@@ -63,7 +63,7 @@ class RAMLExtensionsReferenceHandler extends ReferenceHandler {
         }
       }
       case node: YNode if (node.tagType == YType.Include)  => ramlInclude(node)
-      case _                                            => part.children.foreach(links)
+      case _                                               => part.children.foreach(links)
     }
   }
 

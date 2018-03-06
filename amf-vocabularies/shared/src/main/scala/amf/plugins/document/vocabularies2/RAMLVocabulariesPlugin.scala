@@ -52,6 +52,8 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
     DialectLibraryModel,
     DialectFragmentModel,
     DialectInstanceModel,
+    DialectInstanceLibraryModel,
+    DialectInstanceFragmentModel
   ) // TODO
 
   override def serializableAnnotations(): Map[String, AnnotationGraphLoader] = Map.empty
@@ -142,7 +144,14 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
 
   protected def parseDialectInstance(header: String, document: Root, parentContext: ParserContext): Option[BaseUnit] = {
     registry.withRegisteredDialect(header) { dialect =>
-      new RamlDialectInstanceParser(document)(new DialectInstanceContext(dialect, parentContext)).parseDocument()
+      if (header.replace(" ", "") == dialect.header)
+        new RamlDialectInstanceParser(document)(new DialectInstanceContext(dialect, parentContext)).parseDocument()
+      else if (dialect.isFragmentHeader(header))
+        new RamlDialectInstanceParser(document)(new DialectInstanceContext(dialect, parentContext)).parseFragment()
+      else if (dialect.isLibraryHeader(header))
+        new RamlDialectInstanceParser(document)(new DialectInstanceContext(dialect, parentContext)).parseLibrary()
+      else
+        throw new Exception("Dialect instances libraries not supported yet")
     }
   }
 
