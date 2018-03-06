@@ -1,7 +1,7 @@
 #%RAML 1.0
 title: resource type parameter with reference
-  /lot:
-    get:
+/lot:
+  get:
     responses:
       200:
         body:
@@ -10,4 +10,3 @@ title: resource type parameter with reference
               - 1
               - 2
             type: array
-            items: string
