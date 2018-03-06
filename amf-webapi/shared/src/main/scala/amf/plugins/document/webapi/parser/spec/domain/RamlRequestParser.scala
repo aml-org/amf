@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.model.domain.{AmfArray, DomainElement}
+import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.Lazy
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
@@ -30,64 +30,6 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
       }
     )
 
-    map.key(
-      "body",
-      entry => {
-        val payloads = mutable.ListBuffer[Payload]()
-
-        entry.value.tagType match {
-          case YType.Null =>
-            Raml10TypeParser(entry,
-                             shape => shape.withName("default").adopted(request.getOrCreate.id),
-                             isAnnotation = false,
-                             AnyDefaultType)
-              .parse()
-              .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
-
-          case YType.Str =>
-            Raml10TypeParser(entry,
-                             shape => shape.withName("default").adopted(request.getOrCreate.id),
-                             isAnnotation = false,
-                             AnyDefaultType)
-              .parse()
-              .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
-
-          case _ =>
-            // Now we parsed potentially nested shapes for different data types
-            entry.value.to[YMap] match {
-              case Right(m) =>
-                m.regex(
-                  ".*/.*",
-                  entries => {
-                    entries.foreach(entry => {
-                      payloads += Raml10PayloadParser(entry, producer = request.getOrCreate.withPayload).parse()
-                    })
-                  }
-                )
-                val others = YMap(m.entries.filter(e => !e.key.toString().matches(".*/.*")))
-                if (others.entries.nonEmpty) {
-                  if (payloads.isEmpty) {
-                    Raml10TypeParser(entry,
-                                     shape => shape.withName("default").adopted(request.getOrCreate.id),
-                                     defaultType = AnyDefaultType)
-                      .parse()
-                      .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
-                  } else {
-                    others.entries.foreach(e =>
-                      ctx.violation(s"Unexpected key '${e.key}'. Expecting valid media types.", Some(e)))
-                  }
-                }
-              case _ =>
-            }
-        }
-
-        if (payloads.nonEmpty)
-          request.getOrCreate.set(RequestModel.Payloads,
-                                  AmfArray(payloads, Annotations(entry.value)),
-                                  Annotations(entry))
-      }
-    )
-
     request.option
   }
 
@@ -97,45 +39,8 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
 case class Raml08RequestParser(map: YMap, producer: () => Request, parseOptional: Boolean = false)(
     implicit ctx: RamlWebApiContext)
     extends RamlRequestParser(map, producer, parseOptional) {
-  override def parse(): Option[Request] = {
-    super.parse()
-    Raml08BodyContentParser(map,
-                            (value: Option[String]) => request.getOrCreate.withPayload(value),
-                            () => request.getOrCreate).parse()
-
-    request.option
-  }
 
   override protected val baseUriParameterKey: String = "baseUriParameters"
-}
-
-case class Raml08BodyContentParser(map: YMap,
-                                   producer: (Option[String] => Payload),
-                                   accessor: () => DomainElement,
-                                   parseOptional: Boolean = false)(implicit ctx: RamlWebApiContext) {
-  def parse(): Unit = {
-    val payloads = mutable.ListBuffer[Payload]()
-
-    map.key(
-      "body",
-      entry => {
-        entry.value
-          .as[YMap]
-          .regex(
-            ".*/.*",
-            entries => {
-              entries.foreach(entry => {
-                payloads += Raml08PayloadParser(entry, producer = producer, parseOptional)
-                  .parse()
-              })
-            }
-          )
-        if (payloads.nonEmpty)
-          accessor()
-            .set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
-      }
-    )
-  }
 }
 
 abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOptional: Boolean = false)(
@@ -187,6 +92,68 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
                                 AmfArray(parameters, Annotations(entry.value)),
                                 Annotations(entry))
 
+      }
+    )
+
+    map.key(
+      "body",
+      entry => {
+        val payloads = mutable.ListBuffer[Payload]()
+
+        entry.value.tagType match {
+          case YType.Null =>
+            ctx.factory
+              .typeParser(entry,
+                          shape => shape.withName("default").adopted(request.getOrCreate.id),
+                          false,
+                          AnyDefaultType)
+              .parse()
+              .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
+
+          case YType.Str =>
+            ctx.factory
+              .typeParser(entry,
+                          shape => shape.withName("default").adopted(request.getOrCreate.id),
+                          false,
+                          AnyDefaultType)
+              .parse()
+              .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
+
+          case _ =>
+            // Now we parsed potentially nested shapes for different data types
+            entry.value.to[YMap] match {
+              case Right(m) =>
+                m.regex(
+                  ".*/.*",
+                  entries => {
+                    entries.foreach(entry => {
+                      payloads += ctx.factory.payloadParser(entry, request.getOrCreate.withPayload, false).parse()
+                    })
+                  }
+                )
+                val others = YMap(m.entries.filter(e => !e.key.toString().matches(".*/.*")))
+                if (others.entries.nonEmpty) {
+                  if (payloads.isEmpty) {
+                    ctx.factory
+                      .typeParser(entry,
+                                  shape => shape.withName("default").adopted(request.getOrCreate.id),
+                                  false,
+                                  AnyDefaultType)
+                      .parse()
+                      .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
+                  } else {
+                    others.entries.foreach(e =>
+                      ctx.violation(s"Unexpected key '${e.key}'. Expecting valid media types.", Some(e)))
+                  }
+                }
+              case _ =>
+            }
+        }
+
+        if (payloads.nonEmpty)
+          request.getOrCreate.set(RequestModel.Payloads,
+                                  AmfArray(payloads, Annotations(entry.value)),
+                                  Annotations(entry))
       }
     )
 

@@ -5,7 +5,7 @@ import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
-import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, Raml10TypeParser}
+import amf.plugins.document.webapi.parser.spec.declaration.AnyDefaultType
 import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
 import org.yaml.model.{YMap, YMapEntry, YType}
@@ -20,74 +20,6 @@ case class Raml10ResponseParser(entry: YMapEntry, producer: (String) => Response
     extends RamlResponseParser(entry, producer, parseOptional) {
 
   override def parseMap(response: Response, map: YMap): Unit = {
-    map.key(
-      "body",
-      entry => {
-        val payloads = mutable.ListBuffer[Payload]()
-
-        val payload = Payload()
-        payload.adopted(response.id)
-
-        entry.value.tagType match {
-          case YType.Null =>
-            Raml10TypeParser(entry,
-                             shape => shape.withName("default").adopted(payload.id),
-                             isAnnotation = false,
-                             AnyDefaultType)
-              .parse()
-              .foreach { schema =>
-                schema.annotations += SynthesizedField()
-                payloads += payload.withSchema(schema)
-              }
-            response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
-
-          case YType.Str =>
-            Raml10TypeParser(entry,
-                             shape => shape.withName("default").adopted(payload.id),
-                             isAnnotation = false,
-                             AnyDefaultType)
-              .parse()
-              .foreach(payloads += payload.withSchema(_))
-            response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
-
-          case _ =>
-            // This is the case where the body is directly a data type
-            entry.value.to[YMap] match {
-              case Right(bodyMap) =>
-                val filterMap = YMap(bodyMap.entries.filter(e => !e.key.toString().matches(".*/.*")))
-                if (filterMap.entries.nonEmpty) {
-                  Raml10TypeParser(entry,
-                                   shape => shape.withName("default").adopted(payload.id),
-                                   isAnnotation = false,
-                                   AnyDefaultType)
-                    .parse()
-                    .foreach(payloads += payload.withSchema(_))
-                }
-              case _ =>
-            }
-
-            // Now we parsed potentially nested shapes for different data types
-            entry.value.to[YMap] match {
-              case Right(m) =>
-                m.regex(
-                  ".*/.*",
-                  entries => {
-                    entries.foreach(entry => {
-                      payloads += Raml10PayloadParser(entry, response.withPayload).parse()
-                    })
-                  }
-                )
-              case _ =>
-            }
-            if (payloads.nonEmpty)
-              response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
-        }
-      }
-    )
-
-    val examples = OasResponseExamplesParser("(examples)", map).parse()
-    if (examples.nonEmpty) response.set(ResponseModel.Examples, AmfArray(examples))
-
     AnnotationParser(response, map).parse()
 
   }
@@ -96,11 +28,7 @@ case class Raml10ResponseParser(entry: YMapEntry, producer: (String) => Response
 case class Raml08ResponseParser(entry: YMapEntry, producer: (String) => Response, parseOptional: Boolean = false)(
     implicit ctx: RamlWebApiContext)
     extends RamlResponseParser(entry, producer, parseOptional) {
-
-  override protected def parseMap(response: Response, map: YMap): Unit = {
-    Raml08BodyContentParser(map, (value: Option[String]) => response.withPayload(value), () => response, parseOptional)
-      .parse()
-  }
+  override protected def parseMap(response: Response, map: YMap): Unit = Unit
 }
 
 abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Response, parseOptional: Boolean = false)(
@@ -135,6 +63,71 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
             response.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
           }
         )
+
+        map.key(
+          "body",
+          entry => {
+            val payloads = mutable.ListBuffer[Payload]()
+
+            val payload = Payload()
+            payload.adopted(response.id)
+
+            entry.value.tagType match {
+              case YType.Null =>
+                ctx.factory
+                  .typeParser(entry, shape => shape.withName("default").adopted(payload.id), false, AnyDefaultType)
+                  .parse()
+                  .foreach { schema =>
+                    schema.annotations += SynthesizedField()
+                    payloads += payload.withSchema(schema)
+                  }
+                response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
+
+              case YType.Str =>
+                ctx.factory
+                  .typeParser(entry, shape => shape.withName("default").adopted(payload.id), false, AnyDefaultType)
+                  .parse()
+                  .foreach(payloads += payload.withSchema(_))
+                response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
+
+              case _ =>
+                // This is the case where the body is directly a data type
+                entry.value.to[YMap] match {
+                  case Right(bodyMap) =>
+                    val filterMap = YMap(bodyMap.entries.filter(e => !e.key.toString().matches(".*/.*")))
+                    if (filterMap.entries.nonEmpty) {
+                      ctx.factory
+                        .typeParser(entry,
+                                    shape => shape.withName("default").adopted(payload.id),
+                                    false,
+                                    AnyDefaultType)
+                        .parse()
+                        .foreach(payloads += payload.withSchema(_))
+                    }
+                  case _ =>
+                }
+
+                // Now we parsed potentially nested shapes for different data types
+                entry.value.to[YMap] match {
+                  case Right(m) =>
+                    m.regex(
+                      ".*/.*",
+                      entries => {
+                        entries.foreach(entry => {
+                          payloads += ctx.factory.payloadParser(entry, response.withPayload, false).parse()
+                        })
+                      }
+                    )
+                  case _ =>
+                }
+                if (payloads.nonEmpty)
+                  response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
+            }
+          }
+        )
+
+        val examples = OasResponseExamplesParser("(examples)", map).parse()
+        if (examples.nonEmpty) response.set(ResponseModel.Examples, AmfArray(examples))
 
         ctx.closedShape(response.id, map, "response")
 
