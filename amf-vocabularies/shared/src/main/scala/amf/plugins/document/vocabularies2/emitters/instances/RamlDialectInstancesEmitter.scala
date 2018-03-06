@@ -9,7 +9,7 @@ import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{FieldEntry, Position, Value}
 import amf.core.utils._
-import amf.plugins.document.vocabularies2.model.document.{Dialect, DialectInstance}
+import amf.plugins.document.vocabularies2.model.document.{Dialect, DialectInstance, DialectInstanceFragment}
 import amf.plugins.document.vocabularies2.model.domain._
 import org.yaml.model.{YDocument, YNode}
 
@@ -122,8 +122,12 @@ case class DialectNodeEmitter(node: DialectDomainElement,
 
   override def position(): Position = node.annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
 
-  protected def emitLink(node: DialectDomainElement): PartEmitter = LinkScalaEmitter(node.includeName, node.annotations)
+  protected def emitLink(node: DialectDomainElement): PartEmitter = new PartEmitter {
+    override def emit(b: YDocument.PartBuilder): Unit =
+      b += YNode.include(node.includeName)
 
+    override def position(): Position = node.annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
+  }
 
   protected def emitRef(node: DialectDomainElement): PartEmitter = TextScalarEmitter(node.localRefName, node.annotations)
 
@@ -179,14 +183,12 @@ case class DialectNodeEmitter(node: DialectDomainElement,
   }
 
   def isFragment(elem: DialectDomainElement, instance: DialectInstance): Boolean = {
-    /*
-    instance.references.exists {
-      case ref: DialecInstancetFragment => ref.encodes.id == elem.id
-      case _                            => false
-    }
-    */
     elem.linkTarget match {
-      case Some(domainElement) => false // TODO: Review when fragments are supported
+      case Some(domainElement) =>
+        instance.references.exists {
+          case ref: DialectInstanceFragment => ref.encodes.id == domainElement.id
+          case _                            => false
+        }
       case _                   =>  throw new Exception(s"Cannot check fragment for an element without target for element ${elem.id}")
     }
   }

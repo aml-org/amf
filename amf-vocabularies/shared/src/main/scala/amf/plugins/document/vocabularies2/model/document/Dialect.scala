@@ -28,13 +28,15 @@ case class Dialect(fields: Fields, annotations: Annotations) extends BaseUnit wi
 
   def header = s"%${name()} ${version()}".replace(" ","")
   def libraryHeaders = Option(documents().library()) match {
-    case Some(library) => Seq(s"%RAMLLibrary/$header")
+    case Some(library) => Seq(s"%RAMLLibrary/${header.replaceFirst("%","")}")
     case None          => Nil
   }
+  def isLibraryHeader(header: String) = libraryHeaders.contains(header.replace(" ", ""))
   def fragmentHeaders = Option(documents().fragments()) match {
-    case Some(fragments) => fragments.map { fragment => s"%${fragment.documentName()}/$header".replace(" ", "") }
+    case Some(fragments) => fragments.map { fragment => s"%${fragment.documentName()}/${header.replaceFirst("%","")}".replace(" ", "") }
     case None          => Nil
   }
+  def isFragmentHeader(header: String) = fragmentHeaders.contains(header.replace(" ", ""))
   def allHeaders = Seq(header) ++ libraryHeaders ++ fragmentHeaders
 }
 
