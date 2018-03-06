@@ -212,7 +212,7 @@
         ],
         "http://schema.org/documentation": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/full-example.raml#/web-api/creative-work/externalDocsUrl",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/full-example.raml#/web-api/creative-work/Home%20documentation",
             "@type": [
               "http://schema.org/CreativeWork",
               "http://raml.org/vocabularies/document#DomainElement"
@@ -224,7 +224,7 @@
             ],
             "http://schema.org/title": [
               {
-                "@value": "Home"
+                "@value": "Home documentation"
               }
             ],
             "http://schema.org/description": [
@@ -234,7 +234,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/full-example.raml#/web-api/creative-work/externalDocsUrl/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/full-example.raml#/web-api/creative-work/Home%20documentation/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -247,7 +247,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(21,4)-(22,0)]"
+                        "@value": "[(22,4)-(23,0)]"
                       }
                     ]
                   },
@@ -259,14 +259,14 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(20,4)-(21,0)]"
+                        "@value": "[(21,4)-(22,0)]"
                       }
                     ]
                   },
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/full-example.raml#/web-api/creative-work/externalDocsUrl"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/full-example.raml#/web-api/creative-work/Home%20documentation"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -283,7 +283,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(22,4)-(23,0)]"
+                        "@value": "[(20,4)-(21,0)]"
                       }
                     ]
                   }
@@ -292,7 +292,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/full-example.raml#/web-api/creative-work/externalDocsUrl2",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/full-example.raml#/web-api/creative-work/Home%20another%20documentation",
             "@type": [
               "http://schema.org/CreativeWork",
               "http://raml.org/vocabularies/document#DomainElement"
@@ -304,7 +304,7 @@
             ],
             "http://schema.org/title": [
               {
-                "@value": "Home2"
+                "@value": "Home another documentation"
               }
             ],
             "http://schema.org/description": [
@@ -314,7 +314,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/full-example.raml#/web-api/creative-work/externalDocsUrl2/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/full-example.raml#/web-api/creative-work/Home%20another%20documentation/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -327,7 +327,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(24,4)-(25,0)]"
+                        "@value": "[(25,4)-(26,0)]"
                       }
                     ]
                   },
@@ -339,14 +339,14 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(23,4)-(24,0)]"
+                        "@value": "[(24,4)-(25,0)]"
                       }
                     ]
                   },
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/full-example.raml#/web-api/creative-work/externalDocsUrl2"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/full-example.raml#/web-api/creative-work/Home%20another%20documentation"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -363,7 +363,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(25,4)-(26,0)]"
+                        "@value": "[(23,4)-(24,0)]"
                       }
                     ]
                   }

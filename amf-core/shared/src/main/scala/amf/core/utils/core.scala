@@ -25,6 +25,7 @@ package object utils {
     def urlEncoded: String = {
       str
         .replaceAll("/", "%2F")
+        .replaceAll(" ", "%20")
         .replaceAll("\\{", "%7B")
         .replaceAll("\\}", "%7D")
         .replaceAll("<", "%3C")
@@ -34,6 +35,7 @@ package object utils {
     def urlDecoded: String = {
       str
         .replaceAll("%2F", "/")
+        .replaceAll("%20", " ")
         .replaceAll("%7B", "\\{")
         .replaceAll("%7D", "\\}")
         .replaceAll("%3C", "<")
@@ -92,6 +94,6 @@ package object utils {
 
     val varPattern = "\\{(.[^{]*)\\}".r
     def variables(path: String): Seq[String] =
-      varPattern.findAllIn(path).toSeq.map(v => v.replace("{","").replace("}",""))
+      varPattern.findAllIn(path).toSeq.map(v => v.replace("{", "").replace("}", ""))
   }
 }

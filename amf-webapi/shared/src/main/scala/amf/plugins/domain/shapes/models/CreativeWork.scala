@@ -1,5 +1,6 @@
 package amf.plugins.domain.shapes.models
 
+import amf.core.utils._
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
@@ -20,7 +21,7 @@ case class CreativeWork(fields: Fields, annotations: Annotations) extends Domain
   def withTitle(title: String): this.type             = set(Title, title)
 
   override def adopted(parent: String): this.type =
-    withId(parent + "/creative-work/" + Option(url).fold(title)(u => u))
+    withId(parent + "/creative-work/" + Option(title).fold(url)(u => u.urlEncoded))
 
   override def linkCopy(): Linkable = CreativeWork().withId(id)
 
