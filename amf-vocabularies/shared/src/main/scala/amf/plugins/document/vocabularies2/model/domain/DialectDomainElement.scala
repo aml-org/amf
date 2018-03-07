@@ -38,8 +38,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
       linkTarget.map(_.id.split("#").last.split("/").last).getOrElse {
         throw new Exception(s"Cannot produce local reference without linked element at elem $id")
       }
-    else
-      throw new Exception(s"Cannot produce local reference without linked element at elem $id")
+    else id.split("#").last.split("/").last
   }
 
   def includeName: String = {

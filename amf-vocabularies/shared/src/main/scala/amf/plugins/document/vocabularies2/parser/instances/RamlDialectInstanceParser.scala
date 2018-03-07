@@ -1,12 +1,14 @@
 package amf.plugins.document.vocabularies2.parser.instances
 
 import amf.core.Root
-import amf.core.annotations.Aliases
-import amf.core.model.document.{BaseUnit, DeclaresModel}
+import amf.core.annotations.{Aliases, LexicalInformation}
+import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
+import amf.core.model.domain.Annotation
 import amf.core.utils._
 import amf.core.parser._
 import amf.core.parser.{Annotations, BaseSpecParser, Declarations, EmptyFutureDeclarations, ErrorHandler, FutureDeclarations, ParsedReference, ParserContext, Reference, SearchScope}
 import amf.core.vocabulary.Namespace
+import amf.plugins.document.vocabularies2.annotations.AliasesLocation
 import amf.plugins.document.vocabularies2.model.document.{Dialect, DialectInstance, DialectInstanceFragment, DialectInstanceLibrary}
 import amf.plugins.document.vocabularies2.model.domain._
 import amf.plugins.document.vocabularies2.parser.common.SyntaxErrorReporter
@@ -52,15 +54,22 @@ class DialectInstanceDeclarations(var dialectDomainElements: Map[String, Dialect
 class DialectInstanceContext(val dialect: Dialect, private val wrapped: ParserContext, private val ds: Option[DialectInstanceDeclarations] = None)
   extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations) with SyntaxErrorReporter {
 
-  val declarationsNodeMappings: Map[String, NodeMapping] = parseDeclaredNodeMappings()
+  val libraryDeclarationsNodeMappings: Map[String, NodeMapping] = parseDeclaredNodeMappings("library")
+  val rootDeclarationsNodeMappings: Map[String, NodeMapping]    = parseDeclaredNodeMappings("root")
 
   val declarations: DialectInstanceDeclarations =
     ds.getOrElse(new DialectInstanceDeclarations(errorHandler = Some(this), futureDeclarations = futureDeclarations))
 
-  protected def parseDeclaredNodeMappings(): Map[String, NodeMapping] = {
-    val declarations = Option(dialect.documents()).flatMap { documents =>
-      Option(documents.root()).map { root =>
-        root.declaredNodes() map { declaration =>
+  protected def parseDeclaredNodeMappings(documentType: String): Map[String, NodeMapping] = {
+    val declarations: Seq[(String, NodeMapping)] = Option(dialect.documents()).flatMap { documents =>
+      // document mappings for root and libraries, everything that declares something
+      val documentMappings: Option[DocumentMapping] = if (documentType == "root") {
+        Option(documents.root())
+      } else {
+        Option(documents.library())
+      }
+      documentMappings.map { mapping =>
+        mapping.declaredNodes() map { declaration: PublicNodeMapping =>
           findNodeMapping(declaration.mappedNode()) map { nodeMapping =>
             (declaration.name(), nodeMapping)
           }
@@ -96,7 +105,10 @@ case class ReferenceDeclarations(references: mutable.Map[String, Any] = mutable.
       case m: DeclaresModel =>
         val library = ctx.declarations.getOrCreateLibrary(alias)
         m.declares.foreach {
-          case dialectElement: DialectDomainElement => library.registerDialectDomainElement(dialectElement.localRefName, dialectElement)
+          case dialectElement: DialectDomainElement =>
+            val localName = dialectElement.localRefName
+            library.registerDialectDomainElement(localName, dialectElement)
+            ctx.futureDeclarations.resolveRef(s"$alias.$localName", dialectElement)
           case decl                                 => library += decl
         }
       case f: DialectInstanceFragment =>
@@ -108,7 +120,7 @@ case class ReferenceDeclarations(references: mutable.Map[String, Any] = mutable.
     references.values.toSet.filter(_.isInstanceOf[BaseUnit]).toSeq.asInstanceOf[Seq[BaseUnit]]
 }
 
-case class DialectInstanceReferencesParser(dialectInstance: DialectInstance, map: YMap, references: Seq[ParsedReference])(implicit ctx: DialectInstanceContext) {
+case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap, references: Seq[ParsedReference])(implicit ctx: DialectInstanceContext) {
 
   def parse(location: String): ReferenceDeclarations = {
     val result = ReferenceDeclarations()
@@ -125,16 +137,18 @@ case class DialectInstanceReferencesParser(dialectInstance: DialectInstance, map
     references.find(r => r.origin.url.equals(url)).map(_.unit)
 
 
-  private def parseLibraries(dialectInstance: DialectInstance, result: ReferenceDeclarations, id: String): Unit = {
+  private def parseLibraries(dialectInstance: BaseUnit, result: ReferenceDeclarations, id: String): Unit = {
     map.key(
       "uses",
-      entry =>
+      entry => {
+        val annotation: Annotation = AliasesLocation(Annotations(entry.key).find(classOf[LexicalInformation]).map(_.range.start.line).getOrElse(0))
+        dialectInstance.annotations += annotation
         entry.value
           .as[YMap]
           .entries
           .foreach(e => {
             val alias: String = e.key
-            val url: String   = library(e)
+            val url: String = library(e)
             target(url).foreach {
               case module: DeclaresModel =>
                 collectAlias(dialectInstance, alias -> module.id)
@@ -143,6 +157,7 @@ case class DialectInstanceReferencesParser(dialectInstance: DialectInstance, map
                 ctx.violation(id, s"Expected vocabulary module but found: $other", e) // todo Uses should only reference modules...
             }
           })
+      }
     )
   }
 
@@ -169,7 +184,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
 
   def parseDocument(): Option[DialectInstance] = {
     val dialectInstance: DialectInstance = DialectInstance(Annotations(map)).withLocation(root.location).withId(root.location + "#").withDefinedBy(ctx.dialect.id)
-    parseDeclarations()
+    parseDeclarations("root")
     val references = DialectInstanceReferencesParser(dialectInstance, map, root.references).parse(dialectInstance.location)
 
     val document = parseEncoded(dialectInstance) match {
@@ -200,10 +215,32 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
     }
   }
 
-  def parseLibrary(): Option[DialectInstanceLibrary] = throw new Exception("Not implemented yet")
+  def parseLibrary(): Option[DialectInstanceLibrary] = {
+    val dialectInstance: DialectInstanceLibrary = DialectInstanceLibrary(Annotations(map)).withLocation(root.location).withId(root.location + "#").withDefinedBy(ctx.dialect.id)
 
-  protected def parseDeclarations(): Unit = {
-    ctx.declarationsNodeMappings.foreach { case (name, nodeMapping) =>
+    parseDeclarations("library")
+
+    val references = DialectInstanceReferencesParser(dialectInstance, map, root.references).parse(dialectInstance.location)
+
+    if (ctx.declarations.declarables.nonEmpty)
+      dialectInstance.withDeclares(ctx.declarations.declarables)
+
+    if (references.baseUnitReferences().nonEmpty)
+      dialectInstance.withReferences(references.baseUnitReferences())
+
+    // resolve unresolved references
+    ctx.futureDeclarations.resolve()
+
+    Some(dialectInstance)
+  }
+
+  protected def parseDeclarations(documentType: String): Unit = {
+    val declarationsNodeMappings = if (documentType == "root") {
+      ctx.rootDeclarationsNodeMappings
+    } else {
+      ctx.libraryDeclarationsNodeMappings
+    }
+    declarationsNodeMappings.foreach { case (name, nodeMapping) =>
         map.entries.find(_.key.as[String] == name).foreach { entry =>
           val declarationsId = root.location + "#/" + name.urlEncoded
           entry.value.as[YMap].entries.foreach { declarationEntry =>
@@ -217,7 +254,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
     }
   }
 
-  protected def parseEncoded(dialectInstance: DialectInstance): Option[DialectDomainElement] = {
+  protected def parseEncoded(dialectInstance: EncodesModel): Option[DialectDomainElement] = {
     Option(ctx.dialect.documents()) flatMap {
       documents: DocumentsModel =>
         Option(documents.root()) flatMap {
