@@ -45,7 +45,8 @@ class Cycle08ToVersion extends BuildCycleTests {
     FixtureData("security schemes", "security-schemes.raml", "security-schemes-08.raml"),
     FixtureData("empty parameter", "empty-param.raml", "empty-param.raml.raml"),
     FixtureData("empty resource type reference", "empty-resource-type-ref.raml", "empty-resource-type-ref.raml.raml"),
-    FixtureData("name in json schema def", "name-json-schema.raml", "name-json-schema-08.raml")
+    FixtureData("name in json schema def", "name-json-schema.raml", "name-json-schema-08.raml"),
+    FixtureData("empty media type", "empty-media-type.raml", "empty-media-type-08.raml")
   )
 
   cycles08.foreach(f => {
