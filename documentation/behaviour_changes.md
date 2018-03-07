@@ -18,3 +18,24 @@
    example: +14158675309
   
   ```
+  
+* Java parser allows set example to body and not to the shape in the body. 
+  Actually, java parser handle all media type map as a type ( storing the media type in the shape name).
+  For 0.8 this is valid, but in 1.0 not. We only parse the example in 0.8 an store inside the shape. 
+  
+  Example:
+  
+  ```yaml
+  
+  #%RAML 1.0
+  title: Test API
+  version: 1.0
+  
+  /subscription:
+    post:
+      body:
+        application/json:
+          schema: !include schema.json
+          example: !include example.json
+  
+  ```

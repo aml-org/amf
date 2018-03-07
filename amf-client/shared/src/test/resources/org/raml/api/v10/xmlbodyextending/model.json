@@ -1,0 +1,44 @@
+#%RAML 1.0
+title: xml body
+/top:
+  get:
+    body:
+      application/xml:
+        type: object
+        additionalProperties: true
+        properties:
+          firstname:
+            required: true
+            type: string
+          lastname:
+            required: true
+            type: string
+          age:
+            type: integer
+            minimum: 0
+            maximum: 144
+            required: true
+          address:
+            required: true
+            type: string
+    responses:
+      200:
+        body:
+          application/xml:
+            type: object
+            additionalProperties: true
+            properties:
+              firstname:
+                required: true
+                type: string
+              lastname:
+                required: true
+                type: string
+              age:
+                type: integer
+                minimum: 0
+                maximum: 144
+                required: true
+              address:
+                required: true
+                type: string
