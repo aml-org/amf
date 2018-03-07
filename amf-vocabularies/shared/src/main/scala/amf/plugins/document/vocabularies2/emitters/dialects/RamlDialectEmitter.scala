@@ -10,6 +10,7 @@ import amf.core.model.domain.{AmfScalar, DomainElement}
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
 import amf.core.vocabulary.Namespace
+import amf.plugins.document.vocabularies2.annotations.AliasesLocation
 import amf.plugins.document.vocabularies2.emitters.common.{ExternalEmitter, IdCounter}
 import amf.plugins.document.vocabularies2.metamodel.document.DialectModel
 import amf.plugins.document.vocabularies2.metamodel.domain.{DocumentMappingModel, PropertyMappingModel}
@@ -46,7 +47,7 @@ trait PosExtractor {
 }
 
 case class LibraryDocumentModelEmitter(dialect: Dialect, ordering: SpecOrdering, aliases: Map[String, (String, String)]) extends EntryEmitter with AliasesConsumer {
-  val mapping =  dialect.documents.library()
+  val mapping: DocumentMapping =  dialect.documents.library()
   var emitters: Seq[EntryEmitter] = Seq()
 
   override def emit(b: EntryBuilder): Unit = {
@@ -340,7 +341,6 @@ case class NodeMappingEmitter(dialect: Dialect, nodeMapping: NodeMapping, orderi
   override def emit(b: EntryBuilder): Unit = {
     if (nodeMapping.isLink) {
       if (isFragment(nodeMapping.linkTarget.get, dialect)) {
-        // b.entry(nodeMapping.name, YNode(new YScalar.Builder(nodeMapping.linkLabel.get, YType.Include.tag).scalar, YType.Include))
         b.entry(nodeMapping.name, YNode.include(nodeMapping.linkLabel.get))
       } else {
         b.entry(nodeMapping.name, nodeMapping.linkLabel.get)
@@ -371,18 +371,18 @@ case class NodeMappingEmitter(dialect: Dialect, nodeMapping: NodeMapping, orderi
   override def position(): Position = nodeMapping.annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
 }
 
-case class ReferencesEmitter(references: Seq[BaseUnit], ordering: SpecOrdering, aliases: Map[String,(String, String)]) extends EntryEmitter {
+case class ReferencesEmitter(baseUnit: BaseUnit, ordering: SpecOrdering, aliases: Map[String,(String, String)]) extends EntryEmitter {
+  val modules = baseUnit.references.collect({ case m: DeclaresModel => m })
   override def emit(b: EntryBuilder): Unit = {
-    val modules = references.collect({ case m: DeclaresModel => m })
     if (modules.nonEmpty) {
-
       b.entry("uses", _.obj { b =>
         traverse(ordering.sorted(modules.map(r => ReferenceEmitter(r, ordering, aliases))), b)
       })
     }
   }
 
-  override def position(): Position = ZERO
+  override def position(): Position =
+    baseUnit.annotations.find(classOf[AliasesLocation]).map(annot => Position((annot.position, 0))).getOrElse(ZERO)
 }
 
 case class ReferenceEmitter(reference: BaseUnit, ordering: SpecOrdering, aliases: Map[String,(String, String)])
@@ -438,7 +438,7 @@ trait RamlDialectDocumentsEmitters {
   }
 
   def rootLevelEmitters(ordering: SpecOrdering) =
-    Seq(ReferencesEmitter(dialect.references, ordering, aliases)) ++
+    Seq(ReferencesEmitter(dialect, ordering, aliases)) ++
       nodeMappingDeclarationEmitters(dialect, ordering, aliases) ++
       externalEmitters(ordering)
 

@@ -1,16 +1,20 @@
 package amf.plugins.document.vocabularies2.emitters.instances
 
-import amf.core.annotations.LexicalInformation
+import amf.core.annotations.{Aliases, LexicalInformation}
 import amf.core.emitter.BaseEmitters.{ValueEmitter, _}
 import amf.core.emitter.SpecOrdering.Lexical
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.metamodel.Field
+import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{FieldEntry, Position, Value}
 import amf.core.utils._
+import amf.plugins.document.vocabularies2.annotations.AliasesLocation
+import amf.plugins.document.vocabularies2.emitters.common.IdCounter
 import amf.plugins.document.vocabularies2.model.document.{Dialect, DialectInstance, DialectInstanceFragment}
 import amf.plugins.document.vocabularies2.model.domain._
+import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YDocument, YNode}
 
 trait DialectEmitterHelper {
@@ -25,14 +29,76 @@ trait DialectEmitterHelper {
   }
 }
 
+case class ReferencesEmitter(baseUnit: BaseUnit, ordering: SpecOrdering, aliases: Map[String,(String, String)]) extends EntryEmitter {
+  override def emit(b: EntryBuilder): Unit = {
+    val modules = baseUnit.references.collect({ case m: DeclaresModel => m })
+    if (modules.nonEmpty) {
+
+      b.entry("uses", _.obj { b =>
+        traverse(ordering.sorted(modules.map(r => ReferenceEmitter(r, ordering, aliases))), b)
+      })
+    }
+  }
+
+  override def position(): Position =
+    baseUnit.annotations.find(classOf[AliasesLocation]).map(annot => Position((annot.position, 0))).getOrElse(ZERO)
+}
+
+case class ReferenceEmitter(reference: BaseUnit, ordering: SpecOrdering, aliases: Map[String,(String, String)])
+  extends EntryEmitter {
+
+  override def emit(b: EntryBuilder): Unit = {
+    aliases.get(reference.id) match {
+      case Some((alias, location)) =>
+        MapEntryEmitter(alias, location).emit(b)
+      case _ => // TODO: emit violation
+    }
+  }
+
+  override def position(): Position = ZERO
+}
+
+
 case class RamlDialectInstancesEmitter(instance: DialectInstance, dialect: Dialect) extends DialectEmitterHelper  {
   val ordering: SpecOrdering = Lexical
+  val aliases:  Map[String,(String, String)] = collectAliases()
+
+  def collectAliases(): Map[String,(String, String)] = {
+    val vocabFile = instance.location.split("/").last
+    val vocabFilePrefix = instance.location.replace(vocabFile, "")
+
+    val maps = instance.annotations.find(classOf[Aliases]).map { aliases =>
+      aliases.aliases.foldLeft(Map[String,String]()) { case (acc, (alias, id)) =>
+        acc + (id -> alias)
+      }
+    }.getOrElse(Map())
+    val idCounter = new IdCounter()
+    instance.references.foldLeft(Map[String,(String,String)]()) {
+      case (acc: Map[String,(String,String)], m: DeclaresModel) =>
+        val location = Option(m.location).getOrElse(m.id).replace("#","")
+        val importLocation: String = if (location.contains(vocabFilePrefix)) {
+          location.replace(vocabFilePrefix, "")
+        } else {
+          location.replace("file://", "")
+        }
+
+        if (maps.get(m.id).isDefined) {
+          val alias = maps(m.id)
+          acc + (m.id -> (alias, importLocation))
+        } else {
+          val nextAlias = idCounter.genId("uses_")
+          acc + (m.id -> (nextAlias, importLocation))
+        }
+      case (acc: Map[String,(String,String)], _) => acc
+    }
+  }
+
 
   def emitInstance(): YDocument = {
     YDocument(b => {
       b.comment(s"%${dialect.name()} ${dialect.version()}")
       val rootNodeMapping = findNodeMappingById(dialect.documents().root().encoded())
-      DialectNodeEmitter(instance.encodes.asInstanceOf[DialectDomainElement], rootNodeMapping, instance, dialect, ordering, None, rootNode = true).emit(b)
+      DialectNodeEmitter(instance.encodes.asInstanceOf[DialectDomainElement], rootNodeMapping, instance, dialect, ordering, aliases, None, rootNode = true).emit(b)
     })
   }
 }
@@ -43,6 +109,7 @@ case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
                                     instance: DialectInstance,
                                     dialect: Dialect,
                                     ordering: SpecOrdering,
+                                    aliases: Map[String, (String, String)],
                                     keyPropertyId: Option[String] = None) extends EntryEmitter with DialectEmitterHelper {
 
   override def emit(b: YDocument.EntryBuilder): Unit = {
@@ -51,7 +118,7 @@ case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
       sortedDeclarations().foreach { decl =>
         b.entry(
           YNode(decl.id.split("#").last.split("/").last.urlDecoded), // we are using the last part of the URL as the identifier in dialects
-          (b) => DialectNodeEmitter(decl, nodeMapping, instance, dialect, ordering).emit(b)
+          (b) => DialectNodeEmitter(decl, nodeMapping, instance, dialect, ordering, aliases).emit(b)
         )
       }
     })
@@ -74,13 +141,18 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                               instance: DialectInstance,
                               dialect: Dialect,
                               ordering: SpecOrdering,
+                              aliases: Map[String, (String, String)],
                               keyPropertyId: Option[String] = None,
-                              rootNode: Boolean = false) extends PartEmitter with DialectEmitterHelper {
+                              rootNode: Boolean = false)extends PartEmitter with DialectEmitterHelper {
 
   override def emit(b: YDocument.PartBuilder): Unit = {
     if (node.isLink) {
       if (isFragment(node, instance)) emitLink(node).emit(b)
-      else emitRef(node).emit(b)
+      else if(isLibrary(node, instance)) {
+        emitLibrarRef(node, instance).emit(b)
+      } else {
+        emitRef(node).emit(b)
+      }
     } else {
       var emitters: Seq[EntryEmitter] = Nil
       node.dynamicFields.foreach { field =>
@@ -115,6 +187,10 @@ case class DialectNodeEmitter(node: DialectDomainElement,
       if (rootNode)
         emitters ++= declarationsEmitters(b)
 
+      // and also for use of libraries
+      if (rootNode)
+        emitters ++= Seq(ReferencesEmitter(instance, ordering, aliases))
+
       // finally emit the object
       b.obj { b => ordering.sorted(emitters).foreach(_.emit(b)) }
     }
@@ -140,14 +216,14 @@ case class DialectNodeEmitter(node: DialectDomainElement,
 
   protected def emitObject(key: String, element: DialectDomainElement, propertyMapping: PropertyMapping): Seq[EntryEmitter] = {
     val nextNodeMapping = findNodeMapping(propertyMapping.objectRange().head, dialect)
-    Seq(EntryPartEmitter(key, DialectNodeEmitter(element, nextNodeMapping, instance, dialect, ordering)))
+    Seq(EntryPartEmitter(key, DialectNodeEmitter(element, nextNodeMapping, instance, dialect, ordering, aliases)))
   }
 
   protected def emitObjectArray(key: String, array: AmfArray, propertyMapping: PropertyMapping): Seq[EntryEmitter] = {
     Seq(new EntryEmitter() {
       val nextNodeMapping: NodeMapping = findNodeMapping(propertyMapping.objectRange().head, dialect)
       val arrayElements: Seq[DialectNodeEmitter] = array.values.map { case dialectDomainElement: DialectDomainElement =>
-        DialectNodeEmitter(dialectDomainElement, nextNodeMapping, instance, dialect, ordering)
+        DialectNodeEmitter(dialectDomainElement, nextNodeMapping, instance, dialect, ordering, aliases)
       }
 
       override def emit(b: YDocument.EntryBuilder): Unit = {
@@ -165,7 +241,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
     Seq(new EntryEmitter() {
       val nextNodeMapping: NodeMapping = findNodeMapping(propertyMapping.objectRange().head, dialect)
       val mapElements = array.values.foldLeft(Map[DialectNodeEmitter, DialectDomainElement]()) { case (acc, dialectDomainElement: DialectDomainElement) =>
-        acc + (DialectNodeEmitter(dialectDomainElement, nextNodeMapping, instance, dialect, ordering, Some(propertyMapping.mapKeyProperty())) -> dialectDomainElement)
+        acc + (DialectNodeEmitter(dialectDomainElement, nextNodeMapping, instance, dialect, ordering, aliases, Some(propertyMapping.mapKeyProperty())) -> dialectDomainElement)
       }
 
       override def emit(b: YDocument.EntryBuilder): Unit = {
@@ -193,6 +269,24 @@ case class DialectNodeEmitter(node: DialectDomainElement,
     }
   }
 
+  def isLibrary(elem: DialectDomainElement, instance: DialectInstance): Boolean = {
+    instance.references.exists {
+      case lib: DeclaresModel =>
+        lib.declares.exists(_.id == elem.linkTarget.get.id)
+      case _ => false
+    }
+  }
+
+  def emitLibrarRef(elem: DialectDomainElement, instance: DialectInstance): TextScalarEmitter = {
+    val lib = instance.references.find {
+      case lib: DeclaresModel =>
+        lib.declares.exists(_.id == elem.linkTarget.get.id)
+      case _ => false
+    }
+    val alias = aliases(lib.get.id)._1
+    TextScalarEmitter(s"$alias.${elem.localRefName}", elem.annotations)
+  }
+
   def declarationsEmitters(b: YDocument.PartBuilder): Seq[EntryEmitter] = {
     val emitters = for {
       docs         <- Option(dialect.documents())
@@ -208,7 +302,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
           }
           if (declared.nonEmpty) {
             val nodeMapping = findNodeMappingById(publicNodeMapping.mappedNode())
-            acc ++ Seq(DeclarationsGroupEmitter(declared, publicNodeMapping, nodeMapping, instance, dialect, ordering))
+            acc ++ Seq(DeclarationsGroupEmitter(declared, publicNodeMapping, nodeMapping, instance, dialect, ordering, aliases))
           } else acc
         }
       }

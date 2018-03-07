@@ -11,6 +11,7 @@ import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.Platform
 import amf.plugins.document.vocabularies.references.RAMLExtensionsReferenceHandler
 import amf.plugins.document.vocabularies.{DialectHeader, RamlHeaderExtractor}
+import amf.plugins.document.vocabularies2.annotations.AliasesLocation
 import amf.plugins.document.vocabularies2.emitters.dialects.{RamlDialectEmitter, RamlDialectLibraryEmitter}
 import amf.plugins.document.vocabularies2.emitters.instances.RamlDialectInstancesEmitter
 import amf.plugins.document.vocabularies2.emitters.vocabularies.RamlVocabularyEmitter
@@ -56,7 +57,9 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
     DialectInstanceFragmentModel
   ) // TODO
 
-  override def serializableAnnotations(): Map[String, AnnotationGraphLoader] = Map.empty
+  override def serializableAnnotations(): Map[String, AnnotationGraphLoader] = Map(
+    "aliases-location" -> AliasesLocation
+  )
 
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
