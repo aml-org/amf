@@ -24,15 +24,15 @@ baseUriParameters:
         type: string
         required: false
 
-#documentation:
-#    - title: doc title 1
-#      content:
-#        value: single line
-#        (basic): first chapter
-#    - title: doc title 2
-#      content: |
-#           multi
-#           line
+documentation:
+    - title: doc title 1
+      content:
+        value: single line
+        (basic): first chapter
+    - title: doc title 2
+      content: |
+           multi
+           line
 
 types:
     User:
@@ -204,6 +204,8 @@ annotationTypes:
             one:
               displayName: The One
               type: number
+            two:
+              type: (string|number)[]
             three?: integer
             four?:
               type: integer
@@ -214,8 +216,8 @@ annotationTypes:
                 type: string
                 required: false
         headers: &headersGet
-            one:
-            two:
+            header-one:
+            header-two:
                 displayName: The Second
     post:
         description: post something

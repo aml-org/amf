@@ -1,36 +1,196 @@
-Model: file://amf-client/shared/src/test/resources/org/raml/api/v10/full/input.raml
-Profile: RAML
-Conforms? false
-Number of results: 4
-
-Level: Violation
-
-- Source: http://raml.org/vocabularies/amf/parser#Parameter-binding-maxCount
-  Message: Only one binding is allowed per parameter
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/full/input.raml#/web-api/end-points/%2Ftop/get/request/parameter/one
-  Property: http://raml.org/vocabularies/http#binding
-  Position: Some(LexicalInformation([(204,12)-(207,0)]))
-
-Level: Warning
-
-- Source: http://raml.org/vocabularies/amf/parser#parsing-warning
-  Message: 'schema' keyword it's deprecated for 1.0 version, should use 'type' instead
-  Level: Warning
-  Target: 
-  Property: 
-  Position: Some(LexicalInformation([(239,16)-(239,22)]))
-
-- Source: http://raml.org/vocabularies/amf/parser#parsing-warning
-  Message: 'schema' keyword it's deprecated for 1.0 version, should use 'type' instead
-  Level: Warning
-  Target: 
-  Property: 
-  Position: Some(LexicalInformation([(239,16)-(239,22)]))
-
-- Source: http://raml.org/vocabularies/amf/parser#parsing-warning
-  Message: 'schema' keyword it's deprecated for 1.0 version, should use 'type' instead
-  Level: Warning
-  Target: 
-  Property: 
-  Position: Some(LexicalInformation([(269,16)-(269,22)]))
+#%RAML 1.0
+title:
+  value: api title
+  (basic): title
+description: api description
+version: 1.0
+baseUri: base.uri/{version}/{param1}/{param2}/{param3}/{param4}
+protocols:
+  - HTTP
+  - HTTPS
+baseUriParameters:
+  param1:
+    displayName: Param 1
+    description: some description
+    type: string
+    maxLength: 10
+    example: one
+  param2?:
+    type: string
+  param3?:
+    type: string
+    required: true
+  param4?:
+    type: string
+    required: false
+documentation:
+  -
+    title: doc title 1
+    content:
+      value: single line
+      (basic): first chapter
+  -
+    title: doc title 2
+    content: |
+      multi
+      line
+(basic): sometimes
+(complex):
+  controls:
+    url: here
+    property: off
+    names:
+      - one
+      - two
+  permanentUri: false
+/top:
+  description: top description
+  get:
+    description: get something
+    protocols:
+      - HTTPS
+    queryParameters:
+      one:
+        displayName: The One
+        type: number
+      two:
+        type: union
+        anyOf:
+          -
+            type: array
+            items:
+              type: string
+          -
+            type: array
+            items:
+              type: number
+      three?:
+        type: integer
+      four?:
+        type: integer
+      five?:
+        type: string
+        required: true
+      six?:
+        type: string
+        required: false
+    headers:
+      header-one:
+        type: string
+      header-two:
+        displayName: The Second
+    displayName: uno
+    body: {}
+    securedBy: []
+  post:
+    description: post something
+    queryString:
+      type: object
+      additionalProperties: true
+      properties:
+        lat:
+          required: true
+          type: number
+        long:
+          required: true
+          type: number
+    responses:
+      200:
+        headers:
+          header-one:
+            type: string
+          header-two:
+            displayName: The Second
+        body:
+          application/json:
+            example:
+              firstname: tato
+              lastname: bores
+              age: 66
+            type: object
+            additionalProperties: true
+            properties:
+              firstname:
+                required: true
+                type: string
+              lastname:
+                required: true
+                type: string
+              age:
+                type: integer
+                minimum: 0
+                maximum: 144
+                required: true
+              height:
+                required: false
+                type: number
+              goggles:
+                required: false
+                type: boolean
+          application/xml: |
+            <?xml version="1.0" encoding="utf-16"?>
+            <xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+              <xsd:element name="first" type="xsd:string" />
+              <xsd:element name="second" type="xsd:string" />
+            </xsd:schema>
+      400:
+        body:
+          text/plain:
+            type: any
+    displayName: dos
+    body:
+      application/json:
+        example:
+          firstname: tato
+          lastname: bores
+          age: 66
+        type: object
+        additionalProperties: true
+        properties:
+          firstname:
+            required: true
+            type: string
+          lastname:
+            required: true
+            type: string
+          age:
+            type: integer
+            minimum: 0
+            maximum: 144
+            required: true
+          height:
+            required: false
+            type: number
+          goggles:
+            required: false
+            type: boolean
+      application/xml: |
+        <?xml version="1.0" encoding="utf-16"?>
+        <xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+          <xsd:element name="first" type="xsd:string" />
+          <xsd:element name="second" type="xsd:string" />
+        </xsd:schema>
+    securedBy: []
+  /child/{childId}:
+    description: child description
+    post:
+      body:
+        application/json:
+          type: object
+          additionalProperties: true
+          properties:
+            firstname:
+              type: string
+              required: true
+            lastname:
+              type: string
+              required: true
+            age:
+              type: integer
+              required: false
+      securedBy: []
+    uriParameters:
+      childId?:
+        type: integer
+      childId2?:
+        required: true
