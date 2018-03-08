@@ -290,6 +290,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
       case ObjectProperty            => parseObjectProperty(id, propertyEntry, property, node)
       case ObjectPropertyCollection  => parseObjectCollectionProperty(id, propertyEntry, property, node)
       case ObjectMapProperty         => parseObjectMapProperty(id, propertyEntry,property, node)
+      case ObjectPairProperty        => parseObjectPairProperty(id, propertyEntry,property, node)
       case _ => // TODO: throw exception
     }
   }
@@ -400,8 +401,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
   def parseObjectMapProperty(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
     val nested = propertyEntry.value.as[YMap].entries.map { keyEntry =>
         property.objectRange() match {
-          case range: Seq[String] if range.size > 1  =>
-            parseObjectUnion(id, keyEntry.value, property, node)
+          case range: Seq[String] if range.size > 1  => parseObjectUnion(id, keyEntry.value, property, node)
           case range: Seq[String] if range.size == 1 =>
             ctx.dialect.declares.find(_.id == range.head) match {
               case Some(nodeMapping: NodeMapping) =>
@@ -415,6 +415,30 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
         }
     }
     node.setObjectField(property, nested.collect { case Some(node: DialectDomainElement) => node }, propertyEntry.value)
+  }
+
+  def parseObjectPairProperty(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
+    val propertyKeyMapping = Option(property.mapKeyProperty())
+    val propertyValueMapping = Option(property.mapValueProperty())
+    if (propertyKeyMapping.isDefined && propertyValueMapping.isDefined) {
+      val nested = ctx.dialect.declares.find(_.id == property.objectRange().head) match {
+        case Some(nodeMapping: NodeMapping) =>
+          propertyEntry.value.as[YMap].entries map { pair: YMapEntry =>
+            val nestedId = id + "/" + propertyEntry.key.as[String].urlEncoded + "/" + pair.key.as[String].urlEncoded
+            val nestedNode = DialectDomainElement(Annotations(pair)).withId(nestedId).withDefinedBy(Seq(nodeMapping)).withInstanceTypes(Seq(nodeMapping.nodetypeMapping))
+            nestedNode.setMapKeyField(propertyKeyMapping.get, pair.key.as[String], pair.key)
+            nestedNode.setMapKeyField(propertyValueMapping.get, pair.value.as[String], pair.value)
+            Some(nestedNode)
+          } collect { case Some(elem: DialectDomainElement) => elem }
+        case _ =>
+          // TODO: raise violation
+          Nil
+      }
+
+      node.setObjectField(property, nested, propertyEntry.key)
+    } else {
+      // TODO: raise violation
+    }
   }
 
   def parseObjectCollectionProperty(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {

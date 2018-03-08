@@ -16,7 +16,13 @@ trait AmfObject extends AmfElement {
 
   /** Set element unique identifier. */
   def withId(value: String): this.type = {
-    id = value
+    val cleanId = if (value.contains("://")) {
+      val parts = value.split("://")
+      parts(0) + "://" + parts(1).replace("//","/")
+    } else {
+      value.replace("//","/")
+    }
+    id = cleanId
     this
   }
 

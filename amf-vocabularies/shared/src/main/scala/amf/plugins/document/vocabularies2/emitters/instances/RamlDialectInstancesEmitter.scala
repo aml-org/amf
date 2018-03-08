@@ -183,6 +183,9 @@ case class DialectNodeEmitter(node: DialectDomainElement,
 
               case Some(array: AmfArray) if propertyClassification == ObjectPropertyCollection && propertyMapping.isUnion =>
                 emitObjectUnionArray(key, array, propertyMapping)
+
+              case Some(array: AmfArray) if propertyClassification == ObjectPairProperty =>
+                emitObjectPairs(key, array, propertyMapping)
             }
             emitters ++= nextEmitter
           }
@@ -292,6 +295,40 @@ case class DialectNodeEmitter(node: DialectDomainElement,
             val dialectDomainElement = mapElements(emitter)
             val mapKeyValue = dialectDomainElement.fields.fields().find(_.field.value.iri() == propertyMapping.mapKeyProperty()).get.value.toString
             EntryPartEmitter(mapKeyValue, emitter).emit(b)
+          }
+        })
+      }
+
+      override def position(): Position = array.annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
+    })
+  }
+
+  protected def emitObjectPairs(key: String, array: AmfArray, propertyMapping: PropertyMapping): Seq[EntryEmitter] = {
+    val keyProperty = propertyMapping.mapKeyProperty()
+    val valueProperty = propertyMapping.mapValueProperty()
+
+    Seq(new EntryEmitter() {
+      override def emit(b: YDocument.EntryBuilder): Unit = {
+        b.entry(key, _.obj { b =>
+          val sortedElements = array.values.sortBy { elem =>
+            elem.annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
+          }
+          sortedElements.foreach {
+            case element: DialectDomainElement =>
+              val keyField = element.dynamicFields.find(_.value.iri() == keyProperty)
+              val valueField = element.dynamicFields.find(_.value.iri() == valueProperty)
+              if (keyField.isDefined && valueField.isDefined) {
+                val keyLiteral = element.valueForField(keyField.get)
+                val valueLiteral = element.valueForField(valueField.get)
+                (keyLiteral, valueLiteral) match {
+                  case (Some(keyScalar: AmfScalar), Some(valueScalar: AmfScalar)) =>
+                    MapEntryEmitter(keyScalar.value.toString, valueScalar.value.toString).emit(b)
+                  case _ => throw new Exception("Cannot generate object pair without scalar values for key and value")
+                }
+              } else {
+                throw new Exception("Cannot generate object pair with undefined key or value")
+              }
+            case _ => // ignore
           }
         })
       }

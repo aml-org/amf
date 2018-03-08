@@ -1,0 +1,26 @@
+#%RAML 1.0 Dialect
+dialect: Test
+version: 1.0
+nodeMappings:
+  A:
+    classTerm: tmp.A
+    mapping:
+      a:
+        propertyTerm: tmp.a
+        range: string
+      c:
+        propertyTerm: tmp.c
+        range: string
+  RootNode:
+    classTerm: tmp.Test
+    mapping:
+      as:
+        propertyTerm: tmp.as
+        mapKey: tmp.a
+        mapValue: tmp.c
+        range: A
+documents:
+  root:
+    encodes: RootNode
+external:
+  tmp: http://test.com/tmp#
