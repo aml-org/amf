@@ -19,7 +19,7 @@ trait BaseSpecParser extends SpecParserOps {
 
 trait SpecParserOps {
 
-  class ObjectField(elem: DomainElement, field: Field)(implicit iv: WebApiContext) extends Function1[YMapEntry, Unit] {
+  class ObjectField(target: Target, field: Field)(implicit iv: WebApiContext) extends Function1[YMapEntry, Unit] {
 
     private val annotations: Annotations = Annotations()
 
@@ -27,8 +27,9 @@ trait SpecParserOps {
     private var typed: Option[TypedNode => AmfElement] = None
 
     private var single    = false
+    private var entries   = false
     private var annotated = false
-    private var dry       = false
+    private var opt       = false
 
     /** Allow scalar-valued annotations. */
     def allowingAnnotations: ObjectField = {
@@ -42,9 +43,15 @@ trait SpecParserOps {
       this
     }
 
-    /** Dry run: do not update object, only parse element. */
-    def parseOnly: ObjectField = {
-      dry = true
+    /** Allow parsing map node entries as array elements when expecting array. */
+    def treatMapAsArray: ObjectField = {
+      entries = true
+      this
+    }
+
+    /** Optional element. Do not fail on YType.Null. */
+    def optional: ObjectField = {
+      opt = true
       this
     }
 
@@ -72,12 +79,17 @@ trait SpecParserOps {
 
     override def apply(entry: YMapEntry): Unit = {
       val node = entry.value
-      val value = field.`type` match {
-        case _: Obj if mapped.isDefined => mapped.get(node)
-        case ArrayLike(element)         => parseArray(node, element)
-        case element                    => parseScalar(node, element)
+      entry.value.tagType match {
+        case YType.Null if opt =>
+        case _ =>
+          val value = field.`type` match {
+            case _: Obj if mapped.isDefined => mapped.get(node)
+            case ArrayLike(element)         => parseArray(node, element)
+            case element                    => parseScalar(node, element)
+          }
+
+          target.foreach(_.set(field, value, Annotations(entry) ++= annotations))
       }
-      if (!dry) elem.set(field, value, Annotations(entry) ++= annotations)
     }
 
     private def parseScalar(node: YNode, element: Type): AmfElement = {
@@ -91,7 +103,7 @@ trait SpecParserOps {
     }
 
     private def parseArray(node: YNode, element: Type): AmfElement = {
-      val array = if (single) SingleArrayNode(node) else ArrayNode(node)
+      val array = createArrayNode(node)
       element match {
         case _: Obj if mapped.isDefined => array.obj(mapped.get)
         case _ if typed.isDefined       => typed.get(array)
@@ -101,15 +113,34 @@ trait SpecParserOps {
       }
     }
 
+    private def createArrayNode(node: YNode): ArrayNode = {
+      if (single) SingleArrayNode(node)
+      else if (entries) MapArrayNode(node)
+      else ArrayNode(node)
+    }
+
     private def parseScalarValued(node: YNode) = {
       val result = RamlScalarNode(node)
-      annotations ++= Annotations(collectDomainExtensions(elem.id, result).map(DomainExtensionAnnotation))
+      annotations ++= Annotations(collectDomainExtensions(null, result).map(DomainExtensionAnnotation))
       result
     }
   }
 
   implicit class FieldOps(field: Field)(implicit iv: WebApiContext) {
-    def in(elem: DomainElement): ObjectField = new ObjectField(elem, field)
+    def in(elem: DomainElement): ObjectField = in(SingleTarget(elem))
+    def in(target: Target): ObjectField      = new ObjectField(target, field)
+  }
+
+  trait Target {
+    def foreach(fn: DomainElement => Unit)
+  }
+
+  private case class SingleTarget(elem: DomainElement) extends Target {
+    override def foreach(fn: DomainElement => Unit): Unit = fn(elem)
+  }
+
+  case object EmptyTarget extends Target {
+    override def foreach(fn: DomainElement => Unit): Unit = {}
   }
 }
 
@@ -142,10 +173,23 @@ private case class RamlSingleArrayNode(node: YNode)(implicit iv: WebApiContext) 
 object SingleArrayNode {
   def apply(node: YNode)(implicit iv: WebApiContext): ArrayNode = {
     node.value match {
-      case obj: YSequence => ArrayNode(obj)
+      case seq: YSequence => ArrayNode(seq)
       case _              => RamlSingleArrayNode(node)
     }
   }
+}
+
+/** Map array node. */
+case class MapEntriesArrayNode(obj: YMap)(override implicit val iv: IllegalTypeHandler) extends BaseArrayNode {
+
+  override def nodes: (Seq[YNode], YPart) = {
+    val maps = obj.entries.map(e => YNode(YMap(IndexedSeq(e))))
+    (maps, obj)
+  }
+}
+
+object MapArrayNode {
+  def apply(node: YNode)(implicit iv: WebApiContext): ArrayNode = MapEntriesArrayNode(node.as[YMap])(iv)
 }
 
 object RamlScalarNode {

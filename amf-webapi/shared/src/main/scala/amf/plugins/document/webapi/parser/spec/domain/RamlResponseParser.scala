@@ -7,7 +7,7 @@ import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.AnyDefaultType
 import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
-import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
+import amf.plugins.domain.webapi.models.{Payload, Response}
 import org.yaml.model.{YMap, YMapEntry, YType}
 
 import scala.collection.mutable
@@ -53,16 +53,9 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
       case Right(map) =>
         map.key("description", (ResponseModel.Description in response).allowingAnnotations)
 
-        map.key(
-          "headers",
-          entry => {
-            val parameters: Seq[Parameter] =
-              RamlParametersParser(entry.value.as[YMap], response.withHeader, parseOptional)
-                .parse()
-                .map(_.withBinding("header"))
-            response.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
-          }
-        )
+        map.key("headers",
+                (ResponseModel.Headers in response using RamlHeaderParser
+                  .parse(response.withHeader, parseOptional)).treatMapAsArray.optional)
 
         map.key(
           "body",

@@ -104,11 +104,17 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
     map.key(
       "baseUriParameters",
       entry => {
-        val parameters =
-          RamlParametersParser(entry.value.as[YMap], api.withBaseUriParameter)
-            .parse()
-            .map(_.withBinding("path"))
-        api.set(WebApiModel.BaseUriParameters, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
+        entry.value.tagType match {
+          case YType.Map =>
+            val parameters =
+              RamlParametersParser(entry.value.as[YMap], api.withBaseUriParameter)
+                .parse()
+                .map(_.withBinding("path"))
+            api.set(WebApiModel.BaseUriParameters, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
+          case YType.Null =>
+          case _          => ctx.violation("Invalid node for baseUriParameters", Some(entry.value))
+        }
+
       }
     )
 

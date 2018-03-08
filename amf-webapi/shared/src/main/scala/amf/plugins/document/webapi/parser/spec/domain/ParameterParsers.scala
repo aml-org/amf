@@ -10,7 +10,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{Raml08TypeParser, Ra
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
 import amf.plugins.domain.webapi.metamodel.ParameterModel
 import amf.plugins.domain.webapi.models.Parameter
-import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
+import org.yaml.model._
 
 /**
   *
@@ -21,6 +21,28 @@ case class RamlParametersParser(map: YMap, producer: String => Parameter, parseO
   def parse(): Seq[Parameter] =
     map.entries
       .map(entry => ctx.factory.parameterParser(entry, producer, parseOptional).parse())
+}
+
+object RamlHeaderParser {
+  def parse(producer: String => Parameter, parseOptional: Boolean = false)(node: YNode)(
+      implicit ctx: RamlWebApiContext): Parameter = {
+    RamlParameterParser.parse(producer, parseOptional)(node).withBinding("header")
+  }
+}
+
+object RamlQueryParameterParser {
+  def parse(producer: String => Parameter, parseOptional: Boolean = false)(node: YNode)(
+      implicit ctx: RamlWebApiContext): Parameter = {
+    RamlParameterParser.parse(producer, parseOptional)(node).withBinding("query")
+  }
+}
+
+object RamlParameterParser {
+  def parse(producer: String => Parameter, parseOptional: Boolean = false)(node: YNode)(
+      implicit ctx: RamlWebApiContext): Parameter = {
+    val head = node.as[YMap].entries.head
+    ctx.factory.parameterParser(head, producer, parseOptional).parse()
+  }
 }
 
 case class Raml10ParameterParser(entry: YMapEntry, producer: String => Parameter, parseOptional: Boolean = false)(
