@@ -147,7 +147,7 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
 
   protected def parseDialectInstance(header: String, document: Root, parentContext: ParserContext): Option[BaseUnit] = {
     registry.withRegisteredDialect(header) { dialect =>
-      if (header.replace(" ", "") == dialect.header)
+      if (header.split("\\|").head.replace(" ", "") == dialect.header)
         new RamlDialectInstanceParser(document)(new DialectInstanceContext(dialect, parentContext)).parseDocument()
       else if (dialect.isFragmentHeader(header))
         new RamlDialectInstanceParser(document)(new DialectInstanceContext(dialect, parentContext)).parseFragment()

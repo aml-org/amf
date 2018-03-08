@@ -65,6 +65,10 @@ class DialectInstancesParsingTest extends BuildCycleTests {
     withDialect("dialect11.raml", "example11.raml", "example11.json", VocabularyYamlHint, Amf)
   }
 
+  test("parse 12 test") {
+    withInlineDialect("example12.raml", "example12.json", VocabularyYamlHint, Amf)
+  }
+
   test("generate 1 test") {
     withDialect("dialect1.raml", "example1.json", "example1.raml", AmfJsonHint, RamlVocabulary)
   }
@@ -127,6 +131,19 @@ class DialectInstancesParsingTest extends BuildCycleTests {
     for {
       v   <- Validation(platform).map(_.withEnabledValidation(false))
       _   <- AMFCompiler(s"file://$directory/$dialect", platform, VocabularyYamlHint, v).build()
+      res <- cycle(source, golden, hint, target)
+    } yield {
+      res
+    }
+  }
+
+  protected def withInlineDialect(source: String,
+                                  golden: String,
+                                  hint: Hint,
+                                  target: Vendor,
+                                  directory: String = basePath) = {
+    for {
+      v   <- Validation(platform).map(_.withEnabledValidation(false))
       res <- cycle(source, golden, hint, target)
     } yield {
       res

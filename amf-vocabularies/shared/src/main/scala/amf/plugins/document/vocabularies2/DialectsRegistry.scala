@@ -5,12 +5,15 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfObject, DomainElement}
 import amf.core.parser.Annotations
 import amf.core.registries.AMFDomainEntityResolver
+import amf.core.remote.Context
+import amf.core.services.RuntimeCompiler
+import amf.core.unsafe.PlatformSecrets
 import amf.core.vocabulary.ValueType
 import amf.plugins.document.vocabularies2.metamodel.domain.DialectDomainElementModel
 import amf.plugins.document.vocabularies2.model.document.{Dialect, DialectInstance}
 import amf.plugins.document.vocabularies2.model.domain.{DialectDomainElement, NodeMapping, ObjectMapProperty}
 
-class DialectsRegistry extends AMFDomainEntityResolver {
+class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
   protected var map: Map[String, Dialect] = Map()
 
@@ -30,10 +33,10 @@ class DialectsRegistry extends AMFDomainEntityResolver {
     this
   }
 
-  def withRegisteredDialect(header:String)(k: Dialect => Option[BaseUnit]) = {
-    map.get(headerKey(header)) match {
+  def withRegisteredDialect(header:String)(k: Dialect => Option[BaseUnit]): Option[BaseUnit] = {
+    map.get(headerKey(header.split("\\|").head)) match {
       case Some(dialect) => k(dialect)
-      case _             => None
+      case _ => None
     }
   }
 
