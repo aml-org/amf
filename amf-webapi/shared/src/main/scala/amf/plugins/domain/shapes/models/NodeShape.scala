@@ -1,5 +1,6 @@
 package amf.plugins.domain.shapes.models
 
+import amf.client.model.{BoolField, IntField, StrField}
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
@@ -9,16 +10,17 @@ import org.yaml.model.YPart
 /**
   * Node shape.
   */
-case class NodeShape(override val fields: Fields, override val annotations: Annotations) extends AnyShape(fields, annotations) {
+case class NodeShape(override val fields: Fields, override val annotations: Annotations)
+    extends AnyShape(fields, annotations) {
 
-  def minProperties: Int                      = fields(MinProperties)
-  def maxProperties: Int                      = fields(MaxProperties)
-  def closed: Boolean                         = fields(Closed)
-  def discriminator: String                   = fields(Discriminator)
-  def discriminatorValue: String              = fields(DiscriminatorValue)
-  def readOnly: Boolean                       = fields(ReadOnly)
-  def properties: Seq[PropertyShape]          = fields(Properties)
-  def dependencies: Seq[PropertyDependencies] = fields(Dependencies)
+  def minProperties: IntField                 = fields.field(MinProperties)
+  def maxProperties: IntField                 = fields.field(MaxProperties)
+  def closed: BoolField                       = fields.field(Closed)
+  def discriminator: StrField                 = fields.field(Discriminator)
+  def discriminatorValue: StrField            = fields.field(DiscriminatorValue)
+  def readOnly: BoolField                     = fields.field(ReadOnly)
+  def properties: Seq[PropertyShape]          = fields.field(Properties)
+  def dependencies: Seq[PropertyDependencies] = fields.field(Dependencies)
 
   def withMinProperties(min: Int): this.type                               = set(MinProperties, min)
   def withMaxProperties(max: Int): this.type                               = set(MaxProperties, max)
@@ -54,7 +56,7 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
   }
 
   override def adopted(parent: String): this.type = {
-    withId(parent + "/" + name)
+    withId(parent + "/" + name.value())
     properties.foreach(_.adopted(id))
     this
   }

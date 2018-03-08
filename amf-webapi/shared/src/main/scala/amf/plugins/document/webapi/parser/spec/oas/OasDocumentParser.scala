@@ -196,7 +196,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) ext
           case None    => declaration
         }
 
-        if (declaration.`type` == "OAuth 2.0") {
+        if (declaration.`type`.is("OAuth 2.0")) {
           val settings = OAuth2Settings().adopted(scheme.id)
           val scopes = schemeEntry.value
             .as[Seq[YNode]]
@@ -239,7 +239,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) ext
       if (!TemplateUri.isValid(path))
         ctx.violation(endpoint.id, TemplateUri.invalidMsg(path), entry.value)
 
-      if (collector.exists(e => e.path == path)) ctx.violation(endpoint.id, "Duplicated resource path " + path, entry)
+      if (collector.exists(e => e.path.is(path))) ctx.violation(endpoint.id, "Duplicated resource path " + path, entry)
       else parseEndpoint(endpoint)
     }
 

@@ -1,5 +1,6 @@
 package amf.core.model.domain
 
+import amf.client.model.StrField
 import amf.core.metamodel.domain.ExternalDomainElementModel
 import amf.core.metamodel.domain.ExternalDomainElementModel.{MediaType, Raw}
 import amf.core.parser.{Annotations, Fields}
@@ -7,8 +8,8 @@ import org.yaml.model.YMap
 
 case class ExternalDomainElement(fields: Fields, annotations: Annotations) extends DomainElement {
 
-  def raw: String       = fields(Raw)
-  def mediaType: String = fields(MediaType)
+  def raw: StrField       = fields.field(Raw)
+  def mediaType: StrField = fields.field(MediaType)
 
   def withRaw(text: String): this.type            = set(Raw, text)
   def withMediaType(mediaType: String): this.type = set(MediaType, mediaType)

@@ -4,7 +4,7 @@ import java.io.File
 import java.util.concurrent.CompletableFuture
 
 import amf.core.remote.FutureConverter._
-import amf.model.document.BaseUnit
+import amf.client.model.document.BaseUnit
 
 import scala.language.implicitConversions
 
@@ -19,11 +19,11 @@ class Generator(protected val vendor: String, protected val mediaType: String) e
     * (like the browser) or if a remote URL is provided.
     */
   def generateFile(unit: BaseUnit, path: File, handler: FileHandler): Unit =
-    generate(unit.element, "file://" + path.getAbsolutePath, GenerationOptions(), UnitHandlerAdapter(handler))
+    generate(unit._internal, "file://" + path.getAbsolutePath, GenerationOptions(), UnitHandlerAdapter(handler))
 
   /** Generates the syntax text and returns it to the provided callback. */
   def generateString(unit: BaseUnit, handler: StringHandler): Unit =
-    generate(unit.element, GenerationOptions(), StringHandlerAdapter(handler))
+    generate(unit._internal, GenerationOptions(), StringHandlerAdapter(handler))
 
   /**
     * Generates asynchronously the syntax text and stores it in the file pointed by the provided URL.
@@ -31,10 +31,10 @@ class Generator(protected val vendor: String, protected val mediaType: String) e
     * (like the browser) or if a remote URL is provided.
     */
   def generateFile(unit: BaseUnit, url: File): CompletableFuture[Void] =
-    generate(unit.element, "file://" + url.getAbsolutePath, GenerationOptions()).asJava
+    generate(unit._internal, "file://" + url.getAbsolutePath, GenerationOptions()).asJava
 
   /** Generates the syntax text and returns it. */
-  def generateString(unit: BaseUnit): String = generate(unit.element, GenerationOptions())
+  def generateString(unit: BaseUnit): String = generate(unit._internal, GenerationOptions())
 
   protected case class UnitHandlerAdapter(handler: FileHandler) extends Handler[Unit] {
     override def success(unit: Unit): Unit         = handler.success()

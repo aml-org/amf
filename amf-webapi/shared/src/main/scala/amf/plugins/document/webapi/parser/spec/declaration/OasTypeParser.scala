@@ -388,7 +388,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       )
 
       val properties = mutable.ListMap[String, PropertyShape]()
-      shape.properties.foreach(p => properties += (p.name -> p))
+      shape.properties.foreach(p => properties += (p.name.value() -> p))
 
       map.key(
         "dependencies",
@@ -473,7 +473,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
       map.key("enum", ShapeModel.Values in shape)
       map.key("externalDocs", AnyShapeModel.Documentation in shape using OasCreativeWorkParser.parse)
-      map.key("xml", AnyShapeModel.XMLSerialization in shape using XMLSerializerParser.parse(shape.name))
+      map.key("xml", AnyShapeModel.XMLSerialization in shape using XMLSerializerParser.parse(shape.name.value()))
 
       map.key(
         "x-facets",

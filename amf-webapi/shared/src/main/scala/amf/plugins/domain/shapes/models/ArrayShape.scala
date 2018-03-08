@@ -1,5 +1,6 @@
 package amf.plugins.domain.shapes.models
 
+import amf.client.model.{BoolField, IntField}
 import amf.core.metamodel.Obj
 import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, Fields}
@@ -11,9 +12,10 @@ import org.yaml.model.YPart
   * Array shape
   */
 abstract class DataArrangementShape(fields: Fields, annotations: Annotations) extends AnyShape(fields, annotations) {
-  def minItems: Int        = fields(MinItems)
-  def maxItems: Int        = fields(MaxItems)
-  def uniqueItems: Boolean = fields(UniqueItems)
+
+  def minItems: IntField     = fields.field(MinItems)
+  def maxItems: IntField     = fields.field(MaxItems)
+  def uniqueItems: BoolField = fields.field(UniqueItems)
 
   def withMinItems(minItems: Int): this.type           = set(MinItems, minItems)
   def withMaxItems(maxItems: Int): this.type           = set(MaxItems, maxItems)
@@ -38,7 +40,7 @@ abstract class DataArrangementShape(fields: Fields, annotations: Annotations) ex
   }
 
   override def adopted(parent: String): this.type = {
-    withId(parent + "/array/" + name)
+    withId(parent + "/array/" + name.value())
     fields.entry(Items) match {
       case Some(items) =>
         items.value.value match {
@@ -50,8 +52,11 @@ abstract class DataArrangementShape(fields: Fields, annotations: Annotations) ex
   }
 }
 
-case class ArrayShape(override val fields: Fields, override val annotations: Annotations) extends DataArrangementShape(fields, annotations) {
-  def items: Shape                       = fields(Items)
+case class ArrayShape(override val fields: Fields, override val annotations: Annotations)
+    extends DataArrangementShape(fields, annotations) {
+
+  def items: Shape = fields.field(Items)
+
   def withItems(items: Shape): this.type = set(Items, items)
 
   def toMatrixShape: MatrixShape = MatrixShape(fields, annotations)
@@ -71,8 +76,11 @@ object ArrayShape {
 
 }
 
-case class MatrixShape(override val fields: Fields, override val annotations: Annotations) extends DataArrangementShape(fields, annotations) {
-  def items: Shape                       = fields(Items)
+case class MatrixShape(override val fields: Fields, override val annotations: Annotations)
+    extends DataArrangementShape(fields, annotations) {
+
+  def items: Shape = fields.field(Items)
+
   def withItems(items: Shape): this.type = set(Items, items)
 
   def toArrayShape               = ArrayShape(fields, annotations)
@@ -93,14 +101,17 @@ object MatrixShape {
 
 }
 
-case class TupleShape(override val fields: Fields, override val annotations: Annotations) extends DataArrangementShape(fields, annotations) {
-  def items: Seq[Shape]                       = fields(Items)
+case class TupleShape(override val fields: Fields, override val annotations: Annotations)
+    extends DataArrangementShape(fields, annotations) {
+
+  def items: Seq[Shape] = fields.field(Items)
+
   def withItems(items: Seq[Shape]): this.type = setArray(Items, items)
 
   override def linkCopy() = TupleShape().withId(id)
 
   override def adopted(parent: String): this.type = {
-    withId(parent + "/array/" + name)
+    withId(parent + "/array/" + name.value())
     if (Option(items).isDefined) {
       items.foreach(_.adopted(id))
     }

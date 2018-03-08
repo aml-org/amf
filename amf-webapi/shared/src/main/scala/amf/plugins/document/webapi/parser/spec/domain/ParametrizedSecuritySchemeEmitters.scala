@@ -71,17 +71,17 @@ case class OasParametrizedSecuritySchemeEmitter(parametrizedScheme: Parametrized
       case Some(f) =>
         val scopes = f.element match {
           case settings: OAuth2Settings =>
-            settings.scopes.map(s => ScalarEmitter(AmfScalar(s.name, s.annotations)))
+            settings.scopes.map(s => ScalarEmitter(AmfScalar(s.name.value(), s.annotations)))
           case _ => // we cant emit, if its not 2.0 isnt valid in oas.
             Nil
 
         }
         b.obj {
-          _.entry(parametrizedScheme.name, _.list(traverse(ordering.sorted(scopes), _)))
+          _.entry(parametrizedScheme.name.value(), _.list(traverse(ordering.sorted(scopes), _)))
         }
 
       case None =>
-        b.obj(_.entry(parametrizedScheme.name, _.list(_ => {})))
+        b.obj(_.entry(parametrizedScheme.name.value(), _.list(_ => {})))
     }
   }
 
@@ -98,10 +98,10 @@ case class RamlParametrizedSecuritySchemeEmitter(parametrizedScheme: Parametrize
     fs.entry(ParametrizedSecuritySchemeModel.Settings) match {
       case Some(f) =>
         b.obj(
-          _.entry(parametrizedScheme.name,
+          _.entry(parametrizedScheme.name.value(),
                   _.obj(traverse(ordering.sorted(RamlSecuritySettingsValuesEmitters(f, ordering).emitters), _))))
       case None =>
-        b.+=(parametrizedScheme.name)
+        b.+=(parametrizedScheme.name.value())
     }
 
   }

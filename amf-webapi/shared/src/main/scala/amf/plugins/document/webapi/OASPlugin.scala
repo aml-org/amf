@@ -96,7 +96,7 @@ object OAS20Plugin extends OASPlugin {
   override def unparse(unit: BaseUnit, options: GenerationOptions): Option[YDocument] = unit match {
     case module: Module             => Some(OasModuleEmitter(module)(specContext).emitModule())
     case document: Document         => Some(OasDocumentEmitter(document)(specContext).emitDocument())
-    case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw)))
+    case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
     case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext).emitFragment())
     case _                          => None
   }
@@ -128,7 +128,7 @@ object OAS30Plugin extends OASPlugin {
   override def unparse(unit: BaseUnit, options: GenerationOptions): Option[YDocument] = unit match {
     case module: Module             => Some(OasModuleEmitter(module)(specContext).emitModule())
     case document: Document         => Some(OasDocumentEmitter(document)(specContext).emitDocument())
-    case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw)))
+    case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
     case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext).emitFragment())
     case _                          => None
   }

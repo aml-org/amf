@@ -61,7 +61,7 @@ trait RAMLPlugin extends BaseWebApiPlugin {
     ast match {
       case mut: MutRef =>
         document match {
-          case None => mut.target = Some(YNode(encodes.raw))
+          case None => mut.target = Some(YNode(encodes.raw.value()))
           case _    => mut.target = document
         }
       case _ =>
@@ -168,7 +168,7 @@ object RAML10Plugin extends RAMLPlugin {
   override def unparse(unit: BaseUnit, options: GenerationOptions): Option[YDocument] = unit match {
     case module: Module             => Some(RamlModuleEmitter(module)(specContext).emitModule())
     case document: Document         => Some(RamlDocumentEmitter(document)(specContext).emitDocument())
-    case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw)))
+    case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
     case fragment: Fragment         => Some(new RamlFragmentEmitter(fragment)(specContext).emitFragment())
     case _                          => None
   }

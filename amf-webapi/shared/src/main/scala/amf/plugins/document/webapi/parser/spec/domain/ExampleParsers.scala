@@ -123,7 +123,7 @@ case class RamlSingleExampleValueParser(node: YNode, producer: () => Example)(im
         map
           .key("value")
           .foreach { entry =>
-            RamlExampleValueAsString(entry.value, example, Option(example.strict).getOrElse(true)).populate()
+            RamlExampleValueAsString(entry.value, example, example.strict.option().getOrElse(true)).populate()
           }
 
         AnnotationParser(example, map).parse()

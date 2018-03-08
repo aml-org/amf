@@ -1,10 +1,13 @@
 package amf.plugins.document
 
+import amf.client.convert.WebApiRegister
 import amf.core.unsafe.PlatformSecrets
-import amf.model.document._
-import amf.model.domain.{DataNode, Shape}
+import amf.client.model.document._
+import amf.client.model.domain.{DataNode, Shape}
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
 import amf.plugins.document.webapi._
+import amf.plugins.domain.shapes.DataShapesDomainPlugin
+import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.validation.AMFValidationReport
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -15,38 +18,12 @@ import scala.scalajs.js
 @JSExportAll
 object WebApi extends PlatformSecrets {
 
-  def register() = {
-    platform.registerWrapper(AnnotationTypeDeclarationFragmentModel) {
-      case s: model.AnnotationTypeDeclarationFragment => AnnotationTypeDeclaration(s)
-    }
-    platform.registerWrapper(DataTypeFragmentModel) {
-      case s: model.DataTypeFragment => DataType(s)
-    }
-    platform.registerWrapper(DocumentationItemFragmentModel) {
-      case s: model.DocumentationItemFragment => DocumentationItem(s)
-    }
-    platform.registerWrapper(NamedExampleFragmentModel) {
-      case s: model.NamedExampleFragment => NamedExample(s)
-    }
-    platform.registerWrapper(ResourceTypeFragmentModel) {
-      case s: model.ResourceTypeFragment => ResourceTypeFragment(s)
-    }
-    platform.registerWrapper(SecuritySchemeFragmentModel) {
-      case s: model.SecuritySchemeFragment => SecuritySchemeFragment(s)
-    }
-    platform.registerWrapper(TraitFragmentModel) {
-      case s: model.TraitFragment => TraitFragment(s)
-    }
-    platform.registerWrapper(amf.plugins.document.webapi.metamodel.ExtensionModel) {
-      case m: model.Extension => new Extension(m)
-    }
-    platform.registerWrapper(amf.plugins.document.webapi.metamodel.OverlayModel) {
-      case m: model.Overlay => new Overlay(m)
-    }
+  def register(): Unit = {
+    WebApiRegister.register(platform)
 
-    // initialization of wrappers
-    amf.plugins.domain.DataShapes.register()
-    amf.plugins.domain.WebApi.register()
+    // plugin initialization
+    amf.Core.registerPlugin(DataShapesDomainPlugin)
+    amf.Core.registerPlugin(WebAPIDomainPlugin)
 
     // Initialization of plugins
     amf.Core.registerPlugin(OAS20Plugin)
@@ -57,6 +34,6 @@ object WebApi extends PlatformSecrets {
   }
 
   def validatePayload(shape: Shape, payload: DataNode): js.Promise[AMFValidationReport] = {
-    RAML10Plugin.validatePayload(shape.shape, payload.dataNode).map(new AMFValidationReport(_)).toJSPromise
+    RAML10Plugin.validatePayload(shape._internal, payload._internal).map(new AMFValidationReport(_)).toJSPromise
   }
 }

@@ -1,5 +1,6 @@
 package amf.plugins.domain.shapes.models
 
+import amf.client.model.StrField
 import amf.core.metamodel.Obj
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
@@ -12,8 +13,8 @@ import org.yaml.model.YMapEntry
   */
 case class PropertyDependencies(fields: Fields, annotations: Annotations) extends DomainElement {
 
-  def propertySource: String      = fields(PropertySource)
-  def propertyTarget: Seq[String] = fields(PropertyTarget)
+  def propertySource: StrField      = fields.field(PropertySource)
+  def propertyTarget: Seq[StrField] = fields.field(PropertyTarget)
 
   def withPropertySource(propertySource: String): this.type      = set(PropertySource, propertySource)
   def withPropertyTarget(propertyTarget: Seq[String]): this.type = set(PropertyTarget, propertyTarget)

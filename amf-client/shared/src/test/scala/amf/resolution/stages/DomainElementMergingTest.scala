@@ -51,27 +51,27 @@ class DomainElementMergingTest extends FunSuite {
     main.operations.size should be(4)
 
     val get = main.operations.head
-    get.summary should be("Get main operation")
-    get.method should be("get")
+    get.summary.value() should be("Get main operation")
+    get.method.value() should be("get")
 
     val parameters = get.request.queryParameters
     parameters.size should be(1)
     val a = parameters.head
-    a.name should be("a")
-    a.description should be("Main query parameter a")
-    a.schema.asInstanceOf[ScalarShape].dataType should be("integer")
+    a.name.value() should be("a")
+    a.description.value() should be("Main query parameter a")
+    a.schema.asInstanceOf[ScalarShape].dataType.value() should be("integer")
 
     val post = main.operations(1)
-    post.summary should be("Post main operation")
-    post.method should be("post")
+    post.summary.value() should be("Post main operation")
+    post.method.value() should be("post")
 
     val head = main.operations(2)
-    head.summary should be("Head other operation")
-    head.method should be("head")
+    head.summary.value() should be("Head other operation")
+    head.method.value() should be("head")
 
     val put = main.operations(3)
-    put.summary should be("Put other operation")
-    put.method should be("put")
+    put.summary.value() should be("Put other operation")
+    put.method.value() should be("put")
   }
 
   test("Do not merge extends") {

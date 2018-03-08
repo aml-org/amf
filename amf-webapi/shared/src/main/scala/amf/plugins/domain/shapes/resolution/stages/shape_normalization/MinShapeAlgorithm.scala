@@ -25,14 +25,15 @@ trait MinShapeAlgorithm extends RestrictionComputation {
       case baseScalar: ScalarShape if superShape.isInstanceOf[ScalarShape] =>
         val superScalar = superShape.asInstanceOf[ScalarShape]
 
-        if (baseScalar.dataType == superScalar.dataType) {
+        val b = baseScalar.dataType.value()
+        val s = superScalar.dataType.value()
+        if (b == s) {
           computeMinScalar(baseScalar, superScalar)
-        } else if (baseScalar.dataType == (Namespace.Xsd + "integer")
-                     .iri() && superScalar.dataType == (Namespace.Xsd + "float").iri()) {
+        } else if (b == (Namespace.Xsd + "integer")
+                     .iri() && s == (Namespace.Xsd + "float").iri()) {
           computeMinScalar(baseScalar, superScalar.withDataType((Namespace.Xsd + "integer").iri()))
         } else {
-          throw new Exception(
-            s"Resolution error: Invalid scalar inheritance base type ${baseScalar.dataType} < ${superScalar.dataType} ")
+          throw new Exception(s"Resolution error: Invalid scalar inheritance base type $b < $s ")
         }
 
       // Arrays
@@ -184,23 +185,23 @@ trait MinShapeAlgorithm extends RestrictionComputation {
 
     val commonProps: mutable.HashMap[String, Boolean] = mutable.HashMap()
 
-    superProperties.foreach(p => commonProps.put(p.path, false))
+    superProperties.foreach(p => commonProps.put(p.path.value(), false))
     baseProperties.foreach { p =>
-      if (commonProps.get(p.path).isDefined) {
-        commonProps.put(p.path, true)
+      if (commonProps.get(p.path.value()).isDefined) {
+        commonProps.put(p.path.value(), true)
       } else {
-        commonProps.put(p.path, false)
+        commonProps.put(p.path.value(), false)
       }
     }
 
     val minProps = commonProps.map {
       case (path, true) =>
-        val superProp = superProperties.find(_.path == path).get
-        val baseProp  = baseProperties.find(_.path == path).get
+        val superProp = superProperties.find(_.path.is(path)).get
+        val baseProp  = baseProperties.find(_.path.is(path)).get
         minShape(baseProp, superProp)
       case (path, false) =>
-        val superProp = superProperties.find(_.path == path)
-        val baseProp  = baseProperties.find(_.path == path)
+        val superProp = superProperties.find(_.path.is(path))
+        val baseProp  = baseProperties.find(_.path.is(path))
         superProp.getOrElse(baseProp.get)
     }
 

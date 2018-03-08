@@ -6,13 +6,14 @@ import amf.plugins.domain.shapes.metamodel.UnionShapeModel
 import amf.plugins.domain.shapes.metamodel.UnionShapeModel._
 import org.yaml.model.YPart
 
-case class UnionShape(override val fields: Fields, override val annotations: Annotations) extends AnyShape(fields, annotations) {
+case class UnionShape(override val fields: Fields, override val annotations: Annotations)
+    extends AnyShape(fields, annotations) {
 
-  def anyOf: Seq[Shape] = fields(AnyOf)
+  def anyOf: Seq[Shape] = fields.field(AnyOf)
 
   def withAnyOf(elements: Seq[Shape]): this.type = this.setArray(AnyOf, elements)
 
-  override def adopted(parent: String): this.type = withId(parent + "/union/" + name)
+  override def adopted(parent: String): this.type = withId(parent + "/union/" + name.value())
 
   override def linkCopy(): AnyShape = UnionShape().withId(id)
 

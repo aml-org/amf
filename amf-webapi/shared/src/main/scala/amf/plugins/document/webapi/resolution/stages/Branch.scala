@@ -23,5 +23,6 @@ case class Context(model: BaseUnit, variables: Set[Variable] = Set()) {
 
   def add(name: String, value: String): Context = copy(variables = variables + Variable(name, ScalarNode(value, None)))
 
-  def add(vs: Seq[VariableValue]): Context = copy(variables = variables ++ vs.map(v => Variable(v.name, v.value)))
+  def add(vs: Seq[VariableValue]): Context =
+    copy(variables = variables ++ vs.map(v => Variable(v.name.value(), v.value)))
 }

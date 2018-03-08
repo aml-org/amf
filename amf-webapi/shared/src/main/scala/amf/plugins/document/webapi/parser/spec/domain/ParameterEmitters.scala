@@ -114,8 +114,8 @@ case class Raml10ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
       .entry(ParameterModel.Required)
       .exists(_.value.annotations.contains(classOf[ExplicitField]))
 
-    if (!explicit && !parameter.required) {
-      ScalarEmitter(AmfScalar(parameter.name + "?")).emit(b)
+    if (!explicit && !parameter.required.value()) {
+      ScalarEmitter(AmfScalar(parameter.name.value() + "?")).emit(b)
     } else {
       ScalarEmitter(fs.entry(ParameterModel.Name).get.scalar).emit(b)
     }
@@ -277,14 +277,14 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
         fs.entry(ParameterModel.Description).map(f => result += ValueEmitter("description", f))
 
         fs.entry(ParameterModel.Required)
-          .filter(_.value.annotations.contains(classOf[ExplicitField]) || parameter.required)
+          .filter(_.value.annotations.contains(classOf[ExplicitField]) || parameter.required.value())
           .map(f => result += ValueEmitter("required", f))
 
         fs.entry(ParameterModel.Binding).map(f => result += ValueEmitter("in", f))
 
         fs.entry(ParameterModel.Schema)
           .foreach { f =>
-            if (parameter.binding == "body") {
+            if (parameter.binding.is("body")) {
               result += OasSchemaEmitter(f, ordering, references)
             } else {
               result ++= OasTypeEmitter(f.value.value.asInstanceOf[Shape],

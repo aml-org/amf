@@ -23,7 +23,7 @@ class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
           .collectFirst { case rt: ResourceType => rt }
           .map { rt =>
             val endPoint = rt.asEndpoint(model)
-            endPoint.description should be("The collection of <<resourcePathName>>")
+            endPoint.description.value() should be("The collection of <<resourcePathName>>")
             succeed
           }
           .getOrElse(succeed)
@@ -38,7 +38,7 @@ class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
           .collectFirst { case tr: Trait => tr }
           .map { rt =>
             val op = rt.asOperation(model)
-            op.description should be("Some requests require authentication.")
+            op.description.value() should be("Some requests require authentication.")
             succeed
           }
           .getOrElse(succeed)
@@ -69,9 +69,9 @@ class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
         model.declares
           .collectFirst { case rt: ResourceType => rt }
           .map { rt =>
-            val op = rt.asEndpoint(model)
+            val op    = rt.asEndpoint(model)
             val props = op.operations.last.responses.head.payloads.head.schema.asInstanceOf[NodeShape].properties
-            assert(Option(props.find(_.name == "p2").get.range).isEmpty)
+            assert(Option(props.find(_.name.is("p2")).get.range).isEmpty)
             succeed
           }
           .getOrElse(succeed)

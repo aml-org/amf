@@ -178,7 +178,7 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
 
   case class OasSecuritySettingsParser(map: YMap, scheme: SecurityScheme) {
     def parse(): Option[Settings] = {
-      val result = scheme.`type` match {
+      val result = scheme.`type`.value() match {
         case "OAuth 1.0" => Some(oauth1())
         case "OAuth 2.0" => Some(oauth2())
         case "x-apiKey"  => Some(apiKey())

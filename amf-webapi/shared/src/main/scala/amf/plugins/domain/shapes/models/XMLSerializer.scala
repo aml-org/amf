@@ -1,5 +1,6 @@
 package amf.plugins.domain.shapes.models
 
+import amf.client.model.{BoolField, StrField}
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.XMLSerializerModel
@@ -7,11 +8,12 @@ import amf.plugins.domain.shapes.metamodel.XMLSerializerModel._
 import org.yaml.model.YMap
 
 case class XMLSerializer(fields: Fields, annotations: Annotations) extends DomainElement {
-  def attribute: Boolean = fields(Attribute)
-  def wrapped: Boolean   = fields(Wrapped)
-  def name: String       = fields(Name)
-  def namespace: String  = fields(Namespace)
-  def prefix: String     = fields(Prefix)
+
+  def attribute: BoolField = fields.field(Attribute)
+  def wrapped: BoolField   = fields.field(Wrapped)
+  def name: StrField       = fields.field(Name)
+  def namespace: StrField  = fields.field(Namespace)
+  def prefix: StrField     = fields.field(Prefix)
 
   def withAttribute(attribute: Boolean): this.type = set(Attribute, attribute)
   def withWrapped(wrapped: Boolean): this.type     = set(Wrapped, wrapped)

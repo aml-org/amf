@@ -5,6 +5,7 @@ import amf.core.parser.{Annotations, DeclarationPromise, ParserContext}
 import org.yaml.model.YPart
 
 trait Linkable extends AmfObject { this: DomainElement with Linkable =>
+
   var linkTarget: Option[DomainElement]    = None
   var linkAnnotations: Option[Annotations] = None
 
@@ -30,9 +31,9 @@ trait Linkable extends AmfObject { this: DomainElement with Linkable =>
 
   // Unresolved references to things that can be linked
   // TODO: another trait?
-  var isUnresolved: Boolean = false
-  var refName = ""
-  var refAst: Option[YPart] = None
+  var isUnresolved: Boolean         = false
+  var refName                       = ""
+  var refAst: Option[YPart]         = None
   var refCtx: Option[ParserContext] = None
 
   def unresolved(refName: String, refAst: YPart)(implicit ctx: ParserContext) = {
@@ -43,12 +44,19 @@ trait Linkable extends AmfObject { this: DomainElement with Linkable =>
     this
   }
 
-  def toFutureRef(resolve:(Linkable) => Unit) = {
+  def toFutureRef(resolve: (Linkable) => Unit) = {
     refCtx match {
-      case Some(ctx) => ctx.futureDeclarations.futureRef(id, refName, DeclarationPromise(
-        resolve,
-        () => ctx.violation(id, s"Unresolved reference $refName from root context ${ctx.rootContextDocument}", refAst.get)
-      ))
+      case Some(ctx) =>
+        ctx.futureDeclarations.futureRef(
+          id,
+          refName,
+          DeclarationPromise(
+            resolve,
+            () =>
+              ctx.violation(id,
+                            s"Unresolved reference $refName from root context ${ctx.rootContextDocument}",
+                            refAst.get)
+          ))
       case none => throw new Exception("Cannot create unresolved reference with missing parsing context")
     }
   }

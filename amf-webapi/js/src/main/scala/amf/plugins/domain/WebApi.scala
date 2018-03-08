@@ -1,7 +1,7 @@
 package amf.plugins.domain
 
 import amf.core.unsafe.PlatformSecrets
-import amf.model.domain._
+import amf.client.model.domain._
 import amf.plugins.domain.webapi.metamodel.templates
 import amf.plugins.domain.webapi.{WebAPIDomainPlugin, metamodel, models}
 
@@ -50,16 +50,16 @@ object WebApi extends PlatformSecrets {
       case s: models.security.Scope => Scope(s)
     }
     platform.registerWrapper(metamodel.security.SettingsModel) {
-      case s: models.security.Settings => Settings(s)
+      case s: models.security.Settings => new Settings(s)
     }
     platform.registerWrapper(metamodel.WebApiModel) {
-      case s: models.WebApi => amf.model.domain.WebApi(s)
+      case s: models.WebApi => new WebApi(s)
     }
     platform.registerWrapper(metamodel.templates.TraitModel) {
-      case s: models.templates.Trait => amf.model.domain.Trait(s)
+      case s: models.templates.Trait => Trait(s)
     }
     platform.registerWrapper(metamodel.templates.ResourceTypeModel) {
-      case s: models.templates.ResourceType => amf.model.domain.ResourceType(s)
+      case s: models.templates.ResourceType => ResourceType(s)
     }
 
     amf.Core.registerPlugin(WebAPIDomainPlugin)

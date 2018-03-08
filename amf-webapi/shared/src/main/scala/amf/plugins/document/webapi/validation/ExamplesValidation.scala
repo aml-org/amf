@@ -123,25 +123,25 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
     * @return
     */
   protected def validExample(example: Example, mediaType: String): Boolean = {
-    Option(example.value).isDefined &&
-    Option(example.strict).getOrElse(false) && (
+    example.value.option().isDefined &&
+    example.strict.option().getOrElse(false) && (
       mediaType.indexOf("json") > -1 ||
       mediaType.indexOf("yaml") > -1
     )
   }
 
   protected def unsupportedExample(example: Example, mediaType: String): Boolean =
-    Option(example.strict).getOrElse(false) && !validExample(example, mediaType)
+    example.strict.option().getOrElse(false) && !validExample(example, mediaType)
 
   protected def mediaType(example: Example): String = {
-    Option(example.mediaType) match {
+    example.mediaType.option() match {
       case Some(mediaType) => mediaType
       case None            => guessMediaType(example)
     }
   }
 
   protected def guessMediaType(example: Example): String = {
-    Option(example.value) match {
+    example.value.option() match {
       case Some(value) =>
         if (isXml(value)) "application/xml"
         else if (isJson(value)) "application/json"

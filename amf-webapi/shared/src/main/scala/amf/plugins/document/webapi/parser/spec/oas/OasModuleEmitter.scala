@@ -133,7 +133,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
 
     val emitters: Seq[EntryEmitter] =
       OasSecuritySchemeEmitter(securityScheme.encodes,
-                               OasSecuritySchemeTypeMapping.fromText(securityScheme.encodes.`type`),
+                               OasSecuritySchemeTypeMapping.fromText(securityScheme.encodes.`type`.value()),
                                ordering).emitters()
   }
 

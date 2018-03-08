@@ -1,7 +1,8 @@
 package amf.core.parser
 
-import amf.core.metamodel.Field
+import amf.client.model.{BoolField, IntField, StrField}
 import amf.core.metamodel.Type._
+import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.model.domain._
 
 import scala.collection.immutable.ListMap
@@ -24,15 +25,47 @@ class Fields {
     }
   }
 
+  def field[T](f: Field): T = {
+
+    def typed(t: Type, e: AmfElement): Any = e match {
+      case s: AmfScalar =>
+        t match {
+          case Str | Iri => new StrFieldImpl(s)
+          case Bool      => new BoolFieldImpl(s)
+          case Type.Int  => new IntFieldImpl(s)
+          case _         => throw new Exception(s"Invalid value '$s' of type '$t'")
+        }
+      case o: AmfObject =>
+        t match {
+          case _: Obj => o
+          case _      => throw new Exception(s"Invalid value '$o' of type '$t'")
+        }
+      case a: AmfArray =>
+        t match {
+          case ArrayLike(element) => a.values.map(typed(element, _))
+          case _                  => throw new Exception(s"Invalid value '$a' of type '$t'")
+        }
+    }
+
+    //noinspection ScalaStyle
+    def empty(): T =
+      (f.`type` match {
+        case Str | Iri    => StrFieldImpl(null, Annotations())
+        case Bool         => BoolFieldImpl(null.asInstanceOf[Boolean], Annotations())
+        case Type.Int     => IntFieldImpl(null.asInstanceOf[Int], Annotations())
+        case ArrayLike(_) => Nil
+        case _: Obj       => null
+      }).asInstanceOf[T]
+
+    fs.get(f).map(v => typed(f.`type`, v.value)).fold(empty())(_.asInstanceOf[T])
+  }
+
   def fieldsMeta(): List[Field] = fs.keys.toList
 
   def ?[T](field: Field): Option[T] = fs.get(field).map(_.value.asInstanceOf[T])
 
   /** Return [[Value]] associated to given [[Field]]. */
   def getValue(field: Field): Value = fs.get(field).orNull
-
-  def getAnnotation[T <: Annotation](field: Field, classType: Class[T]): Option[T] =
-    fs.get(field).flatMap(_.annotations.find(classType))
 
   /** Add field array - value. */
   def add(id: String, field: Field, value: AmfElement): this.type = {
@@ -140,6 +173,18 @@ class Fields {
   def size: Int = fs.size
 
   def nonEmpty: Boolean = fs.nonEmpty
+
+  private case class StrFieldImpl(value: String, annotations: Annotations) extends StrField {
+    def this(s: AmfScalar) = this(s.value.asInstanceOf[String], s.annotations)
+  }
+
+  private case class BoolFieldImpl(value: Boolean, annotations: Annotations) extends BoolField {
+    def this(s: AmfScalar) = this(s.value.asInstanceOf[Boolean], s.annotations)
+  }
+
+  private case class IntFieldImpl(value: Int, annotations: Annotations) extends IntField {
+    def this(s: AmfScalar) = this(s.value.asInstanceOf[Int], s.annotations)
+  }
 }
 
 object Fields {

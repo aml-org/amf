@@ -58,7 +58,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     if (!TemplateUri.isValid(path))
       ctx.violation(endpoint.id, TemplateUri.invalidMsg(path), entry.value)
 
-    if (collector.exists(e => e.path == path)) ctx.violation(endpoint.id, "Duplicated resource path " + path, entry)
+    if (collector.exists(e => e.path.is(path))) ctx.violation(endpoint.id, "Duplicated resource path " + path, entry)
     else {
       entry.value.tagType match {
         case YType.Null => collector += endpoint
@@ -125,8 +125,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
               .map(_.withBinding("path"))
 
           explicitParameters ++ implicitPathParams(endpoint,
-                                                   variable => !explicitParameters.exists(_.name == variable))
-
+                                                   variable => !explicitParameters.exists(_.name.is(variable)))
         }.toSeq
     }
 
@@ -180,7 +179,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
       }
   }
 
-  protected def parsePath(): String = parent.map(_.path).getOrElse("") + entry.key.as[String]
+  protected def parsePath(): String = parent.map(_.path.value()).getOrElse("") + entry.key.as[String]
 
   protected def uriParametersKey: String
 }

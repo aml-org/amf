@@ -84,9 +84,9 @@ trait GraphParserHelpers {
       case YType.Map =>
         val m: YMap = node.as[YMap]
         t match {
-          case Iri                            => m.key("@id").get.value
-          case Str | RegExp | Bool | Type.Int => m.key("@value").get.value
-          case _                              => node
+          case Iri                   => m.key("@id").get.value
+          case Str | Bool | Type.Int => m.key("@value").get.value
+          case _                     => node
         }
       case _ => node
     }

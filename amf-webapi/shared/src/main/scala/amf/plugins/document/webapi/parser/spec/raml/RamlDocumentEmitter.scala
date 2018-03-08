@@ -109,7 +109,7 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
 
     override def emit(b: EntryBuilder): Unit = {
       val name = Option(annotation.name).orElse(throw new Exception(s"Annotation type without name $annotation")).get
-      b.entry(name, if (annotation.isLink) emitLink _ else emitInline _)
+      b.entry(name.value(), if (annotation.isLink) emitLink _ else emitInline _)
     }
 
     private def emitLink(b: PartBuilder): Unit = {
@@ -339,9 +339,8 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
     private def endpoints(f: FieldEntry, ordering: SpecOrdering, vendor: Option[Vendor]): Seq[EntryEmitter] = {
 
       def defaultOrder(emitters: Seq[RamlEndPointEmitter]): Seq[RamlEndPointEmitter] = {
-
         emitters.sorted((x: RamlEndPointEmitter, y: RamlEndPointEmitter) =>
-          x.endpoint.path.count(_ == '/') compareTo y.endpoint.path.count(_ == '/'))
+          x.endpoint.path.value().count(_ == '/') compareTo y.endpoint.path.value().count(_ == '/'))
       }
 
       val endpoints = f.array.values

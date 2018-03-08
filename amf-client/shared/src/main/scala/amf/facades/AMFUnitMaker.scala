@@ -39,7 +39,7 @@ class AMFUnitMaker {
       case Raml08        => "RAML 0.8"
       case Oas           => "OAS 2.0"
       case Extension     => "RAML Extension"
-      case Unknown       => "Uknown Vendor"
+      case Unknown       => "Unknown Vendor"
     }
 
     val mediaType = vendor match {

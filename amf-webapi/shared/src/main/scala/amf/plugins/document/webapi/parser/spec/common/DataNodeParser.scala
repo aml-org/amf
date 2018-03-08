@@ -67,7 +67,7 @@ case class DataNodeParser(node: YNode,
       case reference: YScalar =>
         ctx.refs.find(ref => ref.origin.url == reference.text) match {
           case Some(ref) if ref.unit.isInstanceOf[ExternalFragment] =>
-            val includedText = ref.unit.asInstanceOf[ExternalFragment].encodes.raw
+            val includedText = ref.unit.asInstanceOf[ExternalFragment].encodes.raw.value()
             parseIncludedAST(includedText)
           case _ =>
             parseLink(reference.text)

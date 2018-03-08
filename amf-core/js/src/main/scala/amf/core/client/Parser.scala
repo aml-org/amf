@@ -1,10 +1,15 @@
 package amf.core.client
 
 import amf.ProfileNames
-import amf.core.model.document.{BaseUnit => CoreBaseUnit, Document => CoreDocument, Fragment => CoreFragment, Module => CoreModule}
+import amf.core.model.document.{
+  BaseUnit => CoreBaseUnit,
+  Document => CoreDocument,
+  Fragment => CoreFragment,
+  Module => CoreModule
+}
 import amf.core.remote.{Platform, StringContentPlatform}
 import amf.core.validation.AMFValidationReport
-import amf.model.document._
+import amf.client.model.document._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
@@ -37,8 +42,8 @@ class Parser(protected val vendor: String, protected val mediaType: String) exte
   @JSExport
   def parseString(stream: String, handler: JsHandler[BaseUnit]): Unit =
     super.parse(DEFAULT_DOCUMENT_URL,
-      BaseUnitHandlerAdapter(handler),
-      Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform)))
+                BaseUnitHandlerAdapter(handler),
+                Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform)))
 
   /**
     * Generates the [[BaseUnit]] from a given string, which should be a valid api.
@@ -48,10 +53,7 @@ class Parser(protected val vendor: String, protected val mediaType: String) exte
     */
   @JSExport
   def parseString(baseUrl: String, stream: String, handler: JsHandler[BaseUnit]): Unit =
-    super.parse(baseUrl,
-      BaseUnitHandlerAdapter(handler),
-      Some(StringContentPlatform(baseUrl, stream, platform)))
-
+    super.parse(baseUrl, BaseUnitHandlerAdapter(handler), Some(StringContentPlatform(baseUrl, stream, platform)))
 
   /**
     * Asynchronously generate a [[BaseUnit]] from the api located in the given url.
@@ -108,9 +110,10 @@ class Parser(protected val vendor: String, protected val mediaType: String) exte
   def reportCustomValidation(profileName: String, customProfilePath: String): js.Promise[AMFValidationReport] =
     super.reportCustomValidationImplementation(profileName, customProfilePath).toJSPromise
 
-  private case class BaseUnitHandlerAdapter(handler: JsHandler[BaseUnit]) extends Handler[amf.core.model.document.BaseUnit] {
+  private case class BaseUnitHandlerAdapter(handler: JsHandler[BaseUnit])
+      extends Handler[amf.core.model.document.BaseUnit] {
     override def success(document: amf.core.model.document.BaseUnit): Unit = handler.success(unitScalaToJS(document))
-    override def error(exception: Throwable): Unit              = handler.error(exception)
+    override def error(exception: Throwable): Unit                         = handler.error(exception)
   }
 }
 

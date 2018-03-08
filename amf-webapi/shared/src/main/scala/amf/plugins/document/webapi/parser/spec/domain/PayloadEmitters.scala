@@ -95,7 +95,7 @@ case class Raml08PayloadEmitter(payload: Payload, ordering: SpecOrdering)(implic
         Seq(new EntryEmitter() {
           override def emit(b: EntryBuilder): Unit =
             b.entry(
-              payload.mediaType,
+              payload.mediaType.value(),
               p => {
                 typeEmitters match {
                   case Seq(pe: PartEmitter) => pe.emit(p)
@@ -140,9 +140,9 @@ case class Raml08FormPropertiesEmitter(nodeShape: NodeShape, ordering: SpecOrder
           nodeShape.properties.foreach { p =>
             p.range match {
               case anyShape: AnyShape =>
-                ob.entry(p.name, Raml08TypePartEmitter(anyShape, ordering, None, Seq(), Seq()).emit(_))
+                ob.entry(p.name.value(), Raml08TypePartEmitter(anyShape, ordering, None, Seq(), Seq()).emit(_))
               case other =>
-                ob.entry(p.name,
+                ob.entry(p.name.value(),
                          CommentEmitter(
                            other,
                            s"Cannot emit property ${other.getClass.toString} in raml 08 form properties").emit(_))

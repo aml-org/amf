@@ -23,15 +23,15 @@ class Declarations(var libraries: Map[String, Declarations] = Map(),
   def +=(element: DomainElement): Declarations = {
     element match {
       case a: CustomDomainProperty =>
-        futureDeclarations.resolveRef(a.name, a)
-        annotations = annotations + (a.name -> a)
+        futureDeclarations.resolveRef(a.name.value(), a)
+        annotations = annotations + (a.name.value() -> a)
     }
     this
   }
 
   /** Find domain element with the same name. */
   def findEquivalent(element: DomainElement): Option[DomainElement] = element match {
-    case a: CustomDomainProperty => findAnnotation(a.name, SearchScope.All)
+    case a: CustomDomainProperty => findAnnotation(a.name.value(), SearchScope.All)
     case _                       => None
   }
 

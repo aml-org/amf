@@ -16,7 +16,7 @@ import amf.core.vocabulary.{Namespace, ValueType}
   */
 object EndPointModel extends DomainElementModel with KeyField {
 
-  val Path = Field(RegExp, Http + "path")
+  val Path = Field(Str, Http + "path")
 
   val Name = Field(Str, Schema + "name")
 

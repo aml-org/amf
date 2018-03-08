@@ -1,12 +1,13 @@
 package amf.plugins.domain.webapi.models
 
-import amf.plugins.domain.webapi.models.security.ParametrizedSecurityScheme
+import amf.client.model.StrField
+import amf.core.utils.Strings
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.Strings
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
+import amf.plugins.domain.webapi.models.security.ParametrizedSecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait}
 
 /**
@@ -16,17 +17,17 @@ case class EndPoint(fields: Fields, annotations: Annotations)
     extends DomainElement
     with ExtensibleWebApiDomainElement {
 
-  def name: String                              = fields(Name)
-  def description: String                       = fields(Description)
-  def path: String                              = fields(Path)
-  def operations: Seq[Operation]                = fields(Operations)
-  def parameters: Seq[Parameter]                = fields(Parameters)
+  def name: StrField                            = fields.field(Name)
+  def description: StrField                     = fields.field(Description)
+  def path: StrField                            = fields.field(Path)
+  def operations: Seq[Operation]                = fields.field(Operations)
+  def parameters: Seq[Parameter]                = fields.field(Parameters)
   def payloads: Seq[Payload]                    = fields(EndPointModel.Payloads)
-  def security: Seq[ParametrizedSecurityScheme] = fields(Security)
+  def security: Seq[ParametrizedSecurityScheme] = fields.field(Security)
 
   def parent: Option[EndPoint] = annotations.find(classOf[ParentEndPoint]).map(_.parent)
 
-  def relativePath: String = parent.map(p => path.stripPrefix(p.path)).getOrElse(path)
+  def relativePath: String = parent.map(p => path.value().stripPrefix(p.path.value())).getOrElse(path.value())
 
   def traits: Seq[ParametrizedTrait] = extend collect { case t: ParametrizedTrait => t }
 
@@ -65,7 +66,7 @@ case class EndPoint(fields: Fields, annotations: Annotations)
     result
   }
 
-  override def adopted(parent: String): this.type = withId(parent + "/end-points/" + path.urlEncoded)
+  override def adopted(parent: String): this.type = withId(parent + "/end-points/" + path.value().urlEncoded)
 
   override def meta = EndPointModel
 }

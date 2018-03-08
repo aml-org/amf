@@ -11,12 +11,13 @@ import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import org.yaml.model.YPart
 
 case class ResourceType(fields: Fields, annotations: Annotations) extends AbstractDeclaration(fields, annotations) {
+
   override def linkCopy(): ResourceType = ResourceType().withId(id)
 
   override def meta: AbstractDeclarationModel = ResourceTypeModel
 
   def asEndpoint[T <: BaseUnit](unit: T, profile: String = ProfileNames.RAML): EndPoint =
-    ExtendsHelper.asEndpoint(unit, profile, dataNode, name)
+    ExtendsHelper.asEndpoint(unit, profile, dataNode, name.value())
 }
 
 object ResourceType {

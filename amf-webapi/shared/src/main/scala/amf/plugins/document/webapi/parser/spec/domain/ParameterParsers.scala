@@ -227,7 +227,7 @@ case class OasParameterParser(map: YMap, parentId: String, name: Option[String])
               OasTypeParser(entry, (shape) => shape.withName("schema").adopted(p.payload.id))
                 .parse()
                 .map { schema =>
-                  schema.withName(Option(parameter.parameterName).getOrElse("schema"))
+                  schema.withName(parameter.parameterName.option().getOrElse("schema"))
                   val schemaToCheck = if (schema.isLink) schema.linkTarget
                                       else schema
                   if (schemaToCheck.isInstanceOf[FileShape])
@@ -257,7 +257,7 @@ case class OasParameterParser(map: YMap, parentId: String, name: Option[String])
           ).parse()
             .map { schema =>
               if (p.isFormData) {
-                schema.withName(Option(parameter.parameterName).getOrElse("schema"))
+                schema.withName(parameter.parameterName.option().getOrElse("schema"))
                 p.payload.set(PayloadModel.Schema, schema, Annotations(map))
               }
               else parameter.set(ParameterModel.Schema, schema, Annotations(map))

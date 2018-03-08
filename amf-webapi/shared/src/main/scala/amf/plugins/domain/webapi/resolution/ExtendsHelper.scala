@@ -111,8 +111,8 @@ object ExtendsHelper {
             declaration match {
               // we recover the local alias we removed when resolving
               case element: NamedDomainElement if inContext.isDefined =>
-                val localName = inContext.get.name
-                val realName  = element.name
+                val localName = inContext.get.name.value()
+                val realName  = element.name.value()
                 element.withName(localName)
                 nestedCtx.declarations += declaration
                 element.withName(realName)

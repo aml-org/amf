@@ -180,16 +180,21 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     }
   }
 
-  private def isRamlOrYaml(encodes: ExternalDomainElement) = plugin.documentSyntaxes.contains(encodes.mediaType)
+  private def isRamlOrYaml(encodes: ExternalDomainElement) =
+    plugin.documentSyntaxes.contains(encodes.mediaType.value())
 
   private def resolveUnitDocument(reference: ParsedReference): Either[String, YDocument] = {
     reference.unit match {
 
       case e: ExternalFragment if isRamlOrYaml(e.encodes) =>
         Right(
-          YamlParser(e.encodes.raw).withIncludeTag("!include").parse().collectFirst({ case d: YDocument => d }).head)
+          YamlParser(e.encodes.raw.value())
+            .withIncludeTag("!include")
+            .parse()
+            .collectFirst({ case d: YDocument => d })
+            .head)
       case e: ExternalFragment =>
-        Left(e.encodes.raw)
+        Left(e.encodes.raw.value())
       case o if hasDocumentAST(o) =>
         Right(o.annotations.find(classOf[SourceAST]).map(_.ast.asInstanceOf[YDocument]).get)
       case _ => Left("")

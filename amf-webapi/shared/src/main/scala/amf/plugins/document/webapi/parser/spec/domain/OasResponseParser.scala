@@ -66,7 +66,7 @@ case class OasResponseParser(entry: YMapEntry, producer: String => Response)(imp
         res
     }
 
-    if (response.name == "default") {
+    if (response.name.is("default")) {
       response.set(ResponseModel.StatusCode, "200")
     } else {
       response.set(ResponseModel.StatusCode, node.string())

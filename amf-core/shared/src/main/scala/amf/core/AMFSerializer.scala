@@ -54,7 +54,7 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
     }
     parsed match {
       case Some(doc)                                   => doc.toString
-      case None if unit.isInstanceOf[ExternalFragment] => unit.asInstanceOf[ExternalFragment].encodes.raw
+      case None if unit.isInstanceOf[ExternalFragment] => unit.asInstanceOf[ExternalFragment].encodes.raw.value()
       case _                                           => throw new Exception(s"Unsupported media type $mediaType and vendor $vendor")
     }
   }

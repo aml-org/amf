@@ -1,5 +1,6 @@
 package amf.plugins.domain.webapi.models
 
+import amf.client.model.StrField
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.OrganizationModel
@@ -11,9 +12,9 @@ import org.yaml.model.YMap
   */
 case class Organization(fields: Fields, annotations: Annotations) extends DomainElement {
 
-  def url: String   = fields(Url)
-  def name: String  = fields(Name)
-  def email: String = fields(Email)
+  def url: StrField   = fields.field(Url)
+  def name: StrField  = fields.field(Name)
+  def email: StrField = fields.field(Email)
 
   def withUrl(url: String): this.type     = set(Url, url)
   def withName(name: String): this.type   = set(Name, name)

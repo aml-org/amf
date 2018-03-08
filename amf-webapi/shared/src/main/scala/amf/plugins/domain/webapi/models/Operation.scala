@@ -1,30 +1,33 @@
 package amf.plugins.domain.webapi.models
 
-import amf.plugins.domain.webapi.models.security.ParametrizedSecurityScheme
+import amf.client.model.{BoolField, IntField, StrField}
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.models.CreativeWork
-import amf.plugins.domain.webapi.metamodel.OperationModel.{Request => OperationRequest, _}
 import amf.plugins.domain.webapi.metamodel.OperationModel
+import amf.plugins.domain.webapi.metamodel.OperationModel.{Request => OperationRequest, _}
+import amf.plugins.domain.webapi.models.security.ParametrizedSecurityScheme
 import amf.plugins.domain.webapi.models.templates.ParametrizedTrait
 
 /**
   * Operation internal model.
   */
-case class Operation(fields: Fields, annotations: Annotations) extends DomainElement with ExtensibleWebApiDomainElement {
+case class Operation(fields: Fields, annotations: Annotations)
+    extends DomainElement
+    with ExtensibleWebApiDomainElement {
 
-  def method: String               = fields(Method)
-  def name: String                 = fields(Name)
-  def description: String          = fields(Description)
-  def deprecated: Boolean          = fields(Deprecated)
-  def summary: String              = fields(Summary)
-  def documentation: CreativeWork  = fields(Documentation)
-  def schemes: Seq[String]         = fields(Schemes)
-  def accepts: Seq[String]         = fields(Accepts)
-  def contentType: Seq[String]     = fields(ContentType)
-  def request: Request             = fields(OperationRequest)
-  def responses: Seq[Response]     = fields(Responses)
-  def security: Seq[DomainElement] = fields(Security)
+  def method: StrField             = fields.field(Method)
+  def name: StrField               = fields.field(Name)
+  def description: StrField        = fields.field(Description)
+  def deprecated: BoolField        = fields.field(Deprecated)
+  def summary: StrField            = fields.field(Summary)
+  def documentation: CreativeWork  = fields.field(Documentation)
+  def schemes: Seq[StrField]       = fields.field(Schemes)
+  def accepts: Seq[StrField]       = fields.field(Accepts)
+  def contentType: Seq[StrField]   = fields.field(ContentType)
+  def request: Request             = fields.field(OperationRequest)
+  def responses: Seq[Response]     = fields.field(Responses)
+  def security: Seq[DomainElement] = fields.field(Security)
 
   def traits: Seq[ParametrizedTrait] = extend collect { case t: ParametrizedTrait => t }
 
@@ -41,7 +44,7 @@ case class Operation(fields: Fields, annotations: Annotations) extends DomainEle
   def withResponses(responses: Seq[Response]): this.type        = setArray(Responses, responses)
   def withSecurity(security: Seq[DomainElement]): this.type     = setArray(Security, security)
 
-  override def adopted(parent: String): this.type = withId(parent + "/" + method)
+  override def adopted(parent: String): this.type = withId(parent + "/" + method.value())
 
   def withResponse(name: String): Response = {
     val result = Response().withName(name).withStatusCode(if (name == "default") "200" else name)

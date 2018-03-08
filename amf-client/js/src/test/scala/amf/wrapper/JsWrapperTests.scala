@@ -3,8 +3,8 @@ package amf.wrapper
 import _root_.org.scalatest.{Assertion, AsyncFunSuite}
 import amf._
 import amf.core.unsafe.PlatformSecrets
-import amf.model.document.{BaseUnit, Document, TraitFragment}
-import amf.model.domain.{DomainEntity, ScalarShape, WebApi}
+import amf.client.model.document.{BaseUnit, Document, TraitFragment}
+import amf.client.model.domain.{DomainEntity, ScalarShape, WebApi}
 
 import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
@@ -147,25 +147,25 @@ class JsWrapperTests extends AsyncFunSuite with PlatformSecrets {
     amf.plugins.document.Vocabularies.register()
     amf.plugins.document.WebApi.register()
     amf.Core.init().toFuture flatMap { _ =>
-      val vocab = new amf.model.domain.Vocabulary()
+      val vocab = new amf.client.model.domain.Vocabulary()
       vocab
         .withBase("http://test.com/vocab#")
         .withVersion("1.0")
         .withUsage("Just a small sample vocabulary")
         .withExternals(
           Seq(
-            new amf.model.domain.ExternalVocabularyImport()
+            new amf.client.model.domain.ExternalVocabularyImport()
               .withName("other")
               .withUri("http://test.com/vocabulary/other#")
           ).toJSArray)
         .withUses(
           Seq(
-            new amf.model.domain.VocabularyImport()
+            new amf.client.model.domain.VocabularyImport()
               .withName("raml-doc")
               .withUri("http://raml.org/vocabularies/doc#")
           ).toJSArray)
 
-      val doc = new amf.model.document.Document()
+      val doc = new amf.client.model.document.Document()
       doc.withLocation("test_vocab.raml")
       doc.withEncodes(vocab)
 
@@ -177,11 +177,11 @@ class JsWrapperTests extends AsyncFunSuite with PlatformSecrets {
       assert(readVocab.version() == vocab.version())
       assert(Option(readVocab.version()).isDefined)
 
-      val propertyTerm = new amf.model.domain.PropertyTerm()
+      val propertyTerm = new amf.client.model.domain.PropertyTerm()
         .withId("http://raml.org/vocabularies/doc#test")
         .withRange(Seq("http://www.w3.org/2001/XMLSchema#string").toJSArray)
 
-      val classTerm = new amf.model.domain.ClassTerm()
+      val classTerm = new amf.client.model.domain.ClassTerm()
         .withId("http://test.com/vocab#Class")
         .withDescription("A sample class")
         .withDisplayName("Class")
@@ -247,13 +247,13 @@ class JsWrapperTests extends AsyncFunSuite with PlatformSecrets {
     amf.plugins.document.WebApi.register()
     val res = amf.Core.init().toFuture flatMap { _ =>
       val parser = amf.Core.parser("RAML Vocabularies", "application/yaml")
-      val f: Future[amf.model.document.BaseUnit] =
+      val f: Future[amf.client.model.document.BaseUnit] =
         parser.parseFileAsync("file://vocabularies/vocabularies/raml_doc.raml").toFuture
       f
     }
 
-    res map { parsed: amf.model.document.BaseUnit =>
-      assert(parsed.isInstanceOf[amf.model.document.Document])
+    res map { parsed: amf.client.model.document.BaseUnit =>
+      assert(parsed.isInstanceOf[amf.client.model.document.Document])
     }
   }
 

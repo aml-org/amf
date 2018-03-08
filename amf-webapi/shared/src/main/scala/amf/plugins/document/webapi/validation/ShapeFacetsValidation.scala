@@ -20,7 +20,8 @@ class ShapeFacetsValidation(model: BaseUnit, platform: Platform) {
 
   def validate(): Future[Seq[AMFValidationResult]] = {
     val shapesWithFacets = findShapesWithFacets()
-    val listResults = shapesWithFacets map { case (shape: Shape, facetDefinitons: Seq[Shape#FacetsMap]) =>
+    val listResults = shapesWithFacets map {
+      case (shape: Shape, facetDefinitons: Seq[Shape#FacetsMap]) =>
         validateFacets(shape, facetDefinitons)
     }
 
@@ -48,7 +49,7 @@ class ShapeFacetsValidation(model: BaseUnit, platform: Platform) {
 
     val elements = encodedShapes ++ declaredShapes
 
-    elements map  {
+    elements map {
       case payload: Payload =>
         Option(payload.schema) match {
           case Some(shape) =>
@@ -93,8 +94,8 @@ class ShapeFacetsValidation(model: BaseUnit, platform: Platform) {
 
     } filter {
       case Some((shape: Shape, facetDefinitons: Seq[Shape#FacetsMap])) => facetDefinitons.nonEmpty
-      case _ => false
-    } map(_.get)
+      case _                                                           => false
+    } map (_.get)
   }
 
   // Create a data node with the facets and a shape with the facet definitions.
@@ -105,7 +106,7 @@ class ShapeFacetsValidation(model: BaseUnit, platform: Platform) {
       case _                                               => shape
     }
     val facetsPayload = toFacetsPayload(effectiveShape)
-    val facetsShape = toFacetsDefinitionShape(effectiveShape, facetDefinitons)
+    val facetsShape   = toFacetsDefinitionShape(effectiveShape, facetDefinitons)
     PayloadValidation(platform, facetsShape).validate(facetsPayload) map { report =>
       if (report.conforms) {
         Seq.empty
@@ -117,12 +118,11 @@ class ShapeFacetsValidation(model: BaseUnit, platform: Platform) {
     }
   }
 
-
   // We collect the facet instances and build a data node with them
   protected def toFacetsPayload(shape: Shape): DataNode = {
     val payload = ObjectNode(shape.annotations).withId(shape.id)
     shape.customShapeProperties.foreach { extension =>
-      payload.addProperty(extension.definedBy.name, extension.extension, extension.annotations)
+      payload.addProperty(extension.definedBy.name.value(), extension.extension, extension.annotations)
     }
     payload
   }
@@ -135,7 +135,7 @@ class ShapeFacetsValidation(model: BaseUnit, platform: Platform) {
       facetsShape.withProperties(facetDefinitions.head.values.toSeq)
     } else {
       val facetsShape = UnionShape().withId(shape.id + "Shape")
-      var counter = 0
+      var counter     = 0
       val anyOfShapes = facetDefinitions.map { facetsMap =>
         val facetsUnionShape = NodeShape().withId(shape.id + "Shape" + counter)
         counter += 1

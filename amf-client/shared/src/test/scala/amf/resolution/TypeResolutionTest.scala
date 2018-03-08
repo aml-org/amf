@@ -22,35 +22,43 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
   test("TypeExpressions") {
     Validation(platform)
       .map(_.withEnabledValidation(false))
-      .map(v => {
+      .map(_ => {
         val adopt = (shape: Shape) => { shape.adopted("/test") }
 
-        implicit val ctx = new Raml10WebApiContext(ParserContext())
+        implicit val ctx: Raml10WebApiContext = new Raml10WebApiContext(ParserContext())
 
         var res = RamlTypeExpressionParser(adopt).parse("integer")
         assert(res.get.isInstanceOf[ScalarShape])
-        assert(res.get.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
+        assert(res.get.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
 
         res = RamlTypeExpressionParser(adopt).parse("(integer)")
         assert(res.get.isInstanceOf[ScalarShape])
-        assert(res.get.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
+        assert(res.get.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
 
         res = RamlTypeExpressionParser(adopt).parse("((integer))")
         assert(res.get.isInstanceOf[ScalarShape])
-        assert(res.get.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
+        assert(res.get.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
 
         res = RamlTypeExpressionParser(adopt).parse("integer[]")
         assert(res.get.isInstanceOf[ArrayShape])
         assert(
-          res.get.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer")
-            .iri())
+          res.get
+            .asInstanceOf[ArrayShape]
+            .items
+            .asInstanceOf[ScalarShape]
+            .dataType
+            .is((Namespace.Xsd + "integer").iri()))
         assert(res != null)
 
         res = RamlTypeExpressionParser(adopt).parse("(integer)[]")
         assert(res.get.isInstanceOf[ArrayShape])
         assert(
-          res.get.asInstanceOf[ArrayShape].items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer")
-            .iri())
+          res.get
+            .asInstanceOf[ArrayShape]
+            .items
+            .asInstanceOf[ScalarShape]
+            .dataType
+            .is((Namespace.Xsd + "integer").iri()))
         assert(res != null)
 
         var error = false
@@ -69,7 +77,7 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
         var union = res.get.asInstanceOf[UnionShape]
         assert(union.anyOf.length == 2)
         assert(union.anyOf.map { e =>
-          e.asInstanceOf[ScalarShape].dataType
+          e.asInstanceOf[ScalarShape].dataType.value()
         } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
         assert(res != null)
 
@@ -78,7 +86,7 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
         union = res.get.asInstanceOf[UnionShape]
         assert(union.anyOf.length == 2)
         assert(union.anyOf.map { e =>
-          e.asInstanceOf[ScalarShape].dataType
+          e.asInstanceOf[ScalarShape].dataType.value()
         } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
         assert(res != null)
 
@@ -87,7 +95,7 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
         union = res.get.asInstanceOf[UnionShape]
         assert(union.anyOf.length == 3)
         assert(union.anyOf.map { e =>
-          e.asInstanceOf[ScalarShape].dataType
+          e.asInstanceOf[ScalarShape].dataType.value()
         } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri(), (Namespace.Xsd + "float").iri()))
         assert(res != null)
 
@@ -97,7 +105,7 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
         assert(array.items.isInstanceOf[UnionShape])
         union = array.items.asInstanceOf[UnionShape]
         assert(union.anyOf.map { e =>
-          e.asInstanceOf[ScalarShape].dataType
+          e.asInstanceOf[ScalarShape].dataType.value()
         } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
         assert(res != null)
 
@@ -107,15 +115,15 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
         union = res.get.asInstanceOf[UnionShape]
         assert(union.anyOf.length == 2)
         assert(union.anyOf.head.isInstanceOf[ScalarShape])
-        assert(union.anyOf.head.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
+        assert(union.anyOf.head.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
         assert(union.anyOf.last.isInstanceOf[ArrayShape])
         assert(
           union.anyOf.last
             .asInstanceOf[ArrayShape]
             .items
             .asInstanceOf[ScalarShape]
-            .dataType == (Namespace.Xsd + "string")
-            .iri())
+            .dataType
+            .is((Namespace.Xsd + "string").iri()))
 
         val caught = intercept[Exception] { // Result type: Assertion
           res = RamlTypeExpressionParser(adopt).parse("[]string")
@@ -124,15 +132,15 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
           union = res.get.asInstanceOf[UnionShape]
           assert(union.anyOf.length == 2)
           assert(union.anyOf.head.isInstanceOf[ScalarShape])
-          assert(union.anyOf.head.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
+          assert(union.anyOf.head.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
           assert(union.anyOf.last.isInstanceOf[ArrayShape])
           assert(
             union.anyOf.last
               .asInstanceOf[ArrayShape]
               .items
               .asInstanceOf[ScalarShape]
-              .dataType == (Namespace.Xsd + "string")
-              .iri())
+              .dataType
+              .is((Namespace.Xsd + "string").iri()))
         }
         assert(caught.getMessage.contains("Error parsing type expression, cannot accept type ScalarShape"))
 
@@ -142,15 +150,15 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
         union = res.get.asInstanceOf[UnionShape]
         assert(union.anyOf.length == 2)
         assert(union.anyOf.head.isInstanceOf[ScalarShape])
-        assert(union.anyOf.head.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
+        assert(union.anyOf.head.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
         assert(union.anyOf.last.isInstanceOf[ArrayShape])
         assert(
           union.anyOf.last
             .asInstanceOf[ArrayShape]
             .items
             .asInstanceOf[ScalarShape]
-            .dataType == (Namespace.Xsd + "string")
-            .iri())
+            .dataType
+            .is((Namespace.Xsd + "string").iri()))
 
         res = RamlTypeExpressionParser(adopt).parse("integer[][]")
         assert(res != null)
@@ -159,7 +167,7 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
         assert(matrix.items.isInstanceOf[ArrayShape])
         array = matrix.items.asInstanceOf[ArrayShape]
         assert(array.items.isInstanceOf[ScalarShape])
-        assert(array.items.asInstanceOf[ScalarShape].dataType == (Namespace.Xsd + "integer").iri())
+        assert(array.items.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
       })
   }
 
@@ -217,10 +225,9 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
       build(s"file://$basePath$example.raml", RamlYamlHint)
         .map(RAML10Plugin.resolve)
         .transformWith {
-          case Success(_) => {
+          case Success(_) =>
             fail("Expected resolution error")
             succeed
-          }
           case Failure(exception) =>
             exception.getMessage should startWith("Resolution error:")
             succeed
