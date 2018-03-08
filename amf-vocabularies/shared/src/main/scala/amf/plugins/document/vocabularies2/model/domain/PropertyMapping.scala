@@ -13,6 +13,7 @@ object LiteralProperty extends PropertyClassification
 object ObjectProperty extends PropertyClassification
 object ObjectPropertyCollection extends PropertyClassification
 object ObjectMapProperty extends PropertyClassification
+object ObjectPairProperty extends PropertyClassification
 object LiteralPropertyCollection extends PropertyClassification
 
 case class PropertyMapping(fields: Fields, annotations: Annotations) extends DomainElement {
@@ -61,11 +62,14 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
     val isObject = Option(objectRange()).isDefined && objectRange().nonEmpty
     val multiple = Option(allowMultiple()).getOrElse(false)
     val isMap = Option(mapKeyProperty()).isDefined
+    val isMapValue = Option(mapValueProperty()).isDefined
 
     if (isLiteral && !multiple)
       LiteralProperty
     else if (isLiteral)
       LiteralPropertyCollection
+    else if (isObject && isMap && isMapValue)
+      ObjectPairProperty
     else if (isObject && isMap)
       ObjectMapProperty
     else if (isObject && !multiple)
