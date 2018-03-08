@@ -1,0 +1,45 @@
+#%RAML 1.0
+title: AMF Test API
+protocols:
+  - http
+baseUri: localhost/escape
+/trial:
+  /{uriParam}:
+    post:
+      queryParameters:
+        timeonlyparam:
+          type: time-only
+        datetimeparam:
+          type: datetime
+        datetimeonlyparam:
+          type: datetime-only
+        dateonlyparam:
+          type: date-only
+        numberparam:
+          type: number
+        integerparam:
+          type: integer
+        booleanparam:
+          type: boolean
+        stringparam:
+          type: string
+        nullparam:
+          type: nil
+        fileparam:
+          type: file
+        unionparam:
+          type: number | boolean
+        arrayparam:
+          type: array
+        numberarrayparam:
+          type: number[]
+        objectparam:
+          type: object
+        objectwuthpropertiesparam:
+          properties:
+            stringproperty:
+              type: string
+      body:
+        application/json:
+          type:
+            - number[]

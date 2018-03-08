@@ -12,31 +12,17 @@ import amf.core.model.domain.{AmfScalar, Linkable, Shape}
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, FieldEntry, Fields, Position}
 import amf.plugins.document.webapi.annotations._
-import amf.plugins.document.webapi.contexts.{
-  OasSpecEmitterContext,
-  RamlScalarEmitter,
-  RamlSpecEmitterContext,
-  SpecEmitterContext
-}
+import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.domain.{
-  MultipleExampleEmitter,
-  SingleExampleEmitter,
-  StringToAstEmitter
-}
+import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter, StringToAstEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
-import amf.plugins.document.webapi.parser.{
-  OasTypeDefMatcher,
-  OasTypeDefStringValueMatcher,
-  RamlTypeDefMatcher,
-  RamlTypeDefStringValueMatcher
-}
+import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, OasTypeDefStringValueMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.metamodel.{ExampleModel, _}
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.YType
+import org.yaml.model.{YNode, YType}
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -190,7 +176,14 @@ case class Raml10TypeEmitter(shape: AnyShape,
     }
   }
 
-  def entries(): Seq[EntryEmitter] = emitters() collect { case e: EntryEmitter => e }
+  def entries(): Seq[EntryEmitter] = emitters() collect {
+    case e: EntryEmitter => e
+    case p: PartEmitter => new EntryEmitter {
+      override def emit(b: EntryBuilder): Unit =
+        b.entry(YNode("type"), (b) => p.emit(b))
+      override def position(): Position = p.position()
+    }
+  }
 }
 
 abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(
@@ -343,6 +336,9 @@ case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referen
 
     fs.entry(NodeShapeModel.Dependencies)
       .map(f => result += RamlShapeDependenciesEmitter(f, ordering, propertiesMap))
+
+    if (result.isEmpty && typeName.isEmpty)
+      result += MapEntryEmitter("type", "object")
 
     result
   }
@@ -644,6 +640,9 @@ case class RamlArrayShapeEmitter(array: ArrayShape, ordering: SpecOrdering, refe
     fs.entry(ArrayShapeModel.MinItems).map(f => result += RamlScalarEmitter("minItems", f))
 
     fs.entry(ArrayShapeModel.UniqueItems).map(f => result += RamlScalarEmitter("uniqueItems", f))
+
+    if (result.isEmpty && typeName.isEmpty)
+      result += MapEntryEmitter("type", "array")
 
     result
   }

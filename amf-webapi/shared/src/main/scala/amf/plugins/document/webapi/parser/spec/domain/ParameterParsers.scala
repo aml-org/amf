@@ -6,12 +6,8 @@ import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  Raml08TypeParser,
-  Raml10TypeParser,
-  RamlTypeSyntax,
-  StringDefaultType
-}
+import amf.plugins.document.webapi.parser.spec.declaration.{Raml08TypeParser, Raml10TypeParser, RamlTypeSyntax, StringDefaultType}
+import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
 import amf.plugins.domain.webapi.metamodel.ParameterModel
 import amf.plugins.domain.webapi.models.Parameter
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
@@ -84,6 +80,13 @@ case class Raml10ParameterParser(entry: YMapEntry, producer: String => Parameter
                 val schema = parseWellKnownTypeRef(ref.text).withName("schema").adopted(parameter.id)
                 parameter.withSchema(schema)
 
+              case Right(ref) if isTypeExpression(ref.text) =>
+                RamlTypeExpressionParser((shape) => shape.withName("schema").adopted(parameter.id)).parse(ref.text) match {
+                  case Some(schema) => parameter.withSchema(schema)
+                  case _            =>
+                    ctx.violation(parameter.id, s"Cannot parse type expression for unresolved parameter '${parameter.name}'", entry.value)
+                    parameter
+                }
               case _ =>
                 ctx.violation(parameter.id, "Cannot declare unresolved parameter", entry.value)
                 parameter
