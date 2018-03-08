@@ -40,7 +40,7 @@ trait ArrayNode extends TypedNode {
 }
 
 object ArrayNode {
-  def apply(node: YNode)(implicit iv: IllegalTypeHandler): ArrayNode = DefaultArrayNode(node)
+  def apply(node: YNode)(implicit iv: IllegalTypeHandler): ArrayNode = DefaultArrayNode(node)(iv)
 }
 
 /** Default scalar node. */
@@ -55,8 +55,9 @@ case class DefaultScalarNode(node: YNode)(implicit iv: IllegalTypeHandler) exten
   private def scalar(fn: YNode => Any) = AmfScalar(fn(node), Annotations(node.value))
 }
 
-/** Default array node. */
-case class DefaultArrayNode(node: YNode)(implicit iv: IllegalTypeHandler) extends ArrayNode {
+trait BaseArrayNode extends ArrayNode {
+
+  implicit val iv: IllegalTypeHandler
 
   override def string(): AmfArray                     = array(scalar(_.as[String]))
   override def text(): AmfArray                       = array(scalar(_.as[YScalar].text))
@@ -66,9 +67,21 @@ case class DefaultArrayNode(node: YNode)(implicit iv: IllegalTypeHandler) extend
   override def obj(fn: YNode => AmfElement): AmfArray = array(fn)
 
   private def array(fn: YNode => AmfElement) = {
-    val elements = node.as[Seq[YNode]].map(fn(_))
-    AmfArray(elements, Annotations(node.value))
+    nodes match {
+      case (all, value) =>
+        val elements = all.map(fn(_))
+        AmfArray(elements, Annotations(value))
+    }
   }
 
+  /** Return all affected nodes, and node for annotation. */
+  def nodes: (Seq[YNode], YPart)
+
   private def scalar(fn: YNode => Any)(e: YNode): AmfScalar = AmfScalar(fn(e), Annotations(e.value))
+}
+
+/** Default array node. */
+case class DefaultArrayNode(node: YNode)(override implicit val iv: IllegalTypeHandler) extends BaseArrayNode {
+
+  override def nodes: (Seq[YNode], YPart) = (node.as[Seq[YNode]], node.value)
 }

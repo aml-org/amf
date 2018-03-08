@@ -1,12 +1,13 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.model.domain.AmfArray
+import amf.core.model.domain.{AmfArray, DomainElement}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.Lazy
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
+import amf.plugins.document.webapi.parser.spec.common.SpecParserOps
 import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, Raml10TypeParser}
 import amf.plugins.domain.webapi.metamodel.RequestModel
-import amf.plugins.domain.webapi.models.{Parameter, Payload, Request}
+import amf.plugins.domain.webapi.models.{Payload, Request}
 import org.yaml.model.{YMap, YType}
 
 import scala.collection.mutable
@@ -18,8 +19,9 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
     implicit ctx: RamlWebApiContext)
     extends RamlRequestParser(map, producer, parseOptional) {
 
-  override def parse(): Option[Request] = {
-    super.parse()
+  override protected val baseUriParameterKey: String = "(baseUriParameters)"
+
+  override def parse(request: Lazy[Request], target: Target): Unit = {
 
     map.key(
       "queryString",
@@ -29,11 +31,7 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
           .map(q => request.getOrCreate.withQueryString(q))
       }
     )
-
-    request.option
   }
-
-  override protected val baseUriParameterKey: String = "(baseUriParameters)"
 }
 
 case class Raml08RequestParser(map: YMap, producer: () => Request, parseOptional: Boolean = false)(
@@ -41,41 +39,34 @@ case class Raml08RequestParser(map: YMap, producer: () => Request, parseOptional
     extends RamlRequestParser(map, producer, parseOptional) {
 
   override protected val baseUriParameterKey: String = "baseUriParameters"
+
+  override def parse(request: Lazy[Request], target: Target): Unit = Unit
 }
 
 abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOptional: Boolean = false)(
-    implicit ctx: RamlWebApiContext) {
+    implicit ctx: RamlWebApiContext)
+    extends SpecParserOps {
   protected val request = new Lazy[Request](producer)
 
   protected val baseUriParameterKey: String
 
+  def parse(request: Lazy[Request], target: Target): Unit
+
   def parse(): Option[Request] = {
+
+    val target = new Target {
+      override def foreach(fn: DomainElement => Unit): Unit = fn(request.getOrCreate)
+    }
 
     map.key(
       "queryParameters",
-      entry => {
-
-        val parameters: Seq[Parameter] =
-          RamlParametersParser(entry.value.as[YMap], request.getOrCreate.withQueryParameter, parseOptional)
-            .parse()
-            .map(_.withBinding("query"))
-        request.getOrCreate.set(RequestModel.QueryParameters,
-                                AmfArray(parameters, Annotations(entry.value)),
-                                Annotations(entry))
-      }
+      (RequestModel.QueryParameters in target using RamlQueryParameterParser
+        .parse((name: String) => request.getOrCreate.withQueryParameter(name), parseOptional)).treatMapAsArray.optional
     )
-
     map.key(
       "headers",
-      entry => {
-        val parameters: Seq[Parameter] =
-          RamlParametersParser(entry.value.as[YMap], request.getOrCreate.withHeader, parseOptional)
-            .parse()
-            .map(_.withBinding("header"))
-        request.getOrCreate.set(RequestModel.Headers,
-                                AmfArray(parameters, Annotations(entry.value)),
-                                Annotations(entry))
-      }
+      (RequestModel.Headers in target using RamlHeaderParser
+        .parse((name: String) => request.getOrCreate.withHeader(name), parseOptional)).treatMapAsArray.optional
     )
 
     // BaseUriParameters here are only valid for 0.8, must support the extention in RAml 1.0
@@ -156,6 +147,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
                                   Annotations(entry))
       }
     )
+    parse(request, target)
 
     request.option
   }

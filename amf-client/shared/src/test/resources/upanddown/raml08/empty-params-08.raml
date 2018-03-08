@@ -1,0 +1,11 @@
+#%RAML 0.8
+title: test raml project
+protocols:
+  - https
+baseUri: mocksvc.mulesoft.com/mocks/af61f92b-2715-4164-bc71-b8e149a10875{endpoint}/{apiPath}/{version}
+version: 1
+/users:
+  get:
+    description: get all users filtering by parameters
+    responses:
+      200: {}

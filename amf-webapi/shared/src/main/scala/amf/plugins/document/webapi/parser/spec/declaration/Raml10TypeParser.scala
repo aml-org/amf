@@ -37,6 +37,12 @@ object Raml10TypeParser {
             defaultType: DefaultType = StringDefaultType)(implicit ctx: WebApiContext): Raml10TypeParser =
     new Raml10TypeParser(ast, ast.key, ast.value, adopt, isAnnotation, defaultType)(
       new Raml10WebApiContext(ctx, Some(ctx.declarations)))
+
+  def parse(adopt: Shape => Shape, isAnnotation: Boolean = false, defaultType: DefaultType = StringDefaultType)(
+      node: YNode)(implicit ctx: RamlWebApiContext) = {
+    val head = node.as[YMap].entries.head
+    apply(head, adopt, isAnnotation, defaultType).parse()
+  }
 }
 
 trait RamlTypeSyntax {
