@@ -260,7 +260,7 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("banking-api.raml", "banking-api.raml.jsonld", RamlYamlHint, Amf)
   }
 
-  test("Types raml to amf test") {
+  test("HERE_HERE Types raml to amf test") {
     cycle("types.raml", "types.raml.jsonld", RamlYamlHint, Amf)
   }
 
@@ -286,6 +286,18 @@ class CompleteCycleTest extends BuildCycleTests {
 
   test("Types dependency raml to raml test") {
     cycle("types-dependency.raml", RamlYamlHint)
+  }
+
+  test("Types problems raml to amf") {
+    cycle("types_problems.raml", "types_problems.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Types problems amf to jsonld") {
+    cycle("types_problems.jsonld", "types_problems.jsonld.raml", AmfJsonHint, Raml)
+  }
+
+  test("Types problems2 raml to amf") {
+    cycle("types_problems2.raml", "types_problems2.jsonld", RamlYamlHint, Amf)
   }
 
   test("Types dependency oas to oas test") {
