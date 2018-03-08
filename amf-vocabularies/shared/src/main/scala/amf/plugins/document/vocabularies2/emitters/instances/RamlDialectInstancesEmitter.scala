@@ -180,6 +180,9 @@ case class DialectNodeEmitter(node: DialectDomainElement,
 
               case Some(element: DialectDomainElement) if propertyClassification == ObjectProperty && propertyMapping.isUnion =>
                 emitObjectUnion(key, element, propertyMapping)
+
+              case Some(array: AmfArray) if propertyClassification == ObjectPropertyCollection && propertyMapping.isUnion =>
+                emitObjectUnionArray(key, array, propertyMapping)
             }
             emitters ++= nextEmitter
           }
@@ -226,6 +229,31 @@ case class DialectNodeEmitter(node: DialectDomainElement,
       case Some(nextNodeMapping) => Seq(EntryPartEmitter(key, DialectNodeEmitter(element, nextNodeMapping, instance, dialect, ordering, aliases)))
       case _                     => Nil // TODO: raise violation
     }
+  }
+
+  protected def emitObjectUnionArray(key: String, array: AmfArray, propertyMapping: PropertyMapping): Seq[EntryEmitter] = {
+    Seq(new EntryEmitter() {
+      val nodeMappings: Seq[NodeMapping] = propertyMapping.objectRange().map { rangeNodeMapping =>
+        findNodeMapping(rangeNodeMapping, dialect)
+      }
+      val arrayElements: Seq[DialectNodeEmitter] = array.values.map {
+        case dialectDomainElement: DialectDomainElement =>
+          nodeMappings.find(nodeMapping => dialectDomainElement.dynamicType.map(_.iri()).contains(nodeMapping.nodetypeMapping)) match {
+            case Some(nextNodeMapping) => Some(DialectNodeEmitter(dialectDomainElement, nextNodeMapping, instance, dialect, ordering, aliases))
+            case _ => None // TODO: raise violation
+          }
+        case _ => None
+      } collect { case Some(parsed) => parsed }
+
+      override def emit(b: YDocument.EntryBuilder): Unit = {
+        b.entry(key, _.list { b =>
+          ordering.sorted(arrayElements).foreach(_.emit(b))
+        })
+      }
+
+      override def position(): Position = array.annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
+
+    })
   }
 
   protected def emitObject(key: String, element: DialectDomainElement, propertyMapping: PropertyMapping): Seq[EntryEmitter] = {

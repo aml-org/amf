@@ -315,7 +315,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
     }
   }
 
-  def parseObjectUnion(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
+  def parseObjectUnion(id: String, ast: YNode, property: PropertyMapping, node: DialectDomainElement): Option[DialectDomainElement] = {
     val unionMappings = property.objectRange().map { nodeMappingId =>
       ctx.dialect.declares.find(_.id == nodeMappingId) match {
         case Some(nodeMapping) => Some(nodeMapping)
@@ -323,9 +323,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
       }
     } collect { case Some(mapping: NodeMapping) => mapping }
 
-    val ast = propertyEntry.value
-
-    val parsedRange: Option[DialectDomainElement] = ast.tagType match {
+    ast.tagType match {
       case YType.Map =>
         val nodeMap = ast.as[YMap]
         val mappings = findCompatibleMapping(unionMappings, nodeMap)
@@ -377,17 +375,15 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
 
       case _ => None // TODO violation here
     }
-
-    parsedRange match {
-      case Some(range) => node.setObjectField(property, range, propertyEntry.value)
-      case None        => // ignore
-    }
   }
 
   def parseObjectProperty(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
     property.objectRange() match {
       case range: Seq[String] if range.size > 1  =>
-        parseObjectUnion(id, propertyEntry, property, node)
+        parseObjectUnion(id, propertyEntry.value, property, node) match {
+          case Some(parsedRange) => node.setObjectField(property, parsedRange, propertyEntry.value)
+          case None        => // ignore
+        }
       case range: Seq[String] if range.size == 1 =>
         ctx.dialect.declares.find(_.id == range.head) match {
           case Some(nodeMapping: NodeMapping) =>
@@ -404,7 +400,8 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
   def parseObjectMapProperty(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
     val nested = propertyEntry.value.as[YMap].entries.map { keyEntry =>
         property.objectRange() match {
-          case range: Seq[String] if range.size > 1  => // TODO: parse unions
+          case range: Seq[String] if range.size > 1  =>
+            parseObjectUnion(id, keyEntry.value, property, node)
           case range: Seq[String] if range.size == 1 =>
             ctx.dialect.declares.find(_.id == range.head) match {
               case Some(nodeMapping: NodeMapping) =>
@@ -421,14 +418,15 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
   }
 
   def parseObjectCollectionProperty(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
-    val res = propertyEntry.value.as[YSequence].nodes.zipWithIndex.map { case (node, nextElem) =>
+    val res = propertyEntry.value.as[YSequence].nodes.zipWithIndex.map { case (elementNode, nextElem) =>
       property.objectRange() match {
-        case range: Seq[String] if range.size > 1  => // TODO: parse unions
+        case range: Seq[String] if range.size > 1  =>
+          parseObjectUnion(id, elementNode, property, node)
         case range: Seq[String] if range.size == 1 =>
           ctx.dialect.declares.find(_.id == range.head) match {
             case Some(nodeMapping: NodeMapping) =>
               val nestedObjectId = pathSegment(id, propertyEntry.key.as[String].urlEncoded) + s"/$nextElem"
-              parseNestedNode(nestedObjectId, node, nodeMapping) match {
+              parseNestedNode(nestedObjectId, elementNode, nodeMapping) match {
                 case Some(dialectDomainElement) => Some(dialectDomainElement)
                 case None                       => None
               }
