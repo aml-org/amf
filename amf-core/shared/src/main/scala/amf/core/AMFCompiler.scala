@@ -23,7 +23,7 @@ class AMFCompiler(val rawUrl: String,
                   private val cache: Cache,
                   private val baseContext: Option[ParserContext] = None) {
 
-  val url                           = new java.net.URI(rawUrl).normalize().toString
+  val url: String                   = new java.net.URI(rawUrl).normalize().toString
   private lazy val context: Context = base.map(_.update(url)).getOrElse(core.remote.Context(remote, url))
   private lazy val location         = context.current
   private val ctx: ParserContext =
@@ -78,7 +78,7 @@ class AMFCompiler(val rawUrl: String,
   }
 
   def parseExternalFragment(content: Content): Future[BaseUnit] = {
-    val result = ExternalDomainElement().withRaw(content.stream.toString) //
+    val result = ExternalDomainElement().withId(content.url + "#/").withRaw(content.stream.toString) //
     content.mime.foreach(mime => result.withMediaType(mime))
     Future.successful(ExternalFragment().withId(content.url).withEncodes(result).withLocation(content.url))
   }
