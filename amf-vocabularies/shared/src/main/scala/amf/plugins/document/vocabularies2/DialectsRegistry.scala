@@ -62,7 +62,7 @@ class DialectsRegistry extends AMFDomainEntityResolver {
       val reviver = (annotations: Annotations) =>
         DialectDomainElement(annotations)
           .withInstanceTypes(Seq(dialectModel.typeIri))
-          .withDefinedBy(dialectModel.nodeMapping.get)
+          .withDefinedBy(dialectModel.nodeMapping)
       Some(reviver)
     case _ => None
   }
@@ -76,6 +76,6 @@ class DialectsRegistry extends AMFDomainEntityResolver {
 
     val mapPropertiesFields = mapPropertiesInDomain.map(_.mapKeyProperty()).distinct.map( iri => Field(Type.Str, ValueType(iri)))
 
-    new DialectDomainElementModel(nodeType, fields ++ mapPropertiesFields, Some(nodeMapping))
+    new DialectDomainElementModel(nodeType, fields ++ mapPropertiesFields, Seq(nodeMapping))
   }
 }

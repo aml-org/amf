@@ -177,6 +177,9 @@ case class DialectNodeEmitter(node: DialectDomainElement,
 
               case Some(array: AmfArray) if propertyClassification == ObjectMapProperty =>
                 emitObjectMap(key, array, propertyMapping)
+
+              case Some(element: DialectDomainElement) if propertyClassification == ObjectProperty && propertyMapping.isUnion =>
+                emitObjectUnion(key, element, propertyMapping)
             }
             emitters ++= nextEmitter
           }
@@ -213,6 +216,17 @@ case class DialectNodeEmitter(node: DialectDomainElement,
 
   protected def emitScalarArray(key: String, field: Field, array: AmfArray): Seq[EntryEmitter] =
     Seq(ArrayEmitter(key, FieldEntry(field, Value(array, array.annotations)), ordering))
+
+  protected def emitObjectUnion(key: String, element: DialectDomainElement, propertyMapping: PropertyMapping): Seq[EntryEmitter] = {
+    val nodeMappings: Seq[NodeMapping] = propertyMapping.objectRange().map { rangeNodeMapping =>
+      findNodeMapping(rangeNodeMapping, dialect)
+    }
+
+    nodeMappings.find(nodeMapping => element.dynamicType.map(_.iri()).contains(nodeMapping.nodetypeMapping)) match {
+      case Some(nextNodeMapping) => Seq(EntryPartEmitter(key, DialectNodeEmitter(element, nextNodeMapping, instance, dialect, ordering, aliases)))
+      case _                     => Nil // TODO: raise violation
+    }
+  }
 
   protected def emitObject(key: String, element: DialectDomainElement, propertyMapping: PropertyMapping): Seq[EntryEmitter] = {
     val nextNodeMapping = findNodeMapping(propertyMapping.objectRange().head, dialect)
@@ -298,7 +312,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
       } else {
         declarations.foldLeft(Seq[EntryEmitter]()) { case (acc, publicNodeMapping) =>
           val declared = instance.declares.collect {
-            case elem: DialectDomainElement if elem.definedBy.id == publicNodeMapping.mappedNode() => elem
+            case elem: DialectDomainElement if elem.definedBy.exists(_.id == publicNodeMapping.mappedNode()) => elem
           }
           if (declared.nonEmpty) {
             val nodeMapping = findNodeMappingById(publicNodeMapping.mappedNode())
