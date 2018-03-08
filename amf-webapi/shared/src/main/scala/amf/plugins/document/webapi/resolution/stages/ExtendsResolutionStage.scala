@@ -43,7 +43,7 @@ class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = tru
         val node = rt.dataNode.cloneNode()
         node.replaceVariables(context.variables)
 
-        ExtendsHelper.asEndpoint(context.model, profile, node, r.name, Some(ctx))
+        ExtendsHelper.asEndpoint(context.model, profile, node, r.name.value(), Some(ctx))
 
       case _ => throw new Exception(s"Cannot find target for parametrized resource type ${r.id}")
     }
@@ -92,7 +92,7 @@ class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = tru
 
     // Iterate operations and resolve extends with inherited traits.
     endpoint.operations.foreach { operation =>
-      val local = context.add("methodName", operation.method)
+      val local = context.add("methodName", operation.method.value())
 
       val branches = ListBuffer[BranchContainer]()
 
@@ -104,7 +104,7 @@ class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = tru
 
       // ResourceType branches
       resourceTypes.foreach { rt =>
-        branches += Branches.resourceType(resolver, rt, local, operation.method)
+        branches += Branches.resourceType(resolver, rt, local, operation.method.value())
       }
 
       // Compute final traits
@@ -134,7 +134,7 @@ class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = tru
       .getOrElse("")
   }
 
-  private def resourcePath(endPoint: EndPoint) = endPoint.path.replaceAll("\\{ext\\}", "")
+  private def resourcePath(endPoint: EndPoint) = endPoint.path.value().replaceAll("\\{ext\\}", "")
 
   private def findExtendsPredicate(element: DomainElement): Boolean = element.isInstanceOf[EndPoint]
 
@@ -152,7 +152,7 @@ class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = tru
 
       // Resolve resource type method traits
       val o = resourceType.operations
-        .find(_.method == operation)
+        .find(_.method.value() == operation)
         .map(method(traits, _, context).flatten())
         .getOrElse(Seq())
 

@@ -63,15 +63,17 @@ case class Raml08PayloadParser(entry: YMapEntry, producer: Option[String] => Pay
   override def parse(): Payload = {
     val payload = super.parse()
 
-    if (payload.mediaType.endsWith("?")) {
+    val mediaType = payload.mediaType.value()
+
+    if (mediaType.endsWith("?")) {
       payload.set(PayloadModel.Optional, value = true)
-      payload.set(PayloadModel.MediaType, payload.mediaType.stripSuffix("?"))
+      payload.set(PayloadModel.MediaType, mediaType.stripSuffix("?"))
     }
 
     entry.value.tagType match {
       case YType.Null => // Nothing
       case _ =>
-        if (List("application/x-www-form-urlencoded", "multipart/form-data").contains(payload.mediaType)) {
+        if (List("application/x-www-form-urlencoded", "multipart/form-data").contains(mediaType)) {
           Raml08WebFormParser(entry.value.as[YMap], payload.id).parse().foreach(payload.withSchema)
         } else {
           Raml08TypeParser(entry, (shape: Shape) => shape.adopted(payload.id), defaultType = NilDefaultType)
@@ -100,7 +102,7 @@ case class Raml08WebFormParser(map: YMap, parentId: String)(implicit ctx: RamlWe
               Raml08TypeParser(e, (shape: Shape) => shape)
                 .parse()
                 .foreach(s => {
-                  val property = webFormShape.withProperty(s.name)
+                  val property = webFormShape.withProperty(s.name.value())
                   s.fields.entry(ShapeModel.RequiredShape) match {
                     case None                        => property.withMinCount(0)
                     case Some(f) if !f.scalar.toBool => property.withMinCount(0)

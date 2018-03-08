@@ -1,5 +1,6 @@
 package amf.core.model.domain.extensions
 
+import amf.client.model.{IntField, StrField}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel._
@@ -11,10 +12,10 @@ import amf.core.parser.{Annotations, Fields}
   */
 case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape {
 
-  def path: String  = fields(Path)
-  def range: Shape  = fields(Range)
-  def minCount: Int = fields(MinCount)
-  def maxCount: Int = fields(MaxCount)
+  def path: StrField     = fields.field(Path)
+  def range: Shape       = fields.field(Range)
+  def minCount: IntField = fields.field(MinCount)
+  def maxCount: IntField = fields.field(MaxCount)
 
   def withPath(path: String): this.type  = set(Path, path)
   def withRange(range: Shape): this.type = set(Range, range)
@@ -23,7 +24,7 @@ case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape
   def withMaxCount(max: Int): this.type = set(MaxCount, max)
 
   override def adopted(parent: String): this.type = {
-    withId(parent + "/property/" + name)
+    withId(parent + "/property/" + name.value())
     if (Option(range).isDefined) {
       range.adopted(id)
     }

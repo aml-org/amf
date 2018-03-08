@@ -1,5 +1,6 @@
 package amf.plugins.domain.webapi.models.security
 
+import amf.client.model.StrField
 import amf.core.metamodel.Obj
 import amf.core.model.domain
 import amf.core.model.domain.{AmfArray, DataNode, DomainElement}
@@ -8,7 +9,12 @@ import amf.plugins.domain.webapi.metamodel.security.ApiKeySettingsModel._
 import amf.plugins.domain.webapi.metamodel.security.OAuth1SettingsModel.{AuthorizationUri => AuthorizationUri1, _}
 import amf.plugins.domain.webapi.metamodel.security.OAuth2SettingsModel.{AuthorizationUri => AuthorizationUri2, _}
 import amf.plugins.domain.webapi.metamodel.security.SettingsModel._
-import amf.plugins.domain.webapi.metamodel.security.{ApiKeySettingsModel, OAuth1SettingsModel, OAuth2SettingsModel, SettingsModel}
+import amf.plugins.domain.webapi.metamodel.security.{
+  ApiKeySettingsModel,
+  OAuth1SettingsModel,
+  OAuth2SettingsModel,
+  SettingsModel
+}
 
 class Settings(val fields: Fields, val annotations: Annotations) extends DomainElement {
   def additionalProperties: DataNode = fields(AdditionalProperties)
@@ -56,10 +62,11 @@ object Settings {
 
 case class OAuth1Settings(override val fields: Fields, override val annotations: Annotations)
     extends Settings(fields, annotations) {
-  def requestTokenUri: String     = fields(RequestTokenUri)
-  def authorizationUri: String    = fields(AuthorizationUri1)
-  def tokenCredentialsUri: String = fields(TokenCredentialsUri)
-  def signatures: Seq[String]     = fields(Signatures)
+
+  def requestTokenUri: StrField     = fields.field(RequestTokenUri)
+  def authorizationUri: StrField    = fields.field(AuthorizationUri1)
+  def tokenCredentialsUri: StrField = fields.field(TokenCredentialsUri)
+  def signatures: Seq[StrField]     = fields.field(Signatures)
 
   def withRequestTokenUri(requestTokenUri: String): this.type =
     set(RequestTokenUri, requestTokenUri)
@@ -83,11 +90,12 @@ object OAuth1Settings {
 
 case class OAuth2Settings(override val fields: Fields, override val annotations: Annotations)
     extends Settings(fields, annotations) {
-  def authorizationUri: String         = fields(AuthorizationUri2)
-  def accessTokenUri: String           = fields(AccessTokenUri)
-  def authorizationGrants: Seq[String] = fields(AuthorizationGrants)
-  def flow: String                     = fields(Flow)
-  def scopes: Seq[Scope]               = fields(Scopes)
+
+  def authorizationUri: StrField         = fields.field(AuthorizationUri2)
+  def accessTokenUri: StrField           = fields.field(AccessTokenUri)
+  def authorizationGrants: Seq[StrField] = fields.field(AuthorizationGrants)
+  def flow: StrField                     = fields.field(Flow)
+  def scopes: Seq[Scope]                 = fields.field(Scopes)
 
   def withAuthorizationUri(authorizationUri: String): this.type =
     set(AuthorizationUri2, authorizationUri)
@@ -111,8 +119,9 @@ object OAuth2Settings {
 
 case class ApiKeySettings(override val fields: Fields, override val annotations: Annotations)
     extends Settings(fields, annotations) {
-  def name: String = fields(Name)
-  def in: String   = fields(In)
+
+  def name: StrField = fields.field(Name)
+  def in: StrField   = fields.field(In)
 
   def withName(name: String): this.type = set(Name, name)
   def withIn(in: String): this.type     = set(In, in)

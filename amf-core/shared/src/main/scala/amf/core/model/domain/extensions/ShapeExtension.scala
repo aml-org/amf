@@ -6,12 +6,12 @@ import amf.core.metamodel.domain.extensions.ShapeExtensionModel._
 import amf.core.parser.{Annotations, Fields}
 import org.yaml.model.YPart
 
-case class ShapeExtension (fields: Fields, annotations: Annotations) extends DomainElement {
+case class ShapeExtension(fields: Fields, annotations: Annotations) extends DomainElement {
 
   id = "http://raml.org/vocabularies#document/shape_extension"
 
-  def definedBy: PropertyShape = fields(DefinedBy)
-  def extension: DataNode      = fields(Extension)
+  def definedBy: PropertyShape = fields.field(DefinedBy)
+  def extension: DataNode      = fields.field(Extension)
 
   def withDefinedBy(customProperty: PropertyShape): this.type =
     set(DefinedBy, customProperty)
@@ -32,4 +32,3 @@ object ShapeExtension {
 
   def apply(annotations: Annotations): ShapeExtension = ShapeExtension(Fields(), annotations)
 }
-

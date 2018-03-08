@@ -1,0 +1,37 @@
+package amf.client.model.domain
+
+import amf.client.convert.CoreClientConverters._
+import amf.client.model.StrField
+import amf.core.model.domain.templates.{AbstractDeclaration => InternalAbstractDeclaration}
+
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
+
+@JSExportAll
+@JSExportTopLevel("model.domain.AbstractDeclaration")
+class AbstractDeclaration(private[amf] val _internal: InternalAbstractDeclaration)
+    extends DomainElement
+    with Linkable {
+
+  def name: StrField                  = _internal.name
+  def dataNode: DataNode              = _internal.dataNode
+  def variables: ClientList[StrField] = _internal.variables.asClient
+
+  def withName(name: String): this.type = {
+    _internal.withName(name)
+    this
+  }
+
+  def withDataNode(dataNode: DataNode): this.type = {
+    _internal.withDataNode(dataNode._internal)
+    this
+  }
+
+  def withVariables(variables: ClientList[String]): this.type = {
+    _internal.withVariables(variables.asInternal)
+    this
+  }
+
+  override def linkTarget: Option[DomainElement] = throw new Exception("AbstractDeclaration is abstract")
+
+  override def linkCopy(): AbstractDeclaration = throw new Exception("AbstractDeclaration is abstract")
+}

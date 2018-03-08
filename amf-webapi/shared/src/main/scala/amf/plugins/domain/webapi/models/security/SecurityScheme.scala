@@ -1,5 +1,6 @@
 package amf.plugins.domain.webapi.models.security
 
+import amf.client.model.StrField
 import amf.core.model.domain
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, Fields}
@@ -13,15 +14,16 @@ case class SecurityScheme(fields: Fields, annotations: Annotations)
     with Linkable
     with NamedDomainElement
     with WithSettings {
-  def name: String                    = fields(Name)
-  def `type`: String                  = fields(Type)
-  def displayName: String             = fields(DisplayName)
-  def description: String             = fields(Description)
-  def headers: Seq[Parameter]         = fields(Headers)
-  def queryParameters: Seq[Parameter] = fields(QueryParameters)
-  def responses: Seq[Response]        = fields(Responses)
-  def settings: Settings              = fields(SettingsField)
-  def queryString: Shape              = fields(QueryString)
+
+  def name: StrField                  = fields.field(Name)
+  def `type`: StrField                = fields.field(Type)
+  def displayName: StrField           = fields.field(DisplayName)
+  def description: StrField           = fields.field(Description)
+  def headers: Seq[Parameter]         = fields.field(Headers)
+  def queryParameters: Seq[Parameter] = fields.field(QueryParameters)
+  def responses: Seq[Response]        = fields.field(Responses)
+  def settings: Settings              = fields.field(SettingsField)
+  def queryString: Shape              = fields.field(QueryString)
 
   def withName(name: String): this.type                               = set(Name, name)
   def withType(`type`: String): this.type                             = set(Type, `type`)
@@ -33,11 +35,12 @@ case class SecurityScheme(fields: Fields, annotations: Annotations)
   def withSettings(settings: Settings): this.type                     = set(SettingsField, settings)
   def withQueryString(queryString: Shape): this.type                  = set(QueryString, queryString)
 
-  override def adopted(parent: String): this.type = if (parent.contains("#")) {
-    withId(parent + "/" + Option(name).getOrElse("fragment"))
-  } else {
-    withId(parent + "#" + Option(name).getOrElse("fragment"))
-  }
+  override def adopted(parent: String): this.type =
+    if (parent.contains("#")) {
+      withId(parent + "/" + name.option().getOrElse("fragment"))
+    } else {
+      withId(parent + "#" + name.option().getOrElse("fragment"))
+    }
 
   def withHeader(name: String): Parameter = {
     val result = Parameter().withName(name)
@@ -88,7 +91,7 @@ case class SecurityScheme(fields: Fields, annotations: Annotations)
   }
 
   def cloneScheme(parent: String): SecurityScheme = {
-    val cloned = SecurityScheme(annotations).withName(name).adopted(parent)
+    val cloned = SecurityScheme(annotations).withName(name.value()).adopted(parent)
 
     this.fields.foreach {
       case (f, v) =>

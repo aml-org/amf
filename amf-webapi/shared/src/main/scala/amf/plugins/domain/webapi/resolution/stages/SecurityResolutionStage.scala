@@ -16,7 +16,7 @@ class SecurityResolutionStage(profile: String) extends ResolutionStage(profile) 
                                parent: String): SecurityScheme = {
     scheme.fields
       .entry(ParametrizedSecuritySchemeModel.Scheme)
-      .fold(SecurityScheme(scheme.annotations).withName(scheme.name)) { f =>
+      .fold(SecurityScheme(scheme.annotations).withName(scheme.name.value())) { f =>
         f.value.value match {
           case s: SecurityScheme =>
             val cloned = s.cloneScheme(parent)

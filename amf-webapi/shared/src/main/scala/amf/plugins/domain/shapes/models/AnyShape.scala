@@ -9,11 +9,11 @@ import org.yaml.model.YPart
 
 class AnyShape(val fields: Fields, val annotations: Annotations) extends Shape with ShapeHelpers {
 
-  override def adopted(parent: String): this.type = withId(parent + "/any/" + name)
+  override def adopted(parent: String): this.type = withId(parent + "/any/" + name.value())
 
-  def documentation: CreativeWork     = fields(Documentation)
-  def xmlSerialization: XMLSerializer = fields(XMLSerialization)
-  def examples: Seq[Example]          = fields(Examples)
+  def documentation: CreativeWork     = fields.field(Documentation)
+  def xmlSerialization: XMLSerializer = fields.field(XMLSerialization)
+  def examples: Seq[Example]          = fields.field(Examples)
 
   def withDocumentation(documentation: CreativeWork): this.type        = set(Documentation, documentation)
   def withXMLSerialization(xmlSerialization: XMLSerializer): this.type = set(XMLSerialization, xmlSerialization)

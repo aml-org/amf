@@ -1,7 +1,7 @@
 package amf.plugins.domain
 
 import amf.core.unsafe.PlatformSecrets
-import amf.model.domain._
+import amf.client.model.domain._
 import amf.plugins.domain.shapes.{DataShapesDomainPlugin, metamodel, models}
 
 import scala.scalajs.js.annotation.JSExportAll
@@ -19,7 +19,7 @@ object DataShapes extends PlatformSecrets {
       case s: models.ArrayShape => ArrayShape(s)
     }
     platform.registerWrapper(metamodel.MatrixShapeModel) {
-      case s: models.MatrixShape => MatrixShape(s)
+      case s: models.MatrixShape => new MatrixShape(s.toArrayShape)
     }
     platform.registerWrapper(metamodel.TupleShapeModel) {
       case s: models.TupleShape => TupleShape(s)

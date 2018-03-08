@@ -2,7 +2,7 @@ package amf
 
 import amf.core.client.{Generator, Parser, Resolver}
 import amf.core.plugins.AMFPlugin
-import amf.model.document.BaseUnit
+import amf.client.model.document.BaseUnit
 import amf.plugins.document.Vocabularies
 import amf.plugins.document.vocabularies.spec.Dialect
 import amf.validation.AMFValidationReport

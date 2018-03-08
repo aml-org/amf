@@ -186,7 +186,7 @@ case class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: Oa
             fs.entry(EndPointModel.Description).map(f => result += ValueEmitter("x-description", f))
             fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter("x-", f, ordering).emitters())
 
-            val parameters = Parameters.classified(endpoint.path, endpoint.parameters, endpoint.payloads.headOption)
+            val parameters = Parameters.classified(endpoint.path.value(), endpoint.parameters, endpoint.payloads.headOption)
 
             if (parameters.nonEmpty)
               result ++= OasParametersEmitter("parameters",
@@ -520,7 +520,7 @@ class OasSpecEmitter(implicit val spec: OasSpecEmitterContext) extends BaseSpecE
 
     override def emit(b: EntryBuilder): Unit = {
       b.entry(
-        Option(parameter.name).getOrElse(throw new Exception(s"Cannot declare shape without name $parameter")),
+        parameter.name.option().getOrElse(throw new Exception(s"Cannot declare shape without name $parameter")),
         b => {
           if (parameter.isLink) OasTagToReferenceEmitter(parameter, parameter.linkLabel, Nil).emit(b)
           else ParameterEmitter(parameter, ordering, references).emit(b)
@@ -554,9 +554,9 @@ class OasSpecEmitter(implicit val spec: OasSpecEmitterContext) extends BaseSpecE
       extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
       b.entry(
-        Option(annotationType.name)
-          .orElse(throw new Exception(s"Cannot declare annotation type without name $annotationType"))
-          .get,
+        annotationType.name
+          .option()
+          .getOrElse(throw new Exception(s"Cannot declare annotation type without name $annotationType")),
         b => {
           if (annotationType.isLink) OasTagToReferenceEmitter(annotationType, annotationType.linkLabel, Nil).emit(b)
           else

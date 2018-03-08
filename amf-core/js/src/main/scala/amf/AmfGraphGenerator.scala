@@ -1,10 +1,9 @@
 package amf
 
-
 import amf.core.client.{FileHandler, GenerationOptions, Generator, StringHandler}
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Amf
-import amf.model.document.BaseUnit
+import amf.client.model.document.BaseUnit
 import amf.plugins.document.graph.AMFGraphPlugin
 
 import scala.scalajs.js.annotation.{JSExport, JSExportAll}
@@ -22,17 +21,17 @@ class AmfGraphGenerator extends Generator("AMF Graph", "application/ld+json") {
 
   @JSExport
   def generateFile(unit: BaseUnit, url: String, options: GenerationOptions, handler: FileHandler): Unit =
-    generate(unit.element, url, options, UnitHandlerAdapter(handler))
+    generate(unit._internal, url, options, UnitHandlerAdapter(handler))
 
   @JSExport
   def generateString(unit: BaseUnit, options: GenerationOptions, handler: StringHandler): Unit =
-    generate(unit.element, options, StringHandlerAdapter(handler))
+    generate(unit._internal, options, StringHandlerAdapter(handler))
 
   @JSExport
   def generateFile(unit: BaseUnit, url: String, options: GenerationOptions): js.Promise[Unit] =
-    generate(unit.element, url, options).toJSPromise
+    generate(unit._internal, url, options).toJSPromise
 
   @JSExport
   def generateString(unit: BaseUnit, options: GenerationOptions): String =
-    generate(unit.element, options)
+    generate(unit._internal, options)
 }

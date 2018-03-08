@@ -1,5 +1,6 @@
 package amf.plugins.domain.shapes.models
 
+import amf.client.model.{BoolField, StrField}
 import amf.core.metamodel.Obj
 import amf.core.model.domain.{DataNode, DomainElement, Linkable, NamedDomainElement}
 import amf.core.parser.{Annotations, Fields}
@@ -15,13 +16,13 @@ case class Example(fields: Fields, annotations: Annotations)
     with Linkable
     with NamedDomainElement {
 
-  def name: String              = fields(Name)
-  def displayName: String       = fields(DisplayName)
-  def description: String       = fields(Description)
-  def value: String             = fields(ExampleModel.Value)
+  def name: StrField        = fields.field(Name)
+  def displayName: StrField = fields.field(DisplayName)
+  def description: StrField = fields.field(Description)
+  def value: StrField       = fields.field(ExampleModel.Value)
   def structuredValue: DataNode = fields(ExampleModel.StructuredValue)
-  def strict: Boolean           = fields(Strict)
-  def mediaType: String         = fields(MediaType)
+  def strict: BoolField     = fields.field(Strict)
+  def mediaType: StrField   = fields.field(MediaType)
 
   def withName(name: String): this.type               = set(Name, name)
   def withDisplayName(displayName: String): this.type = set(DisplayName, displayName)
@@ -32,7 +33,7 @@ case class Example(fields: Fields, annotations: Annotations)
   def withMediaType(mediaType: String): this.type     = set(MediaType, mediaType)
 
   /** Call after object has been adopted by specified parent. */
-  override def adopted(parent: String): Example.this.type = withId(parent + "/example/" + name)
+  override def adopted(parent: String): Example.this.type = withId(parent + "/example/" + name.value())
 
   override def linkCopy(): Example = Example().withId(id)
 

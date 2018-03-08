@@ -9,14 +9,18 @@ import org.yaml.model.{YNode, YPart}
 /**
   * Unresolved shape: intended to be resolved after parsing (exception is thrown if shape is not resolved).
   */
-case class UnresolvedShape(override val fields: Fields, override val annotations: Annotations, override val reference: String) extends AnyShape(fields, annotations) with UnresolvedReference {
+case class UnresolvedShape(override val fields: Fields,
+                           override val annotations: Annotations,
+                           override val reference: String)
+    extends AnyShape(fields, annotations)
+    with UnresolvedReference {
 
   override def linkCopy(): AnyShape = this
 
   override def adopted(parent: String): this.type = withId(parent + "/unresolved")
 
   /** Resolve [[UnresolvedShape]] as link to specified target. */
-  def resolve(target: Shape): Shape = target.link(reference, annotations).asInstanceOf[Shape].withName(name)
+  def resolve(target: Shape): Shape = target.link(reference, annotations).asInstanceOf[Shape].withName(name.value())
 
   override def meta: Obj = ShapeModel
 }

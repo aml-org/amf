@@ -26,7 +26,7 @@ case class OasSecuritySchemesEmitters(securitySchemes: Seq[SecurityScheme], orde
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val securityTypes: Map[OasSecuritySchemeType, SecurityScheme] =
-      securitySchemes.map(s => OasSecuritySchemeTypeMapping.fromText(s.`type`) -> s).toMap
+      securitySchemes.map(s => OasSecuritySchemeTypeMapping.fromText(s.`type`.value()) -> s).toMap
     val (oasSecurityDefinitions, extensionDefinitions) = securityTypes.partition(m => m._1.isOas)
 
     if (oasSecurityDefinitions.nonEmpty)
@@ -75,7 +75,8 @@ case class OasNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
   override def position(): Position = pos(securityScheme.annotations)
 
   override def emit(b: EntryBuilder): Unit = {
-    val name = Option(securityScheme.name)
+    val name = securityScheme.name
+      .option()
       .getOrElse(throw new Exception(s"Cannot declare security scheme without name $securityScheme"))
 
     b.entry(name, if (securityScheme.isLink) emitLink _ else emitInline _)
@@ -118,7 +119,8 @@ abstract class RamlNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
   override def position(): Position = pos(securityScheme.annotations)
 
   override def emit(b: EntryBuilder): Unit = {
-    val name = Option(securityScheme.name)
+    val name = securityScheme.name
+      .option()
       .getOrElse(throw new Exception(s"Cannot declare security scheme without name $securityScheme"))
 
     b.entry(name, if (securityScheme.isLink) emitLink _ else emitInline _)
@@ -357,7 +359,7 @@ case class RamlOAuth2SettingsEmitters(o2: OAuth2Settings, ordering: SpecOrdering
 
 case class RamlOAuth2ScopeEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    val namesEmitters = f.array.values.collect({ case s: Scope => RawEmitter(s.name) })
+    val namesEmitters = f.array.values.collect({ case s: Scope => RawEmitter(s.name.value()) })
 
     b.entry(key, _.list(traverse(ordering.sorted(namesEmitters), _)))
 
@@ -380,7 +382,7 @@ case class OasOAuth2ScopeEmitter(key: String, f: FieldEntry, ordering: SpecOrder
 
 case class OasScopeValuesEmitters(f: FieldEntry) {
   def emitters(): Seq[EntryEmitter] =
-    f.array.values.collect({ case s: Scope => MapEntryEmitter(s.name, s.description) })
+    f.array.values.collect({ case s: Scope => MapEntryEmitter(s.name.value(), s.description.value()) })
 }
 
 case class OasSettingsTypeEmitter(settingsEntries: Seq[EntryEmitter], settings: Settings, ordering: SpecOrdering)

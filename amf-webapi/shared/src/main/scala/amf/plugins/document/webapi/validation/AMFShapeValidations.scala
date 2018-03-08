@@ -28,13 +28,13 @@ class AMFShapeValidations(shape: Shape) {
 
   protected def emitShapeValidations(context: String, shape: Shape): List[ValidationSpecification] = {
     shape match {
-      case union: UnionShape     =>  unionConstraints(context, union)
-      case scalar: ScalarShape   =>  scalarConstraints(context, scalar)
-      case array: ArrayShape     =>  arrayConstraints(context, array)
-      case obj: NodeShape        =>  nodeConstraints(context, obj)
-      case recur: RecursiveShape =>  recursiveShapeConstraints(context, recur)
-      case _: AnyShape           =>  List.empty
-      case _                     =>  List.empty
+      case union: UnionShape     => unionConstraints(context, union)
+      case scalar: ScalarShape   => scalarConstraints(context, scalar)
+      case array: ArrayShape     => arrayConstraints(context, array)
+      case obj: NodeShape        => nodeConstraints(context, obj)
+      case recur: RecursiveShape => recursiveShapeConstraints(context, recur)
+      case _: AnyShape           => List.empty
+      case _                     => List.empty
     }
   }
 
@@ -97,14 +97,14 @@ class AMFShapeValidations(shape: Shape) {
   }
 
   protected def recursiveShapeConstraints(context: String, shape: RecursiveShape): List[ValidationSpecification] = {
-    val msg = s"Recursive object at $context must be valid"
+    val msg                                              = s"Recursive object at $context must be valid"
     var nestedConstraints: List[ValidationSpecification] = List.empty
     var validation = new ValidationSpecification(
       name = validationId(shape),
       message = msg,
       ramlMessage = Some(msg),
       oasMessage = Some(msg),
-      targetClass = Seq(shape.fixpoint),
+      targetClass = Seq(shape.fixpoint.value()),
       propertyConstraints = Seq()
     )
     List(validation)
@@ -123,19 +123,19 @@ class AMFShapeValidations(shape: Shape) {
     )
 
     node.properties.foreach { property =>
-      nestedConstraints ++= emitShapeValidations(context + s"/${property.name}", property.range)
+      nestedConstraints ++= emitShapeValidations(context + s"/${property.name.value()}", property.range)
 
       val propertyValidationId = validationId(property.range)
-      val propertyId           = (Namespace.Data + property.name).iri()
+      val propertyId           = (Namespace.Data + property.name.value()).iri()
       val nodeConstraint = PropertyConstraint(
         ramlPropertyId = propertyId,
-        name = validationId(node) + s"_validation_node_prop_${property.name}",
-        message = Some(s"Property ${property.name} at $context must have a valid value"),
+        name = validationId(node) + s"_validation_node_prop_${property.name.value()}",
+        message = Some(s"Property ${property.name.value()} at $context must have a valid value"),
         node = Some(propertyValidationId)
       )
       validation = validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(nodeConstraint))
-      validation = checkMinCount(context + s"/${property.name}", property, validation, property)
-      validation = checkMaxCount(context + s"/${property.name}", property, validation, property)
+      validation = checkMinCount(context + s"/${property.name.value()}", property, validation, property)
+      validation = checkMaxCount(context + s"/${property.name.value()}", property, validation, property)
     }
 
     validation = checkClosed(validation, node)
@@ -162,8 +162,8 @@ class AMFShapeValidations(shape: Shape) {
         PropertyConstraint(
           ramlPropertyId = (Namespace.Data + "value").iri(),
           name = scalar.id + "_validation_range/prop",
-          message = Some(s"Scalar at $context must have data type ${scalar.dataType}"),
-          datatype = Some(scalar.dataType)
+          message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
+          datatype = Some(scalar.dataType.value())
         ))
     )
     validation = checkScalarType(scalar, context, validation)
@@ -225,8 +225,8 @@ class AMFShapeValidations(shape: Shape) {
       case Some(minCount) if minCount.toNumber.intValue() > 0 =>
         val msg = s"Data at $context must have min. cardinality $minCount"
         val propertyValidation = PropertyConstraint(
-          ramlPropertyId = (Namespace.Data + shape.name).iri(),
-          name = validation.name + "_" + property.name + "_validation_minCount/prop",
+          ramlPropertyId = (Namespace.Data + shape.name.value()).iri(),
+          name = validation.name + "_" + property.name.value() + "_validation_minCount/prop",
           message = Some(msg),
           minCount = Some(s"$minCount"),
           datatype = effectiveDataType(shape)
@@ -244,8 +244,8 @@ class AMFShapeValidations(shape: Shape) {
       case Some(maxCount) =>
         val msg = s"Data at $context must have max. cardinality $maxCount"
         val propertyValidation = PropertyConstraint(
-          ramlPropertyId = (Namespace.Data + shape.name).iri(),
-          name = validation.name + "_" + property.name + "_validation_minCount/prop",
+          ramlPropertyId = (Namespace.Data + shape.name.value()).iri(),
+          name = validation.name + "_" + property.name.value() + "_validation_minCount/prop",
           message = Some(msg),
           maxCount = Some(s"$maxCount"),
           datatype = effectiveDataType(shape)
@@ -258,7 +258,7 @@ class AMFShapeValidations(shape: Shape) {
   protected def checkPattern(context: String,
                              validation: ValidationSpecification,
                              shape: Shape with CommonShapeFields): ValidationSpecification = {
-    Option(shape.pattern) match {
+    shape.pattern.option() match {
       case Some(pattern) =>
         val msg = s"Data at $context must match pattern $pattern"
         val propertyValidation = PropertyConstraint(
@@ -384,7 +384,7 @@ class AMFShapeValidations(shape: Shape) {
     shape.fields.?[AmfArray](ScalarShapeModel.Values) match {
       case Some(valuesArray) =>
         val values = valuesArray.scalars.map(_.toString)
-        val msg = s"Data at $context must be within the values (${values.mkString(",")})"
+        val msg    = s"Data at $context must be within the values (${values.mkString(",")})"
         val propertyValidation = PropertyConstraint(
           ramlPropertyId = (Namespace.Data + "value").iri(),
           name = validation.name + "_validation_enum/prop",
@@ -401,8 +401,9 @@ class AMFShapeValidations(shape: Shape) {
       case Some(datatype) =>
         val format = shape.fields.?[AmfScalar](ScalarShapeModel.Format).map(_.toString)
         TypeDefXsdMapping.typeDef(datatype, format.getOrElse("")) match {
-          case NumberType => Some((Namespace.Shapes + "number").iri()) // if this is a number, send our custom scalar type
-          case _         =>  Some(datatype) // normal 1:1 mapping, we send the regular XSD type
+          case NumberType =>
+            Some((Namespace.Shapes + "number").iri()) // if this is a number, send our custom scalar type
+          case _ => Some(datatype) // normal 1:1 mapping, we send the regular XSD type
         }
       case None => None // no XSD datatype
 

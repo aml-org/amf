@@ -40,7 +40,7 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
         webApi.fields.remove(WebApiModel.BaseUriParameters)
         // collect endpoint parameters
         webApi.endPoints.foreach { endpoint =>
-          finalParams = finalParams.merge(Parameters.classified(endpoint.path, Option(endpoint.parameters).getOrElse(Seq())))
+          finalParams = finalParams.merge(Parameters.classified(endpoint.path.value(), Option(endpoint.parameters).getOrElse(Seq())))
           endpoint.fields.remove(EndPointModel.Parameters)
           // collect operation query parameters
           if (finalParams.nonEmpty)
@@ -77,7 +77,7 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
         val webApi = doc.encodes.asInstanceOf[WebApi]
         // collect endpoint path parameters
         webApi.endPoints.foreach { endpoint =>
-          val finalParams = Parameters.classified(endpoint.path, Option(endpoint.parameters).getOrElse(Seq()))
+          val finalParams = Parameters.classified(endpoint.path.value(), Option(endpoint.parameters).getOrElse(Seq()))
           // collect operation query parameters
           if (finalParams.nonEmpty && endpoint.operations.nonEmpty) {
             endpoint.fields.remove(EndPointModel.Parameters)
@@ -109,9 +109,9 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
           val endpointParameters = Option(endpoint.parameters).getOrElse(Seq())
 
           // we filter path parameters and the remaining parameters
-          val (path, other) = endpointParameters.partition(p => p.binding == "path")
+          val (path, other) = endpointParameters.partition(p => p.binding.is("path"))
 
-          val finalParams = Parameters.classified(endpoint.path, other)
+          val finalParams = Parameters.classified(endpoint.path.value(), other)
           // collect operation query parameters
           if (finalParams.nonEmpty && endpoint.operations.nonEmpty) {
             endpoint.fields.remove(EndPointModel.Parameters)

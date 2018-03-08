@@ -291,7 +291,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
       adopt(shape)
       parseMap(shape)
       val str = shape match {
-        case scalar: ScalarShape => scalar.dataType
+        case scalar: ScalarShape => scalar.dataType.value()
         case _                   => "#shape"
       }
 
@@ -654,7 +654,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
       map.key("multipleOf", (ScalarShapeModel.MultipleOf in shape).allowingAnnotations)
 
-      val syntaxType = Option(shape.dataType).getOrElse("#shape").split("#").last match {
+      val syntaxType = shape.dataType.option().getOrElse("#shape").split("#").last match {
         case "integer" | "float" | "double" => "numberScalarShape"
         case "string"                       => "stringScalarShape"
         case "dateTime"                     => "dateScalarShape"
@@ -940,7 +940,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
       )
 
       val properties = mutable.ListMap[String, PropertyShape]()
-      shape.properties.foreach(p => properties += (p.name -> p))
+      shape.properties.foreach(p => properties += (p.name.value() -> p))
 
       map.key(
         "(dependencies)",
@@ -1053,7 +1053,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
         "xml",
         entry => {
           val xmlSerializer: XMLSerializer =
-            XMLSerializerParser(shape.name, entry.value.as[YMap]).parse()
+            XMLSerializerParser(shape.name.value(), entry.value.as[YMap]).parse()
           shape.set(AnyShapeModel.XMLSerialization, xmlSerializer, Annotations(entry))
         }
       )

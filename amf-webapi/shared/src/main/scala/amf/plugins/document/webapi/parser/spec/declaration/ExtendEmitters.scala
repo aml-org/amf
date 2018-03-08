@@ -60,7 +60,7 @@ case class ParametrizedDeclarationEmitter(declaration: ParametrizedDeclaration, 
     if (declaration.variables.nonEmpty) {
       b.obj {
         _.entry(
-          declaration.name,
+          declaration.name.value(),
           _.obj { b =>
             val result = declaration.variables.map(variable => VariableEmitter(variable, ordering))
 
@@ -69,7 +69,7 @@ case class ParametrizedDeclarationEmitter(declaration: ParametrizedDeclaration, 
         )
       }
     } else {
-      raw(b, declaration.name)
+      raw(b, declaration.name.value())
     }
   }
 
@@ -79,7 +79,7 @@ case class ParametrizedDeclarationEmitter(declaration: ParametrizedDeclaration, 
 case class VariableEmitter(variable: VariableValue, ordering: SpecOrdering) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-      variable.name,
+      variable.name.value(),
       DataNodeEmitter(variable.value, ordering).emit(_)
     )
   }

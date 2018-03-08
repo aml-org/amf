@@ -1,5 +1,6 @@
 package amf.plugins.domain.webapi.models
 
+import amf.client.model.{BoolField, StrField}
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.models.{NodeShape, ScalarShape}
@@ -15,27 +16,28 @@ case class Parameter(fields: Fields, annotations: Annotations)
     with Linkable
     with NamedDomainElement {
 
-  def name: String            = fields(Name)
-  def parameterName: String   = fields(ParameterName)
-  def description: String     = fields(Description)
-  def required: Boolean       = fields(Required)
-  def binding: String         = fields(Binding)
-    def schema: Shape           = fields(Schema)
+  def name: StrField        = fields.field(Name)
+  def parameterName: StrField   = fields.field(ParameterName)
+  def description: StrField = fields.field(Description)
+  def required: BoolField   = fields.field(Required)
+  def binding: StrField     = fields.field(Binding)
+  def schema: Shape       = fields.field(Schema)
 
   def withName(name: String): this.type                   = set(Name, name)
-  def withParameterName(name: String)                     = set(ParameterName, name)
+  def withParameterName(name: String): this.type          = set(ParameterName, name)
   def withDescription(description: String): this.type     = set(Description, description)
   def withRequired(required: Boolean): this.type          = set(Required, required)
   def withBinding(binding: String): this.type             = set(Binding, binding)
     def withSchema(schema: Shape): this.type                = set(Schema, schema)
 
-  def isHeader: Boolean = binding == "header"
-  def isQuery: Boolean  = binding == "query"
-  def isBody: Boolean   = binding == "body"
-  def isPath: Boolean   = binding == "path"
-  def isForm: Boolean   = binding == "formData"
+  def isHeader: Boolean = binding.is("header")
+  def isQuery: Boolean  = binding.is("query")
+  def isBody: Boolean   = binding.is("body")
+  def isPath: Boolean   = binding.is("path")
+  def isForm: Boolean   = binding.is("formData")
 
-  override def adopted(parent: String): this.type = withId(parent + "/parameter/" + name)
+
+  override def adopted(parent: String): this.type = withId(parent + "/parameter/" + name.value())
 
   def withObjectSchema(name: String): NodeShape = {
     val node = NodeShape().withName(name)
@@ -49,10 +51,10 @@ case class Parameter(fields: Fields, annotations: Annotations)
     scalar
   }
 
-  override def linkCopy(): Parameter = Parameter().withBinding(binding).withId(id)
+  override def linkCopy(): Parameter = Parameter().withBinding(binding.value()).withId(id)
 
   def cloneParameter(parent: String): Parameter = {
-    val cloned = Parameter(annotations).withName(name).adopted(parent)
+    val cloned = Parameter(annotations).withName(name.value()).adopted(parent)
 
     this.fields.foreach {
       case (f, v) =>

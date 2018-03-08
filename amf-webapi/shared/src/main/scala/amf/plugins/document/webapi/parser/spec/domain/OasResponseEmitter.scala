@@ -87,7 +87,7 @@ object OasPayloads {
 
   def defaultPayload(payloads: Seq[Payload]): Option[Payload] =
     payloads
-      .find(p => Option(p.mediaType).isEmpty || p.mediaType.isEmpty)
-      .orElse(payloads.find(_.mediaType == "application/json"))
+      .find(p => p.mediaType.isNullOrEmpty)
+      .orElse(payloads.find(_.mediaType.is("application/json")))
       .orElse(payloads.headOption)
 }

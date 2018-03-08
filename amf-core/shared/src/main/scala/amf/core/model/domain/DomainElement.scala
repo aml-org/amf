@@ -14,14 +14,14 @@ trait DomainElement extends AmfObject {
 
   def meta: Obj
 
-  def customDomainProperties: Seq[DomainExtension] = fields(CustomDomainProperties)
-  def extend: Seq[DomainElement]                   = fields(Extends)
+  def customDomainProperties: Seq[DomainExtension] = fields.field(CustomDomainProperties)
+  def extend: Seq[DomainElement]                   = fields.field(Extends)
 
-  def withCustomDomainProperties(customProperties: Seq[DomainExtension]): this.type =
-    setArray(CustomDomainProperties, customProperties)
+  def withCustomDomainProperties(extensions: Seq[DomainExtension]): this.type =
+    setArray(CustomDomainProperties, extensions)
 
-  def withCustomDomainProperty(customProperty: DomainExtension): this.type =
-    add(CustomDomainProperties, customProperty)
+  def withCustomDomainProperty(extensions: DomainExtension): this.type =
+    add(CustomDomainProperties, extensions)
 
   def withExtends(extend: Seq[DomainElement]): this.type = setArray(Extends, extend)
 
@@ -29,7 +29,7 @@ trait DomainElement extends AmfObject {
 
   def getPropertyIds(): List[String] = fields.fields().map(f => f.field.value.iri()).toList
 
-  def getScalarByPropertyId(propertyId: String): List[Any] = {
+  def getScalarByPropertyId(propertyId: String): Seq[Any] = {
     fields.fields().find { f: FieldEntry =>
       f.field.value.iri() == Namespace.uri(propertyId).iri()
     } match {

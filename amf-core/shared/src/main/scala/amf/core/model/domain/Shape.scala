@@ -1,5 +1,6 @@
 package amf.core.model.domain
 
+import amf.client.model.StrField
 import amf.core.metamodel.domain.ShapeModel._
 import amf.core.model.domain.extensions.{PropertyShape, ShapeExtension}
 
@@ -8,14 +9,14 @@ import amf.core.model.domain.extensions.{PropertyShape, ShapeExtension}
   */
 abstract class Shape extends DomainElement with Linkable with NamedDomainElement {
 
-  def name: String                                       = fields(Name)
-  def displayName: String                                = fields(DisplayName)
-  def description: String                                = fields(Description)
-  def default: DataNode                                  = fields(Default)
-  def values: Seq[String]                                = fields(Values)
-  def inherits: Seq[Shape]                               = fields(Inherits)
-  def customShapeProperties: Seq[ShapeExtension]         = fields(CustomShapeProperties)
-  def customShapePropertyDefinitions: Seq[PropertyShape] = fields(CustomShapePropertyDefinitions)
+  def name: StrField                                     = fields.field(Name)
+  def displayName: StrField                              = fields.field(DisplayName)
+  def description: StrField                              = fields.field(Description)
+  def default: DataNode                                  = fields.field(Default)
+  def values: Seq[StrField]                              = fields.field(Values)
+  def inherits: Seq[Shape]                               = fields.field(Inherits)
+  def customShapeProperties: Seq[ShapeExtension]         = fields.field(CustomShapeProperties)
+  def customShapePropertyDefinitions: Seq[PropertyShape] = fields.field(CustomShapePropertyDefinitions)
 
   def withName(name: String): this.type               = set(Name, name)
   def withDisplayName(name: String): this.type        = set(DisplayName, name)
@@ -44,7 +45,7 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
       Seq(accInit)
     } else {
       Seq(customShapePropertyDefinitions.foldLeft(accInit) { (acc: FacetsMap, propertyShape: PropertyShape) =>
-        acc.updated(propertyShape.name, propertyShape)
+        acc.updated(propertyShape.name.value(), propertyShape)
       })
     }
 

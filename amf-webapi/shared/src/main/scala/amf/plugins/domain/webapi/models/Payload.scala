@@ -1,5 +1,6 @@
 package amf.plugins.domain.webapi.models
 
+import amf.client.model.StrField
 import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.models.{ArrayShape, NodeShape, ScalarShape}
@@ -12,8 +13,8 @@ import org.yaml.model.YMap
   */
 case class Payload(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
 
-  def mediaType: String = fields(MediaType)
-  def schema: Shape     = fields(Schema)
+  def mediaType: StrField = fields.field(MediaType)
+  def schema: Shape       = fields.field(Schema)
 
   def withMediaType(mediaType: String): this.type = set(MediaType, mediaType)
   def withSchema(schema: Shape): this.type        = set(Schema, schema)
@@ -44,7 +45,7 @@ case class Payload(fields: Fields, annotations: Annotations) extends DomainEleme
   override def linkCopy(): Payload = Payload().withId(id)
 
   def clonePayload(parent: String): Payload = {
-    val cloned = Payload(annotations).withMediaType(mediaType).adopted(parent)
+    val cloned = Payload(annotations).withMediaType(mediaType.value()).adopted(parent)
 
     this.fields.foreach {
       case (f, v) =>

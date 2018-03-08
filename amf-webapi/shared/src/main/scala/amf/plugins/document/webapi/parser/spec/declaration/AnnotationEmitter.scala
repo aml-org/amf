@@ -34,14 +34,14 @@ case class OasAnnotationEmitter(domainExtension: DomainExtension, ordering: Spec
     implicit spec: SpecEmitterContext)
     extends AnnotationEmitter(domainExtension, ordering) {
 
-  override val name: String = "x-" + domainExtension.name
+  override val name: String = "x-" + domainExtension.name.value()
 }
 
 case class RamlAnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrdering)(
     implicit spec: SpecEmitterContext)
     extends AnnotationEmitter(domainExtension, ordering) {
 
-  override val name: String = "(" + domainExtension.name + ")"
+  override val name: String = "(" + domainExtension.name.value() + ")"
 }
 
 abstract class AnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrdering)(
@@ -73,14 +73,14 @@ case class OasFacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: Sp
     implicit spec: SpecEmitterContext)
     extends FacetsInstanceEmitter(shapeExtension, ordering) {
 
-  override val name: String = "x-facet-" + shapeExtension.definedBy.name
+  override val name: String = "x-facet-" + shapeExtension.definedBy.name.value()
 }
 
 case class RamlFacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: SpecOrdering)(
     implicit spec: SpecEmitterContext)
     extends FacetsInstanceEmitter(shapeExtension, ordering) {
 
-  override val name: String = shapeExtension.definedBy.name
+  override val name: String = shapeExtension.definedBy.name.value()
 }
 
 abstract class FacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: SpecOrdering)(

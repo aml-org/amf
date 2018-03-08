@@ -42,7 +42,8 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String =>
         case Some(declaration) =>
           scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration)
 
-          val settings = RamlSecuritySettingsParser(schemeEntry.value.as[YMap], declaration.`type`, scheme).parse()
+          val settings =
+            RamlSecuritySettingsParser(schemeEntry.value.as[YMap], declaration.`type`.value(), scheme).parse()
 
           scheme.set(ParametrizedSecuritySchemeModel.Settings, settings)
         case None =>
@@ -56,7 +57,7 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String =>
 
 object RamlSecuritySettingsParser {
   def parse(scheme: SecurityScheme)(node: YNode)(implicit ctx: WebApiContext): Settings = {
-    RamlSecuritySettingsParser(node.as[YMap], scheme.`type`, scheme).parse()
+    RamlSecuritySettingsParser(node.as[YMap], scheme.`type`.value(), scheme).parse()
   }
 }
 

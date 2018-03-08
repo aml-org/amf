@@ -362,7 +362,7 @@ class ShapeNormalizationStage(profile: String)
       }
       val union = UnionShape()
       union.id = tuple.id + "resolved"
-      union.withName(tuple.name)
+      union.withName(tuple.name.value())
       union
     }
   }

@@ -31,7 +31,8 @@ case class AbstractDeclarationEmitter(declaration: AbstractDeclaration,
     extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
-    val name = Option(declaration.name)
+    val name = declaration.name
+      .option()
       .getOrElse(throw new Exception(s"Cannot declare abstract declaration without name $declaration"))
 
     b.entry(

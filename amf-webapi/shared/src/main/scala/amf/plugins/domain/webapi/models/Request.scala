@@ -10,11 +10,11 @@ import amf.plugins.domain.webapi.metamodel.RequestModel._
   */
 case class Request(fields: Fields, annotations: Annotations) extends DomainElement {
 
-  def queryParameters: Seq[Parameter] = fields(QueryParameters)
-  def headers: Seq[Parameter]         = fields(Headers)
-  def payloads: Seq[Payload]          = fields(Payloads)
-  def queryString: Shape              = fields(QueryString)
-  def uriParameters: Seq[Parameter]   = fields(UriParameters)
+  def queryParameters: Seq[Parameter] = fields.field(QueryParameters)
+  def headers: Seq[Parameter]         = fields.field(Headers)
+  def payloads: Seq[Payload]          = fields.field(Payloads)
+  def queryString: Shape              = fields.field(QueryString)
+  def uriParameters: Seq[Parameter]   = fields.field(UriParameters)
 
   def withQueryParameters(parameters: Seq[Parameter]): this.type = setArray(QueryParameters, parameters)
   def withHeaders(headers: Seq[Parameter]): this.type            = setArray(Headers, headers)

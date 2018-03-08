@@ -2,61 +2,29 @@ package amf
 
 import java.util.concurrent.CompletableFuture
 
+import amf.client.convert.CoreRegister
+import amf.client.model.document._
 import amf.core.AMF
 import amf.core.client.{Generator, Parser, Resolver, Validator}
 import amf.core.plugins.AMFPlugin
-import amf.core.unsafe.PlatformSecrets
-import amf.model.document._
-import amf.model.domain._
 import amf.core.remote.FutureConverter._
+import amf.core.unsafe.PlatformSecrets
 import amf.validation.AMFValidationReport
 
 object Core extends PlatformSecrets {
 
   def init(): CompletableFuture[Nothing] = {
-    platform.registerWrapper(amf.core.metamodel.document.ModuleModel) {
-      case m: amf.core.model.document.Module => Module(m)
-    }
-    platform.registerWrapper(amf.core.metamodel.document.DocumentModel) {
-      case m: amf.core.model.document.Document => Document(m)
-    }
-    platform.registerWrapper(amf.core.metamodel.document.FragmentModel) {
-      case f: amf.core.model.document.Fragment => new Fragment(f)
-    }
-    platform.registerWrapper(amf.core.metamodel.document.ExternalFragmentModel) {
-      case f: amf.core.model.document.ExternalFragment => ExternalFragment(f)
-    }
-    platform.registerWrapper(amf.core.metamodel.domain.ExternalDomainElementModel) {
-      case f: amf.core.model.domain.ExternalDomainElement => ExternalDomainElement(f)
-    }
-    platform.registerWrapper(amf.core.metamodel.domain.DomainElementModel) {
-      case e: amf.core.model.domain.DomainElement => DomainElement(e)
-    }
-    platform.registerWrapper(amf.core.metamodel.domain.extensions.CustomDomainPropertyModel) {
-      case e: amf.core.model.domain.extensions.CustomDomainProperty => CustomDomainProperty(e)
-    }
-    platform.registerWrapper(amf.core.metamodel.domain.extensions.DomainExtensionModel) {
-      case e: amf.core.model.domain.extensions.DomainExtension => DomainExtension(e)
-    }
-    platform.registerWrapper(amf.core.metamodel.domain.extensions.PropertyShapeModel) {
-      case e: amf.core.model.domain.extensions.PropertyShape => PropertyShape(e)
-    }
-    platform.registerWrapper(amf.core.metamodel.domain.DataNodeModel) {
-      case o: amf.core.model.domain.ObjectNode => ObjectNode(o)
-      case s: amf.core.model.domain.ScalarNode => ScalarNode(s)
-      case a: amf.core.model.domain.ArrayNode  => ArrayNode(a)
-      case d: amf.core.model.domain.DataNode   => DataNode(d)
-    }
-    platform.registerWrapper(amf.core.metamodel.domain.templates.VariableValueModel) {
-      case v: amf.core.model.domain.templates.VariableValue => VariableValue(v)
-    }
+    CoreRegister.register(platform)
+
     AMF.init().asJava
   }
 
   def parser(vendor: String, mediaType: String): Parser       = new Parser(vendor, mediaType)
   def generator(vendor: String, mediaType: String): Generator = new Generator(vendor, mediaType)
   def resolver(vendor: String)                                = new Resolver(vendor)
-  def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): CompletableFuture[AMFValidationReport] =
+  def validate(model: BaseUnit,
+               profileName: String,
+               messageStyle: String = "AMF"): CompletableFuture[AMFValidationReport] =
     Validator.validate(model, profileName, messageStyle)
   def loadValidationProfile(url: String): CompletableFuture[Nothing] = Validator.loadValidationProfile(url)
   def registerNamespace(alias: String, prefix: String): Boolean      = platform.registerNamespace(alias, prefix).isDefined

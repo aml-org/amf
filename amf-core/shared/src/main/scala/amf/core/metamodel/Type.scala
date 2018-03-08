@@ -36,8 +36,6 @@ object Type {
 
   object Bool extends Scalar("boolean")
 
-  object RegExp extends Scalar("token")
-
   object ObjType extends Obj {
     override def fields: List[Field]     = Nil
     override val `type`: List[ValueType] = Nil

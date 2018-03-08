@@ -25,7 +25,7 @@ class AnnotationsValidation(model: BaseUnit, platform: Platform) {
       .findBy {
         case extension: DomainExtension =>
           Option(extension.definedBy).exists(definition => {
-            Option(definition.schema).isDefined && resolveAnnotation("(" + definition.name + ")").isDefined
+            Option(definition.schema).isDefined && resolveAnnotation("(" + definition.name.value() + ")").isDefined
           })
         case _ => false
       }

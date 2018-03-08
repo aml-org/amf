@@ -1,18 +1,21 @@
 package amf.plugins.domain.shapes.models
 
+import amf.client.model.StrField
 import amf.core.metamodel.Obj
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.FileShapeModel._
 import amf.plugins.domain.shapes.metamodel.FileShapeModel
 import org.yaml.model.YPart
 
-case class FileShape(override val fields: Fields, override val annotations: Annotations) extends AnyShape(fields, annotations) with CommonShapeFields {
+case class FileShape(override val fields: Fields, override val annotations: Annotations)
+    extends AnyShape(fields, annotations)
+    with CommonShapeFields {
 
-  def fileTypes: Seq[String] = fields(FileTypes)
+  def fileTypes: Seq[StrField] = fields.field(FileTypes)
 
   def withFileTypes(fileTypes: Seq[String]): this.type = set(FileTypes, fileTypes)
 
-  override def adopted(parent: String): this.type = withId(parent + "/" + name)
+  override def adopted(parent: String): this.type = withId(parent + "/" + name.value())
 
   override def linkCopy(): FileShape = FileShape().withId(id)
 

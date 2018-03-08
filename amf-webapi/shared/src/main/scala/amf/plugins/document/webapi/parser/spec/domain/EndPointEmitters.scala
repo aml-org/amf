@@ -1,13 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.SynthesizedField
-import amf.core.utils._
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{FieldEntry, Fields, Position, Value}
+import amf.core.utils._
 import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, ExtendsEmitter}
 import amf.plugins.domain.webapi.metamodel.EndPointModel
@@ -67,14 +66,14 @@ case class Raml08EndPointEmitter(endpoint: EndPoint,
 
   override protected def emitters(fs: Fields): ListBuffer[EntryEmitter] = {
     val result = super.emitters(fs)
-    val variables: Seq[String] = TemplateUri.variables(endpoint.path)
+    val variables: Seq[String] = TemplateUri.variables(endpoint.path.value())
     fs.entry(EndPointModel.Parameters)
       .map { f =>
         if (f.array.values.exists(f => !f.annotations.contains(classOf[SynthesizedField]))) {
           var uriParameters: Seq[Parameter] = Nil
           var pathParameters: Seq[Parameter] = Nil
           f.array.values.foreach { case p: Parameter =>
-            if (variables.contains(p.name) || variables.contains(p.parameterName))
+            if (variables.contains(p.name.value()) || variables.contains(p.parameterName.value()))
               pathParameters ++= Seq(p)
             else
               uriParameters ++= Seq(p)

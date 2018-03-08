@@ -38,23 +38,23 @@ class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
   override def +=(element: DomainElement): WebApiDeclarations = {
     element match {
       case r: ResourceType =>
-        futureDeclarations.resolveRef(r.name, r)
-        resourceTypes = resourceTypes + (r.name -> r)
+        futureDeclarations.resolveRef(r.name.value(), r)
+        resourceTypes = resourceTypes + (r.name.value() -> r)
       case t: Trait =>
-        futureDeclarations.resolveRef(t.name, t)
-        traits = traits + (t.name -> t)
+        futureDeclarations.resolveRef(t.name.value(), t)
+        traits = traits + (t.name.value() -> t)
       case s: Shape =>
-        futureDeclarations.resolveRef(s.name, s)
-        shapes = shapes + (s.name -> s)
+        futureDeclarations.resolveRef(s.name.value(), s)
+        shapes = shapes + (s.name.value() -> s)
       case p: Parameter =>
-        futureDeclarations.resolveRef(p.name, p)
-        parameters = parameters + (p.name -> p)
+        futureDeclarations.resolveRef(p.name.value(), p)
+        parameters = parameters + (p.name.value() -> p)
       case ss: SecurityScheme =>
-        futureDeclarations.resolveRef(ss.name, ss)
-        securitySchemes = securitySchemes + (ss.name -> ss)
+        futureDeclarations.resolveRef(ss.name.value(), ss)
+        securitySchemes = securitySchemes + (ss.name.value() -> ss)
       case re: Response =>
-        futureDeclarations.resolveRef(re.name, re)
-        responses = responses + (re.name -> re)
+        futureDeclarations.resolveRef(re.name.value(), re)
+        responses = responses + (re.name.value() -> re)
       case _ => super.+=(element)
     }
     this
@@ -62,21 +62,21 @@ class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
 
   /** Find domain element with the same name. */
   override def findEquivalent(element: DomainElement): Option[DomainElement] = element match {
-    case r: ResourceType    => findResourceType(r.name, SearchScope.All)
-    case t: Trait           => findTrait(t.name, SearchScope.All)
-    case s: Shape           => findType(s.name, SearchScope.All)
-    case p: Parameter       => findParameter(p.name, SearchScope.All)
-    case ss: SecurityScheme => findSecurityScheme(ss.name, SearchScope.All)
-    case re: Response       => findResponse(re.name, SearchScope.All)
+    case r: ResourceType    => findResourceType(r.name.value(), SearchScope.All)
+    case t: Trait           => findTrait(t.name.value(), SearchScope.All)
+    case s: Shape           => findType(s.name.value(), SearchScope.All)
+    case p: Parameter       => findParameter(p.name.value(), SearchScope.All)
+    case ss: SecurityScheme => findSecurityScheme(ss.name.value(), SearchScope.All)
+    case re: Response       => findResponse(re.name.value(), SearchScope.All)
     case _                  => super.findEquivalent(element)
   }
 
   def registerParameter(parameter: Parameter, payload: Payload): Unit = {
-    parameters = parameters + (parameter.name -> parameter)
-    payloads = payloads + (parameter.name     -> payload)
+    parameters = parameters + (parameter.name.value() -> parameter)
+    payloads = payloads + (parameter.name.value()     -> payload)
   }
 
-  def parameterPayload(parameter: Parameter): Payload = payloads(parameter.name)
+  def parameterPayload(parameter: Parameter): Payload = payloads(parameter.name.value())
 
   /** Get or create specified library. */
   override def getOrCreateLibrary(alias: String): WebApiDeclarations = {

@@ -273,7 +273,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
           .asInstanceOf[Module]
           .declares
           .find {
-            case s: Shape => s.name == shapeName
+            case s: Shape => s.name.is(shapeName)
           }
           .get
         (PayloadValidation(platform, targetType.asInstanceOf[Shape]), payload)
@@ -611,7 +611,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       val resolved      = RAML10Plugin.resolve(doc)
       val A: ArrayShape = resolved.asInstanceOf[Module].declares.head.asInstanceOf[ArrayShape]
       assert(A.items.isInstanceOf[RecursiveShape])
-      assert(A.items.name == "items")
+      assert(A.items.name.is("items"))
       val AOrig   = doc.asInstanceOf[Module].declares.head.asInstanceOf[ArrayShape]
       val profile = new AMFShapeValidations(AOrig).profile()
       assert(profile != null)

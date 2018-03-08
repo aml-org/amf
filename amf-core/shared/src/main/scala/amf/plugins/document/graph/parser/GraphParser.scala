@@ -1,7 +1,7 @@
 package amf.plugins.document.graph.parser
 
 import amf.core.annotations.DomainExtensionAnnotation
-import amf.core.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
+import amf.core.metamodel.Type.{Array, Bool, Iri, SortedArray, Str}
 import amf.core.metamodel.document.BaseUnitModel.Location
 import amf.core.metamodel.document._
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
@@ -245,9 +245,9 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
         case _: Obj =>
           parse(node.as[YMap]).foreach(n => instance.set(f, n, annotations(nodes, sources, key)))
           instance
-        case Str | RegExp | Iri => instance.set(f, str(node.as[YScalar]), annotations(nodes, sources, key))
-        case Bool               => instance.set(f, bool(node.as[YScalar]), annotations(nodes, sources, key))
-        case Type.Int           => instance.set(f, int(node.as[YScalar]), annotations(nodes, sources, key))
+        case Str | Iri => instance.set(f, str(node.as[YScalar]), annotations(nodes, sources, key))
+        case Bool      => instance.set(f, bool(node.as[YScalar]), annotations(nodes, sources, key))
+        case Type.Int  => instance.set(f, int(node.as[YScalar]), annotations(nodes, sources, key))
         case l: SortedArray =>
           instance.setArray(f, parseList(instance.id, l.element, node.as[YMap]), annotations(nodes, sources, key))
         case a: Array =>

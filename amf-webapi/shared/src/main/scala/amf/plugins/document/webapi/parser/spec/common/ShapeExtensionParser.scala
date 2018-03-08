@@ -13,11 +13,11 @@ case class ShapeExtensionParser(shape: Shape, map: YMap, ctx: WebApiContext) {
     val shapeExtensionDefinitions = shape.collectCustomShapePropertyDefinitions(onlyInherited = true)
     shapeExtensionDefinitions.flatMap(_.values).distinct.foreach { shapeExensionDefinition =>
       val extensionKey = ctx.vendor match {
-        case r: Raml => shapeExensionDefinition.name
-        case Oas     => s"x-facet-${shapeExensionDefinition.name}"
+        case r: Raml => shapeExensionDefinition.name.value()
+        case Oas     => s"x-facet-${shapeExensionDefinition.name.value()}"
         case _ =>
           ctx.violation(shape.id, s"Cannot parse shape extension for vendor ${ctx.vendor}", map)
-          shapeExensionDefinition.name
+          shapeExensionDefinition.name.value()
       }
       map.key(
         extensionKey,

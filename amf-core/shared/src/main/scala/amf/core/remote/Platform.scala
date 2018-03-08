@@ -1,5 +1,6 @@
 package amf.core.remote
 
+import amf.client.model.AmfObjectWrapper
 import amf.core.lexer.CharSequenceStream
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit

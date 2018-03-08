@@ -1,5 +1,7 @@
 package amf.core.model.domain
 
+import amf.client.model.StrField
+import amf.core.annotations.ScalarType
 import amf.core.annotations.{DataNodePropertiesAnnotations, LexicalInformation, ScalarType}
 import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.domain.DataNodeModel
@@ -20,19 +22,19 @@ import scala.collection.mutable.ListBuffer
   */
 abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
 
-  /** Replace all raml variables (any name inside double chevrons -> '<<>>') with the provided values. */
-  def replaceVariables(values: Set[Variable]): DataNode
-
-  def name: String = fields(Name)
+  def name: StrField = fields.field(Name)
 
   def withName(name: String): this.type = set(Name, name)
 
   override def adopted(parent: String): this.type = {
-    if (Option(this.id).isEmpty) withId(parent + "/" + name.urlEncoded) else this
+    if (Option(this.id).isEmpty) withId(parent + "/" + name.value().urlEncoded) else this
   }
 
+  /** Replace all raml variables (any name inside double chevrons -> '<<>>') with the provided values. */
+  def replaceVariables(values: Set[Variable]): DataNode
+
   def forceAdopted(parent: String): this.type = {
-    val adoptedId = parent + "/" + (if (Option(name).isDefined) name.urlEncoded else name)
+    val adoptedId = parent + "/" + name.option().map(_.urlEncoded).orNull
     val newId = Option(id) match {
       case Some(oldId: String) if oldId.endsWith("/included") => adoptedId + "/included"
       case _                                                  => adoptedId
@@ -42,7 +44,7 @@ abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
 
   override val fields: Fields = Fields()
 
-  def cloneNode(): this.type
+  def cloneNode(): DataNode
 
   override def meta: Obj = DataNodeModel
 
@@ -127,7 +129,7 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
     this
   }
 
-  override def cloneNode(): this.type = {
+  override def cloneNode(): ObjectNode = {
     val cloned = ObjectNode(annotations)
 
     properties.foreach {
@@ -136,7 +138,7 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
         cloned.propertyAnnotations += property -> propertyAnnotations(property)
     }
 
-    cloned.asInstanceOf[this.type]
+    cloned
   }
 
   override def lexicalPropertiesAnnotation: Option[DataNodePropertiesAnnotations] = {
@@ -189,13 +191,13 @@ class ScalarNode(var value: String,
     VariableReplacer.replaceVariables(this, values)
   }
 
-  override def cloneNode(): this.type = {
+  override def cloneNode(): ScalarNode = {
     val cloned = ScalarNode(annotations)
 
     cloned.value = value
     cloned.dataType = dataType
 
-    cloned.asInstanceOf[this.type]
+    cloned
   }
 }
 
@@ -270,6 +272,7 @@ object ArrayNode {
   */
 class LinkNode(var alias: String, var value: String, override val fields: Fields, val annotations: Annotations)
     extends DataNode(annotations) {
+
   val Value: Field = Field(Str, Namespace.Data + "value")
   val Alias: Field = Field(Str, Namespace.Data + "alias")
 
@@ -287,13 +290,13 @@ class LinkNode(var alias: String, var value: String, override val fields: Fields
 
   override def replaceVariables(values: Set[Variable]): DataNode = this
 
-  override def cloneNode(): this.type = {
+  override def cloneNode(): LinkNode = {
     val cloned = LinkNode(annotations)
 
     cloned.value = value
     cloned.alias = alias
 
-    cloned.asInstanceOf[this.type]
+    cloned
   }
 }
 

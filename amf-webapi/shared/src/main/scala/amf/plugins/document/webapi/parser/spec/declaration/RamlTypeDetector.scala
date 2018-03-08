@@ -165,7 +165,8 @@ case class RamlTypeDetector(parent: String,
           }
         case _: NilShape => Some(NilType)
         case s: ScalarShape =>
-          val (typeDef, format) = RamlTypeDefStringValueMatcher.matchType(TypeDefXsdMapping.typeDef(s.dataType))
+          val (typeDef, format) =
+            RamlTypeDefStringValueMatcher.matchType(TypeDefXsdMapping.typeDef(s.dataType.value()))
           Some(matchType(typeDef, format))
         case union: UnionShape => if (plainUnion) InheritsUnionMatcher(union, part) else Some(UnionType)
         case _: NodeShape      => Some(ObjectType)

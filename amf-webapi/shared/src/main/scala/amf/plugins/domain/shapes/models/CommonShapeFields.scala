@@ -1,19 +1,20 @@
 package amf.plugins.domain.shapes.models
 
+import amf.client.model.{IntField, StrField}
 import amf.core.model.domain.Shape
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel._
 
 trait CommonShapeFields { self: Shape =>
 
-  def pattern: String          = fields(Pattern)
-  def minLength: Int           = fields(MinLength)
-  def maxLength: Int           = fields(MaxLength)
-  def minimum: String          = fields(Minimum)
-  def maximum: String          = fields(Maximum)
-  def exclusiveMinimum: String = fields(ExclusiveMinimum)
-  def exclusiveMaximum: String = fields(ExclusiveMaximum)
-  def format: String           = fields(Format)
-  def multipleOf: Int          = fields(MultipleOf)
+  def pattern: StrField          = fields.field(Pattern)
+  def minLength: IntField        = fields.field(MinLength)
+  def maxLength: IntField        = fields.field(MaxLength)
+  def minimum: StrField          = fields.field(Minimum)
+  def maximum: StrField          = fields.field(Maximum)
+  def exclusiveMinimum: StrField = fields.field(ExclusiveMinimum)
+  def exclusiveMaximum: StrField = fields.field(ExclusiveMaximum)
+  def format: StrField           = fields.field(Format)
+  def multipleOf: IntField       = fields.field(MultipleOf)
 
   def withPattern(pattern: String): this.type      = set(Pattern, pattern)
   def withMinLength(min: Int): this.type           = set(MinLength, min)

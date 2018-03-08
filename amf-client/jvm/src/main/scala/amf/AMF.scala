@@ -1,17 +1,15 @@
 package amf
 
-import java.util.concurrent.{CompletableFuture, Future}
+import java.util.concurrent.CompletableFuture
 
-import amf.model.document.BaseUnit
-import amf.plugins.document.Vocabularies
-import amf.plugins.document.vocabularies.spec.Dialect
+import amf.client.model.document.BaseUnit
 import amf.validation.AMFValidationReport
 
 object AMF {
 
   def init(): CompletableFuture[Nothing] = {
     amf.plugins.document.WebApi.register()
-    amf.plugins.document.Vocabularies.register()
+//    amf.plugins.document.Vocabularies.register()
     amf.plugins.features.AMFValidation.register()
     amf.Core.init()
   }
@@ -43,7 +41,7 @@ object AMF {
 
   def registerNamespace(alias: String, prefix: String): Boolean = Core.registerNamespace(alias, prefix)
 
-  def registerDialect(url: String): Future[Dialect] = Vocabularies.registerDialect(url)
+//  def registerDialect(url: String): Future[Dialect] = Vocabularies.registerDialect(url)
 
   def resolveRaml10(unit: BaseUnit): BaseUnit = new Raml10Resolver().resolve(unit)
 

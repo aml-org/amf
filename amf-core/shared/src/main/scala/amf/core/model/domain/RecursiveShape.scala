@@ -1,15 +1,15 @@
 package amf.core.model.domain
 
+import amf.client.model.StrField
 import amf.core.metamodel.Obj
 import amf.core.metamodel.domain.RecursiveShapeModel
 import amf.core.metamodel.domain.RecursiveShapeModel._
 import amf.core.parser.{Annotations, Fields}
 import org.yaml.model.YPart
 
-
 case class RecursiveShape(override val fields: Fields, override val annotations: Annotations) extends Shape {
 
-  def fixpoint: String = fields(FixPoint)
+  def fixpoint: StrField = fields.field(FixPoint)
 
   def withFixPoint(shapeId: String): this.type = set(FixPoint, shapeId)
 

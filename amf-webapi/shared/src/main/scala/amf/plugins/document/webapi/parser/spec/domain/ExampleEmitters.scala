@@ -29,7 +29,7 @@ case class OasResponseExamplesEmitter(key: String, f: FieldEntry, ordering: Spec
 
 case class OasResponseExampleEmitter(example: Example, ordering: SpecOrdering) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    b.entry(example.mediaType, DataNodeEmitter(example.structuredValue, ordering).emit(_))
+    b.entry(example.mediaType.value(), DataNodeEmitter(example.structuredValue, ordering).emit(_))
   }
 
   override def position(): Position = pos(example.annotations)
@@ -90,7 +90,7 @@ case class SingleExampleEmitter(key: String, example: Example, ordering: SpecOrd
 case class NamedExampleEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    b.entry(example.name, ExampleValuesEmitter(example, ordering).emit(_))
+    b.entry(example.name.value(), ExampleValuesEmitter(example, ordering).emit(_))
   }
 
   override def position(): Position = pos(example.annotations)
@@ -118,6 +118,7 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
       }
     }
     val isExpanded = fs.fieldsMeta().exists(explicitFielMeta.contains(_)) || example.value
+      .value()
       .contains("value")
 
     if (isExpanded) {

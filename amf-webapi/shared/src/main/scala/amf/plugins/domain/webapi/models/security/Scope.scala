@@ -1,5 +1,6 @@
 package amf.plugins.domain.webapi.models.security
 
+import amf.client.model.StrField
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.security.ScopeModel
@@ -7,13 +8,14 @@ import amf.plugins.domain.webapi.metamodel.security.ScopeModel._
 import org.yaml.model.YPart
 
 case class Scope(fields: Fields, annotations: Annotations) extends DomainElement {
-  def name: String        = fields(Name)
-  def description: String = fields(Description)
+
+  def name: StrField        = fields.field(Name)
+  def description: StrField = fields.field(Description)
 
   def withName(name: String): this.type               = set(Name, name)
   def withDescription(description: String): this.type = set(Description, description)
 
-  override def adopted(parent: String): this.type = withId(parent + "/" + name)
+  override def adopted(parent: String): this.type = withId(parent + "/" + name.value())
 
   def cloneScope(): Scope = {
     val cloned = Scope(annotations)

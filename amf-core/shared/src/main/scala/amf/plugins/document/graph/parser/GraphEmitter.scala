@@ -2,7 +2,7 @@ package amf.plugins.document.graph.parser
 
 import amf.core.annotations.{DomainExtensionAnnotation, ScalarType}
 import amf.core.client.GenerationOptions
-import amf.core.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
+import amf.core.metamodel.Type.{Array, Bool, Iri, SortedArray, Str}
 import amf.core.metamodel.document.SourceMapModel
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
@@ -118,7 +118,7 @@ object GraphEmitter extends MetaModelTypeMapping {
             .collect({ case e: DomainExtensionAnnotation => e })
             .foreach(e => {
               val extension = e.extension
-              val uri       = s"${element.id}/scalar-valued/$count/${extension.name}"
+              val uri       = s"${element.id}/scalar-valued/$count/${extension.name.value()}"
               customProperties += uri
               adoptTree(uri, extension.extension) // Fix ids
               createCustomExtension(b, uri, extension, Some(f))
@@ -143,7 +143,7 @@ object GraphEmitter extends MetaModelTypeMapping {
       b.entry(
         encoded,
         _.obj { b =>
-          b.entry(DomainExtensionModel.Name.value.iri(), scalar(_, extension.name))
+          b.entry(DomainExtensionModel.Name.value.iri(), scalar(_, extension.name.value()))
           field.foreach(f => b.entry(DomainExtensionModel.Element.value.iri(), scalar(_, f.value.iri())))
           //val sources = SourceMap(extension.id, extension)
           //createSourcesNode(extension.id + "/source-map", sources, b)
@@ -203,7 +203,7 @@ object GraphEmitter extends MetaModelTypeMapping {
         case Iri =>
           iri(b, v.value.asInstanceOf[AmfScalar].toString)
           sources(v)
-        case Str | RegExp =>
+        case Str =>
           v.annotations.find(classOf[ScalarType]) match {
             case Some(annotation) =>
               typedScalar(b, v.value.asInstanceOf[AmfScalar].toString, annotation.datatype)

@@ -5,7 +5,7 @@ import java.util.Scanner
 
 import amf.core.client._
 import amf.core.remote._
-import amf.model.document.{BaseUnit, Document}
+import amf.client.model.document.{BaseUnit, Document}
 
 class Repl(val in: InputStream, val out: PrintStream) {
 
@@ -55,7 +55,7 @@ class Repl(val in: InputStream, val out: PrintStream) {
       new Handler[BaseUnit] {
         override def success(unit: BaseUnit): Unit = {
           out.println("Successfully parsed. Type `:generate raml` or `:generate oas` or `:generate amf`")
-          callback(Some(Document(unit.asInstanceOf[amf.core.model.document.Document])))
+          callback(Some(new Document(unit.asInstanceOf[amf.core.model.document.Document])))
         }
 
         override def error(exception: Throwable): Unit = {

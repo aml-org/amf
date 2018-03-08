@@ -1,5 +1,6 @@
 package amf.plugins.domain.webapi.models
 
+import amf.client.model.StrField
 import amf.core.model.domain.{AmfArray, DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.models.Example
@@ -11,12 +12,12 @@ import amf.plugins.domain.webapi.metamodel.ResponseModel._
   */
 case class Response(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
 
-  def name: String            = fields(Name)
-  def description: String     = fields(Description)
-  def statusCode: String      = fields(StatusCode)
-  def headers: Seq[Parameter] = fields(Headers)
-  def payloads: Seq[Payload]  = fields(Payloads)
-  def examples: Seq[Example]  = fields(Examples)
+  def name: StrField          = fields.field(Name)
+  def description: StrField   = fields.field(Description)
+  def statusCode: StrField    = fields.field(StatusCode)
+  def headers: Seq[Parameter] = fields.field(Headers)
+  def payloads: Seq[Payload]  = fields.field(Payloads)
+  def examples: Seq[Example]  = fields.field(Examples)
 
   def withName(name: String): this.type               = set(Name, name)
   def withDescription(description: String): this.type = set(Description, description)
@@ -44,10 +45,10 @@ case class Response(fields: Fields, annotations: Annotations) extends DomainElem
     example
   }
 
-  override def adopted(parent: String): this.type = withId(parent + "/" + name)
+  override def adopted(parent: String): this.type = withId(parent + "/" + name.value())
 
   def cloneResponse(parent: String): Response = {
-    val cloned = Response(annotations).withName(name).adopted(parent)
+    val cloned = Response(annotations).withName(name.value()).adopted(parent)
 
     this.fields.foreach {
       case (f, v) =>
