@@ -8,7 +8,7 @@ import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecPar
 import amf.plugins.document.webapi.parser.spec.declaration.AnyDefaultType
 import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Payload, Response}
-import org.yaml.model.{YMap, YMapEntry, YType}
+import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 import scala.collection.mutable
 
@@ -38,24 +38,32 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
   protected def parseMap(response: Response, map: YMap)
 
   def parse(): Response = {
-    val node     = ScalarNode(entry.key).text()
-    val response = producer(node.toString).add(Annotations(entry)).set(ResponseModel.StatusCode, node)
+    val node = ScalarNode(entry.key).text()
 
-    if (parseOptional && node.toString.endsWith("?")) {
-      response.set(ResponseModel.Optional, value = true)
-      val name = node.toString.stripSuffix("?")
-      response.set(ResponseModel.Name, name)
-      response.set(ResponseModel.StatusCode, name)
-    }
+    val response: Response = entry.value.tagType match {
+      case YType.Null =>
+        producer(node.toString).add(Annotations(entry)).set(ResponseModel.StatusCode, node)
+      case YType.Str | YType.Int =>
+        val ref           = entry.value.as[YScalar].text
+        val res: Response = ctx.declarations.findResponseOrError(entry.value)(ref, SearchScope.All).link(ref)
+        res.withName(node.toString)
+      case _ =>
+        val map = entry.value.as[YMap] // if not scalar, must be the response, if not, violation.
 
-    entry.value.to[YMap] match {
-      case Left(_) =>
-      case Right(map) =>
-        map.key("description", (ResponseModel.Description in response).allowingAnnotations)
+        val res = producer(node.toString).add(Annotations(entry)).set(ResponseModel.StatusCode, node)
+
+        if (parseOptional && node.toString.endsWith("?")) { // only in raml the method can be optional, check?
+          res.set(ResponseModel.Optional, value = true)
+          val name = node.toString.stripSuffix("?")
+          res.set(ResponseModel.Name, name)
+          res.set(ResponseModel.StatusCode, name)
+        }
+
+        map.key("description", (ResponseModel.Description in res).allowingAnnotations)
 
         map.key("headers",
-                (ResponseModel.Headers in response using RamlHeaderParser
-                  .parse(response.withHeader, parseOptional)).treatMapAsArray.optional)
+                (ResponseModel.Headers in res using RamlHeaderParser
+                  .parse(res.withHeader, parseOptional)).treatMapAsArray.optional)
 
         map.key(
           "body",
@@ -63,7 +71,7 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
             val payloads = mutable.ListBuffer[Payload]()
 
             val payload = Payload()
-            payload.adopted(response.id)
+            payload.adopted(res.id)
 
             entry.value.tagType match {
               case YType.Null =>
@@ -74,14 +82,14 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
                     schema.annotations += SynthesizedField()
                     payloads += payload.withSchema(schema)
                   }
-                response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
+                res.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
 
               case YType.Str =>
                 ctx.factory
                   .typeParser(entry, shape => shape.withName("default").adopted(payload.id), false, AnyDefaultType)
                   .parse()
                   .foreach(payloads += payload.withSchema(_))
-                response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
+                res.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
 
               case _ =>
                 // Now we parsed potentially nested shapes for different data types
@@ -91,7 +99,7 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
                       ".*/.*",
                       entries => {
                         entries.foreach(entry => {
-                          payloads += ctx.factory.payloadParser(entry, response.withPayload, false).parse()
+                          payloads += ctx.factory.payloadParser(entry, res.withPayload, false).parse()
                         })
                       }
                     )
@@ -99,12 +107,9 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
                     if (others.entries.nonEmpty) {
                       if (payloads.isEmpty) {
                         ctx.factory
-                          .typeParser(entry,
-                                      shape => shape.withName("default").adopted(response.id),
-                                      false,
-                                      AnyDefaultType)
+                          .typeParser(entry, shape => shape.withName("default").adopted(res.id), false, AnyDefaultType)
                           .parse()
-                          .foreach(payloads += response.withPayload(None).withSchema(_)) // todo
+                          .foreach(payloads += res.withPayload(None).withSchema(_)) // todo
                       } else {
                         others.entries.foreach(e =>
                           ctx.violation(s"Unexpected key '${e.key}'. Expecting valid media types.", Some(e)))
@@ -113,17 +118,18 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
                   case _ =>
                 }
                 if (payloads.nonEmpty)
-                  response.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
+                  res.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
             }
           }
         )
 
         val examples = OasResponseExamplesParser("(examples)", map).parse()
-        if (examples.nonEmpty) response.set(ResponseModel.Examples, AmfArray(examples))
+        if (examples.nonEmpty) res.set(ResponseModel.Examples, AmfArray(examples))
 
-        ctx.closedShape(response.id, map, "response")
+        ctx.closedShape(res.id, map, "response")
 
-        parseMap(response, map)
+        parseMap(res, map)
+        res
     }
 
     response

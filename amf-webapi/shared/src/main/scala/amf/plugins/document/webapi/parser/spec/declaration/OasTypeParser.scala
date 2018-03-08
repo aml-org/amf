@@ -11,12 +11,12 @@ import amf.plugins.document.webapi.annotations.Inferred
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
+import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.domain.RamlExamplesParser
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
-import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
-import amf.plugins.domain.shapes.models.{CreativeWork, Example, _}
+import amf.plugins.domain.shapes.models.{Example, _}
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import org.yaml.model._
 import org.yaml.render.YamlRender
@@ -34,7 +34,7 @@ object OasTypeParser {
 }
 
 case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Unit, oasNode: String)(
-    implicit val ctx: WebApiContext)
+    implicit val ctx: OasWebApiContext)
     extends OasSpecParser {
 
   def parse(): Option[Shape] = {

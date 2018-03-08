@@ -12,16 +12,24 @@ package object spec {
 
     val parameterDefinitionsPrefix = "#/parameters/"
 
+    val responsesDefinitionsPrefix = "#/responses/"
+
     def stripDefinitionsPrefix(url: String): String = url.stripPrefix(definitionsPrefix)
 
     def stripParameterDefinitionsPrefix(url: String): String = url.stripPrefix(parameterDefinitionsPrefix)
 
-    def appendDefinitionsPrefix(url: String): String = definitionsPrefix + url
+    def stripResponsesDefinitionsPrefix(url: String): String = url.stripPrefix(responsesDefinitionsPrefix)
 
-    def appendParameterDefinitionsPrefix(url: String): String = parameterDefinitionsPrefix + url
+    def appendDefinitionsPrefix(url: String): String = appendPrefix(definitionsPrefix, url)
+
+    def appendParameterDefinitionsPrefix(url: String): String = appendPrefix(parameterDefinitionsPrefix, url)
+
+    def appendResponsesDefinitionsPrefix(url: String): String = appendPrefix(responsesDefinitionsPrefix, url)
+
+    private def appendPrefix(prefix: String, url: String): String = prefix + url
   }
 
-  def toOas(ctx: WebApiContext): WebApiContext = {
+  def toOas(ctx: WebApiContext): OasWebApiContext = {
     new OasWebApiContext(ctx, Some(ctx.declarations))
   }
 

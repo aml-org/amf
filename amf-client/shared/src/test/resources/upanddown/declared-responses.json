@@ -1,0 +1,33 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "My API With Types",
+    "description": "This RAML illustrates a type declaration that uses facets to restrict its object properties.",
+    "version": "V1"
+  },
+  "paths": {
+    "/levelzero": {
+      "x-displayName": "One display name",
+      "x-description": "and this description!",
+      "get": {
+        "operationId": "Some title",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/Default"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "Default": {
+      "description": "200 descr",
+      "headers": {
+        "Time-Ago": {
+          "required": true,
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

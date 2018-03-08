@@ -15,7 +15,7 @@ import amf.plugins.document.webapi.parser.spec.WebApiDeclarations._
 import amf.plugins.domain.shapes.models.{CreativeWork, Example}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.domain.webapi.models.{Parameter, Payload}
+import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
 import org.yaml.model.YPart
 
 /**
@@ -30,6 +30,7 @@ class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
                          var payloads: Map[String, Payload] = Map(),
                          var traits: Map[String, Trait] = Map(),
                          var securitySchemes: Map[String, SecurityScheme] = Map(),
+                         var responses: Map[String, Response] = Map(),
                          errorHandler: Option[ErrorHandler],
                          futureDeclarations: FutureDeclarations)
     extends Declarations(libs, frags, anns, errorHandler, futureDeclarations = futureDeclarations) {
@@ -51,6 +52,9 @@ class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
       case ss: SecurityScheme =>
         futureDeclarations.resolveRef(ss.name, ss)
         securitySchemes = securitySchemes + (ss.name -> ss)
+      case re: Response =>
+        futureDeclarations.resolveRef(re.name, re)
+        responses = responses + (re.name -> re)
       case _ => super.+=(element)
     }
     this
@@ -63,6 +67,7 @@ class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
     case s: Shape           => findType(s.name, SearchScope.All)
     case p: Parameter       => findParameter(p.name, SearchScope.All)
     case ss: SecurityScheme => findSecurityScheme(ss.name, SearchScope.All)
+    case re: Response       => findResponse(re.name, SearchScope.All)
     case _                  => super.findEquivalent(element)
   }
 
@@ -88,7 +93,7 @@ class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
   override def declarables(): Seq[DomainElement] =
     super
       .declarables()
-      .toList ++ (shapes.values ++ resourceTypes.values ++ traits.values ++ parameters.values ++ securitySchemes.values).toList
+      .toList ++ (shapes.values ++ resourceTypes.values ++ traits.values ++ parameters.values ++ securitySchemes.values ++ responses.values).toList
 
   def findParameterOrError(ast: YPart)(key: String, scope: SearchScope.Scope): Parameter =
     findParameter(key, scope) match {
@@ -151,6 +156,19 @@ class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
       case ss: SecurityScheme => ss
     }
 
+  def findResponse(key: String, scope: SearchScope.Scope): Option[Response] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].responses, scope) collect {
+      case re: Response => re
+    }
+
+  def findResponseOrError(ast: YPart)(key: String, searchScope: SearchScope.Scope): Response =
+    findResponse(key, searchScope) match {
+      case Some(result) => result
+      case _ =>
+        error(s"Response '$key' not found", ast)
+        ErrorResponse
+    }
+
   def findNamedExampleOrError(ast: YPart)(key: String): Example = findNamedExample(key) match {
     case Some(result) => result
     case _ =>
@@ -180,4 +198,5 @@ object WebApiDeclarations {
   object ErrorNamedExample   extends Example(Fields(), Annotations()) with ErrorDeclaration
   object ErrorCreativeWork   extends CreativeWork(Fields(), Annotations()) with ErrorDeclaration
   object ErrorParameter      extends Parameter(Fields(), Annotations()) with ErrorDeclaration
+  object ErrorResponse       extends Response(Fields(), Annotations()) with ErrorDeclaration
 }

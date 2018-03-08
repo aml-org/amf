@@ -12,7 +12,7 @@ import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{Lazy, TemplateUri}
 import amf.plugins.document.webapi.annotations._
-import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, BaseSpecParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationsParser, SecuritySchemeParser, _}
@@ -34,7 +34,7 @@ import scala.collection.mutable.ListBuffer
 /**
   * Oas 2.0 spec parser
   */
-case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extends OasSpecParser {
+case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) extends OasSpecParser {
 
   def parseExtension(): Extension = {
     val extension = parseDocument(Extension())
@@ -119,7 +119,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
       "x-base-uri-parameters",
       entry => {
         val uriParameters =
-          HeaderParametersParser(entry.value.as[YMap], api.withBaseUriParameter).parse()
+          OasHeaderParametersParser(entry.value.as[YMap], api.withBaseUriParameter).parse()
         api.set(WebApiModel.BaseUriParameters, AmfArray(uriParameters, Annotations(entry.value)), Annotations(entry))
       }
     )
@@ -340,7 +340,8 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
       }
   }
 
-  case class RequestParser(map: YMap, globalOrig: OasParameters, producer: () => Request) {
+  case class RequestParser(map: YMap, globalOrig: OasParameters, producer: () => Request)(
+      implicit ctx: OasWebApiContext) {
     def parse(): Option[Request] = {
       val request = new Lazy[Request](producer)
 
@@ -424,7 +425,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
         entry =>
           entry.value
             .as[Seq[YMap]]
-            .map(value => payloads += PayloadParser(value, request.getOrCreate.withPayload).parse())
+            .map(value => payloads += OasPayloadParser(value, request.getOrCreate.withPayload).parse())
       )
 
       if (payloads.nonEmpty) request.getOrCreate.set(RequestModel.Payloads, AmfArray(payloads))
@@ -496,7 +497,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
               entries => {
                 val responses = mutable.ListBuffer[Response]()
                 entries.foreach(entry => {
-                  responses += ResponseParser(entry, operation.withResponse).parse()
+                  responses += OasResponseParser(entry, operation.withResponse).parse()
                 })
                 operation.set(OperationModel.Responses,
                               AmfArray(responses, Annotations(entry.value)),
@@ -513,106 +514,9 @@ case class OasDocumentParser(root: Root)(implicit val ctx: WebApiContext) extend
       operation
     }
   }
-
-  case class ResponseParser(entry: YMapEntry, producer: String => Response) {
-    def parse(): Response = {
-
-      val map = entry.value.as[YMap]
-
-      val node     = ScalarNode(entry.key)
-      val response = producer(node.string().value.toString).add(Annotations(entry))
-
-      if (response.name == "default") {
-        response.set(ResponseModel.StatusCode, "200")
-      } else {
-        response.set(ResponseModel.StatusCode, node.string())
-      }
-
-      map.key("description", ResponseModel.Description in response)
-
-      map.key(
-        "headers",
-        entry => {
-          val parameters: Seq[Parameter] =
-            HeaderParametersParser(entry.value.as[YMap], response.withHeader).parse()
-          response.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
-        }
-      )
-
-      val payloads = mutable.ListBuffer[Payload]()
-
-      defaultPayload(map, response.id).foreach(payloads += _)
-
-      map.key(
-        "x-response-payloads",
-        entry =>
-          entry.value
-            .as[Seq[YMap]]
-            .map(value => payloads += PayloadParser(value, response.withPayload).parse())
-      )
-
-      if (payloads.nonEmpty)
-        response.set(ResponseModel.Payloads, AmfArray(payloads))
-
-      val examples = OasResponseExamplesParser("examples", map).parse()
-      if (examples.nonEmpty) response.set(ResponseModel.Examples, AmfArray(examples))
-
-      AnnotationParser(response, map).parse()
-
-      ctx.closedShape(response.id, map, "response")
-
-      response
-    }
-
-    private def defaultPayload(entries: YMap, parentId: String): Option[Payload] = {
-      val payload = Payload().add(DefaultPayload())
-
-      entries.key("x-media-type",
-                  entry => payload.set(PayloadModel.MediaType, ScalarNode(entry.value).string(), Annotations(entry)))
-      // TODO add parent id to payload?
-      payload.adopted(parentId)
-
-      entries.key(
-        "schema",
-        entry =>
-          OasTypeParser(entry, (shape) => shape.withName("default").adopted(payload.id))
-            .parse()
-            .map { s =>
-              payload.set(PayloadModel.Schema, s, Annotations(entry))
-          }
-      )
-
-      if (payload.fields.nonEmpty) Some(payload) else None
-    }
-  }
-
-  case class PayloadParser(map: YMap, producer: (Option[String]) => Payload) {
-    def parse(): Payload = {
-
-      val payload = producer(
-        map.key("mediaType").map(entry => ScalarNode(entry.value).text().value.toString)
-      ).add(Annotations(map))
-
-      // todo set again for not lose annotations?
-      map.key("mediaType", PayloadModel.MediaType in payload)
-
-      map.key(
-        "schema",
-        entry => {
-          OasTypeParser(entry, (shape) => shape.withName("schema").adopted(payload.id))
-            .parse()
-            .map(payload.set(PayloadModel.Schema, _, Annotations(entry)))
-        }
-      )
-
-      AnnotationParser(payload, map).parse()
-
-      payload
-    }
-  }
 }
 
-abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser with SpecParserOps {
+abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends BaseSpecParser with SpecParserOps {
 
   protected def parseDeclarations(root: Root, map: YMap): Unit = {
     val parent = root.location + "#/declarations"
@@ -622,8 +526,8 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
       .parse()
     AbstractDeclarationsParser("x-traits", (entry: YMapEntry) => Trait(entry), map, parent).parse()
     parseSecuritySchemeDeclarations(map, parent)
-    parseParameterDeclarations("parameters", map, parent)
-
+    parseParameterDeclarations(map, parent)
+    parseResponsesDeclarations("responses", map, parent)
     ctx.futureDeclarations.resolve()
 
   }
@@ -695,7 +599,7 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
     )
   }
 
-  def parseParameterDeclarations(key: String, map: YMap, parentPath: String): Unit = {
+  def parseParameterDeclarations(map: YMap, parentPath: String): Unit = {
     map.key(
       "parameters",
       entry => {
@@ -715,6 +619,24 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
             val parameter = oasParameter.parameter.withName(typeName).add(DeclaredElement())
             parameter.fields.getValue(ParameterModel.Binding).annotations += ExplicitField()
             ctx.declarations.registerParameter(parameter, oasParameter.payload)
+          })
+      }
+    )
+  }
+
+  def parseResponsesDeclarations(key: String, map: YMap, parentPath: String): Unit = {
+    map.key(
+      key,
+      entry => {
+        entry.value
+          .as[YMap]
+          .entries
+          .foreach(e => {
+            ctx.declarations +=
+              OasResponseParser(e, (name: String) => Response().withName(name).adopted(parentPath))
+                .parse()
+                .add(DeclaredElement())
+
           })
       }
     )
@@ -982,43 +904,6 @@ abstract class OasSpecParser(implicit ctx: WebApiContext) extends BaseSpecParser
 
   object OasParameter {
     def apply(ast: YMap): OasParameter = OasParameter(Parameter(ast), Payload(ast))
-  }
-
-  case class HeaderParametersParser(map: YMap, producer: String => Parameter) {
-    def parse(): Seq[Parameter] = {
-      map.entries
-        .map(entry => HeaderParameterParser(entry, producer).parse())
-    }
-  }
-
-  case class HeaderParameterParser(entry: YMapEntry, producer: String => Parameter) {
-    def parse(): Parameter = {
-
-      val name      = entry.key.as[YScalar].text
-      val parameter = producer(name).add(Annotations(entry))
-
-      parameter
-        .set(ParameterModel.Required, !name.endsWith("?"))
-        .set(ParameterModel.Name, ScalarNode(entry.key).string())
-
-      val map = entry.value.as[YMap]
-
-      map.key("description", ParameterModel.Description in parameter)
-      map.key("required", (ParameterModel.Required in parameter).explicit)
-
-      map.key(
-        "type",
-        _ => {
-          OasTypeParser(entry, (shape) => shape.withName("schema").adopted(parameter.id))
-            .parse()
-            .map(parameter.set(ParameterModel.Schema, _, Annotations(entry)))
-        }
-      )
-
-      AnnotationParser(parameter, map).parse()
-
-      parameter
-    }
   }
 
 }

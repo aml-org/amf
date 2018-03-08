@@ -16,6 +16,7 @@ import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.IdCounter
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
+import amf.plugins.document.webapi.parser.spec.oas.OasDeclaredResponsesEmitter
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork}
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
@@ -60,6 +61,12 @@ case class Raml08RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
                                             spec.factory.namedSecurityEmitter)
 //    if (declarations.parameters.nonEmpty)
 //      result += DeclaredParametersEmitter(declarations.parameters.values.toSeq, ordering, document.references) // todo here or move to 1.0 only?
+
+    if (declarations.responses.nonEmpty)
+      result += OasDeclaredResponsesEmitter("(responses)",
+                                            declarations.responses.values.toSeq,
+                                            ordering,
+                                            document.references)(toOas(spec))
 
     result
   }
@@ -154,6 +161,12 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
     if (declarations.parameters.nonEmpty)
       result += DeclaredParametersEmitter(declarations.parameters.values.toSeq, ordering, document.references) // todo here or move to 1.0 only?
 
+    if (declarations.responses.nonEmpty)
+      result += OasDeclaredResponsesEmitter("(responses)",
+                                            declarations.responses.values.toSeq,
+                                            ordering,
+                                            document.references)(toOas(spec))
+
     result
   }
 
@@ -206,7 +219,6 @@ abstract class RamlRootLevelEmitters(doc: BaseUnit with DeclaresModel, ordering:
 
     override def position(): Position = types.headOption.map(a => pos(a.annotations)).getOrElse(ZERO)
   }
-
 }
 
 case class ReferenceEmitter(reference: BaseUnit, ordering: SpecOrdering, aliasGenerator: () => String)

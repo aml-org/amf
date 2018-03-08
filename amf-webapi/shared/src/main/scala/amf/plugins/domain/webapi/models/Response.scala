@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.models
 
-import amf.core.model.domain.{AmfArray, DomainElement}
+import amf.core.model.domain.{AmfArray, DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.metamodel.ResponseModel
@@ -9,7 +9,7 @@ import amf.plugins.domain.webapi.metamodel.ResponseModel._
 /**
   * Response internal model.
   */
-case class Response(fields: Fields, annotations: Annotations) extends DomainElement {
+case class Response(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
 
   def name: String            = fields(Name)
   def description: String     = fields(Description)
@@ -68,6 +68,8 @@ case class Response(fields: Fields, annotations: Annotations) extends DomainElem
   }
 
   override def meta = ResponseModel
+
+  override def linkCopy(): Linkable = Response().withId(id)
 }
 
 object Response {

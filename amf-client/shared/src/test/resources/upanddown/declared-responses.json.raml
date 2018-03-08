@@ -1,0 +1,18 @@
+#%RAML 1.0
+(responses):
+  Default:
+    description: 200 descr
+    headers:
+      Time-Ago:
+        required: true
+        type: integer
+title: My API With Types
+description: This RAML illustrates a type declaration that uses facets to restrict its object properties.
+version: V1
+/levelzero:
+  displayName: One display name
+  description: and this description!
+  get:
+    displayName: Some title
+    responses:
+      200: Default
