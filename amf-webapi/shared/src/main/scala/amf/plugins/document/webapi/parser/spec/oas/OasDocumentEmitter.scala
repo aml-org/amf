@@ -9,7 +9,7 @@ import amf.core.model.document._
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Position.ZERO
-import amf.core.parser.{Annotations, EmptyFutureDeclarations, FieldEntry, Fields, Position, Value}
+import amf.core.parser.{EmptyFutureDeclarations, FieldEntry, Fields, Position}
 import amf.core.remote.{Oas, Vendor}
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.annotations._
@@ -278,13 +278,13 @@ case class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: Oa
       val result = mutable.ListBuffer[EntryEmitter]()
 
       val parameters = operationOnly(request.queryParameters) ++ operationOnly(request.headers)
-      val payloads   = Payloads(request.payloads, endpointPayloadEmitted)
+      val payloads   = OasPayloads(request.payloads, endpointPayloadEmitted)
 
       if (parameters.nonEmpty || payloads.default.isDefined)
         result ++= ParametersEmitter("parameters", parameters, ordering, payloads.default, references).emitters()
 
       if (payloads.other.nonEmpty)
-        result += PayloadsEmitter("x-request-payloads", payloads.other, ordering, references)
+        result += OasPayloadsEmitter("x-request-payloads", payloads.other, ordering, references)
 
       val fs = request.fields
 
@@ -326,105 +326,10 @@ case class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: Oa
     }
 
     private def responses(f: FieldEntry, ordering: SpecOrdering): Seq[EntryEmitter] = {
-      ordering.sorted(f.array.values.map(e => ResponseEmitter(e.asInstanceOf[Response], ordering, references)))
+      ordering.sorted(f.array.values.map(e => OasResponseEmitter(e.asInstanceOf[Response], ordering, references)))
     }
 
     override def position(): Position = pos(f.value.annotations)
-  }
-
-  case class ResponseEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])
-      extends EntryEmitter {
-    override def emit(b: EntryBuilder): Unit = {
-      val fs = response.fields
-
-      sourceOr(
-        response.annotations,
-        b.complexEntry(
-          ScalarEmitter(fs.entry(ResponseModel.Name).get.scalar).emit(_),
-          _.obj { b =>
-            val result = mutable.ListBuffer[EntryEmitter]()
-
-            fs.entry(ResponseModel.Description)
-              .orElse(Some(FieldEntry(ResponseModel.Description, Value(AmfScalar(""), Annotations())))) // this is mandatory in OAS 2.0
-              .map(f => result += ValueEmitter("description", f))
-            fs.entry(RequestModel.Headers)
-              .map(f => result += RamlParametersEmitter("headers", f, ordering, references)(toRaml(spec)))
-
-            val payloads = Payloads(response.payloads)
-
-            payloads.default.foreach(payload => {
-              payload.fields.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("x-media-type", f))
-              payload.fields
-                .entry(PayloadModel.Schema)
-                .map { f =>
-                  if (!f.value.value.annotations.contains(classOf[SynthesizedField])) {
-                    result += OasSchemaEmitter(f, ordering, references)
-                  }
-                }
-            })
-
-            if (payloads.other.nonEmpty)
-              result += PayloadsEmitter("x-response-payloads", payloads.other, ordering, references)
-
-            fs.entry(ResponseModel.Examples).map(f => result += OasResponseExamplesEmitter("examples", f, ordering))
-            result ++= AnnotationsEmitter(response, ordering).emitters
-
-            traverse(ordering.sorted(result), b)
-          }
-        )
-      )
-    }
-
-    override def position(): Position = pos(response.annotations)
-  }
-
-  case class PayloadsEmitter(key: String, payloads: Seq[Payload], ordering: SpecOrdering, references: Seq[BaseUnit])
-      extends EntryEmitter {
-    override def emit(b: EntryBuilder): Unit = {
-      b.entry(
-        key,
-        _.list(traverse(ordering.sorted(payloads.map(p => PayloadEmitter(p, ordering, references))), _))
-      )
-    }
-
-    override def position(): Position = {
-      val filtered = payloads
-        .filter(p => p.annotations.find(classOf[LexicalInformation]).exists(!_.range.start.isZero))
-      val result = filtered
-        .foldLeft[Position](ZERO)(
-          (pos, p) =>
-            p.annotations
-              .find(classOf[LexicalInformation])
-              .map(_.range.start)
-              .filter(newPos => pos.isZero || pos.lt(newPos))
-              .getOrElse(pos))
-      result
-    }
-  }
-
-  case class PayloadEmitter(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit]) extends PartEmitter {
-    override def emit(b: PartBuilder): Unit = {
-      sourceOr(
-        payload.annotations,
-        b.obj { b =>
-          val fs     = payload.fields
-          val result = mutable.ListBuffer[EntryEmitter]()
-
-          fs.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("mediaType", f))
-          fs.entry(PayloadModel.Schema).map { f =>
-            if (!f.value.value.annotations.contains(classOf[SynthesizedField])) {
-              result += OasSchemaEmitter(f, ordering, references)
-            }
-          }
-
-          result ++= AnnotationsEmitter(payload, ordering).emitters
-
-          traverse(ordering.sorted(result), b)
-        }
-      )
-    }
-
-    override def position(): Position = pos(payload.annotations)
   }
 
   case class EndpointsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])
@@ -531,26 +436,6 @@ case class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: Oa
     }
   }
 
-  case class Payloads(default: Option[Payload], other: Seq[Payload])
-
-  object Payloads {
-    def apply(payloads: Seq[Payload], endpointPayloadEmitted: Boolean = false): Payloads = {
-      val clean = payloads.filter(!_.annotations.contains(classOf[EndPointBodyParameter]))
-
-      var default = clean.find(_.annotations.contains(classOf[DefaultPayload]))
-
-      default = if (endpointPayloadEmitted) default else default.orElse(defaultPayload(clean))
-
-      Payloads(default, clean.filter(_ != default.orNull))
-    }
-
-    def defaultPayload(payloads: Seq[Payload]): Option[Payload] =
-      payloads
-        .find(p => Option(p.mediaType).isEmpty || p.mediaType.isEmpty)
-        .orElse(payloads.find(_.mediaType == "application/json"))
-        .orElse(payloads.headOption)
-  }
-
 }
 
 class OasSpecEmitter(implicit val spec: OasSpecEmitterContext) extends BaseSpecEmitter {
@@ -628,6 +513,8 @@ class OasSpecEmitter(implicit val spec: OasSpecEmitterContext) extends BaseSpecE
       if (declarations.parameters.nonEmpty)
         result += DeclaredParametersEmitter(declarations.parameters.values.toSeq, ordering, references)
 
+      if (declarations.responses.nonEmpty)
+        result += OasDeclaredResponsesEmitter("responses", declarations.responses.values.toSeq, ordering, references)
       result
     }
   }
@@ -871,5 +758,18 @@ class OasSpecEmitter(implicit val spec: OasSpecEmitterContext) extends BaseSpecE
 
     override def position(): Position = pos(payload.annotations)
   }
+}
 
+case class OasDeclaredResponsesEmitter(key: String,
+                                       responses: Seq[Response],
+                                       ordering: SpecOrdering,
+                                       references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext)
+    extends EntryEmitter {
+  override def emit(b: EntryBuilder): Unit = {
+    b.entry(
+      key,
+      _.obj(traverse(ordering.sorted(responses.map(OasResponseEmitter(_, ordering, references: Seq[BaseUnit]))), _)))
+  }
+
+  override def position(): Position = responses.headOption.map(a => pos(a.annotations)).getOrElse(ZERO)
 }

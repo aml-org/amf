@@ -74,8 +74,14 @@ abstract class RamlResponseEmitter(response: Response, ordering: SpecOrdering, r
       response.annotations,
       b.complexEntry(
         ScalarEmitter(fs.entry(ResponseModel.StatusCode).get.scalar).emit(_),
-        _.obj { b =>
-          traverse(ordering.sorted(emitters(fs)), b)
+        p => {
+          if (response.isLink) {
+            spec.localReference(response).emit(p)
+          } else {
+            p.obj { b =>
+              traverse(ordering.sorted(emitters(fs)), b)
+            }
+          }
         }
       )
     )

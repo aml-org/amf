@@ -27,7 +27,8 @@ object WellKnownAnnotation {
     "consumes",
     "produces",
     "flow",
-    "examples"
+    "examples",
+    "responses"
   )
 
   private val oasKnownAnnotations = Set(

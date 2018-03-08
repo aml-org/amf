@@ -7,7 +7,7 @@ import amf.core.model.document._
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{LibraryReference, LinkReference, ParserContext}
 import amf.core.remote.Platform
-import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, OasWebApiContext, WebApiContext}
+import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, OasWebApiContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Header, Oas20Overlay}
@@ -28,7 +28,7 @@ object OAS20Plugin extends BaseWebApiPlugin {
 
   override val validationProfile: String = OAS
 
-  private def detectOasUnit(root: Root)(implicit ctx: WebApiContext): Option[BaseUnit] = {
+  private def detectOasUnit(root: Root)(implicit ctx: OasWebApiContext): Option[BaseUnit] = {
     OasHeader(root) map {
       case Oas20Overlay   => OasDocumentParser(root).parseOverlay()
       case Oas20Extension => OasDocumentParser(root).parseExtension()
@@ -46,7 +46,7 @@ object OAS20Plugin extends BaseWebApiPlugin {
   override def canParse(root: Root): Boolean = OasHeader(root).isDefined
 
   override def parse(document: Root, parentContext: ParserContext, platform: Platform): Option[BaseUnit] = {
-    implicit val ctx: WebApiContext =
+    implicit val ctx: OasWebApiContext =
       new OasWebApiContext(parentContext)
     document.referenceKind match {
       case LibraryReference => Some(OasModuleParser(document).parseModule())

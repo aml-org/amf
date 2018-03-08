@@ -9,7 +9,7 @@ import amf.plugins.document.webapi.annotations.DeclaredElement
 import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmitterContext, TagToReferenceEmitter}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecEmitter
-import amf.plugins.domain.webapi.models.Parameter
+import amf.plugins.domain.webapi.models.{Parameter, Response}
 import org.yaml.model.YDocument.PartBuilder
 
 /**
@@ -25,6 +25,8 @@ case class OasTagToReferenceEmitter(target: DomainElement, label: Option[String]
         spec.ref(b, OasDefinitions.appendDefinitionsPrefix(referenceLabel))
       case p: Parameter if p.annotations.contains(classOf[DeclaredElement]) =>
         spec.ref(b, OasDefinitions.appendParameterDefinitionsPrefix(referenceLabel))
+      case r: Response if r.annotations.contains(classOf[DeclaredElement]) =>
+        spec.ref(b, OasDefinitions.appendResponsesDefinitionsPrefix(referenceLabel))
       case _ => spec.ref(b, referenceLabel)
     }
   }

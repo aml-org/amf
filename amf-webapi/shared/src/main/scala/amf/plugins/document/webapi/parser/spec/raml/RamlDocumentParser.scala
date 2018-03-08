@@ -260,6 +260,25 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
       .parse()
     parseSecuritySchemeDeclarations(map, parent)
     parseParameterDeclarations("(parameters)", map, root.location + "#/parameters")
+    parseResponsesDeclarations("(responses)", map, root.location + "#/responses")
+  }
+
+  def parseResponsesDeclarations(key: String, map: YMap, parentPath: String): Unit = {
+    map.key(
+      key,
+      entry => {
+        entry.value
+          .as[YMap]
+          .entries
+          .foreach(e => {
+            ctx.declarations +=
+              OasResponseParser(e, (name: String) => Response().withName(name).adopted(parentPath))(toOas(ctx))
+                .parse()
+                .add(DeclaredElement())
+
+          })
+      }
+    )
   }
 
   def parseAnnotationTypeDeclarations(map: YMap, customProperties: String): Unit = {

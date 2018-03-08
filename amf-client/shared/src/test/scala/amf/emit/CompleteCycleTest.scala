@@ -864,4 +864,24 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Single Array Value") {
     cycle("single-array-value.raml", RamlYamlHint)
   }
+
+  test("Declared response") {
+    cycle("declared-responses.json", OasJsonHint)
+  }
+
+  test("Declared response oas to raml") {
+    cycle("declared-responses.json", "declared-responses.json.raml", OasJsonHint, Raml)
+  }
+
+  test("Declared response raml to oas") {
+    cycle("declared-responses.json.raml", "declared-responses.json", RamlYamlHint, Oas)
+  }
+
+  test("Declared response oas to jsonld") {
+    cycle("declared-responses.json", "declared-responses.json.jsonld", OasJsonHint, Amf)
+  }
+
+  test("Declared response jsonld to oas") {
+    cycle("declared-responses.json.jsonld", "declared-responses.jsonld.json", AmfJsonHint, Oas)
+  }
 }
