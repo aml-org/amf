@@ -49,12 +49,13 @@ trait RamlTypeSyntax {
       case "number"            => ScalarShape().withDataType((Namespace.Xsd + "float").iri())
       case "boolean"           => ScalarShape().withDataType((Namespace.Xsd + "boolean").iri())
       case "datetime"          => ScalarShape().withDataType((Namespace.Xsd + "dateTime").iri())
-      case "datetime-only"     => ScalarShape().withDataType((Namespace.Xsd + "dateTime").iri())
+      case "datetime-only"     => ScalarShape().withDataType((Namespace.Shapes + "dateTimeOnly").iri())
       case "time-only"         => ScalarShape().withDataType((Namespace.Xsd + "time").iri())
       case "date-only"         => ScalarShape().withDataType((Namespace.Xsd + "date").iri())
       case "array"             => ArrayShape()
       case "object"            => NodeShape()
       case "union"             => UnionShape()
+      case "file"              => FileShape()
     }
   }
 
@@ -63,6 +64,13 @@ trait RamlTypeSyntax {
           .indexOf("}") > -1 || (str.startsWith("<<") && str.endsWith(">>"))) {
       false
     } else RamlTypeDefMatcher.matchType(str, default = UndefinedType) != UndefinedType
+
+  def isTypeExpression(str: String): Boolean = {
+    try {  RamlTypeDefMatcher.matchType(str, default = UndefinedType) == TypeExpressionType }
+    catch {
+      case _:Exception => false
+    }
+  }
 }
 
 // Default RAML types
