@@ -12,6 +12,7 @@ import amf.core.parser.Position.ZERO
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies2.annotations.AliasesLocation
 import amf.plugins.document.vocabularies2.emitters.common.{ExternalEmitter, IdCounter}
+import amf.plugins.document.vocabularies2.emitters.instances.DialectEmitterHelper
 import amf.plugins.document.vocabularies2.metamodel.document.DialectModel
 import amf.plugins.document.vocabularies2.metamodel.domain.{DocumentMappingModel, PropertyMappingModel}
 import amf.plugins.document.vocabularies2.model.document.{Dialect, DialectFragment, DialectLibrary}
@@ -19,21 +20,35 @@ import amf.plugins.document.vocabularies2.model.domain._
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YDocument, YNode, YType}
 
-trait AliasesConsumer {
+trait AliasesConsumer extends DialectEmitterHelper {
   val dialect: Dialect
   val aliases: Map[String,(String,String)]
   def aliasFor(id: String): Option[String] = {
-    if (id.startsWith(dialect.id)) {
-      Some(id.split(dialect.id).last.replace("/declarations/",""))
-    } else {
-      aliases.keySet.find(id.contains(_)) map { key =>
-        val alias = aliases(key)._1
-        val postfix = id.split(key).last match {
-          case id if id.contains("/declarations/") => id.replace("/declarations/", "")
-          case nonLibraryDeclaration               => nonLibraryDeclaration
+    maybeFindNodeMappingById(id) match {
+      case Some(nodeMapping: NodeMapping) => {
+        if (id.startsWith(dialect.id)) {
+          Some(nodeMapping.name)
+        } else {
+          aliases.keySet.find(id.contains(_)).map { key =>
+            val alias = aliases(key)._1
+            alias + "." + nodeMapping.name
+          } orElse { Some(nodeMapping.name) }
         }
-        alias + "." + postfix
       }
+
+      case _ =>
+        if (id.startsWith(dialect.id)) {
+          Some(id.split(dialect.id).last.replace("/declarations/", ""))
+        } else {
+          aliases.keySet.find(id.contains(_)) map { key =>
+            val alias = aliases(key)._1
+            val postfix = id.split(key).last match {
+              case id if id.contains("/declarations/") => id.replace("/declarations/", "")
+              case nonLibraryDeclaration => nonLibraryDeclaration
+            }
+            alias + "." + postfix
+          }
+        }
     }
   }
 }
@@ -47,7 +62,7 @@ trait PosExtractor {
 }
 
 case class LibraryDocumentModelEmitter(dialect: Dialect, ordering: SpecOrdering, aliases: Map[String, (String, String)]) extends EntryEmitter with AliasesConsumer {
-  val mapping: DocumentMapping =  dialect.documents.library()
+  val mapping: DocumentMapping =  dialect.documents().library()
   var emitters: Seq[EntryEmitter] = Seq()
 
   override def emit(b: EntryBuilder): Unit = {
@@ -87,7 +102,7 @@ case class LibraryDocumentModelEmitter(dialect: Dialect, ordering: SpecOrdering,
 }
 
 case class RootDocumentModelEmitter(dialect: Dialect, ordering: SpecOrdering, aliases: Map[String, (String, String)]) extends EntryEmitter with AliasesConsumer {
-  val mapping =  dialect.documents().root()
+  val mapping: DocumentMapping =  dialect.documents().root()
   var emitters: Seq[EntryEmitter] = Seq()
 
   override def emit(b: EntryBuilder): Unit = {

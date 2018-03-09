@@ -1,9 +1,9 @@
 package amf.plugins.document.vocabularies2.model.domain
 
 import amf.core.metamodel.Obj
-import amf.core.utils._
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
+import amf.core.utils._
 import amf.plugins.document.vocabularies2.metamodel.domain.NodeMappingModel
 import amf.plugins.document.vocabularies2.metamodel.domain.NodeMappingModel._
 import org.yaml.model.YMap
