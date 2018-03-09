@@ -44,4 +44,8 @@ class Raml08ResolutionTest extends RamlResolutionTest {
       assert(ex.getMessage.contains("Message: Property errorKey not supported in a raml 0.8 webApi node"))
     }
   }
+
+  test("Test empty trait in operations") {
+    cycle("empty-is-operation-endpoint.raml", "empty-is-operation-endpoint.raml.raml", RamlYamlHint, Raml08)
+  }
 }
