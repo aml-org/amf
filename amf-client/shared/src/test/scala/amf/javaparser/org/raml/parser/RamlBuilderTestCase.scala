@@ -10,4 +10,6 @@ class RamlBuilderTestCase extends ModelResolutionTest {
   override def inputFileName: String = "input.raml"
 
   override def outputFileName: String = "output.txt"
+
+  override protected def ignoreDir(d: String): Boolean = true
 }
