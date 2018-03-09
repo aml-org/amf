@@ -3,7 +3,7 @@ package amf.javaparser.org.raml
 import amf.ProfileNames
 import amf.core.annotations.SourceVendor
 import amf.core.client.GenerationOptions
-import amf.core.model.document.{BaseUnit, EncodesModel}
+import amf.core.model.document.{BaseUnit, EncodesModel, Module}
 import amf.core.parser.Position
 import amf.core.remote._
 import amf.core.validation.AMFValidationResult
@@ -59,6 +59,12 @@ trait ModelValidationTest extends DirectoryTest {
         .find(classOf[SourceVendor])
         .map(_.vendor)
         .getOrElse(Raml10)
+    case m: Module =>
+      m.annotations
+        .find(classOf[SourceVendor])
+        .map(_.vendor)
+        .getOrElse(Raml10)
+    case _ => Raml10
   }
 }
 

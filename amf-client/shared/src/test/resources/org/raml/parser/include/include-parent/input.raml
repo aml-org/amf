@@ -2,6 +2,9 @@
 title: Including parent resources
 
 mediaType: application/json
+/blabla:
+  get:
+    is: 400-fault
 
 traits:
   400-fault: !include libraries/traits/responses/400-fault.raml

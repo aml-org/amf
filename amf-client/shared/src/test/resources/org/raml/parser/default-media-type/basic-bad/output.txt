@@ -1,0 +1,20 @@
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/basic-bad/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://raml.org/vocabularies/amf/parser#parsing-error
+  Message: Unexpected key 'example'. Expecting valid media types.
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(7,6)-(8,0)]))
+
+- Source: http://raml.org/vocabularies/amf/parser#parsing-error
+  Message: Unexpected key 'example'. Expecting valid media types.
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(15,6)-(16,0)]))

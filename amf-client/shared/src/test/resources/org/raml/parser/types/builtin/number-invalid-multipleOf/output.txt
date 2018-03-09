@@ -1,25 +1,13 @@
-RamlDocumentNode (Start: 11 , End: 114, On: input.raml, Source: SYObjectNode)
-    KeyValueNodeImpl (Start: 11 , End: 49, On: input.raml)
-        SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
-        OverlayableObjectNodeImpl (Start: 18 , End: 49, On: input.raml, Source: SYStringNode)
-            KeyValueNodeImpl (Start: 11 , End: 49, On: input.raml)
-                StringNodeImpl: "value" (Start: -1 , End: -1)
-                OverlayableStringNode: "Integer with invalid multipleOf" (Start: 18 , End: 49, On: input.raml)
-    TypesNode (Start: 50 , End: 114, On: input.raml, Source: KeyValueNodeImpl)
-        SYStringNode: "types" (Start: 50 , End: 55, On: input.raml)
-        SYObjectNode (Start: 61 , End: 114, On: input.raml)
-            TypeDeclarationField (Start: 61 , End: 114, On: input.raml, Source: KeyValueNodeImpl)
-                SYStringNode: "TestType" (Start: 61 , End: 69, On: input.raml)
-                TypeDeclarationNode (Start: 79 , End: 114, On: input.raml, Source: SYObjectNode)
-                    KeyValueNodeImpl (Start: 79 , End: 91, On: input.raml)
-                        SYStringNode: "type" (Start: 79 , End: 83, On: input.raml)
-                        NativeTypeExpressionNode: "number" (Start: 85 , End: 91, On: input.raml, Source: SYStringNode)
-                    FacetNode (Start: 100 , End: 113, On: input.raml, Source: KeyValueNodeImpl)
-                        SYStringNode: "multipleOf" (Start: 100 , End: 110, On: input.raml)
-                        ErrorNode: "Invalid element 0." (Start: 112 , End: 113, On: input.raml, Source: SYIntegerNode)
-                    KeyValueNodeImpl (Start: -1 , End: -1)
-                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
-                        ObjectNodeImpl (Start: -1 , End: -1)
-                            KeyValueNodeImpl (Start: -1 , End: -1)
-                                StringNodeImpl: "value" (Start: -1 , End: -1)
-                                OverlayableStringNode: "TestType" (Start: -1 , End: -1, Source: SYStringNode)
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/number-invalid-multipleOf/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://raml.org/vocabularies/amf/parser#multiple-of
+  Message: Multiple of facet should be greater than 0
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/number-invalid-multipleOf/input.raml#/declarations/scalar/TestType
+  Property: 
+  Position: Some(LexicalInformation([(4,4)-(7,0)]))
