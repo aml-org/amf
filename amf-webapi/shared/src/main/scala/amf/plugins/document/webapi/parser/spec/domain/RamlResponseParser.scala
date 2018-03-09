@@ -5,7 +5,7 @@ import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
-import amf.plugins.document.webapi.parser.spec.declaration.AnyDefaultType
+import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, DefaultType, NilDefaultType}
 import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Payload, Response}
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
@@ -23,12 +23,16 @@ case class Raml10ResponseParser(entry: YMapEntry, producer: (String) => Response
     AnnotationParser(response, map).parse()
 
   }
+
+  override protected val defaultType: DefaultType = AnyDefaultType
 }
 
 case class Raml08ResponseParser(entry: YMapEntry, producer: (String) => Response, parseOptional: Boolean = false)(
     implicit ctx: RamlWebApiContext)
     extends RamlResponseParser(entry, producer, parseOptional) {
   override protected def parseMap(response: Response, map: YMap): Unit = Unit
+
+  override protected val defaultType: DefaultType = NilDefaultType
 }
 
 abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Response, parseOptional: Boolean = false)(
@@ -36,6 +40,8 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
     extends SpecParserOps {
 
   protected def parseMap(response: Response, map: YMap)
+
+  protected val defaultType: DefaultType
 
   def parse(): Response = {
     val node = ScalarNode(entry.key).text()
@@ -76,7 +82,7 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
             entry.value.tagType match {
               case YType.Null =>
                 ctx.factory
-                  .typeParser(entry, shape => shape.withName("default").adopted(payload.id), false, AnyDefaultType)
+                  .typeParser(entry, shape => shape.withName("default").adopted(payload.id), false, defaultType)
                   .parse()
                   .foreach { schema =>
                     schema.annotations += SynthesizedField()
@@ -86,7 +92,7 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
 
               case YType.Str =>
                 ctx.factory
-                  .typeParser(entry, shape => shape.withName("default").adopted(payload.id), false, AnyDefaultType)
+                  .typeParser(entry, shape => shape.withName("default").adopted(payload.id), false, defaultType)
                   .parse()
                   .foreach(payloads += payload.withSchema(_))
                 res.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
@@ -107,7 +113,7 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
                     if (others.entries.nonEmpty) {
                       if (payloads.isEmpty) {
                         ctx.factory
-                          .typeParser(entry, shape => shape.withName("default").adopted(res.id), false, AnyDefaultType)
+                          .typeParser(entry, shape => shape.withName("default").adopted(res.id), false, defaultType)
                           .parse()
                           .foreach(payloads += res.withPayload(None).withSchema(_)) // todo
                       } else {

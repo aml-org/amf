@@ -1,0 +1,19 @@
+#%RAML 0.8
+title: WarrantyLife API for Recommendations
+mediaType: application/json
+/recommendation:
+  get:
+    body:
+      example:
+        productId: 32568
+        warrantyId: 5698452
+        warrantyName: Life time warranty
+      type: nil
+    responses:
+      200:
+        body:
+          example:
+            productId: 32568
+            warrantyId: 5698452
+            warrantyName: Life time warranty
+          type: nil

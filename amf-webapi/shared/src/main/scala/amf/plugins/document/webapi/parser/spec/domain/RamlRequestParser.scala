@@ -5,7 +5,12 @@ import amf.core.parser.{Annotations, _}
 import amf.core.utils.Lazy
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.SpecParserOps
-import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, Raml10TypeParser}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  AnyDefaultType,
+  DefaultType,
+  NilDefaultType,
+  Raml10TypeParser
+}
 import amf.plugins.domain.webapi.metamodel.RequestModel
 import amf.plugins.domain.webapi.models.{Payload, Request}
 import org.yaml.model.{YMap, YType}
@@ -32,6 +37,8 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
   }
 
   override protected val baseUriParametersKey: String = "(baseUriParameters)"
+
+  override protected val defaultType: DefaultType = AnyDefaultType
 }
 
 case class Raml08RequestParser(map: YMap, producer: () => Request, parseOptional: Boolean = false)(
@@ -41,6 +48,8 @@ case class Raml08RequestParser(map: YMap, producer: () => Request, parseOptional
   override protected val baseUriParametersKey: String = "baseUriParameters"
 
   override def parse(request: Lazy[Request], target: Target): Unit = Unit
+
+  override protected val defaultType: DefaultType = NilDefaultType
 }
 
 abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOptional: Boolean = false)(
@@ -51,6 +60,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
   protected val baseUriParametersKey: String
 
   def parse(request: Lazy[Request], target: Target): Unit
+  protected val defaultType: DefaultType
 
   def parse(): Option[Request] = {
 
@@ -97,7 +107,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
               .typeParser(entry,
                           shape => shape.withName("default").adopted(request.getOrCreate.id),
                           false,
-                          AnyDefaultType)
+                          defaultType)
               .parse()
               .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
 
@@ -106,7 +116,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
               .typeParser(entry,
                           shape => shape.withName("default").adopted(request.getOrCreate.id),
                           false,
-                          AnyDefaultType)
+                          defaultType)
               .parse()
               .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
 
@@ -129,7 +139,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
                       .typeParser(entry,
                                   shape => shape.withName("default").adopted(request.getOrCreate.id),
                                   false,
-                                  AnyDefaultType)
+                                  defaultType)
                       .parse()
                       .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
                   } else {

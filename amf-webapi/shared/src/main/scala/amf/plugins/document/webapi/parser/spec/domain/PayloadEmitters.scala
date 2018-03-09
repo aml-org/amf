@@ -16,7 +16,7 @@ import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload
-import org.yaml.model.YDocument.EntryBuilder
+import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YMap, YNode}
 
 /**
@@ -68,10 +68,18 @@ case class Raml08PayloadsEmitter(key: String, f: FieldEntry, ordering: SpecOrder
       RawEmitter(key).emit(_),
       ob => {
         val payloads = f.array.values.collect({ case p: Payload => p })
-        val emitters = payloads.map { p =>
-          Raml08PayloadEmitter(p, ordering)
+        if (payloads.isEmpty) ob += YMap.empty
+        else {
+          val emitters = payloads.flatMap { p =>
+            Raml08PayloadEmitter(p, ordering).emitters
+          }
+          emitters match {
+            case Seq(pe: PartEmitter) => pe.emit(ob)
+            case es if es.forall(_.isInstanceOf[EntryEmitter]) =>
+              ob.obj(traverse(ordering.sorted(es.collect({ case e: EntryEmitter => e })), _))
+            case other => throw new Exception(s"IllegalTypeDeclarations found: $other")
+          }
         }
-        ob.obj(traverse(ordering.sorted(emitters), _))
       }
     )
   }
@@ -79,28 +87,47 @@ case class Raml08PayloadsEmitter(key: String, f: FieldEntry, ordering: SpecOrder
   override def position(): Position = pos(f.value.annotations)
 }
 
-case class Raml08PayloadEmitter(payload: Payload, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
-    extends EntryEmitter {
+case class Raml08PayloadEmitter(payload: Payload, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
 
-  override def emit(b: EntryBuilder): Unit = {
-    b.entry(
-      payload.mediaType,
-      p => {
-        Option(payload.schema) match {
+  def emitters: Seq[Emitter] = {
+    payload.fields.entry(PayloadModel.MediaType) match {
+      case Some(fieldEntry) =>
+        Seq(new EntryEmitter() {
+          override def emit(b: EntryBuilder): Unit =
+            b.entry(
+              payload.mediaType,
+              p => {
+                typeEmitters match {
+                  case Seq(pe: PartEmitter) => pe.emit(p)
+                  case es if es.forall(_.isInstanceOf[EntryEmitter]) =>
+                    p.obj(traverse(ordering.sorted(es.collect({ case e: EntryEmitter => e })), _))
+                  case other => throw new Exception(s"IllegalTypeDeclarations found: $other")
+                }
+              }
+            )
 
-          case Some(node: NodeShape) if !node.isLink && node.annotations.find(classOf[ParsedJSONSchema]).isEmpty =>
-            p.obj(Raml08FormPropertiesEmitter(node, ordering).emit)
-          case Some(anyShape: AnyShape) =>
-            Raml08TypePartEmitter(anyShape, ordering, Seq()).emit(p)
-          case Some(other) =>
-            CommentEmitter(other, s"Cannot emit schema ${other.getClass.toString} in raml 08 body request").emit(p)
-          case None => p.+=(YNode(YMap.empty)) // ignore
-        }
-      }
-    )
+          override def position(): Position = pos(payload.annotations)
+        })
+      case None => typeEmitters
+    }
   }
 
-  override def position(): Position = pos(payload.annotations)
+  val typeEmitters: Seq[Emitter] = {
+    Option(payload.schema) match {
+      case Some(node: NodeShape) if !node.isLink && node.annotations.find(classOf[ParsedJSONSchema]).isEmpty =>
+        Seq(Raml08FormPropertiesEmitter(node, ordering))
+      case Some(anyShape: AnyShape) =>
+        Raml08TypePartEmitter(anyShape, ordering, Seq()).emitters
+      case Some(other) =>
+        Seq(CommentEmitter(other, s"Cannot emit schema ${other.getClass.toString} in raml 08 body request"))
+      case None =>
+        Seq(new PartEmitter() {
+          override def emit(b: PartBuilder): Unit = b.+=(YNode(YMap.empty)) // ignore
+
+          override def position(): Position = Position.ZERO
+        })
+    }
+  }
 }
 
 case class Raml08FormPropertiesEmitter(nodeShape: NodeShape, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
