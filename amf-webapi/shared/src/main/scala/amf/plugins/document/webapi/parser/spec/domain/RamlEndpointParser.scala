@@ -76,7 +76,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
 
     map.key("is",
             (EndPointModel.Extends in endpoint using ParametrizedDeclarationParser
-              .parse(endpoint.withTrait)).allowingSingleValue)
+              .parse(endpoint.withTrait)).allowingSingleValue.optional)
 
     map.key(
       "type",

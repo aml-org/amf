@@ -55,7 +55,7 @@ case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation
     map.key("(consumes)", OperationModel.Accepts in operation)
     map.key("(produces)", OperationModel.ContentType in operation)
     val DeclarationParser = ParametrizedDeclarationParser.parse(operation.withTrait) _
-    map.key("is", (DomainElementModel.Extends in operation using DeclarationParser).allowingSingleValue)
+    map.key("is", (DomainElementModel.Extends in operation using DeclarationParser).allowingSingleValue.optional)
 
     ctx.factory
       .requestParser(map, () => operation.withRequest(), parseOptional)
