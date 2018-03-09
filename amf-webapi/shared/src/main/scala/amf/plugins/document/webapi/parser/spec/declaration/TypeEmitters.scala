@@ -12,11 +12,20 @@ import amf.core.model.domain.{AmfScalar, Linkable, Shape}
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, FieldEntry, Fields, Position}
 import amf.plugins.document.webapi.annotations._
-import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
+import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEmitter, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter, StringToAstEmitter}
+import amf.plugins.document.webapi.parser.spec.domain.{
+  MultipleExampleEmitter,
+  SingleExampleEmitter,
+  StringToAstEmitter
+}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
-import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, OasTypeDefStringValueMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
+import amf.plugins.document.webapi.parser.{
+  OasTypeDefMatcher,
+  OasTypeDefStringValueMatcher,
+  RamlTypeDefMatcher,
+  RamlTypeDefStringValueMatcher
+}
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.metamodel.{ExampleModel, _}
 import amf.plugins.domain.shapes.models._
@@ -96,7 +105,7 @@ case class Raml08TypePartEmitter(shape: AnyShape,
                                  ignored: Seq[Field] = Nil,
                                  references: Seq[BaseUnit])(implicit spec: SpecEmitterContext)
     extends RamlTypePartEmitter(shape, ordering, annotations, ignored, references) {
-  override protected def emitters: Seq[Emitter] = Raml08TypeEmitter(shape, ordering).emitters()
+  override def emitters: Seq[Emitter] = Raml08TypeEmitter(shape, ordering).emitters()
 }
 
 abstract class RamlTypePartEmitter(shape: AnyShape,
@@ -178,11 +187,12 @@ case class Raml10TypeEmitter(shape: AnyShape,
 
   def entries(): Seq[EntryEmitter] = emitters() collect {
     case e: EntryEmitter => e
-    case p: PartEmitter => new EntryEmitter {
-      override def emit(b: EntryBuilder): Unit =
-        b.entry(YNode("type"), (b) => p.emit(b))
-      override def position(): Position = p.position()
-    }
+    case p: PartEmitter =>
+      new EntryEmitter {
+        override def emit(b: EntryBuilder): Unit =
+          b.entry(YNode("type"), (b) => p.emit(b))
+        override def position(): Position = p.position()
+      }
   }
 }
 
@@ -1279,6 +1289,8 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
       case schema: SchemaShape => Seq(RamlSchemaShapeEmitter(schema))
       case shape: Shape if shape.annotations.find(classOf[ParsedJSONSchema]).isDefined =>
         Seq(RamlJsonShapeEmitter(shape))
+      case nil: NilShape =>
+        RamlNilShapeEmitter(nil, ordering, Seq()).emitters()
       case other =>
         Seq(CommentEmitter(other, s"Unsupported shape class for emit raml 08 spec ${other.getClass.toString}`"))
     }
