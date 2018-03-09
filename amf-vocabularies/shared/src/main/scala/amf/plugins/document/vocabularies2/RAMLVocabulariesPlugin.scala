@@ -22,7 +22,7 @@ import amf.plugins.document.vocabularies2.parser.ExtensionHeader
 import amf.plugins.document.vocabularies2.parser.dialects.{DialectContext, RamlDialectsParser}
 import amf.plugins.document.vocabularies2.parser.instances.{DialectInstanceContext, RamlDialectInstanceParser}
 import amf.plugins.document.vocabularies2.parser.vocabularies.{RamlVocabulariesParser, VocabularyContext}
-import amf.plugins.document.vocabularies2.resolution.pipelines.DialectResolutionPipeline
+import amf.plugins.document.vocabularies2.resolution.pipelines.{DialectInstanceResolutionPipeline, DialectResolutionPipeline}
 import org.yaml.model.YDocument
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -66,8 +66,9 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
   override def resolve(unit: BaseUnit): BaseUnit = unit match {
-    case dialect: Dialect => new DialectResolutionPipeline().resolve(dialect)
-    case _                => unit
+    case dialect: Dialect         => new DialectResolutionPipeline().resolve(dialect)
+    case dialect: DialectInstance => new DialectInstanceResolutionPipeline().resolve(dialect)
+    case _                        => unit
   }
 
   /**

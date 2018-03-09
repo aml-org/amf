@@ -201,7 +201,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
     }
   }
 
-  private def transformByCondition(element: AmfObject,
+  protected def transformByCondition(element: AmfObject,
                                    predicate: (AmfObject) => Boolean,
                                    transformation: (AmfObject, Boolean) => Option[AmfObject],
                                    cycles: Set[String] = Set.empty): AmfObject = {

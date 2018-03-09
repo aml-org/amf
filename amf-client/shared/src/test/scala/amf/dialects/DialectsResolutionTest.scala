@@ -1,7 +1,7 @@
 package amf.dialects
 
 import amf.core.model.document.BaseUnit
-import amf.core.remote.{Amf, RamlVocabulary, VocabularyYamlHint}
+import amf.core.remote.{RamlVocabulary, VocabularyYamlHint}
 import amf.io.BuildCycleTests
 import amf.plugins.document.vocabularies2.RAMLVocabulariesPlugin
 
