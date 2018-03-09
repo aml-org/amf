@@ -1,7 +1,20 @@
-SYObjectNode (Start: 11 , End: 58, On: input.raml)
-    KeyValueNodeImpl (Start: 11 , End: 22, On: input.raml)
-        SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
-        SYStringNode: "hola" (Start: 18 , End: 22, On: input.raml)
-    KeyValueNodeImpl (Start: 23 , End: 57, On: input.raml)
-        SYStringNode: "/top" (Start: 23 , End: 27, On: input.raml)
-        IncludeErrorNode: "Include cannot be resolved: basic-resource.raml" (Start: 29 , End: 57, On: input.raml, Source: SYIncludeNode)
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/include/missing-include/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://raml.org/vocabularies/amf/parser#parsing-error
+  Message: java.io.FileNotFoundException: amf-client/shared/src/test/resources/org/raml/parser/include/missing-include/basic-resource.raml (No such file or directory)
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(3,6)-(3,34)]))
+
+- Source: http://raml.org/vocabularies/amf/parser#parsing-error
+  Message: Not a YMap
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(3,6)-(3,34)]))

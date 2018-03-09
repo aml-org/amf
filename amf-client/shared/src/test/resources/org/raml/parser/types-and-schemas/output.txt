@@ -1,13 +1,22 @@
-RamlDocumentNode (Start: 11 , End: 49, On: input.raml, Source: SYObjectNode)
-    KeyValueNodeImpl (Start: 11 , End: 33, On: input.raml)
-        SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
-        OverlayableObjectNodeImpl (Start: 18 , End: 33, On: input.raml, Source: SYStringNode)
-            KeyValueNodeImpl (Start: 11 , End: 33, On: input.raml)
-                StringNodeImpl: "value" (Start: -1 , End: -1)
-                OverlayableStringNode: "type resolution" (Start: 18 , End: 33, On: input.raml)
-    TypesNode (Start: 34 , End: 42, On: input.raml, Source: KeyValueNodeImpl)
-        SYStringNode: "schemas" (Start: 34 , End: 41, On: input.raml)
-        SYNullNode (Start: 42 , End: 42, On: input.raml)
-    ErrorNode: ""types" and "schemas" are mutually exclusive." (Start: 43 , End: 49, On: input.raml, Source: TypesNode)
-        SYStringNode: "types" (Start: 43 , End: 48, On: input.raml)
-        SYNullNode (Start: 49 , End: 49, On: input.raml)
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/types-and-schemas/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://raml.org/vocabularies/amf/parser#parsing-error
+  Message: 'schemas' and 'types' properties are mutually exclusive
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(3,0)-(3,7)]))
+
+Level: Warning
+
+- Source: http://raml.org/vocabularies/amf/parser#parsing-warning
+  Message: 'schemas' keyword it's deprecated for 1.0 version, should use 'types' instead
+  Level: Warning
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(3,0)-(3,7)]))

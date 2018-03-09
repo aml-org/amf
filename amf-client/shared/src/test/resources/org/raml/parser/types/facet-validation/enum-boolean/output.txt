@@ -1,35 +1,26 @@
-RamlDocumentNode (Start: 11 , End: 138, On: input.raml, Source: SYObjectNode)
-    KeyValueNodeImpl (Start: 11 , End: 35, On: input.raml)
-        SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
-        OverlayableObjectNodeImpl (Start: 18 , End: 35, On: input.raml, Source: SYStringNode)
-            KeyValueNodeImpl (Start: 11 , End: 35, On: input.raml)
-                StringNodeImpl: "value" (Start: -1 , End: -1)
-                OverlayableStringNode: "Enum Boolean Test" (Start: 18 , End: 35, On: input.raml)
-    TypesNode (Start: 37 , End: 138, On: input.raml, Source: KeyValueNodeImpl)
-        SYStringNode: "types" (Start: 37 , End: 42, On: input.raml)
-        SYObjectNode (Start: 45 , End: 138, On: input.raml)
-            TypeDeclarationField (Start: 45 , End: 138, On: input.raml, Source: KeyValueNodeImpl)
-                SYStringNode: "goodBooleanEnum" (Start: 45 , End: 60, On: input.raml)
-                TypeDeclarationNode (Start: 65 , End: 138, On: input.raml, Source: SYObjectNode)
-                    KeyValueNodeImpl (Start: 65 , End: 78, On: input.raml)
-                        SYStringNode: "type" (Start: 65 , End: 69, On: input.raml)
-                        NativeTypeExpressionNode: "boolean" (Start: 71 , End: 78, On: input.raml, Source: SYStringNode)
-                    FacetNode (Start: 82 , End: 94, On: input.raml, Source: KeyValueNodeImpl)
-                        SYStringNode: "enum" (Start: 82 , End: 86, On: input.raml)
-                        SYArrayNode (Start: 88 , End: 94, On: input.raml)
-                            SYBooleanNode: true (Start: 89 , End: 93, On: input.raml)
-                    ExamplesNode (Start: 98 , End: 138, On: input.raml, Source: KeyValueNodeImpl)
-                        SYStringNode: "examples" (Start: 98 , End: 106, On: input.raml)
-                        SYObjectNode (Start: 113 , End: 138, On: input.raml)
-                            ExampleDeclarationNode (Start: 113 , End: 122, On: input.raml, Source: KeyValueNodeImpl)
-                                SYStringNode: "one" (Start: 113 , End: 116, On: input.raml)
-                                SYBooleanNode: true (Start: 118 , End: 122, On: input.raml)
-                            ExampleDeclarationNode (Start: 128 , End: 138, On: input.raml, Source: KeyValueNodeImpl)
-                                SYStringNode: "two" (Start: 128 , End: 131, On: input.raml)
-                                SYBooleanNode: false (Start: 133 , End: 138, On: input.raml)
-                    KeyValueNodeImpl (Start: -1 , End: -1)
-                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
-                        ObjectNodeImpl (Start: -1 , End: -1)
-                            KeyValueNodeImpl (Start: -1 , End: -1)
-                                StringNodeImpl: "value" (Start: -1 , End: -1)
-                                OverlayableStringNode: "goodBooleanEnum" (Start: -1 , End: -1, Source: SYStringNode)
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/enum-boolean/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://raml.org/vocabularies/amf/parser#example-validation-error
+  Message: Model: http://test.com/payload
+Profile: Payload
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/enum-boolean/input.raml#/declarations/scalar/goodBooleanEnum_validation_validation_enum/prop
+  Message: Data at / must be within the values (true)
+  Level: Violation
+  Target: http://amfparser.org/test_payload/scalar_1
+  Property: http://raml.org/vocabularies/data#value
+  Position: Some(LexicalInformation([(1,0)-(1,5)]))
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/enum-boolean/input.raml#/declarations/scalar/goodBooleanEnum/example/two
+  Property: http://raml.org/vocabularies/document#value
+  Position: Some(LexicalInformation([(10,10)-(10,15)]))

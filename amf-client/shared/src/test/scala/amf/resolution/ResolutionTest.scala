@@ -16,6 +16,7 @@ abstract class ResolutionTest extends BuildCycleTests {
     case Oas           => OAS20Plugin.resolve(unit)
     case Amf           => new AmfResolutionPipeline().resolve(unit)
     case target        => throw new Exception(s"Cannot resolve $target")
+//    case _ => unit
   }
 
   override def render(unit: BaseUnit, config: CycleConfig): String =

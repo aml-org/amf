@@ -1,5 +1,16 @@
-ErrorNode: "Underlying error while parsing YAML syntax: 'mapping values are not allowed here
- in 'reader', line 5, column 8:
-        get:
-           ^
-'" (Start: 52 , End: 53, On: )
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/invalid-yaml/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://raml.org/vocabularies/amf/parser#parsing-error
+  Message: Error node '    invalidyaml
+    get:
+        description: "get something"
+'
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(4,0)-(7,0)]))
