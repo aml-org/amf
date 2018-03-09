@@ -1,6 +1,6 @@
 package amf.dialects
 
-import amf.core.remote.{Amf, AmfJsonHint, RamlVocabulary, VocabularyYamlHint}
+import amf.core.remote._
 import amf.io.BuildCycleTests
 
 import scala.concurrent.ExecutionContext
@@ -59,6 +59,10 @@ class DialectsParsingTest extends BuildCycleTests {
     cycle("example12.raml", "example12.json", VocabularyYamlHint, Amf)
   }
 
+  test("parse 13 test") {
+    cycle("example13.raml", "example13.json", VocabularyYamlHint, Amf)
+  }
+
   test("parse mappings_lib test") {
     cycle("mappings_lib.raml", "mappings_lib.json", VocabularyYamlHint, Amf)
   }
@@ -111,8 +115,11 @@ class DialectsParsingTest extends BuildCycleTests {
     cycle("example12.json", "example12.raml", AmfJsonHint, RamlVocabulary)
   }
 
+  test("generate 13 test") {
+    cycle("example13.json", "example13.raml", AmfJsonHint, RamlVocabulary)
+  }
+
   test("generate mappings_lib test") {
     cycle("mappings_lib.json", "mappings_lib.raml", AmfJsonHint, RamlVocabulary)
   }
-
 }

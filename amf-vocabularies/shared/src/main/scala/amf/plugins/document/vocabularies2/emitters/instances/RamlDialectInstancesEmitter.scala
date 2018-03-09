@@ -12,7 +12,7 @@ import amf.core.parser.{FieldEntry, Position, Value}
 import amf.core.utils._
 import amf.plugins.document.vocabularies2.annotations.AliasesLocation
 import amf.plugins.document.vocabularies2.emitters.common.IdCounter
-import amf.plugins.document.vocabularies2.model.document.{Dialect, DialectInstance, DialectInstanceFragment}
+import amf.plugins.document.vocabularies2.model.document._
 import amf.plugins.document.vocabularies2.model.domain._
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YDocument, YNode}
@@ -21,11 +21,22 @@ trait DialectEmitterHelper {
   val dialect: Dialect
 
   def findNodeMappingById(nodeMappingId: String): NodeMapping = {
+    maybeFindNodeMappingById(nodeMappingId).getOrElse{
+      throw new Exception(s"Cannot find node mapping $nodeMappingId")
+    }
+  }
+
+  def maybeFindNodeMappingById(nodeMappingId: String): Option[NodeMapping] = {
     dialect.declares.find {
       case nodeMapping: NodeMapping => nodeMapping.id == nodeMappingId
-    }.getOrElse {
-      throw new Exception(s"Cannot find node mapping $nodeMappingId")
-    }.asInstanceOf[NodeMapping]
+    }.asInstanceOf[Option[NodeMapping]].orElse {
+      dialect.references.collect {
+        case lib: DialectLibrary =>
+          lib.declares.find(_.id == nodeMappingId)
+      }.collectFirst { case Some(mapping: NodeMapping) =>
+        mapping
+      }
+    }
   }
 }
 
