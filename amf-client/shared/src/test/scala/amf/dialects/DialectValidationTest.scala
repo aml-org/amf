@@ -266,7 +266,7 @@ class DialectValidationTest extends AsyncFunSuite with CompilerTestBuilder {
   test("Custom dialect can be validated (amc2)") {
 
     var dialect: Option[Dialect] = None
-    val dialectFile              = "file://amf-client/shared/src/test/resources/vocabularies/amc2/dialect.raml"
+    val dialectFile              = "file://amf-client/shared/src/test/resources/vocabularies/amc2/validation_dialect.raml"
     val dialectExampleFile       = "file://amf-client/shared/src/test/resources/vocabularies/amc2/example.raml"
 
     PlatformDialectRegistry.registerDialect(dialectFile) flatMap { parsedDialect =>
@@ -292,7 +292,7 @@ class DialectValidationTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("Custom dialect can be validated (amf-eng-demos)") {
     var dialect: Option[Dialect] = None
-    val dialectFile              = "file://amf-client/shared/src/test/resources/vocabularies/eng_demos/dialect.raml"
+    val dialectFile              = "file://amf-client/shared/src/test/resources/vocabularies/eng_demos/validation_dialect.raml"
     val dialectExampleFile       = "file://amf-client/shared/src/test/resources/vocabularies/eng_demos/demo.raml"
 
     PlatformDialectRegistry.registerDialect(dialectFile) flatMap { parsedDialect =>
@@ -318,7 +318,7 @@ class DialectValidationTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("Custom dialect with custom validation can be validated (amf-eng-demos)") {
     var dialect: Option[Dialect] = None
-    val dialectFile              = "file://amf-client/shared/src/test/resources/vocabularies/eng_demos/dialect.raml"
+    val dialectFile              = "file://amf-client/shared/src/test/resources/vocabularies/eng_demos/validation_dialect.raml"
     val dialectExampleFile       = "file://amf-client/shared/src/test/resources/vocabularies/eng_demos/demo.raml"
     val dialectValidationProfileFile =
       "file://amf-client/shared/src/test/resources/vocabularies/eng_demos/validation_profile.raml"
@@ -350,7 +350,7 @@ class DialectValidationTest extends AsyncFunSuite with CompilerTestBuilder {
   test("Custom dialect can be validated (evented_apis)") {
 
     var dialect: Option[Dialect] = None
-    val dialectFile              = "file://amf-client/shared/src/test/resources/vocabularies/evented_apis/dialect.raml"
+    val dialectFile              = "file://amf-client/shared/src/test/resources/vocabularies/evented_apis/validation_dialect.raml"
     val dialectExampleFile =
       "file://amf-client/shared/src/test/resources/vocabularies/evented_apis/example/example.raml"
 

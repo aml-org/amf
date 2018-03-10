@@ -400,19 +400,21 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
 
   def parseObjectMapProperty(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
     val nested = propertyEntry.value.as[YMap].entries.map { keyEntry =>
-        property.objectRange() match {
-          case range: Seq[String] if range.size > 1  => parseObjectUnion(id, keyEntry.value, property, node)
-          case range: Seq[String] if range.size == 1 =>
-            ctx.dialect.declares.find(_.id == range.head) match {
-              case Some(nodeMapping: NodeMapping) =>
-                val nestedObjectId = pathSegment(id, propertyEntry.key.as[String].urlEncoded) + s"/${keyEntry.key.as[String].urlEncoded}"
-                parseNestedNode(nestedObjectId, keyEntry.value, nodeMapping) match {
-                  case Some(dialectDomainElement) => Some(checkHashProperties(dialectDomainElement, property, keyEntry))
-                  case None                       => None
-                }
-            }
-          case _ => None
-        }
+      val nestedObjectId = pathSegment(id, propertyEntry.key.as[String].urlEncoded) + s"/${keyEntry.key.as[String].urlEncoded}"
+      val parsedNode = property.objectRange() match {
+        case range: Seq[String] if range.size > 1  =>
+          parseObjectUnion(nestedObjectId, keyEntry.value, property, node)
+        case range: Seq[String] if range.size == 1 =>
+          ctx.dialect.declares.find(_.id == range.head) match {
+            case Some(nodeMapping: NodeMapping) =>
+              parseNestedNode(nestedObjectId, keyEntry.value, nodeMapping)
+          }
+        case _ => None
+      }
+      parsedNode match {
+        case Some(dialectDomainElement) => Some(checkHashProperties(dialectDomainElement, property, keyEntry))
+        case None                       => None
+      }
     }
     node.setObjectField(property, nested.collect { case Some(node: DialectDomainElement) => node }, propertyEntry.value)
   }
@@ -483,7 +485,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
       case YType.Bool  =>
         ctx.inconsistentPropertyRangeValueViolation(node.id, property, property.literalRange(), (Namespace.Xsd + "boolean").iri(), value)
         None
-      case YType.Int   if property.literalRange() == (Namespace.Xsd + "integer").iri() =>
+      case YType.Int   if property.literalRange() == (Namespace.Xsd + "integer").iri() || property.literalRange() == (Namespace.Xsd + "number").iri() =>
         Some(value.as[Int])
       case YType.Int  =>
         ctx.inconsistentPropertyRangeValueViolation(node.id, property, property.literalRange(), (Namespace.Xsd + "integer").iri(), value)
@@ -493,7 +495,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
       case YType.Str  =>
         ctx.inconsistentPropertyRangeValueViolation(node.id, property, property.literalRange(), (Namespace.Xsd + "string").iri(), value)
         None
-      case YType.Float if property.literalRange() == (Namespace.Xsd + "float").iri() =>
+      case YType.Float if property.literalRange() == (Namespace.Xsd + "float").iri() || property.literalRange() == (Namespace.Xsd + "number").iri() =>
         Some(value.as[Float])
       case YType.Float  =>
         ctx.inconsistentPropertyRangeValueViolation(node.id, property, property.literalRange(), (Namespace.Xsd + "float").iri(), value)
