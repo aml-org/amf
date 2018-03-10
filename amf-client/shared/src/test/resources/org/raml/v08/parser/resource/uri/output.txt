@@ -16,6 +16,10 @@ baseUri: api.github.com/
   displayName: Users
   /{userId}:
     displayName: User
+    uriParameters:
+      userId:
+        displayName: User ID
+        type: integer
     /followers:
       displayName: Followers
     /following:
@@ -24,11 +28,7 @@ baseUri: api.github.com/
       displayName: Public Keys
       /{keyId}:
         displayName: Public Key
-        baseUriParameters:
+        uriParameters:
           keyId:
             displayName: Public Key ID
             type: integer
-    baseUriParameters:
-      userId:
-        displayName: User ID
-        type: integer

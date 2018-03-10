@@ -16,6 +16,19 @@ title: API
         description: pisado
         required: false
         type: string
-      param2Endpoint:
-        required: false
-        type: string
+  (parameters):
+    -
+      name: param1
+      description: Some descr
+      required: true
+      in: query
+    -
+      name: param2
+      description: Some descr
+      required: true
+      in: header
+    -
+      name: param2Endpoint
+      required: false
+      in: header
+      type: string

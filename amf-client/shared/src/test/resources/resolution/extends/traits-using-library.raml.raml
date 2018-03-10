@@ -105,6 +105,9 @@ baseUri: acme-banking.com/apis
             required: true
             type: date-only
   /{customer_id}:
+    uriParameters:
+      customer_id:
+        type: string
     get:
       description: Returns Customer data
       responses:
@@ -404,6 +407,9 @@ baseUri: acme-banking.com/apis
                   - saver
                 required: true
       /{account_id}:
+        uriParameters:
+          account_id:
+            type: string
         get:
           description: Returns BankAccount data
           responses:
@@ -480,9 +486,6 @@ baseUri: acme-banking.com/apis
                           type: string
         delete:
           description: Removes a BankAccount from the system
-        uriParameters:
-          account_id:
-            type: string
     /loans:
       get:
         queryParameters:
@@ -658,6 +661,3 @@ baseUri: acme-banking.com/apis
                   - failed
                   - closed
                 required: true
-    uriParameters:
-      customer_id:
-        type: string

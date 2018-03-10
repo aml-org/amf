@@ -19,8 +19,6 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
     implicit ctx: RamlWebApiContext)
     extends RamlRequestParser(map, producer, parseOptional) {
 
-  override protected val baseUriParameterKey: String = "(baseUriParameters)"
-
   override def parse(request: Lazy[Request], target: Target): Unit = {
 
     map.key(
@@ -32,13 +30,15 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
       }
     )
   }
+
+  override protected val baseUriParametersKey: String = "(baseUriParameters)"
 }
 
 case class Raml08RequestParser(map: YMap, producer: () => Request, parseOptional: Boolean = false)(
     implicit ctx: RamlWebApiContext)
     extends RamlRequestParser(map, producer, parseOptional) {
 
-  override protected val baseUriParameterKey: String = "baseUriParameters"
+  override protected val baseUriParametersKey: String = "baseUriParameters"
 
   override def parse(request: Lazy[Request], target: Target): Unit = Unit
 }
@@ -48,7 +48,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
     extends SpecParserOps {
   protected val request = new Lazy[Request](producer)
 
-  protected val baseUriParameterKey: String
+  protected val baseUriParametersKey: String
 
   def parse(request: Lazy[Request], target: Target): Unit
 
@@ -69,9 +69,9 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
         .parse((name: String) => request.getOrCreate.withHeader(name), parseOptional)).treatMapAsArray.optional
     )
 
-    // BaseUriParameters here are only valid for 0.8, must support the extention in RAml 1.0
+    // baseUriParameters from raml08. Only complex parameters will be written here, simple ones will be in the parameters with binding path.
     map.key(
-      baseUriParameterKey,
+      baseUriParametersKey,
       entry => {
         val parameters = entry.value.as[YMap].entries.map { paramEntry =>
           Raml08ParameterParser(paramEntry, request.getOrCreate.withBaseUriParameter, parseOptional)
@@ -79,7 +79,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
             .withBinding("path")
         }
 
-        request.getOrCreate.set(RequestModel.BaseUriParameters,
+        request.getOrCreate.set(RequestModel.UriParameters,
                                 AmfArray(parameters, Annotations(entry.value)),
                                 Annotations(entry))
 

@@ -14,6 +14,7 @@ case class Request(fields: Fields, annotations: Annotations) extends DomainEleme
   def headers: Seq[Parameter]         = fields(Headers)
   def payloads: Seq[Payload]          = fields(Payloads)
   def queryString: Shape              = fields(QueryString)
+  def uriParameters: Seq[Parameter]   = fields(UriParameters)
 
   def withQueryParameters(parameters: Seq[Parameter]): this.type = setArray(QueryParameters, parameters)
   def withHeaders(headers: Seq[Parameter]): this.type            = setArray(Headers, headers)
@@ -36,7 +37,7 @@ case class Request(fields: Fields, annotations: Annotations) extends DomainEleme
 
   def withBaseUriParameter(name: String): Parameter = {
     val result = Parameter().withName(name)
-    add(BaseUriParameters, result)
+    add(UriParameters, result)
     result
   }
 

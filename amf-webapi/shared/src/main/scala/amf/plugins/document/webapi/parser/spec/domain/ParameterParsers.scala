@@ -4,13 +4,20 @@ import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, _}
-import amf.plugins.document.webapi.contexts.RamlWebApiContext
+import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext}
+import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
-import amf.plugins.document.webapi.parser.spec.declaration.{Raml08TypeParser, Raml10TypeParser, RamlTypeSyntax, StringDefaultType}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  Raml08TypeParser,
+  Raml10TypeParser,
+  RamlTypeSyntax,
+  StringDefaultType,
+  _
+}
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
-import amf.plugins.domain.webapi.metamodel.ParameterModel
-import amf.plugins.domain.webapi.models.Parameter
-import org.yaml.model._
+import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
+import amf.plugins.domain.webapi.models.{Parameter, Payload}
+import org.yaml.model.{YMap, YMapEntry, YScalar, YType, _}
 
 /**
   *
@@ -103,10 +110,13 @@ case class Raml10ParameterParser(entry: YMapEntry, producer: String => Parameter
                 parameter.withSchema(schema)
 
               case Right(ref) if isTypeExpression(ref.text) =>
-                RamlTypeExpressionParser((shape) => shape.withName("schema").adopted(parameter.id)).parse(ref.text) match {
+                RamlTypeExpressionParser((shape) => shape.withName("schema").adopted(parameter.id))
+                  .parse(ref.text) match {
                   case Some(schema) => parameter.withSchema(schema)
-                  case _            =>
-                    ctx.violation(parameter.id, s"Cannot parse type expression for unresolved parameter '${parameter.name}'", entry.value)
+                  case _ =>
+                    ctx.violation(parameter.id,
+                                  s"Cannot parse type expression for unresolved parameter '${parameter.name}'",
+                                  entry.value)
                     parameter
                 }
               case _ =>
@@ -179,4 +189,85 @@ abstract class RamlParameterParser(entry: YMapEntry, producer: String => Paramet
     extends RamlTypeSyntax
     with SpecParserOps {
   def parse(): Parameter
+}
+
+case class OasParameterParser(map: YMap, parentId: String)(implicit ctx: OasWebApiContext) extends SpecParserOps {
+  def parse(): OasParameter = {
+    map.key("$ref") match {
+      case Some(ref) => parseParameterRef(ref, parentId)
+      case None =>
+        val p         = OasParameter(map)
+        val parameter = p.parameter
+
+        parameter.set(ParameterModel.Required, value = false)
+
+        map.key("name", ParameterModel.Name in parameter)
+        map.key("description", ParameterModel.Description in parameter)
+        map.key("required", (ParameterModel.Required in parameter).explicit)
+        map.key("in", ParameterModel.Binding in parameter)
+
+        // TODO generate parameter with parent id or adopt
+        if (p.isBody) {
+          p.payload.adopted(parentId)
+          map.key(
+            "schema",
+            entry => {
+              OasTypeParser(entry, (shape) => shape.withName("schema").adopted(p.payload.id))
+                .parse()
+                .map(p.payload.set(PayloadModel.Schema, _, Annotations(entry)))
+            }
+          )
+
+          map.key("x-media-type", PayloadModel.MediaType in p.payload)
+
+        } else {
+          // type
+          parameter.adopted(parentId)
+
+          ctx.closedShape(parameter.id, map, "parameter")
+
+          OasTypeParser(
+            map,
+            "",
+            map,
+            shape => shape.withName("schema").adopted(parameter.id),
+            "parameter"
+          ).parse()
+            .map(parameter.set(ParameterModel.Schema, _, Annotations(map)))
+        }
+
+        AnnotationParser(parameter, map).parse()
+
+        p
+    }
+  }
+
+  protected def parseParameterRef(ref: YMapEntry, parentId: String): OasParameter = {
+    val refUrl = OasDefinitions.stripParameterDefinitionsPrefix(ref.value)
+    ctx.declarations.findParameter(refUrl, SearchScope.All) match {
+      case Some(p) =>
+        val payload: Payload     = ctx.declarations.parameterPayload(p)
+        val parameter: Parameter = p.link(refUrl, Annotations(map))
+        parameter.withName(refUrl).adopted(parentId)
+        OasParameter(parameter, payload)
+      case None =>
+        val oasParameter = OasParameter(Parameter(YMap.empty), Payload(YMap.empty))
+        ctx.violation(oasParameter.parameter.id, s"Cannot find parameter reference $refUrl", ref)
+        oasParameter
+    }
+  }
+}
+
+case class OasParametersParser(values: Seq[YMap], parentId: String)(implicit ctx: OasWebApiContext) {
+  def parse(): Parameters = {
+    val parameters = values
+      .map(value => OasParameterParser(value, parentId).parse())
+
+    Parameters(
+      parameters.filter(_.isQuery).map(_.parameter),
+      parameters.filter(_.isPath).map(_.parameter),
+      parameters.filter(_.isHeader).map(_.parameter),
+      parameters.filter(_.isBody).map(_.payload).headOption
+    )
+  }
 }

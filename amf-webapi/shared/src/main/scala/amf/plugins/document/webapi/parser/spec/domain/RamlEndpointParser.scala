@@ -6,11 +6,12 @@ import amf.core.parser.{Annotations, _}
 import amf.core.utils.TemplateUri
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
+import amf.plugins.document.webapi.parser.spec
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
-import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
+import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import org.yaml.model.{YMap, YMapEntry, YType}
 
 import scala.collection.mutable
@@ -106,44 +107,54 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     val SchemeParser = RamlParametrizedSecuritySchemeParser.parse(endpoint.withSecurity) _
     map.key("securedBy", (EndPointModel.Security in endpoint using SchemeParser).allowingSingleValue)
 
-    // TODO refactor this changes for baseUriParameters/UriParameters
+    var parameters               = Parameters()
+    var annotations: Annotations = Annotations()
+
     val entries = map.regex(uriParametersKey)
-    entries match {
+    val implicitExplicitPathParams = entries match {
       case Nil =>
-        val implicitParameters = TemplateUri
-          .variables(parsePath())
-          .map { variable =>
-            val implicitParam = endpoint.withParameter(variable).withBinding("path").withRequired(true)
-            implicitParam.withScalarSchema(variable).withDataType((Namespace.Xsd + "string").iri())
-            implicitParam.annotations += SynthesizedField()
-            implicitParam
-          }
-        if (implicitParameters.nonEmpty)
-          endpoint.set(EndPointModel.UriParameters,
-                       AmfArray(implicitParameters, Annotations(entry.value)),
-                       Annotations(entry))
+        implicitPathParams(endpoint)
+
       case _ =>
-        val parameters = entries.flatMap { entry =>
-          val explicitParameters: Seq[Parameter] =
+        entries.flatMap { entry =>
+          annotations = Annotations(entries.head.value)
+
+          val explicitParameters =
             RamlParametersParser(entry.value.as[YMap], endpoint.withParameter)
               .parse()
               .map(_.withBinding("path"))
-          val implicitParameters = TemplateUri
-            .variables(parsePath())
-            .filter(variable => !explicitParameters.exists(_.name == variable))
-            .map { variable =>
-              val implicitParam = endpoint.withParameter(variable).withBinding("path").withRequired(true)
-              implicitParam.withScalarSchema(variable).withDataType((Namespace.Xsd + "string").iri())
-              implicitParam.annotations += SynthesizedField()
-              implicitParam
-            }
-          explicitParameters ++ implicitParameters
-        }.toSeq
 
-        endpoint.set(EndPointModel.UriParameters,
-                     AmfArray(parameters, Annotations(entries.head.value)),
-                     Annotations(entries.head))
+          explicitParameters ++ implicitPathParams(endpoint,
+                                                   variable => !explicitParameters.exists(_.name == variable))
+
+        }.toSeq
     }
+
+    parameters = parameters.add(Parameters(path = implicitExplicitPathParams))
+
+    map.key(
+      "(parameters)",
+      entry => {
+        parameters =
+          parameters.add(OasParametersParser(entry.value.as[Seq[YMap]], endpoint.id)(spec.toOas(ctx)).parse())
+        annotations = Annotations(entry.value)
+      }
+    )
+
+    parameters match {
+      case Parameters(query, path, header, _) if parameters.nonEmpty =>
+        endpoint.set(EndPointModel.Parameters, AmfArray(query ++ path ++ header, annotations), annotations)
+      case _ =>
+    }
+
+    map.key(
+      "(payloads)",
+      entry => {
+        endpoint.set(EndPointModel.Payloads,
+                     AmfArray(Seq(Raml10PayloadParser(entry, endpoint.withPayload).parse()), Annotations(entry.value)),
+                     Annotations(entry))
+      }
+    )
 
     collector += endpoint
 
@@ -155,6 +166,18 @@ abstract class RamlEndpointParser(entry: YMapEntry,
         entries.foreach(ctx.factory.endPointParser(_, producer, Some(endpoint), collector, false).parse())
       }
     )
+  }
+
+  private def implicitPathParams(endpoint: EndPoint, filter: String => Boolean = _ => true) = {
+    TemplateUri
+      .variables(parsePath())
+      .filter(filter)
+      .map { variable =>
+        val implicitParam = endpoint.withParameter(variable).withBinding("path").withRequired(true)
+        implicitParam.withScalarSchema(variable).withDataType((Namespace.Xsd + "string").iri())
+        implicitParam.annotations += SynthesizedField()
+        implicitParam
+      }
   }
 
   protected def parsePath(): String = parent.map(_.path).getOrElse("") + entry.key.as[String]

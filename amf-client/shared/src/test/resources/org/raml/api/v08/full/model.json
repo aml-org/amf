@@ -23,10 +23,6 @@ documentation:
       line
 /top:
   get:
-    baseUriParameters:
-      param1:
-        description: method override
-        type: boolean
     description: get something
     queryParameters:
       order:
@@ -35,6 +31,10 @@ documentation:
         example: desc
         type: string
     body: {}
+    baseUriParameters:
+      param1:
+        description: method override
+        type: boolean
   post:
     description: post something
     responses:
@@ -129,6 +129,10 @@ documentation:
             "required": false,
             "type": "object"
         }
+    baseUriParameters:
+      param1:
+        description: resource override
+        type: number
   /children:
     description: child description
     post:
@@ -145,11 +149,7 @@ documentation:
              "required": [ "firstname", "lastname" ]
           }
     /{childId}:
-      baseUriParameters:
+      uriParameters:
         childId:
           type: string
   description: top description
-  baseUriParameters:
-    param1:
-      description: resource override
-      type: number
