@@ -9,11 +9,10 @@ import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations}
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
-import amf.plugins.document.vocabularies2.{ RAMLVocabulariesPlugin => RAMLVocabularies2Plugin }
 import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
 import amf.plugins.document.vocabularies.spec.Dialect
-import amf.plugins.document.vocabularies.validation.AMFDialectValidations
-import amf.plugins.document.webapi._
+import amf.plugins.document.vocabularies2.{RAMLVocabulariesPlugin => RAMLVocabularies2Plugin}
+import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML08Plugin, RAML10Plugin, _}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.features.validation.AMFValidatorPlugin
@@ -105,7 +104,8 @@ class Validation(platform: Platform) {
     * @param dialect RAML dialect to be parsed as a Validation Profile
     */
   def loadDialectValidationProfile(dialect: Dialect): Unit =
-    profile = Some(new AMFDialectValidations(dialect).profile())
+    // TODO: REDO THIS!!!
+    profile = None // Some(new AMFDialectValidations(dialect).profile())
 
   def validate(model: BaseUnit,
                profileName: String,

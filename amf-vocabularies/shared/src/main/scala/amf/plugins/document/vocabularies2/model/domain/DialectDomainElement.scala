@@ -26,12 +26,15 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   override def dynamicType: List[ValueType] = (instanceTypes.distinct.map(iriToValue) ++ DialectDomainElementModel().`type`).toList
 
   // Dialect mapping defining the instance
-  protected var instanceDefinedBy: Seq[NodeMapping] = Nil
-  def withDefinedBy(nodeMapping: Seq[NodeMapping]) = {
-    instanceDefinedBy = nodeMapping
+  protected var instanceDefinedBy: Option[NodeMapping] = None
+  def withDefinedBy(nodeMapping: NodeMapping) = {
+    instanceDefinedBy = Some(nodeMapping)
     this
   }
-  def definedBy: Seq[NodeMapping] = instanceDefinedBy
+  def definedBy: NodeMapping = instanceDefinedBy match {
+    case Some(mapping) => mapping
+    case None          => throw new Exception("NodeMapping for the instance not defined")
+  }
 
   def localRefName: String = {
     if (isLink)
@@ -56,14 +59,14 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     }
 
     (literalProperties.keys ++ objectProperties.keys ++ objectCollectionProperties.keys).map { propertyId =>
-       val property = instanceDefinedBy.flatMap(_.propertiesMapping()).find(_.id == propertyId).get
-       property.toField()
+      val property = instanceDefinedBy.get.propertiesMapping().find(_.id == propertyId).get
+      property.toField()
     }.toList ++ mapKeyFields ++ fields.fields().map(_.field)// ++ LinkableElementModel.fields
   }
 
 
   def findPropertyByTermPropertyId(termPropertyId: String) =
-    definedBy.flatMap(_.propertiesMapping()).find(_.nodePropertyMapping() == termPropertyId).map(_.id).getOrElse(termPropertyId)
+    definedBy.propertiesMapping().find(_.nodePropertyMapping() == termPropertyId).map(_.id).getOrElse(termPropertyId)
 
 
   override def valueForField(f: Field): Option[AmfElement] = {
@@ -178,7 +181,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   override def meta: Obj = if (instanceTypes.isEmpty) {
     DialectDomainElementModel()
   } else {
-    new DialectDomainElementModel(instanceTypes.head, dynamicFields, definedBy)
+    new DialectDomainElementModel(instanceTypes.head, dynamicFields, Some(definedBy))
   }
 
   override def adopted(newId: String): DialectDomainElement.this.type = if (Option(this.id).isEmpty) withId(newId) else this

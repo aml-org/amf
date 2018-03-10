@@ -63,9 +63,15 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
   override def buildType(modelType: Obj): Option[Annotations => AmfObject] = modelType match {
     case dialectModel: DialectDomainElementModel =>
       val reviver = (annotations: Annotations) =>
-        DialectDomainElement(annotations)
-          .withInstanceTypes(Seq(dialectModel.typeIri))
-          .withDefinedBy(dialectModel.nodeMapping)
+        dialectModel.nodeMapping match {
+          case Some(nodeMapping) =>
+            DialectDomainElement(annotations)
+              .withInstanceTypes(Seq(dialectModel.typeIri, nodeMapping.id))
+              .withDefinedBy(nodeMapping)
+          case _ =>
+            throw new Exception(s"Cannot find node mapping for dialectModel $dialectModel")
+        }
+
       Some(reviver)
     case _ => None
   }
@@ -79,6 +85,6 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
     val mapPropertiesFields = mapPropertiesInDomain.map(_.mapKeyProperty()).distinct.map( iri => Field(Type.Str, ValueType(iri)))
 
-    new DialectDomainElementModel(nodeType, fields ++ mapPropertiesFields, Seq(nodeMapping))
+    new DialectDomainElementModel(nodeType, fields ++ mapPropertiesFields, Some(nodeMapping))
   }
 }

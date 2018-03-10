@@ -18,6 +18,7 @@
         "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example2.raml#/",
         "@type": [
           "http://test.com/tmp#Test",
+          "file://amf-client/shared/src/test/resources/vocabularies2/instances/dialect2.raml#/declarations/RootNode",
           "http://raml.org/vocabularies/meta#DialectDomainElement",
           "http://raml.org/vocabularies/document#DomainElement"
         ],
@@ -31,6 +32,7 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example2.raml#/a",
             "@type": [
               "http://test.com/tmp#A",
+              "file://amf-client/shared/src/test/resources/vocabularies2/instances/dialect2.raml#/declarations/A",
               "http://raml.org/vocabularies/meta#DialectDomainElement",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
@@ -44,6 +46,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example2.raml#/a/a2",
                 "@type": [
                   "http://test.com/tmp#B",
+                  "file://amf-client/shared/src/test/resources/vocabularies2/instances/dialect2.raml#/declarations/B",
                   "http://raml.org/vocabularies/meta#DialectDomainElement",
                   "http://raml.org/vocabularies/document#DomainElement"
                 ],
@@ -105,6 +108,7 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example2.raml#/b",
             "@type": [
               "http://test.com/tmp#B",
+              "file://amf-client/shared/src/test/resources/vocabularies2/instances/dialect2.raml#/declarations/B",
               "http://raml.org/vocabularies/meta#DialectDomainElement",
               "http://raml.org/vocabularies/document#DomainElement"
             ],

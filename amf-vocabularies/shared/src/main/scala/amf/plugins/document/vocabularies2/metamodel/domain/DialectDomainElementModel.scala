@@ -6,7 +6,7 @@ import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies2.model.domain.NodeMapping
 
-class DialectDomainElementModel(val typeIri: String = (Namespace.Meta + "DialectDomainElement").iri(), val typeFields: Seq[Field] = Nil, val nodeMapping: Seq[NodeMapping] = Nil) extends DomainElementModel {
+class DialectDomainElementModel(val typeIri: String = (Namespace.Meta + "DialectDomainElement").iri(), val typeFields: Seq[Field] = Nil, val nodeMapping: Option[NodeMapping] = None) extends DomainElementModel {
 
   override def fields: List[Field] = DomainElementModel.fields ++ typeFields
   override val `type`: List[ValueType] = Namespace.Meta + "DialectDomainElement" :: DomainElementModel.`type`

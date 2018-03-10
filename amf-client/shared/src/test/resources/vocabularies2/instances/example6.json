@@ -18,6 +18,7 @@
         "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example6.raml#/",
         "@type": [
           "http://test.com/tmp#Test",
+          "file://amf-client/shared/src/test/resources/vocabularies2/instances/dialect6.raml#/declarations/RootNode",
           "http://raml.org/vocabularies/meta#DialectDomainElement",
           "http://raml.org/vocabularies/document#DomainElement"
         ],
@@ -26,6 +27,7 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example6.raml#/a/hey",
             "@type": [
               "http://test.com/tmp#A",
+              "file://amf-client/shared/src/test/resources/vocabularies2/instances/dialect6.raml#/declarations/A",
               "http://raml.org/vocabularies/meta#DialectDomainElement",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
@@ -66,6 +68,7 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example6.raml#/a/lets",
             "@type": [
               "http://test.com/tmp#A",
+              "file://amf-client/shared/src/test/resources/vocabularies2/instances/dialect6.raml#/declarations/A",
               "http://raml.org/vocabularies/meta#DialectDomainElement",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
@@ -137,6 +140,7 @@
         "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example6.raml#/As/Go",
         "@type": [
           "http://test.com/tmp#A",
+          "file://amf-client/shared/src/test/resources/vocabularies2/instances/dialect6.raml#/declarations/A",
           "http://raml.org/vocabularies/meta#DialectDomainElement",
           "http://raml.org/vocabularies/document#DomainElement"
         ],
