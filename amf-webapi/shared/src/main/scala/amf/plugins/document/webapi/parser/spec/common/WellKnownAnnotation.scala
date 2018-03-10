@@ -15,6 +15,7 @@ object WellKnownAnnotation {
     "deprecated",
     "summary",
     "externalDocs",
+    "payloads",
     "request-payloads",
     "response-payloads",
     "media-type",

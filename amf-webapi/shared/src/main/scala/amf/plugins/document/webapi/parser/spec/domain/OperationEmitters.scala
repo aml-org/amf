@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.core.annotations.SynthesizedField
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.metamodel.domain.DomainElementModel
@@ -98,8 +99,12 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
         .map(f => result += spec.factory.payloadsEmitter("body", f, ordering, references))
 
       fields
-        .entry(RequestModel.BaseUriParameters)
-        .map(f => result += RamlParametersEmitter(baseUriParameterKey, f, ordering, references))
+        .entry(RequestModel.UriParameters)
+        .map { f =>
+          if (f.array.values.exists(f => !f.annotations.contains(classOf[SynthesizedField]))) {
+            result += RamlParametersEmitter(baseUriParameterKey, f, ordering, references)
+          }
+        }
     }
 
     fs.entry(OperationModel.Responses)

@@ -1,5 +1,4 @@
 #%RAML 0.8
-
 title: GitHub API
 version: v3
 protocols:
@@ -10,8 +9,8 @@ baseUri: api.github.com/
 /users:
   displayName: Users
   /{userId}:
-   displayName: User
-   baseUriParameters:
-     userId:
-       displayName: User ID
-       type: integer
+    displayName: User
+    uriParameters:
+      userId:
+        displayName: User ID
+        type: integer

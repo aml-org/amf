@@ -30,12 +30,6 @@ documentation:
 /levelzero/level-one:
   displayName: One display name
   description: and this description!
-  uriParameters:
-    two:
-      required: false
-    three:
-      description: endpoint uri parameter
-      required: true
   get:
     displayName: Some title
     queryParameters:
@@ -70,4 +64,10 @@ documentation:
           application/x-www-form-urlencoded; charset=UTF-8: {}
       404:
         description: Not found!
+  uriParameters:
+    two:
+      required: false
+    three:
+      description: endpoint uri parameter
+      required: true
 baseUri: api.example.com/path

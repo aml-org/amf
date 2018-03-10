@@ -50,6 +50,11 @@ description: This is the place to come for all the technical details you need to
             displayName: popular
             /page-{pageno}.atom:
               displayName: page-{pageno}.atom
+              uriParameters:
+                pageno:
+                  description: Page number of results to return
+                  required: true
+                  type: integer
               get:
                 queryParameters:
                   platform:
@@ -97,11 +102,6 @@ description: This is the place to come for all the technical details you need to
                 (oas-tags):
                   - discoveryresources
                 body: {}
-              uriParameters:
-                pageno:
-                  description: Page number of results to return
-                  required: true
-                  type: integer
           /title.atom:
             displayName: title.atom
             get:
@@ -155,6 +155,11 @@ description: This is the place to come for all the technical details you need to
             displayName: title
             /page-{pageno}.atom:
               displayName: page-{pageno}.atom
+              uriParameters:
+                pageno:
+                  description: Page number of results to return
+                  required: true
+                  type: integer
               get:
                 queryParameters:
                   platform:
@@ -202,13 +207,13 @@ description: This is the place to come for all the technical details you need to
                 (oas-tags):
                   - discoveryresources
                 body: {}
-              uriParameters:
-                pageno:
-                  description: Page number of results to return
-                  required: true
-                  type: integer
           /page-{pageno}.atom:
             displayName: page-{pageno}.atom
+            uriParameters:
+              pageno:
+                description: Page number of results to return
+                required: true
+                type: integer
             get:
               queryParameters:
                 platform:
@@ -257,11 +262,6 @@ description: This is the place to come for all the technical details you need to
               (oas-tags):
                 - discoveryresources
               body: {}
-            uriParameters:
-              pageno:
-                description: Page number of results to return
-                required: true
-                type: integer
           /popular.atom:
             displayName: popular.atom
             get:
@@ -313,6 +313,11 @@ description: This is the place to come for all the technical details you need to
               body: {}
         /page-{pageno}.atom:
           displayName: page-{pageno}.atom
+          uriParameters:
+            pageno:
+              description: Page number of results to return
+              required: true
+              type: integer
           get:
             queryParameters:
               platform:
@@ -361,11 +366,6 @@ description: This is the place to come for all the technical details you need to
             (oas-tags):
               - discoveryresources
             body: {}
-          uriParameters:
-            pageno:
-              description: Page number of results to return
-              required: true
-              type: integer
         /title.atom:
           displayName: title.atom
           get:
@@ -419,6 +419,11 @@ description: This is the place to come for all the technical details you need to
           displayName: title
           /page-{pageno}.atom:
             displayName: page-{pageno}.atom
+            uriParameters:
+              pageno:
+                description: Page number of results to return
+                required: true
+                type: integer
             get:
               queryParameters:
                 platform:
@@ -466,11 +471,6 @@ description: This is the place to come for all the technical details you need to
               (oas-tags):
                 - discoveryresources
               body: {}
-            uriParameters:
-              pageno:
-                description: Page number of results to return
-                required: true
-                type: integer
         /4od.atom:
           displayName: 4od.atom
           get:
@@ -573,6 +573,11 @@ description: This is the place to come for all the technical details you need to
           body: {}
     /page-{pageno}.atom:
       displayName: page-{pageno}.atom
+      uriParameters:
+        pageno:
+          description: Page number of results to return
+          required: true
+          type: integer
       get:
         queryParameters:
           platform:
@@ -621,11 +626,6 @@ description: This is the place to come for all the technical details you need to
         (oas-tags):
           - discoveryresources
         body: {}
-      uriParameters:
-        pageno:
-          description: Page number of results to return
-          required: true
-          type: integer
     /popular.atom:
       displayName: popular.atom
       get:
@@ -679,6 +679,11 @@ description: This is the place to come for all the technical details you need to
       displayName: popular
       /page-{pageno}.atom:
         displayName: page-{pageno}.atom
+        uriParameters:
+          pageno:
+            description: Page number of results to return
+            required: true
+            type: integer
         get:
           queryParameters:
             platform:
@@ -726,11 +731,6 @@ description: This is the place to come for all the technical details you need to
           (oas-tags):
             - discoveryresources
           body: {}
-        uriParameters:
-          pageno:
-            description: Page number of results to return
-            required: true
-            type: integer
     /4od.atom:
       displayName: 4od.atom
       get:
@@ -934,6 +934,11 @@ description: This is the place to come for all the technical details you need to
         displayName: popular
         /page-{pageno}.atom:
           displayName: page-{pageno}.atom
+          uriParameters:
+            pageno:
+              description: Page number of results to return
+              required: true
+              type: integer
           get:
             queryParameters:
               platform:
@@ -981,13 +986,13 @@ description: This is the place to come for all the technical details you need to
             (oas-tags):
               - discoveryresources
             body: {}
-          uriParameters:
-            pageno:
-              description: Page number of results to return
-              required: true
-              type: integer
       /page-{pageno}.atom:
         displayName: page-{pageno}.atom
+        uriParameters:
+          pageno:
+            description: Page number of results to return
+            required: true
+            type: integer
         get:
           queryParameters:
             platform:
@@ -1036,15 +1041,15 @@ description: This is the place to come for all the technical details you need to
           (oas-tags):
             - discoveryresources
           body: {}
-        uriParameters:
-          pageno:
-            description: Page number of results to return
-            required: true
-            type: integer
       /title:
         displayName: title
         /page-{pageno}.atom:
           displayName: page-{pageno}.atom
+          uriParameters:
+            pageno:
+              description: Page number of results to return
+              required: true
+              type: integer
           get:
             queryParameters:
               platform:
@@ -1092,15 +1097,15 @@ description: This is the place to come for all the technical details you need to
             (oas-tags):
               - discoveryresources
             body: {}
-          uriParameters:
-            pageno:
-              description: Page number of results to return
-              required: true
-              type: integer
     /title:
       displayName: title
       /page-{pageno}.atom:
         displayName: page-{pageno}.atom
+        uriParameters:
+          pageno:
+            description: Page number of results to return
+            required: true
+            type: integer
         get:
           queryParameters:
             platform:
@@ -1148,15 +1153,22 @@ description: This is the place to come for all the technical details you need to
           (oas-tags):
             - discoveryresources
           body: {}
-        uriParameters:
-          pageno:
-            description: Page number of results to return
-            required: true
-            type: integer
     /channel:
       displayName: channel
       /{channel}.atom:
         displayName: {channel}.atom
+        uriParameters:
+          channel:
+            description: The name of the channel for which you seek associated Channel 4oD programmes
+            enum:
+              - c4
+              - f4
+              - e4
+              - m4
+              - 4m
+              - 4s
+            required: true
+            type: string
         get:
           queryParameters:
             platform:
@@ -1205,24 +1217,17 @@ description: This is the place to come for all the technical details you need to
           (oas-tags):
             - discoveryresources
           body: {}
-        uriParameters:
-          channel:
-            description: The name of the channel for which you seek associated Channel 4oD programmes
-            enum:
-              - c4
-              - f4
-              - e4
-              - m4
-              - 4m
-              - 4s
-            required: true
-            type: string
       /{channel}:
         displayName: {channel}
         /4od:
           displayName: 4od
           /page-{pageno}.atom:
             displayName: page-{pageno}.atom
+            uriParameters:
+              pageno:
+                description: Page number of results to return
+                required: true
+                type: integer
             get:
               queryParameters:
                 platform:
@@ -1271,15 +1276,15 @@ description: This is the place to come for all the technical details you need to
               (oas-tags):
                 - discoveryresources
               body: {}
-            uriParameters:
-              pageno:
-                description: Page number of results to return
-                required: true
-                type: integer
           /popular:
             displayName: popular
             /page-{pageno}.atom:
               displayName: page-{pageno}.atom
+              uriParameters:
+                pageno:
+                  description: Page number of results to return
+                  required: true
+                  type: integer
               get:
                 queryParameters:
                   platform:
@@ -1327,15 +1332,15 @@ description: This is the place to come for all the technical details you need to
                 (oas-tags):
                   - discoveryresources
                 body: {}
+          /title:
+            displayName: title
+            /page-{pageno}.atom:
+              displayName: page-{pageno}.atom
               uriParameters:
                 pageno:
                   description: Page number of results to return
                   required: true
                   type: integer
-          /title:
-            displayName: title
-            /page-{pageno}.atom:
-              displayName: page-{pageno}.atom
               get:
                 queryParameters:
                   platform:
@@ -1383,11 +1388,6 @@ description: This is the place to come for all the technical details you need to
                 (oas-tags):
                   - discoveryresources
                 body: {}
-              uriParameters:
-                pageno:
-                  description: Page number of results to return
-                  required: true
-                  type: integer
           /title.atom:
             displayName: title.atom
             get:
@@ -1589,6 +1589,11 @@ description: This is the place to come for all the technical details you need to
           displayName: title
           /page-{pageno}.atom:
             displayName: page-{pageno}.atom
+            uriParameters:
+              pageno:
+                description: Page number of results to return
+                required: true
+                type: integer
             get:
               queryParameters:
                 platform:
@@ -1636,13 +1641,13 @@ description: This is the place to come for all the technical details you need to
               (oas-tags):
                 - discoveryresources
               body: {}
-            uriParameters:
-              pageno:
-                description: Page number of results to return
-                required: true
-                type: integer
         /page-{pageno}.atom:
           displayName: page-{pageno}.atom
+          uriParameters:
+            pageno:
+              description: Page number of results to return
+              required: true
+              type: integer
           get:
             queryParameters:
               platform:
@@ -1691,13 +1696,13 @@ description: This is the place to come for all the technical details you need to
             (oas-tags):
               - discoveryresources
             body: {}
-          uriParameters:
-            pageno:
-              description: Page number of results to return
-              required: true
-              type: integer
   /{category}.atom:
     displayName: {category}.atom
+    uriParameters:
+      category:
+        description: The name of the category for which you seek associated Channel 4 programmes. (For a full list of categories, please see http://api.channel4.com/pmlsd/categories.atom?apikey=xxxxxxxxxxxxxxxxxxxxxxxx)
+        required: true
+        type: string
     get:
       queryParameters:
         platform:
@@ -1746,17 +1751,17 @@ description: This is the place to come for all the technical details you need to
       (oas-tags):
         - discoveryresources
       body: {}
-    uriParameters:
-      category:
-        description: The name of the category for which you seek associated Channel 4 programmes. (For a full list of categories, please see http://api.channel4.com/pmlsd/categories.atom?apikey=xxxxxxxxxxxxxxxxxxxxxxxx)
-        required: true
-        type: string
 /{brand-web-safe-title}:
   displayName: {brand-web-safe-title}
   /videos:
     displayName: videos
     /{clip-asset-id}.atom:
       displayName: {clip-asset-id}.atom
+      uriParameters:
+        clip-asset-id:
+          description: Asset id for this clip
+          required: true
+          type: string
       get:
         queryParameters:
           platform:
@@ -1803,15 +1808,15 @@ description: This is the place to come for all the technical details you need to
         (oas-tags):
           - metadataresources
         body: {}
-      uriParameters:
-        clip-asset-id:
-          description: Asset id for this clip
-          required: true
-          type: string
     /series-{series_number}:
       displayName: series-{series_number}
       /episode-{episode_number}.atom:
         displayName: episode-{episode_number}.atom
+        uriParameters:
+          episode_number:
+            description: Unique identifier of episode to which clips belong
+            required: true
+            type: string
         get:
           queryParameters:
             platform:
@@ -1865,13 +1870,13 @@ description: This is the place to come for all the technical details you need to
           (oas-tags):
             - metadataresources
           body: {}
-        uriParameters:
-          episode_number:
-            description: Unique identifier of episode to which clips belong
-            required: true
-            type: string
     /series-{series_number}.atom:
       displayName: series-{series_number}.atom
+      uriParameters:
+        series_number:
+          description: Unique identifier of series to which clips belong
+          required: true
+          type: string
       get:
         queryParameters:
           platform:
@@ -1925,11 +1930,6 @@ description: This is the place to come for all the technical details you need to
         (oas-tags):
           - metadataresources
         body: {}
-      uriParameters:
-        series_number:
-          description: Unique identifier of series to which clips belong
-          required: true
-          type: string
     /all.atom:
       displayName: all.atom
       get:
@@ -2139,6 +2139,11 @@ description: This is the place to come for all the technical details you need to
     displayName: episode-guide
     /series-{series_number}.atom:
       displayName: series-{series_number}.atom
+      uriParameters:
+        series_number:
+          description: Unique enumerated identifier of the series within its brand
+          required: true
+          type: string
       get:
         queryParameters:
           platform:
@@ -2187,15 +2192,15 @@ description: This is the place to come for all the technical details you need to
         (oas-tags):
           - metadataresources
         body: {}
-      uriParameters:
-        series_number:
-          description: Unique enumerated identifier of the series within its brand
-          required: true
-          type: string
     /series-{series_number}:
       displayName: series-{series_number}
       /episode-{episode_number}.atom:
         displayName: episode-{episode_number}.atom
+        uriParameters:
+          episode_number:
+            description: Unique enumerated identifier of the episode within its series
+            required: true
+            type: string
         get:
           queryParameters:
             platform:
@@ -2244,11 +2249,6 @@ description: This is the place to come for all the technical details you need to
           (oas-tags):
             - metadataresources
           body: {}
-        uriParameters:
-          episode_number:
-            description: Unique enumerated identifier of the episode within its series
-            required: true
-            type: string
 /4od:
   displayName: 4od
   /episode-list:
@@ -2261,6 +2261,11 @@ description: This is the place to come for all the technical details you need to
           displayName: {mm}
           /{dd}.atom:
             displayName: {dd}.atom
+            uriParameters:
+              dd:
+                description: The date for which you wish to see programming information
+                required: true
+                type: string
             get:
               queryParameters:
                 platform:
@@ -2308,11 +2313,6 @@ description: This is the place to come for all the technical details you need to
               (oas-tags):
                 - discoveryresources
               body: {}
-            uriParameters:
-              dd:
-                description: The date for which you wish to see programming information
-                required: true
-                type: string
     /popular.atom:
       displayName: popular.atom
       get:
@@ -2419,6 +2419,11 @@ description: This is the place to come for all the technical details you need to
   displayName: atoz
   /{start_letter}.atom:
     displayName: {start_letter}.atom
+    uriParameters:
+      start_letter:
+        description: The letter of the alphabet for which you seek associated Channel 4 programmes
+        required: true
+        type: string
     get:
       queryParameters:
         platform:
@@ -2465,15 +2470,15 @@ description: This is the place to come for all the technical details you need to
       (oas-tags):
         - discoveryresources
       body: {}
-    uriParameters:
-      start_letter:
-        description: The letter of the alphabet for which you seek associated Channel 4 programmes
-        required: true
-        type: string
   /{start_letter}:
     displayName: {start_letter}
     /page-{pageno}.atom:
       displayName: page-{pageno}.atom
+      uriParameters:
+        pageno:
+          description: Page number of results to return
+          required: true
+          type: integer
       get:
         queryParameters:
           platform:
@@ -2520,11 +2525,6 @@ description: This is the place to come for all the technical details you need to
         (oas-tags):
           - discoveryresources
         body: {}
-      uriParameters:
-        pageno:
-          description: Page number of results to return
-          required: true
-          type: integer
 /brands:
   displayName: brands
   /4od.atom:
@@ -2631,6 +2631,11 @@ description: This is the place to come for all the technical details you need to
       displayName: popular
       /page-{pageno}.atom:
         displayName: page-{pageno}.atom
+        uriParameters:
+          pageno:
+            description: Page number of results to return
+            required: true
+            type: integer
         get:
           queryParameters:
             platform:
@@ -2678,13 +2683,13 @@ description: This is the place to come for all the technical details you need to
           (oas-tags):
             - discoveryresources
           body: {}
-        uriParameters:
-          pageno:
-            description: Page number of results to return
-            required: true
-            type: integer
     /page-{pageno}.atom:
       displayName: page-{pageno}.atom
+      uriParameters:
+        pageno:
+          description: Page number of results to return
+          required: true
+          type: integer
       get:
         queryParameters:
           platform:
@@ -2732,11 +2737,6 @@ description: This is the place to come for all the technical details you need to
         (oas-tags):
           - discoveryresources
         body: {}
-      uriParameters:
-        pageno:
-          description: Page number of results to return
-          required: true
-          type: integer
   /popular.atom:
     displayName: popular.atom
     get:
@@ -2790,6 +2790,11 @@ description: This is the place to come for all the technical details you need to
     displayName: popular
     /page-{pageno}.atom:
       displayName: page-{pageno}.atom
+      uriParameters:
+        pageno:
+          description: Page number of results to return
+          required: true
+          type: integer
       get:
         queryParameters:
           platform:
@@ -2837,11 +2842,6 @@ description: This is the place to come for all the technical details you need to
         (oas-tags):
           - discoveryresources
         body: {}
-      uriParameters:
-        pageno:
-          description: Page number of results to return
-          required: true
-          type: integer
 /categories.atom:
   displayName: categories.atom
   get:
@@ -2894,6 +2894,11 @@ description: This is the place to come for all the technical details you need to
   displayName: collections
   /{collection_name}.atom:
     displayName: {collection_name}.atom
+    uriParameters:
+      collection_name:
+        description: Web safe title for the collection.
+        required: true
+        type: string
     get:
       queryParameters:
         platform:
@@ -2943,11 +2948,6 @@ description: This is the place to come for all the technical details you need to
       (oas-tags):
         - discoveryresources
       body: {}
-    uriParameters:
-      collection_name:
-        description: Web safe title for the collection.
-        required: true
-        type: string
   /{collection_name}:
     displayName: {collection_name}
     /4od.atom:
@@ -3156,6 +3156,11 @@ description: This is the place to come for all the technical details you need to
   displayName: coming-soon
   /{category}.atom:
     displayName: {category}.atom
+    uriParameters:
+      category:
+        description: The category websafe_title to filter the coming soon programmes on TV.
+        required: true
+        type: string
     get:
       queryParameters:
         platform:
@@ -3203,15 +3208,15 @@ description: This is the place to come for all the technical details you need to
       (oas-tags):
         - metadataresources
       body: {}
-    uriParameters:
-      category:
-        description: The category websafe_title to filter the coming soon programmes on TV.
-        required: true
-        type: string
 /programme:
   displayName: programme
   /{programme-id}.atom:
     displayName: {programme-id}.atom
+    uriParameters:
+      programme-id:
+        description: The websafe programme identifier for the episode for which you seek on-demand content
+        required: true
+        type: string
     get:
       queryParameters:
         platform:
@@ -3260,11 +3265,6 @@ description: This is the place to come for all the technical details you need to
       (oas-tags):
         - metadataresources
       body: {}
-    uriParameters:
-      programme-id:
-        description: The websafe programme identifier for the episode for which you seek on-demand content
-        required: true
-        type: string
 /search.atom:
   displayName: search.atom
   get:
@@ -3322,6 +3322,11 @@ description: This is the place to come for all the technical details you need to
   displayName: search
   /page-{pageno}.atom:
     displayName: page-{pageno}.atom
+    uriParameters:
+      pageno:
+        description: Page number of results to return
+        required: true
+        type: integer
     get:
       queryParameters:
         platform:
@@ -3373,13 +3378,13 @@ description: This is the place to come for all the technical details you need to
       (oas-tags):
         - discoveryresources
       body: {}
-    uriParameters:
-      pageno:
-        description: Page number of results to return
-        required: true
-        type: integer
   /{q}.atom:
     displayName: {q}.atom
+    uriParameters:
+      q:
+        description: The programme name to look for, minimum length: 2 chars.Looking for programme names with special chars might be URL encoded.
+        required: true
+        type: string
     get:
       queryParameters:
         platform:
@@ -3427,15 +3432,15 @@ description: This is the place to come for all the technical details you need to
       (oas-tags):
         - discoveryresources
       body: {}
-    uriParameters:
-      q:
-        description: The programme name to look for, minimum length: 2 chars.Looking for programme names with special chars might be URL encoded.
-        required: true
-        type: string
   /{q}:
     displayName: {q}
     /page-{pageno}.atom:
       displayName: page-{pageno}.atom
+      uriParameters:
+        pageno:
+          description: Page number of results to return
+          required: true
+          type: integer
       get:
         queryParameters:
           platform:
@@ -3483,11 +3488,6 @@ description: This is the place to come for all the technical details you need to
         (oas-tags):
           - discoveryresources
         body: {}
-      uriParameters:
-        pageno:
-          description: Page number of results to return
-          required: true
-          type: integer
 /tv-listings:
   displayName: tv-listings
   /daily:
@@ -3498,6 +3498,11 @@ description: This is the place to come for all the technical details you need to
         displayName: {mm}
         /{dd}.atom:
           displayName: {dd}.atom
+          uriParameters:
+            dd:
+              description: The date for which you wish to see programming information. Note the schedule days start from 6am and run until 6am on the next calendar day.
+              required: true
+              type: string
           get:
             queryParameters:
               platform:
@@ -3545,15 +3550,22 @@ description: This is the place to come for all the technical details you need to
             (oas-tags):
               - discoveryresources
             body: {}
-          uriParameters:
-            dd:
-              description: The date for which you wish to see programming information. Note the schedule days start from 6am and run until 6am on the next calendar day.
-              required: true
-              type: string
         /{dd}:
           displayName: {dd}
           /{channel}.atom:
             displayName: {channel}.atom
+            uriParameters:
+              channel:
+                description: The EPG for a specific channel (c4, e4, m4, 4m, f4, 4s)
+                enum:
+                  - c4
+                  - f4
+                  - e4
+                  - m4
+                  - 4m
+                  - 4s
+                required: true
+                type: string
             get:
               queryParameters:
                 platform:
@@ -3601,20 +3613,13 @@ description: This is the place to come for all the technical details you need to
               (oas-tags):
                 - discoveryresources
               body: {}
-            uriParameters:
-              channel:
-                description: The EPG for a specific channel (c4, e4, m4, 4m, f4, 4s)
-                enum:
-                  - c4
-                  - f4
-                  - e4
-                  - m4
-                  - 4m
-                  - 4s
-                required: true
-                type: string
 /{brand-web-safe-title}.atom:
   displayName: {brand-web-safe-title}.atom
+  uriParameters:
+    brand-web-safe-title:
+      description: The title of the programme for which you seek associated data
+      required: true
+      type: string
   get:
     queryParameters:
       platform:
@@ -3661,11 +3666,6 @@ description: This is the place to come for all the technical details you need to
     (oas-tags):
       - metadataresources
     body: {}
-  uriParameters:
-    brand-web-safe-title:
-      description: The title of the programme for which you seek associated data
-      required: true
-      type: string
 /atoz.atom:
   displayName: atoz.atom
   get:

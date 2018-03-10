@@ -5,7 +5,7 @@ import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.{AmfScalar, DomainElement}
 import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.domain.webapi.metamodel.{OperationModel, PayloadModel, RequestModel, WebApiModel}
+import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models.{Payload, WebApi}
 
 /** Apply root and operation mime types to payloads.
@@ -14,13 +14,32 @@ import amf.plugins.domain.webapi.models.{Payload, WebApi}
   * Response payloads will have as default mime type the 'contentType' field.
   */
 class MediaTypeResolutionStage(profile: String) extends ResolutionStage(profile) {
-
   override def resolve(model: BaseUnit): BaseUnit = {
     model match {
-      case doc: Document if doc.encodes.isInstanceOf[WebApi] => resolveMediaTypes(doc.encodes.asInstanceOf[WebApi])
-      case _                                                 =>
+      case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
+        resolvePayloads(doc.encodes.asInstanceOf[WebApi])
+        resolveMediaTypes(doc.encodes.asInstanceOf[WebApi])
+      case _ =>
     }
     model
+  }
+
+  def resolvePayloads(api: WebApi): Unit = {
+    api.endPoints.foreach { endpoint =>
+      val payloads = endpoint.payloads
+      endpoint.fields.remove(EndPointModel.Payloads)
+      if (payloads.nonEmpty) {
+        endpoint.operations.foreach { operation =>
+          Option(operation.request) match {
+            case Some(request) =>
+              payloads.foreach { payload =>
+                request.add(RequestModel.Payloads, payload)
+              }
+            case None => operation.withRequest().withPayloads(payloads)
+          }
+        }
+      }
+    }
   }
 
   def resolveMediaTypes(api: WebApi): Unit = {

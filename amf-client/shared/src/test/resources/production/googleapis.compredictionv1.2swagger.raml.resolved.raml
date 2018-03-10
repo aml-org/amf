@@ -117,6 +117,11 @@ description: Lets you access a cloud hosted machine learning service that makes 
             description: IP address of the site where the request originates. Use this if you want to enforce per-user limits.
             type: string
         securedBy: []
+    uriParameters:
+      data:
+        description: mybucket/mydata resource in Google Storage
+        required: true
+        type: string
     put:
       displayName: prediction.training.update
       description: Add new data to a trained model
@@ -305,11 +310,6 @@ description: Lets you access a cloud hosted machine learning service that makes 
       (oas-tags):
         - training
       securedBy: []
-    uriParameters:
-      data:
-        description: mybucket/mydata resource in Google Storage
-        required: true
-        type: string
   post:
     displayName: prediction.training.insert
     description: Begin training your model

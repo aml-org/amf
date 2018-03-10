@@ -227,6 +227,9 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
         .withPath("/levelzero/level-one")
         .withName("One display name")
         .withDescription("and this description!")
+        .withPayloads(List(Payload()
+          .withMediaType("application/json")
+          .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#integer"))))
         .withOperations(List(
           Operation()
             .withMethod("get")
@@ -259,10 +262,6 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
                 .withHeaders(List(
                   Parameter().withName("Header-One").withRequired(false).withBinding("header")
                 ))
-                .withPayloads(List(Payload()
-                  .withSchema(
-                    ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#integer"))
-                  .withMediaType("application/json")))
             )
         ))
     )

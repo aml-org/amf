@@ -173,6 +173,11 @@ documentation:
     securedBy: []
   /child/{childId}:
     description: child description
+    uriParameters:
+      childId?:
+        type: integer
+      childId2?:
+        required: true
     post:
       body:
         application/json:
@@ -189,8 +194,3 @@ documentation:
               type: integer
               required: false
       securedBy: []
-    uriParameters:
-      childId?:
-        type: integer
-      childId2?:
-        required: true

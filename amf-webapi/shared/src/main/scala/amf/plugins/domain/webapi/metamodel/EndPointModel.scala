@@ -24,7 +24,9 @@ object EndPointModel extends DomainElementModel with KeyField {
 
   val Operations = Field(Array(OperationModel), Hydra + "supportedOperation")
 
-  val UriParameters = Field(Array(ParameterModel), Http + "parameter")
+  val Parameters = Field(Array(ParameterModel), Http + "parameter")
+
+  val Payloads = Field(Array(PayloadModel), Http + "payload")
 
   val Security = Field(Array(ParametrizedSecuritySchemeModel), Namespace.Security + "security")
 
@@ -33,7 +35,7 @@ object EndPointModel extends DomainElementModel with KeyField {
   override val `type`: List[ValueType] = Http + "EndPoint" :: DomainElementModel.`type`
 
   override def fields: List[Field] =
-    List(Path, Name, Description, Operations, UriParameters, Security) ++ DomainElementModel.fields
+    List(Path, Name, Description, Operations, Parameters, Payloads, Security) ++ DomainElementModel.fields
 
   override def modelInstance = EndPoint()
 }

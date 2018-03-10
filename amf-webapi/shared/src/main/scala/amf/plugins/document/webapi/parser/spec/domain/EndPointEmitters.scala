@@ -4,15 +4,16 @@ import amf.core.annotations.SynthesizedField
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
-import amf.core.model.domain.AmfScalar
-import amf.core.parser.{FieldEntry, Position}
+import amf.core.model.domain.{AmfArray, AmfScalar}
+import amf.core.parser.{FieldEntry, Fields, Position, Value}
 import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, ExtendsEmitter}
 import amf.plugins.domain.webapi.metamodel.EndPointModel
-import amf.plugins.domain.webapi.models.{EndPoint, Operation}
+import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 
 /**
   *
@@ -25,6 +26,32 @@ case class Raml10EndPointEmitter(endpoint: EndPoint,
 
   override protected def keyParameter: String = "uriParameters"
 
+  override protected def emitters(fs: Fields): ListBuffer[EntryEmitter] = {
+    val result = super.emitters(fs)
+
+    fs.entry(EndPointModel.Payloads).map(f => result += Raml10PayloadsEmitter("(payloads)", f, ordering, references))
+
+    fs.entry(EndPointModel.Parameters)
+      .map { f =>
+        if (f.array.values.exists(f => !f.annotations.contains(classOf[SynthesizedField]))) {
+
+          val (path, other) = f.array.values.asInstanceOf[Seq[Parameter]].partition(p => p.isPath)
+
+          result ++= OasParametersEmitter("(parameters)", other, ordering, references = references)(
+            amf.plugins.document.webapi.parser.spec.toOas(spec)).ramlEndpointEmitters()
+
+          if (path.nonEmpty) {
+            // TODO just emit other params in other way
+            val entry = FieldEntry(EndPointModel.Parameters,
+                                   Value(AmfArray(path, f.value.value.annotations), f.value.annotations))
+
+            result += RamlParametersEmitter(keyParameter, entry, ordering, references)
+          }
+        }
+      }
+
+    result
+  }
 }
 
 case class Raml08EndPointEmitter(endpoint: EndPoint,
@@ -33,8 +60,21 @@ case class Raml08EndPointEmitter(endpoint: EndPoint,
                                  references: Seq[BaseUnit] = Seq())(implicit ctx: RamlSpecEmitterContext)
     extends RamlEndPointEmitter(ordering, children, references) {
 
-  override protected def keyParameter: String = "baseUriParameters"
+  // TODO should we differentiate between uri and baseUri parameters at endpoint lvl?
+  override protected def keyParameter: String = "uriParameters"
 
+  override protected def emitters(fs: Fields): ListBuffer[EntryEmitter] = {
+    val result = super.emitters(fs)
+
+    fs.entry(EndPointModel.Parameters)
+      .map { f =>
+        if (f.array.values.exists(f => !f.annotations.contains(classOf[SynthesizedField]))) {
+          result += RamlParametersEmitter(keyParameter, f, ordering, references)
+        }
+      }
+
+    result
+  }
 }
 
 abstract class RamlEndPointEmitter(ordering: SpecOrdering,
@@ -57,34 +97,30 @@ abstract class RamlEndPointEmitter(ordering: SpecOrdering,
             ScalarEmitter(AmfScalar(endpoint.relativePath)).emit(b))
         },
         _.obj { b =>
-          val result = mutable.ListBuffer[EntryEmitter]()
-
-          fs.entry(EndPointModel.Name).map(f => result += RamlScalarEmitter("displayName", f))
-
-          fs.entry(EndPointModel.Description).map(f => result += RamlScalarEmitter("description", f))
-
-          fs.entry(EndPointModel.UriParameters)
-            .map { f =>
-              if (f.array.values.exists(f => !f.annotations.contains(classOf[SynthesizedField]))) {
-                result += RamlParametersEmitter(keyParameter, f, ordering, references)
-              }
-            }
-
-          fs.entry(EndPointModel.Extends).map(f => result ++= ExtendsEmitter("", f, ordering).emitters())
-
-          fs.entry(EndPointModel.Operations).map(f => result ++= operations(f, ordering))
-
-          fs.entry(EndPointModel.Security)
-            .map(f => result += ParametrizedSecuritiesSchemeEmitter("securedBy", f, ordering))
-
-          result ++= AnnotationsEmitter(endpoint, ordering).emitters
-
-          result ++= children
-
-          traverse(ordering.sorted(result), b)
+          traverse(ordering.sorted(emitters(fs)), b)
         }
       )
     )
+  }
+
+  protected def emitters(fs: Fields): ListBuffer[EntryEmitter] = {
+    val result = mutable.ListBuffer[EntryEmitter]()
+
+    fs.entry(EndPointModel.Name).map(f => result += RamlScalarEmitter("displayName", f))
+
+    fs.entry(EndPointModel.Description).map(f => result += RamlScalarEmitter("description", f))
+
+    fs.entry(EndPointModel.Extends).map(f => result ++= ExtendsEmitter("", f, ordering).emitters())
+
+    fs.entry(EndPointModel.Operations).map(f => result ++= operations(f, ordering))
+
+    fs.entry(EndPointModel.Security)
+      .map(f => result += ParametrizedSecuritiesSchemeEmitter("securedBy", f, ordering))
+
+    result ++= AnnotationsEmitter(endpoint, ordering).emitters
+
+    result ++= children
+    result
   }
 
   def +=(child: RamlEndPointEmitter): Unit = children += child
