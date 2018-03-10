@@ -92,6 +92,7 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
       val fieldType = literalRange() match {
         case literal if literal.endsWith("anyUri")  => Type.Iri
         case literal if literal.endsWith("anyType") => Type.Any
+        case literal if literal.endsWith("number")  => Type.Float
         case literal if literal == (Namespace.Xsd + "integer").iri() => Type.Int
         case literal if literal == (Namespace.Xsd + "float").iri() => Type.Float
         case literal if literal == (Namespace.Xsd + "boolean").iri() => Type.Bool

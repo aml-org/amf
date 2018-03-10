@@ -12,7 +12,6 @@ class DialectInstancesParsingTest extends BuildCycleTests {
 
   val basePath = "amf-client/shared/src/test/resources/vocabularies2/instances/"
 
-
   test("parse 1 test") {
     withDialect("dialect1.raml", "example1.raml", "example1.json", VocabularyYamlHint, Amf)
   }

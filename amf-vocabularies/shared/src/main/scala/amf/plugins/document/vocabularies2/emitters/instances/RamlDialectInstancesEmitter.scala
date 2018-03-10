@@ -295,16 +295,33 @@ case class DialectNodeEmitter(node: DialectDomainElement,
 
   protected def emitObjectMap(key: String, array: AmfArray, propertyMapping: PropertyMapping): Seq[EntryEmitter] = {
     Seq(new EntryEmitter() {
-      val nextNodeMapping: NodeMapping = findNodeMapping(propertyMapping.objectRange().head, dialect)
+      // val nextNodeMapping: NodeMapping = findNodeMapping(propertyMapping.objectRange().head, dialect)
+      val nextNodeMappings: Seq[NodeMapping] = propertyMapping.objectRange().map { rangeNodeMapping =>
+        findNodeMapping(rangeNodeMapping, dialect)
+      }
+      val mapElements = array.values.foldLeft(Map[Option[DialectNodeEmitter], DialectDomainElement]()) {
+        case (acc, dialectDomainElement: DialectDomainElement) =>
+          nextNodeMappings.find(nodeMapping => dialectDomainElement.dynamicType.map(_.iri()).contains(nodeMapping.nodetypeMapping)) match {
+            case Some(nextNodeMapping) =>
+              acc + (Some(DialectNodeEmitter(dialectDomainElement, nextNodeMapping, instance, dialect, ordering, aliases, Some(propertyMapping.mapKeyProperty()))) -> dialectDomainElement)
+            case _ =>
+              acc // TODO: raise violation
+          }
+        case (acc, _) => acc
+      } collect { case (Some(parsed),x) => (parsed, x) }
+
+      /*
       val mapElements = array.values.foldLeft(Map[DialectNodeEmitter, DialectDomainElement]()) { case (acc, dialectDomainElement: DialectDomainElement) =>
         acc + (DialectNodeEmitter(dialectDomainElement, nextNodeMapping, instance, dialect, ordering, aliases, Some(propertyMapping.mapKeyProperty())) -> dialectDomainElement)
       }
+      */
 
       override def emit(b: YDocument.EntryBuilder): Unit = {
         b.entry(key, _.obj { b =>
           ordering.sorted(mapElements.keys.toSeq).foreach { emitter =>
             val dialectDomainElement = mapElements(emitter)
-            val mapKeyValue = dialectDomainElement.fields.fields().find(_.field.value.iri() == propertyMapping.mapKeyProperty()).get.value.toString
+            val mapKeyField = dialectDomainElement.dynamicFields.find(_.value.iri() == propertyMapping.mapKeyProperty()).get
+            val mapKeyValue = dialectDomainElement.valueForField(mapKeyField).get.toString
             EntryPartEmitter(mapKeyValue, emitter).emit(b)
           }
         })

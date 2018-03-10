@@ -1,0 +1,1537 @@
+[
+  {
+    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#",
+    "@type": [
+      "http://raml.org/vocabularies/meta#DialectInstance",
+      "http://raml.org/vocabularies/document#Document",
+      "http://raml.org/vocabularies/document#Fragment",
+      "http://raml.org/vocabularies/document#Module",
+      "http://raml.org/vocabularies/document#Unit"
+    ],
+    "http://raml.org/vocabularies/meta#definedBy": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#"
+      }
+    ],
+    "http://raml.org/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/",
+        "@type": [
+          "http://raml.org/vocabularies/amf-validation#Profile",
+          "http://raml.org/vocabularies/meta#DialectDomainElement",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://schema.org/description": [
+          {
+            "@value": "Profile that enforces JSON API constraints over the API description"
+          }
+        ],
+        "http://raml.org/vocabularies/amf-validation#setSeverityWarning": [
+          {
+            "@value": "json-api-json-specific-media-type"
+          }
+        ],
+        "http://raml.org/vocabularies/amf-validation#validations": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-json-specific-media-type",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#ShapeValidation",
+              "http://raml.org/vocabularies/meta#DialectDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlClassId": [
+              {
+                "@value": "raml-http.Payload"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#message": [
+              {
+                "@value": "JSON API documents used the 'application/vnd.api+json' media type. Media type of Payloads must match."
+              }
+            ],
+            "http://www.w3.org/ns/shacl#property": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-json-specific-media-type/propertyConstraints/raml-http.mediaType",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape",
+                  "http://raml.org/vocabularies/meta#DialectDomainElement",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#in": [
+                  {
+                    "@value": "application/vnd.api+json"
+                  }
+                ],
+                "http://raml.org/vocabularies/amf-validation#ramlPropertyId": [
+                  {
+                    "@value": "raml-http.mediaType"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-json-specific-media-type/propertyConstraints/raml-http.mediaType/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-json-specific-media-type/propertyConstraints/raml-http.mediaType"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(40,0)-(47,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "json-api-json-specific-media-type"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-json-specific-media-type/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-json-specific-media-type"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(36,0)-(47,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-content-type-content-headers-request",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#FunctionValidation",
+              "http://raml.org/vocabularies/meta#DialectDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlClassId": [
+              {
+                "@value": "raml-http.Request"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#message": [
+              {
+                "@value": "Clients request must at least specify the content-type header"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#js": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-content-type-content-headers-request/functionConstraint",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#JSConstraint",
+                  "http://raml.org/vocabularies/meta#DialectDomainElement",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://raml.org/vocabularies/amf-validation#jsCode": [
+                  {
+                    "@value": "function(request) {\n  var headerNames = path(request, 'http:header / schema:name');\n  for (var i=0; i<headerNames.length; i++) {\n    if(headerNames[i] == \"Content-type\")\n      return true;\n  }\n  return false;\n}\n"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-content-type-content-headers-request/functionConstraint/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-content-type-content-headers-request/functionConstraint"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(51,0)-(64,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "json-api-content-type-content-headers-request"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-content-type-content-headers-request/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-content-type-content-headers-request"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(48,0)-(64,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-content-type-content-headers-response",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#FunctionValidation",
+              "http://raml.org/vocabularies/meta#DialectDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlClassId": [
+              {
+                "@value": "hydra.Operation"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#message": [
+              {
+                "@value": "Server responses must at least specify the content-type header"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#js": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-content-type-content-headers-response/functionConstraint",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#JSConstraint",
+                  "http://raml.org/vocabularies/meta#DialectDomainElement",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://raml.org/vocabularies/amf-validation#jsCode": [
+                  {
+                    "@value": "function(operation) {\n  if (value(operation, 'hydra:method', 'get')) {\n    return value(operation, 'hydra:returns / http:header / schema:name', 'Content-type');\n  }\n  return true;\n}\n"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-content-type-content-headers-response/functionConstraint/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-content-type-content-headers-response/functionConstraint"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(68,0)-(78,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "json-api-content-type-content-headers-response"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-content-type-content-headers-response/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-content-type-content-headers-response"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(65,0)-(78,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-415-server-response",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#FunctionValidation",
+              "http://raml.org/vocabularies/meta#DialectDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlClassId": [
+              {
+                "@value": "hydra.Operation"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#message": [
+              {
+                "@value": "Servers MUST support a 415 response code for requests with content-type header with type parameters"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#js": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-415-server-response/functionConstraint",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#JSConstraint",
+                  "http://raml.org/vocabularies/meta#DialectDomainElement",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://raml.org/vocabularies/amf-validation#jsCode": [
+                  {
+                    "@value": "function(operation) {\n   if (value(operation, 'hydra:method', 'post')) {\n     return value(operation, \"hydra:returns / hydra:statusCode\", \"415\");\n   } else {\n     return true\n   }\n}\n"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-415-server-response/functionConstraint/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-415-server-response/functionConstraint"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(82,0)-(93,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "json-api-415-server-response"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-415-server-response/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-415-server-response"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(79,0)-(93,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-406-server-response",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#FunctionValidation",
+              "http://raml.org/vocabularies/meta#DialectDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlClassId": [
+              {
+                "@value": "hydra.Operation"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#message": [
+              {
+                "@value": "Servers MUST support a 406 response code for requests with accept header with type parameters"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#js": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-406-server-response/functionConstraint",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#JSConstraint",
+                  "http://raml.org/vocabularies/meta#DialectDomainElement",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://raml.org/vocabularies/amf-validation#jsCode": [
+                  {
+                    "@value": "function(operation) {\n   if (value(operation, 'hydra:method', 'post')) {\n     return value(operation, \"hydra:returns / hydra:statusCode\", \"406\");\n   } else {\n     return true\n   }\n}\n"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-406-server-response/functionConstraint/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-406-server-response/functionConstraint"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(97,0)-(110,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "json-api-406-server-response"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-406-server-response/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-406-server-response"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(94,0)-(110,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-top-level-object",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#FunctionValidation",
+              "http://raml.org/vocabularies/meta#DialectDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlClassId": [
+              {
+                "@value": "raml-http.Payload"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#message": [
+              {
+                "@value": "A JSON object MUST be at the root of every JSON API request and response containing data. This object defines a document\u2019s \u201Ctop level\u201D."
+              }
+            ],
+            "http://www.w3.org/ns/shacl#js": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-top-level-object/functionConstraint",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#JSConstraint",
+                  "http://raml.org/vocabularies/meta#DialectDomainElement",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://raml.org/vocabularies/amf-validation#jsCode": [
+                  {
+                    "@value": "function(payload)  {\n  if (value(payload, 'http:mediaType', 'application/vnd.api+json')) {\n    var schema = path(payload, 'http:schema')[0]\n    return isModelType(schema, 'shacl:NodeShape');\n  } else {\n    return true;\n  }\n}\n"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-top-level-object/functionConstraint/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-top-level-object/functionConstraint"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(114,0)-(129,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "json-api-top-level-object"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-top-level-object/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-top-level-object"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(111,0)-(129,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-payload",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#FunctionValidation",
+              "http://raml.org/vocabularies/meta#DialectDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlClassId": [
+              {
+                "@value": "raml-http.Payload"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#message": [
+              {
+                "@value": "A document MUST contain at least one of the following top-level members data, errors or meta"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#js": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-payload/functionConstraint",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#JSConstraint",
+                  "http://raml.org/vocabularies/meta#DialectDomainElement",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://raml.org/vocabularies/amf-validation#jsCode": [
+                  {
+                    "@value": "function(payload) {\n  if (value(payload, 'http:mediaType', 'application/vnd.api+json')) {\n    var hasData = value(payload, 'http:schema / shacl:property / shacl:name', 'data');\n    var hasErrors = value(payload, 'http:schema / shacl:property / shacl:name', 'errors');\n    var hasMeta = value(payload, 'http:schema / shacl:property / shacl:name', 'meta');\n    return (hasData || hasErrors || hasMeta);\n  } else {\n    return true;\n  }\n}\n"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-payload/functionConstraint/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-payload/functionConstraint"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(133,0)-(146,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "json-api-valid-payload"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-payload/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-payload"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(130,0)-(146,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-payload-data-errors-exclusive",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#FunctionValidation",
+              "http://raml.org/vocabularies/meta#DialectDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlClassId": [
+              {
+                "@value": "raml-http.Payload"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#message": [
+              {
+                "@value": "The members data and errors MUST NOT coexist in the same document."
+              }
+            ],
+            "http://www.w3.org/ns/shacl#js": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-payload-data-errors-exclusive/functionConstraint",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#JSConstraint",
+                  "http://raml.org/vocabularies/meta#DialectDomainElement",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://raml.org/vocabularies/amf-validation#jsCode": [
+                  {
+                    "@value": "function(payload) {\n  if (value(payload, 'http:mediaType', 'application/vnd.api+json')) {\n    var hasData = value(payload, 'http:schema / shacl:property / shacl:name', 'data');\n    var hasErrors = value(payload, 'http:schema / shacl:property / shacl:name', 'errors');\n    return !(hasData && hasErrors)\n  } else {\n    return true;\n  }\n}\n"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-payload-data-errors-exclusive/functionConstraint/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-payload-data-errors-exclusive/functionConstraint"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(150,0)-(162,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "json-api-valid-payload-data-errors-exclusive"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-payload-data-errors-exclusive/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-payload-data-errors-exclusive"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(147,0)-(162,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-payload-no-includes-without-data",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#FunctionValidation",
+              "http://raml.org/vocabularies/meta#DialectDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlClassId": [
+              {
+                "@value": "raml-http.Payload"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#message": [
+              {
+                "@value": "If a document does not contain a top-level data key, the included member MUST NOT be present either"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#js": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-payload-no-includes-without-data/functionConstraint",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#JSConstraint",
+                  "http://raml.org/vocabularies/meta#DialectDomainElement",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://raml.org/vocabularies/amf-validation#jsCode": [
+                  {
+                    "@value": "function(payload) {\n  if (value(payload, 'http:mediaType', 'application/vnd.api+json')) {\n    var hasData = value(payload, 'http:schema / shacl:property / shacl:name', 'data');\n    var hasLinks = value(payload, 'http:schema / shacl:property / shacl:name', 'links');\n    if (!hasData) {\n      return !hasLinks\n    } else {\n      return true\n    }\n  } else {\n    return true;\n  }\n}\n"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-payload-no-includes-without-data/functionConstraint/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-payload-no-includes-without-data/functionConstraint"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(166,0)-(185,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "json-api-valid-payload-no-includes-without-data"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-payload-no-includes-without-data/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-payload-no-includes-without-data"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(163,0)-(185,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-primary-data",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#FunctionValidation",
+              "http://raml.org/vocabularies/meta#DialectDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlClassId": [
+              {
+                "@value": "raml-http.Payload"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#message": [
+              {
+                "@value": "Primary data of a payload must be either single resource or an array of resources"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#js": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-primary-data/functionConstraint",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#JSConstraint",
+                  "http://raml.org/vocabularies/meta#DialectDomainElement",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://raml.org/vocabularies/amf-validation#jsCode": [
+                  {
+                    "@value": "function(payload) {\n    if (value(payload, 'http:mediaType', 'application/vnd.api+json')) {\n      var schemas = path(payload, 'http:schema');\n      var dataSchema = filterByPropertyValue(schemas, 'shacl:property / shacl:name', 'data')[0];\n      if (dataSchema != null) {\n        var properties = path(dataSchema, 'shacl:property');\n        var dataProperty = filterByPropertyValue(properties, 'shacl:name', 'data');\n        var dataSchemaRange = path(dataProperty, 'raml-shapes:range');\n        return isModelType(dataSchemaRange, 'shacl:NodeShape') || isModelType(dataSchemaRange, 'raml-shapes:ArrayShape');\n      } else {\n        return true;\n      }\n    } else {\n      return true;\n    }\n}\n"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-primary-data/functionConstraint/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-primary-data/functionConstraint"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(189,0)-(217,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "json-api-valid-primary-data"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-primary-data/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-primary-data"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(186,0)-(217,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-resource-shapes",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#FunctionValidation",
+              "http://raml.org/vocabularies/meta#DialectDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlClassId": [
+              {
+                "@value": "shacl.PropertyShape"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#message": [
+              {
+                "@value": "Resource objects MUST contain at lest the 'type' top-level member"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#js": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-resource-shapes/functionConstraint",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#JSConstraint",
+                  "http://raml.org/vocabularies/meta#DialectDomainElement",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://raml.org/vocabularies/amf-validation#jsCode": [
+                  {
+                    "@value": "function(property) {\n   if (value(property, 'shacl:name', 'data')) {\n     var propertyRange = path(property, 'raml-shapes:range')[0]\n     if (propertyRange == null) {\n       return false;\n     } else {\n       var resourceShape;\n       if (isModelType(propertyRange, 'raml-shapes:ArrayShape')) {\n          resourceShape = path(propertyRange, 'raml-shapes:items')[0]\n       } else if (isModelType(propertyRange, 'shacl:NodeShape')) {\n         resourceShape = propertyRange\n       }\n       if (resourceShape != null) {\n         var hasTypeProperty = value(resourceShape, 'shacl:property / shacl:name', 'type')\n         return hasTypeProperty;\n       } else {\n         return false;\n       }\n     }\n   } else {\n     return true;\n   }\n}\n"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-resource-shapes/functionConstraint/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-resource-shapes/functionConstraint"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(221,0)-(251,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "json-api-valid-resource-shapes"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-resource-shapes/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-resource-shapes"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(218,0)-(251,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-fields-namespace",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#FunctionValidation",
+              "http://raml.org/vocabularies/meta#DialectDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlClassId": [
+              {
+                "@value": "shacl.NodeShape"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#message": [
+              {
+                "@value": "Resource objects MUST have valid field names without duplication or 'id' and 'type' field names"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#js": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-fields-namespace/functionConstraint",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#JSConstraint",
+                  "http://raml.org/vocabularies/meta#DialectDomainElement",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://raml.org/vocabularies/amf-validation#jsCode": [
+                  {
+                    "@value": "function(node) {\n  var fieldNames = {};\n  var properties = path(node, 'shacl:property') || [];\n  var attributesProperty = filterByPropertyValue(properties, 'shacl:name', 'attributes');\n  if (attributesProperty) {\n    var attributeNames = path(attributesProperty, 'raml-shapes:range / shacl:property / shacl:name')\n    for (var i=0; i< attributeNames.length; i++) {\n      var attributeName = attributeNames[i];\n      if (attributeName === 'type' || attributeName === 'id') {\n        return false;\n      }\n      fieldNames[attributeName] = true;\n    }\n  }\n  var relationshipsProperty = filterByPropertyValue(properties, 'shacl:name', 'relationships');\n  if (relationshipsProperty) {\n    var relationshipNames = path(relationshipsProperty, 'raml-shapes:range / shacl:property / shacl:name')\n    for (var i=0; i< relationshipNames.length; i++) {\n      var relationshipName = relationshipNames[i];\n      if (relationshipName === 'type' || relationshipName === 'id' || fieldNames[relationshipName]) {\n        return false;\n      }\n      fieldNames[relationshipName] = true;\n    }\n  }\n}\n"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-fields-namespace/functionConstraint/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-fields-namespace/functionConstraint"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(255,0)-(288,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "json-api-fields-namespace"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-fields-namespace/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-fields-namespace"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(252,0)-(288,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-relationship-keys",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#FunctionValidation",
+              "http://raml.org/vocabularies/meta#DialectDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlClassId": [
+              {
+                "@value": "shacl.PropertyShape"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#message": [
+              {
+                "@value": "Relationship objects must contain at least a 'links', 'data' or 'meta' field"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#js": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-relationship-keys/functionConstraint",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#JSConstraint",
+                  "http://raml.org/vocabularies/meta#DialectDomainElement",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://raml.org/vocabularies/amf-validation#jsCode": [
+                  {
+                    "@value": "function(property) {\n   if (value(property, 'shacl:name', 'relationships')) {\n     var relationshipsObject = path(property, 'raml-shapes:range')[0];\n     if (relationshipsObject == null) {\n       return false;\n     } else {\n       var relationships = path(relationshipsObject, 'shacl:property / raml-shapes:range');\n       for (var i=0; i<relationships.length; i++) {\n         var relationship = relationships[i];\n         var relationshipFields = path(relationship, 'shacl:property / shacl:name');\n         var foundValidKey = false;\n         for (var j=0; j<relationshipFields.length; j++) {\n           var fieldName = relationshipFields[j];\n           if (fieldName === 'links' || fieldName === 'data' || fieldName === 'meta') {\n               foundValidKey = true;\n           }\n         }\n         if (foundValidKey === false) {\n           return false;\n         }\n       }\n       return true;\n     }\n   } else {\n     return true;\n   }\n}\n"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-relationship-keys/functionConstraint/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-relationship-keys/functionConstraint"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(292,0)-(324,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "json-api-valid-relationship-keys"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-relationship-keys/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-relationship-keys"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(289,0)-(324,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-links-object",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#FunctionValidation",
+              "http://raml.org/vocabularies/meta#DialectDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlClassId": [
+              {
+                "@value": "shacl.PropertyShape"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#message": [
+              {
+                "@value": "Links objects must contain at leat one of the following fields 'self' or 'related'"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#js": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-links-object/functionConstraint",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#JSConstraint",
+                  "http://raml.org/vocabularies/meta#DialectDomainElement",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://raml.org/vocabularies/amf-validation#jsCode": [
+                  {
+                    "@value": "function(property) {\n   if (value(property, 'shacl:name', 'links')) {\n     var linksObject = path(property, 'raml-shapes:range')[0];\n     if (linksObject == null) {\n       return false;\n     } else {\n       var links = path(linksObject, 'shacl:property / shacl:name');\n       for (var i=0; i<links.length; i++) {\n         var link = links[i];\n         if (link === 'self' || link === 'related') {\n           return true;\n         }\n       }\n       return false;\n     }\n   } else {\n     return true;\n   }\n}\n"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-links-object/functionConstraint/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-links-object/functionConstraint"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(328,0)-(359,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "json-api-valid-links-object"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-links-object/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-links-object"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(325,0)-(359,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-links",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#FunctionValidation",
+              "http://raml.org/vocabularies/meta#DialectDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlClassId": [
+              {
+                "@value": "shacl.PropertyShape"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#message": [
+              {
+                "@value": "Links must contain either a simple string or map with 'href' and optional 'meta'"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#js": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-links/functionConstraint",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#JSConstraint",
+                  "http://raml.org/vocabularies/meta#DialectDomainElement",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://raml.org/vocabularies/amf-validation#jsCode": [
+                  {
+                    "@value": "function(property) {\n   if (value(property, 'shacl:name', 'self') || value(property, 'shacl:name', 'related')) {\n     var link =  path(property, 'raml-shapes:range')[0];\n     if (isModelType(link, 'shacl:ScalarShape')) {\n       var dataTypeNode = path(link, 'shacl:datatype')[0] || {}\n       return dataTypeNode[\"@id\"] === 'xsd:string';\n     } else if (isModelType(link, 'shacl:NodeShape')) {\n        var keys = path(link, 'shacl:property / shacl:name');\n        for (var i=0; i<keys.length; i++) {\n          var key = keys[i];\n          if (key === 'href' || key === 'meta') {\n            return true;\n          }\n        }\n        return false;\n     } else {\n        return false;\n     }\n   } else {\n     return true;\n   }\n}\n"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-links/functionConstraint/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-links/functionConstraint"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(363,0)-(389,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "json-api-valid-links"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-links/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-valid-links"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(360,0)-(389,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-meta-object",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#FunctionValidation",
+              "http://raml.org/vocabularies/meta#DialectDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlClassId": [
+              {
+                "@value": "shacl.PropertyShape"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#message": [
+              {
+                "@value": "Resource objects MAY contain meta members whose value is a meta object"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#js": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-meta-object/functionConstraint",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#JSConstraint",
+                  "http://raml.org/vocabularies/meta#DialectDomainElement",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://raml.org/vocabularies/amf-validation#jsCode": [
+                  {
+                    "@value": "function(property) {\n  if (value(property, 'shacl:name', 'meta')) {\n    var meta =  path(property, 'raml-shapes:range')[0];\n    return isModelType(meta, 'shacl:NodeShape')\n  } else {\n    return true;\n  }\n}\n"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-meta-object/functionConstraint/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-meta-object/functionConstraint"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(393,0)-(415,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "json-api-meta-object"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-meta-object/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-meta-object"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(390,0)-(415,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-includes",
+            "@type": [
+              "http://raml.org/vocabularies/amf-validation#FunctionValidation",
+              "http://raml.org/vocabularies/meta#DialectDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/amf-validation#ramlClassId": [
+              {
+                "@value": "shacl.PropertyShape"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#message": [
+              {
+                "@value": "Compound documents may include a list of included resource objects"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#js": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-includes/functionConstraint",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#JSConstraint",
+                  "http://raml.org/vocabularies/meta#DialectDomainElement",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://raml.org/vocabularies/amf-validation#jsCode": [
+                  {
+                    "@value": "function(property) {\n  if (value(property, 'shacl:name', 'included')) {\n    var includes =  path(property, 'raml-shapes:range')[0];\n    if (isModelType(includes, 'raml-shapes:ArrayShape')) {\n      var item = path(includes, 'raml-shapes:items')[0]\n      if (isModelType(item,  'shacl:NodeShape')) {\n        var hasId = value(item, 'shacl:property / shacl:name', 'id');\n        var hasType = value(item, 'shacl:property / shacl:name', 'type');\n        return (hasId && hasType);\n      } else {\n        return false;\n      }\n    } else {\n      return false;\n    }\n  } else {\n    return true;\n  }\n}"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-includes/functionConstraint/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-includes/functionConstraint"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(419,0)-(438,9)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "json-api-includes"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-includes/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/validations/json-api-includes"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(416,0)-(438,9)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "JSON API 1.0"
+          }
+        ],
+        "http://raml.org/vocabularies/amf-validation#setSeverityViolation": [
+          {
+            "@value": "json-api-top-level-object"
+          },
+          {
+            "@value": "json-api-content-type-content-headers-request"
+          },
+          {
+            "@value": "json-api-content-type-content-headers-response"
+          },
+          {
+            "@value": "json-api-415-server-response"
+          },
+          {
+            "@value": "json-api-406-server-response"
+          },
+          {
+            "@value": "json-api-valid-payload"
+          },
+          {
+            "@value": "json-api-valid-payload-data-errors-exclusive"
+          },
+          {
+            "@value": "json-api-valid-payload-no-includes-without-data"
+          },
+          {
+            "@value": "json-api-valid-primary-data"
+          },
+          {
+            "@value": "json-api-valid-resource-shapes"
+          },
+          {
+            "@value": "json-api-fields-namespace"
+          },
+          {
+            "@value": "json-api-valid-relationship-keys"
+          },
+          {
+            "@value": "json-api-valid-links-object"
+          },
+          {
+            "@value": "json-api-valid-links"
+          },
+          {
+            "@value": "json-api-meta-object"
+          },
+          {
+            "@value": "json-api-includes"
+          }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/source-map",
+            "@type": [
+              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(3,0)-(438,9)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://raml.org/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#/source-map",
+        "@type": [
+          "http://raml.org/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://raml.org/vocabularies/document-source-maps#lexical": [
+          {
+            "http://raml.org/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_instance1.raml#"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(3,0)-(438,9)]"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
