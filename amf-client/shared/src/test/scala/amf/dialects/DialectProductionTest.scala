@@ -17,7 +17,7 @@ class DialectProductionTest extends BuildCycleTests {
   }
 
   test("Can parse validation dialect instance"){
-    withDialect("validation_dialect.raml", "validation_instance1.raml", "validation_instance1.json", VocabularyYamlHint, Amf)
+    withDialect("validation_dialect.raml", "validation_instance1.raml", "validation_instance1.raml.raml", VocabularyYamlHint, RamlVocabulary)
   }
 
 

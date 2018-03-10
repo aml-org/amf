@@ -33,6 +33,7 @@ case class NodeConstraint(constraint: String, value: String)
 
 case class PropertyConstraint(ramlPropertyId: String,
                               name: String,
+                              // shacl:message
                               message: Option[String] = None,
                               pattern: Option[String] = None,
                               maxCount: Option[String] = None,
@@ -43,22 +44,60 @@ case class PropertyConstraint(ramlPropertyId: String,
                               maxExclusive: Option[String] = None,
                               minInclusive: Option[String] = None,
                               maxInclusive: Option[String] = None,
+                              /**
+                                * shacl:node
+                                * Objects of this property must conform to the
+                                * provided node shape
+                                */
                               node: Option[String] = None,
                               datatype: Option[String] = None,
                               // format: Option[String] = None,
+                              /**
+                                * shacl:class
+                                * Objects of this property must have this class
+                                */
                               `class`: Seq[String] = Seq(),
                               in: Seq[String] = Seq.empty,
                               custom: Option[(EntryBuilder, String) => Unit] = None
                              ) {}
 
 case class ValidationSpecification(name: String,
+                                   // shacl:message
                                    message: String,
                                    ramlMessage: Option[String] = None,
                                    oasMessage: Option[String] = None,
+                                   /**
+                                     * shacl:targetNode
+                                     * URIs of the nodes in the graph that will be
+                                     * targeted by this shape
+                                     */
                                    targetInstance: Seq[String] = Seq.empty,
+
+                                   /**
+                                     * shacl:targetClass
+                                     * Nodes with these classes will be targeted
+                                     * by this shape
+                                     */
                                    targetClass: Seq[String] = Seq.empty,
+
+                                   /**
+                                     * shacl:targetObjectsOf
+                                     *
+                                     * Nodes that are object of the properties in
+                                     * this array will be targeted by this shape
+                                     */
                                    targetObject: Seq[String] = Seq.empty,
+
+                                   /**
+                                     * Union of constraints passed as URIs
+                                     * to the contraints in the union
+                                     */
                                    unionConstraints: Seq[String] = Seq.empty,
+
+                                   /**
+                                     * shacl:property
+                                     * Property constraints for the node
+                                     */
                                    propertyConstraints: Seq[PropertyConstraint] = Seq.empty,
                                    nodeConstraints: Seq[NodeConstraint] = Seq.empty,
                                    closed: Option[Boolean] = None,

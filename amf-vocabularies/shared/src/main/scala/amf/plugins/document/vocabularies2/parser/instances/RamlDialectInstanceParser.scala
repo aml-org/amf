@@ -3,15 +3,15 @@ package amf.plugins.document.vocabularies2.parser.instances
 import amf.core.Root
 import amf.core.annotations.{Aliases, LexicalInformation}
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
-import amf.core.model.domain.{Annotation, DomainElement}
+import amf.core.model.domain.Annotation
+import amf.core.parser.{Annotations, BaseSpecParser, Declarations, EmptyFutureDeclarations, ErrorHandler, FutureDeclarations, ParsedReference, ParserContext, Reference, SearchScope, _}
 import amf.core.utils._
-import amf.core.parser._
-import amf.core.parser.{Annotations, BaseSpecParser, Declarations, EmptyFutureDeclarations, ErrorHandler, FutureDeclarations, ParsedReference, ParserContext, Reference, SearchScope}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies2.annotations.AliasesLocation
 import amf.plugins.document.vocabularies2.model.document.{Dialect, DialectInstance, DialectInstanceFragment, DialectInstanceLibrary}
 import amf.plugins.document.vocabularies2.model.domain._
 import amf.plugins.document.vocabularies2.parser.common.SyntaxErrorReporter
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.convert.YRead
 import org.yaml.model._
 
@@ -43,7 +43,7 @@ class DialectInstanceDeclarations(var dialectDomainElements: Map[String, Dialect
 
   def findDialectDomainElement(key: String, nodeMapping: NodeMapping, scope: SearchScope.Scope): Option[DialectDomainElement] = {
     findForType(key, _.asInstanceOf[DialectInstanceDeclarations].dialectDomainElements, scope) collect {
-      case dialectDomainElement: DialectDomainElement if dialectDomainElement.definedBy.exists(_.id == nodeMapping.id) => dialectDomainElement
+      case dialectDomainElement: DialectDomainElement if dialectDomainElement.definedBy.id == nodeMapping.id => dialectDomainElement
     }
   }
 
@@ -331,8 +331,8 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
         if (mappings.isEmpty){
           // TODO: violation here
           None
-        } else {
-          val node: DialectDomainElement = DialectDomainElement(nodeMap).withId(id).withDefinedBy(mappings)
+        } else if(mappings.size == 1) {
+          val node: DialectDomainElement = DialectDomainElement(nodeMap).withId(id).withDefinedBy(mappings.head)
           var instanceTypes: Seq[String] = Nil
           mappings.foreach { mapping =>
             val beforeValues = node.literalProperties.size + node.objectCollectionProperties.size + node.objectProperties.size + node.mapKeyProperties.size
@@ -351,8 +351,16 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
               instanceTypes ++= Seq(mapping.nodetypeMapping)
             }
           }
-          node.withInstanceTypes(instanceTypes)
+          node.withInstanceTypes(instanceTypes ++ Seq(mappings.head.id))
           Some(node)
+        } else {
+          ctx.violation(
+            ParserSideValidations.DialectAmbiguousRangeSpecification.id(),
+            id,
+            Some(property.nodePropertyMapping()),
+            s"Ambiguous node, please provide a type disambiguator. Nodes ${mappings.map(_.id).mkString(",")} have been found compatible, only one is allowed",
+            map)
+          None
         }
       case YType.Str | YType.Include =>
         val refTuple = ctx.link(ast) match {
@@ -427,7 +435,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
         case Some(nodeMapping: NodeMapping) =>
           propertyEntry.value.as[YMap].entries map { pair: YMapEntry =>
             val nestedId = id + "/" + propertyEntry.key.as[String].urlEncoded + "/" + pair.key.as[String].urlEncoded
-            val nestedNode = DialectDomainElement(Annotations(pair)).withId(nestedId).withDefinedBy(Seq(nodeMapping)).withInstanceTypes(Seq(nodeMapping.nodetypeMapping))
+            val nestedNode = DialectDomainElement(Annotations(pair)).withId(nestedId).withDefinedBy(nodeMapping).withInstanceTypes(Seq(nodeMapping.nodetypeMapping, nodeMapping.id))
             nestedNode.setMapKeyField(propertyKeyMapping.get, pair.key.as[String], pair.key)
             nestedNode.setMapKeyField(propertyValueMapping.get, pair.value.as[String], pair.value)
             Some(nestedNode)
@@ -540,8 +548,8 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
     ast.tagType match {
       case YType.Map =>
         val nodeMap = ast.as[YMap]
-        val node: DialectDomainElement = DialectDomainElement(nodeMap).withId(id).withDefinedBy(Seq(mapping))
-        node.withInstanceTypes(Seq(mapping.nodetypeMapping))
+        val node: DialectDomainElement = DialectDomainElement(nodeMap).withId(id).withDefinedBy(mapping)
+        node.withInstanceTypes(Seq(mapping.nodetypeMapping, mapping.id))
         mapping.propertiesMapping().foreach { propertyMapping =>
           val propertyName = propertyMapping.name()
           nodeMap.entries.find(_.key.as[String] == propertyName) match {

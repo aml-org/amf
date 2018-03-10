@@ -22,7 +22,7 @@ import amf.plugins.document.vocabularies.references.RAMLExtensionsReferenceHandl
 import amf.plugins.document.vocabularies.registries.{DialectRegistry, PlatformDialectRegistry}
 import amf.plugins.document.vocabularies.resolution.DialectsResolutionPipeline
 import amf.plugins.document.vocabularies.spec._
-import amf.plugins.document.vocabularies.validation.AMFDialectValidations
+import amf.plugins.document.vocabularies2.validation.AMFDialectValidations
 import org.yaml.model.{YComment, YDocument}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -155,7 +155,8 @@ object RAMLVocabulariesPlugin
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] = {
     PlatformDialectRegistry.dialects.foldLeft(Map[String, () => ValidationProfile]()) {
       case (acc, dialect) if !dialect.name.contains("Validation Profile") =>
-        acc.updated(dialect.name, () => new AMFDialectValidations(dialect).profile())
+        //acc.updated(dialect.name, () => new AMFDialectValidations(dialect).profile())
+        acc
       case (acc, _) => acc
     }
   }

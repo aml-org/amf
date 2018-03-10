@@ -405,7 +405,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
       } else {
         declarations.foldLeft(Seq[EntryEmitter]()) { case (acc, publicNodeMapping) =>
           val declared = instance.declares.collect {
-            case elem: DialectDomainElement if elem.definedBy.exists(_.id == publicNodeMapping.mappedNode()) => elem
+            case elem: DialectDomainElement if elem.definedBy.id == publicNodeMapping.mappedNode() => elem
           }
           if (declared.nonEmpty) {
             val nodeMapping = findNodeMappingById(publicNodeMapping.mappedNode())
