@@ -52,7 +52,7 @@ class DialectInstanceDeclarations(var dialectDomainElements: Map[String, Dialect
 
 
 class DialectInstanceContext(val dialect: Dialect, private val wrapped: ParserContext, private val ds: Option[DialectInstanceDeclarations] = None)
-  extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations) with SyntaxErrorReporter {
+  extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, wrapped.parserCount) with SyntaxErrorReporter {
 
   val libraryDeclarationsNodeMappings: Map[String, NodeMapping] = parseDeclaredNodeMappings("library")
   val rootDeclarationsNodeMappings: Map[String, NodeMapping]    = parseDeclaredNodeMappings("root")
@@ -307,7 +307,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
     val properties: Set[String] = nodeMap.entries.map { entry => entry.key.as[String] }.toSet
     unionMappings.filter { mapping =>
       val mappingRequiredSet: Set[String] = Option(mapping.propertiesMapping()).map {
-        props => props.filter(_.minCount() > 0).map(_.name())
+        props => props.filter(_.minCount().getOrElse(0) > 0).map(_.name())
       }.getOrElse(Nil).toSet
       val mappingSet: Set[String] = Option(mapping.propertiesMapping()).map { props => props.map(_.name()) }.getOrElse(Nil).toSet
 
@@ -493,7 +493,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
       case YType.Bool  =>
         ctx.inconsistentPropertyRangeValueViolation(node.id, property, property.literalRange(), (Namespace.Xsd + "boolean").iri(), value)
         None
-      case YType.Int   if property.literalRange() == (Namespace.Xsd + "integer").iri() || property.literalRange() == (Namespace.Xsd + "number").iri() =>
+      case YType.Int   if property.literalRange() == (Namespace.Xsd + "integer").iri() || property.literalRange() == (Namespace.Shapes + "number").iri() =>
         Some(value.as[Int])
       case YType.Int  =>
         ctx.inconsistentPropertyRangeValueViolation(node.id, property, property.literalRange(), (Namespace.Xsd + "integer").iri(), value)
@@ -503,7 +503,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
       case YType.Str  =>
         ctx.inconsistentPropertyRangeValueViolation(node.id, property, property.literalRange(), (Namespace.Xsd + "string").iri(), value)
         None
-      case YType.Float if property.literalRange() == (Namespace.Xsd + "float").iri() || property.literalRange() == (Namespace.Xsd + "number").iri() =>
+      case YType.Float if property.literalRange() == (Namespace.Xsd + "float").iri() || property.literalRange() == (Namespace.Shapes + "number").iri() =>
         Some(value.as[Float])
       case YType.Float  =>
         ctx.inconsistentPropertyRangeValueViolation(node.id, property, property.literalRange(), (Namespace.Xsd + "float").iri(), value)

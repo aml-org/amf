@@ -223,22 +223,26 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
                 extendedEntity.get.fields.into(domainEntity.fields);
                 // do we need to mark source of extension.
                 // yes
-              } else {
+              }
+              else{
+                /*
                 ctx.violation(
                   ParserSideValidations.DialectExtendIssue.id(),
                   domainEntity.id,
                   s"Extending unknown node " + ref,
                   node
                 )
+                */
               }
             }
-            case _ =>
-              ctx.violation(
-                ParserSideValidations.DialectExtendIssue.id(),
-                domainEntity.id,
-                s"Expecting scalar in !extend",
-                node
-              )
+            case _=>  /*
+            ctx.violation(
+              ParserSideValidations.DialectExtendIssue.id(),
+              domainEntity.id,
+              s"Expecting scalar in !extend",
+              node
+            )
+            */
           }
         }
         validateClosedNode(domainEntity, map, mappings, topLevel)
@@ -282,12 +286,14 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
             }
         }
       case _ =>
+        /*
         ctx.violation(
           ParserSideValidations.DialectExpectingMap.id(),
           domainEntity.id,
           s"Expecting map node or scalar",
           node
         )
+        */
       // case _ => throw new MajorParserFailureException(s"Error parsing unknown node $node",node.range)
     }
   }
@@ -356,6 +362,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
             }
         }
       case _ =>
+        /*
         ctx.violation(
           ParserSideValidations.DialectExpectingMap.id(),
           parentDomainEntity.id,
@@ -363,7 +370,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
           s"Expecting map node for dialect mapping ${mapping.name}, found ${entryNode.value.getClass}",
           entryNode
         )
-
+       */
     }
   }
 
@@ -601,6 +608,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
             .map(_.ast.range)
             .map(range => Range(range))
             .map(range => LexicalInformation(range))
+          /*
           ctx.violation(
             ParserSideValidations.DialectUnresolvableReference.id(),
             parent.id,
@@ -608,6 +616,7 @@ class DialectParser(val dialect: Dialect, root: Root)(implicit val ctx: DialectC
             "Can not resolve reference:" + value.toString,
             lexical
           )
+          */
           value
       }
     } else {

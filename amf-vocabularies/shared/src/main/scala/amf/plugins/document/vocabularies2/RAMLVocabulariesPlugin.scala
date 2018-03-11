@@ -1,14 +1,18 @@
 package amf.plugins.document.vocabularies2
 
+import amf.ProfileNames
 import amf.core.Root
 import amf.core.client.GenerationOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
 import amf.core.parser.{ParserContext, ReferenceHandler}
-import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin}
+import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.Platform
+import amf.core.services.RuntimeValidator
+import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels, ValidationResultProcessor}
+import amf.core.validation.core.ValidationProfile
 import amf.plugins.document.vocabularies.references.RAMLExtensionsReferenceHandler
 import amf.plugins.document.vocabularies.{DialectHeader, RamlHeaderExtractor}
 import amf.plugins.document.vocabularies2.annotations.AliasesLocation
@@ -23,12 +27,13 @@ import amf.plugins.document.vocabularies2.parser.dialects.{DialectContext, RamlD
 import amf.plugins.document.vocabularies2.parser.instances.{DialectInstanceContext, RamlDialectInstanceParser}
 import amf.plugins.document.vocabularies2.parser.vocabularies.{RamlVocabulariesParser, VocabularyContext}
 import amf.plugins.document.vocabularies2.resolution.pipelines.{DialectInstanceResolutionPipeline, DialectResolutionPipeline}
+import amf.plugins.document.vocabularies2.validation.AMFDialectValidations
 import org.yaml.model.YDocument
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor {
+object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor with AMFValidationPlugin with ValidationResultProcessor {
 
   val registry = new DialectsRegistry
 
@@ -162,5 +167,57 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
         throw new Exception("Dialect instances libraries not supported yet")
     }
   }
+
+  // Cache for the validation profiles
+  var validationsProfilesMap: Map[String, ValidationProfile] = Map()
+
+  /**
+    * Validation profiles supported by this plugin. Notice this will be called multiple times.
+    */
+  override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] = {
+    registry.allDialects().foldLeft(Map[String, () => ValidationProfile]()) {
+      case (acc, dialect) if !dialect.nameAndVersion().contains("Validation Profile") =>
+        acc.updated(dialect.nameAndVersion(), () => {
+          val profileName = dialect.nameAndVersion()
+          validationsProfilesMap.get(profileName) match {
+            case Some(profile) => profile
+            case _             =>
+              val resolvedDialect = new DialectResolutionPipeline().resolve(dialect)
+              val profile = new AMFDialectValidations(resolvedDialect).profile()
+              validationsProfilesMap += (profileName -> profile)
+              profile
+          }
+        })
+      case (acc, _) =>
+        acc
+    }
+  }
+
+  /**
+    * Request for validation of a particular model, profile and list of effective validations for that profile
+    */
+  override def validationRequest(baseUnit: BaseUnit,
+                                 profile: String,
+                                 validations: EffectiveValidations,
+                                 platform: Platform): Future[AMFValidationReport] = {
+    for {
+      shaclReport <- RuntimeValidator.shaclValidation(baseUnit, validations)
+    } yield {
+
+      // todo aggregating parser-side validations ?
+      // var results = aggregatedReport.map(r => processAggregatedResult(r, "RAML", validations))
+
+      // adding model-side validations
+      val results = shaclReport.results.flatMap { r => buildValidationResult(baseUnit, r, ProfileNames.RAML, validations) }
+
+      AMFValidationReport(
+        conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
+        model = baseUnit.id,
+        profile = profile,
+        results = results
+      )
+    }
+  }
+
 
 }

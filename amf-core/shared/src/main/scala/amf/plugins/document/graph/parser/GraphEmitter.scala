@@ -266,15 +266,15 @@ object GraphEmitter extends MetaModelTypeMapping {
               case Type.Int =>
                 seq.values
                   .asInstanceOf[Seq[AmfScalar]]
-                  .foreach(e => scalar(b, e.value.asInstanceOf[AmfScalar].toString, YType.Int, inArray = true))
+                  .foreach(e => scalar(b, e.value.toString, YType.Int, inArray = true))
               case Type.Float =>
                 seq.values
                   .asInstanceOf[Seq[AmfScalar]]
-                  .foreach(e => scalar(b, e.value.asInstanceOf[AmfScalar].toString, YType.Float, inArray = true))
+                  .foreach(e => scalar(b, e.value.toString, YType.Float, inArray = true))
               case Bool =>
                 seq.values
                   .asInstanceOf[Seq[AmfScalar]]
-                  .foreach(e => scalar(b, e.value.asInstanceOf[AmfScalar].toString, YType.Bool, inArray = true))
+                  .foreach(e => scalar(b, e.value.toString, YType.Bool, inArray = true))
               case Any =>
                 seq.values.asInstanceOf[Seq[AmfScalar]].foreach { scalarElement =>
                   scalarElement.value match {

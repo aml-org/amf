@@ -71,7 +71,7 @@ class Validation(platform: Platform) {
   // The aggregated report
   def reset(): Unit = validator.reset()
 
-  def aggregatedReport: List[AMFValidationResult] = validator.aggregatedReport
+  def aggregatedReport: List[AMFValidationResult] = validator.aggregatedReport(validator.aggregatedReport.keySet.max)
 
   // disable temporarily the reporting of validations
   def enabled: Boolean = validator.enabled
@@ -83,17 +83,6 @@ class Validation(platform: Platform) {
 
   def disableValidations[T]()(f: () => T): T = validator.disableValidations()(f)
 
-  /**
-    * Client code can use this function to register a new validation failure
-    */
-  def reportConstraintFailure(level: String,
-                              validationId: String,
-                              targetNode: String,
-                              targetProperty: Option[String] = None,
-                              message: String = "",
-                              position: Option[LexicalInformation] = None): Unit = {
-    validator.reportConstraintFailure(level, validationId, targetNode, targetProperty, message, position)
-  }
 
   def loadValidationProfile(validationProfilePath: String): Future[String] = {
     validator.loadValidationProfile(validationProfilePath)

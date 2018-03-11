@@ -26,6 +26,10 @@ trait ValidationResultProcessor {
       message = "Constraint violation"
     }
 
+    if (spec.isParserSide() && Option(result.message).isDefined) {
+      message = result.message
+    }
+
     val severity = findLevel(spec.id(), validations)
     new AMFValidationResult(message,
                             severity,
@@ -81,6 +85,10 @@ trait ValidationResultProcessor {
 
         if (Option(message).isEmpty || message == "") {
           message = result.message.getOrElse("Constraint violation")
+        }
+
+        if (targetSpec.isParserSide() && result.message.nonEmpty) {
+          message = result.message.get
         }
 
         val finalId = idMapping(result.sourceShape).startsWith("http") match {
