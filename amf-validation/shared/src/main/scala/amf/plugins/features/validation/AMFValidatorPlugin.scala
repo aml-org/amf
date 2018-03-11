@@ -2,7 +2,7 @@ package amf.plugins.features.validation
 
 import amf.ProfileNames
 import amf.core.client.GenerationOptions
-import amf.core.model.document.{BaseUnit, Document}
+import amf.core.model.document.BaseUnit
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Context
@@ -11,8 +11,9 @@ import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport}
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.plugins.document.graph.AMFGraphPlugin
-import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
-import amf.plugins.document.vocabularies.model.domain.DomainEntity
+import amf.plugins.document.vocabularies2.RAMLVocabulariesPlugin
+import amf.plugins.document.vocabularies2.model.document.DialectInstance
+import amf.plugins.document.vocabularies2.model.domain.DialectDomainElement
 import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
 import amf.plugins.features.validation.model.{ParsedValidationProfile, ValidationDialectText}
 import amf.plugins.syntax.SYamlSyntaxPlugin
@@ -28,7 +29,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     // Registering ourselves as the runtime validator
     RuntimeValidator.register(AMFValidatorPlugin)
     val url = "http://raml.org/dialects/profile.raml"
-    RAMLVocabulariesPlugin.registerDialect(url, ValidationDialectText.text) map { _ =>
+    RAMLVocabulariesPlugin.registry.registerDialect(url, ValidationDialectText.text) map { _ =>
       this
     }
   }
@@ -63,9 +64,14 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
       Some("application/yaml"),
       RAMLVocabulariesPlugin.ID,
       Context(platform)
-    ).map { case parsed: Document => parsed.encodes }
-      .map {
-        case encoded: DomainEntity if encoded.definition.shortName == "Profile" =>
+    ).map {
+      case parsed: DialectInstance if parsed.definedBy() == "http://raml.org/dialects/profile.raml#" =>
+        parsed.encodes
+      case _ =>
+        throw new Exception(
+          "Trying to load as a validation profile that does not match the Validation Profile dialect")
+    }.map {
+      case encoded: DialectDomainElement if encoded.definedBy.name == "profileNode" =>
           val profile = ParsedValidationProfile(encoded)
           val domainPlugin = profilesPlugins.get(profile.name) match {
             case Some(plugin) => plugin
@@ -84,7 +90,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
           customValidationProfilesPlugins += (profile.name -> domainPlugin)
           profile.name
 
-        case _ =>
+        case other =>
           throw new Exception(
             "Trying to load as a validation profile that does not match the Validation Profile dialect")
       }

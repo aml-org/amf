@@ -1,3 +1,4 @@
+/*
 package amf.dialects
 
 import amf.common.Tests.checkDiff
@@ -339,3 +340,4 @@ class DialectFeatureTest extends AsyncFunSuite with CompilerTestBuilder {
     }
   }
 }
+*/

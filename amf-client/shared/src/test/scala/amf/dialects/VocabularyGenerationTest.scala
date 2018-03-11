@@ -1,3 +1,4 @@
+/*
 package amf.dialects
 
 import amf.core.client.GenerationOptions
@@ -47,3 +48,4 @@ class VocabularyGenerationTest extends BuildCycleTests {
     new AMFDumper(unit, target, target.defaultSyntax, GenerationOptions()).dumpToString
   }
 }
+*/

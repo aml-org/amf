@@ -1,18 +1,16 @@
 package amf.facades
 
 import amf.ProfileNames
-import amf.core.annotations.LexicalInformation
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
 import amf.core.services.RuntimeValidator
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations}
 import amf.plugins.document.graph.AMFGraphPlugin
-import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
-import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
 import amf.plugins.document.vocabularies.spec.Dialect
-import amf.plugins.document.vocabularies2.{RAMLVocabulariesPlugin => RAMLVocabularies2Plugin}
-import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML08Plugin, RAML10Plugin, _}
+import amf.plugins.document.vocabularies2.model.document.Dialect
+import amf.plugins.document.vocabularies2.RAMLVocabulariesPlugin
+import amf.plugins.document.webapi._
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.features.validation.AMFValidatorPlugin
@@ -57,7 +55,7 @@ class Validation(platform: Platform) {
     * Loads the validation dialect from the provided URL
     */
   def loadValidationDialect(): Future[Dialect] = {
-    PlatformDialectRegistry.registerDialect(url, ValidationDialectText.text)
+    RAMLVocabulariesPlugin.registry.registerDialect(url, ValidationDialectText.text)
     /*
     platform.dialectsRegistry.get("%Validation Profile 1.0") match {
       case Some(dialect) => Promise().success(dialect).future

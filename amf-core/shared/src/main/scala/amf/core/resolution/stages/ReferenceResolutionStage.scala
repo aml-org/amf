@@ -84,7 +84,7 @@ class ReferenceResolutionStage(profile: String) extends ResolutionStage(profile)
 
   def resolveDynamicLink(l: LinkNode): Option[DomainElement] = {
     modelResolver.get.findFragment(l.value) match {
-      case Some(elem) => Some(new ResolvedLinkNode(l, elem))
+      case Some(elem) => Some(new ResolvedLinkNode(l, elem).withId(l.id))
       case _          => Some(l)
     }
   }

@@ -11,10 +11,8 @@ import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.Platform
 import amf.core.services.RuntimeValidator
-import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels, ValidationResultProcessor}
 import amf.core.validation.core.ValidationProfile
-import amf.plugins.document.vocabularies.references.RAMLExtensionsReferenceHandler
-import amf.plugins.document.vocabularies.{DialectHeader, RamlHeaderExtractor}
+import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels, ValidationResultProcessor}
 import amf.plugins.document.vocabularies2.annotations.AliasesLocation
 import amf.plugins.document.vocabularies2.emitters.dialects.{RamlDialectEmitter, RamlDialectLibraryEmitter}
 import amf.plugins.document.vocabularies2.emitters.instances.RamlDialectInstancesEmitter
@@ -23,15 +21,38 @@ import amf.plugins.document.vocabularies2.metamodel.document._
 import amf.plugins.document.vocabularies2.metamodel.domain._
 import amf.plugins.document.vocabularies2.model.document.{Dialect, DialectInstance, DialectLibrary, Vocabulary}
 import amf.plugins.document.vocabularies2.parser.ExtensionHeader
+import amf.plugins.document.vocabularies2.parser.common.RAMLExtensionsReferenceHandler
 import amf.plugins.document.vocabularies2.parser.dialects.{DialectContext, RamlDialectsParser}
 import amf.plugins.document.vocabularies2.parser.instances.{DialectInstanceContext, RamlDialectInstanceParser}
 import amf.plugins.document.vocabularies2.parser.vocabularies.{RamlVocabulariesParser, VocabularyContext}
 import amf.plugins.document.vocabularies2.resolution.pipelines.{DialectInstanceResolutionPipeline, DialectResolutionPipeline}
 import amf.plugins.document.vocabularies2.validation.AMFDialectValidations
-import org.yaml.model.YDocument
+import org.yaml.model.{YComment, YDocument}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+
+trait RamlHeaderExtractor {
+  def comment(root: Root): Option[YComment] = root.parsed.comment
+
+  def comment(document: YDocument): Option[YComment] =
+    document.children.find(v => v.isInstanceOf[YComment]).asInstanceOf[Option[YComment]]
+}
+
+object DialectHeader extends RamlHeaderExtractor {
+  def apply(root: Root): Boolean = comment(root) match {
+    case Some(comment: YComment) =>
+      comment.metaText match {
+        case t if t.startsWith("%RAML 1.0 Vocabulary") => true
+        case t if t.startsWith("%RAML 1.0 Dialect")    => true
+        case t if t.startsWith("%RAML 1.0")            => false
+        case t if t.startsWith("%RAML 0.8")            => false
+        case t if t.startsWith("%")                    => true
+        case _                                         => false
+      }
+    case _ => false
+  }
+}
 
 object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor with AMFValidationPlugin with ValidationResultProcessor {
 

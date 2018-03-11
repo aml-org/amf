@@ -34,7 +34,7 @@ trait RAMLPlugin extends BaseWebApiPlugin {
     inlineExternalReferences(root)
 
     val updated     = context(parentContext)
-    val cleanNested = ParserContext(root.location, root.references, EmptyFutureDeclarations())
+    val cleanNested = ParserContext(root.location, root.references, EmptyFutureDeclarations(), parserCount = parentContext.parserCount)
     val clean       = context(cleanNested)
 
     RamlHeader(root) flatMap { // todo review this, should we use the raml web api context for get the version parser?

@@ -577,13 +577,25 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
     })
 
     map.key("minimum", entry => {
-      val value = ValueNode(entry.value).integer().toNumber
-      propertyMapping.withMinimum(value.intValue())
+      entry.value.tagType match {
+        case YType.Int =>
+          val value = ValueNode(entry.value).integer().value
+          propertyMapping.withMinimum(value.asInstanceOf[Int].toDouble)
+        case _ =>
+          val value = ValueNode(entry.value).float().value
+          propertyMapping.withMinimum(value.asInstanceOf[Double])
+      }
     })
 
     map.key("maximum", entry => {
-      val value = ValueNode(entry.value).integer().toNumber
-      propertyMapping.withMaximum(value.intValue())
+      entry.value.tagType match {
+        case YType.Int =>
+          val value = ValueNode(entry.value).integer().value
+          propertyMapping.withMaximum(value.asInstanceOf[Int].toFloat)
+        case _ =>
+          val value = ValueNode(entry.value).float().value
+          propertyMapping.withMaximum(value.asInstanceOf[Double])
+      }
     })
 
     map.key("allowMultiple", entry => {

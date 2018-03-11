@@ -18,8 +18,8 @@ object ValidationDialectText {
       |    classTerm: shacl.JSConstraint
       |    mapping:
       |      message:
-      |         propertyTerm: shacl.message
-      |         range: string
+      |        propertyTerm: shacl.message
+      |        range: string
       |      code:
       |        range: string
       |        propertyTerm: validation.jsCode
@@ -46,10 +46,10 @@ object ValidationDialectText {
       |        range: string
       |      maxCount:
       |        propertyTerm: shacl.maxCount
-      |        range: number
+      |        range: integer
       |      minCount:
       |        propertyTerm: shacl.minCount
-      |        range: number
+      |        range: integer
       |      minExclusive:
       |        propertyTerm: shacl.minExclusive
       |        range: number
@@ -102,8 +102,7 @@ object ValidationDialectText {
       |      propertyConstraints:
       |        mandatory: true
       |        propertyTerm: shacl.property
-      |        asMap: true
-      |        hash: validation.ramlPropertyId
+      |        mapKey: validation.ramlPropertyId
       |        range: propertyConstraintNode
       |  queryValidationNode:
       |    classTerm: validation.QueryValidation
@@ -120,8 +119,7 @@ object ValidationDialectText {
       |        allowMultiple: true
       |      propertyConstraints:
       |        propertyTerm: shacl.property
-      |        asMap: true
-      |        hash: validation.ramlPropertyId
+      |        mapKey: validation.ramlPropertyId
       |        range: propertyConstraintNode
       |      targetQuery:
       |        mandatory: true
@@ -143,9 +141,8 @@ object ValidationDialectText {
       |    mapping:
       |      prefixes:
       |        propertyTerm: validation.ramlPrefixes
-      |        asMap: true
-      |        hash: validation.ramlPrefixName
-      |        hashValue: validation.ramlPrefixUri
+      |        mapKey: validation.ramlPrefixName
+      |        mapValue: validation.ramlPrefixUri
       |        range: ramlPrefixNode
       |      profile:
       |        propertyTerm: schema-org.name
@@ -175,21 +172,20 @@ object ValidationDialectText {
       |        allowMultiple: true
       |      validations:
       |        propertyTerm: validation.validations
-      |        asMap: true
-      |        hash: schema-org.name
+      |        mapKey: schema-org.name
       |        range: [ shapeValidationNode, queryValidationNode,functionValidationNode]
-      |raml:
+      |documents:
       |  fragments:
       |    encodes:
       |      ShapeValidation: queryValidationNode
       |      FunctionValidation: functionValidationNode
       |
-      |  module:
+      |  library:
       |    declares:
       |      shapes: queryValidationNode
       |      functions: functionValidationNode
       |
-      |  document:
+      |  root:
       |    encodes: profileNode
     """.stripMargin
 }

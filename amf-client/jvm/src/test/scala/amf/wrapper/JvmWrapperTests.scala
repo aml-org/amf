@@ -90,7 +90,8 @@ class JvmWrapperTests extends AsyncFunSuite with PlatformSecrets {
     assert(report.conforms)
   }
 
-  /*test("Vocabularies test") {
+  /*
+  test("Vocabularies test") {
     AMF.init().get()
 
     AMF.registerDialect("file://amf-client/shared/src/test/resources/api/dialects/eng-demos.raml").get()

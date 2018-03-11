@@ -34,6 +34,8 @@ object Type {
 
   object Float extends Scalar("float")
 
+  object Double extends Scalar("double")
+
   object Iri extends Scalar("url")
 
   object Bool extends Scalar("boolean")

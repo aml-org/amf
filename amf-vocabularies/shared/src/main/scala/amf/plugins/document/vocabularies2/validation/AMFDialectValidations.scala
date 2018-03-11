@@ -149,7 +149,7 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
       val dataRange = prop.literalRange()
       dataRange match {
 
-        case literal if literal.endsWith("number") =>
+        case literal if literal.endsWith("number") || literal.endsWith("float") || literal.endsWith("double") =>
           val message = s"Property '${prop.name()}'  value must be of type ${(Namespace.Xsd + "integer").iri()} or ${(Namespace.Xsd + "float").iri()}"
           validations += new ValidationSpecification(
             name = validationId(node, prop.name(), "dialectRange"),
@@ -177,11 +177,6 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
             )))
 
         case literal                                =>
-          val datatype = if (dataRange == (Namespace.Xsd + "float").iri()) {
-            (Namespace.Xsd + "double").iri() // floats must be casted to doubles for precission
-          } else {
-            dataRange
-          }
           val message = s"Property '${prop.name()}'  value must be of type $dataRange"
           validations += new ValidationSpecification(
             name = validationId(node, prop.name(), "dataRange"),
@@ -193,7 +188,7 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
               ramlPropertyId = prop.nodePropertyMapping(),
               name = validationId(node, prop.name(), "dataRange") + "/prop",
               message = Some(message),
-              datatype = Some(datatype)
+              datatype = Some(literal)
             )))
 
       }

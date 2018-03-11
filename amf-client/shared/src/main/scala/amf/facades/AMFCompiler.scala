@@ -6,7 +6,7 @@ import amf.core.parser.{ParsedDocument, ParsedReference, ParserContext, Referenc
 import amf.core.remote.Syntax.{Json, Yaml}
 import amf.core.remote._
 import amf.core.{AMFCompiler => ModularCompiler}
-import amf.plugins.document.vocabularies.RamlHeaderExtractor
+import amf.plugins.document.vocabularies2.RamlHeaderExtractor
 import org.yaml.model.YDocument
 
 import scala.collection.mutable.ListBuffer

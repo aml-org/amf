@@ -123,19 +123,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Custom function validation success test") {
-    for {
-      validation <- Validation(platform)
-      //_      <- validation.loadValidationDialect()
-      //_      <- validation.loadValidationProfile(examplesPath + "data/custom_function_validation_success.raml")
-      model  <- AMFCompiler(basePath + "mule_config.raml", platform, RamlYamlHint, validation).build()
-      report <- validation.validate(model, "RAML 1.0 Vocabulary")
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.size == 3)
-    }
-  }
-
   test("Raml Vocabulary") {
     for {
       validation <- Validation(platform)

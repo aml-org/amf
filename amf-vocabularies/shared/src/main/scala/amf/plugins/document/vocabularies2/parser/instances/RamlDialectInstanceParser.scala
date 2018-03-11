@@ -12,7 +12,8 @@ import amf.plugins.document.vocabularies2.model.document.{Dialect, DialectInstan
 import amf.plugins.document.vocabularies2.model.domain._
 import amf.plugins.document.vocabularies2.parser.common.SyntaxErrorReporter
 import amf.plugins.features.validation.ParserSideValidations
-import org.yaml.convert.YRead
+import org.yaml.convert.{ScalarYRead, YRead}
+import org.yaml.convert.YRead.LongYRead
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -482,11 +483,6 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
 
   def parseLiteralValue(value: YNode, property: PropertyMapping, node: DialectDomainElement): Option[_] = {
 
-    implicit val reader:YRead[Float] = new YRead[Float]() {
-      override def read(node: YNode): Either[YError, Float] = Right(value.toString.toFloat)
-      override def defaultValue: Float = 0
-    }
-
     value.tagType match {
       case YType.Bool if property.literalRange() == (Namespace.Xsd + "boolean").iri() =>
         Some(value.as[Boolean])
@@ -504,7 +500,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
         ctx.inconsistentPropertyRangeValueViolation(node.id, property, property.literalRange(), (Namespace.Xsd + "string").iri(), value)
         None
       case YType.Float if property.literalRange() == (Namespace.Xsd + "float").iri() || property.literalRange() == (Namespace.Shapes + "number").iri() =>
-        Some(value.as[Float])
+        Some(value.as[Double])
       case YType.Float  =>
         ctx.inconsistentPropertyRangeValueViolation(node.id, property, property.literalRange(), (Namespace.Xsd + "float").iri(), value)
         None
@@ -519,6 +515,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
       case Some(b: Boolean) => node.setLiteralField(property, b, value)
       case Some(i: Int)     => node.setLiteralField(property, i, value)
       case Some(f: Float)   => node.setLiteralField(property, f, value)
+      case Some(d: Double)  => node.setLiteralField(property, d, value)
       case Some(s: String)  => node.setLiteralField(property, s, value)
       case _                => // ignore
     }
