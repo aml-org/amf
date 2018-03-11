@@ -88,54 +88,54 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMapping] = Map(),
 }
 
 trait DialectSyntax {this: DialectContext =>
-  val dialect: Map[String,String] = Map(
-    "dialect" -> "string",
-    "version" -> "string",
-    "usage" -> "string",
-    "external" -> "libraries",
-    "uses" -> "DeclaresModel[]",
-    "nodeMappings" -> "NodeMapping[]",
-    "documents" -> "PublicNodeMapping"
+  val dialect: Map[String,Boolean] = Map(
+    "dialect" -> true,
+    "version" -> true,
+    "usage" -> false,
+    "external" -> false,
+    "uses" -> false,
+    "nodeMappings" -> false,
+    "documents" -> false
   )
 
-  val library: Map[String,String] = Map(
-    "usage" -> "string",
-    "external" -> "libraries",
-    "uses" -> "DeclaresModel[]",
-    "nodeMappings" -> "NodeMapping[]"
+  val library: Map[String,Boolean] = Map(
+    "usage" -> false,
+    "external" -> false,
+    "uses" -> false,
+    "nodeMappings" -> false
   )
 
-  val nodeMapping: Map[String,String] = Map(
-    "classTerm" -> "string",
-    "mapping" -> "propertyMapping"
+  val nodeMapping: Map[String,Boolean] = Map(
+    "classTerm" -> true,
+    "mapping" -> false
   )
 
-  val fragment: Map[String,String] = Map(
-    "usage" -> "string",
-    "external" -> "libraries",
-    "uses" -> "DeclaresModel[]"
+  val fragment: Map[String,Boolean] = Map(
+    "usage" -> false,
+    "external" -> false,
+    "uses" -> false
   ) ++ nodeMapping
 
-  val propertyMapping: Map[String,String] = Map(
-    "propertyTerm" -> "string",
-    "range"        -> "string",
-    "mapKey"       -> "string",
-    "mapValue"     -> "string",
-    "mandatory"    -> "string",
-    "pattern"      -> "string",
-    "sorted"       -> "boolean",
-    "minimum"      -> "integer",
-    "maximum"      -> "integer",
-    "allowMultiple"         -> "boolean",
-    "enum"                  -> "any[]",
-    "typeDiscriminatorName" -> "string",
-    "typeDiscriminator"     -> "Map[String,String]"
+  val propertyMapping: Map[String,Boolean] = Map(
+    "propertyTerm" -> true,
+    "range"        -> true,
+    "mapKey"       -> false,
+    "mapValue"     -> false,
+    "mandatory"    -> false,
+    "pattern"      -> false,
+    "sorted"       -> false,
+    "minimum"      -> false,
+    "maximum"      -> false,
+    "allowMultiple"         -> false,
+    "enum"                  -> false,
+    "typeDiscriminatorName" -> false,
+    "typeDiscriminator"     -> false
   )
 
-  val documentsMapping: Map[String,String] = Map(
-    "root" -> "DocumentMapping",
-    "fragments" -> "DocumentMapping[]",
-    "library" -> "DocumentMapping[]"
+  val documentsMapping: Map[String,Boolean] = Map(
+    "root" -> false,
+    "fragments" -> false,
+    "library" -> false
   )
 
   def closedNode(nodeType: String, id: String, map: YMap): Unit = {
@@ -153,6 +153,15 @@ trait DialectSyntax {this: DialectContext =>
         case None => closedNodeViolation(id, property, nodeType, map)
       }
     }
+
+    allowedProps.foreach { case (propName, mandatory) =>
+      val props = map.map.keySet.map(_.as[String]).toSet
+      if (mandatory) {
+        if (!props.contains(propName)) {
+          missingPropertyViolation(id, propName, nodeType, map)
+        }
+      }
+    }
   }
 
   private def isInclude(node: YNode) = node.tagType == YType.Include
@@ -166,7 +175,7 @@ trait DialectSyntax {this: DialectContext =>
 }
 
 class DialectContext(private val wrapped: ParserContext, private val ds: Option[DialectDeclarations] = None)
-  extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations)
+  extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, wrapped.parserCount)
     with DialectSyntax with SyntaxErrorReporter {
 
   val declarations: DialectDeclarations =

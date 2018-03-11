@@ -116,7 +116,7 @@ case class ValidationSpecification(name: String,
     }
   }
 
-  def isParserSide() = targetClass.nonEmpty && targetClass.head == ValidationSpecification.PARSER_SIDE_VALIDATION
+  def isParserSide() = targetInstance.nonEmpty && targetInstance.head == ValidationSpecification.PARSER_SIDE_VALIDATION
 }
 
 object ValidationSpecification {

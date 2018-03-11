@@ -108,7 +108,7 @@ trait VocabularySyntax { this: VocabularyContext =>
 }
 
 class VocabularyContext(private val wrapped: ParserContext, private val ds: Option[VocabularyDeclarations] = None)
-  extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations)
+  extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, wrapped.parserCount)
     with VocabularySyntax with SyntaxErrorReporter {
 
   var imported: Map[String,Vocabulary] = Map()

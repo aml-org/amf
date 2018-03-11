@@ -4,7 +4,7 @@ import amf.core
 import amf.core.exception.CyclicReferenceException
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.ExternalDomainElement
-import amf.core.parser.{ParsedDocument, ParsedReference, ParserContext, ReferenceKind}
+import amf.core.parser.{ParsedDocument, ParsedReference, ParserContext, ReferenceKind, UnspecifiedReference}
 import amf.core.plugins.AMFDocumentPlugin
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
@@ -14,13 +14,21 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.Future.failed
 
+object AMFCompilerRunCount {
+  var count = 0
+  def nextRun(): Int = synchronized {
+    count += 1
+    count
+  }
+}
+
 class AMFCompiler(val rawUrl: String,
                   val remote: Platform,
                   val base: Option[Context],
                   val mediaType: Option[String],
                   val vendor: String,
-                  val referenceKind: ReferenceKind,
-                  private val cache: Cache,
+                  val referenceKind: ReferenceKind = UnspecifiedReference,
+                  private val cache: Cache = Cache(),
                   private val baseContext: Option[ParserContext] = None) {
 
   val url: String                   = new java.net.URI(rawUrl).normalize().toString
@@ -91,6 +99,7 @@ class AMFCompiler(val rawUrl: String,
   }
 
   private def parseDomain(document: Root): Future[BaseUnit] = {
+    var currentRun = ctx.parserCount
     val domainPluginOption = AMFPluginsRegistry.documentPluginForVendor(vendor).find(_.canParse(document)) match {
       case Some(domainPlugin) => Some(domainPlugin)
       case None               => AMFPluginsRegistry.documentPluginForMediaType(document.mediatype).find(_.canParse(document))
@@ -119,6 +128,8 @@ class AMFCompiler(val rawUrl: String,
     }
 
     futureDocument map { baseUnit: BaseUnit =>
+      // we setup the run for the parsed unit
+      baseUnit.parserRun = Some(currentRun)
       AMFPluginsRegistry.featurePlugins().foldLeft(baseUnit) {
         case (unit, plugin) =>
           plugin.onModelParsed(url, unit)

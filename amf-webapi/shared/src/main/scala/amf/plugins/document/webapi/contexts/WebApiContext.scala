@@ -110,7 +110,7 @@ class OasWebApiContext(private val wrapped: ParserContext, private val ds: Optio
 }
 
 abstract class WebApiContext(private val wrapped: ParserContext, private val ds: Option[WebApiDeclarations] = None)
-    extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations)
+    extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, parserCount = wrapped.parserCount)
     with SpecAwareContext {
 
   val syntax: SpecSyntax

@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies2.metamodel.domain
 
 import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Bool, Int, Iri, SortedArray, Str, Any}
+import amf.core.metamodel.Type.{Bool, Int, Iri, SortedArray, Str, Any, Float}
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.{Namespace, ValueType}
@@ -19,8 +19,8 @@ object PropertyMappingModel extends DomainElementModel {
   val Sorted                = Field(Bool, Namespace.Meta + "sorted")
   val MinCount              = Field(Int, Namespace.Shacl + "minCount")
   val Pattern               = Field(Str, Namespace.Shacl + "pattern")
-  val Minimum               = Field(Int, Namespace.Shacl + "minInclusive")
-  val Maximum               = Field(Int, Namespace.Shacl + "maxInclusive")
+  val Minimum               = Field(Float, Namespace.Shacl + "minInclusive")
+  val Maximum               = Field(Float, Namespace.Shacl + "maxInclusive")
   val AllowMultiple         = Field(Bool, Namespace.Meta + "allowMultiple")
   val Enum                  = Field(SortedArray(Any), Namespace.Shacl + "in")
   val TypeDiscriminator     = Field(Str, Namespace.Meta + "typeDiscriminatorMap")

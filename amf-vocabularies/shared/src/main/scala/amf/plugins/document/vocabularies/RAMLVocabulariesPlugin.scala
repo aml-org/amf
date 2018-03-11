@@ -22,7 +22,6 @@ import amf.plugins.document.vocabularies.references.RAMLExtensionsReferenceHandl
 import amf.plugins.document.vocabularies.registries.{DialectRegistry, PlatformDialectRegistry}
 import amf.plugins.document.vocabularies.resolution.DialectsResolutionPipeline
 import amf.plugins.document.vocabularies.spec._
-import amf.plugins.document.vocabularies2.validation.AMFDialectValidations
 import org.yaml.model.{YComment, YDocument}
 
 import scala.concurrent.ExecutionContext.Implicits.global

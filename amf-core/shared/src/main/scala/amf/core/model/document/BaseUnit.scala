@@ -11,7 +11,11 @@ import scala.collection.mutable.ListBuffer
 /** Any parseable unit, backed by a source URI. */
 trait BaseUnit extends AmfObject with MetaModelTypeMapping {
 
+  // We store the parser run here to be able to find runtime validations for this model
+  var parserRun: Option[Int] = None
+
   /** Raw text  used to generated this unit */
+
   var raw: Option[String] = None
 
   /** Meta data for the document */

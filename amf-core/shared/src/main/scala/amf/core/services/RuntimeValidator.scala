@@ -38,7 +38,8 @@ trait RuntimeValidator {
                               targetNode: String,
                               targetProperty: Option[String] = None,
                               message: String = "",
-                              position: Option[LexicalInformation] = None)
+                              position: Option[LexicalInformation] = None,
+                              parserRun: Int)
 
   /**
     * Temporary disable checking of runtime validations for the duration of the passed block
@@ -99,7 +100,8 @@ object RuntimeValidator {
                               targetNode: String,
                               targetProperty: Option[String] = None,
                               message: String = "",
-                              position: Option[LexicalInformation] = None) = {
+                              position: Option[LexicalInformation] = None,
+                              parserRun: Int) = {
     validator match {
       case Some(runtimeValidator) => runtimeValidator.reportConstraintFailure(
         level,
@@ -107,7 +109,8 @@ object RuntimeValidator {
         targetNode,
         targetProperty,
         message,
-        position
+        position,
+        parserRun
       )
       case None => throw new Exception("No registered runtime validator")
     }

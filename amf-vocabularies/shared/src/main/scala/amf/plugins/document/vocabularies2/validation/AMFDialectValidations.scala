@@ -15,10 +15,10 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
   def profile() = {
     val parsedValidations = validations()
     ValidationProfile(
-      name = dialect.name(),
+      name = dialect.nameAndVersion(),
       baseProfileName = None,
       violationLevel = parsedValidations.map(_.name),
-      validations = parsedValidations ++ ParserSideValidations.validations,
+      validations = parsedValidations ++ ParserSideValidations.validations
     )
   }
 
@@ -40,8 +40,43 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
 
   protected def emitPropertyValidations(node: NodeMapping, prop: PropertyMapping): List[ValidationSpecification] = {
     val validations: ListBuffer[ValidationSpecification] = ListBuffer.empty
-    if (prop.minCount() > 0) {
-      val message = s"Property ${prop.name()} is mandatory"
+
+    if (prop.minimum().isDefined) {
+      val minValue = prop.minimum().get
+      val message = s"Property '${prop.name()}' minimum inclusive value is $minValue"
+      validations += new ValidationSpecification(
+        name = validationId(node, prop.name(), "minimum"),
+        message = message,
+        ramlMessage = Some(message),
+        oasMessage = Some(message),
+        targetClass = Seq(node.id),
+        propertyConstraints = Seq(PropertyConstraint(
+          ramlPropertyId = prop.nodePropertyMapping(),
+          name = validationId(node, prop.name(), "minimum") + "/prop",
+          message = Some(message),
+          minInclusive = Some(minValue.toString)
+        )))
+    }
+
+    if (prop.maximum().isDefined) {
+      val maxValue = prop.maximum().get
+      val message = s"Property '${prop.name()}' maximum inclusive value is $maxValue"
+      validations += new ValidationSpecification(
+        name = validationId(node, prop.name(), "maximum"),
+        message = message,
+        ramlMessage = Some(message),
+        oasMessage = Some(message),
+        targetClass = Seq(node.id),
+        propertyConstraints = Seq(PropertyConstraint(
+          ramlPropertyId = prop.nodePropertyMapping(),
+          name = validationId(node, prop.name(), "maximum") + "/prop",
+          message = Some(message),
+          maxInclusive = Some(maxValue.toString)
+        )))
+    }
+
+    if (prop.minCount().getOrElse(0) > 0) {
+      val message = s"Property '${prop.name()}' is mandatory"
       validations += new ValidationSpecification(
         name = validationId(node, prop.name(), "required"),
         message = message,
@@ -57,7 +92,7 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
     }
 
     if (!Option(prop.allowMultiple()).getOrElse(false) && Option(prop.mapKeyProperty()).isEmpty) {
-      val message = s"Property ${prop.name()} cannot have more than 1 value"
+      val message = s"Property '${prop.name()}' cannot have more than 1 value"
       validations += new ValidationSpecification(
         name = validationId(node, prop.name(), "notCollection"),
         message = message,
@@ -74,7 +109,7 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
 
     Option(prop.pattern()) match {
       case Some(pattern) =>
-        val message = s"Property ${prop.name()} must match pattern $pattern"
+        val message = s"Property '${prop.name()}' must match pattern $pattern"
         validations += new ValidationSpecification(
           name = validationId(node, prop.name(), "pattern"),
           message = message,
@@ -93,7 +128,7 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
 
     Option(prop.enum()) match {
       case Some(values) =>
-        val message = s"Property ${prop.name()} must match some value in ${values.mkString(",")}"
+        val message = s"Property '${prop.name()}' must match some value in ${values.mkString(",")}"
         validations += new ValidationSpecification(
           name = validationId(node, prop.name(), "enum"),
           message = message,
@@ -115,7 +150,7 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
       dataRange match {
 
         case literal if literal.endsWith("number") =>
-          val message = s"Property ${prop.name()}  value must be of type ${(Namespace.Xsd + "integer").iri()} or ${(Namespace.Xsd + "float").iri()}"
+          val message = s"Property '${prop.name()}'  value must be of type ${(Namespace.Xsd + "integer").iri()} or ${(Namespace.Xsd + "float").iri()}"
           validations += new ValidationSpecification(
             name = validationId(node, prop.name(), "dialectRange"),
             message = message,
@@ -128,17 +163,26 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
               message = Some(message),
               custom = Some((b: EntryBuilder, parentId: String) => {
                 b.entry(
-                  (Namespace.Shacl + "in").iri(),
+                  (Namespace.Shacl + "or").iri(),
                   _.obj(_.entry("@list", _.list { l =>
-                    l.obj(_.entry("@id", (Namespace.Xsd + "integer").iri().trim))
-                    l.obj(_.entry("@id", (Namespace.Xsd + "float").iri().trim))
+                    l.obj { v =>
+                      v.entry((Namespace.Shacl + "datatype").iri(), _.obj(_.entry("@id", (Namespace.Xsd + "integer").iri().trim)))
+                    }
+                    l.obj { v =>
+                      v.entry((Namespace.Shacl + "datatype").iri(), _.obj(_.entry("@id", (Namespace.Xsd + "double").iri().trim)))
+                    }
                   }))
                 )
               })
             )))
 
         case literal                                =>
-          val message = s"Property ${prop.name()}  value must be of type $dataRange"
+          val datatype = if (dataRange == (Namespace.Xsd + "float").iri()) {
+            (Namespace.Xsd + "double").iri() // floats must be casted to doubles for precission
+          } else {
+            dataRange
+          }
+          val message = s"Property '${prop.name()}'  value must be of type $dataRange"
           validations += new ValidationSpecification(
             name = validationId(node, prop.name(), "dataRange"),
             message = message,
@@ -149,14 +193,14 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
               ramlPropertyId = prop.nodePropertyMapping(),
               name = validationId(node, prop.name(), "dataRange") + "/prop",
               message = Some(message),
-              datatype = Some(dataRange)
+              datatype = Some(datatype)
             )))
 
       }
     }
 
     if (Option(prop.objectRange()).isDefined) {
-      val message = s"Property ${prop.name()}  value must be of type ${prop.objectRange()}"
+      val message = s"Property '${prop.name()}'  value must be of type ${prop.objectRange()}"
           validations += new ValidationSpecification(
             name = validationId(node, prop.name(), "objectRange"),
             message = message,

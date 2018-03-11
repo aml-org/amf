@@ -28,6 +28,8 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     }
   }
 
+  def allDialects(): Seq[Dialect] = map.values.toSeq
+
   def register(dialect: Dialect): DialectsRegistry = {
     dialect.allHeaders foreach { header => map += (header -> dialect) }
     this

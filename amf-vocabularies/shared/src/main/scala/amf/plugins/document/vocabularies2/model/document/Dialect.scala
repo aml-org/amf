@@ -17,6 +17,8 @@ case class Dialect(fields: Fields, annotations: Annotations) extends BaseUnit wi
   def usage: String = fields(Usage)
   def adopted(parent: String): this.type = withId(parent)
 
+  def nameAndVersion(): String = s"${name()} ${version()}"
+
   def name(): String = fields(Name)
   def withName(name: String) = set(Name, name)
   def version(): String = fields(Version)

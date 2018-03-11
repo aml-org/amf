@@ -1,0 +1,18 @@
+#%RAML 1.0 Dialect
+dialect: ValidationExample
+version: 1.4
+nodeMappings:
+  RootNode:
+    classTerm: tmp.Test
+    mapping:
+      multiple24:
+        propertyTerm: tmp.multiple
+        range: integer
+        allowMultiple: true
+        minimum: 2
+        maximum: 4
+documents:
+  root:
+    encodes: RootNode
+external:
+  tmp: http://test.com/tmp#
