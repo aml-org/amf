@@ -88,6 +88,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
         ).build()
       }
       instance <- {
+        AMFValidatorPlugin.enabled = true
         new AMFCompiler(
           basePath + instance,
           platform,

@@ -40,6 +40,9 @@ trait AmfObject extends AmfElement {
   /** Set scalar value. */
   def set(field: Field, value: Int): this.type = set(field, AmfScalar(value))
 
+  /** Set scalar value. */
+  def set(field: Field, value: Double): this.type = set(field, AmfScalar(value))
+
   def set(field: Field, value: Float): this.type = set(field, AmfScalar(value))
 
   /** Set scalar value. */

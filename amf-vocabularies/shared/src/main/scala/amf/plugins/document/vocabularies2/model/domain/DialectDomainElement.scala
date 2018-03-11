@@ -155,6 +155,12 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     this
   }
 
+  def setLiteralField(property: PropertyMapping, value: Double, node: YNode) = {
+    literalProperties.put(property.id, value)
+    propertyAnnotations.put(property.id, Annotations(node))
+    this
+  }
+
   def setLiteralField(property: PropertyMapping, value: Boolean, node: YNode) = {
     literalProperties.put(property.id, value)
     propertyAnnotations.put(property.id, Annotations(node))

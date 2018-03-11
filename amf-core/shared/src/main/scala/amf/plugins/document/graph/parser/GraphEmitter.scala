@@ -237,6 +237,10 @@ object GraphEmitter extends MetaModelTypeMapping {
         case Type.Int =>
           scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Int)
           sources(v)
+        case Type.Double =>
+          // this will transform the value to double and will not emit @type TODO: ADD YType.Double
+          scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Float)
+          sources(v)
         case Type.Float =>
           scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Float)
           sources(v)

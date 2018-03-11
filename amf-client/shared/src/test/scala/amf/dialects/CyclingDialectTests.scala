@@ -1,3 +1,4 @@
+/*
 package amf.dialects
 
 import amf.core.remote._
@@ -63,3 +64,4 @@ class CyclingDialectTests extends BuildCycleTests {
     cycle("withDomain2.json", "withDomain2.raml", AmfJsonHint, Extension)
   }
 }
+*/

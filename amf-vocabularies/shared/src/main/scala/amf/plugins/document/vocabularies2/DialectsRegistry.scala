@@ -6,12 +6,15 @@ import amf.core.model.domain.{AmfObject, DomainElement}
 import amf.core.parser.Annotations
 import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.Context
-import amf.core.services.RuntimeCompiler
+import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.vocabulary.ValueType
 import amf.plugins.document.vocabularies2.metamodel.domain.DialectDomainElementModel
 import amf.plugins.document.vocabularies2.model.document.{Dialect, DialectInstance}
 import amf.plugins.document.vocabularies2.model.domain.{DialectDomainElement, NodeMapping, ObjectMapProperty}
+
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
@@ -45,15 +48,15 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
   protected def headerKey(header: String) = header.trim.replace(" ", "")
 
   override def findType(typeString: String): Option[Obj] = {
-    val foundMapping: Option[(Dialect, DomainElement)] = map.values.collectFirst {
+    val foundMapping: Option[(Dialect, DomainElement)] = map.values.toSeq.distinct.collect {
       case dialect: Dialect =>
         dialect.declares.find {
-          case nodeMapping: NodeMapping => nodeMapping.nodetypeMapping == typeString
-          case _                        => false
+          case nodeMapping: NodeMapping => nodeMapping.id == typeString
+          case _ => false
         } map { nodeMapping =>
           (dialect, nodeMapping)
         }
-    }.flatten
+    }.collectFirst { case Some(x) => x }
 
     foundMapping match {
       case Some((dialect: Dialect, nodeMapping: NodeMapping)) =>
@@ -88,5 +91,23 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     val mapPropertiesFields = mapPropertiesInDomain.map(_.mapKeyProperty()).distinct.map( iri => Field(Type.Str, ValueType(iri)))
 
     new DialectDomainElementModel(nodeType, fields ++ mapPropertiesFields, Some(nodeMapping))
+  }
+
+  def registerDialect(uri: String): Future[Dialect] = {
+    RuntimeValidator.disableValidationsAsync() { reenableValidations =>
+      RuntimeCompiler(uri, Option("application/yaml"), RAMLVocabulariesPlugin.ID, Context(platform))
+        .map { case dialect: Dialect =>
+          reenableValidations()
+          register(dialect)
+          dialect
+        }
+    }
+  }
+
+  def registerDialect(url: String, dialectCode: String): Future[Dialect] = {
+    platform.cacheResourceText(url, dialectCode)
+    val res = registerDialect(url)
+    platform.removeCacheResourceText(url)
+    res
   }
 }

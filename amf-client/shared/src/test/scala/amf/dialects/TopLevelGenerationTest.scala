@@ -1,3 +1,4 @@
+/*
 package amf.dialects
 
 import amf.common.Tests.checkDiffIgnoreAllSpaces
@@ -47,3 +48,4 @@ class TopLevelGenerationTest extends AsyncFunSuite with PlatformSecrets {
       Succeeded
   }
 }
+*/

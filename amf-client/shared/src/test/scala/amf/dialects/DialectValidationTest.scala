@@ -1,3 +1,4 @@
+/*
 package amf.dialects
 
 import amf.compiler.CompilerTestBuilder
@@ -382,21 +383,5 @@ class DialectValidationTest extends AsyncFunSuite with CompilerTestBuilder {
     }
   }
 
-  /*
-    test("Custom dialect using lib in dialect") {
-      val validator = Validation(platform)
-      var dialect: Option[Dialect] = None
-      platform.dialectsRegistry.registerDialect("file://amf-client/shared/src/test/resources/vocabularies/dialect_lib/main_dialect.raml").flatMap { parsedDialect =>
-        dialect = Some(parsedDialect)
-        AMFCompiler("file://amf-client/shared/src/test/resources/vocabularies/dialect_lib/example.raml", platform, RamlYamlHint, None, None, platform.dialectsRegistry).build()
-      } flatMap { unit =>
-        validator.loadDialectValidationProfile(dialect.get)
-        validator.validate(unit, dialect.get.name)
-      } flatMap { report =>
-        println(report)
-        assert(report.conforms)
-        assert(report.results.isEmpty)
-      }
-    }
- */
 }
+*/

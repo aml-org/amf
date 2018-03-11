@@ -249,6 +249,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
         case Bool               => instance.set(f, bool(node), annotations(nodes, sources, key))
         case Type.Int           => instance.set(f, int(node), annotations(nodes, sources, key))
         case Type.Float         => instance.set(f, float(node), annotations(nodes, sources, key))
+        case Type.Double        => instance.set(f, double(node), annotations(nodes, sources, key))
         case l: SortedArray =>
           instance.setArray(f, parseList(instance.id, l.element, node.as[YMap]), annotations(nodes, sources, key))
         case a: Array =>
@@ -306,16 +307,28 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
     AmfScalar(value)
   }
 
+  private def double(node: YNode) = {
+    val value = node.tagType match {
+      case YType.Map =>
+        node.as[YMap].entries.find(_.key.as[String] == "@value") match {
+          case Some(entry) => entry.value.as[YScalar].text.toDouble
+          case _           => node.as[YScalar].text.toDouble
+        }
+      case _ =>  node.as[YScalar].text.toDouble
+    }
+    AmfScalar(value)
+  }
+
   private def float(node: YNode) = {
     val value = node.tagType match {
       case YType.Map =>
         node.as[YMap].entries.find(_.key.as[String] == "@value") match {
           case Some(entry) => {
-            entry.value.as[YScalar].text.toFloat
+            entry.value.as[YScalar].text.toDouble
           }
-          case _           => node.as[YScalar].text.toFloat
+          case _           => node.as[YScalar].text.toDouble
         }
-      case _ =>  node.as[YScalar].text.toFloat
+      case _ =>  node.as[YScalar].text.toDouble
     }
     AmfScalar(value)
   }

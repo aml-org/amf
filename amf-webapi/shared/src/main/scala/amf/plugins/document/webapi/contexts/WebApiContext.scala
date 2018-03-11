@@ -117,7 +117,7 @@ abstract class WebApiContext(private val wrapped: ParserContext, private val ds:
   val vendor: Vendor
 
   val declarations: WebApiDeclarations =
-    ds.getOrElse(new WebApiDeclarations(errorHandler = Some(this), futureDeclarations = futureDeclarations))
+    ds.getOrElse(new WebApiDeclarations(None, errorHandler = Some(this), futureDeclarations = futureDeclarations))
 
   def link(node: YNode): Either[String, YNode]
   def ignore(shape: String, property: String): Boolean

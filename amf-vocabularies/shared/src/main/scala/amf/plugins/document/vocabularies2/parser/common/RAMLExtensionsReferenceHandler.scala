@@ -1,7 +1,6 @@
-package amf.plugins.document.vocabularies.references
+package amf.plugins.document.vocabularies2.parser.common
 
 import amf.core.parser.{LibraryReference, LinkReference, Reference, ReferenceHandler, _}
-import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
 import org.yaml.model._
 
 import scala.collection.mutable.ArrayBuffer
@@ -11,13 +10,24 @@ class RAMLExtensionsReferenceHandler extends ReferenceHandler {
 
   override def collect(parsed: ParsedDocument, ctx: ParserContext): Seq[Reference] = {
     if (parsed.comment.isDefined){
-        if (referencesDialect(parsed.comment.get.metaText)){
-          references+=Reference(RAMLVocabulariesPlugin.dialectDefinitionUrl(parsed.comment.get.metaText),SchemaReference,parsed.document.node)
-        }
+      if (referencesDialect(parsed.comment.get.metaText)){
+        references+=Reference(dialectDefinitionUrl(parsed.comment.get.metaText), SchemaReference, parsed.document.node)
+      }
     }
     libraries(parsed.document, ctx)
     links(parsed.document)
     references
+  }
+
+  def dialectDefinitionUrl(mt: String): String = {
+    val io = mt.indexOf("|");
+    if (io > 0) {
+      var msk = mt.substring(io + 1);
+      val si  = msk.indexOf("<");
+      val se  = msk.lastIndexOf(">");
+      return msk.substring(si + 1, se);
+    }
+    ""
   }
 
   private def libraries(document: YDocument, ctx: ParserContext): Unit = {
@@ -62,8 +72,8 @@ class RAMLExtensionsReferenceHandler extends ReferenceHandler {
           part.children.foreach(links)
         }
       }
-      case node: YNode if (node.tagType == YType.Include)  => ramlInclude(node)
-      case _                                               => part.children.foreach(links)
+      case node: YNode if node.tagType == YType.Include  => ramlInclude(node)
+      case _                                             => part.children.foreach(links)
     }
   }
 

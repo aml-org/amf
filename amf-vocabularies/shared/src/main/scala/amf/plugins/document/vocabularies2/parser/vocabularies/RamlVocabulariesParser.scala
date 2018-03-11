@@ -262,8 +262,8 @@ case class VocabulariesReferencesParser(map: YMap, references: Seq[ParsedReferen
 
 class RamlVocabulariesParser(root: Root)(implicit override val ctx: VocabularyContext) extends BaseSpecParser {
 
-  val map = root.parsed.document.as[YMap]
-  val vocabulary = Vocabulary(Annotations(map)).withLocation(root.location)
+  val map: YMap = root.parsed.document.as[YMap]
+  val vocabulary: Vocabulary = Vocabulary(Annotations(map)).withLocation(root.location)
 
   def parseDocument(): BaseUnit = {
 
@@ -406,8 +406,9 @@ class RamlVocabulariesParser(root: Root)(implicit override val ctx: VocabularyCo
       case _          => propertyTermDeclaration.value.as[YMap].key("range") match {
         case None        => DatatypePropertyTerm(Annotations(propertyTermDeclaration))
         case Some(value) => value.value.as[String] match {
-          case "string" |  "integer" | "float" | "boolean" | "uri" | "any" => DatatypePropertyTerm(Annotations(propertyTermDeclaration))
-          case _                                                           => ObjectPropertyTerm(Annotations(propertyTermDeclaration))
+          case "string" |  "integer" | "float" | "boolean" | "uri" | "any" | "time" | "date" | "dateTime" =>
+            DatatypePropertyTerm(Annotations(propertyTermDeclaration))
+          case _ => ObjectPropertyTerm(Annotations(propertyTermDeclaration))
         }
       }
     }
@@ -440,7 +441,7 @@ class RamlVocabulariesParser(root: Root)(implicit override val ctx: VocabularyCo
           val rangeId = entry.value.as[String] match {
             case "uri" => Some((Namespace.Xsd + "anyUri").iri())
             case "any" => Some((Namespace.Xsd + "anyType").iri())
-            case "string" |  "integer" | "float" | "boolean" =>  Some((Namespace.Xsd + entry.value.as[String]).iri())
+            case "string" |  "integer" | "float" | "boolean" | "time" | "date" | "dateTime" =>  Some((Namespace.Xsd + entry.value.as[String]).iri())
             case classAlias =>
               ctx.resolveClassTermAlias(vocabulary.id, classAlias, entry.value, strictLocal = true) match {
                 case Some(classTermId) => Some(classTermId)

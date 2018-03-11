@@ -76,7 +76,8 @@ class JsWrapperTests extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  /*  test("Vocabularies test") {
+  /*
+  test("Vocabularies test") {
     AMF.init().toFuture flatMap { _ =>
       AMF.registerDialect("file://amf-client/shared/src/test/resources/api/dialects/eng-demos.raml").toFuture
     } flatMap { _ =>
@@ -94,7 +95,8 @@ class JsWrapperTests extends AsyncFunSuite with PlatformSecrets {
         val speakers = elem.getObjectByPropertyId("eng-demos:speakers")
         assert(speakers.toSeq.nonEmpty)
     }
-  }*/
+  }
+  */
 
   test("world-music-test") {
     amf.plugins.features.AMFValidation.register()
