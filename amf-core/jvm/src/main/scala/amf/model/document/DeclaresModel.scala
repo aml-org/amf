@@ -1,11 +1,11 @@
 package amf.model.document
 
-import amf.core.unsafe.PlatformSecrets
 import amf.core.model.document
+import amf.core.unsafe.PlatformSecrets
 import amf.model.domain.DomainElement
 
-import scala.language.postfixOps
 import scala.collection.JavaConverters._
+import scala.language.postfixOps
 
 trait DeclaresModel extends PlatformSecrets {
 
@@ -21,6 +21,12 @@ trait DeclaresModel extends PlatformSecrets {
 
   def withDeclaredElement(declared: DomainElement): this.type = {
     element.withDeclaredElement(declared.element)
+    this
+  }
+
+  def withDeclares(declares: java.util.List[DomainElement]): this.type = {
+    val elements: Seq[amf.core.model.domain.DomainElement] = declares.asScala.map(e => e.element)
+    element.withDeclares(elements)
     this
   }
 }
