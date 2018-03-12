@@ -944,4 +944,15 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.isEmpty)
     }
   }
+
+  test("Shape with items in oas") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "/shapes/shape-with-items.json", platform, OasJsonHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.OAS)
+    } yield {
+      assert(report.results.isEmpty)
+    }
+  }
 }
