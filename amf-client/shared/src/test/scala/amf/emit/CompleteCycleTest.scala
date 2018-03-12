@@ -884,4 +884,20 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Declared response jsonld to oas") {
     cycle("declared-responses.json.jsonld", "declared-responses.jsonld.json", AmfJsonHint, Oas)
   }
+
+  test("Additional properties shape oas to oas") {
+    cycle("additional-properties.json", "additional-properties.json", OasJsonHint, Oas)
+  }
+
+  test("Additional properties shape oas to raml") {
+    cycle("additional-properties.json", "additional-properties.raml", OasJsonHint, Raml)
+  }
+
+  test("Additional properties shape raml to oas") {
+    cycle("additional-properties.raml", "additional-properties.raml.json", RamlYamlHint, Oas)
+  }
+
+  test("Additional properties shape oas to amf") {
+    cycle("additional-properties.json", "additional-properties.jsonld", OasJsonHint, Amf)
+  }
 }

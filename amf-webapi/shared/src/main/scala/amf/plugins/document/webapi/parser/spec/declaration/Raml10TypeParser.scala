@@ -72,9 +72,8 @@ trait RamlTypeSyntax {
     } else RamlTypeDefMatcher.matchType(str, default = UndefinedType) != UndefinedType
 
   def isTypeExpression(str: String): Boolean = {
-    try {  RamlTypeDefMatcher.matchType(str, default = UndefinedType) == TypeExpressionType }
-    catch {
-      case _:Exception => false
+    try { RamlTypeDefMatcher.matchType(str, default = UndefinedType) == TypeExpressionType } catch {
+      case _: Exception => false
     }
   }
 }
@@ -893,6 +892,12 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
       shape.set(NodeShapeModel.Closed, value = false)
       map.key("additionalProperties", (NodeShapeModel.Closed in shape).negated.explicit)
+
+      map.key("(additionalProperties)").foreach { entry =>
+        OasTypeParser(entry, s => s.adopted(shape.id)).parse().foreach { s =>
+          shape.set(NodeShapeModel.AdditionalPropertiesSchema, s, Annotations(entry))
+        }
+      }
 
       map.key("discriminator", (NodeShapeModel.Discriminator in shape).allowingAnnotations)
       map.key("discriminatorValue", (NodeShapeModel.DiscriminatorValue in shape).allowingAnnotations)
