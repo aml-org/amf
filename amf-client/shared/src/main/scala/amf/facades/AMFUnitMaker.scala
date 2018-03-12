@@ -6,8 +6,8 @@ import amf.core.client.GenerationOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.plugins.document.graph.AMFGraphPlugin
-import amf.plugins.document.vocabularies2.{RAMLVocabulariesPlugin, RAMLVocabulariesPlugin => RAMLVocabularies2Plugin}
-import amf.plugins.document.webapi._
+import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
+import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML08Plugin, RAML10Plugin, _}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin

@@ -6,7 +6,7 @@ import amf.core.parser.{ParsedDocument, ParsedReference, ParserContext, Referenc
 import amf.core.remote.Syntax.{Json, Yaml}
 import amf.core.remote._
 import amf.core.{AMFCompiler => ModularCompiler}
-import amf.plugins.document.vocabularies2.RamlHeaderExtractor
+import amf.plugins.document.vocabularies.RamlHeaderExtractor
 import org.yaml.model.YDocument
 
 import scala.collection.mutable.ListBuffer
@@ -30,7 +30,7 @@ class AMFCompiler private (val url: String,
   def build(): Future[BaseUnit] = {
 
     val actualVendor = hint.vendor match {
-      case RamlVocabulary => "RAML Vocabularies2"
+      case RamlVocabulary => "RAML Vocabularies"
       case Raml10    => "RAML 1.0"
       case Raml08    => "RAML 0.8"
       case Raml      => "RAML"
@@ -79,7 +79,7 @@ class AMFCompiler private (val url: String,
 
   def root(): Future[Root] = {
     val actualVendor = hint.vendor match {
-      case RamlVocabulary => "RAML Vocabularies2"
+      case RamlVocabulary => "RAML Vocabularies"
       case Raml10    => "RAML 1.0"
       case Raml08    => "RAML 0.8"
       case Raml      => "RAML"
@@ -124,7 +124,7 @@ class AMFCompiler private (val url: String,
     }
 
     val hint = root.vendor match {
-      case "RAML Vocabularies2" if mediaType == Yaml             => VocabularyYamlHint
+      case "RAML Vocabularies" if mediaType == Yaml              => VocabularyYamlHint
       case "RAML" | "RAML 1.0" | "RAML 0.8" if mediaType == Yaml => RamlYamlHint
       case "RAML" | "RAML 1.0" | "RAML 0.8" if mediaType == Json => RamlJsonHint
       case "OAS 2.0" if mediaType == Json                        => OasJsonHint
@@ -157,7 +157,7 @@ case class Root(parsed: ParsedDocument,
   // TODO: remove me, only for compatibility while refactoring
   def newFormat(): amf.core.Root = {
     val actualVendor = vendor match {
-      case RamlVocabulary => "RAML Vocabularies2"
+      case RamlVocabulary => "RAML Vocabularies"
       case Raml10    => "RAML 1.0"
       case Raml08    => "RAML 0.8"
       case Raml      => "RAML"

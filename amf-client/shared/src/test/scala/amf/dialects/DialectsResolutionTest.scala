@@ -3,7 +3,7 @@ package amf.dialects
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{RamlVocabulary, VocabularyYamlHint}
 import amf.io.BuildCycleTests
-import amf.plugins.document.vocabularies2.RAMLVocabulariesPlugin
+import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
 
 import scala.concurrent.ExecutionContext
 

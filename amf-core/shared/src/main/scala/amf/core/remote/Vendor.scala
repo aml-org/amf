@@ -62,7 +62,7 @@ trait Oas extends Vendor {
 
 trait RamlVocabulary extends Vendor {
 
-  override val name: String          = "RAML Vocabularies2"
+  override val name: String          = "RAML Vocabularies"
   override val defaultSyntax: Syntax = Yaml
 
   override def toString: String = name.trim

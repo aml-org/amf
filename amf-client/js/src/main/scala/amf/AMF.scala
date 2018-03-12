@@ -4,7 +4,7 @@ import amf.core.client.{Generator, Parser, Resolver}
 import amf.core.plugins.AMFPlugin
 import amf.client.model.document.BaseUnit
 //import amf.plugins.document.Vocabularies
-import amf.plugins.document.vocabularies.spec.Dialect
+// import amf.plugins.document.vocabularies.spec.Dialect
 import amf.validation.AMFValidationReport
 
 import scala.scalajs.js.Promise
