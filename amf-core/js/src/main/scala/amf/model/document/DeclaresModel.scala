@@ -1,7 +1,7 @@
 package amf.model.document
 
-import amf.core.model.domain.DomainElement
 import amf.core.unsafe.PlatformSecrets
+import amf.model.domain.DomainElement
 
 import scala.language.postfixOps
 import scala.scalajs.js
@@ -22,11 +22,16 @@ trait DeclaresModel extends PlatformSecrets {
   }
 
   def withDeclaredElement(declared: DomainElement): this.type = {
-    declared.meta match {
+    declared.element match {
       case domainElement: DomainElement => element.withDeclaredElement(domainElement)
       case _                            => throw new Exception("Only can declare domain elements") // todo js errors?
     }
     this
   }
 
+  def withDeclares(declares: js.Array[DomainElement]): this.type = {
+    val elements: Seq[amf.core.model.domain.DomainElement] = declares.toSeq.map(e => e.element)
+    element.withDeclares(elements)
+    this
+  }
 }
