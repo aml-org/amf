@@ -1,0 +1,48 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.9-abcd",
+    "title": "Swagger Sample API",
+    "description": "A sample API",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "name": "Swagger API Team",
+      "url": "http://swagger.io"
+    },
+    "license": {
+      "name": "Creative Commons 4.0 International",
+      "url": "http://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "host": "my.api.com",
+  "basePath": "/v1",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json",
+    "application/xml"
+  ],
+  "paths": {
+    "/user/{id}": {
+      "parameters": [
+        {
+          "name": "user",
+          "in": "body",
+          "description": "user to add to the system",
+          "required": true,
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
