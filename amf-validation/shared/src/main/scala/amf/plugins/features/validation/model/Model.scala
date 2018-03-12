@@ -2,7 +2,7 @@ package amf.plugins.features.validation.model
 
 import amf.core.validation.core._
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.vocabularies2.model.domain.DialectDomainElement
+import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
 
 import scala.collection.mutable
 

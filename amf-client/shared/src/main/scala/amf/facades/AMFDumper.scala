@@ -7,7 +7,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote._
 import amf.plugins.document.graph.AMFGraphPlugin
-import amf.plugins.document.vocabularies2.{RAMLVocabulariesPlugin, RAMLVocabulariesPlugin => RAMLVocabularies2Plugin}
+import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
 import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML08Plugin, RAML10Plugin, _}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
@@ -39,7 +39,7 @@ class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: Generat
 
   private def dump(): String = {
     val vendorString = vendor match {
-      case RamlVocabulary => "RAML Vocabularies2"
+      case RamlVocabulary => "RAML Vocabularies"
       case Amf           => "AMF Graph"
       case Payload       => "AMF Payload"
       case Raml08        => "RAML 0.8"

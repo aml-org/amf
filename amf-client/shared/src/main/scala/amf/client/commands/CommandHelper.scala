@@ -5,7 +5,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.services.{RuntimeCompiler, RuntimeSerializer}
-import amf.plugins.document.vocabularies2.RAMLVocabulariesPlugin
+import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
 import amf.plugins.document.webapi.{OAS20Plugin, OAS30Plugin, RAML08Plugin, RAML10Plugin}
 import amf.plugins.features.validation.AMFValidatorPlugin
 

@@ -11,9 +11,9 @@ import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport}
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.plugins.document.graph.AMFGraphPlugin
-import amf.plugins.document.vocabularies2.RAMLVocabulariesPlugin
-import amf.plugins.document.vocabularies2.model.document.DialectInstance
-import amf.plugins.document.vocabularies2.model.domain.DialectDomainElement
+import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
+import amf.plugins.document.vocabularies.model.document.DialectInstance
+import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
 import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
 import amf.plugins.features.validation.model.{ParsedValidationProfile, ValidationDialectText}
 import amf.plugins.syntax.SYamlSyntaxPlugin

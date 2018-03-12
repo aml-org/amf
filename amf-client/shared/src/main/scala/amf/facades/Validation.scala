@@ -7,10 +7,9 @@ import amf.core.services.RuntimeValidator
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations}
 import amf.plugins.document.graph.AMFGraphPlugin
-import amf.plugins.document.vocabularies.spec.Dialect
-import amf.plugins.document.vocabularies2.model.document.Dialect
-import amf.plugins.document.vocabularies2.RAMLVocabulariesPlugin
-import amf.plugins.document.webapi._
+import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
+import amf.plugins.document.vocabularies.model.document.Dialect
+import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML08Plugin, RAML10Plugin, _}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.features.validation.AMFValidatorPlugin

@@ -3,8 +3,8 @@ package amf.dialects
 import amf.core.AMFCompiler
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.vocabularies2.RAMLVocabulariesPlugin
-import amf.plugins.document.vocabularies2.model.document.Dialect
+import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
+import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.features.validation.AMFValidatorPlugin
 import org.scalatest.AsyncFunSuite
 

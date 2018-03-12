@@ -12,27 +12,6 @@ trait BaseSpecParser {
 
 }
 
-/*
-case class ArrayNode(ast: YNode)(implicit iv: IllegalTypeHandler) {
-
-  def strings(): AmfArray = {
-    val nodes    = ast.as[Seq[String]]
-    val elements = nodes.map(child => AmfScalar(child, annotations()))
-
-    AmfArray(elements, annotations())
-  }
-
-  def rawMembers(): AmfArray = {
-    val nodes    = ast.as[Seq[YNode]]
-    val elements = nodes.map(child => AmfScalar(child.toString, annotations()))
-
-    AmfArray(elements, annotations())
-  }
-
-  private def annotations() = Annotations(ast.value)
-}
-*/
-
 case class ValueNode(node: YNode)(implicit iv: IllegalTypeHandler) {
 
   def string(): AmfScalar = {
