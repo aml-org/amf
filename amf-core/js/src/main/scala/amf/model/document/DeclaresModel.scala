@@ -22,10 +22,7 @@ trait DeclaresModel extends PlatformSecrets {
   }
 
   def withDeclaredElement(declared: DomainElement): this.type = {
-    declared.element match {
-      case domainElement: DomainElement => element.withDeclaredElement(domainElement)
-      case _                            => throw new Exception("Only can declare domain elements") // todo js errors?
-    }
+    element.withDeclaredElement(declared.element)
     this
   }
 
