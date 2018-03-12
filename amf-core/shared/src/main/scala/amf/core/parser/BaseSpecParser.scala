@@ -1,7 +1,6 @@
 package amf.core.parser
 
-import amf.core.model.domain.{AmfArray, AmfScalar}
-import org.yaml.convert.{ScalarYRead, YRead}
+import amf.core.model.domain.AmfScalar
 import org.yaml.model._
 
 /**
@@ -13,6 +12,7 @@ trait BaseSpecParser {
 
 }
 
+/*
 case class ArrayNode(ast: YNode)(implicit iv: IllegalTypeHandler) {
 
   def strings(): AmfArray = {
@@ -31,6 +31,7 @@ case class ArrayNode(ast: YNode)(implicit iv: IllegalTypeHandler) {
 
   private def annotations() = Annotations(ast.value)
 }
+*/
 
 case class ValueNode(node: YNode)(implicit iv: IllegalTypeHandler) {
 

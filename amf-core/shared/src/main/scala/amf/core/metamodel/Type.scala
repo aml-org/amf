@@ -36,6 +36,10 @@ object Type {
 
   object Double extends Scalar("double")
 
+  object Time extends Scalar("time")
+
+  object Date extends Scalar("date")
+
   object Iri extends Scalar("url")
 
   object Bool extends Scalar("boolean")

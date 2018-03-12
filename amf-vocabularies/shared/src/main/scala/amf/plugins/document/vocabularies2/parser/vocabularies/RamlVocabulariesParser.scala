@@ -353,7 +353,7 @@ class RamlVocabulariesParser(root: Root)(implicit override val ctx: VocabularyCo
         classTermMap.key("properties", entry => {
           val refs: Seq[String] = entry.value.tagType match {
             case YType.Str => Seq(ValueNode(entry.value).string().toString)
-            case YType.Seq => ArrayNode(entry.value).strings().scalars.map(_.toString)
+            case YType.Seq => DefaultArrayNode(entry.value).nodes._1.map(_.value.toString)  // ArrayNode(entry.value).strings().scalars.map(_.toString)
           }
 
           val properties: Seq[String] = refs.map { term: String =>
@@ -372,7 +372,10 @@ class RamlVocabulariesParser(root: Root)(implicit override val ctx: VocabularyCo
         classTermMap.key("extends", entry => {
           val refs: Seq[String] = entry.value.tagType match {
             case YType.Str => Seq(ValueNode(entry.value).string().toString)
-            case YType.Seq => ArrayNode(entry.value).strings().scalars.map(_.toString)
+            case YType.Seq => {
+              // ArrayNode(entry.value).strings().scalars.map(_.toString)
+              DefaultArrayNode(node = entry.value).nodes._1.map(_.value.toString)
+            }
           }
 
           val superClasses: Seq[String] = refs.map { term: String =>
@@ -460,7 +463,9 @@ class RamlVocabulariesParser(root: Root)(implicit override val ctx: VocabularyCo
         propertyTermMap.key("extends", entry => {
           val refs: Seq[String] = entry.value.tagType match {
             case YType.Str => Seq(ValueNode(entry.value).string().toString)
-            case YType.Seq => ArrayNode(entry.value).strings().scalars.map(_.toString)
+            case YType.Seq =>
+              DefaultArrayNode(entry.value).nodes._1.map(_.as[String])
+              // ArrayNode(entry.value).strings().scalars.map(_.toString)
           }
 
           val superClasses: Seq[String] = refs.map { term: String =>
