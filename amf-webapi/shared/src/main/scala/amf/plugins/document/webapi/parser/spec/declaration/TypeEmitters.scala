@@ -326,14 +326,17 @@ case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referen
     fs.entry(NodeShapeModel.MinProperties).map(f => result += RamlScalarEmitter("minProperties", f))
     fs.entry(NodeShapeModel.MaxProperties).map(f => result += RamlScalarEmitter("maxProperties", f))
 
-    fs.entry(NodeShapeModel.Closed)
-      .foreach(f => {
-        if (node.closed || f.value.annotations.contains(classOf[ExplicitField])) {
-          result += MapEntryEmitter("additionalProperties",
-                                    (!node.closed).toString,
-                                    position = pos(f.value.annotations))
-        }
-      })
+    fs.entry(NodeShapeModel.Closed).foreach { f =>
+      if (node.closed || f.value.annotations.contains(classOf[ExplicitField])) {
+        result += MapEntryEmitter("additionalProperties", (!node.closed).toString, position = pos(f.value.annotations))
+      }
+    }
+
+    fs.entry(NodeShapeModel.AdditionalPropertiesSchema)
+      .map(
+        f =>
+          result += OasEntryShapeEmitter("(additionalProperties)", f, ordering, references)(
+            amf.plugins.document.webapi.parser.spec.toOas(spec)))
 
     fs.entry(NodeShapeModel.Discriminator).map(f => result += RamlScalarEmitter("discriminator", f))
     fs.entry(NodeShapeModel.DiscriminatorValue).map(f => result += RamlScalarEmitter("discriminatorValue", f))
@@ -1033,8 +1036,12 @@ case class OasNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referenc
     fs.entry(NodeShapeModel.MaxProperties).map(f => result += ValueEmitter("maxProperties", f))
 
     fs.entry(NodeShapeModel.Closed)
-      .filter(_.value.annotations.contains(classOf[ExplicitField]))
-      .map(f => result += ValueEmitter("additionalProperties", f.negated))
+      .filter(_.value.annotations.contains(classOf[ExplicitField])) match {
+      case Some(f) => result += ValueEmitter("additionalProperties", f.negated)
+      case _ =>
+        fs.entry(NodeShapeModel.AdditionalPropertiesSchema)
+          .map(f => result += OasEntryShapeEmitter("additionalProperties", f, ordering, references))
+    }
 
     fs.entry(NodeShapeModel.Discriminator).map(f => result += ValueEmitter("discriminator", f))
 
@@ -1054,7 +1061,22 @@ case class OasNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referenc
 
     result
   }
+}
 
+case class OasEntryShapeEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: OasSpecEmitterContext)
+    extends EntryEmitter {
+  override def emit(b: EntryBuilder): Unit = {
+    b.entry(
+      key,
+      _.obj { b =>
+        val emitters = OasTypeEmitter(f.element.asInstanceOf[Shape], ordering, references = references).entries()
+        traverse(ordering.sorted(emitters), b)
+      }
+    )
+  }
+
+  override def position(): Position = pos(f.value.annotations)
 }
 
 case class OasShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(

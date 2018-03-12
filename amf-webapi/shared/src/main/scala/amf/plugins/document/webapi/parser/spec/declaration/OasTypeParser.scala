@@ -335,7 +335,17 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       map.key("maxProperties", NodeShapeModel.MaxProperties in shape)
 
       shape.set(NodeShapeModel.Closed, value = false)
-      map.key("additionalProperties", (NodeShapeModel.Closed in shape).negated.explicit)
+
+      map.key("additionalProperties").foreach { entry =>
+        entry.value.tagType match {
+          case YType.Bool => (NodeShapeModel.Closed in shape).negated.explicit(entry)
+          case YType.Map =>
+            OasTypeParser(entry, s => s.adopted(shape.id)).parse().foreach { s =>
+              shape.set(NodeShapeModel.AdditionalPropertiesSchema, s, Annotations(entry))
+            }
+          case _ => ctx.violation(shape.id, "Invalid part type for additional properties node", entry)
+        }
+      }
 
       map.key("discriminator", NodeShapeModel.Discriminator in shape)
       map.key("x-discriminator-value", NodeShapeModel.DiscriminatorValue in shape)

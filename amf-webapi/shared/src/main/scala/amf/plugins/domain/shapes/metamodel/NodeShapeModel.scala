@@ -19,6 +19,8 @@ object NodeShapeModel extends AnyShapeModel {
 
   val Closed = Field(Bool, Shacl + "closed")
 
+  val AdditionalPropertiesSchema = Field(ShapeModel, Shacl + "additionalPropertiesSchema")
+
   val Discriminator = Field(Str, Shapes + "discriminator")
 
   val DiscriminatorValue = Field(Str, Shapes + "discriminatorValue")
@@ -33,6 +35,7 @@ object NodeShapeModel extends AnyShapeModel {
     List(MinProperties,
          MaxProperties,
          Closed,
+         AdditionalPropertiesSchema,
          Discriminator,
          DiscriminatorValue,
          ReadOnly,

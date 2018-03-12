@@ -37,11 +37,11 @@ package object spec {
     new Raml10WebApiContext(ctx, Some(ctx.declarations))
   }
 
-  def toRaml(spec: OasSpecEmitterContext): RamlSpecEmitterContext = {
+  def toRaml(spec: SpecEmitterContext): RamlSpecEmitterContext = {
     new Raml10SpecEmitterContext(spec.getRefEmitter)
   }
 
-  def toOas(spec: RamlSpecEmitterContext): OasSpecEmitterContext = {
+  def toOas(spec: SpecEmitterContext): OasSpecEmitterContext = {
     new OasSpecEmitterContext(spec.getRefEmitter)
   }
 }

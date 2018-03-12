@@ -1,6 +1,6 @@
 package amf.core.emitter
 
-import amf.core.annotations.{DomainExtensionAnnotation, LexicalInformation, SingleValueArray}
+import amf.core.annotations.{LexicalInformation, SingleValueArray}
 import amf.core.metamodel.{Field, Type}
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.Position._
