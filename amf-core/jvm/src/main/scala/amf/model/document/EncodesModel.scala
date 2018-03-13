@@ -10,6 +10,6 @@ trait EncodesModel extends PlatformSecrets {
   private[amf] val element: document.EncodesModel
 
   /** Encoded [[DomainElement]] described in the document element. */
-  lazy val encodes: DomainElement         = platform.wrap[DomainElement](element.encodes)
+  def encodes: DomainElement              = platform.wrap[DomainElement](element.encodes)
   def withEncodes(encoded: DomainElement) = element.withEncodes(encoded.element)
 }
