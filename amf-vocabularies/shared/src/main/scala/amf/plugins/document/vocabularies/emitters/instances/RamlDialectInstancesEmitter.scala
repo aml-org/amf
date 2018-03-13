@@ -10,7 +10,7 @@ import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{FieldEntry, Position, Value}
 import amf.core.utils._
-import amf.plugins.document.vocabularies.annotations.AliasesLocation
+import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId}
 import amf.plugins.document.vocabularies.emitters.common.IdCounter
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
@@ -170,6 +170,14 @@ case class DialectNodeEmitter(node: DialectDomainElement,
       if(discriminator.isDefined) {
         val (discriminatorName, discriminatorValue) = discriminator.get
         emitters ++= Seq(MapEntryEmitter(discriminatorName, discriminatorValue))
+      }
+      if (node.annotations.find(classOf[CustomId]).isDefined) {
+        val customId = if (node.id.contains(dialect.location)) {
+          node.id.replace(dialect.id,"")
+        } else {
+          node.id
+        }
+        emitters ++= Seq(MapEntryEmitter("$id", customId))
       }
       node.dynamicFields.foreach { field =>
         findPropertyMapping(field) foreach { propertyMapping =>

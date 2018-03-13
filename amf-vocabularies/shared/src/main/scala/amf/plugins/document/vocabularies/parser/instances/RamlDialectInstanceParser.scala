@@ -7,7 +7,7 @@ import amf.core.model.domain.Annotation
 import amf.core.parser.{Annotations, BaseSpecParser, Declarations, EmptyFutureDeclarations, ErrorHandler, FutureDeclarations, ParsedReference, ParserContext, Reference, SearchScope, _}
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.vocabularies.annotations.AliasesLocation
+import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectInstanceFragment, DialectInstanceLibrary}
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.SyntaxErrorReporter
@@ -591,7 +591,21 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
     ast.tagType match {
       case YType.Map =>
         val nodeMap = ast.as[YMap]
-        val node: DialectDomainElement = DialectDomainElement(nodeMap).withId(id).withDefinedBy(mapping)
+        val node: DialectDomainElement = DialectDomainElement(nodeMap).withDefinedBy(mapping)
+
+        nodeMap.key("$id") match {
+          case Some(entry) =>
+            val rawId = entry.value.as[String]
+            val externalId = if (rawId.contains("://")) {
+              rawId
+            } else {
+              (ctx.dialect.location.split("#").head + s"#$rawId").replace("##", "#")
+            }
+            node.withId(externalId)
+            node.annotations += CustomId()
+          case None        => node.withId(id)
+        }
+
         node.withInstanceTypes(Seq(mapping.nodetypeMapping, mapping.id))
         mapping.propertiesMapping().foreach { propertyMapping =>
           val propertyName = propertyMapping.name()
