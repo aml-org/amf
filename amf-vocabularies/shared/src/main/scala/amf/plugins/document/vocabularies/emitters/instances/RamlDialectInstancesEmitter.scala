@@ -154,7 +154,8 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                               ordering: SpecOrdering,
                               aliases: Map[String, (String, String)],
                               keyPropertyId: Option[String] = None,
-                              rootNode: Boolean = false)extends PartEmitter with DialectEmitterHelper {
+                              rootNode: Boolean = false,
+                              discriminator: Option[(String, String)] = None) extends PartEmitter with DialectEmitterHelper {
 
   override def emit(b: YDocument.PartBuilder): Unit = {
     if (node.isLink) {
@@ -166,6 +167,10 @@ case class DialectNodeEmitter(node: DialectDomainElement,
       }
     } else {
       var emitters: Seq[EntryEmitter] = Nil
+      if(discriminator.isDefined) {
+        val (discriminatorName, discriminatorValue) = discriminator.get
+        emitters ++= Seq(MapEntryEmitter(discriminatorName, discriminatorValue))
+      }
       node.dynamicFields.foreach { field =>
         findPropertyMapping(field) foreach { propertyMapping =>
           if (keyPropertyId.isEmpty || propertyMapping.nodePropertyMapping() != keyPropertyId.get) {
@@ -247,14 +252,32 @@ case class DialectNodeEmitter(node: DialectDomainElement,
 
   protected def emitObjectUnionArray(key: String, array: AmfArray, propertyMapping: PropertyMapping): Seq[EntryEmitter] = {
     Seq(new EntryEmitter() {
-      val nodeMappings: Seq[NodeMapping] = propertyMapping.objectRange().map { rangeNodeMapping =>
+      // potential node range based in the objectRange
+      val objectRangeMappings: Seq[NodeMapping] = Option(propertyMapping.objectRange()).getOrElse(Nil).map { rangeNodeMapping =>
         findNodeMapping(rangeNodeMapping, dialect)
       }
+
+      // potential node range based in discriminators map
+      val discriminatorsMappings: Map[String, NodeMapping] = Option(propertyMapping.typeDiscrminator()).getOrElse(Map()).foldLeft(Map[String, NodeMapping]()) {
+        case (acc, (alias, mappingId)) =>
+          findNodeMapping(mappingId, dialect) match {
+            case nodeMapping: NodeMapping => acc + (alias -> nodeMapping)
+            case _                        => acc // TODO: violation here
+          }
+      }
+
       val arrayElements: Seq[DialectNodeEmitter] = array.values.map {
         case dialectDomainElement: DialectDomainElement =>
-          nodeMappings.find(nodeMapping => dialectDomainElement.dynamicType.map(_.iri()).contains(nodeMapping.nodetypeMapping)) match {
-            case Some(nextNodeMapping) => Some(DialectNodeEmitter(dialectDomainElement, nextNodeMapping, instance, dialect, ordering, aliases))
-            case _ => None // TODO: raise violation
+          val elementTypes = dialectDomainElement.dynamicType.map(_.iri())
+          objectRangeMappings.find(nodeMapping => elementTypes.contains(nodeMapping.nodetypeMapping)) match {
+            case Some(nextNodeMapping) =>
+              Some(DialectNodeEmitter(dialectDomainElement, nextNodeMapping, instance, dialect, ordering, aliases))
+            case _ => discriminatorsMappings.find { case (_, discriminatorMapping) => elementTypes.contains(discriminatorMapping.nodetypeMapping) } match {
+              case Some((alias, discriminatorMapping)) =>
+                val discriminatorName = propertyMapping.typeDiscriminatorName()
+                Some(DialectNodeEmitter(dialectDomainElement, discriminatorMapping, instance, dialect, ordering, aliases, discriminator = Some((discriminatorName, alias))))
+              case None => None
+            }
           }
         case _ => None
       } collect { case Some(parsed) => parsed }
@@ -423,6 +446,8 @@ case class DialectNodeEmitter(node: DialectDomainElement,
   }
 
   protected def findNodeMapping(nodeMappingId: String, dialect: Dialect): NodeMapping =
-    dialect.declares.find(_.id == nodeMappingId).getOrElse { throw new Exception(s"Cannot find nodeMapping $nodeMappingId") }.asInstanceOf[NodeMapping]
+    dialect.declares.find(_.id == nodeMappingId).getOrElse {
+      throw new Exception(s"Cannot find nodeMapping $nodeMappingId")
+    }.asInstanceOf[NodeMapping]
 
 }

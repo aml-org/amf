@@ -35,7 +35,6 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMapping] = Map(),
     }
   }
 
-
   def +=(nodeMapping: NodeMapping): DialectDeclarations = {
     nodeMappings += (nodeMapping.name -> nodeMapping)
     this
@@ -118,7 +117,7 @@ trait DialectSyntax {this: DialectContext =>
 
   val propertyMapping: Map[String,Boolean] = Map(
     "propertyTerm" -> true,
-    "range"        -> true,
+    "range"        -> false,
     "mapKey"       -> false,
     "mapValue"     -> false,
     "mandatory"    -> false,
@@ -326,6 +325,7 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
     declarables.foreach {
       case nodeMapping: NodeMapping =>
         nodeMapping.propertiesMapping().foreach { propertyMapping =>
+          // Setting ids we left unresolved in objectRanges
           Option(propertyMapping.objectRange()) match {
             case Some(nodeMappingRefs) =>
               val mapped = nodeMappingRefs.map { nodeMappingRef =>
@@ -346,6 +346,28 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
               if (refs.nonEmpty)
                 propertyMapping.withObjectRange(refs)
 
+            case _ => // ignore
+          }
+
+          // Setting ids we left unresolved in typeDiscriminators
+          Option(propertyMapping.typeDiscrminator()) match {
+            case Some(typeDiscriminators) =>
+
+              val mapped = typeDiscriminators.foldLeft(Map[String,String]()) { case (acc, (nodeMappingRef, alias)) =>
+                ctx.declarations.findNodeMapping(nodeMappingRef, All) match {
+                  case Some(mapping) => acc.updated(mapping.id, alias)
+                  case _ =>
+                    ctx.missingPropertyRangeViolation(
+                      nodeMappingRef,
+                      nodeMapping.id,
+                      propertyMapping.fields.entry(PropertyMappingModel.TypeDiscriminator)
+                        .flatMap(_.value.annotations.find(classOf[LexicalInformation]))
+                        .orElse(propertyMapping.annotations.find(classOf[LexicalInformation]))
+                    )
+                    acc
+                }
+              }
+              propertyMapping.withTypeDiscriminator(mapped)
             case _ => // ignore
           }
         }
