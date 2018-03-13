@@ -7,7 +7,7 @@ import amf.core.remote._
 import amf.core.services.{RuntimeCompiler, RuntimeSerializer}
 import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
 import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
-import amf.plugins.document.webapi.{OAS20Plugin, RAML08Plugin, RAML10Plugin}
+import amf.plugins.document.webapi.{OAS20Plugin, OAS30Plugin, RAML08Plugin, RAML10Plugin}
 import amf.plugins.features.validation.AMFValidatorPlugin
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -21,6 +21,7 @@ trait CommandHelper {
     amf.core.AMF.registerPlugin(RAML10Plugin)
     amf.core.AMF.registerPlugin(RAML08Plugin)
     amf.core.AMF.registerPlugin(OAS20Plugin)
+    amf.core.AMF.registerPlugin(OAS30Plugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     amf.core.AMF.init()
   }
@@ -61,7 +62,7 @@ trait CommandHelper {
       generateOptions.withSourceMaps
     }
     val mediaType = effectiveMediaType(config.outputMediaType, config.outputFormat)
-    val vendor = effectiveVendor(config.outputMediaType, config.outputFormat)
+    val vendor    = effectiveVendor(config.outputMediaType, config.outputFormat)
     config.output match {
       case Some(f) =>
         RuntimeSerializer.dumpToFile(

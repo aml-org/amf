@@ -12,14 +12,14 @@ import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
 import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
 import amf.plugins.document.vocabularies.spec.Dialect
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
-import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML08Plugin, RAML10Plugin}
+import amf.plugins.document.webapi._
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.features.validation.AMFValidatorPlugin
 import amf.plugins.features.validation.model.ValidationDialectText
 import amf.plugins.syntax.SYamlSyntaxPlugin
-import scala.concurrent.ExecutionContext.Implicits.global
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class Validation(platform: Platform) {
@@ -31,6 +31,7 @@ class Validation(platform: Platform) {
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAML10Plugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAML08Plugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(OAS20Plugin)
+      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(OAS30Plugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAMLVocabulariesPlugin)

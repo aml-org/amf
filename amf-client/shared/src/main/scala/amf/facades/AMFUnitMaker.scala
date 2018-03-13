@@ -7,7 +7,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
-import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML08Plugin, RAML10Plugin}
+import amf.plugins.document.webapi._
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
@@ -24,6 +24,7 @@ class AMFUnitMaker {
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAML10Plugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAML08Plugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(OAS20Plugin)
+  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(OAS30Plugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAMLVocabulariesPlugin)

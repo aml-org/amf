@@ -8,7 +8,7 @@ import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
 import amf.plugins.document.vocabularies.core.DialectValidator
 import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
 import amf.plugins.document.vocabularies.spec.Dialect
-import amf.plugins.document.webapi.{OAS20Plugin, RAML08Plugin, RAML10Plugin}
+import amf.plugins.document.webapi.{OAS20Plugin, OAS30Plugin, RAML08Plugin, RAML10Plugin}
 import amf.plugins.features.validation.AMFValidatorPlugin
 import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers._
@@ -29,6 +29,7 @@ class DialectValidationTest extends AsyncFunSuite with CompilerTestBuilder {
   amf.core.AMF.registerPlugin(RAML10Plugin)
   amf.core.AMF.registerPlugin(RAML08Plugin)
   amf.core.AMF.registerPlugin(OAS20Plugin)
+  amf.core.AMF.registerPlugin(OAS30Plugin)
   amf.core.AMF.registerPlugin(AMFValidatorPlugin)
   AMF.init()
 
