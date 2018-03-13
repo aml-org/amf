@@ -72,6 +72,10 @@ class DialectInstancesParsingTest extends BuildCycleTests {
     withDialect("dialect13.raml", "example13.raml", "example13.json", VocabularyYamlHint, Amf)
   }
 
+  test("parse 14 test") {
+    withDialect("dialect14.raml", "example14.raml", "example14.json", VocabularyYamlHint, Amf)
+  }
+
   test("generate 1 test") {
     withDialect("dialect1.raml", "example1.json", "example1.raml", AmfJsonHint, RamlVocabulary)
   }
@@ -128,6 +132,10 @@ class DialectInstancesParsingTest extends BuildCycleTests {
     withDialect("dialect13.raml", "example13.json", "example13.raml", AmfJsonHint, RamlVocabulary)
   }
 
+  test("generate 14 test") {
+    withDialect("dialect14.raml", "example14.json", "example14.raml", AmfJsonHint, RamlVocabulary)
+  }
+
   protected def withDialect(dialect: String,
                             source: String,
                             golden: String,
@@ -142,7 +150,7 @@ class DialectInstancesParsingTest extends BuildCycleTests {
       res
     }
   }
-
+  
   protected def withInlineDialect(source: String,
                                   golden: String,
                                   hint: Hint,
