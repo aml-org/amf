@@ -393,6 +393,11 @@
                             "@value": "queryParam"
                           }
                         ],
+                        "http://raml.org/vocabularies/http#paramName": [
+                          {
+                            "@value": "queryParam"
+                          }
+                        ],
                         "http://www.w3.org/ns/hydra/core#required": [
                           {
                             "@value": true
@@ -756,6 +761,11 @@
                             "@value": "header"
                           }
                         ],
+                        "http://raml.org/vocabularies/http#paramName": [
+                          {
+                            "@value": "header"
+                          }
+                        ],
                         "http://www.w3.org/ns/hydra/core#required": [
                           {
                             "@value": true
@@ -1038,6 +1048,11 @@
                   "http://raml.org/vocabularies/document#DomainElement"
                 ],
                 "http://schema.org/name": [
+                  {
+                    "@value": "pathParam"
+                  }
+                ],
+                "http://raml.org/vocabularies/http#paramName": [
                   {
                     "@value": "pathParam"
                   }

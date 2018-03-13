@@ -210,6 +210,11 @@
             "@value": "a"
           }
         ],
+        "http://raml.org/vocabularies/http#paramName": [
+          {
+            "@value": "b"
+          }
+        ],
         "http://www.w3.org/ns/hydra/core#required": [
           {
             "@value": true
@@ -329,6 +334,18 @@
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(8,9)-(13,5)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#paramName"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(12,6)-(12,17)]"
                   }
                 ]
               },

@@ -260,7 +260,7 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("banking-api.raml", "banking-api.raml.jsonld", RamlYamlHint, Amf)
   }
 
-  test("HERE_HERE Types raml to amf test") {
+  test("Types raml to amf test") {
     cycle("types.raml", "types.raml.jsonld", RamlYamlHint, Amf)
   }
 

@@ -68,6 +68,11 @@
                             "@value": "UserID"
                           }
                         ],
+                        "http://raml.org/vocabularies/http#paramName": [
+                          {
+                            "@value": "UserID"
+                          }
+                        ],
                         "http://schema.org/description": [
                           {
                             "@value": "description: the identifier for the user who posts a new organization"
@@ -270,6 +275,18 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
+                                    "@value": "http://schema.org/name"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(47,12)-(47,28)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "http://raml.org/vocabularies/document-source-maps#element": [
+                                  {
                                     "@value": "file://amf-client/shared/src/test/resources/upanddown/examples.json#/web-api/end-points/%2Forganization/post/request/parameter/UserID"
                                   }
                                 ],
@@ -282,7 +299,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://schema.org/name"
+                                    "@value": "http://raml.org/vocabularies/http#paramName"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [

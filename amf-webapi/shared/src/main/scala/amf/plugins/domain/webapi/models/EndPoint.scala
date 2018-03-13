@@ -47,7 +47,7 @@ case class EndPoint(fields: Fields, annotations: Annotations)
   }
 
   def withParameter(name: String): Parameter = {
-    val result = Parameter().withName(name)
+    val result = Parameter().withName(name).withParameterName(name)
     add(Parameters, result)
     result
   }

@@ -481,6 +481,11 @@
                             "@value": "param1"
                           }
                         ],
+                        "http://raml.org/vocabularies/http#paramName": [
+                          {
+                            "@value": "param1"
+                          }
+                        ],
                         "http://schema.org/description": [
                           {
                             "@value": "Some descr"
@@ -628,6 +633,11 @@
                             "@value": "param2"
                           }
                         ],
+                        "http://raml.org/vocabularies/http#paramName": [
+                          {
+                            "@value": "param2"
+                          }
+                        ],
                         "http://www.w3.org/ns/hydra/core#required": [
                           {
                             "@value": false
@@ -737,6 +747,11 @@
                           "http://raml.org/vocabularies/document#DomainElement"
                         ],
                         "http://schema.org/name": [
+                          {
+                            "@value": "testHeader"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/http#paramName": [
                           {
                             "@value": "testHeader"
                           }
@@ -1177,6 +1192,11 @@
                           "http://raml.org/vocabularies/document#DomainElement"
                         ],
                         "http://schema.org/name": [
+                          {
+                            "@value": "Time-Ago"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/http#paramName": [
                           {
                             "@value": "Time-Ago"
                           }
@@ -1634,6 +1654,11 @@
                     "@value": "two"
                   }
                 ],
+                "http://raml.org/vocabularies/http#paramName": [
+                  {
+                    "@value": "two"
+                  }
+                ],
                 "http://www.w3.org/ns/hydra/core#required": [
                   {
                     "@value": false
@@ -1755,6 +1780,11 @@
                   "http://raml.org/vocabularies/document#DomainElement"
                 ],
                 "http://schema.org/name": [
+                  {
+                    "@value": "three"
+                  }
+                ],
+                "http://raml.org/vocabularies/http#paramName": [
                   {
                     "@value": "three"
                   }
@@ -1968,6 +1998,11 @@
                 "@value": "uriParameter1"
               }
             ],
+            "http://raml.org/vocabularies/http#paramName": [
+              {
+                "@value": "uriParameter1"
+              }
+            ],
             "http://schema.org/description": [
               {
                 "@value": "testUriDisplay"
@@ -2123,6 +2158,11 @@
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://schema.org/name": [
+              {
+                "@value": "uriParameter2"
+              }
+            ],
+            "http://raml.org/vocabularies/http#paramName": [
               {
                 "@value": "uriParameter2"
               }
