@@ -332,8 +332,8 @@ case class PropertyMappingEmitter(dialect: Dialect, propertyMapping: PropertyMap
           override def emit(b: EntryBuilder): Unit = b.entry("typeDiscriminator", _.obj { b =>
             typesMapping.foreach { case (alias, nodeMappingId) =>
               aliasFor(nodeMappingId) match {
-                case Some(nodeMapping) => b.entry(nodeMapping, alias)
-                case _                 => b.entry(nodeMappingId, alias)
+                case Some(nodeMapping) => b.entry(alias, nodeMapping)
+                case _                 => b.entry(alias, nodeMappingId)
               }
             }
           })

@@ -13,6 +13,7 @@ object LiteralProperty extends PropertyClassification
 object ObjectProperty extends PropertyClassification
 object ObjectPropertyCollection extends PropertyClassification
 object ObjectMapProperty extends PropertyClassification
+object ObjectMapInheritanceProperty extends PropertyClassification
 object ObjectPairProperty extends PropertyClassification
 object LiteralPropertyCollection extends PropertyClassification
 
@@ -78,17 +79,22 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
       ObjectPropertyCollection
   }
 
-  def isUnion = Option(objectRange()).exists(_.size > 1)
+  def nodesInRange: Seq[String] = Option(objectRange()).getOrElse(Option(typeDiscrminator()).getOrElse(Map()).values).toSeq
+
+  def isUnion: Boolean = nodesInRange.nonEmpty
 
   def toField(): Field = {
     val propertyIdValue = ValueType(nodePropertyMapping())
-    Option(objectRange()).map { objProp =>
+
+    val isObjectRange = Option(objectRange()).isDefined || Option(typeDiscrminator()).isDefined
+
+    if (isObjectRange) {
       if (allowMultiple() || Option(mapKeyProperty()).isDefined) {
         Field(Type.Array(DialectDomainElementModel()), propertyIdValue)
       } else {
         Field(DialectDomainElementModel(), propertyIdValue)
       }
-    }.getOrElse {
+    } else {
       val fieldType = literalRange() match {
         case literal if literal.endsWith("anyUri")  => Type.Iri
         case literal if literal.endsWith("anyType") => Type.Any

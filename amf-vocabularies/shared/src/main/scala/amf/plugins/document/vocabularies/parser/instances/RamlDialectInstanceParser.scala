@@ -286,12 +286,12 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
 
   def parseProperty(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
     property.classification() match {
-      case LiteralProperty           => parseLiteralProperty(id, propertyEntry, property, node)
-      case LiteralPropertyCollection => parseLiteralCollectionProperty(id, propertyEntry, property, node)
-      case ObjectProperty            => parseObjectProperty(id, propertyEntry, property, node)
-      case ObjectPropertyCollection  => parseObjectCollectionProperty(id, propertyEntry, property, node)
-      case ObjectMapProperty         => parseObjectMapProperty(id, propertyEntry,property, node)
-      case ObjectPairProperty        => parseObjectPairProperty(id, propertyEntry,property, node)
+      case LiteralProperty              => parseLiteralProperty(id, propertyEntry, property, node)
+      case LiteralPropertyCollection    => parseLiteralCollectionProperty(id, propertyEntry, property, node)
+      case ObjectProperty               => parseObjectProperty(id, propertyEntry, property, node)
+      case ObjectPropertyCollection     => parseObjectCollectionProperty(id, propertyEntry, property, node)
+      case ObjectMapProperty            => parseObjectMapProperty(id, propertyEntry,property, node)
+      case ObjectPairProperty           => parseObjectPairProperty(id, propertyEntry,property, node)
       case _ => // TODO: throw exception
     }
   }
@@ -304,31 +304,54 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
     }
   }
 
-  def findCompatibleMapping(unionMappings: Seq[NodeMapping], nodeMap: YMap): Seq[NodeMapping] = {
-    val properties: Set[String] = nodeMap.entries.map { entry => entry.key.as[String] }.toSet
-    unionMappings.filter { mapping =>
-      val mappingRequiredSet: Set[String] = Option(mapping.propertiesMapping()).map {
-        props => props.filter(_.minCount().getOrElse(0) > 0).map(_.name())
-      }.getOrElse(Nil).toSet
-      val mappingSet: Set[String] = Option(mapping.propertiesMapping()).map { props => props.map(_.name()) }.getOrElse(Nil).toSet
+  def findCompatibleMapping(unionMappings: Seq[NodeMapping], discriminatorMapping: Map[String,NodeMapping], discriminator: Option[String], nodeMap: YMap): Seq[NodeMapping] = {
+    discriminator match {
+        // Using explicit discriminator
+      case Some(propertyName) =>
+        val explicitMapping = nodeMap.entries.find(_.key.as[String] == propertyName).flatMap { entry =>
+          discriminatorMapping.get(entry.value.as[String])
+        }
+        explicitMapping match {
+          case Some(nodeMapping) => Seq(nodeMapping)
+          case None              => Nil
+        }
+        // Inferring based on properties
+      case None =>
+        val properties: Set[String] = nodeMap.entries.map { entry => entry.key.as[String] }.toSet
+        unionMappings.filter { mapping =>
+          val mappingRequiredSet: Set[String] = Option(mapping.propertiesMapping()).map {
+            props => props.filter(_.minCount().getOrElse(0) > 0).map(_.name())
+          }.getOrElse(Nil).toSet
+          val mappingSet: Set[String] = Option(mapping.propertiesMapping()).map { props => props.map(_.name()) }.getOrElse(Nil).toSet
 
-      // There are not additional properties in the set and all required properties are in the set
-      properties.diff(mappingSet).isEmpty && mappingRequiredSet.diff(properties).isEmpty
+          // There are not additional properties in the set and all required properties are in the set
+          properties.diff(mappingSet).isEmpty && mappingRequiredSet.diff(properties).isEmpty
+        }
     }
   }
 
   def parseObjectUnion(id: String, ast: YNode, property: PropertyMapping, node: DialectDomainElement): Option[DialectDomainElement] = {
-    val unionMappings = property.objectRange().map { nodeMappingId =>
+    // potential node range based in the objectRange
+    val unionMappings = Option(property.objectRange()).getOrElse(Nil).map { nodeMappingId =>
       ctx.dialect.declares.find(_.id == nodeMappingId) match {
         case Some(nodeMapping) => Some(nodeMapping)
         case None              => None // TODO: violation here
       }
     } collect { case Some(mapping: NodeMapping) => mapping }
+    // potential node range based in discriminators map
+    val discriminatorsMapping = Option(property.typeDiscrminator()).getOrElse(Map()).foldLeft(Map[String, NodeMapping]()) { case (acc, (alias, mappingId)) =>
+        ctx.dialect.declares.find(_.id == mappingId) match {
+          case Some(nodeMapping: NodeMapping) => acc + (alias -> nodeMapping)
+          case _                              => acc // TODO: violation here
+        }
+    }
+    // all possible mappings combining objectRange and type discriminator
+    val allPossibleMappings = (unionMappings ++ discriminatorsMapping.values).distinct
 
     ast.tagType match {
       case YType.Map =>
         val nodeMap = ast.as[YMap]
-        val mappings = findCompatibleMapping(unionMappings, nodeMap)
+        val mappings = findCompatibleMapping(unionMappings, discriminatorsMapping, Option(property.typeDiscriminatorName()), nodeMap)
         if (mappings.isEmpty){
           // TODO: violation here
           None
@@ -363,13 +386,13 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
             map)
           None
         }
-      case YType.Str | YType.Include =>
+      case YType.Str | YType.Include => // here the mapping information is explicit in the fragment/declaration mapping
         val refTuple = ctx.link(ast) match {
           case Left(key) =>
-            (key, unionMappings.map(mapping => ctx.declarations.findDialectDomainElement(key, mapping, SearchScope.Fragments)).collectFirst { case Some(x) => x })
+            (key, allPossibleMappings.map(mapping => ctx.declarations.findDialectDomainElement(key, mapping, SearchScope.Fragments)).collectFirst { case Some(x) => x })
           case _ =>
             val text = ast.as[YScalar].text
-            (text, unionMappings.map(mapping => ctx.declarations.findDialectDomainElement(text, mapping, SearchScope.Named)).collectFirst { case Some(x) => x })
+            (text, allPossibleMappings.map(mapping => ctx.declarations.findDialectDomainElement(text, mapping, SearchScope.Named)).collectFirst { case Some(x) => x })
         }
         refTuple match {
           case (text: String, Some(s)) =>
@@ -388,7 +411,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
   }
 
   def parseObjectProperty(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
-    property.objectRange() match {
+    property.nodesInRange match {
       case range: Seq[String] if range.size > 1  =>
         parseObjectUnion(id, propertyEntry.value, property, node) match {
           case Some(parsedRange) => node.setObjectField(property, parsedRange, propertyEntry.value)
@@ -410,7 +433,30 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
   def parseObjectMapProperty(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
     val nested = propertyEntry.value.as[YMap].entries.map { keyEntry =>
       val nestedObjectId = pathSegment(id, propertyEntry.key.as[String].urlEncoded) + s"/${keyEntry.key.as[String].urlEncoded}"
-      val parsedNode = property.objectRange() match {
+      val parsedNode = property.nodesInRange match {
+        case range: Seq[String] if range.size > 1  =>
+          parseObjectUnion(nestedObjectId, keyEntry.value, property, node)
+        case range: Seq[String] if range.size == 1 =>
+          ctx.dialect.declares.find(_.id == range.head) match {
+            case Some(nodeMapping: NodeMapping) =>
+              parseNestedNode(nestedObjectId, keyEntry.value, nodeMapping)
+          }
+        case _ => None
+      }
+      parsedNode match {
+        case Some(dialectDomainElement) => Some(checkHashProperties(dialectDomainElement, property, keyEntry))
+        case None                       => None
+      }
+    }
+    node.setObjectField(property, nested.collect { case Some(node: DialectDomainElement) => node }, propertyEntry.value)
+  }
+
+  def parseObjectInheritanceMap(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
+    val discriminator = property.typeDiscriminatorName()
+    val nested = propertyEntry.value.as[YMap].entries.map { keyEntry =>
+      val nestedObjectId = pathSegment(id, propertyEntry.key.as[String].urlEncoded) + s"/${keyEntry.key.as[String].urlEncoded}"
+
+      val parsedNode = property.nodesInRange match {
         case range: Seq[String] if range.size > 1  =>
           parseObjectUnion(nestedObjectId, keyEntry.value, property, node)
         case range: Seq[String] if range.size == 1 =>
@@ -454,7 +500,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
 
   def parseObjectCollectionProperty(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
     val res = propertyEntry.value.as[YSequence].nodes.zipWithIndex.map { case (elementNode, nextElem) =>
-      property.objectRange() match {
+      property.nodesInRange match {
         case range: Seq[String] if range.size > 1  =>
           parseObjectUnion(id, elementNode, property, node)
         case range: Seq[String] if range.size == 1 =>
