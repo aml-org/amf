@@ -42,6 +42,6 @@ package object spec {
   }
 
   def toOas(spec: SpecEmitterContext): OasSpecEmitterContext = {
-    new OasSpecEmitterContext(spec.getRefEmitter)
+    new Oas2SpecEmitterContext(spec.getRefEmitter)
   }
 }

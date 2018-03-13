@@ -11,6 +11,8 @@ object Vendor {
       case Raml10.name  => Some(Raml10)
       case Raml08.name  => Some(Raml08)
       case Raml.name    => Some(Raml) // todo remove later
+      case Oas2.name    => Some(Oas2)
+      case Oas3.name    => Some(Oas3)
       case Oas.name     => Some(Oas)
       case Amf.name     => Some(Amf)
       case Payload.name => Some(Payload)
@@ -42,6 +44,34 @@ trait Raml extends Vendor {
   }
 }
 
+trait Oas extends Vendor {
+  def version: String
+
+  override val name: String          = ("oas " + version).trim
+  override val defaultSyntax: Syntax = Json
+
+  override def toString: String = name.trim
+
+  override def isSameWithoutVersion(vendor: Vendor): Boolean = {
+    vendor match {
+      case _: Oas => true
+      case _      => false
+    }
+  }
+}
+
+object Oas extends Oas {
+  override def version: String = ""
+}
+
+object Oas2 extends Raml {
+  override def version: String = "2.0"
+}
+
+object Oas3 extends Raml {
+  override def version: String = "3.0.0"
+}
+
 object Raml extends Raml {
   override def version: String = ""
 }
@@ -52,13 +82,6 @@ object Raml10 extends Raml {
 
 object Raml08 extends Raml {
   override def version: String = "0.8"
-}
-
-object Oas extends Vendor {
-  override val name: String          = "oas"
-  override val defaultSyntax: Syntax = Json
-
-  override def toString: String = name
 }
 
 object Amf extends Vendor {

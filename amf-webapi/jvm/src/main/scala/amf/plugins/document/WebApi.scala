@@ -49,6 +49,7 @@ object WebApi extends PlatformSecrets {
 
     // Initialization of plugins
     amf.Core.registerPlugin(OAS20Plugin)
+    amf.Core.registerPlugin(OAS30Plugin)
     amf.Core.registerPlugin(RAML10Plugin)
     amf.Core.registerPlugin(RAML08Plugin)
     amf.Core.registerPlugin(PayloadPlugin)

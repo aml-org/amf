@@ -19,7 +19,11 @@ object OasHeader {
 
   val swagger = "swagger"
 
-  object Oas20Header extends OasHeader("swagger", "2.0")
+  val openapi = "openapi"
+
+  object Oas20Header extends OasHeader(swagger, "2.0")
+
+  object Oas30Header extends OasHeader(openapi, "3.0.0")
 
   object Oas20DocumentationItem extends OasHeader(extensionName, "2.0 DocumentationItem")
 
@@ -45,12 +49,14 @@ object OasHeader {
         .key(extensionName)
         .orElse(map.key(extensionType))
         .orElse(map.key(swagger))
+        .orElse(map.key(openapi))
         .flatMap(extension => OasHeader(extension.value))
     case Left(_) => None
   }
 
   def apply(text: String): Option[OasHeader] = text match {
     case Oas20Header.value                    => Some(Oas20Header)
+    case Oas30Header.value                    => Some(Oas30Header)
     case Oas20DocumentationItem.value         => Some(Oas20DocumentationItem)
     case Oas20DataType.value                  => Some(Oas20DataType)
     case Oas20NamedExample.value              => Some(Oas20NamedExample)

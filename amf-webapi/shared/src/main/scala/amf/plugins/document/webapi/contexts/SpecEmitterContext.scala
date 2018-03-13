@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.contexts
 
-import amf.core.annotations.{DomainExtensionAnnotation, SingleValueArray}
+import amf.core.annotations.DomainExtensionAnnotation
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.SpecOrdering.Default
 import amf.core.emitter._
@@ -8,7 +8,7 @@ import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, DeclaresModel, Document}
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}
 import amf.core.model.domain.{DomainElement, Linkable}
-import amf.core.parser.{Annotations, FieldEntry, Value}
+import amf.core.parser.FieldEntry
 import amf.core.remote._
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.RamlHeader
@@ -271,15 +271,23 @@ abstract class RamlSpecEmitterContext(refEmitter: RefEmitter) extends SpecEmitte
 
 }
 
-class OasSpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) extends SpecEmitterContext(refEmitter) {
-
-  override val vendor: Vendor = Oas
-
+abstract class OasSpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) extends SpecEmitterContext(refEmitter) {
   override def localReference(reference: Linkable): PartEmitter =
     factory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel, Nil)
 
-  override val factory: SpecEmitterFactory = new OasSpecEmitterFactory()(this)
+  val factory: OasSpecEmitterFactory
+}
 
+class Oas3SpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) extends OasSpecEmitterContext(refEmitter) {
+  // TODO differentiate when needed.
+  override val factory: OasSpecEmitterFactory = new OasSpecEmitterFactory()(this)
+  override val vendor: Vendor                 = Oas3
+}
+
+class Oas2SpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) extends OasSpecEmitterContext(refEmitter) {
+  // TODO differentiate when needed.
+  override val factory: OasSpecEmitterFactory = new OasSpecEmitterFactory()(this)
+  override val vendor: Vendor                 = Oas2
 }
 
 trait RefEmitter {

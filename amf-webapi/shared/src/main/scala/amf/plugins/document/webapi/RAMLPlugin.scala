@@ -68,10 +68,6 @@ trait RAMLPlugin extends BaseWebApiPlugin {
     }
   }
 
-  private def inlineYScalar(ref: MutRef, raw: String): Unit = ref.target = Some(YNode(raw))
-
-  private def isRamlOrYaml(encodes: ExternalDomainElement) = documentSyntaxes.contains(encodes.mediaType)
-
   /**
     * List of media types used to encode serialisations of
     * this domain
@@ -104,7 +100,7 @@ object RAML08Plugin extends RAMLPlugin {
     case _: Overlay                           => false
     case _: Extension                         => false
     case document: Document                   => document.encodes.isInstanceOf[WebApi]
-    case module: Module                       => false
+    case _: Module                            => false
     case _: DocumentationItemFragment         => true // remove raml header and write as external fragment
     case _: DataTypeFragment                  => true
     case _: NamedExampleFragment              => true
