@@ -148,6 +148,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
           List(
             Parameter()
               .withName("two")
+              .withParameterName("two")
               .withRequired(false)
               .withBinding("path")
               .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
@@ -160,6 +161,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
           Seq(
             Parameter()
               .withName("two")
+              .withParameterName("two")
               .withRequired(true)
               .withBinding("path")
               .withSchema(ScalarShape().withName("two").withDataType("http://www.w3.org/2001/XMLSchema#string"))
@@ -172,6 +174,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
               .withQueryParameters(List(
                 Parameter()
                   .withName("param1")
+                  .withParameterName("param1")
                   .withDescription("Some descr")
                   .withRequired(true)
                   .withBinding("query")
@@ -181,6 +184,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
                     .withDataType("http://www.w3.org/2001/XMLSchema#string")),
                 Parameter()
                   .withName("param2")
+                  .withParameterName("param2")
                   .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
                   .withRequired(false)
                   .withBinding("query")
@@ -193,6 +197,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
               .withHeaders(List(
                 Parameter()
                   .withName("Header-One")
+                  .withParameterName("Header-One")
                   .withRequired(false)
                   .withBinding("header")
                   .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
@@ -206,6 +211,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
         List(
           Parameter()
             .withName("one")
+            .withParameterName("one")
             .withRequired(true)
             .withDescription("One base uri param")
             .withBinding("path")
@@ -240,12 +246,14 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
                   List(
                     Parameter()
                       .withName("param1")
+                      .withParameterName("param1")
                       .withDescription("Some descr")
                       .withRequired(true)
                       .withBinding("query")
                   ))
                 .withHeaders(List(Parameter()
                   .withName("param2?")
+                  .withParameterName("param2?")
                   .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
                   .withRequired(false)
                   .withBinding("header")))
@@ -260,7 +268,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
             .withRequest(
               Request()
                 .withHeaders(List(
-                  Parameter().withName("Header-One").withRequired(false).withBinding("header")
+                  Parameter().withName("Header-One").withParameterName("Header-One").withRequired(false).withBinding("header")
                 ))
             )
         ))
@@ -299,6 +307,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
                     List(
                       Parameter()
                         .withName("Time-Ago")
+                        .withParameterName("Time-Ago")
                         .withBinding("header")
                         .withSchema(
                           ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#integer"))
@@ -501,18 +510,20 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     //shape of param2
     request
       .withQueryParameter("param2")
+      .withParameterName("param2")
       .withBinding("query")
       .withRequired(false)
       .withScalarSchema("schema")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
 
     //param3 typeless
-    request.withQueryParameter("param3").withRequired(false).withBinding("query").withDescription("typeless")
+    request.withQueryParameter("param3").withParameterName("param3").withRequired(false).withBinding("query").withDescription("typeless")
 
     //headers
     //header type string
     request
       .withHeader("Header-One")
+      .withParameterName("Header-One")
       .withBinding("header")
       .withRequired(false)
       .withScalarSchema("schema")
@@ -522,6 +533,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     val header2Type =
       request
         .withHeader("header-two")
+        .withParameterName("header-two")
         .withRequired(false)
         .withBinding("header")
         .withScalarSchema("schema")
@@ -650,6 +662,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     //shape of param1
     val param1Shape = request
       .withQueryParameter("param1")
+      .withParameterName("param1")
       .withDescription("Some descr")
       .withBinding("query")
       .withRequired(true)
@@ -692,6 +705,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     //shape of param2
     request
       .withQueryParameter("param2")
+      .withParameterName("param2")
       .withBinding("query")
       .withRequired(false)
       .withScalarSchema("schema")
@@ -700,6 +714,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     //param3 typeless , default type its string?
     request
       .withQueryParameter("param3")
+      .withParameterName("param3")
       .withRequired(true)
       .withBinding("query")
       .withDescription("typeless")
@@ -711,6 +726,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     //header type string
     request
       .withHeader("Header-One")
+      .withParameterName("Header-One")
       .withBinding("header")
       .withRequired(false)
       .withScalarSchema("schema")
@@ -725,7 +741,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
 
     //header with object type
     val header2Type =
-      request.withHeader("header-two").withRequired(true).withBinding("header").withObjectSchema("schema")
+      request.withHeader("header-two").withParameterName("header-two").withRequired(true).withBinding("header").withObjectSchema("schema")
     header2Type
       .withClosed(false)
       .withProperty("number")

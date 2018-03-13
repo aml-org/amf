@@ -58,7 +58,7 @@ case class Raml10ParameterParser(entry: YMapEntry, producer: String => Parameter
   override def parse(): Parameter = {
 
     val name: String = entry.key
-    val parameter    = producer(name).add(Annotations(entry)) // TODO parameter id is using a name that is not final.
+    val parameter    = producer(name).withParameterName(name).add(Annotations(entry)) // TODO parameter id is using a name that is not final.
 
     val p = entry.value.to[YMap] match {
       case Right(map) =>
@@ -129,9 +129,9 @@ case class Raml10ParameterParser(entry: YMapEntry, producer: String => Parameter
 
     if (p.fields.entry(ParameterModel.Required).isEmpty) {
       val required = !name.endsWith("?")
-
+      val paramName = if (required) name else name.stripSuffix("?")
       p.set(ParameterModel.Required, required)
-      p.set(ParameterModel.Name, if (required) name else name.stripSuffix("?"))
+      p.set(ParameterModel.Name, paramName).set(ParameterModel.ParameterName, paramName)
     }
 
     p
@@ -144,7 +144,7 @@ case class Raml08ParameterParser(entry: YMapEntry, producer: String => Parameter
   def parse(): Parameter = {
 
     var name: String = entry.key
-    val parameter    = producer(name).add(Annotations(entry))
+    val parameter    = producer(name).withParameterName(name).add(Annotations(entry))
 
     entry.value.tagType match {
       case YType.Null =>
@@ -177,7 +177,7 @@ case class Raml08ParameterParser(entry: YMapEntry, producer: String => Parameter
     if (parseOptional && name.endsWith("?")) {
       parameter.set(ParameterModel.Optional, value = true)
       name = name.stripSuffix("?")
-      parameter.set(ParameterModel.Name, name)
+      parameter.set(ParameterModel.Name, name).set(ParameterModel.ParameterName, name)
     }
 
     parameter
@@ -191,7 +191,7 @@ abstract class RamlParameterParser(entry: YMapEntry, producer: String => Paramet
   def parse(): Parameter
 }
 
-case class OasParameterParser(map: YMap, parentId: String)(implicit ctx: OasWebApiContext) extends SpecParserOps {
+case class OasParameterParser(map: YMap, parentId: String, name: Option[String])(implicit ctx: OasWebApiContext) extends SpecParserOps {
   def parse(): OasParameter = {
     map.key("$ref") match {
       case Some(ref) => parseParameterRef(ref, parentId)
@@ -201,7 +201,12 @@ case class OasParameterParser(map: YMap, parentId: String)(implicit ctx: OasWebA
 
         parameter.set(ParameterModel.Required, value = false)
 
-        map.key("name", ParameterModel.Name in parameter)
+        if (name.isDefined) {
+          parameter.set(ParameterModel.Name, name.get)
+        } else {
+          map.key("name", ParameterModel.Name in parameter) // name of the parameter in the HTTP binding (path, request parameter, etc)
+        }
+        map.key("name", ParameterModel.ParameterName in parameter) // name of the parameter in the HTTP binding (path, request parameter, etc)
         map.key("description", ParameterModel.Description in parameter)
         map.key("required", (ParameterModel.Required in parameter).explicit)
         map.key("in", ParameterModel.Binding in parameter)
@@ -261,7 +266,7 @@ case class OasParameterParser(map: YMap, parentId: String)(implicit ctx: OasWebA
 case class OasParametersParser(values: Seq[YMap], parentId: String)(implicit ctx: OasWebApiContext) {
   def parse(): Parameters = {
     val parameters = values
-      .map(value => OasParameterParser(value, parentId).parse())
+      .map(value => OasParameterParser(value, parentId, None).parse())
 
     Parameters(
       parameters.filter(_.isQuery).map(_.parameter),

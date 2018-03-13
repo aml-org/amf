@@ -68,6 +68,11 @@
                             "@value": "digest_all_fields"
                           }
                         ],
+                        "http://raml.org/vocabularies/http#paramName": [
+                          {
+                            "@value": "digest_all_fields"
+                          }
+                        ],
                         "http://schema.org/description": [
                           {
                             "@value": "If no values match the value given for title, use digest_all_fields instead"
@@ -185,6 +190,11 @@
                           "http://raml.org/vocabularies/document#DomainElement"
                         ],
                         "http://schema.org/name": [
+                          {
+                            "@value": "title"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/http#paramName": [
                           {
                             "@value": "title"
                           }
@@ -310,6 +320,11 @@
                             "@value": "access_token"
                           }
                         ],
+                        "http://raml.org/vocabularies/http#paramName": [
+                          {
+                            "@value": "access_token"
+                          }
+                        ],
                         "http://schema.org/description": [
                           {
                             "@value": "A valid access_token is required"
@@ -427,6 +442,11 @@
                           "http://raml.org/vocabularies/document#DomainElement"
                         ],
                         "http://schema.org/name": [
+                          {
+                            "@value": "numPages"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/http#paramName": [
                           {
                             "@value": "numPages"
                           }

@@ -15,6 +15,8 @@ object ParameterModel extends DomainElementModel with LinkableElementModel with 
 
   val Name = Field(Str, SchemaNamespace + "name")
 
+  val ParameterName = Field(Str, Http + "paramName")
+
   val Description = Field(Str, SchemaNamespace + "description")
 
   val Required = Field(Bool, Hydra + "required")
@@ -28,7 +30,7 @@ object ParameterModel extends DomainElementModel with LinkableElementModel with 
   override val `type`: List[ValueType] = Http + "Parameter" :: DomainElementModel.`type`
 
   override def fields: List[Field] =
-    List(Name, Description, Required, Binding, Schema) ++ LinkableElementModel.fields ++ DomainElementModel.fields
+    List(Name, ParameterName, Description, Required, Binding, Schema) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override def modelInstance = Parameter()
 }

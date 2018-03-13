@@ -274,7 +274,7 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
         val result = mutable.ListBuffer[EntryEmitter]()
         val fs     = parameter.fields
 
-        fs.entry(ParameterModel.Name).map(f => result += ValueEmitter("name", f))
+        fs.entry(ParameterModel.ParameterName).orElse(fs.entry(ParameterModel.Name)).map(f => result += ValueEmitter("name", f))
 
         fs.entry(ParameterModel.Description).map(f => result += ValueEmitter("description", f))
 
