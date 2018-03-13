@@ -6,11 +6,11 @@ Number of results: 3
 Level: Violation
 
 - Source: http://raml.org/vocabularies/amf/parser#parsing-error
-  Message: Security scheme 'd' not found in declarations.
+  Message: Security scheme 'b' not found in declarations.
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/v08/parser/invalid-reference/security-scheme/input.raml#/web-api/end-points/%2Fsec/post/d
+  Target: file://amf-client/shared/src/test/resources/org/raml/v08/parser/invalid-reference/security-scheme/input.raml#/web-api/b
   Property: 
-  Position: Some(LexicalInformation([(9,16)-(9,17)]))
+  Position: Some(LexicalInformation([(4,12)-(4,13)]))
 
 - Source: http://raml.org/vocabularies/amf/parser#parsing-error
   Message: Security scheme 'c' not found in declarations.
@@ -20,8 +20,8 @@ Level: Violation
   Position: Some(LexicalInformation([(7,14)-(7,15)]))
 
 - Source: http://raml.org/vocabularies/amf/parser#parsing-error
-  Message: Security scheme 'b' not found in declarations.
+  Message: Security scheme 'd' not found in declarations.
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/v08/parser/invalid-reference/security-scheme/input.raml#/web-api/b
+  Target: file://amf-client/shared/src/test/resources/org/raml/v08/parser/invalid-reference/security-scheme/input.raml#/web-api/end-points/%2Fsec/post/d
   Property: 
-  Position: Some(LexicalInformation([(4,12)-(4,13)]))
+  Position: Some(LexicalInformation([(9,16)-(9,17)]))

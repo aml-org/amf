@@ -6,14 +6,6 @@ Number of results: 4
 Level: Violation
 
 - Source: http://raml.org/vocabularies/amf/parser#parsing-error
-  Message: Error node '        }
-# above '}' should close in its correct indentation'
-  Level: Violation
-  Target: 
-  Property: 
-  Position: Some(LexicalInformation([(27,0)-(28,51)]))
-
-- Source: http://raml.org/vocabularies/amf/parser#parsing-error
   Message: Error node '{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "Employee",
@@ -45,6 +37,14 @@ Level: Violation
   Target: 
   Property: 
   Position: Some(LexicalInformation([(7,13)-(27,0)]))
+
+- Source: http://raml.org/vocabularies/amf/parser#parsing-error
+  Message: Error node '        }
+# above '}' should close in its correct indentation'
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(27,0)-(28,51)]))
 
 - Source: http://raml.org/vocabularies/amf/parser#parsing-error
   Message: Not a YMap

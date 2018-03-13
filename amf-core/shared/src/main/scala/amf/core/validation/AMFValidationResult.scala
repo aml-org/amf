@@ -3,6 +3,7 @@ package amf.core.validation
 import amf.core.annotations.LexicalInformation
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfArray, DomainElement}
+import amf.core.parser.Position
 import amf.core.validation.core.ValidationResult
 
 case class AMFValidationResult(message: String,
@@ -11,7 +12,8 @@ case class AMFValidationResult(message: String,
                                targetProperty: Option[String],
                                validationId: String,
                                position: Option[LexicalInformation],
-                               source: Any) {
+                               source: Any)
+    extends Ordered[AMFValidationResult] {
   override def toString: String = {
     var str = s"\n- Source: $validationId\n"
     str += s"  Message: $message\n"
@@ -20,6 +22,22 @@ case class AMFValidationResult(message: String,
     str += s"  Property: ${targetProperty.getOrElse("")}\n"
     str += s"  Position: $position\n"
     str
+  }
+
+  override def compare(that: AMFValidationResult): Int = {
+
+    this.position
+      .map(_.range.start)
+      .getOrElse(Position.ZERO) compareTo that.position.map(_.range.start).getOrElse(Position.ZERO) match {
+      case 0 =>
+        this.position
+          .map(_.range.end)
+          .getOrElse(Position.ZERO) compareTo that.position.map(_.range.end).getOrElse(Position.ZERO) match {
+          case 0 => this.targetProperty.getOrElse("") compareTo that.targetProperty.getOrElse("")
+          case x => x
+        }
+      case x => x
+    }
   }
 }
 
@@ -30,7 +48,7 @@ object AMFValidationResult {
                           level: String,
                           validation: ValidationResult): AMFValidationResult = {
     model.findById(validation.focusNode) match {
-      case None       => throw new Exception(s"Cannot find node with validation error ${validation.focusNode}")
+      case None => throw new Exception(s"Cannot find node with validation error ${validation.focusNode}")
       case Some(node) =>
         val position = findPosition(node, validation)
         AMFValidationResult(

@@ -11,4 +11,5 @@ types:
         type: number
       /^note\d+$/: # restrict any properties whose keys start with "note"
                    # followed by one or more digits to be a string
+                   # AMF: the IRI for the id of this element is not encoded, so JS test hangs
         type: string

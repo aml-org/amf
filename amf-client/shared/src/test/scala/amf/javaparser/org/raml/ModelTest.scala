@@ -4,9 +4,7 @@ import amf.ProfileNames
 import amf.core.annotations.SourceVendor
 import amf.core.client.GenerationOptions
 import amf.core.model.document.{BaseUnit, EncodesModel, Module}
-import amf.core.parser.Position
 import amf.core.remote._
-import amf.core.validation.AMFValidationResult
 import amf.facades.{AMFCompiler, AMFDumper, Validation}
 import amf.resolution.ResolutionTest
 import org.mulesoft.common.io.{Fs, SyncFile}
@@ -28,15 +26,8 @@ trait ModelValidationTest extends DirectoryTest {
         val vendor = target(model)
         AMFDumper(transform(model, d, vendor), vendor, vendor.defaultSyntax, GenerationOptions()).dumpToString
       } else {
-        val ordered = report.results.sorted(new Ordering[AMFValidationResult] {
-          override def compare(x: AMFValidationResult, y: AMFValidationResult): Int = {
-            transform(x).compareTo(transform(y))
-          }
-
-          private def transform(r: AMFValidationResult) = r.position.map(_.range.start).getOrElse(Position.ZERO)
-        })
-        report.copy(results = ordered)
-        report.toString
+        val ordered = report.results.sorted
+        report.copy(results = ordered).toString
       }
     }
   }

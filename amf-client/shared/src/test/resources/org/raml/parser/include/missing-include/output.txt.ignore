@@ -6,7 +6,7 @@ Number of results: 2
 Level: Violation
 
 - Source: http://raml.org/vocabularies/amf/parser#parsing-error
-  Message: java.io.FileNotFoundException: amf-client/shared/src/test/resources/org/raml/parser/include/missing-include/basic-resource.raml (No such file or directory)
+  Message: java.io.IOException: ENOENT: no such file or directory, open 'amf-client/shared/src/test/resources/org/raml/parser/include/missing-include/basic-resource.raml'
   Level: Violation
   Target: 
   Property: 

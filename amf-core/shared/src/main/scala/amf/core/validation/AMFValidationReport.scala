@@ -6,7 +6,7 @@ case class AMFValidationReport(conforms: Boolean, model: String, profile: String
     str += s"Profile: $profile\n"
     str += s"Conforms? $conforms\n"
     str += s"Number of results: ${results.length}\n"
-    results.groupBy(_.level) foreach {
+    results.sorted.groupBy(_.level) foreach {
       case (level, results) =>
         str += s"\nLevel: $level\n"
         for { result <- results } {

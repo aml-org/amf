@@ -13,12 +13,12 @@ Number of results: 4
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/simple-inheritance-validation/input.raml#/web-api/end-points/%2Fresource/get/200/application/json/schema/property/id/scalar/id_validation_range/prop
-  Message: Scalar at //id must have data type http://www.w3.org/2001/XMLSchema#integer
+- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/simple-inheritance-validation/input.raml#/web-api/end-points/%2Fresource/get/200/application/json/schema_validation
+  Message: Object at / must be valid
   Level: Violation
-  Target: http://amfparser.org/test_payload/object_1/scalar_3
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(2,20)-(2,24)]))
+  Target: http://amfparser.org/test_payload/object_1
+  Property: http://raml.org/vocabularies/data#id
+  Position: Some(LexicalInformation([(1,0)-(2,24)]))
 
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/simple-inheritance-validation/input.raml#/web-api/end-points/%2Fresource/get/200/application/json/schema_validation
   Message: Object at / must be valid
@@ -27,19 +27,19 @@ Level: Violation
   Property: http://raml.org/vocabularies/data#name
   Position: Some(LexicalInformation([(1,0)-(2,24)]))
 
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/simple-inheritance-validation/input.raml#/web-api/end-points/%2Fresource/get/200/application/json/schema_validation
-  Message: Object at / must be valid
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1
-  Property: http://raml.org/vocabularies/data#id
-  Position: Some(LexicalInformation([(1,0)-(2,24)]))
-
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/simple-inheritance-validation/input.raml#/web-api/end-points/%2Fresource/get/200/application/json/schema/property/name/scalar/name_validation_range/prop
   Message: Scalar at //name must have data type http://www.w3.org/2001/XMLSchema#string
   Level: Violation
   Target: http://amfparser.org/test_payload/object_1/scalar_2
   Property: http://raml.org/vocabularies/data#value
   Position: Some(LexicalInformation([(1,22)-(1,26)]))
+
+- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/simple-inheritance-validation/input.raml#/web-api/end-points/%2Fresource/get/200/application/json/schema/property/id/scalar/id_validation_range/prop
+  Message: Scalar at //id must have data type http://www.w3.org/2001/XMLSchema#integer
+  Level: Violation
+  Target: http://amfparser.org/test_payload/object_1/scalar_3
+  Property: http://raml.org/vocabularies/data#value
+  Position: Some(LexicalInformation([(2,20)-(2,24)]))
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/simple-inheritance-validation/input.raml#/web-api/end-points/%2Fresource/get/200/application/json/schema/example/bad
