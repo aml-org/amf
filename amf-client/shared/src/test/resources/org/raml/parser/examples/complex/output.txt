@@ -13,19 +13,19 @@ Number of results: 3
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/complex/input.raml#/web-api/end-points/%2Forgs%2F%7BorgId%7D/get/200/application/json/schema/property/Head/Manager_validation_validation_node_prop_phone
-  Message: Property phone at //Head must have a valid value
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1/object_8
-  Property: http://raml.org/vocabularies/data#phone
-  Position: Some(LexicalInformation([(8,0)-(16,31)]))
-
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/complex/input.raml#/web-api/end-points/%2Forgs%2F%7BorgId%7D/get/200/application/json/schema_validation
   Message: Object at / must be valid
   Level: Violation
   Target: http://amfparser.org/test_payload/object_1
   Property: http://raml.org/vocabularies/data#Head
   Position: Some(LexicalInformation([(1,0)-(16,31)]))
+
+- Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/complex/input.raml#/web-api/end-points/%2Forgs%2F%7BorgId%7D/get/200/application/json/schema/property/Head/Manager_validation_validation_node_prop_phone
+  Message: Property phone at //Head must have a valid value
+  Level: Violation
+  Target: http://amfparser.org/test_payload/object_1/object_8
+  Property: http://raml.org/vocabularies/data#phone
+  Position: Some(LexicalInformation([(8,0)-(16,31)]))
 
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/complex/input.raml#/web-api/end-points/%2Forgs%2F%7BorgId%7D/get/200/application/json/schema/property/Head/Manager/property/phone/scalar/Phone_validation_validation_pattern/prop
   Message: Data at //Head/phone must match pattern ^[0-9|-]+$

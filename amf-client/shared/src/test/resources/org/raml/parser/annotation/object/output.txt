@@ -12,16 +12,16 @@ Level: Violation
   Property: http://raml.org/vocabularies/data#alive
   Position: Some(LexicalInformation([(22,0)-(23,0)]))
 
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/object/input.raml#/declarations/user/user/property/alive/scalar/alive_validation_range/prop
-  Message: Scalar at //alive must have data type http://www.w3.org/2001/XMLSchema#boolean
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/object/input.raml#/web-api/end-points/%2Fbad1/user/object_1/scalar_3
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(26,13)-(26,15)]))
-
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/object/input.raml#/declarations/user/user_validation
   Message: Object at / must be valid
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/object/input.raml#/web-api/end-points/%2Fbad1/user/object_1
   Property: http://raml.org/vocabularies/data#alive
   Position: Some(LexicalInformation([(25,0)-(26,15)]))
+
+- Source: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/object/input.raml#/declarations/user/user/property/alive/scalar/alive_validation_range/prop
+  Message: Scalar at //alive must have data type http://www.w3.org/2001/XMLSchema#boolean
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/object/input.raml#/web-api/end-points/%2Fbad1/user/object_1/scalar_3
+  Property: http://raml.org/vocabularies/data#value
+  Position: Some(LexicalInformation([(26,13)-(26,15)]))

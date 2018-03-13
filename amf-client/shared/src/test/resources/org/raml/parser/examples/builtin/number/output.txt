@@ -13,19 +13,19 @@ Number of results: 2
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/builtin/number/input.raml#/declarations/User/property/age/scalar/age_validation_range/prop
-  Message: Scalar at //age must have data type http://www.w3.org/2001/XMLSchema#integer
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1/scalar_3
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(2,14)-(2,18)]))
-
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/builtin/number/input.raml#/declarations/User_validation
   Message: Object at / must be valid
   Level: Violation
   Target: http://amfparser.org/test_payload/object_1
   Property: http://raml.org/vocabularies/data#age
   Position: Some(LexicalInformation([(1,0)-(3,21)]))
+
+- Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/builtin/number/input.raml#/declarations/User/property/age/scalar/age_validation_range/prop
+  Message: Scalar at //age must have data type http://www.w3.org/2001/XMLSchema#integer
+  Level: Violation
+  Target: http://amfparser.org/test_payload/object_1/scalar_3
+  Property: http://raml.org/vocabularies/data#value
+  Position: Some(LexicalInformation([(2,14)-(2,18)]))
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/builtin/number/input.raml#/declarations/User/example/bad-int

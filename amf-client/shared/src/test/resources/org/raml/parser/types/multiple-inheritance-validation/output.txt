@@ -17,14 +17,14 @@ Level: Violation
   Message: Object at / must be valid
   Level: Violation
   Target: http://amfparser.org/test_payload/object_1
-  Property: http://raml.org/vocabularies/data#id
+  Property: http://raml.org/vocabularies/data#age
   Position: Some(LexicalInformation([(1,0)-(3,25)]))
 
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/multiple-inheritance-validation/input.raml#/web-api/end-points/%2Fresource/get/200/application/json/schema_validation
   Message: Object at / must be valid
   Level: Violation
   Target: http://amfparser.org/test_payload/object_1
-  Property: http://raml.org/vocabularies/data#age
+  Property: http://raml.org/vocabularies/data#id
   Position: Some(LexicalInformation([(1,0)-(3,25)]))
 
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/multiple-inheritance-validation/input.raml#/web-api/end-points/%2Fresource/get/200/application/json/schema/property/id/scalar/id_validation_range/prop
