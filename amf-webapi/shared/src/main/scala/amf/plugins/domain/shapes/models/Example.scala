@@ -1,7 +1,7 @@
 package amf.plugins.domain.shapes.models
 
 import amf.core.metamodel.Obj
-import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
+import amf.core.model.domain.{DataNode, DomainElement, Linkable, NamedDomainElement}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.ExampleModel._
@@ -15,17 +15,19 @@ case class Example(fields: Fields, annotations: Annotations)
     with Linkable
     with NamedDomainElement {
 
-  def name: String        = fields(Name)
-  def displayName: String = fields(DisplayName)
-  def description: String = fields(Description)
-  def value: String       = fields(ExampleModel.Value)
-  def strict: Boolean     = fields(Strict)
-  def mediaType: String   = fields(MediaType)
+  def name: String              = fields(Name)
+  def displayName: String       = fields(DisplayName)
+  def description: String       = fields(Description)
+  def value: String             = fields(ExampleModel.Value)
+  def structuredValue: DataNode = fields(ExampleModel.StructuredValue)
+  def strict: Boolean           = fields(Strict)
+  def mediaType: String         = fields(MediaType)
 
   def withName(name: String): this.type               = set(Name, name)
   def withDisplayName(displayName: String): this.type = set(DisplayName, displayName)
   def withDescription(description: String): this.type = set(Description, description)
   def withValue(value: String): this.type             = set(ExampleModel.Value, value)
+  def withStructuredValue(value: DataNode): this.type = set(ExampleModel.StructuredValue, value)
   def withStrict(strict: Boolean): this.type          = set(Strict, strict)
   def withMediaType(mediaType: String): this.type     = set(MediaType, mediaType)
 

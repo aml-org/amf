@@ -20,7 +20,7 @@ trait ShapeModel extends DomainElementModel with LinkableElementModel with KeyFi
 
   val Description = Field(Str, Schema + "description")
 
-  val Default = Field(Str, Shacl + "defaultValue")
+  val Default = Field(DataNodeModel, Shacl + "defaultValue")
 
   val Values = Field(SortedArray(Str), Shacl + "in")
 
@@ -39,7 +39,7 @@ trait ShapeModel extends DomainElementModel with LinkableElementModel with KeyFi
 
   // RAML user-defined facets: definitions and values
   lazy val CustomShapePropertyDefinitions = Field(Array(PropertyShapeModel), Shapes + "customShapePropertyDefinitions")
-  lazy val CustomShapeProperties = Field(Array(ShapeExtensionModel), Shapes + "customShapeProperties")
+  lazy val CustomShapeProperties          = Field(Array(ShapeExtensionModel), Shapes + "customShapeProperties")
   //
 
 }

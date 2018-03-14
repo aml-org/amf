@@ -11,19 +11,27 @@ class AnyShape(val fields: Fields, val annotations: Annotations) extends Shape w
 
   override def adopted(parent: String): this.type = withId(parent + "/any/" + name)
 
-  def documentation: CreativeWork                = fields(Documentation)
-  def xmlSerialization: XMLSerializer            = fields(XMLSerialization)
-  def examples: Seq[Example]                     = fields(Examples)
+  def documentation: CreativeWork     = fields(Documentation)
+  def xmlSerialization: XMLSerializer = fields(XMLSerialization)
+  def examples: Seq[Example]          = fields(Examples)
 
-  def withDocumentation(documentation: CreativeWork): this.type             = set(Documentation, documentation)
-  def withXMLSerialization(xmlSerialization: XMLSerializer): this.type      = set(XMLSerialization, xmlSerialization)
-  def withExamples(examples: Seq[Example]): this.type                       = setArray(Examples, examples)
+  def withDocumentation(documentation: CreativeWork): this.type        = set(Documentation, documentation)
+  def withXMLSerialization(xmlSerialization: XMLSerializer): this.type = set(XMLSerialization, xmlSerialization)
+  def withExamples(examples: Seq[Example]): this.type                  = setArray(Examples, examples)
+
+  def withExample(name: Option[String]): Example = {
+    val example = Example()
+    name.foreach { example.withName }
+    add(Examples, example)
+    example
+  }
 
   override def linkCopy(): AnyShape = AnyShape().withId(id)
 
   override def meta: Obj = AnyShapeModel
 
-  def copyAnyShape(fields: Fields = fields, annotations: Annotations = annotations) = AnyShape(fields, annotations).withId(id)
+  def copyAnyShape(fields: Fields = fields, annotations: Annotations = annotations) =
+    AnyShape(fields, annotations).withId(id)
 }
 
 object AnyShape {

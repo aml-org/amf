@@ -13,6 +13,7 @@ import amf.plugins.document.webapi.parser.RamlFragment
 import amf.plugins.document.webapi.parser.RamlFragmentHeader._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.RamlNamedExampleParser
+import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import org.yaml.model.YMap
 
@@ -143,7 +144,14 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
       val entries      = map.entries
       val namedExample = NamedExampleFragment().adopted(root.location)
 
-      namedExample.withEncodes(RamlNamedExampleParser(entries.head).parse())
+      val producer = (name: Option[String]) => {
+        val example = Example()
+        name.foreach(example.withName)
+        namedExample.withEncodes(example)
+        example
+      }
+
+      namedExample.withEncodes(RamlNamedExampleParser(entries.head, producer).parse())
     }
   }
 

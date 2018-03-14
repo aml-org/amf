@@ -1,18 +1,16 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.SynthesizedField
-import amf.core.emitter._
 import amf.core.emitter.BaseEmitters._
+import amf.core.emitter._
 import amf.core.model.document.BaseUnit
-import amf.core.parser.{FieldEntry, Position, _}
-import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
-import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
+import amf.core.parser.{FieldEntry, Position}
+import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, SpecEmitterContext}
+import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, DataNodeEmitter}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.ExampleModel._
 import amf.plugins.domain.shapes.models.Example
 import org.yaml.model.YDocument._
-import org.yaml.model._
-import org.yaml.parser.YamlParser
 
 import scala.collection.mutable.ListBuffer
 
@@ -31,7 +29,7 @@ case class OasResponseExamplesEmitter(key: String, f: FieldEntry, ordering: Spec
 
 case class OasResponseExampleEmitter(example: Example, ordering: SpecOrdering) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    b.entry(example.mediaType, StringToAstEmitter(example.value).emit(_))
+    b.entry(example.mediaType, DataNodeEmitter(example.structuredValue, ordering).emit(_))
   }
 
   override def position(): Position = pos(example.annotations)
@@ -132,17 +130,18 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
         fs.entry(ExampleModel.Strict).foreach(f => results += RamlScalarEmitter("strict", f))
       }
 
-      fs.entry(ExampleModel.Value)
+      fs.entry(ExampleModel.StructuredValue)
         .foreach(f => {
           results += EntryPartEmitter("value",
-                                      StringToAstEmitter(f.value.toString),
+                                      DataNodeEmitter(example.structuredValue, ordering),
                                       position = pos(f.value.annotations))
         })
 
       results ++= AnnotationsEmitter(example, ordering).emitters
 
     } else {
-      fs.entry(ExampleModel.Value).foreach(f => results += StringToAstEmitter(f.value.toString))
+      fs.entry(ExampleModel.StructuredValue)
+        .foreach(f => results += DataNodeEmitter(example.structuredValue, ordering))
     }
 
     results
@@ -155,30 +154,4 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
   }
 
   override def position(): Position = pos(example.annotations)
-}
-
-case class StringToAstEmitter(value: String) extends PartEmitter {
-  override def emit(b: PartBuilder): Unit = {
-    val parts = YamlParser(value).withIncludeTag("!include").parse()
-    parts.collect({ case d: YDocument => d }).headOption.map(_.node) match {
-      case Some(node) => emitNode(node, b)
-      case _          => throw new IllegalStateException(s"Could not parse string example $value")
-    }
-  }
-  private def emitNode(node: YNode, b: PartBuilder): Unit = {
-
-    node.tagType match {
-      case YType.Map =>
-        val map = node.as[YMap]
-        b.obj(e => map.entries.foreach(entry => e.entry(entry.key.as[String], p => emitNode(entry.value, p))))
-      case YType.Seq =>
-        val seq = node.as[Seq[YNode]]
-        b.list(p => seq.foreach(emitNode(_, p)))
-      case _ =>
-        val scalar = node.as[YScalar]
-        b += scalar.text
-    }
-  }
-
-  override def position(): Position = Position.ZERO
 }

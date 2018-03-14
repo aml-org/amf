@@ -39,12 +39,13 @@ object AMFDomainRegistry {
       .headOption
 
   val annotationsRegistry: mutable.HashMap[String, AnnotationGraphLoader] = mutable.HashMap(
-    "lexical"            -> LexicalInformation,
-    "source-vendor"      -> SourceVendor,
-    "single-value-array" -> SingleValueArray,
-    "aliases-array"      -> Aliases,
-    "synthesized-field"  -> SynthesizedField,
-    "default-node"       -> DefaultNode
+    "lexical"              -> LexicalInformation,
+    "source-vendor"        -> SourceVendor,
+    "single-value-array"   -> SingleValueArray,
+    "aliases-array"        -> Aliases,
+    "synthesized-field"    -> SynthesizedField,
+    "default-node"         -> DefaultNode,
+    "data-node-properties" -> DataNodePropertiesAnnotations
   )
   val metadataRegistry: mutable.HashMap[String, Obj] = mutable.HashMap(
     defaultIri(DocumentModel)              -> DocumentModel,

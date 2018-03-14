@@ -4,7 +4,7 @@ import amf.core.annotations.ExplicitField
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain.{AmfArray, AmfScalar, Shape}
+import amf.core.model.domain.{AmfArray, AmfScalar, DataNode, Shape}
 import amf.core.parser.{Annotations, _}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, Inferred}
@@ -12,14 +12,13 @@ import amf.plugins.document.webapi.contexts.{OasWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
-import amf.plugins.document.webapi.parser.spec.domain.RamlExamplesParser
+import amf.plugins.document.webapi.parser.spec.domain.{NodeDataNodeParser, RamlExamplesParser}
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
-import amf.plugins.domain.shapes.models.{Example, _}
+import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import org.yaml.model._
-import org.yaml.render.YamlRender
 
 import scala.collection.mutable
 
@@ -37,7 +36,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     implicit val ctx: OasWebApiContext)
     extends OasSpecParser {
 
-  def parse(): Option[Shape] = {
+  def parse(): Option[AnyShape] = {
 
     val parsedShape = detect(oasNode) match {
       case UnionType                   => Some(parseUnionType())
@@ -50,7 +49,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     }
 
     parsedShape match {
-      case Some(shape: Shape) =>
+      case Some(shape: AnyShape) =>
         ctx.closedShape(shape.id, map, oasNode)
         Some(shape)
       case None => None
@@ -88,7 +87,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       })
   }
 
-  private def parseScalarType(typeDef: TypeDef): Shape = {
+  private def parseScalarType(typeDef: TypeDef): AnyShape = {
     val parsed = typeDef match {
       case NilType => NilShape(ast).withName(name)
       case FileType =>
@@ -102,24 +101,24 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     parsed
   }
 
-  private def parseAnyType(): Shape = {
+  private def parseAnyType(): AnyShape = {
     val shape = AnyShape(ast).withName(name)
     adopt(shape)
-    AnyShapeParser(shape, map).parse()
+    AnyTypeShapeParser(shape, map).parse()
   }
 
-  private def parseArrayType(): Shape = {
+  private def parseArrayType(): AnyShape = {
     DataArrangementParser(name, ast, map, (shape: Shape) => adopt(shape)).parse()
   }
 
-  private def parseLinkType(): Option[Shape] = {
+  private def parseLinkType(): Option[AnyShape] = {
     map
       .key("$ref")
       .map(e => OasDefinitions.stripDefinitionsPrefix(e.value))
       .map(text =>
         ctx.declarations.findType(text, SearchScope.All) match {
           case Some(s) =>
-            val copied = s.link(text, Annotations(ast)).asInstanceOf[Shape].withName(name)
+            val copied = s.link(text, Annotations(ast)).asInstanceOf[AnyShape].withName(name)
             adopt(copied)
             copied
           case None =>
@@ -131,7 +130,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       })
   }
 
-  private def parseObjectType(): Shape = {
+  private def parseObjectType(): AnyShape = {
     if (map.key("x-schema").isDefined) {
       val shape = SchemaShape(ast).withName(name)
       adopt(shape)
@@ -143,7 +142,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     }
   }
 
-  private def parseUnionType(): Shape = {
+  private def parseUnionType(): UnionShape = {
     UnionShapeParser(map, name).parse()
   }
 
@@ -173,7 +172,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     }
   }
   case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap)
-      extends ShapeParser()
+      extends AnyShapeParser()
       with CommonScalarParsingLogic {
     override def parse(): ScalarShape = {
       super.parse()
@@ -189,7 +188,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     }
   }
 
-  case class UnionShapeParser(override val map: YMap, name: String) extends ShapeParser() {
+  case class UnionShapeParser(override val map: YMap, name: String) extends AnyShapeParser() {
 
     override val shape: UnionShape = UnionShape(Annotations(map)).withName(name)
 
@@ -236,7 +235,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       }
     }
 
-    def parse(): Shape = {
+    def parse(): AnyShape = {
       lookAhead() match {
         case None =>
           val arrayShape = ArrayShape()
@@ -250,9 +249,9 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
   }
 
-  case class TupleShapeParser(shape: TupleShape, map: YMap, adopt: Shape => Unit) extends ShapeParser() {
+  case class TupleShapeParser(shape: TupleShape, map: YMap, adopt: Shape => Unit) extends AnyShapeParser() {
 
-    override def parse(): Shape = {
+    override def parse(): AnyShape = {
       adopt(shape)
 
       super.parse()
@@ -281,8 +280,8 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     }
   }
 
-  case class ArrayShapeParser(shape: ArrayShape, map: YMap, adopt: Shape => Unit) extends ShapeParser() {
-    override def parse(): Shape = {
+  case class ArrayShapeParser(shape: ArrayShape, map: YMap, adopt: Shape => Unit) extends AnyShapeParser() {
+    override def parse(): AnyShape = {
       adopt(shape)
 
       super.parse()
@@ -308,12 +307,12 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
         item match {
           case array: ArrayShape   => shape.withItems(array).toMatrixShape
           case matrix: MatrixShape => shape.withItems(matrix).toMatrixShape
-          case other: Shape        => shape.withItems(other)
+          case other: AnyShape     => shape.withItems(other)
         }
       }
 
       finalShape match {
-        case Some(parsed: Shape) => parsed
+        case Some(parsed: AnyShape) => parsed
         case None =>
           val arrayShape = ArrayShape()
           adopt(arrayShape)
@@ -323,9 +322,18 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     }
   }
 
-  case class AnyShapeParser(shape: AnyShape, map: YMap) extends ShapeParser() {
+  case class AnyTypeShapeParser(shape: AnyShape, map: YMap) extends AnyShapeParser {}
+
+  abstract class AnyShapeParser() extends ShapeParser() {
+
+    override val shape: AnyShape
+
     override def parse(): AnyShape = {
       super.parse()
+
+      val examples: Seq[Example] = RamlExamplesParser(map, "example", "x-examples", shape.withExample).parse()
+      if (examples.nonEmpty)
+        shape.setArray(AnyShapeModel.Examples, examples)
 
       map.key("type", _ => shape.add(ExplicitField())) // todo lexical of type?? new annotation?
 
@@ -333,7 +341,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     }
   }
 
-  case class NodeShapeParser(shape: NodeShape, map: YMap) extends ShapeParser() {
+  case class NodeShapeParser(shape: NodeShape, map: YMap) extends AnyShapeParser() {
     override def parse(): NodeShape = {
 
       super.parse()
@@ -458,20 +466,9 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       map.key("title", ShapeModel.DisplayName in shape)
       map.key("description", ShapeModel.Description in shape)
 
-      map.key(
-        "default",
-        entry => {
-          entry.value.tagType match {
-            case YType.Map | YType.Seq =>
-              shape.set(ShapeModel.Default,
-                        AmfScalar(YamlRender.render(entry.value), Annotations(entry.value)),
-                        Annotations(entry))
-            case _ =>
-              val value = ScalarNode(entry.value)
-              shape.set(ShapeModel.Default, value.string(), Annotations(entry))
-          }
-        }
-      )
+      val defaultParser: ((YNode) => DataNode) = (node: YNode) => NodeDataNodeParser(node, shape.id).parse()._2
+
+      map.key("default", ShapeModel.Default in shape using defaultParser)
 
       map.key("enum", ShapeModel.Values in shape)
       map.key("externalDocs", AnyShapeModel.Documentation in shape using OasCreativeWorkParser.parse)
@@ -485,10 +482,6 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
         }
       )
 
-      val examples: Seq[Example] = RamlExamplesParser(map, "example", "x-examples").parse()
-      if (examples.nonEmpty)
-        shape.setArray(AnyShapeModel.Examples, examples)
-
       // normal annotations
       AnnotationParser(shape, map).parse()
 
@@ -497,9 +490,9 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
   }
 
   case class FileShapeParser(typeDef: TypeDef, shape: FileShape, map: YMap)
-      extends ShapeParser()
+      extends AnyShapeParser()
       with CommonScalarParsingLogic {
-    override def parse(): Shape = {
+    override def parse(): FileShape = {
       super.parse()
 
       parseScalar(map, shape)
@@ -510,10 +503,10 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     }
   }
 
-  case class SchemaShapeParser(shape: SchemaShape, map: YMap) extends ShapeParser() with CommonScalarParsingLogic {
+  case class SchemaShapeParser(shape: SchemaShape, map: YMap) extends AnyShapeParser() with CommonScalarParsingLogic {
     super.parse()
 
-    override def parse(): Shape = {
+    override def parse(): AnyShape = {
       map.key(
         "x-schema", { entry =>
           entry.value.to[String] match {

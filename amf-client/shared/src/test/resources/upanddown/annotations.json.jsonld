@@ -74,6 +74,42 @@
           "@type": [
             "http://raml.org/vocabularies/data#Object"
           ],
+          "http://raml.org/vocabularies/data#a": [
+            {
+              "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations.json#/web-api/foo/object_1/scalar_2",
+              "@type": [
+                "http://raml.org/vocabularies/data#Scalar"
+              ],
+              "http://raml.org/vocabularies/data#value": [
+                {
+                  "@value": "is",
+                  "@type": "http://www.w3.org/2001/XMLSchema#string"
+                }
+              ],
+              "http://raml.org/vocabularies/document-source-maps#sources": [
+                {
+                  "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations.json#/web-api/foo/object_1/scalar_2/source-map",
+                  "@type": [
+                    "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                  ],
+                  "http://raml.org/vocabularies/document-source-maps#lexical": [
+                    {
+                      "http://raml.org/vocabularies/document-source-maps#element": [
+                        {
+                          "@value": "file://amf-client/shared/src/test/resources/upanddown/annotations.json#/web-api/foo/object_1/scalar_2"
+                        }
+                      ],
+                      "http://raml.org/vocabularies/document-source-maps#value": [
+                        {
+                          "@value": "[(9,9)-(9,13)]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
           "http://raml.org/vocabularies/data#b": [
             {
               "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations.json#/web-api/foo/object_1/array_3",
@@ -175,47 +211,25 @@
               ]
             }
           ],
-          "http://raml.org/vocabularies/data#a": [
-            {
-              "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations.json#/web-api/foo/object_1/scalar_2",
-              "@type": [
-                "http://raml.org/vocabularies/data#Scalar"
-              ],
-              "http://raml.org/vocabularies/data#value": [
-                {
-                  "@value": "is",
-                  "@type": "http://www.w3.org/2001/XMLSchema#string"
-                }
-              ],
-              "http://raml.org/vocabularies/document-source-maps#sources": [
-                {
-                  "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations.json#/web-api/foo/object_1/scalar_2/source-map",
-                  "@type": [
-                    "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                  ],
-                  "http://raml.org/vocabularies/document-source-maps#lexical": [
-                    {
-                      "http://raml.org/vocabularies/document-source-maps#element": [
-                        {
-                          "@value": "file://amf-client/shared/src/test/resources/upanddown/annotations.json#/web-api/foo/object_1/scalar_2"
-                        }
-                      ],
-                      "http://raml.org/vocabularies/document-source-maps#value": [
-                        {
-                          "@value": "[(9,9)-(9,13)]"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
           "http://raml.org/vocabularies/document-source-maps#sources": [
             {
               "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations.json#/web-api/foo/object_1/source-map",
               "@type": [
                 "http://raml.org/vocabularies/document-source-maps#SourceMap"
+              ],
+              "http://raml.org/vocabularies/document-source-maps#data-node-properties": [
+                {
+                  "http://raml.org/vocabularies/document-source-maps#element": [
+                    {
+                      "@value": "file://amf-client/shared/src/test/resources/upanddown/annotations.json#/web-api/foo/object_1"
+                    }
+                  ],
+                  "http://raml.org/vocabularies/document-source-maps#value": [
+                    {
+                      "@value": "b->[(10,4)-(13,5)]#a->[(9,4)-(9,13)]"
+                    }
+                  ]
+                }
               ],
               "http://raml.org/vocabularies/document-source-maps#lexical": [
                 {

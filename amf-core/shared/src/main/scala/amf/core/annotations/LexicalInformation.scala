@@ -11,6 +11,8 @@ case class LexicalInformation(range: Range) extends SerializableAnnotation with 
 
 object LexicalInformation extends AnnotationGraphLoader {
   override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    LexicalInformation(Range.apply(annotatedValue))
+    LexicalInformation.apply(annotatedValue)
   }
+
+  def apply(range: String): LexicalInformation = new LexicalInformation(Range.apply(range))
 }

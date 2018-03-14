@@ -26,10 +26,10 @@ documentation:
     description: get something
     queryParameters:
       order:
-        default: asc
         maxLength: 4
         example: desc
         type: string
+        default: asc
     body: {}
     baseUriParameters:
       param1:
