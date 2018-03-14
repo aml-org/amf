@@ -176,6 +176,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) ext
     )
 
     AnnotationParser(api, map).parse()
+    AnnotationParser(api, map).parseOrphanNode("paths")
 
     ctx.closedShape(api.id, map, "webApi")
 
@@ -490,6 +491,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) ext
         }
       )
 
+      AnnotationParser(operation, map).parseOrphanNode("responses")
       AnnotationParser(operation, map).parse()
 
       ctx.closedShape(operation.id, map, "operation")

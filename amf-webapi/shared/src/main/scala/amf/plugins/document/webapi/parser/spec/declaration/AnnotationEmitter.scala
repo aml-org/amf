@@ -11,6 +11,7 @@ import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmit
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.core.utils._
+import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType
 
@@ -20,7 +21,13 @@ import scala.collection.mutable.ListBuffer
   *
   */
 case class AnnotationsEmitter(element: DomainElement, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
-  def emitters: Seq[EntryEmitter] = element.customDomainProperties.map(spec.factory.annotationEmitter(_, ordering))
+  def emitters: Seq[EntryEmitter] = element.customDomainProperties
+    .filter(!_.extension.annotations.contains(classOf[OrphanOasExtension]))
+    .map(spec.factory.annotationEmitter(_, ordering))
+}
+
+case class OrphanAnnotationsEmitter(orphans: Seq[DomainExtension], ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
+  def emitters: Seq[EntryEmitter] = orphans.map(spec.factory.annotationEmitter(_, ordering))
 }
 
 case class OasAnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrdering)(

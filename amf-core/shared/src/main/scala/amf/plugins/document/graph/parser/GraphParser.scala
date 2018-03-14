@@ -206,6 +206,9 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
                 extension.withExtension(pn)
               }
 
+              val sources = retrieveSources(extension.id, map)
+              extension.annotations ++= annotations(nodes, sources, extension.id)
+
               extension
             })
         }
