@@ -750,6 +750,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
       super.parse()
 
       map.key("uniqueItems", (ArrayShapeModel.UniqueItems in shape).allowingAnnotations)
+      map.key("(collectionFormat)", ArrayShapeModel.CollectionFormat in shape)
 
       val finalShape = (for {
         itemsEntry <- map.key("items")

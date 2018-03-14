@@ -160,6 +160,7 @@ object OasSyntax extends SpecSyntax {
       "enum",
       "type",
       "items",
+      "collectionFormat",
       "allOf",
       "properties",
       "additionalProperties",

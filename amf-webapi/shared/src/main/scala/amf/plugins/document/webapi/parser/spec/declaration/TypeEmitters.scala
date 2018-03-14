@@ -654,6 +654,8 @@ case class RamlArrayShapeEmitter(array: ArrayShape, ordering: SpecOrdering, refe
 
     fs.entry(ArrayShapeModel.UniqueItems).map(f => result += RamlScalarEmitter("uniqueItems", f))
 
+    fs.entry(ArrayShapeModel.CollectionFormat).map(f => result += ValueEmitter("(collectionFormat)", f))
+
     if (result.isEmpty && typeName.isEmpty)
       result += MapEntryEmitter("type", "array")
 
@@ -828,7 +830,8 @@ case class OasTypePartEmitter(shape: Shape,
                               ordering: SpecOrdering,
                               ignored: Seq[Field] = Nil,
                               references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext)
-    extends PartEmitter {
+    extends OasTypePartCollector(shape, ordering, ignored, references)
+    with PartEmitter {
 
   override def emit(b: PartBuilder): Unit =
     emitter match {
@@ -838,9 +841,16 @@ case class OasTypePartEmitter(shape: Shape,
 
   override def position(): Position = emitters.headOption.map(_.position()).getOrElse(ZERO)
 
-  private val emitters = ordering.sorted(OasTypeEmitter(shape, ordering, ignored, references).emitters())
+}
 
-  private val emitter: Either[PartEmitter, Seq[EntryEmitter]] = emitters match {
+abstract class OasTypePartCollector(shape: Shape,
+                                    ordering: SpecOrdering,
+                                    ignored: Seq[Field],
+                                    references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext) {
+  protected val emitters: Seq[Emitter] =
+    ordering.sorted(OasTypeEmitter(shape, ordering, ignored, references).emitters())
+
+  protected val emitter: Either[PartEmitter, Seq[EntryEmitter]] = emitters match {
     case Seq(p: PartEmitter)                           => Left(p)
     case es if es.forall(_.isInstanceOf[EntryEmitter]) => Right(es.collect { case e: EntryEmitter => e })
     case other                                         => throw new Exception(s"IllegalTypeDeclarations found: $other")
@@ -973,13 +983,20 @@ case class OasArrayShapeEmitter(shape: ArrayShape, ordering: SpecOrdering, refer
 
     result += MapEntryEmitter("type", "array")
 
-    result += OasItemsShapeEmitter(shape, ordering, references)
-
     fs.entry(ArrayShapeModel.MaxItems).map(f => result += ValueEmitter("maxItems", f))
 
     fs.entry(ArrayShapeModel.MinItems).map(f => result += ValueEmitter("minItems", f))
 
     fs.entry(ArrayShapeModel.UniqueItems).map(f => result += ValueEmitter("uniqueItems", f))
+
+    fs.entry(ArrayShapeModel.CollectionFormat) match { // What happens if there is an array of an array with collectionFormat?
+      case Some(f) if f.value.annotations.contains(classOf[CollectionFormatFromItems]) =>
+        result += OasItemsShapeEmitter(shape, ordering, references, Some(ValueEmitter("collectionFormat", f)))
+      case Some(f) =>
+        result += OasItemsShapeEmitter(shape, ordering, references, None) += ValueEmitter("collectionFormat", f)
+      case None =>
+        result += OasItemsShapeEmitter(shape, ordering, references, None)
+    }
 
     result ++= AnnotationsEmitter(shape, ordering).emitters
 
@@ -1008,11 +1025,23 @@ case class OasSchemaShapeEmitter(shape: SchemaShape, ordering: SpecOrdering)(imp
   }
 }
 
-case class OasItemsShapeEmitter(array: ArrayShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasSpecEmitterContext)
-    extends EntryEmitter {
-  override def emit(b: EntryBuilder): Unit =
-    b.entry("items", OasTypePartEmitter(array.items, ordering, references = references).emit(_))
+case class OasItemsShapeEmitter(array: ArrayShape,
+                                ordering: SpecOrdering,
+                                references: Seq[BaseUnit],
+                                additionalEntry: Option[ValueEmitter])(implicit spec: OasSpecEmitterContext)
+    extends OasTypePartCollector(array.items, ordering, Nil, references)
+    with EntryEmitter {
+
+  def emit(b: EntryBuilder): Unit = {
+    b.entry("items", b => emitPart(b))
+  }
+
+  def emitPart(part: PartBuilder): Unit = {
+    emitter match {
+      case Left(p)        => p.emit(part) // What happens if additionalProperty is defined and is not an Seq?
+      case Right(entries) => part.obj(traverse(entries ++ additionalEntry, _))
+    }
+  }
 
   override def position(): Position = {
     pos(array.fields.getValue(ArrayShapeModel.Items).annotations)

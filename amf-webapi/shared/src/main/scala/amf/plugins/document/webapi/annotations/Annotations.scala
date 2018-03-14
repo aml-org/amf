@@ -65,6 +65,8 @@ case class ReferencedElement(parsedUrl: String, referenced: DomainElement) exten
 
 case class Inferred() extends Annotation
 
+case class CollectionFormatFromItems() extends Annotation
+
 object WebApiAnnotations {
 
   private def sourceVendor(value: String, objects: Map[String, AmfElement]) = {

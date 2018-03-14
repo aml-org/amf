@@ -7,7 +7,7 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, AmfScalar, Shape}
 import amf.core.parser.{Annotations, _}
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.webapi.annotations.Inferred
+import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, Inferred}
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
@@ -290,6 +290,15 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       map.key("minItems", ArrayShapeModel.MinItems in shape)
       map.key("maxItems", ArrayShapeModel.MaxItems in shape)
       map.key("uniqueItems", ArrayShapeModel.UniqueItems in shape)
+      map.key("collectionFormat", ArrayShapeModel.CollectionFormat in shape)
+
+      map
+        .key("items")
+        .flatMap(_.value.toOption[YMap])
+        .foreach(
+          _.key("collectionFormat",
+                (ArrayShapeModel.CollectionFormat in shape)
+                  .withAnnotation(CollectionFormatFromItems())))
 
       val finalShape = for {
         entry <- map.key("items")
