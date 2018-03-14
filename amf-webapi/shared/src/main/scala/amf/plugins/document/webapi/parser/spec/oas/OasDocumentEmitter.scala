@@ -7,12 +7,11 @@ import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document._
 import amf.core.model.domain._
-import amf.core.model.domain.extensions.CustomDomainProperty
+import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{EmptyFutureDeclarations, FieldEntry, Fields, Position}
 import amf.core.remote.{Oas, Vendor}
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.{BaseSpecEmitter, OasSpecEmitterContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Overlay}
@@ -21,10 +20,11 @@ import amf.plugins.document.webapi.parser.spec.common.IdCounter
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.shapes.models._
+import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
 import org.yaml.model.YDocument
-import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
+import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -105,9 +105,13 @@ case class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: Oa
 
       fs.entry(WebApiModel.Documentations).map(f => result ++= UserDocumentationsEmitter(f, ordering).emitters())
 
+      // Annotations collected from the "paths" element that has no direct representation in any model element
+      // They will be passed to the EndpointsEmitter
+      val orphanAnnotations = api.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
+
       fs.entry(WebApiModel.EndPoints)
         .fold(result += EntryPartEmitter("paths", EmptyMapEmitter()))(f =>
-          result += EndpointsEmitter("paths", f, ordering, references))
+          result += EndpointsEmitter("paths", f, ordering, references, orphanAnnotations))
 
       fs.entry(WebApiModel.Security).map(f => result += ParametrizedSecuritiesSchemeEmitter("security", f, ordering))
 
@@ -247,9 +251,12 @@ case class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: Oa
             fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter("x-", f, ordering).emitters())
             Option(operation.request).foreach(req =>
               result ++= requestEmitters(req, ordering, endpointPayloadEmitted, references))
+            // Annotations collected from the "responses" element that has no direct representation in any model element
+            // They will be passed to the ResponsesEmitter
+            val orphanAnnotations = operation.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
             fs.entry(OperationModel.Responses)
               .fold(result += EntryPartEmitter("responses", EmptyMapEmitter()))(f =>
-                result += ResponsesEmitter("responses", f, ordering, references))
+                result += ResponsesEmitter("responses", f, ordering, references, orphanAnnotations))
 
             fs.entry(OperationModel.Security)
               .map(f => result += ParametrizedSecuritiesSchemeEmitter("security", f, ordering))
@@ -303,14 +310,15 @@ case class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: Oa
     }
   }
 
-  case class ResponsesEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])
+  case class ResponsesEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit], orphanAnnotations: Seq[DomainExtension])
       extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
+      val emitters = responses(f, ordering) ++ responsesElementsAnnotations()
       sourceOr(
         f.value.annotations,
         b.entry(
           key,
-          _.obj(traverse(responses(f, ordering), _))
+          _.obj(traverse(emitters, _))
         )
       )
     }
@@ -319,19 +327,29 @@ case class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: Oa
       ordering.sorted(f.array.values.map(e => OasResponseEmitter(e.asInstanceOf[Response], ordering, references)))
     }
 
+    private def responsesElementsAnnotations(): Seq[EntryEmitter] = {
+      OrphanAnnotationsEmitter(orphanAnnotations, ordering).emitters
+    }
+
+
     override def position(): Position = pos(f.value.annotations)
   }
 
-  case class EndpointsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])
+  case class EndpointsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit], orphanAnnotations: Seq[DomainExtension])
       extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
+      val emitters = endpoints(f, ordering, references) ++ pathsElementAnnotations()
       sourceOr(
         f.value.annotations,
         b.entry(
           key,
-          _.obj(traverse(endpoints(f, ordering, references), _))
+          _.obj(traverse(emitters, _))
         )
       )
+    }
+
+    private def pathsElementAnnotations(): Seq[EntryEmitter] = {
+      OrphanAnnotationsEmitter(orphanAnnotations, ordering).emitters
     }
 
     private def endpoints(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {

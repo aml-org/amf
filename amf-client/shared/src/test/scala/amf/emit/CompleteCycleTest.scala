@@ -32,6 +32,14 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("full-example.json", "full-example.json.jsonld", OasJsonHint, Amf)
   }
 
+  test("Orphan extensions oas to amf test") {
+    cycle("orphan_extensions.json", "orphan_extensions.jsonld", OasJsonHint, Amf)
+  }
+
+  test("Orphan extensions amf to oas test") {
+    cycle("orphan_extensions.jsonld", "orphan_extensions.json", AmfJsonHint, Oas)
+  }
+
   test("Traits and resourceTypes raml to amf test") {
     cycle("traits-resource-types.raml", "traits-resource-types.raml.jsonld", RamlYamlHint, Amf)
   }
