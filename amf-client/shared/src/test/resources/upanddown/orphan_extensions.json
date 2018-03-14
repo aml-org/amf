@@ -1,0 +1,45 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test title",
+    "version": "1.1"
+  },
+  "host": "api.example.com",
+  "basePath": "/path",
+  "consumes": [
+    "application/yaml"
+  ],
+  "produces": [
+    "application/yaml"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "petstore_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://swagger.io/api/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:pets": "modify pets in your account",
+        "read:pets": "read your pets",
+        "x-scopes-extension": "hey"
+      }
+    }
+  },
+  "paths": {
+    "/levelzero": {
+      "x-displayName": "Name",
+      "get": {
+        "responses": {
+          "200": {
+            "description": "200 response"
+          },
+          "x-responses-extension": "hey"
+        }
+      }
+    },
+    "x-paths-extension": "hey"
+  }
+}
