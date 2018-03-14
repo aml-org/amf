@@ -142,6 +142,20 @@
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
+                    "http://raml.org/vocabularies/document-source-maps#data-node-properties": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/security.raml#/declarations/custom_auth/settings/default/object_1"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "custom->[(36,6)-(36,21)]"
+                          }
+                        ]
+                      }
+                    ],
                     "http://raml.org/vocabularies/document-source-maps#lexical": [
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [

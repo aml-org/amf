@@ -6,20 +6,18 @@ import amf.core.unsafe.PlatformSecrets
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
-
-
 @JSExportAll
 @JSExportTopLevel("model.domain.Shape")
 class Shape(private[amf] val shape: domain.Shape) extends DomainElement with Linkable {
 
   override private[amf] def element = shape
 
-  def name: String                    = shape.name
-  def displayName: String             = shape.displayName
-  def description: String             = shape.description
-  def defaultValue: String            = shape.default
-  def values: js.Iterable[String]     = Option(shape.values).getOrElse(Seq()).toJSArray
-  def inherits: js.Iterable[Shape]    = Option(shape.inherits).getOrElse(Seq()).map(Shape(_)).toJSArray
+  def name: String                 = shape.name
+  def displayName: String          = shape.displayName
+  def description: String          = shape.description
+  def defaultValue: DataNode       = DataNode(shape.default)
+  def values: js.Iterable[String]  = Option(shape.values).getOrElse(Seq()).toJSArray
+  def inherits: js.Iterable[Shape] = Option(shape.inherits).getOrElse(Seq()).map(Shape(_)).toJSArray
 
   def withName(name: String): this.type = {
     shape.withName(name)
@@ -33,8 +31,8 @@ class Shape(private[amf] val shape: domain.Shape) extends DomainElement with Lin
     shape.withDescription(description)
     this
   }
-  def withDefaultValue(default: String): this.type = {
-    shape.withDefault(default)
+  def withDefaultValue(default: DataNode): this.type = {
+    shape.withDefault(default.dataNode)
     this
   }
   def withValues(values: js.Iterable[String]): this.type = {

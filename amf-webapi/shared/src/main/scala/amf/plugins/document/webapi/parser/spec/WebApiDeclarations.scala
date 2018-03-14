@@ -12,7 +12,7 @@ import amf.core.parser.{
   SearchScope
 }
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations._
-import amf.plugins.domain.shapes.models.{CreativeWork, Example}
+import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
@@ -138,9 +138,9 @@ class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
       case t: Trait => t
     }
 
-  def findType(key: String, scope: SearchScope.Scope): Option[Shape] =
+  def findType(key: String, scope: SearchScope.Scope): Option[AnyShape] =
     findForType(key, _.asInstanceOf[WebApiDeclarations].shapes, scope) collect {
-      case s: Shape => s
+      case s: AnyShape => s
     }
 
   def findSecuritySchemeOrError(ast: YPart)(key: String, scope: SearchScope.Scope): SecurityScheme =

@@ -3,12 +3,11 @@ package amf.plugins.document.webapi.parser.spec.common
 import amf.core.model.document.ExternalFragment
 import amf.core.model.domain.{DataNode, LinkNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
 import amf.core.parser.{Annotations, _}
+import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import org.yaml.model._
 import org.yaml.parser.YamlParser
-import amf.core.utils._
 
-import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -94,8 +93,8 @@ case class DataNodeParser(node: YNode,
     if (linkText.contains(":")) {
       LinkNode(linkText, linkText).withId(parent.getOrElse("") + "/included")
     } else {
-      val localUrl = parent.getOrElse("#").split("#").head
-      val leftLink = if(localUrl.endsWith("/")) localUrl else s"${baseUrl(localUrl)}/"
+      val localUrl  = parent.getOrElse("#").split("#").head
+      val leftLink  = if (localUrl.endsWith("/")) localUrl else s"${baseUrl(localUrl)}/"
       val rightLink = if (linkText.startsWith("/")) linkText.drop(1) else linkText
       val finalLink = normalizeUrl(leftLink + rightLink)
       LinkNode(linkText, finalLink).withId(parent.getOrElse("") + "/included")
@@ -104,9 +103,9 @@ case class DataNodeParser(node: YNode,
 
   protected def baseUrl(url: String): String = {
     if (url.contains("://")) {
-      val protocol = url.split("://").head
-      val path = url.split("://").last
-      val remaining =  path.split("/").dropRight(1)
+      val protocol  = url.split("://").head
+      val path      = url.split("://").last
+      val remaining = path.split("/").dropRight(1)
       s"$protocol://${remaining.mkString("/")}"
     } else {
       url.split("/").dropRight(1).mkString("/")
@@ -115,9 +114,9 @@ case class DataNodeParser(node: YNode,
 
   protected def normalizeUrl(url: String): String = {
     if (url.contains("://")) {
-      val protocol = url.split("://").head
-      val path = url.split("://").last
-      val remaining =  path.split("/")
+      val protocol                  = url.split("://").head
+      val path                      = url.split("://").last
+      val remaining                 = path.split("/")
       var stack: ListBuffer[String] = new ListBuffer[String]()
       remaining.foreach {
         case "."   => // ignore
@@ -129,7 +128,6 @@ case class DataNodeParser(node: YNode,
       url
     }
   }
-
 
   protected def parseScalar(ast: YScalar, dataType: String): DataNode = {
     val node = ScalarNode(ast.text, Some((Namespace.Xsd + dataType).iri()), Annotations(ast))
@@ -160,6 +158,7 @@ case class DataNodeParser(node: YNode,
 
       val propertyNode = DataNodeParser(value, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
       node.addProperty(key.urlEncoded, propertyNode, propertyAnnotations)
+      node.lexicalPropertiesAnnotation.map(a => node.annotations += a)
     }
     node
   }

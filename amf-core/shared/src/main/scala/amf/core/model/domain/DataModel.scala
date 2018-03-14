@@ -1,10 +1,10 @@
 package amf.core.model.domain
 
-import amf.core.annotations.ScalarType
-import amf.core.metamodel.{Field, Obj}
+import amf.core.annotations.{DataNodePropertiesAnnotations, LexicalInformation, ScalarType}
 import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.domain.DataNodeModel
 import amf.core.metamodel.domain.DataNodeModel._
+import amf.core.metamodel.{Field, Obj}
 import amf.core.model.domain.templates.Variable
 import amf.core.parser.{Annotations, Fields}
 import amf.core.resolution.VariableReplacer
@@ -45,6 +45,8 @@ abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
   def cloneNode(): this.type
 
   override def meta: Obj = DataNodeModel
+
+  def lexicalPropertiesAnnotation: Option[DataNodePropertiesAnnotations] = None
 }
 
 object DataNodeOps {
@@ -68,15 +70,23 @@ object DataNodeOps {
   */
 class ObjectNode(override val fields: Fields, val annotations: Annotations) extends DataNode(annotations) {
 
-  val properties: mutable.Map[String, DataNode]             = mutable.HashMap()
-  val propertyAnnotations: mutable.Map[String, Annotations] = mutable.HashMap()
+  val properties: mutable.Map[String, DataNode] = mutable.HashMap()
+  val propertyAnnotations: mutable.Map[String, Annotations] =
+    annotations.find(classOf[DataNodePropertiesAnnotations]) match {
+      case Some(ann) => mutable.HashMap() ++ ann.properties.map(t => t._1 -> Annotations(Seq(t._2)))
+      case _         => mutable.HashMap()
+    }
 
   def addProperty(propertyOrUri: String, objectValue: DataNode, annotations: Annotations = Annotations()): this.type = {
     val property = ensurePlainProperty(propertyOrUri)
     objectValue.adopted(this.id)
 
     properties += property -> objectValue
-    propertyAnnotations.update(property, annotations)
+    propertyAnnotations.get(property) match {
+      case Some(ann) => annotations.foreach(a => if (!ann.contains(a.getClass)) ann += a)
+      case None      => propertyAnnotations.update(property, annotations)
+    }
+
     this
   }
 
@@ -88,7 +98,7 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
     }
 
   override def dynamicFields: List[Field] =
-    this.properties.keys
+    this.properties.keys.toSeq.sorted
       .map({ p =>
         Field(DataNodeModel, Namespace.Data + p)
       })
@@ -127,6 +137,13 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
     }
 
     cloned.asInstanceOf[this.type]
+  }
+
+  override def lexicalPropertiesAnnotation: Option[DataNodePropertiesAnnotations] = {
+    val stringToInformation = propertyAnnotations.flatMap {
+      case (key, ann) => ann.find(classOf[LexicalInformation]).map(l => (key, l))
+    }
+    if (stringToInformation.nonEmpty) Some(DataNodePropertiesAnnotations(stringToInformation.toMap)) else None
   }
 
 }

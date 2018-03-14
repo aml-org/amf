@@ -6,15 +6,17 @@ import amf.core.unsafe.PlatformSecrets
 
 import scala.collection.JavaConverters._
 
+abstract class Shape(private[amf] val shape: domain.Shape)
+    extends DomainElement
+    with Linkable
+    with NamedDomainElement {
 
-abstract class Shape(private[amf] val shape: domain.Shape) extends DomainElement with Linkable with NamedDomainElement {
-
-  def name: String                       = shape.name
-  def displayName: String                = shape.displayName
-  def description: String                = shape.description
-  def defaultValue: String               = shape.default
-  def values: java.util.List[String]     = Option(shape.values).getOrElse(Nil).asJava
-  def inherits: java.util.List[Shape]    = Option(shape.inherits).getOrElse(Nil).map(platform.wrap[Shape](_)).asJava
+  def name: String                    = shape.name
+  def displayName: String             = shape.displayName
+  def description: String             = shape.description
+  def defaultValue: DataNode          = DataNode(shape.default)
+  def values: java.util.List[String]  = Option(shape.values).getOrElse(Nil).asJava
+  def inherits: java.util.List[Shape] = Option(shape.inherits).getOrElse(Nil).map(platform.wrap[Shape](_)).asJava
 
   def withName(name: String): this.type = {
     shape.withName(name)
@@ -28,8 +30,8 @@ abstract class Shape(private[amf] val shape: domain.Shape) extends DomainElement
     shape.withDescription(description)
     this
   }
-  def withDefaultValue(default: String): this.type = {
-    shape.withDefault(default)
+  def withDefaultValue(default: DataNode): this.type = {
+    shape.withDefault(default.dataNode)
     this
   }
   def withValues(values: java.util.List[String]): this.type = {
@@ -44,6 +46,6 @@ abstract class Shape(private[amf] val shape: domain.Shape) extends DomainElement
 
 }
 
-object Shape extends PlatformSecrets{
+object Shape extends PlatformSecrets {
   def apply(shape: domain.Shape): Shape = platform.wrap[Shape](shape)
 }

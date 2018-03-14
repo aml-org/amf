@@ -74,6 +74,7 @@ types:
         type: integer
         format: int32
       history:
+        type: array
         items: Activity
   Product:
     type: object
@@ -123,6 +124,7 @@ protocols:
       200:
         description: An array of products
         body:
+          type: array
           items: Product
       200:
         description: Unexpected error
@@ -164,6 +166,7 @@ protocols:
       200:
         description: An array of price estimates by product
         body:
+          type: array
           items: PriceEstimate
       200:
         description: Unexpected error
@@ -194,6 +197,7 @@ protocols:
       200:
         description: An array of products
         body:
+          type: array
           items: Product
       200:
         description: Unexpected error
