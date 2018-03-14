@@ -252,9 +252,6 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
           val scopeMap = entry.value.as[YMap]
           val scopes =
             scopeMap.entries.filterNot(entry => isOasAnnotation(entry.key)).map(parseScope)
-
-          AnnotationParser(scheme, scopeMap).parse()
-
           settings.setArray(OAuth2SettingsModel.Scopes, scopes, Annotations(entry))
         }
       )
@@ -269,6 +266,8 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
           dynamicSettings(xSettings, settings, "authorizationGrants")
         }
       )
+
+      AnnotationParser(settings, map).parseOrphanNode("scopes")
 
       settings
     }

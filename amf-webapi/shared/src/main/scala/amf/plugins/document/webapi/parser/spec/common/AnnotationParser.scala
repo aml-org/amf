@@ -6,12 +6,25 @@ import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser.parseExtensions
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.resolveAnnotation
+import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import org.yaml.model._
 
 case class AnnotationParser(element: DomainElement, map: YMap)(implicit val ctx: WebApiContext) {
   def parse(): Unit = {
     val extensions = parseExtensions(element.id, map)
-    if (extensions.nonEmpty) element.withCustomDomainProperties(extensions)
+    val oldExtensions = Option(element.customDomainProperties).getOrElse(Nil)
+    if (extensions.nonEmpty) element.withCustomDomainProperties(oldExtensions ++ extensions)
+  }
+
+  def parseOrphanNode(orphanNodeName: String) = {
+    map.key(orphanNodeName) match {
+      case Some(orphanMapEntry) if orphanMapEntry.value.tagType == YType.Map =>
+        val extensions = parseExtensions(element.id, orphanMapEntry.value.as[YMap])
+        extensions.foreach { extension => Option(extension.extension).foreach(_.annotations += OrphanOasExtension(orphanNodeName)) }
+        val oldExtensions = Option(element.customDomainProperties).getOrElse(Nil)
+        if (extensions.nonEmpty) element.withCustomDomainProperties(oldExtensions ++ extensions)
+      case _ => // ignore
+    }
   }
 }
 

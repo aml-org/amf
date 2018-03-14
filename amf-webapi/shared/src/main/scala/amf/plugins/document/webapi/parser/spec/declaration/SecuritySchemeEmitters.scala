@@ -4,13 +4,9 @@ import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DataNode
+import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.{FieldEntry, Fields, Position}
-import amf.plugins.document.webapi.contexts.{
-  OasSpecEmitterContext,
-  RamlScalarEmitter,
-  RamlSpecEmitterContext,
-  SpecEmitterContext
-}
+import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.oas.{OasSecuritySchemeType, OasSecuritySchemeTypeMapping}
 import amf.plugins.domain.shapes.models.AnyShape
@@ -18,6 +14,7 @@ import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import amf.plugins.document.webapi.parser.spec._
+import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 
 import scala.collection.mutable.ListBuffer
 
@@ -306,7 +303,7 @@ case class RamlOAuth1SettingsEmitters(o1: OAuth1Settings, ordering: SpecOrdering
   }
 }
 
-case class OasOAuth2SettingsEmitters(settings: Settings, ordering: SpecOrdering) {
+case class OasOAuth2SettingsEmitters(settings: Settings, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
   def emitters(): Seq[EntryEmitter] = {
     val fs        = settings.fields
     val externals = ListBuffer[EntryEmitter]()
@@ -317,8 +314,12 @@ case class OasOAuth2SettingsEmitters(settings: Settings, ordering: SpecOrdering)
 
     fs.entry(OAuth2SettingsModel.Flow).map(f => externals += ValueEmitter("flow", f))
 
+    // Annotations collected from the "paths" element that has no direct representation in any model element
+    // They will be passed to the EndpointsEmitter
+    val orphanAnnotations = settings.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
+
     fs.entry(OAuth2SettingsModel.Scopes)
-      .foreach(f => externals += OasOAuth2ScopeEmitter("scopes", f, ordering))
+      .foreach(f => externals += OasOAuth2ScopeEmitter("scopes", f, ordering, orphanAnnotations))
 
     val internals = ListBuffer[EntryEmitter]()
     fs.entry(OAuth2SettingsModel.AuthorizationGrants)
@@ -330,6 +331,8 @@ case class OasOAuth2SettingsEmitters(settings: Settings, ordering: SpecOrdering)
 
     if (internals.nonEmpty)
       externals += OasSettingsTypeEmitter(internals, settings, ordering)
+
+    externals ++= AnnotationsEmitter(settings, ordering).emitters
 
     externals
   }
@@ -362,10 +365,16 @@ case class RamlOAuth2ScopeEmitter(key: String, f: FieldEntry, ordering: SpecOrde
   override def position(): Position = pos(f.value.annotations)
 }
 
-case class OasOAuth2ScopeEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {
+case class OasOAuth2ScopeEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, orphanAnnotations: Seq[DomainExtension])(implicit spec: SpecEmitterContext) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    b.entry(key, _.obj(traverse(ordering.sorted(OasScopeValuesEmitters(f).emitters()), _)))
+    val emitters =  OasScopeValuesEmitters(f).emitters() ++ scopesElementAnnotations()
+    b.entry(key, _.obj(traverse(ordering.sorted(emitters), _)))
   } // todo : name and description?
+
+  private def scopesElementAnnotations(): Seq[EntryEmitter] = {
+    OrphanAnnotationsEmitter(orphanAnnotations, ordering).emitters
+  }
+
   override def position(): Position = pos(f.value.annotations)
 }
 
