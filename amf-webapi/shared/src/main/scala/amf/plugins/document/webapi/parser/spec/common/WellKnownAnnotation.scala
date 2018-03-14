@@ -30,7 +30,8 @@ object WellKnownAnnotation {
     "flow",
     "examples",
     "responses",
-    "additionalProperties"
+    "additionalProperties",
+    "collectionFormat"
   )
 
   private val oasKnownAnnotations = Set(

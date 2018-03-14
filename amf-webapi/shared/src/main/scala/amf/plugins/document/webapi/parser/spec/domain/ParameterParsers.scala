@@ -128,7 +128,7 @@ case class Raml10ParameterParser(entry: YMapEntry, producer: String => Parameter
     }
 
     if (p.fields.entry(ParameterModel.Required).isEmpty) {
-      val required = !name.endsWith("?")
+      val required  = !name.endsWith("?")
       val paramName = if (required) name else name.stripSuffix("?")
       p.set(ParameterModel.Required, required)
       p.set(ParameterModel.Name, paramName).set(ParameterModel.ParameterName, paramName)
@@ -191,7 +191,8 @@ abstract class RamlParameterParser(entry: YMapEntry, producer: String => Paramet
   def parse(): Parameter
 }
 
-case class OasParameterParser(map: YMap, parentId: String, name: Option[String])(implicit ctx: OasWebApiContext) extends SpecParserOps {
+case class OasParameterParser(map: YMap, parentId: String, name: Option[String])(implicit ctx: OasWebApiContext)
+    extends SpecParserOps {
   def parse(): OasParameter = {
     map.key("$ref") match {
       case Some(ref) => parseParameterRef(ref, parentId)
@@ -214,6 +215,9 @@ case class OasParameterParser(map: YMap, parentId: String, name: Option[String])
         // TODO generate parameter with parent id or adopt
         if (p.isBody) {
           p.payload.adopted(parentId)
+
+          ctx.closedShape(parameter.id, map, "bodyParameter")
+
           map.key(
             "schema",
             entry => {

@@ -900,4 +900,20 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Additional properties shape oas to amf") {
     cycle("additional-properties.json", "additional-properties.jsonld", OasJsonHint, Amf)
   }
+
+  test("CollectionFormat shape oas to amf") {
+    cycle("collection-format.json", "collection-format.jsonld", OasJsonHint, Amf)
+  }
+
+  test("CollectionFormat shape oas to oas") {
+    cycle("collection-format.json", "collection-format.json.json", OasJsonHint, Oas)
+  }
+
+  test("CollectionFormat shape oas to raml") {
+    cycle("collection-format.json", "collection-format.raml", OasJsonHint, Raml)
+  }
+
+  test("CollectionFormat shape amf to oas") {
+    cycle("collection-format.jsonld", "collection-format.jsonld.json", AmfJsonHint, Oas)
+  }
 }
