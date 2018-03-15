@@ -11,16 +11,16 @@ case class Operation private[model] (private val operation: models.Operation) ex
 
   def this() = this(models.Operation())
 
-  def method: String                       = operation.method
-  def name: String                         = operation.name
-  def description: String                  = operation.description
-  def deprecated: Boolean                  = operation.deprecated
-  def summary: String                      = operation.summary
-  def documentation: CreativeWork          = Option(operation.documentation).map(CreativeWork).orNull
+  def method: String                          = operation.method
+  def name: String                            = operation.name
+  def description: String                     = operation.description
+  def deprecated: Boolean                     = operation.deprecated
+  def summary: String                         = operation.summary
+  def documentation: CreativeWork             = Option(operation.documentation).map(CreativeWork).orNull
   def schemes: java.util.List[String]         = Option(operation.schemes).getOrElse(Nil).asJava
   def accepts: java.util.List[String]         = Option(operation.accepts).getOrElse(Nil).asJava
   def contentType: java.util.List[String]     = Option(operation.contentType).getOrElse(Nil).asJava
-  def request: Request                     = Option(operation.request).map(Request).orNull
+  def request: Request                        = Option(operation.request).map(Request).orNull
   def responses: java.util.List[Response]     = Option(operation.responses).getOrElse(Nil).map(Response).asJava
   def security: java.util.List[DomainElement] = Option(operation.security).getOrElse(Nil).map(DomainElement(_)).asJava
 
@@ -85,6 +85,9 @@ case class Operation private[model] (private val operation: models.Operation) ex
     operation.withRequest(request.element)
     this
   }
+
+  /** Set request property of this [[Operation]]. */
+  def withRequest(): Request = Request(operation.withRequest())
 
   /** Set responses property of this [[Operation]]. */
   def withResponses(responses: java.util.List[Response]): this.type = {
