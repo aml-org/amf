@@ -1,0 +1,87 @@
+#%RAML 1.0
+title: Query example
+version: v1
+baseUri: http://domain.api.domain.com/{version}/
+
+annotationTypes:
+  annotationTest: nil
+  deprecated: string
+  clearanceLevel:
+    properties:
+      level:
+        enum: [ low, medium, high ]
+        required: true
+      signature:
+        pattern: "\\d{3}-\\w{12}"
+        required: true
+securitySchemes:
+  oauth2:
+    type: OAuth 2.0
+    settings:
+      accessTokenUri: https://token.com
+      authorizationUri: https://auth.com
+      authorizationGrants: implicit
+      scopes: [profile, email]
+    describedBy:
+      queryParameters:
+        access_token:
+          type: string
+          description: Apply access token here.
+traits:
+  paginable:
+    queryParameters:
+      limit:
+        type: number
+        displayName: Limit
+        description: Size of the response
+        minimum: 1
+        maximum: 1000
+      nextPageToken:
+        description: If provided it will be used to paginate the results.
+
+/endpoint/{fileType}/{fileId}:
+  securedBy: oauth2
+  uriParameters:
+    fileType:
+      displayName: File type
+      description: Type of the file. Currently only 3 types are supported.
+      type: string
+      enum: [file1, file2, file3]
+      pattern: ^file[0-9]$
+    fileId:
+      description: Numeric file ID
+      type: number
+      minimum: 6
+      maximum: 32
+      displayName: File ID
+  get:
+    is: [paginable]
+    queryParameters:
+      basic:
+        (deprecated):
+        type: string
+        example: encoded%20example
+      optional:
+        (clearanceLevel):
+          level: high
+          signature: 230-ghtwvfrs1itr
+        type: string
+        required: false
+        example: "optional=some%20param"
+        default: default value
+      requiredProperty:
+        type: string
+        required: true
+        example: required header
+        default: devault required value
+      x-number:
+        type: number
+        description: |
+          MY number header
+      x-union:
+        type: string | integer
+      repeatable:
+        type: string[]
+      enumable:
+        type: string
+        enum: [one, two, three]

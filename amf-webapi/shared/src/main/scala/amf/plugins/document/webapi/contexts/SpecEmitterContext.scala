@@ -7,23 +7,21 @@ import amf.core.emitter._
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, DeclaresModel, Document}
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}
-import amf.core.model.domain.{DomainElement, Linkable}
+import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.parser.FieldEntry
 import amf.core.remote._
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.RamlHeader
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.raml.{
-  Raml08RootLevelEmitters,
-  Raml10RootLevelEmitters,
-  RamlRootLevelEmitters
-}
+import amf.plugins.document.webapi.parser.spec.raml.{Raml08RootLevelEmitters, Raml10RootLevelEmitters, RamlRootLevelEmitters}
+import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 import amf.plugins.domain.shapes.models.AnyShape
+import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityScheme}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter, Response}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YNode, YScalar}
+import org.yaml.model.{YNode, YScalar, YType}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -42,6 +40,27 @@ abstract class SpecEmitterContext(refEmitter: RefEmitter) {
   val factory: SpecEmitterFactory
 
   def getRefEmitter: RefEmitter = refEmitter
+
+  def oasTypePropertyEmitter(typeName: String, shape: Shape): MapEntryEmitter  = {
+    shape.annotations.find(classOf[TypePropertyLexicalInfo]) match {
+      case Some(lexicalInfo) =>
+        MapEntryEmitter("type", typeName, YType.Str, lexicalInfo.range.start)
+      case None =>
+        MapEntryEmitter("type", typeName)
+    }
+  }
+
+  def ramlTypePropertyEmitter(typeName: String, shape: Shape): Option[MapEntryEmitter] = {
+    shape.fields.?(NodeShapeModel.Inherits) match {
+      case None =>
+        shape.annotations.find(classOf[TypePropertyLexicalInfo]) match {
+          case Some(lexicalInfo) =>
+            Some(MapEntryEmitter("type", typeName, YType.Str, lexicalInfo.range.start))
+          case _  => None
+        }
+      case _ => None
+    }
+  }
 }
 
 trait SpecEmitterFactory {

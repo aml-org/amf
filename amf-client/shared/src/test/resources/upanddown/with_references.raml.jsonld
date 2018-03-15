@@ -1036,6 +1036,20 @@
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/annotA/scalar/annotA"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(12,9)-(14,0)]"
+                      }
+                    ]
+                  }
+                ],
                 "http://raml.org/vocabularies/document-source-maps#lexical": [
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
@@ -1239,6 +1253,20 @@
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(7,2)-(9,0)]"
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/scalar/A"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(7,4)-(9,0)]"
                   }
                 ]
               }
@@ -1758,6 +1786,20 @@
                       }
                     ]
                   }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/referred.raml/scalar/type"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(3,0)-(3,12)]"
+                      }
+                    ]
+                  }
                 ]
               }
             ]
@@ -1866,6 +1908,20 @@
                         "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#fragment/parameter/Authorization/scalar/schema/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                          {
+                            "http://raml.org/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#fragment/parameter/Authorization/scalar/schema"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(14,18)-(17,0)]"
+                              }
+                            ]
+                          }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#lexical": [
                           {
@@ -2453,6 +2509,20 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/referred_annotation.raml#annotation/scalar/annotationType/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/referred_annotation.raml#annotation/scalar/annotationType"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(3,0)-(3,12)]"
+                          }
+                        ]
+                      }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#lexical": [
                       {

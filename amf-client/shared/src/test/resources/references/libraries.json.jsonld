@@ -146,6 +146,20 @@
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
+                        "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                          {
+                            "http://raml.org/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp1/scalar/objProp1"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(8,20)-(10,9)]"
+                              }
+                            ]
+                          }
+                        ],
                         "http://raml.org/vocabularies/document-source-maps#lexical": [
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
@@ -155,7 +169,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(8,10)-(8,26)]"
+                                "@value": "[(9,10)-(9,26)]"
                               }
                             ]
                           },
@@ -167,7 +181,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(7,8)-(9,9)]"
+                                "@value": "[(8,8)-(10,9)]"
                               }
                             ]
                           }
@@ -201,7 +215,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(7,8)-(9,9)]"
+                            "@value": "[(8,8)-(10,9)]"
                           }
                         ]
                       }
@@ -246,6 +260,20 @@
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
+                        "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                          {
+                            "http://raml.org/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType/property/objProp2/scalar/objProp2"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(11,20)-(13,9)]"
+                              }
+                            ]
+                          }
+                        ],
                         "http://raml.org/vocabularies/document-source-maps#lexical": [
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
@@ -255,7 +283,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(11,10)-(11,26)]"
+                                "@value": "[(12,10)-(12,26)]"
                               }
                             ]
                           },
@@ -267,7 +295,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(10,8)-(12,9)]"
+                                "@value": "[(11,8)-(13,9)]"
                               }
                             ]
                           }
@@ -301,7 +329,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(10,8)-(12,9)]"
+                            "@value": "[(11,8)-(13,9)]"
                           }
                         ]
                       }
@@ -344,7 +372,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(6,6)-(13,7)]"
+                        "@value": "[(7,6)-(14,7)]"
                       }
                     ]
                   },
@@ -356,7 +384,21 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(5,4)-(14,5)]"
+                        "@value": "[(5,4)-(15,5)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/references/lib/lib.json#/declarations/ObjectType"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(5,18)-(15,5)]"
                       }
                     ]
                   }
@@ -411,7 +453,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(1,0)-(16,1)]"
+                    "@value": "[(1,0)-(18,0)]"
                   }
                 ]
               }

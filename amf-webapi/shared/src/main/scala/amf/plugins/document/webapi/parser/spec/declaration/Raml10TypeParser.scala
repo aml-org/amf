@@ -8,12 +8,7 @@ import amf.core.model.domain.{ScalarNode => DynamicDataNode, _}
 import amf.core.parser.{Annotations, Value, _}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
-import amf.plugins.document.webapi.contexts.{
-  Raml08WebApiContext,
-  Raml10WebApiContext,
-  RamlWebApiContext,
-  WebApiContext
-}
+import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec._
@@ -24,6 +19,7 @@ import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
+import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import org.yaml.model.{YPart, _}
 import org.yaml.parser.YamlParser
 
@@ -242,6 +238,7 @@ case class Raml08UnionTypeParser(shape: UnionShape, types: Seq[YNode], ast: YPar
       }
       .filter(_.isDefined)
       .map(_.get)
+
     shape.setArray(UnionShapeModel.AnyOf, unionNodes, Annotations(ast))
 
   }
@@ -282,6 +279,8 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
           }
         })
         .getOrElse(ScalarShape(map).withName(name))
+
+      map.key("type", e => { shape.annotations += TypePropertyLexicalInfo(Range(e.key.range)) })
 
       adopt(shape)
       parseMap(shape)
@@ -1055,6 +1054,9 @@ sealed abstract class RamlTypeParser(ast: YPart,
         "facets",
         entry => PropertiesParser(entry.value.as[YMap], shape.withCustomShapePropertyDefinition).parse()
       )
+
+      // Explicit annotation for the type property
+      map.key("type", entry =>  shape.annotations += TypePropertyLexicalInfo(Range(node.range)) )
 
       shape
     }

@@ -2,6 +2,7 @@
   "swagger": "2.0",
   "definitions": {
     "Person": {
+      "type": "object",
       "properties": {
         "age": {
           "type": "number"
@@ -9,8 +10,7 @@
         "name": {
           "type": "string"
         }
-      },
-      "type": "object"
+      }
     }
   },
   "x-annotationTypes": {
@@ -20,12 +20,12 @@
         "WebAPI"
       ],
       "schema": {
+        "type": "object",
         "properties": {
           "wadus": {
             "type": "string"
           }
-        },
-        "type": "object"
+        }
       }
     }
   },

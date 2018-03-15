@@ -38,18 +38,18 @@ description: Lets you access a cloud hosted machine learning service that makes 
         description: Submit data and request a prediction
         body:
           application/json:
-            (oas-body-name): body
             type: object
+            (oas-body-name): body
             additionalProperties: true
             properties:
               input:
-                required: false
                 type: object
+                required: false
                 additionalProperties: true
                 properties:
                   csvInstance:
-                    required: false
                     type: array
+                    required: false
                     items: {}
         responses:
           200:
@@ -69,8 +69,8 @@ description: Lets you access a cloud hosted machine learning service that makes 
                     type: string
                     required: false
                   outputMulti:
-                    required: false
                     type: array
+                    required: false
                     items:
                       type: object
                       additionalProperties: true
@@ -127,8 +127,8 @@ description: Lets you access a cloud hosted machine learning service that makes 
       description: Add new data to a trained model
       body:
         application/json:
-          (oas-body-name): body
           type: object
+          (oas-body-name): body
           additionalProperties: true
           properties:
             classLabel:
@@ -136,9 +136,9 @@ description: Lets you access a cloud hosted machine learning service that makes 
               type: string
               required: false
             csvInstance:
+              type: array
               description: The input features for this instance
               required: false
-              type: array
               items: {}
       responses:
         200:
@@ -155,8 +155,8 @@ description: Lets you access a cloud hosted machine learning service that makes 
                   required: false
                   default: prediction#training
                 modelInfo:
-                  required: false
                   type: object
+                  required: false
                   additionalProperties: true
                   properties:
                     classificationAccuracy:
@@ -250,8 +250,8 @@ description: Lets you access a cloud hosted machine learning service that makes 
                   required: false
                   default: prediction#training
                 modelInfo:
-                  required: false
                   type: object
+                  required: false
                   additionalProperties: true
                   properties:
                     classificationAccuracy:
@@ -315,8 +315,8 @@ description: Lets you access a cloud hosted machine learning service that makes 
     description: Begin training your model
     body:
       application/json:
-        (oas-body-name): body
         type: object
+        (oas-body-name): body
         additionalProperties: true
         properties:
           id:
@@ -327,8 +327,8 @@ description: Lets you access a cloud hosted machine learning service that makes 
             required: false
             default: prediction#training
           modelInfo:
-            required: false
             type: object
+            required: false
             additionalProperties: true
             properties:
               classificationAccuracy:
@@ -363,8 +363,8 @@ description: Lets you access a cloud hosted machine learning service that makes 
                 required: false
                 default: prediction#training
               modelInfo:
-                required: false
                 type: object
+                required: false
                 additionalProperties: true
                 properties:
                   classificationAccuracy:
@@ -428,18 +428,18 @@ description: Lets you access a cloud hosted machine learning service that makes 
         description: Submit input and request an output against a hosted model
         body:
           application/json:
-            (oas-body-name): body
             type: object
+            (oas-body-name): body
             additionalProperties: true
             properties:
               input:
-                required: false
                 type: object
+                required: false
                 additionalProperties: true
                 properties:
                   csvInstance:
-                    required: false
                     type: array
+                    required: false
                     items: {}
         responses:
           200:
@@ -459,8 +459,8 @@ description: Lets you access a cloud hosted machine learning service that makes 
                     type: string
                     required: false
                   outputMulti:
-                    required: false
                     type: array
+                    required: false
                     items:
                       type: object
                       additionalProperties: true

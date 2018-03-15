@@ -4,6 +4,12 @@
     required: true
     type: string
     (binding): path
+  payload?:
+    type: object
+    properties:
+      prop:
+        type: string
+    (binding): body
 title: test
 version: 1.0
 /a/{a}:

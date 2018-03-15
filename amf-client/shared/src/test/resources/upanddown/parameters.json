@@ -6,10 +6,22 @@
   },
   "parameters": {
     "a": {
+      "type": "string",
       "required": true,
       "in": "path",
-      "type": "string",
       "name": "b"
+    },
+    "payload": {
+      "in": "body",
+      "name": "theBody",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "prop": {
+            "type": "string"
+          }
+        }
+      }
     }
   },
   "paths": {
