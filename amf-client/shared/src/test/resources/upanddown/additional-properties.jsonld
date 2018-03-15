@@ -126,6 +126,20 @@
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/additional-properties.json#/declarations/ObjType/scalar/additionalProperties"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(10,30)-(12,7)]"
+                      }
+                    ]
+                  }
+                ],
                 "http://raml.org/vocabularies/document-source-maps#lexical": [
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
@@ -135,7 +149,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(10,8)-(10,24)]"
+                        "@value": "[(11,8)-(11,24)]"
                       }
                     ]
                   },
@@ -147,7 +161,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(9,6)-(11,7)]"
+                        "@value": "[(10,6)-(12,7)]"
                       }
                     ]
                   }
@@ -190,7 +204,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(9,6)-(11,7)]"
+                    "@value": "[(10,6)-(12,7)]"
                   }
                 ]
               },
@@ -203,6 +217,20 @@
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(8,4)-(13,5)]"
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/additional-properties.json#/declarations/ObjType"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(8,15)-(13,5)]"
                   }
                 ]
               }

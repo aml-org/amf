@@ -7,6 +7,7 @@ title: My API With Types
         body:
           application/json:
             discriminator: kind
+            type: object
             examples:
               good:
                 kind: Employee
@@ -16,7 +17,6 @@ title: My API With Types
                 kind: user
                 userId: 1
                 name: Leandro
-            type: object
             additionalProperties: true
             properties:
               kind:

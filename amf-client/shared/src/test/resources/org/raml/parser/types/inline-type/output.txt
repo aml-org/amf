@@ -8,10 +8,10 @@ baseUri: api.samplehost.com/{version}
   get:
     body:
       application/xml:
+        type: object
         example:
           prop1: hola
           prop2: 2
-        type: object
         additionalProperties: true
         properties:
           prop1:

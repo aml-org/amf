@@ -32,16 +32,16 @@ types:
   ObjectType:
     type: object
   FileType:
+    type: file
     fileTypes:
       - image/jpeg
       - image/png
     maxLength: 307200
-    type: file
   UnionType:
+    type: union
     anyOf:
       -
         type: string
       -
         type: integer
-    type: union
 title: test title

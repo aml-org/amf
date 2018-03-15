@@ -22,6 +22,7 @@ protocols:
           lastName:
             type: string
           address:
+            type: object
             properties:
               city:
                 type: string
@@ -40,9 +41,9 @@ protocols:
                 - city
               number:
                 - street
-            type: object
     body:
       application/raml:
+        type: object
         properties:
           credit_card:
             type: integer
@@ -64,5 +65,4 @@ protocols:
             - city
           number:
             - street
-        type: object
 baseUri: api.example.com/path

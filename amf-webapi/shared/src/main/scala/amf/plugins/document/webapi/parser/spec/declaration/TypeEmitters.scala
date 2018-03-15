@@ -16,16 +16,12 @@ import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEm
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
-import amf.plugins.document.webapi.parser.{
-  OasTypeDefMatcher,
-  OasTypeDefStringValueMatcher,
-  RamlTypeDefMatcher,
-  RamlTypeDefStringValueMatcher
-}
+import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, OasTypeDefStringValueMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
+import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YNode, YType}
 
@@ -176,7 +172,8 @@ case class Raml10TypeEmitter(shape: AnyShape,
         RamlNilShapeEmitter(copiedNode, ordering, references).emitters()
       case any: AnyShape =>
         val copiedNode = any.copyAnyShape(fields = any.fields.filter(f => !ignored.contains(f._1)))
-        RamlAnyShapeEmitter(copiedNode, ordering, references).emitters()
+        RamlAnyShapeInstanceEmitter(copiedNode, ordering, references).emitters()
+
       case _ => Seq()
     }
   }
@@ -239,7 +236,12 @@ abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references
 
     fs.entry(ShapeModel.Inherits)
       .fold(
-        typeName.foreach(value => result += MapEntryEmitter("type", value))
+        typeName.foreach { value =>
+          //result += MapEntryEmitter("type", value)
+          spec.ramlTypePropertyEmitter(value, shape).foreach { emitter =>
+            result += emitter
+          }
+        }
       )(f => result += RamlShapeInheritsEmitter(f, ordering, references = references))
 
     result
@@ -337,7 +339,7 @@ case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referen
     fs.entry(NodeShapeModel.Dependencies)
       .map(f => result += RamlShapeDependenciesEmitter(f, ordering, propertiesMap))
 
-    if (result.isEmpty && typeName.isEmpty)
+    if (result.isEmpty  || (result.size == 1 && typeName.isEmpty && node.fields.?(AnyShapeModel.Examples).nonEmpty))
       result += MapEntryEmitter("type", "object")
 
     result
@@ -408,7 +410,7 @@ class RamlAnyShapeEmitter(shape: AnyShape, ordering: SpecOrdering, references: S
     implicit spec: SpecEmitterContext)
     extends RamlShapeEmitter(shape, ordering, references) {
   override def emitters(): Seq[EntryEmitter] = {
-    val results = ListBuffer(super.emitters(): _*)
+    var results = ListBuffer(super.emitters(): _*)
 
     shape.fields
       .entry(AnyShapeModel.Examples)
@@ -424,8 +426,47 @@ class RamlAnyShapeEmitter(shape: AnyShape, ordering: SpecOrdering, references: S
                                           ordering,
                                           references)
       })
+
     results
-  } //:+ MapEntryEmitter("type", "any")
+  }
+
+  override val typeName: Option[String] = Some("any")
+}
+
+object RamlAnyShapeInstanceEmitter {
+  def apply(shape: AnyShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: SpecEmitterContext): RamlAnyShapeInstanceEmitter =
+    new RamlAnyShapeInstanceEmitter(shape, ordering, references)(spec)
+}
+
+class RamlAnyShapeInstanceEmitter(shape: AnyShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
+  implicit spec: SpecEmitterContext)
+  extends RamlShapeEmitter(shape, ordering, references) {
+  override def emitters(): Seq[EntryEmitter] = {
+    var results = ListBuffer(super.emitters(): _*)
+
+    shape.fields
+      .entry(AnyShapeModel.Examples)
+      .map(f => {
+        val (anonymous, named) =
+          shape.examples.partition(e => !e.fields.fieldsMeta().contains(ExampleModel.Name) && !e.isLink)
+        val examples = f.array.values.collect({ case e: Example => e })
+        anonymous.headOption.foreach { a =>
+          results += SingleExampleEmitter("example", a, ordering)
+        }
+        results += MultipleExampleEmitter("examples",
+          named ++ (if (anonymous.lengthCompare(1) > 0) examples.tail else None),
+          ordering,
+          references)
+      })
+
+    if (results.isEmpty || results.size == 1 && shape.fields.?(AnyShapeModel.Examples).nonEmpty) {
+      val entry = MapEntryEmitter("type", "any")
+      results ++= Seq(entry)
+    }
+
+    results
+  }
 
   override val typeName: Option[String] = Some("any")
 }
@@ -433,7 +474,16 @@ class RamlAnyShapeEmitter(shape: AnyShape, ordering: SpecOrdering, references: S
 case class RamlNilShapeEmitter(shape: NilShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: SpecEmitterContext)
     extends RamlAnyShapeEmitter(shape, ordering, references) {
-  override def emitters(): Seq[EntryEmitter] = super.emitters() //:+ MapEntryEmitter("type", "nil")
+
+  override def emitters(): Seq[EntryEmitter] = {
+    var result: Seq[EntryEmitter] = super.emitters()
+    if (result.isEmpty || result.size == 1 && shape.fields.?(AnyShapeModel.Examples).nonEmpty) {
+      val entry = MapEntryEmitter("type", "nil")
+      result = result ++ Seq(entry)
+    }
+    result
+  }
+
 
   override val typeName: Option[String] = Some("nil")
 }
@@ -536,6 +586,7 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
     }
   }
 
+
   override val typeName: Option[String] = None //exceptional case for get the type (scalar) and format
 }
 
@@ -559,6 +610,9 @@ case class RamlFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, refer
     fs.entry(ScalarShapeModel.Maximum).map(f => result += ValueEmitter("(maximum)", f))
 
     fs.entry(ScalarShapeModel.MultipleOf).map(f => result += ValueEmitter("(multipleOf)", f))
+
+    if (result.isEmpty || (result.size == 1 && scalar.fields.?(AnyShapeModel.Examples).nonEmpty))
+      result += MapEntryEmitter("type", "file")
 
     result
   }
@@ -667,7 +721,7 @@ case class RamlArrayShapeEmitter(array: ArrayShape, ordering: SpecOrdering, refe
 
     fs.entry(ArrayShapeModel.CollectionFormat).map(f => result += ValueEmitter("(collectionFormat)", f))
 
-    if (result.isEmpty && typeName.isEmpty)
+    if (result.isEmpty && typeName.isEmpty || (result.size == 1 && typeName.isEmpty && array.fields.?(AnyShapeModel.Examples).nonEmpty))
       result += MapEntryEmitter("type", "array")
 
     result
@@ -1003,7 +1057,7 @@ case class OasArrayShapeEmitter(shape: ArrayShape, ordering: SpecOrdering, refer
     val result = ListBuffer[EntryEmitter]()
     val fs     = shape.fields
 
-    result += MapEntryEmitter("type", "array")
+    result += spec.oasTypePropertyEmitter("array", shape)
 
     fs.entry(ArrayShapeModel.MaxItems).map(f => result += ValueEmitter("maxItems", f))
 
@@ -1033,7 +1087,7 @@ case class OasSchemaShapeEmitter(shape: SchemaShape, ordering: SpecOrdering)(imp
     val result = ListBuffer[EntryEmitter]()
     val fs     = shape.fields
 
-    result += MapEntryEmitter("type", "object")
+    result += spec.oasTypePropertyEmitter("object", shape)
 
     fs.entry(SchemaShapeModel.MediaType).map(f => result += ValueEmitter("x-media-type", f))
 
@@ -1078,9 +1132,7 @@ case class OasNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referenc
 
     val fs = node.fields
 
-    // TODO annotation for original position?
-    if (node.annotations.contains(classOf[ExplicitField]))
-      result += MapEntryEmitter("type", "object")
+    result += spec.oasTypePropertyEmitter("object", node)
 
     fs.entry(NodeShapeModel.MinProperties).map(f => result += ValueEmitter("minProperties", f))
 
@@ -1238,9 +1290,16 @@ case class OasScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, re
     val typeDef = OasTypeDefStringValueMatcher.matchType(TypeDefXsdMapping.typeDef(scalar.dataType))
 
     fs.entry(ScalarShapeModel.DataType)
-      .foreach(f =>
-        if (!f.value.annotations.contains(classOf[Inferred]))
-          result += MapEntryEmitter("type", typeDef, position = pos(f.value.annotations))) // TODO check this  - annotations of typeDef in parser
+      .foreach { f =>
+        if (!f.value.annotations.contains(classOf[Inferred])) {
+          scalar.annotations.find(classOf[TypePropertyLexicalInfo]) match {
+            case Some(lexicalInfo) =>
+              result += MapEntryEmitter("type", typeDef, YType.Str, lexicalInfo.range.start)
+            case _ =>
+              result += MapEntryEmitter("type", typeDef, position = pos(f.value.annotations)) // TODO check this  - annotations of typeDef in parser
+          }
+        }
+      }
 
     fs.entry(ScalarShapeModel.Format) match {
       case Some(_) => // ignore, this will be set with the explicit information
@@ -1265,7 +1324,7 @@ case class OasFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, refere
 
     val fs = scalar.fields
 
-    result += MapEntryEmitter("type", "file")
+    result += spec.oasTypePropertyEmitter("file", scalar)
 
     emitCommonFields(fs, result)
 
@@ -1381,7 +1440,14 @@ case class SimpleTypeEmitter(shape: ScalarShape, ordering: SpecOrdering)(implici
 
     val rawTypeDef = TypeDefXsdMapping.typeDef08(shape.dataType)
     fs.entry(ScalarShapeModel.DataType)
-      .map(f => result += MapEntryEmitter("type", rawTypeDef, position = pos(f.value.annotations)))
+      .map { f =>
+        shape.annotations.find(classOf[TypePropertyLexicalInfo]) match {
+          case Some(lexicalInfo) =>
+            result += MapEntryEmitter("type", rawTypeDef, position = lexicalInfo.range.start)
+          case _ =>
+            result += MapEntryEmitter("type", rawTypeDef, position = pos(f.value.annotations))
+        }
+      }
 
     fs.entry(ScalarShapeModel.Description).map(f => result += ValueEmitter("description", f))
 

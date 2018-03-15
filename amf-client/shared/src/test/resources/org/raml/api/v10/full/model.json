@@ -103,11 +103,11 @@ documentation:
             displayName: The Second
         body:
           application/json:
+            type: object
             example:
               firstname: tato
               lastname: bores
               age: 66
-            type: object
             additionalProperties: true
             properties:
               firstname:
@@ -140,11 +140,11 @@ documentation:
     displayName: dos
     body:
       application/json:
+        type: object
         example:
           firstname: tato
           lastname: bores
           age: 66
-        type: object
         additionalProperties: true
         properties:
           firstname:

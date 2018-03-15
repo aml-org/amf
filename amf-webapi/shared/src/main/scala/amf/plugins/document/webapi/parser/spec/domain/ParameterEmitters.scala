@@ -285,13 +285,16 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
         fs.entry(ParameterModel.Binding).map(f => result += ValueEmitter("in", f))
 
         fs.entry(ParameterModel.Schema)
-          .map(
-            f =>
+          .foreach { f =>
+            if (parameter.binding == "body") {
+              result += OasSchemaEmitter(f, ordering, references)
+            } else {
               result ++= OasTypeEmitter(f.value.value.asInstanceOf[Shape],
-                                        ordering,
-                                        Seq(ShapeModel.Description),
-                                        references)
-                .entries())
+                ordering,
+                Seq(ShapeModel.Description),
+                references).entries()
+            }
+          }
 
         result ++= AnnotationsEmitter(parameter, ordering).emitters
 
