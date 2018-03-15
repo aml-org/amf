@@ -12,7 +12,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class Request private[model] (private val request: models.Request) extends DomainElement {
 
-  @JSExportTopLevel("Request")
+  @JSExportTopLevel("model.domain.Request")
   def this() = this(models.Request())
 
   def queryParameters: js.Iterable[Parameter] = request.queryParameters.map(Parameter).toJSArray

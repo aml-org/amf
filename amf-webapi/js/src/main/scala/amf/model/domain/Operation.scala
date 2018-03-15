@@ -90,6 +90,9 @@ case class Operation private[model] (private val operation: models.Operation) ex
     this
   }
 
+  /** Set request property of this [[Operation]]. */
+  def withRequest(): Request = Request(operation.withRequest())
+
   /** Set responses property of this [[Operation]]. */
   def withResponses(responses: js.Iterable[Response]): this.type = {
     operation.withResponses(responses.toSeq.map(_.element))
