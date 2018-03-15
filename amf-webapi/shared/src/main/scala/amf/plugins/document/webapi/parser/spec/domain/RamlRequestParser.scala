@@ -144,7 +144,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
                       .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
                   } else {
                     others.entries.foreach(e =>
-                      ctx.violation(s"Unexpected key '${e.key}'. Expecting valid media types.", Some(e)))
+                      ctx.violation(s"Unexpected key '${e.key}'. Expecting valid media types.", e))
                   }
                 }
               case _ =>

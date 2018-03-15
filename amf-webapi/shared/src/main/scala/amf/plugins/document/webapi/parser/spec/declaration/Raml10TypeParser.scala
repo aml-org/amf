@@ -8,7 +8,12 @@ import amf.core.model.domain.{ScalarNode => DynamicDataNode, _}
 import amf.core.parser.{Annotations, Value, _}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
-import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext, WebApiContext}
+import amf.plugins.document.webapi.contexts.{
+  Raml08WebApiContext,
+  Raml10WebApiContext,
+  RamlWebApiContext,
+  WebApiContext
+}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec._
@@ -177,7 +182,7 @@ case class Raml08TypeParser(ast: YPart,
     def parse(): Option[AnyShape] = {
       value.tagType match {
         case YType.Null =>
-          Raml08DefaultTypeParser(defaultType.typeDef, name, adopt).parse().map(s => s.add(SourceAST(value)))
+          Raml08DefaultTypeParser(defaultType.typeDef, name, value, adopt).parse().map(s => s.add(SourceAST(value)))
         case _ =>
           value.as[YScalar].text match {
             case XMLSchema(_)  => Option(parseXMLSchemaExpression(name, value, adopt))
@@ -205,7 +210,7 @@ case class Raml08TypeParser(ast: YPart,
 
 }
 
-case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, adopt: (Shape) => Shape)(
+case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, ast: YPart, adopt: (Shape) => Shape)(
     implicit ctx: RamlWebApiContext) {
   def parse(): Option[AnyShape] = {
     val product: Option[AnyShape] = defaultType match {
@@ -215,7 +220,8 @@ case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, adopt: (S
         Option(ScalarShape()
           .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(defaultType)), Annotations() += Inferred()))
       case _ =>
-        ctx.violation(s"Cannot set default type $defaultType in raml 08", None)
+        // TODO get parent id
+        ctx.violation(s"Cannot set default type $defaultType in raml 08", ast)
         None
     }
     product.map(adopt)
@@ -269,7 +275,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
             case _          => e.value.toOption[YScalar]
           }
         })
-        .fold(Raml08DefaultTypeParser(defaultType, name, adopt).parse())(value => {
+        .fold(Raml08DefaultTypeParser(defaultType, name, map, adopt).parse())(value => {
           XsdTypeDefMapping.xsdFromString(value.text) match {
             case (iri: String, format: Option[String]) =>
               val shape = ScalarShape(value).set(ScalarShapeModel.DataType, AmfScalar(iri), Annotations(value))
@@ -387,8 +393,9 @@ trait RamlExternalTypes {
     val schemaAst = YamlParser(text)(ctx).withIncludeTag("!include").parse(keepTokens = true)
     val schemaEntry = schemaAst.head match {
       case d: YDocument => YMapEntry(name, d.node)
-      case _ =>
-        ctx.violation("invalid json schema expression", Some(valueAST))
+      case _            =>
+        // TODO get parent id
+        ctx.violation("invalid json schema expression", valueAST)
         YMapEntry(name, YNode.Null)
     }
 
@@ -1010,7 +1017,8 @@ sealed abstract class RamlTypeParser(ast: YPart,
           Some(property)
 
         case Left(error) =>
-          ctx.violation(error.error, Some(entry.key))
+          // TODO get parent id
+          ctx.violation(error.error, entry.key)
           None
       }
     }
@@ -1057,7 +1065,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
       )
 
       // Explicit annotation for the type property
-      map.key("type", entry =>  shape.annotations += TypePropertyLexicalInfo(Range(node.range)) )
+      map.key("type", entry => shape.annotations += TypePropertyLexicalInfo(Range(node.range)))
 
       shape
     }

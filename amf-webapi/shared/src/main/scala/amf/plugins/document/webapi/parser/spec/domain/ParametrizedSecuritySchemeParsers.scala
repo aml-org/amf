@@ -46,7 +46,7 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String =>
 
           scheme.set(ParametrizedSecuritySchemeModel.Settings, settings)
         case None =>
-          ctx.violation("", s"Security scheme '$name' not found in declarations (and name cannot be 'null').", node)
+          ctx.violation(s"Security scheme '$name' not found in declarations (and name cannot be 'null').", node)
       }
 
       scheme

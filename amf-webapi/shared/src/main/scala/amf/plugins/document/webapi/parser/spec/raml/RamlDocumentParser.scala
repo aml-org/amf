@@ -112,7 +112,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
                 .map(_.withBinding("path"))
             api.set(WebApiModel.BaseUriParameters, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
           case YType.Null =>
-          case _          => ctx.violation("Invalid node for baseUriParameters", Some(entry.value))
+          case _          => ctx.violation("Invalid node for baseUriParameters", entry.value)
         }
 
       }
@@ -335,11 +335,11 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
       _ <- types
       s <- schemas
     } {
-      ctx.violation("'schemas' and 'types' properties are mutually exclusive", Some(s.key))
+      ctx.violation("'schemas' and 'types' properties are mutually exclusive", s.key)
     }
 
     schemas.foreach(s =>
-      ctx.warning("'schemas' keyword it's deprecated for 1.0 version, should use 'types' instead", Some(s.key)))
+      ctx.warning("'schemas' keyword it's deprecated for 1.0 version, should use 'types' instead", s.key))
 
     types.orElse(schemas)
   }

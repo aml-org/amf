@@ -28,7 +28,8 @@ trait GraphParserHelpers {
               val element = e.as[YMap]
               val k       = element.key(SourceMapModel.Element.value.iri()).get
               val v       = element.key(SourceMapModel.Value.value.iri()).get
-              consumer(value(SourceMapModel.Element.`type`, k.value).as[YScalar].text, value(SourceMapModel.Value.`type`, v.value).as[YScalar].text)
+              consumer(value(SourceMapModel.Element.`type`, k.value).as[YScalar].text,
+                       value(SourceMapModel.Value.`type`, v.value).as[YScalar].text)
             })
         case _ => // Unknown annotation identifier
       }
@@ -59,7 +60,7 @@ trait GraphParserHelpers {
     map.key("@id") match {
       case Some(entry) => Some(entry.value.as[YScalar].text)
       case _ =>
-        ctx.violation("", s"No @id declaration on node $map", map)
+        ctx.violation(s"No @id declaration on node $map", map)
         None
     }
   }
