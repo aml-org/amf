@@ -9,6 +9,7 @@ import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel._
 import org.yaml.model.YMap
 
 class PropertyClassification
+object ExtensionPointProperty extends PropertyClassification
 object LiteralProperty extends PropertyClassification
 object ObjectProperty extends PropertyClassification
 object ObjectPropertyCollection extends PropertyClassification
@@ -59,13 +60,16 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
   def withTypeDiscriminatorName(name: String)                 = set(TypeDiscriminatorName, name)
 
   def classification(): PropertyClassification = {
+    val isAnyNode = Option(objectRange()).getOrElse(Nil).contains((Namespace.Meta + "anyNode").iri())
     val isLiteral = Option(literalRange()).isDefined
     val isObject = Option(objectRange()).isDefined && objectRange().nonEmpty
     val multiple = Option(allowMultiple()).getOrElse(false)
     val isMap = Option(mapKeyProperty()).isDefined
     val isMapValue = Option(mapValueProperty()).isDefined
 
-    if (isLiteral && !multiple)
+    if (isAnyNode)
+      ExtensionPointProperty
+    else if (isLiteral && !multiple)
       LiteralProperty
     else if (isLiteral)
       LiteralPropertyCollection

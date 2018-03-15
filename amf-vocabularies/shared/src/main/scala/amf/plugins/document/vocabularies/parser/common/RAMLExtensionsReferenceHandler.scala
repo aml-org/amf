@@ -64,11 +64,12 @@ class RAMLExtensionsReferenceHandler extends ReferenceHandler {
 
   private def links(part: YPart): Unit = {
     part match {
-      case entry: YMapEntry =>{
-        if (entry.key.tag.text=="!extend"){
-            ramlInclude(entry.value);
+      case entry: YMapEntry => {
+        if (entry.key.as[String] =="$dialect") {
+          val dialectRef = entry.value
+          ramlInclude(dialectRef.split("#").head)
         }
-        else{
+        else {
           part.children.foreach(links)
         }
       }
@@ -81,7 +82,7 @@ class RAMLExtensionsReferenceHandler extends ReferenceHandler {
     node.value match {
 
       case scalar: YScalar => references += Reference(scalar.text, LinkReference, node)
-      case _               => throw new Exception(s"Unexpected !include with ${node.value}")
+      case _               => throw new Exception(s"Unexpected !include or dialect with ${node.value}")
     }
   }
 }

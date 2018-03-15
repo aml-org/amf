@@ -18,7 +18,14 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
+
   protected var map: Map[String, Dialect] = Map()
+
+  def findNode(dialectNode: String): Option[(Dialect, NodeMapping)] = {
+    map.values.find(dialect => dialectNode.contains(dialect.id)) map { dialect =>
+      (dialect, dialect.declares.find(_.id == dialectNode))
+    } collectFirst { case (dialect, Some(nodeMapping: NodeMapping)) => (dialect, nodeMapping) }
+  }
 
   def knowsHeader(header: String): Boolean = map.contains(headerKey(header))
 

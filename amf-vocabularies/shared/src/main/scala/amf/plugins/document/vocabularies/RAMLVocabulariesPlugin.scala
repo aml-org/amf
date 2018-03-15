@@ -226,9 +226,6 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
       shaclReport <- RuntimeValidator.shaclValidation(baseUnit, validations)
     } yield {
 
-      // todo aggregating parser-side validations ?
-      // var results = aggregatedReport.map(r => processAggregatedResult(r, "RAML", validations))
-
       // adding model-side validations
       val results = shaclReport.results.flatMap { r => buildValidationResult(baseUnit, r, ProfileNames.RAML, validations) }
 

@@ -326,7 +326,6 @@ case class DialectNodeEmitter(node: DialectDomainElement,
 
   protected def emitObjectMap(key: String, array: AmfArray, propertyMapping: PropertyMapping): Seq[EntryEmitter] = {
     Seq(new EntryEmitter() {
-      // val nextNodeMapping: NodeMapping = findNodeMapping(propertyMapping.objectRange().head, dialect)
       val nextNodeMappings: Seq[NodeMapping] = propertyMapping.objectRange().map { rangeNodeMapping =>
         findNodeMapping(rangeNodeMapping, dialect)
       }
@@ -340,12 +339,6 @@ case class DialectNodeEmitter(node: DialectDomainElement,
           }
         case (acc, _) => acc
       } collect { case (Some(parsed),x) => (parsed, x) }
-
-      /*
-      val mapElements = array.values.foldLeft(Map[DialectNodeEmitter, DialectDomainElement]()) { case (acc, dialectDomainElement: DialectDomainElement) =>
-        acc + (DialectNodeEmitter(dialectDomainElement, nextNodeMapping, instance, dialect, ordering, aliases, Some(propertyMapping.mapKeyProperty())) -> dialectDomainElement)
-      }
-      */
 
       override def emit(b: YDocument.EntryBuilder): Unit = {
         b.entry(key, _.obj { b =>

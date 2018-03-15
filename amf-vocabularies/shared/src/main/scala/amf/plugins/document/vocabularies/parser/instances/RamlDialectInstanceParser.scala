@@ -7,13 +7,12 @@ import amf.core.model.domain.Annotation
 import amf.core.parser.{Annotations, BaseSpecParser, Declarations, EmptyFutureDeclarations, ErrorHandler, FutureDeclarations, ParsedReference, ParserContext, Reference, SearchScope, _}
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
+import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
 import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectInstanceFragment, DialectInstanceLibrary}
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.SyntaxErrorReporter
 import amf.plugins.features.validation.ParserSideValidations
-import org.yaml.convert.{ScalarYRead, YRead}
-import org.yaml.convert.YRead.LongYRead
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -52,14 +51,23 @@ class DialectInstanceDeclarations(var dialectDomainElements: Map[String, Dialect
 }
 
 
-class DialectInstanceContext(val dialect: Dialect, private val wrapped: ParserContext, private val ds: Option[DialectInstanceDeclarations] = None)
+class DialectInstanceContext(var dialect: Dialect, private val wrapped: ParserContext, private val ds: Option[DialectInstanceDeclarations] = None)
   extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, wrapped.parserCount) with SyntaxErrorReporter {
 
+  var nestedDialects: Seq[Dialect] = Nil
   val libraryDeclarationsNodeMappings: Map[String, NodeMapping] = parseDeclaredNodeMappings("library")
   val rootDeclarationsNodeMappings: Map[String, NodeMapping]    = parseDeclaredNodeMappings("root")
 
   val declarations: DialectInstanceDeclarations =
     ds.getOrElse(new DialectInstanceDeclarations(errorHandler = Some(this), futureDeclarations = futureDeclarations))
+
+  def withCurrentDialect[T](tmpDialect: Dialect)(k: => T) = {
+    val oldDialect = dialect
+    dialect = tmpDialect
+    val res = k
+    dialect = oldDialect
+    res
+  }
 
   protected def parseDeclaredNodeMappings(documentType: String): Map[String, NodeMapping] = {
     val declarations: Seq[(String, NodeMapping)] = Option(dialect.documents()).flatMap { documents =>
@@ -196,6 +204,8 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
           dialectInstance.withDeclares(ctx.declarations.declarables)
         if (references.baseUnitReferences().nonEmpty)
           dialectInstance.withReferences(references.baseUnitReferences())
+        if (ctx.nestedDialects.nonEmpty)
+          dialectInstance.withGraphDependencies(ctx.nestedDialects.map(_.id))
         Some(dialectInstance)
 
       case _ => None
@@ -286,6 +296,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
 
   def parseProperty(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
     property.classification() match {
+      case ExtensionPointProperty       => parseDialectExtension(id, propertyEntry, property, node)
       case LiteralProperty              => parseLiteralProperty(id, propertyEntry, property, node)
       case LiteralPropertyCollection    => parseLiteralCollectionProperty(id, propertyEntry, property, node)
       case ObjectProperty               => parseObjectProperty(id, propertyEntry, property, node)
@@ -293,6 +304,34 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
       case ObjectMapProperty            => parseObjectMapProperty(id, propertyEntry,property, node)
       case ObjectPairProperty           => parseObjectPairProperty(id, propertyEntry,property, node)
       case _ => // TODO: throw exception
+    }
+  }
+
+  def parseDialectExtension(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
+    propertyEntry.value.tagType match {
+      case YType.Str => // TODO: support external link here
+      case YType.Map =>
+        val map = propertyEntry.value.as[YMap]
+        map.key("$dialect") match {
+          case Some(nested) if nested.value.tagType == YType.Str =>
+            val dialectNode = nested.value.as[String]
+            // TODO: resolve dialect node URI to absolute normalised URI
+            RAMLVocabulariesPlugin.registry.findNode(dialectNode) match {
+              case Some((dialect, nodeMapping)) =>
+                ctx.nestedDialects ++= Seq(dialect)
+                ctx.withCurrentDialect(dialect) {
+                  val nestedObjectId = pathSegment(id, propertyEntry.key.as[String].urlEncoded)
+                  parseNestedNode(nestedObjectId, propertyEntry.value, nodeMapping) match {
+                    case Some(dialectDomainElement) => node.setObjectField(property, dialectDomainElement, propertyEntry.value)
+                    case None => // ignore
+                  }
+                }
+              case None =>
+                ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(), id, s"Cannot find nested node mapping $dialectNode", nested.value)
+            }
+          case None =>
+            ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(), id, "$dialect key without string value", map)
+        }
     }
   }
 
