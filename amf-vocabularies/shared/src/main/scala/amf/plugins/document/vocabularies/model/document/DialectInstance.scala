@@ -8,11 +8,18 @@ import amf.plugins.document.vocabularies.metamodel.document.{DialectInstanceFrag
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel._
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
 
-case class DialectInstance(fields: Fields, annotations: Annotations) extends BaseUnit with DeclaresModel with EncodesModel  {
+trait ComposedInstancesSupport {
+  var composedDialects: Map[String, Dialect] = Map()
+
+  def dialectForComposedUnit(dialect: Dialect) = composedDialects += (dialect.id -> dialect)
+}
+
+case class DialectInstance(fields: Fields, annotations: Annotations) extends BaseUnit with DeclaresModel with EncodesModel with ComposedInstancesSupport {
 
   override def meta: Obj = DialectInstanceModel
 
   def references: Seq[BaseUnit] = fields(References)
+  def graphDependencies: Seq[String] = fields(GraphDependencies)
   def location: String = fields(Location)
   def encodes: DomainElement = fields(Encodes)
   def declares: Seq[DomainElement] = fields(Declares)
@@ -21,6 +28,7 @@ case class DialectInstance(fields: Fields, annotations: Annotations) extends Bas
 
   def definedBy(): String = fields(DefinedBy)
   def withDefinedBy(dialectId: String) = set(DefinedBy, dialectId)
+  def withGraphDependencies(ids: Seq[String]) = set(GraphDependencies, ids)
 
   override def transform(selector: (DomainElement) => Boolean,
                 transformation: (DomainElement, Boolean) => Option[DomainElement]): BaseUnit = {
@@ -108,10 +116,11 @@ object DialectInstance {
   def apply(annotations: Annotations): DialectInstance = DialectInstance(Fields(), annotations)
 }
 
-case class DialectInstanceFragment(fields: Fields, annotations: Annotations) extends BaseUnit with EncodesModel {
+case class DialectInstanceFragment(fields: Fields, annotations: Annotations) extends BaseUnit with EncodesModel with ComposedInstancesSupport {
   override def meta: Obj = DialectInstanceFragmentModel
 
   def references: Seq[BaseUnit] = fields(References)
+  def graphDependencies: Seq[String] = fields(GraphDependencies)
   def location: String = fields(Location)
   def encodes: DomainElement = fields(Encodes)
     def usage: String = fields(Usage)
@@ -119,6 +128,7 @@ case class DialectInstanceFragment(fields: Fields, annotations: Annotations) ext
 
   def definedBy(): String = fields(DefinedBy)
   def withDefinedBy(dialectId: String) = set(DefinedBy, dialectId)
+  def withGraphDepencies(ids: Seq[String]) = set(GraphDependencies, ids)
 }
 
 object DialectInstanceFragment {
@@ -126,10 +136,11 @@ object DialectInstanceFragment {
   def apply(annotations: Annotations): DialectInstanceFragment = DialectInstanceFragment(Fields(), annotations)
 }
 
-case class DialectInstanceLibrary(fields: Fields, annotations: Annotations) extends BaseUnit with DeclaresModel {
+case class DialectInstanceLibrary(fields: Fields, annotations: Annotations) extends BaseUnit with DeclaresModel with ComposedInstancesSupport {
   override def meta: Obj = DialectInstanceLibraryModel
 
   def references: Seq[BaseUnit] = fields(References)
+  def graphDependencies: Seq[String] = fields(GraphDependencies)
   def location: String = fields(Location)
   def declares: Seq[DomainElement] = fields(Declares)
   def usage: String = fields(Usage)
@@ -137,6 +148,7 @@ case class DialectInstanceLibrary(fields: Fields, annotations: Annotations) exte
 
   def definedBy(): String = fields(DefinedBy)
   def withDefinedBy(dialectId: String) = set(DefinedBy, dialectId)
+  def withGraphDependencies(ids: Seq[String]) = set(GraphDependencies, ids)
 }
 
 object DialectInstanceLibrary {

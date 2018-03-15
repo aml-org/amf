@@ -329,17 +329,21 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
           Option(propertyMapping.objectRange()) match {
             case Some(nodeMappingRefs) =>
               val mapped = nodeMappingRefs.map { nodeMappingRef =>
-                ctx.declarations.findNodeMapping(nodeMappingRef, All) match {
-                  case Some(mapping) => Some(mapping.id)
-                  case _ =>
-                    ctx.missingPropertyRangeViolation(
-                      nodeMappingRef,
-                      nodeMapping.id,
-                      propertyMapping.fields.entry(PropertyMappingModel.ObjectRange)
-                        .flatMap(_.value.annotations.find(classOf[LexicalInformation]))
-                        .orElse(propertyMapping.annotations.find(classOf[LexicalInformation]))
-                    )
-                    None
+                if (nodeMappingRef == (Namespace.Meta + "anyNode").iri() ) {
+                  Some(nodeMappingRef)
+                } else {
+                  ctx.declarations.findNodeMapping(nodeMappingRef, All) match {
+                    case Some(mapping) => Some(mapping.id)
+                    case _ =>
+                      ctx.missingPropertyRangeViolation(
+                        nodeMappingRef,
+                        nodeMapping.id,
+                        propertyMapping.fields.entry(PropertyMappingModel.ObjectRange)
+                          .flatMap(_.value.annotations.find(classOf[LexicalInformation]))
+                          .orElse(propertyMapping.annotations.find(classOf[LexicalInformation]))
+                      )
+                      None
+                  }
                 }
               }
               val refs = mapped.collect { case Some(ref) => ref }
@@ -563,9 +567,10 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
           val range = value.string().toString
           range match {
             case "string" | "integer" | "boolean" | "float" | "decimal" | "double" | "duration" | "dateTime" | "time" | "date" | "anyUri" | "anyType" =>  propertyMapping.withLiteralRange((Namespace.Xsd + range).iri())
-            case "number" =>  propertyMapping.withLiteralRange((Namespace.Shapes + "number").iri())
-            case "uri"    =>  propertyMapping.withLiteralRange((Namespace.Xsd + "anyUri").iri())
-            case "any"    =>  propertyMapping.withLiteralRange((Namespace.Xsd + "anyType").iri())
+            case "number"      => propertyMapping.withLiteralRange((Namespace.Shapes + "number").iri())
+            case "uri"         => propertyMapping.withLiteralRange((Namespace.Xsd + "anyUri").iri())
+            case "any"         => propertyMapping.withLiteralRange((Namespace.Xsd + "anyType").iri())
+            case "anyNode"     => propertyMapping.withObjectRange(Seq((Namespace.Meta + "anyNode").iri()))
             case nodeMappingId => propertyMapping.withObjectRange(Seq(nodeMappingId)) // temporary until we can resolve all nodeMappings after finishing parsing declarations
           }
       }

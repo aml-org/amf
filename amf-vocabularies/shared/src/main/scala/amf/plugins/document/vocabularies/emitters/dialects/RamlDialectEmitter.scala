@@ -249,9 +249,13 @@ case class PropertyMappingEmitter(dialect: Dialect, propertyMapping: PropertyMap
       Option(propertyMapping.objectRange()).foreach { nodeIds =>
         val pos = fieldPos(propertyMapping, PropertyMappingModel.ObjectRange)
         val targets = nodeIds.map { nodeId =>
-          aliasFor(nodeId) match {
-            case Some(nodeMappingAlias) => Some(nodeMappingAlias)
-            case _                      => None
+          if (nodeId == (Namespace.Meta + "anyNode").iri()) {
+            Some("anyNode")
+          } else {
+            aliasFor(nodeId) match {
+              case Some(nodeMappingAlias) => Some(nodeMappingAlias)
+              case _ => None
+            }
           }
         }.collect { case Some(alias) => alias}
 
