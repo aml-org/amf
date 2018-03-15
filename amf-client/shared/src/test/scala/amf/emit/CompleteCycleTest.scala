@@ -924,4 +924,8 @@ class CompleteCycleTest extends BuildCycleTests {
   test("CollectionFormat shape amf to oas") {
     cycle("collection-format.jsonld", "collection-format.jsonld.json", AmfJsonHint, Oas)
   }
+
+  test("Anonymous and named examples with annotations json to raml") {
+    cycle("anonymous-and-named-examples.jsonld", "anonymous-and-named-examples.raml", AmfJsonHint, Raml)
+  }
 }

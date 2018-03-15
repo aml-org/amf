@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.{SingleValueArray, SynthesizedField}
+import amf.core.annotations.SynthesizedField
 import amf.core.model.domain.{AmfScalar, DataNode}
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -99,12 +99,11 @@ case class RamlSingleExampleParser(key: String, map: YMap, producer: Option[Stri
     map.key(key).flatMap { entry =>
       entry.value.tagType match {
         case YType.Map =>
-          Option(RamlSingleExampleValueParser(entry.value.as[YMap], newProducer).parse().add(SingleValueArray()))
+          Option(RamlSingleExampleValueParser(entry.value.as[YMap], newProducer).parse())
         case _ => // example can be any type or scalar value, like string int datetime etc. We will handle all like strings in this stage
           Option(
             RamlExampleValueAsString(entry.value, newProducer().add(Annotations(entry.value)), strict = true)
-              .populate()
-              .add(SingleValueArray()))
+              .populate())
       }
     }
   }
