@@ -432,10 +432,11 @@ sealed abstract class RamlTypeParser(ast: YPart,
   def parse(): Option[Shape] = {
 
     val info: Option[TypeDef] =
-      RamlTypeDetection(node,
-                        "",
-                        node.toOption[YMap].flatMap(m => m.key("(format)").map(_.value.toString())),
-                        defaultType)
+      RamlTypeDetection(
+        node,
+        "",
+        node.toOption[YMap].flatMap(m => m.key("format").orElse(m.key("(format)")).map(_.value.toString())),
+        defaultType)
     val result = info.map {
       case XMLSchemaType                         => parseXMLSchemaExpression(name, node, adopt)
       case JSONSchemaType                        => parseJSONSchemaExpression(name, node, adopt)
