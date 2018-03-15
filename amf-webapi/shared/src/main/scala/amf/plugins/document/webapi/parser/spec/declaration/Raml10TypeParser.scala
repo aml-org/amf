@@ -655,10 +655,10 @@ sealed abstract class RamlTypeParser(ast: YPart,
       map.key("multipleOf", (ScalarShapeModel.MultipleOf in shape).allowingAnnotations)
 
       val syntaxType = Option(shape.dataType).getOrElse("#shape").split("#").last match {
-        case "integer" | "float" => "numberScalarShape"
-        case "string"            => "stringScalarShape"
-        case "dateTime"          => "dateScalarShape"
-        case _                   => "shape"
+        case "integer" | "float" | "double" => "numberScalarShape"
+        case "string"                       => "stringScalarShape"
+        case "dateTime"                     => "dateScalarShape"
+        case _                              => "shape"
       }
 
       ctx.closedRamlTypeShape(shape, map, syntaxType, isAnnotation)

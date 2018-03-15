@@ -101,7 +101,8 @@ object Raml10Syntax extends RamlSyntax {
       "pattern",
       "minLength",
       "maxLength",
-      "required"
+      "required",
+      "format"
     ),
     "numberScalarShape" -> Set(
       "type",

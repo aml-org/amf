@@ -99,7 +99,9 @@ case class RamlTypeDetector(parent: String,
       (typeOrSchema(map)
         .flatMap(
           e =>
-            RamlTypeDetector(parent, map.key("(format)").map(_.value.toString()), recursive = true)
+            RamlTypeDetector(parent,
+                             map.key("format").orElse(map.key("(format)")).map(_.value.toString()),
+                             recursive = true)
               .detect(e.value)) match {
         case Some(t) if t == UndefinedType => ShapeClassTypeDefMatcher.fetchByRamlSyntax(map)
         case Some(other)                   => Some(other)
