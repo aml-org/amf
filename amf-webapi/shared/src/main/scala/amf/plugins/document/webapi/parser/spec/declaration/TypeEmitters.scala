@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.{ExplicitField, SingleValueArray, SynthesizedField}
+import amf.core.annotations.{ExplicitField, SynthesizedField}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
 import amf.core.metamodel.Field
@@ -413,11 +413,16 @@ class RamlAnyShapeEmitter(shape: AnyShape, ordering: SpecOrdering, references: S
     shape.fields
       .entry(AnyShapeModel.Examples)
       .map(f => {
+        val (anonymous, named) =
+          shape.examples.partition(e => !e.fields.fieldsMeta().contains(ExampleModel.Name) && !e.isLink)
         val examples = f.array.values.collect({ case e: Example => e })
-        if (examples.size == 1 && examples.head.annotations.contains(classOf[SingleValueArray]))
-          results += SingleExampleEmitter("example", examples.head, ordering)
-        else
-          results += MultipleExampleEmitter("examples", examples, ordering, references)
+        anonymous.headOption.foreach { a =>
+          results += SingleExampleEmitter("example", a, ordering)
+        }
+        results += MultipleExampleEmitter("examples",
+                                          named ++ (if (anonymous.lengthCompare(1) > 0) examples.tail else None),
+                                          ordering,
+                                          references)
       })
     results
   } //:+ MapEntryEmitter("type", "any")
