@@ -36,8 +36,9 @@ class ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
     reportConstraint(id, node, property, message, lexical, VIOLATION)
   }
 
-  def violation(message: String, ast: Option[YPart]): Unit = {
-    violation(ParsingErrorSpecification.id(), "", None, message, ast.flatMap(lexical))
+  /** Report constraint failure of severity violation. WITHOUT NODE ID. */
+  def violation(message: String, ast: YPart): Unit = {
+    violation(ParsingErrorSpecification.id(), "", None, message, lexical(ast))
   }
 
   /** Report constraint failure of severity violation. */
@@ -64,8 +65,9 @@ class ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
     reportConstraint(id, node, property, message, lexical, WARNING)
   }
 
-  def warning(message: String, ast: Option[YPart]): Unit = {
-    warning(ParsingWarningSpecification.id(), "", None, message, ast.flatMap(lexical))
+  /** Report constraint failure of severity warning. WITHOUT NODE ID. */
+  def warning(message: String, ast: YPart): Unit = {
+    warning(ParsingWarningSpecification.id(), "", None, message, lexical(ast))
   }
 
   /** Report constraint failure of severity warning. */
@@ -98,8 +100,7 @@ class ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
       case range           => Some(annotations.LexicalInformation(Range(range)))
     }
   }
-  override def handle(node: YPart, e: SyamlException): Unit =
-    violation(e.getMessage, Some(node))
+  override def handle(node: YPart, e: SyamlException): Unit = violation("", e.getMessage, node)
 }
 
 object EmptyFutureDeclarations {

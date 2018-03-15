@@ -50,7 +50,7 @@ case class RamlTypeDetector(parent: String,
       val scalar = node.as[YScalar]
       scalar.text match {
         case t: String if t.startsWith("<<") && t.endsWith(">>") =>
-          ctx.violation("Trait/Resource Type parameter in type", Some(node))
+          ctx.violation(parent, "Trait/Resource Type parameter in type", node)
           None
 
         case RamlTypeDefMatcher.TypeExpression(text) =>
@@ -117,11 +117,11 @@ case class RamlTypeDetector(parent: String,
       _ <- `type`
       s <- schema
     } {
-      ctx.violation("'schema' and 'type' properties are mutually exclusive", Some(s.key))
+      ctx.violation("'schema' and 'type' properties are mutually exclusive", s.key)
     }
 
     schema.foreach(s =>
-      ctx.warning("'schema' keyword it's deprecated for 1.0 version, should use 'type' instead", Some(s.key)))
+      ctx.warning("'schema' keyword it's deprecated for 1.0 version, should use 'type' instead", s.key))
 
     `type`.orElse(schema)
   }

@@ -225,12 +225,12 @@ object RamlScalarNode {
     }
 
     if (values.nonEmpty) {
-      values.tail.foreach(d => iv.violation(s"Duplicated key 'value'.", Some(d)))
+      values.tail.foreach(d => iv.violation(s"Duplicated key 'value'.", d))
     }
 
     RamlScalarValuedNode(obj, values.headOption.map(entry => ScalarNode(entry.value)))
   }
 
   private def unexpected(key: YNode)(implicit iv: WebApiContext): Unit =
-    iv.violation(s"Unexpected key '$key'. Options are 'value' or annotations \\(.+\\)", Some(key))
+    iv.violation(s"Unexpected key '$key'. Options are 'value' or annotations \\(.+\\)", key)
 }

@@ -11,7 +11,7 @@ class Declarations(var libraries: Map[String, Declarations] = Map(),
                    var fragments: Map[String, DomainElement] = Map(),
                    var annotations: Map[String, CustomDomainProperty] = Map(),
                    errorHandler: Option[ErrorHandler],
-                  futureDeclarations: FutureDeclarations) {
+                   futureDeclarations: FutureDeclarations) {
 
   def +=(fragment: (String, Fragment)): Declarations = {
     fragment match {
@@ -46,16 +46,13 @@ class Declarations(var libraries: Map[String, Declarations] = Map(),
     }
   }
 
-  protected def error(message: String, ast: Option[YPart]): Unit = errorHandler match {
+  protected def error(message: String, ast: YPart): Unit = errorHandler match {
     case Some(handler) => handler.violation(message, ast)
     case _             => throw new Exception(message)
   }
 
-  protected def error(message: String, ast: YPart): Unit = error(message, Option(ast))
-
   def declarables(): Seq[DomainElement] =
     annotations.values.toSeq
-
 
   def findAnnotationOrError(ast: YPart)(key: String, scope: SearchScope.Scope): CustomDomainProperty =
     findAnnotation(key, scope) match {
@@ -101,7 +98,9 @@ class Declarations(var libraries: Map[String, Declarations] = Map(),
 
 object Declarations {
 
-  def apply(declarations: Seq[DomainElement], errorHandler: Option[ErrorHandler], futureDeclarations: FutureDeclarations): Declarations = {
+  def apply(declarations: Seq[DomainElement],
+            errorHandler: Option[ErrorHandler],
+            futureDeclarations: FutureDeclarations): Declarations = {
     val result = new Declarations(errorHandler = errorHandler, futureDeclarations = futureDeclarations)
     declarations.foreach(result += _)
     result
