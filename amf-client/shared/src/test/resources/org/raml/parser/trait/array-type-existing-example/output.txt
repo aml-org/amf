@@ -4,10 +4,10 @@ title: Example with headers
   get:
     headers:
       X-Dept:
+        type: array
         description: |
           A department code to be charged.
           Multiple of such headers are allowed.
-        type: array
         items:
           example: 230-OCTO
           pattern: ^\d+\-\w+$

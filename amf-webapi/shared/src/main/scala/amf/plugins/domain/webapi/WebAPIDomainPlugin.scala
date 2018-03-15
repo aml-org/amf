@@ -4,7 +4,7 @@ import amf.core.metamodel.domain.extensions.{CustomDomainPropertyModel, DomainEx
 import amf.core.plugins.{AMFDomainPlugin, AMFPlugin}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
-import amf.plugins.domain.webapi.annotations.{OrphanOasExtension, ParentEndPoint}
+import amf.plugins.domain.webapi.annotations.{OrphanOasExtension, ParentEndPoint, TypePropertyLexicalInfo}
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.metamodel.templates.{ParametrizedResourceTypeModel, ParametrizedTraitModel, ResourceTypeModel, TraitModel}
@@ -46,7 +46,8 @@ object WebAPIDomainPlugin extends AMFDomainPlugin {
 
   override def serializableAnnotations() = Map(
     "parent-end-point"     -> ParentEndPoint,
-    "orphan-oas-extension" -> OrphanOasExtension
+    "orphan-oas-extension" -> OrphanOasExtension,
+    "type-property-lexical-info" -> TypePropertyLexicalInfo
   )
 
   override def init(): Future[AMFPlugin] = Future { this }

@@ -6,6 +6,7 @@
   },
   "definitions": {
     "lat-long": {
+      "type": "object",
       "properties": {
         "lat": {
           "type": "number"
@@ -16,6 +17,7 @@
       }
     },
     "loc": {
+      "type": "object",
       "properties": {
         "location": {
           "type": "string"
@@ -23,6 +25,7 @@
       }
     },
     "paging": {
+      "type": "object",
       "properties": {
         "start": {
           "type": "number"

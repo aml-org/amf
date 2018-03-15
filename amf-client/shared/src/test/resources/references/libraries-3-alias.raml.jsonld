@@ -311,6 +311,20 @@
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
+                        "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                          {
+                            "http://raml.org/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml#/declarations/Person/property/name/scalar/name"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(6,11)-(7,20)]"
+                              }
+                            ]
+                          }
+                        ],
                         "http://raml.org/vocabularies/document-source-maps#lexical": [
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [

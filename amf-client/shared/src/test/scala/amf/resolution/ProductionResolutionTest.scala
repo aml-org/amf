@@ -2,7 +2,7 @@ package amf.resolution
 
 import amf.core.client.GenerationOptions
 import amf.core.model.document.BaseUnit
-import amf.core.remote.{Raml, Raml08, RamlYamlHint}
+import amf.core.remote.{Amf, Raml, Raml08, RamlYamlHint}
 import amf.facades.AMFDumper
 
 abstract class RamlResolutionTest extends ResolutionTest {
@@ -22,6 +22,10 @@ class ProductionResolutionTest extends RamlResolutionTest {
 
   test("Resolves channel4.com1.0.0swagger.raml") {
     cycle("channel4.com1.0.0swagger.raml", "channel4.com1.0.0swagger.resolved.raml", RamlYamlHint, Raml)
+  }
+
+  test("Types with unions raml to AMF") {
+    cycle("unions-example.raml", "unions-example.raml.jsonld", RamlYamlHint, Amf)
   }
 
 }

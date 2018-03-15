@@ -20,10 +20,10 @@ securitySchemes:
           description: Authorization error.
           body:
             application/json:
+              type: object
               properties:
                 merge:
                   type: string
-              type: object
     settings:
       requestTokenUri: https://api.mysampleapi.com/1/oauth/request_token
       authorizationUri: https://api.mysampleapi.com/1/oauth/authorize

@@ -18,6 +18,7 @@ import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
+import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -346,7 +347,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
       super.parse()
 
-      map.key("type", _ => shape.add(ExplicitField())) // todo lexical of type?? new annotation?
+      map.key("type", _ => shape.add(ExplicitField()))
 
       map.key("minProperties", NodeShapeModel.MinProperties in shape)
       map.key("maxProperties", NodeShapeModel.MaxProperties in shape)
@@ -481,6 +482,9 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
             PropertiesParser(entry.value.as[YMap], shape.withCustomShapePropertyDefinition, Seq()).parse()
         }
       )
+
+      // Explicit annotation for the type property
+      map.key("type", entry =>  shape.annotations += TypePropertyLexicalInfo(Range(map.range)) )
 
       // normal annotations
       AnnotationParser(shape, map).parse()

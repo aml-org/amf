@@ -27,6 +27,7 @@
         "parameters": [
           {
             "schema": {
+              "type": "object",
               "properties": {
                 "name": {
                   "type": "string"
@@ -35,6 +36,7 @@
                   "type": "string"
                 },
                 "address": {
+                  "type": "object",
                   "properties": {
                     "city": {
                       "type": "string"
@@ -63,8 +65,7 @@
                     ]
                   }
                 }
-              },
-              "type": "object"
+              }
             },
             "in": "body"
           }
@@ -73,6 +74,7 @@
           {
             "mediaType": "application/raml",
             "schema": {
+              "type": "object",
               "properties": {
                 "credit_card": {
                   "type": "integer"
@@ -103,8 +105,7 @@
                 "number": [
                   "street"
                 ]
-              },
-              "type": "object"
+              }
             }
           }
         ],

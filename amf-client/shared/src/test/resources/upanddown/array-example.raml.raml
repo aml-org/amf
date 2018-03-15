@@ -1,14 +1,13 @@
 #%RAML 1.0
 title: Simple Array Type with Example
-
 types:
   Email:
+    type: object
     properties:
       subject:
         type: string
       body:
         type: string
-    type: object
   Emails:
     type: Email[]
     minItems: 1

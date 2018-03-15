@@ -10,8 +10,8 @@ title: My API with Types
             additionalProperties: true
             properties:
               onCall:
-                required: true
                 type: object
+                required: true
                 additionalProperties: true
                 properties:
                   firstname:
@@ -33,8 +33,8 @@ title: My API with Types
                     type: string
                     required: true
               Head:
-                required: true
                 type: object
+                required: true
                 additionalProperties: true
                 properties:
                   firstname:
@@ -47,8 +47,8 @@ title: My API with Types
                     type: string
                     required: false
                   reports:
-                    required: true
                     type: array
+                    required: true
                     items:
                       type: object
                       additionalProperties: true

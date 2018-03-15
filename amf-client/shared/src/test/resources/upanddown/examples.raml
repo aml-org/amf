@@ -2,6 +2,7 @@
 title: API with Examples
 types:
   User:
+    type: object
     properties:
       name:
         type: string
@@ -10,8 +11,8 @@ types:
     example:
       name: Bob
       lastname: Marley
-    type: object
   Org:
+    type: object
     properties:
       name:
         type: string
@@ -19,7 +20,6 @@ types:
         type: string
       value?:
         type: string
-    type: object
 /organization:
   post:
     headers:

@@ -2,6 +2,7 @@
   "swagger": "2.0",
   "definitions": {
     "Person": {
+      "type": "object",
       "properties": {
         "age": {
           "type": "number"
@@ -15,10 +16,10 @@
         "parent": {
           "$ref": "#/definitions/Person"
         }
-      },
-      "type": "object"
+      }
     },
     "Address": {
+      "type": "object",
       "properties": {
         "street": {
           "type": "string"
@@ -26,8 +27,7 @@
         "number": {
           "type": "number"
         }
-      },
-      "type": "object"
+      }
     }
   },
   "paths": {
