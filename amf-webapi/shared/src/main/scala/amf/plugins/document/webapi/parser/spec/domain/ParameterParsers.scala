@@ -212,7 +212,9 @@ case class OasParameterParser(map: YMap, parentId: String, name: Option[String])
         map.key("required", (ParameterModel.Required in parameter).explicit)
         map.key("in", ParameterModel.Binding in parameter)
 
-        // TODO generate parameter with parent id or adopt
+        // type
+        parameter.adopted(parentId)
+
         if (p.isBody) {
           p.payload.adopted(parentId)
 
@@ -223,15 +225,15 @@ case class OasParameterParser(map: YMap, parentId: String, name: Option[String])
             entry => {
               OasTypeParser(entry, (shape) => shape.withName("schema").adopted(p.payload.id))
                 .parse()
-                .map(p.payload.set(PayloadModel.Schema, _, Annotations(entry)))
+                .map {
+                  p.payload.set(PayloadModel.Schema, _, Annotations(entry))
+                }
             }
           )
 
           map.key("x-media-type", PayloadModel.MediaType in p.payload)
 
         } else {
-          // type
-          parameter.adopted(parentId)
 
           ctx.closedShape(parameter.id, map, "parameter")
 

@@ -4,8 +4,8 @@ title: Sample API
   get:
     body:
       application/xml:
-        example: <Person> <name>max</name> <age>22</age> </Person>
         type: object
+        example: <Person> <name>max</name> <age>22</age> </Person>
         additionalProperties: true
         properties:
           name:

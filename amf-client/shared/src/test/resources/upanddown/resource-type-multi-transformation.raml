@@ -2,10 +2,10 @@
 title: Test
 types:
   PostMedium:
+    type: object
     properties:
       name:
         type: string
-    type: object
 resourceTypes:
   collection:
     post?:
@@ -17,6 +17,6 @@ resourceTypes:
   post:
     body:
       application/json:
+        type: object
         example:
           name: Something
-        type: object

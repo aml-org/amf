@@ -31,7 +31,7 @@ class ReferencesCycleTest extends BuildCycleTests with ListAssertions with Compi
     "Data type fragment raml to raml"             -> ("data-type-fragment.raml", RamlYamlHint)       -> ("fragments/person.raml", Raml),
     "Data type fragment oas to oas"               -> ("data-type-fragment.json", OasJsonHint)        -> ("fragments/person.json", Oas),
     "Data type fragment raml to oas"              -> ("data-type-fragment.raml", RamlJsonHint)       -> ("fragments/person.json", Oas),
-    "Data type fragment oas to raml"              -> ("data-type-fragment.json", OasJsonHint)        -> ("fragments/person.raml", Raml),
+    "Data type fragment oas to raml"              -> ("data-type-fragment.json", OasJsonHint)        -> ("fragments/person.json.raml", Raml),
     "Data type fragment amf to raml from include" -> ("data-type-fragment.raml.jsonld", AmfJsonHint) -> ("fragments/person.raml", Raml),
     "Data type fragment amf to oas from include"  -> ("data-type-fragment.json.jsonld", AmfJsonHint) -> ("fragments/person.json", Oas),
     "Resource type fragment raml to raml"         -> ("resource-type-fragment.raml", RamlYamlHint)   -> ("fragments/resource-type.raml", Raml),
@@ -41,6 +41,7 @@ class ReferencesCycleTest extends BuildCycleTests with ListAssertions with Compi
     "Security schemes fragment oas to oas"        -> ("security-scheme-fragment.json", OasJsonHint)  -> ("fragments/security-scheme.json", Oas),
     "Named Example fragment raml to raml"         -> ("named-example.raml", RamlYamlHint)            -> ("fragments/named-example.raml", Raml),
     "Named Example fragment oas to oas"           -> ("named-example.json", OasJsonHint)             -> ("fragments/named-example.json", Oas)
+
   )
 
   fixture.foreach {

@@ -592,7 +592,7 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends BaseSpecPar
           .as[YMap]
           .entries
           .foreach(e => {
-            val typeName = e.key.as[YScalar].text
+             val typeName = e.key.as[YScalar].text
             val oasParameter = e.value.to[YMap] match {
               case Right(m) => OasParameterParser(m, parentPath, Some(typeName)).parse()
               case _ =>
@@ -600,8 +600,10 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends BaseSpecPar
                 ctx.violation(parameter.parameter.id, "Map needed to parse a parameter declaration", e)
                 parameter
             }
-
             val parameter = oasParameter.parameter.add(DeclaredElement())
+            if (Option(oasParameter.payload).isDefined && Option(oasParameter.payload.schema).isDefined) {
+              parameter.withSchema(oasParameter.payload.schema)
+            }
             parameter.fields.getValue(ParameterModel.Binding).annotations += ExplicitField()
             ctx.declarations.registerParameter(parameter, oasParameter.payload)
           })

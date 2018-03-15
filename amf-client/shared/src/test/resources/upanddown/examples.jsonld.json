@@ -6,6 +6,7 @@
   },
   "definitions": {
     "User": {
+      "type": "object",
       "properties": {
         "name": {
           "type": "string"
@@ -20,6 +21,7 @@
       }
     },
     "Org": {
+      "type": "object",
       "properties": {
         "name": {
           "type": "string"
@@ -42,14 +44,15 @@
       "post": {
         "parameters": [
           {
+            "type": "string",
             "name": "UserID",
             "description": "description: the identifier for the user who posts a new organization",
-            "type": "string",
             "in": "header",
             "example": "SWED-123"
           },
           {
             "schema": {
+              "type": "object",
               "allOf": [
                 {
                   "$ref": "#/definitions/Org"
@@ -74,6 +77,7 @@
           "201": {
             "x-media-type": "application/json",
             "schema": {
+              "type": "object",
               "allOf": [
                 {
                   "$ref": "#/definitions/Org"

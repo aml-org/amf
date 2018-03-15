@@ -149,6 +149,20 @@
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
+                    "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "null/property/onlyFutureDates/scalar/onlyFutureDates"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(11,27)-(13,9)]"
+                          }
+                        ]
+                      }
+                    ],
                     "http://raml.org/vocabularies/document-source-maps#lexical": [
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
@@ -248,6 +262,20 @@
                     "@id": "null/property/noHolidays/scalar/noHolidays/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "null/property/noHolidays/scalar/noHolidays"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(14,22)-(16,9)]"
+                          }
+                        ]
+                      }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#lexical": [
                       {
@@ -367,6 +395,20 @@
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(18,6)-(18,22)]"
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/CustomDate"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(9,18)-(20,5)]"
                   }
                 ]
               }
@@ -495,6 +537,20 @@
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(23,6)-(23,22)]"
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/PossibleMeetingDate"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(21,27)-(25,5)]"
                   }
                 ]
               }

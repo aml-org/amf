@@ -28,15 +28,15 @@ baseUri: localhost/escape
           required: false
       body:
         application/json:
+          type: object
           properties:
             ip:
             type:
               type: string
-          type: object
       responses:
         200:
           body:
             application/json:
+              type: any
               example:
                 success: true
-              type: any

@@ -11,18 +11,18 @@
         "operationId": "Some title",
         "parameters": [
           {
+            "type": "array",
             "name": "param1",
             "in": "header",
             "collectionFormat": "csv",
-            "type": "array",
             "items": {
               "type": "string"
             }
           },
           {
+            "type": "array",
             "name": "param2",
             "in": "query",
-            "type": "array",
             "items": {
               "type": "string",
               "collectionFormat": "tsv"

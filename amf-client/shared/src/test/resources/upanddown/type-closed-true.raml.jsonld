@@ -122,6 +122,20 @@
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
+                    "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/type-closed-true.raml#/declarations/ClosedType/property/name/scalar/name"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(7,11)-(8,20)]"
+                          }
+                        ]
+                      }
+                    ],
                     "http://raml.org/vocabularies/document-source-maps#lexical": [
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [

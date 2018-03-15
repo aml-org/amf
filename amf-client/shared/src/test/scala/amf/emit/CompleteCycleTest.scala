@@ -1,5 +1,6 @@
 package amf.emit
 
+import amf.core.remote.Syntax.Json
 import amf.core.remote._
 import amf.io.BuildCycleTests
 
@@ -230,6 +231,10 @@ class CompleteCycleTest extends BuildCycleTests {
 
   test("Complete with parameter references oas to amf test") {
     cycle("parameters.json", "parameters.json.jsonld", OasJsonHint, Amf)
+  }
+
+  test("Complete with parameter references amf to oas test") {
+    cycle("parameters.json.jsonld", "parameters.json", AmfJsonHint, Oas)
   }
 
   test("Complete with parameter references oas to raml test") {
@@ -857,7 +862,7 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("users_accounts.jsonld", "users_accounts.raml", AmfJsonHint, Raml)
   }
 
-  test("API with implicit object definition APIMF-376") {
+  test("HERE_HERE API with implicit object definition APIMF-376") {
     cycle("implicitly-defined-object.raml", "implicitly-defined-object.raml.raml", RamlYamlHint, Raml)
   }
 

@@ -209,6 +209,20 @@
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
+                        "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                          {
+                            "http://raml.org/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/references/fragments/person.json/type/property/name/scalar/name"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(8,12)-(10,5)]"
+                              }
+                            ]
+                          }
+                        ],
                         "http://raml.org/vocabularies/document-source-maps#lexical": [
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
@@ -218,7 +232,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(8,6)-(8,22)]"
+                                "@value": "[(9,6)-(9,22)]"
                               }
                             ]
                           },
@@ -230,7 +244,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(7,4)-(9,5)]"
+                                "@value": "[(8,4)-(10,5)]"
                               }
                             ]
                           }
@@ -264,7 +278,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(7,4)-(9,5)]"
+                            "@value": "[(8,4)-(10,5)]"
                           }
                         ]
                       }
@@ -284,6 +298,20 @@
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/references/fragments/person.json/type"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(1,0)-(12,1)]"
+                      }
+                    ]
+                  }
+                ],
                 "http://raml.org/vocabularies/document-source-maps#lexical": [
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
@@ -293,7 +321,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(6,2)-(10,3)]"
+                        "@value": "[(7,2)-(11,3)]"
                       }
                     ]
                   },
@@ -305,7 +333,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(1,0)-(11,1)]"
+                        "@value": "[(1,0)-(12,1)]"
                       }
                     ]
                   }
@@ -329,7 +357,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(1,0)-(12,0)]"
+                    "@value": "[(1,0)-(13,0)]"
                   }
                 ]
               }
