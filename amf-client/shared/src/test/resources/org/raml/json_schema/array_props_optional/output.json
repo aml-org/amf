@@ -3,14 +3,17 @@
   "$ref": "#/definitions/root",
   "definitions": {
     "root": {
+      "additionalProperties": false,
       "type": "object",
-      "additionalProperties": true,
-      "required": [
-        "name"
-      ],
       "properties": {
         "name": {
           "type": "string"
+        },
+        "friends": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     }

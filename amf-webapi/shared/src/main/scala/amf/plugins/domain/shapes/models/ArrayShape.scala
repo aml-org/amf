@@ -12,14 +12,15 @@ import org.yaml.model.YPart
   * Array shape
   */
 abstract class DataArrangementShape(fields: Fields, annotations: Annotations) extends AnyShape(fields, annotations) {
+  def minItems: IntField       = fields.field(MinItems)
+  def maxItems: IntField       = fields.field(MaxItems)
+  def uniqueItems: BoolField   = fields.field(UniqueItems)
+  def collectionFormat: String = fields.field(CollectionFormat)
 
-  def minItems: IntField     = fields.field(MinItems)
-  def maxItems: IntField     = fields.field(MaxItems)
-  def uniqueItems: BoolField = fields.field(UniqueItems)
-
-  def withMinItems(minItems: Int): this.type           = set(MinItems, minItems)
-  def withMaxItems(maxItems: Int): this.type           = set(MaxItems, maxItems)
-  def withUniqueItems(uniqueItems: Boolean): this.type = set(UniqueItems, uniqueItems)
+  def withMinItems(minItems: Int): this.type                     = set(MinItems, minItems)
+  def withMaxItems(maxItems: Int): this.type                     = set(MaxItems, maxItems)
+  def withUniqueItems(uniqueItems: Boolean): this.type           = set(UniqueItems, uniqueItems)
+  def withCollectionFormat(collectionFormat: Boolean): this.type = set(CollectionFormat, collectionFormat)
 
   def withScalarItems(): ScalarShape = {
     val scalar = ScalarShape()
@@ -55,8 +56,7 @@ abstract class DataArrangementShape(fields: Fields, annotations: Annotations) ex
 case class ArrayShape(override val fields: Fields, override val annotations: Annotations)
     extends DataArrangementShape(fields, annotations) {
 
-  def items: Shape = fields.field(Items)
-
+  def items: Shape                       = fields.field(Items)
   def withItems(items: Shape): this.type = set(Items, items)
 
   def toMatrixShape: MatrixShape = MatrixShape(fields, annotations)
@@ -79,8 +79,7 @@ object ArrayShape {
 case class MatrixShape(override val fields: Fields, override val annotations: Annotations)
     extends DataArrangementShape(fields, annotations) {
 
-  def items: Shape = fields.field(Items)
-
+  def items: Shape                       = fields.field(Items)
   def withItems(items: Shape): this.type = set(Items, items)
 
   def toArrayShape               = ArrayShape(fields, annotations)
@@ -104,8 +103,7 @@ object MatrixShape {
 case class TupleShape(override val fields: Fields, override val annotations: Annotations)
     extends DataArrangementShape(fields, annotations) {
 
-  def items: Seq[Shape] = fields.field(Items)
-
+  def items: Seq[Shape]                       = fields.field(Items)
   def withItems(items: Seq[Shape]): this.type = setArray(Items, items)
 
   override def linkCopy() = TupleShape().withId(id)

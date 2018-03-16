@@ -28,6 +28,7 @@ case class Operation(fields: Fields, annotations: Annotations)
   def request: Request             = fields.field(OperationRequest)
   def responses: Seq[Response]     = fields.field(Responses)
   def security: Seq[DomainElement] = fields.field(Security)
+  def tags: Seq[String]            = fields(Tags)
 
   def traits: Seq[ParametrizedTrait] = extend collect { case t: ParametrizedTrait => t }
 
@@ -43,6 +44,7 @@ case class Operation(fields: Fields, annotations: Annotations)
   def withRequest(request: Request): this.type                  = set(OperationRequest, request)
   def withResponses(responses: Seq[Response]): this.type        = setArray(Responses, responses)
   def withSecurity(security: Seq[DomainElement]): this.type     = setArray(Security, security)
+  def withTags(tag: Seq[String]): this.type                     = set(Tags, tag.toList)
 
   override def adopted(parent: String): this.type = withId(parent + "/" + method.value())
 

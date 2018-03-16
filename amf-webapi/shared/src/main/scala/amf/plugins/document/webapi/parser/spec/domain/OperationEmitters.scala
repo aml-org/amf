@@ -72,6 +72,8 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
 
     fs.entry(OperationModel.Summary).map(f => result += ValueEmitter("(summary)", f))
 
+    fs.entry(OperationModel.Tags).map(f => result += ArrayEmitter("(tags)", f, ordering))
+
     fs.entry(OperationModel.Documentation)
       .map(f =>
         result += OasEntryCreativeWorkEmitter("(externalDocs)", f.value.value.asInstanceOf[CreativeWork], ordering))
@@ -89,9 +91,7 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
 
       fields
         .entry(RequestModel.QueryParameters)
-        .map(f =>
-          result += RamlParametersEmitter("queryParameters", f, ordering, references)
-        )
+        .map(f => result += RamlParametersEmitter("queryParameters", f, ordering, references))
 
       fields
         .entry(RequestModel.Headers)

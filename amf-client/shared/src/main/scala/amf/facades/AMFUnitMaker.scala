@@ -1,7 +1,7 @@
 package amf.facades
 
 import amf.Core
-import amf.core.AMFSerializer
+import amf.core.CommonASTMaker
 import amf.core.client.GenerationOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
@@ -30,6 +30,7 @@ class AMFUnitMaker {
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAMLVocabulariesPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(WebAPIDomainPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
+  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(JsonSchemaPlugin)
 
   def make(unit: BaseUnit, vendor: Vendor, options: GenerationOptions): YDocument = {
     val vendorString = vendor match {
@@ -51,7 +52,7 @@ class AMFUnitMaker {
       case Unknown   => "text/plain"
     }
 
-    new AMFSerializer(unit, mediaType, vendorString, options).make()
+    CommonASTMaker(unit, options, vendorString, mediaType).make()
   }
 }
 
