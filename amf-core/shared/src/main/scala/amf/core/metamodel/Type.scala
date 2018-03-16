@@ -30,6 +30,8 @@ object Type {
 
   object Str extends Scalar("string")
 
+  object RegExp extends Scalar("regexp")
+
   object Int extends Scalar("int")
 
   object Float extends Scalar("float")

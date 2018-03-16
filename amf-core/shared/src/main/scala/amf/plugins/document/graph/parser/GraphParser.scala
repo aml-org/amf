@@ -1,7 +1,7 @@
 package amf.plugins.document.graph.parser
 
 import amf.core.annotations.DomainExtensionAnnotation
-import amf.core.metamodel.Type.{Array, Bool, Iri, SortedArray, Str}
+import amf.core.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.core.metamodel.document.BaseUnitModel.Location
 import amf.core.metamodel.document._
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
