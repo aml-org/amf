@@ -206,7 +206,7 @@ class ShapeNormalizationStage(profile: String)
   }
 
   private def canonicalShape(any: Shape) = {
-    if (Option(any.inherits).isDefined && any.inherits.nonEmpty) {
+    if (any.inherits.nonEmpty) {
       canonicalInheritance(any)
     } else {
       any
@@ -234,7 +234,7 @@ class ShapeNormalizationStage(profile: String)
   }
 
   protected def canonicalArray(array: ArrayShape): Shape = {
-    if (Option(array.inherits).isDefined && array.inherits.nonEmpty) {
+    if (array.inherits.nonEmpty) {
       canonicalInheritance(array)
     } else {
       Option(array.items).fold(array.asInstanceOf[Shape])(i => {
@@ -289,7 +289,7 @@ class ShapeNormalizationStage(profile: String)
 
   protected def canonicalNode(node: NodeShape): Shape = {
     node.add(ExplicitField())
-    if (Option(node.inherits).isDefined && node.inherits.nonEmpty) {
+    if (node.inherits.nonEmpty) {
       canonicalInheritance(node)
     } else {
       // We start processing the properties by cloning the base node shape
@@ -311,11 +311,11 @@ class ShapeNormalizationStage(profile: String)
   }
 
   protected def canonicalUnion(union: UnionShape): Shape = {
-    if (Option(union.inherits).isDefined && union.inherits.nonEmpty) {
+    if (union.inherits.nonEmpty) {
       canonicalInheritance(union)
     } else {
       val anyOfAcc: ListBuffer[Shape] = ListBuffer()
-      Option(union.anyOf).getOrElse(Nil).foreach { shape =>
+      union.anyOf.foreach { shape =>
         canonical(shape) match {
           case union: UnionShape => union.anyOf.foreach(e => anyOfAcc += e)
           case other: Shape      => anyOfAcc += other

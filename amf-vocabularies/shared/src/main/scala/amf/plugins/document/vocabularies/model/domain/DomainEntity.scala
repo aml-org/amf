@@ -10,7 +10,7 @@ case class DomainEntity(linkValue: Option[String], definition: DialectNode, fiel
     with Linkable {
 
   override def adopted(parent: String): this.type = {
-    if (Option(this.id).isEmpty) {
+    if (Option(id).isEmpty) {
       linkValue match {
         case Some(link) =>
           parent.charAt(parent.length - 1) match {
@@ -53,7 +53,7 @@ case class DomainEntity(linkValue: Option[String], definition: DialectNode, fiel
 
   def boolean(m: DialectPropertyMapping): Option[Boolean] =
     fields.get(m.field()) match {
-      case scalar: AmfScalar => Option(scalar.toString.toBoolean)
+      case scalar: AmfScalar => Some(scalar.toString.toBoolean)
       case _                 => None
     }
 

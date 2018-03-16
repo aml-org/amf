@@ -22,7 +22,7 @@ case class CreativeWork(fields: Fields, annotations: Annotations) extends Domain
   def withTitle(title: String): this.type             = set(Title, title)
 
   override def adopted(parent: String): this.type =
-    withId(parent + "/creative-work/" + Option(title.value()).fold(url.value())((u: String) => u.urlEncoded))
+    withId(parent + "/creative-work/" + title.option().orElse(url.option()).map(_.urlEncoded).orNull)
 
   override def linkCopy(): Linkable = CreativeWork().withId(id)
 

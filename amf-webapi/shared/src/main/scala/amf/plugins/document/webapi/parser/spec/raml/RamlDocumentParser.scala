@@ -219,7 +219,7 @@ trait Raml10BaseSpecParser extends RamlBaseDocumentParser {
           .foreach(e => {
             val parameter =
               Raml10ParameterParser(e, (name) => Parameter().withId(parentPath + "/" + name).withName(name)).parse()
-            if (Option(parameter.binding).isEmpty) {
+            if (parameter.binding.isNullOrEmpty) {
               ctx.violation(parameter.id, "Missing binding information in declared parameter", entry.value)
             }
             ctx.declarations.registerParameter(parameter.add(DeclaredElement()),

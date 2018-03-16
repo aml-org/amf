@@ -36,11 +36,11 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
       case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
         // collect baseUri parameters
         val webApi      = doc.encodes.asInstanceOf[WebApi]
-        var finalParams = Parameters(path = Option(webApi.baseUriParameters).getOrElse(Seq()))
+        var finalParams = Parameters(path = webApi.baseUriParameters)
         webApi.fields.remove(WebApiModel.BaseUriParameters)
         // collect endpoint parameters
         webApi.endPoints.foreach { endpoint =>
-          finalParams = finalParams.merge(Parameters.classified(endpoint.path.value(), Option(endpoint.parameters).getOrElse(Seq())))
+          finalParams = finalParams.merge(Parameters.classified(endpoint.path.value(), endpoint.parameters))
           endpoint.fields.remove(EndPointModel.Parameters)
           // collect operation query parameters
           if (finalParams.nonEmpty)
@@ -77,7 +77,7 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
         val webApi = doc.encodes.asInstanceOf[WebApi]
         // collect endpoint path parameters
         webApi.endPoints.foreach { endpoint =>
-          val finalParams = Parameters.classified(endpoint.path.value(), Option(endpoint.parameters).getOrElse(Seq()))
+          val finalParams = Parameters.classified(endpoint.path.value(), endpoint.parameters)
           // collect operation query parameters
           if (finalParams.nonEmpty && endpoint.operations.nonEmpty) {
             endpoint.fields.remove(EndPointModel.Parameters)
@@ -106,7 +106,7 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
         val webApi = doc.encodes.asInstanceOf[WebApi]
         // collect endpoint path parameters
         webApi.endPoints.foreach { endpoint =>
-          val endpointParameters = Option(endpoint.parameters).getOrElse(Seq())
+          val endpointParameters = endpoint.parameters
 
           // we filter path parameters and the remaining parameters
           val (path, other) = endpointParameters.partition(p => p.binding.is("path"))

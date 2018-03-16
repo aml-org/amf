@@ -108,8 +108,8 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
       extends EntryEmitter {
 
     override def emit(b: EntryBuilder): Unit = {
-      val name = Option(annotation.name).orElse(throw new Exception(s"Annotation type without name $annotation")).get
-      b.entry(name.value(), if (annotation.isLink) emitLink _ else emitInline _)
+      val name = annotation.name.option().orElse(throw new Exception(s"Annotation type without name $annotation")).get
+      b.entry(name, if (annotation.isLink) emitLink _ else emitInline _)
     }
 
     private def emitLink(b: PartBuilder): Unit = {

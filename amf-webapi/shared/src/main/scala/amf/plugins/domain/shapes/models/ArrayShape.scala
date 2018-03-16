@@ -112,9 +112,7 @@ case class TupleShape(override val fields: Fields, override val annotations: Ann
 
   override def adopted(parent: String): this.type = {
     withId(parent + "/array/" + name.value())
-    if (Option(items).isDefined) {
-      items.foreach(_.adopted(id))
-    }
+    items.foreach(_.adopted(id))
     this
   }
 

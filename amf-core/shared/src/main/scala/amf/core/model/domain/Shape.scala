@@ -53,22 +53,21 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
     // properties or properties for the current shape.
     // Notice that the properties map for this shape or from the inheritance can be sequences with more than one
     // element if unions are involved
-    Option(inherits) match {
-      // inheritance will get the map of facet properties for each element in the union
-      case Some(baseShapes: Seq[Shape]) =>
-        // for each base shape compute sequence(s) of facets map and merge it with the
-        // initial facets maps computed for this shape. This multiplies the number of
-        // final facets maps
-        baseShapes.foldLeft(initialSequence) { (acc: Seq[FacetsMap], baseShape: Shape) =>
-          baseShape.collectCustomShapePropertyDefinitions().flatMap { facetsMap: FacetsMap =>
-            acc.map { accFacetsMap =>
-              accFacetsMap ++ facetsMap
-            }
+    // inheritance will get the map of facet properties for each element in the union
+    if (inherits.nonEmpty) {
+      // for each base shape compute sequence(s) of facets map and merge it with the
+      // initial facets maps computed for this shape. This multiplies the number of
+      // final facets maps
+      inherits.foldLeft(initialSequence) { (acc: Seq[FacetsMap], baseShape: Shape) =>
+        baseShape.collectCustomShapePropertyDefinitions().flatMap { facetsMap: FacetsMap =>
+          acc.map { accFacetsMap =>
+            accFacetsMap ++ facetsMap
           }
         }
-
+      }
+    } else {
       // no inheritance, return the initial sequence
-      case _ => initialSequence
+      initialSequence
     }
   }
 
