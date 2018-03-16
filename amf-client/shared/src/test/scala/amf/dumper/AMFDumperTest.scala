@@ -317,7 +317,7 @@ class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTes
         |                ],
         |                "http://schema.org/documentation": [
         |                  {
-        |                    "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/get/creative-work/localhost:8080/endpoint/operation",
+        |                    "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/get/creative-work/localhost%3A8080%2Fendpoint%2Foperation",
         |                    "@type": [
         |                      "http://schema.org/CreativeWork",
         |                      "http://raml.org/vocabularies/document#DomainElement"
@@ -373,7 +373,7 @@ class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTes
         |                ],
         |                "http://schema.org/documentation": [
         |                  {
-        |                    "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/post/creative-work/localhost:8080/endpoint/operation",
+        |                    "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/post/creative-work/localhost%3A8080%2Fendpoint%2Foperation",
         |                    "@type": [
         |                      "http://schema.org/CreativeWork",
         |                      "http://raml.org/vocabularies/document#DomainElement"

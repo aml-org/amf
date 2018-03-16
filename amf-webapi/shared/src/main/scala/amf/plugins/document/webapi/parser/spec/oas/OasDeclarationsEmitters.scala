@@ -82,7 +82,7 @@ case class OasNamedParameterEmitter(parameter: Parameter, ordering: SpecOrdering
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-      Option(parameter.name).getOrElse(throw new Exception(s"Cannot declare shape without name $parameter")),
+      parameter.name.option().getOrElse(throw new Exception(s"Cannot declare shape without name $parameter")),
       b => {
         if (parameter.isLink) OasTagToReferenceEmitter(parameter, parameter.linkLabel, Nil).emit(b)
         else ParameterEmitter(parameter, ordering, references).emit(b)
@@ -119,7 +119,8 @@ case class OasNamedPropertyTypeEmitter(annotationType: CustomDomainProperty, ord
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-      Option(annotationType.name)
+      annotationType.name
+        .option()
         .orElse(throw new Exception(s"Cannot declare annotation type without name $annotationType"))
         .get,
       b => {

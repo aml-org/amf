@@ -24,6 +24,7 @@ package object utils {
     /** Url encoded string. */
     def urlEncoded: String = {
       str
+        .replaceAll(":", "%3A")
         .replaceAll("/", "%2F")
         .replaceAll(" ", "%20")
         .replaceAll("\\{", "%7B")
@@ -34,12 +35,13 @@ package object utils {
 
     def urlDecoded: String = {
       str
+        .replaceAll("%3A", ":")
         .replaceAll("%2F", "/")
         .replaceAll("%20", " ")
         .replaceAll("%7B", "\\{")
         .replaceAll("%7D", "\\}")
         .replaceAll("%3C", "<")
-        .replaceAll("%3E", ">") // TODO encode
+        .replaceAll("%3E", ">") // TODO decode
     }
 
     def escape: String = {
