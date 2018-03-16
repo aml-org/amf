@@ -103,7 +103,7 @@ trait MinShapeAlgorithm extends RestrictionComputation {
 
   protected def isGenericNodeShape(shape: Shape) = {
     shape match {
-      case node: NodeShape => Option(node.properties).getOrElse(Seq()).isEmpty
+      case node: NodeShape => node.properties.isEmpty
       case _               => false
     }
   }
@@ -222,8 +222,8 @@ trait MinShapeAlgorithm extends RestrictionComputation {
 
   protected def computeMinUnion(baseUnion: UnionShape, superUnion: UnionShape): Shape = {
     val newUnionItems =
-      if (Option(baseUnion.anyOf).getOrElse(Nil).isEmpty || Option(superUnion.anyOf).getOrElse(Nil).isEmpty) {
-        Option(baseUnion.anyOf).getOrElse(Nil) ++ Option(superUnion.anyOf).getOrElse(Nil)
+      if (baseUnion.anyOf.isEmpty || superUnion.anyOf.isEmpty) {
+        baseUnion.anyOf ++ superUnion.anyOf
       } else {
         for {
           baseUnionElement  <- baseUnion.anyOf

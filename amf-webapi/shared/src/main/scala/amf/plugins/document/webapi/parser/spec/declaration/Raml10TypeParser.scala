@@ -215,9 +215,9 @@ case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, ast: YPar
   def parse(): Option[AnyShape] = {
     val product: Option[AnyShape] = defaultType match {
       case NilType =>
-        Option(NilShape().withName(name).add(Inferred()))
+        Some(NilShape().withName(name).add(Inferred()))
       case StrType =>
-        Option(ScalarShape()
+        Some(ScalarShape()
           .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(defaultType)), Annotations() += Inferred()))
       case _ =>
         // TODO get parent id

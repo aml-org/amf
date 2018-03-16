@@ -8,11 +8,6 @@ import amf.core.parser.Annotations
   */
 case class AmfScalar(value: Any, annotations: Annotations = new Annotations()) extends AmfElement {
 
-  val grrrr = {
-    val result = value.isInstanceOf[ValueField]
-    result
-  }
-
   override def toString: String = {
     Option(value) match {
       case Some(v) => v.toString

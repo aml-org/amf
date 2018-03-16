@@ -18,7 +18,11 @@ case class Parameters(query: Seq[Parameter] = Nil,
   }
 
   def add(inner: Parameters): Parameters = {
-    Parameters(add(query, inner.query), add(path, inner.path), add(header, inner.header), add(baseUri08, inner.baseUri08), add(body, inner.body))
+    Parameters(add(query, inner.query),
+               add(path, inner.path),
+               add(header, inner.header),
+               add(baseUri08, inner.baseUri08),
+               add(body, inner.body))
   }
 
   private def merge(global: Option[Payload], inner: Option[Payload]): Option[Payload] =
@@ -28,15 +32,15 @@ case class Parameters(query: Seq[Parameter] = Nil,
     inner.map(_.add(DefaultPayload())).orElse(global.map(_.copy()))
 
   private def merge(global: Seq[Parameter], inner: Seq[Parameter]): Seq[Parameter] = {
-    val globalMap = global.map(p => p.name -> p).toMap
-    val innerMap  = inner.map(p => p.name  -> p).toMap
+    val globalMap = global.map(p => p.name.value() -> p).toMap
+    val innerMap  = inner.map(p => p.name.value()  -> p).toMap
 
     (globalMap ++ innerMap).values.toSeq
   }
 
   private def add(global: Seq[Parameter], inner: Seq[Parameter]): Seq[Parameter] = {
-    val globalMap = global.map(p => p.name -> p).toMap
-    val innerMap  = inner.map(p => p.name  -> p).toMap
+    val globalMap = global.map(p => p.name.value() -> p).toMap
+    val innerMap  = inner.map(p => p.name.value()  -> p).toMap
 
     (globalMap ++ innerMap).values.toSeq
   }
@@ -45,11 +49,11 @@ case class Parameters(query: Seq[Parameter] = Nil,
 }
 
 object Parameters {
-  def classified(path: String,params: Seq[Parameter], payload: Option[Payload] = None): Parameters = {
-    var uriParams: Seq[Parameter] = Nil
+  def classified(path: String, params: Seq[Parameter], payload: Option[Payload] = None): Parameters = {
+    var uriParams: Seq[Parameter]  = Nil
     var pathParams: Seq[Parameter] = Nil
     params.filter(_.isPath).foreach { param =>
-      if (path.contains(s"{${param.name}}"))
+      if (path.contains(s"{${param.name.value()}}"))
         pathParams ++= Seq(param)
       else uriParams ++= Seq(param)
     }

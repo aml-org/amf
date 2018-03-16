@@ -60,7 +60,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
   override def loadValidationProfile(validationProfilePath: String): Future[String] = {
     RuntimeCompiler(
       validationProfilePath,
-      Option("application/yaml"),
+      Some("application/yaml"),
       RAMLVocabulariesPlugin.ID,
       Context(platform)
     ).map { case parsed: Document => parsed.encodes }
@@ -126,7 +126,6 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     }
 
     val modelJSON = RuntimeSerializer(model, "application/ld+json", "AMF Graph", GenerationOptions())
-
 
     /*
     println("\n\nGRAPH")

@@ -1,9 +1,9 @@
 package amf.plugins.domain.webapi.models
 
 import amf.client.model.StrField
-import amf.core.utils.Strings
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
+import amf.core.utils.Strings
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
@@ -22,7 +22,7 @@ case class EndPoint(fields: Fields, annotations: Annotations)
   def path: StrField                            = fields.field(Path)
   def operations: Seq[Operation]                = fields.field(Operations)
   def parameters: Seq[Parameter]                = fields.field(Parameters)
-  def payloads: Seq[Payload]                    = fields(EndPointModel.Payloads)
+  def payloads: Seq[Payload]                    = fields.field(Payloads)
   def security: Seq[ParametrizedSecurityScheme] = fields.field(Security)
 
   def parent: Option[EndPoint] = annotations.find(classOf[ParentEndPoint]).map(_.parent)
@@ -39,7 +39,7 @@ case class EndPoint(fields: Fields, annotations: Annotations)
   def withOperations(operations: Seq[Operation]): this.type              = setArray(Operations, operations)
   def withParameters(parameters: Seq[Parameter]): this.type              = setArray(Parameters, parameters)
   def withSecurity(security: Seq[ParametrizedSecurityScheme]): this.type = setArray(Security, security)
-  def withPayloads(payloads: Seq[Payload]): this.type                    = setArray(EndPointModel.Payloads, payloads)
+  def withPayloads(payloads: Seq[Payload]): this.type                    = setArray(Payloads, payloads)
 
   def withOperation(method: String): Operation = {
     val result = Operation().withMethod(method)
@@ -56,7 +56,7 @@ case class EndPoint(fields: Fields, annotations: Annotations)
   def withPayload(mediaType: Option[String] = None): Payload = {
     val result = Payload()
     mediaType.foreach(result.withMediaType)
-    add(EndPointModel.Payloads, result)
+    add(Payloads, result)
     result
   }
 
