@@ -146,6 +146,7 @@ object AMFRawValidations {
     "		AMF	Domain	raml-shapes:ScalarShape	sh:datatype	PropertyShape	sh:path	sh:minCount	1	type information for a RAML scalar is required	type information fo a Schema object of scalar type is required",
     "		AMF	Domain	raml-doc:DomainProperty	raml-shapes:schema	PropertyShape	sh:path	sh:minCount	1	type is mandatory for a RAML annotationType	schema is mandatory for an extension type",
     "		AMF	Domain	raml-doc:DomainProperty	raml-shapes:schema	PropertyShape	sh:path	sh:maxCount	1	type must be a single value for a RAML annotationType	schema must be a single value for an extension type",
-    "		AMF	Domain	raml-doc:DomainProperty	raml-shapes:schema	PropertyShape	sh:path	sh:class	raml-shapes:Shape	type value must be a RAML Type	schema value must be a Schema object"
+    "		AMF	Domain	raml-doc:DomainProperty	raml-shapes:schema	PropertyShape	sh:path	sh:class	raml-shapes:Shape	type value must be a RAML Type	schema value must be a Schema object",
+    "		AMF	Domain	raml-http:Tag	schema-org:name	PropertyShape	sh:path	sh:minCount	1	Tag must have a name	Tag object must have a name property",
   )
 }

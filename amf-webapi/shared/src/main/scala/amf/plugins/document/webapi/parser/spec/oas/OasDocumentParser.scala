@@ -113,6 +113,14 @@ case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) ext
       }
     )
 
+    map.key(
+      "tags",
+      entry => {
+        val tags = entry.value.as[Seq[YMap]].map(tag => TagsParser(tag, (tag: Tag) => tag.adopted(api.id)).parse())
+        api.set(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
+      }
+    )
+
     map.key("host", WebApiModel.Host in api)
 
     map.key(
@@ -326,8 +334,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) ext
       }
   }
 
-  case class RequestParser(map: YMap, producer: () => Request)(
-      implicit ctx: OasWebApiContext) {
+  case class RequestParser(map: YMap, producer: () => Request)(implicit ctx: OasWebApiContext) {
     def parse(): Option[Request] = {
       val request    = new Lazy[Request](producer)
       var parameters = Parameters()
@@ -337,7 +344,8 @@ case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) ext
         .key("parameters")
         .foreach { entry =>
           entries += entry
-          parameters = parameters.add(OasParametersParser(entry.value.as[Seq[YMap]], request.getOrCreate.id).parse(inRequest = true))
+          parameters = parameters.add(
+            OasParametersParser(entry.value.as[Seq[YMap]], request.getOrCreate.id).parse(inRequest = true))
         }
 
       map
@@ -441,6 +449,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) ext
       map.key("schemes", OperationModel.Schemes in operation)
       map.key("consumes", OperationModel.Accepts in operation)
       map.key("produces", OperationModel.ContentType in operation)
+      map.key("tags", OperationModel.Tags in operation)
 
       map.key(
         "x-is",
@@ -592,7 +601,7 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends BaseSpecPar
           .as[YMap]
           .entries
           .foreach(e => {
-             val typeName = e.key.as[YScalar].text
+            val typeName = e.key.as[YScalar].text
             val oasParameter = e.value.to[YMap] match {
               case Right(m) => OasParameterParser(m, parentPath, Some(typeName)).parse()
               case _ =>

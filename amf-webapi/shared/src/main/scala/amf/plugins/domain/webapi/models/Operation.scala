@@ -11,7 +11,9 @@ import amf.plugins.domain.webapi.models.templates.ParametrizedTrait
 /**
   * Operation internal model.
   */
-case class Operation(fields: Fields, annotations: Annotations) extends DomainElement with ExtensibleWebApiDomainElement {
+case class Operation(fields: Fields, annotations: Annotations)
+    extends DomainElement
+    with ExtensibleWebApiDomainElement {
 
   def method: String               = fields(Method)
   def name: String                 = fields(Name)
@@ -25,6 +27,7 @@ case class Operation(fields: Fields, annotations: Annotations) extends DomainEle
   def request: Request             = fields(OperationRequest)
   def responses: Seq[Response]     = fields(Responses)
   def security: Seq[DomainElement] = fields(Security)
+  def tags: Seq[String]            = fields(Tags)
 
   def traits: Seq[ParametrizedTrait] = extend collect { case t: ParametrizedTrait => t }
 
@@ -40,6 +43,7 @@ case class Operation(fields: Fields, annotations: Annotations) extends DomainEle
   def withRequest(request: Request): this.type                  = set(OperationRequest, request)
   def withResponses(responses: Seq[Response]): this.type        = setArray(Responses, responses)
   def withSecurity(security: Seq[DomainElement]): this.type     = setArray(Security, security)
+  def withTags(tag: Seq[String]): this.type                     = set(Tags, tag.toList)
 
   override def adopted(parent: String): this.type = withId(parent + "/" + method)
 

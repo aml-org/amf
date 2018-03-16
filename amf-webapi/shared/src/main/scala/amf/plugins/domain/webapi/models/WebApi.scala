@@ -45,6 +45,8 @@ case class WebApi(fields: Fields, annotations: Annotations) extends DomainElemen
 
   def security: Seq[ParametrizedSecurityScheme] = fields(Security)
 
+  def tags: Seq[Tag] = fields(Tags)
+
   def withName(name: String): this.type = set(Name, name)
 
   def withDescription(description: String): this.type = set(Description, description)
@@ -74,6 +76,8 @@ case class WebApi(fields: Fields, annotations: Annotations) extends DomainElemen
   def withBaseUriParameters(parameters: Seq[Parameter]): this.type = setArray(BaseUriParameters, parameters)
 
   def withSecurity(security: Seq[ParametrizedSecurityScheme]): this.type = setArray(Security, security)
+
+  def withTags(tags: Seq[Tag]): this.type = setArray(Tags, tags)
 
   def withEndPoint(path: String): EndPoint = {
     val result = EndPoint().withPath(path)

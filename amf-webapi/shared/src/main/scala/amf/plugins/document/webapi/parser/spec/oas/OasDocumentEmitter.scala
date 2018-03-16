@@ -12,7 +12,7 @@ import amf.core.parser.Position.ZERO
 import amf.core.parser.{EmptyFutureDeclarations, FieldEntry, Fields, Position}
 import amf.core.remote.{Oas, Vendor}
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.webapi.contexts.{BaseSpecEmitter, OasSpecEmitterContext}
+import amf.plugins.document.webapi.contexts.{BaseSpecEmitter, OasSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Overlay}
 import amf.plugins.document.webapi.parser.spec._
@@ -24,7 +24,7 @@ import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
 import org.yaml.model.YDocument
-import org.yaml.model.YDocument.EntryBuilder
+import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -103,11 +103,15 @@ case class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: Oa
       fs.entry(WebApiModel.Schemes)
         .map(f => result += ArrayEmitter("schemes", f, ordering))
 
+      fs.entry(WebApiModel.Tags)
+        .map(f => result += TagsEmitter("tags", f.array.values.asInstanceOf[Seq[Tag]], ordering))
+
       fs.entry(WebApiModel.Documentations).map(f => result ++= UserDocumentationsEmitter(f, ordering).emitters())
 
       // Annotations collected from the "paths" element that has no direct representation in any model element
       // They will be passed to the EndpointsEmitter
-      val orphanAnnotations = api.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
+      val orphanAnnotations =
+        api.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
 
       fs.entry(WebApiModel.EndPoints)
         .fold(result += EntryPartEmitter("paths", EmptyMapEmitter()))(f =>
@@ -239,6 +243,7 @@ case class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: Oa
             fs.entry(OperationModel.Description).map(f => result += ValueEmitter("description", f))
             fs.entry(OperationModel.Deprecated).map(f => result += ValueEmitter("deprecated", f))
             fs.entry(OperationModel.Summary).map(f => result += ValueEmitter("summary", f))
+            fs.entry(OperationModel.Tags).map(f => result += ArrayEmitter("tags", f, ordering))
             fs.entry(OperationModel.Documentation)
               .map(
                 f =>
@@ -253,7 +258,8 @@ case class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: Oa
               result ++= requestEmitters(req, ordering, endpointPayloadEmitted, references))
             // Annotations collected from the "responses" element that has no direct representation in any model element
             // They will be passed to the ResponsesEmitter
-            val orphanAnnotations = operation.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
+            val orphanAnnotations =
+              operation.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
             fs.entry(OperationModel.Responses)
               .fold(result += EntryPartEmitter("responses", EmptyMapEmitter()))(f =>
                 result += ResponsesEmitter("responses", f, ordering, references, orphanAnnotations))
@@ -311,7 +317,11 @@ case class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: Oa
     }
   }
 
-  case class ResponsesEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit], orphanAnnotations: Seq[DomainExtension])
+  case class ResponsesEmitter(key: String,
+                              f: FieldEntry,
+                              ordering: SpecOrdering,
+                              references: Seq[BaseUnit],
+                              orphanAnnotations: Seq[DomainExtension])
       extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
       val emitters = responses(f, ordering) ++ responsesElementsAnnotations()
@@ -332,11 +342,14 @@ case class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: Oa
       OrphanAnnotationsEmitter(orphanAnnotations, ordering).emitters
     }
 
-
     override def position(): Position = pos(f.value.annotations)
   }
 
-  case class EndpointsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit], orphanAnnotations: Seq[DomainExtension])
+  case class EndpointsEmitter(key: String,
+                              f: FieldEntry,
+                              ordering: SpecOrdering,
+                              references: Seq[BaseUnit],
+                              orphanAnnotations: Seq[DomainExtension])
       extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
       val emitters = endpoints(f, ordering, references) ++ pathsElementAnnotations()
@@ -617,4 +630,43 @@ case class OasDeclaredResponsesEmitter(key: String,
   }
 
   override def position(): Position = responses.headOption.map(a => pos(a.annotations)).getOrElse(ZERO)
+}
+
+case class TagsEmitter(key: String, tags: Seq[Tag], ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+    extends EntryEmitter {
+
+  override def position(): Position = tags.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
+
+  override def emit(b: EntryBuilder): Unit = {
+    val emitters = tags.map(t => TagEmitter(t, ordering))
+    b.entry(
+      key,
+      _.list(traverse(ordering.sorted(emitters), _))
+    )
+  }
+
+  private case class TagEmitter(tag: Tag, ordering: SpecOrdering) extends PartEmitter {
+
+    override def position(): Position = pos(tag.annotations)
+
+    override def emit(p: PartBuilder): Unit = {
+      p.obj { b =>
+        val fs     = tag.fields
+        val result = mutable.ListBuffer[EntryEmitter]()
+
+        fs.entry(TagModel.Name) getOrElse (throw new Exception(s"Cannot declare shape without name $tag"))
+
+        fs.entry(TagModel.Name).map(f => result += ValueEmitter("name", f))
+        fs.entry(TagModel.Description).map(f => result += ValueEmitter("description", f))
+        fs.entry(TagModel.Documentation)
+          .map(f =>
+            result +=
+              OasEntryCreativeWorkEmitter("externalDocs", tag.documentation, ordering))
+
+        result ++= AnnotationsEmitter(tag, ordering).emitters
+
+        traverse(ordering.sorted(result), b)
+      }
+    }
+  }
 }

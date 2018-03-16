@@ -1,0 +1,34 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test title",
+    "description": "test description",
+    "version": "1.1"
+  },
+  "tags": [
+    {
+      "name": "pets",
+      "description": "Everything about your Pets",
+      "externalDocs": {
+        "url": "http://docs.my-api.com/pet-operations.htm"
+      }
+    },
+    {
+      "name": "store",
+      "description": "Access to Petstore orders",
+      "externalDocs": {
+        "url": "http://docs.my-api.com/store-orders.htm"
+      }
+    }
+  ],
+  "paths": {
+    "/pet": {
+      "get": {
+        "summary": "Get all pets",
+        "tags": [
+          "pets"
+        ]
+      }
+    }
+  }
+}
