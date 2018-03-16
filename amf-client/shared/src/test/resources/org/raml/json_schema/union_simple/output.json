@@ -4,11 +4,19 @@
   "definitions": {
     "root": {
       "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "value"
+      ],
       "properties": {
         "value": {
           "anyOf": [
-            { "type": "string" },
-            { "type": "integer" }
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
           ]
         }
       }

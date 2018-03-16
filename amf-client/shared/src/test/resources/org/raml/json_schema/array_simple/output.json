@@ -4,6 +4,11 @@
   "definitions": {
     "root": {
       "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "name",
+        "friends"
+      ],
       "properties": {
         "name": {
           "type": "string"

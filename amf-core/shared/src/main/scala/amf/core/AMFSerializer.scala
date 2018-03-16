@@ -2,7 +2,8 @@ package amf.core
 
 import amf.core.client.GenerationOptions
 import amf.core.model.document.{BaseUnit, ExternalFragment}
-import amf.core.plugins.AMFSyntaxPlugin
+import amf.core.model.domain.AmfElement
+import amf.core.plugins.{AMFDocumentPlugin, AMFSyntaxPlugin}
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Platform
 import amf.core.services.RuntimeSerializer
@@ -10,20 +11,46 @@ import org.yaml.model.YDocument
 
 import scala.concurrent.Future
 
-class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: GenerationOptions) {
+trait ASTMaker[T <: AmfElement] {
+  val mediaType: String
 
+  def make(): YDocument
+  val domainPlugin: Option[AMFDocumentPlugin]
+  val element: T
+  val vendor: String
+  val options: GenerationOptions
+}
+
+case class CommonASTMaker(element: BaseUnit,
+                          override val options: GenerationOptions,
+                          override val vendor: String,
+                          override val mediaType: String)
+    extends ASTMaker[BaseUnit] {
   def make(): YDocument = {
-    findDomainPlugin() match {
-      case Some(domainPlugin) =>
-        domainPlugin.unparse(unit, options) match {
+    domainPlugin match {
+      case Some(dp) =>
+        dp.unparse(element, options) match {
           case Some(ast) => ast
-          case None      => throw new Exception(s"Error unparsing syntax $mediaType with domain plugin ${domainPlugin.ID}")
+          case None      => throw new Exception(s"Error unparsing syntax $mediaType with domain plugin ${dp.ID}")
         }
       case None =>
         throw new Exception(
-          s"Cannot serialize domain model '${unit.location}' for detected media type $mediaType and vendor $vendor")
+          s"Cannot serialize domain model '${element.location}' for detected media type $mediaType and vendor $vendor")
     }
   }
+
+  override val domainPlugin: Option[AMFDocumentPlugin] = {
+    AMFPluginsRegistry.documentPluginForVendor(vendor).find { plugin =>
+      plugin.documentSyntaxes.contains(mediaType) && plugin.canUnparse(element)
+    } match {
+      case Some(plugin) => Some(plugin)
+      case None         => AMFPluginsRegistry.documentPluginForMediaType(mediaType).find(_.canUnparse(element))
+    }
+  }
+
+}
+
+class AMFSerializer(maker: ASTMaker[_ <: AmfElement]) {
 
   /** Print ast to string. */
   def dumpToString: String = dump()
@@ -32,16 +59,16 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
   def dumpToFile(remote: Platform, path: String): Future[Unit] = remote.write(path, dump())
 
   protected def dump(): String = {
-    val ast = make()
+    val ast = maker.make()
 
     // Let's try to find a syntax plugin for the media type and vendor
-    val parsed: Option[CharSequence] = AMFPluginsRegistry.syntaxPluginForMediaType(mediaType) match {
-      case Some(syntaxPlugin) => syntaxPlugin.unparse(mediaType, ast)
+    val parsed: Option[CharSequence] = AMFPluginsRegistry.syntaxPluginForMediaType(maker.mediaType) match {
+      case Some(syntaxPlugin) => syntaxPlugin.unparse(maker.mediaType, ast)
       case None               =>
         // media type not directly supported, maybe it is supported by the media types of the accepted domain plugin
-        findDomainPlugin() match {
-          case Some(domainPlugin) =>
-            domainPlugin.documentSyntaxes.collectFirst[(String, Option[AMFSyntaxPlugin])] {
+        maker.domainPlugin match {
+          case Some(dp) =>
+            dp.documentSyntaxes.collectFirst[(String, Option[AMFSyntaxPlugin])] {
               case mediaType: String =>
                 (mediaType, AMFPluginsRegistry.syntaxPluginForMediaType(mediaType))
             } flatMap {
@@ -53,18 +80,10 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
       case _ => None
     }
     parsed match {
-      case Some(doc)                                   => doc.toString
-      case None if unit.isInstanceOf[ExternalFragment] => unit.asInstanceOf[ExternalFragment].encodes.raw
-      case _                                           => throw new Exception(s"Unsupported media type $mediaType and vendor $vendor")
-    }
-  }
-
-  protected def findDomainPlugin() = {
-    AMFPluginsRegistry.documentPluginForVendor(vendor).find { plugin =>
-      plugin.documentSyntaxes.contains(mediaType) && plugin.canUnparse(unit)
-    } match {
-      case Some(domainPlugin) => Some(domainPlugin)
-      case None               => AMFPluginsRegistry.documentPluginForMediaType(mediaType).find(_.canUnparse(unit))
+      case Some(doc) => doc.toString
+      case None if maker.element.isInstanceOf[ExternalFragment] =>
+        maker.element.asInstanceOf[ExternalFragment].encodes.raw
+      case _ => throw new Exception(s"Unsupported media type ${maker.mediaType} and vendor ${maker.vendor}")
     }
   }
 }
@@ -74,7 +93,7 @@ object AMFSerializer {
     if (RuntimeSerializer.serializer.isEmpty) {
       RuntimeSerializer.register(new RuntimeSerializer {
         override def dump(unit: BaseUnit, mediaType: String, vendor: String, options: GenerationOptions): String =
-          new AMFSerializer(unit, mediaType, vendor, options).dump()
+          apply(unit, mediaType, vendor, options).dump()
 
         override def dumpToFile(platform: Platform,
                                 file: String,
@@ -82,8 +101,11 @@ object AMFSerializer {
                                 mediaType: String,
                                 vendor: String,
                                 options: GenerationOptions) =
-          new AMFSerializer(unit, mediaType, vendor, options).dumpToFile(platform, file)
+          apply(unit, mediaType, vendor, options).dumpToFile(platform, file)
       })
     }
   }
+
+  def apply(unit: BaseUnit, mediaType: String, vendor: String, options: GenerationOptions): AMFSerializer =
+    new AMFSerializer(CommonASTMaker(unit, options, vendor, mediaType))
 }

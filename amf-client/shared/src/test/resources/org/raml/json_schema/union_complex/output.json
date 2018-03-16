@@ -4,38 +4,46 @@
   "definitions": {
     "root": {
       "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "value"
+      ],
       "properties": {
         "value": {
           "anyOf": [
             {
-              "$ref": "#/definitions/cat"
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "name",
+                "color"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "color": {
+                  "type": "string"
+                }
+              }
             },
             {
-              "$ref": "#/definitions/dog"
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "name",
+                "fangs"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "fangs": {
+                  "type": "string"
+                }
+              }
             }
           ]
-        }
-      }
-    },
-    "cat": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "color": {
-          "type": "string"
-        }
-      }
-    },
-    "dog": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "fangs": {
-          "type": "string"
         }
       }
     }
