@@ -640,7 +640,7 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
           node.value match {
             case scalar: YScalar => Some(scalar.value)
             case _               => {
-              ctx.violation("Cannot create enumeration constraint from not scalar value", Some(node))
+              ctx.violation("Cannot create enumeration constraint from not scalar value", node)
               None
             }
           }

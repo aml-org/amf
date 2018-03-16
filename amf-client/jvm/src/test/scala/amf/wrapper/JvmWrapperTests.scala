@@ -2,14 +2,11 @@ package amf.wrapper
 
 import _root_.org.scalatest.{Assertion, AsyncFunSuite}
 import amf._
-import amf.core.unsafe.PlatformSecrets
-import amf.client.model.document.{BaseUnit, Document, TraitFragment}
-import amf.client.model.domain.{ScalarShape, WebApi}
 import amf.client.convert.WebApiClientConverters._
-import amf.core.model.document
-import amf.plugins.document.vocabularies.model.domain.DomainEntity
+import amf.client.model.document.{BaseUnit, Document}
+import amf.client.model.domain.WebApi
+import amf.core.unsafe.PlatformSecrets
 
-import scala.collection.mutable
 import scala.concurrent.ExecutionContext
 
 class JvmWrapperTests extends AsyncFunSuite with PlatformSecrets {
