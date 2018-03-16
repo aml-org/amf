@@ -4,15 +4,18 @@
   "definitions": {
     "root": {
       "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "name"
+      ],
       "properties": {
         "name": {
           "type": "string"
         },
         "children": {
           "type": "array",
-          "items": {
-            "$ref": "#/definitions/root"
-          }
+          "uniqueItems": true,
+          "items": {}
         }
       }
     }

@@ -1,25 +1,31 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "$ref": "#/definitions/root",
-    "definitions": {
-        "root": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "friend": {
-                    "$ref": "#/definitions/friend"
-                }
-            }
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/root",
+  "definitions": {
+    "root": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "name",
+        "friend"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
         },
         "friend": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                }
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
             }
+          }
         }
+      }
     }
+  }
 }

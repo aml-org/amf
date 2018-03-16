@@ -56,7 +56,7 @@ class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: Generat
       case _                      => "text/plain"
     }
 
-    new AMFSerializer(unit, mediaType, vendorString, options).dumpToString
+    AMFSerializer(unit, mediaType, vendorString, options).dumpToString
   }
 }
 

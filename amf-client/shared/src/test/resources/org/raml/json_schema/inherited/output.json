@@ -4,6 +4,11 @@
   "definitions": {
     "root": {
       "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "id",
+        "amount"
+      ],
       "properties": {
         "amount": {
           "type": "number"
