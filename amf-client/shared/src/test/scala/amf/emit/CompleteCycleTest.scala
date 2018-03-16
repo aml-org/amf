@@ -1,6 +1,5 @@
 package amf.emit
 
-import amf.core.remote.Syntax.Json
 import amf.core.remote._
 import amf.io.BuildCycleTests
 
@@ -949,4 +948,29 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Anonymous and named examples with annotations json to raml") {
     cycle("anonymous-and-named-examples.jsonld", "anonymous-and-named-examples.raml", AmfJsonHint, Raml)
   }
+
+  test("Tags node oas to amf") {
+    cycle("tags.json", "tags.jsonld", OasJsonHint, Amf)
+  }
+
+  test("Tags node oas to oas") {
+    cycle("tags.json", "tags.json.json", OasJsonHint, Oas)
+  }
+
+  test("Tags node oas to raml") {
+    cycle("tags.json", "tags.raml", OasJsonHint, Raml)
+  }
+
+  test("Tags node amf to oas") {
+    cycle("tags.jsonld", "tags.json.json", AmfJsonHint, Oas)
+  }
+
+  test("Tags node raml to oas") {
+    cycle("tags.raml", "tags.json.json", RamlYamlHint, Oas)
+  }
+
+  test("Generic number entries validation") {
+    cycle("generic-number-entries.raml", "generic-number-entries.raml.raml", RamlYamlHint, Raml)
+  }
+
 }

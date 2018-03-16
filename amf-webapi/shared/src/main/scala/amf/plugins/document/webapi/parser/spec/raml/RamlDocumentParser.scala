@@ -143,6 +143,14 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
     map.key("(contact)", WebApiModel.Provider in api using OrganizationParser.parse)
     map.key("(license)", WebApiModel.License in api using LicenseParser.parse)
 
+    map.key(
+      "(tags)",
+      entry => {
+        val tags = entry.value.as[Seq[YMap]].map(tag => TagsParser(tag, (tag: Tag) => tag.adopted(api.id)).parse())
+        api.set(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
+      }
+    )
+
     map.regex(
       "^/.*",
       entries => {

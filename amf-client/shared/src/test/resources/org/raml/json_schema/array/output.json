@@ -4,20 +4,25 @@
   "definitions": {
     "root": {
       "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "value"
+      ],
       "properties": {
         "value": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Friend"
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
           }
-        }
-      }
-    },
-    "Friend": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
         }
       }
     }

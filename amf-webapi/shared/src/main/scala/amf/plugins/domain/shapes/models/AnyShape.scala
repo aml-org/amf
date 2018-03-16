@@ -3,11 +3,15 @@ package amf.plugins.domain.shapes.models
 import amf.core.metamodel.Obj
 import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, Fields}
+import amf.plugins.document.webapi.parser.spec.common.JsonSchemaSerializer
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel._
 import org.yaml.model.YPart
 
-class AnyShape(val fields: Fields, val annotations: Annotations) extends Shape with ShapeHelpers {
+class AnyShape(val fields: Fields, val annotations: Annotations)
+    extends Shape
+    with ShapeHelpers
+    with JsonSchemaSerializer {
 
   override def adopted(parent: String): this.type = withId(parent + "/any/" + name.value())
 
@@ -29,6 +33,8 @@ class AnyShape(val fields: Fields, val annotations: Annotations) extends Shape w
   override def linkCopy(): AnyShape = AnyShape().withId(id)
 
   override def meta: Obj = AnyShapeModel
+
+  def toJsonSchema: String = toJsonSchema(this)
 
   def copyAnyShape(fields: Fields = fields, annotations: Annotations = annotations) =
     AnyShape(fields, annotations).withId(id)

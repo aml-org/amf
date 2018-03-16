@@ -16,7 +16,7 @@ import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.IdCounter
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.oas.OasDeclaredResponsesEmitter
+import amf.plugins.document.webapi.parser.spec.oas.{OasDeclaredResponsesEmitter, TagsEmitter}
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork}
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
@@ -320,6 +320,9 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
         .map(f => result += ArrayEmitter("protocols", f, ordering))
 
       fs.entry(WebApiModel.Provider).map(f => result += OrganizationEmitter("(contact)", f, ordering))
+
+      fs.entry(WebApiModel.Tags)
+        .map(f => result += TagsEmitter("(tags)", f.array.values.asInstanceOf[Seq[Tag]], ordering)(toOas(spec)))
 
       fs.entry(WebApiModel.Documentations).map(f => result += UserDocumentationsEmitter(f, ordering))
 
