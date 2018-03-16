@@ -4,12 +4,21 @@
   "definitions": {
     "root": {
       "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "name",
+        "friend"
+      ],
       "properties": {
         "name": {
           "type": "string"
         },
         "friend": {
           "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "name"
+          ],
           "properties": {
             "name": {
               "type": "string"

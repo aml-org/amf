@@ -4,6 +4,10 @@
   "definitions": {
     "root": {
       "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "age"
+      ],
       "properties": {
         "age": {
           "type": "number"

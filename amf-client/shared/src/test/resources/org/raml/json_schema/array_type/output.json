@@ -2,17 +2,13 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "$ref": "#/definitions/root",
   "definitions": {
-    "Friend": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        }
-      }
-    },
-
     "root": {
       "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "name",
+        "friends"
+      ],
       "properties": {
         "name": {
           "type": "string"
@@ -20,7 +16,16 @@
         "friends": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Friend"
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
           }
         }
       }

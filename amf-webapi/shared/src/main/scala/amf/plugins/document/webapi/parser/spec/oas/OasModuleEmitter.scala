@@ -25,7 +25,7 @@ case class OasModuleEmitter(module: Module)(implicit override val spec: OasSpecE
     val ordering = SpecOrdering.ordering(Oas, module.annotations)
 
     val references = Seq(ReferencesEmitter(module.references, ordering))
-    val declares   = DeclarationsEmitter(module.declares, ordering, module.references).emitters
+    val declares   = OasDeclarationsEmitter(module.declares, ordering, module.references).emitters
     val usages     = module.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("x-usage", f))
 
     YDocument {

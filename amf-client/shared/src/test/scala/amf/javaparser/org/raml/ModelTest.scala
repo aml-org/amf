@@ -24,13 +24,16 @@ trait ModelValidationTest extends DirectoryTest {
     } yield {
       if (report.conforms) {
         val vendor = target(model)
-        AMFDumper(transform(model, d, vendor), vendor, vendor.defaultSyntax, GenerationOptions()).dumpToString
+        dump(model, d, vendor)
       } else {
         val ordered = report.results.sorted
         report.copy(results = ordered).toString
       }
     }
   }
+
+  def dump(model: BaseUnit, d: String, vendor: Vendor) =
+    AMFDumper(transform(model, d, vendor), vendor, vendor.defaultSyntax, GenerationOptions()).dumpToString
 
   def transform(unit: BaseUnit, d: String, vendor: Vendor): BaseUnit =
     unit
