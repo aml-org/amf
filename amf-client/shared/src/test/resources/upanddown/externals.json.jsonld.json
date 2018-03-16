@@ -15,6 +15,7 @@
       "post": {
         "parameters": [
           {
+            "x-media-type": "application/json",
             "schema": {
               "type": "object",
               "properties": {
@@ -23,7 +24,6 @@
                 }
               }
             },
-            "x-media-type": "application/json",
             "in": "body"
           }
         ],
@@ -44,6 +44,7 @@
       "post": {
         "parameters": [
           {
+            "x-media-type": "application/json",
             "schema": {
               "type": "object",
               "properties": {
@@ -52,7 +53,6 @@
                 }
               }
             },
-            "x-media-type": "application/json",
             "in": "body"
           }
         ],

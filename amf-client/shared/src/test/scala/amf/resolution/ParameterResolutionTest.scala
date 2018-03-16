@@ -1,6 +1,6 @@
 package amf.resolution
 
-import amf.core.remote.{Amf, Oas, OasJsonHint, RamlYamlHint}
+import amf.core.remote._
 import amf.remote._
 
 class ParameterResolutionTest extends ResolutionTest {

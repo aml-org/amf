@@ -7,16 +7,18 @@ import org.yaml.model.YMap
 case class Parameters(query: Seq[Parameter] = Nil,
                       path: Seq[Parameter] = Nil,
                       header: Seq[Parameter] = Nil,
+                      baseUri08: Seq[Parameter] = Nil,
                       body: Option[Payload] = None) {
   def merge(inner: Parameters): Parameters = {
     Parameters(merge(query, inner.query),
                merge(path, inner.path),
                merge(header, inner.header),
+               merge(baseUri08, inner.baseUri08),
                merge(body, inner.body))
   }
 
   def add(inner: Parameters): Parameters = {
-    Parameters(add(query, inner.query), add(path, inner.path), add(header, inner.header), add(body, inner.body))
+    Parameters(add(query, inner.query), add(path, inner.path), add(header, inner.header), add(baseUri08, inner.baseUri08), add(body, inner.body))
   }
 
   private def merge(global: Option[Payload], inner: Option[Payload]): Option[Payload] =
@@ -43,18 +45,26 @@ case class Parameters(query: Seq[Parameter] = Nil,
 }
 
 object Parameters {
-  def classified(params: Seq[Parameter], payload: Option[Payload] = None): Parameters = {
-    Parameters(params.filter(_.isQuery), params.filter(_.isPath), params.filter(_.isHeader), payload)
+  def classified(path: String,params: Seq[Parameter], payload: Option[Payload] = None): Parameters = {
+    var uriParams: Seq[Parameter] = Nil
+    var pathParams: Seq[Parameter] = Nil
+    params.filter(_.isPath).foreach { param =>
+      if (path.contains(s"{${param.name}}"))
+        pathParams ++= Seq(param)
+      else uriParams ++= Seq(param)
+    }
+    Parameters(params.filter(_.isQuery) ++ pathParams, Nil, params.filter(_.isHeader), uriParams, payload)
   }
 }
 
-case class OasParameter(parameter: Parameter, payload: Payload) {
-  def isBody: Boolean   = parameter.isBody
-  def isQuery: Boolean  = parameter.isQuery
-  def isPath: Boolean   = parameter.isPath
-  def isHeader: Boolean = parameter.isHeader
+case class OasParameter(parameter: Parameter, payload: Payload, ast: Option[YMap] = None) {
+  def isFormData: Boolean = parameter.isForm
+  def isBody: Boolean     = parameter.isBody
+  def isQuery: Boolean    = parameter.isQuery
+  def isPath: Boolean     = parameter.isPath
+  def isHeader: Boolean   = parameter.isHeader
 }
 
 object OasParameter {
-  def apply(ast: YMap): OasParameter = OasParameter(Parameter(ast), Payload(ast))
+  def apply(ast: YMap): OasParameter = OasParameter(Parameter(ast), Payload(ast), Some(ast))
 }

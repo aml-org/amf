@@ -273,7 +273,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) ext
           }
 
           parameters match {
-            case Parameters(query, path, header, _) if query.nonEmpty || path.nonEmpty || header.nonEmpty =>
+            case Parameters(query, path, header, _, _) if query.nonEmpty || path.nonEmpty || header.nonEmpty =>
               endpoint.set(EndPointModel.Parameters,
                            AmfArray(query ++ path ++ header, Annotations(entries.head.value)),
                            Annotations(entries.head))
@@ -337,7 +337,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) ext
         .key("parameters")
         .foreach { entry =>
           entries += entry
-          parameters = parameters.add(OasParametersParser(entry.value.as[Seq[YMap]], request.getOrCreate.id).parse())
+          parameters = parameters.add(OasParametersParser(entry.value.as[Seq[YMap]], request.getOrCreate.id).parse(inRequest = true))
         }
 
       map
@@ -378,16 +378,16 @@ case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) ext
             val parameter = Raml08ParameterParser(paramEntry, request.getOrCreate.withQueryParameter)(spec.toRaml(ctx))
               .parse()
               .withBinding("path")
-            parameters = parameters.add(Parameters(path = Seq(parameter)))
+            parameters = parameters.add(Parameters(baseUri08 = Seq(parameter)))
           }
         }
       )
 
       parameters match {
-        case Parameters(query, path, header, _) =>
+        case Parameters(query, path, header, baseUri08, _) =>
           if (query.nonEmpty || path.nonEmpty)
             request.getOrCreate.set(RequestModel.QueryParameters,
-                                    AmfArray(query, Annotations(entries.head)),
+                                    AmfArray(query ++ path, Annotations(entries.head)),
                                     Annotations(entries.head))
           if (header.nonEmpty)
             request.getOrCreate.set(RequestModel.Headers,
@@ -396,7 +396,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) ext
 
           if (path.nonEmpty)
             request.getOrCreate.set(RequestModel.UriParameters,
-                                    AmfArray(path, Annotations(entries.head)),
+                                    AmfArray(baseUri08, Annotations(entries.head)),
                                     Annotations(entries.head))
       }
 

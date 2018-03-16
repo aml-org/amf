@@ -1,8 +1,10 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.SynthesizedField
+import amf.core.utils._
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{FieldEntry, Fields, Position, Value}
@@ -65,11 +67,21 @@ case class Raml08EndPointEmitter(endpoint: EndPoint,
 
   override protected def emitters(fs: Fields): ListBuffer[EntryEmitter] = {
     val result = super.emitters(fs)
-
+    val variables: Seq[String] = TemplateUri.variables(endpoint.path)
     fs.entry(EndPointModel.Parameters)
       .map { f =>
         if (f.array.values.exists(f => !f.annotations.contains(classOf[SynthesizedField]))) {
-          result += RamlParametersEmitter(keyParameter, f, ordering, references)
+          var uriParameters: Seq[Parameter] = Nil
+          var pathParameters: Seq[Parameter] = Nil
+          f.array.values.foreach { case p: Parameter =>
+            if (variables.contains(p.name) || variables.contains(p.parameterName))
+              pathParameters ++= Seq(p)
+            else
+              uriParameters ++= Seq(p)
+          }
+
+          result += RamlParametersEmitter("uriParameters", FieldEntry(EndPointModel.Parameters, Value(AmfArray(pathParameters), f.value.annotations)), ordering, references)
+          result += RamlParametersEmitter("baseUriParameters", FieldEntry(EndPointModel.Parameters, Value(AmfArray(uriParameters), f.value.annotations)), ordering, references)
         }
       }
 

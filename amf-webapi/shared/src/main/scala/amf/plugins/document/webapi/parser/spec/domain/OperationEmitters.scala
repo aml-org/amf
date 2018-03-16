@@ -89,7 +89,9 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
 
       fields
         .entry(RequestModel.QueryParameters)
-        .map(f => result += RamlParametersEmitter("queryParameters", f, ordering, references))
+        .map(f =>
+          result += RamlParametersEmitter("queryParameters", f, ordering, references)
+        )
 
       fields
         .entry(RequestModel.Headers)
