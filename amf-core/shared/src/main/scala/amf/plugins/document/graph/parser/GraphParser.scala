@@ -226,7 +226,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
       scalars.foreach { e =>
         instance.fields
           .fieldsMeta()
-          .find(_.value.iri() == e.element)
+          .find(f => e.element.is(f.value.iri()))
           .foreach(f => {
             instance.fields.entry(f).foreach {
               case FieldEntry(_, value) => value.annotations += DomainExtensionAnnotation(e)

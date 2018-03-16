@@ -9,8 +9,7 @@ import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.{Raml08TypeParser, Raml10TypeParser, RamlTypeSyntax, StringDefaultType, _}
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
-import amf.plugins.domain.shapes.metamodel.AnyShapeModel
-import amf.plugins.domain.shapes.models.{AnyShape, FileShape}
+import amf.plugins.domain.shapes.models.FileShape
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import amf.plugins.features.validation.ParserSideValidations

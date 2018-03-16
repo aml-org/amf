@@ -20,8 +20,7 @@ case class Payload(fields: Fields, annotations: Annotations) extends DomainEleme
   def withSchema(schema: Shape): this.type        = set(Schema, schema)
 
   override def adopted(parent: String): this.type = {
-    val mediaType: Option[String] = fields.?(MediaType)
-    withId(parent + "/" + mediaType.getOrElse("default"))
+    withId(parent + "/" + mediaType.option().getOrElse("default"))
   }
 
   def withObjectSchema(name: String): NodeShape = {

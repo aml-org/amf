@@ -3,7 +3,7 @@ package amf
 import amf.core.client.{Generator, Parser, Resolver}
 import amf.core.plugins.AMFPlugin
 import amf.client.model.document.BaseUnit
-import amf.plugins.document.Vocabularies
+//import amf.plugins.document.Vocabularies
 import amf.plugins.document.vocabularies.spec.Dialect
 import amf.validation.AMFValidationReport
 
@@ -16,7 +16,7 @@ object AMF {
 
   def init(): Promise[Any] = {
     amf.plugins.document.WebApi.register()
-    amf.plugins.document.Vocabularies.register()
+//    amf.plugins.document.Vocabularies.register()
     amf.plugins.features.AMFValidation.register()
     amf.Core.init()
   }
@@ -46,7 +46,7 @@ object AMF {
 
   def registerNamespace(alias: String, prefix: String): Boolean = amf.Core.registerNamespace(alias, prefix)
 
-  def registerDialect(url: String): Promise[Dialect] = Vocabularies.registerDialect(url)
+//  def registerDialect(url: String): Promise[Dialect] = Vocabularies.registerDialect(url)
 
   def resolveRaml10(unit: BaseUnit): BaseUnit = new Raml10Resolver().resolve(unit)
 
@@ -87,8 +87,8 @@ object PluginsWrapper {
 
 @JSExportAll
 object DocumentPluginsWrapper {
-  val WebApi       = amf.plugins.document.WebApi
-  val Vocabularies = amf.plugins.document.Vocabularies
+  val WebApi = amf.plugins.document.WebApi
+//  val Vocabularies = amf.plugins.document.Vocabularies
 }
 
 @JSExportAll
