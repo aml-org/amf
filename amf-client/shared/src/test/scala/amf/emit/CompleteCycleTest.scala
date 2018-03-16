@@ -969,4 +969,9 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("tags.raml", "tags.json.json", RamlYamlHint, Oas)
   }
 
+
+  test("Generic number entries validation") {
+    cycle("generic-number-entries.raml", "generic-number-entries.raml.raml", RamlYamlHint, Raml)
+  }
+
 }
