@@ -22,12 +22,12 @@ class ExamplesResolutionStage(profile: String) extends ResolutionStage(profile) 
     val allResponses = webApi.endPoints.flatMap(e => e.operations).flatMap(o => o.responses)
 
     allResponses.foreach { response =>
-      val mappedExamples = response.examples.map(e => e.mediaType -> e).toMap
+      val mappedExamples = response.examples.map(e => e.mediaType.value() -> e).toMap
       response.fields.remove(ResponseModel.Examples)
       response.payloads.foreach(p => {
         p.schema match {
           case shape: AnyShape =>
-            val exampleOption = mappedExamples.get(p.mediaType)
+            val exampleOption = mappedExamples.get(p.mediaType.value())
             exampleOption.foreach(e => { shape.withExamples(shape.examples ++ Seq(e)) })
           case _ => // ignore
         }
