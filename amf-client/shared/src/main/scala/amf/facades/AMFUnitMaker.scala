@@ -30,6 +30,7 @@ class AMFUnitMaker {
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAMLVocabulariesPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(WebAPIDomainPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
+  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(JsonSchemaPlugin)
 
   def make(unit: BaseUnit, vendor: Vendor, options: GenerationOptions): YDocument = {
     val vendorString = vendor match {

@@ -10,7 +10,7 @@ import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.core.remote.{Oas, Vendor}
-import amf.plugins.document.webapi.contexts.{BaseSpecEmitter, OasSpecEmitterContext}
+import amf.plugins.document.webapi.contexts.{BaseSpecEmitter, OasSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Overlay}
 import amf.plugins.document.webapi.parser.spec._

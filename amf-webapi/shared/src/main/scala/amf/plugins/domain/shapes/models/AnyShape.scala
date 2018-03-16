@@ -3,7 +3,7 @@ package amf.plugins.domain.shapes.models
 import amf.core.metamodel.Obj
 import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.document.webapi.parser.spec.oas.JsonSchemaSerializer
+import amf.plugins.document.webapi.parser.spec.common.JsonSchemaSerializer
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel._
 import org.yaml.model.YPart
