@@ -22,7 +22,15 @@ documentation:
       multi
       line
 /top:
+  baseUriParameters:
+    param1:
+      description: resource override
+      type: number
   get:
+    baseUriParameters:
+      param1:
+        description: method override
+        type: boolean
     description: get something
     queryParameters:
       order:
@@ -31,10 +39,6 @@ documentation:
         type: string
         default: asc
     body: {}
-    baseUriParameters:
-      param1:
-        description: method override
-        type: boolean
   post:
     description: post something
     responses:
@@ -129,10 +133,6 @@ documentation:
             "required": false,
             "type": "object"
         }
-    baseUriParameters:
-      param1:
-        description: resource override
-        type: number
   /children:
     description: child description
     post:

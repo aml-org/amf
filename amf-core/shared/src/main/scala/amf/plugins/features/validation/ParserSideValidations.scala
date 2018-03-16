@@ -7,6 +7,22 @@ import amf.core.vocabulary.Namespace
 
 object ParserSideValidations {
 
+  val OasBodyAndFormDataParameterSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "oas-not-body-and-form-data-parameters").iri(),
+    "Operation cannot have a body parameter and a formData parameter",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
+  val OasFormDataNotFileSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "oas-file-not-form-data-parameters").iri(),
+    "Parameters with type file must be in formData",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val ExampleValidationErrorSpecification = ValidationSpecification(
     (Namespace.AmfParser + "example-validation-error").iri(),
     "Example does not validate type",
@@ -86,6 +102,14 @@ object ParserSideValidations {
   )
 
   val levels: Map[String, Map[String, String]] = Map(
+    OasBodyAndFormDataParameterSpecification.id() -> Map(
+      ProfileNames.OAS  -> SeverityLevels.VIOLATION
+    ),
+
+    OasFormDataNotFileSpecification.id() -> Map(
+      ProfileNames.OAS  -> SeverityLevels.VIOLATION
+    ),
+
     ClosedShapeSpecification.id() -> Map(
       ProfileNames.RAML -> SeverityLevels.VIOLATION,
       ProfileNames.OAS  -> SeverityLevels.VIOLATION,

@@ -15,24 +15,25 @@ case class Parameter(fields: Fields, annotations: Annotations)
     with Linkable
     with NamedDomainElement {
 
-  def name: String          = fields(Name)
-  def parameterName: String = fields(ParameterName)
-  def description: String   = fields(Description)
-  def required: Boolean     = fields(Required)
-  def binding: String       = fields(Binding)
-  def schema: Shape         = fields(Schema)
+  def name: String            = fields(Name)
+  def parameterName: String   = fields(ParameterName)
+  def description: String     = fields(Description)
+  def required: Boolean       = fields(Required)
+  def binding: String         = fields(Binding)
+    def schema: Shape           = fields(Schema)
 
-  def withName(name: String): this.type               = set(Name, name)
-  def withParameterName(name: String)                 = set(ParameterName, name)
-  def withDescription(description: String): this.type = set(Description, description)
-  def withRequired(required: Boolean): this.type      = set(Required, required)
-  def withBinding(binding: String): this.type         = set(Binding, binding)
-  def withSchema(schema: Shape): this.type            = set(Schema, schema)
+  def withName(name: String): this.type                   = set(Name, name)
+  def withParameterName(name: String)                     = set(ParameterName, name)
+  def withDescription(description: String): this.type     = set(Description, description)
+  def withRequired(required: Boolean): this.type          = set(Required, required)
+  def withBinding(binding: String): this.type             = set(Binding, binding)
+    def withSchema(schema: Shape): this.type                = set(Schema, schema)
 
   def isHeader: Boolean = binding == "header"
   def isQuery: Boolean  = binding == "query"
   def isBody: Boolean   = binding == "body"
   def isPath: Boolean   = binding == "path"
+  def isForm: Boolean   = binding == "formData"
 
   override def adopted(parent: String): this.type = withId(parent + "/parameter/" + name)
 

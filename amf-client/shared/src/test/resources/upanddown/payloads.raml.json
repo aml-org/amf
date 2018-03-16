@@ -14,11 +14,11 @@
         "operationId": "Some title",
         "parameters": [
           {
+            "x-media-type": "application/json",
+            "in": "body",
             "schema": {
               "type": "string"
-            },
-            "x-media-type": "application/json",
-            "in": "body"
+            }
           }
         ],
         "responses": {

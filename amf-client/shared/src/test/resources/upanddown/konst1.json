@@ -9,6 +9,8 @@
       "get": {
         "parameters": [
           {
+            "x-media-type": "application/json",
+            "in": "body",
             "schema": {
               "x-a": "stringValue5",
               "type": "object",
@@ -20,9 +22,7 @@
                   "x-a": "stringValue6"
                 }
               }
-            },
-            "x-media-type": "application/json",
-            "in": "body"
+            }
           }
         ],
         "responses": {},
