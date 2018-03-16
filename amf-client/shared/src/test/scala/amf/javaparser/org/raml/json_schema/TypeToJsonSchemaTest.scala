@@ -23,7 +23,7 @@ class TypeToJsonSchemaTest extends ModelValidationTest {
   override def dump(model: BaseUnit, d: String, vendor: Vendor): String = {
     model match {
       case d: DeclaresModel =>
-        d.declares.collectFirst { case s: AnyShape if s.name.equals("root") => s } match {
+        d.declares.collectFirst { case s: AnyShape if s.name.is("root") => s } match {
           case Some(anyShape: AnyShape) => anyShape.toJsonSchema
           case Some(other)              => throw new AssertionError("Wrong type declared $other")
           case None                     => throw new AssertionError("Model with empty declarations")

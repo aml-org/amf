@@ -11,6 +11,7 @@ import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.oas.OasDeclarationsEmitter
 import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.model.YDocument
+import org.yaml.model.YDocument.EntryBuilder
 
 trait JsonSchemaSerializer {
   // todo, check if its resolved?
@@ -23,7 +24,7 @@ trait JsonSchemaSerializer {
 }
 
 object JsonSchemaEntry extends EntryEmitter {
-  override def emit(b: YDocument.EntryBuilder): Unit = b.entry("$schema", "http://json-schema.org/draft-04/schema#")
+  override def emit(b: EntryBuilder): Unit = b.entry("$schema", "http://json-schema.org/draft-04/schema#")
 
   override def position(): Position = Position.ZERO
 }
@@ -38,8 +39,8 @@ case class JsonSchemaEmitter(shape: AnyShape, ordering: SpecOrdering = SpecOrder
   }
 
   private val jsonSchemaRefEntry = new EntryEmitter {
-    override def emit(b: YDocument.EntryBuilder): Unit =
-      b.entry("$ref", OasDefinitions.appendDefinitionsPrefix(shape.name))
+    override def emit(b: EntryBuilder): Unit =
+      b.entry("$ref", OasDefinitions.appendDefinitionsPrefix(shape.name.value()))
 
     override def position(): Position = Position.ZERO
   }

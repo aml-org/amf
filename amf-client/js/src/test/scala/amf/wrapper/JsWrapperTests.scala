@@ -4,7 +4,7 @@ import _root_.org.scalatest.{Assertion, AsyncFunSuite}
 import amf._
 import amf.client.convert.WebApiClientConverters._
 import amf.client.model.document.{BaseUnit, Document, TraitFragment}
-import amf.client.model.domain.{ScalarShape, WebApi}
+import amf.client.model.domain.WebApi
 import amf.core.unsafe.PlatformSecrets
 
 import scala.concurrent.ExecutionContext
@@ -13,35 +13,35 @@ class JsWrapperTests extends AsyncFunSuite with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  ignore("Parsing raml 1.0 detect test") {
+  test("Parsing raml 1.0 detect test") {
     AMF.init().toFuture.flatMap { _ =>
       val parser = new RamlParser()
       parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder.raml").toFuture
     } flatMap { assertBaseUnit(_, "file://amf-client/shared/src/test/resources/api/zencoder.raml") }
   }
 
-  ignore("Parsing raml 0.8 detect test") {
+  test("Parsing raml 0.8 detect test") {
     AMF.init().toFuture.flatMap { _ =>
       val parser = new RamlParser()
       parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder08.raml").toFuture
     } flatMap { assertBaseUnit(_, "file://amf-client/shared/src/test/resources/api/zencoder08.raml") }
   }
 
-  ignore("Parsing raml 1.0 test") {
+  test("Parsing raml 1.0 test") {
     AMF.init().toFuture.flatMap { _ =>
       val parser = new Raml10Parser()
       parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder.raml").toFuture
     } flatMap { assertBaseUnit(_, "file://amf-client/shared/src/test/resources/api/zencoder.raml") }
   }
 
-  ignore("Parsing raml 0.8 test") {
+  test("Parsing raml 0.8 test") {
     AMF.init().toFuture.flatMap { _ =>
       val parser = new Raml08Parser()
       parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder08.raml").toFuture
     } flatMap { assertBaseUnit(_, "file://amf-client/shared/src/test/resources/api/zencoder08.raml") }
   }
 
-  ignore("Generation test") {
+  test("Generation test") {
     AMF.init().toFuture.flatMap { _ =>
       val parser = new RamlParser()
       parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder.raml").toFuture
@@ -52,7 +52,7 @@ class JsWrapperTests extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  ignore("Resolution test") {
+  test("Resolution test") {
     AMF.init().toFuture flatMap { _ =>
       val parser = new RamlParser()
       parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder.raml").toFuture
@@ -76,7 +76,7 @@ class JsWrapperTests extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  /*  ignore("Vocabularies test") {
+  /*  test("Vocabularies test") {
     AMF.init().toFuture flatMap { _ =>
       AMF.registerDialect("file://amf-client/shared/src/test/resources/api/dialects/eng-demos.raml").toFuture
     } flatMap { _ =>
@@ -96,7 +96,7 @@ class JsWrapperTests extends AsyncFunSuite with PlatformSecrets {
     }
   }*/
 
-  ignore("world-music-test") {
+  test("world-music-test") {
     amf.plugins.features.AMFValidation.register()
     amf.plugins.document.WebApi.register()
     amf.Core.init().toFuture flatMap { _ =>
@@ -108,7 +108,7 @@ class JsWrapperTests extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  ignore("banking-api-test") {
+  test("banking-api-test") {
     amf.plugins.features.AMFValidation.register()
     amf.plugins.document.WebApi.register()
     amf.Core.init().toFuture flatMap { _ =>
@@ -126,7 +126,7 @@ class JsWrapperTests extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  ignore("banking-api-test 2") {
+  test("banking-api-test 2") {
     amf.plugins.features.AMFValidation.register()
     amf.plugins.document.WebApi.register()
     amf.Core.init().toFuture flatMap { _ =>
@@ -138,13 +138,13 @@ class JsWrapperTests extends AsyncFunSuite with PlatformSecrets {
       val traitRefs     = traitModel.references().asInternal
       val firstFragment = traitRefs.head
       assert(firstFragment.location != null)
-      assert(firstFragment.asInstanceOf[TraitFragment].encodes != null)
+      assert(firstFragment.asInstanceOf[amf.plugins.document.webapi.model.TraitFragment].encodes != null)
       assert(!traitRefs.map(_.location).contains(null))
     }
   }
 
   /*
-  ignore("Vocabulary generation") {
+  test("Vocabulary generation") {
     amf.plugins.document.Vocabularies.register()
     amf.plugins.document.WebApi.register()
     amf.Core.init().toFuture flatMap { _ =>
@@ -226,7 +226,7 @@ class JsWrapperTests extends AsyncFunSuite with PlatformSecrets {
    */
 
   /*
-  ignore("vocabularies parsing") {
+  test("vocabularies parsing") {
     amf.plugins.document.Vocabularies.register()
     amf.plugins.document.WebApi.register()
     amf.Core.init().toFuture flatMap { _ =>
@@ -247,7 +247,7 @@ class JsWrapperTests extends AsyncFunSuite with PlatformSecrets {
    */
 
   /*
-  ignore("Vocabularies parsing raml_doc") {
+  test("Vocabularies parsing raml_doc") {
     amf.plugins.document.Vocabularies.register()
     amf.plugins.document.WebApi.register()
     val res = amf.Core.init().toFuture flatMap { _ =>
@@ -263,7 +263,7 @@ class JsWrapperTests extends AsyncFunSuite with PlatformSecrets {
   }
    */
 
-  ignore("Parsing text document with base url") {
+  test("Parsing text document with base url") {
     val spec = """#%RAML 1.0
                  |
                  |title: tes
@@ -290,7 +290,7 @@ class JsWrapperTests extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  ignore("Parsing text document with base url only with domain") {
+  test("Parsing text document with base url only with domain") {
     val spec = """#%RAML 1.0
                  |
                  |title: tes
@@ -345,12 +345,12 @@ class JsWrapperTests extends AsyncFunSuite with PlatformSecrets {
 
     assert(
       post.responses.head.payloads.head.schema
-        .asInstanceOf[ScalarShape]
+        .asInstanceOf[amf.plugins.domain.shapes.models.ScalarShape]
         .dataType
         .is("http://www.w3.org/2001/XMLSchema#string"))
     assert(
       post.request.payloads.head.schema
-        .asInstanceOf[ScalarShape]
+        .asInstanceOf[amf.plugins.domain.shapes.models.ScalarShape]
         .dataType
         .is("http://www.w3.org/2001/XMLSchema#string"))
     assert(post.responses.head.statusCode.is("200"))
