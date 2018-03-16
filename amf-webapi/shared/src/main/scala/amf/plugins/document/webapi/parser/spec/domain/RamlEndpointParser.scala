@@ -142,7 +142,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     )
 
     parameters match {
-      case Parameters(query, path, header, _) if parameters.nonEmpty =>
+      case Parameters(query, path, header, _, _) if parameters.nonEmpty =>
         endpoint.set(EndPointModel.Parameters, AmfArray(query ++ path ++ header, annotations), annotations)
       case _ =>
     }

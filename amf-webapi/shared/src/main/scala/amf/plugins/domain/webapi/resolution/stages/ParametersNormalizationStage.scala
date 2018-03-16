@@ -1,12 +1,13 @@
 package amf.plugins.domain.webapi.resolution.stages
 
 import amf.ProfileNames
+import amf.core.utils._
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.AmfArray
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.webapi.parser.spec.domain.Parameters
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, RequestModel, WebApiModel}
-import amf.plugins.domain.webapi.models.{Operation, WebApi}
+import amf.plugins.domain.webapi.models.{Operation, Parameter, WebApi}
 
 /**
   * Place parameter models in the right locations according to the RAML/OpenAPI specs and our own
@@ -39,7 +40,7 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
         webApi.fields.remove(WebApiModel.BaseUriParameters)
         // collect endpoint parameters
         webApi.endPoints.foreach { endpoint =>
-          finalParams = finalParams.merge(Parameters.classified(Option(endpoint.parameters).getOrElse(Seq())))
+          finalParams = finalParams.merge(Parameters.classified(endpoint.path, Option(endpoint.parameters).getOrElse(Seq())))
           endpoint.fields.remove(EndPointModel.Parameters)
           // collect operation query parameters
           if (finalParams.nonEmpty)
@@ -76,7 +77,7 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
         val webApi = doc.encodes.asInstanceOf[WebApi]
         // collect endpoint path parameters
         webApi.endPoints.foreach { endpoint =>
-          val finalParams = Parameters.classified(Option(endpoint.parameters).getOrElse(Seq()))
+          val finalParams = Parameters.classified(endpoint.path, Option(endpoint.parameters).getOrElse(Seq()))
           // collect operation query parameters
           if (finalParams.nonEmpty && endpoint.operations.nonEmpty) {
             endpoint.fields.remove(EndPointModel.Parameters)
@@ -110,7 +111,7 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
           // we filter path parameters and the remaining parameters
           val (path, other) = endpointParameters.partition(p => p.binding == "path")
 
-          val finalParams = Parameters.classified(other)
+          val finalParams = Parameters.classified(endpoint.path, other)
           // collect operation query parameters
           if (finalParams.nonEmpty && endpoint.operations.nonEmpty) {
             endpoint.fields.remove(EndPointModel.Parameters)
