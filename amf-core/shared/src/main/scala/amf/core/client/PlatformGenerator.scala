@@ -22,10 +22,10 @@ abstract class PlatformGenerator extends PlatformSecrets {
     * (like the browser) or if a remote URL is provided.
     */
   protected def generate(unit: BaseUnit, url: String, options: GenerationOptions): Future[Unit] =
-    new AMFSerializer(unit, mediaType, vendor, options).dumpToFile(platform, url)
+    AMFSerializer(unit, mediaType, vendor, options).dumpToFile(platform, url)
 
   protected def generate(unit: BaseUnit, options: GenerationOptions): String =
-    new AMFSerializer(unit, mediaType, vendor, options).dumpToString
+    AMFSerializer(unit, mediaType, vendor, options).dumpToString
 
   protected def generate(unit: BaseUnit, url: String, options: GenerationOptions, handler: Handler[Unit]): Unit = {
     generate(unit, url, options).onComplete(unitSyncAdapter(handler))

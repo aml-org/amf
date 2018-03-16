@@ -4,16 +4,18 @@
   "definitions": {
     "root": {
       "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "value",
+        "left",
+        "right"
+      ],
       "properties": {
         "value": {
           "type": "string"
         },
-        "left": {
-          "$ref": "#/definitions/root"
-        },
-        "right": {
-          "$ref": "#/definitions/root"
-        }
+        "left": {},
+        "right": {}
       }
     }
   }
