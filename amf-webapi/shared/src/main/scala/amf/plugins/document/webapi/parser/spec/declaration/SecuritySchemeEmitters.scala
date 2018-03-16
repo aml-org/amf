@@ -443,7 +443,10 @@ abstract class DescribedByEmitter(key: String,
     fs.entry(SecuritySchemeModel.Headers)
       .foreach(f => results += RamlParametersEmitter("headers", f, ordering, references))
     fs.entry(SecuritySchemeModel.QueryParameters)
-      .foreach(f => results += RamlParametersEmitter("queryParameters", f, ordering, references))
+      .foreach { f =>
+        if (f.array.values.nonEmpty)
+          results += RamlParametersEmitter("queryParameters", f, ordering, references)
+      }
     fs.entry(SecuritySchemeModel.Responses)
       .foreach(f => results += RamlResponsesEmitter("responses", f, ordering, references))
 

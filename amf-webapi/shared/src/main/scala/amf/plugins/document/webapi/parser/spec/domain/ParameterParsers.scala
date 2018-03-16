@@ -7,16 +7,13 @@ import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  Raml08TypeParser,
-  Raml10TypeParser,
-  RamlTypeSyntax,
-  StringDefaultType,
-  _
-}
+import amf.plugins.document.webapi.parser.spec.declaration.{Raml08TypeParser, Raml10TypeParser, RamlTypeSyntax, StringDefaultType, _}
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
+import amf.plugins.domain.shapes.metamodel.AnyShapeModel
+import amf.plugins.domain.shapes.models.{AnyShape, FileShape}
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType, _}
 
 /**
@@ -208,16 +205,20 @@ case class OasParameterParser(map: YMap, parentId: String, name: Option[String])
           map.key("name", ParameterModel.Name in parameter) // name of the parameter in the HTTP binding (path, request parameter, etc)
         }
         map.key("name", ParameterModel.ParameterName in parameter) // name of the parameter in the HTTP binding (path, request parameter, etc)
-        map.key("description", ParameterModel.Description in parameter)
-        map.key("required", (ParameterModel.Required in parameter).explicit)
         map.key("in", ParameterModel.Binding in parameter)
+
+        // This is for in: body parameters that might not have a name
+        if ((p.isBody || p.isFormData) && Option(parameter.name).isEmpty)
+          parameter.withName("default")
 
         // type
         parameter.adopted(parentId)
+        p.payload.adopted(parameter.id)
+
+        map.key("description", ParameterModel.Description in parameter)
+        map.key("required", (ParameterModel.Required in parameter).explicit)
 
         if (p.isBody) {
-          p.payload.adopted(parentId)
-
           ctx.closedShape(parameter.id, map, "bodyParameter")
 
           map.key(
@@ -225,8 +226,18 @@ case class OasParameterParser(map: YMap, parentId: String, name: Option[String])
             entry => {
               OasTypeParser(entry, (shape) => shape.withName("schema").adopted(p.payload.id))
                 .parse()
-                .map {
-                  p.payload.set(PayloadModel.Schema, _, Annotations(entry))
+                .map { schema =>
+                  schema.withName(Option(parameter.parameterName).getOrElse("schema"))
+                  val schemaToCheck = if (schema.isLink) schema.linkTarget
+                                      else schema
+                  if (schemaToCheck.isInstanceOf[FileShape])
+                    ctx.violation(
+                      ParserSideValidations.OasFormDataNotFileSpecification.id(),
+                      schema.id,
+                      "File types in parameters must be declared in formData params",
+                      map
+                    )
+                  p.payload.set(PayloadModel.Schema, schema, Annotations(entry))
                 }
             }
           )
@@ -244,7 +255,14 @@ case class OasParameterParser(map: YMap, parentId: String, name: Option[String])
             shape => shape.withName("schema").adopted(parameter.id),
             "parameter"
           ).parse()
-            .map(parameter.set(ParameterModel.Schema, _, Annotations(map)))
+            .map { schema =>
+              if (p.isFormData) {
+                schema.withName(Option(parameter.parameterName).getOrElse("schema"))
+                p.payload.set(PayloadModel.Schema, schema, Annotations(map))
+              }
+              else parameter.set(ParameterModel.Schema, schema, Annotations(map))
+            }
+
         }
 
         AnnotationParser(parameter, map).parse()
@@ -270,15 +288,30 @@ case class OasParameterParser(map: YMap, parentId: String, name: Option[String])
 }
 
 case class OasParametersParser(values: Seq[YMap], parentId: String)(implicit ctx: OasWebApiContext) {
-  def parse(): Parameters = {
+  def parse(inRequest: Boolean = false): Parameters = {
     val parameters = values
       .map(value => OasParameterParser(value, parentId, None).parse())
+
+    if (inRequest) {
+      if (parameters.exists(_.isBody) && parameters.exists(_.isFormData)) {
+        val bodyParam = parameters.find(_.isBody).head
+        ctx.violation(
+          ParserSideValidations.OasBodyAndFormDataParameterSpecification.id(),
+          bodyParam.payload.id,
+          "Cannot declare body and formData params at the same time for a request",
+          bodyParam.ast.get)
+      }
+
+    }
 
     Parameters(
       parameters.filter(_.isQuery).map(_.parameter),
       parameters.filter(_.isPath).map(_.parameter),
       parameters.filter(_.isHeader).map(_.parameter),
-      parameters.filter(_.isBody).map(_.payload).headOption
+      Nil,
+      parameters.filter(_.isBody).map(_.payload).headOption.orElse {
+        parameters.filter(_.isFormData).map(_.payload).headOption
+      }
     )
   }
 }

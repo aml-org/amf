@@ -7,16 +7,11 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{FieldEntry, Fields, Position}
-import amf.plugins.document.webapi.contexts.{
-  OasSpecEmitterContext,
-  RamlScalarEmitter,
-  RamlSpecEmitterContext,
-  SpecEmitterContext
-}
+import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
-import amf.plugins.domain.shapes.metamodel.AnyShapeModel
+import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, FileShapeModel}
 import amf.plugins.domain.shapes.models.{AnyShape, ArrayShape, FileShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
@@ -34,13 +29,16 @@ case class RamlParametersEmitter(key: String, f: FieldEntry, ordering: SpecOrder
     extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
-    sourceOr(
-      f.value.annotations,
-      b.entry(
-        key,
-        _.obj(traverse(parameters(f, ordering, references), _))
+    val params = parameters(f, ordering, references)
+    if (params.nonEmpty) {
+      sourceOr(
+        f.value.annotations,
+        b.entry(
+          key,
+          _.obj(traverse(params, _))
+        )
       )
-    )
+    }
   }
 
   private def parameters(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
@@ -314,15 +312,28 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
     b.obj { b =>
       val result = mutable.ListBuffer[EntryEmitter]()
 
-      payload.fields
-        .entry(PayloadModel.Schema)
-        .map(f => result += OasSchemaEmitter(f, ordering, references))
+      if (Option(payload.schema).exists(_.isInstanceOf[FileShape])) {
 
-      payload.fields.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("x-media-type", f))
+        val fs = payload.schema.fields
+        fs.entry(FileShapeModel.Name).map(f => result += ValueEmitter("name", f))
+        fs.entry(FileShapeModel.Description).map(f => result += ValueEmitter("description", f))
+        result += MapEntryEmitter("in","formData")
+        result ++= OasTypeEmitter(payload.schema,
+          ordering,
+          Seq(ShapeModel.Description),
+          references).entries()
+        result ++= AnnotationsEmitter(payload, ordering).emitters
 
-      result += MapEntryEmitter("in", "body")
+      } else {
 
-      result ++= AnnotationsEmitter(payload, ordering).emitters
+        payload.fields.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("x-media-type", f))
+        result += MapEntryEmitter("in", "body")
+        payload.fields
+          .entry(PayloadModel.Schema)
+          .map(f => result += OasSchemaEmitter(f, ordering, references))
+        result ++= AnnotationsEmitter(payload, ordering).emitters
+
+      }
 
       traverse(ordering.sorted(result), b)
     }

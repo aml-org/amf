@@ -20,6 +20,7 @@ abstract class ResolutionTest extends BuildCycleTests {
 //    case _ => unit
   }
 
-  override def render(unit: BaseUnit, config: CycleConfig): String =
+  override def render(unit: BaseUnit, config: CycleConfig): String = {
     new AMFDumper(unit, Amf, Amf.defaultSyntax, GenerationOptions().withSourceMaps).dumpToString
+  }
 }

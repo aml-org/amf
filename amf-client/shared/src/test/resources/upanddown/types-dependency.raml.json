@@ -26,6 +26,8 @@
         "operationId": "Some title",
         "parameters": [
           {
+            "x-media-type": "application/raml",
+            "in": "body",
             "schema": {
               "type": "object",
               "required": [
@@ -66,9 +68,7 @@
                   "street"
                 ]
               }
-            },
-            "x-media-type": "application/raml",
-            "in": "body"
+            }
           }
         ],
         "x-queryParameters": {

@@ -1,0 +1,32 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test",
+    "version": "1.0"
+  },
+  "parameters": {
+    "a": {
+      "type": "string",
+      "required": true,
+      "in": "path",
+      "name": "b"
+    }
+  },
+  "paths": {
+    "/a/{a}": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/a"
+          },
+          {
+            "type": "file",
+            "name": "theBody",
+            "in": "formData"
+          }
+        ],
+        "responses": {}
+      }
+    }
+  }
+}

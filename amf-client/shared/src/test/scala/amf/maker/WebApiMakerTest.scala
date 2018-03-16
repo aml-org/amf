@@ -235,7 +235,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
         .withDescription("and this description!")
         .withPayloads(List(Payload()
           .withMediaType("application/json")
-          .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#integer"))))
+          .withSchema(ScalarShape().withName("paramName").withDataType("http://www.w3.org/2001/XMLSchema#integer"))))
         .withOperations(List(
           Operation()
             .withMethod("get")
@@ -258,7 +258,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
                   .withRequired(false)
                   .withBinding("header")))
                 .withPayloads(List(Payload()
-                  .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
+                  .withSchema(ScalarShape().withName("otherParamName").withDataType("http://www.w3.org/2001/XMLSchema#string"))
                   .withMediaType("application/xml")))
             ),
           Operation()
@@ -471,7 +471,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     val payloadParam1 = request.withPayload()
 
     val objectParam1 = payloadParam1
-      .withObjectSchema("schema")
+      .withObjectSchema("param1")
       .withClosed(false)
 
     objectParam1
@@ -594,7 +594,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withName("scalar_array")
       .withRequest()
       .withPayload(None)
-      .withArraySchema("schema")
+      .withArraySchema("scalar_array")
       .withMinItems(3)
       .withMaxItems(10)
       .withUniqueItems(true)
@@ -608,7 +608,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withName("object_array")
       .withRequest()
       .withPayload(None)
-      .withArraySchema("schema")
+      .withArraySchema("object_array")
       .withNodeItems()
       .withClosed(false)
       .withName("items")

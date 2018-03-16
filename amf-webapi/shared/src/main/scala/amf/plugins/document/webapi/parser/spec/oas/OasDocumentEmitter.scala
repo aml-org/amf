@@ -186,7 +186,7 @@ case class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: Oa
             fs.entry(EndPointModel.Description).map(f => result += ValueEmitter("x-description", f))
             fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter("x-", f, ordering).emitters())
 
-            val parameters = Parameters.classified(endpoint.parameters, endpoint.payloads.headOption)
+            val parameters = Parameters.classified(endpoint.path, endpoint.parameters, endpoint.payloads.headOption)
 
             if (parameters.nonEmpty)
               result ++= OasParametersEmitter("parameters",
@@ -301,7 +301,8 @@ case class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: Oa
 
       fs.entry(RequestModel.UriParameters)
         .map { f =>
-          result += RamlParametersEmitter("x-baseUriParameters", f, ordering, references)(toRaml(spec))
+          if (f.array.values.nonEmpty)
+            result += RamlParametersEmitter("x-baseUriParameters", f, ordering, references)(toRaml(spec))
         }
 
       result ++= AnnotationsEmitter(request, ordering).emitters

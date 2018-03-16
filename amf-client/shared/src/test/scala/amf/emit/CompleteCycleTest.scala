@@ -229,6 +229,22 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("parameters.json", OasJsonHint)
   }
 
+  test("Complete with formData parameter references oas to amf test") {
+    cycle("formDataParameters.json", "formDataParameters.jsonld", OasJsonHint, Amf)
+  }
+
+  test("Complete with formData parameter references amf to oas test") {
+    cycle("formDataParameters.jsonld", "formDataParameters.json", AmfJsonHint, Oas)
+  }
+
+  test("Complete with formData parameter references oas to oas test") {
+    cycle("formDataParameters.json", OasJsonHint)
+  }
+
+  test("Complete with formData parameter references oas to raml test") {
+    cycle("formDataParameters.json", "formDataParameters.raml", OasJsonHint, Raml)
+  }
+
   test("Complete with parameter references oas to amf test") {
     cycle("parameters.json", "parameters.json.jsonld", OasJsonHint, Amf)
   }
@@ -862,7 +878,7 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("users_accounts.jsonld", "users_accounts.raml", AmfJsonHint, Raml)
   }
 
-  test("HERE_HERE API with implicit object definition APIMF-376") {
+  test("API with implicit object definition APIMF-376") {
     cycle("implicitly-defined-object.raml", "implicitly-defined-object.raml.raml", RamlYamlHint, Raml)
   }
 
