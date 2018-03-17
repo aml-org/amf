@@ -11,16 +11,16 @@ import org.yaml.model.YMap
 
 case class External(fields: Fields, annotations: Annotations) extends DomainElement {
   override def meta: Obj = ExternalModel
-  override def adopted(parent: String): External.this.type = Option(alias) match {
-    case Some(alias) => withId(parent + "/externals/" + alias.value().urlEncoded)
+  override def adopted(parent: String): External.this.type = alias.option() match {
+    case Some(alias) => withId(parent + "/externals/" + alias.urlEncoded)
     case None        => throw new Exception("Cannot set ID of external without alias")
   }
 
   def withAlias(alias: String): this.type = set(Alias, alias)
-  def withBase(base: String): this.type = set(Base, base)
+  def withBase(base: String): this.type   = set(Base, base)
 
   def alias: StrField = fields.field(Alias)
-  def base: StrField = fields.field(Base)
+  def base: StrField  = fields.field(Base)
 }
 
 object External {
