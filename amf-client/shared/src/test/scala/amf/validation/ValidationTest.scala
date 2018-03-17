@@ -966,4 +966,32 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.nonEmpty)
     }
   }
+
+  test("Invalid example validation over union shapes") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "/shapes/invalid-example-in-unions.raml",
+                             platform,
+                             RamlYamlHint,
+                             validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.results.nonEmpty)
+      val results = report.results.filter(_.level == SeverityLevels.VIOLATION)
+      assert(results.lengthCompare(2) == 0)
+      assert(results.head.message.contains("Data at / must be a scalar"))
+    }
+  }
+
+  test("Valid examples validation over union shapes") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "/shapes/examples-in-unions.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
 }

@@ -863,13 +863,13 @@ sealed abstract class RamlTypeParser(ast: YPart,
           shape.set(ShapeModel.Inherits, AmfArray(inherits, Annotations(entry.value)), Annotations(entry))
 
         case YType.Map =>
-          Raml10TypeParser(entry, shape => shape.adopted(shape.id))
+          Raml10TypeParser(entry, s => s.adopted(shape.id))
             .parse()
             .foreach(s =>
               shape.set(ShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry)))
 
         case _ if RamlTypeDefMatcher.TypeExpression.unapply(entry.value.as[YScalar].text).isDefined =>
-          Raml10TypeParser(entry, shape => shape.adopted(shape.id))
+          Raml10TypeParser(entry, s => s.adopted(shape.id))
             .parse()
             .foreach(s =>
               shape.set(ShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry)))

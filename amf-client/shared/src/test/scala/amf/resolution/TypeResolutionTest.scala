@@ -181,6 +181,7 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
     "union5",
     "union6",
     "union7",
+    "union-with-examples",
     "inheritance1",
     "inheritance2",
     "inheritance3",
