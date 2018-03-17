@@ -32,7 +32,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
   def knowsDialectInstance(instance: DialectInstance): Boolean = dialectFor(instance).isDefined
 
   def dialectFor(instance: DialectInstance) = {
-    Option(instance.definedBy()) match {
+    instance.definedBy().option() match {
       case Some(dialectId) => map.values.find(_.id == dialectId)
       case _               => None
     }
@@ -93,11 +93,11 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     val fields = nodeMapping.propertiesMapping().map(_.toField())
     val mapPropertiesInDomain = dialect.declares.collect { case nodeMapping: NodeMapping =>
       nodeMapping.propertiesMapping().filter(_.classification() == ObjectMapProperty)
-    }.flatten.filter(prop => Option(prop.objectRange()).getOrElse(Nil).contains(nodeMapping.id))
+    }.flatten.filter(prop => prop.objectRange().exists(_.value() == nodeMapping.id))
 
-    val mapPropertiesFields = mapPropertiesInDomain.map(_.mapKeyProperty()).distinct.map( iri => Field(Type.Str, ValueType(iri)))
+    val mapPropertiesFields = mapPropertiesInDomain.map(_.mapKeyProperty()).distinct.map( iri => Field(Type.Str, ValueType(iri.value())))
 
-    new DialectDomainElementModel(nodeType, fields ++ mapPropertiesFields, Some(nodeMapping))
+    new DialectDomainElementModel(nodeType.value(), fields ++ mapPropertiesFields, Some(nodeMapping))
   }
 
   def registerDialect(uri: String): Future[Dialect] = {

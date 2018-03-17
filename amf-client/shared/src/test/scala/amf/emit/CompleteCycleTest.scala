@@ -701,12 +701,12 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("examples.raml", "examples.raml.jsonld", RamlYamlHint, Amf)
   }
 
-  test("Example json to amf") {
-    cycle("examples.json", "examples.json.jsonld", OasJsonHint, Amf)
+  test("HERE_HERE Example amf to raml") {
+    cycle("examples.raml.jsonld", "examples.raml", AmfJsonHint, Raml)
   }
 
-  test("Example amf to raml") {
-    cycle("examples.raml.jsonld", "examples.jsonld.raml", AmfJsonHint, Raml)
+  test("Example json to amf") {
+    cycle("examples.json", "examples.json.jsonld", OasJsonHint, Amf)
   }
 
   test("Example amf to json") {

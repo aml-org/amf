@@ -1,6 +1,6 @@
 package amf.core.parser
 
-import amf.client.model.{BoolField, IntField, StrField}
+import amf.client.model._
 import amf.core.metamodel.Type._
 import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.model.domain._
@@ -30,10 +30,13 @@ class Fields {
     def typed(t: Type, e: AmfElement): Any = e match {
       case s: AmfScalar =>
         t match {
-          case Str | Iri => new StrFieldImpl(s)
-          case Bool      => new BoolFieldImpl(s)
-          case Type.Int  => new IntFieldImpl(s)
-          case _         => throw new Exception(s"Invalid value '$s' of type '$t'")
+          case Str | Iri   => new StrFieldImpl(s, defined())
+          case Bool        => new BoolFieldImpl(s, defined())
+          case Type.Int    => new IntFieldImpl(s, defined())
+          case Type.Float  => new DoubleFieldImpl(s, defined())
+          case Type.Double => new DoubleFieldImpl(s, defined())
+          case Type.Any    => new AnyFieldImpl(s, defined())
+          case _           => throw new Exception(s"Invalid value '$s' of type '$t'")
         }
       case o: AmfObject =>
         t match {
@@ -50,12 +53,17 @@ class Fields {
     //noinspection ScalaStyle
     def empty(): T =
       (f.`type` match {
-        case Str | Iri    => StrFieldImpl(null, Annotations())
-        case Bool         => BoolFieldImpl(null.asInstanceOf[Boolean], Annotations())
-        case Type.Int     => IntFieldImpl(null.asInstanceOf[Int], Annotations())
+        case Str | Iri    => StrFieldImpl(null, Annotations(), present = false)
+        case Bool         => BoolFieldImpl(null.asInstanceOf[Boolean], Annotations(), present = false)
+        case Type.Int     => IntFieldImpl(null.asInstanceOf[Int], Annotations(), present = false)
+        case Type.Float   => DoubleFieldImpl(null.asInstanceOf[Double], Annotations(), present = false)
+        case Type.Double  => DoubleFieldImpl(null.asInstanceOf[Double], Annotations(), present = false)
+        case Type.Any     => AnyFieldImpl(null, Annotations(), defined())
         case ArrayLike(_) => Nil
         case _: Obj       => null
       }).asInstanceOf[T]
+
+    def defined(): Boolean = fs.get(f).isDefined
 
     fs.get(f).map(v => typed(f.`type`, v.value)).fold(empty())(_.asInstanceOf[T])
   }
@@ -174,16 +182,24 @@ class Fields {
 
   def nonEmpty: Boolean = fs.nonEmpty
 
-  private case class StrFieldImpl(value: String, annotations: Annotations) extends StrField {
-    def this(s: AmfScalar) = this(s.value.asInstanceOf[String], s.annotations)
+  private case class StrFieldImpl(value: String, annotations: Annotations, present: Boolean) extends StrField {
+    def this(s: AmfScalar, present: Boolean) = this(s.value.asInstanceOf[String], s.annotations, present)
   }
 
-  private case class BoolFieldImpl(value: Boolean, annotations: Annotations) extends BoolField {
-    def this(s: AmfScalar) = this(s.value.asInstanceOf[Boolean], s.annotations)
+  private case class BoolFieldImpl(value: Boolean, annotations: Annotations, present: Boolean) extends BoolField {
+    def this(s: AmfScalar, present: Boolean) = this(s.value.asInstanceOf[Boolean], s.annotations, present)
   }
 
-  private case class IntFieldImpl(value: Int, annotations: Annotations) extends IntField {
-    def this(s: AmfScalar) = this(s.value.asInstanceOf[Int], s.annotations)
+  private case class IntFieldImpl(value: Int, annotations: Annotations, present: Boolean) extends IntField {
+    def this(s: AmfScalar, present: Boolean) = this(s.value.asInstanceOf[Int], s.annotations, present)
+  }
+
+  private case class DoubleFieldImpl(value: Double, annotations: Annotations, present: Boolean) extends DoubleField {
+    def this(s: AmfScalar, present: Boolean) = this(s.value.asInstanceOf[Double], s.annotations, present)
+  }
+
+  private case class AnyFieldImpl(value: Any, annotations: Annotations, present: Boolean) extends AnyField {
+    def this(s: AmfScalar, present: Boolean) = this(s.value, s.annotations, present)
   }
 }
 

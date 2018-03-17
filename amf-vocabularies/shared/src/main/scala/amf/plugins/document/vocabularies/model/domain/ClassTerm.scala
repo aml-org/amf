@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies.model.domain
 
+import amf.client.model.StrField
 import amf.core.metamodel.Obj
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.{Annotations, Fields}
@@ -16,11 +17,11 @@ case class ClassTerm(fields: Fields, annotations: Annotations) extends DomainEle
     this
   }
 
-  def name: String            = fields(Name)
-  def displayName: String     = fields(DisplayName)
-  def description: String     = fields(Description)
-  def properties: Seq[String] = fields(Properties)
-  def subClassOf: Seq[String] = fields(SubClassOf)
+  def name: StrField            = fields.field(Name)
+  def displayName: StrField     = fields.field(DisplayName)
+  def description: StrField     = fields.field(Description)
+  def properties: Seq[StrField] = fields.field(Properties)
+  def subClassOf: Seq[StrField] = fields.field(SubClassOf)
 
   def withName(name: String)                   = set(Name, name)
   def withDisplayName(displayName: String)     = set(DisplayName, displayName)

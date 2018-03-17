@@ -9,4 +9,6 @@ trait StrField extends BaseField with ValueField {
 
   /** Return true if string value is null or empty. */
   def isNullOrEmpty: Boolean = option().fold(true)(_.isEmpty)
+
+  def isSomeAndNonEmpty = !isNullOrEmpty
 }

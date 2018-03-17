@@ -37,10 +37,10 @@ trait AliasMapper {
   def buildAliasMapping(vocabulary: Vocabulary): Map[String,String] = {
     var aliasMapping: Map[String,String] = Map()
     vocabulary.externals.foreach { external =>
-      aliasMapping += (external.base -> external.alias)
+      aliasMapping += (external.base.value() -> external.alias.value())
     }
     vocabulary.imports.foreach { imported =>
-      aliasMapping += (imported.reference -> imported.alias)
+      aliasMapping += (imported.reference.value() -> imported.alias.value())
     }
     aliasMapping
   }
@@ -50,21 +50,21 @@ private case class ClassTermEmitter(classTerm: ClassTerm, ordering: SpecOrdering
   override def emit(b: YDocument.EntryBuilder): Unit = {
     val classAlias = aliasFor(classTerm.id, aliasMapping)
     var ctEmitters: Seq[EntryEmitter] = Seq()
-    if (Option(classTerm.displayName).isDefined) {
-      ctEmitters ++= Seq(MapEntryEmitter("displayName", classTerm.displayName))
+    if (classTerm.displayName.present()) {
+      ctEmitters ++= Seq(MapEntryEmitter("displayName", classTerm.displayName.value()))
     }
-    if (Option(classTerm.description).isDefined) {
-      ctEmitters ++= Seq(MapEntryEmitter("description", classTerm.description))
+    if (classTerm.description.present()) {
+      ctEmitters ++= Seq(MapEntryEmitter("description", classTerm.description.value()))
     }
-    if (Option(classTerm.subClassOf).isDefined && classTerm.subClassOf.nonEmpty) {
+    if (classTerm.subClassOf.nonEmpty) {
       ctEmitters ++= Seq(new EntryEmitter {
         override def emit(b: YDocument.EntryBuilder): Unit = {
           if (classTerm.subClassOf.length == 1) {
-            b.entry("extends", aliasFor(classTerm.subClassOf.head, aliasMapping))
+            b.entry("extends", aliasFor(classTerm.subClassOf.head.value(), aliasMapping))
           } else {
             b.entry("extends", _.list({ l =>
               classTerm.subClassOf.foreach { extended =>
-                l += aliasFor(extended, aliasMapping)
+                l += aliasFor(extended.value(), aliasMapping)
               }
             }))
           }
@@ -74,12 +74,12 @@ private case class ClassTermEmitter(classTerm: ClassTerm, ordering: SpecOrdering
       })
     }
 
-    if (Option(classTerm.properties).isDefined && classTerm.properties.nonEmpty) {
+    if (classTerm.properties.nonEmpty) {
       ctEmitters ++= Seq(new EntryEmitter {
         override def emit(b: YDocument.EntryBuilder): Unit = {
           b.entry("properties", _.list({ l =>
             classTerm.properties.foreach { prop =>
-              l += aliasFor(prop, aliasMapping)
+              l += aliasFor(prop.value(), aliasMapping)
             }
           }))
         }
@@ -104,21 +104,21 @@ private case class PropertyTermEmitter(propertyTerm: PropertyTerm, ordering: Spe
   override def emit(b: YDocument.EntryBuilder): Unit = {
     val propertyAlias = aliasFor(propertyTerm.id, aliasMapping)
     var ptEmitters: Seq[EntryEmitter] = Seq()
-    if (Option(propertyTerm.displayName).isDefined) {
-      ptEmitters ++= Seq(MapEntryEmitter("displayName", propertyTerm.displayName))
+    if (propertyTerm.displayName.present()) {
+      ptEmitters ++= Seq(MapEntryEmitter("displayName", propertyTerm.displayName.value()))
     }
-    if (Option(propertyTerm.description).isDefined) {
-      ptEmitters ++= Seq(MapEntryEmitter("description", propertyTerm.description))
+    if (propertyTerm.description.present()) {
+      ptEmitters ++= Seq(MapEntryEmitter("description", propertyTerm.description.value()))
     }
-    if (Option(propertyTerm.subPropertyOf).isDefined && propertyTerm.subPropertyOf.nonEmpty) {
+    if (propertyTerm.subPropertyOf.nonEmpty) {
       ptEmitters ++= Seq(new EntryEmitter {
         override def emit(b: YDocument.EntryBuilder): Unit = {
           if (propertyTerm.subPropertyOf.size == 1) {
-            b.entry("extends", aliasFor(propertyTerm.subPropertyOf.head, aliasMapping))
+            b.entry("extends", aliasFor(propertyTerm.subPropertyOf.head.value(), aliasMapping))
           } else {
             b.entry("extends", _.list({ l =>
               propertyTerm.subPropertyOf.foreach { extended =>
-                l += aliasFor(extended, aliasMapping)
+                l += aliasFor(extended.value(), aliasMapping)
               }
             }))
           }
@@ -128,10 +128,10 @@ private case class PropertyTermEmitter(propertyTerm: PropertyTerm, ordering: Spe
       })
     }
 
-    if (Option(propertyTerm.range).isDefined) {
+    if (propertyTerm.range.present()) {
       ptEmitters ++= Seq(new EntryEmitter {
         override def emit(b: YDocument.EntryBuilder): Unit = {
-          b.entry("range", aliasFor(propertyTerm.range, aliasMapping))
+          b.entry("range", aliasFor(propertyTerm.range.value(), aliasMapping))
         }
         override def position(): Position =
           propertyTerm.fields.get(ObjectPropertyTermModel.Range).annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
@@ -155,7 +155,7 @@ private case class ImportEmitter(vocabularyReference: VocabularyReference, vocab
     val vocabFile = vocabulary.location.split("/").last
     val vocabFilePrefix = vocabulary.location.replace(vocabFile, "")
 
-    val vocabularyReferenceFile = vocabulary.references.find(_.id == vocabularyReference.reference) match {
+    val vocabularyReferenceFile = vocabulary.references.find(_.id == vocabularyReference.reference.value()) match {
       case Some(reference: BaseUnit) => reference.location
       case None                      => throw new Exception("Cannot regenerate vocabulary link without reference")
     }
@@ -166,7 +166,7 @@ private case class ImportEmitter(vocabularyReference: VocabularyReference, vocab
       vocabularyReferenceFile.replace("file://", "")
     }
 
-    MapEntryEmitter(vocabularyReference.alias, importLocation).emit(b)
+    MapEntryEmitter(vocabularyReference.alias.value(), importLocation).emit(b)
   }
 
   override def position(): Position =
@@ -255,7 +255,7 @@ case class RamlVocabularyEmitter(vocabulary: Vocabulary) extends AliasMapper {
       })
 
     emitters ++= Seq(new EntryEmitter {
-        override def emit(b: YDocument.EntryBuilder): Unit = MapEntryEmitter("vocabulary", vocabulary.name).emit(b)
+        override def emit(b: YDocument.EntryBuilder): Unit = MapEntryEmitter("vocabulary", vocabulary.name.value()).emit(b)
 
         override def position(): Position =
           vocabulary.fields.get(VocabularyModel.Name).annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)

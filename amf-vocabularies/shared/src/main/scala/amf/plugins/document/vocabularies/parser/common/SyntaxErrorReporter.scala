@@ -1,6 +1,7 @@
 package amf.plugins.document.vocabularies.parser.common
 
 import amf.core.annotations.LexicalInformation
+import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, ErrorHandler}
 import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel
 import amf.plugins.document.vocabularies.model.domain.PropertyMapping
@@ -32,8 +33,8 @@ trait SyntaxErrorReporter { this: ErrorHandler =>
     violation(
       ParserSideValidations.InconsistentPropertyRangeValueSpecification.id(),
       node,
-      Some(property.nodePropertyMapping()),
-      s"Cannot find expected range for property ${property.nodePropertyMapping()} (${property.name()})",
+      Some(property.nodePropertyMapping().value()),
+      s"Cannot find expected range for property ${property.nodePropertyMapping().value()} (${property.name().value()})",
       Annotations(valueNode).find(classOf[LexicalInformation]))
   }
 

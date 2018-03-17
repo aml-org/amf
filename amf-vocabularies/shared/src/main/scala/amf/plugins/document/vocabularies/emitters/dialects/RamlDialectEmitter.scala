@@ -27,12 +27,12 @@ trait AliasesConsumer extends DialectEmitterHelper {
     maybeFindNodeMappingById(id) match {
       case Some(nodeMapping: NodeMapping) => {
         if (id.startsWith(dialect.id)) {
-          Some(nodeMapping.name)
+          Some(nodeMapping.name.value())
         } else {
           aliases.keySet.find(id.contains(_)).map { key =>
             val alias = aliases(key)._1
-            alias + "." + nodeMapping.name
-          } orElse { Some(nodeMapping.name) }
+            alias + "." + nodeMapping.name.value()
+          } orElse { Some(nodeMapping.name.value()) }
         }
       }
 
@@ -70,9 +70,9 @@ case class LibraryDocumentModelEmitter(dialect: Dialect, ordering: SpecOrdering,
       case Some(declarations) =>
         val declaredNodes = declarations
           .map { declaration =>
-            aliasFor(declaration.mappedNode()) match {
-              case Some(declaredId) => MapEntryEmitter(declaration.name(), declaredId)
-              case _                => MapEntryEmitter(declaration.name(), declaration.mappedNode())
+            aliasFor(declaration.mappedNode().value()) match {
+              case Some(declaredId) => MapEntryEmitter(declaration.name().value(), declaredId)
+              case _                => MapEntryEmitter(declaration.name().value(), declaration.mappedNode().value())
             }
           }
         val sortedNodes = ordering.sorted(declaredNodes)
@@ -108,9 +108,9 @@ case class RootDocumentModelEmitter(dialect: Dialect, ordering: SpecOrdering, al
   override def emit(b: EntryBuilder): Unit = {
     Option(mapping.encoded()) match {
       case Some(encodedId) =>
-        aliasFor(encodedId) match {
+        aliasFor(encodedId.value()) match {
           case Some(alias) => emitters ++= Seq(MapEntryEmitter("encodes", alias))
-          case None        => emitters ++= Seq(MapEntryEmitter("encodes", encodedId))
+          case None        => emitters ++= Seq(MapEntryEmitter("encodes", encodedId.value()))
         }
       case _ => // ignore
     }
@@ -118,9 +118,9 @@ case class RootDocumentModelEmitter(dialect: Dialect, ordering: SpecOrdering, al
       case Some(declarations) if declarations.nonEmpty =>
         val declaredNodes = declarations
           .map { declaration =>
-            aliasFor(declaration.mappedNode()) match {
-              case Some(declaredId) => MapEntryEmitter(declaration.name(), declaredId)
-              case _                => MapEntryEmitter(declaration.name(), declaration.mappedNode())
+            aliasFor(declaration.mappedNode().value()) match {
+              case Some(declaredId) => MapEntryEmitter(declaration.name().value(), declaredId)
+              case _                => MapEntryEmitter(declaration.name().value(), declaration.mappedNode().value())
             }
           }
         val sortedNodes = ordering.sorted(declaredNodes)
@@ -149,9 +149,9 @@ case class RootDocumentModelEmitter(dialect: Dialect, ordering: SpecOrdering, al
 case class FragmentMappingEmitter(dialect: Dialect, fragment: DocumentMapping, ordering: SpecOrdering, aliases: Map[String, (String, String)]) extends EntryEmitter with AliasesConsumer {
 
   override def emit(b: EntryBuilder): Unit = {
-    aliasFor(fragment.encoded()) match {
-      case Some(alias) => MapEntryEmitter(fragment.documentName(), alias).emit(b)
-      case _           => MapEntryEmitter(fragment.documentName(), fragment.encoded()).emit(b)
+    aliasFor(fragment.encoded().value()) match {
+      case Some(alias) => MapEntryEmitter(fragment.documentName().value(), alias).emit(b)
+      case _           => MapEntryEmitter(fragment.documentName().value(), fragment.encoded().value()).emit(b)
     }
   }
 
@@ -218,17 +218,17 @@ case class DocumentsModelEmitter(dialect: Dialect, ordering: SpecOrdering, alias
 
 case class PropertyMappingEmitter(dialect: Dialect, propertyMapping: PropertyMapping, ordering: SpecOrdering, aliases: Map[String,(String, String)]) extends EntryEmitter with AliasesConsumer with PosExtractor {
   override def emit(b: EntryBuilder): Unit = {
-    b.entry(propertyMapping.name(), _.obj { b =>
+    b.entry(propertyMapping.name().value(), _.obj { b =>
       var emitters: Seq[EntryEmitter] = Seq()
 
-      aliasFor(propertyMapping.nodePropertyMapping()) match {
+      aliasFor(propertyMapping.nodePropertyMapping().value()) match {
         case Some(propertyTermAlias) =>
           val pos = fieldPos(propertyMapping, PropertyMappingModel.NodePropertyMapping)
           emitters ++= Seq(MapEntryEmitter("propertyTerm", propertyTermAlias, YType.Str, pos))
         case None                    =>
       }
 
-      Option(propertyMapping.literalRange()).foreach {
+      propertyMapping.literalRange().option().foreach {
         case literal if literal.endsWith("anyUri")  =>
           val pos = fieldPos(propertyMapping, PropertyMappingModel.LiteralRange)
           emitters ++= Seq(MapEntryEmitter("range", "uri", YType.Str, pos))
@@ -249,10 +249,10 @@ case class PropertyMappingEmitter(dialect: Dialect, propertyMapping: PropertyMap
       Option(propertyMapping.objectRange()).foreach { nodeIds =>
         val pos = fieldPos(propertyMapping, PropertyMappingModel.ObjectRange)
         val targets = nodeIds.map { nodeId =>
-          if (nodeId == (Namespace.Meta + "anyNode").iri()) {
+          if (nodeId.value() == (Namespace.Meta + "anyNode").iri()) {
             Some("anyNode")
           } else {
-            aliasFor(nodeId) match {
+            aliasFor(nodeId.value()) match {
               case Some(nodeMappingAlias) => Some(nodeMappingAlias)
               case _ => None
             }
@@ -270,7 +270,7 @@ case class PropertyMappingEmitter(dialect: Dialect, propertyMapping: PropertyMap
           })
       }
 
-      Option(propertyMapping.mapKeyProperty()).foreach { value =>
+      propertyMapping.mapKeyProperty().option().foreach { value =>
         val pos = fieldPos(propertyMapping, PropertyMappingModel.MapKeyProperty)
         aliasFor(value) match {
           case Some(propertyId) => emitters ++= Seq(MapEntryEmitter("mapKey", propertyId, YType.Str, pos))
@@ -278,7 +278,7 @@ case class PropertyMappingEmitter(dialect: Dialect, propertyMapping: PropertyMap
         }
       }
 
-      Option(propertyMapping.mapValueProperty()).foreach { value =>
+      propertyMapping.mapValueProperty().option().foreach { value =>
         val pos = fieldPos(propertyMapping, PropertyMappingModel.MapValueProperty)
         aliasFor(value) match {
           case Some(propertyId) => emitters ++= Seq(MapEntryEmitter("mapValue", propertyId, YType.Str, pos))
@@ -364,13 +364,13 @@ case class NodeMappingEmitter(dialect: Dialect, nodeMapping: NodeMapping, orderi
   override def emit(b: EntryBuilder): Unit = {
     if (nodeMapping.isLink) {
       if (isFragment(nodeMapping.linkTarget.get, dialect)) {
-        b.entry(nodeMapping.name, YNode.include(nodeMapping.linkLabel.get))
+        b.entry(nodeMapping.name.value(), YNode.include(nodeMapping.linkLabel.get))
       } else {
-        b.entry(nodeMapping.name, nodeMapping.linkLabel.get)
+        b.entry(nodeMapping.name.value(), nodeMapping.linkLabel.get)
       }
     } else {
-      b.entry(nodeMapping.name, _.obj { b =>
-        aliasFor(nodeMapping.nodetypeMapping) match {
+      b.entry(nodeMapping.name.value(), _.obj { b =>
+        aliasFor(nodeMapping.nodetypeMapping.value()) match {
           case Some(classTermAlias) => MapEntryEmitter("classTerm", classTermAlias).emit(b)
           case None => nodeMapping.nodetypeMapping
         }
@@ -456,7 +456,7 @@ trait RamlDialectDocumentsEmitters {
     }
     dialect.externals.foldLeft(dialectReferences) {
       case (acc: Map[String,(String,String)], e: External) =>
-        acc + (e.base -> (e.alias, ""))
+        acc + (e.base.value() -> (e.alias.value(), ""))
     }
   }
 
@@ -539,7 +539,7 @@ case class RamlDialectEmitter(dialect: Dialect) extends RamlDialectDocumentsEmit
 
     emitters ++= Seq(new EntryEmitter {
       override def emit(b: YDocument.EntryBuilder): Unit = {
-        MapEntryEmitter("dialect", dialect.name()).emit(b)
+        MapEntryEmitter("dialect", dialect.name().value()).emit(b)
       }
 
       override def position(): Position =
@@ -548,7 +548,7 @@ case class RamlDialectEmitter(dialect: Dialect) extends RamlDialectDocumentsEmit
     })
 
     emitters ++= Seq(new EntryEmitter {
-      override def emit(b: YDocument.EntryBuilder): Unit = MapEntryEmitter("version", dialect.version()).emit(b)
+      override def emit(b: YDocument.EntryBuilder): Unit = MapEntryEmitter("version", dialect.version().value()).emit(b)
 
       override def position(): Position =
         dialect.fields.entry(DialectModel.Version).get.value.annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)

@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies.model.document
 
+import amf.client.model.StrField
 import amf.core.metamodel.Obj
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.DomainElement
@@ -10,25 +11,25 @@ import amf.plugins.document.vocabularies.model.domain.{DocumentsModel, External,
 
 case class Dialect(fields: Fields, annotations: Annotations) extends BaseUnit with DeclaresModel with EncodesModel  {
   def meta: Obj = DialectModel
-  def references: Seq[BaseUnit] = fields(References)
+  def references: Seq[BaseUnit] = fields.field(References)
   def location: String = fields(Location)
-  def encodes: DomainElement = fields(Encodes)
-  def declares: Seq[DomainElement] = fields(Declares)
+  def encodes: DomainElement = fields.field(Encodes)
+  def declares: Seq[DomainElement] = fields.field(Declares)
   def usage: String = fields(Usage)
   def adopted(parent: String): this.type = withId(parent)
 
-  def nameAndVersion(): String = s"${name()} ${version()}"
+  def nameAndVersion(): String = s"${name().value()} ${version().value()}"
 
-  def name(): String = fields(Name)
-  def withName(name: String) = set(Name, name)
-  def version(): String = fields(Version)
-  def withVersion(version: String) = set(Version, version)
-  def externals: Seq[External]          = fields(Externals)
-  def withExternals(externals: Seq[External])             = setArray(Externals, externals)
-  def documents(): DocumentsModel = fields(Documents)
+  def name(): StrField                                = fields.field(Name)
+  def withName(name: String)                          = set(Name, name)
+  def version(): StrField                             = fields.field(Version)
+  def withVersion(version: String)                    = set(Version, version)
+  def externals: Seq[External]                        = fields.field(Externals)
+  def withExternals(externals: Seq[External])         = setArray(Externals, externals)
+  def documents(): DocumentsModel                     = fields.field(Documents)
   def withDocuments(documentsMapping: DocumentsModel) = set(Documents, documentsMapping)
 
-  def header = s"%${name()} ${version()}".replace(" ","")
+  def header = s"%${name().value()} ${version().value()}".replace(" ","")
   def libraryHeaders = Option(documents().library()) match {
     case Some(library) => Seq(s"%RAMLLibrary/${header.replaceFirst("%","")}")
     case None          => Nil
@@ -50,14 +51,14 @@ object Dialect {
 
 case class DialectLibrary(fields: Fields, annotations: Annotations) extends BaseUnit with DeclaresModel  {
   def meta: Obj = DialectLibraryModel
-  def references: Seq[BaseUnit] = fields(References)
-  def location: String = fields(Location)
-  def declares: Seq[DomainElement] = fields(Declares)
-  def usage: String = fields(Usage)
+  def references: Seq[BaseUnit]          = fields.field(References)
+  def location: String                   = fields(Location)
+  def declares: Seq[DomainElement]       = fields.field(Declares)
+  def usage: String                      = fields(Usage)
   def adopted(parent: String): this.type = withId(parent)
 
-  def externals: Seq[External]          = fields(Externals)
-  def withExternals(externals: Seq[External])             = setArray(Externals, externals)
+  def externals: Seq[External]                = fields.field(Externals)
+  def withExternals(externals: Seq[External]) = setArray(Externals, externals)
 }
 
 object DialectLibrary {
@@ -69,16 +70,16 @@ object DialectLibrary {
 
 case class DialectFragment(fields: Fields, annotations: Annotations) extends BaseUnit with EncodesModel  {
   def meta: Obj = DialectFragmentModel
-  def references: Seq[BaseUnit] = fields(References)
-  def location: String = fields(Location)
+  def references: Seq[BaseUnit] = fields.field(References)
+  def location: String          = fields(Location)
+  def usage: String             = fields(Usage)
 
-  def usage: String = fields(Usage)
   def adopted(parent: String): this.type = withId(parent)
 
-  def externals: Seq[External]          = fields(Externals)
-  def withExternals(externals: Seq[External])             = setArray(Externals, externals)
-  override def encodes: NodeMapping = fields(Encodes)
-  def withEncodes(nodeMapping: NodeMapping) = set(Encodes, nodeMapping)
+  def externals: Seq[External]                = fields.field(Externals)
+  def withExternals(externals: Seq[External]) = setArray(Externals, externals)
+  override def encodes: NodeMapping           = fields.field(Encodes)
+  def withEncodes(nodeMapping: NodeMapping)   = set(Encodes, nodeMapping)
 }
 
 object DialectFragment {

@@ -17,17 +17,17 @@ trait DialectWrapper {
   }
 
   def extractString(node: DialectDomainElement, property: String): Option[String] = {
-    node.definedBy.propertiesMapping().find(_.name() == property) match {
+    node.definedBy.propertiesMapping().find(_.name().value() == property) match {
       case Some(profileProperty) if node.literalProperties.contains(profileProperty.id) =>
         node.literalProperties.get(profileProperty.id).map(_.toString)
-      case Some(profileProperty) if node.mapKeyProperties.contains(profileProperty.nodePropertyMapping()) =>
-        node.mapKeyProperties.get(profileProperty.nodePropertyMapping()).map(_.toString)
+      case Some(profileProperty) if node.mapKeyProperties.contains(profileProperty.nodePropertyMapping().value()) =>
+        node.mapKeyProperties.get(profileProperty.nodePropertyMapping().value()).map(_.toString)
       case _                     => None
     }
   }
 
   def extractStrings(node: DialectDomainElement, property: String): Seq[String] = {
-    node.definedBy.propertiesMapping().find(_.name() == property) match {
+    node.definedBy.propertiesMapping().find(_.name().value() == property) match {
       case Some(profileProperty) if node.literalProperties.contains(profileProperty.id) =>
         node.literalProperties(profileProperty.id).asInstanceOf[Seq[String]]
       case _ => Seq()
@@ -35,7 +35,7 @@ trait DialectWrapper {
   }
 
   def mapEntities[T](node: DialectDomainElement, property: String, f: (DialectDomainElement) => T): Seq[T] = {
-    node.definedBy.propertiesMapping().find(_.name() == property) match {
+    node.definedBy.propertiesMapping().find(_.name().value() == property) match {
       case Some(profileProperty) if node.objectCollectionProperties.contains(profileProperty.id) =>
         node.objectCollectionProperties(profileProperty.id).map(f)
       case _ => Seq()
@@ -43,7 +43,7 @@ trait DialectWrapper {
   }
 
   def mapEntity[T](node: DialectDomainElement, property: String, f: (DialectDomainElement) => T): Option[T] = {
-    node.definedBy.propertiesMapping().find(_.name() == property) match {
+    node.definedBy.propertiesMapping().find(_.name().value() == property) match {
       case Some(profileProperty) if node.objectProperties.contains(profileProperty.id) =>
         node.objectProperties.get(profileProperty.id).map(f)
       case _ => None
@@ -52,8 +52,8 @@ trait DialectWrapper {
 
   def prefixes(node: DialectDomainElement) = {
     val prefixMap: mutable.Map[String,String] = mutable.HashMap()
-    node.definedBy.propertiesMapping().find(_.name() == "prefixes") match {
-      case Some(prefixesProperty) => node.objectCollectionProperties.get(prefixesProperty.id).map { prefixes =>
+    node.definedBy.propertiesMapping().find(_.name().value() == "prefixes") match {
+      case Some(prefixesProperty) => node.objectCollectionProperties.get(prefixesProperty.id).foreach { prefixes =>
         prefixes foreach  { prefixEntity =>
           val prefix = extractString(prefixEntity, "prefix").getOrElse("")
           val prefixUri = extractString(prefixEntity, "uri").getOrElse("")

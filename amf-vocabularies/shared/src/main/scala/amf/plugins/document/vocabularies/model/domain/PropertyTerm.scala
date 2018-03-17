@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies.model.domain
 
+import amf.client.model.StrField
 import amf.core.metamodel.Obj
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.{Annotations, Fields}
@@ -16,17 +17,17 @@ abstract class PropertyTerm extends DomainElement {
     this
   }
 
-  def name: String               = fields(Name)
-  def displayName: String        = fields(DisplayName)
-  def description: String        = fields(Description)
-  def range: String              = fields(Range)
-  def subPropertyOf: Seq[String] = fields(SubPropertyOf)
+  def name: StrField               = fields.field(Name)
+  def displayName: StrField        = fields.field(DisplayName)
+  def description: StrField        = fields.field(Description)
+  def range: StrField              = fields.field(Range)
+  def subPropertyOf: Seq[StrField] = fields.field(SubPropertyOf)
 
   def withName(name: String)                      = set(Name, name)
   def withDisplayName(displayName: String)        = set(DisplayName, displayName)
   def withDescription(description: String)        = set(Description, description)
   def withRange(range: String)                    = set(Range, range)
-  def withSubClasOf(superProperties: Seq[String]) =  set(SubPropertyOf, AmfArray(superProperties.map(AmfScalar(_))))
+  def withSubClasOf(superProperties: Seq[String]) = set(SubPropertyOf, AmfArray(superProperties.map(AmfScalar(_))))
 }
 
 case class ObjectPropertyTerm(fields: Fields, annotations: Annotations) extends PropertyTerm {

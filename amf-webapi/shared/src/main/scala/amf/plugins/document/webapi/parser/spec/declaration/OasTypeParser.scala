@@ -332,7 +332,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     override def parse(): AnyShape = {
       super.parse()
 
-      val examples: Seq[Example] = RamlExamplesParser(map, "example", "x-examples", shape.withExample).parse()
+      val examples: Seq[Example] = RamlExamplesParser(map, "example", "x-examples", shape.withExample, strictDefault = false).parse()
       if (examples.nonEmpty)
         shape.setArray(AnyShapeModel.Examples, examples)
 

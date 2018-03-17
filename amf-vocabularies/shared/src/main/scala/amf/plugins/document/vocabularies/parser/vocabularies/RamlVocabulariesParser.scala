@@ -24,14 +24,14 @@ class VocabularyDeclarations(var externals: Map[String, External] = Map(),
   extends Declarations(libs, Map(), Map(), errorHandler, futureDeclarations) {
 
   def registerTerm(term: PropertyTerm) = {
-    if (!term.name.contains(".")) {
-      propertyTerms += (term.name -> term)
+    if (!term.name.value().contains(".")) {
+      propertyTerms += (term.name.value() -> term)
     }
   }
 
   def registerTerm(term: ClassTerm) = {
-    if (!term.name.contains(".")) {
-      classTerms += (term.name -> term)
+    if (!term.name.value().contains(".")) {
+      classTerms += (term.name.value() -> term)
     }
   }
 
@@ -136,7 +136,7 @@ class VocabularyContext(private val wrapped: ParserContext, private val ds: Opti
       val prefix = propertyTermAlias.split("\\.").head
       val value = propertyTermAlias.split("\\.").last
       declarations.externals.get(prefix) match {
-        case Some(external) => Some(s"${external.base}$value")
+        case Some(external) => Some(s"${external.base.value()}$value")
         case None => declarations.libraries.get(prefix) match {
           case Some(vocab: VocabularyDeclarations) => vocab.getPropertyTermId(value)
           case _                                   => None
@@ -157,7 +157,7 @@ class VocabularyContext(private val wrapped: ParserContext, private val ds: Opti
       val prefix = classTermAlias.split("\\.").head
       val value = classTermAlias.split("\\.").last
       declarations.externals.get(prefix) match {
-        case Some(external) => Some(s"${external.base}$value")
+        case Some(external) => Some(s"${external.base.value()}$value")
         case None => declarations.libraries.get(prefix) match {
           case Some(vocab: VocabularyDeclarations) => vocab.getClassTermId(value)
           case _                                   => None
@@ -195,8 +195,8 @@ case class ReferenceDeclarations(references: mutable.Map[String, Any] = mutable.
   }
 
   def += (external: External): Unit = {
-    references += (external.alias -> external)
-    ctx.declarations.externals += (external.alias -> external)
+    references += (external.alias.value() -> external)
+    ctx.declarations.externals += (external.alias.value() -> external)
   }
 
   def baseUnitReferences(): Seq[BaseUnit] = references.values.toSet.filter(_.isInstanceOf[BaseUnit]).toSeq.asInstanceOf[Seq[BaseUnit]]
@@ -284,12 +284,12 @@ class RamlVocabulariesParser(root: Root)(implicit override val ctx: VocabularyCo
 
     // base must have a value and is different from the location, but ID is the base
     vocabulary.withLocation(root.location)
-    vocabulary.adopted(vocabulary.base)
+    vocabulary.adopted(vocabulary.base.value())
 
     // closed node validation
     ctx.closedNode("vocabulary", vocabulary.id, map)
 
-    val references = VocabulariesReferencesParser(map, root.references).parse(vocabulary.base)
+    val references = VocabulariesReferencesParser(map, root.references).parse(vocabulary.base.value())
 
     if (ctx.declarations.externals.nonEmpty)
       vocabulary.withExternals(ctx.declarations.externals.values.toSeq)

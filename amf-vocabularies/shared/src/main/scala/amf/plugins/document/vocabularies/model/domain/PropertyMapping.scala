@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies.model.domain
 
+import amf.client.model._
 import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.model.domain.{AmfScalar, DomainElement}
 import amf.core.parser.{Annotations, Fields}
@@ -24,48 +25,48 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
   override def adopted(parent: String): PropertyMapping.this.type = withId(parent)
 
   def withName(name: String)                      = set(Name, name)
-  def name(): String                              = fields(Name)
+  def name(): StrField                            = fields.field(Name)
   def withNodePropertyMapping(propertyId: String) = set(NodePropertyMapping, propertyId)
-  def nodePropertyMapping(): String               = fields(NodePropertyMapping)
+  def nodePropertyMapping(): StrField             = fields.field(NodePropertyMapping)
   def withLiteralRange(range: String)             = set(LiteralRange, range)
-  def literalRange(): String                      = fields(LiteralRange)
+  def literalRange(): StrField                    = fields.field(LiteralRange)
   def withObjectRange(range: Seq[String])         = set(ObjectRange, range)
-  def objectRange(): Seq[String]                  = fields(ObjectRange)
-  def mapKeyProperty(): String                    = fields(MapKeyProperty)
+  def objectRange(): Seq[StrField]                = fields.field(ObjectRange)
+  def mapKeyProperty(): StrField                  = fields.field(MapKeyProperty)
   def withMapKeyProperty(key: String)             = set(MapKeyProperty, key)
-  def mapValueProperty(): String                  = fields(MapValueProperty)
+  def mapValueProperty(): StrField                = fields.field(MapValueProperty)
   def withMapValueProperty(value: String)         = set(MapValueProperty, value)
-  def minCount(): Option[Int]                     = Option(fields(MinCount))
+  def minCount(): IntField                        = fields.field(MinCount)
   def withMinCount(minCount: Int)                 = set(MinCount, minCount)
-  def pattern(): String                           = fields(Pattern)
+  def pattern(): StrField                         = fields.field(Pattern)
   def withPattern(pattern: String)                = set(Pattern, pattern)
-  def minimum(): Option[Double]                   = Option(fields(Minimum))
+  def minimum(): DoubleField                      = fields.field(Minimum)
   def withMinimum(min: Double)                    = set(Minimum, min)
-  def maximum(): Option[Double]                   = Option(fields(Maximum))
+  def maximum(): DoubleField                      = fields.field(Maximum)
   def withMaximum(max: Double)                    = set(Maximum, max)
-  def allowMultiple(): Boolean                    = fields(AllowMultiple)
+  def allowMultiple(): BoolField                  = fields.field(AllowMultiple)
   def withAllowMultiple(allow: Boolean)           = set(AllowMultiple, allow)
-  def enum(): Seq[Any]                            = fields(PropertyMappingModel.Enum)
+  def enum(): Seq[AnyField]                       = fields.field(PropertyMappingModel.Enum)
   def withEnum(values: Seq[Any])                  = setArray(PropertyMappingModel.Enum, values.map(AmfScalar(_)))
-  def sorted(): Boolean                           = fields(Sorted)
+  def sorted(): BoolField                         = fields.field(Sorted)
   def withSorted(sorted: Boolean)                 = set(Sorted, sorted)
-  def typeDiscrminator(): Map[String,String]     = Option(fields(TypeDiscriminator)).map { disambiguator: String =>
+  def typeDiscrminator(): Map[String,String]      = Option(fields(TypeDiscriminator)).map { disambiguator: String =>
     disambiguator.split(",").foldLeft(Map[String,String]()){ case (acc, typeMapping) =>
       val pair = typeMapping.split("->")
       acc + (pair(1) -> pair(0))
     }
   }.orNull
-  def withTypeDiscriminator(typesMapping: Map[String,String]) = set(TypeDiscriminator, typesMapping.map {  case (a,b) => s"$a->$b" }.mkString(","))
-  def typeDiscriminatorName(): String                         = fields(TypeDiscriminatorName)
-  def withTypeDiscriminatorName(name: String)                 = set(TypeDiscriminatorName, name)
+  def withTypeDiscriminator(typesMapping: Map[String,String])   = set(TypeDiscriminator, typesMapping.map {  case (a,b) => s"$a->$b" }.mkString(","))
+  def typeDiscriminatorName(): StrField                         = fields.field(TypeDiscriminatorName)
+  def withTypeDiscriminatorName(name: String)                   = set(TypeDiscriminatorName, name)
 
   def classification(): PropertyClassification = {
-    val isAnyNode = Option(objectRange()).getOrElse(Nil).contains((Namespace.Meta + "anyNode").iri())
-    val isLiteral = Option(literalRange()).isDefined
-    val isObject = Option(objectRange()).isDefined && objectRange().nonEmpty
-    val multiple = Option(allowMultiple()).getOrElse(false)
-    val isMap = Option(mapKeyProperty()).isDefined
-    val isMapValue = Option(mapValueProperty()).isDefined
+    val isAnyNode  = objectRange().exists { obj => obj.value() == (Namespace.Meta + "anyNode").iri() }
+    val isLiteral  = literalRange().present()
+    val isObject   = objectRange().nonEmpty
+    val multiple   = allowMultiple().option().getOrElse(false)
+    val isMap      = mapKeyProperty().present()
+    val isMapValue = mapValueProperty().present()
 
     if (isAnyNode)
       ExtensionPointProperty
@@ -83,23 +84,30 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
       ObjectPropertyCollection
   }
 
-  def nodesInRange: Seq[String] = Option(objectRange()).getOrElse(Option(typeDiscrminator()).getOrElse(Map()).values).toSeq
+  def nodesInRange: Seq[String] = {
+    val range = objectRange()
+    if (range.isEmpty) {
+      Option(typeDiscrminator()).getOrElse(Map()).values.toSeq
+    }  else {
+      range.map(_.value())
+    }
+  }
 
   def isUnion: Boolean = nodesInRange.nonEmpty
 
   def toField(): Field = {
-    val propertyIdValue = ValueType(nodePropertyMapping())
+    val propertyIdValue = ValueType(nodePropertyMapping().value())
 
-    val isObjectRange = Option(objectRange()).isDefined || Option(typeDiscrminator()).isDefined
+    val isObjectRange = objectRange.nonEmpty || Option(typeDiscrminator()).isDefined
 
     if (isObjectRange) {
-      if (allowMultiple() || Option(mapKeyProperty()).isDefined) {
+      if (allowMultiple().value() || mapKeyProperty().present()) {
         Field(Type.Array(DialectDomainElementModel()), propertyIdValue)
       } else {
         Field(DialectDomainElementModel(), propertyIdValue)
       }
     } else {
-      val fieldType = literalRange() match {
+      val fieldType = literalRange().value() match {
         case literal if literal.endsWith("anyUri")  => Type.Iri
         case literal if literal.endsWith("anyType") => Type.Any
         case literal if literal.endsWith("number")  => Type.Float
@@ -112,7 +120,7 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
         case _ => Type.Str
       }
 
-      if (allowMultiple()) {
+      if (allowMultiple().value()) {
         Field(Type.Array(fieldType), propertyIdValue)
       } else {
         Field(fieldType, propertyIdValue)
