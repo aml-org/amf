@@ -66,7 +66,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
 
 
   def findPropertyByTermPropertyId(termPropertyId: String) =
-    definedBy.propertiesMapping().find(_.nodePropertyMapping() == termPropertyId).map(_.id).getOrElse(termPropertyId)
+    definedBy.propertiesMapping().find(_.nodePropertyMapping().value() == termPropertyId).map(_.id).getOrElse(termPropertyId)
 
 
   override def valueForField(f: Field): Option[AmfElement] = {
@@ -98,7 +98,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   }
 
   def containsProperty(property: PropertyMapping): Boolean = {
-    mapKeyProperties.contains(property.nodePropertyMapping()) ||
+    mapKeyProperties.contains(property.nodePropertyMapping().value()) ||
     objectCollectionProperties.contains(property.id) ||
     literalProperties.contains(property.id)
   }

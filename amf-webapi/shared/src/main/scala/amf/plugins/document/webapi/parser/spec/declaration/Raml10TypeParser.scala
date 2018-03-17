@@ -147,7 +147,7 @@ case class Raml08TypeParser(ast: YPart,
             val maybeShape = Raml08SchemaParser(map, adopt).parse()
 
             maybeShape.foreach(s => {
-              RamlSingleExampleParser("example", map, s.withExample)
+              RamlSingleExampleParser("example", map, s.withExample, strictDefault = true)
                 .parse()
                 .foreach(e => s.setArray(ScalarShapeModel.Examples, Seq(e)))
             })
@@ -325,7 +325,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
       shape.set(ScalarShapeModel.Maximum, value.text(), Annotations(entry))
     })
 
-    RamlSingleExampleParser("example", map, shape.withExample)
+    RamlSingleExampleParser("example", map, shape.withExample, strictDefault = true)
       .parse()
       .foreach(e => shape.setArray(ScalarShapeModel.Examples, Seq(e)))
 
@@ -616,7 +616,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
     override def parse(): AnyShape = {
       super.parse()
 
-      val examples = RamlExamplesParser(map, "example", "examples", shape.withExample).parse()
+      val examples = RamlExamplesParser(map, "example", "examples", shape.withExample, strictDefault = true).parse()
       if (examples.nonEmpty)
         shape.setArray(AnyShapeModel.Examples, examples)
 

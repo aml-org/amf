@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies.model.document
 
+import amf.client.model.StrField
 import amf.core.metamodel.Obj
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.{AmfObject, DomainElement, Linkable}
@@ -18,16 +19,16 @@ case class DialectInstance(fields: Fields, annotations: Annotations) extends Bas
 
   override def meta: Obj = DialectInstanceModel
 
-  def references: Seq[BaseUnit] = fields(References)
-  def graphDependencies: Seq[String] = fields(GraphDependencies)
-  def location: String = fields(Location)
-  def encodes: DomainElement = fields(Encodes)
-  def declares: Seq[DomainElement] = fields(Declares)
-  def usage: String = fields(Usage)
+  def references: Seq[BaseUnit]          = fields.field(References)
+  def graphDependencies: Seq[StrField]   = fields.field(GraphDependencies)
+  def location: String                   = fields(Location)
+  def encodes: DomainElement             = fields.field(Encodes)
+  def declares: Seq[DomainElement]       = fields.field(Declares)
+  def usage: String                      = fields(Usage)
   def adopted(parent: String): this.type = withId(parent)
 
-  def definedBy(): String = fields(DefinedBy)
-  def withDefinedBy(dialectId: String) = set(DefinedBy, dialectId)
+  def definedBy(): StrField                   = fields.field(DefinedBy)
+  def withDefinedBy(dialectId: String)        = set(DefinedBy, dialectId)
   def withGraphDependencies(ids: Seq[String]) = set(GraphDependencies, ids)
 
   override def transform(selector: (DomainElement) => Boolean,

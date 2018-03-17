@@ -28,9 +28,9 @@ class DialectReferencesResolutionStage(profile: String) extends ResolutionStage(
 
   def findExternals(model: BaseUnit, acc: Set[String] = Set()): Set[String] = {
     val updateDeclarations = model match {
-      case lib: DialectLibrary => acc ++ lib.externals.map(_.base)
-      case dialect: Dialect => acc ++ dialect.externals.map(_.base)
-      case fragment: DialectFragment => acc ++ fragment.externals.map(_.base)
+      case lib: DialectLibrary => acc ++ lib.externals.map(_.base.value())
+      case dialect: Dialect => acc ++ dialect.externals.map(_.base.value())
+      case fragment: DialectFragment => acc ++ fragment.externals.map(_.base.value())
       case _ => acc
     }
 
@@ -79,7 +79,7 @@ class DialectReferencesResolutionStage(profile: String) extends ResolutionStage(
       case dialect: Dialect =>
         Dialect().withId(dialect.id).withLocation(dialect.location)
           .withDocuments(dialect.documents()).withDeclares(finalDeclarations).withExternals(finalExternals)
-          .withName(dialect.name()).withVersion(dialect.version())
+          .withName(dialect.name().value()).withVersion(dialect.version().value())
       case library: DialectLibrary =>
         DialectLibrary().withId(library.id).withLocation(library.location)
           .withDeclares(finalDeclarations).withExternals(finalExternals)

@@ -146,7 +146,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
         example
       }
 
-      namedExample.withEncodes(RamlNamedExampleParser(entries.head, producer).parse())
+      namedExample.withEncodes(RamlNamedExampleParser(entries.head, producer, strictDefault = false).parse())
     }
   }
 }

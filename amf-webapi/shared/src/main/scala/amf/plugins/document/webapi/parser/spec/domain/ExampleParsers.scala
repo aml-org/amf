@@ -45,14 +45,15 @@ case class OasResponseExampleParser(yMapEntry: YMapEntry)(implicit ctx: WebApiCo
 case class RamlExamplesParser(map: YMap,
                               singleExampleKey: String,
                               multipleExamplesKey: String,
-                              producer: Option[String] => Example)(implicit ctx: WebApiContext) {
+                              producer: Option[String] => Example,
+                              strictDefault: Boolean)(implicit ctx: WebApiContext) {
   def parse(): Seq[Example] =
-    RamlMultipleExampleParser(multipleExamplesKey, map, producer).parse() ++
-      RamlSingleExampleParser(singleExampleKey, map, producer).parse()
+    RamlMultipleExampleParser(multipleExamplesKey, map, producer, strictDefault).parse() ++
+      RamlSingleExampleParser(singleExampleKey, map, producer, strictDefault).parse()
 
 }
 
-case class RamlMultipleExampleParser(key: String, map: YMap, producer: Option[String] => Example)(
+case class RamlMultipleExampleParser(key: String, map: YMap, producer: Option[String] => Example, strictDefault: Boolean)(
     implicit ctx: WebApiContext) {
   def parse(): Seq[Example] = {
     val examples = ListBuffer[Example]()
@@ -65,10 +66,10 @@ case class RamlMultipleExampleParser(key: String, map: YMap, producer: Option[St
         case Right(node) =>
           node.tagType match {
             case YType.Map =>
-              examples ++= node.as[YMap].entries.map(RamlNamedExampleParser(_, producer).parse())
+              examples ++= node.as[YMap].entries.map(RamlNamedExampleParser(_, producer, strictDefault).parse())
             case YType.Seq => // example sequence must have a name ??
-              RamlExampleValueAsString(node, Example(node), strict = true).populate()
-            case _ => RamlExampleValueAsString(node, Example(node.as[YScalar]), strict = true).populate()
+              RamlExampleValueAsString(node, Example(node), strict = strictDefault).populate()
+            case _ => RamlExampleValueAsString(node, Example(node.as[YScalar]), strict = strictDefault).populate()
           }
       }
     }
@@ -76,7 +77,7 @@ case class RamlMultipleExampleParser(key: String, map: YMap, producer: Option[St
   }
 }
 
-case class RamlNamedExampleParser(entry: YMapEntry, producer: Option[String] => Example)(implicit ctx: WebApiContext) {
+case class RamlNamedExampleParser(entry: YMapEntry, producer: Option[String] => Example, strictDefault: Boolean)(implicit ctx: WebApiContext) {
   def parse(): Example = {
     val name           = ScalarNode(entry.key)
     val simpleProducer = () => producer(Some(name.text().toString))
@@ -85,31 +86,31 @@ case class RamlNamedExampleParser(entry: YMapEntry, producer: Option[String] => 
         ctx.declarations
           .findNamedExample(s)
           .map(e => e.link(s).asInstanceOf[Example])
-          .getOrElse(RamlSingleExampleValueParser(entry.value, simpleProducer).parse())
-      case Right(_) => RamlSingleExampleValueParser(entry.value, simpleProducer).parse()
+          .getOrElse(RamlSingleExampleValueParser(entry.value, simpleProducer, strictDefault).parse())
+      case Right(_) => RamlSingleExampleValueParser(entry.value, simpleProducer, strictDefault).parse()
     }
     example.set(ExampleModel.Name, name.string(), Annotations(entry))
   }
 }
 
-case class RamlSingleExampleParser(key: String, map: YMap, producer: Option[String] => Example)(
+case class RamlSingleExampleParser(key: String, map: YMap, producer: Option[String] => Example, strictDefault: Boolean)(
     implicit ctx: WebApiContext) {
   def parse(): Option[Example] = {
     val newProducer = () => producer(None)
     map.key(key).flatMap { entry =>
       entry.value.tagType match {
         case YType.Map =>
-          Option(RamlSingleExampleValueParser(entry.value.as[YMap], newProducer).parse())
+          Option(RamlSingleExampleValueParser(entry.value.as[YMap], newProducer, strictDefault).parse())
         case _ => // example can be any type or scalar value, like string int datetime etc. We will handle all like strings in this stage
           Option(
-            RamlExampleValueAsString(entry.value, newProducer().add(Annotations(entry.value)), strict = true)
+            RamlExampleValueAsString(entry.value, newProducer().add(Annotations(entry.value)), strict = strictDefault)
               .populate())
       }
     }
   }
 }
 
-case class RamlSingleExampleValueParser(node: YNode, producer: () => Example)(implicit ctx: WebApiContext)
+case class RamlSingleExampleValueParser(node: YNode, producer: () => Example, strictDefault: Boolean)(implicit ctx: WebApiContext)
     extends SpecParserOps {
   def parse(): Example = {
     val example = producer().add(Annotations(node))
@@ -123,13 +124,13 @@ case class RamlSingleExampleValueParser(node: YNode, producer: () => Example)(im
         map
           .key("value")
           .foreach { entry =>
-            RamlExampleValueAsString(entry.value, example, example.strict.option().getOrElse(true)).populate()
+            RamlExampleValueAsString(entry.value, example, example.strict.option().getOrElse(strictDefault)).populate()
           }
 
         AnnotationParser(example, map).parse()
 
       case _ =>
-        RamlExampleValueAsString(node, example, strict = true).populate()
+        RamlExampleValueAsString(node, example, strict = strictDefault).populate()
     }
 
     example

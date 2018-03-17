@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies.model.domain
 
+import amf.client.model.StrField
 import amf.core.metamodel.Obj
 import amf.core.utils.Strings
 import amf.core.model.domain.DomainElement
@@ -13,15 +14,15 @@ case class VocabularyReference(fields: Fields, annotations: Annotations) extends
   override def meta: Obj = VocabularyReferenceModel
 
   override def adopted(parent: String): VocabularyReference.this.type = Option(alias) match {
-    case Some(alias) => withId(parent + "/vocabularyReference/" + alias.urlEncoded)
+    case Some(alias) => withId(parent + "/vocabularyReference/" + alias.value().urlEncoded)
     case None => throw new Exception("Cannot set ID of VocabularyReference without alias")
   }
 
   def withAlias(alias: String): this.type = set(Alias, alias)
   def withReference(reference: String): this.type = set(Reference, reference)
 
-  def alias: String = fields(Alias)
-  def reference: String = fields(Reference)
+  def alias: StrField = fields.field(Alias)
+  def reference: StrField = fields.field(Reference)
 }
 
 object VocabularyReference {

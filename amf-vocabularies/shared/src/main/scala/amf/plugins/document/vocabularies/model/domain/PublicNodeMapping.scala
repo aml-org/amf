@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies.model.domain
 
+import amf.client.model.StrField
 import amf.core.metamodel.Obj
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
@@ -13,9 +14,9 @@ case class PublicNodeMapping(fields: Fields, annotations: Annotations) extends D
   override def meta: Obj = PublicNodeMappingModel
   override def adopted(parent: String): PublicNodeMapping.this.type = withId(parent)
 
-  def name(): String = fields(Name)
+  def name(): StrField = fields.field(Name)
   def withName(name: String) = set(Name, name)
-  def mappedNode(): String = fields(MappedNode)
+  def mappedNode(): StrField = fields.field(MappedNode)
   def withMappedNode(mappedNode: String) = set(MappedNode, mappedNode)
 }
 
@@ -29,11 +30,11 @@ case class DocumentMapping(fields: Fields, annotations: Annotations) extends Dom
   override def meta: Obj = DocumentMappingModel
   override def adopted(parent: String): DocumentMapping.this.type = withId(parent)
 
-  def documentName(): String = fields(DocumentName)
+  def documentName(): StrField = fields.field(DocumentName)
   def withDocumentName(name: String) = set(DocumentName, name)
-  def encoded(): String = fields(EncodedNode)
+  def encoded(): StrField = fields.field(EncodedNode)
   def withEncoded(encodedNode: String) = set(EncodedNode, encodedNode)
-  def declaredNodes(): Seq[PublicNodeMapping] = fields(DeclaredNodes)
+  def declaredNodes(): Seq[PublicNodeMapping] = fields.field(DeclaredNodes)
   def withDeclaredNodes(fragments: Seq[PublicNodeMapping]) = setArrayWithoutId(DeclaredNodes, fragments)
 }
 
@@ -48,11 +49,11 @@ case class DocumentsModel(fields: Fields, annotations: Annotations) extends Doma
   override def meta: Obj = DocumentsModelModel
   override def adopted(parent: String): DocumentsModel.this.type = withId(parent)
 
-  def root(): DocumentMapping = fields(Root)
+  def root(): DocumentMapping = fields.field(Root)
   def withRoot(documentMapping: DocumentMapping) = set(Root, documentMapping)
-  def fragments(): Seq[DocumentMapping] = fields(Fragments)
+  def fragments(): Seq[DocumentMapping] = fields.field(Fragments)
   def withFragments(fragments: Seq[DocumentMapping]) = setArrayWithoutId(Fragments, fragments)
-  def library(): DocumentMapping = fields(Library)
+  def library(): DocumentMapping = fields.field(Library)
   def withLibrary(library: DocumentMapping) = set(Library, library)
 }
 

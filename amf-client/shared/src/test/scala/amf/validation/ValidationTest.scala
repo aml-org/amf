@@ -160,6 +160,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       assert(report.conforms)
       assert(report.results.length == 1)
+      
       val result = report.results.head
       assert(result.level == "Info")
       assert(result.validationId == "http://raml.org/vocabularies/data#my-custom-validation")

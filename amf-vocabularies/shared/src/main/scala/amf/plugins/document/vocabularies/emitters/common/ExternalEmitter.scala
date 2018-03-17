@@ -10,7 +10,7 @@ import org.yaml.model.YDocument
 
 case class ExternalEmitter(external: External, ordering: SpecOrdering) extends EntryEmitter {
   override def emit(b: YDocument.EntryBuilder): Unit =
-    MapEntryEmitter(external.alias, external.base).emit(b)
+    MapEntryEmitter(external.alias.value(), external.base.value()).emit(b)
 
   override def position(): Position =
     external.annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
