@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: Headers example
+version: v1
+baseUri: http://domain.api.domain.com/{version}/
+
+/endpoint:
+  get:
+    headers:
+      x-union:
+        type: string | integer
+        displayName: Union type
+        examples:
+          stringExample: Hello union
+          numberExample: 25
