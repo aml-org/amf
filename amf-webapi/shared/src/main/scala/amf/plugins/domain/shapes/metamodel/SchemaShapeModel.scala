@@ -11,7 +11,7 @@ object SchemaShapeModel extends AnyShapeModel {
   val MediaType = Field(Str, Shacl + "mediaType")
   val Raw       = Field(Str, Shacl + "raw")
 
-  override val fields = List(MediaType, Raw) ++ ShapeModel.fields ++ DomainElementModel.fields
+  override val fields = List(MediaType, Raw) ++ AnyShapeModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = List(Shacl + "SchemaShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
 

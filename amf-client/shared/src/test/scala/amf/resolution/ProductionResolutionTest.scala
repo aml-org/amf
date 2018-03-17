@@ -28,6 +28,10 @@ class ProductionResolutionTest extends RamlResolutionTest {
     cycle("unions-example.raml", "unions-example.raml.jsonld", RamlYamlHint, Amf)
   }
 
+  test("Examples in header of type union") {
+    cycle("example-in-union.raml", "example-in-union.raml.jsonld", RamlYamlHint, Amf)
+  }
+
 }
 
 class Raml08ResolutionTest extends RamlResolutionTest {
