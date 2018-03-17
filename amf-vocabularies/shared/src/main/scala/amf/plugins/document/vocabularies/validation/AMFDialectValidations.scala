@@ -23,19 +23,23 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
   }
 
   protected def validations(): List[ValidationSpecification] = {
-    Option(dialect.documents()).flatMap(docs => Option(docs.root())).flatMap(root => Option(root.encoded())).map { mappingId =>
-      Option(findNodeMappingById(mappingId.value())) match {
-        case Some(nodeMapping) =>  emitEntityValidations(nodeMapping)
-        case _                 => Nil
-      }
+    Option(dialect.documents()).flatMap(docs => Option(docs.root())).flatMap(root => root.encoded().option()).map {
+      mappingId =>
+        Option(findNodeMappingById(mappingId)) match {
+          case Some(nodeMapping) => emitEntityValidations(nodeMapping)
+          case _                 => Nil
+        }
 
     } getOrElse Nil
   }
 
   protected def emitEntityValidations(node: NodeMapping): List[ValidationSpecification] = {
-    node.propertiesMapping().flatMap { propertyMapping =>
-      emitPropertyValidations(node, propertyMapping)
-    }.toList
+    node
+      .propertiesMapping()
+      .flatMap { propertyMapping =>
+        emitPropertyValidations(node, propertyMapping)
+      }
+      .toList
   }
 
   protected def emitPropertyValidations(node: NodeMapping, prop: PropertyMapping): List[ValidationSpecification] = {
@@ -43,36 +47,40 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
 
     if (prop.minimum().present()) {
       val minValue = prop.minimum().value()
-      val message = s"Property '${prop.name()}' minimum inclusive value is $minValue"
+      val message  = s"Property '${prop.name()}' minimum inclusive value is $minValue"
       validations += new ValidationSpecification(
         name = validationId(node, prop.name().value(), "minimum"),
         message = message,
         ramlMessage = Some(message),
         oasMessage = Some(message),
         targetClass = Seq(node.id),
-        propertyConstraints = Seq(PropertyConstraint(
-          ramlPropertyId = prop.nodePropertyMapping().value(),
-          name = validationId(node, prop.name().value(), "minimum") + "/prop",
-          message = Some(message),
-          minInclusive = Some(minValue.toString)
-        )))
+        propertyConstraints = Seq(
+          PropertyConstraint(
+            ramlPropertyId = prop.nodePropertyMapping().value(),
+            name = validationId(node, prop.name().value(), "minimum") + "/prop",
+            message = Some(message),
+            minInclusive = Some(minValue.toString)
+          ))
+      )
     }
 
     if (prop.maximum().present()) {
       val maxValue = prop.maximum().value()
-      val message = s"Property '${prop.name()}' maximum inclusive value is $maxValue"
+      val message  = s"Property '${prop.name()}' maximum inclusive value is $maxValue"
       validations += new ValidationSpecification(
         name = validationId(node, prop.name().value(), "maximum"),
         message = message,
         ramlMessage = Some(message),
         oasMessage = Some(message),
         targetClass = Seq(node.id),
-        propertyConstraints = Seq(PropertyConstraint(
-          ramlPropertyId = prop.nodePropertyMapping().value(),
-          name = validationId(node, prop.name().value(), "maximum") + "/prop",
-          message = Some(message),
-          maxInclusive = Some(maxValue.toString)
-        )))
+        propertyConstraints = Seq(
+          PropertyConstraint(
+            ramlPropertyId = prop.nodePropertyMapping().value(),
+            name = validationId(node, prop.name().value(), "maximum") + "/prop",
+            message = Some(message),
+            maxInclusive = Some(maxValue.toString)
+          ))
+      )
     }
 
     if (prop.minCount().present() && prop.minCount().value() > 0) {
@@ -83,12 +91,14 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
         ramlMessage = Some(message),
         oasMessage = Some(message),
         targetClass = Seq(node.id),
-        propertyConstraints = Seq(PropertyConstraint(
-          ramlPropertyId = prop.nodePropertyMapping().value(),
-          name = validationId(node, prop.name().value(), "required") + "/prop",
-          message = Some(message),
-          minCount = Some("1")
-        )))
+        propertyConstraints = Seq(
+          PropertyConstraint(
+            ramlPropertyId = prop.nodePropertyMapping().value(),
+            name = validationId(node, prop.name().value(), "required") + "/prop",
+            message = Some(message),
+            minCount = Some("1")
+          ))
+      )
     }
 
     if (!prop.allowMultiple().value() && prop.mapKeyProperty().isNullOrEmpty) {
@@ -99,12 +109,14 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
         ramlMessage = Some(message),
         oasMessage = Some(message),
         targetClass = Seq(node.id),
-        propertyConstraints = Seq(PropertyConstraint(
-          ramlPropertyId = prop.nodePropertyMapping().value(),
-          name = validationId(node, prop.name().value(), "notCollection") + "/prop",
-          message = Some(message),
-          maxCount = Some("1")
-        )))
+        propertyConstraints = Seq(
+          PropertyConstraint(
+            ramlPropertyId = prop.nodePropertyMapping().value(),
+            name = validationId(node, prop.name().value(), "notCollection") + "/prop",
+            message = Some(message),
+            maxCount = Some("1")
+          ))
+      )
     }
 
     prop.pattern().option() match {
@@ -116,18 +128,19 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
           ramlMessage = Some(message),
           oasMessage = Some(message),
           targetClass = Seq(node.id),
-          propertyConstraints = Seq(PropertyConstraint(
-            ramlPropertyId = prop.nodePropertyMapping().value(),
-            name = validationId(node, prop.name().value(), "pattern") + "/prop",
-            message = Some(message),
-            pattern = Some(pattern)
-          )))
-      case _  => // ignore
+          propertyConstraints = Seq(
+            PropertyConstraint(
+              ramlPropertyId = prop.nodePropertyMapping().value(),
+              name = validationId(node, prop.name().value(), "pattern") + "/prop",
+              message = Some(message),
+              pattern = Some(pattern)
+            ))
+        )
+      case _ => // ignore
     }
 
-
-    if(prop.enum().nonEmpty) {
-      val values = prop.enum().map(_.value())
+    if (prop.enum().nonEmpty) {
+      val values  = prop.enum().map(_.value())
       val message = s"Property '${prop.name()}' must match some value in ${values.mkString(",")}"
       validations += new ValidationSpecification(
         name = validationId(node, prop.name().value(), "enum"),
@@ -135,12 +148,14 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
         ramlMessage = Some(message),
         oasMessage = Some(message),
         targetClass = Seq(node.id),
-        propertyConstraints = Seq(PropertyConstraint(
-          ramlPropertyId = prop.nodePropertyMapping().value(),
-          name = validationId(node, prop.name().value(), "enum") + "/prop",
-          message = Some(message),
-          in = values.map(_.toString)
-        )))
+        propertyConstraints = Seq(
+          PropertyConstraint(
+            ramlPropertyId = prop.nodePropertyMapping().value(),
+            name = validationId(node, prop.name().value(), "enum") + "/prop",
+            message = Some(message),
+            in = values.map(_.toString)
+          ))
+      )
     }
 
     // ranges here
@@ -149,33 +164,41 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
       dataRange match {
 
         case literal if literal.endsWith("number") || literal.endsWith("float") || literal.endsWith("double") =>
-          val message = s"Property '${prop.name()}'  value must be of type ${(Namespace.Xsd + "integer").iri()} or ${(Namespace.Xsd + "float").iri()}"
+          val message = s"Property '${prop.name()}'  value must be of type ${(Namespace.Xsd + "integer")
+            .iri()} or ${(Namespace.Xsd + "float").iri()}"
           validations += new ValidationSpecification(
             name = validationId(node, prop.name().value(), "dialectRange"),
             message = message,
             ramlMessage = Some(message),
             oasMessage = Some(message),
             targetClass = Seq(node.id),
-            propertyConstraints = Seq(PropertyConstraint(
-              ramlPropertyId = prop.nodePropertyMapping().value(),
-              name = validationId(node, prop.name().value(), "dialectRange") + "/prop",
-              message = Some(message),
-              custom = Some((b: EntryBuilder, parentId: String) => {
-                b.entry(
-                  (Namespace.Shacl + "or").iri(),
-                  _.obj(_.entry("@list", _.list { l =>
-                    l.obj { v =>
-                      v.entry((Namespace.Shacl + "datatype").iri(), _.obj(_.entry("@id", (Namespace.Xsd + "integer").iri().trim)))
-                    }
-                    l.obj { v =>
-                      v.entry((Namespace.Shacl + "datatype").iri(), _.obj(_.entry("@id", (Namespace.Xsd + "double").iri().trim)))
-                    }
-                  }))
-                )
-              })
-            )))
+            propertyConstraints = Seq(
+              PropertyConstraint(
+                ramlPropertyId = prop.nodePropertyMapping().value(),
+                name = validationId(node, prop.name().value(), "dialectRange") + "/prop",
+                message = Some(message),
+                custom = Some((b: EntryBuilder, parentId: String) => {
+                  b.entry(
+                    (Namespace.Shacl + "or").iri(),
+                    _.obj(_.entry(
+                      "@list",
+                      _.list { l =>
+                        l.obj { v =>
+                          v.entry((Namespace.Shacl + "datatype").iri(),
+                                  _.obj(_.entry("@id", (Namespace.Xsd + "integer").iri().trim)))
+                        }
+                        l.obj { v =>
+                          v.entry((Namespace.Shacl + "datatype").iri(),
+                                  _.obj(_.entry("@id", (Namespace.Xsd + "double").iri().trim)))
+                        }
+                      }
+                    ))
+                  )
+                })
+              ))
+          )
 
-        case literal                                =>
+        case literal =>
           val message = s"Property '${prop.name()}'  value must be of type $dataRange"
           validations += new ValidationSpecification(
             name = validationId(node, prop.name().value(), "dataRange"),
@@ -183,38 +206,43 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
             ramlMessage = Some(message),
             oasMessage = Some(message),
             targetClass = Seq(node.id),
-            propertyConstraints = Seq(PropertyConstraint(
-              ramlPropertyId = prop.nodePropertyMapping().value(),
-              name = validationId(node, prop.name().value(), "dataRange") + "/prop",
-              message = Some(message),
-              datatype = Some(literal)
-            )))
+            propertyConstraints = Seq(
+              PropertyConstraint(
+                ramlPropertyId = prop.nodePropertyMapping().value(),
+                name = validationId(node, prop.name().value(), "dataRange") + "/prop",
+                message = Some(message),
+                datatype = Some(literal)
+              ))
+          )
 
       }
     }
 
     if (prop.objectRange().nonEmpty) {
       val message = s"Property '${prop.name()}'  value must be of type ${prop.objectRange()}"
-          validations += new ValidationSpecification(
-            name = validationId(node, prop.name().value(), "objectRange"),
-            message = message,
-            ramlMessage = Some(message),
-            oasMessage = Some(message),
-            targetClass = Seq(node.id),
-            propertyConstraints = Seq(PropertyConstraint(
-              ramlPropertyId = prop.nodePropertyMapping().value(),
-              name = validationId(node, prop.name().value(), "objectRange") + "/prop",
-              message = Some(message),
-              `class` = prop.objectRange().map(_.value()))
-            ))
+      validations += new ValidationSpecification(
+        name = validationId(node, prop.name().value(), "objectRange"),
+        message = message,
+        ramlMessage = Some(message),
+        oasMessage = Some(message),
+        targetClass = Seq(node.id),
+        propertyConstraints = Seq(
+          PropertyConstraint(
+            ramlPropertyId = prop.nodePropertyMapping().value(),
+            name = validationId(node, prop.name().value(), "objectRange") + "/prop",
+            message = Some(message),
+            `class` = prop.objectRange().map(_.value())
+          ))
+      )
     }
 
     validations.toList
   }
 
-  private def validationId(dialectNode: NodeMapping, propName: String, constraint: String): String = Option(dialectNode.id) match {
-    case Some(id) => s"${id}_${propName}_${constraint}_validation"
-    case None     => throw new Exception("Cannot generate validation for dialect node without ID")
-  }
+  private def validationId(dialectNode: NodeMapping, propName: String, constraint: String): String =
+    Option(dialectNode.id) match {
+      case Some(id) => s"${id}_${propName}_${constraint}_validation"
+      case None     => throw new Exception("Cannot generate validation for dialect node without ID")
+    }
 
 }

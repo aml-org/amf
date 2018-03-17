@@ -13,15 +13,15 @@ case class VocabularyReference(fields: Fields, annotations: Annotations) extends
 
   override def meta: Obj = VocabularyReferenceModel
 
-  override def adopted(parent: String): VocabularyReference.this.type = Option(alias) match {
-    case Some(alias) => withId(parent + "/vocabularyReference/" + alias.value().urlEncoded)
-    case None => throw new Exception("Cannot set ID of VocabularyReference without alias")
+  override def adopted(parent: String): VocabularyReference.this.type = alias.option() match {
+    case Some(alias) => withId(parent + "/vocabularyReference/" + alias.urlEncoded)
+    case None        => throw new Exception("Cannot set ID of VocabularyReference without alias")
   }
 
-  def withAlias(alias: String): this.type = set(Alias, alias)
+  def withAlias(alias: String): this.type         = set(Alias, alias)
   def withReference(reference: String): this.type = set(Reference, reference)
 
-  def alias: StrField = fields.field(Alias)
+  def alias: StrField     = fields.field(Alias)
   def reference: StrField = fields.field(Reference)
 }
 

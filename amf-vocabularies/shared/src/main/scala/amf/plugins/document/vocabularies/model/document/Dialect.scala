@@ -5,17 +5,17 @@ import amf.core.metamodel.Obj
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.document.vocabularies.metamodel.document.{DialectFragmentModel, DialectLibraryModel, DialectModel}
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel._
+import amf.plugins.document.vocabularies.metamodel.document.{DialectFragmentModel, DialectLibraryModel, DialectModel}
 import amf.plugins.document.vocabularies.model.domain.{DocumentsModel, External, NodeMapping}
 
-case class Dialect(fields: Fields, annotations: Annotations) extends BaseUnit with DeclaresModel with EncodesModel  {
-  def meta: Obj = DialectModel
-  def references: Seq[BaseUnit] = fields.field(References)
-  def location: String = fields(Location)
-  def encodes: DomainElement = fields.field(Encodes)
-  def declares: Seq[DomainElement] = fields.field(Declares)
-  def usage: String = fields(Usage)
+case class Dialect(fields: Fields, annotations: Annotations) extends BaseUnit with DeclaresModel with EncodesModel {
+  def meta: Obj                          = DialectModel
+  def references: Seq[BaseUnit]          = fields.field(References)
+  def location: String                   = fields(Location)
+  def encodes: DomainElement             = fields.field(Encodes)
+  def declares: Seq[DomainElement]       = fields.field(Declares)
+  def usage: String                      = fields(Usage)
   def adopted(parent: String): this.type = withId(parent)
 
   def nameAndVersion(): String = s"${name().value()} ${version().value()}"
@@ -29,17 +29,21 @@ case class Dialect(fields: Fields, annotations: Annotations) extends BaseUnit wi
   def documents(): DocumentsModel                     = fields.field(Documents)
   def withDocuments(documentsMapping: DocumentsModel) = set(Documents, documentsMapping)
 
-  def header = s"%${name().value()} ${version().value()}".replace(" ","")
+  def header = s"%${name().value()} ${version().value()}".replace(" ", "")
+
   def libraryHeaders = Option(documents().library()) match {
-    case Some(library) => Seq(s"%RAMLLibrary/${header.replaceFirst("%","")}")
+    case Some(library) => Seq(s"%RAMLLibrary/${header.replaceFirst("%", "")}")
     case None          => Nil
   }
+
   def isLibraryHeader(header: String) = libraryHeaders.contains(header.replace(" ", ""))
-  def fragmentHeaders = Option(documents().fragments()) match {
-    case Some(fragments) => fragments.map { fragment => s"%${fragment.documentName()}/${header.replaceFirst("%","")}".replace(" ", "") }
-    case None          => Nil
+
+  def fragmentHeaders = documents().fragments().map { fragment =>
+    s"%${fragment.documentName().value()}/${header.replaceFirst("%", "")}".replace(" ", "")
   }
+
   def isFragmentHeader(header: String) = fragmentHeaders.contains(header.replace(" ", ""))
+
   def allHeaders = Seq(header) ++ libraryHeaders ++ fragmentHeaders
 }
 
@@ -49,8 +53,8 @@ object Dialect {
   def apply(annotations: Annotations): Dialect = Dialect(Fields(), annotations)
 }
 
-case class DialectLibrary(fields: Fields, annotations: Annotations) extends BaseUnit with DeclaresModel  {
-  def meta: Obj = DialectLibraryModel
+case class DialectLibrary(fields: Fields, annotations: Annotations) extends BaseUnit with DeclaresModel {
+  def meta: Obj                          = DialectLibraryModel
   def references: Seq[BaseUnit]          = fields.field(References)
   def location: String                   = fields(Location)
   def declares: Seq[DomainElement]       = fields.field(Declares)
@@ -67,9 +71,8 @@ object DialectLibrary {
   def apply(annotations: Annotations): DialectLibrary = DialectLibrary(Fields(), annotations)
 }
 
-
-case class DialectFragment(fields: Fields, annotations: Annotations) extends BaseUnit with EncodesModel  {
-  def meta: Obj = DialectFragmentModel
+case class DialectFragment(fields: Fields, annotations: Annotations) extends BaseUnit with EncodesModel {
+  def meta: Obj                 = DialectFragmentModel
   def references: Seq[BaseUnit] = fields.field(References)
   def location: String          = fields(Location)
   def usage: String             = fields(Usage)

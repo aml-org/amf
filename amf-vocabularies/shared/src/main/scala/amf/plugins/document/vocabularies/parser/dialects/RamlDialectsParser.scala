@@ -22,14 +22,15 @@ import scala.collection.mutable
 class DialectDeclarations(var nodeMappings: Map[String, NodeMapping] = Map(),
                           errorHandler: Option[ErrorHandler],
                           futureDeclarations: FutureDeclarations)
-  extends VocabularyDeclarations(Map(), Map(), Map(), Map(), errorHandler, futureDeclarations) {
+    extends VocabularyDeclarations(Map(), Map(), Map(), Map(), errorHandler, futureDeclarations) {
 
   /** Get or create specified library. */
   override def getOrCreateLibrary(alias: String): DialectDeclarations = {
     libraries.get(alias) match {
       case Some(lib: DialectDeclarations) => lib
       case _ =>
-        val result = new DialectDeclarations(errorHandler = errorHandler, futureDeclarations = EmptyFutureDeclarations())
+        val result =
+          new DialectDeclarations(errorHandler = errorHandler, futureDeclarations = EmptyFutureDeclarations())
         libraries = libraries + (alias -> result)
         result
     }
@@ -53,30 +54,28 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMapping] = Map(),
   def findClassTerm(key: String, scope: SearchScope.Scope): Option[ClassTerm] =
     findForType(key, _.asInstanceOf[DialectDeclarations].classTerms, scope) match {
       case Some(ct: ClassTerm) => Some(ct)
-      case None => resolveExternal(key) match {
-        case Some(externalId: String) => Some(ClassTerm().withId(externalId))
-        case None                     => None
-      }
+      case None =>
+        resolveExternal(key) match {
+          case Some(externalId: String) => Some(ClassTerm().withId(externalId))
+          case None                     => None
+        }
     }
 
   def findPropertyTerm(key: String, scope: SearchScope.Scope): Option[PropertyTerm] =
     findForType(key, _.asInstanceOf[DialectDeclarations].propertyTerms, scope) match {
       case Some(pt: PropertyTerm) => Some(pt)
-      case None => resolveExternal(key) match {
-        case Some(externalId: String) => Some(DatatypePropertyTerm().withId(externalId))
-        case None                     => None
-      }
+      case None =>
+        resolveExternal(key) match {
+          case Some(externalId: String) => Some(DatatypePropertyTerm().withId(externalId))
+          case None                     => None
+        }
     }
-
 
   def resolveExternal(key: String): Option[String] = {
     if (key.contains(".")) {
       val prefix = key.split("\\.").head
-      val value = key.split("\\.").last
-      externals.get(prefix) match {
-        case Some(external) => Some(s"${external.base}$value")
-        case _              => None
-      }
+      val value  = key.split("\\.").last
+      externals.get(prefix).map(external => s"${external.base.value()}$value")
     } else {
       None
     }
@@ -86,80 +85,81 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMapping] = Map(),
 
 }
 
-trait DialectSyntax {this: DialectContext =>
-  val dialect: Map[String,Boolean] = Map(
-    "dialect" -> true,
-    "version" -> true,
-    "usage" -> false,
-    "external" -> false,
-    "uses" -> false,
+trait DialectSyntax { this: DialectContext =>
+  val dialect: Map[String, Boolean] = Map(
+    "dialect"      -> true,
+    "version"      -> true,
+    "usage"        -> false,
+    "external"     -> false,
+    "uses"         -> false,
     "nodeMappings" -> false,
-    "documents" -> false
+    "documents"    -> false
   )
 
-  val library: Map[String,Boolean] = Map(
-    "usage" -> false,
-    "external" -> false,
-    "uses" -> false,
+  val library: Map[String, Boolean] = Map(
+    "usage"        -> false,
+    "external"     -> false,
+    "uses"         -> false,
     "nodeMappings" -> false
   )
 
-  val nodeMapping: Map[String,Boolean] = Map(
+  val nodeMapping: Map[String, Boolean] = Map(
     "classTerm" -> true,
-    "mapping" -> false
+    "mapping"   -> false
   )
 
-  val fragment: Map[String,Boolean] = Map(
-    "usage" -> false,
+  val fragment: Map[String, Boolean] = Map(
+    "usage"    -> false,
     "external" -> false,
-    "uses" -> false
+    "uses"     -> false
   ) ++ nodeMapping
 
-  val propertyMapping: Map[String,Boolean] = Map(
-    "propertyTerm" -> true,
-    "range"        -> false,
-    "mapKey"       -> false,
-    "mapValue"     -> false,
-    "mandatory"    -> false,
-    "pattern"      -> false,
-    "sorted"       -> false,
-    "minimum"      -> false,
-    "maximum"      -> false,
+  val propertyMapping: Map[String, Boolean] = Map(
+    "propertyTerm"          -> true,
+    "range"                 -> false,
+    "mapKey"                -> false,
+    "mapValue"              -> false,
+    "mandatory"             -> false,
+    "pattern"               -> false,
+    "sorted"                -> false,
+    "minimum"               -> false,
+    "maximum"               -> false,
     "allowMultiple"         -> false,
     "enum"                  -> false,
     "typeDiscriminatorName" -> false,
     "typeDiscriminator"     -> false
   )
 
-  val documentsMapping: Map[String,Boolean] = Map(
-    "root" -> false,
+  val documentsMapping: Map[String, Boolean] = Map(
+    "root"      -> false,
     "fragments" -> false,
-    "library" -> false
+    "library"   -> false
   )
 
   def closedNode(nodeType: String, id: String, map: YMap): Unit = {
     val allowedProps = nodeType match {
-      case "dialect"         => dialect
-      case "library"         => library
-      case "fragment"        => fragment
-      case "nodeMapping"     => nodeMapping
-      case "propertyMapping" => propertyMapping
+      case "dialect"          => dialect
+      case "library"          => library
+      case "fragment"         => fragment
+      case "nodeMapping"      => nodeMapping
+      case "propertyMapping"  => propertyMapping
       case "documentsMapping" => documentsMapping
     }
     map.map.keySet.map(_.as[String]).foreach { property =>
       allowedProps.get(property) match {
         case Some(_) => // correct
-        case None => closedNodeViolation(id, property, nodeType, map)
+        case None    => closedNodeViolation(id, property, nodeType, map)
       }
     }
 
-    allowedProps.foreach { case (propName, mandatory) =>
-      val props = map.map.keySet.map(_.as[String]).toSet
-      if (mandatory) {
-        if (!props.contains(propName)) {
-          missingPropertyViolation(id, propName, nodeType, map)
+    allowedProps.foreach {
+      case (propName, mandatory) =>
+        val props = map.map.keySet.map(_.as[String]).toSet
+        if (mandatory) {
+          if (!props.contains(propName)) {
+            missingPropertyViolation(id, propName, nodeType, map)
+          }
         }
-      }
     }
   }
 
@@ -174,8 +174,9 @@ trait DialectSyntax {this: DialectContext =>
 }
 
 class DialectContext(private val wrapped: ParserContext, private val ds: Option[DialectDeclarations] = None)
-  extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, wrapped.parserCount)
-    with DialectSyntax with SyntaxErrorReporter {
+    extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, wrapped.parserCount)
+    with DialectSyntax
+    with SyntaxErrorReporter {
 
   val declarations: DialectDeclarations =
     ds.getOrElse(new DialectDeclarations(errorHandler = Some(this), futureDeclarations = futureDeclarations))
@@ -203,15 +204,17 @@ case class ReferenceDeclarations(references: mutable.Map[String, Any] = mutable.
     }
   }
 
-  def += (external: External): Unit = {
-    references += (external.alias.value() -> external)
+  def +=(external: External): Unit = {
+    references += (external.alias.value()                 -> external)
     ctx.declarations.externals += (external.alias.value() -> external)
   }
 
-  def baseUnitReferences(): Seq[BaseUnit] = references.values.toSet.filter(_.isInstanceOf[BaseUnit]).toSeq.asInstanceOf[Seq[BaseUnit]]
+  def baseUnitReferences(): Seq[BaseUnit] =
+    references.values.toSet.filter(_.isInstanceOf[BaseUnit]).toSeq.asInstanceOf[Seq[BaseUnit]]
 }
 
-case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq[ParsedReference])(implicit ctx: DialectContext) {
+case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq[ParsedReference])(
+    implicit ctx: DialectContext) {
 
   def parse(location: String): ReferenceDeclarations = {
     val result = ReferenceDeclarations()
@@ -228,7 +231,6 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
 
   private def target(url: String): Option[BaseUnit] =
     references.find(r => r.origin.url.equals(url)).map(_.unit)
-
 
   private def parseLibraries(dialect: Dialect, result: ReferenceDeclarations, id: String): Unit = {
     map.key(
@@ -256,7 +258,6 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
     case _             => e.value
   }
 
-
   private def parseExternals(result: ReferenceDeclarations, id: String): Unit = {
     map.key(
       "external",
@@ -266,13 +267,12 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
           .entries
           .foreach(e => {
             val alias: String = e.key
-            val base: String   = e.value
-            val external = External()
+            val base: String  = e.value
+            val external      = External()
             result += external.withAlias(alias).withBase(base)
           })
     )
   }
-
 
   private def collectAlias(aliasCollectorUnit: BaseUnit, alias: (String, String)): BaseUnit = {
     aliasCollectorUnit.annotations.find(classOf[Aliases]) match {
@@ -284,12 +284,10 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
   }
 }
 
-
 class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) extends BaseSpecParser {
 
-  val map: YMap = root.parsed.document.as[YMap]
+  val map: YMap        = root.parsed.document.as[YMap]
   val dialect: Dialect = Dialect(Annotations(map)).withLocation(root.location).withId(root.location + "#")
-
 
   def parseDocument(): BaseUnit = {
 
@@ -303,12 +301,14 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
       dialect.set(DialectModel.Usage, value.string(), Annotations(entry))
     })
 
-    map.key("version", entry => {
-      val value = ValueNode(entry.value)
-      val version = value.text().value.toString
-      dialect.set(DialectModel.Version, AmfScalar(version, Annotations(entry.value)), Annotations(entry))
-    })
-
+    map.key(
+      "version",
+      entry => {
+        val value   = ValueNode(entry.value)
+        val version = value.text().value.toString
+        dialect.set(DialectModel.Version, AmfScalar(version, Annotations(entry.value)), Annotations(entry))
+      }
+    )
 
     // closed node validation
     ctx.closedNode("dialect", dialect.id, map)
@@ -318,17 +318,15 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
     if (ctx.declarations.externals.nonEmpty)
       dialect.withExternals(ctx.declarations.externals.values.toSeq)
 
-
     parseDeclarations(root, map)
 
     val declarables = ctx.declarations.declarables()
     declarables.foreach {
       case nodeMapping: NodeMapping =>
         nodeMapping.propertiesMapping().foreach { propertyMapping =>
-
           // Setting ids we left unresolved in objectRanges
           val mapped = propertyMapping.objectRange().map { nodeMappingRef =>
-            if (nodeMappingRef.value() == (Namespace.Meta + "anyNode").iri() ) {
+            if (nodeMappingRef.value() == (Namespace.Meta + "anyNode").iri()) {
               Some(nodeMappingRef.value())
             } else {
               ctx.declarations.findNodeMapping(nodeMappingRef.value(), All) match {
@@ -337,7 +335,8 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
                   ctx.missingPropertyRangeViolation(
                     nodeMappingRef.value(),
                     nodeMapping.id,
-                    propertyMapping.fields.entry(PropertyMappingModel.ObjectRange)
+                    propertyMapping.fields
+                      .entry(PropertyMappingModel.ObjectRange)
                       .flatMap(_.value.annotations.find(classOf[LexicalInformation]))
                       .orElse(propertyMapping.annotations.find(classOf[LexicalInformation]))
                   )
@@ -349,25 +348,24 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
           if (refs.nonEmpty)
             propertyMapping.withObjectRange(refs)
 
-
-
           // Setting ids we left unresolved in typeDiscriminators
           Option(propertyMapping.typeDiscrminator()) match {
             case Some(typeDiscriminators) =>
-
-              val mapped = typeDiscriminators.foldLeft(Map[String,String]()) { case (acc, (nodeMappingRef, alias)) =>
-                ctx.declarations.findNodeMapping(nodeMappingRef, All) match {
-                  case Some(mapping) => acc.updated(mapping.id, alias)
-                  case _ =>
-                    ctx.missingPropertyRangeViolation(
-                      nodeMappingRef,
-                      nodeMapping.id,
-                      propertyMapping.fields.entry(PropertyMappingModel.TypeDiscriminator)
-                        .flatMap(_.value.annotations.find(classOf[LexicalInformation]))
-                        .orElse(propertyMapping.annotations.find(classOf[LexicalInformation]))
-                    )
-                    acc
-                }
+              val mapped = typeDiscriminators.foldLeft(Map[String, String]()) {
+                case (acc, (nodeMappingRef, alias)) =>
+                  ctx.declarations.findNodeMapping(nodeMappingRef, All) match {
+                    case Some(mapping) => acc.updated(mapping.id, alias)
+                    case _ =>
+                      ctx.missingPropertyRangeViolation(
+                        nodeMappingRef,
+                        nodeMapping.id,
+                        propertyMapping.fields
+                          .entry(PropertyMappingModel.TypeDiscriminator)
+                          .flatMap(_.value.annotations.find(classOf[LexicalInformation]))
+                          .orElse(propertyMapping.annotations.find(classOf[LexicalInformation]))
+                      )
+                      acc
+                  }
               }
               propertyMapping.withTypeDiscriminator(mapped)
             case _ => // ignore
@@ -407,7 +405,6 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
     if (ctx.declarations.externals.nonEmpty)
       dialect.withExternals(ctx.declarations.externals.values.toSeq)
 
-
     parseDeclarations(root, map)
 
     val declarables = ctx.declarations.declarables()
@@ -416,7 +413,7 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
         nodeMapping.propertiesMapping().foreach { propertyMapping =>
           // Setting ids we left unresolved in objectRanges
           val mapped = propertyMapping.objectRange().map { nodeMappingRef =>
-            if (nodeMappingRef.value() == (Namespace.Meta + "anyNode").iri() ) {
+            if (nodeMappingRef.value() == (Namespace.Meta + "anyNode").iri()) {
               Some(nodeMappingRef.value())
             } else {
               ctx.declarations.findNodeMapping(nodeMappingRef.value(), All) match {
@@ -425,7 +422,8 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
                   ctx.missingPropertyRangeViolation(
                     nodeMappingRef.value(),
                     nodeMapping.id,
-                    propertyMapping.fields.entry(PropertyMappingModel.ObjectRange)
+                    propertyMapping.fields
+                      .entry(PropertyMappingModel.ObjectRange)
                       .flatMap(_.value.annotations.find(classOf[LexicalInformation]))
                       .orElse(propertyMapping.annotations.find(classOf[LexicalInformation]))
                   )
@@ -437,25 +435,24 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
           if (refs.nonEmpty)
             propertyMapping.withObjectRange(refs)
 
-
-
           // Setting ids we left unresolved in typeDiscriminators
           Option(propertyMapping.typeDiscrminator()) match {
             case Some(typeDiscriminators) =>
-
-              val mapped = typeDiscriminators.foldLeft(Map[String,String]()) { case (acc, (nodeMappingRef, alias)) =>
-                ctx.declarations.findNodeMapping(nodeMappingRef, All) match {
-                  case Some(mapping) => acc.updated(mapping.id, alias)
-                  case _ =>
-                    ctx.missingPropertyRangeViolation(
-                      nodeMappingRef,
-                      nodeMapping.id,
-                      propertyMapping.fields.entry(PropertyMappingModel.TypeDiscriminator)
-                        .flatMap(_.value.annotations.find(classOf[LexicalInformation]))
-                        .orElse(propertyMapping.annotations.find(classOf[LexicalInformation]))
-                    )
-                    acc
-                }
+              val mapped = typeDiscriminators.foldLeft(Map[String, String]()) {
+                case (acc, (nodeMappingRef, alias)) =>
+                  ctx.declarations.findNodeMapping(nodeMappingRef, All) match {
+                    case Some(mapping) => acc.updated(mapping.id, alias)
+                    case _ =>
+                      ctx.missingPropertyRangeViolation(
+                        nodeMappingRef,
+                        nodeMapping.id,
+                        propertyMapping.fields
+                          .entry(PropertyMappingModel.TypeDiscriminator)
+                          .flatMap(_.value.annotations.find(classOf[LexicalInformation]))
+                          .orElse(propertyMapping.annotations.find(classOf[LexicalInformation]))
+                      )
+                      acc
+                  }
               }
               propertyMapping.withTypeDiscriminator(mapped)
             case _ => // ignore
@@ -485,8 +482,6 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
       dialect.set(DialectModel.Usage, value.string(), Annotations(entry))
     })
 
-
-
     // closed node validation
     ctx.closedNode("fragment", dialect.id, map)
 
@@ -495,18 +490,19 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
     if (ctx.declarations.externals.nonEmpty)
       dialect.withExternals(ctx.declarations.externals.values.toSeq)
 
-
     parseDeclarations(root, map)
 
     if (references.baseUnitReferences().nonEmpty) dialect.withReferences(references.baseUnitReferences())
 
     val fragment = toFragment(dialect)
 
-    parseNodeMapping(YMapEntry(YNode("fragment"), map), (mapping) => mapping.withId(fragment.id + "/fragment").withName("fragment"), fragment = true) match {
+    parseNodeMapping(YMapEntry(YNode("fragment"), map),
+                     (mapping) => mapping.withId(fragment.id + "/fragment").withName("fragment"),
+                     fragment = true) match {
       case Some(encoded) => {
         fragment.fields.setWithoutId(FragmentModel.Encodes, encoded)
       }
-      case _             => // ignore
+      case _ => // ignore
     }
 
     fragment
@@ -521,8 +517,8 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
     if (Option(dialect.usage).isDefined)
       fragment.withUsage(dialect.usage)
 
-    if (Option(dialect.externals).isDefined)
-      fragment.withExternals(dialect.externals)
+    val externals = dialect.externals
+    if (externals.nonEmpty) fragment.withExternals(dialect.externals)
 
     fragment
   }
@@ -536,11 +532,11 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
     if (Option(dialect.usage).isDefined)
       library.withUsage(dialect.usage)
 
-    if (Option(dialect.declares).isDefined)
-      library.withDeclares(dialect.declares)
+    val declares = dialect.declares
+    if (declares.nonEmpty) library.withDeclares(declares)
 
-    if (Option(dialect.externals).isDefined)
-      library.withExternals(dialect.externals)
+    val externals = dialect.externals
+    if (externals.nonEmpty) library.withExternals(externals)
 
     library
   }
@@ -551,60 +547,78 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
   }
 
   def parsePropertyMapping(entry: YMapEntry, adopt: PropertyMapping => Any): PropertyMapping = {
-    val map = entry.value.as[YMap]
+    val map             = entry.value.as[YMap]
     val propertyMapping = PropertyMapping(map)
 
     adopt(propertyMapping)
     ctx.closedNode("propertyMapping", propertyMapping.id, map)
 
-    map.key("propertyTerm", entry => {
-      val value = ValueNode(entry.value)
-      val propertyTermId = value.string().toString
-      ctx.declarations.findPropertyTerm(propertyTermId, SearchScope.All) match {
-        case Some(propertyTerm) =>
-          propertyMapping.withNodePropertyMapping(propertyTerm.id)
-        case _ =>
-          ctx.violation(propertyMapping.id, s"Cannot find property term with alias $propertyTermId", entry.value)
+    map.key(
+      "propertyTerm",
+      entry => {
+        val value          = ValueNode(entry.value)
+        val propertyTermId = value.string().toString
+        ctx.declarations.findPropertyTerm(propertyTermId, SearchScope.All) match {
+          case Some(propertyTerm) =>
+            propertyMapping.withNodePropertyMapping(propertyTerm.id)
+          case _ =>
+            ctx.violation(propertyMapping.id, s"Cannot find property term with alias $propertyTermId", entry.value)
+        }
       }
-    })
+    )
 
-    map.key("range", entry => {
-      entry.value.tagType match {
-        case YType.Seq =>
-          propertyMapping.withObjectRange(entry.value.as[Seq[String]])
-        case _ =>
-          val value = ValueNode(entry.value)
-          val range = value.string().toString
-          range match {
-            case "string" | "integer" | "boolean" | "float" | "decimal" | "double" | "duration" | "dateTime" | "time" | "date" | "anyUri" | "anyType" =>  propertyMapping.withLiteralRange((Namespace.Xsd + range).iri())
-            case "number"      => propertyMapping.withLiteralRange((Namespace.Shapes + "number").iri())
-            case "uri"         => propertyMapping.withLiteralRange((Namespace.Xsd + "anyUri").iri())
-            case "any"         => propertyMapping.withLiteralRange((Namespace.Xsd + "anyType").iri())
-            case "anyNode"     => propertyMapping.withObjectRange(Seq((Namespace.Meta + "anyNode").iri()))
-            case nodeMappingId => propertyMapping.withObjectRange(Seq(nodeMappingId)) // temporary until we can resolve all nodeMappings after finishing parsing declarations
-          }
+    map.key(
+      "range",
+      entry => {
+        entry.value.tagType match {
+          case YType.Seq =>
+            propertyMapping.withObjectRange(entry.value.as[Seq[String]])
+          case _ =>
+            val value = ValueNode(entry.value)
+            val range = value.string().toString
+            range match {
+              case "string" | "integer" | "boolean" | "float" | "decimal" | "double" | "duration" | "dateTime" |
+                  "time" | "date" | "anyUri" | "anyType" =>
+                propertyMapping.withLiteralRange((Namespace.Xsd + range).iri())
+              case "number"  => propertyMapping.withLiteralRange((Namespace.Shapes + "number").iri())
+              case "uri"     => propertyMapping.withLiteralRange((Namespace.Xsd + "anyUri").iri())
+              case "any"     => propertyMapping.withLiteralRange((Namespace.Xsd + "anyType").iri())
+              case "anyNode" => propertyMapping.withObjectRange(Seq((Namespace.Meta + "anyNode").iri()))
+              case nodeMappingId =>
+                propertyMapping
+                  .withObjectRange(Seq(nodeMappingId)) // temporary until we can resolve all nodeMappings after finishing parsing declarations
+            }
+        }
       }
-    })
+    )
 
-    map.key("mapKey", entry => {
-      val propertyTermId = ValueNode(entry.value).string().toString
-      ctx.declarations.findPropertyTerm(propertyTermId, All) match {
-        case Some(term) => propertyMapping.withMapKeyProperty(term.id)
-        case _         => ctx.violation(propertyMapping.id, s"Cannot find property term with alias $propertyTermId", entry.value)
+    map.key(
+      "mapKey",
+      entry => {
+        val propertyTermId = ValueNode(entry.value).string().toString
+        ctx.declarations.findPropertyTerm(propertyTermId, All) match {
+          case Some(term) => propertyMapping.withMapKeyProperty(term.id)
+          case _ =>
+            ctx.violation(propertyMapping.id, s"Cannot find property term with alias $propertyTermId", entry.value)
+        }
       }
-    })
+    )
 
-    map.key("mapValue", entry => {
-      val propertyTermId = ValueNode(entry.value).string().toString
-      ctx.declarations.findPropertyTerm(propertyTermId, All) match {
-        case Some(term) => propertyMapping.withMapValueProperty(term.id)
-        case _         => ctx.violation(propertyMapping.id, s"Cannot find property term with alias $propertyTermId", entry.value)
+    map.key(
+      "mapValue",
+      entry => {
+        val propertyTermId = ValueNode(entry.value).string().toString
+        ctx.declarations.findPropertyTerm(propertyTermId, All) match {
+          case Some(term) => propertyMapping.withMapValueProperty(term.id)
+          case _ =>
+            ctx.violation(propertyMapping.id, s"Cannot find property term with alias $propertyTermId", entry.value)
+        }
       }
-    })
+    )
 
     map.key("mandatory", entry => {
       val required = ValueNode(entry.value).boolean().toBool
-      val value = if (required) 1 else 0
+      val value    = if (required) 1 else 0
       propertyMapping.withMinCount(value)
     })
 
@@ -613,27 +627,33 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
       propertyMapping.withPattern(value)
     })
 
-    map.key("minimum", entry => {
-      entry.value.tagType match {
-        case YType.Int =>
-          val value = ValueNode(entry.value).integer().value
-          propertyMapping.withMinimum(value.asInstanceOf[Int].toDouble)
-        case _ =>
-          val value = ValueNode(entry.value).float().value
-          propertyMapping.withMinimum(value.asInstanceOf[Double])
+    map.key(
+      "minimum",
+      entry => {
+        entry.value.tagType match {
+          case YType.Int =>
+            val value = ValueNode(entry.value).integer().value
+            propertyMapping.withMinimum(value.asInstanceOf[Int].toDouble)
+          case _ =>
+            val value = ValueNode(entry.value).float().value
+            propertyMapping.withMinimum(value.asInstanceOf[Double])
+        }
       }
-    })
+    )
 
-    map.key("maximum", entry => {
-      entry.value.tagType match {
-        case YType.Int =>
-          val value = ValueNode(entry.value).integer().value
-          propertyMapping.withMaximum(value.asInstanceOf[Int].toFloat)
-        case _ =>
-          val value = ValueNode(entry.value).float().value
-          propertyMapping.withMaximum(value.asInstanceOf[Double])
+    map.key(
+      "maximum",
+      entry => {
+        entry.value.tagType match {
+          case YType.Int =>
+            val value = ValueNode(entry.value).integer().value
+            propertyMapping.withMaximum(value.asInstanceOf[Int].toFloat)
+          case _ =>
+            val value = ValueNode(entry.value).float().value
+            propertyMapping.withMaximum(value.asInstanceOf[Double])
+        }
       }
-    })
+    )
 
     map.key("allowMultiple", entry => {
       val value = ValueNode(entry.value).boolean().toBool
@@ -645,27 +665,34 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
       propertyMapping.withSorted(sorted)
     })
 
-    map.key("enum", entry => {
-      val values = entry.value.as[YSequence].nodes.map { node =>
+    map.key(
+      "enum",
+      entry => {
+        val values = entry.value.as[YSequence].nodes.map { node =>
           node.value match {
             case scalar: YScalar => Some(scalar.value)
-            case _               => {
+            case _ => {
               ctx.violation("Cannot create enumeration constraint from not scalar value", node)
               None
             }
           }
+        }
+        propertyMapping.withEnum(values.collect { case Some(v) => v })
       }
-      propertyMapping.withEnum(values.collect { case Some(v) => v})
-    })
+    )
 
-    map.key("typeDiscriminator", entry => {
-      val types = entry.value.as[YMap]
-      val typeMapping = types.entries.foldLeft(Map[String,String]()) { case (acc,entry) =>
-        val nodeMappingId = entry.value.as[String]
-        acc + (entry.key.as[String] -> nodeMappingId )
+    map.key(
+      "typeDiscriminator",
+      entry => {
+        val types = entry.value.as[YMap]
+        val typeMapping = types.entries.foldLeft(Map[String, String]()) {
+          case (acc, entry) =>
+            val nodeMappingId = entry.value.as[String]
+            acc + (entry.key.as[String] -> nodeMappingId)
+        }
+        propertyMapping.withTypeDiscriminator(typeMapping)
       }
-      propertyMapping.withTypeDiscriminator(typeMapping)
-    })
+    )
 
     map.key("typeDiscriminatorName", entry => {
       val name = ValueNode(entry.value).string().toString
@@ -680,7 +707,7 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
   def parseNodeMapping(entry: YMapEntry, adopt: NodeMapping => Any, fragment: Boolean = false): Option[NodeMapping] = {
     entry.value.tagType match {
       case YType.Map =>
-        val map = entry.value.as[YMap]
+        val map         = entry.value.as[YMap]
         val nodeMapping = NodeMapping(map)
 
         adopt(nodeMapping)
@@ -688,23 +715,33 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
         if (!fragment)
           ctx.closedNode("nodeMapping", nodeMapping.id, map)
 
-        map.key("classTerm", entry => {
-          val value = ValueNode(entry.value)
-          val classTermId = value.string().toString
-          ctx.declarations.findClassTerm(classTermId, SearchScope.All) match {
-            case Some(classTerm) =>
-              nodeMapping.withNodeTypeMapping(classTerm.id)
-            case _ =>
-              ctx.violation(nodeMapping.id, s"Cannot find class term with alias $classTermId", entry.value)
+        map.key(
+          "classTerm",
+          entry => {
+            val value       = ValueNode(entry.value)
+            val classTermId = value.string().toString
+            ctx.declarations.findClassTerm(classTermId, SearchScope.All) match {
+              case Some(classTerm) =>
+                nodeMapping.withNodeTypeMapping(classTerm.id)
+              case _ =>
+                ctx.violation(nodeMapping.id, s"Cannot find class term with alias $classTermId", entry.value)
+            }
           }
-        })
+        )
 
-        map.key("mapping", entry => {
-          val properties = entry.value.as[YMap].entries.map { entry =>
-            parsePropertyMapping(entry, propertyMapping => propertyMapping.withName(entry.key).adopted(nodeMapping.id + "/property/" + entry.key.as[String].urlEncoded))
+        map.key(
+          "mapping",
+          entry => {
+            val properties = entry.value.as[YMap].entries.map { entry =>
+              parsePropertyMapping(entry,
+                                   propertyMapping =>
+                                     propertyMapping
+                                       .withName(entry.key)
+                                       .adopted(nodeMapping.id + "/property/" + entry.key.as[String].urlEncoded))
+            }
+            nodeMapping.withPropertiesMapping(properties)
           }
-          nodeMapping.withPropertiesMapping(properties)
-        })
+        )
 
         Some(nodeMapping)
 
@@ -718,7 +755,8 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
         }
         refTuple match {
           case (text: String, Some(s)) =>
-            val linkedNode = s.link(text, Annotations(entry.value))
+            val linkedNode = s
+              .link(text, Annotations(entry.value))
               .asInstanceOf[NodeMapping]
               .withName(text) // we setup the local reference in the name
             adopt(linkedNode) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
@@ -741,14 +779,15 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
         }
         refTuple match {
           case (text: String, Some(s)) =>
-            val linkedNode = s.link(text, Annotations(entry.value))
+            val linkedNode = s
+              .link(text, Annotations(entry.value))
               .asInstanceOf[NodeMapping]
               .withName(text) // we setup the local reference in the name
             adopt(linkedNode) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
             Some(linkedNode)
           case (text: String, _) =>
             val nodeMappingTmp = adopt(NodeMapping()).asInstanceOf[NodeMapping]
-            val suffix = nodeMappingTmp.id.split("#").head
+            val suffix         = nodeMappingTmp.id.split("#").head
             ctx.missingFragmentViolation(text, nodeMappingTmp.id.replace(suffix, ""), entry.value)
             None
         }
@@ -776,29 +815,38 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
   def parseRootDocumentMapping(value: YNode, parent: String): Option[DocumentMapping] = {
     value.as[YMap].key("root") match {
       case Some(entry: YMapEntry) if entry.value.tagType == YType.Map =>
-        val name = s"${dialect.name()} ${dialect.version()}"
-        val rootMap = entry.value.as[YMap]
+        val name             = s"${dialect.name().value()} ${dialect.version().value()}"
+        val rootMap          = entry.value.as[YMap]
         val documentsMapping = DocumentMapping(map).withDocumentName(name).withId(parent + "/root")
-        rootMap.key("encodes", entry => {
-          val nodeId = entry.value.as[String]
-          ctx.declarations.findNodeMapping(nodeId, SearchScope.All) match {
-            case Some(nodeMapping) => Some(documentsMapping.withEncoded(nodeMapping.id))
-            case _                 => None // TODO: violation here
-          }
-        })
-        rootMap.key("declares", entry => {
-          val declaresMap = entry.value.as[YMap]
-          val declarations: Seq[Option[PublicNodeMapping]] = declaresMap.entries.map { declarationEntry =>
-            val declarationId = declarationEntry.value.as[String]
-            val declarationName = declarationEntry.key.as[String]
-            val declarationMapping = PublicNodeMapping(declarationEntry).withName(declarationName).withId(parent + "/declaration/" + declarationName.urlEncoded)
-            ctx.declarations.findNodeMapping(declarationId, SearchScope.All) match {
-              case Some(nodeMapping) => Some(declarationMapping.withMappedNode(nodeMapping.id))
+        rootMap.key(
+          "encodes",
+          entry => {
+            val nodeId = entry.value.as[String]
+            ctx.declarations.findNodeMapping(nodeId, SearchScope.All) match {
+              case Some(nodeMapping) => Some(documentsMapping.withEncoded(nodeMapping.id))
               case _                 => None // TODO: violation here
             }
           }
-          documentsMapping.withDeclaredNodes(declarations.collect{ case m: Some[PublicNodeMapping] => m.get})
-        })
+        )
+        rootMap.key(
+          "declares",
+          entry => {
+            val declaresMap = entry.value.as[YMap]
+            val declarations: Seq[Option[PublicNodeMapping]] = declaresMap.entries.map {
+              declarationEntry =>
+                val declarationId   = declarationEntry.value.as[String]
+                val declarationName = declarationEntry.key.as[String]
+                val declarationMapping = PublicNodeMapping(declarationEntry)
+                  .withName(declarationName)
+                  .withId(parent + "/declaration/" + declarationName.urlEncoded)
+                ctx.declarations.findNodeMapping(declarationId, SearchScope.All) match {
+                  case Some(nodeMapping) => Some(declarationMapping.withMappedNode(nodeMapping.id))
+                  case _                 => None // TODO: violation here
+                }
+            }
+            documentsMapping.withDeclaredNodes(declarations.collect { case m: Some[PublicNodeMapping] => m.get })
+          }
+        )
         Some(documentsMapping)
       case _ => None
     }
@@ -811,11 +859,13 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
           case Some(entry: YMapEntry) =>
             val docs = entry.value.as[YMap].entries.map { fragmentEntry =>
               val fragmentName = fragmentEntry.key.as[String]
-              val nodeId = fragmentEntry.value.as[String]
-              val documentsMapping = DocumentMapping(fragmentEntry.value).withDocumentName(fragmentName).withId(parent + s"/fragments/${fragmentName.urlEncoded}")
+              val nodeId       = fragmentEntry.value.as[String]
+              val documentsMapping = DocumentMapping(fragmentEntry.value)
+                .withDocumentName(fragmentName)
+                .withId(parent + s"/fragments/${fragmentName.urlEncoded}")
               ctx.declarations.findNodeMapping(nodeId, SearchScope.All) match {
                 case Some(nodeMapping) => Some(documentsMapping.withEncoded(nodeMapping.id))
-                case _                 =>
+                case _ =>
                   ctx.missingTermViolation(nodeId, parent, fragmentEntry)
                   None
               }
@@ -830,31 +880,32 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
   def parseLibraries(value: YNode, parent: String): Option[DocumentMapping] = {
     value.as[YMap].key("library") match {
       case Some(entry: YMapEntry) =>
-        val name = s"${dialect.name()} ${dialect.version()} / Library"
-        val rootMap = entry.value.as[YMap]
+        val name             = s"${dialect.name().value()} ${dialect.version().value()} / Library"
+        val rootMap          = entry.value.as[YMap]
         val documentsMapping = DocumentMapping(map).withDocumentName(name).withId(parent + "/modules")
         entry.value.as[YMap].key("declares") match {
           case Some(libraryEntry) =>
             val declaresMap = libraryEntry.value.as[YMap]
             val declarations: Seq[Option[PublicNodeMapping]] = declaresMap.entries.map { declarationEntry =>
-              val declarationId = declarationEntry.value.as[String]
+              val declarationId   = declarationEntry.value.as[String]
               val declarationName = declarationEntry.key.as[String]
-              val declarationMapping = PublicNodeMapping(declarationEntry).withName(declarationName).withId(parent + "/modules/" + declarationName.urlEncoded)
+              val declarationMapping = PublicNodeMapping(declarationEntry)
+                .withName(declarationName)
+                .withId(parent + "/modules/" + declarationName.urlEncoded)
               ctx.declarations.findNodeMapping(declarationId, SearchScope.All) match {
                 case Some(nodeMapping) => Some(declarationMapping.withMappedNode(nodeMapping.id))
-                case _                 =>
+                case _ =>
                   ctx.missingTermViolation(declarationId, parent, libraryEntry)
                   None
               }
             }
-            Some(documentsMapping.withDeclaredNodes(declarations.collect{ case m: Some[PublicNodeMapping] => m.get}))
+            Some(documentsMapping.withDeclaredNodes(declarations.collect { case m: Some[PublicNodeMapping] => m.get }))
           case _ => None
         }
 
       case _ => None
     }
   }
-
 
   private def parseDocumentsMapping(map: YMap, parent: String): Unit = {
     val documentsMapping = DocumentsModel().withId(parent + "/documents")
@@ -864,10 +915,11 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
         documentsMapping.withRoot(rootMapping)
       }
       parseFragmentsMapping(e.value, documentsMapping.id) map { fragmentMappings: Seq[DocumentMapping] =>
-          documentsMapping.withFragments(fragmentMappings)
+        documentsMapping.withFragments(fragmentMappings)
       }
-      parseLibraries(e.value, documentsMapping.id) foreach { case libraryMapping: DocumentMapping =>
-        documentsMapping.withLibrary(libraryMapping)
+      parseLibraries(e.value, documentsMapping.id) foreach {
+        case libraryMapping: DocumentMapping =>
+          documentsMapping.withLibrary(libraryMapping)
       }
     }
 
