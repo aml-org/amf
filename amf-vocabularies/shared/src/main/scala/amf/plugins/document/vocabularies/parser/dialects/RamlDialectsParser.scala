@@ -54,21 +54,13 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMapping] = Map(),
   def findClassTerm(key: String, scope: SearchScope.Scope): Option[ClassTerm] =
     findForType(key, _.asInstanceOf[DialectDeclarations].classTerms, scope) match {
       case Some(ct: ClassTerm) => Some(ct)
-      case None =>
-        resolveExternal(key) match {
-          case Some(externalId: String) => Some(ClassTerm().withId(externalId))
-          case None                     => None
-        }
+      case _                   => resolveExternal(key).map(ClassTerm().withId(_))
     }
 
   def findPropertyTerm(key: String, scope: SearchScope.Scope): Option[PropertyTerm] =
     findForType(key, _.asInstanceOf[DialectDeclarations].propertyTerms, scope) match {
       case Some(pt: PropertyTerm) => Some(pt)
-      case None =>
-        resolveExternal(key) match {
-          case Some(externalId: String) => Some(DatatypePropertyTerm().withId(externalId))
-          case None                     => None
-        }
+      case _                      => resolveExternal(key).map(DatatypePropertyTerm().withId(_))
     }
 
   def resolveExternal(key: String): Option[String] = {
@@ -154,7 +146,7 @@ trait DialectSyntax { this: DialectContext =>
 
     allowedProps.foreach {
       case (propName, mandatory) =>
-        val props = map.map.keySet.map(_.as[String]).toSet
+        val props = map.map.keySet.map(_.as[String])
         if (mandatory) {
           if (!props.contains(propName)) {
             missingPropertyViolation(id, propName, nodeType, map)
@@ -499,10 +491,8 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
     parseNodeMapping(YMapEntry(YNode("fragment"), map),
                      (mapping) => mapping.withId(fragment.id + "/fragment").withName("fragment"),
                      fragment = true) match {
-      case Some(encoded) => {
-        fragment.fields.setWithoutId(FragmentModel.Encodes, encoded)
-      }
-      case _ => // ignore
+      case Some(encoded) => fragment.fields.setWithoutId(FragmentModel.Encodes, encoded)
+      case _             => // ignore
     }
 
     fragment
@@ -671,10 +661,9 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
         val values = entry.value.as[YSequence].nodes.map { node =>
           node.value match {
             case scalar: YScalar => Some(scalar.value)
-            case _ => {
+            case _ =>
               ctx.violation("Cannot create enumeration constraint from not scalar value", node)
               None
-            }
           }
         }
         propertyMapping.withEnum(values.collect { case Some(v) => v })
@@ -686,9 +675,9 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
       entry => {
         val types = entry.value.as[YMap]
         val typeMapping = types.entries.foldLeft(Map[String, String]()) {
-          case (acc, entry) =>
-            val nodeMappingId = entry.value.as[String]
-            acc + (entry.key.as[String] -> nodeMappingId)
+          case (acc, e) =>
+            val nodeMappingId = e.value.as[String]
+            acc + (e.key.as[String] -> nodeMappingId)
         }
         propertyMapping.withTypeDiscriminator(typeMapping)
       }
@@ -745,7 +734,7 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
 
         Some(nodeMapping)
 
-      case YType.Str if entry.value.toOption[YScalar].isDefined => {
+      case YType.Str if entry.value.toOption[YScalar].isDefined =>
         val refTuple = ctx.link(entry.value) match {
           case Left(key) =>
             (key, ctx.declarations.findNodeMapping(key, SearchScope.Fragments))
@@ -767,7 +756,6 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
             linkedNode.unresolved(text, map)
             Some(linkedNode)
         }
-      }
 
       case YType.Include if entry.value.toOption[YScalar].isDefined =>
         val refTuple = ctx.link(entry.value) match {
@@ -792,7 +780,7 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
             None
         }
 
-      case other => None
+      case _ => None
     }
   }
 
@@ -881,7 +869,6 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
     value.as[YMap].key("library") match {
       case Some(entry: YMapEntry) =>
         val name             = s"${dialect.name().value()} ${dialect.version().value()} / Library"
-        val rootMap          = entry.value.as[YMap]
         val documentsMapping = DocumentMapping(map).withDocumentName(name).withId(parent + "/modules")
         entry.value.as[YMap].key("declares") match {
           case Some(libraryEntry) =>
@@ -917,10 +904,7 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
       parseFragmentsMapping(e.value, documentsMapping.id) map { fragmentMappings: Seq[DocumentMapping] =>
         documentsMapping.withFragments(fragmentMappings)
       }
-      parseLibraries(e.value, documentsMapping.id) foreach {
-        case libraryMapping: DocumentMapping =>
-          documentsMapping.withLibrary(libraryMapping)
-      }
+      parseLibraries(e.value, documentsMapping.id).foreach(documentsMapping.withLibrary)
     }
 
     dialect.withDocuments(documentsMapping)

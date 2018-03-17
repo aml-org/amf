@@ -14,7 +14,7 @@ import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId}
 import amf.plugins.document.vocabularies.emitters.common.IdCounter
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
-import org.yaml.model.YDocument.EntryBuilder
+import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode}
 
 trait DialectEmitterHelper {
@@ -141,7 +141,7 @@ case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
     extends EntryEmitter
     with DialectEmitterHelper {
 
-  override def emit(b: YDocument.EntryBuilder): Unit = {
+  override def emit(b: EntryBuilder): Unit = {
     val declarationKey = publicNodeMapping.name().value()
     b.entry(
       declarationKey,
@@ -165,7 +165,7 @@ case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
       .headOption
       .getOrElse(ZERO)
 
-  def sortedDeclarations() = {
+  def sortedDeclarations(): Seq[DialectDomainElement] = {
     declared.sortBy(
       _.annotations
         .find(classOf[LexicalInformation])
@@ -188,7 +188,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
     extends PartEmitter
     with DialectEmitterHelper {
 
-  override def emit(b: YDocument.PartBuilder): Unit = {
+  override def emit(b: PartBuilder): Unit = {
     if (node.isLink) {
       if (isFragment(node, instance)) emitLink(node).emit(b)
       else if (isLibrary(node, instance)) {
@@ -270,7 +270,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
     node.annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
 
   protected def emitLink(node: DialectDomainElement): PartEmitter = new PartEmitter {
-    override def emit(b: YDocument.PartBuilder): Unit =
+    override def emit(b: PartBuilder): Unit =
       b += YNode.include(node.includeName)
 
     override def position(): Position =
@@ -345,7 +345,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
         case _ => None
       } collect { case Some(parsed) => parsed }
 
-      override def emit(b: YDocument.EntryBuilder): Unit = {
+      override def emit(b: EntryBuilder): Unit = {
         b.entry(key, _.list { b =>
           ordering.sorted(arrayElements).foreach(_.emit(b))
         })
@@ -372,7 +372,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
           DialectNodeEmitter(dialectDomainElement, nextNodeMapping, instance, dialect, ordering, aliases)
       }
 
-      override def emit(b: YDocument.EntryBuilder): Unit = {
+      override def emit(b: EntryBuilder): Unit = {
         b.entry(key, _.list { b =>
           ordering.sorted(arrayElements).foreach(_.emit(b))
         })
@@ -389,7 +389,8 @@ case class DialectNodeEmitter(node: DialectDomainElement,
       val nextNodeMappings: Seq[NodeMapping] = propertyMapping.objectRange().map { rangeNodeMapping =>
         findNodeMapping(rangeNodeMapping.value(), dialect)
       }
-      val mapElements = array.values.foldLeft(Map[Option[DialectNodeEmitter], DialectDomainElement]()) {
+      val mapElements: Map[DialectNodeEmitter, DialectDomainElement] = array.values.foldLeft(
+        Map[Option[DialectNodeEmitter], DialectDomainElement]()) {
         case (acc, dialectDomainElement: DialectDomainElement) =>
           nextNodeMappings.find(nodeMapping =>
             dialectDomainElement.dynamicType.map(_.iri()).contains(nodeMapping.nodetypeMapping.value())) match {
@@ -408,7 +409,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
         case (acc, _) => acc
       } collect { case (Some(parsed), x) => (parsed, x) }
 
-      override def emit(b: YDocument.EntryBuilder): Unit = {
+      override def emit(b: EntryBuilder): Unit = {
         b.entry(
           key,
           _.obj { b =>
@@ -433,7 +434,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
     val valueProperty = propertyMapping.mapValueProperty().value()
 
     Seq(new EntryEmitter() {
-      override def emit(b: YDocument.EntryBuilder): Unit = {
+      override def emit(b: EntryBuilder): Unit = {
         b.entry(
           key,
           _.obj {
@@ -497,7 +498,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
     TextScalarEmitter(s"$alias.${elem.localRefName}", elem.annotations)
   }
 
-  def declarationsEmitters(b: YDocument.PartBuilder): Seq[EntryEmitter] = {
+  def declarationsEmitters(b: PartBuilder): Seq[EntryEmitter] = {
     val emitters = for {
       docs <- Option(dialect.documents())
       root <- Option(docs.root())

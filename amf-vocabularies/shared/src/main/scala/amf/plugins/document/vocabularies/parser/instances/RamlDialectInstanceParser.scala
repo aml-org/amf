@@ -534,8 +534,9 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
             parseNestedNode(nestedObjectId, propertyEntry.value, nodeMapping) match {
               case Some(dialectDomainElement) =>
                 node.setObjectField(property, dialectDomainElement, propertyEntry.value)
-              case None => // ignore
+              case _ => // ignore
             }
+          case _ => // ignore
         }
       case _ => // TODO: throw exception, illegal range
     }
@@ -554,6 +555,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
           ctx.dialect.declares.find(_.id == range.head) match {
             case Some(nodeMapping: NodeMapping) =>
               parseNestedNode(nestedObjectId, keyEntry.value, nodeMapping)
+            case _ => None
           }
         case _ => None
       }
@@ -582,6 +584,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
           ctx.dialect.declares.find(_.id == range.head) match {
             case Some(nodeMapping: NodeMapping) =>
               parseNestedNode(nestedObjectId, keyEntry.value, nodeMapping)
+            case _ => None
           }
         case _ => None
       }
@@ -642,6 +645,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
                   case Some(dialectDomainElement) => Some(dialectDomainElement)
                   case None                       => None
                 }
+              case _ => None
             }
           case _ => None
         }
