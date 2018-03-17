@@ -515,7 +515,7 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
     val fs = scalar.fields
 
     val rawTypeDef        = TypeDefXsdMapping.typeDef(scalar.dataType.value())
-    val (typeDef, format) = RamlTypeDefStringValueMatcher.matchType(rawTypeDef)
+    val (typeDef, format) = RamlTypeDefStringValueMatcher.matchType(rawTypeDef, scalar.format.option())
 
     val typeEmitterOption = if (scalar.inherits.isEmpty) {
       fs.entry(ScalarShapeModel.DataType)

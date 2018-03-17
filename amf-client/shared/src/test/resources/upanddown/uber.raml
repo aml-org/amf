@@ -4,7 +4,7 @@ types:
     type: object
     properties:
       code:
-        type: integer
+        type: number
         format: int32
       message:
         type: string
@@ -63,15 +63,15 @@ types:
     properties:
       offset:
         description: Position in pagination.
-        type: integer
+        type: number
         format: int32
       limit:
         description: Number of items to retrieve (100 max).
-        type: integer
+        type: number
         format: int32
       count:
         description: Total number of items available.
-        type: integer
+        type: number
         format: int32
       history:
         type: array
@@ -220,11 +220,11 @@ protocols:
     queryParameters:
       offset?:
         description: Offset the list of returned results by this amount. Default is zero.
-        type: integer
+        type: number
         format: int32
       limit?:
         description: Number of items to retrieve. Default is 5, maximum is 100.
-        type: integer
+        type: number
         format: int32
     responses:
       200:
