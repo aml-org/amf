@@ -8,7 +8,8 @@ import amf.plugins.domain.shapes.models.TypeDef._
   */
 object RamlTypeDefMatcher {
 
-  val knownFormats: Set[String] = Set("byte", "binary", "password", "int32", "int64", "double", "float")
+  val knownFormats: Set[String] =
+    Set("byte", "binary", "password", "int", "int8", "int16", "int32", "int64", "long", "double", "float")
   def match08Type(value: String): Option[TypeDef] = value match {
     case "number"  => Some(NumberType)
     case "integer" => Some(IntType)
@@ -35,8 +36,12 @@ object RamlTypeDefMatcher {
         }
       case "number" =>
         format match {
+          case "int"    => IntType
+          case "int8"   => IntType
+          case "int16"  => IntType
           case "int32"  => IntType
           case "int64"  => LongType
+          case "long"   => LongType
           case "float"  => FloatType
           case "double" => DoubleType
           case _        => FloatType
@@ -77,14 +82,26 @@ object RamlTypeDefMatcher {
 
 object RamlTypeDefStringValueMatcher {
 
-  def matchType(typeDef: TypeDef): (String, String) = typeDef match {
+  def matchType(typeDef: TypeDef, format: Option[String]): (String, String) = typeDef match {
 
-    case ByteType         => ("string", "byte")
-    case BinaryType       => ("string", "binary")
-    case PasswordType     => ("string", "password")
-    case StrType          => ("string", "")
-    case IntType          => ("integer", "")
-    case LongType         => ("integer", "long")
+    case ByteType     => ("string", "byte")
+    case BinaryType   => ("string", "binary")
+    case PasswordType => ("string", "password")
+    case StrType      => ("string", "")
+    case IntType =>
+      format match {
+        case Some("int")   => ("number", "int")
+        case Some("int8")  => ("number", "int8")
+        case Some("int16") => ("number", "int16")
+        case Some("int32") => ("number", "int32")
+        case _             => ("integer", "")
+      }
+    case LongType =>
+      format match {
+        case Some("int64") => ("number", "int64")
+        case Some("long")  => ("number", "long")
+        case _             => ("integer", "long")
+      }
     case FloatType        => ("number", "float")
     case DoubleType       => ("number", "double")
     case BoolType         => ("boolean", "")

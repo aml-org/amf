@@ -970,7 +970,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Generic number entries validation") {
-    cycle("generic-number-entries.raml", "generic-number-entries.raml.raml", RamlYamlHint, Raml)
+    cycle("generic-number-entries.raml", RamlYamlHint)
   }
 
 }
