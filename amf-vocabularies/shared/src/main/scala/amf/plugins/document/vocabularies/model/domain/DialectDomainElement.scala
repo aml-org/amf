@@ -68,6 +68,9 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   def findPropertyByTermPropertyId(termPropertyId: String) =
     definedBy.propertiesMapping().find(_.nodePropertyMapping().value() == termPropertyId).map(_.id).getOrElse(termPropertyId)
 
+  def findPropertyMappingByTermPropertyId(termPropertyId: String) =
+    definedBy.propertiesMapping().find(_.nodePropertyMapping().value() == termPropertyId)
+
 
   override def valueForField(f: Field): Option[AmfElement] = {
     val termPropertyId = f.value.iri()
