@@ -89,7 +89,7 @@ class JvmWrapperTests extends AsyncFunSuite with PlatformSecrets {
   }
 
 
-  test("HERE_HERE Vocabularies test") {
+  test("Vocabularies test") {
     AMF.init().get()
 
     AMF.registerDialect("file://amf-client/shared/src/test/resources/api/dialects/eng-demos.raml").get()

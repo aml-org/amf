@@ -22,24 +22,30 @@
           "http://raml.org/vocabularies/meta#DialectDomainElement",
           "http://raml.org/vocabularies/document#DomainElement"
         ],
-        "http://test.com/tmp#int": [
-          {
-            "@value": 10
-          }
-        ],
         "http://test.com/tmp#str": [
           {
             "@value": "hey"
           }
         ],
-        "http://test.com/tmp#float": [
+        "http://test.com/tmp#date": [
           {
-            "@value": 12.35
+            "@value": "2017-09-18",
+            "@type": "http://www.w3.org/2001/XMLSchema#date"
+          }
+        ],
+        "http://test.com/tmp#int": [
+          {
+            "@value": 10
           }
         ],
         "http://test.com/tmp#boolean": [
           {
             "@value": true
+          }
+        ],
+        "http://test.com/tmp#float": [
+          {
+            "@value": 12.35
           }
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
@@ -57,7 +63,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(2,0)-(5,13)]"
+                    "@value": "[(2,0)-(6,16)]"
                   }
                 ]
               }
@@ -81,7 +87,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#value": [
               {
-                "@value": "[(2,0)-(5,13)]"
+                "@value": "[(2,0)-(6,16)]"
               }
             ]
           }
