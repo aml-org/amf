@@ -376,8 +376,24 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("types-facet.json", "types-facet.json.raml", OasJsonHint, Raml)
   }
 
+  test("Types all facets oas to jsonld test") {
+    cycle("types-facet.json", "types-facet.json.jsonld", OasJsonHint, Amf)
+  }
+
+  test("Types all facets jsonld to oas test") {
+    cycle("types-facet.json.jsonld", "types-facet.json.jsonld.json", AmfJsonHint, Oas)
+  }
+
   test("Types all facets raml to oas test") {
     cycle("types-facet.raml", "types-facet.raml.json", RamlYamlHint, Oas)
+  }
+
+  test("Types all facets raml to jsonld test") {
+    cycle("types-facet.raml", "types-facet.raml.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Types all facets jsonld to raml test") {
+    cycle("types-facet.raml.jsonld", "types-facet.raml.jsonld.raml", AmfJsonHint, Raml)
   }
 
   test("Types all types raml to raml test") {

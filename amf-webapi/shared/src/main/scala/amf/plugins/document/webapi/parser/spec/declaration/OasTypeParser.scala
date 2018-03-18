@@ -367,7 +367,6 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
       map.key("discriminator", NodeShapeModel.Discriminator in shape)
       map.key("x-discriminator-value", NodeShapeModel.DiscriminatorValue in shape)
-      map.key("readOnly", NodeShapeModel.ReadOnly in shape)
 
       val requiredFields = map
         .key("required")
@@ -444,6 +443,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
         .set(PropertyShapeModel.MinCount, AmfScalar(if (required) 1 else 0), Annotations() += ExplicitField())
 
       property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text).iri())
+      entry.value.toOption[YMap].foreach(_.key("readOnly", PropertyShapeModel.ReadOnly in property))
 
       OasTypeParser(entry, shape => shape.adopted(property.id))
         .parse()
@@ -484,7 +484,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       )
 
       // Explicit annotation for the type property
-      map.key("type", entry =>  shape.annotations += TypePropertyLexicalInfo(Range(map.range)) )
+      map.key("type", entry => shape.annotations += TypePropertyLexicalInfo(Range(map.range)))
 
       // normal annotations
       AnnotationParser(shape, map).parse()

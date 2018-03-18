@@ -18,7 +18,6 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
   def closed: BoolField                       = fields.field(Closed)
   def discriminator: StrField                 = fields.field(Discriminator)
   def discriminatorValue: StrField            = fields.field(DiscriminatorValue)
-  def readOnly: BoolField                     = fields.field(ReadOnly)
   def properties: Seq[PropertyShape]          = fields.field(Properties)
   def dependencies: Seq[PropertyDependencies] = fields.field(Dependencies)
 
@@ -27,7 +26,6 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
   def withClosed(closed: Boolean): this.type                               = set(Closed, closed)
   def withDiscriminator(discriminator: String): this.type                  = set(Discriminator, discriminator)
   def withDiscriminatorValue(value: String): this.type                     = set(DiscriminatorValue, value)
-  def withReadOnly(readOnly: Boolean): this.type                           = set(ReadOnly, readOnly)
   def withProperties(properties: Seq[PropertyShape]): this.type            = setArray(Properties, properties)
   def withDependencies(dependencies: Seq[PropertyDependencies]): this.type = setArray(Dependencies, dependencies)
 
