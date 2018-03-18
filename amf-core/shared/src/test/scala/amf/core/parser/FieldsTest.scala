@@ -14,27 +14,28 @@ class FieldsTest extends FunSuite with Matchers {
 
     val strUndefined: StrField = fields.field(StrProperty)
     strUndefined.option() shouldBe None
-    strUndefined.present() shouldBe false
     strUndefined.value() should be(null)
+    strUndefined.nonNull should be(false)
     strUndefined.isNull should be(true)
     strUndefined.isNullOrEmpty should be(true)
+    strUndefined.nonEmpty should be(false)
 
     val intUndefined: IntField = fields.field(IntProperty)
     intUndefined.option() shouldBe None
-    intUndefined.present() shouldBe false
     intUndefined.value() should be(0)
+    intUndefined.nonNull should be(false)
     intUndefined.isNull should be(true)
 
     val doubleUndefined: DoubleField = fields.field(DoubleProperty)
     doubleUndefined.option() shouldBe None
-    doubleUndefined.present() shouldBe false
     doubleUndefined.value() should be(0.0)
+    doubleUndefined.nonNull should be(false)
     doubleUndefined.isNull should be(true)
 
     val boolUndefined: BoolField = fields.field(BoolProperty)
     boolUndefined.option() shouldBe None
-    boolUndefined.present() shouldBe false
     boolUndefined.value() should be(false)
+    boolUndefined.nonNull should be(false)
     boolUndefined.isNull should be(true)
 
     val seqStrUndefined: Seq[StrField] = fields.field(SeqStrProperty)
@@ -50,37 +51,38 @@ class FieldsTest extends FunSuite with Matchers {
     fields.set("/", StrProperty, AmfScalar("hello"))
     val strDefined: StrField = fields.field(StrProperty)
     strDefined.option() shouldBe Some("hello")
-    strDefined.present() shouldBe true
     strDefined.value() should be("hello")
+    strDefined.nonNull should be(true)
     strDefined.isNull should be(false)
     strDefined.isNullOrEmpty should be(false)
+    strDefined.nonEmpty should be(true)
 
     fields.set("/", IntProperty, AmfScalar(10))
     val intDefined: IntField = fields.field(IntProperty)
     intDefined.option() shouldBe Some(10)
-    intDefined.present() shouldBe true
     intDefined.value() should be(10)
+    intDefined.nonNull should be(true)
     intDefined.isNull should be(false)
 
     fields.set("/", DoubleProperty, AmfScalar(5.5))
     val doubleDefined: DoubleField = fields.field(DoubleProperty)
     doubleDefined.option() shouldBe Some(5.5)
-    doubleDefined.present() shouldBe true
     doubleDefined.value() should be(5.5)
+    doubleDefined.nonNull should be(true)
     doubleDefined.isNull should be(false)
 
     fields.set("/", BoolProperty, AmfScalar(true))
     val boolTrue: BoolField = fields.field(BoolProperty)
     boolTrue.option() shouldBe Some(true)
-    boolTrue.present() shouldBe true
     boolTrue.value() should be(true)
+    boolTrue.nonNull should be(true)
     boolTrue.isNull should be(false)
 
     fields.set("/", BoolProperty, AmfScalar(false))
     val boolFalse: BoolField = fields.field(BoolProperty)
     boolFalse.option() shouldBe Some(false)
-    boolFalse.present() shouldBe true
     boolFalse.value() should be(false)
+    boolFalse.nonNull should be(true)
     boolFalse.isNull should be(false)
 
     fields.set("/", SeqStrProperty, AmfArray(Seq(AmfScalar("hello"))))
@@ -89,10 +91,11 @@ class FieldsTest extends FunSuite with Matchers {
     seqStrDefined.size should be(1)
     val strHead = seqStrDefined.head
     strHead.option() shouldBe Some("hello")
-    strHead.present() shouldBe true
     strHead.value() should be("hello")
+    strHead.nonNull should be(true)
     strHead.isNull should be(false)
     strHead.isNullOrEmpty should be(false)
+    strHead.nonEmpty should be(true)
 
     fields.set("/", SeqAnyProperty, AmfArray(Seq(AmfScalar(10))))
     val seqAnyUndefined: Seq[AnyField] = fields.field(SeqAnyProperty)
@@ -100,8 +103,8 @@ class FieldsTest extends FunSuite with Matchers {
     seqAnyUndefined.size should be(1)
     val anyHead = seqAnyUndefined.head
     anyHead.option() shouldBe Some(10)
-    anyHead.present() shouldBe true
     anyHead.value() should be(10)
+    anyHead.nonNull should be(true)
     anyHead.isNull should be(false)
   }
 
@@ -111,31 +114,31 @@ class FieldsTest extends FunSuite with Matchers {
     fields.set("/", StrProperty, AmfScalar(null))
     val strDefined: StrField = fields.field(StrProperty)
     strDefined.option() shouldBe None
-    strDefined.present() shouldBe true
+    strDefined.nonNull shouldBe false
     strDefined.value() should be(null)
     strDefined.isNull should be(true)
     strDefined.isNullOrEmpty should be(true)
 
     fields.set("/", IntProperty, AmfScalar(null))
     val intDefined: IntField = fields.field(IntProperty)
-    intDefined.option() shouldBe Some(0)
-    intDefined.present() shouldBe true
+    intDefined.option() shouldBe None
+    intDefined.nonNull shouldBe false
     intDefined.value() should be(0)
-    intDefined.isNull should be(false) // ...
+    intDefined.isNull should be(true)
 
     fields.set("/", DoubleProperty, AmfScalar(null))
     val doubleDefined: DoubleField = fields.field(DoubleProperty)
-    doubleDefined.option() shouldBe Some(0.0)
-    doubleDefined.present() shouldBe true
+    doubleDefined.option() shouldBe None
+    doubleDefined.nonNull shouldBe false
     doubleDefined.value() should be(0.0)
-    doubleDefined.isNull should be(false) // ...
+    doubleDefined.isNull should be(true)
 
     fields.set("/", BoolProperty, AmfScalar(null))
     val boolTrue: BoolField = fields.field(BoolProperty)
-    boolTrue.option() shouldBe Some(false)
-    boolTrue.present() shouldBe true
+    boolTrue.option() shouldBe None
+    boolTrue.nonNull shouldBe false
     boolTrue.value() should be(false)
-    boolTrue.isNull should be(false) // ...
+    boolTrue.isNull should be(true)
 
     fields.set("/", SeqStrProperty, AmfArray(Seq(AmfScalar(null))))
     val seqStrDefined: Seq[StrField] = fields.field(SeqStrProperty)
@@ -143,7 +146,7 @@ class FieldsTest extends FunSuite with Matchers {
     seqStrDefined.size should be(1)
     val strHead = seqStrDefined.head
     strHead.option() shouldBe None
-    strHead.present() shouldBe true
+    strHead.nonNull shouldBe false
     strHead.value() should be(null)
     strHead.isNull should be(true)
     strHead.isNullOrEmpty should be(true)
@@ -154,7 +157,7 @@ class FieldsTest extends FunSuite with Matchers {
     seqAnyUndefined.size should be(1)
     val anyHead = seqAnyUndefined.head
     anyHead.option() shouldBe None
-    anyHead.present() shouldBe true
+    anyHead.nonNull shouldBe false
     (anyHead.value() == null) shouldBe true
     anyHead.isNull should be(true)
   }

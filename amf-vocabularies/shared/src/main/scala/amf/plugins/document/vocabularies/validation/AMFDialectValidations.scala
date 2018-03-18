@@ -45,45 +45,41 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
   protected def emitPropertyValidations(node: NodeMapping, prop: PropertyMapping): List[ValidationSpecification] = {
     val validations: ListBuffer[ValidationSpecification] = ListBuffer.empty
 
-    if (prop.minimum().present()) {
-      val minValue = prop.minimum().value()
-      val message  = s"Property '${prop.name()}' minimum inclusive value is $minValue"
+    prop.minimum().option().foreach { minValue =>
+      val message = s"Property '${prop.name()}' minimum inclusive value is $minValue"
       validations += new ValidationSpecification(
         name = validationId(node, prop.name().value(), "minimum"),
         message = message,
         ramlMessage = Some(message),
         oasMessage = Some(message),
         targetClass = Seq(node.id),
-        propertyConstraints = Seq(
-          PropertyConstraint(
-            ramlPropertyId = prop.nodePropertyMapping().value(),
-            name = validationId(node, prop.name().value(), "minimum") + "/prop",
-            message = Some(message),
-            minInclusive = Some(minValue.toString)
-          ))
+        propertyConstraints = Seq(PropertyConstraint(
+          ramlPropertyId = prop.nodePropertyMapping().value(),
+          name = validationId(node, prop.name().value(), "minimum") + "/prop",
+          message = Some(message),
+          minInclusive = Some(minValue.toString)
+        ))
       )
     }
 
-    if (prop.maximum().present()) {
-      val maxValue = prop.maximum().value()
-      val message  = s"Property '${prop.name()}' maximum inclusive value is $maxValue"
+    prop.maximum().option().foreach { maxValue =>
+      val message = s"Property '${prop.name()}' maximum inclusive value is $maxValue"
       validations += new ValidationSpecification(
         name = validationId(node, prop.name().value(), "maximum"),
         message = message,
         ramlMessage = Some(message),
         oasMessage = Some(message),
         targetClass = Seq(node.id),
-        propertyConstraints = Seq(
-          PropertyConstraint(
-            ramlPropertyId = prop.nodePropertyMapping().value(),
-            name = validationId(node, prop.name().value(), "maximum") + "/prop",
-            message = Some(message),
-            maxInclusive = Some(maxValue.toString)
-          ))
+        propertyConstraints = Seq(PropertyConstraint(
+          ramlPropertyId = prop.nodePropertyMapping().value(),
+          name = validationId(node, prop.name().value(), "maximum") + "/prop",
+          message = Some(message),
+          maxInclusive = Some(maxValue.toString)
+        ))
       )
     }
 
-    if (prop.minCount().present() && prop.minCount().value() > 0) {
+    if (prop.minCount().nonNull && prop.minCount().value() > 0) {
       val message = s"Property '${prop.name()}' is mandatory"
       validations += new ValidationSpecification(
         name = validationId(node, prop.name().value(), "required"),
@@ -159,7 +155,7 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
     }
 
     // ranges here
-    if (prop.literalRange().present()) {
+    if (prop.literalRange().nonNull) {
       val dataRange = prop.literalRange().value()
       dataRange match {
 

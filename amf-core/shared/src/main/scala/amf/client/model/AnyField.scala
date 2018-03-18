@@ -1,9 +1,9 @@
 package amf.client.model
 
-trait AnyField extends BaseField with ValueField{
+trait AnyField extends BaseField with ValueField {
 
   override type ValueType = Any
 
-  /** Return int value. */
-  override def value(): Any
+  /** Return value or null if value is null or undefined. */
+  override def value(): Any = option().orNull
 }
