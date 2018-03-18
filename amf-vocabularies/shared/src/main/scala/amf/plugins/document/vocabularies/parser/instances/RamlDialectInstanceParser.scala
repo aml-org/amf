@@ -4,32 +4,16 @@ import amf.core.Root
 import amf.core.annotations.{Aliases, LexicalInformation}
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.Annotation
-import amf.core.parser.{
-  Annotations,
-  BaseSpecParser,
-  Declarations,
-  EmptyFutureDeclarations,
-  ErrorHandler,
-  FutureDeclarations,
-  ParsedReference,
-  ParserContext,
-  Reference,
-  SearchScope,
-  _
-}
+import amf.core.parser.{Annotations, BaseSpecParser, Declarations, EmptyFutureDeclarations, ErrorHandler, FutureDeclarations, ParsedReference, ParserContext, Reference, SearchScope, _}
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
 import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId}
-import amf.plugins.document.vocabularies.model.document.{
-  Dialect,
-  DialectInstance,
-  DialectInstanceFragment,
-  DialectInstanceLibrary
-}
+import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectInstanceFragment, DialectInstanceLibrary}
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.SyntaxErrorReporter
 import amf.plugins.features.validation.ParserSideValidations
+import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -705,6 +689,21 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
                                                     (Namespace.Xsd + "float").iri(),
                                                     value)
         None
+
+      case YType.Timestamp
+        if property.literalRange().value() == (Namespace.Xsd + "time").iri() ||
+          property.literalRange().value() == (Namespace.Xsd + "date").iri() ||
+          property.literalRange().value() == (Namespace.Xsd + "dateTime").iri() =>
+        Some(value.as[SimpleDateTime])
+
+      case YType.Timestamp =>
+        ctx.inconsistentPropertyRangeValueViolation(node.id,
+          property,
+          property.literalRange().value(),
+          (Namespace.Xsd + "dateTime").iri(),
+          value)
+        None
+
       case _ =>
         ctx.violation(node.id, s"Unsupported scalar type ${value.tagType}", value)
         None
@@ -713,11 +712,12 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
 
   def setLiteralValue(value: YNode, property: PropertyMapping, node: DialectDomainElement) = {
     parseLiteralValue(value, property, node) match {
-      case Some(b: Boolean) => node.setLiteralField(property, b, value)
-      case Some(i: Int)     => node.setLiteralField(property, i, value)
-      case Some(f: Float)   => node.setLiteralField(property, f, value)
-      case Some(d: Double)  => node.setLiteralField(property, d, value)
-      case Some(s: String)  => node.setLiteralField(property, s, value)
+      case Some(b: Boolean)        => node.setLiteralField(property, b, value)
+      case Some(i: Int)            => node.setLiteralField(property, i, value)
+      case Some(f: Float)          => node.setLiteralField(property, f, value)
+      case Some(d: Double)         => node.setLiteralField(property, d, value)
+      case Some(s: String)         => node.setLiteralField(property, s, value)
+      case Some(d: SimpleDateTime) => node.setLiteralField(property, d, value)
       case _                => // ignore
     }
   }

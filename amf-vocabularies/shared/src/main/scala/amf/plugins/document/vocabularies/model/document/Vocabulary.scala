@@ -25,7 +25,11 @@ case class Vocabulary(fields: Fields, annotations: Annotations) extends BaseUnit
   def imports: Seq[VocabularyReference]   = fields.field(Imports)
   def externals: Seq[External]            = fields.field(Externals)
 
-  def withBase(base: String)                              = set(Base, base)
+  def withName(name: String)                              = set(Name, name)
+  def withBase(base: String) = {
+    withId(base)
+    set(Base, base)
+  }
   def withExternals(externals: Seq[External])             = setArray(Externals, externals)
   def withImports(vocabularies: Seq[VocabularyReference]) = setArray(Imports, vocabularies)
 

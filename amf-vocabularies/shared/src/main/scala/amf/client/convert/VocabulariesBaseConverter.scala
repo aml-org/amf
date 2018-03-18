@@ -1,6 +1,10 @@
 package amf.client.convert
 
-import amf.client.model.domain.{DialectDomainElement => ClientDialectDomainElement, DocumentMapping => ClientDocumentMapping, DocumentsModel => ClientDocumentsModel, External => ClientExternal, NodeMapping => ClientNodeMapping, PropertyMapping => ClientPropertyMapping, PublicNodeMapping => ClientPublicNodeMapping, VocabularyReference => ClientVocabularyReference}
+import amf.client.model.domain.{
+  DatatypePropertyTerm => ClientDatatypePropertyTerm,
+  ObjectPropertyTerm => ClientObjectPropertyTerm,
+  ClassTerm => ClientClassTerm,
+  DialectDomainElement => ClientDialectDomainElement, DocumentMapping => ClientDocumentMapping, DocumentsModel => ClientDocumentsModel, External => ClientExternal, NodeMapping => ClientNodeMapping, PropertyMapping => ClientPropertyMapping, PublicNodeMapping => ClientPublicNodeMapping, VocabularyReference => ClientVocabularyReference}
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.vocabularies.model.domain._
 
@@ -14,6 +18,34 @@ trait VocabulariesBaseConverter
     with ExternalConverter
     with NodeMappingConverter
     with DialectDomainElementConverter
+    with DatatypePropertyMappingConverter
+    with ObjectPropertyMappingConverter
+    with ClassTermMappingConverter
+
+trait DatatypePropertyMappingConverter extends PlatformSecrets {
+
+  implicit object DatatypePropertyMappingConverter extends BidirectionalMatcher[DatatypePropertyTerm, ClientDatatypePropertyTerm] {
+    override def asClient(from: DatatypePropertyTerm): ClientDatatypePropertyTerm   = platform.wrap[ClientDatatypePropertyTerm](from)
+    override def asInternal(from: ClientDatatypePropertyTerm): DatatypePropertyTerm = from._internal
+  }
+}
+
+trait ObjectPropertyMappingConverter extends PlatformSecrets {
+
+  implicit object ObjectPropertyMappingConverter extends BidirectionalMatcher[ObjectPropertyTerm, ClientObjectPropertyTerm] {
+    override def asClient(from: ObjectPropertyTerm): ClientObjectPropertyTerm   = platform.wrap[ClientObjectPropertyTerm](from)
+    override def asInternal(from: ClientObjectPropertyTerm): ObjectPropertyTerm = from._internal
+  }
+}
+
+trait ClassTermMappingConverter extends PlatformSecrets {
+
+  implicit object ClassTermMappingConverter extends BidirectionalMatcher[ClassTerm, ClientClassTerm] {
+    override def asClient(from: ClassTerm): ClientClassTerm   = platform.wrap[ClientClassTerm](from)
+    override def asInternal(from: ClientClassTerm): ClassTerm = from._internal
+  }
+}
+
 
 trait PropertyMappingConverter extends PlatformSecrets {
 
@@ -22,7 +54,6 @@ trait PropertyMappingConverter extends PlatformSecrets {
     override def asInternal(from: ClientPropertyMapping): PropertyMapping = from._internal
   }
 }
-
 
 trait PublicNodeMappingConverter extends PlatformSecrets {
 
@@ -78,7 +109,7 @@ trait NodeMappingConverter extends PlatformSecrets {
 
 trait DialectDomainElementConverter extends PlatformSecrets {
 
-  implicit object DialectDomainElementConverter extends BidirectionalMatcher[DialectDomainElement, ClientDialectDomainElement] {
+  implicit object DialectDomainElementConvertej extends BidirectionalMatcher[DialectDomainElement, ClientDialectDomainElement] {
     override def asClient(from: DialectDomainElement): ClientDialectDomainElement   = platform.wrap[ClientDialectDomainElement](from)
     override def asInternal(from: ClientDialectDomainElement): DialectDomainElement = from._internal
   }

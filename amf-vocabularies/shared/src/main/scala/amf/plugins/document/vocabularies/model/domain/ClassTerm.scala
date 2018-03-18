@@ -23,11 +23,11 @@ case class ClassTerm(fields: Fields, annotations: Annotations) extends DomainEle
   def properties: Seq[StrField] = fields.field(Properties)
   def subClassOf: Seq[StrField] = fields.field(SubClassOf)
 
-  def withName(name: String)                   = set(Name, name)
-  def withDisplayName(displayName: String)     = set(DisplayName, displayName)
-  def withDescription(description: String)     = set(Description, description)
-  def withProperties(properties: Seq[String])  = set(Properties, AmfArray(properties.map(AmfScalar(_))))
-  def withSubClasOf(superClasses: Seq[String]) = set(SubClassOf, AmfArray(superClasses.map(AmfScalar(_))))
+  def withName(name: String)                    = set(Name, name)
+  def withDisplayName(displayName: String)      = set(DisplayName, displayName)
+  def withDescription(description: String)      = set(Description, description)
+  def withProperties(properties: Seq[String])   = set(Properties, AmfArray(properties.map(AmfScalar(_))))
+  def withSubClassOf(superClasses: Seq[String]) = set(SubClassOf, AmfArray(superClasses.map(AmfScalar(_))))
 }
 
 object ClassTerm {
