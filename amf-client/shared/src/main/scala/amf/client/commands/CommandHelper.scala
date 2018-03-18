@@ -41,7 +41,7 @@ trait CommandHelper {
       RAMLVocabulariesPlugin.registry.registerDialect(dialect)
     }
     Future.sequence(dialectFutures).map[Unit] { _ =>
-      }
+    }
   }
 
   protected def parseInput(config: ParserConfig): Future[BaseUnit] = {
