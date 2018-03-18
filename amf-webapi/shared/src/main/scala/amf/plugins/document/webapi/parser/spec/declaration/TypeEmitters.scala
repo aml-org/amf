@@ -12,7 +12,12 @@ import amf.core.model.domain.{AmfScalar, Linkable, Shape}
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, FieldEntry, Fields, Position}
 import amf.plugins.document.webapi.annotations._
-import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEmitter, SpecEmitterContext}
+import amf.plugins.document.webapi.contexts.{
+  OasSpecEmitterContext,
+  RamlScalarEmitter,
+  RamlSpecEmitterContext,
+  SpecEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
@@ -127,7 +132,7 @@ abstract class RamlTypePartEmitter(shape: AnyShape,
 
   protected def emitters: Seq[Emitter]
 
-  private val emitter: Either[PartEmitter, Seq[EntryEmitter]] = emitters match {
+  val emitter: Either[PartEmitter, Seq[EntryEmitter]] = emitters match {
     case Seq(p: PartEmitter)                           => Left(p)
     case es if es.forall(_.isInstanceOf[EntryEmitter]) => Right(es.collect { case e: EntryEmitter => e })
     case other                                         => throw new Exception(s"IllegalTypeDeclarations found: $other")
@@ -336,8 +341,6 @@ case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referen
 
     fs.entry(NodeShapeModel.Discriminator).map(f => result += RamlScalarEmitter("discriminator", f))
     fs.entry(NodeShapeModel.DiscriminatorValue).map(f => result += RamlScalarEmitter("discriminatorValue", f))
-
-    fs.entry(NodeShapeModel.ReadOnly).map(f => result += ValueEmitter("(readOnly)", f))
 
     fs.entry(NodeShapeModel.Properties).map(f => result += RamlPropertiesShapeEmitter(f, ordering, references))
 
@@ -852,13 +855,23 @@ case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrder
         raw(_, "", YType.Null)
       )
     } else {
+
+      val readOnlyEmitter: Option[ValueEmitter] =
+        property.fields.entry(PropertyShapeModel.ReadOnly).map(fe => ValueEmitter("(readOnly)", fe))
+
       property.range match {
         case range: AnyShape =>
           b.entry(
             name,
-            Raml10TypePartEmitter(range, ordering, None, references = references).emit(_)
+            pb => {
+              Raml10TypePartEmitter(range, ordering, None, references = references).emitter match {
+                case Left(p)        => p.emit(pb)
+                case Right(entries) => pb.obj(traverse(ordering.sorted(entries ++ readOnlyEmitter), _))
+              }
+            }
           )
         case _ => // ignreo
+          b.entry(name, _.obj(e => traverse(readOnlyEmitter.toSeq, e)))
       }
     }
   }
@@ -1157,8 +1170,6 @@ case class OasNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referenc
 
     fs.entry(NodeShapeModel.DiscriminatorValue).map(f => result += ValueEmitter("x-discriminator-value", f))
 
-    fs.entry(NodeShapeModel.ReadOnly).map(f => result += ValueEmitter("readOnly", f))
-
     fs.entry(NodeShapeModel.Properties).map(f => result += OasRequiredPropertiesShapeEmitter(f, references))
 
     fs.entry(NodeShapeModel.Properties).map(f => result += OasPropertiesShapeEmitter(f, ordering, references))
@@ -1386,13 +1397,27 @@ case class OasPropertiesShapeEmitter(f: FieldEntry, ordering: SpecOrdering, refe
 
 case class OasPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: OasSpecEmitterContext)
-    extends EntryEmitter {
+    extends OasTypePartCollector(property.range, ordering, Nil, references)
+    with EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
-    b.entry(
-      property.name.value(),
-      OasTypePartEmitter(property.range, ordering, references = references).emit(_)
-    )
+    val readOnlyEmitter: Option[ValueEmitter] =
+      property.fields.entry(PropertyShapeModel.ReadOnly).map(fe => ValueEmitter("readOnly", fe))
+
+    property.range match {
+      case range: AnyShape =>
+        b.entry(
+          property.name.value(),
+          pb => {
+            emitter match {
+              case Left(p)        => p.emit(pb)
+              case Right(entries) => pb.obj(traverse(ordering.sorted(entries ++ readOnlyEmitter), _))
+            }
+          }
+        )
+      case _ => // ignreo
+        b.entry(property.name.value(), _.obj(e => traverse(readOnlyEmitter.toSeq, e)))
+    }
   }
 
   override def position(): Position = pos(property.annotations) // TODO check this

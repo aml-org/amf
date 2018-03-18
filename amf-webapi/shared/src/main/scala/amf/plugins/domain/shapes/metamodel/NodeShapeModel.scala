@@ -25,8 +25,6 @@ object NodeShapeModel extends AnyShapeModel {
 
   val DiscriminatorValue = Field(Str, Shapes + "discriminatorValue")
 
-  val ReadOnly = Field(Bool, Shapes + "readOnly")
-
   val Properties = Field(Array(PropertyShapeModel), Shacl + "property")
 
   val Dependencies = Field(Array(PropertyDependenciesModel), Shapes + "dependencies")
@@ -38,7 +36,6 @@ object NodeShapeModel extends AnyShapeModel {
          AdditionalPropertiesSchema,
          Discriminator,
          DiscriminatorValue,
-         ReadOnly,
          Properties,
          Dependencies) ++ AnyShapeModel.fields ++ DomainElementModel.fields
 

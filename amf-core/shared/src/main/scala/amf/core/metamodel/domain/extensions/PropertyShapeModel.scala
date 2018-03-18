@@ -1,7 +1,7 @@
 package amf.core.metamodel.domain.extensions
 
 import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Int, Iri}
+import amf.core.metamodel.Type.{Bool, Int, Iri}
 import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.vocabulary.Namespace.{Shacl, Shapes}
@@ -22,10 +22,12 @@ object PropertyShapeModel extends ShapeModel {
 
   val MaxCount = Field(Int, Shacl + "maxCount")
 
+  val ReadOnly = Field(Bool, Shapes + "readOnly")
+
   override val `type`: List[ValueType] = List(Shacl + "PropertyShape") ++ ShapeModel.`type`
 
   override def fields: List[Field] =
-    List(Path, Range, MinCount, MaxCount) ++ ShapeModel.fields ++ DomainElementModel.fields
+    List(Path, Range, MinCount, MaxCount, ReadOnly) ++ ShapeModel.fields ++ DomainElementModel.fields
 
   override def modelInstance = PropertyShape()
 }

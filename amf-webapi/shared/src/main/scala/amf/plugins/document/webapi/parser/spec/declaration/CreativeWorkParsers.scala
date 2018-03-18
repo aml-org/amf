@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.parser.{Annotations, ScalarNode, _}
+import amf.core.parser.{Annotations, _}
 import amf.core.remote.{Oas, Raml08, Raml10}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}

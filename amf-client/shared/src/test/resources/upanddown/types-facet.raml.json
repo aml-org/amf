@@ -49,13 +49,13 @@
       "additionalProperties": true,
       "discriminator": "ddd",
       "x-discriminator-value": "valueD",
-      "readOnly": false,
       "required": [
         "name"
       ],
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "readOnly": false
         }
       }
     }

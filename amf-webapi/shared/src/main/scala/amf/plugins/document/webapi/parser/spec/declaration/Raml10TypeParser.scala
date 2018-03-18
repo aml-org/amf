@@ -924,8 +924,6 @@ sealed abstract class RamlTypeParser(ast: YPart,
       map.key("discriminator", (NodeShapeModel.Discriminator in shape).allowingAnnotations)
       map.key("discriminatorValue", (NodeShapeModel.DiscriminatorValue in shape).allowingAnnotations)
 
-      map.key("(readOnly)", NodeShapeModel.ReadOnly in shape)
-
       map.key(
         "properties",
         entry => {
@@ -974,8 +972,8 @@ sealed abstract class RamlTypeParser(ast: YPart,
           val property = producer(prop).add(Annotations(entry))
 
           var explicitRequired: Option[Value] = None
-          entry.value.to[YMap] match {
-            case Right(map) =>
+          entry.value.toOption[YMap] match {
+            case Some(map) =>
               map.key(
                 "required",
                 entry => {
@@ -986,6 +984,8 @@ sealed abstract class RamlTypeParser(ast: YPart,
                                Annotations(entry) += ExplicitField())
                 }
               )
+
+              map.key("(readOnly)", PropertyShapeModel.ReadOnly in property)
             case _ =>
           }
 

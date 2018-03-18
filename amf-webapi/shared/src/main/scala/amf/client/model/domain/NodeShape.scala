@@ -17,7 +17,6 @@ case class NodeShape(override private[amf] val _internal: InternalNodeShape) ext
   def closed: BoolField                              = _internal.closed
   def discriminator: StrField                        = _internal.discriminator
   def discriminatorValue: StrField                   = _internal.discriminatorValue
-  def readOnly: BoolField                            = _internal.readOnly
   def properties: ClientList[PropertyShape]          = _internal.properties.asClient
   def dependencies: ClientList[PropertyDependencies] = _internal.dependencies.asClient
 
@@ -39,10 +38,6 @@ case class NodeShape(override private[amf] val _internal: InternalNodeShape) ext
   }
   def withDiscriminatorValue(value: String): this.type = {
     _internal.withDiscriminatorValue(value)
-    this
-  }
-  def withReadOnly(readOnly: Boolean): this.type = {
-    _internal.withReadOnly(readOnly)
     this
   }
   def withProperties(properties: ClientList[PropertyShape]): this.type = {
