@@ -5,6 +5,7 @@ import amf.core.model.domain._
 import amf.core.parser.{Annotations, Fields}
 import amf.core.vocabulary.ValueType
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
+import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.{YMap, YNode}
 
 import scala.collection.mutable
@@ -177,6 +178,12 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   }
 
   def setLiteralField(property: PropertyMapping, value: String, node: YNode) = {
+    literalProperties.put(property.id, value)
+    propertyAnnotations.put(property.id, Annotations(node))
+    this
+  }
+
+  def setLiteralField(property: PropertyMapping, value: SimpleDateTime, node: YNode) = {
     literalProperties.put(property.id, value)
     propertyAnnotations.put(property.id, Annotations(node))
     this

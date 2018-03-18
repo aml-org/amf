@@ -14,6 +14,7 @@ import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.{FieldEntry, Value}
 import amf.core.vocabulary.Namespace.SourceMaps
 import amf.core.vocabulary.{Namespace, ValueType}
+import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
 
@@ -244,6 +245,16 @@ object GraphEmitter extends MetaModelTypeMapping {
         case Type.Float =>
           scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Float)
           sources(v)
+        case Type.Date =>
+          val dateTime = v.value.asInstanceOf[AmfScalar].value.asInstanceOf[SimpleDateTime]
+          if (dateTime.timeOfDay.isDefined || dateTime.zoneOffset.isDefined) {
+            // TODO: add support for RFC3339 here
+            //typedScalar(b, dateTime.toRFC3339, (Namespace.Xsd + "dateTime").iri())
+            throw new Exception("Serialisation of timestamps not supported yet")
+          } else {
+            typedScalar(b, f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d", (Namespace.Xsd + "date").iri())
+            sources(v)
+          }
         case a: SortedArray =>
           createSortedArray(b, v.value.asInstanceOf[AmfArray].values, parent, a.element, sources, Some(v))
         case a: Array =>

@@ -11,11 +11,11 @@ uses:
 external:
   schema-org: http://schema.org/
 
-raml:
-  module:
+documents:
+  library:
     declares:
       products: ProductNode
-  document:
+  root:
     encodes: PresentationNode
 
 nodeMappings:
@@ -45,8 +45,7 @@ nodeMappings:
       speakers:
         propertyTerm: demos.speakers
         mandatory: true
-        asMap: true
-        hash: demos.nickName
+        mapKey: demos.nickName
         range: SpeakerNode
 
   SpeakerNode:

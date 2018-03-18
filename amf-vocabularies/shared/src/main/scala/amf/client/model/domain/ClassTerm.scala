@@ -80,8 +80,8 @@ case class ClassTerm(override private[amf] val _internal: InternalClassTerm) ext
     * @param properties
     * @return
     */
-  def withProperties(properties: Seq[String]) = {
-    _internal.withProperties(properties)
+  def withProperties(properties: ClientList[String]) = {
+    _internal.withProperties(properties.asInternal)
     this
   }
 
@@ -90,8 +90,8 @@ case class ClassTerm(override private[amf] val _internal: InternalClassTerm) ext
     * @param superClasses
     * @return
     */
-  def withSubClasOf(superClasses: Seq[String]) = {
-    _internal.withSubClasOf(superClasses)
+  def withSubClassOf(superClasses: ClientList[String]) = {
+    _internal.withSubClassOf(superClasses.asInternal)
     this
   }
 

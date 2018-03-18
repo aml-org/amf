@@ -1,9 +1,9 @@
 package amf.client.model.document
 
 import amf.client.convert.VocabulariesClientConverter._
-import amf.client.convert.CoreBaseConverter
 import amf.client.model.StrField
-import amf.client.model.domain.{DialectDomainElement, DomainElement}
+import amf.client.model.domain.DialectDomainElement
+import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement => InternalDialectDomainElement}
 import amf.plugins.document.vocabularies.model.document.{DialectInstance => InternalDialectInstance, DialectInstanceFragment => InternalDialectInstanceFragment, DialectInstanceLibrary => InternalDialectInstanceLibrary}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -24,7 +24,7 @@ class DialectInstance(private[amf] val _internal: InternalDialectInstance) exten
     this
   }
 
-  override def encodes: DialectDomainElement = DialectDomainElement(_internal.encodes.asInstanceOf[DialectDomainElement])
+  override def encodes: DialectDomainElement = DialectDomainElement(_internal.encodes.asInstanceOf[InternalDialectDomainElement])
   def withEncodes(encoded: DialectDomainElement) = {
     _internal.withEncodes(encoded._internal)
     this
@@ -38,7 +38,7 @@ class DialectInstanceFragment(private[amf] val _internal: InternalDialectInstanc
   @JSExportTopLevel("model.document.DialectInstanceFragment")
   def this() = this(InternalDialectInstanceFragment())
 
-  override def encodes: DialectDomainElement = DialectDomainElement(_internal.encodes.asInstanceOf[DialectDomainElement])
+  override def encodes: DialectDomainElement = DialectDomainElement(_internal.encodes.asInstanceOf[InternalDialectDomainElement])
   def withEncodes(encoded: DialectDomainElement) = {
     _internal.withEncodes(encoded._internal)
     this

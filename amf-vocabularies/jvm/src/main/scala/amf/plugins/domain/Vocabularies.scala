@@ -13,7 +13,7 @@ import amf.plugins.document.vocabularies.model.document
 object Vocabularies {
   def register(platform: Platform) = {
 
-    val p: (Obj) => Boolean = (x: Obj) => x.isInstanceOf[DialectDomainElement]
+    val p: (Obj) => Boolean = (x: Obj) => x.isInstanceOf[DialectDomainElementModel]
     platform.registerWrapperPredicate(p) {
       case m: domain.DialectDomainElement => DialectDomainElement(m)
     }
