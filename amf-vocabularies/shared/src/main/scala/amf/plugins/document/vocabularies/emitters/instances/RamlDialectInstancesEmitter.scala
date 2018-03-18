@@ -14,6 +14,7 @@ import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId}
 import amf.plugins.document.vocabularies.emitters.common.IdCounter
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
+import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode}
 
@@ -280,8 +281,15 @@ case class DialectNodeEmitter(node: DialectDomainElement,
   protected def emitRef(node: DialectDomainElement): PartEmitter =
     TextScalarEmitter(node.localRefName, node.annotations)
 
-  protected def emitScalar(key: String, field: Field, scalar: AmfScalar): Seq[EntryEmitter] =
-    Seq(ValueEmitter(key, FieldEntry(field, Value(scalar, scalar.annotations))))
+  protected def emitScalar(key: String, field: Field, scalar: AmfScalar): Seq[EntryEmitter] = {
+    val formatted = scalar.value match {
+      case date: SimpleDateTime =>
+        f"${date.year}%04d-${date.month}%02d-${date.day}%02d"
+      case other => other
+    }
+
+    Seq(ValueEmitter(key, FieldEntry(field, Value(AmfScalar(formatted), scalar.annotations))))
+  }
 
   protected def emitScalarArray(key: String, field: Field, array: AmfArray): Seq[EntryEmitter] =
     Seq(ArrayEmitter(key, FieldEntry(field, Value(array, array.annotations)), ordering))

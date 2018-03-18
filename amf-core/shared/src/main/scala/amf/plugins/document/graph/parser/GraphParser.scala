@@ -15,6 +15,7 @@ import amf.core.registries.AMFDomainRegistry
 import amf.core.remote.Platform
 import amf.core.unsafe.TrunkPlatform
 import amf.core.vocabulary.Namespace
+import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.convert.YRead.SeqNodeYRead
 import org.yaml.model._
 
@@ -250,6 +251,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
         case Type.Int           => instance.set(f, int(node), annotations(nodes, sources, key))
         case Type.Float         => instance.set(f, float(node), annotations(nodes, sources, key))
         case Type.Double        => instance.set(f, double(node), annotations(nodes, sources, key))
+        case Type.Date          => instance.set(f, date(node), annotations(nodes, sources, key))
         case l: SortedArray =>
           instance.setArray(f, parseList(instance.id, l.element, node.as[YMap]), annotations(nodes, sources, key))
         case a: Array =>
@@ -315,6 +317,18 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
           case _           => node.as[YScalar].text.toDouble
         }
       case _ =>  node.as[YScalar].text.toDouble
+    }
+    AmfScalar(value)
+  }
+
+  private def date(node: YNode) = {
+    val value = node.tagType match {
+      case YType.Map =>
+        node.as[YMap].entries.find(_.key.as[String] == "@value") match {
+          case Some(entry) => SimpleDateTime.parse(entry.value.as[YScalar].text).get
+          case _           => SimpleDateTime.parse(node.as[YScalar].text).get
+        }
+      case _ =>  SimpleDateTime.parse(node.as[YScalar].text).get
     }
     AmfScalar(value)
   }
