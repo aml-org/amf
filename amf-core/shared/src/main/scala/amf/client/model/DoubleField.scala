@@ -1,9 +1,12 @@
 package amf.client.model
 
-trait DoubleField extends BaseField with ValueField {
+trait DoubleField extends BaseAnyValField {
 
   override type ValueType = Double
 
-  /** Return int value. */
-  override def value(): Double
+  /** Return double value or `0.0` if value is null or undefined. */
+  override def value(): Double = option() match {
+    case Some(v) => v
+    case _       => 0.0
+  }
 }

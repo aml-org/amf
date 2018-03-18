@@ -12,7 +12,7 @@ import amf.plugins.document.vocabularies.emitters.common.ExternalEmitter
 import amf.plugins.document.vocabularies.metamodel.document.VocabularyModel
 import amf.plugins.document.vocabularies.metamodel.domain.{ClassTermModel, ObjectPropertyTermModel}
 import amf.plugins.document.vocabularies.model.document.Vocabulary
-import amf.plugins.document.vocabularies.model.domain.{ClassTerm, External, PropertyTerm, VocabularyReference}
+import amf.plugins.document.vocabularies.model.domain.{ClassTerm, PropertyTerm, VocabularyReference}
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YDocument, YType}
 
@@ -53,12 +53,15 @@ private case class ClassTermEmitter(classTerm: ClassTerm, ordering: SpecOrdering
   override def emit(b: EntryBuilder): Unit = {
     val classAlias                    = aliasFor(classTerm.id, aliasMapping)
     var ctEmitters: Seq[EntryEmitter] = Seq()
-    if (classTerm.displayName.present()) {
-      ctEmitters ++= Seq(MapEntryEmitter("displayName", classTerm.displayName.value()))
-    }
-    if (classTerm.description.present()) {
-      ctEmitters ++= Seq(MapEntryEmitter("description", classTerm.description.value()))
-    }
+
+    classTerm.displayName
+      .option()
+      .foreach(displayName => ctEmitters ++= Seq(MapEntryEmitter("displayName", displayName)))
+
+    classTerm.description
+      .option()
+      .foreach(description => ctEmitters ++= Seq(MapEntryEmitter("description", description)))
+
     if (classTerm.subClassOf.nonEmpty) {
       ctEmitters ++= Seq(new EntryEmitter {
         override def emit(b: EntryBuilder): Unit = {
@@ -121,12 +124,15 @@ private case class PropertyTermEmitter(propertyTerm: PropertyTerm,
   override def emit(b: EntryBuilder): Unit = {
     val propertyAlias                 = aliasFor(propertyTerm.id, aliasMapping)
     var ptEmitters: Seq[EntryEmitter] = Seq()
-    if (propertyTerm.displayName.present()) {
-      ptEmitters ++= Seq(MapEntryEmitter("displayName", propertyTerm.displayName.value()))
-    }
-    if (propertyTerm.description.present()) {
-      ptEmitters ++= Seq(MapEntryEmitter("description", propertyTerm.description.value()))
-    }
+
+    propertyTerm.displayName
+      .option()
+      .foreach(displayName => ptEmitters ++= Seq(MapEntryEmitter("displayName", displayName)))
+
+    propertyTerm.description
+      .option()
+      .foreach(description => ptEmitters ++= Seq(MapEntryEmitter("description", description)))
+
     if (propertyTerm.subPropertyOf.nonEmpty) {
       ptEmitters ++= Seq(new EntryEmitter {
         override def emit(b: EntryBuilder): Unit = {
@@ -150,7 +156,7 @@ private case class PropertyTermEmitter(propertyTerm: PropertyTerm,
       })
     }
 
-    if (propertyTerm.range.present()) {
+    if (propertyTerm.range.nonNull) {
       ptEmitters ++= Seq(new EntryEmitter {
         override def emit(b: EntryBuilder): Unit = {
           b.entry("range", aliasFor(propertyTerm.range.value(), aliasMapping))
@@ -273,7 +279,7 @@ case class RamlVocabularyEmitter(vocabulary: Vocabulary) extends AliasMapper {
     }
   }
 
-  def vocabularyPropertiesEmitter(ordering: SpecOrdering) = {
+  private def vocabularyPropertiesEmitter(ordering: SpecOrdering) = {
     var emitters: Seq[EntryEmitter] = Nil
 
     emitters ++= Seq(new EntryEmitter {

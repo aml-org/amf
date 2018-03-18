@@ -1,9 +1,12 @@
 package amf.client.model
 
-trait IntField extends BaseField with ValueField {
+trait IntField extends BaseAnyValField {
 
   override type ValueType = Int
 
-  /** Return int value. */
-  override def value(): Int
+  /** Return int value or `0` if value is null or undefined. */
+  override def value(): Int = option() match {
+    case Some(v) => v
+    case _       => 0
+  }
 }
