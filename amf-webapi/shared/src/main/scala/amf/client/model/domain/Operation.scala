@@ -105,4 +105,9 @@ case class Operation(override private[amf] val _internal: InternalOperation) ext
     * Name property of the response is required.
     */
   def withResponse(name: String): Response = _internal.withResponse(name)
+
+  /**
+    * Adds a Request to this Operation and returns it for population.
+    */
+  def withRequest(): Request = _internal.withRequest()
 }

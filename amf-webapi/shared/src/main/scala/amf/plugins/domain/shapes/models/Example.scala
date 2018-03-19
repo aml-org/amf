@@ -16,19 +16,19 @@ case class Example(fields: Fields, annotations: Annotations)
     with Linkable
     with NamedDomainElement {
 
-  def name: StrField        = fields.field(Name)
-  def displayName: StrField = fields.field(DisplayName)
-  def description: StrField = fields.field(Description)
-  def value: StrField       = fields.field(ExampleModel.Value)
-  def structuredValue: DataNode = fields(ExampleModel.StructuredValue)
-  def strict: BoolField     = fields.field(Strict)
-  def mediaType: StrField   = fields.field(MediaType)
+  def name: StrField            = fields.field(Name)
+  def displayName: StrField     = fields.field(DisplayName)
+  def description: StrField     = fields.field(Description)
+  def value: StrField           = fields.field(Value)
+  def structuredValue: DataNode = fields.field(StructuredValue)
+  def strict: BoolField         = fields.field(Strict)
+  def mediaType: StrField       = fields.field(MediaType)
 
   def withName(name: String): this.type               = set(Name, name)
   def withDisplayName(displayName: String): this.type = set(DisplayName, displayName)
   def withDescription(description: String): this.type = set(Description, description)
-  def withValue(value: String): this.type             = set(ExampleModel.Value, value)
-  def withStructuredValue(value: DataNode): this.type = set(ExampleModel.StructuredValue, value)
+  def withValue(value: String): this.type             = set(Value, value)
+  def withStructuredValue(value: DataNode): this.type = set(StructuredValue, value)
   def withStrict(strict: Boolean): this.type          = set(Strict, strict)
   def withMediaType(mediaType: String): this.type     = set(MediaType, mediaType)
 
