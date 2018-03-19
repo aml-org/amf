@@ -40,27 +40,27 @@ class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: Generat
   private def dump(): String = {
     val vendorString = vendor match {
       case RamlVocabulary => "RAML Vocabularies"
-      case Amf           => "AMF Graph"
-      case Payload       => "AMF Payload"
-      case Raml08        => "RAML 0.8"
-      case Raml10 | Raml => "RAML 1.0"
-      case Oas           => "OAS 2.0"
-      case Oas2          => "OAS 2.0"
-      case Oas3          => "OAS 3.0"
-      case Extension     => "RAML Vocabularies"
-      case _             => "Unknown Vendor"
+      case Amf            => "AMF Graph"
+      case Payload        => "AMF Payload"
+      case Raml08         => "RAML 0.8"
+      case Raml10 | Raml  => "RAML 1.0"
+      case Oas            => "OAS 2.0"
+      case Oas2           => "OAS 2.0"
+      case Oas3           => "OAS 3.0"
+      case Extension      => "RAML Vocabularies"
+      case _              => "Unknown Vendor"
     }
 
     val mediaType = vendor match {
-      case Amf                    => "application/ld+json"
-      case Payload                => "application/amf+json"
+      case Amf                                     => "application/ld+json"
+      case Payload                                 => "application/amf+json"
       case Raml10 | Raml08 | Raml | RamlVocabulary => "application/yaml"
-      case Oas | Oas2 | Oas3      => "application/json"
-      case Extension              => "application/yaml"
-      case _                      => "text/plain"
+      case Oas | Oas2 | Oas3                       => "application/json"
+      case Extension                               => "application/yaml"
+      case _                                       => "text/plain"
     }
 
-    AMFSerializer(unit, mediaType, vendorString, options).dumpToString
+    new AMFSerializer(unit, mediaType, vendorString, options).dumpToString
   }
 }
 
