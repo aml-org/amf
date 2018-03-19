@@ -160,7 +160,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       assert(report.conforms)
       assert(report.results.length == 1)
-      
+
       val result = report.results.head
       assert(result.level == "Info")
       assert(result.validationId == "http://raml.org/vocabularies/data#my-custom-validation")
@@ -980,6 +980,22 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report <- validation.validate(library, ProfileNames.RAML)
     } yield {
       assert(report.conforms)
+    }
+  }
+
+  test("Invalid example in any shape") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "/shapes/any-shape-invalid-example.raml",
+                             platform,
+                             RamlYamlHint,
+                             validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+      assert(report.results.lengthCompare(1) == 0)
+      assert(report.results.head.level == SeverityLevels.WARNING)
     }
   }
 }

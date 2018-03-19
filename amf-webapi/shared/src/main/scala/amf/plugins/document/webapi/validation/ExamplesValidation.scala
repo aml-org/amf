@@ -7,6 +7,7 @@ import amf.core.remote.Platform
 import amf.core.services.RuntimeValidator
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
 import amf.core.vocabulary.Namespace
+import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.{AnyShape, Example, UnionShape}
 import amf.plugins.features.validation.ParserSideValidations
 
@@ -42,9 +43,10 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
   protected def findExamples(): (Seq[(Shape, Example, String)], Seq[(Shape, Example, String)]) = {
     val allExamples: Seq[(Shape, Example, String)] = model.findByType((Namespace.Shapes + "Shape").iri()) flatMap {
       case shape: AnyShape =>
-        shape.examples.map { example =>
-          (shape, example, mediaType(example))
-        }
+        shape.examples.collect({
+          case example: Example if example.fields.entry(ExampleModel.StructuredValue).isDefined =>
+            (shape, example, mediaType(example))
+        })
       case _ => Nil
     }
     val supportedExamples = allExamples.filter {

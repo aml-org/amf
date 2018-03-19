@@ -3,16 +3,16 @@ package amf.plugins.document.webapi.parser.spec.declaration
 import amf.core.annotations.ExplicitField
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain.{AmfArray, AmfScalar, DataNode, Shape}
-import amf.core.parser.{Annotations, _}
+import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, Inferred}
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
-import amf.plugins.document.webapi.parser.spec.domain.{NodeDataNodeParser, RamlExamplesParser}
+import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, NodeDataNodeParser, RamlExamplesParser}
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
@@ -323,22 +323,28 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     }
   }
 
-  case class AnyTypeShapeParser(shape: AnyShape, map: YMap) extends AnyShapeParser {}
+  case class AnyTypeShapeParser(shape: AnyShape, map: YMap) extends AnyShapeParser {
+    override val options: ExampleOptions = ExampleOptions(strictDefault = false, quiet = true)
+  }
 
   abstract class AnyShapeParser() extends ShapeParser() {
 
     override val shape: AnyShape
-
+    val options: ExampleOptions = ExampleOptions(strictDefault = false, quiet = false)
     override def parse(): AnyShape = {
       super.parse()
-
-      val examples: Seq[Example] = RamlExamplesParser(map, "example", "x-examples", shape.withExample, strictDefault = false).parse()
-      if (examples.nonEmpty)
-        shape.setArray(AnyShapeModel.Examples, examples)
+      parseExample()
 
       map.key("type", _ => shape.add(ExplicitField())) // todo lexical of type?? new annotation?
 
       shape
+    }
+
+    private def parseExample() = {
+      val examples: Seq[Example] =
+        RamlExamplesParser(map, "example", "x-examples", shape.withExample, options).parse()
+      if (examples.nonEmpty)
+        shape.setArray(AnyShapeModel.Examples, examples)
     }
   }
 
@@ -467,9 +473,15 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       map.key("title", ShapeModel.DisplayName in shape)
       map.key("description", ShapeModel.Description in shape)
 
-      val defaultParser: ((YNode) => DataNode) = (node: YNode) => NodeDataNodeParser(node, shape.id).parse()._2
+      map.key(
+        "default",
+        node => {
+          NodeDataNodeParser(node.value, shape.id, quiet = false).parse().dataNode.foreach { dn =>
+            shape.set(ShapeModel.Default, dn, Annotations(node))
+          }
 
-      map.key("default", ShapeModel.Default in shape using defaultParser)
+        }
+      )
 
       map.key("enum", ShapeModel.Values in shape)
       map.key("externalDocs", AnyShapeModel.Documentation in shape using OasCreativeWorkParser.parse)
