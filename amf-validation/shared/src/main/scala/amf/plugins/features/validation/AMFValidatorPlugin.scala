@@ -79,9 +79,11 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
               profilesPlugins.get(profile.baseProfileName.getOrElse("AMF")) match {
                 case Some(plugin) =>
                   plugin
-                case None =>
+                case None => RAMLVocabulariesPlugin
+                  /*
                   throw new Exception(
                     s"Plugin for custom validation profile ${profile.name}, ${profile.baseProfileName} not found")
+                    */
               }
           }
           customValidationProfiles += (profile.name -> { () =>
@@ -132,6 +134,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     }
 
     val modelJSON = RuntimeSerializer(model, "application/ld+json", "AMF Graph", GenerationOptions())
+
 
     /*
     println("\n\nGRAPH")

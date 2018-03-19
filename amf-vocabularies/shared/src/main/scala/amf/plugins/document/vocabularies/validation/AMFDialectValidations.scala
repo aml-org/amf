@@ -230,6 +230,13 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
             `class` = prop.objectRange().map(_.value())
           ))
       )
+
+      // nested validations here
+      prop.objectRange().foreach { nodeMapping =>
+        dialect.findNodeMapping(nodeMapping.value()).foreach { mapping =>
+          validations ++= emitEntityValidations(mapping)
+        }
+      }
     }
 
     validations.toList

@@ -222,8 +222,9 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
                                  profile: String,
                                  validations: EffectiveValidations,
                                  platform: Platform): Future[AMFValidationReport] = {
+    val resolvedModel = new DialectInstanceResolutionPipeline().resolve(baseUnit)
     for {
-      shaclReport <- RuntimeValidator.shaclValidation(baseUnit, validations)
+      shaclReport   <- RuntimeValidator.shaclValidation(resolvedModel, validations)
     } yield {
 
       // adding model-side validations

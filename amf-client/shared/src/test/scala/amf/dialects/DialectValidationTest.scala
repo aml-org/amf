@@ -34,34 +34,6 @@ class DialectValidationTest extends AsyncFunSuite with CompilerTestBuilder {
   amf.core.AMF.registerPlugin(AMFValidatorPlugin)
   AMF.init()
 
-  test("Basic Validation Test") {
-    val dl = PlatformDialectRegistry.registerDialect(basePath + "mule_config_dialect3.raml")
-    val cm =
-      dl.flatMap(d => build("file://amf-client/shared/src/test/resources/vocabularies/muleconfig.raml", RamlYamlHint))
-    cm.map(u => DialectValidator.validate(u).size)
-      .map(s => {
-        s should be(0)
-      })
-  }
-
-  test("another validation test") {
-    val dl = PlatformDialectRegistry.registerDialect(basePath + "mule_config_dialect3.raml")
-    val cm =
-      dl.flatMap(d => build("file://amf-client/shared/src/test/resources/vocabularies/muleconfig2.raml", RamlYamlHint))
-    cm.map(u => DialectValidator.validate(u).size)
-      .map(s => {
-        s should be(1)
-      })
-  }
-  test("missing required property") {
-    val dl = PlatformDialectRegistry.registerDialect(basePath + "mule_config_dialect3.raml")
-    val cm =
-      dl.flatMap(d => build("file://amf-client/shared/src/test/resources/vocabularies/muleconfig3.raml", RamlYamlHint))
-    cm.map(u => DialectValidator.validate(u).size)
-      .map(s => {
-        s should be(1)
-      })
-  }
 
   test("Vocabulary can be validated") {
     Validation(platform).flatMap { v =>
