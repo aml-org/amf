@@ -12,7 +12,7 @@ import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.RamlFragment
 import amf.plugins.document.webapi.parser.RamlFragmentHeader._
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.domain.RamlNamedExampleParser
+import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, RamlNamedExampleParser}
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import org.yaml.model.YMap
@@ -151,7 +151,8 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
         example
       }
 
-      namedExample.withEncodes(RamlNamedExampleParser(entries.head, producer, strictDefault = true).parse())
+      namedExample.withEncodes(
+        RamlNamedExampleParser(entries.head, producer, ExampleOptions(strictDefault = true, quiet = true)).parse())
     }
   }
 
