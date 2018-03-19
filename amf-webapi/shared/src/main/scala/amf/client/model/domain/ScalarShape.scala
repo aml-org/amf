@@ -1,7 +1,7 @@
 package amf.client.model.domain
 
 import amf.client.convert.WebApiClientConverters._
-import amf.client.model.{IntField, StrField}
+import amf.client.model.{BoolField, IntField, StrField}
 import amf.plugins.domain.shapes.models.{ScalarShape => InternalScalarShape}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -12,16 +12,16 @@ case class ScalarShape(override private[amf] val _internal: InternalScalarShape)
   @JSExportTopLevel("model.domain.ScalarShape")
   def this() = this(InternalScalarShape())
 
-  def dataType: StrField         = _internal.dataType
-  def pattern: StrField          = _internal.pattern
-  def minLength: IntField        = _internal.minLength
-  def maxLength: IntField        = _internal.maxLength
-  def minimum: StrField          = _internal.minimum
-  def maximum: StrField          = _internal.maximum
-  def exclusiveMinimum: StrField = _internal.exclusiveMinimum
-  def exclusiveMaximum: StrField = _internal.exclusiveMaximum
-  def format: StrField           = _internal.format
-  def multipleOf: IntField       = _internal.multipleOf
+  def dataType: StrField          = _internal.dataType
+  def pattern: StrField           = _internal.pattern
+  def minLength: IntField         = _internal.minLength
+  def maxLength: IntField         = _internal.maxLength
+  def minimum: StrField           = _internal.minimum
+  def maximum: StrField           = _internal.maximum
+  def exclusiveMinimum: BoolField = _internal.exclusiveMinimum
+  def exclusiveMaximum: BoolField = _internal.exclusiveMaximum
+  def format: StrField            = _internal.format
+  def multipleOf: IntField        = _internal.multipleOf
 
   def withDataType(dataType: String): this.type = {
     _internal.withDataType(dataType)
@@ -47,11 +47,11 @@ case class ScalarShape(override private[amf] val _internal: InternalScalarShape)
     _internal.withMaximum(max)
     this
   }
-  def withExclusiveMinimum(min: String): this.type = {
+  def withExclusiveMinimum(min: Boolean): this.type = {
     _internal.withExclusiveMinimum(min)
     this
   }
-  def withExclusiveMaximum(max: String): this.type = {
+  def withExclusiveMaximum(max: Boolean): this.type = {
     _internal.withExclusiveMaximum(max)
     this
   }
