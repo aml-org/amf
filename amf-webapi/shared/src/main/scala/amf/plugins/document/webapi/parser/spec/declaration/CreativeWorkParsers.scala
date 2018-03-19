@@ -46,6 +46,8 @@ case class RamlCreativeWorkParser(map: YMap)(implicit val ctx: WebApiContext) ex
 
     map.key(url, CreativeWorkModel.Url in documentation)
 
+    AnnotationParser(documentation, map).parse()
+
     documentation
   }
 }
