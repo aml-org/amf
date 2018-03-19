@@ -96,7 +96,6 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
     customValidationProfile("eng_demos_dialect1.raml", "eng_demos_instance1.raml", "eng_demos_profile.raml", "Eng Demos 0.1", 0)
   }
 
-
   protected def validate(dialect: String, instance: String, numErrors: Int) = {
     amf.core.AMF.registerPlugin(RAMLVocabulariesPlugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
