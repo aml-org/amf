@@ -1,0 +1,51 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "ACME Banking HTTP API",
+    "version": "1.0"
+  },
+  "host": "acme-banking.com",
+  "basePath": "/apis",
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "externalDocs": {
+    "description": "Documentation content",
+    "x-title": "Documentation title",
+    "x-AnnotationInDocumentationRoot": "sjf"
+  },
+  "paths": {
+    "/customers": {
+      "x-displayName": "EndPoint display name",
+      "x-description": "EndPoint description",
+      "x-AnnotationInEndPointAlpha": "alpha",
+      "x-AnnotationInEndPointBeta": "beta"
+    },
+    "/customers/{customer_id}": {
+      "parameters": [
+        {
+          "name": "customer_id",
+          "required": true,
+          "in": "path",
+          "x-AnnotationInParameter": "sjf",
+          "type": "string",
+          "x-AnnotationInParameter": "sjf"
+        }
+      ],
+      "get": {
+        "description": "Returns Customer data",
+        "responses": {
+          "200": {
+            "description": "Response description",
+            "x-media-type": "application/json"
+          }
+        },
+        "x-AnnotationInOperation": "sjf"
+      }
+    }
+  },
+  "x-AnnotationInRoot": "sjf"
+}

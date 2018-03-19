@@ -32,7 +32,8 @@ object WellKnownAnnotation {
     "responses",
     "additionalProperties",
     "collectionFormat",
-    "tags"
+    "tags",
+    "url"
   )
 
   private val oasKnownAnnotations = Set(
