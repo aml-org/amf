@@ -55,7 +55,22 @@ trait Oas extends Vendor {
   override def isSameWithoutVersion(vendor: Vendor): Boolean = {
     vendor match {
       case _: Oas => true
-      case _      => false
+      case _       => false
+    }
+  }
+}
+
+trait RamlVocabulary extends Vendor {
+
+  override val name: String          = "RAML Vocabularies"
+  override val defaultSyntax: Syntax = Yaml
+
+  override def toString: String = name.trim
+
+  override def isSameWithoutVersion(vendor: Vendor): Boolean = {
+    vendor match {
+      case _: Oas => true
+      case _       => false
     }
   }
 }
@@ -75,6 +90,8 @@ object Oas3 extends Raml {
 object Raml extends Raml {
   override def version: String = ""
 }
+
+object RamlVocabulary extends RamlVocabulary
 
 object Raml10 extends Raml {
   override def version: String = "1.0"

@@ -84,7 +84,7 @@ class ReferenceResolutionStage(profile: String) extends ResolutionStage(profile)
 
   def resolveDynamicLink(l: LinkNode): Option[DomainElement] = {
     modelResolver.get.findFragment(l.value) match {
-      case Some(elem) => Some(new ResolvedLinkNode(l, elem))
+      case Some(elem) => Some(new ResolvedLinkNode(l, elem).withId(l.id))
       case _          => Some(l)
     }
   }
@@ -120,7 +120,7 @@ class ReferenceResolutionStage(profile: String) extends ResolutionStage(profile)
     // let's annotate the resolved name
     source match {
 
-      case s: NamedDomainElement if s.name.value().notNull.nonEmpty =>
+      case s: NamedDomainElement if s.name.nonEmpty =>
         val resolvedNamesPresent          = resolved.annotations.find(classOf[ResolvedNamedEntity])
         val resolvedNamedEntityAnnotation = resolvedNamesPresent.getOrElse(ResolvedNamedEntity())
         val referenced                    = resolvedNamedEntityAnnotation.vals.getOrElse(s.name.value(), Nil)

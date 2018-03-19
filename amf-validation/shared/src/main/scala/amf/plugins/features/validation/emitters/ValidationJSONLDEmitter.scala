@@ -138,56 +138,60 @@ class ValidationJSONLDEmitter(targetProfile: String) {
   }
 
   private def emitConstraint(b: PartBuilder, constraintId: String, constraint: PropertyConstraint): Unit = {
-    b.obj { b =>
-      b.entry("@id", constraintId)
-      b.entry((Namespace.Shacl + "path").iri(), link(_, expandRamlId(constraint.ramlPropertyId)))
+    if (Option(constraint.ramlPropertyId).isDefined) {
+      b.obj { b =>
+        b.entry("@id", constraintId)
+        b.entry((Namespace.Shacl + "path").iri(), link(_, expandRamlId(constraint.ramlPropertyId)))
 
-      constraint.maxCount.foreach(genPropertyConstraintValue(b, "maxCount", _, Some(constraint)))
-      constraint.minCount.foreach(genPropertyConstraintValue(b, "minCount", _, Some(constraint)))
-      constraint.maxLength.foreach(genPropertyConstraintValue(b, "maxLength", _, Some(constraint)))
-      constraint.minLength.foreach(genPropertyConstraintValue(b, "minLength", _, Some(constraint)))
-      constraint.maxExclusive.foreach(genPropertyConstraintValue(b, "maxExclusive", _, Some(constraint)))
-      constraint.minExclusive.foreach(genPropertyConstraintValue(b, "minExclusive", _, Some(constraint)))
-      constraint.maxInclusive.foreach(genPropertyConstraintValue(b, "maxInclusive", _, Some(constraint)))
-      constraint.minInclusive.foreach(genPropertyConstraintValue(b, "minInclusive", _, Some(constraint)))
-      constraint.pattern.foreach(v => genPropertyConstraintValue(b, "pattern", v))
-      constraint.node.foreach(genPropertyConstraintValue(b, "node", _))
-      constraint.datatype.foreach { v =>
-        if (!v.endsWith("#float") && !v.endsWith("#number")) {
-          // raml/oas 'number' are actually the union of integers and floats
-          // i handle the data type integer and float inside of every constraint. Here only need to generate the simples data types for path entry
-          b.entry((Namespace.Shacl + "datatype").iri(), link(_, v))
+        constraint.maxCount.foreach(genPropertyConstraintValue(b, "maxCount", _, Some(constraint)))
+        constraint.minCount.foreach(genPropertyConstraintValue(b, "minCount", _, Some(constraint)))
+        constraint.maxLength.foreach(genPropertyConstraintValue(b, "maxLength", _, Some(constraint)))
+        constraint.minLength.foreach(genPropertyConstraintValue(b, "minLength", _, Some(constraint)))
+        constraint.maxExclusive.foreach(genNumericPropertyConstraintValue(b, "maxExclusive", _, Some(constraint)))
+        constraint.minExclusive.foreach(genNumericPropertyConstraintValue(b, "minExclusive", _, Some(constraint)))
+        constraint.maxInclusive.foreach(genNumericPropertyConstraintValue(b, "maxInclusive", _, Some(constraint)))
+        constraint.minInclusive.foreach(genNumericPropertyConstraintValue(b, "minInclusive", _, Some(constraint)))
+        constraint.pattern.foreach(v => genPropertyConstraintValue(b, "pattern", v))
+        constraint.node.foreach(genPropertyConstraintValue(b, "node", _))
+        constraint.datatype.foreach { v =>
+          if (!v.endsWith("#float") && !v.endsWith("#number")) {
+            // raml/oas 'number' are actually the union of integers and floats
+            // i handle the data type integer and float inside of every constraint. Here only need to generate the simples data types for path entry
+            b.entry((Namespace.Shacl + "datatype").iri(), link(_, v))
+          }
         }
-      }
-      if (constraint.`class`.nonEmpty) {
-        if (constraint.`class`.length == 1) {
-          b.entry((Namespace.Shacl + "class").iri(), link(_, constraint.`class`.head))
-        } else {
+        if (constraint.`class`.nonEmpty) {
+          if (constraint.`class`.length == 1) {
+            b.entry((Namespace.Shacl + "class").iri(), link(_, constraint.`class`.head))
+          } else {
+            b.entry(
+              (Namespace.Shacl + "or").iri(),
+              _.obj {
+                _.entry("@list",
+                  _.list(l =>
+                    constraint.`class`.foreach { v =>
+                      l.obj {
+                        _.entry((Namespace.Shacl + "class").iri(), link(_, v))
+                      }
+                    }))
+              }
+            )
+          }
+        }
+
+        // custom builder
+        constraint.custom.foreach { builder =>
+          builder(b, constraintId)
+        }
+
+        if (constraint.in.nonEmpty) {
           b.entry(
-            (Namespace.Shacl + "or").iri(),
+            (Namespace.Shacl + "in").iri(),
             _.obj {
-              _.entry("@list",
-                      _.list(l =>
-                        constraint.`class`.foreach { v =>
-                          l.obj {
-                            _.entry((Namespace.Shacl + "class").iri(), link(_, v))
-                          }
-                      }))
+              _.entry("@list", _.list(b => constraint.in.foreach(genValue(b, _))))
             }
           )
         }
-      }
-
-      // custom builder
-      constraint.custom.foreach { builder =>
-        builder(b, constraintId)
-      }
-
-      if (constraint.in.nonEmpty) {
-        b.entry(
-          (Namespace.Shacl + "in").iri(),
-          _.obj { _.entry("@list", _.list(b => constraint.in.foreach(genValue(b, _)))) }
-        )
       }
     }
   }
@@ -302,16 +306,13 @@ class ValidationJSONLDEmitter(targetProfile: String) {
             _.entry(
               "@list",
               _.list { l =>
-                if (value.indexOf(".") == -1) {
-                  l.obj { o =>
-                    o.entry((Namespace.Shacl + constraintName).iri(),
-                            genValue(_, value, Some((Namespace.Xsd + "integer").iri())))
-                  }
-                }
-
                 l.obj { o =>
                   o.entry((Namespace.Shacl + constraintName).iri(),
-                          genValue(_, value, Some((Namespace.Xsd + "float").iri())))
+                    genValue(_, value.toDouble.floor.toInt.toString, Some((Namespace.Xsd + "integer").iri())))
+                }
+                l.obj { o =>
+                  o.entry((Namespace.Shacl + constraintName).iri(),
+                          genValue(_, value.toDouble.toString, Some((Namespace.Xsd + "double").iri())))
                 }
               }
             )
@@ -323,6 +324,31 @@ class ValidationJSONLDEmitter(targetProfile: String) {
         b.entry((Namespace.Shacl + constraintName).iri(), genValue(_, value, None))
     }
 
+  }
+
+  private def genNumericPropertyConstraintValue(b: EntryBuilder,
+                                                constraintName: String,
+                                                value: String,
+                                                constraint: Option[PropertyConstraint] = None): Unit = {
+    b.entry(
+      (Namespace.Shacl + "or").iri(),
+      _.obj {
+        _.entry(
+          "@list",
+          _.list { l =>
+            l.obj { o =>
+              o.entry((Namespace.Shacl + constraintName).iri(),
+                genValue(_, value.toDouble.floor.toInt.toString, Some((Namespace.Xsd + "integer").iri())))
+            }
+
+            l.obj { o =>
+              o.entry((Namespace.Shacl + constraintName).iri(),
+                genValue(_, value.toDouble.toString, Some((Namespace.Xsd + "double").iri())))
+            }
+          }
+        )
+      }
+    )
   }
 
   private def expandRamlId(s: String): String =

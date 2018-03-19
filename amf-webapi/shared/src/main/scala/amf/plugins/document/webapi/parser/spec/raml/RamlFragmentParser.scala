@@ -151,7 +151,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
         example
       }
 
-      namedExample.withEncodes(RamlNamedExampleParser(entries.head, producer).parse())
+      namedExample.withEncodes(RamlNamedExampleParser(entries.head, producer, strictDefault = true).parse())
     }
   }
 

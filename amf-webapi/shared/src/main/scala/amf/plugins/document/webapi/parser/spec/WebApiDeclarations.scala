@@ -21,7 +21,8 @@ import org.yaml.model.YPart
 /**
   * Declarations object.
   */
-class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
+class WebApiDeclarations(alias: Option[String],
+                         libs: Map[String, WebApiDeclarations] = Map(),
                          frags: Map[String, DomainElement] = Map(),
                          var shapes: Map[String, Shape] = Map(),
                          anns: Map[String, CustomDomainProperty] = Map(),
@@ -38,26 +39,31 @@ class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
   override def +=(element: DomainElement): WebApiDeclarations = {
     element match {
       case r: ResourceType =>
-        futureDeclarations.resolveRef(r.name.value(), r)
+        futureDeclarations.resolveRef(aliased(r.name.value()), r)
         resourceTypes = resourceTypes + (r.name.value() -> r)
       case t: Trait =>
-        futureDeclarations.resolveRef(t.name.value(), t)
+        futureDeclarations.resolveRef(aliased(t.name.value()), t)
         traits = traits + (t.name.value() -> t)
       case s: Shape =>
-        futureDeclarations.resolveRef(s.name.value(), s)
+        futureDeclarations.resolveRef(aliased(s.name.value()), s)
         shapes = shapes + (s.name.value() -> s)
       case p: Parameter =>
-        futureDeclarations.resolveRef(p.name.value(), p)
+        futureDeclarations.resolveRef(aliased(p.name.value()), p)
         parameters = parameters + (p.name.value() -> p)
       case ss: SecurityScheme =>
-        futureDeclarations.resolveRef(ss.name.value(), ss)
+        futureDeclarations.resolveRef(aliased(ss.name.value()), ss)
         securitySchemes = securitySchemes + (ss.name.value() -> ss)
       case re: Response =>
-        futureDeclarations.resolveRef(re.name.value(), re)
+        futureDeclarations.resolveRef(aliased(re.name.value()), re)
         responses = responses + (re.name.value() -> re)
       case _ => super.+=(element)
     }
     this
+  }
+
+  def aliased(name: String) = alias match {
+    case Some(prefix) => s"$prefix.$name"
+    case None         => name
   }
 
   /** Find domain element with the same name. */
@@ -83,8 +89,7 @@ class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
     libraries.get(alias) match {
       case Some(lib: WebApiDeclarations) => lib
       case _ =>
-        val result =
-          new WebApiDeclarations(errorHandler = errorHandler, futureDeclarations = EmptyFutureDeclarations())
+        val result = new WebApiDeclarations(Some(alias), errorHandler = errorHandler, futureDeclarations = EmptyFutureDeclarations())
         libraries = libraries + (alias -> result)
         result
     }
@@ -182,10 +187,8 @@ class WebApiDeclarations(libs: Map[String, WebApiDeclarations] = Map(),
 
 object WebApiDeclarations {
 
-  def apply(declarations: Seq[DomainElement],
-            errorHandler: Option[ErrorHandler],
-            futureDeclarations: FutureDeclarations): WebApiDeclarations = {
-    val result = new WebApiDeclarations(errorHandler = errorHandler, futureDeclarations = futureDeclarations)
+  def apply(declarations: Seq[DomainElement], errorHandler: Option[ErrorHandler], futureDeclarations: FutureDeclarations): WebApiDeclarations = {
+    val result = new WebApiDeclarations(None, errorHandler = errorHandler, futureDeclarations = futureDeclarations)
     declarations.foreach(result += _)
     result
   }

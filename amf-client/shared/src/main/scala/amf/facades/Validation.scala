@@ -1,7 +1,6 @@
 package amf.facades
 
 import amf.ProfileNames
-import amf.core.annotations.LexicalInformation
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
 import amf.core.services.RuntimeValidator
@@ -9,10 +8,8 @@ import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations}
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
-import amf.plugins.document.vocabularies.registries.PlatformDialectRegistry
-import amf.plugins.document.vocabularies.spec.Dialect
-import amf.plugins.document.vocabularies.validation.AMFDialectValidations
-import amf.plugins.document.webapi._
+import amf.plugins.document.vocabularies.model.document.Dialect
+import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML08Plugin, RAML10Plugin, _}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.features.validation.AMFValidatorPlugin
@@ -56,7 +53,7 @@ class Validation(platform: Platform) {
     * Loads the validation dialect from the provided URL
     */
   def loadValidationDialect(): Future[Dialect] = {
-    PlatformDialectRegistry.registerDialect(url, ValidationDialectText.text)
+    RAMLVocabulariesPlugin.registry.registerDialect(url, ValidationDialectText.text)
     /*
     platform.dialectsRegistry.get("%Validation Profile 1.0") match {
       case Some(dialect) => Promise().success(dialect).future
@@ -70,7 +67,7 @@ class Validation(platform: Platform) {
   // The aggregated report
   def reset(): Unit = validator.reset()
 
-  def aggregatedReport: List[AMFValidationResult] = validator.aggregatedReport
+  def aggregatedReport: List[AMFValidationResult] = validator.aggregatedReport(validator.aggregatedReport.keySet.max)
 
   // disable temporarily the reporting of validations
   def enabled: Boolean = validator.enabled
@@ -82,17 +79,6 @@ class Validation(platform: Platform) {
 
   def disableValidations[T]()(f: () => T): T = validator.disableValidations()(f)
 
-  /**
-    * Client code can use this function to register a new validation failure
-    */
-  def reportConstraintFailure(level: String,
-                              validationId: String,
-                              targetNode: String,
-                              targetProperty: Option[String] = None,
-                              message: String = "",
-                              position: Option[LexicalInformation] = None): Unit = {
-    validator.reportConstraintFailure(level, validationId, targetNode, targetProperty, message, position)
-  }
 
   def loadValidationProfile(validationProfilePath: String): Future[String] = {
     validator.loadValidationProfile(validationProfilePath)
@@ -103,7 +89,8 @@ class Validation(platform: Platform) {
     * @param dialect RAML dialect to be parsed as a Validation Profile
     */
   def loadDialectValidationProfile(dialect: Dialect): Unit =
-    profile = Some(new AMFDialectValidations(dialect).profile())
+    // TODO: REDO THIS!!!
+    profile = None // Some(new AMFDialectValidations(dialect).profile())
 
   def validate(model: BaseUnit,
                profileName: String,

@@ -16,7 +16,13 @@ trait AmfObject extends AmfElement {
 
   /** Set element unique identifier. */
   def withId(value: String): this.type = {
-    id = value
+    val cleanId = if (value.contains("://")) {
+      val parts = value.split("://")
+      parts(0) + "://" + parts(1).replace("//","/")
+    } else {
+      value.replace("//","/")
+    }
+    id = cleanId
     this
   }
 
@@ -33,6 +39,11 @@ trait AmfObject extends AmfElement {
 
   /** Set scalar value. */
   def set(field: Field, value: Int): this.type = set(field, AmfScalar(value))
+
+  /** Set scalar value. */
+  def set(field: Field, value: Double): this.type = set(field, AmfScalar(value))
+
+  def set(field: Field, value: Float): this.type = set(field, AmfScalar(value))
 
   /** Set scalar value. */
   def set(field: Field, values: Seq[String]): this.type = setArray(field, values.map(AmfScalar(_)))

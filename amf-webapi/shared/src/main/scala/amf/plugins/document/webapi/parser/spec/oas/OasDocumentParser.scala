@@ -15,7 +15,7 @@ import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, BaseSpecParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, WebApiBaseSpecParser}
 import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationsParser, SecuritySchemeParser, _}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
@@ -510,7 +510,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) ext
   }
 }
 
-abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends BaseSpecParser with SpecParserOps {
+abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseSpecParser with SpecParserOps {
 
   protected def parseDeclarations(root: Root, map: YMap): Unit = {
     val parent = root.location + "#/declarations"

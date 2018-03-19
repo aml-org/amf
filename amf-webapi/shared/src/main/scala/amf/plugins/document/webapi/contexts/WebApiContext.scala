@@ -110,14 +110,14 @@ class OasWebApiContext(private val wrapped: ParserContext, private val ds: Optio
 }
 
 abstract class WebApiContext(private val wrapped: ParserContext, private val ds: Option[WebApiDeclarations] = None)
-    extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations)
+    extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, parserCount = wrapped.parserCount)
     with SpecAwareContext {
 
   val syntax: SpecSyntax
   val vendor: Vendor
 
   val declarations: WebApiDeclarations =
-    ds.getOrElse(new WebApiDeclarations(errorHandler = Some(this), futureDeclarations = futureDeclarations))
+    ds.getOrElse(new WebApiDeclarations(None, errorHandler = Some(this), futureDeclarations = futureDeclarations))
 
   def link(node: YNode): Either[String, YNode]
   def ignore(shape: String, property: String): Boolean

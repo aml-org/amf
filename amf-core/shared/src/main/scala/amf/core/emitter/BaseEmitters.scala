@@ -72,6 +72,7 @@ package object BaseEmitters {
 
     val tag: YType = {
       f.field.`type` match {
+        case Type.Date => YType.Timestamp
         case Type.Int  => YType.Int
         case Type.Bool => YType.Bool
         case _         => YType.Str

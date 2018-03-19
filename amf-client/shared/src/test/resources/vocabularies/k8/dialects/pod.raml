@@ -8,8 +8,8 @@ uses:
   k8-core: ../vocabulary/core.raml
   k8-common: ../vocabulary/common.raml
 
-raml:
-  document:
+documents:
+  root:
     encodes: PodNode
 
 nodeMappings:
@@ -83,8 +83,7 @@ nodeMappings:
         range: string
       volumes:
         propertyTerm: k8-core.volumes
-        asMap: true
-        hash: k8-core.volumeType
+        mapKey: k8-core.volumeType
         range:
           - AWSElasticBlockStoreVolumeSourceNode
           - AzureDiskVolumeSource

@@ -2,9 +2,8 @@ package amf
 
 import amf.core.client.{Generator, Parser, Resolver}
 import amf.core.plugins.AMFPlugin
-import amf.client.model.document.BaseUnit
-//import amf.plugins.document.Vocabularies
-import amf.plugins.document.vocabularies.spec.Dialect
+import amf.client.model.document.{BaseUnit, Dialect}
+import amf.plugins.document.Vocabularies
 import amf.validation.AMFValidationReport
 
 import scala.scalajs.js.Promise
@@ -46,7 +45,7 @@ object AMF {
 
   def registerNamespace(alias: String, prefix: String): Boolean = amf.Core.registerNamespace(alias, prefix)
 
-//  def registerDialect(url: String): Promise[Dialect] = Vocabularies.registerDialect(url)
+  def registerDialect(url: String): Promise[Dialect] = Vocabularies.registerDialect(url)
 
   def resolveRaml10(unit: BaseUnit): BaseUnit = new Raml10Resolver().resolve(unit)
 

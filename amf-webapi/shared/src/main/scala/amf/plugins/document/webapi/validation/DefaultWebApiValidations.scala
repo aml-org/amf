@@ -49,6 +49,8 @@ object AMFValidation {
                  value,
                  ramlError,
                  openApiError) =>
+        val parsedValue = if (constraint.endsWith("pattern")) value
+                          else Namespace.uri(value).iri() // this might not be a URI, but trying to expand it is still safe
         Some(
           AMFValidation(
             nonNullString(Namespace.uri(uri).iri()),
@@ -60,7 +62,7 @@ object AMFValidation {
             shape,
             Namespace.uri(target).iri(),
             Namespace.uri(constraint).iri(),
-            Namespace.uri(value).iri(), // this might not be a URI, but trying to expand it is still safe
+            parsedValue,
             ramlError,
             openApiError
           ))

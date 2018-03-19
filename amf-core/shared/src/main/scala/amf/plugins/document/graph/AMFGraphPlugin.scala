@@ -37,7 +37,7 @@ object AMFGraphPlugin extends AMFDocumentPlugin {
     val maybeMaps = root.parsed.document.node.toOption[Seq[YMap]]
     val maybeMap  = maybeMaps.flatMap(s => s.headOption)
     maybeMap match {
-      case Some(m: YMap) => m.key((Namespace.Document + "encodes").iri()).isDefined
+      case Some(m: YMap) => m.key("@id").isDefined || m.key("@type").isDefined || m.key((Namespace.Document + "encodes").iri()).isDefined || m.key((Namespace.Document + "declares").iri()).isDefined
       case _             => false
     }
 

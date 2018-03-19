@@ -356,7 +356,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
 
 }
 
-abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends BaseSpecParser {
+abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBaseSpecParser {
 
   case class UsageParser(map: YMap, baseUnit: BaseUnit) {
     def parse(): Unit = {

@@ -47,12 +47,12 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
 
   override def dependencies(): Seq[AMFPlugin] = Seq()
 
-  var aggregatedReport: List[AMFValidationResult] = List()
+  var aggregatedReport: Map[Int,List[AMFValidationResult]] = Map()
 
   // The aggregated report
   def reset(): Unit = {
     enabled = true
-    aggregatedReport = List()
+    aggregatedReport = Map()
   }
 
   // disable temporarily the reporting of validations
@@ -116,7 +116,11 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
   override def validate(model: BaseUnit, profileName: String, messageStyle: String): Future[AMFValidationReport] = {
     val validations = EffectiveValidations().someEffective(parserSideValidationsProfile)
     // aggregating parser-side validations
-    var results = aggregatedReport.map(r => processAggregatedResult(r, messageStyle, validations))
+    var results = model.parserRun match {
+      case Some(runId) => aggregatedReport.getOrElse(runId, Nil).map(r => processAggregatedResult(r, messageStyle, validations))
+      case _           => Nil
+    }
+
 
     Future {
       AMFValidationReport(
@@ -132,14 +136,17 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
     * Client code can use this function to register a new validation failure
     */
   override def reportConstraintFailure(level: String,
-                              validationId: String,
-                              targetNode: String,
-                              targetProperty: Option[String] = None,
-                              message: String = "",
-                              position: Option[LexicalInformation] = None): Unit = {
+                                       validationId: String,
+                                       targetNode: String,
+                                       targetProperty: Option[String] = None,
+                                       message: String = "",
+                                       position: Option[LexicalInformation] = None,
+                                       parserRun: Int): Unit = synchronized {
     val validationError = AMFValidationResult(message, level, targetNode, targetProperty, validationId, position, this)
     if (enabled) {
-      aggregatedReport ++= Seq(validationError)
+      var report = aggregatedReport.getOrElse(parserRun, List())
+      report ++= Seq(validationError)
+      aggregatedReport += (parserRun -> report)
     } else {
       throw new Exception(validationError.toString)
     }

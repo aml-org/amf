@@ -46,40 +46,17 @@ object ParserSideValidations {
     None,
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
-
-  val DialectExpectingMap = ValidationSpecification(
-    (Namespace.AmfParser + "dialect-expecting-map").iri(),
-    "Expecting map node",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
-  )
-  val DialectExtendIssue = ValidationSpecification(
-    (Namespace.AmfParser + "dialect-extend-issue").iri(),
-    "Extend related issue",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
-  )
-
-  val DialectUnresolvableReference = ValidationSpecification(
-    (Namespace.AmfParser + "dialect-unresolvable-reference").iri(),
-    "Unresolvable Reference",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
-  )
-  val DialectNodeRangeShouldBeDialect = ValidationSpecification(
-    (Namespace.AmfParser + "dialect-node-range-should-be-dialect").iri(),
-    "Dialect Node Range should be dialect",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
-  )
-
   val ClosedShapeSpecification = ValidationSpecification(
     (Namespace.AmfParser + "closed-shape").iri(),
-    "invalid property for node",
+    "Invalid property for node",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
+  val MissingPropertySpecification = ValidationSpecification(
+    (Namespace.AmfParser + "mandatory-property-shape").iri(),
+    "Missing mandatory property",
     None,
     None,
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
@@ -101,6 +78,40 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
+  val InconsistentPropertyRangeValueSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "inconsistent-property-range-value").iri(),
+    "Range value does not match the expected type",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
+  val MissingPropertyRangeSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "missing-node-mapping-range-term").iri(),
+    "Missing property range term",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
+
+  val MissingTermSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "missing-vocabulary-term").iri(),
+    "Missing vocabulary term",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
+  val MissingFragmentSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "missing-dialect-fragment").iri(),
+    "Missing dialect fragment",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
+
   val levels: Map[String, Map[String, String]] = Map(
     OasBodyAndFormDataParameterSpecification.id() -> Map(
       ProfileNames.OAS  -> SeverityLevels.VIOLATION
@@ -116,21 +127,6 @@ object ParserSideValidations {
       ProfileNames.AMF  -> SeverityLevels.VIOLATION
     ),
     DialectAmbiguousRangeSpecification.id() -> Map(
-      ProfileNames.RAML -> SeverityLevels.VIOLATION,
-      ProfileNames.OAS  -> SeverityLevels.VIOLATION,
-      ProfileNames.AMF  -> SeverityLevels.VIOLATION
-    ),
-    DialectExpectingMap.id() -> Map(
-      ProfileNames.RAML -> SeverityLevels.VIOLATION,
-      ProfileNames.OAS  -> SeverityLevels.VIOLATION,
-      ProfileNames.AMF  -> SeverityLevels.VIOLATION
-    ),
-    DialectUnresolvableReference.id() -> Map(
-      ProfileNames.RAML -> SeverityLevels.VIOLATION,
-      ProfileNames.OAS  -> SeverityLevels.VIOLATION,
-      ProfileNames.AMF  -> SeverityLevels.VIOLATION
-    ),
-    DialectNodeRangeShouldBeDialect.id() -> Map(
       ProfileNames.RAML -> SeverityLevels.VIOLATION,
       ProfileNames.OAS  -> SeverityLevels.VIOLATION,
       ProfileNames.AMF  -> SeverityLevels.VIOLATION
@@ -154,6 +150,31 @@ object ParserSideValidations {
       ProfileNames.RAML -> SeverityLevels.WARNING,
       ProfileNames.OAS  -> SeverityLevels.WARNING,
       ProfileNames.AMF  -> SeverityLevels.WARNING
+    ),
+    InconsistentPropertyRangeValueSpecification.id() -> Map(
+      ProfileNames.RAML -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS  -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF  -> SeverityLevels.VIOLATION
+    ),
+    MissingPropertyRangeSpecification.id() -> Map(
+      ProfileNames.RAML -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS  -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF  -> SeverityLevels.VIOLATION
+    ),
+    MissingTermSpecification.id() -> Map(
+      ProfileNames.RAML -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS  -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF  -> SeverityLevels.VIOLATION
+    ),
+    MissingFragmentSpecification.id() -> Map(
+      ProfileNames.RAML -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS  -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF  -> SeverityLevels.VIOLATION
+    ),
+    MissingPropertySpecification.id() -> Map(
+      ProfileNames.RAML -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS  -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF  -> SeverityLevels.VIOLATION
     )
   )
 
@@ -164,8 +185,10 @@ object ParserSideValidations {
     ParsingWarningSpecification,
     ExampleValidationErrorSpecification,
     UnsupportedExampleMediaTypeErrorSpecification,
-    DialectExpectingMap,
-    DialectUnresolvableReference,
-    DialectNodeRangeShouldBeDialect
+    InconsistentPropertyRangeValueSpecification,
+    MissingPropertyRangeSpecification,
+    MissingTermSpecification,
+    MissingFragmentSpecification,
+    MissingPropertySpecification
   )
 }
