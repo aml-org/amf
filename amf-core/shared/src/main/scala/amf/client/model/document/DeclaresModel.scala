@@ -19,4 +19,9 @@ trait DeclaresModel extends AmfObjectWrapper {
     _internal.withDeclaredElement(declared)
     this
   }
+
+  def withDeclares(declares: ClientList[DomainElement]): this.type = {
+    _internal.withDeclares(declares.asInternal)
+    this
+  }
 }

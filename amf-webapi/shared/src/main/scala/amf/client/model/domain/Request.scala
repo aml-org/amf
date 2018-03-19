@@ -11,7 +11,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class Request(override private[amf] val _internal: InternalRequest) extends DomainElement {
 
-  @JSExportTopLevel("Request")
+  @JSExportTopLevel("model.domain.Request")
   def this() = this(InternalRequest())
 
   def queryParameters: ClientList[Parameter] = _internal.queryParameters.asClient
