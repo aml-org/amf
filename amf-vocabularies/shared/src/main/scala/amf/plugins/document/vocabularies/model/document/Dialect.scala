@@ -9,7 +9,21 @@ import amf.plugins.document.vocabularies.metamodel.document.DialectModel._
 import amf.plugins.document.vocabularies.metamodel.document.{DialectFragmentModel, DialectLibraryModel, DialectModel}
 import amf.plugins.document.vocabularies.model.domain.{DocumentsModel, External, NodeMapping}
 
-case class Dialect(fields: Fields, annotations: Annotations) extends BaseUnit with DeclaresModel with EncodesModel {
+trait MappingDeclarer { this: BaseUnit with DeclaresModel =>
+
+  def findNodeMapping(mappingId: String): Option[NodeMapping] = {
+    declares.find(_.id == mappingId) match {
+      case Some(mapping: NodeMapping) => Some(mapping)
+      case _ => references.collect { case lib: MappingDeclarer =>
+        lib
+      }.map { dec =>
+        dec.findNodeMapping(mappingId)
+      }.filter(_.isDefined).map(_.get).headOption
+    }
+  }
+}
+
+case class Dialect(fields: Fields, annotations: Annotations) extends BaseUnit with DeclaresModel with EncodesModel with MappingDeclarer {
   def meta: Obj                          = DialectModel
   def references: Seq[BaseUnit]          = fields.field(References)
   def location: String                   = fields(Location)
@@ -53,7 +67,7 @@ object Dialect {
   def apply(annotations: Annotations): Dialect = Dialect(Fields(), annotations)
 }
 
-case class DialectLibrary(fields: Fields, annotations: Annotations) extends BaseUnit with DeclaresModel {
+case class DialectLibrary(fields: Fields, annotations: Annotations) extends BaseUnit with DeclaresModel with MappingDeclarer {
   def meta: Obj                          = DialectLibraryModel
   def references: Seq[BaseUnit]          = fields.field(References)
   def location: String                   = fields(Location)

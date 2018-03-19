@@ -72,6 +72,30 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
     validate("dialect7.raml", "instance7_incorrect1.raml", 1)
   }
 
+  test("validation mule_config  example 1 correct") {
+    validate("mule_config_dialect1.raml", "mule_config_instance_correct1.raml", 0)
+  }
+
+  test("validation mule_config  example 1 incorrect") {
+    validate("mule_config_dialect1.raml", "mule_config_instance_incorrect1.raml", 1)
+  }
+
+  test("validation mule_config  example 2 incorrect") {
+    validate("mule_config_dialect1.raml", "mule_config_instance_incorrect2.raml", 1)
+  }
+
+  test("validation eng_demos  example 1 correct") {
+    validate("eng_demos_dialect1.raml", "eng_demos_instance1.raml", 0)
+  }
+
+  test("custom validation profile for dialect") {
+    customValidationProfile("eng_demos_dialect1.raml", "eng_demos_instance1.raml", "eng_demos_profile.raml", "Custom Eng-Demos Validation", 6)
+  }
+
+  test("custom validation profile for dialect default profile") {
+    customValidationProfile("eng_demos_dialect1.raml", "eng_demos_instance1.raml", "eng_demos_profile.raml", "Eng Demos 0.1", 0)
+  }
+
 
   protected def validate(dialect: String, instance: String, numErrors: Int) = {
     amf.core.AMF.registerPlugin(RAMLVocabulariesPlugin)
@@ -101,6 +125,50 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
         RuntimeValidator(
           instance,
           dialect.asInstanceOf[Dialect].nameAndVersion()
+        )
+      }
+    } yield {
+      if (numErrors == 0) {
+        if (!report.conforms)
+          println(report)
+        assert(report.conforms)
+      }
+      else assert(report.results.length == numErrors)
+    }
+  }
+
+  protected def customValidationProfile(dialect: String, instance: String, profile: String, name: String, numErrors: Int) = {
+    amf.core.AMF.registerPlugin(RAMLVocabulariesPlugin)
+    amf.core.AMF.registerPlugin(AMFValidatorPlugin)
+    for {
+      _       <- amf.core.AMF.init()
+      dialect <- {
+        new AMFCompiler(
+          basePath + dialect,
+          platform,
+          None,
+          Some("application/yaml"),
+          RAMLVocabulariesPlugin.ID
+        ).build()
+      }
+      profile <- {
+        AMFValidatorPlugin.enabled = true
+        AMFValidatorPlugin.loadValidationProfile(basePath + profile)
+      }
+      instance <- {
+        AMFValidatorPlugin.enabled = true
+        new AMFCompiler(
+          basePath + instance,
+          platform,
+          None,
+          Some("application/yaml"),
+          RAMLVocabulariesPlugin.ID
+        ).build()
+      }
+      report <- {
+        RuntimeValidator(
+          instance,
+          name
         )
       }
     } yield {
