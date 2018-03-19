@@ -1,6 +1,6 @@
 package amf.core.parser
 
-import amf.core.annotations
+import amf.core.{AMFCompilerRunCount, annotations}
 import amf.core.annotations.LexicalInformation
 import amf.core.services.RuntimeValidator
 import amf.core.validation.SeverityLevels.{VIOLATION, WARNING}
@@ -11,7 +11,9 @@ import org.yaml.model._
 /**
   * Parser context
   */
-class ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
+abstract class ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
+
+  val parserCount: Int
 
   override def handle[T](error: YError, defaultValue: T): T = {
     violation("", error.error, part(error))
@@ -24,7 +26,7 @@ class ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
                                message: String,
                                lexical: Option[LexicalInformation],
                                level: String): Unit = {
-    RuntimeValidator.reportConstraintFailure(level, id, node, property, message, lexical)
+    RuntimeValidator.reportConstraintFailure(level, id, node, property, message, lexical, parserCount)
   }
 
   /** Report constraint failure of severity violation. */
@@ -108,5 +110,6 @@ object EmptyFutureDeclarations {
 }
 case class ParserContext(rootContextDocument: String = "",
                          refs: Seq[ParsedReference] = Seq.empty,
-                         futureDeclarations: FutureDeclarations = EmptyFutureDeclarations())
+                         futureDeclarations: FutureDeclarations = EmptyFutureDeclarations(),
+                         parserCount: Int = AMFCompilerRunCount.nextRun())
     extends ErrorHandler

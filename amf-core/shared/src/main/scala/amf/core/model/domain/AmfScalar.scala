@@ -1,6 +1,5 @@
 package amf.core.model.domain
 
-import amf.client.model.ValueField
 import amf.core.parser.Annotations
 
 /**

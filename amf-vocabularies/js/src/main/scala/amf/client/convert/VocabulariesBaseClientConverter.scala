@@ -1,0 +1,3 @@
+package amf.client.convert
+
+trait VocabulariesBaseClientConverter extends VocabulariesBaseConverter with CoreBaseClientConverter

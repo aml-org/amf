@@ -1,19 +1,17 @@
 package amf.plugins.document
 
 import amf.client.convert.WebApiRegister
-import amf.core.unsafe.PlatformSecrets
-import amf.client.model.document._
 import amf.client.model.domain.{DataNode, Shape}
-import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
+import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi._
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.validation.AMFValidationReport
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSExportAll
-import scala.scalajs.js
 
 @JSExportAll
 object WebApi extends PlatformSecrets {

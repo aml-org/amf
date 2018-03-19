@@ -1,0 +1,18 @@
+#%RAML 1.0 Vocabulary
+external:
+  test: http://test.com/vocab#
+base: http://raml.org/vocabularies/test5#
+vocabulary: test5
+classTerms:
+  D:
+    extends: test.Base
+propertyTerms:
+  c:
+    displayName: property c
+    description: c
+    extends: test.scalar
+    range: string
+  d:
+    displayName: property d
+    description: d
+    range: test.D

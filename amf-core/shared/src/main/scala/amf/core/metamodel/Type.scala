@@ -30,7 +30,17 @@ object Type {
 
   object Str extends Scalar("string")
 
+  object RegExp extends Scalar("regexp")
+
   object Int extends Scalar("int")
+
+  object Float extends Scalar("float")
+
+  object Double extends Scalar("double")
+
+  object Time extends Scalar("time")
+
+  object Date extends Scalar("date")
 
   object Iri extends Scalar("url")
 

@@ -54,7 +54,7 @@ case class RamlTypeDetector(parent: String,
           None
 
         case RamlTypeDefMatcher.TypeExpression(text) =>
-          RamlTypeExpressionParser(shape => shape, Some(node.as[YScalar]), checking = true)
+          RamlTypeExpressionParser(shape => shape.withId("/"), Some(node.as[YScalar]), checking = true)
             .parse(text)
             .flatMap(s => ShapeClassTypeDefMatcher(s, node, recursive))
             .map {

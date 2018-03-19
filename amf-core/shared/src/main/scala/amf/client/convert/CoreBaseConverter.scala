@@ -1,21 +1,8 @@
 package amf.client.convert
 
-import amf.client.model.StrField
+import amf.client.model.{AnyField, DoubleField, StrField}
 import amf.client.model.document.{BaseUnit => ClientBaseUnit}
-import amf.client.model.domain.{
-  AbstractDeclaration => ClientAbstractDeclaration,
-  ArrayNode => ClientArrayNode,
-  CustomDomainProperty => ClientCustomDomainProperty,
-  DataNode => ClientDataNode,
-  DomainElement => ClientDomainElement,
-  DomainExtension => ClientDomainExtension,
-  ObjectNode => ClientObjectNode,
-  ParametrizedDeclaration => ClientParameterizedDeclaration,
-  PropertyShape => ClientPropertyShape,
-  ScalarNode => ClientScalarNode,
-  Shape => ClientShape,
-  VariableValue => ClientVariableValue
-}
+import amf.client.model.domain.{AbstractDeclaration => ClientAbstractDeclaration, ArrayNode => ClientArrayNode, CustomDomainProperty => ClientCustomDomainProperty, DataNode => ClientDataNode, DomainElement => ClientDomainElement, DomainExtension => ClientDomainExtension, ObjectNode => ClientObjectNode, ParametrizedDeclaration => ClientParameterizedDeclaration, PropertyShape => ClientPropertyShape, ScalarNode => ClientScalarNode, Shape => ClientShape, VariableValue => ClientVariableValue}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
@@ -75,6 +62,10 @@ trait CoreBaseConverter
                                                        m: ClientInternalMatcher[Client, Internal]): Seq[Internal]
 
   implicit object StrFieldMatcher extends IdentityMatcher[StrField]
+
+  implicit object DoubleFieldMatcher extends IdentityMatcher[DoubleField]
+
+  implicit object AnyFieldMatcher extends IdentityMatcher[AnyField]
 
   implicit object StringMatcher extends IdentityMatcher[String]
 

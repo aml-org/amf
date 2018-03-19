@@ -13,9 +13,7 @@ import org.yaml.model._
 
 import scala.collection.mutable.ListBuffer
 
-trait BaseSpecParser extends SpecParserOps {
-  implicit val ctx: ParserContext
-}
+trait WebApiBaseSpecParser extends BaseSpecParser with SpecParserOps
 
 trait SpecParserOps {
 

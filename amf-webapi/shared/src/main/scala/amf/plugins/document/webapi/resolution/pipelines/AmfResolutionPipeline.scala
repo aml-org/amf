@@ -3,8 +3,8 @@ package amf.plugins.document.webapi.resolution.pipelines
 import amf.ProfileNames
 import amf.core.model.document.BaseUnit
 import amf.core.resolution.pipelines.ResolutionPipeline
-import amf.core.resolution.stages.{CleanReferencesStage, ReferenceResolutionStage}
-import amf.plugins.document.webapi.resolution.stages.{DeclarationsRemovalStage, ExtendsResolutionStage, ExtensionsResolutionStage}
+import amf.core.resolution.stages.{CleanReferencesStage, DeclarationsRemovalStage, ReferenceResolutionStage}
+import amf.plugins.document.webapi.resolution.stages.{ExtendsResolutionStage, ExtensionsResolutionStage}
 import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
 import amf.plugins.domain.webapi.resolution.stages.{ExamplesResolutionStage, MediaTypeResolutionStage, ParametersNormalizationStage, SecurityResolutionStage}
 

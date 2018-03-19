@@ -5,7 +5,6 @@ import amf.core.metamodel.document.DocumentModel._
 import amf.core.metamodel.document.{DocumentModel, ExtensionLikeModel}
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
-import amf.core.resolution.pipelines.BasicResolutionPipeline
 
 /**
   * A [[Document]] is a parsing Unit that encodes a stand-alone [[DomainElement]] and can include references to other

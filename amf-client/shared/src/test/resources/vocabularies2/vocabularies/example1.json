@@ -1,0 +1,54 @@
+[
+  {
+    "@id": "http://raml.org/vocabularies/test1#",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Ontology2",
+      "http://raml.org/vocabularies/meta#Vocabulary",
+      "http://raml.org/vocabularies/document#Unit"
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "test1"
+      }
+    ],
+    "http://raml.org/vocabularies/document#location": [
+      {
+        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/vocabularies/example1.raml"
+      }
+    ],
+    "http://raml.org/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "http://raml.org/vocabularies/test1#/source-map",
+        "@type": [
+          "http://raml.org/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://raml.org/vocabularies/document-source-maps#lexical": [
+          {
+            "http://raml.org/vocabularies/document-source-maps#element": [
+              {
+                "@value": "http://schema.org/name"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(3,0)-(4,0)]"
+              }
+            ]
+          },
+          {
+            "http://raml.org/vocabularies/document-source-maps#element": [
+              {
+                "@value": "http://raml.org/vocabularies/test1#"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(2,0)-(4,0)]"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

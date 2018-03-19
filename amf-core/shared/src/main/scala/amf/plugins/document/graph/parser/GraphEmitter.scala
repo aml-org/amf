@@ -2,7 +2,7 @@ package amf.plugins.document.graph.parser
 
 import amf.core.annotations.{DomainExtensionAnnotation, ScalarType}
 import amf.core.client.GenerationOptions
-import amf.core.metamodel.Type.{Array, Bool, Iri, SortedArray, Str}
+import amf.core.metamodel.Type.{Any, Array, Bool, Iri, SortedArray, Str}
 import amf.core.metamodel.document.SourceMapModel
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
@@ -14,6 +14,7 @@ import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.{FieldEntry, Value}
 import amf.core.vocabulary.Namespace.SourceMaps
 import amf.core.vocabulary.{Namespace, ValueType}
+import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
 
@@ -51,7 +52,12 @@ object GraphEmitter extends MetaModelTypeMapping {
 
       createCustomExtensions(element, b)
 
-      createSourcesNode(id + "/source-map", sources, b)
+      val sourceMapId = if (id.endsWith("/")) {
+        id + "source-map"
+      } else {
+        id + "/source-map"
+      }
+      createSourcesNode(sourceMapId, sources, b)
     }
 
     def traverseDynamicMetaModel(id: String, element: AmfObject, sources: SourceMap, obj: Obj, b: EntryBuilder): Unit = {
@@ -177,6 +183,21 @@ object GraphEmitter extends MetaModelTypeMapping {
                     }
                   case Str =>
                     seq.asInstanceOf[Seq[AmfScalar]].headOption.foreach(e => scalar(b, e.toString, inArray = true))
+
+                  case Iri =>
+                    seq.asInstanceOf[Seq[AmfScalar]].headOption.foreach(e => iri(b, e.toString, inArray = true))
+
+                  case Any =>
+                    seq.asInstanceOf[Seq[AmfScalar]].headOption.foreach { scalarElement =>
+                      scalarElement.value match {
+                        case bool: Boolean => typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true)
+                        case str: String   => typedScalar(b, str.toString, (Namespace.Xsd + "string").iri(), inArray = true)
+                        case i: Int        => typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true)
+                        case f: Float      => typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true)
+                        case d: Double     => typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true)
+                        case other         => scalar(b, other.toString, inArray = true)
+                      }
+                    }
                 }
               }
             )
@@ -217,6 +238,23 @@ object GraphEmitter extends MetaModelTypeMapping {
         case Type.Int =>
           scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Int)
           sources(v)
+        case Type.Double =>
+          // this will transform the value to double and will not emit @type TODO: ADD YType.Double
+          scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Float)
+          sources(v)
+        case Type.Float =>
+          scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Float)
+          sources(v)
+        case Type.Date =>
+          val dateTime = v.value.asInstanceOf[AmfScalar].value.asInstanceOf[SimpleDateTime]
+          if (dateTime.timeOfDay.isDefined || dateTime.zoneOffset.isDefined) {
+            // TODO: add support for RFC3339 here
+            //typedScalar(b, dateTime.toRFC3339, (Namespace.Xsd + "dateTime").iri())
+            throw new Exception("Serialisation of timestamps not supported yet")
+          } else {
+            typedScalar(b, f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d", (Namespace.Xsd + "date").iri())
+            sources(v)
+          }
         case a: SortedArray =>
           createSortedArray(b, v.value.asInstanceOf[AmfArray].values, parent, a.element, sources, Some(v))
         case a: Array =>
@@ -243,11 +281,26 @@ object GraphEmitter extends MetaModelTypeMapping {
               case Type.Int =>
                 seq.values
                   .asInstanceOf[Seq[AmfScalar]]
-                  .foreach(e => scalar(b, e.value.asInstanceOf[AmfScalar].toString, YType.Int, inArray = true))
+                  .foreach(e => scalar(b, e.value.toString, YType.Int, inArray = true))
+              case Type.Float =>
+                seq.values
+                  .asInstanceOf[Seq[AmfScalar]]
+                  .foreach(e => scalar(b, e.value.toString, YType.Float, inArray = true))
               case Bool =>
                 seq.values
                   .asInstanceOf[Seq[AmfScalar]]
-                  .foreach(e => scalar(b, e.value.asInstanceOf[AmfScalar].toString, YType.Bool, inArray = true))
+                  .foreach(e => scalar(b, e.value.toString, YType.Bool, inArray = true))
+              case Any =>
+                seq.values.asInstanceOf[Seq[AmfScalar]].foreach { scalarElement =>
+                  scalarElement.value match {
+                    case bool: Boolean => typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true)
+                    case str: String   => typedScalar(b, str.toString, (Namespace.Xsd + "string").iri(), inArray = true)
+                    case i: Int        => typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true)
+                    case f: Float      => typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true)
+                    case d: Double     => typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true)
+                    case other         => scalar(b, other.toString, inArray = true)
+                  }
+                }
               case _ => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(b, e.toString, inArray = true))
             }
           }

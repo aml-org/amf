@@ -29,6 +29,12 @@ trait Linkable extends AmfObject { this: DomainElement with Linkable =>
       .asInstanceOf[T]
   }
 
+  /**
+    * This can be overriden by subclasses to customise how the links to unresolved classes are generated.
+    * By default it just generates a link.
+    */
+  def resolveUnreferencedLink[T](label: String, annotations: Annotations = Annotations(), unresolved: T): T = link(label, annotations)
+
   // Unresolved references to things that can be linked
   // TODO: another trait?
   var isUnresolved: Boolean         = false

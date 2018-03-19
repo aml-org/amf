@@ -1,6 +1,6 @@
 package amf.core.parser
 
-import amf.client.model.{BoolField, IntField, StrField}
+import amf.client.model._
 import amf.core.metamodel.Type._
 import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.model.domain._
@@ -30,10 +30,13 @@ class Fields {
     def typed(t: Type, e: AmfElement): Any = e match {
       case s: AmfScalar =>
         t match {
-          case Str | Iri => new StrFieldImpl(s)
-          case Bool      => new BoolFieldImpl(s)
-          case Type.Int  => new IntFieldImpl(s)
-          case _         => throw new Exception(s"Invalid value '$s' of type '$t'")
+          case Str | Iri   => new StrFieldImpl(s)
+          case Bool        => new BoolFieldImpl(s)
+          case Type.Int    => new IntFieldImpl(s)
+          case Type.Float  => new DoubleFieldImpl(s)
+          case Type.Double => new DoubleFieldImpl(s)
+          case Type.Any    => new AnyFieldImpl(s)
+          case _           => throw new Exception(s"Invalid value '$s' of type '$t'")
         }
       case o: AmfObject =>
         t match {
@@ -47,12 +50,14 @@ class Fields {
         }
     }
 
-    //noinspection ScalaStyle
     def empty(): T =
       (f.`type` match {
-        case Str | Iri    => StrFieldImpl(null, Annotations())
-        case Bool         => BoolFieldImpl(null.asInstanceOf[Boolean], Annotations())
-        case Type.Int     => IntFieldImpl(null.asInstanceOf[Int], Annotations())
+        case Str | Iri    => StrFieldImpl(None, Annotations())
+        case Bool         => BoolFieldImpl(None, Annotations())
+        case Type.Int     => IntFieldImpl(None, Annotations())
+        case Type.Float   => DoubleFieldImpl(None, Annotations())
+        case Type.Double  => DoubleFieldImpl(None, Annotations())
+        case Type.Any     => AnyFieldImpl(None, Annotations())
         case ArrayLike(_) => Nil
         case _: Obj       => null
       }).asInstanceOf[T]
@@ -174,16 +179,24 @@ class Fields {
 
   def nonEmpty: Boolean = fs.nonEmpty
 
-  private case class StrFieldImpl(value: String, annotations: Annotations) extends StrField {
-    def this(s: AmfScalar) = this(s.value.asInstanceOf[String], s.annotations)
+  private case class StrFieldImpl(option: Option[String], annotations: Annotations) extends StrField {
+    def this(s: AmfScalar) = this(Option(s.value).map(_.asInstanceOf[String]), s.annotations)
   }
 
-  private case class BoolFieldImpl(value: Boolean, annotations: Annotations) extends BoolField {
-    def this(s: AmfScalar) = this(s.value.asInstanceOf[Boolean], s.annotations)
+  private case class BoolFieldImpl(option: Option[Boolean], annotations: Annotations) extends BoolField {
+    def this(s: AmfScalar) = this(Option(s.value).map(_.asInstanceOf[Boolean]), s.annotations)
   }
 
-  private case class IntFieldImpl(value: Int, annotations: Annotations) extends IntField {
-    def this(s: AmfScalar) = this(s.value.asInstanceOf[Int], s.annotations)
+  private case class IntFieldImpl(option: Option[Int], annotations: Annotations) extends IntField {
+    def this(s: AmfScalar) = this(Option(s.value).map(_.asInstanceOf[Int]), s.annotations)
+  }
+
+  private case class DoubleFieldImpl(option: Option[Double], annotations: Annotations) extends DoubleField {
+    def this(s: AmfScalar) = this(Option(s.value).map(_.asInstanceOf[Double]), s.annotations)
+  }
+
+  private case class AnyFieldImpl(option: Option[Any], annotations: Annotations) extends AnyField {
+    def this(s: AmfScalar) = this(Option(s.value), s.annotations)
   }
 }
 
@@ -204,7 +217,7 @@ class Value(var value: AmfElement, val annotations: Annotations) {
       // in the declarations of the parser context
       // to be executed when a reference is resolved
       linkable.toFutureRef((resolved) => {
-        value = resolved.link(linkable.refName, linkable.annotations) // mutation of the field value
+        value = resolved.resolveUnreferencedLink(linkable.refName, linkable.annotations, linkable) // mutation of the field value
       })
 
     case array: AmfArray => // Same for arrays, but iterating through elements and looking for unresolved
@@ -213,7 +226,7 @@ class Value(var value: AmfElement, val annotations: Annotations) {
           linkable.toFutureRef((resolved) => {
             value.asInstanceOf[AmfArray].values = value.asInstanceOf[AmfArray].values map { element =>
               if (element == linkable) {
-                resolved.link(linkable.refName, linkable.annotations) // mutation of the field value
+                resolved.resolveUnreferencedLink(linkable.refName, linkable.annotations, element) // mutation of the field value
               } else {
                 element
               }
