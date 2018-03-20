@@ -1,5 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
+import amf.core.metamodel.domain.templates.AbstractDeclarationModel
+import amf.core.model.domain.AmfScalar
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -52,7 +54,17 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
         val parentUri =
           if (parent.contains("#")) s"$parent/$key"
           else s"$parent#/$key"
-        val dataNode = DataNodeParser(value, variables, Some(parentUri)).parse()
+        val filteredNode: YNode = value.tagType match {
+          case YType.Map =>
+            value.as[YMap].key("usage", { usage =>
+              declaration.set(AbstractDeclarationModel.Description, AmfScalar(usage.value.as[String], Annotations(usage)))
+            })
+            val fields = value.as[YMap].entries.filter(_.key.as[String] != "usage")
+            YMap(fields)
+          case _ =>
+            value
+        }
+        val dataNode = DataNodeParser(filteredNode, variables, Some(parentUri)).parse()
 
         declaration.withName(key).adopted(parent).withDataNode(dataNode)
 
