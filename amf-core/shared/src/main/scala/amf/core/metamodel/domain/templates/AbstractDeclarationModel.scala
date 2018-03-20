@@ -14,9 +14,11 @@ trait AbstractDeclarationModel extends DomainElementModel with KeyField {
 
   val Variables = Field(Array(Str), Document + "variable")
 
+  val Description = Field(Str, Schema + "description")
+
   override val key: Field = Name
 
-  override def fields: List[Field] = List(Name, DataNode, Variables) ++ LinkableElementModel.fields ++ DomainElementModel.fields
+  override def fields: List[Field] = List(Name, Description, DataNode, Variables) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 }
 
 object AbstractDeclarationModel extends AbstractDeclarationModel {
