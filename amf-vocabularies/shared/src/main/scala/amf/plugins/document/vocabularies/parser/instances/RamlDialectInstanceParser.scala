@@ -219,7 +219,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
         if (references.baseUnitReferences().nonEmpty)
           dialectInstance.withReferences(references.baseUnitReferences())
         if (ctx.nestedDialects.nonEmpty)
-          dialectInstance.withGraphDependencies(ctx.nestedDialects.map(_.id))
+          dialectInstance.withGraphDependencies(ctx.nestedDialects.map(_.location))
         Some(dialectInstance)
 
       case _ => None
