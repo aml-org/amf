@@ -109,13 +109,17 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
   }
 
   def registerDialect(uri: String): Future[Dialect] = {
-    RuntimeValidator.disableValidationsAsync() { reenableValidations =>
-      RuntimeCompiler(uri, Some("application/yaml"), RAMLVocabulariesPlugin.ID, Context(platform))
-        .map {
-          case dialect: Dialect =>
-            reenableValidations()
-            register(dialect)
-            dialect
+    map.get(uri) match {
+      case Some(dialect) => Future { dialect }
+      case _ =>
+        RuntimeValidator.disableValidationsAsync() { reenableValidations =>
+          RuntimeCompiler(uri, Some("application/yaml"), RAMLVocabulariesPlugin.ID, Context(platform))
+            .map {
+              case dialect: Dialect =>
+                reenableValidations()
+                register(dialect)
+                dialect
+            }
         }
     }
   }
