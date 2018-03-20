@@ -1,7 +1,7 @@
 package amf.plugins.document.graph
 
+import amf.client.render.RenderOptions
 import amf.core.Root
-import amf.core.client.GenerationOptions
 import amf.core.model.document.BaseUnit
 import amf.core.parser._
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin}
@@ -37,8 +37,11 @@ object AMFGraphPlugin extends AMFDocumentPlugin {
     val maybeMaps = root.parsed.document.node.toOption[Seq[YMap]]
     val maybeMap  = maybeMaps.flatMap(s => s.headOption)
     maybeMap match {
-      case Some(m: YMap) => m.key("@id").isDefined || m.key("@type").isDefined || m.key((Namespace.Document + "encodes").iri()).isDefined || m.key((Namespace.Document + "declares").iri()).isDefined
-      case _             => false
+      case Some(m: YMap) =>
+        m.key("@id").isDefined || m.key("@type").isDefined || m
+          .key((Namespace.Document + "encodes").iri())
+          .isDefined || m.key((Namespace.Document + "declares").iri()).isDefined
+      case _ => false
     }
 
   }
@@ -47,7 +50,7 @@ object AMFGraphPlugin extends AMFDocumentPlugin {
 
   override def canUnparse(unit: BaseUnit) = true
 
-  override def unparse(unit: BaseUnit, options: GenerationOptions) =
+  override def unparse(unit: BaseUnit, options: RenderOptions) =
     Some(GraphEmitter.emit(unit, options))
 
   override def referenceHandler() = SimpleReferenceHandler

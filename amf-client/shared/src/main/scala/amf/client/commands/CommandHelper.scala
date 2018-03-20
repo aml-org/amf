@@ -1,6 +1,7 @@
 package amf.client.commands
 
-import amf.core.client.{GenerationOptions, ParserConfig}
+import amf.client.render.RenderOptions
+import amf.core.client.ParserConfig
 import amf.core.model.document.BaseUnit
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
@@ -41,7 +42,7 @@ trait CommandHelper {
       RAMLVocabulariesPlugin.registry.registerDialect(dialect)
     }
     Future.sequence(dialectFutures).map[Unit] { _ =>
-    }
+      }
   }
 
   protected def parseInput(config: ParserConfig): Future[BaseUnit] = {
@@ -56,7 +57,7 @@ trait CommandHelper {
   }
 
   protected def generateOutput(config: ParserConfig, unit: BaseUnit): Future[Unit] = {
-    val generateOptions = GenerationOptions()
+    val generateOptions = RenderOptions()
     if (config.withSourceMaps) {
       generateOptions.withSourceMaps
     }

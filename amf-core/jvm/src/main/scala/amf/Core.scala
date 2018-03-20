@@ -4,8 +4,9 @@ import java.util.concurrent.CompletableFuture
 
 import amf.client.convert.CoreRegister
 import amf.client.model.document._
+import amf.client.render.Renderer
 import amf.core.AMF
-import amf.core.client.{Generator, Parser, Resolver, Validator}
+import amf.core.client.{Parser, Resolver, Validator}
 import amf.core.plugins.AMFPlugin
 import amf.core.remote.FutureConverter._
 import amf.core.unsafe.PlatformSecrets
@@ -19,9 +20,9 @@ object Core extends PlatformSecrets {
     AMF.init().asJava
   }
 
-  def parser(vendor: String, mediaType: String): Parser       = new Parser(vendor, mediaType)
-  def generator(vendor: String, mediaType: String): Generator = new Generator(vendor, mediaType)
-  def resolver(vendor: String)                                = new Resolver(vendor)
+  def parser(vendor: String, mediaType: String): Parser      = new Parser(vendor, mediaType)
+  def generator(vendor: String, mediaType: String): Renderer = new Renderer(vendor, mediaType)
+  def resolver(vendor: String)                               = new Resolver(vendor)
   def validate(model: BaseUnit,
                profileName: String,
                messageStyle: String = "AMF"): CompletableFuture[AMFValidationReport] =

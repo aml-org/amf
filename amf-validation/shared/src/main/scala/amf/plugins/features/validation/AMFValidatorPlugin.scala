@@ -1,7 +1,7 @@
 package amf.plugins.features.validation
 
 import amf.ProfileNames
-import amf.core.client.GenerationOptions
+import amf.client.render.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.registries.AMFPluginsRegistry
@@ -65,13 +65,14 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
       RAMLVocabulariesPlugin.ID,
       Context(platform)
     ).map {
-      case parsed: DialectInstance if parsed.definedBy().value() == "http://raml.org/dialects/profile.raml#" =>
-        parsed.encodes
-      case _ =>
-        throw new Exception(
-          "Trying to load as a validation profile that does not match the Validation Profile dialect")
-    }.map {
-      case encoded: DialectDomainElement if encoded.definedBy.name.value() == "profileNode" =>
+        case parsed: DialectInstance if parsed.definedBy().value() == "http://raml.org/dialects/profile.raml#" =>
+          parsed.encodes
+        case _ =>
+          throw new Exception(
+            "Trying to load as a validation profile that does not match the Validation Profile dialect")
+      }
+      .map {
+        case encoded: DialectDomainElement if encoded.definedBy.name.value() == "profileNode" =>
           val profile = ParsedValidationProfile(encoded)
           val domainPlugin = profilesPlugins.get(profile.name) match {
             case Some(plugin) => plugin
@@ -80,10 +81,10 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
                 case Some(plugin) =>
                   plugin
                 case None => RAMLVocabulariesPlugin
-                  /*
+                /*
                   throw new Exception(
                     s"Plugin for custom validation profile ${profile.name}, ${profile.baseProfileName} not found")
-                    */
+               */
               }
           }
           customValidationProfiles += (profile.name -> { () =>
@@ -133,8 +134,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
       case _          => // ignore
     }
 
-    val modelJSON = RuntimeSerializer(model, "application/ld+json", "AMF Graph", GenerationOptions())
-
+    val modelJSON = RuntimeSerializer(model, "application/ld+json", "AMF Graph", RenderOptions())
 
     /*
     println("\n\nGRAPH")
@@ -145,7 +145,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     println("===========================")
     println(jsLibrary)
     println("===========================")
-    */
+     */
 
     ValidationMutex.synchronized {
       PlatformValidator.instance.report(

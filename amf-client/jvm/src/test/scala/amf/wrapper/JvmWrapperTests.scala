@@ -5,6 +5,9 @@ import amf._
 import amf.client.convert.WebApiClientConverters._
 import amf.client.model.document.{BaseUnit, DialectInstance, Document, Vocabulary}
 import amf.client.model.domain.{PropertyTerm, WebApi}
+import amf.client.parse.{Raml10Parser, RamlParser}
+import amf.client.render.{AmfGraphRenderer, Oas20Renderer, Raml10Renderer}
+import amf.client.resolve.Raml10Resolver
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.vocabularies.model.domain.ClassTerm
 
@@ -63,9 +66,9 @@ class JvmWrapperTests extends AsyncFunSuite with PlatformSecrets {
     AMF.init().get()
     val parser   = new RamlParser()
     val baseUnit = parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder.raml").get()
-    assert(new Raml10Generator().generateString(baseUnit) != "") // TODO: test this properly
-    assert(new Oas20Generator().generateString(baseUnit) != "")
-    assert(new AmfGraphGenerator().generateString(baseUnit) != "")
+    assert(new Raml10Renderer().generateString(baseUnit) != "") // TODO: test this properly
+    assert(new Oas20Renderer().generateString(baseUnit) != "")
+    assert(new AmfGraphRenderer().generateString(baseUnit) != "")
   }
 
   test("Validation test") {
@@ -88,7 +91,6 @@ class JvmWrapperTests extends AsyncFunSuite with PlatformSecrets {
     assert(report.conforms)
   }
 
-
   test("Vocabularies test") {
     AMF.init().get()
 
@@ -102,7 +104,7 @@ class JvmWrapperTests extends AsyncFunSuite with PlatformSecrets {
     assert(report.conforms)
 
     AMF.registerNamespace("eng-demos", "http://mulesoft.com/vocabularies/eng-demos#")
-    val elem     = baseUnit.asInstanceOf[DialectInstance].encodes
+    val elem = baseUnit.asInstanceOf[DialectInstance].encodes
     assert(elem.definedBy().nodetypeMapping.value() == "http://mulesoft.com/vocabularies/eng-demos#Presentation")
     assert(elem.getTypeUris().asInternal.contains("http://mulesoft.com/vocabularies/eng-demos#Presentation"))
     // TODO: fix this getter
@@ -118,7 +120,7 @@ class JvmWrapperTests extends AsyncFunSuite with PlatformSecrets {
       parser.parseFileAsync("file://amf-client/shared/src/test/resources/upanddown/unnamed-security-scheme.raml").get()
     val resolver = new Raml10Resolver()
     resolver.resolve(baseUnit)
-    val generator = new Oas20Generator()
+    val generator = new Oas20Renderer()
     val str       = generator.generateString(baseUnit)
     assert(!str.isEmpty)
   }
@@ -153,7 +155,6 @@ class JvmWrapperTests extends AsyncFunSuite with PlatformSecrets {
     assert(!traitRefs.map(_.location).contains(null))
   }
 
-
   test("Vocabulary generation") {
     // TODO: complete setters
     amf.plugins.document.Vocabularies.register()
@@ -167,7 +168,7 @@ class JvmWrapperTests extends AsyncFunSuite with PlatformSecrets {
       .withName("Vocab")
       //.withVersion("1.0")
       .withUsage("Just a small sample vocabulary")
-      /*
+    /*
       .withExternals(
         Seq(
           new amf.client.model.domain.External()
@@ -180,23 +181,22 @@ class JvmWrapperTests extends AsyncFunSuite with PlatformSecrets {
             .withAlias("raml-doc")
             .withReference("http://raml.org/vocabularies/doc#")
         ))
-       */
+     */
     assert(vocab.base.option().isDefined)
     assert(vocab.base.value() == "http://test.com/vocab#")
     assert(vocab.description.option().isDefined)
     assert(vocab.description.value() == "Just a small sample vocabulary")
 
-
     val propertyTerm = new amf.client.model.domain.DatatypePropertyTerm()
       .withId("http://raml.org/vocabularies/doc#test")
-      //.withRange(Seq("http://www.w3.org/2001/XMLSchema#string").asClient)
+    //.withRange(Seq("http://www.w3.org/2001/XMLSchema#string").asClient)
 
     val classTerm = new amf.client.model.domain.ClassTerm()
       .withId("http://test.com/vocab#Class")
       .withDescription("A sample class")
       .withDisplayName("Class")
-      //.withSubClassOf(Seq("http://test.com/vocabulary/other#Class").asClient)
-      //.withProperties(Seq("http://raml.org/vocabularies/doc#test").asClient)
+    //.withSubClassOf(Seq("http://test.com/vocabulary/other#Class").asClient)
+    //.withProperties(Seq("http://raml.org/vocabularies/doc#test").asClient)
 
     vocab.withDeclaredElement(classTerm).withDeclaredElement(propertyTerm)
 
@@ -215,7 +215,7 @@ class JvmWrapperTests extends AsyncFunSuite with PlatformSecrets {
           |propertyTerms:
           |  test:
           |""".stripMargin)
-        /*
+    /*
       text ==
         """#%RAML 1.0 Vocabulary
         |base: http://test.com/vocab#
@@ -235,10 +235,8 @@ class JvmWrapperTests extends AsyncFunSuite with PlatformSecrets {
         |  raml-doc.test:
         |    range: string
         |""".stripMargin)
-        */
+   */
   }
-
-
 
   /*
   TODO: Fix setters
@@ -260,17 +258,17 @@ class JvmWrapperTests extends AsyncFunSuite with PlatformSecrets {
 
     assert(acc.size == 14)
   }
-  */
+   */
 
   test("Vocabularies parsing raml_doc") {
     amf.plugins.document.Vocabularies.register()
     amf.plugins.document.WebApi.register()
     amf.Core.init().get()
 
-    val parser     = amf.Core.parser("RAML Vocabularies", "application/yaml")
-    val parsed     = parser.parseFileAsync("file://vocabularies/vocabularies/raml_doc.raml").get()
+    val parser = amf.Core.parser("RAML Vocabularies", "application/yaml")
+    val parsed = parser.parseFileAsync("file://vocabularies/vocabularies/raml_doc.raml").get()
     val terms = parsed.asInstanceOf[Vocabulary].declares.asInternal.collect {
-      case term: ClassTerm => term
+      case term: ClassTerm    => term
       case prop: PropertyTerm => prop
     }
     assert(terms.size == 15)

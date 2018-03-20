@@ -1,7 +1,7 @@
 package amf.plugins.document.graph.parser
 
+import amf.client.render.RenderOptions
 import amf.core.annotations.{DomainExtensionAnnotation, ScalarType}
-import amf.core.client.GenerationOptions
 import amf.core.metamodel.Type.{Any, Array, Bool, Iri, SortedArray, Str}
 import amf.core.metamodel.document.SourceMapModel
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
@@ -25,9 +25,9 @@ import scala.collection.mutable.ListBuffer
   */
 object GraphEmitter extends MetaModelTypeMapping {
 
-  def emit(unit: BaseUnit, options: GenerationOptions): YDocument = Emitter(options).root(unit)
+  def emit(unit: BaseUnit, options: RenderOptions): YDocument = Emitter(options).root(unit)
 
-  case class Emitter(options: GenerationOptions) {
+  case class Emitter(options: RenderOptions) {
 
     def root(unit: BaseUnit): YDocument = {
       YDocument {
@@ -188,15 +188,19 @@ object GraphEmitter extends MetaModelTypeMapping {
                     seq.asInstanceOf[Seq[AmfScalar]].headOption.foreach(e => iri(b, e.toString, inArray = true))
 
                   case Any =>
-                    seq.asInstanceOf[Seq[AmfScalar]].headOption.foreach { scalarElement =>
-                      scalarElement.value match {
-                        case bool: Boolean => typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true)
-                        case str: String   => typedScalar(b, str.toString, (Namespace.Xsd + "string").iri(), inArray = true)
-                        case i: Int        => typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true)
-                        case f: Float      => typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true)
-                        case d: Double     => typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true)
-                        case other         => scalar(b, other.toString, inArray = true)
-                      }
+                    seq.asInstanceOf[Seq[AmfScalar]].headOption.foreach {
+                      scalarElement =>
+                        scalarElement.value match {
+                          case bool: Boolean =>
+                            typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true)
+                          case str: String =>
+                            typedScalar(b, str.toString, (Namespace.Xsd + "string").iri(), inArray = true)
+                          case i: Int   => typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true)
+                          case f: Float => typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true)
+                          case d: Double =>
+                            typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true)
+                          case other => scalar(b, other.toString, inArray = true)
+                        }
                     }
                 }
               }
@@ -252,7 +256,9 @@ object GraphEmitter extends MetaModelTypeMapping {
             //typedScalar(b, dateTime.toRFC3339, (Namespace.Xsd + "dateTime").iri())
             throw new Exception("Serialisation of timestamps not supported yet")
           } else {
-            typedScalar(b, f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d", (Namespace.Xsd + "date").iri())
+            typedScalar(b,
+                        f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d",
+                        (Namespace.Xsd + "date").iri())
             sources(v)
           }
         case a: SortedArray =>
@@ -293,12 +299,13 @@ object GraphEmitter extends MetaModelTypeMapping {
               case Any =>
                 seq.values.asInstanceOf[Seq[AmfScalar]].foreach { scalarElement =>
                   scalarElement.value match {
-                    case bool: Boolean => typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true)
-                    case str: String   => typedScalar(b, str.toString, (Namespace.Xsd + "string").iri(), inArray = true)
-                    case i: Int        => typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true)
-                    case f: Float      => typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true)
-                    case d: Double     => typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true)
-                    case other         => scalar(b, other.toString, inArray = true)
+                    case bool: Boolean =>
+                      typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true)
+                    case str: String => typedScalar(b, str.toString, (Namespace.Xsd + "string").iri(), inArray = true)
+                    case i: Int      => typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true)
+                    case f: Float    => typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true)
+                    case d: Double   => typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true)
+                    case other       => scalar(b, other.toString, inArray = true)
                   }
                 }
               case _ => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(b, e.toString, inArray = true))

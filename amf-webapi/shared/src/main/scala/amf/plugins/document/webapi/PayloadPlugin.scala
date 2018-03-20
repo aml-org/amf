@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi
 
+import amf.client.render.RenderOptions
 import amf.core.Root
-import amf.core.client.GenerationOptions
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{ParserContext, SimpleReferenceHandler}
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin}
@@ -57,7 +57,7 @@ object PayloadPlugin extends AMFDocumentPlugin {
   }
 
   // Unparsing payloads not supported
-  override def unparse(unit: BaseUnit, options: GenerationOptions) = None
+  override def unparse(unit: BaseUnit, options: RenderOptions) = None
 
   override def canUnparse(unit: BaseUnit) = false
 

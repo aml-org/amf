@@ -1,8 +1,8 @@
 package amf.javaparser.org.raml
 
 import amf.ProfileNames
+import amf.client.render.RenderOptions
 import amf.core.annotations.SourceVendor
-import amf.core.client.GenerationOptions
 import amf.core.model.document.{BaseUnit, EncodesModel, Module}
 import amf.core.remote._
 import amf.facades.{AMFCompiler, AMFDumper, Validation}
@@ -33,7 +33,7 @@ trait ModelValidationTest extends DirectoryTest {
   }
 
   def dump(model: BaseUnit, d: String, vendor: Vendor) =
-    AMFDumper(transform(model, d, vendor), vendor, vendor.defaultSyntax, GenerationOptions()).dumpToString
+    AMFDumper(transform(model, d, vendor), vendor, vendor.defaultSyntax, RenderOptions()).dumpToString
 
   def transform(unit: BaseUnit, d: String, vendor: Vendor): BaseUnit =
     unit

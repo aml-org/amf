@@ -1,6 +1,6 @@
 package amf.resolution
 
-import amf.core.client.GenerationOptions
+import amf.client.render.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.facades.AMFDumper
@@ -21,6 +21,6 @@ abstract class ResolutionTest extends BuildCycleTests {
   }
 
   override def render(unit: BaseUnit, config: CycleConfig): String = {
-    new AMFDumper(unit, Amf, Amf.defaultSyntax, GenerationOptions().withSourceMaps).dumpToString
+    new AMFDumper(unit, Amf, Amf.defaultSyntax, RenderOptions().withSourceMaps).dumpToString
   }
 }

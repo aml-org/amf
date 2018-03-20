@@ -2,8 +2,8 @@ package amf.plugins.document.webapi
 
 import amf.ProfileNames
 import amf.ProfileNames.RAML
+import amf.client.render.RenderOptions
 import amf.core.Root
-import amf.core.client.GenerationOptions
 import amf.core.model.document._
 import amf.core.model.domain.{DomainElement, ExternalDomainElement}
 import amf.core.parser.{EmptyFutureDeclarations, ParserContext}
@@ -33,9 +33,10 @@ trait RAMLPlugin extends BaseWebApiPlugin {
   override def parse(root: Root, parentContext: ParserContext, platform: Platform): Option[BaseUnit] = {
     inlineExternalReferences(root)
 
-    val updated     = context(parentContext)
-    val cleanNested = ParserContext(root.location, root.references, EmptyFutureDeclarations(), parserCount = parentContext.parserCount)
-    val clean       = context(cleanNested)
+    val updated = context(parentContext)
+    val cleanNested =
+      ParserContext(root.location, root.references, EmptyFutureDeclarations(), parserCount = parentContext.parserCount)
+    val clean = context(cleanNested)
 
     RamlHeader(root) flatMap { // todo review this, should we use the raml web api context for get the version parser?
       case Raml08          => Some(Raml08DocumentParser(root)(updated).parseDocument())
@@ -113,7 +114,7 @@ object RAML08Plugin extends RAMLPlugin {
   }
 
   // fix for 08?
-  override def unparse(unit: BaseUnit, options: GenerationOptions): Option[YDocument] = unit match {
+  override def unparse(unit: BaseUnit, options: RenderOptions): Option[YDocument] = unit match {
     case document: Document => Some(RamlDocumentEmitter(document)(specContext).emitDocument())
     case fragment: Fragment => Some(new RamlFragmentEmitter(fragment)(specContext).emitFragment())
     case _                  => None
@@ -165,7 +166,7 @@ object RAML10Plugin extends RAMLPlugin {
   }
 
   // fix for 08?
-  override def unparse(unit: BaseUnit, options: GenerationOptions): Option[YDocument] = unit match {
+  override def unparse(unit: BaseUnit, options: RenderOptions): Option[YDocument] = unit match {
     case module: Module             => Some(RamlModuleEmitter(module)(specContext).emitModule())
     case document: Document         => Some(RamlDocumentEmitter(document)(specContext).emitDocument())
     case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))

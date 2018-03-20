@@ -1,6 +1,6 @@
 package amf.resolution
 
-import amf.core.client.GenerationOptions
+import amf.client.render.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{Raml, RamlYamlHint}
 import amf.facades.AMFDumper
@@ -59,6 +59,6 @@ class OverlayResolutionTest extends ResolutionTest {
 
   override def render(unit: BaseUnit, config: CycleConfig): String = {
     val target = config.target
-    new AMFDumper(unit, target, target.defaultSyntax, GenerationOptions().withSourceMaps).dumpToString
+    new AMFDumper(unit, target, target.defaultSyntax, RenderOptions().withSourceMaps).dumpToString
   }
 }

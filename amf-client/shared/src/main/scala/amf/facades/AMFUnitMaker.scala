@@ -1,8 +1,8 @@
 package amf.facades
 
 import amf.Core
+import amf.client.render.RenderOptions
 import amf.core.CommonASTMaker
-import amf.core.client.GenerationOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.plugins.document.graph.AMFGraphPlugin
@@ -32,7 +32,7 @@ class AMFUnitMaker {
   amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(JsonSchemaPlugin)
 
-  def make(unit: BaseUnit, vendor: Vendor, options: GenerationOptions): YDocument = {
+  def make(unit: BaseUnit, vendor: Vendor, options: RenderOptions): YDocument = {
     val vendorString = vendor match {
       case Amf           => "AMF Graph"
       case Payload       => "AMF Payload"
@@ -57,6 +57,6 @@ class AMFUnitMaker {
 }
 
 object AMFUnitMaker {
-  def apply(unit: BaseUnit, vendor: Vendor, options: GenerationOptions): YDocument =
+  def apply(unit: BaseUnit, vendor: Vendor, options: RenderOptions): YDocument =
     new AMFUnitMaker().make(unit, vendor, options)
 }

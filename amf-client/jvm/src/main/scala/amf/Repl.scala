@@ -3,9 +3,13 @@ package amf
 import java.io.{InputStream, PrintStream}
 import java.util.Scanner
 
+import amf.client.convert.CoreClientConverters
+import amf.client.handler.Handler
+import amf.client.model.document.{BaseUnit, Document}
+import amf.client.parse.{Oas20Parser, Raml08Parser, Raml10Parser, RamlParser}
+import amf.client.render._
 import amf.core.client._
 import amf.core.remote._
-import amf.client.model.document.{BaseUnit, Document}
 
 class Repl(val in: InputStream, val out: PrintStream) {
 
@@ -26,27 +30,27 @@ class Repl(val in: InputStream, val out: PrintStream) {
   }
 
   private def generate(unit: BaseUnit, syntax: String): Unit = {
-    val generator: Option[Generator] = syntax match {
-      case "raml"   => Some(new Raml10Generator)
-      case "raml08" => Some(new Raml08Generator)
-      case "oas"    => Some(new Oas20Generator)
-      case "amf"    => Some(new AmfGraphGenerator)
+    val generator: Option[Renderer] = syntax match {
+      case "raml"   => Some(new Raml10Renderer)
+      case "raml08" => Some(new Raml08Renderer)
+      case "oas"    => Some(new Oas20Renderer)
+      case "amf"    => Some(new AmfGraphRenderer)
       case _ =>
         out.println(s"Unsupported generation for: $syntax")
         None
     }
 
+    val handler = new Handler[String] {
+      override def error(exception: Throwable): Unit = println(s"An error occurred: $exception")
+      override def success(generation: String): Unit = out.print(generation)
+    }
+
     generator.foreach(g => {
       g.generateString(
         unit,
-        new StringHandler {
-          override def error(exception: Throwable): Unit = println(s"An error occurred: $exception")
-
-          override def success(generation: String): Unit = out.print(generation)
-        }
+        handler.asInstanceOf[CoreClientConverters.Handler]
       )
     })
-
   }
 
   private def remote(vendor: Vendor, url: String, callback: (Option[Document]) => Unit): Unit = {
