@@ -77,13 +77,8 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
             case Some(plugin) => plugin
             case None =>
               profilesPlugins.get(profile.baseProfileName.getOrElse("AMF")) match {
-                case Some(plugin) =>
-                  plugin
-                case None => RAMLVocabulariesPlugin
-                  /*
-                  throw new Exception(
-                    s"Plugin for custom validation profile ${profile.name}, ${profile.baseProfileName} not found")
-                    */
+                case Some(plugin) => plugin
+                case None         => RAMLVocabulariesPlugin
               }
           }
           customValidationProfiles += (profile.name -> { () =>
