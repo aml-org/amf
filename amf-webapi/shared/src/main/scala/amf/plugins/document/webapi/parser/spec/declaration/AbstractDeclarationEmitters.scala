@@ -7,6 +7,7 @@ import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.Position
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
+import org.yaml.model.YType
 
 /**
   *
@@ -41,8 +42,15 @@ case class AbstractDeclarationEmitter(declaration: AbstractDeclaration,
         if (declaration.isLink)
           declaration.linkTarget.foreach(l =>
             spec.factory.tagToReferenceEmitter(l, declaration.linkLabel, references).emit(b))
-        else
-          DataNodeEmitter(declaration.dataNode, ordering).emit(b)
+        else {
+          var emitters = DataNodeEmitter(declaration.dataNode, ordering).emitters()
+          declaration.description.option().foreach { description =>
+            emitters ++= Seq(MapEntryEmitter("usage", description, YType.Str, pos(declaration.description.annotations())))
+          }
+          b.obj { b =>
+            ordering.sorted(emitters).foreach(_.emit(b))
+          }
+        }
       }
     )
   }
