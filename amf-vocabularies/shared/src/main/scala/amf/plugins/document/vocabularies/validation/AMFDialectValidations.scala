@@ -214,7 +214,7 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
       }
     }
 
-    if (prop.objectRange().nonEmpty) {
+    if (prop.objectRange().nonEmpty && !prop.objectRange().map(_.value()).contains((Namespace.Meta + "anyNode").iri())) {
       val message = s"Property '${prop.name()}'  value must be of type ${prop.objectRange()}"
       validations += new ValidationSpecification(
         name = validationId(node, prop.name().value(), "objectRange"),

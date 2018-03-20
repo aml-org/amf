@@ -23,6 +23,7 @@ class DialectInstance(private[amf] val _internal: InternalDialectInstance) exten
     _internal.withGraphDependencies(ids.asInternal)
     this
   }
+  def graphDependencies(): ClientList[StrField] = _internal.graphDependencies.asClient
 
   override def encodes: DialectDomainElement = DialectDomainElement(_internal.encodes.asInstanceOf[InternalDialectDomainElement])
   def withEncodes(encoded: DialectDomainElement) = {
