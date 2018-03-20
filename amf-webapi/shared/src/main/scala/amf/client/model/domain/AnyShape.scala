@@ -34,4 +34,6 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
 
   override def linkCopy(): AnyShape = _internal.linkCopy()
 //  def build(shape: InternalAnyShape): Shape = platform.wrap[Shape](shape) ???
+
+  def toJsonSchema: String = _internal.toJsonSchema
 }
