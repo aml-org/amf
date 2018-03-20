@@ -1,7 +1,7 @@
 package amf.emit
 
+import amf.client.render.RenderOptions
 import amf.common.ListAssertions
-import amf.core.client.GenerationOptions
 import amf.core.model.document.Document
 import amf.core.parser._
 import amf.core.remote.{Oas, Raml, Vendor}
@@ -119,6 +119,6 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
   }
 
   private def ast(document: Document, vendor: Vendor): YMap = {
-    AMFUnitMaker(document, vendor, GenerationOptions()).node.as[YMap]
+    AMFUnitMaker(document, vendor, RenderOptions()).node.as[YMap]
   }
 }

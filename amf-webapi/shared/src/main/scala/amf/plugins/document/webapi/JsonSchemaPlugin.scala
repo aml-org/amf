@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi
 
+import amf.client.render.RenderOptions
 import amf.core.Root
-import amf.core.client.GenerationOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.model.domain.AnnotationGraphLoader
@@ -41,7 +41,7 @@ object JsonSchemaPlugin extends AMFDocumentPlugin {
   /**
     * Unparses a model base unit and return a document AST
     */
-  override def unparse(unit: BaseUnit, options: GenerationOptions): Option[YDocument] = {
+  override def unparse(unit: BaseUnit, options: RenderOptions): Option[YDocument] = {
     firstAnyShape(unit).map(as => JsonSchemaEmitter(as).emitDocument())
 
   }

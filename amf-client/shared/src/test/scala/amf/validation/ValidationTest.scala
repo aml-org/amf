@@ -1,8 +1,8 @@
 package amf.validation
 
 import amf.ProfileNames
+import amf.client.render.RenderOptions
 import amf.common.Tests.checkDiff
-import amf.core.client.GenerationOptions
 import amf.core.model.document.{Document, Module}
 import amf.core.model.domain.{DataNode, RecursiveShape, Shape}
 import amf.core.remote.Syntax.{Json, Syntax, Yaml}
@@ -46,7 +46,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }) flatMap { v =>
       AMFCompiler(basePath + exampleFile, platform, hint, v, None, None).build()
     } map {
-      AMFDumper(_, target, syntax, GenerationOptions()).dumpToString
+      AMFDumper(_, target, syntax, RenderOptions()).dumpToString
     }
   }
 
@@ -160,7 +160,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       assert(report.conforms)
       assert(report.results.length == 1)
-      
+
       val result = report.results.head
       assert(result.level == "Info")
       assert(result.validationId == "http://raml.org/vocabularies/data#my-custom-validation")
@@ -292,8 +292,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                                  PayloadYamlHint,
                                  validationPayload).build()
     } yield {
-      val fileJson = JsonRender.render(GraphEmitter.emit(filePayload, GenerationOptions()))
-      val textJson = JsonRender.render(GraphEmitter.emit(textPayload, GenerationOptions()))
+      val fileJson = JsonRender.render(GraphEmitter.emit(filePayload, RenderOptions()))
+      val textJson = JsonRender.render(GraphEmitter.emit(textPayload, RenderOptions()))
       assert(fileJson == textJson)
     }
 

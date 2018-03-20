@@ -1,8 +1,8 @@
 package amf.plugins.document.vocabularies
 
 import amf.ProfileNames
+import amf.client.render.RenderOptions
 import amf.core.Root
-import amf.core.client.GenerationOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
@@ -25,7 +25,10 @@ import amf.plugins.document.vocabularies.parser.common.RAMLExtensionsReferenceHa
 import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, RamlDialectsParser}
 import amf.plugins.document.vocabularies.parser.instances.{DialectInstanceContext, RamlDialectInstanceParser}
 import amf.plugins.document.vocabularies.parser.vocabularies.{RamlVocabulariesParser, VocabularyContext}
-import amf.plugins.document.vocabularies.resolution.pipelines.{DialectInstanceResolutionPipeline, DialectResolutionPipeline}
+import amf.plugins.document.vocabularies.resolution.pipelines.{
+  DialectInstanceResolutionPipeline,
+  DialectResolutionPipeline
+}
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import org.yaml.model.{YComment, YDocument}
 
@@ -54,7 +57,11 @@ object DialectHeader extends RamlHeaderExtractor {
   }
 }
 
-object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor with AMFValidationPlugin with ValidationResultProcessor {
+object RAMLVocabulariesPlugin
+    extends AMFDocumentPlugin
+    with RamlHeaderExtractor
+    with AMFValidationPlugin
+    with ValidationResultProcessor {
 
   val registry = new DialectsRegistry
 
@@ -86,7 +93,7 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
 
   override def serializableAnnotations(): Map[String, AnnotationGraphLoader] = Map(
     "aliases-location" -> AliasesLocation,
-    "custom-id" -> CustomId
+    "custom-id"        -> CustomId
   )
 
   /**
@@ -119,11 +126,14 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
     comment(document) match {
       case Some(comment) =>
         comment.metaText match {
-          case ExtensionHeader.VocabularyHeader      => Some(new RamlVocabulariesParser(document)(new VocabularyContext(parentContext)).parseDocument())
-          case ExtensionHeader.DialectLibraryHeader  => Some(new RamlDialectsParser(document)(new DialectContext(parentContext)).parseLibrary())
-          case ExtensionHeader.DialectFragmentHeader => Some(new RamlDialectsParser(document)(new DialectContext(parentContext)).parseFragment())
-          case ExtensionHeader.DialectHeader         => parseAndRegisterDialect(document, parentContext)
-          case header                                => parseDialectInstance(header, document, parentContext)
+          case ExtensionHeader.VocabularyHeader =>
+            Some(new RamlVocabulariesParser(document)(new VocabularyContext(parentContext)).parseDocument())
+          case ExtensionHeader.DialectLibraryHeader =>
+            Some(new RamlDialectsParser(document)(new DialectContext(parentContext)).parseLibrary())
+          case ExtensionHeader.DialectFragmentHeader =>
+            Some(new RamlDialectsParser(document)(new DialectContext(parentContext)).parseFragment())
+          case ExtensionHeader.DialectHeader => parseAndRegisterDialect(document, parentContext)
+          case header                        => parseDialectInstance(header, document, parentContext)
         }
       case _ => None
     }
@@ -132,12 +142,13 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
   /**
     * Unparses a model base unit and return a document AST
     */
-  override def unparse(unit: BaseUnit, options: GenerationOptions): Option[YDocument] = unit match {
-    case vocabulary: Vocabulary    => Some(RamlVocabularyEmitter(vocabulary).emitVocabulary())
-    case dialect: Dialect          => Some(RamlDialectEmitter(dialect).emitDialect())
-    case library: DialectLibrary   => Some(RamlDialectLibraryEmitter(library).emitDialectLibrary())
-    case instance: DialectInstance => Some(RamlDialectInstancesEmitter(instance, registry.dialectFor(instance).get).emitInstance())
-    case _                         => None
+  override def unparse(unit: BaseUnit, options: RenderOptions): Option[YDocument] = unit match {
+    case vocabulary: Vocabulary  => Some(RamlVocabularyEmitter(vocabulary).emitVocabulary())
+    case dialect: Dialect        => Some(RamlDialectEmitter(dialect).emitDialect())
+    case library: DialectLibrary => Some(RamlDialectLibraryEmitter(library).emitDialectLibrary())
+    case instance: DialectInstance =>
+      Some(RamlDialectInstancesEmitter(instance, registry.dialectFor(instance).get).emitInstance())
+    case _ => None
   }
 
   /**
@@ -199,17 +210,20 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] = {
     registry.allDialects().foldLeft(Map[String, () => ValidationProfile]()) {
       case (acc, dialect) if !dialect.nameAndVersion().contains("Validation Profile") =>
-        acc.updated(dialect.nameAndVersion(), () => {
-          val profileName = dialect.nameAndVersion()
-          validationsProfilesMap.get(profileName) match {
-            case Some(profile) => profile
-            case _             =>
-              val resolvedDialect = new DialectResolutionPipeline().resolve(dialect)
-              val profile = new AMFDialectValidations(resolvedDialect).profile()
-              validationsProfilesMap += (profileName -> profile)
-              profile
+        acc.updated(
+          dialect.nameAndVersion(),
+          () => {
+            val profileName = dialect.nameAndVersion()
+            validationsProfilesMap.get(profileName) match {
+              case Some(profile) => profile
+              case _ =>
+                val resolvedDialect = new DialectResolutionPipeline().resolve(dialect)
+                val profile         = new AMFDialectValidations(resolvedDialect).profile()
+                validationsProfilesMap += (profileName -> profile)
+                profile
+            }
           }
-        })
+        )
       case (acc, _) =>
         acc
     }
@@ -224,11 +238,13 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
                                  platform: Platform): Future[AMFValidationReport] = {
     val resolvedModel = new DialectInstanceResolutionPipeline().resolve(baseUnit)
     for {
-      shaclReport   <- RuntimeValidator.shaclValidation(resolvedModel, validations)
+      shaclReport <- RuntimeValidator.shaclValidation(resolvedModel, validations)
     } yield {
 
       // adding model-side validations
-      val results = shaclReport.results.flatMap { r => buildValidationResult(baseUnit, r, ProfileNames.RAML, validations) }
+      val results = shaclReport.results.flatMap { r =>
+        buildValidationResult(baseUnit, r, ProfileNames.RAML, validations)
+      }
 
       AMFValidationReport(
         conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
@@ -238,6 +254,5 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
       )
     }
   }
-
 
 }

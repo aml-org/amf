@@ -1,7 +1,7 @@
 package amf.io
 
+import amf.client.render.RenderOptions
 import amf.common.Tests.checkDiff
-import amf.core.client.GenerationOptions
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.{AMFCompiler, AMFDumper, Validation}
 import amf.core.model.document.BaseUnit
@@ -68,7 +68,7 @@ trait BuildCycleTests extends AsyncFunSuite with PlatformSecrets {
   /** Method to render parsed unit. Override if necessary. */
   def render(unit: BaseUnit, config: CycleConfig): String = {
     val target = config.target
-    new AMFDumper(unit, target, target.defaultSyntax, GenerationOptions().withSourceMaps).dumpToString
+    new AMFDumper(unit, target, target.defaultSyntax, RenderOptions().withSourceMaps).dumpToString
   }
 
   protected def writeTemporaryFile(golden: String)(content: String): Future[AsyncFile] = {

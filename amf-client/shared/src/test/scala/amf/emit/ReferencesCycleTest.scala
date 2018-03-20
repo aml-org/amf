@@ -1,9 +1,9 @@
 package amf.emit
 
+import amf.client.render.RenderOptions
 import amf.common.ListAssertions
 import amf.common.Tests.checkDiff
 import amf.compiler.CompilerTestBuilder
-import amf.core.client.GenerationOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.facades.AMFDumper
@@ -41,7 +41,6 @@ class ReferencesCycleTest extends BuildCycleTests with ListAssertions with Compi
     "Security schemes fragment oas to oas"        -> ("security-scheme-fragment.json", OasJsonHint)  -> ("fragments/security-scheme.json", Oas),
     "Named Example fragment raml to raml"         -> ("named-example.raml", RamlYamlHint)            -> ("fragments/named-example.raml", Raml),
     "Named Example fragment oas to oas"           -> ("named-example.json", OasJsonHint)             -> ("fragments/named-example.json", Oas)
-
   )
 
   fixture.foreach {
@@ -58,7 +57,7 @@ class ReferencesCycleTest extends BuildCycleTests with ListAssertions with Compi
     val ref    = unit.references.head
     val actual = fs.asyncFile(tmp(reference.replace("/", "--")))
     actual
-      .write(AMFDumper(ref, vendor, vendor.defaultSyntax, GenerationOptions().withSourceMaps).dumpToString)
+      .write(AMFDumper(ref, vendor, vendor.defaultSyntax, RenderOptions().withSourceMaps).dumpToString)
       .map(_ => actual)
   }
 

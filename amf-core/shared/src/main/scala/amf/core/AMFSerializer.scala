@@ -1,6 +1,6 @@
 package amf.core
 
-import amf.core.client.GenerationOptions
+import amf.client.render.RenderOptions
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.AmfElement
 import amf.core.plugins.{AMFDocumentPlugin, AMFSyntaxPlugin}
@@ -8,6 +8,8 @@ import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Platform
 import amf.core.services.RuntimeSerializer
 import org.yaml.model.YDocument
+
+import scala.concurrent.ExecutionContext.Implicits.global
 
 import scala.concurrent.Future
 
@@ -18,11 +20,11 @@ trait ASTMaker[T <: AmfElement] {
   val domainPlugin: Option[AMFDocumentPlugin]
   val element: T
   val vendor: String
-  val options: GenerationOptions
+  val options: RenderOptions
 }
 
 case class CommonASTMaker(element: BaseUnit,
-                          override val options: GenerationOptions,
+                          override val options: RenderOptions,
                           override val vendor: String,
                           override val mediaType: String)
     extends ASTMaker[BaseUnit] {
@@ -53,10 +55,10 @@ case class CommonASTMaker(element: BaseUnit,
 class AMFSerializer(maker: ASTMaker[_ <: AmfElement]) {
 
   /** Print ast to string. */
-  def dumpToString: String = dump()
+  def renderToString: Future[String] = Future { dump() }
 
   /** Print ast to file. */
-  def dumpToFile(remote: Platform, path: String): Future[Unit] = remote.write(path, dump())
+  def renderToFile(remote: Platform, path: String): Future[Unit] = remote.write(path, dump())
 
   protected def dump(): String = {
     val ast = maker.make()
@@ -92,7 +94,7 @@ object AMFSerializer {
   def init() = {
     if (RuntimeSerializer.serializer.isEmpty) {
       RuntimeSerializer.register(new RuntimeSerializer {
-        override def dump(unit: BaseUnit, mediaType: String, vendor: String, options: GenerationOptions): String =
+        override def dump(unit: BaseUnit, mediaType: String, vendor: String, options: RenderOptions): String =
           apply(unit, mediaType, vendor, options).dump()
 
         override def dumpToFile(platform: Platform,
@@ -100,12 +102,12 @@ object AMFSerializer {
                                 unit: BaseUnit,
                                 mediaType: String,
                                 vendor: String,
-                                options: GenerationOptions) =
-          apply(unit, mediaType, vendor, options).dumpToFile(platform, file)
+                                options: RenderOptions) =
+          apply(unit, mediaType, vendor, options).renderToFile(platform, file)
       })
     }
   }
 
-  def apply(unit: BaseUnit, mediaType: String, vendor: String, options: GenerationOptions): AMFSerializer =
+  def apply(unit: BaseUnit, mediaType: String, vendor: String, options: RenderOptions): AMFSerializer =
     new AMFSerializer(CommonASTMaker(unit, options, vendor, mediaType))
 }

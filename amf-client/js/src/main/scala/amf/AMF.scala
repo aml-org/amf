@@ -3,6 +3,9 @@ package amf
 import amf.core.client.{Generator, Parser, Resolver}
 import amf.core.plugins.AMFPlugin
 import amf.client.model.document.{BaseUnit, Dialect}
+import amf.client.parse.AmfGraphParser
+import amf.client.render._
+import amf.client.resolve.AmfGraphResolver
 import amf.plugins.document.Vocabularies
 import amf.validation.AMFValidationReport
 
@@ -24,19 +27,19 @@ object AMF {
 
   def ramlParser(): RamlParser = new RamlParser()
 
-  def raml10Generator(): Raml10Generator = new Raml10Generator()
+  def raml10Generator(): Raml10Renderer = new Raml10Renderer()
 
   def raml08Parser(): Raml08Parser = new Raml08Parser()
 
-  def raml08Generator(): Raml08Generator = new Raml08Generator()
+  def raml08Generator(): Raml08Renderer = new Raml08Renderer()
 
   def oas20Parser(): Oas20Parser = new Oas20Parser()
 
-  def oas20Generator(): Oas20Generator = new Oas20Generator()
+  def oas20Generator(): Oas20Renderer = new Oas20Renderer()
 
   def amfGraphParser(): AmfGraphParser = new AmfGraphParser()
 
-  def amfGraphGenerator(): AmfGraphGenerator = new AmfGraphGenerator()
+  def amfGraphGenerator(): AmfGraphRenderer = new AmfGraphRenderer()
 
   def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): Promise[AMFValidationReport] =
     amf.Core.validate(model, profileName, messageStyle)
@@ -63,7 +66,7 @@ object CoreWrapper {
 
   def parser(vendor: String, mediaType: String): Parser = amf.Core.parser(vendor, mediaType)
 
-  def generator(vendor: String, mediaType: String): Generator = amf.Core.generator(vendor, mediaType)
+  def generator(vendor: String, mediaType: String): Renderer = amf.Core.generator(vendor, mediaType)
 
   def resolver(vendor: String): Resolver = amf.Core.resolver(vendor)
 

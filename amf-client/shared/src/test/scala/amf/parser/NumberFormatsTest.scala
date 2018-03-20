@@ -1,8 +1,8 @@
 package amf.parser
 
+import amf.client.render.RenderOptions
 import amf.common.Diff
 import amf.common.Diff.makeString
-import amf.core.client.GenerationOptions
 import amf.core.model.document.Fragment
 import amf.core.remote.Syntax.Yaml
 import amf.core.remote.{Raml10, RamlYamlHint}
@@ -37,7 +37,7 @@ class NumberFormatsTest extends AsyncFunSuite with PlatformSecrets {
       for {
         validation <- Validation(platform).map(_.withEnabledValidation(false))
         unit       <- AMFCompiler("", TrunkPlatform(ex.api), RamlYamlHint, validation).build()
-        dumped     <- Future { AMFDumper(unit, Raml10, Yaml, GenerationOptions()).dumpToString }
+        dumped     <- Future { AMFDumper(unit, Raml10, Yaml, RenderOptions()).dumpToString }
       } yield {
         unit match {
           case f: Fragment =>

@@ -1,7 +1,7 @@
 package amf.core.plugins
 
+import amf.client.render.RenderOptions
 import amf.core.Root
-import amf.core.client.GenerationOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
@@ -39,7 +39,7 @@ abstract class AMFDocumentPlugin extends AMFPlugin {
   /**
     * Unparses a model base unit and return a document AST
     */
-  def unparse(unit: BaseUnit, options: GenerationOptions): Option[YDocument]
+  def unparse(unit: BaseUnit, options: RenderOptions): Option[YDocument]
 
   /**
     * Decides if this plugin can parse the provided document instance.

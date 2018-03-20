@@ -7,7 +7,7 @@ import amf.core.model.document.{BaseUnit => InternalBaseUnit}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.vocabulary.Namespace
 
-import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
+import scala.scalajs.js.annotation.JSExportAll
 
 /** Any parsable unit, backed by a source URI. */
 @JSExportAll

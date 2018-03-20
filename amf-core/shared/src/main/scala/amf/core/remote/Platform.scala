@@ -198,12 +198,6 @@ case class StringContentPlatform(contentUrl: String, content: String, wrappedPla
   /** Underlying file system for platform. */
   override val fs: FileSystem = wrappedPlatform.fs
 
-  // TODO: Removed from platform @modularization
-  // override val dialectsRegistry: PlatformDialectRegistry = wrappedPlatform.dialectsRegistry
-
-  // @modularization
-  //  override val validator: SHACLValidator = wrappedPlatform.validator
-
   override def resolvePath(path: String): String =
     if (path == contentUrl) {
       contentUrl

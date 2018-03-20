@@ -1,8 +1,21 @@
 package amf.client.convert
 
-import amf.client.model.{AnyField, DoubleField, StrField}
 import amf.client.model.document.{BaseUnit => ClientBaseUnit}
-import amf.client.model.domain.{AbstractDeclaration => ClientAbstractDeclaration, ArrayNode => ClientArrayNode, CustomDomainProperty => ClientCustomDomainProperty, DataNode => ClientDataNode, DomainElement => ClientDomainElement, DomainExtension => ClientDomainExtension, ObjectNode => ClientObjectNode, ParametrizedDeclaration => ClientParameterizedDeclaration, PropertyShape => ClientPropertyShape, ScalarNode => ClientScalarNode, Shape => ClientShape, VariableValue => ClientVariableValue}
+import amf.client.model.domain.{
+  AbstractDeclaration => ClientAbstractDeclaration,
+  ArrayNode => ClientArrayNode,
+  CustomDomainProperty => ClientCustomDomainProperty,
+  DataNode => ClientDataNode,
+  DomainElement => ClientDomainElement,
+  DomainExtension => ClientDomainExtension,
+  ObjectNode => ClientObjectNode,
+  ParametrizedDeclaration => ClientParameterizedDeclaration,
+  PropertyShape => ClientPropertyShape,
+  ScalarNode => ClientScalarNode,
+  Shape => ClientShape,
+  VariableValue => ClientVariableValue
+}
+import amf.client.model.{AnyField, DoubleField, StrField}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
@@ -10,9 +23,13 @@ import amf.core.model.domain.templates.{AbstractDeclaration, ParametrizedDeclara
 import amf.core.unsafe.PlatformSecrets
 
 import scala.collection.mutable
+import scala.concurrent.Future
 
 trait CoreBaseConverter
     extends PlatformSecrets
+    with CollectionConverter
+    with FutureConverter
+    with HandlerConverter
     with CustomDomainPropertyConverter
     with ShapeConverter
     with PropertyShapeConverter
@@ -22,6 +39,56 @@ trait CoreBaseConverter
     with VariableValueConverter
     with DomainElementConverter
     with BaseUnitConverter {
+
+  implicit def asClient[Internal, Client](from: Internal)(
+      implicit m: InternalClientMatcher[Internal, Client]): Client = m.asClient(from)
+
+  implicit def asInternal[Internal, Client](from: Client)(
+      implicit m: ClientInternalMatcher[Client, Internal]): Internal = m.asInternal(from)
+
+  implicit object StrFieldMatcher extends IdentityMatcher[StrField]
+
+  implicit object DoubleFieldMatcher extends IdentityMatcher[DoubleField]
+
+  implicit object AnyFieldMatcher extends IdentityMatcher[AnyField]
+
+  implicit object StringMatcher extends IdentityMatcher[String]
+
+  implicit object AnyMatcher extends IdentityMatcher[Any]
+
+  trait IdentityMatcher[T] extends InternalClientMatcher[T, T] with ClientInternalMatcher[T, T] {
+    override def asClient(from: T): T   = from
+    override def asInternal(from: T): T = from
+  }
+}
+
+/** Return internal instance for given client representation. */
+trait ClientInternalMatcher[Client, Internal] {
+  def asInternal(from: Client): Internal
+}
+
+/** Return client instance for given internal representation. */
+trait InternalClientMatcher[Internal, Client] {
+  def asClient(from: Internal): Client
+}
+
+/** Matcher functioning in two directions. */
+trait BidirectionalMatcher[Internal, Client]
+    extends ClientInternalMatcher[Client, Internal]
+    with InternalClientMatcher[Internal, Client]
+
+trait FutureConverter {
+
+  type ClientFuture[T]
+
+  implicit class InternalFutureOps[T](from: Future[T]) {
+    def asClient: ClientFuture[T] = asClientFuture(from)
+  }
+
+  private[convert] def asClientFuture[T](from: Future[T]): ClientFuture[T]
+}
+
+trait CollectionConverter {
 
   type ClientList[E]
   type ClientMap[V]
@@ -46,12 +113,6 @@ trait CoreBaseConverter
     def asClient: Option[Client] = from.map(m.asClient)
   }
 
-  implicit def asClient[Internal, Client](from: Internal)(
-      implicit m: InternalClientMatcher[Internal, Client]): Client = m.asClient(from)
-
-  implicit def asInternal[Internal, Client](from: Client)(
-      implicit m: ClientInternalMatcher[Client, Internal]): Internal = m.asInternal(from)
-
   private[convert] def asClientList[Internal, Client](from: Seq[Internal],
                                                       m: InternalClientMatcher[Internal, Client]): ClientList[Client]
 
@@ -60,39 +121,20 @@ trait CoreBaseConverter
 
   private[convert] def asInternalSeq[Client, Internal](from: ClientList[Client],
                                                        m: ClientInternalMatcher[Client, Internal]): Seq[Internal]
+}
 
-  implicit object StrFieldMatcher extends IdentityMatcher[StrField]
+trait HandlerConverter {
 
-  implicit object DoubleFieldMatcher extends IdentityMatcher[DoubleField]
-
-  implicit object AnyFieldMatcher extends IdentityMatcher[AnyField]
-
-  implicit object StringMatcher extends IdentityMatcher[String]
-
-  implicit object AnyMatcher extends IdentityMatcher[Any]
-
-  trait IdentityMatcher[T] extends InternalClientMatcher[T, T] with ClientInternalMatcher[T, T] {
-    override def asClient(from: T): T = from
-
-    override def asInternal(from: T): T = from
+  type Handler[T] <: {
+    def success(result: T): Unit
+    def error(exception: Throwable): Unit
   }
 
+  type FileHandler <: {
+    def success(): Unit
+    def error(exception: Throwable): Unit
+  }
 }
-
-/** Return internal instance for given client representation. */
-trait ClientInternalMatcher[Client, Internal] {
-  def asInternal(from: Client): Internal
-}
-
-/** Return client instance for given internal representation. */
-trait InternalClientMatcher[Internal, Client] {
-  def asClient(from: Internal): Client
-}
-
-/** Matcher functioning in two directions. */
-trait BidirectionalMatcher[Internal, Client]
-    extends ClientInternalMatcher[Client, Internal]
-    with InternalClientMatcher[Internal, Client]
 
 trait DomainExtensionConverter {
 

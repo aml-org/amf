@@ -5,6 +5,7 @@ import amf._
 import amf.client.convert.WebApiClientConverters._
 import amf.client.model.document.{BaseUnit, Document, TraitFragment}
 import amf.client.model.domain.WebApi
+import amf.client.render.{AmfGraphRenderer, Oas20Renderer, Raml10Renderer}
 import amf.core.unsafe.PlatformSecrets
 
 import scala.concurrent.ExecutionContext
@@ -46,9 +47,9 @@ class JsWrapperTests extends AsyncFunSuite with PlatformSecrets {
       val parser = new RamlParser()
       parser.parseFileAsync("file://amf-client/shared/src/test/resources/api/zencoder.raml").toFuture
     } flatMap { baseUnit =>
-      assert(new Raml10Generator().generateString(baseUnit) != "") // TODO: test this properly
-      assert(new Oas20Generator().generateString(baseUnit) != "")
-      assert(new AmfGraphGenerator().generateString(baseUnit) != "")
+      assert(new Raml10Renderer().generateString(baseUnit) != "") // TODO: test this properly
+      assert(new Oas20Renderer().generateString(baseUnit) != "")
+      assert(new AmfGraphRenderer().generateString(baseUnit) != "")
     }
   }
 
@@ -96,7 +97,7 @@ class JsWrapperTests extends AsyncFunSuite with PlatformSecrets {
         assert(speakers.toSeq.nonEmpty)
     }
   }
-  */
+   */
 
   test("world-music-test") {
     amf.plugins.features.AMFValidation.register()

@@ -1,13 +1,13 @@
 package amf.resolution
 
-import amf.core.client.GenerationOptions
+import amf.client.render.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{Amf, Raml, Raml08, RamlYamlHint}
 import amf.facades.AMFDumper
 
 abstract class RamlResolutionTest extends ResolutionTest {
   override def render(unit: BaseUnit, config: CycleConfig): String =
-    new AMFDumper(unit, config.target, Raml.defaultSyntax, GenerationOptions().withSourceMaps).dumpToString
+    new AMFDumper(unit, config.target, Raml.defaultSyntax, RenderOptions().withSourceMaps).dumpToString
 }
 
 class ProductionResolutionTest extends RamlResolutionTest {
