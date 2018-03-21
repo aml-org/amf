@@ -1,5 +1,8 @@
 package amf.client.model
 
+import scala.scalajs.js.annotation.JSExportAll
+
+@JSExportAll
 trait AnyField extends BaseField with ValueField {
 
   override type ValueType = Any

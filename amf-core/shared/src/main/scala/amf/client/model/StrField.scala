@@ -1,5 +1,8 @@
 package amf.client.model
 
+import scala.scalajs.js.annotation.JSExportAll
+
+@JSExportAll
 trait StrField extends BaseField with ValueField {
 
   override type ValueType = String
