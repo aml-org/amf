@@ -1,5 +1,6 @@
 package amf.client.convert
 
+import amf.client.handler.{FileHandler, Handler}
 import amf.client.model.document.{BaseUnit => ClientBaseUnit}
 import amf.client.model.domain.{
   AbstractDeclaration => ClientAbstractDeclaration,
@@ -16,13 +17,16 @@ import amf.client.model.domain.{
   VariableValue => ClientVariableValue
 }
 import amf.client.model.{AnyField, DoubleField, StrField}
+import amf.client.validate.{ValidationReport => ClientValidatorReport, ValidationResult => ClientValidationResult}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
 import amf.core.model.domain.templates.{AbstractDeclaration, ParametrizedDeclaration, VariableValue}
 import amf.core.unsafe.PlatformSecrets
+import amf.core.validation.{AMFValidationReport, AMFValidationResult}
 
 import scala.collection.mutable
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 trait CoreBaseConverter
@@ -37,6 +41,7 @@ trait CoreBaseConverter
     with DomainExtensionConverter
     with DeclarationsConverter
     with VariableValueConverter
+    with ValidationConverter
     with DomainElementConverter
     with BaseUnitConverter {
 
@@ -55,6 +60,8 @@ trait CoreBaseConverter
   implicit object StringMatcher extends IdentityMatcher[String]
 
   implicit object AnyMatcher extends IdentityMatcher[Any]
+
+  implicit object UnitMatcher extends IdentityMatcher[Unit]
 
   trait IdentityMatcher[T] extends InternalClientMatcher[T, T] with ClientInternalMatcher[T, T] {
     override def asClient(from: T): T   = from
@@ -81,8 +88,9 @@ trait FutureConverter {
 
   type ClientFuture[T]
 
-  implicit class InternalFutureOps[T](from: Future[T]) {
-    def asClient: ClientFuture[T] = asClientFuture(from)
+  implicit class InternalFutureOps[Internal, Client](from: Future[Internal])(
+      implicit m: InternalClientMatcher[Internal, Client]) {
+    def asClient: ClientFuture[Client] = asClientFuture(from.map(m.asClient))
   }
 
   private[convert] def asClientFuture[T](from: Future[T]): ClientFuture[T]
@@ -125,15 +133,8 @@ trait CollectionConverter {
 
 trait HandlerConverter {
 
-  type Handler[T] <: {
-    def success(result: T): Unit
-    def error(exception: Throwable): Unit
-  }
-
-  type FileHandler <: {
-    def success(): Unit
-    def error(exception: Throwable): Unit
-  }
+  type ClientResultHandler[T] <: Handler[T]
+  type ClientFileHandler <: FileHandler
 }
 
 trait DomainExtensionConverter {
@@ -221,6 +222,17 @@ trait VariableValueConverter {
     override def asClient(from: VariableValue): ClientVariableValue = ClientVariableValue(from)
   }
 
+}
+
+trait ValidationConverter {
+
+  implicit object ValidationReportMatcher extends InternalClientMatcher[AMFValidationReport, ClientValidatorReport] {
+    override def asClient(from: AMFValidationReport): ClientValidatorReport = new ClientValidatorReport(from)
+  }
+
+  implicit object ValidationResultMatcher extends InternalClientMatcher[AMFValidationResult, ClientValidationResult] {
+    override def asClient(from: AMFValidationResult): ClientValidationResult = new ClientValidationResult(from)
+  }
 }
 
 trait DomainElementConverter extends PlatformSecrets {

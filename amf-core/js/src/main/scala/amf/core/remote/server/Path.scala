@@ -1,4 +1,4 @@
-package amf.core.interop
+package amf.core.remote.server
 
 /**
   *
@@ -88,18 +88,4 @@ object Path extends js.Object {
     * The platform-specific file delimiter. ';' or ':'.
     */
   var delimiter: String = js.native
-
-  /**
-    * Returns an object from a path string - the opposite of format().
-    *
-    * @param pathString path to evaluate.
-    */
-  def parse(pathString: String): ParsedPath = js.native
-
-  /**
-    * Returns a path string from an object - the opposite of parse().
-    *
-    * @param pathObject path to evaluate.
-    */
-  def format(pathObject: ParsedPath): String = js.native
 }

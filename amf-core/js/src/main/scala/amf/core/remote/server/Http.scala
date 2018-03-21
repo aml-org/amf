@@ -1,4 +1,4 @@
-package amf.core.interop
+package amf.core.remote.server
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport

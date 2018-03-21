@@ -3,11 +3,11 @@ package amf
 import java.util.concurrent.{CompletableFuture, Future}
 
 import amf.client.model.document.{BaseUnit, Dialect}
-import amf.client.parse.{Oas20Parser, Raml08Parser, Raml10Parser, RamlParser}
+import amf.client.parse._
 import amf.client.render.{AmfGraphRenderer, Oas20Renderer, Raml08Renderer, Raml10Renderer}
-import amf.client.resolve.{Oas20Resolver, Raml08Resolver, Raml10Resolver}
+import amf.client.resolve.{AmfGraphResolver, Oas20Resolver, Raml08Resolver, Raml10Resolver}
+import amf.client.validate.ValidationReport
 import amf.plugins.document.Vocabularies
-import amf.validation.AMFValidationReport
 
 object AMF {
 
@@ -38,7 +38,7 @@ object AMF {
 
   def validate(model: BaseUnit,
                profileName: String,
-               messageStyle: String = "AMF"): CompletableFuture[AMFValidationReport] =
+               messageStyle: String = "AMF"): CompletableFuture[ValidationReport] =
     Core.validate(model, profileName, messageStyle)
 
   def loadValidationProfile(url: String): CompletableFuture[Nothing] = Core.loadValidationProfile(url)

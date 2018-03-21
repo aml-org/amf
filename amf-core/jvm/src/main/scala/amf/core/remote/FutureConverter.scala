@@ -9,6 +9,7 @@ import scala.language.implicitConversions
 /**
   *
   */
+//todo delete
 object FutureConverter {
   implicit def converters(s: Future[_]): FutureConverter = new FutureConverter(s)
 }

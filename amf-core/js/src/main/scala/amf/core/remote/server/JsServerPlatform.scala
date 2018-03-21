@@ -2,16 +2,16 @@ package amf.core.remote.server
 
 import java.io.IOException
 
-import amf.core.interop.{OS, Path}
 import amf.core.lexer.CharSequenceStream
 import amf.core.remote.File.FILE_PROTOCOL
 import amf.core.remote._
+import amf.core.remote.server.JsServerPlatform.OS
 import org.mulesoft.common.io.{FileSystem, Fs}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Future, Promise}
 import scala.scalajs.js
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSImport}
 
 /**
   *
@@ -43,7 +43,7 @@ class JsServerPlatform extends Platform {
     val promise: Promise[Content] = Promise()
 
     if (url.startsWith("https:")) {
-      amf.core.interop.Https.get(
+      Https.get(
         url,
         (response: js.Dynamic) => {
           var str = ""
@@ -69,7 +69,7 @@ class JsServerPlatform extends Platform {
       )
 
     } else {
-      amf.core.interop.Http.get(
+      Http.get(
         url,
         (response: js.Dynamic) => {
           var str = ""
@@ -108,7 +108,7 @@ class JsServerPlatform extends Platform {
           FILE_PROTOCOL + Path.resolve(withTrailingSlash(path)).substring(1)
         }
 
-      case Http(protocol, host, path) => protocol + host + Path.resolve(withTrailingSlash(path))
+      case HttpParts(protocol, host, path) => protocol + host + Path.resolve(withTrailingSlash(path))
     }
   }
 
@@ -125,5 +125,14 @@ object JsServerPlatform {
     case None =>
       singleton = Some(new JsServerPlatform())
       singleton.get
+  }
+
+  /** Operating System */
+  @js.native
+  @JSImport("os", JSImport.Namespace, "os")
+  object OS extends js.Object {
+
+    /** Returns the operating system's default directory for temporary files. */
+    def tmpdir(): String = js.native
   }
 }
