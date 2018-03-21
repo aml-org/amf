@@ -1,0 +1,11 @@
+#%RAML 0.8
+  get:
+    description: Dictionary/Object/HashMap of links that are used in the app, e.g. Terms & Conditions, Privacy Policy etc
+    responses:
+      200:
+        body:
+          application/json:
+            schema: |
+              {
+                "type": "object"
+              }
