@@ -18,7 +18,7 @@ import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, ShapeExtensionParser, SpecParserOps}
-import amf.plugins.document.webapi.parser.spec.domain.{NodeDataNodeParser, RamlExamplesParser, RamlSingleExampleParser}
+import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.raml.{RamlSpecParser, RamlTypeExpressionParser}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
@@ -147,7 +147,10 @@ case class Raml08TypeParser(ast: YPart,
             val maybeShape = Raml08SchemaParser(map, adopt).parse()
 
             maybeShape.foreach(s => {
-              RamlSingleExampleParser("example", map, s.withExample, strictDefault = true)
+              RamlSingleExampleParser("example",
+                                      map,
+                                      s.withExample,
+                                      ExampleOptions(strictDefault = true, quiet = true))
                 .parse()
                 .foreach(e => s.setArray(ScalarShapeModel.Examples, Seq(e)))
             })
@@ -325,14 +328,20 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
       shape.set(ScalarShapeModel.Maximum, value.text(), Annotations(entry))
     })
 
-    RamlSingleExampleParser("example", map, shape.withExample, strictDefault = true)
+    RamlSingleExampleParser("example", map, shape.withExample, ExampleOptions(strictDefault = true, quiet = true))
       .parse()
       .foreach(e => shape.setArray(ScalarShapeModel.Examples, Seq(e)))
 
     map.key("required", ScalarShapeModel.RequiredShape in shape)
-    val defaultParser: ((YNode) => DataNode) = (node: YNode) => NodeDataNodeParser(node, shape.id).parse()._2
 
-    map.key("default", ShapeModel.Default in shape using defaultParser)
+    map.key(
+      "default",
+      entry => {
+        NodeDataNodeParser(entry.value, shape.id, quiet = false).parse().dataNode.foreach { dn =>
+          shape.set(ShapeModel.Default, dn, Annotations(entry))
+        }
+      }
+    )
   }
 }
 
@@ -607,20 +616,31 @@ sealed abstract class RamlTypeParser(ast: YPart,
     }
   }
 
-  case class AnyTypeShapeParser(shape: AnyShape, map: YMap) extends AnyShapeParser {}
+  case class AnyTypeShapeParser(shape: AnyShape, map: YMap) extends AnyShapeParser {
+
+    override val options: ExampleOptions = ExampleOptions(strictDefault = true, quiet = true)
+
+    override def parse(): AnyShape = {
+
+      super.parse()
+    }
+  }
 
   abstract class AnyShapeParser() extends ShapeParser {
 
     override val shape: AnyShape
+    val options: ExampleOptions = DefaultExampleOptions
 
     override def parse(): AnyShape = {
       super.parse()
+      parseExamples()
+      shape
+    }
 
-      val examples = RamlExamplesParser(map, "example", "examples", shape.withExample, strictDefault = true).parse()
+    protected def parseExamples(): Unit = {
+      val examples = RamlExamplesParser(map, "example", "examples", shape.withExample, options).parse()
       if (examples.nonEmpty)
         shape.setArray(AnyShapeModel.Examples, examples)
-
-      shape
     }
   }
 
@@ -1039,8 +1059,10 @@ sealed abstract class RamlTypeParser(ast: YPart,
       map.key(
         "default",
         entry => {
-          val (_, dataNode) = NodeDataNodeParser(entry.value, shape.id).parse()
-          shape.set(ShapeModel.Default, dataNode, Annotations(entry))
+          val dataNodeResult = NodeDataNodeParser(entry.value, shape.id, quiet = false).parse()
+          dataNodeResult.dataNode.foreach { dataNode =>
+            shape.set(ShapeModel.Default, dataNode, Annotations(entry))
+          }
         }
       )
 

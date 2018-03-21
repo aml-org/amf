@@ -105,10 +105,10 @@ class Renderer(vendor: String, mediaType: String) {
     * (like the browser) or if a remote URL is provided.
     */
   private def generate(unit: InternalBaseUnit, url: String, options: RenderOptions): Future[Unit] =
-    AMFSerializer(unit, mediaType, vendor, options).renderToFile(platform, url)
+    new AMFSerializer(unit, mediaType, vendor, options).renderToFile(platform, url)
 
   private def generate(unit: InternalBaseUnit, options: RenderOptions): Future[String] =
-    AMFSerializer(unit, mediaType, vendor, options).renderToString
+    new AMFSerializer(unit, mediaType, vendor, options).renderToString
 
   private def generate(unit: InternalBaseUnit, url: String, options: RenderOptions, handler: FileHandler): Unit = {
     generate(unit, url, options).onComplete(unitSyncAdapter(handler))

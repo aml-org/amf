@@ -84,10 +84,10 @@ abstract class ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
 
   /** Report constraint failure of severity warning. */
   def warning(node: String, message: String, ast: YPart): Unit = {
-    warning(ParsingErrorSpecification.id(), node, message, ast)
+    warning(ParsingWarningSpecification.id(), node, message, ast)
   }
 
-  private def part(error: YError): YPart = {
+  protected def part(error: YError): YPart = {
     error.node match {
       case d: YDocument => d
       case n: YNode     => n
@@ -113,3 +113,22 @@ case class ParserContext(rootContextDocument: String = "",
                          futureDeclarations: FutureDeclarations = EmptyFutureDeclarations(),
                          parserCount: Int = AMFCompilerRunCount.nextRun())
     extends ErrorHandler
+
+case class WarningOnlyHandler() extends ErrorHandler {
+  override val parserCount: Int = AMFCompilerRunCount.count
+
+  override def handle(node: YPart, e: SyamlException): Unit = {
+    warning("", e.getMessage, node)
+    warningRegister = true
+  }
+
+  override def handle[T](error: YError, defaultValue: T): T = {
+    warning("", error.error, part(error))
+    warningRegister = true
+    defaultValue
+  }
+
+  private var warningRegister: Boolean = false
+
+  def hasRegister: Boolean = warningRegister
+}

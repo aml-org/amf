@@ -151,31 +151,53 @@ class AMFShapeValidations(shape: Shape) {
   }
 
   protected def scalarConstraints(context: String, scalar: ScalarShape): List[ValidationSpecification] = {
-    val msg = s"Scalar at $context must be valid"
-    var validation = new ValidationSpecification(
-      name = validationId(scalar),
-      message = msg,
-      ramlMessage = Some(msg),
-      oasMessage = Some(msg),
-      targetClass = Seq.empty,
-      propertyConstraints = Seq(
-        PropertyConstraint(
-          ramlPropertyId = (Namespace.Data + "value").iri(),
-          name = scalar.id + "_validation_range/prop",
-          message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
-          datatype = Some(scalar.dataType.value())
-        ))
-    )
-    validation = checkScalarType(scalar, context, validation)
-    validation = checkPattern(context, validation, scalar)
-    validation = checkMinLength(context, validation, scalar)
-    validation = checkMaxLength(context, validation, scalar)
-    validation = checkMinimum(context, validation, scalar)
-    validation = checkMaximum(context, validation, scalar)
-    validation = checkMinimumExclusive(context, validation, scalar)
-    validation = checkMaximumExclusive(context, validation, scalar)
-    validation = checkEnum(context, validation, scalar)
-    List(validation)
+    if (scalar.format.option().isDefined && scalar.format
+          .value() == "RFC2616" && scalar.dataType.value().endsWith("dateTime")) {
+      // RAML 0.8 date type following RFC2616
+      val msg = s"Scalar at $context must be valid RFC2616 date"
+      var validation = new ValidationSpecification(
+        name = validationId(scalar),
+        message = msg,
+        ramlMessage = Some(msg),
+        oasMessage = Some(msg),
+        targetClass = Seq.empty,
+        propertyConstraints = Seq(
+          PropertyConstraint(
+            ramlPropertyId = (Namespace.Data + "value").iri(),
+            name = scalar.id + "_validation_range/prop",
+            message = Some(msg),
+            pattern = Some(
+              "((Mon|Tue|Wed|Thu|Fri|Sat|Sun), [0-9]{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT)")
+          ))
+      )
+      List(validation)
+    } else {
+      val msg = s"Scalar at $context must be valid"
+      var validation = new ValidationSpecification(
+        name = validationId(scalar),
+        message = msg,
+        ramlMessage = Some(msg),
+        oasMessage = Some(msg),
+        targetClass = Seq.empty,
+        propertyConstraints = Seq(
+          PropertyConstraint(
+            ramlPropertyId = (Namespace.Data + "value").iri(),
+            name = scalar.id + "_validation_range/prop",
+            message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
+            datatype = Some(scalar.dataType.value())
+          ))
+      )
+      validation = checkScalarType(scalar, context, validation)
+      validation = checkPattern(context, validation, scalar)
+      validation = checkMinLength(context, validation, scalar)
+      validation = checkMaxLength(context, validation, scalar)
+      validation = checkMinimum(context, validation, scalar)
+      validation = checkMaximum(context, validation, scalar)
+      validation = checkMinimumExclusive(context, validation, scalar)
+      validation = checkMaximumExclusive(context, validation, scalar)
+      validation = checkEnum(context, validation, scalar)
+      List(validation)
+    }
   }
 
   protected def checkScalarType(shape: Shape,

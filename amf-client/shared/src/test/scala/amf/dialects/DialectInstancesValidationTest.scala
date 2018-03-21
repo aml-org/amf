@@ -72,6 +72,14 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
     validate("dialect7.raml", "instance7_incorrect1.raml", 1)
   }
 
+  test("validation dialect 8 example 1 correct") {
+    validate("dialect8a.raml", "instance8_correct1.raml", 0)
+  }
+
+  test("validation dialect 8 example 1 incorrect") {
+    validate("dialect8a.raml", "instance8_incorrect1.raml", 2)
+  }
+
   test("validation mule_config  example 1 correct") {
     validate("mule_config_dialect1.raml", "mule_config_instance_correct1.raml", 0)
   }
@@ -89,19 +97,26 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
   }
 
   test("custom validation profile for dialect") {
-    customValidationProfile("eng_demos_dialect1.raml", "eng_demos_instance1.raml", "eng_demos_profile.raml", "Custom Eng-Demos Validation", 6)
+    customValidationProfile("eng_demos_dialect1.raml",
+                            "eng_demos_instance1.raml",
+                            "eng_demos_profile.raml",
+                            "Custom Eng-Demos Validation",
+                            6)
   }
 
   test("custom validation profile for dialect default profile") {
-    customValidationProfile("eng_demos_dialect1.raml", "eng_demos_instance1.raml", "eng_demos_profile.raml", "Eng Demos 0.1", 0)
+    customValidationProfile("eng_demos_dialect1.raml",
+                            "eng_demos_instance1.raml",
+                            "eng_demos_profile.raml",
+                            "Eng Demos 0.1",
+                            0)
   }
-
 
   protected def validate(dialect: String, instance: String, numErrors: Int) = {
     amf.core.AMF.registerPlugin(RAMLVocabulariesPlugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     for {
-      _       <- amf.core.AMF.init()
+      _ <- amf.core.AMF.init()
       dialect <- {
         new AMFCompiler(
           basePath + dialect,
@@ -132,16 +147,19 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
         if (!report.conforms)
           println(report)
         assert(report.conforms)
-      }
-      else assert(report.results.length == numErrors)
+      } else assert(report.results.length == numErrors)
     }
   }
 
-  protected def customValidationProfile(dialect: String, instance: String, profile: String, name: String, numErrors: Int) = {
+  protected def customValidationProfile(dialect: String,
+                                        instance: String,
+                                        profile: String,
+                                        name: String,
+                                        numErrors: Int) = {
     amf.core.AMF.registerPlugin(RAMLVocabulariesPlugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     for {
-      _       <- amf.core.AMF.init()
+      _ <- amf.core.AMF.init()
       dialect <- {
         new AMFCompiler(
           basePath + dialect,
@@ -176,8 +194,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
         if (!report.conforms)
           println(report)
         assert(report.conforms)
-      }
-      else assert(report.results.length == numErrors)
+      } else assert(report.results.length == numErrors)
     }
   }
 }

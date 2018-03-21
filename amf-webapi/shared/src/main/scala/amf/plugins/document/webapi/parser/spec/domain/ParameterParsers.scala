@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.SynthesizedField
+import amf.core.annotations.{LexicalInformation, SynthesizedField}
 import amf.core.metamodel.domain.ShapeModel
-import amf.core.model.domain.Shape
+import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
@@ -16,6 +16,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
 }
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
 import amf.plugins.domain.shapes.models.FileShape
+import amf.plugins.domain.webapi.annotations.ParameterBindingInBodyLexicalInfo
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import amf.plugins.features.validation.ParserSideValidations
@@ -231,20 +232,10 @@ case class OasParameterParser(map: YMap, parentId: String, name: Option[String])
             entry => {
               OasTypeParser(entry, (shape) => shape.withName("schema").adopted(p.payload.id))
                 .parse()
-                .map {
-                  schema =>
-                    schema.withName(parameter.parameterName.option().getOrElse("schema"))
-                    val schemaToCheck =
-                      if (schema.isLink) schema.linkTarget
-                      else schema
-                    if (schemaToCheck.isInstanceOf[FileShape])
-                      ctx.violation(
-                        ParserSideValidations.OasFormDataNotFileSpecification.id(),
-                        schema.id,
-                        "File types in parameters must be declared in formData params",
-                        map
-                      )
-                    p.payload.set(PayloadModel.Schema, schema, Annotations(entry))
+                .map { schema =>
+                  shapeFromOasParameter(parameter, schema)
+                  checkNotFileInBody(schema)
+                  p.payload.set(PayloadModel.Schema, schema, Annotations(entry))
                 }
             }
           )
@@ -264,7 +255,7 @@ case class OasParameterParser(map: YMap, parentId: String, name: Option[String])
           ).parse()
             .map { schema =>
               if (p.isFormData) {
-                schema.withName(parameter.parameterName.option().getOrElse("schema"))
+                shapeFromOasParameter(parameter, schema)
                 p.payload.set(PayloadModel.Schema, schema, Annotations(map))
               } else parameter.set(ParameterModel.Schema, schema, Annotations(map))
             }
@@ -275,6 +266,35 @@ case class OasParameterParser(map: YMap, parentId: String, name: Option[String])
 
         p
     }
+  }
+
+  protected def checkNotFileInBody(schema: Shape): Unit = {
+    val schemaToCheck =
+      if (schema.isLink) schema.linkTarget
+      else schema
+    if (schemaToCheck.isInstanceOf[FileShape])
+      ctx.violation(
+        ParserSideValidations.OasFormDataNotFileSpecification.id(),
+        schema.id,
+        "File types in parameters must be declared in formData params",
+        map
+      )
+  }
+
+  protected def shapeFromOasParameter(parameter: Parameter, schema: Shape): Shape = {
+    parameter.parameterName.option() match {
+      case Some(paramName) => schema.set(ShapeModel.Name, AmfScalar(paramName), parameter.parameterName.annotations())
+      case None            => schema.withName("schema")
+    }
+    parameter.description.option() match {
+      case Some(description) =>
+        schema.set(ShapeModel.Description, AmfScalar(description), parameter.description.annotations())
+      case None => // ignore
+    }
+    parameter.binding.annotations().find(classOf[LexicalInformation]).foreach { lexicalInfo =>
+      schema.annotations += ParameterBindingInBodyLexicalInfo(lexicalInfo.range)
+    }
+    schema
   }
 
   protected def parseParameterRef(ref: YMapEntry, parentId: String): OasParameter = {

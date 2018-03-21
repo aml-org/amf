@@ -1,0 +1,23 @@
+#%RAML 0.8
+---
+title: Ticketing API
+baseUri: http://ticketing/api/{version}
+version: v1.0
+mediaType: application/json
+
+/tickets:
+  get:
+    description: Gets the specified tickets by the filters
+    queryParameters:
+      createdAfter:
+        displayName: createdAfter
+        type: date
+        description: The filter for tickets created after a specific date and time.
+        example: 2002-05-30T09:00:00
+        required: true
+    responses:
+      200:
+        description: A ticket object
+        body:
+          application/json:
+            example: Example

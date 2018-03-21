@@ -10,7 +10,7 @@ import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader._
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.domain.RamlNamedExampleParser
+import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, RamlNamedExampleParser}
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import org.yaml.model.YMap
@@ -146,7 +146,8 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
         example
       }
 
-      namedExample.withEncodes(RamlNamedExampleParser(entries.head, producer, strictDefault = false).parse())
+      namedExample.withEncodes(
+        RamlNamedExampleParser(entries.head, producer, ExampleOptions(strictDefault = false, quiet = true)).parse())
     }
   }
 }
