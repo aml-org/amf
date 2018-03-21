@@ -178,15 +178,16 @@ object RAMLVocabulariesPlugin extends AMFDocumentPlugin with RamlHeaderExtractor
   }
 
   protected def parseDialectInstance(header: String, document: Root, parentContext: ParserContext): Option[BaseUnit] = {
+    val headerKey = header.split("\\|").head.replace(" ", "")
     registry.withRegisteredDialect(header) { dialect =>
-      if (header.split("\\|").head.replace(" ", "") == dialect.header)
+      if (headerKey == dialect.header)
         new RamlDialectInstanceParser(document)(new DialectInstanceContext(dialect, parentContext)).parseDocument()
-      else if (dialect.isFragmentHeader(header))
+      else if (dialect.isFragmentHeader(headerKey))
         new RamlDialectInstanceParser(document)(new DialectInstanceContext(dialect, parentContext)).parseFragment()
-      else if (dialect.isLibraryHeader(header))
+      else if (dialect.isLibraryHeader(headerKey))
         new RamlDialectInstanceParser(document)(new DialectInstanceContext(dialect, parentContext)).parseLibrary()
       else
-        throw new Exception("Dialect instances libraries not supported yet")
+        throw new Exception(s"Unknown type of dialect header $header")
     }
   }
 

@@ -26,7 +26,7 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
     Option(dialect.documents()).flatMap(docs => Option(docs.root())).flatMap(root => root.encoded().option()).map {
       mappingId =>
         Option(findNodeMappingById(mappingId)) match {
-          case Some(nodeMapping) => emitEntityValidations(nodeMapping)
+          case Some((_, nodeMapping)) => emitEntityValidations(nodeMapping)
           case _                 => Nil
         }
 

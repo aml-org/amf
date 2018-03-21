@@ -53,6 +53,13 @@ class DialectInstanceDeclarations(var dialectDomainElements: Map[String, Dialect
     }
   }
 
+  def findAnyDialectDomainElement(key: String,
+                                  scope: SearchScope.Scope): Option[DialectDomainElement] = {
+    findForType(key, _.asInstanceOf[DialectInstanceDeclarations].dialectDomainElements, scope) collect {
+      case dialectDomainElement: DialectDomainElement => dialectDomainElement
+    }
+  }
+
   override def declarables: Seq[DialectDomainElement] = dialectDomainElements.values.toSeq
 }
 
@@ -334,7 +341,35 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
                             property: PropertyMapping,
                             node: DialectDomainElement): Unit = {
     propertyEntry.value.tagType match {
-      case YType.Str => // TODO: support external link here
+      case YType.Str | YType.Include =>
+        val refTuple = ctx.link(propertyEntry.value) match {
+          case Left(key) =>
+            (key, ctx.declarations.findAnyDialectDomainElement(key, SearchScope.Fragments))
+          case _ =>
+            val text = propertyEntry.value.as[YScalar].text
+            (text, ctx.declarations.findAnyDialectDomainElement(text, SearchScope.All))
+        }
+        refTuple match {
+          case (text: String, Some(s)) =>
+            RAMLVocabulariesPlugin.registry.findNode(s.definedBy.id) match {
+              case Some((dialect, _)) =>
+                ctx.nestedDialects ++= Seq(dialect)
+                val linkedExternal = s.link(text, Annotations(propertyEntry.value))
+                  .asInstanceOf[DialectDomainElement]
+                  .withId(id) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
+                node.setObjectField(property, linkedExternal, propertyEntry.value)
+              case None =>
+                ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+                  id,
+                  s"Cannot find dialect for anyNode node mapping ${s.definedBy.id}",
+                  propertyEntry.value)
+            }
+          case _ =>
+            ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+              id,
+              s"anyNode reference must be to a known node or an external fragment, unknown value: '${propertyEntry.value}'",
+              propertyEntry.value)
+        }
       case YType.Map =>
         val map = propertyEntry.value.as[YMap]
         map.key("$dialect") match {
@@ -355,7 +390,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
               case None =>
                 ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
                               id,
-                              s"Cannot find nested node mapping $dialectNode",
+                              s"Cannot find dialect for nested anyNode mapping $dialectNode",
                               nested.value)
             }
           case None =>
