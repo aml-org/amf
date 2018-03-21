@@ -265,13 +265,13 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
         "items",
         entry => {
           val items = entry.value
-            .as[YMap]
-            .entries
+            .as[YSequence]
+            .nodes
+            .collect { case node if node.tagType == YType.Map => node }
             .zipWithIndex
             .map {
               case (elem, index) =>
-                OasTypeParser(elem, item => item.adopted(item.id + "/items/" + index))
-                  .parse()
+                OasTypeParser(elem, s"member$index", elem.as[YMap], item => item.adopted(shape.id + "/items/" + index), "schema").parse()
             }
           shape.withItems(items.filter(_.isDefined).map(_.get))
         }
