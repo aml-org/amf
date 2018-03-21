@@ -1,8 +1,9 @@
 package amf.client.convert
 
-import amf.client.handler
+import amf.client.handler.{FileHandler, Handler, JsFileHandler, JsHandler}
 
 import scala.collection.mutable
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
@@ -14,8 +15,8 @@ trait CoreBaseClientConverter extends CoreBaseConverter {
 
   override type ClientFuture[T] = js.Promise[T]
 
-  override type Handler[T]  = handler.Handler[T]
-  override type FileHandler = handler.FileHandler
+  override type ClientResultHandler[T] = JsHandler[T] with Handler[T]
+  override type ClientFileHandler      = JsFileHandler with FileHandler
 
   override private[convert] def asClientList[A, B](from: Seq[A], matcher: InternalClientMatcher[A, B]): js.Array[B] =
     from.map(matcher.asClient).toJSArray

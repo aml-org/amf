@@ -3,9 +3,9 @@ package amf.client.render
 import java.io.File
 
 import amf.client.convert.CoreClientConverters._
+import amf.client.handler.{FileHandler, Handler}
 import amf.client.model.document.BaseUnit
 import amf.core.AMFSerializer
-import amf.core.client.Handler
 import amf.core.model.document.{BaseUnit => InternalBaseUnit}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -24,22 +24,22 @@ class Renderer(vendor: String, mediaType: String) {
     * (like the browser) or if a remote URL is provided.
     */
   @JSExport
-  def generateFile(unit: BaseUnit, url: String, handler: FileHandler): Unit =
+  def generateFile(unit: BaseUnit, url: String, handler: ClientFileHandler): Unit =
     generateFile(unit, url, RenderOptions(), handler)
 
   @JSExport
-  def generateFile(unit: BaseUnit, url: String, options: RenderOptions, handler: FileHandler): Unit =
-    generate(unit._internal, url, options, UnitHandlerAdapter(handler))
+  def generateFile(unit: BaseUnit, url: String, options: RenderOptions, handler: ClientFileHandler): Unit =
+    generate(unit._internal, url, options, handler)
 
   /** Generates the syntax text and returns it to the provided callback. */
   @JSExport
-  def generateString(unit: BaseUnit, handler: Handler[String]): Unit =
+  def generateString(unit: BaseUnit, handler: ClientResultHandler[String]): Unit =
     generateString(unit, RenderOptions(), handler)
 
   /** Generates the syntax text and returns it to the provided callback. */
   @JSExport
-  def generateString(unit: BaseUnit, options: RenderOptions, handler: Handler[String]): Unit =
-    generate(unit._internal, options, StringHandlerAdapter(handler))
+  def generateString(unit: BaseUnit, options: RenderOptions, handler: ClientResultHandler[String]): Unit =
+    generate(unit._internal, options, handler)
 
   /**
     * Asynchronously renders the syntax text and stores it in the file pointed by the provided URL.
@@ -72,7 +72,7 @@ class Renderer(vendor: String, mediaType: String) {
     * It must throw an UnsupportedOperation exception in platforms without support to write to the file system
     * (like the browser) or if a remote URL is provided.
     */
-  def generateFile(unit: BaseUnit, output: File, handler: FileHandler): Unit =
+  def generateFile(unit: BaseUnit, output: File, handler: ClientFileHandler): Unit =
     generateFile(unit, output, RenderOptions(), handler)
 
   /**
@@ -80,7 +80,7 @@ class Renderer(vendor: String, mediaType: String) {
     * It must throw an UnsupportedOperation exception in platforms without support to write to the file system
     * (like the browser) or if a remote URL is provided.
     */
-  def generateFile(unit: BaseUnit, output: File, options: RenderOptions, handler: FileHandler): Unit =
+  def generateFile(unit: BaseUnit, output: File, options: RenderOptions, handler: ClientFileHandler): Unit =
     generateFile(unit, "file://" + output.getAbsolutePath, options, handler)
 
   /**
@@ -110,7 +110,7 @@ class Renderer(vendor: String, mediaType: String) {
   private def generate(unit: InternalBaseUnit, options: RenderOptions): Future[String] =
     AMFSerializer(unit, mediaType, vendor, options).renderToString
 
-  private def generate(unit: InternalBaseUnit, url: String, options: RenderOptions, handler: Handler[Unit]): Unit = {
+  private def generate(unit: InternalBaseUnit, url: String, options: RenderOptions, handler: FileHandler): Unit = {
     generate(unit, url, options).onComplete(unitSyncAdapter(handler))
   }
 
@@ -124,18 +124,8 @@ class Renderer(vendor: String, mediaType: String) {
     case Failure(exception) => handler.error(exception)
   }
 
-  private def unitSyncAdapter(handler: Handler[Unit])(t: Try[Unit]): Unit = t match {
-    case Success(unit)      => handler.success(unit)
+  private def unitSyncAdapter(handler: FileHandler)(t: Try[Unit]): Unit = t match {
+    case Success(_)         => handler.success()
     case Failure(exception) => handler.error(exception)
-  }
-
-  private case class UnitHandlerAdapter(handler: FileHandler) extends Handler[Unit] {
-    override def success(unit: Unit): Unit         = handler.success()
-    override def error(exception: Throwable): Unit = handler.error(exception)
-  }
-
-  private case class StringHandlerAdapter(handler: Handler[String]) extends Handler[String] {
-    override def success(document: String): Unit   = handler.success(document)
-    override def error(exception: Throwable): Unit = handler.error(exception)
   }
 }

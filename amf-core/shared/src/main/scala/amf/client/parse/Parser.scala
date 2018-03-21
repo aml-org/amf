@@ -3,11 +3,11 @@ package amf.client.parse
 import amf.ProfileNames
 import amf.client.convert.CoreClientConverters._
 import amf.client.model.document.BaseUnit
+import amf.client.validate.ValidationReport
 import amf.core.client.ParsingOptions
 import amf.core.model.document.{BaseUnit => InternalBaseUnit}
 import amf.core.remote.{Context, Platform, StringContentPlatform}
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
-import amf.core.validation.AMFValidationReport
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -27,7 +27,7 @@ class Parser(vendor: String, mediaType: String) {
     * @param handler Handler object to execute the success or fail functions with the result object model.
     */
   @JSExport
-  def parseFile(url: String, handler: Handler[BaseUnit]): Unit = parse(url, handler)
+  def parseFile(url: String, handler: ClientResultHandler[BaseUnit]): Unit = parse(url, handler)
 
   /**
     * Generates the BaseUnit from a given string.
@@ -35,7 +35,7 @@ class Parser(vendor: String, mediaType: String) {
     * @param handler Handler object to execute the success or fail functions with the result object model.
     */
   @JSExport
-  def parseString(stream: String, handler: Handler[BaseUnit]): Unit =
+  def parseString(stream: String, handler: ClientResultHandler[BaseUnit]): Unit =
     parse(DEFAULT_DOCUMENT_URL, handler, fromStream(stream))
 
   /**
@@ -46,7 +46,7 @@ class Parser(vendor: String, mediaType: String) {
     * @param handler Handler object to execute the success or fail functions with the result object model.
     */
   @JSExport
-  def parseString(url: String, stream: String, handler: Handler[BaseUnit]): Unit =
+  def parseString(url: String, stream: String, handler: ClientResultHandler[BaseUnit]): Unit =
     parse(url, handler, fromStream(url, stream))
 
   /**
@@ -55,7 +55,7 @@ class Parser(vendor: String, mediaType: String) {
     * @return A future that will have a BaseUnit or an error to handle the result of such invocation.
     */
   @JSExport
-  def parseFileAsync(url: String): ClientFuture[BaseUnit] = toClient(parseAsync(url))
+  def parseFileAsync(url: String): ClientFuture[BaseUnit] = parseAsync(url).asClient
 
   /**
     * Asynchronously generate a BaseUnit from a given string.
@@ -64,11 +64,11 @@ class Parser(vendor: String, mediaType: String) {
     */
   @JSExport
   def parseStringAsync(stream: String): ClientFuture[BaseUnit] =
-    toClient(parseAsync(DEFAULT_DOCUMENT_URL, fromStream(stream)))
+    parseAsync(DEFAULT_DOCUMENT_URL, fromStream(stream)).asClient
 
   @JSExport
   def parseStringAsync(url: String, stream: String): ClientFuture[BaseUnit] =
-    toClient(parseAsync(url, fromStream(url, stream)))
+    parseAsync(url, fromStream(url, stream)).asClient
 
   /**
     * Generates the validation report for the last parsed model.
@@ -77,11 +77,11 @@ class Parser(vendor: String, mediaType: String) {
     * @return the AMF validation report
     */
   @JSExport
-  def reportValidation(profile: String, messageStyle: String): ClientFuture[AMFValidationReport] =
+  def reportValidation(profile: String, messageStyle: String): ClientFuture[ValidationReport] =
     report(profile, messageStyle)
 
   @JSExport
-  def reportValidation(profile: String): ClientFuture[AMFValidationReport] = report(profile)
+  def reportValidation(profile: String): ClientFuture[ValidationReport] = report(profile)
 
   /**
     * Generates a custom validaton profile as specified in the input validation profile file
@@ -90,7 +90,7 @@ class Parser(vendor: String, mediaType: String) {
     * @return the AMF validation report
     */
   @JSExport
-  def reportCustomValidation(profile: String, customProfilePath: String): ClientFuture[AMFValidationReport] =
+  def reportCustomValidation(profile: String, customProfilePath: String): ClientFuture[ValidationReport] =
     reportCustomValidationImplementation(profile, customProfilePath)
 
   private def parseAsync(url: String,
@@ -110,8 +110,7 @@ class Parser(vendor: String, mediaType: String) {
     * @param messageStyle if a RAML/OAS profile, this can be set to the preferred error reporting styl
     * @return the AMF validation report
     */
-  private def report(profileName: String,
-                     messageStyle: String = ProfileNames.RAML): ClientFuture[AMFValidationReport] = {
+  private def report(profileName: String, messageStyle: String = ProfileNames.RAML): ClientFuture[ValidationReport] = {
 
     val result = parsedModel.map(RuntimeValidator(_, profileName, messageStyle)) match {
       case Some(validation) => validation
@@ -128,7 +127,7 @@ class Parser(vendor: String, mediaType: String) {
     * @return the AMF validation report
     */
   private def reportCustomValidationImplementation(profileName: String,
-                                                   customProfilePath: String): ClientFuture[AMFValidationReport] = {
+                                                   customProfilePath: String): ClientFuture[ValidationReport] = {
     val result = parsedModel match {
       case Some(model) =>
         for {
@@ -143,19 +142,19 @@ class Parser(vendor: String, mediaType: String) {
     result.asClient
   }
 
-  private def parse(url: String, handler: Handler[BaseUnit], overridePlatForm: Option[Platform] = None): Unit =
+  private def parse(url: String,
+                    handler: ClientResultHandler[BaseUnit],
+                    overridePlatForm: Option[Platform] = None): Unit =
     parseAsync(url, overridePlatForm)
       .onComplete {
         case Success(result: InternalBaseUnit) => handler.success(result)
         case Failure(exception)                => handler.error(exception)
       }
 
-  private def toClient(f: Future[InternalBaseUnit]): ClientFuture[BaseUnit] = f.map[BaseUnit](unit => unit).asClient
-
-  private def fromStream(url: String, stream: String) =
+  private def fromStream(url: String, stream: String): Option[Platform] =
     Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform))
 
-  private def fromStream(stream: String) = fromStream(DEFAULT_DOCUMENT_URL, stream)
+  private def fromStream(stream: String): Option[Platform] = fromStream(DEFAULT_DOCUMENT_URL, stream)
 
   private val DEFAULT_DOCUMENT_URL = "http://raml.org/amf/default_document"
 }

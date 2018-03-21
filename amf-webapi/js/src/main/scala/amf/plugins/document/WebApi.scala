@@ -2,11 +2,11 @@ package amf.plugins.document
 
 import amf.client.convert.WebApiRegister
 import amf.client.model.domain.{DataNode, Shape}
+import amf.client.validate.ValidationReport
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi._
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
-import amf.validation.AMFValidationReport
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
@@ -32,7 +32,7 @@ object WebApi extends PlatformSecrets {
     amf.Core.registerPlugin(JsonSchemaPlugin)
   }
 
-  def validatePayload(shape: Shape, payload: DataNode): js.Promise[AMFValidationReport] = {
-    RAML10Plugin.validatePayload(shape._internal, payload._internal).map(new AMFValidationReport(_)).toJSPromise
+  def validatePayload(shape: Shape, payload: DataNode): js.Promise[ValidationReport] = {
+    RAML10Plugin.validatePayload(shape._internal, payload._internal).map(new ValidationReport(_)).toJSPromise
   }
 }

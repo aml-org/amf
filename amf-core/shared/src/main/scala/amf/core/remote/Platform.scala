@@ -90,7 +90,7 @@ trait Platform extends FileMediaType {
   /** Resolve remote url. */
   def resolve(url: String, context: Option[Context]): Future[Content] = {
     url match {
-      case Http(_, _, _)                       => checkCache(url, () => fetchHttp(url))
+      case HttpParts(_, _, _)                  => checkCache(url, () => fetchHttp(url))
       case File(path)                          => checkCache(path, () => fetchFile(path))
       case Relative(path) if context.isDefined => resolve(context.get resolve path, None)
       case _                                   => Future.failed(new Exception(s"Unsupported url: $url"))
@@ -153,7 +153,7 @@ object Platform {
   def base(url: String): Option[String] = Some(url.substring(0, url.lastIndexOf('/')))
 }
 
-object Http {
+object HttpParts {
   def unapply(uri: String): Option[(String, String, String)] = uri match {
     case url if url.startsWith("http://") || url.startsWith("https://") =>
       val protocol        = url.substring(0, url.indexOf("://") + 3)

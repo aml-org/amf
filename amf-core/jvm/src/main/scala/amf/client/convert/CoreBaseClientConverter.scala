@@ -3,7 +3,7 @@ package amf.client.convert
 import java.util
 import java.util.concurrent.CompletableFuture
 
-import amf.client.handler
+import amf.client.handler.{FileHandler, Handler}
 
 import scala.collection.JavaConverters._
 import scala.collection.mutable
@@ -17,8 +17,8 @@ trait CoreBaseClientConverter extends CoreBaseConverter {
 
   override type ClientFuture[T] = CompletableFuture[T]
 
-  override type Handler[T]  = handler.Handler[T]
-  override type FileHandler = handler.FileHandler
+  override type ClientResultHandler[T] = Handler[T]
+  override type ClientFileHandler      = FileHandler
 
   override private[convert] def asClientList[A, B](from: Seq[A], matcher: InternalClientMatcher[A, B]): util.List[B] =
     from.map(matcher.asClient).asJava

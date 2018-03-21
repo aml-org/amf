@@ -20,7 +20,9 @@ trait RuntimeValidator {
   /**
     * Low level validation returning a SHACL validation report
     */
-  def shaclValidation(model: BaseUnit, validations: EffectiveValidations, messageStyle: String): Future[ValidationReport]
+  def shaclValidation(model: BaseUnit,
+                      validations: EffectiveValidations,
+                      messageStyle: String): Future[ValidationReport]
 
   /**
     * Main validation function returning an AMF validation report linking validation errors
@@ -58,14 +60,16 @@ object RuntimeValidator {
     validator = Some(runtimeValidator)
   }
 
-  def loadValidationProfile(validationProfilePath: String) = {
+  def loadValidationProfile(validationProfilePath: String): Future[String] = {
     validator match {
       case Some(runtimeValidator) => runtimeValidator.loadValidationProfile(validationProfilePath)
       case None                   => throw new Exception("No registered runtime validator")
     }
   }
 
-  def shaclValidation(model: BaseUnit, validations: EffectiveValidations, messgeStyle: String = "AMF"): Future[ValidationReport] = {
+  def shaclValidation(model: BaseUnit,
+                      validations: EffectiveValidations,
+                      messgeStyle: String = "AMF"): Future[ValidationReport] = {
     validator match {
       case Some(runtimeValidator) => runtimeValidator.shaclValidation(model, validations, messgeStyle)
       case None                   => throw new Exception("No registered runtime validator")
@@ -103,15 +107,16 @@ object RuntimeValidator {
                               position: Option[LexicalInformation] = None,
                               parserRun: Int) = {
     validator match {
-      case Some(runtimeValidator) => runtimeValidator.reportConstraintFailure(
-        level,
-        validationId,
-        targetNode,
-        targetProperty,
-        message,
-        position,
-        parserRun
-      )
+      case Some(runtimeValidator) =>
+        runtimeValidator.reportConstraintFailure(
+          level,
+          validationId,
+          targetNode,
+          targetProperty,
+          message,
+          position,
+          parserRun
+        )
       case None => throw new Exception("No registered runtime validator")
     }
   }

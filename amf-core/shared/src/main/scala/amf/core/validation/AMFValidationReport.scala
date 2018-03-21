@@ -1,6 +1,7 @@
 package amf.core.validation
 
 case class AMFValidationReport(conforms: Boolean, model: String, profile: String, results: Seq[AMFValidationResult]) {
+
   override def toString: String = {
     var str = s"Model: $model\n"
     str += s"Profile: $profile\n"
