@@ -1,5 +1,8 @@
 package amf.client.model
 
+import scala.scalajs.js.annotation.JSExportAll
+
+@JSExportAll
 trait DoubleField extends BaseAnyValField {
 
   override type ValueType = Double
