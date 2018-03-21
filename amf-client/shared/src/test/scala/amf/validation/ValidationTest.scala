@@ -641,6 +641,16 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("External raml 0.8 fragment") {
+    for {
+      validation <- Validation(platform)
+      library    <- AMFCompiler(validationsPath + "08/external_fragment_test.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.results.isEmpty)
+    }
+  }
+
   test("Some production api with includes") {
     for {
       validation <- Validation(platform)
