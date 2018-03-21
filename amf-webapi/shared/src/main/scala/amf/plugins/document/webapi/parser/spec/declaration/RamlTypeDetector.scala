@@ -4,10 +4,10 @@ import amf.core.model.domain.Shape
 import amf.core.parser._
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.matchType
+import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema, matchType}
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
 import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
-import amf.plugins.domain.shapes.models.TypeDef._
+import amf.plugins.domain.shapes.models.TypeDef.{JSONSchemaType, _}
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 import amf.plugins.features.validation.ParserSideValidations
@@ -52,6 +52,10 @@ case class RamlTypeDetector(parent: String,
         case t: String if t.startsWith("<<") && t.endsWith(">>") =>
           ctx.violation(parent, "Trait/Resource Type parameter in type", node)
           None
+
+        case XMLSchema(_) => Some(XMLSchemaType)
+
+        case JSONSchema(_) => Some(JSONSchemaType)
 
         case RamlTypeDefMatcher.TypeExpression(text) =>
           RamlTypeExpressionParser(shape => shape.withId("/"), Some(node.as[YScalar]), checking = true)
