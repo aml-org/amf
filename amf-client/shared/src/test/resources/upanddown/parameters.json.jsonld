@@ -546,7 +546,7 @@
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                "http://raml.org/vocabularies/document-source-maps#parameter-binding-in-body-lexical-info": [
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
@@ -555,7 +555,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(17,16)-(24,7)]"
+                        "@value": "[(15,12)-(15,18)]"
                       }
                     ]
                   }
@@ -564,12 +564,12 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://www.w3.org/ns/shacl#property"
+                        "@value": "http://www.w3.org/ns/shacl#name"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(19,8)-(23,9)]"
+                        "@value": "[(16,14)-(16,23)]"
                       }
                     ]
                   },
@@ -582,6 +582,32 @@
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(17,6)-(24,7)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#property"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(19,8)-(23,9)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/parameters.json#/declarations/parameter/payload/theBody"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(17,16)-(24,7)]"
                       }
                     ]
                   }
