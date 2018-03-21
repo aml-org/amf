@@ -606,6 +606,19 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Can parse the production financial api") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(productionPath + "/financial-api/infor-financial-api.raml",
+                         platform,
+                         RamlYamlHint,
+                         validation).build()
+    } yield {
+      val resolved = RAML10Plugin.resolve(doc)
+      assert(Option(resolved).isDefined)
+    }
+  }
+
   test("Can normalize a recursive array API") {
     for {
       validation <- Validation(platform)
@@ -840,6 +853,35 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Raml 0.8 Query Parameter Negative test case") {
+
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "/08/date-query-parameter.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML08)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 1)
+    }
+  }
+
+  test("Raml 0.8 Query Parameter Positive test case") {
+
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "/08/date-query-parameter-correct.raml",
+                             platform,
+                             RamlYamlHint,
+                             validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML08)
+    } yield {
+      assert(report.conforms)
+      assert(report.results.isEmpty)
+    }
+  }
+
   test("Raml 0.8 Null pointer tck case APIMF-429") {
 
     for {
@@ -895,6 +937,17 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Empty parameter validation") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "/08/empty-param.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML08)
+    } yield {
+      assert(report.results.isEmpty)
+    }
+  }
+
+  test("Date parameter validation") {
     for {
       validation <- Validation(platform)
       library <- AMFCompiler(validationsPath + "/08/empty-param.raml", platform, RamlYamlHint, validation)
@@ -980,6 +1033,22 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report <- validation.validate(library, ProfileNames.RAML)
     } yield {
       assert(report.conforms)
+    }
+  }
+
+  test("Invalid example in any shape") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "/shapes/any-shape-invalid-example.raml",
+                             platform,
+                             RamlYamlHint,
+                             validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+      assert(report.results.lengthCompare(1) == 0)
+      assert(report.results.head.level == SeverityLevels.WARNING)
     }
   }
 }

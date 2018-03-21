@@ -278,12 +278,12 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#property"
+                    "@value": "http://www.w3.org/ns/shacl#name"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(5,4)-(9,20)]"
+                    "@value": "[(4,2)-(4,12)]"
                   }
                 ]
               },
@@ -296,6 +296,18 @@
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(4,2)-(9,20)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#property"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(5,4)-(9,20)]"
                   }
                 ]
               }

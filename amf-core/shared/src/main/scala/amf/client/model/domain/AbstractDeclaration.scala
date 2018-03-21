@@ -13,11 +13,17 @@ class AbstractDeclaration(private[amf] val _internal: InternalAbstractDeclaratio
     with Linkable {
 
   def name: StrField                  = _internal.name
+  def description: StrField           = _internal.description
   def dataNode: DataNode              = _internal.dataNode
   def variables: ClientList[StrField] = _internal.variables.asClient
 
   def withName(name: String): this.type = {
     _internal.withName(name)
+    this
+  }
+
+  def withDescription(description: String): this.type = {
+    _internal.withDescription(description)
     this
   }
 

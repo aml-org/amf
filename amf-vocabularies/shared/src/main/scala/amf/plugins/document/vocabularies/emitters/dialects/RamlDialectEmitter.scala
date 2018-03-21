@@ -25,7 +25,7 @@ trait AliasesConsumer extends DialectEmitterHelper {
   val aliases: Map[String, (String, String)]
   def aliasFor(id: String): Option[String] = {
     maybeFindNodeMappingById(id) match {
-      case Some(nodeMapping: NodeMapping) =>
+      case Some((_, nodeMapping: NodeMapping)) =>
         if (id.startsWith(dialect.id)) {
           Some(nodeMapping.name.value())
         } else {

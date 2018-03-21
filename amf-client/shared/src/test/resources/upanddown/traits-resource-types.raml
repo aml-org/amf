@@ -3,6 +3,7 @@ title: Example API
 version: v1
 resourceTypes:
   searchableCollection:
+    usage: resource type usage
     get:
       queryParameters:
         <<queryParamName>>:
@@ -11,6 +12,7 @@ resourceTypes:
           description: If no values match the value given for <<queryParamName>>, use <<fallbackParamName>> instead
 traits:
   secured:
+    usage: trait usage
     queryParameters:
       <<tokenName>>:
         description: A valid <<tokenName>> is required

@@ -43,7 +43,8 @@
             "description": "If no values match the value given for <<queryParamName>>, use <<fallbackParamName>> instead"
           }
         }
-      }
+      },
+      "usage": "resource type usage"
     }
   },
   "x-traits": {
@@ -52,7 +53,8 @@
         "<<tokenName>>": {
           "description": "A valid <<tokenName>> is required"
         }
-      }
+      },
+      "usage": "trait usage"
     },
     "paged": {
       "queryParameters": {

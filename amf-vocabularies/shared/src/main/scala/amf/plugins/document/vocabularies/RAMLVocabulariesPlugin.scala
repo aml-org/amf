@@ -189,15 +189,16 @@ object RAMLVocabulariesPlugin
   }
 
   protected def parseDialectInstance(header: String, document: Root, parentContext: ParserContext): Option[BaseUnit] = {
+    val headerKey = header.split("\\|").head.replace(" ", "")
     registry.withRegisteredDialect(header) { dialect =>
-      if (header.split("\\|").head.replace(" ", "") == dialect.header)
+      if (headerKey == dialect.header)
         new RamlDialectInstanceParser(document)(new DialectInstanceContext(dialect, parentContext)).parseDocument()
-      else if (dialect.isFragmentHeader(header))
+      else if (dialect.isFragmentHeader(headerKey))
         new RamlDialectInstanceParser(document)(new DialectInstanceContext(dialect, parentContext)).parseFragment()
-      else if (dialect.isLibraryHeader(header))
+      else if (dialect.isLibraryHeader(headerKey))
         new RamlDialectInstanceParser(document)(new DialectInstanceContext(dialect, parentContext)).parseLibrary()
       else
-        throw new Exception("Dialect instances libraries not supported yet")
+        throw new Exception(s"Unknown type of dialect header $header")
     }
   }
 
@@ -210,22 +211,27 @@ object RAMLVocabulariesPlugin
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] = {
     registry.allDialects().foldLeft(Map[String, () => ValidationProfile]()) {
       case (acc, dialect) if !dialect.nameAndVersion().contains("Validation Profile") =>
-        acc.updated(
-          dialect.nameAndVersion(),
-          () => {
-            val profileName = dialect.nameAndVersion()
-            validationsProfilesMap.get(profileName) match {
-              case Some(profile) => profile
-              case _ =>
-                val resolvedDialect = new DialectResolutionPipeline().resolve(dialect)
-                val profile         = new AMFDialectValidations(resolvedDialect).profile()
-                validationsProfilesMap += (profileName -> profile)
-                profile
-            }
-          }
-        )
-      case (acc, _) =>
-        acc
+        acc.updated(dialect.nameAndVersion(), () => { computeValidationProfile(dialect) })
+      case (acc, _) => acc
+    }
+  }
+
+  protected def computeValidationProfile(dialect: Dialect): ValidationProfile = {
+    val profileName = dialect.nameAndVersion()
+    validationsProfilesMap.get(profileName) match {
+      case Some(profile) => profile
+      case _ =>
+        val resolvedDialect = new DialectResolutionPipeline().resolve(dialect)
+        val profile         = new AMFDialectValidations(resolvedDialect).profile()
+        validationsProfilesMap += (profileName -> profile)
+        profile
+    }
+  }
+
+  def aggregatValidations(validations: EffectiveValidations,
+                          dependenciesValidations: Seq[ValidationProfile]): EffectiveValidations = {
+    dependenciesValidations.foldLeft(validations) {
+      case (effective, profile) => effective.someEffective(profile)
     }
   }
 
@@ -236,22 +242,38 @@ object RAMLVocabulariesPlugin
                                  profile: String,
                                  validations: EffectiveValidations,
                                  platform: Platform): Future[AMFValidationReport] = {
-    val resolvedModel = new DialectInstanceResolutionPipeline().resolve(baseUnit)
-    for {
-      shaclReport <- RuntimeValidator.shaclValidation(resolvedModel, validations)
-    } yield {
+    baseUnit match {
+      case dialectInstance: DialectInstance =>
+        val resolvedModel = new DialectInstanceResolutionPipeline().resolve(dialectInstance)
 
-      // adding model-side validations
-      val results = shaclReport.results.flatMap { r =>
-        buildValidationResult(baseUnit, r, ProfileNames.RAML, validations)
-      }
+        val dependenciesValidations: Future[Seq[ValidationProfile]] = Future.sequence(
+          dialectInstance.graphDependencies.map { instance =>
+            registry.registerDialect(instance.value())
+          }) map { dialects =>
+          dialects.map(computeValidationProfile)
+        }
 
-      AMFValidationReport(
-        conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
-        model = baseUnit.id,
-        profile = profile,
-        results = results
-      )
+        for {
+          validationsFromDeps <- dependenciesValidations
+          shaclReport <- RuntimeValidator.shaclValidation(resolvedModel,
+                                                          aggregatValidations(validations, validationsFromDeps))
+        } yield {
+
+          // adding model-side validations
+          val results = shaclReport.results.flatMap { r =>
+            buildValidationResult(baseUnit, r, ProfileNames.RAML, validations)
+          }
+
+          AMFValidationReport(
+            conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
+            model = baseUnit.id,
+            profile = profile,
+            results = results
+          )
+        }
+
+      case _ =>
+        throw new Exception(s"Cannot resolve base unit of type ${baseUnit.getClass}")
     }
   }
 

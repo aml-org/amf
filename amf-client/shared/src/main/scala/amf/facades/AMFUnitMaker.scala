@@ -2,7 +2,7 @@ package amf.facades
 
 import amf.Core
 import amf.client.render.RenderOptions
-import amf.core.CommonASTMaker
+import amf.core.AMFSerializer
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.plugins.document.graph.AMFGraphPlugin
@@ -52,7 +52,7 @@ class AMFUnitMaker {
       case Unknown   => "text/plain"
     }
 
-    CommonASTMaker(unit, options, vendorString, mediaType).make()
+    new AMFSerializer(unit, mediaType, vendorString, options).make()
   }
 }
 

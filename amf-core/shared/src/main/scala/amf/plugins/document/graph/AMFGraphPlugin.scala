@@ -8,7 +8,7 @@ import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.remote.Platform
 import amf.core.resolution.pipelines.BasicResolutionPipeline
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.graph.parser.{GraphEmitter, GraphParser}
+import amf.plugins.document.graph.parser.{GraphDependenciesReferenceHandler, GraphEmitter, GraphParser}
 import org.yaml.model.YMap
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -53,7 +53,7 @@ object AMFGraphPlugin extends AMFDocumentPlugin {
   override def unparse(unit: BaseUnit, options: RenderOptions) =
     Some(GraphEmitter.emit(unit, options))
 
-  override def referenceHandler() = SimpleReferenceHandler
+  override def referenceHandler() = GraphDependenciesReferenceHandler
 
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document

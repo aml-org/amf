@@ -4,6 +4,7 @@ import amf.core.Root
 import amf.core.annotations._
 import amf.core.metamodel.Field
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
+import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.CustomDomainProperty
@@ -21,6 +22,7 @@ import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.metamodel.WebApiModel
+import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import org.yaml.model._
@@ -244,8 +246,15 @@ trait Raml10BaseSpecParser extends RamlBaseDocumentParser {
         e.value.tagType match {
           case YType.Map =>
             e.value.as[YMap].entries.foreach { entry =>
-              ctx.declarations += SecuritySchemeParser(entry, scheme => scheme.withName(entry.key).adopted(parent))
-                .parse()
+              ctx.declarations += SecuritySchemeParser(
+                entry,
+                scheme => {
+                  scheme.set(SecuritySchemeModel.Name,
+                             AmfScalar(entry.key.as[String], Annotations(entry.key.value)),
+                             Annotations(entry.key))
+                  scheme.adopted(parent)
+                }
+              ).parse()
                 .add(DeclaredElement())
             }
           case YType.Null =>
@@ -300,11 +309,15 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
               .entries
               .map { entry =>
                 val typeName = entry.key.as[String]
-                val customProperty = AnnotationTypesParser(entry,
-                                                           customProperty =>
-                                                             customProperty
-                                                               .withName(typeName)
-                                                               .adopted(customProperties))
+                val customProperty = AnnotationTypesParser(
+                  entry,
+                  customProperty => {
+                    customProperty.set(CustomDomainPropertyModel.Name,
+                                       AmfScalar(typeName, Annotations(entry.key.value)),
+                                       Annotations(entry.key))
+                    customProperty.adopted(customProperties)
+                  }
+                )
                 ctx.declarations += customProperty.add(DeclaredElement())
               }
           case YType.Null =>
@@ -319,8 +332,12 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
       e.value.tagType match {
         case YType.Map =>
           e.value.as[YMap].entries.foreach { entry =>
-            Raml10TypeParser(entry, shape => shape.withName(entry.key).adopted(parent))
-              .parse() match {
+            Raml10TypeParser(entry, shape => {
+              shape.set(ShapeModel.Name,
+                        AmfScalar(entry.key.as[String], Annotations(entry.key.value)),
+                        Annotations(entry.key))
+              shape.adopted(parent)
+            }).parse() match {
               case Some(shape) =>
                 if (entry.value.tagType == YType.Null) shape.annotations += SynthesizedField()
                 ctx.declarations += shape.add(DeclaredElement())

@@ -26,8 +26,8 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
     Option(dialect.documents()).flatMap(docs => Option(docs.root())).flatMap(root => root.encoded().option()).map {
       mappingId =>
         Option(findNodeMappingById(mappingId)) match {
-          case Some(nodeMapping) => emitEntityValidations(nodeMapping)
-          case _                 => Nil
+          case Some((_, nodeMapping)) => emitEntityValidations(nodeMapping)
+          case _                      => Nil
         }
 
     } getOrElse Nil
@@ -214,7 +214,9 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
       }
     }
 
-    if (prop.objectRange().nonEmpty) {
+    if (prop
+          .objectRange()
+          .nonEmpty && !prop.objectRange().map(_.value()).contains((Namespace.Meta + "anyNode").iri())) {
       val message = s"Property '${prop.name()}'  value must be of type ${prop.objectRange()}"
       validations += new ValidationSpecification(
         name = validationId(node, prop.name().value(), "objectRange"),
