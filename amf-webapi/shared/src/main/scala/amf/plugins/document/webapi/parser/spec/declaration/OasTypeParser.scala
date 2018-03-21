@@ -376,8 +376,15 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
       val requiredFields = map
         .key("required")
-        .flatMap(_.value.toOption[Seq[String]])
-        .getOrElse(Nil)
+        .map { field =>
+          field.value.tagType match {
+            case YType.Seq =>
+              field.value.as[YSequence].nodes.foldLeft(Map[String,YNode]()) { case (acc, node) =>
+                acc.updated(node.as[String], node)
+              }
+            case _ => Map[String, YNode]()
+          }
+        }.getOrElse(Map[String, YNode]())
 
       map.key(
         "properties",
@@ -431,22 +438,23 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     }
   }
 
-  case class PropertiesParser(map: YMap, producer: String => PropertyShape, requiredFields: Seq[String]) {
+  case class PropertiesParser(map: YMap, producer: String => PropertyShape, requiredFields: Map[String, YNode]) {
     def parse(): Seq[PropertyShape] = {
       map.entries.map(entry => PropertyShapeParser(entry, producer, requiredFields).parse())
     }
   }
 
-  case class PropertyShapeParser(entry: YMapEntry, producer: String => PropertyShape, requiredFields: Seq[String]) {
+  case class PropertyShapeParser(entry: YMapEntry, producer: String => PropertyShape, requiredFields: Map[String, YNode]) {
 
     def parse(): PropertyShape = {
 
-      val name     = entry.key.as[YScalar].text
-      val required = requiredFields.contains(name)
+      val name                = entry.key.as[YScalar].text
+      val required            = requiredFields.contains(name)
+      val requiredAnnotations = requiredFields.get(name).map(node => Annotations(node)).getOrElse(Annotations())
 
       val property = producer(name)
         .add(Annotations(entry))
-        .set(PropertyShapeModel.MinCount, AmfScalar(if (required) 1 else 0), Annotations() += ExplicitField())
+        .set(PropertyShapeModel.MinCount, AmfScalar(if (required) 1 else 0), requiredAnnotations += ExplicitField())
 
       property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text).iri())
       entry.value.toOption[YMap].foreach(_.key("readOnly", PropertyShapeModel.ReadOnly in property))
@@ -491,7 +499,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
         "x-facets",
         entry => {
           val properties: Seq[PropertyShape] =
-            PropertiesParser(entry.value.as[YMap], shape.withCustomShapePropertyDefinition, Seq()).parse()
+            PropertiesParser(entry.value.as[YMap], shape.withCustomShapePropertyDefinition, Map()).parse()
         }
       )
 

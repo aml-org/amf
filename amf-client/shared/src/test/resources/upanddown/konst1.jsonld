@@ -606,6 +606,20 @@
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/document#name"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(5,2)-(5,3)]"
+                  }
+                ]
+              }
+            ],
             "http://raml.org/vocabularies/document-source-maps#declared-element": [
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
@@ -843,12 +857,12 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#property"
+                    "@value": "http://www.w3.org/ns/shacl#name"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(10,4)-(13,0)]"
+                    "@value": "[(8,2)-(8,8)]"
                   }
                 ]
               },
@@ -861,6 +875,18 @@
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(8,2)-(13,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#property"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(10,4)-(13,0)]"
                   }
                 ]
               }

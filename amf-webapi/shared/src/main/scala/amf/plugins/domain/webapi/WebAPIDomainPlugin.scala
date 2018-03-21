@@ -4,15 +4,10 @@ import amf.core.metamodel.domain.extensions.{CustomDomainPropertyModel, DomainEx
 import amf.core.plugins.{AMFDomainPlugin, AMFPlugin}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
-import amf.plugins.domain.webapi.annotations.{OrphanOasExtension, ParentEndPoint, TypePropertyLexicalInfo}
+import amf.plugins.domain.webapi.annotations.{OrphanOasExtension, ParameterBindingInBodyLexicalInfo, ParentEndPoint, TypePropertyLexicalInfo}
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.metamodel.security._
-import amf.plugins.domain.webapi.metamodel.templates.{
-  ParametrizedResourceTypeModel,
-  ParametrizedTraitModel,
-  ResourceTypeModel,
-  TraitModel
-}
+import amf.plugins.domain.webapi.metamodel.templates.{ParametrizedResourceTypeModel, ParametrizedTraitModel, ResourceTypeModel, TraitModel}
 
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -51,9 +46,10 @@ object WebAPIDomainPlugin extends AMFDomainPlugin {
   )
 
   override def serializableAnnotations() = Map(
-    "parent-end-point"           -> ParentEndPoint,
-    "orphan-oas-extension"       -> OrphanOasExtension,
-    "type-property-lexical-info" -> TypePropertyLexicalInfo
+    "parent-end-point"                       -> ParentEndPoint,
+    "orphan-oas-extension"                   -> OrphanOasExtension,
+    "type-property-lexical-info"             -> TypePropertyLexicalInfo,
+    "parameter-binding-in-body-lexical-info" -> ParameterBindingInBodyLexicalInfo
   )
 
   override def init(): Future[AMFPlugin] = Future { this }
