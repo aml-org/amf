@@ -4,7 +4,7 @@ import amf.core.Root
 import amf.core.annotations.{ExplicitField, SingleValueArray, SourceVendor}
 import amf.core.metamodel.Field
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
-import amf.core.metamodel.domain.DomainElementModel
+import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.CustomDomainProperty
@@ -557,8 +557,10 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
           .entries
           .foreach(e => {
             val typeName = e.key.as[YScalar].text
-            OasTypeParser(e, shape => shape.withName(typeName).adopted(typesPrefix))
-              .parse() match {
+            OasTypeParser(e, shape => {
+              shape.set(ShapeModel.Name, AmfScalar(typeName, Annotations(e.key.value)), Annotations(e.key))
+              shape.adopted(typesPrefix)
+            }).parse() match {
               case Some(shape) =>
                 ctx.declarations += shape.add(DeclaredElement())
               case None =>
@@ -574,8 +576,10 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
       "securityDefinitions",
       e => {
         e.value.as[YMap].entries.foreach { entry =>
-          ctx.declarations += SecuritySchemeParser(entry, scheme => scheme.withName(entry.key).adopted(parent))
-            .parse()
+          ctx.declarations += SecuritySchemeParser(entry, scheme => {
+            scheme.set(ParametrizedSecuritySchemeModel.Name, AmfScalar(entry.key.as[String], Annotations(entry.key.value)), Annotations(entry.key))
+            scheme.adopted(parent)
+          }).parse()
             .add(DeclaredElement())
         }
       }
@@ -585,8 +589,10 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
       "x-securitySchemes",
       e => {
         e.value.as[YMap].entries.foreach { entry =>
-          ctx.declarations += SecuritySchemeParser(entry, scheme => scheme.withName(entry.key).adopted(parent))
-            .parse()
+          ctx.declarations += SecuritySchemeParser(entry, scheme => {
+            scheme.set(ParametrizedSecuritySchemeModel.Name, AmfScalar(entry.key.as[String], Annotations(entry.key.value)), Annotations(entry.key))
+            scheme.adopted(parent)
+          }).parse()
             .add(DeclaredElement())
         }
       }

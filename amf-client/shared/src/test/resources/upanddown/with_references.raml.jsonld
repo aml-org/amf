@@ -1109,7 +1109,19 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://raml.org/vocabularies/shapes#schema"
+                    "@value": "http://raml.org/vocabularies/document#name"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(12,2)-(12,8)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/annotA"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1121,7 +1133,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/annotA"
+                    "@value": "http://raml.org/vocabularies/shapes#schema"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1180,6 +1192,18 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
+                    "@value": "http://raml.org/vocabularies/document#name"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(14,2)-(14,8)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
                     "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/annotB"
                   }
                 ],
@@ -1235,12 +1259,12 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#datatype"
+                    "@value": "http://www.w3.org/ns/shacl#name"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(8,4)-(9,0)]"
+                    "@value": "[(7,2)-(7,3)]"
                   }
                 ]
               },
@@ -1253,6 +1277,18 @@
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(7,2)-(9,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#datatype"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(8,4)-(9,0)]"
                   }
                 ]
               }
