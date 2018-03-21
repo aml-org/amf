@@ -846,12 +846,20 @@ sealed abstract class RamlTypeParser(ast: YPart,
         "items",
         entry => {
           val items = entry.value
-            .as[YMap]
-            .entries
+            .as[YSequence]
+            .nodes
+            .collect { case node if node.tagType == YType.Map => node }
             .zipWithIndex
             .map {
               case (elem, index) =>
-                Raml10TypeParser(elem, item => item.adopted(shape.id + "/items/" + index)).parse()
+                Raml10TypeParser(
+                  elem,
+                  s"member$index",
+                  elem.as[YMap],
+                  item => item.adopted(shape.id + "/items/" + index),
+                    isAnnotation = false,
+                    defaultType = AnyDefaultType
+                  ).parse()
             }
           shape.withItems(items.filter(_.isDefined).map(_.get))
         }
