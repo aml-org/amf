@@ -793,6 +793,10 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("matrix.raml", "matrix.jsonld", RamlYamlHint, Amf)
   }
 
+  test("Parsing oas shape with description oas to amf") {
+    cycle("shapes-with-items.json", "shapes-with-items.jsonld", OasJsonHint, Amf)
+  }
+
   test("Parsing example fragment raml to raml") {
     cycle("example-fragment.raml", "example-fragment.raml", RamlYamlHint, Raml)
   }

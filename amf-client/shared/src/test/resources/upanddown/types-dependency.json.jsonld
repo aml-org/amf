@@ -1152,7 +1152,7 @@
                                 "@type": [
                                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                 ],
-                                "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                                "http://raml.org/vocabularies/document-source-maps#parameter-binding-in-body-lexical-info": [
                                   {
                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                       {
@@ -1161,7 +1161,7 @@
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(29,22)-(69,13)]"
+                                        "@value": "[(70,18)-(70,24)]"
                                       }
                                     ]
                                   }
@@ -1188,6 +1188,20 @@
                                     "http://raml.org/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(29,12)-(69,13)]"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                                  {
+                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/types-dependency.json#/web-api/end-points/%2Flevel-zero/get/request/parameter/default/default/schema"
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(29,22)-(69,13)]"
                                       }
                                     ]
                                   }

@@ -135,6 +135,18 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
+                    "@value": "http://www.w3.org/ns/shacl#name"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(4,4)-(4,12)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
                     "@value": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/declarations/person"
                   }
                 ],
@@ -270,6 +282,18 @@
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://www.w3.org/ns/shacl#minCount"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(5,4)-(5,10)]"
+                          }
+                        ]
+                      },
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
