@@ -606,6 +606,16 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Can parse the production financial api") {
+    for {
+      validation <- Validation(platform)
+      doc        <- AMFCompiler(productionPath + "/financial-api/infor-financial-api.raml", platform, RamlYamlHint, validation).build()
+    } yield {
+      val resolved = RAML10Plugin.resolve(doc)
+      assert(Option(resolved).isDefined)
+    }
+  }
+
   test("Can normalize a recursive array API") {
     for {
       validation <- Validation(platform)
