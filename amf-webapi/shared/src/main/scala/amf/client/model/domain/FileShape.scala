@@ -1,7 +1,7 @@
 package amf.client.model.domain
 
 import amf.client.convert.WebApiClientConverters._
-import amf.client.model.{BoolField, IntField, StrField}
+import amf.client.model._
 import amf.plugins.domain.shapes.models.{FileShape => InternalFileShape}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -16,8 +16,8 @@ case class FileShape(override private[amf] val _internal: InternalFileShape) ext
   def pattern: StrField               = _internal.pattern
   def minLength: IntField             = _internal.minLength
   def maxLength: IntField             = _internal.maxLength
-  def minimum: StrField               = _internal.minimum
-  def maximum: StrField               = _internal.maximum
+  def minimum: FloatField             = _internal.minimum
+  def maximum: FloatField             = _internal.maximum
   def exclusiveMinimum: BoolField     = _internal.exclusiveMinimum
   def exclusiveMaximum: BoolField     = _internal.exclusiveMaximum
   def format: StrField                = _internal.format
@@ -39,11 +39,11 @@ case class FileShape(override private[amf] val _internal: InternalFileShape) ext
     _internal.withMaxLength(max)
     this
   }
-  def withMinimum(min: String): this.type = {
+  def withMinimum(min: Float): this.type = {
     _internal.withMinimum(min)
     this
   }
-  def withMaximum(max: String): this.type = {
+  def withMaximum(max: Float): this.type = {
     _internal.withMaximum(max)
     this
   }

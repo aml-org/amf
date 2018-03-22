@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes.models
 
-import amf.client.model.{BoolField, IntField, StrField}
+import amf.client.model._
 import amf.core.model.domain.Shape
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel._
 
@@ -9,8 +9,8 @@ trait CommonShapeFields { self: Shape =>
   def pattern: StrField           = fields.field(Pattern)
   def minLength: IntField         = fields.field(MinLength)
   def maxLength: IntField         = fields.field(MaxLength)
-  def minimum: StrField           = fields.field(Minimum)
-  def maximum: StrField           = fields.field(Maximum)
+  def minimum: FloatField         = fields.field(Minimum)
+  def maximum: FloatField         = fields.field(Maximum)
   def exclusiveMinimum: BoolField = fields.field(ExclusiveMinimum)
   def exclusiveMaximum: BoolField = fields.field(ExclusiveMaximum)
   def format: StrField            = fields.field(Format)
@@ -19,8 +19,8 @@ trait CommonShapeFields { self: Shape =>
   def withPattern(pattern: String): this.type       = set(Pattern, pattern)
   def withMinLength(min: Int): this.type            = set(MinLength, min)
   def withMaxLength(max: Int): this.type            = set(MaxLength, max)
-  def withMinimum(min: String): this.type           = set(Minimum, min)
-  def withMaximum(max: String): this.type           = set(Maximum, max)
+  def withMinimum(min: Float): this.type            = set(Minimum, min)
+  def withMaximum(max: Float): this.type            = set(Maximum, max)
   def withExclusiveMinimum(min: Boolean): this.type = set(ExclusiveMinimum, min)
   def withExclusiveMaximum(max: Boolean): this.type = set(ExclusiveMaximum, max)
   def withFormat(format: String): this.type         = set(Format, format)

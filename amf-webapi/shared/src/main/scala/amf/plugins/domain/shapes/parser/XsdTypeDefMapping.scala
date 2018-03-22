@@ -54,6 +54,19 @@ object TypeDefXsdMapping {
       case s if s == (Shapes + "file").iri()   => "file"
       case s                                   => throw new RuntimeException(s"Unknown mapping: $s")
     }
+
+  def type08Def(iri: String): TypeDef =
+    iri match {
+      case s if s == (Xsd + "string").iri()    => StrType
+      case s if s == (Xsd + "integer").iri()   => IntType
+      case s if s == (Xsd + "float").iri()     => FloatType
+      case s if s == (Shapes + "number").iri() => NumberType
+      case s if s == (Xsd + "boolean").iri()   => BoolType
+      case s if s == (Xsd + "dateTime").iri()  => DateTimeType
+      case s if s == (Shapes + "file").iri()   => FileType
+      case s                                   => throw new RuntimeException(s"Unknown mapping: $s")
+    }
+
   def typeDef(iri: String): TypeDef =
     iri match {
       case s if s == (Xsd + "string").iri()          => StrType
@@ -70,7 +83,7 @@ object TypeDefXsdMapping {
       case s if s == (Xsd + "byte").iri()            => ByteType
       case s if s == (Xsd + "base64Binary").iri()    => BinaryType
       case s if s == (Shapes + "password").iri()     => PasswordType
-      case s                                         => throw new RuntimeException(s"Unknown mapping: $s")
+      case _                                         => UndefinedType
     }
 
   def typeDef(iri: String, format: String): TypeDef = typeDef(iri) match {

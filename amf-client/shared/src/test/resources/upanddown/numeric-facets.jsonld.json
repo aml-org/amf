@@ -1,0 +1,56 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test title",
+    "description": "test description",
+    "version": "1.1"
+  },
+  "consumes": [
+    "application/yaml"
+  ],
+  "produces": [
+    "application/yaml"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/level-zero": {
+      "get": {
+        "x-queryParameters": {
+          "param1": {
+            "description": "Some person",
+            "type": [
+              "Person"
+            ]
+          }
+        },
+        "responses": {}
+      }
+    }
+  },
+  "definitions": {
+    "Age": {
+      "type": "integer",
+      "minimum": 3,
+      "maximum": 5,
+      "multipleOf": 1
+    },
+    "Person": {
+      "type": "object",
+      "required": [
+        "name",
+        "age"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "age": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}
