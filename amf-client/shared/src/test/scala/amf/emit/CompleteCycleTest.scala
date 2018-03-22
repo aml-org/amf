@@ -6,6 +6,7 @@ import amf.io.BuildCycleTests
 class CompleteCycleTest extends BuildCycleTests {
 
   override val basePath = "amf-client/shared/src/test/resources/upanddown/"
+  val base08Path = "amf-client/shared/src/test/resources/upanddown/raml08/"
   val referencesPath    = "amf-client/shared/src/test/resources/references/"
 
   test("Full raml to raml test") {
@@ -629,6 +630,10 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("externals.json.jsonld", "externals.json.jsonld.json", AmfJsonHint, Oas)
   }
 
+  test("JSON Schema wrapped in array test") {
+    cycle("json_schema_array.raml", "json_schema_array.raml.jsonld", RamlYamlHint, Amf, base08Path)
+  }
+
   test("Security schemes raml to amf") {
     cycle("security.raml", "security.raml.jsonld", RamlYamlHint, Amf)
   }
@@ -914,6 +919,10 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Message for model objects not supported in 08") {
+    cycle("array-of-node.raml", "array-of-node-unsupported08.raml", RamlYamlHint, Raml08)
+  }
+
+  test("JSON Schema with [{}]") {
     cycle("array-of-node.raml", "array-of-node-unsupported08.raml", RamlYamlHint, Raml08)
   }
 
