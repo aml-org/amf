@@ -5,6 +5,7 @@ import amf.core.metamodel.Obj
 import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.ArrayShapeModel._
+import amf.plugins.domain.shapes.metamodel.TupleShapeModel.TupleItems
 import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, MatrixShapeModel, TupleShapeModel}
 import org.yaml.model.YPart
 
@@ -103,16 +104,13 @@ object MatrixShape {
 case class TupleShape(override val fields: Fields, override val annotations: Annotations)
     extends DataArrangementShape(fields, annotations) {
 
-  def items: Seq[Shape]                       = fields.field(Items)
-  def withItems(items: Seq[Shape]): this.type = setArray(Items, items)
+  def items: Seq[Shape]                       = fields.field(TupleItems)
+  def withItems(items: Seq[Shape]): this.type = setArray(TupleItems, items)
 
   override def linkCopy() = TupleShape().withId(id)
 
-  override def adopted(parent: String): this.type = {
+  override def adopted(parent: String): this.type =
     withId(parent + "/array/" + name.value())
-    items.foreach(_.adopted(id))
-    this
-  }
 
   override def meta: Obj = TupleShapeModel
 }
