@@ -8,6 +8,7 @@ import amf.core.model.domain.AnnotationGraphLoader
 import amf.core.parser.{ParserContext, ReferenceHandler}
 import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.Platform
+import amf.core.resolution.pipelines.ResolutionPipeline
 import org.yaml.model.YDocument
 
 abstract class AMFDocumentPlugin extends AMFPlugin {
@@ -23,7 +24,7 @@ abstract class AMFDocumentPlugin extends AMFPlugin {
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  def resolve(unit: BaseUnit): BaseUnit
+  def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit
 
   /**
     * List of media types used to encode serialisations of

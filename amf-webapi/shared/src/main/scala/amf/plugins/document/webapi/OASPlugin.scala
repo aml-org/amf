@@ -8,6 +8,7 @@ import amf.core.model.document._
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{LibraryReference, LinkReference, ParserContext}
 import amf.core.remote.Platform
+import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader
@@ -104,7 +105,7 @@ object OAS20Plugin extends OASPlugin {
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit): BaseUnit = new OasResolutionPipeline().resolve(unit)
+  override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = new OasResolutionPipeline().resolve(unit)
 }
 
 object OAS30Plugin extends OASPlugin {
@@ -155,6 +156,6 @@ object OAS30Plugin extends OASPlugin {
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit): BaseUnit = new OasResolutionPipeline().resolve(unit)
+  override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = new OasResolutionPipeline().resolve(unit)
 
 }
