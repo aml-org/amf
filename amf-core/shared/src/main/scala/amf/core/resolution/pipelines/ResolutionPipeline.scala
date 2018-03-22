@@ -19,3 +19,7 @@ abstract class ResolutionPipeline {
     model.get.asInstanceOf[T]
   }
 }
+
+object ResolutionPipeline {
+  val DEFAULT_PIPELINE = "default"
+}
