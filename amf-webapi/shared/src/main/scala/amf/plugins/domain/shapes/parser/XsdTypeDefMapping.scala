@@ -16,6 +16,7 @@ object XsdTypeDefMapping {
       case LongType         => Xsd + "long"
       case FloatType        => Xsd + "float"
       case DoubleType       => Xsd + "double"
+      case NumberType       => Shapes + "number"
       case BoolType         => Xsd + "boolean"
       case DateTimeType     => Xsd + "dateTime"
       case DateTimeOnlyType => Shapes + "dateTimeOnly" // custom scalar type
@@ -30,12 +31,12 @@ object XsdTypeDefMapping {
   /** for 0.8*/
   def xsdFromString(text: String): (String, Option[String]) =
     text match {
-      case "string"  => ((Xsd + "string").iri(), Some(""))
-      case "number"  => ((Xsd + "float").iri(), Some(""))
-      case "integer" => ((Xsd + "integer").iri(), Some(""))
-      case "date"    => ((Xsd + "dateTime").iri(), Some("RFC2616"))
-      case "boolean" => ((Xsd + "boolean").iri(), Some(""))
-      case "file"    => ((Shapes + "file").iri(), Some(""))
+      case "string"                      => ((Xsd + "string").iri(), Some(""))
+      case "number" | "float" | "double" => ((Shapes + "number").iri(), Some(""))
+      case "integer"                     => ((Xsd + "integer").iri(), Some(""))
+      case "date"                        => ((Xsd + "dateTime").iri(), Some("RFC2616"))
+      case "boolean"                     => ((Xsd + "boolean").iri(), Some(""))
+      case "file"                        => ((Shapes + "file").iri(), Some(""))
     }
 }
 
@@ -43,13 +44,15 @@ object TypeDefXsdMapping {
 
   def typeDef08(iri: String): String =
     iri match {
-      case s if s == (Xsd + "string").iri()   => "string"
-      case s if s == (Xsd + "integer").iri()  => "integer"
-      case s if s == (Xsd + "float").iri()    => "number"
-      case s if s == (Xsd + "boolean").iri()  => "boolean"
-      case s if s == (Xsd + "dateTime").iri() => "date"
-      case s if s == (Shapes + "file").iri()  => "file"
-      case s                                  => throw new RuntimeException(s"Unknown mapping: $s")
+      case s if s == (Xsd + "string").iri()    => "string"
+      case s if s == (Xsd + "integer").iri()   => "integer"
+      case s if s == (Shapes + "number").iri() => "number"
+      case s if s == (Xsd + "float").iri()     => "number"
+      case s if s == (Xsd + "double").iri()    => "number"
+      case s if s == (Xsd + "boolean").iri()   => "boolean"
+      case s if s == (Xsd + "dateTime").iri()  => "date"
+      case s if s == (Shapes + "file").iri()   => "file"
+      case s                                   => throw new RuntimeException(s"Unknown mapping: $s")
     }
   def typeDef(iri: String): TypeDef =
     iri match {
@@ -58,6 +61,7 @@ object TypeDefXsdMapping {
       case s if s == (Xsd + "long").iri()            => LongType
       case s if s == (Xsd + "float").iri()           => FloatType
       case s if s == (Xsd + "double").iri()          => DoubleType
+      case s if s == (Shapes + "number").iri()       => NumberType
       case s if s == (Xsd + "boolean").iri()         => BoolType
       case s if s == (Xsd + "dateTime").iri()        => DateTimeType
       case s if s == (Shapes + "dateTimeOnly").iri() => DateTimeOnlyType

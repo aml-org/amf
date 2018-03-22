@@ -8,7 +8,17 @@ import amf.plugins.domain.shapes.models.TypeDef._
   */
 object OasTypeDefMatcher {
 
-  val knownFormats: Set[String] = Set("time-only", "date-only", "date-time", "date-time-only", "password", "byte", "binary", "int32", "int64", "long", "float")
+  val knownFormats: Set[String] = Set("time-only",
+                                      "date-only",
+                                      "date-time",
+                                      "date-time-only",
+                                      "password",
+                                      "byte",
+                                      "binary",
+                                      "int32",
+                                      "int64",
+                                      "long",
+                                      "float")
 
   def matchType(ramlType: String, format: String = ""): TypeDef = ramlType match {
     case "string" =>
@@ -22,22 +32,23 @@ object OasTypeDefMatcher {
         case "binary"         => BinaryType
         case _                => StrType
       }
-    case "null"          => NilType
-    case "integer"       => format match {
-      case "int64" => LongType
-      case _       => IntType
-    }
+    case "null" => NilType
+    case "integer" =>
+      format match {
+        case "int64" => LongType
+        case _       => IntType
+      }
     case "number" =>
       format match {
         case "float"  => FloatType
         case "double" => DoubleType
-        case _        => FloatType
+        case _        => NumberType
       }
-    case "boolean"       => BoolType
-    case "object"        => ObjectType
-    case "array"         => ArrayType
-    case "file"          => FileType
-    case _               => ObjectType
+    case "boolean" => BoolType
+    case "object"  => ObjectType
+    case "array"   => ArrayType
+    case "file"    => FileType
+    case _         => ObjectType
   }
 }
 
@@ -61,6 +72,7 @@ object OasTypeDefStringValueMatcher {
     case ObjectType       => "object"
     case FileType         => "file"
     case NilType          => "null"
+    case NumberType       => "number"
     case UndefinedType    => throw new RuntimeException("Undefined type def")
   }
 

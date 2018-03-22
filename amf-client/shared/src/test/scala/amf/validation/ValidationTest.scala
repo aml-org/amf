@@ -541,6 +541,21 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Example invalid min and max constraint validations test") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(examplesPath + "examples/invalid-max-min-constraint.raml",
+                             platform,
+                             RamlYamlHint,
+                             validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.lengthCompare(6) == 0)
+    }
+  }
+
   test("Test js custom validation - multiple of") {
     for {
       validation <- Validation(platform)
@@ -609,7 +624,10 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Can parse the production financial api") {
     for {
       validation <- Validation(platform)
-      doc        <- AMFCompiler(productionPath + "/financial-api/infor-financial-api.raml", platform, RamlYamlHint, validation).build()
+      doc <- AMFCompiler(productionPath + "/financial-api/infor-financial-api.raml",
+                         platform,
+                         RamlYamlHint,
+                         validation).build()
     } yield {
       val resolved = RAML10Plugin.resolve(doc)
       assert(Option(resolved).isDefined)
@@ -644,8 +662,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("External raml 0.8 fragment") {
     for {
       validation <- Validation(platform)
-      library    <- AMFCompiler(validationsPath + "08/external_fragment_test.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(library, ProfileNames.RAML)
+      library <- AMFCompiler(validationsPath + "08/external_fragment_test.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
     } yield {
       assert(report.results.isEmpty)
     }
@@ -864,10 +883,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
     for {
       validation <- Validation(platform)
-      library <- AMFCompiler(validationsPath + "/08/date-query-parameter.raml",
-        platform,
-        RamlYamlHint,
-        validation)
+      library <- AMFCompiler(validationsPath + "/08/date-query-parameter.raml", platform, RamlYamlHint, validation)
         .build()
       report <- validation.validate(library, ProfileNames.RAML08)
     } yield {
@@ -881,9 +897,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       library <- AMFCompiler(validationsPath + "/08/date-query-parameter-correct.raml",
-        platform,
-        RamlYamlHint,
-        validation)
+                             platform,
+                             RamlYamlHint,
+                             validation)
         .build()
       report <- validation.validate(library, ProfileNames.RAML08)
     } yield {
