@@ -338,7 +338,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
 
       // potential node range based in discriminators map
       val discriminatorsMappings: Map[String, NodeMapping] =
-        Option(propertyMapping.typeDiscrminator()).getOrElse(Map()).foldLeft(Map[String, NodeMapping]()) {
+        Option(propertyMapping.typeDiscriminator()).getOrElse(Map()).foldLeft(Map[String, NodeMapping]()) {
           case (acc, (alias, mappingId)) =>
             findNodeMappingById(mappingId) match {
               case (_, nodeMapping: NodeMapping) => acc + (alias -> nodeMapping)

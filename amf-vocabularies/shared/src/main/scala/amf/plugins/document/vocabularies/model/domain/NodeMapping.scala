@@ -11,21 +11,27 @@ import org.yaml.model.YMap
 
 case class NodeMapping(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
 
-  override def meta: Obj = NodeMappingModel
+  override def meta: Obj                                      = NodeMappingModel
   override def adopted(parent: String): NodeMapping.this.type = withId(parent + "/" + name.value().urlEncoded)
 
-  def name: StrField                                     = fields.field(Name)
-  def withName(name: String)                             = set(Name, name)
-  def nodetypeMapping: StrField                          = fields.field(NodeTypeMapping)
-  def withNodeTypeMapping(nodeType: String)              = set(NodeTypeMapping, nodeType)
-  def propertiesMapping(): Seq[PropertyMapping]          = fields.field(PropertiesMapping)
-  def withPropertiesMapping(props: Seq[PropertyMapping]) = setArrayWithoutId(PropertiesMapping, props)
+  def name: StrField                            = fields.field(Name)
+  def nodetypeMapping: StrField                 = fields.field(NodeTypeMapping)
+  def propertiesMapping(): Seq[PropertyMapping] = fields.field(PropertiesMapping)
+
+  def withName(name: String): NodeMapping                             = set(Name, name)
+  def withNodeTypeMapping(nodeType: String): NodeMapping              = set(NodeTypeMapping, nodeType)
+  def withPropertiesMapping(props: Seq[PropertyMapping]): NodeMapping = setArrayWithoutId(PropertiesMapping, props)
 
   override def linkCopy(): Linkable = NodeMapping().withId(id)
 
   override def resolveUnreferencedLink[T](label: String, annotations: Annotations, unresolved: T): T = {
     val unresolvedNodeMapping = unresolved.asInstanceOf[NodeMapping]
-    unresolvedNodeMapping.link(label, annotations).asInstanceOf[NodeMapping].withId(unresolvedNodeMapping.id).withName(unresolvedNodeMapping.name.value()).asInstanceOf[T]
+    unresolvedNodeMapping
+      .link(label, annotations)
+      .asInstanceOf[NodeMapping]
+      .withId(unresolvedNodeMapping.id)
+      .withName(unresolvedNodeMapping.name.value())
+      .asInstanceOf[T]
   }
 }
 

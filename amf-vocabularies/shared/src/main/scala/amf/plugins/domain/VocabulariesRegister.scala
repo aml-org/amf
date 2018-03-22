@@ -7,11 +7,11 @@ import amf.core.remote.Platform
 import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
 import amf.plugins.document.vocabularies.metamodel.document._
 import amf.plugins.document.vocabularies.metamodel.domain._
-import amf.plugins.document.vocabularies.model.domain
-import amf.plugins.document.vocabularies.model.document
+import amf.plugins.document.vocabularies.model.{document, domain}
 
-object Vocabularies {
-  def register(platform: Platform) = {
+object VocabulariesRegister {
+
+  def register(platform: Platform): Unit = {
 
     val p: (Obj) => Boolean = (x: Obj) => x.isInstanceOf[DialectDomainElementModel]
     platform.registerWrapperPredicate(p) {

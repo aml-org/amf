@@ -2,7 +2,9 @@ package amf.plugins.document.graph
 
 import amf.client.render.RenderOptions
 import amf.core.Root
+import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
+import amf.core.model.domain.AnnotationGraphLoader
 import amf.core.parser._
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.remote.Platform
@@ -23,9 +25,9 @@ object AMFGraphPlugin extends AMFDocumentPlugin {
 
   val vendors = Seq("AMF JSON-LD", "AMF Graph")
 
-  override def modelEntities = Nil
+  override def modelEntities: Seq[Obj] = Nil
 
-  override def serializableAnnotations() = Map.empty
+  override def serializableAnnotations(): Map[String, AnnotationGraphLoader] = Map.empty
 
   override def documentSyntaxes = Seq(
     "application/ld+json",
@@ -33,7 +35,7 @@ object AMFGraphPlugin extends AMFDocumentPlugin {
     "application/amf+json"
   )
 
-  override def canParse(root: Root) = {
+  override def canParse(root: Root): Boolean = {
     val maybeMaps = root.parsed.document.node.toOption[Seq[YMap]]
     val maybeMap  = maybeMaps.flatMap(s => s.headOption)
     maybeMap match {
@@ -53,10 +55,10 @@ object AMFGraphPlugin extends AMFDocumentPlugin {
   override def unparse(unit: BaseUnit, options: RenderOptions) =
     Some(GraphEmitter.emit(unit, options))
 
-  override def referenceHandler() = GraphDependenciesReferenceHandler
+  override def referenceHandler(): ReferenceHandler = GraphDependenciesReferenceHandler
 
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit) = new BasicResolutionPipeline().resolve(unit)
+  override def resolve(unit: BaseUnit): BaseUnit = new BasicResolutionPipeline().resolve(unit)
 }

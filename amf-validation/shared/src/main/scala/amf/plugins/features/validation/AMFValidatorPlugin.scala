@@ -65,14 +65,14 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
       RAMLVocabulariesPlugin.ID,
       Context(platform)
     ).map {
-        case parsed: DialectInstance if parsed.definedBy().value() == "http://raml.org/dialects/profile.raml#" =>
+        case parsed: DialectInstance if parsed.definedBy().is("http://raml.org/dialects/profile.raml#") =>
           parsed.encodes
         case _ =>
           throw new Exception(
             "Trying to load as a validation profile that does not match the Validation Profile dialect")
       }
       .map {
-        case encoded: DialectDomainElement if encoded.definedBy.name.value() == "profileNode" =>
+        case encoded: DialectDomainElement if encoded.definedBy.name.is("profileNode") =>
           val profile = ParsedValidationProfile(encoded)
           val domainPlugin = profilesPlugins.get(profile.name) match {
             case Some(plugin) => plugin

@@ -14,51 +14,65 @@ trait MappingDeclarer { this: BaseUnit with DeclaresModel =>
   def findNodeMapping(mappingId: String): Option[NodeMapping] = {
     declares.find(_.id == mappingId) match {
       case Some(mapping: NodeMapping) => Some(mapping)
-      case _ => references.collect { case lib: MappingDeclarer =>
-        lib
-      }.map { dec =>
-        dec.findNodeMapping(mappingId)
-      }.filter(_.isDefined).map(_.get).headOption
+      case _ =>
+        references
+          .collect {
+            case lib: MappingDeclarer =>
+              lib
+          }
+          .map { dec =>
+            dec.findNodeMapping(mappingId)
+          }
+          .filter(_.isDefined)
+          .map(_.get)
+          .headOption
     }
   }
 }
 
-case class Dialect(fields: Fields, annotations: Annotations) extends BaseUnit with DeclaresModel with EncodesModel with MappingDeclarer {
-  def meta: Obj                          = DialectModel
-  def references: Seq[BaseUnit]          = fields.field(References)
-  def location: String                   = fields(Location)
-  def encodes: DomainElement             = fields.field(Encodes)
-  def declares: Seq[DomainElement]       = fields.field(Declares)
-  def usage: String                      = fields(Usage)
-  def adopted(parent: String): this.type = withId(parent)
+case class Dialect(fields: Fields, annotations: Annotations)
+    extends BaseUnit
+    with DeclaresModel
+    with EncodesModel
+    with MappingDeclarer {
+
+  def references: Seq[BaseUnit]    = fields.field(References)
+  def encodes: DomainElement       = fields.field(Encodes)
+  def declares: Seq[DomainElement] = fields.field(Declares)
+  def name(): StrField             = fields.field(Name)
+  def version(): StrField          = fields.field(Version)
+  def externals: Seq[External]     = fields.field(Externals)
+  def documents(): DocumentsModel  = fields.field(Documents)
+
+  def location: String = fields(Location)
+  def usage: String    = fields(Usage)
 
   def nameAndVersion(): String = s"${name().value()} ${version().value()}"
+  def header: String           = s"%${name().value()} ${version().value()}".replace(" ", "")
 
-  def name(): StrField                                = fields.field(Name)
-  def withName(name: String)                          = set(Name, name)
-  def version(): StrField                             = fields.field(Version)
-  def withVersion(version: String)                    = set(Version, version)
-  def externals: Seq[External]                        = fields.field(Externals)
-  def withExternals(externals: Seq[External])         = setArray(Externals, externals)
-  def documents(): DocumentsModel                     = fields.field(Documents)
-  def withDocuments(documentsMapping: DocumentsModel) = set(Documents, documentsMapping)
+  def adopted(parent: String): this.type = withId(parent)
 
-  def header = s"%${name().value()} ${version().value()}".replace(" ", "")
+  def withName(name: String): Dialect                          = set(Name, name)
+  def withVersion(version: String): Dialect                    = set(Version, version)
+  def withExternals(externals: Seq[External]): Dialect         = setArray(Externals, externals)
+  def withDocuments(documentsMapping: DocumentsModel): Dialect = set(Documents, documentsMapping)
 
-  def libraryHeaders = Option(documents().library()) match {
+  def libraryHeaders: Seq[String] = Option(documents().library()) match {
     case Some(library) => Seq(s"%RAMLLibrary/${header.replaceFirst("%", "")}")
     case None          => Nil
   }
 
-  def isLibraryHeader(header: String) = libraryHeaders.contains(header.replace(" ", ""))
+  def isLibraryHeader(header: String): Boolean = libraryHeaders.contains(header.replace(" ", ""))
 
-  def fragmentHeaders = documents().fragments().map { fragment =>
+  def fragmentHeaders: Seq[String] = documents().fragments().map { fragment =>
     s"%${fragment.documentName().value()}/${header.replaceFirst("%", "")}".replace(" ", "")
   }
 
-  def isFragmentHeader(header: String) = fragmentHeaders.contains(header.replace(" ", ""))
+  def isFragmentHeader(header: String): Boolean = fragmentHeaders.contains(header.replace(" ", ""))
 
-  def allHeaders = Seq(header) ++ libraryHeaders ++ fragmentHeaders
+  def allHeaders: Seq[String] = Seq(header) ++ libraryHeaders ++ fragmentHeaders
+
+  def meta: Obj = DialectModel
 }
 
 object Dialect {
@@ -67,16 +81,23 @@ object Dialect {
   def apply(annotations: Annotations): Dialect = Dialect(Fields(), annotations)
 }
 
-case class DialectLibrary(fields: Fields, annotations: Annotations) extends BaseUnit with DeclaresModel with MappingDeclarer {
-  def meta: Obj                          = DialectLibraryModel
-  def references: Seq[BaseUnit]          = fields.field(References)
-  def location: String                   = fields(Location)
-  def declares: Seq[DomainElement]       = fields.field(Declares)
-  def usage: String                      = fields(Usage)
+case class DialectLibrary(fields: Fields, annotations: Annotations)
+    extends BaseUnit
+    with DeclaresModel
+    with MappingDeclarer {
+
+  def references: Seq[BaseUnit]    = fields.field(References)
+  def declares: Seq[DomainElement] = fields.field(Declares)
+  def externals: Seq[External]     = fields.field(Externals)
+
+  def location: String = fields(Location)
+  def usage: String    = fields(Usage)
+
   def adopted(parent: String): this.type = withId(parent)
 
-  def externals: Seq[External]                = fields.field(Externals)
-  def withExternals(externals: Seq[External]) = setArray(Externals, externals)
+  def withExternals(externals: Seq[External]): DialectLibrary = setArray(Externals, externals)
+
+  def meta: Obj = DialectLibraryModel
 }
 
 object DialectLibrary {
@@ -86,17 +107,20 @@ object DialectLibrary {
 }
 
 case class DialectFragment(fields: Fields, annotations: Annotations) extends BaseUnit with EncodesModel {
-  def meta: Obj                 = DialectFragmentModel
-  def references: Seq[BaseUnit] = fields.field(References)
-  def location: String          = fields(Location)
-  def usage: String             = fields(Usage)
+
+  def references: Seq[BaseUnit]     = fields.field(References)
+  def externals: Seq[External]      = fields.field(Externals)
+  override def encodes: NodeMapping = fields.field(Encodes)
+
+  def location: String = fields(Location)
+  def usage: String    = fields(Usage)
 
   def adopted(parent: String): this.type = withId(parent)
 
-  def externals: Seq[External]                = fields.field(Externals)
-  def withExternals(externals: Seq[External]) = setArray(Externals, externals)
-  override def encodes: NodeMapping           = fields.field(Encodes)
-  def withEncodes(nodeMapping: NodeMapping)   = set(Encodes, nodeMapping)
+  def withExternals(externals: Seq[External]): DialectFragment = setArray(Externals, externals)
+  def withEncodes(nodeMapping: NodeMapping): DialectFragment   = set(Encodes, nodeMapping)
+
+  def meta: Obj = DialectFragmentModel
 }
 
 object DialectFragment {
