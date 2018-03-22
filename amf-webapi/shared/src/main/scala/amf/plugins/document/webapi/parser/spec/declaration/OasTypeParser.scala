@@ -125,7 +125,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
             copied
           case None =>
             ctx.findLocalJSONPath(map.key("$ref").map(_.value.as[String]).getOrElse("")) match {
-              case Some((name,shapeNode)) =>
+              case Some((name, shapeNode)) =>
                 OasTypeParser(YMapEntry(name, shapeNode), adopt, oasNode).parse() match {
                   case Some(shape) => shape
                   case None =>
@@ -168,14 +168,14 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       map.key("minLength", ScalarShapeModel.MinLength in shape)
       map.key("maxLength", ScalarShapeModel.MaxLength in shape)
 
-      map.key("minimum", entry => { // todo pope
+      map.key("minimum", entry => {
         val value = ScalarNode(entry.value)
-        shape.set(ScalarShapeModel.Minimum, value.integer(), Annotations(entry))
+        shape.set(ScalarShapeModel.Minimum, value.text(), Annotations(entry))
       })
 
-      map.key("maximum", entry => { // todo pope
+      map.key("maximum", entry => {
         val value = ScalarNode(entry.value)
-        shape.set(ScalarShapeModel.Maximum, value.integer(), Annotations(entry))
+        shape.set(ScalarShapeModel.Maximum, value.text(), Annotations(entry))
       })
 
       map.key("exclusiveMinimum", ScalarShapeModel.ExclusiveMinimum in shape)
@@ -286,7 +286,11 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
             .zipWithIndex
             .map {
               case (elem, index) =>
-                OasTypeParser(elem, s"member$index", elem.as[YMap], item => item.adopted(shape.id + "/items/" + index), "schema").parse()
+                OasTypeParser(elem,
+                              s"member$index",
+                              elem.as[YMap],
+                              item => item.adopted(shape.id + "/items/" + index),
+                              "schema").parse()
             }
           shape.withItems(items.filter(_.isDefined).map(_.get))
         }
@@ -394,12 +398,14 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
         .map { field =>
           field.value.tagType match {
             case YType.Seq =>
-              field.value.as[YSequence].nodes.foldLeft(Map[String,YNode]()) { case (acc, node) =>
-                acc.updated(node.as[String], node)
+              field.value.as[YSequence].nodes.foldLeft(Map[String, YNode]()) {
+                case (acc, node) =>
+                  acc.updated(node.as[String], node)
               }
             case _ => Map[String, YNode]()
           }
-        }.getOrElse(Map[String, YNode]())
+        }
+        .getOrElse(Map[String, YNode]())
 
       map.key(
         "properties",
@@ -459,7 +465,9 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     }
   }
 
-  case class PropertyShapeParser(entry: YMapEntry, producer: String => PropertyShape, requiredFields: Map[String, YNode]) {
+  case class PropertyShapeParser(entry: YMapEntry,
+                                 producer: String => PropertyShape,
+                                 requiredFields: Map[String, YNode]) {
 
     def parse(): PropertyShape = {
 

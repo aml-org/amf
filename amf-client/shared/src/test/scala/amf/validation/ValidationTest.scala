@@ -1042,7 +1042,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         .build()
       report <- validation.validate(library, ProfileNames.OAS)
     } yield {
-      assert(report.results.nonEmpty)
+      val results = report.results.filter(_.level == SeverityLevels.VIOLATION)
+      assert(results.lengthCompare(1) == 0)
+      assert(results.head.message.contains("Tag must have a name"))
     }
   }
 

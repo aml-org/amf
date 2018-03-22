@@ -14,7 +14,11 @@ import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.RamlHeader
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.raml.{Raml08RootLevelEmitters, Raml10RootLevelEmitters, RamlRootLevelEmitters}
+import amf.plugins.document.webapi.parser.spec.raml.{
+  Raml08RootLevelEmitters,
+  Raml10RootLevelEmitters,
+  RamlRootLevelEmitters
+}
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
@@ -41,7 +45,7 @@ abstract class SpecEmitterContext(refEmitter: RefEmitter) {
 
   def getRefEmitter: RefEmitter = refEmitter
 
-  def oasTypePropertyEmitter(typeName: String, shape: Shape): MapEntryEmitter  = {
+  def oasTypePropertyEmitter(typeName: String, shape: Shape): MapEntryEmitter = {
     shape.annotations.find(classOf[TypePropertyLexicalInfo]) match {
       case Some(lexicalInfo) =>
         MapEntryEmitter("type", typeName, YType.Str, lexicalInfo.range.start)
@@ -56,7 +60,7 @@ abstract class SpecEmitterContext(refEmitter: RefEmitter) {
         shape.annotations.find(classOf[TypePropertyLexicalInfo]) match {
           case Some(lexicalInfo) =>
             Some(MapEntryEmitter("type", typeName, YType.Str, lexicalInfo.range.start))
-          case _  => None
+          case _ => None
         }
       case _ => None
     }
@@ -90,8 +94,10 @@ trait BaseSpecEmitter {
 }
 
 /** Scalar valued raml node (emit as obj node). */
-private case class RamlScalarValueEmitter(key: String, f: FieldEntry, extensions: Seq[DomainExtension])(
-    implicit spec: SpecEmitterContext)
+private case class RamlScalarValueEmitter(key: String,
+                                          f: FieldEntry,
+                                          extensions: Seq[DomainExtension],
+                                          mediaType: Option[YType] = None)(implicit spec: SpecEmitterContext)
     extends BaseValueEmitter {
 
   override def emit(b: EntryBuilder): Unit = sourceOr(f.value, annotatedScalar(b))
@@ -100,7 +106,7 @@ private case class RamlScalarValueEmitter(key: String, f: FieldEntry, extensions
     b.entry(
       key,
       _.obj { b =>
-        b.value = YNode(YScalar(f.scalar.value), tag)
+        b.value = YNode(YScalar(f.scalar.value), mediaType.getOrElse(tag))
         extensions.foreach { e =>
           spec.factory.annotationEmitter(e, Default).emit(b)
         }
@@ -110,12 +116,13 @@ private case class RamlScalarValueEmitter(key: String, f: FieldEntry, extensions
 }
 
 object RamlScalarEmitter {
-  def apply(key: String, f: FieldEntry)(implicit spec: SpecEmitterContext): EntryEmitter = {
+  def apply(key: String, f: FieldEntry, mediaType: Option[YType] = None)(
+      implicit spec: SpecEmitterContext): EntryEmitter = {
     val extensions = f.value.annotations.collect({ case e: DomainExtensionAnnotation => e })
     if (extensions.nonEmpty && spec.vendor == Raml10) {
-      RamlScalarValueEmitter(key, f, extensions.map(_.extension))
+      RamlScalarValueEmitter(key, f, extensions.map(_.extension), mediaType)
     } else {
-      ValueEmitter(key, f)
+      ValueEmitter(key, f, mediaType)
     }
   }
 }

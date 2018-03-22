@@ -12,12 +12,7 @@ import amf.core.model.domain.{AmfScalar, Linkable, Shape}
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, FieldEntry, Fields, Position}
 import amf.plugins.document.webapi.annotations._
-import amf.plugins.document.webapi.contexts.{
-  OasSpecEmitterContext,
-  RamlScalarEmitter,
-  RamlSpecEmitterContext,
-  SpecEmitterContext
-}
+import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEmitter, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
@@ -29,6 +24,7 @@ import amf.plugins.document.webapi.parser.{
 }
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.metamodel._
+import amf.plugins.domain.shapes.models.TypeDef.UndefinedType
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
@@ -506,7 +502,6 @@ trait RamlCommonOASFieldsEmitter {
     fs.entry(ScalarShapeModel.ExclusiveMinimum).map(f => result += ValueEmitter("(exclusiveMinimum)", f))
 
     fs.entry(ScalarShapeModel.ExclusiveMaximum).map(f => result += ValueEmitter("(exclusiveMaximum)", f))
-
   }
 }
 case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
@@ -540,11 +535,14 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
 
     fs.entry(ScalarShapeModel.Pattern).map(f => result += RamlScalarEmitter("pattern", f))
 
-    fs.entry(ScalarShapeModel.Minimum).map(f => result += ValueEmitter("minimum", f))
+    fs.entry(ScalarShapeModel.Minimum)
+      .map(f => result += ValueEmitter("minimum", f, Some(NumberTypeToYTypeConverter.convert(rawTypeDef))))
 
-    fs.entry(ScalarShapeModel.Maximum).map(f => result += ValueEmitter("maximum", f))
+    fs.entry(ScalarShapeModel.Maximum)
+      .map(f => result += ValueEmitter("maximum", f, Some(NumberTypeToYTypeConverter.convert(rawTypeDef))))
 
-    fs.entry(ScalarShapeModel.MultipleOf).map(f => result += RamlScalarEmitter("multipleOf", f))
+    fs.entry(ScalarShapeModel.MultipleOf)
+      .map(f => result += RamlScalarEmitter("multipleOf", f, Some(NumberTypeToYTypeConverter.convert(rawTypeDef))))
 
     result ++= emitFormat(rawTypeDef, fs, format)
 
@@ -1275,22 +1273,29 @@ case class OasNilShapeEmitter(nil: NilShape, ordering: SpecOrdering) extends Ent
 }
 
 trait OasCommonOASFieldsEmitter {
+
+  def typeDef: Option[TypeDef] = None
+
   def emitCommonFields(fs: Fields, result: ListBuffer[EntryEmitter]): Option[result.type] = {
+
     fs.entry(ScalarShapeModel.Pattern).map(f => result += ValueEmitter("pattern", f))
 
     fs.entry(ScalarShapeModel.MinLength).map(f => result += ValueEmitter("minLength", f))
 
     fs.entry(ScalarShapeModel.MaxLength).map(f => result += ValueEmitter("maxLength", f))
 
-    fs.entry(ScalarShapeModel.Minimum).map(f => result += ValueEmitter("minimum", f))
+    fs.entry(ScalarShapeModel.Minimum)
+      .map(f => result += ValueEmitter("minimum", f, Some(NumberTypeToYTypeConverter.convert(typeDef))))
 
-    fs.entry(ScalarShapeModel.Maximum).map(f => result += ValueEmitter("maximum", f))
+    fs.entry(ScalarShapeModel.Maximum)
+      .map(f => result += ValueEmitter("maximum", f, Some(NumberTypeToYTypeConverter.convert(typeDef))))
 
     fs.entry(ScalarShapeModel.ExclusiveMinimum).map(f => result += ValueEmitter("exclusiveMinimum", f))
 
     fs.entry(ScalarShapeModel.ExclusiveMaximum).map(f => result += ValueEmitter("exclusiveMaximum", f))
 
-    fs.entry(ScalarShapeModel.MultipleOf).map(f => result += ValueEmitter("multipleOf", f))
+    fs.entry(ScalarShapeModel.MultipleOf)
+      .map(f => result += ValueEmitter("multipleOf", f, Some(NumberTypeToYTypeConverter.convert(typeDef))))
 
     fs.entry(ScalarShapeModel.Format).map(f => result += ValueEmitter("format", f))
   }
@@ -1300,21 +1305,23 @@ case class OasScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, re
     implicit spec: SpecEmitterContext)
     extends OasAnyShapeEmitter(scalar, ordering, references)
     with OasCommonOASFieldsEmitter {
+
+  override def typeDef: Option[TypeDef] = scalar.dataType.option().map(TypeDefXsdMapping.typeDef)
+
   override def emitters(): Seq[EntryEmitter] = {
+
     val result: ListBuffer[EntryEmitter] = ListBuffer(super.emitters(): _*)
-
-    val fs = scalar.fields
-
-    val typeDef = OasTypeDefStringValueMatcher.matchType(TypeDefXsdMapping.typeDef(scalar.dataType.value()))
+    val fs                               = scalar.fields
 
     fs.entry(ScalarShapeModel.DataType)
       .foreach { f =>
         if (!f.value.annotations.contains(classOf[Inferred])) {
+          val typeDefStr = OasTypeDefStringValueMatcher.matchType(typeDef.get)
           scalar.annotations.find(classOf[TypePropertyLexicalInfo]) match {
             case Some(lexicalInfo) =>
-              result += MapEntryEmitter("type", typeDef, YType.Str, lexicalInfo.range.start)
+              result += MapEntryEmitter("type", typeDefStr, YType.Str, lexicalInfo.range.start)
             case _ =>
-              result += MapEntryEmitter("type", typeDef, position = pos(f.value.annotations)) // TODO check this  - annotations of typeDef in parser
+              result += MapEntryEmitter("type", typeDefStr, position = pos(f.value.annotations)) // TODO check this  - annotations of typeDef in parser
           }
         }
       }
@@ -1322,7 +1329,7 @@ case class OasScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, re
     fs.entry(ScalarShapeModel.Format) match {
       case Some(_) => // ignore, this will be set with the explicit information
       case None =>
-        OasTypeDefStringValueMatcher.matchFormat(TypeDefXsdMapping.typeDef(scalar.dataType.value())) match {
+        OasTypeDefStringValueMatcher.matchFormat(typeDef.getOrElse(UndefinedType)) match {
           case Some(format) => result += RawValueEmitter("format", ScalarShapeModel.Format, format)
           case None         => // ignore
         }
@@ -1337,7 +1344,11 @@ case class OasFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, refere
     implicit spec: SpecEmitterContext)
     extends OasAnyShapeEmitter(scalar, ordering, references)
     with OasCommonOASFieldsEmitter {
+
+  override def typeDef: Option[TypeDef] = None
+
   override def emitters(): Seq[EntryEmitter] = {
+
     val result: ListBuffer[EntryEmitter] = ListBuffer(super.emitters(): _*)
 
     val fs = scalar.fields
@@ -1470,9 +1481,11 @@ case class SimpleTypeEmitter(shape: ScalarShape, ordering: SpecOrdering)(implici
     val result = ListBuffer[EntryEmitter]()
     fs.entry(ScalarShapeModel.DisplayName).map(f => result += ValueEmitter("displayName", f))
 
-    val rawTypeDef = TypeDefXsdMapping.typeDef08(shape.dataType.value())
+    val typeDef = shape.dataType.option().map(TypeDefXsdMapping.type08Def)
+
     fs.entry(ScalarShapeModel.DataType)
       .map { f =>
+        val rawTypeDef = TypeDefXsdMapping.typeDef08(shape.dataType.value())
         shape.annotations.find(classOf[TypePropertyLexicalInfo]) match {
           case Some(lexicalInfo) =>
             result += MapEntryEmitter("type", rawTypeDef, position = lexicalInfo.range.start)
@@ -1491,9 +1504,11 @@ case class SimpleTypeEmitter(shape: ScalarShape, ordering: SpecOrdering)(implici
 
     fs.entry(ScalarShapeModel.MaxLength).map(f => result += ValueEmitter("maxLength", f))
 
-    fs.entry(ScalarShapeModel.Minimum).map(f => result += ValueEmitter("minimum", f))
+    fs.entry(ScalarShapeModel.Minimum)
+      .map(f => result += ValueEmitter("minimum", f, Some(NumberTypeToYTypeConverter.convert(typeDef))))
 
-    fs.entry(ScalarShapeModel.Maximum).map(f => result += ValueEmitter("maximum", f))
+    fs.entry(ScalarShapeModel.Maximum)
+      .map(f => result += ValueEmitter("maximum", f, Some(NumberTypeToYTypeConverter.convert(typeDef))))
 
     shape.examples.headOption.foreach(e => result += SingleExampleEmitter("example", e, ordering))
     fs.entry(ScalarShapeModel.RequiredShape).map(f => result += ValueEmitter("required", f))
@@ -1508,4 +1523,18 @@ case class SimpleTypeEmitter(shape: ScalarShape, ordering: SpecOrdering)(implici
     result
   }
 
+}
+
+object NumberTypeToYTypeConverter {
+
+  def convert(datatype: TypeDef): YType = {
+    datatype match {
+      case TypeDef.IntType => YType.Int
+      case _               => YType.Float
+    }
+  }
+
+  def convert(datatype: Option[TypeDef]): YType = {
+    this.convert(datatype.getOrElse(TypeDef.UndefinedType))
+  }
 }

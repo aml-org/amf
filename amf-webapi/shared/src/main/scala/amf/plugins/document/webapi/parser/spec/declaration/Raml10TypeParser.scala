@@ -296,7 +296,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
       adopt(shape)
       parseMap(shape)
       val str = shape match {
-        case scalar: ScalarShape  => scalar.dataType.value()
+        case scalar: ScalarShape => scalar.dataType.value()
         case _                   => "#shape"
       }
 
@@ -412,16 +412,17 @@ trait RamlExternalTypes {
     // we set the local schema entry to be able to resolve local $refs
     ctx.localJSONSchemaContext = Some(schemaEntry.value)
 
-    val parsed = OasTypeParser(schemaEntry, (shape) => adopt(shape), oasNode = "externalSchema")(toOas(ctx)).parse() match {
-      case Some(shape) =>
-        shape.annotations += ParsedJSONSchema(text)
-        shape
-      case None =>
-        val shape = SchemaShape()
-        adopt(shape)
-        ctx.violation(shape.id, "Cannot parse JSON Schema", value)
-        shape
-    }
+    val parsed =
+      OasTypeParser(schemaEntry, (shape) => adopt(shape), oasNode = "externalSchema")(toOas(ctx)).parse() match {
+        case Some(shape) =>
+          shape.annotations += ParsedJSONSchema(text)
+          shape
+        case None =>
+          val shape = SchemaShape()
+          adopt(shape)
+          ctx.violation(shape.id, "Cannot parse JSON Schema", value)
+          shape
+      }
     ctx.localJSONSchemaContext = None // we reset the JSON schema context after parsing
     parsed
   }
@@ -743,12 +744,12 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
       map.key("(minimum)", entry => { // todo pope
         val value = ScalarNode(entry.value)
-        shape.set(ScalarShapeModel.Minimum, value.string(), Annotations(entry))
+        shape.set(ScalarShapeModel.Minimum, value.text(), Annotations(entry))
       })
 
       map.key("(maximum)", entry => { // todo pope
         val value = ScalarNode(entry.value)
-        shape.set(ScalarShapeModel.Maximum, value.string(), Annotations(entry))
+        shape.set(ScalarShapeModel.Maximum, value.text(), Annotations(entry))
       })
 
       map.key("(format)", ScalarShapeModel.Format in shape)
@@ -863,9 +864,9 @@ sealed abstract class RamlTypeParser(ast: YPart,
                   s"member$index",
                   elem.as[YMap],
                   item => item.adopted(shape.id + "/items/" + index),
-                    isAnnotation = false,
-                    defaultType = AnyDefaultType
-                  ).parse()
+                  isAnnotation = false,
+                  defaultType = AnyDefaultType
+                ).parse()
             }
           shape.withItems(items.filter(_.isDefined).map(_.get))
         }
