@@ -222,6 +222,8 @@ case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, ast: YPar
       case StrType =>
         Some(ScalarShape()
           .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(defaultType)), Annotations() += Inferred()))
+      case AnyType =>
+        Some(AnyShape().withName(name).add(Inferred()))
       case _ =>
         // TODO get parent id
         ctx.violation(s"Cannot set default type $defaultType in raml 08", ast)
@@ -287,14 +289,14 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
             case _ => None
           }
         })
-        .getOrElse(ScalarShape(map).withName(name))
+        .getOrElse(ScalarShape(map).withDataType((Namespace.Xsd + "string").iri()).withName(name))
 
       map.key("type", e => { shape.annotations += TypePropertyLexicalInfo(Range(e.key.range)) })
 
       adopt(shape)
       parseMap(shape)
       val str = shape match {
-        case scalar: ScalarShape => scalar.dataType.value()
+        case scalar: ScalarShape  => scalar.dataType.value()
         case _                   => "#shape"
       }
 
@@ -407,8 +409,10 @@ trait RamlExternalTypes {
         ctx.violation("invalid json schema expression", valueAST)
         YMapEntry(name, YNode.Null)
     }
+    // we set the local schema entry to be able to resolve local $refs
+    ctx.localJSONSchemaContext = Some(schemaEntry.value)
 
-    OasTypeParser(schemaEntry, (shape) => adopt(shape))(toOas(ctx)).parse() match {
+    val parsed = OasTypeParser(schemaEntry, (shape) => adopt(shape), oasNode = "externalSchema")(toOas(ctx)).parse() match {
       case Some(shape) =>
         shape.annotations += ParsedJSONSchema(text)
         shape
@@ -418,6 +422,8 @@ trait RamlExternalTypes {
         ctx.violation(shape.id, "Cannot parse JSON Schema", value)
         shape
     }
+    ctx.localJSONSchemaContext = None // we reset the JSON schema context after parsing
+    parsed
   }
 
   protected def typeOrSchema(map: YMap): Option[YMapEntry] = map.key("type").orElse(map.key("schema"))

@@ -119,6 +119,43 @@ abstract class WebApiContext(private val wrapped: ParserContext, private val ds:
   val declarations: WebApiDeclarations =
     ds.getOrElse(new WebApiDeclarations(None, errorHandler = Some(this), futureDeclarations = futureDeclarations))
 
+  var localJSONSchemaContext: Option[YNode] = wrapped match {
+    case (wac: WebApiContext) => wac.localJSONSchemaContext
+    case _                    => None
+  }
+
+  def findLocalJSONPath(path: String): Option[(String,YNode)] = {
+    localJSONSchemaContext match {
+      case None => None
+      case Some(schema) =>
+        var tmp: YNode = schema
+        var name = "schema"
+        var parts = path.replace("#", "").split("/").filter(_ != "")
+        var error = false
+
+        while(parts.nonEmpty && !error) {
+          tmp.tagType match {
+            case YType.Map => {
+              val nextPart = parts.head
+              parts = parts.tail
+              val map = tmp.as[YMap]
+              map.key(nextPart) match {
+                case Some(entry) =>
+                  name = nextPart
+                  tmp = entry.value
+                case _ =>
+                  error = true
+              }
+            }
+            case _ =>
+              error = true
+          }
+        }
+
+        if (!error) Some((name, tmp)) else None
+    }
+  }
+
   def link(node: YNode): Either[String, YNode]
   def ignore(shape: String, property: String): Boolean
 

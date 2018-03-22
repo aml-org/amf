@@ -1,0 +1,648 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Comment describing your JSON Schema",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "number"
+    },
+    "pnrnumber": {
+      "type": "string"
+    },
+    "pnrcreationDate": {
+      "type": "number"
+    },
+    "pnrlastUpdateTime": {
+      "type": "number"
+    },
+    "gdspnrnumber": {
+      "type": "string"
+    },
+    "ttyreservationIndicator": {
+      "type": "string"
+    },
+    "createAgentID": {
+      "type": "string"
+    },
+    "lastUpdateAgentID": {
+      "type": "string"
+    },
+    "createLocationCode": {
+      "type": "string"
+    },
+    "lastUpdateLocationCode": {
+      "type": "string"
+    },
+    "createAgentDuytyCode": {
+      "type": "string"
+    },
+    "lastUpdateAgentDutyCode": {
+      "type": "string"
+    },
+    "bookingOutletTypeCode": {
+      "type": "string"
+    },
+    "lastUpdatedOutletTypeCode": {
+      "type": "string"
+    },
+    "originalGDSOwnerCode": {
+      "type": "string"
+    },
+    "currentGDSOwnerCode": {
+      "type": "string"
+    },
+    "holdLimitTypeCode": {
+      "type": "string"
+    },
+    "holdLimitDate": {
+      "type": "number"
+    },
+    "arrowPurgeDateTime": {
+      "type": "number"
+    },
+    "nameAssociationIndicator": {
+      "type": "boolean"
+    },
+    "orderDocumentURI": {
+      "type": "string"
+    },
+    "groupReservationIndicator": {
+      "type": "boolean"
+    },
+    "crewReservationIndicator": {
+      "type": "boolean"
+    },
+    "passriderReservationIndicator": {
+      "type": "boolean"
+    },
+    "codeshareResrvationIndicator": {
+      "type": "boolean"
+    },
+    "trainingReservationIndicator": {
+      "type": "boolean"
+    },
+    "firearmReservationIndicator": {
+      "type": "boolean"
+    },
+    "reservationContactTypeCode": {
+      "type": "string"
+    },
+    "reservationContactTypeText": {
+      "type": "string"
+    },
+    "travelAgentATCNumber": {
+      "type": "string"
+    },
+    "corporateID": {
+      "type": "string"
+    },
+    "tripName": {
+      "type": "string"
+    },
+    "bookedUniqueCustomerID": {
+      "type": "string"
+    },
+    "lastUpdatedUniqueCustomerID": {
+      "type": "string"
+    },
+    "parentPNRNumber": {
+      "type": "string"
+    },
+    "preferredNotificationTypeCode": {
+      "type": "string"
+    },
+    "notificationMinutesQuantity": {
+      "type": "integer"
+    },
+    "auditDetails": {
+      "$ref": "#/definitions/auditDetails"
+    },
+    "passengers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/passenger"
+      }
+    },
+    "segments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/segment"
+      }
+    },
+    "miscItems": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/miscItem"
+      }
+    },
+    "formOfPayments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/formOfPayment"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "auditDetails": {
+      "type": "object",
+      "properties": {
+        "createTime": {
+          "type": "number"
+        },
+        "lastUpdatedTime": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false
+    },
+    "segment": {
+      "type": "object",
+      "properties": {
+        "segmentNumber": {
+          "type": "string"
+        },
+        "bookingStatusCode": {
+          "type": "string"
+        },
+        "typeCode": {
+          "type": "string"
+        },
+        "trainNumber": {
+          "type": "string"
+        },
+        "tranIndexDate": {
+          "type": "number"
+        },
+        "orignLocationCode": {
+          "type": "string"
+        },
+        "destinationLoctionCode": {
+          "type": "string"
+        },
+        "bookingTime": {
+          "type": "number"
+        },
+        "bookingMethodTypeCode": {
+          "type": "string"
+        },
+        "transportTypeCode": {
+          "type": "string"
+        },
+        "tripNumber": {
+          "type": "string"
+        },
+        "tariffTypeCode": {
+          "type": "string"
+        },
+        "scheduledDepartureTime": {
+          "type": "number"
+        },
+        "scheduledArrivalTime": {
+          "type": "number"
+        },
+        "segmentPassengerCount": {
+          "type": "string"
+        },
+        "carNumber": {
+          "type": "string"
+        },
+        "roomNumber": {
+          "type": "string"
+        },
+        "carrierCode": {
+          "type": "string"
+        },
+        "borderCrossingIndicator": {
+          "type": "boolean"
+        },
+        "cncelMethodCode": {
+          "type": "string"
+        },
+        "cancelTime": {
+          "type": "number"
+        },
+        "protectedIndicator": {
+          "type": "boolean"
+        },
+        "bookingOutletTypeCode": {
+          "type": "string"
+        },
+        "cancelReasonCode": {
+          "type": "string"
+        },
+        "bookingLocationCode": {
+          "type": "string"
+        },
+        "bookingAgentID": {
+          "type": "string"
+        },
+        "lastUpdatedAgentID": {
+          "type": "string"
+        },
+        "bookingAgentDutyCode": {
+          "type": "string"
+        },
+        "restrictionIndicator": {
+          "type": "boolean"
+        },
+        "tickets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ticket"
+          }
+        },
+        "rbdcode": {
+          "type": "string"
+        },
+        "rbdcount": {
+          "type": "string"
+        },
+        "rbdbaseCode": {
+          "type": "string"
+        },
+        "rwbcode": {
+          "type": "string"
+        },
+        "ssrs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ssr"
+          }
+        },
+        "auditDetails": {
+          "$ref": "#/definitions/auditDetails"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ticket": {
+      "type": "object",
+      "properties": {
+        "ticketID": {
+          "type": "string"
+        },
+        "arrowPassengerNumber": {
+          "type": "string"
+        },
+        "segmentNumber": {
+          "type": "string"
+        },
+        "conjunctiveCouponSequenceNumber": {
+          "type": "integer"
+        },
+        "passengerTypeCode": {
+          "type": "string"
+        },
+        "passengerTypeCount": {
+          "type": "string"
+        },
+        "pricingTypeCode": {
+          "type": "string"
+        },
+        "farePlanCode": {
+          "type": "string"
+        },
+        "promotionCode": {
+          "type": "string"
+        },
+        "pricingComments": {
+          "type": "string"
+        },
+        "ticketNumber": {
+          "type": "string"
+        },
+        "ticketCurrentStatusCode": {
+          "type": "string"
+        },
+        "ticketTypeCode": {
+          "type": "string"
+        },
+        "gdsCouponNumber": {
+          "type": "string"
+        },
+        "productTypeCode": {
+          "type": "string"
+        },
+        "productSubTypeCode": {
+          "type": "string"
+        },
+        "ticketingComments": {
+          "type": "string"
+        },
+        "ticketActivities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ticketActivity"
+          }
+        },
+        "akaserviceCode": {
+          "type": "string"
+        },
+        "akamemberID": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ticketActivity": {
+      "type": "object",
+      "properties": {
+        "ticketID": {
+          "type": "number"
+        },
+        "activityTypeCode": {
+          "type": "string"
+        },
+        "activitySubTypeCode": {
+          "type": "string"
+        },
+        "activityTime": {
+          "type": "number"
+        },
+        "outletAgentID": {
+          "type": "string"
+        },
+        "outletagentDutyCode": {
+          "type": "string"
+        },
+        "outletTypeCode": {
+          "type": "string"
+        },
+        "outletLocationCode": {
+          "type": "string"
+        },
+        "monetaryItems": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/monetaryItem"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "monetaryItem": {
+      "type": "object",
+      "properties": {
+        "ticketID": {
+          "type": "number"
+        },
+        "monetaryItemCode": {
+          "type": "number"
+        },
+        "activityTypeCode": {
+          "type": "string"
+        },
+        "activitySubtypeCode": {
+          "type": "string"
+        },
+        "monetaryItemAmount": {
+          "type": "number"
+        },
+        "exchangeMonetaryItemAmount": {
+          "type": "number"
+        },
+        "auditDetail": {
+          "$ref": "#/definitions/auditDetails"
+        }
+      },
+      "additionalProperties": false
+    },
+    "passenger": {
+      "type": "object",
+      "properties": {
+        "arrowPassengerNumber": {
+          "type": "string"
+        },
+        "uniqueCustomerID": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string",
+          "enum": [
+            "M",
+            "F"
+          ]
+        },
+        "birthDate": {
+          "type": "number"
+        },
+        "infantTravelIndicator": {
+          "type": "boolean"
+        },
+        "reservationDocumentURI": {
+          "type": "string"
+        },
+        "passriderNumber": {
+          "type": "string"
+        },
+        "contactComments": {
+          "type": "string"
+        },
+        "nameComments": {
+          "type": "string"
+        },
+        "infantBirthDate": {
+          "type": "number"
+        },
+        "infantGender": {
+          "type": "string",
+          "enum": [
+            "M",
+            "F"
+          ]
+        },
+        "agrnumber": {
+          "type": "string"
+        },
+        "passengerAddresses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/passengerAddress"
+          }
+        },
+        "passengerPhones": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/passengerPhone"
+          }
+        },
+        "passengerEmails": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/passengerEmail"
+          }
+        },
+        "auditDetails": {
+          "$ref": "#/definitions/auditDetails"
+        }
+      },
+      "additionalProperties": false
+    },
+    "passengerPhone": {
+      "type": "object",
+      "properties": {
+        "arrowPassenegerNumber": {
+          "type": "string"
+        },
+        "phoneTypeCode": {
+          "type": "string"
+        },
+        "phoneSequenceNumber": {
+          "type": "integer"
+        },
+        "phoneNumber": {
+          "type": "string"
+        },
+        "phoneAreaCode": {
+          "type": "string"
+        },
+        "phoneExtNumber": {
+          "type": "string"
+        },
+        "phoneInoText": {
+          "type": "string"
+        },
+        "auditDetails": {
+          "$ref": "#/definitions/auditDetails"
+        }
+      },
+      "additionalProperties": false
+    },
+    "passengerEmail": {
+      "type": "object",
+      "properties": {
+        "arrowPassengerNumber": {
+          "type": "string"
+        },
+        "emailTypeCode": {
+          "type": "string"
+        },
+        "emailSequenceNumber": {
+          "type": "integer"
+        },
+        "emailAddress": {
+          "type": "string"
+        },
+        "auditDetails": {
+          "$ref": "#/definitions/auditDetails"
+        }
+      },
+      "additionalProperties": false
+    },
+    "passengerAddress": {
+      "type": "object",
+      "properties": {
+        "arrowPassengerNumber": {
+          "type": "string"
+        },
+        "addressTypeCode": {
+          "type": "string"
+        },
+        "addressLine1": {
+          "type": "string"
+        },
+        "addressLine2": {
+          "type": "string"
+        },
+        "addressLine3": {
+          "type": "string"
+        },
+        "cityName": {
+          "type": "string"
+        },
+        "stateName": {
+          "type": "string"
+        },
+        "countryName": {
+          "type": "string"
+        },
+        "zipCode": {
+          "type": "string"
+        },
+        "auditDetails": {
+          "$ref": "#/definitions/auditDetails"
+        }
+      },
+      "additionalProperties": false
+    },
+    "formOfPayment": {
+      "type": "object",
+      "properties": {
+        "auditDetails": {
+          "$ref": "#/definitions/auditDetails"
+        },
+        "foptypeCode": {
+          "type": "string"
+        },
+        "fopamount": {
+          "type": "number"
+        },
+        "foplocationCode": {
+          "type": "string"
+        },
+        "foptext": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "miscItem": {
+      "type": "object",
+      "properties": {
+        "miscTypeCode": {
+          "type": "string"
+        },
+        "miscSequenceNumber": {
+          "type": "object"
+        },
+        "miscText": {
+          "type": "string"
+        },
+        "auditDetails": {
+          "$ref": "#/definitions/auditDetails"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ssr": {
+      "type": "object",
+      "properties": {
+        "segmentNumber": {
+          "type": "number"
+        },
+        "arrowPassengerNumber": {
+          "type": "string"
+        },
+        "auditDetails": {
+          "$ref": "#/definitions/auditDetails"
+        },
+        "ssrcode": {
+          "type": "string"
+        },
+        "ssrplaceNeededCode": {
+          "type": "string"
+        },
+        "ssrstatusCode": {
+          "type": "string"
+        },
+        "ssrlocationCode": {
+          "type": "string"
+        },
+        "ssrsequence": {
+          "type": "string"
+        },
+        "ssrcommentsText": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
