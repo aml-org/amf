@@ -51,7 +51,8 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
     parsedShape match {
       case Some(shape: AnyShape) =>
-        ctx.closedShape(shape.id, map, oasNode)
+        if (oasNode != "externalSchema") // external schemas can have any top level key
+          ctx.closedShape(shape.id, map, oasNode)
         Some(shape)
       case None => None
     }
@@ -123,11 +124,25 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
             adopt(copied)
             copied
           case None =>
-            val shape = UnresolvedShape(text, map).withName(text)
-            shape.withContext(ctx)
-            shape.unresolved(text, map)
-            adopt(shape)
-            shape
+            ctx.findLocalJSONPath(map.key("$ref").map(_.value.as[String]).getOrElse("")) match {
+              case Some((name,shapeNode)) =>
+                OasTypeParser(YMapEntry(name, shapeNode), adopt, oasNode).parse() match {
+                  case Some(shape) => shape
+                  case None =>
+                    val shape = UnresolvedShape(text, map).withName(text)
+                    shape.withContext(ctx)
+                    shape.unresolved(text, map)
+                    adopt(shape)
+                    shape
+                }
+
+              case None =>
+                val shape = UnresolvedShape(text, map).withName(text)
+                shape.withContext(ctx)
+                shape.unresolved(text, map)
+                adopt(shape)
+                shape
+            }
       })
   }
 
