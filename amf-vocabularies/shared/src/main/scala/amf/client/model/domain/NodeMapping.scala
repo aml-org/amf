@@ -12,18 +12,21 @@ case class NodeMapping(override private[amf] val _internal: InternalNodeMapping)
   @JSExportTopLevel("model.domain.NodeMapping")
   def this() = this(InternalNodeMapping())
 
-  def name: StrField = _internal.name
-  def withName(name: String) = {
+  def name: StrField                                   = _internal.name
+  def nodetypeMapping: StrField                        = _internal.nodetypeMapping
+  def propertiesMapping(): ClientList[PropertyMapping] = _internal.propertiesMapping().asClient
+
+  def withName(name: String): NodeMapping = {
     _internal.withName(name)
     this
   }
-  def nodetypeMapping: StrField = _internal.nodetypeMapping
-  def withNodeTypeMapping(nodeType: String) = {
+
+  def withNodeTypeMapping(nodeType: String): NodeMapping = {
     _internal.withNodeTypeMapping(nodeType)
     this
   }
-  def propertiesMapping(): ClientList[PropertyMapping] = _internal.propertiesMapping().asClient
-  def withPropertiesMapping(props: ClientList[PropertyMapping]) = {
+
+  def withPropertiesMapping(props: ClientList[PropertyMapping]): NodeMapping = {
     _internal.withPropertiesMapping(props.asInternal)
     this
   }

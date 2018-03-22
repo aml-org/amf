@@ -341,7 +341,7 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
             propertyMapping.withObjectRange(refs)
 
           // Setting ids we left unresolved in typeDiscriminators
-          Option(propertyMapping.typeDiscrminator()) match {
+          Option(propertyMapping.typeDiscriminator()) match {
             case Some(typeDiscriminators) =>
               val mapped = typeDiscriminators.foldLeft(Map[String, String]()) {
                 case (acc, (nodeMappingRef, alias)) =>
@@ -428,7 +428,7 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
             propertyMapping.withObjectRange(refs)
 
           // Setting ids we left unresolved in typeDiscriminators
-          Option(propertyMapping.typeDiscrminator()) match {
+          Option(propertyMapping.typeDiscriminator()) match {
             case Some(typeDiscriminators) =>
               val mapped = typeDiscriminators.foldLeft(Map[String, String]()) {
                 case (acc, (nodeMappingRef, alias)) =>

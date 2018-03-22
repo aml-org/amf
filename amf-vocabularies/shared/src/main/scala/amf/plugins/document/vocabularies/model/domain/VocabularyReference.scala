@@ -2,9 +2,9 @@ package amf.plugins.document.vocabularies.model.domain
 
 import amf.client.model.StrField
 import amf.core.metamodel.Obj
-import amf.core.utils.Strings
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
+import amf.core.utils.Strings
 import amf.plugins.document.vocabularies.metamodel.domain.VocabularyReferenceModel
 import amf.plugins.document.vocabularies.metamodel.domain.VocabularyReferenceModel._
 import org.yaml.model.YMap
@@ -26,10 +26,7 @@ case class VocabularyReference(fields: Fields, annotations: Annotations) extends
 }
 
 object VocabularyReference {
-
-  def apply(): VocabularyReference = apply(Annotations())
-
-  def apply(ast: YMap): VocabularyReference = apply(Annotations(ast))
-
+  def apply(): VocabularyReference                         = apply(Annotations())
+  def apply(ast: YMap): VocabularyReference                = apply(Annotations(ast))
   def apply(annotations: Annotations): VocabularyReference = VocabularyReference(Fields(), annotations)
 }

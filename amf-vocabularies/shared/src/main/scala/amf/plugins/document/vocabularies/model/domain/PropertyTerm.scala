@@ -4,8 +4,8 @@ import amf.client.model.StrField
 import amf.core.metamodel.Obj
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.document.vocabularies.metamodel.domain.{DatatypePropertyTermModel, ObjectPropertyTermModel}
 import amf.plugins.document.vocabularies.metamodel.domain.ObjectPropertyTermModel._
+import amf.plugins.document.vocabularies.metamodel.domain.{DatatypePropertyTermModel, ObjectPropertyTermModel}
 import org.yaml.model.YMap
 
 abstract class PropertyTerm extends DomainElement {
@@ -23,11 +23,12 @@ abstract class PropertyTerm extends DomainElement {
   def range: StrField              = fields.field(Range)
   def subPropertyOf: Seq[StrField] = fields.field(SubPropertyOf)
 
-  def withName(name: String)                      = set(Name, name)
-  def withDisplayName(displayName: String)        = set(DisplayName, displayName)
-  def withDescription(description: String)        = set(Description, description)
-  def withRange(range: String)                    = set(Range, range)
-  def withSubClasOf(superProperties: Seq[String]) = set(SubPropertyOf, AmfArray(superProperties.map(AmfScalar(_))))
+  def withName(name: String): PropertyTerm               = set(Name, name)
+  def withDisplayName(displayName: String): PropertyTerm = set(DisplayName, displayName)
+  def withDescription(description: String): PropertyTerm = set(Description, description)
+  def withRange(range: String): PropertyTerm             = set(Range, range)
+  def withSubClassOf(superProperties: Seq[String]): PropertyTerm =
+    set(SubPropertyOf, AmfArray(superProperties.map(AmfScalar(_))))
 }
 
 case class ObjectPropertyTerm(fields: Fields, annotations: Annotations) extends PropertyTerm {
@@ -43,8 +44,6 @@ object ObjectPropertyTerm {
   def apply(annotations: Annotations): ObjectPropertyTerm = ObjectPropertyTerm(Fields(), annotations)
 }
 
-
-
 case class DatatypePropertyTerm(fields: Fields, annotations: Annotations) extends PropertyTerm {
   override def meta: Obj = DatatypePropertyTermModel
 }
@@ -57,4 +56,3 @@ object DatatypePropertyTerm {
 
   def apply(annotations: Annotations): DatatypePropertyTerm = DatatypePropertyTerm(Fields(), annotations)
 }
-

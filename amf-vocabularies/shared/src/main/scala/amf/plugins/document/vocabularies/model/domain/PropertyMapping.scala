@@ -5,8 +5,8 @@ import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.model.domain.{AmfScalar, DomainElement}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.vocabulary.{Namespace, ValueType}
-import amf.plugins.document.vocabularies.metamodel.domain.{DialectDomainElementModel, PropertyMappingModel}
 import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel._
+import amf.plugins.document.vocabularies.metamodel.domain.{DialectDomainElementModel, PropertyMappingModel}
 import org.yaml.model.YMap
 
 class PropertyClassification
@@ -21,36 +21,22 @@ object LiteralPropertyCollection    extends PropertyClassification
 
 case class PropertyMapping(fields: Fields, annotations: Annotations) extends DomainElement {
 
-  override def meta: Obj                                          = PropertyMappingModel
-  override def adopted(parent: String): PropertyMapping.this.type = withId(parent)
+  def name(): StrField                  = fields.field(Name)
+  def nodePropertyMapping(): StrField   = fields.field(NodePropertyMapping)
+  def literalRange(): StrField          = fields.field(LiteralRange)
+  def objectRange(): Seq[StrField]      = fields.field(ObjectRange)
+  def mapKeyProperty(): StrField        = fields.field(MapKeyProperty)
+  def mapValueProperty(): StrField      = fields.field(MapValueProperty)
+  def minCount(): IntField              = fields.field(MinCount)
+  def pattern(): StrField               = fields.field(Pattern)
+  def minimum(): DoubleField            = fields.field(Minimum)
+  def maximum(): DoubleField            = fields.field(Maximum)
+  def allowMultiple(): BoolField        = fields.field(AllowMultiple)
+  def sorted(): BoolField               = fields.field(Sorted)
+  def enum(): Seq[AnyField]             = fields.field(PropertyMappingModel.Enum)
+  def typeDiscriminatorName(): StrField = fields.field(TypeDiscriminatorName)
 
-  def withName(name: String)                      = set(Name, name)
-  def name(): StrField                            = fields.field(Name)
-  def withNodePropertyMapping(propertyId: String) = set(NodePropertyMapping, propertyId)
-  def nodePropertyMapping(): StrField             = fields.field(NodePropertyMapping)
-  def withLiteralRange(range: String)             = set(LiteralRange, range)
-  def literalRange(): StrField                    = fields.field(LiteralRange)
-  def withObjectRange(range: Seq[String])         = set(ObjectRange, range)
-  def objectRange(): Seq[StrField]                = fields.field(ObjectRange)
-  def mapKeyProperty(): StrField                  = fields.field(MapKeyProperty)
-  def withMapKeyProperty(key: String)             = set(MapKeyProperty, key)
-  def mapValueProperty(): StrField                = fields.field(MapValueProperty)
-  def withMapValueProperty(value: String)         = set(MapValueProperty, value)
-  def minCount(): IntField                        = fields.field(MinCount)
-  def withMinCount(minCount: Int)                 = set(MinCount, minCount)
-  def pattern(): StrField                         = fields.field(Pattern)
-  def withPattern(pattern: String)                = set(Pattern, pattern)
-  def minimum(): DoubleField                      = fields.field(Minimum)
-  def withMinimum(min: Double)                    = set(Minimum, min)
-  def maximum(): DoubleField                      = fields.field(Maximum)
-  def withMaximum(max: Double)                    = set(Maximum, max)
-  def allowMultiple(): BoolField                  = fields.field(AllowMultiple)
-  def withAllowMultiple(allow: Boolean)           = set(AllowMultiple, allow)
-  def enum(): Seq[AnyField]                       = fields.field(PropertyMappingModel.Enum)
-  def withEnum(values: Seq[Any])                  = setArray(PropertyMappingModel.Enum, values.map(AmfScalar(_)))
-  def sorted(): BoolField                         = fields.field(Sorted)
-  def withSorted(sorted: Boolean)                 = set(Sorted, sorted)
-  def typeDiscrminator(): Map[String, String] =
+  def typeDiscriminator(): Map[String, String] =
     Option(fields(TypeDiscriminator)).map { disambiguator: String =>
       disambiguator.split(",").foldLeft(Map[String, String]()) {
         case (acc, typeMapping) =>
@@ -58,10 +44,23 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
           acc + (pair(1) -> pair(0))
       }
     }.orNull
-  def withTypeDiscriminator(typesMapping: Map[String, String]) =
+
+  def withName(name: String): PropertyMapping                      = set(Name, name)
+  def withNodePropertyMapping(propertyId: String): PropertyMapping = set(NodePropertyMapping, propertyId)
+  def withLiteralRange(range: String): PropertyMapping             = set(LiteralRange, range)
+  def withObjectRange(range: Seq[String]): PropertyMapping         = set(ObjectRange, range)
+  def withMapKeyProperty(key: String): PropertyMapping             = set(MapKeyProperty, key)
+  def withMapValueProperty(value: String): PropertyMapping         = set(MapValueProperty, value)
+  def withMinCount(minCount: Int): PropertyMapping                 = set(MinCount, minCount)
+  def withPattern(pattern: String): PropertyMapping                = set(Pattern, pattern)
+  def withMinimum(min: Double): PropertyMapping                    = set(Minimum, min)
+  def withMaximum(max: Double): PropertyMapping                    = set(Maximum, max)
+  def withAllowMultiple(allow: Boolean): PropertyMapping           = set(AllowMultiple, allow)
+  def withEnum(values: Seq[Any]): PropertyMapping                  = setArray(PropertyMappingModel.Enum, values.map(AmfScalar(_)))
+  def withSorted(sorted: Boolean): PropertyMapping                 = set(Sorted, sorted)
+  def withTypeDiscriminatorName(name: String): PropertyMapping     = set(TypeDiscriminatorName, name)
+  def withTypeDiscriminator(typesMapping: Map[String, String]): PropertyMapping =
     set(TypeDiscriminator, typesMapping.map { case (a, b) => s"$a->$b" }.mkString(","))
-  def typeDiscriminatorName(): StrField       = fields.field(TypeDiscriminatorName)
-  def withTypeDiscriminatorName(name: String) = set(TypeDiscriminatorName, name)
 
   def classification(): PropertyClassification = {
     val isAnyNode = objectRange().exists { obj =>
@@ -92,7 +91,7 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
   def nodesInRange: Seq[String] = {
     val range = objectRange()
     if (range.isEmpty) {
-      Option(typeDiscrminator()).getOrElse(Map()).values.toSeq
+      Option(typeDiscriminator()).getOrElse(Map()).values.toSeq
     } else {
       range.map(_.value())
     }
@@ -100,10 +99,10 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
 
   def isUnion: Boolean = nodesInRange.nonEmpty
 
-  def toField(): Field = {
+  def toField: Field = {
     val propertyIdValue = ValueType(nodePropertyMapping().value())
 
-    val isObjectRange = objectRange.nonEmpty || Option(typeDiscrminator()).isDefined
+    val isObjectRange = objectRange().nonEmpty || Option(typeDiscriminator()).isDefined
 
     if (isObjectRange) {
       if (allowMultiple().value() || mapKeyProperty().nonNull) {
@@ -132,6 +131,10 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
       }
     }
   }
+
+  override def adopted(parent: String): this.type = withId(parent)
+
+  override def meta: Obj = PropertyMappingModel
 }
 
 object PropertyMapping {

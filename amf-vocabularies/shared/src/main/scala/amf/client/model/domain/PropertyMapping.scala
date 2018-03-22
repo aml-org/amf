@@ -2,7 +2,17 @@ package amf.client.model.domain
 
 import amf.client.convert.VocabulariesClientConverter._
 import amf.client.model._
-import amf.plugins.document.vocabularies.model.domain.{ExtensionPointProperty, LiteralProperty, LiteralPropertyCollection, ObjectMapInheritanceProperty, ObjectMapProperty, ObjectPairProperty, ObjectProperty, ObjectPropertyCollection, PropertyMapping => InternalPropertyMapping}
+import amf.plugins.document.vocabularies.model.domain.{
+  ExtensionPointProperty,
+  LiteralProperty,
+  LiteralPropertyCollection,
+  ObjectMapInheritanceProperty,
+  ObjectMapProperty,
+  ObjectPairProperty,
+  ObjectProperty,
+  ObjectPropertyCollection,
+  PropertyMapping => InternalPropertyMapping
+}
 
 import scala.collection.mutable
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -33,7 +43,7 @@ case class PropertyMapping(override private[amf] val _internal: InternalProperty
     this
   }
   def objectRange(): ClientList[StrField] = _internal.objectRange().asClient
-  def mapKeyProperty(): StrField = _internal.mapKeyProperty()
+  def mapKeyProperty(): StrField          = _internal.mapKeyProperty()
   def withMapKeyProperty(key: String) = {
     _internal.withMapKeyProperty(key)
     this
@@ -78,16 +88,19 @@ case class PropertyMapping(override private[amf] val _internal: InternalProperty
     _internal.withSorted(sorted)
     this
   }
-  def typeDiscriminator(): ClientMap[String] = Option(_internal.typeDiscrminator()) match {
-    case Some(m) => m.foldLeft(mutable.Map[String,String]()) { case (acc, (k,v)) =>
-        acc.put(k, v)
-        acc
-    }.asClient
-    case None => mutable.Map[String,String]().asClient
+  def typeDiscriminator(): ClientMap[String] = Option(_internal.typeDiscriminator()) match {
+    case Some(m) =>
+      m.foldLeft(mutable.Map[String, String]()) {
+          case (acc, (k, v)) =>
+            acc.put(k, v)
+            acc
+        }
+        .asClient
+    case None => mutable.Map[String, String]().asClient
   }
 
   def withTypeDiscriminator(typesMapping: ClientMap[String]) = throw new Exception("Not implemented yet")
-  def typeDiscriminatorName(): StrField = _internal.typeDiscriminatorName()
+  def typeDiscriminatorName(): StrField                      = _internal.typeDiscriminatorName()
   def withTypeDiscriminatorName(name: String) = {
     _internal.withTypeDiscriminatorName(name)
     this
@@ -95,15 +108,15 @@ case class PropertyMapping(override private[amf] val _internal: InternalProperty
 
   def classification(): String = {
     _internal.classification() match {
-      case ExtensionPointProperty => "extension_property"
-      case LiteralProperty  => "literal_property"
-      case ObjectProperty => "object_property"
-      case ObjectPropertyCollection  => "object_property_collection"
-      case ObjectMapProperty => "object_map_property"
+      case ExtensionPointProperty       => "extension_property"
+      case LiteralProperty              => "literal_property"
+      case ObjectProperty               => "object_property"
+      case ObjectPropertyCollection     => "object_property_collection"
+      case ObjectMapProperty            => "object_map_property"
       case ObjectMapInheritanceProperty => "object_map_inheritance"
-      case ObjectPairProperty => "object_pair_property"
-      case LiteralPropertyCollection => "literal_property_collection"
-      case other => throw new Exception(s"Unknown property classification ${other}")
+      case ObjectPairProperty           => "object_pair_property"
+      case LiteralPropertyCollection    => "literal_property_collection"
+      case other                        => throw new Exception(s"Unknown property classification ${other}")
     }
   }
 

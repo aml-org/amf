@@ -472,7 +472,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
     } collect { case Some(mapping: NodeMapping) => mapping }
     // potential node range based in discriminators map
     val discriminatorsMapping =
-      Option(property.typeDiscrminator()).getOrElse(Map()).foldLeft(Map[String, NodeMapping]()) {
+      Option(property.typeDiscriminator()).getOrElse(Map()).foldLeft(Map[String, NodeMapping]()) {
         case (acc, (alias, mappingId)) =>
           ctx.dialect.declares.find(_.id == mappingId) match {
             case Some(nodeMapping: NodeMapping) => acc + (alias -> nodeMapping)

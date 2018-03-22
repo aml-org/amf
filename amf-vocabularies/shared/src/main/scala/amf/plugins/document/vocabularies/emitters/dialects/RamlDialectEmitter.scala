@@ -387,7 +387,7 @@ case class PropertyMappingEmitter(dialect: Dialect,
         propertyMapping.fields.entry(PropertyMappingModel.TypeDiscriminator) foreach {
           entry =>
             val pos          = fieldPos(propertyMapping, entry.field)
-            val typesMapping = propertyMapping.typeDiscrminator()
+            val typesMapping = propertyMapping.typeDiscriminator()
             emitters ++= Seq(new EntryEmitter {
               override def emit(b: EntryBuilder): Unit =
                 b.entry(

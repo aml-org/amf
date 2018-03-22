@@ -6,9 +6,9 @@ import java.util.Scanner
 import amf.client.convert.CoreClientConverters
 import amf.client.handler.Handler
 import amf.client.model.document.{BaseUnit, Document}
-import amf.client.parse.{Oas20Parser, Raml08Parser, Raml10Parser, RamlParser}
+import amf.client.parse._
 import amf.client.render._
-import amf.core.client._
+import amf.core.model.document
 import amf.core.remote._
 
 class Repl(val in: InputStream, val out: PrintStream) {
@@ -48,7 +48,7 @@ class Repl(val in: InputStream, val out: PrintStream) {
     generator.foreach(g => {
       g.generateString(
         unit,
-        handler.asInstanceOf[CoreClientConverters.Handler]
+        handler.asInstanceOf[CoreClientConverters.ClientResultHandler[String]]
       )
     })
   }
@@ -56,18 +56,22 @@ class Repl(val in: InputStream, val out: PrintStream) {
   private def remote(vendor: Vendor, url: String, callback: (Option[Document]) => Unit): Unit = {
     parser(vendor).parseFile(
       url,
-      new Handler[BaseUnit] {
-        override def success(unit: BaseUnit): Unit = {
-          out.println("Successfully parsed. Type `:generate raml` or `:generate oas` or `:generate amf`")
-          callback(Some(new Document(unit.asInstanceOf[amf.core.model.document.Document])))
-        }
-
-        override def error(exception: Throwable): Unit = {
-          callback(None)
-          out.println(exception)
-        }
-      }
+      unitHandler(callback).asInstanceOf[CoreClientConverters.ClientResultHandler[BaseUnit]]
     )
+  }
+
+  private def unitHandler(callback: Option[Document] => Unit) = {
+    new Handler[BaseUnit] {
+      override def success(unit: BaseUnit): Unit = {
+        out.println("Successfully parsed. Type `:generate raml` or `:generate oas` or `:generate amf`")
+        callback(Some(new Document(unit.asInstanceOf[document.Document])))
+      }
+
+      override def error(exception: Throwable): Unit = {
+        callback(None)
+        out.println(exception)
+      }
+    }
   }
 
   private object Parse {

@@ -179,7 +179,7 @@ object RAMLVocabulariesPlugin
 
   override def modelEntitiesResolver: Option[AMFDomainEntityResolver] = Some(registry)
 
-  protected def parseAndRegisterDialect(document: Root, parentContext: ParserContext) = {
+  private def parseAndRegisterDialect(document: Root, parentContext: ParserContext) = {
     new RamlDialectsParser(document)(new DialectContext(parentContext)).parseDocument() match {
       case dialect: Dialect =>
         registry.register(dialect)

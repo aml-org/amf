@@ -10,25 +10,28 @@ import org.yaml.model.{YMap, YNode}
 
 import scala.collection.mutable
 
-case class DialectDomainElement(override val fields: Fields, annotations: Annotations) extends DynamicDomainElement with Linkable {
+case class DialectDomainElement(override val fields: Fields, annotations: Annotations)
+    extends DynamicDomainElement
+    with Linkable {
 
-  val literalProperties: mutable.Map[String, Any] = mutable.HashMap()
-  val mapKeyProperties: mutable.Map[String, Any] = mutable.HashMap()
-  val objectProperties: mutable.Map[String, DialectDomainElement] = mutable.HashMap()
+  val literalProperties: mutable.Map[String, Any]                                = mutable.HashMap()
+  val mapKeyProperties: mutable.Map[String, Any]                                 = mutable.HashMap()
+  val objectProperties: mutable.Map[String, DialectDomainElement]                = mutable.HashMap()
   val objectCollectionProperties: mutable.Map[String, Seq[DialectDomainElement]] = mutable.HashMap()
-  val propertyAnnotations: mutable.Map[String, Annotations] = mutable.HashMap()
+  val propertyAnnotations: mutable.Map[String, Annotations]                      = mutable.HashMap()
 
   // Types of the instance
   protected var instanceTypes: Seq[String] = Nil
-  def withInstanceTypes(types: Seq[String]) = {
+  def withInstanceTypes(types: Seq[String]): DialectDomainElement = {
     instanceTypes = types
     this
   }
-  override def dynamicType: List[ValueType] = (instanceTypes.distinct.map(iriToValue) ++ DialectDomainElementModel().`type`).toList
+  override def dynamicType: List[ValueType] =
+    (instanceTypes.distinct.map(iriToValue) ++ DialectDomainElementModel().`type`).toList
 
   // Dialect mapping defining the instance
   protected var instanceDefinedBy: Option[NodeMapping] = None
-  def withDefinedBy(nodeMapping: NodeMapping) = {
+  def withDefinedBy(nodeMapping: NodeMapping): DialectDomainElement = {
     instanceDefinedBy = Some(nodeMapping)
     this
   }
@@ -41,13 +44,15 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     if (isLink)
       linkTarget.map(_.id.split("#").last.split("/").last).getOrElse {
         throw new Exception(s"Cannot produce local reference without linked element at elem $id")
-      }
-    else id.split("#").last.split("/").last
+      } else id.split("#").last.split("/").last
   }
 
   def includeName: String = {
     if (isLink)
-      linkLabel.getOrElse(linkTarget.map(_.id.split("#").head).getOrElse(throw new Exception(s"Cannot produce include reference without linked element at elem $id")))
+      linkLabel.getOrElse(
+        linkTarget
+          .map(_.id.split("#").head)
+          .getOrElse(throw new Exception(s"Cannot produce include reference without linked element at elem $id")))
     else
       throw new Exception(s"Cannot produce include reference without linked element at elem $id")
   }
@@ -56,27 +61,28 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
 
   override def dynamicFields: List[Field] = {
     val mapKeyFields = mapKeyProperties.keys map { propertyId =>
-        Field(Type.Str, iriToValue(propertyId))
+      Field(Type.Str, iriToValue(propertyId))
     }
 
     (literalProperties.keys ++ objectProperties.keys ++ objectCollectionProperties.keys).map { propertyId =>
-      val property = instanceDefinedBy.get.propertiesMapping().find(_.id == propertyId).get
-      property.toField()
-    }.toList ++ mapKeyFields ++ fields.fields().map(_.field)// ++ LinkableElementModel.fields
+      instanceDefinedBy.get.propertiesMapping().find(_.id == propertyId).get.toField
+    }.toList ++ mapKeyFields ++ fields.fields().map(_.field) // ++ LinkableElementModel.fields
   }
 
+  def findPropertyByTermPropertyId(termPropertyId: String): String =
+    definedBy
+      .propertiesMapping()
+      .find(_.nodePropertyMapping().value() == termPropertyId)
+      .map(_.id)
+      .getOrElse(termPropertyId)
 
-  def findPropertyByTermPropertyId(termPropertyId: String) =
-    definedBy.propertiesMapping().find(_.nodePropertyMapping().value() == termPropertyId).map(_.id).getOrElse(termPropertyId)
-
-  def findPropertyMappingByTermPropertyId(termPropertyId: String) =
+  def findPropertyMappingByTermPropertyId(termPropertyId: String): Option[PropertyMapping] =
     definedBy.propertiesMapping().find(_.nodePropertyMapping().value() == termPropertyId)
-
 
   override def valueForField(f: Field): Option[AmfElement] = {
     val termPropertyId = f.value.iri()
-    val propertyId = findPropertyByTermPropertyId(termPropertyId)
-    val annotations = propertyAnnotations.getOrElse(propertyId, Annotations())
+    val propertyId     = findPropertyByTermPropertyId(termPropertyId)
+    val annotations    = propertyAnnotations.getOrElse(propertyId, Annotations())
 
     // Warning, mapKey has the term property id, no the property mapping id because
     // there's no real propertyMapping for it
@@ -84,14 +90,16 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
       AmfScalar(stringValue, annotations)
     } orElse objectProperties.get(propertyId) map { dialectDomainElement =>
       dialectDomainElement
-    } orElse  {
+    } orElse {
       objectCollectionProperties.get(propertyId) map { seqElements =>
         AmfArray(seqElements, annotations)
       }
     } orElse {
       literalProperties.get(propertyId) map {
         case vs: Seq[_] =>
-          val scalars = vs.map { s => AmfScalar(s) }
+          val scalars = vs.map { s =>
+            AmfScalar(s)
+          }
           AmfArray(scalars, annotations)
         case other =>
           AmfScalar(other, annotations)
@@ -107,24 +115,23 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     literalProperties.contains(property.id)
   }
 
-
-  def setObjectField(property: PropertyMapping, value: DialectDomainElement, node: YNode) = {
+  def setObjectField(property: PropertyMapping, value: DialectDomainElement, node: YNode): DialectDomainElement = {
     objectProperties.put(property.id, value)
     propertyAnnotations.put(property.id, Annotations(node))
     if (value.isUnresolved) {
       value.toFutureRef {
         case resolvedDialectDomainElement: DialectDomainElement =>
           objectProperties.put(property.id,
-            resolveUnreferencedLink(value.refName, value.annotations, resolvedDialectDomainElement)
-              .withId(value.id)
-          )
-        case resolved => throw new Exception(s"Cannot resolve reference with not dialect domain element value ${resolved.id}")
+                               resolveUnreferencedLink(value.refName, value.annotations, resolvedDialectDomainElement)
+                                 .withId(value.id))
+        case resolved =>
+          throw new Exception(s"Cannot resolve reference with not dialect domain element value ${resolved.id}")
       }
     }
     this
   }
 
-  def setObjectField(property: PropertyMapping, value: Seq[DialectDomainElement], node: YNode) = {
+  def setObjectField(property: PropertyMapping, value: Seq[DialectDomainElement], node: YNode): DialectDomainElement = {
     objectCollectionProperties.put(property.id, value)
     propertyAnnotations.put(property.id, Annotations(node))
     value.foreach {
@@ -138,8 +145,9 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
                 oldValue
               }
             }
-          } foreach { case updatedValues: Seq[DialectDomainElement] =>
-            objectCollectionProperties.put(property.id, updatedValues)
+          } foreach {
+            case updatedValues: Seq[DialectDomainElement] =>
+              objectCollectionProperties.put(property.id, updatedValues)
           }
         })
       case _ => // ignore
@@ -147,62 +155,65 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     this
   }
 
-  def setLiteralField(property: PropertyMapping, value: Int, node: YNode) = {
+  def setLiteralField(property: PropertyMapping, value: Int, node: YNode): DialectDomainElement = {
     literalProperties.put(property.id, value)
     propertyAnnotations.put(property.id, Annotations(node))
     this
   }
 
-  def setLiteralField(property: PropertyMapping, value: Float, node: YNode) = {
+  def setLiteralField(property: PropertyMapping, value: Float, node: YNode): DialectDomainElement = {
     literalProperties.put(property.id, value)
     propertyAnnotations.put(property.id, Annotations(node))
     this
   }
 
-  def setLiteralField(property: PropertyMapping, value: Double, node: YNode) = {
+  def setLiteralField(property: PropertyMapping, value: Double, node: YNode): DialectDomainElement = {
     literalProperties.put(property.id, value)
     propertyAnnotations.put(property.id, Annotations(node))
     this
   }
 
-  def setLiteralField(property: PropertyMapping, value: Boolean, node: YNode) = {
+  def setLiteralField(property: PropertyMapping, value: Boolean, node: YNode): DialectDomainElement = {
     literalProperties.put(property.id, value)
     propertyAnnotations.put(property.id, Annotations(node))
     this
   }
 
-  def setLiteralField(property: PropertyMapping, value: Seq[_], node: YNode) = {
+  def setLiteralField(property: PropertyMapping, value: Seq[_], node: YNode): DialectDomainElement = {
     literalProperties.put(property.id, value)
     propertyAnnotations.put(property.id, Annotations(node))
     this
   }
 
-  def setLiteralField(property: PropertyMapping, value: String, node: YNode) = {
+  def setLiteralField(property: PropertyMapping, value: String, node: YNode): DialectDomainElement = {
     literalProperties.put(property.id, value)
     propertyAnnotations.put(property.id, Annotations(node))
     this
   }
 
-  def setLiteralField(property: PropertyMapping, value: SimpleDateTime, node: YNode) = {
+  def setLiteralField(property: PropertyMapping, value: SimpleDateTime, node: YNode): DialectDomainElement = {
     literalProperties.put(property.id, value)
     propertyAnnotations.put(property.id, Annotations(node))
     this
   }
 
-  def setMapKeyField(propertyId: String, value: String, node: YNode) = {
+  def setMapKeyField(propertyId: String, value: String, node: YNode): DialectDomainElement = {
     mapKeyProperties.put(propertyId, value)
     this
   }
 
-  override def meta: Obj = if (instanceTypes.isEmpty) {
-    DialectDomainElementModel()
-  } else {
-    new DialectDomainElementModel(instanceTypes.head, dynamicFields, Some(definedBy))
-  }
+  override def meta: Obj =
+    if (instanceTypes.isEmpty) {
+      DialectDomainElementModel()
+    } else {
+      new DialectDomainElementModel(instanceTypes.head, dynamicFields, Some(definedBy))
+    }
 
-  override def adopted(newId: String): DialectDomainElement.this.type = if (Option(this.id).isEmpty) withId(newId) else this
+  override def adopted(newId: String): DialectDomainElement.this.type =
+    if (Option(this.id).isEmpty) withId(newId) else this
 
-  override def linkCopy(): Linkable = DialectDomainElement().withId(id).withDefinedBy(definedBy).withInstanceTypes(instanceTypes)
+  override def linkCopy(): Linkable =
+    DialectDomainElement().withId(id).withDefinedBy(definedBy).withInstanceTypes(instanceTypes)
 
   override def resolveUnreferencedLink[T](label: String, annotations: Annotations, unresolved: T): T = {
     val unresolvedNodeMapping = unresolved.asInstanceOf[DialectDomainElement]

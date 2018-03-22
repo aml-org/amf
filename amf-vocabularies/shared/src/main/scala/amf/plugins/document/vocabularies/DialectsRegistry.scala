@@ -13,8 +13,8 @@ import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementMo
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance}
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, NodeMapping, ObjectMapProperty}
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
@@ -30,12 +30,8 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
   def knowsDialectInstance(instance: DialectInstance): Boolean = dialectFor(instance).isDefined
 
-  def dialectFor(instance: DialectInstance) = {
-    instance.definedBy().option() match {
-      case Some(dialectId) => map.values.find(_.id == dialectId)
-      case _               => None
-    }
-  }
+  def dialectFor(instance: DialectInstance): Option[Dialect] =
+    instance.definedBy().option().flatMap(id => map.values.find(_.id == id))
 
   def allDialects(): Seq[Dialect] = map.values.toSeq
 
@@ -53,7 +49,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     }
   }
 
-  protected def headerKey(header: String) = header.trim.replace(" ", "")
+  protected def headerKey(header: String): String = header.trim.replace(" ", "")
 
   override def findType(typeString: String): Option[Obj] = {
     val foundMapping: Option[(Dialect, DomainElement)] = map.values.toSeq.distinct
@@ -93,7 +89,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
   def buildMetaModel(nodeMapping: NodeMapping, dialect: Dialect): DialectDomainElementModel = {
     val nodeType = nodeMapping.nodetypeMapping
-    val fields   = nodeMapping.propertiesMapping().map(_.toField())
+    val fields   = nodeMapping.propertiesMapping().map(_.toField)
     val mapPropertiesInDomain = dialect.declares
       .collect {
         case nodeMapping: NodeMapping =>

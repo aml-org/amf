@@ -2,7 +2,11 @@ package amf.client.model.domain
 
 import amf.client.convert.VocabulariesClientConverter._
 import amf.client.model.StrField
-import amf.plugins.document.vocabularies.model.domain.{DatatypePropertyTerm => InternalDatatypePropertyTerm, ObjectPropertyTerm => InternalObjectPropertyTerm, PropertyTerm => InternalPropertyTerm}
+import amf.plugins.document.vocabularies.model.domain.{
+  DatatypePropertyTerm => InternalDatatypePropertyTerm,
+  ObjectPropertyTerm => InternalObjectPropertyTerm,
+  PropertyTerm => InternalPropertyTerm
+}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -33,7 +37,7 @@ abstract class PropertyTerm(override private[amf] val _internal: InternalPropert
   }
 
   def withSubClasOf(superProperties: Seq[String]) = {
-    _internal.withSubClasOf(superProperties)
+    _internal.withSubClassOf(superProperties)
     this
   }
 }
@@ -43,7 +47,8 @@ abstract class PropertyTerm(override private[amf] val _internal: InternalPropert
   * @param _internal
   */
 @JSExportAll
-case class ObjectPropertyTerm(override private[amf] val _internal: InternalObjectPropertyTerm) extends PropertyTerm(_internal) {
+case class ObjectPropertyTerm(override private[amf] val _internal: InternalObjectPropertyTerm)
+    extends PropertyTerm(_internal) {
 
   @JSExportTopLevel("model.domain.ObjectPropertyTerm")
   def this() = this(InternalObjectPropertyTerm())
@@ -55,7 +60,8 @@ case class ObjectPropertyTerm(override private[amf] val _internal: InternalObjec
   * @param _internal
   */
 @JSExportAll
-case class DatatypePropertyTerm(override private[amf] val _internal: InternalDatatypePropertyTerm) extends PropertyTerm(_internal) {
+case class DatatypePropertyTerm(override private[amf] val _internal: InternalDatatypePropertyTerm)
+    extends PropertyTerm(_internal) {
 
   @JSExportTopLevel("model.domain.DatatypePropertyTerm")
   def this() = this(InternalDatatypePropertyTerm())
