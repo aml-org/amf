@@ -670,6 +670,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Validation error raml 0.8 example 1") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "08/validation_error1.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 1)
+    }
+  }
+
   test("Some production api with includes") {
     for {
       validation <- Validation(platform)
