@@ -4,7 +4,8 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, Shape}
-import amf.plugins.domain.shapes.annotations.InheritedField
+import amf.core.parser.Annotations
+import amf.plugins.domain.shapes.annotations.InheritanceProvenance
 import amf.plugins.domain.shapes.metamodel._
 
 trait RestrictionComputation {
@@ -21,23 +22,29 @@ trait RestrictionComputation {
         val superValue = Option(superShape.fields.getValue(f))
         baseValue match {
           case Some(bvalue) if superValue.isEmpty => baseShape.set(f, bvalue.value, bvalue.annotations)
+
           case None if superValue.isDefined       =>
-            val superFieldAnnotations = if (keepEditingInfo) {
-              superValue.get.annotations += InheritedField(superShape.id)
-            } else {
-              superValue.get.annotations
-            }
-            baseShape.set(f, superValue.get.value, superFieldAnnotations)
+            val finalAnnotations = Annotations(superValue.get.annotations)
+            if (keepEditingInfo) inheritAnnotations(finalAnnotations, superShape)
+            baseShape.set(f, superValue.get.value, finalAnnotations)
+
           case Some(bvalue) if superValue.isDefined =>
-            val finalField = computeNarrow(f, bvalue.value, superValue.get.value)
-            if (finalField != bvalue.value && keepEditingInfo) bvalue.annotations += InheritedField(superShape.id)
-            baseShape.set(f, finalField, bvalue.annotations)
+            val finalValue = computeNarrow(f, bvalue.value, superValue.get.value)
+            val finalAnnotations = Annotations(bvalue.annotations)
+            if (finalValue != bvalue.value && keepEditingInfo) inheritAnnotations(finalAnnotations, superShape)
+            baseShape.set(f, finalValue, finalAnnotations)
           case _ => // ignore
         }
       }
     }
 
     baseShape
+  }
+
+  def inheritAnnotations(annotations: Annotations, from: Shape) = {
+    if (!annotations.contains(classOf[InheritanceProvenance]))
+      annotations += InheritanceProvenance(from.id)
+    annotations
   }
 
   protected def restrictShape(restriction: Shape, shape: Shape): Shape = {

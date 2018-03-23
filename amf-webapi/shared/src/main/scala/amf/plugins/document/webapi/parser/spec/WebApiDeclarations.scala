@@ -195,11 +195,25 @@ object WebApiDeclarations {
 
   trait ErrorDeclaration
 
-  object ErrorTrait          extends Trait(Fields(), Annotations()) with ErrorDeclaration
-  object ErrorResourceType   extends ResourceType(Fields(), Annotations()) with ErrorDeclaration
-  object ErrorSecurityScheme extends SecurityScheme(Fields(), Annotations()) with ErrorDeclaration
-  object ErrorNamedExample   extends Example(Fields(), Annotations()) with ErrorDeclaration
-  object ErrorCreativeWork   extends CreativeWork(Fields(), Annotations()) with ErrorDeclaration
-  object ErrorParameter      extends Parameter(Fields(), Annotations()) with ErrorDeclaration
-  object ErrorResponse       extends Response(Fields(), Annotations()) with ErrorDeclaration
+  object ErrorTrait          extends Trait(Fields(), Annotations()) with ErrorDeclaration {
+    id = "http://amferror.com/#errorTrait"
+  }
+  object ErrorResourceType   extends ResourceType(Fields(), Annotations()) with ErrorDeclaration {
+    id = "http://amferror.com/#errorResourceType"
+  }
+  object ErrorSecurityScheme extends SecurityScheme(Fields(), Annotations()) with ErrorDeclaration {
+    id = "http://amferror.com/#errorSecurityScheme"
+  }
+  object ErrorNamedExample   extends Example(Fields(), Annotations()) with ErrorDeclaration {
+    id = "http://amferror.com/#errorNamedExample"
+  }
+  object ErrorCreativeWork   extends CreativeWork(Fields(), Annotations()) with ErrorDeclaration {
+    id = "http://amferror.com/#errorCrativeWork"
+  }
+  object ErrorParameter      extends Parameter(Fields(), Annotations()) with ErrorDeclaration {
+    id = "http://amferror.com/#errorParameter"
+  }
+  object ErrorResponse       extends Response(Fields(), Annotations()) with ErrorDeclaration {
+    id = "http://amferror.com/#errorResponse"
+  }
 }

@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.raml
 
 import amf.core.Root
+import amf.core.utils._
 import amf.core.annotations.SourceVendor
 import amf.core.model.document.Document
 import amf.core.model.domain.templates.AbstractDeclaration
@@ -27,8 +28,8 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
 
     val parent = root.location + "#/declarations"
     parseSchemaDeclarations(map, parent)
-    parseAbstractDeclarations("resourceTypes", entry => ResourceType(entry), map, parent)
-    parseAbstractDeclarations("traits", entry => Trait(entry), map, parent)
+    parseAbstractDeclarations("resourceTypes", entry => ResourceType(entry).withName(entry.key.as[String]).withId(parent + s"/resourceTypes/${entry.key.as[String].urlEncoded}"), map, parent)
+    parseAbstractDeclarations("traits", entry => Trait(entry).withName(entry.key.as[String]).withId(parent + s"/traits/${entry.key.as[String].urlEncoded}"), map, parent)
 
     parseSecuritySchemeDeclarations(map, parent)
 

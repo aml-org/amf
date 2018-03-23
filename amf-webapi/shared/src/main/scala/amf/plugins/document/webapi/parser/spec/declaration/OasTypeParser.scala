@@ -527,7 +527,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       )
 
       // Explicit annotation for the type property
-      map.key("type", entry => shape.annotations += TypePropertyLexicalInfo(Range(map.range)))
+      map.key("type", entry => shape.annotations += TypePropertyLexicalInfo(Range(entry.key.range)))
 
       // normal annotations
       AnnotationParser(shape, map).parse()

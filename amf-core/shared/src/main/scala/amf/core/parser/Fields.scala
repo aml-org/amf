@@ -236,6 +236,8 @@ class Value(var value: AmfElement, val annotations: Annotations) {
       }
     case _ => // ignore
   }
+
+  def cloneAnnotated(annotation: Annotation) = Value(value, Annotations(annotations))
 }
 
 object Value {
