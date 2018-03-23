@@ -7,6 +7,7 @@ import amf.core.parser.Annotations
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
 import amf.core.vocabulary.Namespace
+import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
 
 import scala.collection.mutable
 

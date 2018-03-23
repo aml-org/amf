@@ -25,7 +25,7 @@ import scala.collection.mutable.ListBuffer
   * 4) Resolve each trait and merge each one to the operation in the provided order..
   * 5) Remove 'extends' property from the endpoint and from the operations.
   */
-class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = true)
+class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val fromOverlay: Boolean = false)
     extends ResolutionStage(profile)
     with PlatformSecrets {
 
@@ -43,7 +43,7 @@ class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = tru
         val node = rt.dataNode.cloneNode()
         node.replaceVariables(context.variables)
 
-        ExtendsHelper.asEndpoint(context.model, profile, node, r.name.value(), Some(ctx))
+        ExtendsHelper.asEndpoint(context.model, profile, node, r.name.value(), r.id, keepEditingInfo, Some(ctx))
 
       case _ => throw new Exception(s"Cannot find target for parametrized resource type ${r.id}")
     }
@@ -118,10 +118,12 @@ class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = tru
         case (current, branch) => DomainElementMerging.merge(current, branch.operation)
       }
 
-      if (removeFromModel) operation.fields.remove(DomainElementModel.Extends)
+      // This is required in the case where the extension comes from an overlay/extension
+      if (!keepEditingInfo && !fromOverlay) operation.fields.remove(DomainElementModel.Extends)
     }
 
-    if (removeFromModel) endpoint.fields.remove(DomainElementModel.Extends)
+    // This is required in the case where the extension comes from an overlay/extension
+    if (!keepEditingInfo && !fromOverlay) endpoint.fields.remove(DomainElementModel.Extends)
 
     endpoint
   }
@@ -194,7 +196,7 @@ class ExtendsResolutionStage(profile: String, val removeFromModel: Boolean = tru
           val node: DataNode = t.dataNode.cloneNode()
           node.replaceVariables(local.variables)
 
-          val op = ExtendsHelper.asOperation(profile, node, context.model, Some(ctx))
+          val op = ExtendsHelper.asOperation(profile, node, context.model, t.id, keepEditingInfo, Some(ctx))
 
           val children = op.traits.map(resolve(_, context))
 

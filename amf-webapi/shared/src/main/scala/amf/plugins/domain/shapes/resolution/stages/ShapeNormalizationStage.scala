@@ -25,7 +25,7 @@ import scala.collection.mutable.ListBuffer
   *  - All type references have been replaced by their expanded forms
   * @param profile
   */
-class ShapeNormalizationStage(profile: String)
+class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean)
     extends ResolutionStage(profile)
     with MetaModelTypeMapping
     with MinShapeAlgorithm {
@@ -33,7 +33,7 @@ class ShapeNormalizationStage(profile: String)
   var fixPointCount = 0
 
   override def resolve(model: BaseUnit): BaseUnit =
-    profile match {
+     profile match {
       case ProfileNames.RAML08 => model
       case _                   => model.transform(findShapesPredicate, transform)
     }
@@ -223,7 +223,7 @@ class ShapeNormalizationStage(profile: String)
 
   protected def canonicalInheritance(shape: Shape): Shape = {
     val superTypes = shape.inherits
-    shape.fields.remove(ShapeModel.Inherits)
+    if (!keepEditingInfo) shape.fields.remove(ShapeModel.Inherits)
     var accShape: Shape = canonical(shape)
     superTypes.foreach { superNode =>
       val canonicalSuperNode = canonical(superNode)

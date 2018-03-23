@@ -7,7 +7,7 @@ import amf.core.remote.Platform
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
-import amf.plugins.document.webapi.annotations.{DeclaredElement, LocalLinkPath, ParsedJSONSchema}
+import amf.plugins.document.webapi.annotations.{DeclaredElement, ExtendedField, LocalLinkPath, ParsedJSONSchema}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
 import amf.plugins.document.webapi.metamodel.{ExtensionModel, OverlayModel}
@@ -43,7 +43,8 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
   override def serializableAnnotations() = Map(
     "parsed-json-schema" -> ParsedJSONSchema,
     "declared-element"   -> DeclaredElement,
-    "local-link-path"    -> LocalLinkPath
+    "local-link-path"    -> LocalLinkPath,
+    "extended-field"     -> ExtendedField
   )
 
   val validationProfile: String

@@ -8,9 +8,9 @@ import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
 
 class ValidationResolutionPipeline(profile: String) extends ResolutionPipeline {
 
-  val references = new ReferenceResolutionStage(profile)
-  val extensions = new ExtensionsResolutionStage(profile)
-  val shapes     = new ShapeNormalizationStage(profile)
+  val references = new ReferenceResolutionStage(profile, keepEditingInfo = false)
+  val extensions = new ExtensionsResolutionStage(profile, keepEditingInfo = false)
+  val shapes     = new ShapeNormalizationStage(profile, keepEditingInfo = false)
 
   override def resolve[T <: BaseUnit](model: T): T = {
     withModel(model) { () =>

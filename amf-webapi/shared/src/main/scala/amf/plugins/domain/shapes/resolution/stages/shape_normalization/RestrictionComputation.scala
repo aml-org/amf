@@ -4,9 +4,12 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, Shape}
+import amf.plugins.domain.shapes.annotations.InheritedField
 import amf.plugins.domain.shapes.metamodel._
 
 trait RestrictionComputation {
+
+  val keepEditingInfo: Boolean
 
   protected def computeNarrowRestrictions(fields: Seq[Field],
                                           baseShape: Shape,
@@ -18,9 +21,17 @@ trait RestrictionComputation {
         val superValue = Option(superShape.fields.getValue(f))
         baseValue match {
           case Some(bvalue) if superValue.isEmpty => baseShape.set(f, bvalue.value, bvalue.annotations)
-          case None if superValue.isDefined       => baseShape.set(f, superValue.get.value, superValue.get.annotations)
+          case None if superValue.isDefined       =>
+            val superFieldAnnotations = if (keepEditingInfo) {
+              superValue.get.annotations += InheritedField(superShape.id)
+            } else {
+              superValue.get.annotations
+            }
+            baseShape.set(f, superValue.get.value, superFieldAnnotations)
           case Some(bvalue) if superValue.isDefined =>
-            baseShape.set(f, computeNarrow(f, bvalue.value, superValue.get.value), bvalue.annotations)
+            val finalField = computeNarrow(f, bvalue.value, superValue.get.value)
+            if (finalField != bvalue.value && keepEditingInfo) bvalue.annotations += InheritedField(superShape.id)
+            baseShape.set(f, finalField, bvalue.annotations)
           case _ => // ignore
         }
       }
