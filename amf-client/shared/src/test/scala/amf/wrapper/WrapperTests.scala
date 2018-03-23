@@ -174,10 +174,11 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     for {
       _    <- AMF.init().asFuture
       unit <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(music).asFuture
-//      report <- AMF.validate(unit, "RAML", "RAML").toFuture
+      report <- AMF.validate(unit, "RAML", "RAML").asFuture
     } yield {
+      // println(report)
       assert(!unit.references().asSeq.map(_.location).contains(null))
-//      assert(report.conforms) // todo ???
+      //assert(report.conforms) // todo ???
     }
   }
 
@@ -215,10 +216,9 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
 
     val vocab = new Vocabulary()
     vocab
+      .withName("Vocab")
       .withBase("http://test.com/vocab#")
       .withLocation("test_vocab.raml")
-      .withName("Vocab")
-      //      .withVersion("1.0")
       .withUsage("Just a small sample vocabulary")
     /*.withExternals(
         Seq(
