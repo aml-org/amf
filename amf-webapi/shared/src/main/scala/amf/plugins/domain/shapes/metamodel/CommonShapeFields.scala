@@ -1,7 +1,7 @@
 package amf.plugins.domain.shapes.metamodel
 
 import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Int, Str, Bool}
+import amf.core.metamodel.Type.{Int, Str, Bool, Float}
 import amf.core.vocabulary.Namespace.{Shacl, Shapes}
 
 trait CommonShapeFields {
@@ -12,9 +12,9 @@ trait CommonShapeFields {
 
   val MaxLength = Field(Int, Shacl + "maxLength")
 
-  val Minimum = Field(Int, Shacl + "minInclusive")
+  val Minimum = Field(Float, Shacl + "minInclusive")
 
-  val Maximum = Field(Int, Shacl + "maxInclusive")
+  val Maximum = Field(Float, Shacl + "maxInclusive")
 
   val ExclusiveMinimum = Field(Bool, Shacl + "minExclusive")
 

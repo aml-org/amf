@@ -8,7 +8,7 @@ import amf.core.remote.Syntax.Yaml
 import amf.core.remote.{Raml10, RamlYamlHint}
 import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.facades.{AMFCompiler, AMFRenderer, Validation}
-import amf.plugins.domain.shapes.models.TypeDef.{DoubleType, FloatType, IntType, LongType}
+import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models.{ScalarShape, TypeDef}
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import org.scalatest.Matchers._
@@ -29,7 +29,7 @@ class NumberFormatsTest extends AsyncFunSuite with PlatformSecrets {
     FormatCases("number", LongType, "long"),
     FormatCases("number", DoubleType, "double"),
     FormatCases("number", FloatType, "float"),
-    FormatCases("number", FloatType, "")
+    FormatCases("number", NumberType, "")
   )
 
   cases.foreach { ex =>

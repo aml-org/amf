@@ -42,7 +42,7 @@ case class DataNodeParser(node: YNode,
           parseScalar(node.as[YScalar], "string")
         }
       case YType.Int   => parseScalar(node.as[YScalar], "integer")
-      case YType.Float => parseScalar(node.as[YScalar], "float")
+      case YType.Float => parseScalar(node.as[YScalar], "double")
       case YType.Bool  => parseScalar(node.as[YScalar], "boolean")
       case YType.Null  => parseScalar(node.as[YScalar], "nil")
       case YType.Seq   => parseArray(node.as[Seq[YNode]], node)

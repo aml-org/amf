@@ -23,10 +23,7 @@ class JvmWrapperTests extends WrapperTests {
   }
 
   protected class JvmNativeList[E](list: ClientList[E]) extends NativeList[E] {
-    val native: util.List[E]  = list.asInstanceOf[util.List[E]]
-    def size: Int             = native.size()
-    def head: E               = native.get(0)
-    def has(elem: E): Boolean = native.contains(elem)
-    def asSeq: Seq[E]         = native.asScala
+    val native: util.List[E] = list.asInstanceOf[util.List[E]]
+    def asSeq: Seq[E]        = native.asScala
   }
 }

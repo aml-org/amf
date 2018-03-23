@@ -10,6 +10,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportTopLevel("model.domain.DomainExtension")
 case class DomainExtension(private[amf] val _internal: InternalDomainExtension) extends DomainElement {
 
+  @JSExportTopLevel("model.domain.DomainExtension")
   def this() = this(InternalDomainExtension())
 
   def name: StrField                  = _internal.name

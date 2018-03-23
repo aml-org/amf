@@ -6,8 +6,8 @@ import amf.core.emitter.PartEmitter
 import amf.core.parser.Position
 import amf.core.validation.core.{FunctionConstraint, PropertyConstraint, ValidationSpecification}
 import amf.core.vocabulary.Namespace
-import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YType}
+import org.yaml.model.YDocument._
 import org.yaml.render.JsonRender
 
 import scala.collection.mutable.ListBuffer
@@ -168,12 +168,12 @@ class ValidationJSONLDEmitter(targetProfile: String) {
               (Namespace.Shacl + "or").iri(),
               _.obj {
                 _.entry("@list",
-                  _.list(l =>
-                    constraint.`class`.foreach { v =>
-                      l.obj {
-                        _.entry((Namespace.Shacl + "class").iri(), link(_, v))
-                      }
-                    }))
+                        _.list(l =>
+                          constraint.`class`.foreach { v =>
+                            l.obj {
+                              _.entry((Namespace.Shacl + "class").iri(), link(_, v))
+                            }
+                        }))
               }
             )
           }
@@ -308,7 +308,7 @@ class ValidationJSONLDEmitter(targetProfile: String) {
               _.list { l =>
                 l.obj { o =>
                   o.entry((Namespace.Shacl + constraintName).iri(),
-                    genValue(_, value.toDouble.floor.toInt.toString, Some((Namespace.Xsd + "integer").iri())))
+                          genValue(_, value.toDouble.floor.toInt.toString, Some((Namespace.Xsd + "integer").iri())))
                 }
                 l.obj { o =>
                   o.entry((Namespace.Shacl + constraintName).iri(),
@@ -326,29 +326,47 @@ class ValidationJSONLDEmitter(targetProfile: String) {
 
   }
 
+//  case class NumValueContainer(value:String, dataType:String)
+//
+//  private def genOrListConstraint(b:EntryBuilder, constraintName:String, values:Seq[NumValueContainer]): Unit = {
+//    b.entry(
+//      (Namespace.Shacl + "or").iri(),
+//      _.obj {
+//        _.entry(
+//          "@list",
+//          _.list { l =>
+//            values.foreach(numValue => {
+//              l.obj { o =>
+//                o.entry((Namespace.Shacl + constraintName).iri(),
+//                  genValue(_, numValue.value, Some((Namespace.Xsd + numValue.dataType).iri())))
+//              }
+//            })
+//          }
+//        )
+//      }
+//    )
+//  }
+
   private def genNumericPropertyConstraintValue(b: EntryBuilder,
                                                 constraintName: String,
                                                 value: String,
                                                 constraint: Option[PropertyConstraint] = None): Unit = {
-    b.entry(
-      (Namespace.Shacl + "or").iri(),
-      _.obj {
-        _.entry(
-          "@list",
-          _.list { l =>
-            l.obj { o =>
-              o.entry((Namespace.Shacl + constraintName).iri(),
-                genValue(_, value.toDouble.floor.toInt.toString, Some((Namespace.Xsd + "integer").iri())))
-            }
-
-            l.obj { o =>
-              o.entry((Namespace.Shacl + constraintName).iri(),
+    constraint.flatMap(_.datatype) match {
+      case Some(scalarType)
+          if scalarType == (Namespace.Shapes + "number").iri() || scalarType == (Namespace.Xsd + "double").iri() =>
+        b.entry((Namespace.Shacl + constraintName).iri(),
                 genValue(_, value.toDouble.toString, Some((Namespace.Xsd + "double").iri())))
-            }
-          }
-        )
-      }
-    )
+      case None =>
+        b.entry((Namespace.Shacl + constraintName).iri(),
+                genValue(_, value.toDouble.toString, Some((Namespace.Xsd + "double").iri())))
+      case Some(scalarType) if scalarType == (Namespace.Xsd + "float").iri() =>
+        b.entry((Namespace.Shacl + constraintName).iri(),
+                genValue(_, value.toDouble.toString, Some((Namespace.Xsd + "float").iri())))
+      case Some(scalarType) if scalarType == (Namespace.Xsd + "integer").iri() =>
+        b.entry((Namespace.Shacl + constraintName).iri(),
+                genValue(_, value.toDouble.floor.toInt.toString, Some((Namespace.Xsd + "integer").iri())))
+
+    }
   }
 
   private def expandRamlId(s: String): String =
