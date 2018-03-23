@@ -6,13 +6,17 @@ import amf.core.remote.Syntax.{Json, Yaml}
 import amf.core.remote.{Amf, Oas, Raml}
 import amf.core.unsafe.PlatformSecrets
 import amf.emit.AMFUnitFixtureTest
-import amf.facades.AMFDumper
-import org.scalatest.{Assertion, FunSuite}
+import amf.facades.AMFRenderer
+import org.scalatest.{Assertion, AsyncFunSuite}
+
+import scala.concurrent.ExecutionContext
 
 /**
   * AMF Unit DumperTest
   */
-class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTest {
+class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFixtureTest {
+
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Test simple oas/json") {
     val expected =
@@ -39,8 +43,7 @@ class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTes
         |  "paths": {}
         |}""".stripMargin
 
-    val actual = new AMFDumper(`document/api/bare`, Oas, Json, RenderOptions()).dumpToString
-    assert(actual, expected)
+    new AMFRenderer(`document/api/bare`, Oas, Json, RenderOptions()).renderToString.map(assert(_, expected))
   }
 
   test("Test simple raml/yaml") {
@@ -57,8 +60,7 @@ class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTes
         |  - https
         |baseUri: localhost.com/api""".stripMargin
 
-    val actual = new AMFDumper(`document/api/bare`, Raml, Yaml, RenderOptions()).dumpToString
-    assert(actual, expected)
+    new AMFRenderer(`document/api/bare`, Raml, Yaml, RenderOptions()).renderToString.map(assert(_, expected))
   }
 
   test("Test simple amf/jsonld") {
@@ -133,8 +135,7 @@ class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTes
         |  }
         |]""".stripMargin
 
-    val actual = new AMFDumper(`document/api/bare`, Amf, Json, RenderOptions()).dumpToString
-    assert(actual, expected)
+    new AMFRenderer(`document/api/bare`, Amf, Json, RenderOptions()).renderToString.map(assert(_, expected))
   }
 
   test("Test full amf/jsonld") {
@@ -404,8 +405,7 @@ class AMFDumperTest extends FunSuite with PlatformSecrets with AMFUnitFixtureTes
         |  }
         |]""".stripMargin
 
-    val actual = new AMFDumper(`document/api/full`, Amf, Json, RenderOptions()).dumpToString
-    assert(actual, expected)
+    new AMFRenderer(`document/api/full`, Amf, Json, RenderOptions()).renderToString.map(assert(_, expected))
   }
 
   private def assert(actual: String, expected: String): Assertion = {

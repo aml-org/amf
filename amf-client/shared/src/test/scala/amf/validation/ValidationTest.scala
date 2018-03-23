@@ -9,7 +9,7 @@ import amf.core.remote.Syntax.{Json, Syntax, Yaml}
 import amf.core.remote._
 import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.core.validation.SeverityLevels
-import amf.facades.{AMFCompiler, AMFDumper, Validation}
+import amf.facades.{AMFCompiler, AMFRenderer, Validation}
 import amf.plugins.document.graph.parser.GraphEmitter
 import amf.plugins.document.webapi.RAML10Plugin
 import amf.plugins.document.webapi.validation.{
@@ -45,8 +45,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       v.loadValidationDialect().map(_ => v)
     }) flatMap { v =>
       AMFCompiler(basePath + exampleFile, platform, hint, v, None, None).build()
-    } map {
-      AMFDumper(_, target, syntax, RenderOptions()).dumpToString
+    } flatMap {
+      AMFRenderer(_, target, syntax, RenderOptions()).renderToString
     }
   }
 

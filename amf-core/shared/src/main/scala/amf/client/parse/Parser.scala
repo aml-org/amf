@@ -152,7 +152,7 @@ class Parser(vendor: String, mediaType: String) {
       }
 
   private def fromStream(url: String, stream: String): Option[Platform] =
-    Some(StringContentPlatform(DEFAULT_DOCUMENT_URL, stream, platform))
+    Some(StringContentPlatform(url, stream, platform))
 
   private def fromStream(stream: String): Option[Platform] = fromStream(DEFAULT_DOCUMENT_URL, stream)
 

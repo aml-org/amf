@@ -1,5 +1,6 @@
 package amf.client.convert
 
+import amf.client.model.document.{Dialect => ClientDialect}
 import amf.client.model.domain.{
   ClassTerm => ClientClassTerm,
   DatatypePropertyTerm => ClientDatatypePropertyTerm,
@@ -13,7 +14,6 @@ import amf.client.model.domain.{
   PublicNodeMapping => ClientPublicNodeMapping,
   VocabularyReference => ClientVocabularyReference
 }
-import amf.client.model.document.{Dialect => ClientDialect}
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain._

@@ -3,9 +3,9 @@ package amf.resolution
 import amf.client.render.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{Amf, Raml, RamlYamlHint}
-import amf.facades.AMFDumper
+import amf.facades.AMFRenderer
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 class ExtensionResolutionTest extends ResolutionTest {
 
@@ -37,8 +37,8 @@ class ExtensionResolutionTest extends ResolutionTest {
     cycle("input.raml", "output.raml", RamlYamlHint, Raml, basePath + "example/")
   }
 
-  override def render(unit: BaseUnit, config: CycleConfig): String = {
+  override def render(unit: BaseUnit, config: CycleConfig): Future[String] = {
     val target = config.target
-    new AMFDumper(unit, target, target.defaultSyntax, RenderOptions().withSourceMaps).dumpToString
+    new AMFRenderer(unit, target, target.defaultSyntax, RenderOptions().withSourceMaps).renderToString
   }
 }

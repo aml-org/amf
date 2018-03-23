@@ -20,7 +20,7 @@ trait CoreBaseClientConverter extends CoreBaseConverter {
   override type ClientResultHandler[T] = Handler[T]
   override type ClientFileHandler      = FileHandler
 
-  override private[convert] def asClientList[A, B](from: Seq[A], matcher: InternalClientMatcher[A, B]): util.List[B] =
+  override private[amf] def asClientList[A, B](from: Seq[A], matcher: InternalClientMatcher[A, B]): util.List[B] =
     from.map(matcher.asClient).asJava
 
   override private[convert] def asClientMap[Internal, Client](from: mutable.Map[String, Internal],
