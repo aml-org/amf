@@ -222,6 +222,8 @@ case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, ast: YPar
       case StrType =>
         Some(ScalarShape()
           .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(defaultType)), Annotations() += Inferred()))
+      case AnyType =>
+        Some(AnyShape().withName(name).add(Inferred()))
       case _ =>
         // TODO get parent id
         ctx.violation(s"Cannot set default type $defaultType in raml 08", ast)
@@ -287,7 +289,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
             case _ => None
           }
         })
-        .getOrElse(ScalarShape(map).withName(name))
+        .getOrElse(ScalarShape(map).withDataType((Namespace.Xsd + "string").iri()).withName(name))
 
       map.key("type", e => { shape.annotations += TypePropertyLexicalInfo(Range(e.key.range)) })
 
@@ -407,17 +409,22 @@ trait RamlExternalTypes {
         ctx.violation("invalid json schema expression", valueAST)
         YMapEntry(name, YNode.Null)
     }
+    // we set the local schema entry to be able to resolve local $refs
+    ctx.localJSONSchemaContext = Some(schemaEntry.value)
 
-    OasTypeParser(schemaEntry, (shape) => adopt(shape))(toOas(ctx)).parse() match {
-      case Some(shape) =>
-        shape.annotations += ParsedJSONSchema(text)
-        shape
-      case None =>
-        val shape = SchemaShape()
-        adopt(shape)
-        ctx.violation(shape.id, "Cannot parse JSON Schema", value)
-        shape
-    }
+    val parsed =
+      OasTypeParser(schemaEntry, (shape) => adopt(shape), oasNode = "externalSchema")(toOas(ctx)).parse() match {
+        case Some(shape) =>
+          shape.annotations += ParsedJSONSchema(text)
+          shape
+        case None =>
+          val shape = SchemaShape()
+          adopt(shape)
+          ctx.violation(shape.id, "Cannot parse JSON Schema", value)
+          shape
+      }
+    ctx.localJSONSchemaContext = None // we reset the JSON schema context after parsing
+    parsed
   }
 
   protected def typeOrSchema(map: YMap): Option[YMapEntry] = map.key("type").orElse(map.key("schema"))
@@ -675,10 +682,10 @@ sealed abstract class RamlTypeParser(ast: YPart,
       map.key("multipleOf", (ScalarShapeModel.MultipleOf in shape).allowingAnnotations)
 
       val syntaxType = shape.dataType.option().getOrElse("#shape").split("#").last match {
-        case "integer" | "float" | "double" | "long" => "numberScalarShape"
-        case "string"                                => "stringScalarShape"
-        case "dateTime"                              => "dateScalarShape"
-        case _                                       => "shape"
+        case "integer" | "float" | "double" | "long" | "number" => "numberScalarShape"
+        case "string"                                           => "stringScalarShape"
+        case "dateTime"                                         => "dateScalarShape"
+        case _                                                  => "shape"
       }
 
       ctx.closedRamlTypeShape(shape, map, syntaxType, isAnnotation)
@@ -737,12 +744,12 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
       map.key("(minimum)", entry => { // todo pope
         val value = ScalarNode(entry.value)
-        shape.set(ScalarShapeModel.Minimum, value.string(), Annotations(entry))
+        shape.set(ScalarShapeModel.Minimum, value.text(), Annotations(entry))
       })
 
       map.key("(maximum)", entry => { // todo pope
         val value = ScalarNode(entry.value)
-        shape.set(ScalarShapeModel.Maximum, value.string(), Annotations(entry))
+        shape.set(ScalarShapeModel.Maximum, value.text(), Annotations(entry))
       })
 
       map.key("(format)", ScalarShapeModel.Format in shape)
@@ -846,12 +853,20 @@ sealed abstract class RamlTypeParser(ast: YPart,
         "items",
         entry => {
           val items = entry.value
-            .as[YMap]
-            .entries
+            .as[YSequence]
+            .nodes
+            .collect { case node if node.tagType == YType.Map => node }
             .zipWithIndex
             .map {
               case (elem, index) =>
-                Raml10TypeParser(elem, item => item.adopted(shape.id + "/items/" + index)).parse()
+                Raml10TypeParser(
+                  elem,
+                  s"member$index",
+                  elem.as[YMap],
+                  item => item.adopted(shape.id + "/items/" + index),
+                  isAnnotation = false,
+                  defaultType = AnyDefaultType
+                ).parse()
             }
           shape.withItems(items.filter(_.isDefined).map(_.get))
         }

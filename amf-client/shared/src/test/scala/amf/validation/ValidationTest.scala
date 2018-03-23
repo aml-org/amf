@@ -541,6 +541,21 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Example invalid min and max constraint validations test") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(examplesPath + "examples/invalid-max-min-constraint.raml",
+                             platform,
+                             RamlYamlHint,
+                             validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.lengthCompare(6) == 0)
+    }
+  }
+
   test("Test js custom validation - multiple of") {
     for {
       validation <- Validation(platform)
@@ -641,6 +656,29 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report     <- validation.validate(library, ProfileNames.RAML)
     } yield {
       assert(report.results.isEmpty)
+    }
+  }
+
+  test("External raml 0.8 fragment") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "08/external_fragment_test.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.results.isEmpty)
+    }
+  }
+
+  test("Validation error raml 0.8 example 1") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "08/validation_error1.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 1)
     }
   }
 
@@ -1004,7 +1042,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         .build()
       report <- validation.validate(library, ProfileNames.OAS)
     } yield {
-      assert(report.results.nonEmpty)
+      val results = report.results.filter(_.level == SeverityLevels.VIOLATION)
+      assert(results.lengthCompare(1) == 0)
+      assert(results.head.message.contains("Tag must have a name"))
     }
   }
 

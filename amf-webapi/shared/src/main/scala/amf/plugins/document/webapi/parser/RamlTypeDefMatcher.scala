@@ -44,7 +44,7 @@ object RamlTypeDefMatcher {
           case "long"   => LongType
           case "float"  => FloatType
           case "double" => DoubleType
-          case _        => FloatType
+          case _        => NumberType
         }
       case "integer"       => IntType
       case "boolean"       => BoolType
@@ -113,6 +113,7 @@ object RamlTypeDefStringValueMatcher {
     case ObjectType       => ("object", "")
     case FileType         => ("file", "")
     case NilType          => ("nil", "")
+    case NumberType       => ("number", "")
     case UndefinedType    => throw new RuntimeException("Undefined type def")
   }
 }

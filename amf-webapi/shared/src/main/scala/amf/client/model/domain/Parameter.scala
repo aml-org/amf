@@ -15,11 +15,11 @@ case class Parameter(override private[amf] val _internal: InternalParameter) ext
   @JSExportTopLevel("model.domain.Parameter")
   def this() = this(InternalParameter())
 
-  val name: StrField        = _internal.name
-  val description: StrField = _internal.description
-  val required: BoolField   = _internal.required
-  val binding: StrField     = _internal.binding
-  val schema: Shape         = _internal.schema
+  def name: StrField        = _internal.name
+  def description: StrField = _internal.description
+  def required: BoolField   = _internal.required
+  def binding: StrField     = _internal.binding
+  def schema: Shape         = _internal.schema
 
   /** Set name property of this Parameter. */
   def withName(name: String): this.type = {
@@ -49,5 +49,5 @@ case class Parameter(override private[amf] val _internal: InternalParameter) ext
   def withObjectSchema(name: String): NodeShape = _internal.withObjectSchema(name)
 
   def withScalarSchema(name: String): ScalarShape =
-    ScalarShape(_internal.withScalarSchema(name))
+    _internal.withScalarSchema(name)
 }

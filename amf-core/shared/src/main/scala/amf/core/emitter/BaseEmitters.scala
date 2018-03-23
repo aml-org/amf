@@ -72,24 +72,31 @@ package object BaseEmitters {
 
     val tag: YType = {
       f.field.`type` match {
-        case Type.Date => YType.Timestamp
-        case Type.Int  => YType.Int
-        case Type.Bool => YType.Bool
-        case _         => YType.Str
+        case Type.Date                => YType.Timestamp
+        case Type.Int                 => YType.Int
+        case Type.Bool                => YType.Bool
+        case Type.Double | Type.Float => YType.Float
+        case _                        => YType.Str
       }
     }
 
     override def position(): Position = pos(f.value.annotations)
   }
 
-  case class ValueEmitter(key: String, f: FieldEntry) extends BaseValueEmitter {
+  case class ValueEmitter(key: String, f: FieldEntry, dataType: Option[YType] = None) extends BaseValueEmitter {
 
     override def emit(b: EntryBuilder): Unit = sourceOr(f.value, simpleScalar(b))
 
     private def simpleScalar(b: EntryBuilder): Unit = {
+
+      val value = dataType match {
+        case Some(YType.Int) => f.scalar.value.toString.toDouble.floor.toInt
+        case _               => f.scalar.value
+      }
+
       b.entry(
         key,
-        YNode(YScalar(f.scalar.value), tag)
+        YNode(YScalar(value), dataType.getOrElse(tag))
       )
     }
   }

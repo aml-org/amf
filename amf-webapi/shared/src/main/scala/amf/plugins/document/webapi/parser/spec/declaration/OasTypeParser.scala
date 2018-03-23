@@ -51,7 +51,8 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
     parsedShape match {
       case Some(shape: AnyShape) =>
-        ctx.closedShape(shape.id, map, oasNode)
+        if (oasNode != "externalSchema") // external schemas can have any top level key
+          ctx.closedShape(shape.id, map, oasNode)
         Some(shape)
       case None => None
     }
@@ -123,11 +124,25 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
             adopt(copied)
             copied
           case None =>
-            val shape = UnresolvedShape(text, map).withName(text)
-            shape.withContext(ctx)
-            shape.unresolved(text, map)
-            adopt(shape)
-            shape
+            ctx.findLocalJSONPath(map.key("$ref").map(_.value.as[String]).getOrElse("")) match {
+              case Some((name, shapeNode)) =>
+                OasTypeParser(YMapEntry(name, shapeNode), adopt, oasNode).parse() match {
+                  case Some(shape) => shape
+                  case None =>
+                    val shape = UnresolvedShape(text, map).withName(text)
+                    shape.withContext(ctx)
+                    shape.unresolved(text, map)
+                    adopt(shape)
+                    shape
+                }
+
+              case None =>
+                val shape = UnresolvedShape(text, map).withName(text)
+                shape.withContext(ctx)
+                shape.unresolved(text, map)
+                adopt(shape)
+                shape
+            }
       })
   }
 
@@ -153,14 +168,14 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       map.key("minLength", ScalarShapeModel.MinLength in shape)
       map.key("maxLength", ScalarShapeModel.MaxLength in shape)
 
-      map.key("minimum", entry => { // todo pope
+      map.key("minimum", entry => {
         val value = ScalarNode(entry.value)
-        shape.set(ScalarShapeModel.Minimum, value.integer(), Annotations(entry))
+        shape.set(ScalarShapeModel.Minimum, value.text(), Annotations(entry))
       })
 
-      map.key("maximum", entry => { // todo pope
+      map.key("maximum", entry => {
         val value = ScalarNode(entry.value)
-        shape.set(ScalarShapeModel.Maximum, value.integer(), Annotations(entry))
+        shape.set(ScalarShapeModel.Maximum, value.text(), Annotations(entry))
       })
 
       map.key("exclusiveMinimum", ScalarShapeModel.ExclusiveMinimum in shape)
@@ -265,13 +280,17 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
         "items",
         entry => {
           val items = entry.value
-            .as[YMap]
-            .entries
+            .as[YSequence]
+            .nodes
+            .collect { case node if node.tagType == YType.Map => node }
             .zipWithIndex
             .map {
               case (elem, index) =>
-                OasTypeParser(elem, item => item.adopted(item.id + "/items/" + index))
-                  .parse()
+                OasTypeParser(elem,
+                              s"member$index",
+                              elem.as[YMap],
+                              item => item.adopted(shape.id + "/items/" + index),
+                              "schema").parse()
             }
           shape.withItems(items.filter(_.isDefined).map(_.get))
         }

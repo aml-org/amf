@@ -1,0 +1,39 @@
+#%RAML 0.8
+baseUri: http://mocksvc.mulesoft.com/mocks/0e536537-1d65-4332-99a2-ba99f5429465
+title: SalesODS API
+version: 1.1
+
+schemas:
+  - pnr: !include pnr.schema.json
+
+resourceTypes:
+  - reservation-item:
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                schema: pnr
+
+/reservations:
+    /{pnrcreationdate}:
+      type: reservation-item
+      get:
+        description: Get a reservation determined by pnrnumber + creation date
+        responses:
+            200:
+              body:
+                application/json:
+                  example: |
+                    [{"pnrnumber": "1234", "pnrcreationDate": "20160426"},
+                    {"pnrnumber": "2345", "pnrcreationDate": "20160427"}]
+    /{blah}:
+          type: reservation-item
+          get:
+            description: Get a reservation determined by pnrnumber + creation date
+            responses:
+                200:
+                  body:
+                    application/json:
+                      example: |
+                        {"pnrnumber": "2345", "pnrcreationDate": "20160427"}

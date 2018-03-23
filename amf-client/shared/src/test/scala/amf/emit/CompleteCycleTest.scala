@@ -6,6 +6,7 @@ import amf.io.BuildCycleTests
 class CompleteCycleTest extends BuildCycleTests {
 
   override val basePath = "amf-client/shared/src/test/resources/upanddown/"
+  val base08Path        = "amf-client/shared/src/test/resources/upanddown/raml08/"
   val referencesPath    = "amf-client/shared/src/test/resources/references/"
 
   test("Full raml to raml test") {
@@ -629,6 +630,10 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("externals.json.jsonld", "externals.json.jsonld.json", AmfJsonHint, Oas)
   }
 
+  test("JSON Schema wrapped in array test") {
+    cycle("json_schema_array.raml", "json_schema_array.raml.jsonld", RamlYamlHint, Amf, base08Path)
+  }
+
   test("Security schemes raml to amf") {
     cycle("security.raml", "security.raml.jsonld", RamlYamlHint, Amf)
   }
@@ -917,6 +922,10 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("array-of-node.raml", "array-of-node-unsupported08.raml", RamlYamlHint, Raml08)
   }
 
+  test("JSON Schema with [{}]") {
+    cycle("array-of-node.raml", "array-of-node-unsupported08.raml", RamlYamlHint, Raml08)
+  }
+
   test("Single Array Value") {
     cycle("single-array-value.raml", RamlYamlHint)
   }
@@ -999,6 +1008,26 @@ class CompleteCycleTest extends BuildCycleTests {
 
   test("Generic number entries validation") {
     cycle("generic-number-entries.raml", RamlYamlHint)
+  }
+
+  test("Numeric facets raml to raml") {
+    cycle("numeric-facets.raml", "numeric-facets.raml.raml", RamlYamlHint, Raml)
+  }
+
+  test("Numeric facets raml to oas") {
+    cycle("numeric-facets.raml", "numeric-facets.json", RamlYamlHint, Oas)
+  }
+
+  test("Numeric facets raml to jsonld") {
+    cycle("numeric-facets.raml", "numeric-facets.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Numeric facets jsonld to raml") {
+    cycle("numeric-facets.jsonld", "numeric-facets.jsonld.raml", AmfJsonHint, Raml)
+  }
+
+  test("Numeric facets jsonld to oas") {
+    cycle("numeric-facets.jsonld", "numeric-facets.jsonld.json", AmfJsonHint, Oas)
   }
 
 }

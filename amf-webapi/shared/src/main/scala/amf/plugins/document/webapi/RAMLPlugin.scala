@@ -6,7 +6,7 @@ import amf.client.render.RenderOptions
 import amf.core.Root
 import amf.core.model.document._
 import amf.core.model.domain.{DomainElement, ExternalDomainElement}
-import amf.core.parser.{EmptyFutureDeclarations, ParserContext}
+import amf.core.parser.{EmptyFutureDeclarations, LinkReference, ParserContext}
 import amf.core.remote.Platform
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model._
@@ -17,6 +17,7 @@ import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFr
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
 import amf.plugins.document.webapi.resolution.pipelines.{Raml08ResolutionPipeline, Raml10ResolutionPipeline}
 import amf.plugins.domain.webapi.models.WebApi
+import javax.naming.LinkRef
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YDocument, YNode}
 
@@ -39,6 +40,11 @@ trait RAMLPlugin extends BaseWebApiPlugin {
     val clean = context(cleanNested)
 
     RamlHeader(root) flatMap { // todo review this, should we use the raml web api context for get the version parser?
+
+      // Partial raml0.8 fragment with RAML header but linked through !include
+      // we need to generate an external fragment and inline it in the parent document
+      case Raml08 if root.referenceKind == LinkReference => None
+
       case Raml08          => Some(Raml08DocumentParser(root)(updated).parseDocument())
       case Raml10          => Some(Raml10DocumentParser(root)(updated).parseDocument())
       case Raml10Overlay   => Some(Raml10DocumentParser(root)(updated).parseOverlay())
@@ -90,10 +96,12 @@ object RAML08Plugin extends RAMLPlugin {
 
   override val validationProfile: String = ProfileNames.RAML08
 
-  def canParse(root: Root): Boolean = RamlHeader(root) exists {
-    case Raml08          => true
-    case _: RamlFragment => true
-    case _               => false
+  def canParse(root: Root): Boolean = {
+    RamlHeader(root) exists {
+      case Raml08          => true
+      case _: RamlFragment => true
+      case _               => false
+    }
   }
 
   // fix for 08
