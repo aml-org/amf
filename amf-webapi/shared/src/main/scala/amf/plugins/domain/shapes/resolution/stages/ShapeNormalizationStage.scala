@@ -49,7 +49,6 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean)
     // 'type' properties are explicit
     if (shape.annotations.find(classOf[TypePropertyLexicalInfo]).isEmpty)
       shape.annotations += TypePropertyLexicalInfo(amf.core.parser.Range(ZERO, ZERO))
-
     shape
   }
 
@@ -223,13 +222,15 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean)
 
   protected def canonicalInheritance(shape: Shape): Shape = {
     val superTypes = shape.inherits
-    if (!keepEditingInfo) shape.fields.remove(ShapeModel.Inherits)
+    val oldInherits: Seq[Shape] = if (keepEditingInfo) shape.inherits.map { shape => shape.link(shape.name.value()).asInstanceOf[Shape] } else Nil
+    shape.fields.remove(ShapeModel.Inherits)
     var accShape: Shape = canonical(shape)
     superTypes.foreach { superNode =>
       val canonicalSuperNode = canonical(superNode)
       val newMinShape        = minShape(accShape, canonicalSuperNode)
       accShape = canonical(newMinShape)
     }
+    if (keepEditingInfo) accShape.setArrayWithoutId(ShapeModel.Inherits, oldInherits)
     accShape
   }
 

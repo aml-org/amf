@@ -131,17 +131,18 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
       case _          => // ignore
     }
 
-    val modelJSON = RuntimeSerializer(model, "application/ld+json", "AMF Graph", RenderOptions())
+    val modelJSON = RuntimeSerializer(model, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps)
+
 
     /*
-    println("\n\nGRAPH")
-    println(modelJSON)
-    println("===========================")
-    println("\n\nVALIDATION")
-    println(shapesJSON)
-    println("===========================")
-    println(jsLibrary)
-    println("===========================")
+     println("\n\nGRAPH")
+     println(modelJSON)
+     println("===========================")
+     println("\n\nVALIDATION")
+     println(shapesJSON)
+     println("===========================")
+     println(jsLibrary)
+     println("===========================")
      */
 
     ValidationMutex.synchronized {

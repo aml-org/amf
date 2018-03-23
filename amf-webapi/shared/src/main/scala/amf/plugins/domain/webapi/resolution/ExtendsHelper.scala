@@ -6,9 +6,9 @@ import amf.core.emitter.SpecOrdering
 import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
 import amf.core.model.domain.{AmfArray, DataNode, DomainElement, NamedDomainElement}
 import amf.core.parser.ParserContext
-import amf.core.resolution.stages.ResolvedNamedEntity
+import amf.core.resolution.stages.{ReferenceResolutionStage, ResolvedNamedEntity}
 import amf.core.services.RuntimeValidator
-import amf.plugins.document.webapi.annotations.ExtendedField
+import amf.plugins.document.webapi.annotations.ExtensionProvenance
 import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
@@ -43,7 +43,7 @@ object ExtendsHelper {
     declarations(ctx, unit)
     val operation = ctx.factory.operationParser(entry, _ => Operation(), true).parse()
     if (keepEditingInfo) annotateExtensionId(operation, extensionId)
-    operation
+    new ReferenceResolutionStage(profile, keepEditingInfo).resolveDomainElement(operation)
   }
 
   def asEndpoint[T <: BaseUnit](unit: T,
@@ -75,14 +75,14 @@ object ExtendsHelper {
     collector.toList match {
       case e :: Nil =>
         if (keepEditingInfo) annotateExtensionId(e, extensionId)
-        e
+        new ReferenceResolutionStage(profile, keepEditingInfo).resolveDomainElement(e)
       case Nil      => throw new Exception(s"Couldn't parse an endpoint from resourceType '$name'.")
       case _        => throw new Exception(s"Nested endpoints found in resourceType '$name'.")
     }
   }
 
   private def annotateExtensionId(point: DomainElement, extensionId: String): Unit = {
-    val extendedFieldAnnotation = ExtendedField(extensionId)
+    val extendedFieldAnnotation = ExtensionProvenance(extensionId)
     point.fields.fields().foreach { field =>
       field.value.annotations += extendedFieldAnnotation
       field.value.value match {
@@ -90,7 +90,7 @@ object ExtendsHelper {
         case arr: AmfArray => arr.values.foreach {
           case elem: DomainElement =>
             elem.annotations += extendedFieldAnnotation
-            annotateExtensionId(point, extensionId)
+            annotateExtensionId(elem, extensionId)
           case other                   =>
             other.annotations += extendedFieldAnnotation
         }

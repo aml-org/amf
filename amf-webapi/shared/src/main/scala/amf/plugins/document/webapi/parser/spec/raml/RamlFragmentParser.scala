@@ -93,7 +93,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
       val resourceType = ResourceTypeFragment().adopted(root.location)
 
       val abstractDeclaration =
-        new AbstractDeclarationParser(ResourceType(map), resourceType.id, "resourceType", map).parse()
+        new AbstractDeclarationParser(ResourceType(map).withId(resourceType.id + "#/"), resourceType.id, "resourceType", map).parse()
 
       resourceType.withEncodes(abstractDeclaration)
 
@@ -105,7 +105,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
       val traitFragment = TraitFragment().adopted(root.location)
 
       val abstractDeclaration =
-        new AbstractDeclarationParser(Trait(map), traitFragment.id, "trait", map).parse()
+        new AbstractDeclarationParser(Trait(map).withId(traitFragment.id + "#/"), traitFragment.id, "trait", map).parse()
 
       traitFragment.withEncodes(abstractDeclaration)
     }

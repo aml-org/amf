@@ -2,7 +2,7 @@ package amf.plugins.domain.shapes
 
 import amf.core.metamodel.domain.extensions.{PropertyShapeModel, ShapeExtensionModel}
 import amf.core.plugins.{AMFDomainPlugin, AMFPlugin}
-import amf.plugins.domain.shapes.annotations.{InheritedField, ParsedFromTypeExpression}
+import amf.plugins.domain.shapes.annotations.{InheritanceProvenance, ParsedFromTypeExpression}
 import amf.plugins.domain.shapes.metamodel._
 
 import scala.concurrent.Future
@@ -15,8 +15,8 @@ object DataShapesDomainPlugin extends AMFDomainPlugin {
   override def dependencies() = Seq()
 
   override def serializableAnnotations() = Map(
-    "type-expression" -> ParsedFromTypeExpression,
-    "inherited-field" -> InheritedField
+    "type-expression"        -> ParsedFromTypeExpression,
+    "inheritance-provenance" -> InheritanceProvenance
   )
 
   override def modelEntities = Seq(

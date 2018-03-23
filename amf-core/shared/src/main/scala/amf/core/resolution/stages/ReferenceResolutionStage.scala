@@ -63,6 +63,16 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
     model.transform(findLinkPredicates, transform)
   }
 
+  def resolveDomainElement[T <: DomainElement](element: T): T = {
+    val doc = Document().withId("http://resolutionstage.com/test#")
+    if (element.id != null) {
+      doc.fields.setWithoutId(DocumentModel.Encodes, element)
+    } else {
+      doc.withEncodes(element)
+    }
+    resolve(doc).asInstanceOf[Document].encodes.asInstanceOf[T]
+  }
+
   // Internal request that checks for mutually recursive types
   protected def recursiveResolveInvocation(model: BaseUnit,
                                            modelResolver: Option[ModelReferenceResolver],
@@ -97,7 +107,11 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
     element match {
 
       // link not traversed, cache it and traverse it
-      case l: Linkable if l.linkTarget.isDefined && !isCycle => Some(withName(resolveLinked(l.linkTarget.get), l))
+      case l: Linkable if l.linkTarget.isDefined && !isCycle => {
+        val resolved = resolveLinked(l.linkTarget.get)
+        if (keepEditingInfo) resolved.annotations += ResolvedLinkAnnotation(l.id)
+        Some(withName(resolved, l))
+      }
 
       // link traversed, return the link
       case l: Linkable if l.linkTarget.isDefined => Some(l)

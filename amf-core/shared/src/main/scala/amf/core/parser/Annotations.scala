@@ -43,6 +43,12 @@ object Annotations {
 
   def apply(): Annotations = new Annotations()
 
+  def apply(annotations: Annotations): Annotations = {
+    val result = apply()
+    result.annotations = annotations.annotations.map(identity)
+    result
+  }
+
   def apply(ast: YPart): Annotations = apply() += LexicalInformation(Range(ast.range)) += SourceAST(ast)
 
   def apply(annotations: Seq[Annotation]): Annotations = {

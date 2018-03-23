@@ -14,7 +14,7 @@ import amf.core.model.domain._
 import amf.core.parser.{Annotations, EmptyFutureDeclarations, FieldEntry, ParserContext, Value}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.webapi.annotations.ExtendedField
+import amf.plugins.document.webapi.annotations.ExtensionProvenance
 import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
 import amf.plugins.domain.shapes.metamodel.ExampleModel
@@ -62,7 +62,7 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean) exten
     val libs     = extension.references.collect { case m: Module => m }
 
     val refs = document.references ++ libs.filter(unit => !existing.contains(unit.id)).map { unit =>
-      unit.annotations += ExtendedField(extensionId)
+      unit.annotations += ExtensionProvenance(extensionId)
       unit
     }
 
@@ -78,7 +78,7 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean) exten
     // All includes are resolved and applied for both Master Tree and Extension Tree.
     referenceStage.resolve(document)
     // All Trait and Resource Types applications are applied in the Master Tree.
-    extendsStage.resolve(document)
+     extendsStage.resolve(document)
 
     // Current Target Tree Object is set to the Target Tree root (API).
     val masterTree = document.asInstanceOf[EncodesModel].encodes.asInstanceOf[WebApi]
@@ -119,12 +119,12 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean) exten
         master.fields.entry(field) match {
           case None =>
             val newValue = adoptInner(master.id, value.value)
-            if (keepEditingInfo) newValue.annotations += ExtendedField(extensionId)
+            if (keepEditingInfo) newValue.annotations += ExtensionProvenance(extensionId)
             master.set(field, newValue) // Set field if it doesn't exist.
           case Some(existing) =>
             field.`type` match {
               case _: Type.Scalar          =>
-                if (keepEditingInfo) value.value.annotations += ExtendedField(extensionId)
+                if (keepEditingInfo) value.value.annotations += ExtensionProvenance(extensionId)
                 master.set(field, value.value)
               case Type.ArrayLike(element) => mergeByValue(master, field, element, existing.value, value, extensionId)
               case DataNodeModel =>
@@ -134,7 +134,7 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean) exten
                               value.value.asInstanceOf[DomainElement],
                               extensionId)
               case _: ShapeModel if incompatibleType(existing.domainElement, entry.domainElement) =>
-                master.set(field, entry.domainElement, Annotations(Seq(ExtendedField(overlay.id))))
+                master.set(field, entry.domainElement, Annotations(Seq(ExtensionProvenance(overlay.id))))
               case _: DomainElementModel => merge(existing.domainElement, entry.domainElement, extensionId)
               case _                     => throw new Exception(s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)")
             }
@@ -165,7 +165,7 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean) exten
         DataNodeMerging.merge(e, o)
       case _ =>
         // Different types of nodes means the overlay has redefined this extension, so replace it
-        if (keepEditingInfo) overlay.annotations += ExtendedField(extensionId)
+        if (keepEditingInfo) overlay.annotations += ExtensionProvenance(extensionId)
         master.set(field, overlay)
     }
   }
@@ -180,7 +180,7 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean) exten
         case Some(equivalent) => merge(equivalent, declaration, extensionId)
         case None =>
           val extendedDeclaration = adoptInner(master.id + "#/declarations", declaration).asInstanceOf[DomainElement]
-          if (keepEditingInfo) extendedDeclaration.annotations += ExtendedField(extensionId)
+          if (keepEditingInfo) extendedDeclaration.annotations += ExtensionProvenance(extensionId)
           declarations += extendedDeclaration
       }
     }
@@ -194,7 +194,7 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean) exten
 
   def addAll(target: DomainElement, field: Field, other: AmfArray, extensionId: String): Unit = {
     other.values.foreach { value =>
-      if (keepEditingInfo) value.annotations += ExtendedField(extensionId)
+      if (keepEditingInfo) value.annotations += ExtensionProvenance(extensionId)
       target.add(field, value)
     }
   }
@@ -217,7 +217,7 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean) exten
       val scalar = value.asInstanceOf[AmfScalar].value
       if (!existing.contains(scalar)) {
         val scalarValue = AmfScalar(scalar)
-        if (keepEditingInfo) scalarValue.annotations += ExtendedField(extensionId)
+        if (keepEditingInfo) scalarValue.annotations += ExtensionProvenance(extensionId)
         target.add(field, scalarValue)
       }
     }

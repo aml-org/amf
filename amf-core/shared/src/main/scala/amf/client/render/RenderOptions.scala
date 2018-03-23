@@ -13,6 +13,12 @@ class RenderOptions {
     this
   }
 
+  /** Include source maps when rendering to graph. */
+  def withoutSourceMaps: RenderOptions = {
+    sources = false
+    this
+  }
+
   def isWithSourceMaps: Boolean = sources
 }
 

@@ -11,7 +11,9 @@ import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import org.yaml.model.YPart
 
 case class Trait(fields: Fields, annotations: Annotations) extends AbstractDeclaration(fields, annotations) {
-  override def linkCopy(): Trait = Trait().withId(id)
+  override def linkCopy(): Trait = {
+    Trait().withId(id)
+  }
 
   override def meta: AbstractDeclarationModel = TraitModel
 
