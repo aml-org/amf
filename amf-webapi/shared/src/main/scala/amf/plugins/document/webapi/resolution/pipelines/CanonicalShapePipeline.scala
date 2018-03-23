@@ -12,8 +12,8 @@ import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
 
 class CanonicalShapePipeline extends ResolutionPipeline {
 
-  val references = new ReferenceResolutionStage(ProfileNames.AMF)
-  val shapes     = new ShapeNormalizationStage(ProfileNames.AMF)
+  val references = new ReferenceResolutionStage(ProfileNames.AMF, keepEditingInfo = false)
+  val shapes     = new ShapeNormalizationStage(ProfileNames.AMF, keepEditingInfo = false)
 
   override def resolve[T <: BaseUnit](model: T): T = {
     withModel(model) { () =>

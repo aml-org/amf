@@ -17,7 +17,7 @@ case class ResourceType(fields: Fields, annotations: Annotations) extends Abstra
   override def meta: AbstractDeclarationModel = ResourceTypeModel
 
   def asEndpoint[T <: BaseUnit](unit: T, profile: String = ProfileNames.RAML): EndPoint =
-    ExtendsHelper.asEndpoint(unit, profile, dataNode, name.value())
+    ExtendsHelper.asEndpoint(unit, profile, dataNode, name.value(), id, keepEditingInfo = false)
 }
 
 object ResourceType {

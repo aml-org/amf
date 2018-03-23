@@ -1,5 +1,6 @@
 package amf.core.resolution.stages
 
+import amf.core.annotations.ResolvedLinkAnnotation
 import amf.core.metamodel.document.DocumentModel
 import amf.core.model.document.{BaseUnit, Document, EncodesModel}
 import amf.core.model.domain._
@@ -50,7 +51,7 @@ class ModelReferenceResolver(model: BaseUnit) {
 /**
   * Resolves the local and remote references found in the model.
   */
-class ReferenceResolutionStage(profile: String) extends ResolutionStage(profile) {
+class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extends ResolutionStage(profile) {
 
   var mutuallyRecursive: Seq[String]                = Nil
   var model: Option[BaseUnit]                       = None
@@ -84,7 +85,10 @@ class ReferenceResolutionStage(profile: String) extends ResolutionStage(profile)
 
   def resolveDynamicLink(l: LinkNode): Option[DomainElement] = {
     modelResolver.get.findFragment(l.value) match {
-      case Some(elem) => Some(new ResolvedLinkNode(l, elem).withId(l.id))
+      case Some(elem) =>
+        val resolved = new ResolvedLinkNode(l, elem).withId(l.id)
+        if (keepEditingInfo) resolved.annotations += ResolvedLinkAnnotation(l.id)
+        Some(resolved)
       case _          => Some(l)
     }
   }
@@ -148,7 +152,7 @@ class ReferenceResolutionStage(profile: String) extends ResolutionStage(profile)
     } else {
       val nested = Document()
       nested.fields.setWithoutId(DocumentModel.Encodes, element)
-      val result = new ReferenceResolutionStage(profile)
+      val result = new ReferenceResolutionStage(profile, keepEditingInfo)
         .recursiveResolveInvocation(nested, modelResolver, mutuallyRecursive ++ Seq(element.id))
       result.asInstanceOf[Document].encodes
     }
