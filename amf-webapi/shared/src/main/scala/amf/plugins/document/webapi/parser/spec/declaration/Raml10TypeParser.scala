@@ -453,7 +453,6 @@ sealed abstract class RamlTypeParser(ast: YPart,
   }
 
   def parse(): Option[Shape] = {
-
     val info: Option[TypeDef] =
       RamlTypeDetection(
         node,
