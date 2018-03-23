@@ -18,7 +18,7 @@ import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 
 // TODO: this is only here for compatibility with the test suite
-class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: RenderOptions) {
+class AMFRenderer(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: RenderOptions) {
 
   Core.init()
   amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
@@ -34,12 +34,12 @@ class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: RenderO
   amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
 
   /** Print ast to string. */
-  def dumpToString: Future[String] = dump()
+  def renderToString: Future[String] = render()
 
   /** Print ast to file. */
-  def dumpToFile(remote: Platform, path: String): Future[Unit] = dump().flatMap(s => remote.write(path, s))
+  def renderToFile(remote: Platform, path: String): Future[Unit] = render().flatMap(s => remote.write(path, s))
 
-  private def dump(): Future[String] = {
+  private def render(): Future[String] = {
     val vendorString = vendor match {
       case RamlVocabulary => "RAML Vocabularies"
       case Amf            => "AMF Graph"
@@ -66,7 +66,7 @@ class AMFDumper(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: RenderO
   }
 }
 
-object AMFDumper {
-  def apply(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: RenderOptions): AMFDumper =
-    new AMFDumper(unit, vendor, syntax, options)
+object AMFRenderer {
+  def apply(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: RenderOptions): AMFRenderer =
+    new AMFRenderer(unit, vendor, syntax, options)
 }

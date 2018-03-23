@@ -5,7 +5,8 @@ import amf.client.render.RenderOptions
 import amf.core.annotations.SourceVendor
 import amf.core.model.document.{BaseUnit, EncodesModel, Module}
 import amf.core.remote._
-import amf.facades.{AMFCompiler, AMFDumper, Validation}
+import amf.core.validation.AMFValidationReport
+import amf.facades.{AMFCompiler, AMFRenderer, Validation}
 import amf.resolution.ResolutionTest
 import org.mulesoft.common.io.{Fs, SyncFile}
 import org.scalatest.compatible.Assertion
@@ -21,19 +22,24 @@ trait ModelValidationTest extends DirectoryTest {
       validation <- Validation(platform)
       model      <- AMFCompiler(s"file://${d + inputFileName}", platform, RamlYamlHint, validation).build()
       report     <- validation.validate(model, profileFromModel(model))
+      output     <- renderOutput(d, model, report)
     } yield {
-      if (report.conforms) {
-        val vendor = target(model)
-        dump(model, d, vendor)
-      } else {
-        val ordered = report.results.sorted
-        report.copy(results = ordered).toString
-      }
+      output
     }
   }
 
-  def dump(model: BaseUnit, d: String, vendor: Vendor) =
-    AMFDumper(transform(model, d, vendor), vendor, vendor.defaultSyntax, RenderOptions()).dumpToString
+  private def renderOutput(d: String, model: BaseUnit, report: AMFValidationReport): Future[String] = {
+    if (report.conforms) {
+      val vendor = target(model)
+      render(model, d, vendor)
+    } else {
+      val ordered = report.results.sorted
+      Future.successful(report.copy(results = ordered).toString)
+    }
+  }
+
+  def render(model: BaseUnit, d: String, vendor: Vendor): Future[String] =
+    AMFRenderer(transform(model, d, vendor), vendor, vendor.defaultSyntax, RenderOptions()).renderToString
 
   def transform(unit: BaseUnit, d: String, vendor: Vendor): BaseUnit =
     unit

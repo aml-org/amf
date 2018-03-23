@@ -18,7 +18,7 @@ trait CoreBaseClientConverter extends CoreBaseConverter {
   override type ClientResultHandler[T] = JsHandler[T] with Handler[T]
   override type ClientFileHandler      = JsFileHandler with FileHandler
 
-  override private[convert] def asClientList[A, B](from: Seq[A], matcher: InternalClientMatcher[A, B]): js.Array[B] =
+  override private[amf] def asClientList[A, B](from: Seq[A], matcher: InternalClientMatcher[A, B]): js.Array[B] =
     from.map(matcher.asClient).toJSArray
 
   override private[convert] def asClientMap[Internal, Client](from: mutable.Map[String, Internal],

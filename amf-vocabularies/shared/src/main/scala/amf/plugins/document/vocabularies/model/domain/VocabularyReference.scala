@@ -11,18 +11,18 @@ import org.yaml.model.YMap
 
 case class VocabularyReference(fields: Fields, annotations: Annotations) extends DomainElement {
 
-  override def meta: Obj = VocabularyReferenceModel
+  def alias: StrField     = fields.field(Alias)
+  def reference: StrField = fields.field(Reference)
+
+  def withAlias(alias: String): VocabularyReference         = set(Alias, alias)
+  def withReference(reference: String): VocabularyReference = set(Reference, reference)
 
   override def adopted(parent: String): VocabularyReference.this.type = alias.option() match {
     case Some(alias) => withId(parent + "/vocabularyReference/" + alias.urlEncoded)
     case None        => throw new Exception("Cannot set ID of VocabularyReference without alias")
   }
 
-  def withAlias(alias: String): this.type         = set(Alias, alias)
-  def withReference(reference: String): this.type = set(Reference, reference)
-
-  def alias: StrField     = fields.field(Alias)
-  def reference: StrField = fields.field(Reference)
+  override def meta: Obj = VocabularyReferenceModel
 }
 
 object VocabularyReference {

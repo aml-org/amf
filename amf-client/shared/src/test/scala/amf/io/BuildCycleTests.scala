@@ -3,7 +3,7 @@ package amf.io
 import amf.client.render.RenderOptions
 import amf.common.Tests.checkDiff
 import amf.core.unsafe.PlatformSecrets
-import amf.facades.{AMFCompiler, AMFDumper, Validation}
+import amf.facades.{AMFCompiler, AMFRenderer, Validation}
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{Hint, Vendor}
 import org.mulesoft.common.io.{AsyncFile, FileSystem}
@@ -44,7 +44,7 @@ trait BuildCycleTests extends AsyncFunSuite with PlatformSecrets {
 
     build(config, validation)
       .map(transform(_, config))
-      .map(render(_, config))
+      .flatMap(render(_, config))
       .flatMap(writeTemporaryFile(golden))
       .flatMap(assertDifferences(_, config.goldenPath))
   }
@@ -66,9 +66,9 @@ trait BuildCycleTests extends AsyncFunSuite with PlatformSecrets {
   }
 
   /** Method to render parsed unit. Override if necessary. */
-  def render(unit: BaseUnit, config: CycleConfig): String = {
+  def render(unit: BaseUnit, config: CycleConfig): Future[String] = {
     val target = config.target
-    new AMFDumper(unit, target, target.defaultSyntax, RenderOptions().withSourceMaps).dumpToString
+    new AMFRenderer(unit, target, target.defaultSyntax, RenderOptions().withSourceMaps).renderToString
   }
 
   protected def writeTemporaryFile(golden: String)(content: String): Future[AsyncFile] = {

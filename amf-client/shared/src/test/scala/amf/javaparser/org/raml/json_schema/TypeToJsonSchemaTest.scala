@@ -5,6 +5,8 @@ import amf.core.remote.Vendor
 import amf.javaparser.org.raml.ModelValidationTest
 import amf.plugins.domain.shapes.models.AnyShape
 
+import scala.concurrent.Future
+
 /* this test parse a raml only with declared types, resolve them and serialize a json schema.*/
 
 /* Only validate, beacuse resolution deletes all declared types (this examples are apis with only declared types)
@@ -20,11 +22,11 @@ class TypeToJsonSchemaTest extends ModelValidationTest {
 
   override val basePath: String = path
 
-  override def dump(model: BaseUnit, d: String, vendor: Vendor): String = {
+  override def render(model: BaseUnit, d: String, vendor: Vendor): Future[String] = {
     model match {
       case d: DeclaresModel =>
         d.declares.collectFirst { case s: AnyShape if s.name.is("root") => s } match {
-          case Some(anyShape: AnyShape) => anyShape.toJsonSchema
+          case Some(anyShape: AnyShape) => Future { anyShape.toJsonSchema }
           case Some(other)              => throw new AssertionError("Wrong type declared $other")
           case None                     => throw new AssertionError("Model with empty declarations")
         }

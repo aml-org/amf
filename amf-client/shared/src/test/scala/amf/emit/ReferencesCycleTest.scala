@@ -6,7 +6,7 @@ import amf.common.Tests.checkDiff
 import amf.compiler.CompilerTestBuilder
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
-import amf.facades.AMFDumper
+import amf.facades.AMFRenderer
 import amf.io.BuildCycleTests
 import org.mulesoft.common.io.AsyncFile
 
@@ -56,8 +56,8 @@ class ReferencesCycleTest extends BuildCycleTests with ListAssertions with Compi
   private def renderReference(reference: String, vendor: Vendor, unit: BaseUnit): Future[AsyncFile] = {
     val ref    = unit.references.head
     val actual = fs.asyncFile(tmp(reference.replace("/", "--")))
-    actual
-      .write(AMFDumper(ref, vendor, vendor.defaultSyntax, RenderOptions().withSourceMaps).dumpToString)
+    AMFRenderer(ref, vendor, vendor.defaultSyntax, RenderOptions().withSourceMaps).renderToString
+      .flatMap(actual.write(_))
       .map(_ => actual)
   }
 

@@ -7,14 +7,14 @@ import amf.core.model.document.Fragment
 import amf.core.remote.Syntax.Yaml
 import amf.core.remote.{Raml10, RamlYamlHint}
 import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
-import amf.facades.{AMFCompiler, AMFDumper, Validation}
+import amf.facades.{AMFCompiler, AMFRenderer, Validation}
 import amf.plugins.domain.shapes.models.TypeDef.{DoubleType, FloatType, IntType, LongType}
 import amf.plugins.domain.shapes.models.{ScalarShape, TypeDef}
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 class NumberFormatsTest extends AsyncFunSuite with PlatformSecrets {
   implicit override def executionContext: ExecutionContext =
@@ -37,7 +37,7 @@ class NumberFormatsTest extends AsyncFunSuite with PlatformSecrets {
       for {
         validation <- Validation(platform).map(_.withEnabledValidation(false))
         unit       <- AMFCompiler("", TrunkPlatform(ex.api), RamlYamlHint, validation).build()
-        dumped     <- Future { AMFDumper(unit, Raml10, Yaml, RenderOptions()).dumpToString }
+        dumped     <- AMFRenderer(unit, Raml10, Yaml, RenderOptions()).renderToString
       } yield {
         unit match {
           case f: Fragment =>

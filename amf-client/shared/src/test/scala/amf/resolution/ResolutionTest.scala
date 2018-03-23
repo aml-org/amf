@@ -3,10 +3,12 @@ package amf.resolution
 import amf.client.render.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
-import amf.facades.AMFDumper
+import amf.facades.AMFRenderer
 import amf.io.BuildCycleTests
 import amf.plugins.document.webapi.resolution.pipelines.AmfResolutionPipeline
 import amf.plugins.document.webapi.{OAS20Plugin, OAS30Plugin, RAML08Plugin, RAML10Plugin}
+
+import scala.concurrent.Future
 
 abstract class ResolutionTest extends BuildCycleTests {
 
@@ -20,7 +22,6 @@ abstract class ResolutionTest extends BuildCycleTests {
 //    case _ => unit
   }
 
-  override def render(unit: BaseUnit, config: CycleConfig): String = {
-    new AMFDumper(unit, Amf, Amf.defaultSyntax, RenderOptions().withSourceMaps).dumpToString
-  }
+  override def render(unit: BaseUnit, config: CycleConfig): Future[String] =
+    new AMFRenderer(unit, Amf, Amf.defaultSyntax, RenderOptions().withSourceMaps).renderToString
 }

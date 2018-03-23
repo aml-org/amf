@@ -12,16 +12,9 @@ case class External(override private[amf] val _internal: InternalExternal) exten
   @JSExportTopLevel("model.domain.External")
   def this() = this(InternalExternal())
 
-  def withAlias(alias: String) = {
-    _internal.withAlias(alias)
-    this
-  }
-
-  def withBase(base: String) = {
-    _internal.withBase(base)
-    this
-  }
-
   def alias: StrField = _internal.alias
-  def base: StrField = _internal.base
+  def base: StrField  = _internal.base
+
+  def withAlias(alias: String): External = _internal.withAlias(alias)
+  def withBase(base: String): External   = _internal.withBase(base)
 }
