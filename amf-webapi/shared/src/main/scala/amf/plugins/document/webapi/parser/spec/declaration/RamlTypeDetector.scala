@@ -99,19 +99,29 @@ case class RamlTypeDetector(parent: String,
   }
 
   private def detectTypeOrSchema(map: YMap): Option[TypeDef] = {
-    if (map.entries.nonEmpty)
-      (typeOrSchema(map)
-        .flatMap(
-          e =>
-            RamlTypeDetector(parent,
+    if (map.entries.nonEmpty) {
+      // let's try to detect based on the explicit value of 'type'
+      val fromExplicitType = typeOrSchema(map).flatMap(
+          e => {
+            // let's call ourselves recrusively with the value of type
+            val result = RamlTypeDetector(parent,
                              map.key("format").orElse(map.key("(format)")).map(_.value.toString()),
-                             recursive = true)
-              .detect(e.value)) match {
-        case Some(t) if t == UndefinedType => ShapeClassTypeDefMatcher.fetchByRamlSyntax(map)
-        case Some(other)                   => Some(other)
-        case None                          => ShapeClassTypeDefMatcher.fetchByRamlSyntax(map)
-      }).orElse(Some(ObjectType)) // this is for forward refferences.
-    else Some(defaultType.typeDef)
+                             recursive = true).detect(e.value)
+            result match {
+              case Some(t) if t == UndefinedType => None
+              case Some(other)                   => Some(other)
+            }
+          }
+      )
+
+      fromExplicitType match {
+        case None =>
+          // implicit detection here
+          ShapeClassTypeDefMatcher.fetchByRamlSyntax(map)
+        case explicitType =>
+          explicitType // we were able to find a shape looking into the 'type' property
+      }
+    } else Some(defaultType.typeDef)
   }
 
   /** Get type or schema facet. If both are available, default to type facet and throw a validation error. */
@@ -202,8 +212,10 @@ case class RamlTypeDetector(parent: String,
       var possibles: Seq[String] = Seq()
       map.entries.foreach { entry =>
         val locals = shapesNodes.filter(value => value._2(entry.key.toString()))
-        if (possibles.isEmpty) possibles = locals.keys.toSeq
-        else possibles = locals.keys.filter(k => possibles.contains(k)).toSeq
+        if (locals.nonEmpty) {
+          if (possibles.isEmpty) possibles = locals.keys.toSeq
+          else possibles = locals.keys.filter(k => possibles.contains(k)).toSeq
+        }
       }
 
       possibles.distinct

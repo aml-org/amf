@@ -64,7 +64,7 @@ resourceTypes:
 
 
 annotationTypes:
-  deprecated:
+  deprecated-timestamp:
     properties:
       date: datetime
       deprecatedBy: User
@@ -110,6 +110,9 @@ securitySchemes:
              with the "access_token" query string parameter.
           type: string
       queryParameters:
+        blah:
+          required: false
+          default: Default value
         access_token:
           description: |
              Used to send a valid OAuth 2 access token. Do not use with
@@ -181,7 +184,7 @@ uses:
   post:
   /{songId}:
     get:
-      (deprecated):
+      (deprecated-timestamp):
         date: 2016-02-28T16:41:41.090Z
         deprecatedBy:
           firstname: Christian
