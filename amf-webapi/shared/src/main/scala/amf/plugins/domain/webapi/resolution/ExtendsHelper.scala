@@ -4,10 +4,11 @@ import amf.ProfileNames
 import amf.core.annotations.{Aliases, LexicalInformation}
 import amf.core.emitter.SpecOrdering
 import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
-import amf.core.model.domain.{DataNode, DomainElement, NamedDomainElement}
+import amf.core.model.domain.{AmfArray, DataNode, DomainElement, NamedDomainElement}
 import amf.core.parser.ParserContext
-import amf.core.resolution.stages.ResolvedNamedEntity
+import amf.core.resolution.stages.{ReferenceResolutionStage, ResolvedNamedEntity}
 import amf.core.services.RuntimeValidator
+import amf.plugins.document.webapi.annotations.ExtensionProvenance
 import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
@@ -24,6 +25,8 @@ object ExtendsHelper {
   def asOperation[T <: BaseUnit](profile: String,
                                  node: DataNode,
                                  unit: T,
+                                 extensionId: String,
+                                 keepEditingInfo: Boolean,
                                  context: Option[RamlWebApiContext] = None): Operation = {
     val ctx = context.getOrElse(custom(profile))
 
@@ -38,13 +41,17 @@ object ExtendsHelper {
 
     val entry = document.as[YMap].entries.head
     declarations(ctx, unit)
-    ctx.factory.operationParser(entry, _ => Operation(), true).parse()
+    val operation = ctx.factory.operationParser(entry, _ => Operation(), true).parse()
+    if (keepEditingInfo) annotateExtensionId(operation, extensionId)
+    new ReferenceResolutionStage(profile, keepEditingInfo).resolveDomainElement(operation)
   }
 
   def asEndpoint[T <: BaseUnit](unit: T,
                                 profile: String,
                                 dataNode: DataNode,
                                 name: String,
+                                extensionId: String,
+                                keepEditingInfo: Boolean,
                                 context: Option[RamlWebApiContext] = None): EndPoint = {
     val ctx = context.getOrElse(custom(profile))
 
@@ -66,9 +73,29 @@ object ExtendsHelper {
     validator.foreach(RuntimeValidator.register)
 
     collector.toList match {
-      case e :: Nil => e
+      case e :: Nil =>
+        if (keepEditingInfo) annotateExtensionId(e, extensionId)
+        new ReferenceResolutionStage(profile, keepEditingInfo).resolveDomainElement(e)
       case Nil      => throw new Exception(s"Couldn't parse an endpoint from resourceType '$name'.")
       case _        => throw new Exception(s"Nested endpoints found in resourceType '$name'.")
+    }
+  }
+
+  private def annotateExtensionId(point: DomainElement, extensionId: String): Unit = {
+    val extendedFieldAnnotation = ExtensionProvenance(extensionId)
+    point.fields.fields().foreach { field =>
+      field.value.annotations += extendedFieldAnnotation
+      field.value.value match {
+        case elem: DomainElement => annotateExtensionId(elem, extensionId)
+        case arr: AmfArray => arr.values.foreach {
+          case elem: DomainElement =>
+            elem.annotations += extendedFieldAnnotation
+            annotateExtensionId(elem, extensionId)
+          case other                   =>
+            other.annotations += extendedFieldAnnotation
+        }
+        case  scalar => scalar.annotations += extendedFieldAnnotation
+      }
     }
   }
 

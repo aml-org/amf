@@ -1101,7 +1101,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
       )
 
       // Explicit annotation for the type property
-      map.key("type", entry => shape.annotations += TypePropertyLexicalInfo(Range(node.range)))
+      map.key("type", entry => shape.annotations += TypePropertyLexicalInfo(Range(entry.key.range)))
 
       shape
     }

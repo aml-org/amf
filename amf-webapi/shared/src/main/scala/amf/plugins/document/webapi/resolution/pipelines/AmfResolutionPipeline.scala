@@ -10,14 +10,14 @@ import amf.plugins.domain.webapi.resolution.stages.{ExamplesResolutionStage, Med
 
 class AmfResolutionPipeline extends ResolutionPipeline {
 
-  val references = new ReferenceResolutionStage(ProfileNames.AMF)
-  val shapes     = new ShapeNormalizationStage(ProfileNames.AMF)
+  val references = new ReferenceResolutionStage(ProfileNames.AMF, keepEditingInfo = false)
+  val shapes     = new ShapeNormalizationStage(ProfileNames.AMF, keepEditingInfo = false)
   val parameters = new ParametersNormalizationStage(ProfileNames.AMF)
-  val `extends`  = new ExtendsResolutionStage(ProfileNames.AMF)
+  val `extends`  = new ExtendsResolutionStage(ProfileNames.AMF, keepEditingInfo = false)
   val security   = new SecurityResolutionStage(ProfileNames.AMF)
   val mediaTypes = new MediaTypeResolutionStage(ProfileNames.AMF)
   val examples   = new ExamplesResolutionStage(ProfileNames.AMF)
-  val extensions = new ExtensionsResolutionStage(ProfileNames.AMF)
+  val extensions = new ExtensionsResolutionStage(ProfileNames.AMF, keepEditingInfo = false)
   val cleanRefs  = new CleanReferencesStage(ProfileNames.AMF)
   val cleanDecls = new DeclarationsRemovalStage(ProfileNames.AMF)
 

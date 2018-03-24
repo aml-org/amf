@@ -38,7 +38,7 @@ case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape
   override def meta: ShapeModel = PropertyShapeModel
 
   override def cloneShape(withRecursionBase: Option[String], traversed: Set[String]): PropertyShape = {
-    val cloned = PropertyShape(annotations)
+    val cloned = PropertyShape(Annotations(annotations))
     cloned.id = this.id
     copyFields(cloned, withRecursionBase, traversed)
     cloned.asInstanceOf[this.type]

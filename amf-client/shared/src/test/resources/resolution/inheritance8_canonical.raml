@@ -1,14 +1,12 @@
 #%RAML 1.0 Library
 types:
   CatWithCity:
-    type: object
     additionalProperties: true
     properties:
       city:
         required: true
         type: string
   CatWithAddress:
-    type: object
     additionalProperties: true
     properties:
       address:
@@ -26,7 +24,6 @@ types:
         type: string
       age:
         required: true
-        type: union
         anyOf:
           -
             type: string

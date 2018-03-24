@@ -6,7 +6,7 @@ import amf.core.resolution.stages.ReferenceResolutionStage
 
 class BasicResolutionPipeline extends ResolutionPipeline{
 
-  val references = new ReferenceResolutionStage(ProfileNames.AMF)
+  val references = new ReferenceResolutionStage(ProfileNames.AMF, keepEditingInfo = false)
 
   override def resolve[T <: BaseUnit](model: T): T = {
     withModel(model) { () =>

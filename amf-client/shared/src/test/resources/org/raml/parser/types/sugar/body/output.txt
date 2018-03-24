@@ -4,13 +4,11 @@ title: New API
   get:
     body:
       application/json:
-        type: array
         items:
           type: string
     responses:
       200:
         body:
           application/json:
-            type: array
             items:
               type: string

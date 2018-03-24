@@ -57,12 +57,12 @@ case class ParametrizedDeclarationParser(
       case Left(value) => // in oas links $ref always are maps
         producer(value)
           .add(Annotations(node.value))
-          .set(ParametrizedDeclarationModel.Target, declarations(value, SearchScope.Fragments))
+          .set(ParametrizedDeclarationModel.Target, declarations(value, SearchScope.Fragments).link(value).asInstanceOf[AbstractDeclaration])
       case Right(n) =>
         val text = n.as[YScalar].text
         producer(text)
           .add(Annotations(node.value))
-          .set(ParametrizedDeclarationModel.Target, declarations(text, SearchScope.All))
+          .set(ParametrizedDeclarationModel.Target, declarations(text, SearchScope.All).link(text).asInstanceOf[AbstractDeclaration])
     }
   }
 }

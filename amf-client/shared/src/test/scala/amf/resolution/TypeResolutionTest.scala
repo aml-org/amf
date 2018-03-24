@@ -224,7 +224,7 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
   errorExamples.foreach { example =>
     test(s"Fails on erroneous data types: $example") {
       build(s"file://$basePath$example.raml", RamlYamlHint)
-        .map(RAML10Plugin.resolve)
+        .map(u => RAML10Plugin.resolve(u))
         .transformWith {
           case Success(_) =>
             fail("Expected resolution error")

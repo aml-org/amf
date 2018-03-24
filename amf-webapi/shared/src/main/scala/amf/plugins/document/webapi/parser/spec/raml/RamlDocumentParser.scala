@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.raml
 
 import amf.core.Root
+import amf.core.utils._
 import amf.core.annotations._
 import amf.core.metamodel.Field
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
@@ -272,8 +273,8 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
     val parent = root.location + "#/declarations"
     parseTypeDeclarations(map, parent)
     parseAnnotationTypeDeclarations(map, parent)
-    AbstractDeclarationsParser("traits", entry => Trait(entry), map, parent).parse()
-    AbstractDeclarationsParser("resourceTypes", entry => ResourceType(entry), map, parent)
+    AbstractDeclarationsParser("traits", entry => Trait(entry).withName(entry.key.as[String]).withId(parent + s"/traits/${entry.key.as[String].urlEncoded}"), map, parent).parse()
+    AbstractDeclarationsParser("resourceTypes", entry => ResourceType(entry).withName(entry.key.as[String]).withId(parent + s"/resourceTypes/${entry.key.as[String].urlEncoded}"), map, parent)
       .parse()
     parseSecuritySchemeDeclarations(map, parent)
     parseParameterDeclarations("(parameters)", map, root.location + "#/parameters")

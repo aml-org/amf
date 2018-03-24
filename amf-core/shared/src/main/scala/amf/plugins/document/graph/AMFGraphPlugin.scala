@@ -8,7 +8,7 @@ import amf.core.model.domain.AnnotationGraphLoader
 import amf.core.parser._
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.remote.Platform
-import amf.core.resolution.pipelines.BasicResolutionPipeline
+import amf.core.resolution.pipelines.{BasicResolutionPipeline, ResolutionPipeline}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.graph.parser.{GraphDependenciesReferenceHandler, GraphEmitter, GraphParser}
 import org.yaml.model.YMap
@@ -60,5 +60,5 @@ object AMFGraphPlugin extends AMFDocumentPlugin {
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit): BaseUnit = new BasicResolutionPipeline().resolve(unit)
+  override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE) = new BasicResolutionPipeline().resolve(unit)
 }

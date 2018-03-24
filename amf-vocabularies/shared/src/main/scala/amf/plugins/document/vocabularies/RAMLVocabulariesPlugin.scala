@@ -10,6 +10,7 @@ import amf.core.parser.{ParserContext, ReferenceHandler}
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.Platform
+import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.RuntimeValidator
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels, ValidationResultProcessor}
@@ -99,7 +100,7 @@ object RAMLVocabulariesPlugin
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit): BaseUnit = unit match {
+  override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = unit match {
     case dialect: Dialect         => new DialectResolutionPipeline().resolve(dialect)
     case dialect: DialectInstance => new DialectInstanceResolutionPipeline().resolve(dialect)
     case _                        => unit
