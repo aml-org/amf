@@ -8,7 +8,7 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain.{AmfScalar, Linkable, Shape}
+import amf.core.model.domain.{AmfScalar, Linkable, RecursiveShape, Shape}
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, FieldEntry, Fields, Position}
 import amf.plugins.document.webapi.annotations._
@@ -16,12 +16,7 @@ import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEm
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
-import amf.plugins.document.webapi.parser.{
-  OasTypeDefMatcher,
-  OasTypeDefStringValueMatcher,
-  RamlTypeDefMatcher,
-  RamlTypeDefStringValueMatcher
-}
+import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, OasTypeDefStringValueMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef.UndefinedType
@@ -309,6 +304,16 @@ case class XMLSerializerEmitter(key: String, f: FieldEntry, ordering: SpecOrderi
   }
 
   override def position(): Position = pos(f.value.annotations)
+}
+
+case class RamlRecursiveShapeEmitter(shape: RecursiveShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
+  implicit spec: SpecEmitterContext) {
+  def emitters(): Seq[EntryEmitter] = {
+    val result: ListBuffer[EntryEmitter] = ListBuffer()
+    result += MapEntryEmitter("type", "object")
+    result += MapEntryEmitter("x-recursive", shape.fixpoint.value())
+    result
+  }
 }
 
 case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, references: Seq[BaseUnit])(

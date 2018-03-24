@@ -13,7 +13,7 @@ import amf.plugins.domain.shapes.models.AnyShape
 import amf.core.utils._
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.YType
+import org.yaml.model.{YNode, YType}
 
 import scala.collection.mutable.ListBuffer
 
@@ -122,9 +122,14 @@ case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering) extends P
       case scalar: ScalarNode => Seq(scalarEmitter(scalar))
       case array: ArrayNode   => arrayEmitters(array)
       case obj: ObjectNode    => objectEmitters(obj)
+      case link: LinkNode     => linkEmitters(link)
     }) collect {
-      case e: EntryEmitter => e
-      case other           => throw new Exception(s"Unsupported seq of emitter type in data node emitters $other")
+      case e: EntryEmitter      => e
+      case t: TextScalarEmitter => new EntryEmitter() {
+        override def emit(b: EntryBuilder): Unit = b.entry(YNode("@value"), t.value)
+        override def position(): Position = t.position()
+      }
+      case other                => throw new Exception(s"Unsupported seq of emitter type in data node emitters $other")
     }
   }
 
@@ -150,9 +155,11 @@ case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering) extends P
     scalarEmitter(scalar).emit(b)
   }
 
-  def emitLink(link: LinkNode, b: PartBuilder): Unit = {
-    LinkScalaEmitter(link.alias, link.annotations).emit(b)
-  }
+  def emitLink(link: LinkNode, b: PartBuilder): Unit =
+    linkEmitters(link).foreach(_.emit(b))
+
+  def linkEmitters(link: LinkNode): Seq[PartEmitter] =
+    Seq(LinkScalaEmitter(link.alias, link.annotations))
 
   def scalarEmitter(scalar: ScalarNode): PartEmitter = {
     scalar.dataType match {
@@ -201,8 +208,9 @@ case class RamlAnnotationTypeEmitter(property: CustomDomainProperty, ordering: S
             case es if es.forall(_.isInstanceOf[EntryEmitter])              => es.collect { case e: EntryEmitter => e }
             case other                                                      => throw new Exception(s"IllegalTypeDeclarations found: $other")
           }
-        case Some(x) => throw new Exception("Cannot emit raml type for a shape that is not an AnyShape")
-        case _       => Nil // ignore
+        case Some(shape: RecursiveShape) => RamlRecursiveShapeEmitter(shape, ordering, Nil).emitters()
+        case Some(x)                     => throw new Exception("Cannot emit raml type for a shape that is not an AnyShape")
+        case _                           => Nil // ignore
       }
     }) match {
     case Some(emitters) => emitters

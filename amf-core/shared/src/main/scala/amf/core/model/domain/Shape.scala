@@ -78,10 +78,12 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
     this.fields.foreach {
       case (f, v) =>
         val clonedValue = v.value match {
-          case s: Shape => s.cloneShape(recursionBase, traversed)
+          case s: Shape if s.id != this.id => s.cloneShape(recursionBase, traversed)
+          case s: Shape if s.id == this.id => s
           case a: AmfArray =>
             AmfArray(a.values.map {
-              case e: Shape => e.cloneShape(recursionBase, traversed)
+              case e: Shape if e.id != this.id => e.cloneShape(recursionBase, traversed)
+              case e: Shape if e.id == this.id => e
               case o        => o
             }, a.annotations)
           case o => o
