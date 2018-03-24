@@ -16,6 +16,9 @@ trait ValueField {
   /** Return true if string value is equals to non-null given value. */
   def is(other: ValueType): Boolean = option().fold(false)(_ == other)
 
+  /** Return true if string value is not-null and accepted by given function. */
+  def is(accepts: ValueType => Boolean): Boolean = option().fold(false)(accepts(_))
+
   /** Returns true if field is null. */
   def isNull: Boolean = option().isEmpty
 

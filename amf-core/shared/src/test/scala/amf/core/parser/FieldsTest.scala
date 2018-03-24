@@ -19,24 +19,32 @@ class FieldsTest extends FunSuite with Matchers {
     strUndefined.isNull should be(true)
     strUndefined.isNullOrEmpty should be(true)
     strUndefined.nonEmpty should be(false)
+    strUndefined.is("") should be(false)
+    strUndefined.is(_ == "") should be(false)
 
     val intUndefined: IntField = fields.field(IntProperty)
     intUndefined.option() shouldBe None
     intUndefined.value() should be(0)
     intUndefined.nonNull should be(false)
     intUndefined.isNull should be(true)
+    intUndefined.is(0) should be(false)
+    intUndefined.is(_ == 0) should be(false)
 
     val doubleUndefined: DoubleField = fields.field(DoubleProperty)
     doubleUndefined.option() shouldBe None
     doubleUndefined.value() should be(0.0)
     doubleUndefined.nonNull should be(false)
     doubleUndefined.isNull should be(true)
+    doubleUndefined.is(0.0) should be(false)
+    doubleUndefined.is(_ == 0.0) should be(false)
 
     val boolUndefined: BoolField = fields.field(BoolProperty)
     boolUndefined.option() shouldBe None
     boolUndefined.value() should be(false)
     boolUndefined.nonNull should be(false)
     boolUndefined.isNull should be(true)
+    boolUndefined.is(false) should be(false)
+    boolUndefined.is(_ == false) should be(false)
 
     val seqStrUndefined: Seq[StrField] = fields.field(SeqStrProperty)
     seqStrUndefined shouldBe empty
@@ -56,6 +64,8 @@ class FieldsTest extends FunSuite with Matchers {
     strDefined.isNull should be(false)
     strDefined.isNullOrEmpty should be(false)
     strDefined.nonEmpty should be(true)
+    strDefined.is("hello") should be(true)
+    strDefined.is(_ == "hello") should be(true)
 
     fields.set("/", IntProperty, AmfScalar(10))
     val intDefined: IntField = fields.field(IntProperty)
@@ -63,6 +73,8 @@ class FieldsTest extends FunSuite with Matchers {
     intDefined.value() should be(10)
     intDefined.nonNull should be(true)
     intDefined.isNull should be(false)
+    intDefined.is(10) should be(true)
+    intDefined.is(_ == 10) should be(true)
 
     fields.set("/", DoubleProperty, AmfScalar(5.5))
     val doubleDefined: DoubleField = fields.field(DoubleProperty)
@@ -70,6 +82,8 @@ class FieldsTest extends FunSuite with Matchers {
     doubleDefined.value() should be(5.5)
     doubleDefined.nonNull should be(true)
     doubleDefined.isNull should be(false)
+    doubleDefined.is(5.5) should be(true)
+    doubleDefined.is(_ == 5.5) should be(true)
 
     fields.set("/", BoolProperty, AmfScalar(true))
     val boolTrue: BoolField = fields.field(BoolProperty)
@@ -77,6 +91,8 @@ class FieldsTest extends FunSuite with Matchers {
     boolTrue.value() should be(true)
     boolTrue.nonNull should be(true)
     boolTrue.isNull should be(false)
+    boolTrue.is(true) should be(true)
+    boolTrue.is(_ == true) should be(true)
 
     fields.set("/", BoolProperty, AmfScalar(false))
     val boolFalse: BoolField = fields.field(BoolProperty)
@@ -84,6 +100,8 @@ class FieldsTest extends FunSuite with Matchers {
     boolFalse.value() should be(false)
     boolFalse.nonNull should be(true)
     boolFalse.isNull should be(false)
+    boolFalse.is(false) should be(true)
+    boolFalse.is(_ == false) should be(true)
 
     fields.set("/", SeqStrProperty, AmfArray(Seq(AmfScalar("hello"))))
     val seqStrDefined: Seq[StrField] = fields.field(SeqStrProperty)
@@ -118,6 +136,9 @@ class FieldsTest extends FunSuite with Matchers {
     strDefined.value() should be(null)
     strDefined.isNull should be(true)
     strDefined.isNullOrEmpty should be(true)
+    strDefined.is("") should be(false)
+    strDefined.is(_ == "") should be(false)
+    strDefined.is(_ == null) should be(false) // option() its empty, so fold alwarys return false.
 
     fields.set("/", IntProperty, AmfScalar(null))
     val intDefined: IntField = fields.field(IntProperty)
@@ -125,6 +146,9 @@ class FieldsTest extends FunSuite with Matchers {
     intDefined.nonNull shouldBe false
     intDefined.value() should be(0)
     intDefined.isNull should be(true)
+    intDefined.is(0) should be(false)
+    intDefined.is(_ == 0) should be(false)
+    intDefined.is(_ == null) should be(false)
 
     fields.set("/", DoubleProperty, AmfScalar(null))
     val doubleDefined: DoubleField = fields.field(DoubleProperty)
@@ -132,6 +156,9 @@ class FieldsTest extends FunSuite with Matchers {
     doubleDefined.nonNull shouldBe false
     doubleDefined.value() should be(0.0)
     doubleDefined.isNull should be(true)
+    doubleDefined.is(0.0) should be(false)
+    doubleDefined.is(_ == 0.0) should be(false)
+    doubleDefined.is(_ == null) should be(false)
 
     fields.set("/", BoolProperty, AmfScalar(null))
     val boolTrue: BoolField = fields.field(BoolProperty)
@@ -139,6 +166,9 @@ class FieldsTest extends FunSuite with Matchers {
     boolTrue.nonNull shouldBe false
     boolTrue.value() should be(false)
     boolTrue.isNull should be(true)
+    boolTrue.is(false) should be(false)
+    boolTrue.is(_ == false) should be(false)
+    boolTrue.is(_ == null) should be(false)
 
     fields.set("/", SeqStrProperty, AmfArray(Seq(AmfScalar(null))))
     val seqStrDefined: Seq[StrField] = fields.field(SeqStrProperty)
