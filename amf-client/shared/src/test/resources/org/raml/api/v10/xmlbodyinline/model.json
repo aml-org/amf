@@ -4,7 +4,6 @@ title: xml body inline
   get:
     body:
       application/xml:
-        type: object
         additionalProperties: true
         properties:
           firstname:

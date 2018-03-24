@@ -46,9 +46,6 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean)
 
   protected def cleanUnnecessarySyntax(shape: Shape): Shape = {
     shape.annotations.reject(!_.isInstanceOf[PerpetualAnnotation])
-    // 'type' properties are explicit
-    if (shape.annotations.find(classOf[TypePropertyLexicalInfo]).isEmpty)
-      shape.annotations += TypePropertyLexicalInfo(amf.core.parser.Range(ZERO, ZERO))
     shape
   }
 
