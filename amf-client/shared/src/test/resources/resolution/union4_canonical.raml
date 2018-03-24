@@ -4,7 +4,6 @@ additionalProperties: true
 properties:
   a:
     required: true
-    type: union
     anyOf:
       -
         type: datetime
@@ -12,7 +11,6 @@ properties:
         type: integer
   b:
     required: true
-    type: union
     anyOf:
       -
         type: number

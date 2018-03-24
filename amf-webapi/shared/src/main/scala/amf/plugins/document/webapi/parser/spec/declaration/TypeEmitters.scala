@@ -194,6 +194,7 @@ abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references
     implicit spec: SpecEmitterContext) {
 
   val typeName: Option[String]
+  var typeEmitted = false
 
   def emitters(): Seq[EntryEmitter] = {
 
@@ -238,12 +239,18 @@ abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references
     fs.entry(ShapeModel.Inherits)
       .fold(
         typeName.foreach { value =>
-          //result += MapEntryEmitter("type", value)
-          spec.ramlTypePropertyEmitter(value, shape).foreach { emitter =>
-            result += emitter
+          spec.ramlTypePropertyEmitter(value, shape) match {
+            case Some(emitter) =>
+              typeEmitted = true
+              result += emitter
+            case None =>
+              typeEmitted = false
           }
         }
-      )(f => result += RamlShapeInheritsEmitter(f, ordering, references = references))
+      )(f => {
+        typeEmitted = true
+        result += RamlShapeInheritsEmitter(f, ordering, references = references)
+      })
 
     result
   }
@@ -343,14 +350,17 @@ case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referen
     fs.entry(NodeShapeModel.Discriminator).map(f => result += RamlScalarEmitter("discriminator", f))
     fs.entry(NodeShapeModel.DiscriminatorValue).map(f => result += RamlScalarEmitter("discriminatorValue", f))
 
-    fs.entry(NodeShapeModel.Properties).map(f => result += RamlPropertiesShapeEmitter(f, ordering, references))
+    fs.entry(NodeShapeModel.Properties).map { f =>
+      typeEmitted = true
+      result += RamlPropertiesShapeEmitter(f, ordering, references)
+    }
 
     val propertiesMap = ListMap(node.properties.map(p => p.id -> p): _*)
 
     fs.entry(NodeShapeModel.Dependencies)
       .map(f => result += RamlShapeDependenciesEmitter(f, ordering, propertiesMap))
 
-    if (result.isEmpty || (result.size == 1 && typeName.isEmpty && node.fields.?(AnyShapeModel.Examples).nonEmpty))
+    if (!typeEmitted)
       result += MapEntryEmitter("type", "object")
 
     result
@@ -471,7 +481,7 @@ class RamlAnyShapeInstanceEmitter(shape: AnyShape, ordering: SpecOrdering, refer
                                           references)
       })
 
-    if (results.isEmpty || results.size == 1 && shape.fields.?(AnyShapeModel.Examples).nonEmpty) {
+    if (!typeEmitted) {
       val entry = MapEntryEmitter("type", "any")
       results ++= Seq(entry)
     }
@@ -488,7 +498,7 @@ case class RamlNilShapeEmitter(shape: NilShape, ordering: SpecOrdering, referenc
 
   override def emitters(): Seq[EntryEmitter] = {
     var result: Seq[EntryEmitter] = super.emitters()
-    if (result.isEmpty || result.size == 1 && shape.fields.?(AnyShapeModel.Examples).nonEmpty) {
+    if (!typeEmitted) {
       val entry = MapEntryEmitter("type", "nil")
       result = result ++ Seq(entry)
     }
@@ -721,6 +731,7 @@ case class RamlArrayShapeEmitter(array: ArrayShape, ordering: SpecOrdering, refe
 
     fs.entry(ArrayShapeModel.Items)
       .foreach(_ => {
+        typeEmitted = true
         result += RamlItemsShapeEmitter(array, ordering, references)
       })
 
@@ -732,9 +743,7 @@ case class RamlArrayShapeEmitter(array: ArrayShape, ordering: SpecOrdering, refe
 
     fs.entry(ArrayShapeModel.CollectionFormat).map(f => result += ValueEmitter("(collectionFormat)", f))
 
-    if (result.isEmpty && typeName.isEmpty || (result.size == 1 && typeName.isEmpty && array.fields
-          .?(AnyShapeModel.Examples)
-          .nonEmpty))
+    if (!typeEmitted)
       result += MapEntryEmitter("type", "array")
 
     result

@@ -1,7 +1,6 @@
 #%RAML 1.0 Library
 types:
   Phone:
-    type: object
     additionalProperties: true
     properties:
       manufacturer:
@@ -14,7 +13,6 @@ types:
         required: true
         type: string
   Device:
-    type: object
     additionalProperties: true
     properties:
       manufacturer:
@@ -27,7 +25,6 @@ types:
         required: true
         type: string
   Main:
-    type: union
     anyOf:
       -
         type: object
@@ -44,7 +41,6 @@ types:
             type: string
           phone:
             required: true
-            type: object
             additionalProperties: true
             properties:
               manufacturer:
@@ -58,10 +54,8 @@ types:
                 type: string
           device:
             required: true
-            type: union
             anyOf:
               -
-                type: object
                 additionalProperties: true
                 properties:
                   manufacturer:
@@ -74,7 +68,6 @@ types:
                     required: true
                     type: string
               -
-                type: object
                 additionalProperties: true
                 properties:
                   manufacturer:
@@ -101,7 +94,6 @@ types:
             type: string
           phone:
             required: true
-            type: object
             additionalProperties: true
             properties:
               manufacturer:
@@ -115,10 +107,8 @@ types:
                 type: string
           device:
             required: true
-            type: union
             anyOf:
               -
-                type: object
                 additionalProperties: true
                 properties:
                   manufacturer:
@@ -131,7 +121,6 @@ types:
                     required: true
                     type: string
               -
-                type: object
                 additionalProperties: true
                 properties:
                   manufacturer:

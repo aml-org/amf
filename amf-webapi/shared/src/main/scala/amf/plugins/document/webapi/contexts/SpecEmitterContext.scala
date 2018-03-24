@@ -48,7 +48,7 @@ abstract class SpecEmitterContext(refEmitter: RefEmitter) {
   def oasTypePropertyEmitter(typeName: String, shape: Shape): MapEntryEmitter = {
     shape.annotations.find(classOf[TypePropertyLexicalInfo]) match {
       case Some(lexicalInfo) =>
-        MapEntryEmitter("type", typeName, YType.Str, lexicalInfo.range.start)
+          MapEntryEmitter("type", typeName, YType.Str, lexicalInfo.range.start)
       case None =>
         MapEntryEmitter("type", typeName)
     }

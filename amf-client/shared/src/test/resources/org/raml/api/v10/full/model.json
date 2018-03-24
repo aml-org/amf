@@ -54,7 +54,6 @@ documentation:
         displayName: The One
         type: number
       two:
-        type: union
         anyOf:
           -
             type: array
@@ -85,7 +84,6 @@ documentation:
   post:
     description: post something
     queryString:
-      type: object
       additionalProperties: true
       properties:
         lat:
@@ -181,7 +179,6 @@ documentation:
     post:
       body:
         application/json:
-          type: object
           additionalProperties: true
           properties:
             firstname:
