@@ -114,7 +114,6 @@ baseUri: acme-banking.com/apis
         200:
           body:
             application/json:
-              type: union
               anyOf:
                 -
                   type: object
@@ -136,7 +135,6 @@ baseUri: acme-banking.com/apis
                       type: string
                     address:
                       required: true
-                      type: object
                       additionalProperties: true
                       properties:
                         address_country:
@@ -183,7 +181,6 @@ baseUri: acme-banking.com/apis
                       type: string
                     address:
                       required: true
-                      type: object
                       additionalProperties: true
                       properties:
                         address_country:
@@ -302,19 +299,19 @@ baseUri: acme-banking.com/apis
         queryParameters:
           limit?:
             description: The `limit` parameter restricts the number of entries returned.
-            default: 50
             type: integer
             minimum: 1
+            default: 50
           page?:
             description: The `page` parameter specifies the page of results to return.
-            default: 1
             type: integer
             minimum: 1
+            default: 1
           offset?:
             description: The `offset` parameter specifies the first entry to return from a collection.
-            default: 10
             type: integer
             minimum: 0
+            default: 10
           sort?:
             example: name,-age
             type: string
@@ -325,7 +322,6 @@ baseUri: acme-banking.com/apis
               application/json:
                 type: array
                 items:
-                  type: object
                   additionalProperties: true
                   properties:
                     id:
@@ -342,7 +338,6 @@ baseUri: acme-banking.com/apis
                       required: true
                     amount:
                       required: true
-                      type: object
                       additionalProperties: true
                       properties:
                         value:
@@ -373,7 +368,6 @@ baseUri: acme-banking.com/apis
                       type: number
                     minimum_inflow:
                       required: true
-                      type: object
                       additionalProperties: true
                       properties:
                         value:
@@ -384,7 +378,6 @@ baseUri: acme-banking.com/apis
                           type: string
                     overdraft_limit:
                       required: true
-                      type: object
                       additionalProperties: true
                       properties:
                         value:
@@ -433,7 +426,6 @@ baseUri: acme-banking.com/apis
                       required: true
                     amount:
                       required: true
-                      type: object
                       additionalProperties: true
                       properties:
                         value:
@@ -464,7 +456,6 @@ baseUri: acme-banking.com/apis
                       type: number
                     minimum_inflow:
                       required: true
-                      type: object
                       additionalProperties: true
                       properties:
                         value:
@@ -475,7 +466,6 @@ baseUri: acme-banking.com/apis
                           type: string
                     overdraft_limit:
                       required: true
-                      type: object
                       additionalProperties: true
                       properties:
                         value:
@@ -491,19 +481,19 @@ baseUri: acme-banking.com/apis
         queryParameters:
           limit?:
             description: The `limit` parameter restricts the number of entries returned.
-            default: 50
             type: integer
             minimum: 1
+            default: 50
           page?:
             description: The `page` parameter specifies the page of results to return.
-            default: 1
             type: integer
             minimum: 1
+            default: 1
           offset?:
             description: The `offset` parameter specifies the first entry to return from a collection.
-            default: 10
             type: integer
             minimum: 0
+            default: 10
           sort?:
             example: name,-age
             type: string
@@ -514,7 +504,6 @@ baseUri: acme-banking.com/apis
               application/json:
                 type: array
                 items:
-                  type: object
                   additionalProperties: true
                   properties:
                     id:
@@ -531,7 +520,6 @@ baseUri: acme-banking.com/apis
                       required: true
                     amount:
                       required: true
-                      type: object
                       additionalProperties: true
                       properties:
                         value:
@@ -565,7 +553,6 @@ baseUri: acme-banking.com/apis
                       type: number
                     minimum_inflow:
                       required: true
-                      type: object
                       additionalProperties: true
                       properties:
                         value:
@@ -576,7 +563,6 @@ baseUri: acme-banking.com/apis
                           type: string
                     overdraft_limit:
                       required: true
-                      type: object
                       additionalProperties: true
                       properties:
                         value:
@@ -587,7 +573,6 @@ baseUri: acme-banking.com/apis
                           type: string
                     grace_period:
                       required: true
-                      type: object
                       additionalProperties: true
                       properties:
                         value:
@@ -605,7 +590,6 @@ baseUri: acme-banking.com/apis
                 type: string
               amount:
                 required: true
-                type: object
                 additionalProperties: true
                 properties:
                   value:
@@ -616,7 +600,6 @@ baseUri: acme-banking.com/apis
                     type: string
               term:
                 required: true
-                type: object
                 additionalProperties: true
                 properties:
                   value:
@@ -627,7 +610,6 @@ baseUri: acme-banking.com/apis
                 type: number
               down_payment:
                 required: true
-                type: object
                 additionalProperties: true
                 properties:
                   value:
@@ -638,7 +620,6 @@ baseUri: acme-banking.com/apis
                     type: string
               payment_amount:
                 required: true
-                type: object
                 additionalProperties: true
                 properties:
                   value:

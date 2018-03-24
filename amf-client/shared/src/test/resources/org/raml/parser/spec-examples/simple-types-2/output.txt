@@ -6,7 +6,6 @@ title: My API with Types
       200:
         body:
           application/json:
-            type: object
             additionalProperties: true
             properties:
               onCall:
@@ -48,7 +47,6 @@ title: My API with Types
                     type: string
                   reports:
                     required: true
-                    type: array
                     items:
                       type: object
                       additionalProperties: true

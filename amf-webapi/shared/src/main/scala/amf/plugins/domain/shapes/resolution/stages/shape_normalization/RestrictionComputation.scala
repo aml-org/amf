@@ -4,9 +4,13 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, Shape}
+import amf.core.parser.Annotations
+import amf.plugins.domain.shapes.annotations.InheritanceProvenance
 import amf.plugins.domain.shapes.metamodel._
 
 trait RestrictionComputation {
+
+  val keepEditingInfo: Boolean
 
   protected def computeNarrowRestrictions(fields: Seq[Field],
                                           baseShape: Shape,
@@ -18,15 +22,29 @@ trait RestrictionComputation {
         val superValue = Option(superShape.fields.getValue(f))
         baseValue match {
           case Some(bvalue) if superValue.isEmpty => baseShape.set(f, bvalue.value, bvalue.annotations)
-          case None if superValue.isDefined       => baseShape.set(f, superValue.get.value, superValue.get.annotations)
+
+          case None if superValue.isDefined       =>
+            val finalAnnotations = Annotations(superValue.get.annotations)
+            if (keepEditingInfo) inheritAnnotations(finalAnnotations, superShape)
+            baseShape.set(f, superValue.get.value, finalAnnotations)
+
           case Some(bvalue) if superValue.isDefined =>
-            baseShape.set(f, computeNarrow(f, bvalue.value, superValue.get.value), bvalue.annotations)
+            val finalValue = computeNarrow(f, bvalue.value, superValue.get.value)
+            val finalAnnotations = Annotations(bvalue.annotations)
+            if (finalValue != bvalue.value && keepEditingInfo) inheritAnnotations(finalAnnotations, superShape)
+            baseShape.set(f, finalValue, finalAnnotations)
           case _ => // ignore
         }
       }
     }
 
     baseShape
+  }
+
+  def inheritAnnotations(annotations: Annotations, from: Shape) = {
+    if (!annotations.contains(classOf[InheritanceProvenance]))
+      annotations += InheritanceProvenance(from.id)
+    annotations
   }
 
   protected def restrictShape(restriction: Shape, shape: Shape): Shape = {

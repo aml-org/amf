@@ -8,6 +8,7 @@ import amf.core.model.domain.AnnotationGraphLoader
 import amf.core.parser.{ParserContext, ReferenceHandler, SimpleReferenceHandler}
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.remote.Platform
+import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaEmitter
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
 import amf.plugins.domain.shapes.models.AnyShape
@@ -25,7 +26,7 @@ object JsonSchemaPlugin extends AMFDocumentPlugin {
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit): BaseUnit = new OasResolutionPipeline().resolve(unit)
+  override def resolve(unit: BaseUnit, pipelineId: String =  ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = new OasResolutionPipeline().resolve(unit)
 
   /**
     * List of media types used to encode serialisations of

@@ -660,117 +660,20 @@
                 ],
                 "http://raml.org/vocabularies/document#target": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest2/ta/ta",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest2/ta/null",
                     "@type": [
                       "http://raml.org/vocabularies/document#ResourceType",
                       "http://raml.org/vocabularies/document#AbstractDeclaration",
                       "http://raml.org/vocabularies/document#DomainElement"
                     ],
-                    "http://schema.org/name": [
+                    "http://raml.org/vocabularies/document#link-target": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/ta"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document#link-label": [
                       {
                         "@value": "ta"
-                      }
-                    ],
-                    "http://raml.org/vocabularies/document#dataNode": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/ta/object_1",
-                        "@type": [
-                          "http://raml.org/vocabularies/data#Object"
-                        ],
-                        "http://raml.org/vocabularies/data#description": [
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/ta/object_1/scalar_2",
-                            "@type": [
-                              "http://raml.org/vocabularies/data#Scalar"
-                            ],
-                            "http://raml.org/vocabularies/data#value": [
-                              {
-                                "@value": "test",
-                                "@type": "http://www.w3.org/2001/XMLSchema#string"
-                              }
-                            ],
-                            "http://raml.org/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/ta/object_1/scalar_2/source-map",
-                                "@type": [
-                                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://raml.org/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "http://raml.org/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/ta/object_1/scalar_2"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(18,17)-(18,21)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ],
-                        "http://raml.org/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/ta/object_1/source-map",
-                            "@type": [
-                              "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://raml.org/vocabularies/document-source-maps#data-node-properties": [
-                              {
-                                "http://raml.org/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/ta/object_1"
-                                  }
-                                ],
-                                "http://raml.org/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "description->[(18,4)-(19,0)]"
-                                  }
-                                ]
-                              }
-                            ],
-                            "http://raml.org/vocabularies/document-source-maps#lexical": [
-                              {
-                                "http://raml.org/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/ta/object_1"
-                                  }
-                                ],
-                                "http://raml.org/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(18,4)-(19,0)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ],
-                    "http://raml.org/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest2/ta/ta/source-map",
-                        "@type": [
-                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://raml.org/vocabularies/document-source-maps#lexical": [
-                          {
-                            "http://raml.org/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest2/ta/ta"
-                              }
-                            ],
-                            "http://raml.org/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(17,2)-(19,0)]"
-                              }
-                            ]
-                          }
-                        ]
                       }
                     ]
                   }
@@ -848,47 +751,20 @@
                 ],
                 "http://raml.org/vocabularies/document#target": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest3/tb/tb",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest3/tb/null",
                     "@type": [
                       "http://raml.org/vocabularies/document#ResourceType",
                       "http://raml.org/vocabularies/document#AbstractDeclaration",
                       "http://raml.org/vocabularies/document#DomainElement"
                     ],
-                    "http://schema.org/name": [
-                      {
-                        "@value": "tb"
-                      }
-                    ],
                     "http://raml.org/vocabularies/document#link-target": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/referred_resource_type.raml/resourceType"
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/tb"
                       }
                     ],
                     "http://raml.org/vocabularies/document#link-label": [
                       {
-                        "@value": "referred_resource_type.raml"
-                      }
-                    ],
-                    "http://raml.org/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest3/tb/tb/source-map",
-                        "@type": [
-                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://raml.org/vocabularies/document-source-maps#lexical": [
-                          {
-                            "http://raml.org/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest3/tb/tb"
-                              }
-                            ],
-                            "http://raml.org/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(19,6)-(19,42)]"
-                              }
-                            ]
-                          }
-                        ]
+                        "@value": "tb"
                       }
                     ]
                   }
@@ -1045,7 +921,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(12,9)-(14,0)]"
+                        "@value": "[(13,4)-(13,8)]"
                       }
                     ]
                   }
@@ -1302,7 +1178,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(7,4)-(9,0)]"
+                    "@value": "[(8,4)-(8,8)]"
                   }
                 ]
               }
@@ -1371,7 +1247,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest2/ta/ta",
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/ta",
         "@type": [
           "http://raml.org/vocabularies/document#ResourceType",
           "http://raml.org/vocabularies/document#AbstractDeclaration",
@@ -1464,7 +1340,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest2/ta/ta/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/ta/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -1472,7 +1348,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest2/ta/ta"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/ta"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1486,7 +1362,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest3/tb/tb",
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/tb",
         "@type": [
           "http://raml.org/vocabularies/document#ResourceType",
           "http://raml.org/vocabularies/document#AbstractDeclaration",
@@ -1509,7 +1385,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest3/tb/tb/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/tb/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -1517,7 +1393,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest3/tb/tb"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/tb"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1832,7 +1708,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(3,0)-(3,12)]"
+                        "@value": "[(3,0)-(3,4)]"
                       }
                     ]
                   }
@@ -1954,7 +1830,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(14,18)-(17,0)]"
+                                "@value": "[(16,6)-(16,10)]"
                               }
                             ]
                           }
@@ -2555,7 +2431,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(3,0)-(3,12)]"
+                            "@value": "[(3,0)-(3,4)]"
                           }
                         ]
                       }

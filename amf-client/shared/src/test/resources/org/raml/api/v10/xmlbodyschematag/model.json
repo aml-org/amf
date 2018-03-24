@@ -4,7 +4,6 @@ title: xml body
   get:
     body:
       application/xml:
-        type: object
         additionalProperties: true
         properties:
           firstname:
@@ -22,7 +21,6 @@ title: xml body
       200:
         body:
           application/xml:
-            type: object
             additionalProperties: true
             properties:
               firstname:

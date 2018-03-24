@@ -1,0 +1,27 @@
+#%RAML 1.0
+title: ACME Banking HTTP API
+version: 1.0
+baseUri: acme-banking.com/apis
+
+types:
+  FinancialInstitution:
+    type: object
+    properties:
+      c: string
+      d: string
+      e: string
+  Bank:
+    type: FinancialInstitution
+    properties:
+      a: string
+      b: string
+/customers:
+  displayName: Customer Resource
+  /corporate:
+    post:
+      description: Customer data created correctly for an Organization
+      body:
+        application/json:
+          type: Bank
+          properties:
+            l: string

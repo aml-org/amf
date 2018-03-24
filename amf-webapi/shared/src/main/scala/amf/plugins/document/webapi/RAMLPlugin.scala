@@ -8,6 +8,7 @@ import amf.core.model.document._
 import amf.core.model.domain.{DomainElement, ExternalDomainElement}
 import amf.core.parser.{EmptyFutureDeclarations, LinkReference, ParserContext}
 import amf.core.remote.Platform
+import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.RamlFragmentHeader._
@@ -15,9 +16,8 @@ import amf.plugins.document.webapi.parser.RamlHeader.{Raml10, Raml10Extension, R
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
-import amf.plugins.document.webapi.resolution.pipelines.{Raml08ResolutionPipeline, Raml10ResolutionPipeline}
+import amf.plugins.document.webapi.resolution.pipelines.{Raml08EditingPipeline, Raml08ResolutionPipeline, Raml10EditingPipeline, Raml10ResolutionPipeline}
 import amf.plugins.domain.webapi.models.WebApi
-import javax.naming.LinkRef
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YDocument, YNode}
 
@@ -136,7 +136,12 @@ object RAML08Plugin extends RAMLPlugin {
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit): BaseUnit = new Raml08ResolutionPipeline().resolve(unit)
+  override def resolve(unit: BaseUnit, pipelineId: String = "default"): BaseUnit = {
+    pipelineId match {
+      case ResolutionPipeline.DEFAULT_PIPELINE => new Raml08ResolutionPipeline().resolve(unit)
+      case ResolutionPipeline.EDITING_PIPELINE => new Raml08EditingPipeline().resolve(unit)
+    }
+  }
 }
 
 object RAML10Plugin extends RAMLPlugin {
@@ -190,5 +195,10 @@ object RAML10Plugin extends RAMLPlugin {
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit): BaseUnit = new Raml10ResolutionPipeline().resolve(unit)
+  override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = {
+    pipelineId match {
+      case ResolutionPipeline.DEFAULT_PIPELINE => new Raml10ResolutionPipeline().resolve(unit)
+      case ResolutionPipeline.EDITING_PIPELINE => new Raml10EditingPipeline().resolve(unit)
+    }
+  }
 }

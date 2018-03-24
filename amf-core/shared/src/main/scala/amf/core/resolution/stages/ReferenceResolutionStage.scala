@@ -1,5 +1,6 @@
 package amf.core.resolution.stages
 
+import amf.core.annotations.ResolvedLinkAnnotation
 import amf.core.metamodel.document.DocumentModel
 import amf.core.model.document.{BaseUnit, Document, EncodesModel}
 import amf.core.model.domain._
@@ -50,7 +51,7 @@ class ModelReferenceResolver(model: BaseUnit) {
 /**
   * Resolves the local and remote references found in the model.
   */
-class ReferenceResolutionStage(profile: String) extends ResolutionStage(profile) {
+class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extends ResolutionStage(profile) {
 
   var mutuallyRecursive: Seq[String]                = Nil
   var model: Option[BaseUnit]                       = None
@@ -60,6 +61,16 @@ class ReferenceResolutionStage(profile: String) extends ResolutionStage(profile)
     this.model = Some(model)
     this.modelResolver = Some(new ModelReferenceResolver(model))
     model.transform(findLinkPredicates, transform)
+  }
+
+  def resolveDomainElement[T <: DomainElement](element: T): T = {
+    val doc = Document().withId("http://resolutionstage.com/test#")
+    if (element.id != null) {
+      doc.fields.setWithoutId(DocumentModel.Encodes, element)
+    } else {
+      doc.withEncodes(element)
+    }
+    resolve(doc).asInstanceOf[Document].encodes.asInstanceOf[T]
   }
 
   // Internal request that checks for mutually recursive types
@@ -84,7 +95,10 @@ class ReferenceResolutionStage(profile: String) extends ResolutionStage(profile)
 
   def resolveDynamicLink(l: LinkNode): Option[DomainElement] = {
     modelResolver.get.findFragment(l.value) match {
-      case Some(elem) => Some(new ResolvedLinkNode(l, elem).withId(l.id))
+      case Some(elem) =>
+        val resolved = new ResolvedLinkNode(l, elem).withId(l.id)
+        if (keepEditingInfo) resolved.annotations += ResolvedLinkAnnotation(l.id)
+        Some(resolved)
       case _          => Some(l)
     }
   }
@@ -93,7 +107,11 @@ class ReferenceResolutionStage(profile: String) extends ResolutionStage(profile)
     element match {
 
       // link not traversed, cache it and traverse it
-      case l: Linkable if l.linkTarget.isDefined && !isCycle => Some(withName(resolveLinked(l.linkTarget.get), l))
+      case l: Linkable if l.linkTarget.isDefined && !isCycle => {
+        val resolved = resolveLinked(l.linkTarget.get)
+        if (keepEditingInfo) resolved.annotations += ResolvedLinkAnnotation(l.id)
+        Some(withName(resolved, l))
+      }
 
       // link traversed, return the link
       case l: Linkable if l.linkTarget.isDefined => Some(l)
@@ -148,7 +166,7 @@ class ReferenceResolutionStage(profile: String) extends ResolutionStage(profile)
     } else {
       val nested = Document()
       nested.fields.setWithoutId(DocumentModel.Encodes, element)
-      val result = new ReferenceResolutionStage(profile)
+      val result = new ReferenceResolutionStage(profile, keepEditingInfo)
         .recursiveResolveInvocation(nested, modelResolver, mutuallyRecursive ++ Seq(element.id))
       result.asInstanceOf[Document].encodes
     }

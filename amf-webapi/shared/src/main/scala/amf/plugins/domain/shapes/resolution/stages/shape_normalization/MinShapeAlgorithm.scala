@@ -4,9 +4,10 @@ import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, RecursiveShape, Shape}
 import amf.core.parser.Annotations
+import amf.core.vocabulary.Namespace
+import amf.plugins.domain.shapes.annotations.InheritanceProvenance
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
-import amf.core.vocabulary.Namespace
 
 import scala.collection.mutable
 
@@ -202,7 +203,11 @@ trait MinShapeAlgorithm extends RestrictionComputation {
       case (path, false) =>
         val superProp = superProperties.find(_.path.is(path))
         val baseProp  = baseProperties.find(_.path.is(path))
-        superProp.getOrElse(baseProp.get)
+        if (keepEditingInfo) {
+          superProp.map(inheritProp(superNode)).getOrElse { baseProp.get.cloneShape() }
+        } else {
+          superProp.map(_.cloneShape()).getOrElse{ baseProp.get.cloneShape() }
+        }
     }
 
     // This can be nil in the case of inheritance
@@ -218,6 +223,13 @@ trait MinShapeAlgorithm extends RestrictionComputation {
                               filteredFields = Seq(NodeShapeModel.Properties, NodeShapeModel.Examples))
 
     baseNode
+  }
+
+  def inheritProp(from: Shape)(prop: PropertyShape): PropertyShape = {
+    val clonedProp = prop.cloneShape()
+    if (clonedProp.annotations.find(classOf[InheritanceProvenance]).isEmpty)
+      clonedProp.annotations += InheritanceProvenance(from.id)
+    clonedProp
   }
 
   protected def computeMinUnion(baseUnion: UnionShape, superUnion: UnionShape): Shape = {
