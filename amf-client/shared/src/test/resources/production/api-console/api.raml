@@ -1,0 +1,452 @@
+#%RAML 1.0
+title: My super cool, example API
+version: v1
+baseUri: http://{environment}.api.domain.com/{version}/
+mediaType: [ application/json, application/xml ]
+
+baseUriParameters:
+  environment:
+    type: string
+    description: |
+      API environment. The value can be one of "development", "stage" or "production"
+      Development environment is avaibale for dev keys (client id).
+      Stage is available internally only and keys are whitelisted for this environment. Keys that are not whitelisted will always return 404 for any call.
+      Production is available for redular keys (klient ids).
+    pattern: (development|stage|production)
+    example: production
+
+traits:
+  Paginated: !include traits/pagination.raml
+  Adminable: !include traits/adminable.raml
+
+uses:
+  ExampleType: resourceTypes/example-types.raml
+
+annotationTypes:
+  annotationTest: nil
+  deprecated: string
+  clearanceLevel:
+    properties:
+      level:
+        enum: [ low, medium, high ]
+        required: true
+      signature:
+        pattern: "\\d{3}-\\w{12}"
+        required: true
+types:
+  Image: !include resourceTypes/image.raml
+  Resource: !include resourceTypes/resource.raml
+  AppPerson: !include resourceTypes/app-person.raml
+  Product: !include resourceTypes/product.raml
+  ErrorResource:
+    description: A response that is errored
+    type: object
+    properties:
+      error:
+        type: boolean
+        required: true
+        example: true
+        default: true
+        description: Indicate that the response is errored.
+      message:
+        type: string
+        description: The error message associated with the error.
+        example: <<example>>
+        required: true
+  Feature:
+    description: A feature to test enum values in the URI parameters.
+    type: string
+    enum:
+        - A
+        - B
+        - C
+resourceTypes:
+  ErrorredResource:
+    get:
+  ResourceNotFound:
+    type: ErrorredResource
+    get:
+      responses:
+        404:
+          body:
+            application/json:
+              displayName: Not found response
+              type: ErrorResource
+            application/xml:
+              displayName: Not found response
+              type: !include schemas/error-response.xsd
+              example: !include examples/e404.xml
+  UnauthorizedResponse:
+    type: ErrorredResource
+    get:
+      responses:
+        404:
+          body:
+            application/json:
+              displayName: Unauthorized response
+              type: ErrorResource
+            application/xml:
+              displayName: Unauthorized response
+              type: !include schemas/error-response.xsd
+              example: !include examples/e401.xml
+  RequestErrorResponse:
+    type: ErrorredResource
+    get:
+      responses:
+        400:
+          description: The error response when one of the parameters is invalid and can't be parsed. Nothing can be done at the time except correcting the request to send valid data.
+          body:
+            application/json:
+              displayName: Invalid request
+              type: ErrorResource
+            application/xml:
+              displayName: Invalid request
+              type: !include schemas/error-response.xsd
+              example: !include examples/e400.xml
+securitySchemes:
+  oauth_2_0: !include securitySchemes/oauth_2_0.raml
+  oauth_1_0: !include securitySchemes/oauth_1_0.raml
+  pass_through: !include securitySchemes/passthrough.raml
+  basic: !include securitySchemes/basic.raml
+  digest: !include securitySchemes/digest.raml
+  x-custom: !include securitySchemes/x-custom.raml
+  x-other: !include securitySchemes/x-other.raml
+documentation:
+  - title: Read this!
+    content: |
+      # This is an example API spec
+      The API doesn't exists in the real world therefore calls made to any endpoint will always fail.
+      If you'd like to perform actual request and see the response try GitHub API (which doesn't require user authentication in some endpoints) or other APIs.
+
+      Note that you may need a Client ID or valid authorization token to perform a call to some APIs that are secured by the OAuth 2 protocol.
+
+      Thank you for testing the API console. Your feedback is welcome. Email us: arc@mulesoft.com
+  - !include documentation/about.raml
+  - title: Test docs
+    content: |
+      # A test documentation.
+      This text was created by ARC's RAML editor.
+      You probably see this because you are testing ARC's web components and this component
+      is responsible for displaying a documentation from the RAML definition.
+
+      Play around with the element and use it in your project.
+      Please, note the licensing information available in every ARC component.
+      If you have any question email me: arc@mulesoft.com
+      Or slack me (internally only): Pawel Psztyc (P3)
+securedBy: [oauth_2_0, oauth_1_0, pass_through, basic, digest, x-custom, x-other]
+/test-parameters/{feature}:
+  (deprecated): This endpoint is deprecated and will be removed.
+  uriParameters:
+    feature:
+      type: string
+      enum:
+        - A
+        - B
+        - C
+  get:
+    (deprecated): This method is deprecated and will be removed.
+    (clearanceLevel):
+      level: high
+      signature: 230-ghtwvfrs1itr
+    description: To test enum values in the URI parameters for inline type declaration.
+    queryParameters:
+      testRepeatable:
+        (deprecated): Test parameter will be removed in next version of the API.
+        required: true
+        type: string[]
+        example: [value1, value2]
+      numericRepeatable:
+        required: true
+        type: integer[]
+        examples:
+          Some-test-example: [123, 456]
+          Other-example: [1011, 1213]
+      notRequiredRepeatable:
+        (annotationTest):
+        type: array
+        items: date-only
+        required: false
+  /{typeFeature}:
+    (annotationTest):
+    (deprecated): This method will be removed in future release of the API.
+    uriParameters:
+      typeFeature:
+        (annotationTest):
+        type: Feature
+    get:
+      (deprecated): This endpoint is deprecated and will be removed.
+      description: To test enum values in the URI parameters for global type declaration.
+/people:
+  (annotationTest):
+  displayName: People
+  description: The people API used to access data about the people.
+  get:
+    (annotationTest):
+    displayName: List people
+    description: Use this method to list all the people.
+    is: [Paginated: {resourceType: AppPerson}]
+    headers:
+      x-people-op-id:
+        (annotationTest):
+        type: string
+        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[4][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+        description: People ops ID. It is UUID v4 string
+        example: 9719fa6f-c666-48e0-a191-290890760b30
+  post:
+    displayName: Create a person
+    description: Use this method to add new person
+    body:
+      application/json:
+        (deprecated): This response type is deprecated and soon will be replaced.
+        type: AppPerson
+      application/xml:
+        type: !include schemas/person.xsd
+        example: !include examples/person.xml
+    headers:
+      x-people-op-id:
+        (annotationTest):
+        type: string
+        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[4][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+        description: People ops ID. It is UUID v4 string
+        example: 9719fa6f-c666-48e0-a191-290890760b30
+  /{personId}:
+    type: ResourceNotFound
+    displayName: A person
+    description: The endpoint to access information about the person
+    uriParameters:
+      personId:
+        type: integer
+        required: true
+        description: The ID of the person in the system. It is generated by the database numeric value for the person.
+        example: 1234
+    get:
+      displayName: Get a person
+      description: Returns a person
+      headers:
+        x-client-id:
+          (deprecated): This will be replaced
+          example: 123456-acme.client.com
+          description: The application id used to make a request. It can be obtained in the developer console.
+          type: string
+          required: true
+        x-people-op-id:
+          (annotationTest):
+          type: string
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[4][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+          description: People ops ID. It is UUID v4 string
+          example: 9719fa6f-c666-48e0-a191-290890760b30
+      responses:
+        200:
+          body:
+            application/json:
+              type: AppPerson
+# TODO:
+#            application/xml:
+#              type: !include schemas/person.xsd
+#              example: !include examples/person.xml
+    delete:
+      displayName: Remove a person
+      description: Removes the person from the datastore. This method do not returns any data in 200 response.
+      responses:
+        204:
+      headers:
+        x-people-op-id:
+          (annotationTest):
+          type: string
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[4][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+          description: People ops ID. It is UUID v4 string
+          example: 9719fa6f-c666-48e0-a191-290890760b30
+    put:
+      displayName: Update a person
+      description: Updates the person in the datastore.
+      body:
+        application/json:
+          type: AppPerson
+# TODO:
+#        application/xml:
+#          type: !include schemas/person.xsd
+#          example: !include examples/person.xml
+      responses:
+        200:
+      headers:
+        x-people-op-id:
+          (annotationTest):
+          type: string
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[4][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+          description: People ops ID. It is UUID v4 string
+          example: 9719fa6f-c666-48e0-a191-290890760b30
+/products:
+  displayName: Products
+  description: The API is to be used to access data about the products.
+  get:
+    displayName: List products
+    description: Returns a list of products.
+    is: [Paginated: {resourceType: Product}]
+  post:
+    displayName: Create product
+    description: |
+      Creates a product in the store.
+      While creating a product the `id` and `etag` properties will be ignored.
+
+      The endpoint will reject the request if exactly the same product is already defined in the
+      datastore (all properties of both objects equals). Newly created product is available
+      for listing but **it won't be available for ordering API** until it's availability is not set.
+    body:
+      application/json:
+        type: Product
+    responses:
+      200:
+        body:
+          application/json:
+            (annotationTest):
+            type: Product
+            examples:
+              Product:
+                id: d697f5cea85011e680f576304dec7eb7
+                name: Super product
+                quantity: 125
+                unit: ml
+                upc: "123456789101"
+                available: true
+                etag: "W/\"686897696a7c876b7e\""
+              OtherProduct:
+                id: 123e4567e89b12d3a456426655440000
+                name: Acme Product
+                quantity: 1
+                unit: kg
+                upc: "223456789101"
+                available: true
+                etag: "W/\"123456789\""
+          application/xml:
+            type: !include schemas/product.xsd
+            example: !include examples/product.xml
+      400:
+        description: The request has been rejected. Probably the product already exists in the datastore.
+  /{productId}:
+    type: ResourceNotFound
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: Product
+              example:
+                id: d697f5cea85011e680f576304dec7eb7
+                name: Super product
+                quantity: 125
+                unit: ml
+                upc: "123456789101"
+                available: true
+                etag: "W/\"686897696a7c876b7e\""
+# TODO:
+#            application/xml:
+#              type: !include schemas/product.xsd
+#              example: !include examples/product.xml
+/orgs:
+  securedBy: oauth_2_0
+  /{orgId}:
+    get:
+      displayName: Get organization
+      description: Returns an organization info.
+      responses:
+        200:
+          body:
+            application/json:
+              type: ExampleType.Org
+              properties:
+                id:
+                  type: string
+                  description: UUID generated ID
+              example:
+                id: "12345"
+                onCall:
+                  firstname: nico
+                  lastname: ark
+                  kind: AcmeAdmin
+                  clearanceLevel: low
+                  phone: "12321"
+                Head:
+                  firstname: nico
+                  lastname: ark
+                  kind: AcmeManager
+                  reports:
+                    -
+                      firstname: nico
+                      lastname: ark
+                      kind: admin
+                  phone: "123-23"
+    put:
+      body:
+        application/json:
+          type: ExampleType.Org
+          properties:
+            id:
+              type: string
+              description: UUID generated ID
+      responses:
+        200:
+          body:
+            application/json:
+              type: ExampleType.Org
+    /managers:
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                type: ExampleType.Manager[]
+/messages:
+  securedBy: [oauth_2_0]
+  post:
+    description: Create a new message
+    is:  [Adminable]
+    body:
+      application/json:
+        type: object
+        properties:
+          receiver:
+            type: string
+            description: receiver of the message
+            required: true
+          body:
+            type: string
+            description: A message body
+            required: true
+          important:
+            type: boolean
+            description: If true then the message will be marked as important
+            default: false
+            required: true
+  get:
+    description: |
+      List user messages. It returns an array of messages for last of 7 days if
+      `since` property is not set.
+      You can use `since` and `until` query parameters to control messages time
+      span.
+    queryParameters:
+      until:
+        (annotationTest):
+        type: date-only
+        description: Date right limit of the messages query.
+        example: 2017-05-12
+      since:
+        type: date-only
+        description: Date left limit of the messages query.
+        example: 2017-05-10
+    responses:
+      200:
+        body:
+          application/json:
+            type: array
+            items: !include resourceTypes/message-type.raml
+            example: !include examples/messages-example.json
+  /bulk:
+    post:
+      description: Bulk create messages.
+      is:  [Adminable]
+      body:
+        application/json:
+          (annotationTest):
+          type: array
+          items: !include resourceTypes/message-sent-type.raml
+          example: !include examples/messages-sent-example.json

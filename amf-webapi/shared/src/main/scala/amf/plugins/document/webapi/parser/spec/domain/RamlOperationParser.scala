@@ -48,7 +48,7 @@ case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation
     ctx.closedShape(operation.id, map, "operation")
 
     map.key("displayName", OperationModel.Name in operation)
-    map.key("(deprecated)", OperationModel.Deprecated in operation)
+    map.key("(oas-deprecated)", OperationModel.Deprecated in operation)
     map.key("(summary)", OperationModel.Summary in operation)
     map.key("(externalDocs)", OperationModel.Documentation in operation using OasCreativeWorkParser.parse)
     map.key("protocols", (OperationModel.Schemes in operation).allowingSingleValue)
