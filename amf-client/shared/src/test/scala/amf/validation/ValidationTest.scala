@@ -12,7 +12,7 @@ import amf.core.validation.SeverityLevels
 import amf.facades.{AMFCompiler, AMFRenderer, Validation}
 import amf.plugins.document.graph.parser.GraphEmitter
 import amf.plugins.document.webapi.RAML10Plugin
-import amf.plugins.document.webapi.validation.{AnnotationsValidation, ExamplesValidation, ShapeFacetsValidation, _}
+import amf.plugins.document.webapi.validation.{AnnotationsValidation, ExamplesValidation, PayloadValidation, ShapeFacetsValidation, _}
 import amf.plugins.domain.shapes.models.ArrayShape
 import amf.plugins.features.validation.PlatformValidator
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
@@ -621,6 +621,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                          platform,
                          RamlYamlHint,
                          validation).build()
+      // TODO: FIXME! problem serialising to JSON
+      //generated <- new AMFSerializer(doc, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
     } yield {
       val resolved = RAML10Plugin.resolve(doc)
       assert(Option(resolved).isDefined)

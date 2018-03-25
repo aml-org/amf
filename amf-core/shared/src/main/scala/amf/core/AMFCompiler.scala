@@ -1,6 +1,7 @@
 package amf.core
 
 import amf.core
+import amf.core.benchmark.ExecutionLog
 import amf.core.exception.CyclicReferenceException
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.ExternalDomainElement
@@ -38,9 +39,11 @@ class AMFCompiler(val rawUrl: String,
     baseContext.getOrElse(ParserContext(url))
 
   def build(): Future[BaseUnit] = {
+    ExecutionLog.log(s"AMFCompiler#build: Building $rawUrl")
     if (context.hasCycles) failed(new CyclicReferenceException(context.history))
     else
       cache.getOrUpdate(location) { () =>
+        ExecutionLog.log(s"AMFCompiler#build: compiling $rawUrl")
         compile()
       }
   }
@@ -48,7 +51,7 @@ class AMFCompiler(val rawUrl: String,
   private def compile() = resolve().map(parseSyntax).flatMap(parseDomain)
 
   private def parseSyntax(inputContent: Content): Either[Content, Root] = {
-
+    ExecutionLog.log(s"AMFCompiler#parseSyntax: parsing syntax $rawUrl")
     val content = AMFPluginsRegistry.featurePlugins().foldLeft(inputContent) {
       case (input, plugin) =>
         plugin.onBeginDocumentParsing(url, input, referenceKind, vendor)
@@ -99,6 +102,7 @@ class AMFCompiler(val rawUrl: String,
   }
 
   private def parseDomain(document: Root): Future[BaseUnit] = {
+    ExecutionLog.log(s"AMFCompiler#parseDomain: parsing syntax $rawUrl")
     var currentRun = ctx.parserCount
     val domainPluginOption = AMFPluginsRegistry.documentPluginForVendor(vendor).find(_.canParse(document)) match {
       case Some(domainPlugin) => Some(domainPlugin)
@@ -130,6 +134,7 @@ class AMFCompiler(val rawUrl: String,
     futureDocument map { baseUnit: BaseUnit =>
       // we setup the run for the parsed unit
       baseUnit.parserRun = Some(currentRun)
+      ExecutionLog.log(s"AMFCompiler#parseDomain: model ready $rawUrl")
       AMFPluginsRegistry.featurePlugins().foldLeft(baseUnit) {
         case (unit, plugin) =>
           plugin.onModelParsed(url, unit)

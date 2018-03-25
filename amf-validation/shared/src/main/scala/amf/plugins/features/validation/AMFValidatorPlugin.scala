@@ -2,6 +2,7 @@ package amf.plugins.features.validation
 
 import amf.ProfileNames
 import amf.client.render.RenderOptions
+import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.BaseUnit
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.registries.AMFPluginsRegistry
@@ -29,7 +30,9 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     // Registering ourselves as the runtime validator
     RuntimeValidator.register(AMFValidatorPlugin)
     val url = "http://raml.org/dialects/profile.raml"
+    ExecutionLog.log(s"AMFValidatorPlugin#init: registering validation dialect")
     RAMLVocabulariesPlugin.registry.registerDialect(url, ValidationDialectText.text) map { _ =>
+      ExecutionLog.log(s"AMFValidatorPlugin#init: validation dialect registered")
       this
     }
   }
@@ -117,10 +120,13 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
   override def shaclValidation(model: BaseUnit,
                                validations: EffectiveValidations,
                                messageStyle: String): Future[ValidationReport] = {
+    ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: shacl validation for ${validations.effective.values.size} validations")
     // println(s"VALIDATIONS: ${validations.effective.values.size} / ${validations.all.values.size} => $profileName")
     // validations.effective.keys.foreach(v => println(s" - $v"))
 
     val shapesJSON = shapesGraph(validations, messageStyle)
+
+    ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: shapes graph JSON generated")
 
     // TODO: Check the validation profile passed to JSLibraryEmitter, it contains the prefixes
     // for the functions
@@ -131,9 +137,11 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
       case _          => // ignore
     }
 
+    ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: jsLibrary generated")
+
     val modelJSON = RuntimeSerializer(model, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps)
 
-
+    ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: data graph generated")
     /*
      println("\n\nGRAPH")
      println(modelJSON)
@@ -151,7 +159,10 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
         "application/ld+json",
         shapesJSON,
         "application/ld+json"
-      )
+      ).map { case report =>
+        ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: validation finished")
+        report
+      }
     }
   }
 
