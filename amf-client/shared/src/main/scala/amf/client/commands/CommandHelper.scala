@@ -7,6 +7,7 @@ import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.services.{RuntimeCompiler, RuntimeSerializer}
 import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
+import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.document.webapi.{OAS20Plugin, OAS30Plugin, RAML08Plugin, RAML10Plugin}
 import amf.plugins.features.validation.AMFValidatorPlugin
 
@@ -23,6 +24,7 @@ trait CommandHelper {
     amf.core.AMF.registerPlugin(OAS20Plugin)
     amf.core.AMF.registerPlugin(OAS30Plugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
+    amf.core.AMF.registerPlugin(PayloadValidatorPlugin)
     amf.core.AMF.init()
   }
 

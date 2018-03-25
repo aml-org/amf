@@ -7,6 +7,7 @@ import amf.client.render._
 import amf.client.resolve._
 import amf.client.validate.ValidationReport
 import amf.core.plugins.AMFPlugin
+import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.document.{Vocabularies, WebApi}
 import amf.plugins.features.AMFValidation
 import amf.plugins.{document, features}
@@ -21,6 +22,7 @@ object AMF {
     WebApi.register()
     Vocabularies.register()
     AMFValidation.register()
+    amf.Core.registerPlugin(PayloadValidatorPlugin)
     amf.Core.init()
   }
 
@@ -58,6 +60,10 @@ object AMF {
   def resolveOas20(unit: BaseUnit): BaseUnit = new Oas20Resolver().resolve(unit)
 
   def resolveAmfGraph(unit: BaseUnit): BaseUnit = new AmfGraphResolver().resolve(unit)
+
+  def jsonPayloadParser(): JsonPayloadParser = new JsonPayloadParser()
+
+  def yamlPayloadParser(): YamlPayloadParser = new YamlPayloadParser()
 }
 
 @JSExportAll

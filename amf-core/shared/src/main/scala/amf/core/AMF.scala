@@ -12,7 +12,8 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object AMF {
 
-  private val initializedPlugins: mutable.Set[String] = mutable.Set(SYamlSyntaxPlugin.ID, AMFGraphPlugin.ID, SYamlSyntaxPlugin.ID)
+  private val initializedPlugins: mutable.Set[String] =
+    mutable.Set(SYamlSyntaxPlugin.ID, AMFGraphPlugin.ID, SYamlSyntaxPlugin.ID)
 
   /**
     * Initializes AMF and all the registered plugins
@@ -20,13 +21,15 @@ object AMF {
   def init(): Future[Unit] = {
     AMFCompiler.init()
     AMFSerializer.init()
-    val registeredSYamlPlugin = SYamlSyntaxPlugin.init()
-    val registeredAMFGraphPlugin = AMFGraphPlugin.init()
-    val parserSideValidation = new ParserSideValidationPlugin()
+    val registeredSYamlPlugin               = SYamlSyntaxPlugin.init()
+    val registeredAMFGraphPlugin            = AMFGraphPlugin.init()
+    val parserSideValidation                = new ParserSideValidationPlugin()
     val registeredParserSideValidationPugin = parserSideValidation.init()
-    Future.sequence(Seq(registeredSYamlPlugin, registeredAMFGraphPlugin, registeredParserSideValidationPugin)).flatMap { _ =>
-      processInitializations(AMFPluginsRegistry.plugins.toSeq)
-    } map { _ =>
+    Future
+      .sequence(Seq(registeredSYamlPlugin, registeredAMFGraphPlugin, registeredParserSideValidationPugin))
+      .flatMap { _ =>
+        processInitializations(AMFPluginsRegistry.plugins.toSeq)
+      } map { _ =>
       AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
       AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
       AMFPluginsRegistry.registerFeaturePlugin(parserSideValidation)
@@ -37,10 +40,11 @@ object AMF {
     * Registers a plugin in AMF
     */
   def registerPlugin(plugin: AMFPlugin) = plugin match {
-    case syntax: AMFSyntaxPlugin     => AMFPluginsRegistry.registerSyntaxPlugin(syntax)
-    case document: AMFDocumentPlugin => AMFPluginsRegistry.registerDocumentPlugin(document)
-    case domain: AMFDomainPlugin     => AMFPluginsRegistry.registerDomainPlugin(domain)
-    case feature: AMFFeaturePlugin   => AMFPluginsRegistry.registerFeaturePlugin(feature)
+    case syntax: AMFSyntaxPlugin             => AMFPluginsRegistry.registerSyntaxPlugin(syntax)
+    case document: AMFDocumentPlugin         => AMFPluginsRegistry.registerDocumentPlugin(document)
+    case domain: AMFDomainPlugin             => AMFPluginsRegistry.registerDomainPlugin(domain)
+    case feature: AMFFeaturePlugin           => AMFPluginsRegistry.registerFeaturePlugin(feature)
+    case feature: AMFPayloadValidationPlugin => AMFPluginsRegistry.registerPayloadValidationPlugin(feature)
   }
 
   protected def processInitializations(plugins: Seq[AMFPlugin]): Future[Unit] = {

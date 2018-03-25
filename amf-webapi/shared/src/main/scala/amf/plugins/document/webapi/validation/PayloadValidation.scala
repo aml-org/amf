@@ -1,58 +1,45 @@
 package amf.plugins.document.webapi.validation
 
-import amf.core.metamodel.document.FragmentModel
-import amf.core.model.document.{BaseUnit, Fragment}
+import amf.core.model.document.PayloadFragment
 import amf.core.model.domain._
-import amf.core.parser.{Annotations, Fields}
-import amf.core.remote.Platform
+import amf.core.parser.ParserContext
+import amf.core.plugins.{AMFPayloadValidationPlugin, AMFPlugin}
 import amf.core.services.RuntimeValidator
 import amf.core.validation.core.ValidationSpecification
 import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels}
 import amf.core.vocabulary.Namespace
+import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
+import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
+import org.yaml.model.{YDocument, YNode}
+import org.yaml.parser.YamlParser
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 object PayloadValidation {
-  def apply(platform: Platform, shape: Shape): PayloadValidation = new PayloadValidation(platform, shape)
+  def apply(shape: Shape): PayloadValidation = new PayloadValidation(shape)
 }
 
-case class PayloadFragment(encoded: DataNode, fields: Fields = Fields(), annotations: Annotations = Annotations())
-  extends Fragment {
-  fields.setWithoutId(FragmentModel.Encodes, encoded)
-  override def encodes: DataNode = encoded
-
-  /** Meta data for the document */
-  override def meta = FragmentModel
-}
-
-class PayloadValidation(platform: Platform, shape: Shape) extends WebApiValidations {
-
+case class PayloadValidation(shape: Shape) extends WebApiValidations {
   var profile = Some(new AMFShapeValidations(shape).profile())
 
-  def validate(dataNode: DataNode): Future[AMFValidationReport] = {
+  def validate(payloadFragment: PayloadFragment): Future[AMFValidationReport] = {
 
+    val dataNode = payloadFragment.encodes
     addProfileTargets(dataNode)
     val validations = EffectiveValidations().someEffective(profile.get)
-    val baseUnit = model(dataNode)
-    RuntimeValidator.shaclValidation(baseUnit, validations) map { report =>
-      val results = report.results.map(r => buildPayloadValidationResult(baseUnit, r, validations))
+    RuntimeValidator.shaclValidation(payloadFragment, validations) map { report =>
+      val results = report.results
+        .map(r => buildPayloadValidationResult(payloadFragment, r, validations))
         .filter(_.isDefined)
         .map(_.get)
       AMFValidationReport(
         conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
-        model = baseUnit.id,
+        model = payloadFragment.id,
         profile = profile.get.name,
         results = results
       )
     }
-  }
-
-  protected def model(dataNode: DataNode): BaseUnit = {
-    val doc = PayloadFragment(dataNode, Fields(), Annotations())
-    doc.withLocation("http://test.com/payload")
-    doc.withId("http://test.com/payload")
-    doc
   }
 
   protected def addProfileTargets(dataNode: DataNode): Unit = {
@@ -108,4 +95,39 @@ class PayloadValidation(platform: Platform, shape: Shape) extends WebApiValidati
 
     validationsAcc
   }
+}
+
+object PayloadValidatorPlugin extends AMFPayloadValidationPlugin {
+
+  override def canValidate(shape: Shape): Boolean = {
+    shape match {
+      case _: SchemaShape => false
+      case _: AnyShape    => true
+      case _              => false
+    }
+  }
+
+  override val ID: String = "AMF Payload Validation"
+
+  override def dependencies(): Seq[AMFPlugin] = Nil
+
+  override def init(): Future[AMFPlugin] = Future.successful(this)
+
+  override def validatePayload(shape: Shape, payloadFragment: PayloadFragment): Future[AMFValidationReport] =
+    PayloadValidation(shape).validate(payloadFragment)
+
+  override val payloadMediaType: Seq[String] = Seq("application/json", "application/yaml", "text/vnd.yaml")
+
+  override def validatePayload(shape: Shape, payload: String, mediaType: String): Future[AMFValidationReport] = {
+    val fragment = PayloadFragment().withMediaType(mediaType)
+
+    YamlParser(payload).parse(keepTokens = true).collectFirst({ case doc: YDocument => doc.node }) match {
+      case Some(node: YNode) =>
+        fragment.withEncodes(DataNodeParser(node, parent = Option(fragment.id))(ParserContext()).parse())
+      case None => fragment.withEncodes(ScalarNode(payload, None))
+    }
+    validatePayload(shape, fragment)
+
+  }
+
 }

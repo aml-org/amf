@@ -1,9 +1,10 @@
 package amf.core.metamodel.document
 
 import amf.core.metamodel.Field
+import amf.core.metamodel.Type.Str
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.domain.AmfObject
-import amf.core.vocabulary.Namespace.Document
+import amf.core.vocabulary.Namespace.{Document, Http}
 import amf.core.vocabulary.ValueType
 
 /**
@@ -19,7 +20,8 @@ trait FragmentModel extends BaseUnitModel {
     */
   val Encodes = Field(DomainElementModel, Document + "encodes")
 
-  override def modelInstance: AmfObject = throw new Exception("Fragment is abstract instances cannot be created directly")
+  override def modelInstance: AmfObject =
+    throw new Exception("Fragment is abstract instances cannot be created directly")
 
 }
 
@@ -31,4 +33,11 @@ object FragmentModel extends FragmentModel {
 
 }
 
+object PayloadFragmentModel extends FragmentModel {
 
+  val MediaType = Field(Str, Http + "mediaType")
+
+  override def fields: List[Field] = Encodes :: MediaType :: BaseUnitModel.fields
+
+  override val `type`: List[ValueType] = List(Document + "Fragment") ++ BaseUnitModel.`type`
+}

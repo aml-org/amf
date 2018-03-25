@@ -40,7 +40,7 @@ object PayloadPlugin extends AMFDocumentPlugin {
 
   override def parse(root: Root, parentContext: ParserContext, platform: Platform) = {
     implicit val ctx = parentContext
-    Some(PayloadParser(root.parsed.document, root.location).parseUnit())
+    Some(PayloadParser(root.parsed.document, root.location, root.mediatype).parseUnit())
   }
 
   override def canParse(root: Root) = notRAML(root) && notOAS(root) // any document can be parsed as a Payload
@@ -65,7 +65,8 @@ object PayloadPlugin extends AMFDocumentPlugin {
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE) = new CanonicalShapePipeline().resolve(unit)
+  override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE) =
+    new CanonicalShapePipeline().resolve(unit)
 
   override def init(): Future[AMFPlugin] = Future { this }
 }

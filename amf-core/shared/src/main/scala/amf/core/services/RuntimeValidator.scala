@@ -55,49 +55,33 @@ trait RuntimeValidator {
 }
 
 object RuntimeValidator {
-  var validator: Option[RuntimeValidator] = None
+  var validatorOption: Option[RuntimeValidator] = None
   def register(runtimeValidator: RuntimeValidator) = {
-    validator = Some(runtimeValidator)
+    validatorOption = Some(runtimeValidator)
   }
 
-  def loadValidationProfile(validationProfilePath: String): Future[String] = {
-    validator match {
-      case Some(runtimeValidator) => runtimeValidator.loadValidationProfile(validationProfilePath)
+  private def validator: RuntimeValidator = {
+    validatorOption match {
+      case Some(runtimeValidator) => runtimeValidator
       case None                   => throw new Exception("No registered runtime validator")
     }
   }
+
+  def loadValidationProfile(validationProfilePath: String) = validator.loadValidationProfile(validationProfilePath)
 
   def shaclValidation(model: BaseUnit,
                       validations: EffectiveValidations,
-                      messgeStyle: String = "AMF"): Future[ValidationReport] = {
-    validator match {
-      case Some(runtimeValidator) => runtimeValidator.shaclValidation(model, validations, messgeStyle)
-      case None                   => throw new Exception("No registered runtime validator")
-    }
-  }
+                      messgeStyle: String = "AMF"): Future[ValidationReport] =
+    validator.shaclValidation(model, validations, messgeStyle)
 
-  def apply(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): Future[AMFValidationReport] = {
-    validator match {
-      case Some(runtimeValidator) => runtimeValidator.validate(model, profileName, messageStyle)
-      case None                   => throw new Exception("No registered runtime validator")
-    }
-  }
+  def apply(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): Future[AMFValidationReport] =
+    validator.validate(model, profileName, messageStyle)
 
-  def reset() = {
-    validator match {
-      case Some(runtimeValidator) => runtimeValidator.reset()
-      case None                   => throw new Exception("No registered runtime validator")
-    }
-  }
+  def reset() = validator.reset()
 
-  def disableValidations[T]()(f: () => T): T = validator match {
-    case Some(runtimeValidator) => runtimeValidator.disableValidations()(f)
-    case None                   => throw new Exception("No registered runtime validator")
-  }
-  def disableValidationsAsync[T]()(f: (() => Unit) => T): T = validator match {
-    case Some(runtimeValidator) => runtimeValidator.disableValidationsAsync()(f)
-    case None                   => throw new Exception("No registered runtime validator")
-  }
+  def disableValidations[T]()(f: () => T): T = validator.disableValidations()(f)
+
+  def disableValidationsAsync[T]()(f: (() => Unit) => T): T = validator.disableValidationsAsync()(f)
 
   def reportConstraintFailure(level: String,
                               validationId: String,
@@ -106,18 +90,14 @@ object RuntimeValidator {
                               message: String = "",
                               position: Option[LexicalInformation] = None,
                               parserRun: Int) = {
-    validator match {
-      case Some(runtimeValidator) =>
-        runtimeValidator.reportConstraintFailure(
-          level,
-          validationId,
-          targetNode,
-          targetProperty,
-          message,
-          position,
-          parserRun
-        )
-      case None => throw new Exception("No registered runtime validator")
-    }
+    validator.reportConstraintFailure(
+      level,
+      validationId,
+      targetNode,
+      targetProperty,
+      message,
+      position,
+      parserRun
+    )
   }
 }

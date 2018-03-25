@@ -1,11 +1,11 @@
 package amf.plugins.document.webapi.validation
 
 import amf.core.annotations.LexicalInformation
-import amf.core.model.document.BaseUnit
+import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.model.domain.Shape
 import amf.core.remote.Platform
-import amf.core.services.RuntimeValidator
-import amf.core.validation.{AMFValidationResult, SeverityLevels}
+import amf.core.services.{PayloadValidator, RuntimeValidator}
+import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels}
 import amf.core.vocabulary.Namespace
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.{AnyShape, Example, UnionShape}
@@ -17,50 +17,35 @@ import scala.concurrent.{Future, Promise}
 class ExamplesValidation(model: BaseUnit, platform: Platform) {
 
   def validate(): Future[Seq[AMFValidationResult]] = {
-    // we find all examples with strict validation, some can be supported if we know how to
-    // deal with the media type of the example, if not, they will be collected in the unsupported
-    // exaples list
-    val (supportedExamples, unsupportedExamples) = findExamples()
-
-    // Unsupported examples are transformed into validation WARNINGS, this can be changed with a profile
-    val unsupportedExamplesValidations = unsupportedExamples.map {
-      case (_, example, mediaType) => unsupportedExampleReport(example, mediaType)
-    }
+    // we find all examples with strict validation
+    val examples = findExamples()
 
     // We run regular payload validation for the supported examples
-    val listSupportedResults: Seq[Future[Seq[AMFValidationResult]]] = supportedExamples map {
-      case (shape, example, mediaType) =>
-        validateExample(shape, example, mediaType)
+    val results = examples map {
+      case (shape, example) =>
+        validateExample(shape, example)
     }
-    val futureResult: Future[Seq[AMFValidationResult]] = Future.sequence(listSupportedResults).map(_.flatten)
 
-    // Finally we collect all the results
-    futureResult map { supportedResults =>
-      supportedResults ++ unsupportedExamplesValidations
-    }
+    val futureResult: Future[Seq[AMFValidationResult]] = Future.sequence(results).map(_.flatten)
+    futureResult
   }
 
-  protected def findExamples(): (Seq[(Shape, Example, String)], Seq[(Shape, Example, String)]) = {
-    val allExamples: Seq[(Shape, Example, String)] = model.findByType((Namespace.Shapes + "Shape").iri()) flatMap {
+  protected def findExamples(): Seq[(Shape, Example)] = {
+    val allExamples: Seq[(Shape, Example)] = model.findByType((Namespace.Shapes + "Shape").iri()) flatMap {
       case shape: AnyShape =>
         shape.examples.collect({
-          case example: Example if example.fields.entry(ExampleModel.StructuredValue).isDefined =>
-            (shape, example, mediaType(example))
+          case example: Example
+              if example.fields
+                .entry(ExampleModel.StructuredValue)
+                .isDefined && example.strict.option().getOrElse(true) =>
+            (shape, example)
         })
       case _ => Nil
     }
-    val supportedExamples = allExamples.filter {
-      case (_, example, mediaType) =>
-        validExample(example, mediaType)
-    }
-    val unsupportedExamples = allExamples.filter {
-      case (_, example, mediaType) =>
-        unsupportedExample(example, mediaType)
-    }
-    (supportedExamples, unsupportedExamples)
+    allExamples
   }
 
-  protected def validateExample(shape: Shape, example: Example, mediaType: String): Future[Seq[AMFValidationResult]] = {
+  protected def validateExample(shape: Shape, example: Example): Future[Seq[AMFValidationResult]] = {
     RuntimeValidator.reset()
 
     try {
@@ -83,17 +68,24 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
   }
 
   private def validateShape(shape: Shape, example: Example): Future[Option[AMFValidationResult]] = {
-    PayloadValidation(platform, shape).validate(example.structuredValue) map { report =>
-      if (report.conforms) {
+
+    val fragment = PayloadFragment(
+      example.structuredValue,
+      example.mediaType.option().getOrElse(PayloadValidator.guessMediaType(example.value.value())))
+    fragment.withRaw(example.value.value())
+    PayloadValidator.validate(shape, fragment, SeverityLevels.WARNING) map { report =>
+      if (report.results.isEmpty) { // before was conforms, now we have to considerer warnings for not supported plugin
         None
       } else {
+        val severity = findSeverity(report)
         Some(
           new AMFValidationResult(
             message = report.toString, // TODO: provide a better description here
-            level = SeverityLevels.VIOLATION,
+            severity,
             targetNode = example.id,
             targetProperty = Some((Namespace.Document + "value").iri()),
-            ParserSideValidations.ExampleValidationErrorSpecification.id(),
+            if (severity == SeverityLevels.VIOLATION) ParserSideValidations.ExampleValidationErrorSpecification.id()
+            else ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification.id(),
             position = example.annotations.find(classOf[LexicalInformation]),
             source = example
           )
@@ -101,6 +93,10 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
       }
     }
   }
+
+  private def findSeverity(report: AMFValidationReport): String =
+    if (report.results.exists(_.level == SeverityLevels.VIOLATION)) SeverityLevels.VIOLATION
+    else SeverityLevels.WARNING
 
   protected def unsupportedExampleReport(example: Example, mediaType: String): AMFValidationResult = {
     new AMFValidationResult(
@@ -148,26 +144,6 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
   protected def unsupportedExample(example: Example, mediaType: String): Boolean =
     example.strict.option().getOrElse(false) && !validExample(example, mediaType)
 
-  protected def mediaType(example: Example): String = {
-    example.mediaType.option() match {
-      case Some(mediaType) => mediaType
-      case None            => guessMediaType(example)
-    }
-  }
-
-  protected def guessMediaType(example: Example): String = {
-    example.value.option() match {
-      case Some(value) =>
-        if (isXml(value)) "application/xml"
-        else if (isJson(value)) "application/json"
-        else "text/vnd.yaml" // by default, we will try to parse it as YAML
-      case None => "*/*"
-    }
-  }
-
-  protected def isXml(value: String) = value.startsWith("<")
-
-  protected def isJson(value: String) = value.startsWith("{") || value.startsWith("[")
 }
 
 object ExamplesValidation {

@@ -1,6 +1,8 @@
 package amf.client.model.domain
 
 import amf.client.convert.WebApiClientConverters._
+import amf.client.model.document.PayloadFragment
+import amf.client.validate.ValidationReport
 import amf.plugins.domain.shapes.models.{AnyShape => InternalAnyShape}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -36,4 +38,10 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
 //  def build(shape: InternalAnyShape): Shape = platform.wrap[Shape](shape) ???
 
   def toJsonSchema: String = _internal.toJsonSchema
+
+  def validate(payload: String): ClientFuture[ValidationReport] =
+    _internal.validate(payload).asClient
+
+  def validate(fragment: PayloadFragment): ClientFuture[ValidationReport] =
+    _internal.validate(fragment._internal).asClient
 }

@@ -1,7 +1,6 @@
 package amf.plugins.document.webapi
 
 import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{DataNode, Shape}
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.remote.Platform
 import amf.core.unsafe.PlatformSecrets
@@ -12,7 +11,7 @@ import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
 import amf.plugins.document.webapi.metamodel.{ExtensionModel, OverlayModel}
 import amf.plugins.document.webapi.references.WebApiReferenceHandler
-import amf.plugins.document.webapi.validation.{PayloadValidation, WebApiValidations}
+import amf.plugins.document.webapi.validation.WebApiValidations
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 
@@ -64,6 +63,4 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
 
   override def init(): Future[AMFPlugin] = Future.successful(this)
 
-  def validatePayload(shape: Shape, payload: DataNode): Future[AMFValidationReport] =
-    new PayloadValidation(platform, shape).validate(payload)
 }

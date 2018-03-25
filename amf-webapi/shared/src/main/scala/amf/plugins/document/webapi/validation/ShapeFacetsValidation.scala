@@ -1,11 +1,12 @@
 package amf.plugins.document.webapi.validation
 
 import amf.core.metamodel.domain.ShapeModel
-import amf.core.model.document.{BaseUnit, DeclaresModel}
+import amf.core.model.document.{BaseUnit, DeclaresModel, PayloadFragment}
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{DataNode, ObjectNode, Shape}
 import amf.core.remote.Platform
-import amf.core.validation.AMFValidationResult
+import amf.core.services.PayloadValidator
+import amf.core.validation.{AMFValidationResult, SeverityLevels}
 import amf.core.vocabulary.Namespace
 import amf.plugins.domain.shapes.models.{NodeShape, UnionShape}
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
@@ -107,7 +108,8 @@ class ShapeFacetsValidation(model: BaseUnit, platform: Platform) {
     }
     val facetsPayload = toFacetsPayload(effectiveShape)
     val facetsShape   = toFacetsDefinitionShape(effectiveShape, facetDefinitons)
-    PayloadValidation(platform, facetsShape).validate(facetsPayload) map { report =>
+    val fragment      = PayloadFragment(facetsPayload, "application/yaml")
+    PayloadValidator.validate(facetsShape, fragment, SeverityLevels.WARNING) map { report =>
       if (report.conforms) {
         Seq.empty
       } else {

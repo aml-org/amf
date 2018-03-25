@@ -9,6 +9,7 @@ import amf.core.validation.{AMFValidationReport, AMFValidationResult, EffectiveV
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
 import amf.plugins.document.vocabularies.model.document.Dialect
+import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML08Plugin, RAML10Plugin, _}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
@@ -23,6 +24,7 @@ class Validation(platform: Platform) {
 
   def init(): Future[Unit] = {
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
+    amf.core.AMF.registerPlugin(PayloadValidatorPlugin)
     amf.core.AMF.init().map { _ =>
       amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAML10Plugin)
@@ -36,7 +38,7 @@ class Validation(platform: Platform) {
       amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(WebAPIDomainPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
 
-      RuntimeValidator.validator match {
+      RuntimeValidator.validatorOption match {
         case Some(AMFValidatorPlugin) =>
           AMFValidatorPlugin.reset()
         case _ =>
@@ -44,7 +46,8 @@ class Validation(platform: Platform) {
     }
   }
 
-  lazy val validator: AMFValidatorPlugin.type = RuntimeValidator.validator.get.asInstanceOf[AMFValidatorPlugin.type]
+  lazy val validator: AMFValidatorPlugin.type =
+    RuntimeValidator.validatorOption.get.asInstanceOf[AMFValidatorPlugin.type]
   //
 
   val url = "http://raml.org/dialects/profile.raml"
@@ -78,7 +81,6 @@ class Validation(platform: Platform) {
   }
 
   def disableValidations[T]()(f: () => T): T = validator.disableValidations()(f)
-
 
   def loadValidationProfile(validationProfilePath: String): Future[String] = {
     validator.loadValidationProfile(validationProfilePath)

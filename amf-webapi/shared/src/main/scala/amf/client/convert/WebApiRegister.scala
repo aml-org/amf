@@ -2,15 +2,13 @@ package amf.client.convert
 
 import amf.client.model.document._
 import amf.client.model.domain._
+import amf.core.metamodel.document.PayloadFragmentModel
 import amf.core.remote.Platform
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
 import amf.plugins.document.webapi.model
-import amf.plugins.domain.shapes.{metamodel, models}
-import amf.plugins.domain.webapi
+import amf.plugins.domain.{shapes, webapi}
+import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.domain.webapi.metamodel.templates
-import amf.plugins.domain.webapi.{WebAPIDomainPlugin, metamodel, models}
-
-import amf.plugins.domain.shapes
 
 /** Shared WebApi registrations. */
 object WebApiRegister {
@@ -23,6 +21,9 @@ object WebApiRegister {
     }
     platform.registerWrapper(DataTypeFragmentModel) {
       case s: model.DataTypeFragment => DataType(s)
+    }
+    platform.registerWrapper(PayloadFragmentModel) {
+      case s: amf.core.model.document.PayloadFragment => PayloadFragment(s)
     }
     platform.registerWrapper(DocumentationItemFragmentModel) {
       case s: model.DocumentationItemFragment => DocumentationItem(s)

@@ -1,10 +1,10 @@
 package amf.plugins.document.webapi.validation
 
-import amf.core.model.document.BaseUnit
+import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.remote.Platform
-import amf.core.validation.AMFValidationResult
-import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation
+import amf.core.services.PayloadValidator
+import amf.core.validation.{AMFValidationResult, SeverityLevels}
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.resolveAnnotation
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -35,7 +35,8 @@ class AnnotationsValidation(model: BaseUnit, platform: Platform) {
   protected def validateExtension(extension: DomainExtension): Future[Seq[AMFValidationResult]] = {
     val extensionPayload = extension.extension
     val extensionShape   = extension.definedBy.schema
-    PayloadValidation(platform, extensionShape).validate(extensionPayload) map { report =>
+    val fragment         = PayloadFragment(extensionPayload, "application/yaml")
+    PayloadValidator.validate(extensionShape, fragment, SeverityLevels.WARNING) map { report =>
       if (report.conforms) {
         Seq.empty
       } else {
