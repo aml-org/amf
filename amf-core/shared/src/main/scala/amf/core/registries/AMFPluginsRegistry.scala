@@ -6,17 +6,21 @@ import scala.collection.mutable
 
 object AMFPluginsRegistry {
 
-  private val syntaxPluginIDRegistry: mutable.HashMap[String, AMFSyntaxPlugin] = mutable.HashMap()
-  private val syntaxPluginRegistry: mutable.HashMap[String, AMFSyntaxPlugin] = mutable.HashMap()
-  private val documentPluginRegistry: mutable.HashMap[String, Seq[AMFDocumentPlugin]] = mutable.HashMap()
-  private val documentPluginIDRegistry: mutable.HashMap[String, AMFDocumentPlugin] = mutable.HashMap()
+  private val syntaxPluginIDRegistry: mutable.HashMap[String, AMFSyntaxPlugin]               = mutable.HashMap()
+  private val syntaxPluginRegistry: mutable.HashMap[String, AMFSyntaxPlugin]                 = mutable.HashMap()
+  private val documentPluginRegistry: mutable.HashMap[String, Seq[AMFDocumentPlugin]]        = mutable.HashMap()
+  private val documentPluginIDRegistry: mutable.HashMap[String, AMFDocumentPlugin]           = mutable.HashMap()
   private val documentPluginVendorsRegistry: mutable.HashMap[String, Seq[AMFDocumentPlugin]] = mutable.HashMap()
-  private val domainPluginRegistry: mutable.HashMap[String, AMFDomainPlugin] = mutable.HashMap()
-  private val featurePluginIDRegistry: mutable.HashMap[String, AMFFeaturePlugin] = mutable.HashMap()
-  private val featurePlugin: mutable.HashMap[String, AMFFeaturePlugin] = mutable.HashMap()
+  private val domainPluginRegistry: mutable.HashMap[String, AMFDomainPlugin]                 = mutable.HashMap()
+  private val featurePluginIDRegistry: mutable.HashMap[String, AMFFeaturePlugin]             = mutable.HashMap()
+  private val featurePlugin: mutable.HashMap[String, AMFFeaturePlugin]                       = mutable.HashMap()
+  private val payloadValidationPluginRegistry: mutable.HashMap[String, Seq[AMFPayloadValidationPlugin]] =
+    mutable.HashMap()
+  private val payloadValidationPluginIDRegistry: mutable.HashMap[String, AMFPayloadValidationPlugin] =
+    mutable.HashMap()
 
-
-  def plugins = syntaxPluginIDRegistry.values ++ documentPluginIDRegistry.values ++ domainPluginRegistry.values ++ featurePluginIDRegistry.values
+  def plugins =
+    syntaxPluginIDRegistry.values ++ documentPluginIDRegistry.values ++ domainPluginRegistry.values ++ featurePluginIDRegistry.values
 
   def documentPlugins = documentPluginIDRegistry.values
 
@@ -28,32 +32,35 @@ object AMFPluginsRegistry {
         syntaxPlugin.supportedMediaTypes().foreach { mediaType =>
           syntaxPluginRegistry.get(mediaType) match {
             case Some(plugin) if plugin.ID == syntaxPlugin.ID => // ignore
-            case None         => syntaxPluginRegistry.put(mediaType, syntaxPlugin)
-            case Some(plugin) => throw new Exception(s"Cannot register ${syntaxPlugin.ID} for media type $mediaType, ${plugin.ID} already registered")
+            case None                                         => syntaxPluginRegistry.put(mediaType, syntaxPlugin)
+            case Some(plugin) =>
+              throw new Exception(
+                s"Cannot register ${syntaxPlugin.ID} for media type $mediaType, ${plugin.ID} already registered")
           }
         }
         registerDependencies(syntaxPlugin)
     }
   }
 
-  def cleanMediaType(mediaType: String) = if (mediaType.contains(";")) {
-    mediaType.split(";").head
-  } else {
-    mediaType
-  }
+  def cleanMediaType(mediaType: String) =
+    if (mediaType.contains(";")) {
+      mediaType.split(";").head
+    } else {
+      mediaType
+    }
 
   def syntaxPluginForMediaType(mediaType: String): Option[AMFSyntaxPlugin] = {
     val normalizedMediaType = cleanMediaType(mediaType)
     syntaxPluginRegistry.get(mediaType) match {
       case Some(plugin) => Some(plugin)
-      case _ => syntaxPluginRegistry.get(simpleMediaType(normalizedMediaType))
+      case _            => syntaxPluginRegistry.get(simpleMediaType(normalizedMediaType))
     }
   }
 
   def registerFeaturePlugin(featurePlugin: AMFFeaturePlugin) = {
     featurePluginIDRegistry.get(featurePlugin.ID) match {
-      case Some(_)  => // ignore
-      case None     =>
+      case Some(_) => // ignore
+      case None =>
         featurePluginIDRegistry.put(featurePlugin.ID, featurePlugin)
         registerDependencies(featurePlugin)
     }
@@ -63,12 +70,13 @@ object AMFPluginsRegistry {
 
   def registerDocumentPlugin(documentPlugin: AMFDocumentPlugin) = {
     documentPluginIDRegistry.get(documentPlugin.ID) match {
-      case Some(_)  => // ignore
-      case None     =>
+      case Some(_) => // ignore
+      case None =>
         documentPluginIDRegistry.put(documentPlugin.ID, documentPlugin)
 
-        documentPlugin.serializableAnnotations().foreach { case (name, unloader) =>
-          AMFDomainRegistry.registerAnnotation(name, unloader)
+        documentPlugin.serializableAnnotations().foreach {
+          case (name, unloader) =>
+            AMFDomainRegistry.registerAnnotation(name, unloader)
         }
 
         documentPlugin.documentSyntaxes.foreach { mediaType =>
@@ -81,8 +89,11 @@ object AMFPluginsRegistry {
           documentPluginVendorsRegistry.put(vendor, plugins ++ Seq(documentPlugin))
         }
 
-        documentPlugin.modelEntities.foreach{ entity => AMFDomainRegistry.registerModelEntity(entity) }
-        documentPlugin.modelEntitiesResolver.foreach(resolver => AMFDomainRegistry.registerModelEntityResolver(resolver))
+        documentPlugin.modelEntities.foreach { entity =>
+          AMFDomainRegistry.registerModelEntity(entity)
+        }
+        documentPlugin.modelEntitiesResolver.foreach(resolver =>
+          AMFDomainRegistry.registerModelEntityResolver(resolver))
 
         registerDependencies(documentPlugin)
     }
@@ -91,6 +102,9 @@ object AMFPluginsRegistry {
   def documentPluginForMediaType(mediaType: String): Seq[AMFDocumentPlugin] = {
     documentPluginRegistry.getOrElse(mediaType, Seq())
   }
+
+  def dataNodeValidatorPluginForMediaType(mediaType: String): Seq[AMFPayloadValidationPlugin] =
+    payloadValidationPluginRegistry.getOrElse(mediaType, Nil)
 
   def documentPluginForID(ID: String): Option[AMFDocumentPlugin] = {
     documentPluginIDRegistry.get(ID)
@@ -104,19 +118,38 @@ object AMFPluginsRegistry {
     domainPluginRegistry.get(domainPlugin.ID) match {
       case Some(_) => // ignore
       case None =>
-        domainPlugin.serializableAnnotations().foreach { case (name, unloader) =>
-          AMFDomainRegistry.registerAnnotation(name, unloader)
+        domainPlugin.serializableAnnotations().foreach {
+          case (name, unloader) =>
+            AMFDomainRegistry.registerAnnotation(name, unloader)
         }
         domainPluginRegistry.put(domainPlugin.ID, domainPlugin)
 
-        domainPlugin.modelEntities.foreach{ entity => AMFDomainRegistry.registerModelEntity(entity) }
+        domainPlugin.modelEntities.foreach { entity =>
+          AMFDomainRegistry.registerModelEntity(entity)
+        }
 
         domainPlugin.modelEntitiesResolver match {
           case Some(resolver) => AMFDomainRegistry.registerModelEntityResolver(resolver)
-          case _ => // ignore
+          case _              => // ignore
         }
 
         registerDependencies(domainPlugin)
+    }
+  }
+
+  def registerPayloadValidationPlugin(validationPlugin: AMFPayloadValidationPlugin) = {
+    payloadValidationPluginIDRegistry.get(validationPlugin.ID) match {
+      case Some(_) =>
+      case None =>
+        validationPlugin.payloadMediaType.foreach { mt =>
+          payloadValidationPluginRegistry.get(mt) match {
+            case Some(list) if !list.contains(validationPlugin) =>
+              payloadValidationPluginRegistry.update(mt, list :+ validationPlugin)
+            case None =>
+              payloadValidationPluginRegistry.update(mt, Seq(validationPlugin))
+          }
+        }
+        payloadValidationPluginIDRegistry.update(validationPlugin.ID, validationPlugin)
     }
   }
 

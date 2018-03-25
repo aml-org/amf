@@ -68,7 +68,7 @@ object ExtendsHelper {
 
     declarations(ctx, unit)
 
-    val validator = RuntimeValidator.validator
+    val validator = RuntimeValidator.validatorOption
     ctx.factory.endPointParser(endPointEntry, _ => EndPoint(), None, collector, true).parse()
     validator.foreach(RuntimeValidator.register)
 
@@ -76,8 +76,8 @@ object ExtendsHelper {
       case e :: Nil =>
         if (keepEditingInfo) annotateExtensionId(e, extensionId)
         new ReferenceResolutionStage(profile, keepEditingInfo).resolveDomainElement(e)
-      case Nil      => throw new Exception(s"Couldn't parse an endpoint from resourceType '$name'.")
-      case _        => throw new Exception(s"Nested endpoints found in resourceType '$name'.")
+      case Nil => throw new Exception(s"Couldn't parse an endpoint from resourceType '$name'.")
+      case _   => throw new Exception(s"Nested endpoints found in resourceType '$name'.")
     }
   }
 
@@ -87,14 +87,15 @@ object ExtendsHelper {
       field.value.annotations += extendedFieldAnnotation
       field.value.value match {
         case elem: DomainElement => annotateExtensionId(elem, extensionId)
-        case arr: AmfArray => arr.values.foreach {
-          case elem: DomainElement =>
-            elem.annotations += extendedFieldAnnotation
-            annotateExtensionId(elem, extensionId)
-          case other                   =>
-            other.annotations += extendedFieldAnnotation
-        }
-        case  scalar => scalar.annotations += extendedFieldAnnotation
+        case arr: AmfArray =>
+          arr.values.foreach {
+            case elem: DomainElement =>
+              elem.annotations += extendedFieldAnnotation
+              annotateExtensionId(elem, extensionId)
+            case other =>
+              other.annotations += extendedFieldAnnotation
+          }
+        case scalar => scalar.annotations += extendedFieldAnnotation
       }
     }
   }

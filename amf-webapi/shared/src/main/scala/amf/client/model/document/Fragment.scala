@@ -1,5 +1,6 @@
 package amf.client.model.document
 
+import amf.client.model.domain.DataNode
 import amf.plugins.document.webapi.model.{
   AnnotationTypeDeclarationFragment => InternalAnnotationTypeDeclarationFragment,
   DataTypeFragment => InternalDataTypeFragment,
@@ -9,6 +10,7 @@ import amf.plugins.document.webapi.model.{
   SecuritySchemeFragment => InternalSecuritySchemeFragment,
   TraitFragment => InternalTraitFragment
 }
+import amf.core.model.document.{PayloadFragment => InternalPayloadFragment}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -61,4 +63,10 @@ case class SecuritySchemeFragment(override private[amf] val _internal: InternalS
     extends Fragment(_internal) {
   @JSExportTopLevel("model.domain.SecuritySchemeFragment")
   def this() = this(InternalSecuritySchemeFragment())
+}
+
+@JSExportAll
+case class PayloadFragment(override private[amf] val _internal: InternalPayloadFragment) extends Fragment(_internal) {
+  @JSExportTopLevel("model.domain.PayloadFragment")
+  def this(dataNode: DataNode, mediaType: String) = this(InternalPayloadFragment(dataNode._internal, mediaType))
 }

@@ -1,16 +1,15 @@
 package amf.plugins.document.webapi.parser
 
-import amf.core.model.document.Document
+import amf.core.model.document.PayloadFragment
 import amf.core.parser.ParserContext
 import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
 import org.yaml.model.{YDocument, YNode}
 
-class PayloadParser(document: YDocument, location: String)(implicit ctx: ParserContext) {
+class PayloadParser(document: YDocument, location: String, mediaType: String)(implicit ctx: ParserContext) {
 
-  def parseUnit(): Document = {
-    val parsedDocument = Document().adopted(location)
+  def parseUnit(): PayloadFragment = {
     val payload        = parseNode(location, document.node)
-    parsedDocument.withEncodes(payload)
+    val parsedDocument = PayloadFragment(payload, mediaType).adopted(location)
     parsedDocument
   }
 
@@ -19,6 +18,6 @@ class PayloadParser(document: YDocument, location: String)(implicit ctx: ParserC
 }
 
 object PayloadParser {
-  def apply(document: YDocument, location: String)(implicit ctx: ParserContext) =
-    new PayloadParser(document, location)
+  def apply(document: YDocument, location: String, mediaType: String)(implicit ctx: ParserContext) =
+    new PayloadParser(document, location, mediaType)
 }

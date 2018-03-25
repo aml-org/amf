@@ -16,7 +16,7 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
   override val ID: String = "Parser side AMF Validation"
 
   override def init(): Future[AMFPlugin] = Future {
-    RuntimeValidator.validator match {
+    RuntimeValidator.validatorOption match {
       case Some(validator) => // ignore, we use whatever has already been initialised by client code
       case None            => RuntimeValidator.register(new ParserSideValidationPlugin())
     }
@@ -25,29 +25,41 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
 
   val parserSideValidationsProfile: ValidationProfile = {
     // sorting parser side validation for this profile
-    val violationParserSideValidations = ParserSideValidations.validations.filter { v =>
-      ParserSideValidations.levels(v.id()).getOrElse(ProfileNames.AMF, SeverityLevels.VIOLATION) == SeverityLevels.VIOLATION
-    }.map(_.name)
-    val infoParserSideValidations = ParserSideValidations.validations.filter { v =>
-      ParserSideValidations.levels(v.id()).getOrElse(ProfileNames.AMF, SeverityLevels.VIOLATION) == SeverityLevels.INFO
-    }.map(_.name)
-    val warningParserSideValidations = ParserSideValidations.validations.filter { v =>
-      ParserSideValidations.levels(v.id()).getOrElse(ProfileNames.AMF, SeverityLevels.VIOLATION) == SeverityLevels.WARNING
-    }.map(_.name)
+    val violationParserSideValidations = ParserSideValidations.validations
+      .filter { v =>
+        ParserSideValidations
+          .levels(v.id())
+          .getOrElse(ProfileNames.AMF, SeverityLevels.VIOLATION) == SeverityLevels.VIOLATION
+      }
+      .map(_.name)
+    val infoParserSideValidations = ParserSideValidations.validations
+      .filter { v =>
+        ParserSideValidations
+          .levels(v.id())
+          .getOrElse(ProfileNames.AMF, SeverityLevels.VIOLATION) == SeverityLevels.INFO
+      }
+      .map(_.name)
+    val warningParserSideValidations = ParserSideValidations.validations
+      .filter { v =>
+        ParserSideValidations
+          .levels(v.id())
+          .getOrElse(ProfileNames.AMF, SeverityLevels.VIOLATION) == SeverityLevels.WARNING
+      }
+      .map(_.name)
 
     ValidationProfile(
-      name            = ID,
+      name = ID,
       baseProfileName = None,
-      infoLevel       = infoParserSideValidations,
-      warningLevel    = warningParserSideValidations,
-      violationLevel  = violationParserSideValidations,
-      validations     = ParserSideValidations.validations
+      infoLevel = infoParserSideValidations,
+      warningLevel = warningParserSideValidations,
+      violationLevel = violationParserSideValidations,
+      validations = ParserSideValidations.validations
     )
   }
 
   override def dependencies(): Seq[AMFPlugin] = Seq()
 
-  var aggregatedReport: Map[Int,List[AMFValidationResult]] = Map()
+  var aggregatedReport: Map[Int, List[AMFValidationResult]] = Map()
 
   // The aggregated report
   def reset(): Unit = {
@@ -76,7 +88,6 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
     }
   }
 
-
   def disableValidationsAsync[T]()(f: (() => Unit) => T): T = {
     if (enabled) {
       enabled = false
@@ -92,8 +103,6 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
     }
   }
 
-
-
   /**
     * Loads a validation profile from a URL
     */
@@ -102,9 +111,11 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
   /**
     * Low level validation returning a SHACL validation report
     */
-  override def shaclValidation(model: BaseUnit, validations: EffectiveValidations, messageStyle: String): Future[ValidationReport] = Future {
+  override def shaclValidation(model: BaseUnit,
+                               validations: EffectiveValidations,
+                               messageStyle: String): Future[ValidationReport] = Future {
     new ValidationReport {
-      override def conforms: Boolean = false
+      override def conforms: Boolean               = false
       override def results: List[ValidationResult] = Nil
     }
   }
@@ -117,10 +128,10 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
     val validations = EffectiveValidations().someEffective(parserSideValidationsProfile)
     // aggregating parser-side validations
     var results = model.parserRun match {
-      case Some(runId) => aggregatedReport.getOrElse(runId, Nil).map(r => processAggregatedResult(r, messageStyle, validations))
-      case _           => Nil
+      case Some(runId) =>
+        aggregatedReport.getOrElse(runId, Nil).map(r => processAggregatedResult(r, messageStyle, validations))
+      case _ => Nil
     }
-
 
     Future {
       AMFValidationReport(
@@ -151,5 +162,4 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
       throw new Exception(validationError.toString)
     }
   }
-
 }

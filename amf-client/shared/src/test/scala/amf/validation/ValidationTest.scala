@@ -3,8 +3,8 @@ package amf.validation
 import amf.ProfileNames
 import amf.client.render.RenderOptions
 import amf.common.Tests.checkDiff
-import amf.core.model.document.{Document, Module}
-import amf.core.model.domain.{DataNode, RecursiveShape, Shape}
+import amf.core.model.document.{BaseUnit, Module, PayloadFragment}
+import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.core.remote.Syntax.{Json, Syntax, Yaml}
 import amf.core.remote._
 import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
@@ -12,13 +12,7 @@ import amf.core.validation.SeverityLevels
 import amf.facades.{AMFCompiler, AMFRenderer, Validation}
 import amf.plugins.document.graph.parser.GraphEmitter
 import amf.plugins.document.webapi.RAML10Plugin
-import amf.plugins.document.webapi.validation.{
-  AnnotationsValidation,
-  ExamplesValidation,
-  PayloadValidation,
-  ShapeFacetsValidation,
-  _
-}
+import amf.plugins.document.webapi.validation.{AnnotationsValidation, ExamplesValidation, ShapeFacetsValidation, _}
 import amf.plugins.domain.shapes.models.ArrayShape
 import amf.plugins.features.validation.PlatformValidator
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
@@ -252,7 +246,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         case "json" => PayloadJsonHint
         case "yaml" => PayloadYamlHint
       }
-      val pair = for {
+      val pair: Future[(PayloadValidation, BaseUnit)] = for {
         validation <- Validation(platform).map(_.withEnabledValidation(false))
         library    <- AMFCompiler(payloadsPath + "payloads.raml", platform, RamlYamlHint, validation).build()
         payload    <- AMFCompiler(payloadsPath + payloadFile, platform, hint, validation).build()
@@ -264,12 +258,12 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
             case s: Shape => s.name.is(shapeName)
           }
           .get
-        (PayloadValidation(platform, targetType.asInstanceOf[Shape]), payload)
+        (PayloadValidation(targetType.asInstanceOf[Shape]), payload)
       }
 
       pair flatMap {
         case (validation, payload) =>
-          validation.validate(payload.asInstanceOf[Document].encodes.asInstanceOf[DataNode])
+          validation.validate(payload.asInstanceOf[PayloadFragment])
       } map { report =>
         report.results.foreach { result =>
           assert(result.position.isDefined)
