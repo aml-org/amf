@@ -68,7 +68,7 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
 
     fs.entry(OperationModel.Description).map(f => result += RamlScalarEmitter("description", f))
 
-    fs.entry(OperationModel.Deprecated).map(f => result += ValueEmitter("(deprecated)", f))
+    fs.entry(OperationModel.Deprecated).map(f => result += ValueEmitter("(oas-deprecated)", f))
 
     fs.entry(OperationModel.Summary).map(f => result += ValueEmitter("(summary)", f))
 
