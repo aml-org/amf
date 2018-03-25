@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.resolution.pipelines
 
 import amf.ProfileNames
+import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.BaseUnit
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.stages.ReferenceResolutionStage
@@ -22,11 +23,13 @@ class AmfEditingPipeline extends ResolutionPipeline {
   val ID: String = "editing"
 
   override def resolve[T <: BaseUnit](model: T): T = {
+    ExecutionLog.log(s"AmfEditingPipeline#resolve: resolving ${model.location}")
     withModel(model) { () =>
       commonSteps()
       step(parameters)
       step(mediaTypes)
       step(examples)
+      ExecutionLog.log(s"AmfEditingPipeline#resolve: resolved model ${model.location}")
     }
   }
 
