@@ -1,9 +1,7 @@
 #%RAML 1.0
 title: TCK Sample. RAML 1.0 Annotations 001.
 version: v1
-protocols:
-  - http
-baseUri: api.samplehost.com/{version}
+baseUri: http://api.samplehost.com/{version}
 /resource:
   get:
     (objectAnnotation):

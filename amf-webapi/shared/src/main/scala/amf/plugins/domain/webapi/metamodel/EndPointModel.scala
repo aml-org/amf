@@ -10,7 +10,7 @@ import amf.core.vocabulary.Namespace.{Http, Hydra, Schema}
 import amf.core.vocabulary.{Namespace, ValueType}
 
 /**
-  * EndPoint metamodel
+  * EndPoint metaModel
   *
   * EndPoint in the API holding a number of executable operations
   */
@@ -20,6 +20,8 @@ object EndPointModel extends DomainElementModel with KeyField {
 
   val Name = Field(Str, Schema + "name")
 
+  val Summary = Field(Str, Schema + "summary")
+
   val Description = Field(Str, Schema + "description")
 
   val Operations = Field(Array(OperationModel), Hydra + "supportedOperation")
@@ -28,6 +30,8 @@ object EndPointModel extends DomainElementModel with KeyField {
 
   val Payloads = Field(Array(PayloadModel), Http + "payload")
 
+  val Servers = Field(Array(ServerModel), Http + "server")
+
   val Security = Field(Array(ParametrizedSecuritySchemeModel), Namespace.Security + "security")
 
   override val key: Field = Path
@@ -35,7 +39,7 @@ object EndPointModel extends DomainElementModel with KeyField {
   override val `type`: List[ValueType] = Http + "EndPoint" :: DomainElementModel.`type`
 
   override def fields: List[Field] =
-    List(Path, Name, Description, Operations, Parameters, Payloads, Security) ++ DomainElementModel.fields
+    List(Path, Name, Summary, Description, Operations, Parameters, Payloads, Servers, Security) ++ DomainElementModel.fields
 
   override def modelInstance = EndPoint()
 }

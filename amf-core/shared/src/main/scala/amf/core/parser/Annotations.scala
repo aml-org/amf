@@ -12,7 +12,9 @@ class Annotations {
 
   def foreach(fn: (Annotation) => Unit): Unit = annotations.foreach(fn)
 
-  def find[T <: Annotation](clazz: Class[T]): Option[T] = annotations.find(clazz.isInstance(_)).map(_.asInstanceOf[T])
+  def find[T <: Annotation](fn: Annotation => Boolean): Option[T] = annotations.find(fn).map(_.asInstanceOf[T])
+
+  def find[T <: Annotation](clazz: Class[T]): Option[T] = find(clazz.isInstance(_))
 
   def collect[T <: Annotation](pf: PartialFunction[Annotation, T]): Seq[T] = annotations.collect(pf)
 

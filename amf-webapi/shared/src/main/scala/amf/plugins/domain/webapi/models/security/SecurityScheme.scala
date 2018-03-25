@@ -84,6 +84,18 @@ case class SecurityScheme(fields: Fields, annotations: Annotations)
     settings
   }
 
+  def withHttpSettings(): HttpSettings = {
+    val settings = HttpSettings()
+    set(SettingsField, settings)
+    settings
+  }
+
+  def withOpenIdConnectSettings(): OpenIdConnectSettings = {
+    val settings = OpenIdConnectSettings()
+    set(SettingsField, settings)
+    settings
+  }
+
   def withObject(): ApiKeySettings = {
     val settings = ApiKeySettings()
     set(SettingsField, settings)

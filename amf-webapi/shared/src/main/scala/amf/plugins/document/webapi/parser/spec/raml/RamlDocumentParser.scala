@@ -11,12 +11,10 @@ import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.TemplateUri
 import amf.plugins.document.webapi.annotations.DeclaredElement
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.common.RamlScalarNode.collectDomainExtensions
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
@@ -104,23 +102,6 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
 
     map.key("title", (WebApiModel.Name in api).allowingAnnotations)
 
-    map.key(
-      "baseUriParameters",
-      entry => {
-        entry.value.tagType match {
-          case YType.Map =>
-            val parameters =
-              RamlParametersParser(entry.value.as[YMap], api.withBaseUriParameter)
-                .parse()
-                .map(_.withBinding("path"))
-            api.set(WebApiModel.BaseUriParameters, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
-          case YType.Null =>
-          case _          => ctx.violation("Invalid node for baseUriParameters", entry.value)
-        }
-
-      }
-    )
-
     map.key("description", (WebApiModel.Description in api).allowingAnnotations)
 
     map.key(
@@ -163,39 +144,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
       }
     )
 
-    map.key(
-      "baseUri",
-      entry => {
-        val node  = RamlScalarNode(entry.value)
-        val value = node.text().toString
-
-        val extensions = collectDomainExtensions(api.id, node).map(DomainExtensionAnnotation)
-        api.annotations += BaseUriAnnotation(value, Annotations(extensions))
-
-        val uri = BaseUriSplitter(value)
-
-        if (!TemplateUri.isValid(value))
-          ctx.violation(api.id, TemplateUri.invalidMsg(value), entry.value)
-
-        if (api.schemes.isEmpty && uri.protocol.nonEmpty) {
-          api.set(WebApiModel.Schemes,
-                  AmfArray(Seq(AmfScalar(uri.protocol)), Annotations(entry.value) += SynthesizedField()),
-                  Annotations(entry))
-        }
-
-        if (uri.domain.nonEmpty) {
-          api.set(WebApiModel.Host,
-                  AmfScalar(uri.domain, Annotations(entry.value) += SynthesizedField()),
-                  Annotations(entry))
-        }
-
-        if (uri.path.nonEmpty) {
-          api.set(WebApiModel.BasePath,
-                  AmfScalar(uri.path, (Annotations(entry.value) += SynthesizedField()) ++= Annotations(extensions)),
-                  Annotations(entry))
-        }
-      }
-    )
+    RamlServersParser(map, api).parse()
 
     val SchemeParser = RamlParametrizedSecuritySchemeParser.parse(api.withSecurity) _
     map.key("securedBy", (WebApiModel.Security in api using SchemeParser).allowingSingleValue)

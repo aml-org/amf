@@ -1,9 +1,7 @@
 #%RAML 0.8
 title: Sample API
 version: v1
-protocols:
-  - https
-baseUri: api.sample.com/
+baseUri: https://api.sample.com/
 /media:
   displayName: Media
   get: {}

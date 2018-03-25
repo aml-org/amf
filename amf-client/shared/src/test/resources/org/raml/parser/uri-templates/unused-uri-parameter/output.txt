@@ -1,8 +1,6 @@
 #%RAML 1.0
 title: Test
-protocols:
-  - http
-baseUri: {a}.myapi.org/{c}
+baseUri: http://{a}.myapi.org/{c}
 baseUriParameters:
   a:
     type: string

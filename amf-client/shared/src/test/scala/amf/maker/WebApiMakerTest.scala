@@ -24,15 +24,14 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     val api = WebApi()
       .withName("test")
       .withDescription("testDescription")
-      .withHost("api.example.com")
       .withSchemes(List("http", "https"))
-      .withBasePath("/path")
       .withContentType(List("application/yaml"))
       .withAccepts(List("application/yaml"))
       .withVersion("1.1")
       .withTermsOfService("terminos")
       .withProvider(Organization().withUrl("urlContacto").withName("nombreContacto").withEmail("mailContacto"))
       .withLicense(License().withUrl("urlLicense").withName("nameLicense"))
+    api.withServer("http://api.example.com/path")
     api.withDocumentationUrl("urlExternalDocs").withDescription("descriptionExternalDocs")
 
     assertFixture(api, "completeExample.raml", RamlYamlHint)
@@ -52,8 +51,9 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
 
     val api = WebApi()
       .withName("API")
-      .withBasePath("/some/base/uri")
       .withEndPoints(endpoints)
+
+    api.withServer("/some/base/uri")
 
     assertFixture(api, "nested-endpoints.raml", RamlYamlHint)
   }
@@ -72,8 +72,8 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     )
     val api = WebApi()
       .withName("API")
-      .withBasePath("/some/base/uri")
       .withEndPoints(endpoints)
+    api.withServer("/some/base/uri")
 
     assertFixture(api, "nested-endpoints.json", OasJsonHint)
   }
@@ -81,7 +81,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
   test("WebApi with multiple operations - RAML.") {
     val api = WebApi()
       .withName("API")
-      .withBasePath("/some/base/uri")
+    api.withServer("/some/base/uri")
     api.withEndPoint("/levelzero")
 
     val endpointOne = api.withEndPoint("/levelzero/level-one")
@@ -112,7 +112,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
   test("WebApi with multiple operations - OAS.") {
     val api = WebApi()
       .withName("API")
-      .withBasePath("/some/base/uri")
+    api.withServer("/some/base/uri")
 
     api.withEndPoint("/levelzero").withName("Name")
 
@@ -206,8 +206,11 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     )
     val api = WebApi()
       .withName("API")
-      .withBasePath("/some/{one}/uri")
-      .withBaseUriParameters(
+      .withEndPoints(endpoints)
+
+    api
+      .withServer("/some/{one}/uri")
+      .withVariables(
         List(
           Parameter()
             .withName("one")
@@ -219,7 +222,6 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
               .withName("schema")
               .withDescription("One base uri param")
               .withDataType("http://www.w3.org/2001/XMLSchema#string"))))
-      .withEndPoints(endpoints)
 
     assertFixture(api, "operation-request.raml", RamlYamlHint)
   }
@@ -258,7 +260,8 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
                   .withRequired(false)
                   .withBinding("header")))
                 .withPayloads(List(Payload()
-                  .withSchema(ScalarShape().withName("otherParamName").withDataType("http://www.w3.org/2001/XMLSchema#string"))
+                  .withSchema(
+                    ScalarShape().withName("otherParamName").withDataType("http://www.w3.org/2001/XMLSchema#string"))
                   .withMediaType("application/xml")))
             ),
           Operation()
@@ -267,16 +270,22 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
             .withDescription("Some description")
             .withRequest(
               Request()
-                .withHeaders(List(
-                  Parameter().withName("Header-One").withParameterName("Header-One").withRequired(false).withBinding("header")
-                ))
+                .withHeaders(
+                  List(
+                    Parameter()
+                      .withName("Header-One")
+                      .withParameterName("Header-One")
+                      .withRequired(false)
+                      .withBinding("header")
+                  ))
             )
         ))
     )
     val api = WebApi()
       .withName("API")
-      .withBasePath("/some/base/uri")
       .withEndPoints(endpoints)
+
+    api.withServer("/some/base/uri")
 
     assertFixture(api, "operation-request.json", OasJsonHint)
   }
@@ -333,8 +342,9 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
 
     val api = WebApi()
       .withName("API")
-      .withBasePath("/some/uri")
       .withEndPoints(endpoints)
+
+    api.withServer("/some/uri")
 
     assertFixture(api, "operation-response.raml", RamlYamlHint)
   }
@@ -392,8 +402,8 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
 
     val api = WebApi()
       .withName("API")
-      .withBasePath("/some/uri")
       .withEndPoints(endpoints)
+    api.withServer("/some/uri")
 
     assertFixture(api, "operation-response.json", OasJsonHint)
   }
@@ -401,13 +411,13 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
   test("generate partial succeed") {
     val api = WebApi()
       .withName("test")
-      .withHost("api.example.com")
       .withSchemes(List("http", "https"))
-      .withBasePath("/path")
       .withContentType(List("application/yaml"))
       .withAccepts(List("application/yaml"))
       .withVersion("1.1")
       .withProvider(Organization().withUrl("urlContacto").withName("nombreContacto").withEmail("mailContacto"))
+
+    api.withServer("http://api.example.com/path")
 
     api.withDocumentationUrl("urlExternalDocs").withDescription("descriptionExternalDocs")
 
@@ -419,9 +429,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     val api = WebApi()
       .withName("test")
       .withDescription("testDescription")
-      .withHost("api.example.com")
       .withSchemes(List("http", "https"))
-      .withBasePath("http://api.example.com/path")
       .withContentType(List("application/json"))
       .withAccepts(List("application/json"))
       .withVersion("1.1")
@@ -429,6 +437,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withProvider(Organization().withUrl("urlContact").withName("nameContact").withEmail("emailContact"))
       .withLicense(License().withUrl("urlLicense").withName("nameLicense"))
 
+    api.withServer("api.example.com/path")
     api.withDocumentationUrl("urlExternalDocs").withDescription("descriptionExternalDocs")
 
     assertFixture(api, "completeExample.json", OasJsonHint)
@@ -449,13 +458,13 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     val api = WebApi()
       .withName("test title")
       .withDescription("test description")
-      .withHost("api.example.com")
       .withSchemes(List("http", "https"))
-      .withBasePath("/path")
       .withContentType(List("application/yaml"))
       .withAccepts(List("application/yaml"))
       .withVersion("1.1")
       .withTermsOfService("terms of service")
+
+    api.withServer("api.example.com/path")
 
     val operation = api
       .withEndPoint("/level-zero")
@@ -517,7 +526,12 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
 
     //param3 typeless
-    request.withQueryParameter("param3").withParameterName("param3").withRequired(false).withBinding("query").withDescription("typeless")
+    request
+      .withQueryParameter("param3")
+      .withParameterName("param3")
+      .withRequired(false)
+      .withBinding("query")
+      .withDescription("typeless")
 
     //headers
     //header type string
@@ -641,13 +655,13 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     val api = WebApi()
       .withName("test title")
       .withDescription("test description")
-      .withHost("api.example.com")
       .withSchemes(List("http", "https"))
-      .withBasePath("/path")
       .withContentType(List("application/yaml"))
       .withAccepts(List("application/yaml"))
       .withVersion("1.1")
       .withTermsOfService("terms of service")
+
+    api.withServer("api.example.com/path")
 
     val operation = api
       .withEndPoint("/level-zero")
@@ -741,7 +755,12 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
 
     //header with object type
     val header2Type =
-      request.withHeader("header-two").withParameterName("header-two").withRequired(true).withBinding("header").withObjectSchema("schema")
+      request
+        .withHeader("header-two")
+        .withParameterName("header-two")
+        .withRequired(true)
+        .withBinding("header")
+        .withObjectSchema("schema")
     header2Type
       .withClosed(false)
       .withProperty("number")
@@ -828,14 +847,14 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     val api = WebApi()
       .withName("test title")
       .withDescription("test description")
-      .withHost("api.example.com")
       .withSchemes(List("http", "https"))
-      .withBasePath("/path")
       .withContentType(List("application/yaml"))
       .withAccepts(List("application/yaml"))
       .withVersion("1.1")
       .withTermsOfService("terms of service")
       .withId("amf-client/shared/src/test/resources/maker/types-dependency.raml#/web-api")
+
+    api.withServer("api.example.com/path")
 
     val operation = api
       .withEndPoint("/level-zero")
@@ -983,14 +1002,14 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     val api = WebApi()
       .withName("test title")
       .withDescription("test description")
-      .withHost("api.example.com")
       .withSchemes(List("http", "https"))
-      .withBasePath("/path")
       .withContentType(List("application/yaml"))
       .withAccepts(List("application/yaml"))
       .withVersion("1.1")
       .withTermsOfService("terms of service")
       .withId("amf-client/shared/src/test/resources/maker/types-dependency.json#/web-api")
+
+    api.withServer("api.example.com/path")
 
     val operation = api
       .withEndPoint("/level-zero")

@@ -40,6 +40,8 @@ object AMFDomainRegistry {
 
   val annotationsRegistry: mutable.HashMap[String, AnnotationGraphLoader] = mutable.HashMap(
     "lexical"              -> LexicalInformation,
+    "host-lexical"         -> HostLexicalInformation,
+    "base-path-lexical"    -> BasePathLexicalInformation,
     "source-vendor"        -> SourceVendor,
     "single-value-array"   -> SingleValueArray,
     "aliases-array"        -> Aliases,

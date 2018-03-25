@@ -150,6 +150,9 @@ class Fields {
     }
   }
 
+  /** Return if the given [[Field]] exists within this [[Fields]] instance. */
+  def exists(f: Field): Boolean = entry(f).isDefined
+
   def entryJsonld(f: Field): Option[FieldEntry] = {
     if (f.jsonldField) {
       entry(f)
@@ -264,6 +267,10 @@ case class FieldEntry(field: Field, value: Value) {
   def scalar: AmfScalar = element.asInstanceOf[AmfScalar]
 
   def array: AmfArray = element.asInstanceOf[AmfArray]
+
+  def arrayValues[T <: AmfElement]: Seq[T] = array.values.map(_.asInstanceOf[T])
+
+  def arrayValues[T <: AmfElement](clazz: Class[T]): Seq[T] = arrayValues
 
   def obj: AmfObject = element.asInstanceOf[AmfObject]
 

@@ -13,10 +13,19 @@
                 "http://schema.org/WebAPI",
                 "http://raml.org/vocabularies/document#DomainElement"
             ],
-            "http://raml.org/vocabularies/http#host": [
-                {
+            "http://raml.org/vocabularies/http#server": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/basic.raml#/web-api/api.example.com",
+                "@type": [
+                  "http://raml.org/vocabularies/http#Server",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://raml.org/vocabularies/http#url": [
+                  {
                     "@value": "api.example.com"
-                }
+                  }
+                ]
+              }
             ],
             "http://schema.org/name": [
                 {

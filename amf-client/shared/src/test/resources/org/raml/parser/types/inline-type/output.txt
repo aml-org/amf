@@ -1,9 +1,7 @@
 #%RAML 1.0
 title: inline type inheritance
 version: v1
-protocols:
-  - http
-baseUri: api.samplehost.com/{version}
+baseUri: http://api.samplehost.com/{version}
 /teams:
   get:
     body:

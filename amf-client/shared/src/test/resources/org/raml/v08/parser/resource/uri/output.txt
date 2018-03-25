@@ -1,9 +1,7 @@
 #%RAML 0.8
 title: GitHub API
 version: v3
-protocols:
-  - https
-baseUri: api.github.com/
+baseUri: https://api.github.com
 /user:
   displayName: Authenticated User
   /emails:

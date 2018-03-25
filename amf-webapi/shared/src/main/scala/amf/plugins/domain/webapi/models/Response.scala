@@ -1,6 +1,7 @@
 package amf.plugins.domain.webapi.models
 
 import amf.client.model.StrField
+import amf.core.metamodel.Obj
 import amf.core.model.domain.{AmfArray, DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.models.Example
@@ -12,12 +13,13 @@ import amf.plugins.domain.webapi.metamodel.ResponseModel._
   */
 case class Response(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
 
-  def name: StrField          = fields.field(Name)
-  def description: StrField   = fields.field(Description)
-  def statusCode: StrField    = fields.field(StatusCode)
-  def headers: Seq[Parameter] = fields.field(Headers)
-  def payloads: Seq[Payload]  = fields.field(Payloads)
-  def examples: Seq[Example]  = fields.field(Examples)
+  def name: StrField            = fields.field(Name)
+  def description: StrField     = fields.field(Description)
+  def statusCode: StrField      = fields.field(StatusCode)
+  def headers: Seq[Parameter]   = fields.field(Headers)
+  def payloads: Seq[Payload]    = fields.field(Payloads)
+  def examples: Seq[Example]    = fields.field(Examples)
+  def links: Seq[TemplatedLink] = fields.field(Links)
 
   def withName(name: String): this.type               = set(Name, name)
   def withDescription(description: String): this.type = set(Description, description)
@@ -25,6 +27,7 @@ case class Response(fields: Fields, annotations: Annotations) extends DomainElem
   def withHeaders(headers: Seq[Parameter]): this.type = setArray(Headers, headers)
   def withPayloads(payloads: Seq[Payload]): this.type = setArray(Payloads, payloads)
   def withExamples(examples: Seq[Example]): this.type = setArray(Examples, examples)
+  def withLinks(links: Seq[TemplatedLink]): this.type = setArray(Links, links)
 
   def withHeader(name: String): Parameter = {
     val result = Parameter().withName(name)
@@ -68,7 +71,7 @@ case class Response(fields: Fields, annotations: Annotations) extends DomainElem
     cloned.asInstanceOf[this.type]
   }
 
-  override def meta = ResponseModel
+  override def meta: Obj = ResponseModel
 
   override def linkCopy(): Linkable = Response().withId(id)
 }

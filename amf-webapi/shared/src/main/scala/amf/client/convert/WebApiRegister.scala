@@ -8,7 +8,7 @@ import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
 import amf.plugins.document.webapi.model
 import amf.plugins.domain.{shapes, webapi}
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
-import amf.plugins.domain.webapi.metamodel.templates
+import amf.plugins.domain.webapi.metamodel.{IriTemplateMappingModel, TemplatedLinkModel, templates}
 
 /** Shared WebApi registrations. */
 object WebApiRegister {
@@ -62,6 +62,15 @@ object WebApiRegister {
     }
     platform.registerWrapper(webapi.metamodel.ParameterModel) {
       case s: webapi.models.Parameter => Parameter(s)
+    }
+    platform.registerWrapper(webapi.metamodel.ServerModel) {
+      case s: webapi.models.Server => Server(s)
+    }
+    platform.registerWrapper(webapi.metamodel.CallbackModel) {
+      case s: webapi.models.Callback => Callback(s)
+    }
+    platform.registerWrapper(webapi.metamodel.EncodingModel) {
+      case s: webapi.models.Encoding => Encoding(s)
     }
     platform.registerWrapper(templates.ParametrizedResourceTypeModel) {
       case s: webapi.models.templates.ParametrizedResourceType => ParametrizedResourceType(s)
@@ -142,6 +151,12 @@ object WebApiRegister {
     }
     platform.registerWrapper(shapes.metamodel.UnionShapeModel) {
       case s: shapes.models.UnionShape => UnionShape(s)
+    }
+    platform.registerWrapper(TemplatedLinkModel) {
+      case s: webapi.models.TemplatedLink => TemplatedLink(s)
+    }
+    platform.registerWrapper(IriTemplateMappingModel) {
+      case s: webapi.models.IriTemplateMapping => IriTemplateMapping(s)
     }
 
     amf.Core.registerPlugin(WebAPIDomainPlugin)

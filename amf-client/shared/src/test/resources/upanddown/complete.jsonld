@@ -25,24 +25,6 @@
             "@value": "test description"
           }
         ],
-        "http://raml.org/vocabularies/http#host": [
-          {
-            "@value": "http://api.example.com/path"
-          }
-        ],
-        "http://raml.org/vocabularies/http#scheme": [
-          {
-            "@value": "http"
-          },
-          {
-            "@value": "https"
-          }
-        ],
-        "http://raml.org/vocabularies/http#basePath": [
-          {
-            "@value": "/path"
-          }
-        ],
         "http://raml.org/vocabularies/http#accepts": [
           {
             "@value": "application/yaml"
@@ -51,6 +33,14 @@
         "http://raml.org/vocabularies/http#contentType": [
           {
             "@value": "application/yaml"
+          }
+        ],
+        "http://raml.org/vocabularies/http#scheme": [
+          {
+            "@value": "http"
+          },
+          {
+            "@value": "https"
           }
         ],
         "http://schema.org/version": [
@@ -297,24 +287,12 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://raml.org/vocabularies/http#host"
+                    "@value": "http://schema.org/description"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(9,0)-(9,36)]"
-                  }
-                ]
-              },
-              {
-                "http://raml.org/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://schema.org/name"
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(2,0)-(2,17)]"
+                    "@value": "[(3,0)-(3,29)]"
                   }
                 ]
               },
@@ -333,12 +311,12 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/description"
+                    "@value": "http://schema.org/name"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(3,0)-(3,29)]"
+                    "@value": "[(2,0)-(2,17)]"
                   }
                 ]
               },

@@ -15,8 +15,10 @@ object ExampleModel extends DomainElementModel with LinkableElementModel with Ke
 
   val Name            = Field(Str, Schema + "name")
   val DisplayName     = Field(Str, Document + "displayName")
+  val Summary         = Field(Str, Http + "guiSummary")
   val Description     = Field(Str, Schema + "description")
   val Value           = Field(Str, Document + "value")
+  val ExternalValue   = Field(Str, Document + "externalValue")
   val StructuredValue = Field(DataNodeModel, Document + "structuredValue")
   val Strict          = Field(Bool, Document + "strict")
   val MediaType       = Field(Str, Http + "mediaType")
@@ -24,7 +26,7 @@ object ExampleModel extends DomainElementModel with LinkableElementModel with Ke
   override val key: Field = Name
 
   override def fields: List[Field] =
-    List(Name, DisplayName, Description, Value, Strict, MediaType, StructuredValue) ++ DomainElementModel.fields
+    List(Name, DisplayName, Summary, Description, Value, ExternalValue, Strict, MediaType, StructuredValue) ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = Document + "Example" :: DomainElementModel.`type`
 

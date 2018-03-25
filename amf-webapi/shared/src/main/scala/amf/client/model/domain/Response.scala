@@ -15,12 +15,13 @@ case class Response(override private[amf] val _internal: InternalResponse) exten
   @JSExportTopLevel("model.domain.Response")
   def this() = this(InternalResponse())
 
-  def name: StrField                 = _internal.name
-  def description: StrField          = _internal.description
-  def statusCode: StrField           = _internal.statusCode
-  def headers: ClientList[Parameter] = _internal.headers.asClient
-  def payloads: ClientList[Payload]  = _internal.payloads.asClient
-  def examples: ClientList[Example]  = _internal.examples.asClient
+  def name: StrField                   = _internal.name
+  def description: StrField            = _internal.description
+  def statusCode: StrField             = _internal.statusCode
+  def headers: ClientList[Parameter]   = _internal.headers.asClient
+  def payloads: ClientList[Payload]    = _internal.payloads.asClient
+  def examples: ClientList[Example]    = _internal.examples.asClient
+  def links: ClientList[TemplatedLink] = _internal.links.asClient
 
   /** Set name property of this Response. */
   def withName(name: String): this.type = {
@@ -55,6 +56,11 @@ case class Response(override private[amf] val _internal: InternalResponse) exten
   /** Set examples property of this Response] */
   def withExamples(examples: ClientList[Example]): this.type = {
     _internal.withExamples(examples.asInternal)
+    this
+  }
+
+  def withLinks(links: ClientList[TemplatedLink]): this.type = {
+    _internal.withLinks(links.asInternal)
     this
   }
 

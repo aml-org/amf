@@ -18,15 +18,13 @@ object WebApiModel extends DomainElementModel {
 
   val Description = Field(Str, Schema + "description")
 
-  val Host = Field(Str, Http + "host")
-
-  val Schemes = Field(Array(Str), Http + "scheme")
-
-  val BasePath = Field(Str, Http + "basePath")
+  val Servers = Field(Array(ServerModel), Http + "server")
 
   val Accepts = Field(Array(Str), Http + "accepts")
 
   val ContentType = Field(Array(Str), Http + "contentType")
+
+  val Schemes = Field(Array(Str), Http + "scheme")
 
   val Version = Field(Str, Schema + "version")
 
@@ -40,8 +38,6 @@ object WebApiModel extends DomainElementModel {
 
   val EndPoints = Field(Array(EndPointModel), Http + "endpoint")
 
-  val BaseUriParameters = Field(Array(ParameterModel), Http + "parameter")
-
   val Security = Field(Array(ParametrizedSecuritySchemeModel), Namespace.Security + "security")
 
   val Tags = Field(Array(TagModel), Http + "tag")
@@ -53,18 +49,16 @@ object WebApiModel extends DomainElementModel {
     List(
       Name,
       Description,
-      Host,
-      Schemes,
-      BasePath,
+      Servers,
       Accepts,
       ContentType,
+      Schemes,
       Version,
       TermsOfService,
       Provider,
       License,
       Documentations,
       EndPoints,
-      BaseUriParameters,
       Security,
       Tags
     ) ++ DomainElementModel.fields

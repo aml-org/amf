@@ -1,9 +1,7 @@
 #%RAML 1.0
 title: TCK test. Trait 002
 version: v1
-protocols:
-  - http
-baseUri: api.samplehost.com/
+baseUri: http://api.samplehost.com
 /resource:
   get:
     queryParameters:

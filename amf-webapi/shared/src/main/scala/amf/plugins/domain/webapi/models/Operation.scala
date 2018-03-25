@@ -1,6 +1,7 @@
 package amf.plugins.domain.webapi.models
 
 import amf.client.model.{BoolField, IntField, StrField}
+import amf.core.metamodel.Obj
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.models.CreativeWork
@@ -29,6 +30,8 @@ case class Operation(fields: Fields, annotations: Annotations)
   def responses: Seq[Response]     = fields.field(Responses)
   def security: Seq[DomainElement] = fields.field(Security)
   def tags: Seq[String]            = fields(Tags)
+  def callbacks: Seq[Callback]     = fields.field(Callbacks)
+  def servers: Seq[Server]         = fields.field(Servers)
 
   def traits: Seq[ParametrizedTrait] = extend collect { case t: ParametrizedTrait => t }
 
@@ -45,6 +48,8 @@ case class Operation(fields: Fields, annotations: Annotations)
   def withResponses(responses: Seq[Response]): this.type        = setArray(Responses, responses)
   def withSecurity(security: Seq[DomainElement]): this.type     = setArray(Security, security)
   def withTags(tag: Seq[String]): this.type                     = set(Tags, tag.toList)
+  def withCallbacks(callbacks: Seq[Callback]): this.type        = setArray(Callbacks, callbacks)
+  def withServers(servers: Seq[Server]): this.type              = setArray(Servers, servers)
 
   override def adopted(parent: String): this.type = withId(parent + "/" + method.value())
 
@@ -66,7 +71,19 @@ case class Operation(fields: Fields, annotations: Annotations)
     result
   }
 
-  override def meta = OperationModel
+  def withCallback(name: String): Callback = {
+    val result = Callback().withName(name)
+    add(Callbacks, result)
+    result
+  }
+
+  def withServer(url: String): Server = {
+    val result = Server().withUrl(url)
+    add(Servers, result)
+    result
+  }
+
+  override def meta: Obj = OperationModel
 }
 
 object Operation {

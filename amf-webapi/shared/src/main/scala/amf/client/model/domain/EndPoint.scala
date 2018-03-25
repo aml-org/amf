@@ -17,9 +17,12 @@ case class EndPoint(override private[amf] val _internal: InternalEndPoint) exten
 
   def name: StrField                                   = _internal.name
   def description: StrField                            = _internal.description
+  def summary: StrField                                = _internal.summary
   def path: StrField                                   = _internal.path
   def operations: ClientList[Operation]                = _internal.operations.asClient
   def parameters: ClientList[Parameter]                = _internal.parameters.asClient
+  def payloads: ClientList[Payload]                    = _internal.payloads.asClient
+  def servers: ClientList[Server]                      = _internal.servers.asClient
   def security: ClientList[ParametrizedSecurityScheme] = _internal.security.asClient
 
   /** Get the part of the path property that was defined by this EndPoint. */
@@ -34,6 +37,12 @@ case class EndPoint(override private[amf] val _internal: InternalEndPoint) exten
   /** Set description property of this EndPoint */
   def withDescription(description: String): this.type = {
     _internal.withDescription(description)
+    this
+  }
+
+  /** Set summary property of this EndPoint */
+  def withSummary(summary: String): this.type = {
+    _internal.withSummary(summary)
     this
   }
 
@@ -55,6 +64,18 @@ case class EndPoint(override private[amf] val _internal: InternalEndPoint) exten
     this
   }
 
+  /** Set payloads property of this EndPoint */
+  def withPayloads(payloads: ClientList[Payload]): this.type = {
+    _internal.withPayloads(payloads.asInternal)
+    this
+  }
+
+  /** Set servers property of this EndPoint */
+  def withServers(servers: ClientList[Server]): this.type = {
+    _internal.withServers(servers.asInternal)
+    this
+  }
+
   /** Set security property of this EndPoint using a list of ParametrizedSecurityScheme. */
   def withSecurity(security: ClientList[ParametrizedSecurityScheme]): this.type = {
     _internal.withSecurity(security.asInternal)
@@ -62,14 +83,26 @@ case class EndPoint(override private[amf] val _internal: InternalEndPoint) exten
   }
 
   /**
-    * Adds one Operation to the operations property of this EndPointand returns it for population.
+    * Adds one Operation to the operations property of this EndPoint and returns it for population.
     * Method property of the operation is required.
     */
   def withOperation(method: String): Operation = _internal.withOperation(method)
 
   /**
-    * Adds one Parameter to the uriParameters property of this EndPointand returns it for population.
+    * Adds one Parameter to the uriParameters property of this EndPoint and returns it for population.
     * Name property of the parameter is required.
     */
   def withParameter(name: String): Parameter = _internal.withParameter(name)
+
+  /**
+    * Adds one Payload to the payloads property of this EndPoint and returns it for population.
+    * mediaType property of the parameter is required.
+    */
+  def withPayload(name: String): Payload = _internal.withPayload(Some(name))
+
+  /**
+    * Adds one Server to the servers property of this EndPoint and returns it for population.
+    * url property of the server is required.
+    */
+  def withServer(url: String): Server = _internal.withServer(url)
 }

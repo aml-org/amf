@@ -20,19 +20,54 @@
             "@value": "Rocket"
           }
         ],
-        "http://raml.org/vocabularies/http#host": [
+        "http://raml.org/vocabularies/http#server": [
           {
-            "@value": "qaws.instantpurchaseoffer.com"
-          }
-        ],
-        "http://raml.org/vocabularies/http#scheme": [
-          {
-            "@value": "https"
-          }
-        ],
-        "http://raml.org/vocabularies/http#basePath": [
-          {
-            "@value": "/api"
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/web-api/https%3A%2F%2Fqaws.instantpurchaseoffer.com%2Fapi",
+            "@type": [
+              "http://raml.org/vocabularies/http#Server",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/http#url": [
+              {
+                "@value": "https://qaws.instantpurchaseoffer.com/api"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/web-api/https%3A%2F%2Fqaws.instantpurchaseoffer.com%2Fapi/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://raml.org/vocabularies/http#url"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(4,0)-(5,0)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/web-api/https%3A%2F%2Fqaws.instantpurchaseoffer.com%2Fapi"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
           }
         ],
         "http://schema.org/version": [
@@ -76,18 +111,6 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://raml.org/vocabularies/http#scheme"
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(4,0)-(5,0)]"
-                  }
-                ]
-              },
-              {
-                "http://raml.org/vocabularies/document-source-maps#element": [
-                  {
                     "@value": "http://schema.org/name"
                   }
                 ],
@@ -112,19 +135,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://raml.org/vocabularies/http#host"
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(4,0)-(5,0)]"
-                  }
-                ]
-              },
-              {
-                "http://raml.org/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://raml.org/vocabularies/http#basePath"
+                    "@value": "http://raml.org/vocabularies/http#server"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [

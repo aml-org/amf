@@ -12,8 +12,10 @@ import scala.collection.mutable
 
 package object BaseEmitters {
 
-  protected[amf] def pos(annotations: Annotations): Position =
-    annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
+  protected[amf] def pos[T <: LexicalInformation](annotations: Annotations, clazz: Class[T]): Position =
+    annotations.find[LexicalInformation](clazz.isInstance(_)).map(_.range.start).getOrElse(ZERO)
+
+  protected[amf] def pos(annotations: Annotations): Position = pos(annotations, classOf[LexicalInformation])
 
   protected[amf] def traverse(emitters: Seq[EntryEmitter], b: EntryBuilder): Unit = {
     emitters.foreach(e => {

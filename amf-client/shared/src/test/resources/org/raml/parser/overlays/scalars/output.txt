@@ -1,7 +1,5 @@
 #%RAML 1.0
-protocols:
-  - http
-baseUri: api.com/master
+baseUri: http://api.com/master
 /master:
   /child:
     displayName: child overlaid display name over default

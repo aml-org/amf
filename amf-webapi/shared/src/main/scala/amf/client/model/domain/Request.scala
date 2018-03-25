@@ -1,6 +1,7 @@
 package amf.client.model.domain
 
 import amf.client.convert.WebApiClientConverters._
+import amf.client.model.{BoolField, StrField}
 import amf.plugins.domain.webapi.models.{Request => InternalRequest}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -14,10 +15,26 @@ case class Request(override private[amf] val _internal: InternalRequest) extends
   @JSExportTopLevel("model.domain.Request")
   def this() = this(InternalRequest())
 
-  def queryParameters: ClientList[Parameter] = _internal.queryParameters.asClient
-  def headers: ClientList[Parameter]         = _internal.headers.asClient
-  def payloads: ClientList[Payload]          = _internal.payloads.asClient
-  def queryString: Shape                     = _internal.queryString
+  def description: StrField                   = _internal.description
+  def required: BoolField                     = _internal.required
+  def queryParameters: ClientList[Parameter]  = _internal.queryParameters.asClient
+  def headers: ClientList[Parameter]          = _internal.headers.asClient
+  def payloads: ClientList[Payload]           = _internal.payloads.asClient
+  def queryString: Shape                      = _internal.queryString
+  def uriParameters: ClientList[Parameter]    = _internal.uriParameters.asClient
+  def cookieParameters: ClientList[Parameter] = _internal.cookieParameters.asClient
+
+  /** Set description property of this Request. */
+  def withDescription(description: String): this.type = {
+    _internal.withDescription(description)
+    this
+  }
+
+  /** Set required property of this Request. */
+  def withRequired(required: Boolean): this.type = {
+    _internal.withRequired(required)
+    this
+  }
 
   /** Set queryParameters property of this Request. */
   def withQueryParameters(parameters: ClientList[Parameter]): this.type = {
@@ -34,6 +51,24 @@ case class Request(override private[amf] val _internal: InternalRequest) extends
   /** Set payloads property of this Request. */
   def withPayloads(payloads: ClientList[Payload]): this.type = {
     _internal.withPayloads(payloads.asInternal)
+    this
+  }
+
+  /** Set query string property of this Request. */
+  def withQueryString(queryString: Shape): this.type = {
+    _internal.withQueryString(queryString)
+    this
+  }
+
+  /** Set uriParameters property of this Request. */
+  def withUriParameters(uriParameters: ClientList[Parameter]): this.type = {
+    _internal.withUriParameters(uriParameters.asInternal)
+    this
+  }
+
+  /** Set cookieParameters property of this Request. */
+  def withCookieParameters(cookieParameters: ClientList[Parameter]): this.type = {
+    _internal.withCookieParameters(cookieParameters.asInternal)
     this
   }
 
@@ -55,9 +90,15 @@ case class Request(override private[amf] val _internal: InternalRequest) extends
   /** Adds one Payload]to the payloads property of this Request with the given media type and returns it for population. */
   def withPayload(mediaType: String): Payload = _internal.withPayload(Some(mediaType))
 
-  /** Set query string property of this Request. */
-  def withQueryString(queryString: Shape): this.type = {
-    _internal.withQueryString(queryString)
-    this
-  }
+  /**
+    * Adds one Parameter to the uriParameters property of this Request and returns it for population.
+    * Name property of the parameter is required.
+    */
+  def withUriParameter(name: String): Parameter = _internal.withUriParameter(name)
+
+  /**
+    * Adds one Parameter to the cookieParameters property of this Request and returns it for population.
+    * Name property of the parameter is required.
+    */
+  def withCookieParameter(name: String): Parameter = _internal.withCookieParameter(name)
 }

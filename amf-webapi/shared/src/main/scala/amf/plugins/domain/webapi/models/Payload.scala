@@ -1,11 +1,12 @@
 package amf.plugins.domain.webapi.models
 
 import amf.client.model.StrField
+import amf.core.metamodel.Obj
 import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.domain.shapes.models.{ArrayShape, NodeShape, ScalarShape}
+import amf.plugins.domain.shapes.models.{ArrayShape, Example, NodeShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
-import amf.plugins.domain.webapi.metamodel.PayloadModel._
+import amf.plugins.domain.webapi.metamodel.PayloadModel.{Encoding => EncodingModel, _}
 import org.yaml.model.YMap
 
 /**
@@ -13,11 +14,15 @@ import org.yaml.model.YMap
   */
 case class Payload(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
 
-  def mediaType: StrField = fields.field(MediaType)
-  def schema: Shape       = fields.field(Schema)
+  def mediaType: StrField     = fields.field(MediaType)
+  def schema: Shape           = fields.field(Schema)
+  def examples: Seq[Example]  = fields.field(Examples)
+  def encoding: Seq[Encoding] = fields.field(EncodingModel)
 
-  def withMediaType(mediaType: String): this.type = set(MediaType, mediaType)
-  def withSchema(schema: Shape): this.type        = set(Schema, schema)
+  def withMediaType(mediaType: String): this.type      = set(MediaType, mediaType)
+  def withSchema(schema: Shape): this.type             = set(Schema, schema)
+  def withExamples(examples: Seq[Example]): this.type  = setArray(Examples, examples)
+  def withEncoding(encoding: Seq[Encoding]): this.type = setArray(EncodingModel, encoding)
 
   override def adopted(parent: String): this.type = {
     withId(parent + "/" + mediaType.option().getOrElse("default"))
@@ -41,6 +46,19 @@ case class Payload(fields: Fields, annotations: Annotations) extends DomainEleme
     array
   }
 
+  def withExample(name: Option[String] = None): Example = {
+    val example = Example()
+    name.foreach { example.withName }
+    add(Examples, example)
+    example
+  }
+
+  def withEncoding(name: String): Encoding = {
+    val result = Encoding().withPropertyName(name)
+    add(EncodingModel, result)
+    result
+  }
+
   override def linkCopy(): Payload = Payload().withId(id)
 
   def clonePayload(parent: String): Payload = {
@@ -59,7 +77,7 @@ case class Payload(fields: Fields, annotations: Annotations) extends DomainEleme
     cloned.asInstanceOf[this.type]
   }
 
-  override def meta = PayloadModel
+  override def meta: Obj = PayloadModel
 }
 
 object Payload {

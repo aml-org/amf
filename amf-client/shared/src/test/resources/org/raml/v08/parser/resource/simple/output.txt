@@ -1,9 +1,7 @@
 #%RAML 0.8
 title: Twilio API
 version: 2010-04-01
-protocols:
-  - https
-baseUri: api.twilio.com/{version}
+baseUri: https://api.twilio.com/{version}
 /Accounts:
   /{AccountSid}:
     uriParameters:

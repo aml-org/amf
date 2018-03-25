@@ -1,10 +1,11 @@
 #%RAML 1.0
 title: popes2test
+baseUri: compumundo.hipermega{Name}
 baseUriParameters:
   Name?:
     type: string
 /resource:
-    get:
-      (baseUriParameters):
-        Name3?:
-          type: string
+  get:
+    (baseUriParameters):
+      Name3?:
+        type: string

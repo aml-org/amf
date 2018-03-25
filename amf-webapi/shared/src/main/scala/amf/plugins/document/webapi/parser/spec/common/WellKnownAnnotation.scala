@@ -33,7 +33,9 @@ object WellKnownAnnotation {
     "additionalProperties",
     "collectionFormat",
     "tags",
-    "url"
+    "url",
+    "serverDescription",
+    "servers"
   )
 
   private val oasKnownAnnotations = Set(
@@ -69,7 +71,9 @@ object WellKnownAnnotation {
     "queryString",
     "examples",
     "fileTypes",
-    "schema"
+    "schema",
+    "serverDescription",
+    "servers"
   )
 
   def resolveAnnotation(field: String): Option[String] = {

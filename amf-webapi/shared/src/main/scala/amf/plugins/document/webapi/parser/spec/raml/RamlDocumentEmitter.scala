@@ -8,7 +8,7 @@ import amf.core.model.document._
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Position.ZERO
-import amf.core.parser.{Annotations, EmptyFutureDeclarations, FieldEntry, Fields, Position, Value}
+import amf.core.parser.{EmptyFutureDeclarations, FieldEntry, Position}
 import amf.core.remote._
 import amf.core.utils.TSort.tsort
 import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
@@ -304,8 +304,7 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
 
       fs.entry(WebApiModel.Name).map(f => result += RamlScalarEmitter("title", f))
 
-      fs.entry(WebApiModel.BaseUriParameters)
-        .map(f => result += RamlParametersEmitter("baseUriParameters", f, ordering, references))
+      fs.entry(WebApiModel.Servers).map(f => result ++= RamlServersEmitter(f, ordering, references).emitters())
 
       fs.entry(WebApiModel.Description).map(f => result += RamlScalarEmitter("description", f))
 
@@ -315,9 +314,7 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
 
       fs.entry(WebApiModel.TermsOfService).map(f => result += ValueEmitter("(termsOfService)", f))
 
-      fs.entry(WebApiModel.Schemes)
-        .filter(!_.value.annotations.contains(classOf[SynthesizedField]))
-        .map(f => result += ArrayEmitter("protocols", f, ordering))
+      fs.entry(WebApiModel.Schemes).map(f => result += ArrayEmitter("protocols", f, ordering))
 
       fs.entry(WebApiModel.Provider).map(f => result += OrganizationEmitter("(contact)", f, ordering))
 
@@ -329,8 +326,6 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
       fs.entry(WebApiModel.License).map(f => result += LicenseEmitter("(license)", f, ordering))
 
       fs.entry(WebApiModel.EndPoints).map(f => result ++= endpoints(f, ordering, vendor))
-
-      result += BaseUriEmitter(fs, api.annotations.find(classOf[BaseUriAnnotation]))
 
       result ++= AnnotationsEmitter(api, ordering).emitters
 
@@ -374,52 +369,6 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
       }
 
     }
-
-    private case class BaseUriEmitter(fs: Fields, annotation: Option[BaseUriAnnotation]) extends EntryEmitter {
-      override def emit(b: EntryBuilder): Unit = {
-        val protocol: String = fs
-          .entry(WebApiModel.Schemes)
-          .find(_.value.annotations.contains(classOf[SynthesizedField]))
-          .flatMap(_.array.scalars.headOption)
-          .map(_.toString)
-          .getOrElse("")
-
-        val domain: String = fs
-          .entry(WebApiModel.Host)
-          .map(_.scalar.value)
-          .map(_.toString)
-          .getOrElse("")
-
-        val basePath: String = fs
-          .entry(WebApiModel.BasePath)
-          .map(_.scalar.value)
-          .map(_.toString)
-          .getOrElse("")
-
-        val uri = BaseUriSplitter(protocol, domain, basePath)
-
-        if (uri.nonEmpty) {
-          val Empty = Annotations()
-          RamlScalarEmitter("baseUri",
-                            FieldEntry(WebApiModel.BasePath, // Ignore :S
-                                       Value(AmfScalar(uri.url()), annotation.map(_.extensions).getOrElse(Empty))))
-            .emit(b)
-        }
-      }
-
-      override def position(): Position =
-        fs.entry(WebApiModel.BasePath)
-          .flatMap(f => f.value.annotations.find(classOf[LexicalInformation]))
-          .orElse(fs.entry(WebApiModel.Host).flatMap(f => f.value.annotations.find(classOf[LexicalInformation])))
-          .orElse(
-            fs.entry(WebApiModel.Schemes)
-              .find(_.value.annotations.contains(classOf[SynthesizedField]))
-              .flatMap(f => f.value.annotations.find(classOf[LexicalInformation])))
-          .map(_.range.start)
-          .getOrElse(ZERO)
-
-    }
-
   }
 
   case class LicenseEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {

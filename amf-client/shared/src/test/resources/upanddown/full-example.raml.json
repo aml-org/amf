@@ -16,6 +16,7 @@
     }
   },
   "host": "api.example.com",
+  "basePath": "/path",
   "x-base-uri-parameters": {
     "uriParameter1": {
       "description": "testUriDisplay",
@@ -25,7 +26,6 @@
       "description": "testUriDisplay2"
     }
   },
-  "basePath": "/path",
   "consumes": [
     "application/yaml"
   ],

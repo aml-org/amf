@@ -25,14 +25,6 @@
             "@value": "test description"
           }
         ],
-        "http://raml.org/vocabularies/http#scheme": [
-          {
-            "@value": "http"
-          },
-          {
-            "@value": "https"
-          }
-        ],
         "http://raml.org/vocabularies/http#accepts": [
           {
             "@value": "application/yaml"
@@ -41,6 +33,14 @@
         "http://raml.org/vocabularies/http#contentType": [
           {
             "@value": "application/yaml"
+          }
+        ],
+        "http://raml.org/vocabularies/http#scheme": [
+          {
+            "@value": "http"
+          },
+          {
+            "@value": "https"
           }
         ],
         "http://schema.org/version": [
@@ -612,7 +612,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://raml.org/vocabularies/http#accepts"
+                    "@value": "http://raml.org/vocabularies/http#contentType"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -660,24 +660,24 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://raml.org/vocabularies/http#scheme"
+                    "@value": "http://raml.org/vocabularies/http#accepts"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(7,0)-(10,0)]"
+                    "@value": "[(5,0)-(7,0)]"
                   }
                 ]
               },
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://raml.org/vocabularies/http#contentType"
+                    "@value": "http://raml.org/vocabularies/http#scheme"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(5,0)-(7,0)]"
+                    "@value": "[(7,0)-(10,0)]"
                   }
                 ]
               }

@@ -43,4 +43,8 @@ case class ParametrizedSecurityScheme(override private[amf] val _internal: Inter
   def withOAuth2Settings(): OAuth2Settings = _internal.withOAuth2Settings()
 
   def withApiKeySettings(): ApiKeySettings = _internal.withApiKeySettings()
+
+  def withHttpSettings(): HttpSettings = _internal.withHttpSettings()
+
+  def withOpenIdConnectSettings(): OpenIdConnectSettings = _internal.withOpenIdConnectSettings()
 }

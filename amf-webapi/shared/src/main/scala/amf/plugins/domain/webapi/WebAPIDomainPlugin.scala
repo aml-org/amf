@@ -26,6 +26,7 @@ object WebAPIDomainPlugin extends AMFDomainPlugin {
     EndPointModel,
     OperationModel,
     ParameterModel,
+    ServerModel,
     PayloadModel,
     RequestModel,
     ResponseModel,
