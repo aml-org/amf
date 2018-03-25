@@ -622,7 +622,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                          RamlYamlHint,
                          validation).build()
       // TODO: FIXME! problem serialising to JSON
-      //generated <- new AMFSerializer(doc, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
+      // generated <- new AMFSerializer(doc, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
     } yield {
       val resolved = RAML10Plugin.resolve(doc)
       assert(Option(resolved).isDefined)
