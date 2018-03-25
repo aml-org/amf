@@ -10,6 +10,9 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportTopLevel("model.domain.PropertyShape")
 case class PropertyShape(override private[amf] val _internal: InternalPropertyShape) extends DomainElement {
 
+  @JSExportTopLevel("model.domain.PropertyShape")
+  def this() = this(InternalPropertyShape())
+
   def path: StrField      = _internal.path
   def range: Shape        = _internal.range
   def minCount: IntField  = _internal.minCount
