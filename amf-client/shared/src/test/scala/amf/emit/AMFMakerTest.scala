@@ -39,7 +39,7 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
        ))
     )
     assertNode(root, ("schemes", Array("http", "https")))
-    assertNode(root, ("basePath", "api"))
+    assertNode(root, ("basePath", "/api"))
     assertNode(root, ("host", "localhost.com"))
     assertNode(root, ("consumes", Array("application/json")))
     assertNode(root, ("produces", Array("application/json")))

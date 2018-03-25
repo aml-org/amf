@@ -20,8 +20,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarations
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.{CreativeWork, NodeShape}
-import amf.plugins.domain.webapi.metamodel.EndPointModel
-import amf.plugins.domain.webapi.metamodel._
+import amf.plugins.domain.webapi.metamodel.{EndPointModel, _}
 import amf.plugins.domain.webapi.metamodel.security.{OAuth2SettingsModel, ParametrizedSecuritySchemeModel, ScopeModel}
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.security._
@@ -113,6 +112,8 @@ case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) ext
       }
     )
 
+    OasServersParser(map, api).parse()
+
     map.key(
       "tags",
       entry => {
@@ -121,18 +122,6 @@ case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) ext
       }
     )
 
-    map.key("host", WebApiModel.Host in api)
-
-    map.key(
-      "x-base-uri-parameters",
-      entry => {
-        val uriParameters =
-          OasHeaderParametersParser(entry.value.as[YMap], api.withBaseUriParameter).parse()
-        api.set(WebApiModel.BaseUriParameters, AmfArray(uriParameters, Annotations(entry.value)), Annotations(entry))
-      }
-    )
-
-    map.key("basePath", WebApiModel.BasePath in api)
     map.key("consumes", WebApiModel.Accepts in api)
     map.key("produces", WebApiModel.ContentType in api)
     map.key("schemes", WebApiModel.Schemes in api)

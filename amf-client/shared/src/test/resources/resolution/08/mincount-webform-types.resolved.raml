@@ -1,9 +1,7 @@
 #%RAML 0.8
 title: Amazon simple storage API
 version: 1
-protocols:
-  - https
-baseUri: {destinationBucket}.s3.amazonaws.com/
+baseUri: https://{destinationBucket}.s3.amazonaws.com
 /:
   post:
     body:

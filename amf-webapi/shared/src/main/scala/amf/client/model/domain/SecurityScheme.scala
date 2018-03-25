@@ -86,6 +86,10 @@ case class SecurityScheme(override private[amf] val _internal: InternalSecurityS
 
   def withApiKeySettings(): ApiKeySettings = _internal.withApiKeySettings()
 
+  def withHttpSettings(): HttpSettings = _internal.withHttpSettings()
+
+  def withOpenIdConnectSettings(): OpenIdConnectSettings = _internal.withOpenIdConnectSettings()
+
   override def linkTarget: Option[DomainElement] =
     _internal.linkTarget.map { case ss: InternalSecurityScheme => ss }.asClient
 

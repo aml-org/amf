@@ -84,7 +84,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
       baseUriParametersKey,
       entry => {
         val parameters = entry.value.as[YMap].entries.map { paramEntry =>
-          Raml08ParameterParser(paramEntry, request.getOrCreate.withBaseUriParameter, parseOptional)
+          Raml08ParameterParser(paramEntry, request.getOrCreate.withUriParameter, parseOptional)
             .parse()
             .withBinding("path")
         }

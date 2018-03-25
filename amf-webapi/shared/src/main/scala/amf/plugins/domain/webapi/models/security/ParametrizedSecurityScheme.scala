@@ -1,6 +1,7 @@
 package amf.plugins.domain.webapi.models.security
 
 import amf.client.model.StrField
+import amf.core.metamodel.Obj
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel.{Settings => SettingsField, _}
@@ -43,9 +44,21 @@ case class ParametrizedSecurityScheme(fields: Fields, annotations: Annotations)
     settings
   }
 
+  def withHttpSettings(): HttpSettings = {
+    val settings = HttpSettings()
+    set(SettingsField, settings)
+    settings
+  }
+
+  def withOpenIdConnectSettings(): OpenIdConnectSettings = {
+    val settings = OpenIdConnectSettings()
+    set(SettingsField, settings)
+    settings
+  }
+
   override def adopted(parent: String): this.type = withId(parent + "/" + name.value())
 
-  override def meta = ParametrizedSecuritySchemeModel
+  override def meta: Obj = ParametrizedSecuritySchemeModel
 }
 
 object ParametrizedSecurityScheme {

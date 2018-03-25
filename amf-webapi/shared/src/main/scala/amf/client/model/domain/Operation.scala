@@ -27,6 +27,8 @@ case class Operation(override private[amf] val _internal: InternalOperation) ext
   def request: Request                    = _internal.request
   def responses: ClientList[Response]     = _internal.responses.asClient
   def security: ClientList[DomainElement] = _internal.security.asClient
+  def callbacks: ClientList[Callback]     = _internal.callbacks.asClient
+  def servers: ClientList[Server]         = _internal.servers.asClient
 
   /** Set method property of this Operation. */
   def withMethod(method: String): this.type = {
@@ -100,6 +102,18 @@ case class Operation(override private[amf] val _internal: InternalOperation) ext
     this
   }
 
+  /** Set callbacks property of this Operation. */
+  def withCallbacks(callbacks: ClientList[Callback]): this.type = {
+    _internal.withCallbacks(callbacks.asInternal)
+    this
+  }
+
+  /** Set servers property of this Operation. */
+  def withServers(servers: ClientList[Server]): this.type = {
+    _internal.withServers(servers.asInternal)
+    this
+  }
+
   /**
     * Adds one Response to the responses property of this Operation and returns it for population.
     * Name property of the response is required.
@@ -110,4 +124,16 @@ case class Operation(override private[amf] val _internal: InternalOperation) ext
     * Adds a Request to this Operation and returns it for population.
     */
   def withRequest(): Request = _internal.withRequest()
+
+  /**
+    * Adds one Callback to the callbacks property of this Operation and returns it for population.
+    * Name property of the callback is required.
+    */
+  def withCallback(name: String): Callback = _internal.withCallback(name)
+
+  /**
+    * Adds one Server to the servers property of this Operation and returns it for population.
+    * Url property of the server is required.
+    */
+  def withServer(name: String): Server = _internal.withServer(name)
 }

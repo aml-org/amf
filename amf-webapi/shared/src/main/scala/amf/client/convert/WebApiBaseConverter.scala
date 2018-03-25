@@ -2,6 +2,8 @@ package amf.client.convert
 
 import amf.client.model.domain.{
   ApiKeySettings => ClientApiKeySettings,
+  HttpSettings => ClientHttpSettings,
+  OpenIdConnectSettings => ClientOpenIdConnectSettings,
   CreativeWork => ClientCreativeWork,
   EndPoint => ClientEndPoint,
   License => ClientLicense,
@@ -10,6 +12,9 @@ import amf.client.model.domain.{
   Operation => ClientOperation,
   Organization => ClientOrganization,
   Parameter => ClientParameter,
+  Server => ClientServer,
+  Callback => ClientCallback,
+  Encoding => ClientEncoding,
   ParametrizedSecurityScheme => ClientParametrizedSecurityScheme,
   Payload => ClientPayload,
   Request => ClientRequest,
@@ -18,7 +23,9 @@ import amf.client.model.domain.{
   Scope => ClientScope,
   SecurityScheme => ClientSecurityScheme,
   Settings => ClientSettings,
-  Trait => ClientTrait
+  Trait => ClientTrait,
+  TemplatedLink => ClientTemplatedLink,
+  IriTemplateMapping => ClientIriTemplatedMaping
 }
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.domain.shapes.models.CreativeWork
@@ -43,6 +50,11 @@ trait WebApiBaseConverter
     with SecuritySchemeConverter
     with SettingsConverter
     with ScopeConverter
+    with ServerConverter
+    with IriTemplateMappingConverter
+    with TemplatedLinkConverter
+    with CallbackConverter
+    with EncodingConverter
 
 trait EndPointConverter extends PlatformSecrets {
 
@@ -89,6 +101,30 @@ trait ParameterConverter extends PlatformSecrets {
   implicit object ParameterMatcher extends BidirectionalMatcher[Parameter, ClientParameter] {
     override def asClient(from: Parameter): ClientParameter   = platform.wrap[ClientParameter](from)
     override def asInternal(from: ClientParameter): Parameter = from._internal
+  }
+}
+
+trait ServerConverter extends PlatformSecrets {
+
+  implicit object ServerMatcher extends BidirectionalMatcher[Server, ClientServer] {
+    override def asClient(from: Server): ClientServer   = platform.wrap[ClientServer](from)
+    override def asInternal(from: ClientServer): Server = from._internal
+  }
+}
+
+trait CallbackConverter extends PlatformSecrets {
+
+  implicit object CallbackMatcher extends BidirectionalMatcher[Callback, ClientCallback] {
+    override def asClient(from: Callback): ClientCallback   = platform.wrap[ClientCallback](from)
+    override def asInternal(from: ClientCallback): Callback = from._internal
+  }
+}
+
+trait EncodingConverter extends PlatformSecrets {
+
+  implicit object EncodingMatcher extends BidirectionalMatcher[Encoding, ClientEncoding] {
+    override def asClient(from: Encoding): ClientEncoding   = platform.wrap[ClientEncoding](from)
+    override def asInternal(from: ClientEncoding): Encoding = from._internal
   }
 }
 
@@ -169,12 +205,24 @@ trait SettingsConverter extends PlatformSecrets {
     override def asInternal(from: ClientApiKeySettings): ApiKeySettings = from._internal
   }
 
+  implicit object HttpSettingsMatcher extends BidirectionalMatcher[HttpSettings, ClientHttpSettings] {
+    override def asClient(from: HttpSettings): ClientHttpSettings   = ClientHttpSettings(from)
+    override def asInternal(from: ClientHttpSettings): HttpSettings = from._internal
+  }
+  implicit object OpenIdConnectSettingsMatcher
+      extends BidirectionalMatcher[OpenIdConnectSettings, ClientOpenIdConnectSettings] {
+    override def asClient(from: OpenIdConnectSettings): ClientOpenIdConnectSettings   = ClientOpenIdConnectSettings(from)
+    override def asInternal(from: ClientOpenIdConnectSettings): OpenIdConnectSettings = from._internal
+  }
+
   implicit object SettingsMatcher extends BidirectionalMatcher[Settings, ClientSettings] {
     override def asClient(from: Settings): ClientSettings = from match {
-      case oauth1: OAuth1Settings => OAuth1SettingsMatcher.asClient(oauth1)
-      case oauth2: OAuth2Settings => OAuth2SettingsMatcher.asClient(oauth2)
-      case apiKey: ApiKeySettings => ApiKeySettingsMatcher.asClient(apiKey)
-      case base: Settings         => new ClientSettings(base)
+      case oauth1: OAuth1Settings        => OAuth1SettingsMatcher.asClient(oauth1)
+      case oauth2: OAuth2Settings        => OAuth2SettingsMatcher.asClient(oauth2)
+      case apiKey: ApiKeySettings        => ApiKeySettingsMatcher.asClient(apiKey)
+      case http: HttpSettings            => HttpSettingsMatcher.asClient(http)
+      case openId: OpenIdConnectSettings => OpenIdConnectSettingsMatcher.asClient(openId)
+      case base: Settings                => new ClientSettings(base)
     }
 
     override def asInternal(from: ClientSettings): Settings = from._internal
@@ -186,5 +234,23 @@ trait ScopeConverter extends PlatformSecrets {
   implicit object ScopeMatcher extends BidirectionalMatcher[Scope, ClientScope] {
     override def asClient(from: Scope): ClientScope   = platform.wrap[ClientScope](from)
     override def asInternal(from: ClientScope): Scope = from._internal
+  }
+}
+
+trait IriTemplateMappingConverter extends PlatformSecrets {
+
+  implicit object IriTemplateMappingConverter
+      extends BidirectionalMatcher[IriTemplateMapping, ClientIriTemplatedMaping] {
+    override def asClient(from: IriTemplateMapping): ClientIriTemplatedMaping =
+      platform.wrap[ClientIriTemplatedMaping](from)
+    override def asInternal(from: ClientIriTemplatedMaping): IriTemplateMapping = from._internal
+  }
+}
+
+trait TemplatedLinkConverter extends PlatformSecrets {
+
+  implicit object TemplatedLinkConverter extends BidirectionalMatcher[TemplatedLink, ClientTemplatedLink] {
+    override def asClient(from: TemplatedLink): ClientTemplatedLink   = platform.wrap[ClientTemplatedLink](from)
+    override def asInternal(from: ClientTemplatedLink): TemplatedLink = from._internal
   }
 }

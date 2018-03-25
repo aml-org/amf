@@ -6,15 +6,12 @@ import amf.core.model.domain
 import amf.core.model.domain.{AmfArray, DataNode, DomainElement}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.security.ApiKeySettingsModel._
+import amf.plugins.domain.webapi.metamodel.security.HttpSettingsModel._
+import amf.plugins.domain.webapi.metamodel.security.OpenIdConnectSettingsModel._
 import amf.plugins.domain.webapi.metamodel.security.OAuth1SettingsModel.{AuthorizationUri => AuthorizationUri1, _}
 import amf.plugins.domain.webapi.metamodel.security.OAuth2SettingsModel.{AuthorizationUri => AuthorizationUri2, _}
 import amf.plugins.domain.webapi.metamodel.security.SettingsModel._
-import amf.plugins.domain.webapi.metamodel.security.{
-  ApiKeySettingsModel,
-  OAuth1SettingsModel,
-  OAuth2SettingsModel,
-  SettingsModel
-}
+import amf.plugins.domain.webapi.metamodel.security._
 
 class Settings(val fields: Fields, val annotations: Annotations) extends DomainElement {
   def additionalProperties: DataNode = fields(AdditionalProperties)
@@ -26,10 +23,12 @@ class Settings(val fields: Fields, val annotations: Annotations) extends DomainE
 
   def cloneSettings(parent: String): Settings = {
     val cloned = this match {
-      case _: OAuth1Settings => OAuth1Settings(annotations)
-      case _: OAuth2Settings => OAuth2Settings(annotations)
-      case _: ApiKeySettings => ApiKeySettings(annotations)
-      case _: Settings       => Settings(annotations)
+      case _: OAuth1Settings        => OAuth1Settings(annotations)
+      case _: OAuth2Settings        => OAuth2Settings(annotations)
+      case _: ApiKeySettings        => ApiKeySettings(annotations)
+      case _: HttpSettings          => HttpSettings(annotations)
+      case _: OpenIdConnectSettings => OpenIdConnectSettings(annotations)
+      case _: Settings              => Settings(annotations)
     }
     cloned.adopted(parent)
 
@@ -78,7 +77,7 @@ case class OAuth1Settings(override val fields: Fields, override val annotations:
 
   override def adopted(parent: String): this.type = withId(parent + "/settings/oauth1")
 
-  override def meta = OAuth1SettingsModel
+  override def meta: Obj = OAuth1SettingsModel
 }
 
 object OAuth1Settings {
@@ -95,6 +94,7 @@ case class OAuth2Settings(override val fields: Fields, override val annotations:
   def accessTokenUri: StrField           = fields.field(AccessTokenUri)
   def authorizationGrants: Seq[StrField] = fields.field(AuthorizationGrants)
   def flow: StrField                     = fields.field(Flow)
+  def refreshUri: StrField               = fields.field(RefreshUri)
   def scopes: Seq[Scope]                 = fields.field(Scopes)
 
   def withAuthorizationUri(authorizationUri: String): this.type =
@@ -102,12 +102,13 @@ case class OAuth2Settings(override val fields: Fields, override val annotations:
   def withAccessTokenUri(accessTokenUri: String): this.type = set(AccessTokenUri, accessTokenUri)
   def withAuthorizationGrants(authorizationGrants: Seq[String]): this.type =
     set(AuthorizationGrants, authorizationGrants)
-  def withFlow(flow: String): this.type         = set(Flow, flow)
-  def withScopes(scopes: Seq[Scope]): this.type = setArray(Scopes, scopes)
+  def withFlow(flow: String): this.type             = set(Flow, flow)
+  def withRefreshUri(refreshUri: String): this.type = set(RefreshUri, refreshUri)
+  def withScopes(scopes: Seq[Scope]): this.type     = setArray(Scopes, scopes)
 
   override def adopted(parent: String): this.type = withId(parent + "/settings/oauth2")
 
-  override def meta = OAuth2SettingsModel
+  override def meta: Obj = OAuth2SettingsModel
 }
 
 object OAuth2Settings {
@@ -128,7 +129,7 @@ case class ApiKeySettings(override val fields: Fields, override val annotations:
 
   override def adopted(parent: String): this.type = withId(parent + "/settings/api-key")
 
-  override def meta = ApiKeySettingsModel
+  override def meta: Obj = ApiKeySettingsModel
 }
 
 object ApiKeySettings {
@@ -138,11 +139,53 @@ object ApiKeySettings {
   def apply(annotations: Annotations): ApiKeySettings = new ApiKeySettings(Fields(), annotations)
 }
 
+case class HttpSettings(override val fields: Fields, override val annotations: Annotations)
+    extends Settings(fields, annotations) {
+
+  def scheme: StrField       = fields.field(Scheme)
+  def bearerFormat: StrField = fields.field(BearerFormat)
+
+  def withScheme(scheme: String): this.type             = set(Scheme, scheme)
+  def withBearerFormat(bearerFormat: String): this.type = set(BearerFormat, bearerFormat)
+
+  override def adopted(parent: String): this.type = withId(parent + "/settings/http")
+
+  override def meta: Obj = HttpSettingsModel
+}
+
+object HttpSettings {
+
+  def apply(): HttpSettings = apply(Annotations())
+
+  def apply(annotations: Annotations): HttpSettings = new HttpSettings(Fields(), annotations)
+}
+
+case class OpenIdConnectSettings(override val fields: Fields, override val annotations: Annotations)
+    extends Settings(fields, annotations) {
+
+  def url: StrField = fields.field(Url)
+
+  def withUrl(url: String): this.type = set(Url, url)
+
+  override def adopted(parent: String): this.type = withId(parent + "/settings/open-id-connect")
+
+  override def meta: Obj = OpenIdConnectSettingsModel
+}
+
+object OpenIdConnectSettings {
+
+  def apply(): OpenIdConnectSettings = apply(Annotations())
+
+  def apply(annotations: Annotations): OpenIdConnectSettings = new OpenIdConnectSettings(Fields(), annotations)
+}
+
 trait WithSettings {
   def withDefaultSettings(): Settings
   def withOAuth1Settings(): OAuth1Settings
   def withOAuth2Settings(): OAuth2Settings
   def withApiKeySettings(): ApiKeySettings
+  def withHttpSettings(): HttpSettings
+  def withOpenIdConnectSettings(): OpenIdConnectSettings
 
   def id: String
 }

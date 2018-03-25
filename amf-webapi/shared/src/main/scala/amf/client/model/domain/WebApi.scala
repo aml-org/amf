@@ -18,10 +18,8 @@ case class WebApi(override private[amf] val _internal: InternalWebApi) extends D
 
   def name: StrField                                   = _internal.name
   def description: StrField                            = _internal.description
-  def host: StrField                                   = _internal.host
   def schemes: ClientList[StrField]                    = _internal.schemes.asClient
   def endPoints: ClientList[EndPoint]                  = _internal.endPoints.asClient
-  def basePath: StrField                               = _internal.basePath
   def accepts: ClientList[StrField]                    = _internal.accepts.asClient
   def contentType: ClientList[StrField]                = _internal.contentType.asClient
   def version: StrField                                = _internal.version
@@ -29,7 +27,7 @@ case class WebApi(override private[amf] val _internal: InternalWebApi) extends D
   def provider: Organization                           = _internal.provider
   def license: License                                 = _internal.license
   def documentations: ClientList[CreativeWork]         = _internal.documentations.asClient
-  def baseUriParameters: ClientList[Parameter]         = _internal.baseUriParameters.asClient
+  def servers: ClientList[Server]                      = _internal.servers.asClient
   def security: ClientList[ParametrizedSecurityScheme] = _internal.security.asClient
 
   /** Set name property of this WebApi. */
@@ -44,12 +42,6 @@ case class WebApi(override private[amf] val _internal: InternalWebApi) extends D
     this
   }
 
-  /** Set host property of this WebApi. */
-  def withHost(host: String): this.type = {
-    _internal.withHost(host)
-    this
-  }
-
   /** Set schemes property of this WebApi. */
   def withSchemes(schemes: ClientList[String]): this.type = {
     _internal.withSchemes(schemes.asInternal)
@@ -59,12 +51,6 @@ case class WebApi(override private[amf] val _internal: InternalWebApi) extends D
   /** Set endPoints property of this WebApi. */
   def withEndPoints(endPoints: ClientList[EndPoint]): this.type = {
     _internal.withEndPoints(endPoints.asInternal)
-    this
-  }
-
-  /** Set basePath property of this WebApi. */
-  def withBasePath(path: String): this.type = {
-    _internal.withBasePath(path)
     this
   }
 
@@ -110,6 +96,12 @@ case class WebApi(override private[amf] val _internal: InternalWebApi) extends D
     this
   }
 
+  /** Set servers property of this WebApi using a list of Server objects. */
+  def withServers(servers: ClientList[Server]): this.type = {
+    _internal.withServers(servers.asInternal)
+    this
+  }
+
   /** Set security property of this WebApi using a list of ParametrizedSecurityScheme */
   def withSecurity(security: ClientList[ParametrizedSecurityScheme]): this.type = {
     _internal.withSecurity(security.asInternal)
@@ -128,12 +120,6 @@ case class WebApi(override private[amf] val _internal: InternalWebApi) extends D
     */
   def withDocumentationUrl(url: String): CreativeWork = _internal.withDocumentationUrl(url)
 
-  /** Set baseUriParameters property of this WebApi. */
-  def withBaseUriParameters(parameters: ClientList[Parameter]): this.type = {
-    _internal.withBaseUriParameters(parameters.asInternal)
-    this
-  }
-
   /**
     * Adds one EndPoint to the endPoints property of this WebApi and returns it for population.
     * Path property of the endPoint is required.
@@ -141,10 +127,10 @@ case class WebApi(override private[amf] val _internal: InternalWebApi) extends D
   def withEndPoint(path: String): EndPoint = _internal.withEndPoint(path)
 
   /**
-    * Adds one Parameter to the baseUriParameters property of this WebApi and returns it for population.
-    * Name property of the parameter is required.
+    * Adds one Server to the servers property of this WebApi and returns it for population.
+    * url property of the server is required.
     */
-  def withBaseUriParameter(name: String): Parameter = _internal.withBaseUriParameter(name)
+  def withServer(url: String): Server = _internal.withServer(url)
 
   def sourceVendor: Option[Vendor] = _internal.sourceVendor
 }

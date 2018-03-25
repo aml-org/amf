@@ -1,9 +1,7 @@
 #%RAML 0.8
 title: ZEncoder API
 version: v2
-protocols:
-  - https
-baseUri: app.zencoder.com/api/{version}
+baseUri: https://app.zencoder.com/api/{version}
 /jobs:
   displayName: Jobs
   post:

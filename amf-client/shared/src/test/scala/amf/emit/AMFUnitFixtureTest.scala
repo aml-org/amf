@@ -1,5 +1,6 @@
 package amf.emit
 
+import amf.core.annotations.SynthesizedField
 import amf.core.model.document.{Document, Module}
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.domain.shapes.models.CreativeWork
@@ -21,17 +22,19 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
   def `module/bare`: Module = libraryBare()
 
   private def bare(): WebApi = {
-    WebApi()
+    val api = WebApi()
       .withName("test")
       .withDescription("test description")
-      .withHost("localhost.com")
       .withSchemes(List("http", "https"))
-      .withBasePath("api")
       .withAccepts(List("application/json"))
       .withContentType(List("application/json"))
       .withVersion("1.1")
       .withTermsOfService("termsOfService")
       .adopted("file:///tmp/test")
+
+    api.withServer("localhost.com/api").add(SynthesizedField())
+
+    api
   }
 
   private def basic(): WebApi = {

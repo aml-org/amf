@@ -24,6 +24,8 @@ object ResponseModel extends DomainElementModel with KeyField with OptionalField
 
   val Payloads = Field(Array(PayloadModel), Http + "payload")
 
+  val Links = Field(Array(TemplatedLinkModel), Http + "link")
+
   val Examples = Field(Array(ExampleModel), Document + "examples")
 
   override val key: Field = StatusCode
@@ -32,7 +34,7 @@ object ResponseModel extends DomainElementModel with KeyField with OptionalField
 
   override def fields: List[Field] =
     LinkableElementModel.fields ++
-      List(Name, Description, StatusCode, Headers, Payloads, Examples) ++ DomainElementModel.fields
+      List(Name, Description, StatusCode, Headers, Payloads, Links, Examples) ++ DomainElementModel.fields
 
   override def modelInstance = Response()
 }

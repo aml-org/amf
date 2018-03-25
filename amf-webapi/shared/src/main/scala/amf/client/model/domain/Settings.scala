@@ -3,6 +3,8 @@ package amf.client.model.domain
 import amf.client.convert.WebApiClientConverters._
 import amf.client.model.StrField
 import amf.plugins.domain.webapi.models.security.{
+  OpenIdConnectSettings => InternalOpenIdConnectSettings,
+  HttpSettings => InternalHttpSettings,
   ApiKeySettings => InternalApiKeySettings,
   OAuth1Settings => InternalOAuth1Settings,
   OAuth2Settings => InternalOAuth2Settings,
@@ -75,6 +77,7 @@ case class OAuth2Settings(override private[amf] val _internal: InternalOAuth2Set
   def accessTokenUri: StrField                  = _internal.accessTokenUri
   def authorizationGrants: ClientList[StrField] = _internal.authorizationGrants.asClient
   def flow: StrField                            = _internal.flow
+  def refreshUri: StrField                      = _internal.refreshUri
   def scopes: ClientList[Scope]                 = _internal.scopes.asClient
 
   /** Set authorizationUri property of this OAuth2Settings. */
@@ -98,6 +101,12 @@ case class OAuth2Settings(override private[amf] val _internal: InternalOAuth2Set
   /** Set flow property of this OAuth2Settings] */
   def withFlow(flow: String): this.type = {
     _internal.withFlow(flow)
+    this
+  }
+
+  /** Set refreshUri property of this OAuth2Settings] */
+  def withRefreshUri(refreshUri: String): this.type = {
+    _internal.withRefreshUri(refreshUri)
     this
   }
 
@@ -126,6 +135,44 @@ case class ApiKeySettings(override private[amf] val _internal: InternalApiKeySet
   /** Set in property of this ApiKeySettings] */
   def withIn(in: String): this.type = {
     _internal.withIn(in)
+    this
+  }
+}
+
+@JSExportAll
+case class HttpSettings(override private[amf] val _internal: InternalHttpSettings) extends Settings(_internal) {
+
+  @JSExportTopLevel("model.domain.HttpSettings")
+  def this() = this(InternalHttpSettings())
+
+  def scheme: StrField       = _internal.scheme
+  def bearerFormat: StrField = _internal.bearerFormat
+
+  /** Set scheme property of this HttpSettings. */
+  def withScheme(scheme: String): this.type = {
+    _internal.withScheme(scheme)
+    this
+  }
+
+  /** Set bearerFormat property of this HttpSettings] */
+  def withBearerFormat(bearerFormat: String): this.type = {
+    _internal.withBearerFormat(bearerFormat)
+    this
+  }
+}
+
+@JSExportAll
+case class OpenIdConnectSettings(override private[amf] val _internal: InternalOpenIdConnectSettings)
+    extends Settings(_internal) {
+
+  @JSExportTopLevel("model.domain.OpenIdConnectSettings")
+  def this() = this(InternalOpenIdConnectSettings())
+
+  def url: StrField = _internal.url
+
+  /** Set openIdConnectUrl property of this OpenIdConnectSettings. */
+  def withUrl(url: String): this.type = {
+    _internal.withUrl(url)
     this
   }
 }

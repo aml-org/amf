@@ -29,7 +29,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |    "version": "1.1"
         |  },
         |  "host": "localhost.com",
-        |  "basePath": "api",
+        |  "basePath": "/api",
         |    "consumes": [
         |    "application/json"
         |  ],
@@ -50,6 +50,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
     val expected =
       """#%RAML 1.0
         |title: test
+        |baseUri: localhost.com/api
         |description: test description
         |mediaType:
         |  - application/json
@@ -57,8 +58,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |(termsOfService): termsOfService
         |protocols:
         |  - http
-        |  - https
-        |baseUri: localhost.com/api""".stripMargin
+        |  - https""".stripMargin
 
     new AMFRenderer(`document/api/bare`, Raml, Yaml, RenderOptions()).renderToString.map(assert(_, expected))
   }
@@ -92,22 +92,18 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |            "@value": "test description"
         |          }
         |        ],
-        |        "http://raml.org/vocabularies/http#host": [
+        |        "http://raml.org/vocabularies/http#server": [
         |          {
-        |            "@value": "localhost.com"
-        |          }
-        |        ],
-        |        "http://raml.org/vocabularies/http#scheme": [
-        |          {
-        |            "@value": "http"
-        |          },
-        |          {
-        |            "@value": "https"
-        |          }
-        |        ],
-        |        "http://raml.org/vocabularies/http#basePath": [
-        |          {
-        |            "@value": "api"
+        |            "@id": "file:///tmp/test#/web-api/localhost.com%2Fapi",
+        |            "@type": [
+        |              "http://raml.org/vocabularies/http#Server",
+        |              "http://raml.org/vocabularies/document#DomainElement"
+        |            ],
+        |            "http://raml.org/vocabularies/http#url": [
+        |              {
+        |                "@value": "localhost.com/api"
+        |              }
+        |            ]
         |          }
         |        ],
         |        "http://raml.org/vocabularies/http#accepts": [
@@ -118,6 +114,14 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |        "http://raml.org/vocabularies/http#contentType": [
         |          {
         |            "@value": "application/json"
+        |          }
+        |        ],
+        |        "http://raml.org/vocabularies/http#scheme": [
+        |          {
+        |            "@value": "http"
+        |          },
+        |          {
+        |            "@value": "https"
         |          }
         |        ],
         |        "http://schema.org/version": [
@@ -167,22 +171,18 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |            "@value": "test description"
         |          }
         |        ],
-        |        "http://raml.org/vocabularies/http#host": [
+        |        "http://raml.org/vocabularies/http#server": [
         |          {
-        |            "@value": "localhost.com"
-        |          }
-        |        ],
-        |        "http://raml.org/vocabularies/http#scheme": [
-        |          {
-        |            "@value": "http"
-        |          },
-        |          {
-        |            "@value": "https"
-        |          }
-        |        ],
-        |        "http://raml.org/vocabularies/http#basePath": [
-        |          {
-        |            "@value": "api"
+        |            "@id": "file:///tmp/test#/web-api/localhost.com%2Fapi",
+        |            "@type": [
+        |              "http://raml.org/vocabularies/http#Server",
+        |              "http://raml.org/vocabularies/document#DomainElement"
+        |            ],
+        |            "http://raml.org/vocabularies/http#url": [
+        |              {
+        |                "@value": "localhost.com/api"
+        |              }
+        |            ]
         |          }
         |        ],
         |        "http://raml.org/vocabularies/http#accepts": [
@@ -193,6 +193,14 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |        "http://raml.org/vocabularies/http#contentType": [
         |          {
         |            "@value": "application/json"
+        |          }
+        |        ],
+        |        "http://raml.org/vocabularies/http#scheme": [
+        |          {
+        |            "@value": "http"
+        |          },
+        |          {
+        |            "@value": "https"
         |          }
         |        ],
         |        "http://schema.org/version": [

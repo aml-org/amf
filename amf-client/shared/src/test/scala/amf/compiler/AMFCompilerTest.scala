@@ -184,7 +184,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
 
   private def assertDocument(unit: BaseUnit): Assertion = unit match {
     case d: Document =>
-      d.encodes.asInstanceOf[WebApi].host.value() should be("api.example.com")
+      d.encodes.asInstanceOf[WebApi].servers.headOption.map(_.url.value()).getOrElse("") should be("api.example.com")
       d.encodes.asInstanceOf[WebApi].name.value() should be("test")
   }
 

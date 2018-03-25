@@ -7,9 +7,10 @@ import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.plugins.domain.shapes.models.NodeShape
 import amf.core.vocabulary.Namespace.{Shacl, Shapes}
 import amf.core.vocabulary.ValueType
+import amf.plugins.domain.webapi.metamodel.IriTemplateMappingModel
 
 /**
-  * Node shape metamodel.
+  * Node shape metaModel.
   */
 object NodeShapeModel extends AnyShapeModel {
 
@@ -24,6 +25,8 @@ object NodeShapeModel extends AnyShapeModel {
   val Discriminator = Field(Str, Shapes + "discriminator")
 
   val DiscriminatorValue = Field(Str, Shapes + "discriminatorValue")
+
+  val DiscriminatorMapping = Field(Array(IriTemplateMappingModel), Shapes + "discriminatorMapping")
 
   val Properties = Field(Array(PropertyShapeModel), Shacl + "property")
 

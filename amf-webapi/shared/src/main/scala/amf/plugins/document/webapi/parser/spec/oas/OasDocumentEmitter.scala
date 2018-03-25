@@ -84,12 +84,7 @@ case class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: Oa
 
       result += InfoEmitter(fs, ordering)
 
-      fs.entry(WebApiModel.Host).map(f => result += ValueEmitter("host", f))
-
-      fs.entry(WebApiModel.BaseUriParameters)
-        .map(f => result += RamlParametersEmitter("x-base-uri-parameters", f, ordering, Nil)(toRaml(spec)))
-
-      fs.entry(WebApiModel.BasePath).map(f => result += ValueEmitter("basePath", f))
+      fs.entry(WebApiModel.Servers).map(f => result ++= OasServersEmitter(api, f, ordering, references).emitters())
 
       fs.entry(WebApiModel.Accepts)
         .map(f => result += ArrayEmitter("consumes", f, ordering, force = true))

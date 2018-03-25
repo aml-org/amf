@@ -1,12 +1,12 @@
 package amf.plugins.domain.webapi.resolution.stages
 
 import amf.ProfileNames
-import amf.core.utils._
+import amf.core.annotations.SynthesizedField
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.AmfArray
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.webapi.parser.spec.domain.Parameters
-import amf.plugins.domain.webapi.metamodel.{EndPointModel, RequestModel, WebApiModel}
+import amf.plugins.domain.webapi.metamodel.{EndPointModel, RequestModel, ServerModel}
 import amf.plugins.domain.webapi.models.{Operation, Parameter, WebApi}
 
 /**
@@ -25,9 +25,22 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
     }
   }
 
+  def defaultServerParameters(webApi: WebApi): Seq[Parameter] = {
+    val server = webApi.servers.find(_.annotations.find(classOf[SynthesizedField]).isDefined)
+
+    server
+      .map { s =>
+        val vars = s.variables
+        s.fields.remove(ServerModel.Variables)
+        vars
+      }
+      .getOrElse(Nil)
+  }
+
   /**
     * In AMF we push all the parameters at the operation level.
     * Parameter references should be already resolved in previous steps.
+    *
     * @param unit BaseUnit in
     * @return unit BaseUnit out
     */
@@ -36,8 +49,7 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
       case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
         // collect baseUri parameters
         val webApi      = doc.encodes.asInstanceOf[WebApi]
-        var finalParams = Parameters(path = webApi.baseUriParameters)
-        webApi.fields.remove(WebApiModel.BaseUriParameters)
+        var finalParams = Parameters(path = defaultServerParameters(webApi))
         // collect endpoint parameters
         webApi.endPoints.foreach { endpoint =>
           finalParams = finalParams.merge(Parameters.classified(endpoint.path.value(), endpoint.parameters))

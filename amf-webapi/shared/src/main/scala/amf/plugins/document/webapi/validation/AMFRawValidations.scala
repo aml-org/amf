@@ -11,7 +11,6 @@ object AMFRawValidations {
     "amf-parser:mandatory-external-doc-url	Swagger external-doc element without URL	OpenAPI	Domain	schema-org:CreativeWork	schema-org:url	PropertyShape	sh:path	sh:minCount	1	Documentation URL is mandatory in API external documentation	URL is mandatory in External Documentation object",
     "amf-parser:mandatory-license-name	Swagger License node without name	OpenAPI	Domain	raml-http:License	schema-org:name	PropertyShape	sh:path	sh:minCount	1	License name is mandatory if license information is included	Name is mandatory in License object",
     "amf-parser:strict-url-strings	URLs in values mapped to schema-org:url must be valid	AMF	Domain	raml-doc:DomainElement	schema-org:url	NodeShape	sh:targetObjectsOf	sh:nodeKind	sh:IRI	URLs must be valid	URLs must be valid",
-    "amf-parser:host-valid-domain	Domains must be valid domain names	OpenAPI	Domain	schema-org:WebAPI	raml-http:host	PropertyShape	sh:path	sh:pattern	^[^{}\\/ :\\\\]+(?::\\d+)?$	BaseUris must be valid and not templates	Host information must be valid host",
     "amf-parser:empty-responses	No responses declared	OpenAPI	Domain	hydra:Operation	hydra:returns	PropertyShape	sh:path	sh:minCount	1	Responses array cannot be empty	Responses cannot be empty",
     "amf-parser:empty-enum	Enum in types cannot be empty	OpenAPI	Domain	raml-shapes:Shape	sh:in	PropertyShape	sh:path	sh:node	amf-parser:NonEmptyList	Property 'enum' must have at least one value	Property 'enum' for a Schema object must have at least one value",
     "amf-parser:raml-status-code	Status code must match a valid numeric status code	RAML	Domain	raml-http:Response	hydra:statusCode	PropertyShape	sh:path	sh:pattern	^([0-9]{3})$	Status code must be numeric	Status code must be numeric",
@@ -30,12 +29,7 @@ object AMFRawValidations {
     "		AMF	Domain	raml-doc:DomainElement	schema-org:description	PropertyShape	sh:path	sh:datatype	xsd:string	Descriptions must be strings	Description must be strings",
     "		AMF	Domain	raml-doc:DomainElement	schema-org:description	PropertyShape	sh:path	sh:maxCount	1	Descriptions must be single values	Descriptions must be single values",
     "		AMF	Domain	schema-org:WebAPI	schema-org:name	PropertyShape	sh:path	sh:minCount	1	API name must be a single value	Info object 'title' must be a single value",
-    "		AMF	Domain	schema-org:WebAPI	raml-http:host	PropertyShape	sh:path	sh:datatype	xsd:string	API baseUri host information must be a string	Swagger object 'host' must be a string",
-    "		AMF	Domain	schema-org:WebAPI	raml-http:host	PropertyShape	sh:path	sh:maxCount	1	API baseUri host information must be a single value	Swagger object 'host' must be a single value",
     "		AMF	Domain	schema-org:WebAPI	raml-http:scheme	PropertyShape	sh:path	sh:datatype	xsd:string	API BaseUri scheme information must be a string	Swagger object 'schemes' must be strings",
-    "		AMF	Domain	schema-org:WebAPI	raml-http:basePath	PropertyShape	sh:path	sh:datatype	xsd:string	API baseUri path must be a string	Swagger object 'basePath' must be a string",
-    "		AMF	Domain	schema-org:WebAPI	raml-http:basePath	PropertyShape	sh:path	sh:maxCount	1	API baseUri path must a single value	Swagger object 'basePath' must be a single value.",
-    "		AMF	Domain	schema-org:WebAPI	raml-http:basePath	PropertyShape	sh:path	sh:pattern	^/	API baseUri path must start with a '/'	Swagger object 'basePath' must start with a '/'.",
     "		AMF	Domain	schema-org:WebAPI	raml-http:accepts	PropertyShape	sh:path	sh:datatype	xsd:string	API default media types consumed must be strings	Swagger object 'consumes' must be strings",
     "		AMF	Domain	schema-org:WebAPI	raml-http:mediaType	PropertyShape	sh:path	sh:datatype	xsd:string	API default media types produced must be strings	Swagger object 'produces' must be strings",
     "		AMF	Domain	schema-org:WebAPI	schema-org:version	PropertyShape	sh:path	sh:datatype	xsd:string	API version must be a string	Info object 'version' must be string",
@@ -148,5 +142,8 @@ object AMFRawValidations {
     "		AMF	Domain	raml-doc:DomainProperty	raml-shapes:schema	PropertyShape	sh:path	sh:maxCount	1	type must be a single value for a RAML annotationType	schema must be a single value for an extension type",
     "		AMF	Domain	raml-doc:DomainProperty	raml-shapes:schema	PropertyShape	sh:path	sh:class	raml-shapes:Shape	type value must be a RAML Type	schema value must be a Schema object",
     "		AMF	Domain	raml-http:Tag	schema-org:name	PropertyShape	sh:path	sh:minCount	1	Tag must have a name	Tag object must have a name property",
+    "		AMF	Domain	raml-http:Server	raml-http:url	PropertyShape	sh:path	sh:datatype	xsd:string	API baseUri host information must be a string	Swagger object 'host' and 'basePath' must be a string",
+    "		AMF	Domain	raml-http:Server	schema-org:description	PropertyShape	sh:path	sh:datatype	xsd:string	Server 'description' property must be a string	Server 'description' property must be a string",
+    "		AMF	Domain	raml-http:Server	raml-http:url	PropertyShape	sh:path	sh:minCount	1	Server must have an 'url' property	Server must have an 'url' property"
   )
 }

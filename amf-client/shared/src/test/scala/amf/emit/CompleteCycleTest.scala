@@ -915,7 +915,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("API with uriParameters in endpoint raml to raml") {
-    cycle("define-uri-parameters.raml", "define-uri-parameters.raml.raml", RamlYamlHint, Raml08)
+    cycle("define-uri-parameters.raml", "define-uri-parameters.raml", RamlYamlHint, Raml08)
   }
 
   test("Message for model objects not supported in 08") {
