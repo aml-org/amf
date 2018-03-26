@@ -1,0 +1,12 @@
+#%RAML 1.0 SecurityScheme
+
+description: |
+  This API supports Pass Through Authentication for staging environment.
+type: Pass Through
+describedBy:
+  queryParameters:
+    api-key-pass-through:
+      type: string
+  headers:
+    api_key_pass_through:
+      type: string

@@ -12,7 +12,7 @@ object WellKnownAnnotation {
     "externalDocs",
     "license",
     "base-uri-parameters",
-    "deprecated",
+    "oas-deprecated",
     "summary",
     "externalDocs",
     "payloads",

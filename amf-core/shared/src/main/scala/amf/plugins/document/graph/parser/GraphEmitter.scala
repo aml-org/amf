@@ -41,6 +41,7 @@ object GraphEmitter extends MetaModelTypeMapping {
 
     def traverse(element: AmfObject, b: EntryBuilder): Unit = {
       val id = element.id
+
       createIdNode(b, id)
 
       val sources = SourceMap(id, element)
@@ -151,8 +152,6 @@ object GraphEmitter extends MetaModelTypeMapping {
         _.obj { b =>
           b.entry(DomainExtensionModel.Name.value.iri(), scalar(_, extension.name.value()))
           field.foreach(f => b.entry(DomainExtensionModel.Element.value.iri(), scalar(_, f.value.iri())))
-          //val sources = SourceMap(extension.id, extension)
-          //createSourcesNode(extension.id + "/source-map", sources, b)
           traverse(extension.extension, b)
         }
       )

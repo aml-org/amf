@@ -1,0 +1,29 @@
+#%RAML 1.0 SecurityScheme
+
+description: |
+  Other custom security method for authorization.
+type: x-custom
+describedBy:
+  queryParameters: 
+    apiUserId: 
+      description: |
+        Your api user ID. Some imaginary value.
+      type: number
+      required: true
+    apiNonce:
+      description: Random string
+      type: string
+  responses:
+    401:
+      description: |
+        Bad token autorization.
+      body: 
+        application/json:
+          type: object
+          properties: 
+            error: 
+              type: boolean
+              description: Always true. Indicates that the response is errord.
+            message: 
+              type: string
+              description: Human readable message describing the error.

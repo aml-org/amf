@@ -17,7 +17,7 @@ class EditingResolutionTest extends BuildCycleTests {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val extendsPath = "amf-client/shared/src/test/resources/resolution/extends/"
-
+  val productionPath = "amf-client/shared/src/test/resources/production/"
 
   test("Simple extends resolution to Raml") {
     cycle("simple-merge.raml", "simple-merge.editing.jsonld", RamlYamlHint, Amf, extendsPath)
@@ -27,6 +27,13 @@ class EditingResolutionTest extends BuildCycleTests {
   test("Types resolution to Raml") {
     cycle("data.raml", "data.editing.jsonld", RamlYamlHint, Amf, extendsPath)
   }
+
+  // TODO: FIXME
+  /*
+  test("Types resolution to Raml") {
+    cycle("googleapis.compredictionv1.2swagger.raml", "googleapis.compredictionv1.2swagger.raml", RamlYamlHint, Amf, productionPath)
+  }
+  */
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = config.target match {
     case Raml08        => RAML08Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)

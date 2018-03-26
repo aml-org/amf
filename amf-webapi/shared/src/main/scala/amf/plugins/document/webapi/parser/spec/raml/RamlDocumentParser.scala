@@ -413,7 +413,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
 
       maybeAnnotationType match {
         case Some(annotationType) =>
-          Raml10TypeParser(annotationType, shape => shape.adopted(custom.id), isAnnotation = true)
+          Raml10TypeParser(annotationType, shape => shape.withName("schema").adopted(custom.id), isAnnotation = true)
             .parse()
             .foreach({ shape =>
               custom.set(CustomDomainPropertyModel.Schema, shape, Annotations(ast))

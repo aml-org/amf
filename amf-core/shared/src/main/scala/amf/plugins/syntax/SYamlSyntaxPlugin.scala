@@ -1,5 +1,6 @@
 package amf.plugins.syntax
 
+import amf.core.benchmark.ExecutionLog
 import amf.core.parser.{ParsedDocument, ParserContext}
 import amf.core.plugins.{AMFPlugin, AMFSyntaxPlugin}
 import org.yaml.model.{YComment, YDocument, YMap, YNode}
@@ -60,6 +61,7 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
         }
     }
 
+    ExecutionLog.log(s"Serialising to format $format")
     if (format == "yaml") {
       Some(YamlRender.render(ast))
     } else {

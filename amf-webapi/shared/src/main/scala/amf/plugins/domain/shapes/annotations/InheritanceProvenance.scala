@@ -12,3 +12,14 @@ object InheritanceProvenance extends AnnotationGraphLoader {
     InheritanceProvenance(annotatedValue)
   }
 }
+
+case class InheritedShapes(baseIds: Seq[String]) extends  SerializableAnnotation {
+  override val name: String  = "inherited-shapes"
+  override val value: String = baseIds.mkString(",")
+}
+
+object InheritedShapes extends AnnotationGraphLoader {
+  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
+    InheritedShapes(annotatedValue.split(","))
+  }
+}

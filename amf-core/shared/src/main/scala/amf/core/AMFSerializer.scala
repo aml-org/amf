@@ -1,6 +1,7 @@
 package amf.core
 
 import amf.client.render.RenderOptions
+import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.plugins.{AMFDocumentPlugin, AMFSyntaxPlugin}
 import amf.core.registries.AMFPluginsRegistry
@@ -33,6 +34,7 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
   def renderToFile(remote: Platform, path: String): Future[Unit] = remote.write(path, render())
 
   protected def render(): String = {
+    ExecutionLog.log(s"AMFSerializer#render: Rendering to $mediaType ($vendor file) ${unit.location}")
     val ast = make()
 
     // Let's try to find a syntax plugin for the media type and vendor

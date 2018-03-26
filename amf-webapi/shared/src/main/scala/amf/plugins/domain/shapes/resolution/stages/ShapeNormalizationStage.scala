@@ -12,6 +12,7 @@ import amf.core.parser.Annotations
 import amf.core.parser.Position.ZERO
 import amf.core.resolution.stages.ResolutionStage
 import amf.core.vocabulary.{Namespace, ValueType}
+import amf.plugins.domain.shapes.annotations.InheritedShapes
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.resolution.stages.shape_normalization.MinShapeAlgorithm
@@ -230,7 +231,7 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean)
       val newMinShape        = minShape(accShape, canonicalSuperNode)
       accShape = canonical(newMinShape)
     }
-    if (keepEditingInfo) accShape.setArrayWithoutId(ShapeModel.Inherits, oldInherits)
+    if (keepEditingInfo) accShape.annotations += InheritedShapes(oldInherits.map(_.id))
     accShape
   }
 
