@@ -39,7 +39,7 @@ class AnnotationsTest extends FunSuite with Matchers with Inspectors {
     ("x-base-uri-parameters", None),
     ("(base-uri-parameters)", None),
     ("x-annotationTypes", None),
-    ("(deprecated)", None),
+    ("(oas-deprecated)", None),
     ("(summary)", None)
   )
 

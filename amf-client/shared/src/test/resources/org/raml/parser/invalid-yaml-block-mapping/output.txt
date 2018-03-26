@@ -27,7 +27,7 @@ Level: Violation
   "required": ["id", "name"]
 '
   Level: Violation
-  Target: 
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/invalid-yaml-block-mapping/input.raml
   Property: 
   Position: Some(LexicalInformation([(1,0)-(20,0)]))
 
@@ -42,13 +42,13 @@ Level: Violation
   Message: Error node '        }
 # above '}' should close in its correct indentation'
   Level: Violation
-  Target: 
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/invalid-yaml-block-mapping/input.raml
   Property: 
   Position: Some(LexicalInformation([(27,0)-(28,51)]))
 
 - Source: http://raml.org/vocabularies/amf/parser#parsing-error
   Message: Not a YMap
   Level: Violation
-  Target: 
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/invalid-yaml-block-mapping/input.raml
   Property: 
   Position: None

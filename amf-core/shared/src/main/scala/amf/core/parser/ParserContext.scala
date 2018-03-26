@@ -14,6 +14,7 @@ import org.yaml.model._
 abstract class ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
 
   val parserCount: Int
+  val currentFile: String
 
   override def handle[T](error: YError, defaultValue: T): T = {
     violation("", error.error, part(error))
@@ -55,7 +56,8 @@ abstract class ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
 
   /** Report constraint failure of severity violation. */
   def violation(node: String, message: String, ast: YPart): Unit = {
-    violation(ParsingErrorSpecification.id(), node, message, ast)
+    val errorLocation = if (node == "") currentFile else node
+    violation(ParsingErrorSpecification.id(), errorLocation, message, ast)
   }
 
   /** Report constraint failure of severity warning. */
@@ -112,9 +114,12 @@ case class ParserContext(rootContextDocument: String = "",
                          refs: Seq[ParsedReference] = Seq.empty,
                          futureDeclarations: FutureDeclarations = EmptyFutureDeclarations(),
                          parserCount: Int = AMFCompilerRunCount.nextRun())
-    extends ErrorHandler
+    extends ErrorHandler {
 
-case class WarningOnlyHandler() extends ErrorHandler {
+  override val currentFile: String = rootContextDocument
+}
+
+case class WarningOnlyHandler(override val currentFile: String) extends ErrorHandler {
   override val parserCount: Int = AMFCompilerRunCount.count
 
   override def handle(node: YPart, e: SyamlException): Unit = {
