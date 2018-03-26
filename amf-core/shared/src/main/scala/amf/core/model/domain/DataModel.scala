@@ -1,7 +1,6 @@
 package amf.core.model.domain
 
 import amf.client.model.StrField
-import amf.core.annotations.ScalarType
 import amf.core.annotations.{DataNodePropertiesAnnotations, LexicalInformation, ScalarType}
 import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.domain.DataNodeModel
@@ -27,7 +26,7 @@ abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
   def withName(name: String): this.type = set(Name, name)
 
   override def adopted(parent: String): this.type = {
-    if (Option(id).isEmpty) withId(parent + "/" + name.value().urlEncoded) else this
+    if (Option(id).isEmpty) withId(parent + "/" + name.option().getOrElse("data-node").urlEncoded) else this
   }
 
   /** Replace all raml variables (any name inside double chevrons -> '<<>>') with the provided values. */
