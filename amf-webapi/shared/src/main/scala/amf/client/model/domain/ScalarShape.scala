@@ -16,8 +16,8 @@ case class ScalarShape(override private[amf] val _internal: InternalScalarShape)
   def pattern: StrField           = _internal.pattern
   def minLength: IntField         = _internal.minLength
   def maxLength: IntField         = _internal.maxLength
-  def minimum: FloatField         = _internal.minimum
-  def maximum: FloatField         = _internal.maximum
+  def minimum: DoubleField        = _internal.minimum
+  def maximum: DoubleField        = _internal.maximum
   def exclusiveMinimum: BoolField = _internal.exclusiveMinimum
   def exclusiveMaximum: BoolField = _internal.exclusiveMaximum
   def format: StrField            = _internal.format
@@ -39,11 +39,11 @@ case class ScalarShape(override private[amf] val _internal: InternalScalarShape)
     _internal.withMaxLength(max)
     this
   }
-  def withMinimum(min: Float): this.type = {
+  def withMinimum(min: Double): this.type = {
     _internal.withMinimum(min)
     this
   }
-  def withMaximum(max: Float): this.type = {
+  def withMaximum(max: Double): this.type = {
     _internal.withMaximum(max)
     this
   }
