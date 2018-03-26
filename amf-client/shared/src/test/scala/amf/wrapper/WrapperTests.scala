@@ -1,6 +1,6 @@
 package amf.wrapper
 
-import amf.AMF
+import amf.client.AMF
 import amf.client.model.document._
 import amf.client.model.domain._
 import amf.client.parse._
@@ -172,8 +172,8 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
 
   test("world-music-test") {
     for {
-      _    <- AMF.init().asFuture
-      unit <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(music).asFuture
+      _      <- AMF.init().asFuture
+      unit   <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(music).asFuture
       report <- AMF.validate(unit, "RAML", "RAML").asFuture
     } yield {
       // println(report)

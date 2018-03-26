@@ -1,5 +1,6 @@
-package amf
+package amf.client
 
+import amf.Core
 import amf.client.convert.CoreClientConverters._
 import amf.client.model.document.{BaseUnit, Dialect}
 import amf.client.parse._
