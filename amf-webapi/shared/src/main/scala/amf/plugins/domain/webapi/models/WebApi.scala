@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi.models
 
 import amf.client.model.StrField
-import amf.core.annotations.SourceVendor
+import amf.core.annotations.{SourceVendor, SynthesizedField}
 import amf.core.metamodel.Obj
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
@@ -53,6 +53,8 @@ case class WebApi(fields: Fields, annotations: Annotations) extends DomainElemen
     add(EndPoints, result)
     result
   }
+
+  def withDefaultServer(url: String): Server = withServer(url).add(SynthesizedField())
 
   def withServer(url: String): Server = {
     val result = Server().withUrl(url)
