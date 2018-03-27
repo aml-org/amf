@@ -7,6 +7,7 @@ import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AbstractVariables, DataNodeParser}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model._
 
 /**
@@ -46,6 +47,9 @@ object AbstractDeclarationParser {
 case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: String, key: String, entryValue: YNode)(
     implicit ctx: WebApiContext) {
   def parse(): AbstractDeclaration = {
+
+    if (entryValue.tagType == YType.Null)
+      ctx.warning(ParserSideValidations.ParsingWarningSpecification.id(), parent, "Generating abstract declaration (resource type / trait)  with null value", entryValue)
 
     ctx.link(entryValue) match {
       case Left(link) => parseReferenced(declaration, link, entryValue).adopted(parent)

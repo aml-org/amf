@@ -3,7 +3,7 @@ package amf.resolution
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{Raml, RamlYamlHint}
-import amf.facades.AMFRenderer
+import amf.facades.{AMFRenderer, Validation}
 
 import scala.concurrent.{ExecutionContext, Future}
 
