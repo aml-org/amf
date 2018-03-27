@@ -12,14 +12,17 @@ import scala.concurrent.Future
 
 abstract class ResolutionTest extends BuildCycleTests {
 
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = config.target match {
-    case Raml08        => RAML08Plugin.resolve(unit)
-    case Raml | Raml10 => RAML10Plugin.resolve(unit)
-    case Oas3          => OAS30Plugin.resolve(unit)
-    case Oas | Oas2    => OAS20Plugin.resolve(unit)
-    case Amf           => new AmfResolutionPipeline().resolve(unit)
-    case target        => throw new Exception(s"Cannot resolve $target")
-//    case _ => unit
+  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
+    val res = config.target match {
+      case Raml08        => RAML08Plugin.resolve(unit)
+      case Raml | Raml10 => RAML10Plugin.resolve(unit)
+      case Oas3          => OAS30Plugin.resolve(unit)
+      case Oas | Oas2    => OAS20Plugin.resolve(unit)
+      case Amf           => new AmfResolutionPipeline().resolve(unit)
+      case target        => throw new Exception(s"Cannot resolve $target")
+      //    case _ => unit
+    }
+    res
   }
 
   override def render(unit: BaseUnit, config: CycleConfig): Future[String] =
