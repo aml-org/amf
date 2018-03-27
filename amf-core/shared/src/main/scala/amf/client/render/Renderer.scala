@@ -7,6 +7,7 @@ import amf.client.handler.{FileHandler, Handler}
 import amf.client.model.document.BaseUnit
 import amf.core.AMFSerializer
 import amf.core.model.document.{BaseUnit => InternalBaseUnit}
+import amf.core.emitter.{RenderOptions => InternalRenderOptions}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -25,21 +26,21 @@ class Renderer(vendor: String, mediaType: String) {
     */
   @JSExport
   def generateFile(unit: BaseUnit, url: String, handler: ClientFileHandler): Unit =
-    generateFile(unit, url, RenderOptions(), handler)
+    generate(unit._internal, url, InternalRenderOptions(), handler)
 
   @JSExport
   def generateFile(unit: BaseUnit, url: String, options: RenderOptions, handler: ClientFileHandler): Unit =
-    generate(unit._internal, url, options, handler)
+    generate(unit._internal, url, InternalRenderOptions(options), handler)
 
   /** Generates the syntax text and returns it to the provided callback. */
   @JSExport
   def generateString(unit: BaseUnit, handler: ClientResultHandler[String]): Unit =
-    generateString(unit, RenderOptions(), handler)
+    generate(unit._internal, InternalRenderOptions(), handler)
 
   /** Generates the syntax text and returns it to the provided callback. */
   @JSExport
   def generateString(unit: BaseUnit, options: RenderOptions, handler: ClientResultHandler[String]): Unit =
-    generate(unit._internal, options, handler)
+    generate(unit._internal, InternalRenderOptions(options), handler)
 
   /**
     * Asynchronously renders the syntax text and stores it in the file pointed by the provided URL.
@@ -56,7 +57,7 @@ class Renderer(vendor: String, mediaType: String) {
     */
   @JSExport
   def generateFile(unit: BaseUnit, url: String, options: RenderOptions): ClientFuture[Unit] =
-    generate(unit._internal, url, RenderOptions()).asClient
+    generate(unit._internal, url, InternalRenderOptions(options)).asClient
 
   /** Asynchronously renders the syntax text and returns it. */
   @JSExport
@@ -65,7 +66,7 @@ class Renderer(vendor: String, mediaType: String) {
   /** Asynchronously renders the syntax text and returns it. */
   @JSExport
   def generateString(unit: BaseUnit, options: RenderOptions): ClientFuture[String] =
-    generate(unit._internal, options).asClient
+    generate(unit._internal, InternalRenderOptions(options)).asClient
 
   /**
     * Asynchronously renders the syntax text and stores it in the file pointed by the provided URL.
@@ -104,18 +105,21 @@ class Renderer(vendor: String, mediaType: String) {
     * It must throw a UnsupportedOperation exception in platforms without support to write to the file system
     * (like the browser) or if a remote URL is provided.
     */
-  private def generate(unit: InternalBaseUnit, url: String, options: RenderOptions): Future[Unit] =
+  private def generate(unit: InternalBaseUnit, url: String, options: InternalRenderOptions): Future[Unit] =
     new AMFSerializer(unit, mediaType, vendor, options).renderToFile(platform, url)
 
-  private def generate(unit: InternalBaseUnit, options: RenderOptions): Future[String] =
+  private def generate(unit: InternalBaseUnit, options: InternalRenderOptions): Future[String] =
     new AMFSerializer(unit, mediaType, vendor, options).renderToString
 
-  private def generate(unit: InternalBaseUnit, url: String, options: RenderOptions, handler: FileHandler): Unit = {
+  private def generate(unit: InternalBaseUnit,
+                       url: String,
+                       options: InternalRenderOptions,
+                       handler: FileHandler): Unit = {
     generate(unit, url, options).onComplete(unitSyncAdapter(handler))
   }
 
   /** Generates the syntax text and returns it to the provided callback. */
-  private def generate(unit: InternalBaseUnit, options: RenderOptions, handler: Handler[String]): Unit = {
+  private def generate(unit: InternalBaseUnit, options: InternalRenderOptions, handler: Handler[String]): Unit = {
     generate(unit, options).onComplete(stringSyncAdapter(handler))
   }
 

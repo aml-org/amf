@@ -166,7 +166,7 @@
                                       {
                                         "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/Person/property/name/scalar/name",
                                         "@type": [
-                                          "http://www.w3.org/ns/shacl#ScalarShape",
+                                          "http://raml.org/vocabularies/shapes#ScalarShape",
                                           "http://www.w3.org/ns/shacl#Shape",
                                           "http://raml.org/vocabularies/shapes#Shape",
                                           "http://raml.org/vocabularies/document#DomainElement"
@@ -254,7 +254,7 @@
                                       {
                                         "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/Person/property/age/scalar/age",
                                         "@type": [
-                                          "http://www.w3.org/ns/shacl#ScalarShape",
+                                          "http://raml.org/vocabularies/shapes#ScalarShape",
                                           "http://www.w3.org/ns/shacl#Shape",
                                           "http://raml.org/vocabularies/shapes#Shape",
                                           "http://raml.org/vocabularies/document#DomainElement"
@@ -690,7 +690,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/scalar/Age",
         "@type": [
-          "http://www.w3.org/ns/shacl#ScalarShape",
+          "http://raml.org/vocabularies/shapes#ScalarShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://raml.org/vocabularies/shapes#Shape",
           "http://raml.org/vocabularies/document#DomainElement"
@@ -712,7 +712,7 @@
         ],
         "http://raml.org/vocabularies/shapes#multipleOf": [
           {
-            "@value": 1
+            "@value": 1.0
           }
         ],
         "http://www.w3.org/ns/shacl#name": [
@@ -861,7 +861,7 @@
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/Person/property/name/scalar/name",
                 "@type": [
-                  "http://www.w3.org/ns/shacl#ScalarShape",
+                  "http://raml.org/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://raml.org/vocabularies/shapes#Shape",
                   "http://raml.org/vocabularies/document#DomainElement"
@@ -949,7 +949,7 @@
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/Person/property/age/scalar/age",
                 "@type": [
-                  "http://www.w3.org/ns/shacl#ScalarShape",
+                  "http://raml.org/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://raml.org/vocabularies/shapes#Shape",
                   "http://raml.org/vocabularies/document#DomainElement"

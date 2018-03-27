@@ -1,6 +1,6 @@
 package amf.resolution
 
-import amf.client.render.RenderOptions
+import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{Amf, Raml, Raml08, RamlYamlHint}
 import amf.facades.AMFRenderer
@@ -37,7 +37,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
   ignore("API Console test api") {
     cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, basePath + "api-console/")
   }
-  
+
 }
 
 class Raml08ResolutionTest extends RamlResolutionTest {

@@ -1,6 +1,6 @@
 package amf.client.commands
 
-import amf.client.render.RenderOptions
+import amf.core.emitter.RenderOptions
 import amf.core.client.ParserConfig
 import amf.core.model.document.BaseUnit
 import amf.core.registries.AMFPluginsRegistry

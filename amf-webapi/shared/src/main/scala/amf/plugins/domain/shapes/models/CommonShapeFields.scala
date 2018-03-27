@@ -14,7 +14,7 @@ trait CommonShapeFields { self: Shape =>
   def exclusiveMinimum: BoolField = fields.field(ExclusiveMinimum)
   def exclusiveMaximum: BoolField = fields.field(ExclusiveMaximum)
   def format: StrField            = fields.field(Format)
-  def multipleOf: IntField        = fields.field(MultipleOf)
+  def multipleOf: DoubleField     = fields.field(MultipleOf)
 
   def withPattern(pattern: String): this.type       = set(Pattern, pattern)
   def withMinLength(min: Int): this.type            = set(MinLength, min)
@@ -24,6 +24,6 @@ trait CommonShapeFields { self: Shape =>
   def withExclusiveMinimum(min: Boolean): this.type = set(ExclusiveMinimum, min)
   def withExclusiveMaximum(max: Boolean): this.type = set(ExclusiveMaximum, max)
   def withFormat(format: String): this.type         = set(Format, format)
-  def withMultipleOf(multiple: Int): this.type      = set(MultipleOf, multiple)
+  def withMultipleOf(multiple: Double): this.type   = set(MultipleOf, multiple)
 
 }

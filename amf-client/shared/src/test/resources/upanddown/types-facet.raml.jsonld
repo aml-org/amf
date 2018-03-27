@@ -74,7 +74,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/scalar/ScalarTest",
         "@type": [
-          "http://www.w3.org/ns/shacl#ScalarShape",
+          "http://raml.org/vocabularies/shapes#ScalarShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://raml.org/vocabularies/shapes#Shape",
           "http://raml.org/vocabularies/document#DomainElement"
@@ -303,7 +303,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/scalar/IntegerTest",
         "@type": [
-          "http://www.w3.org/ns/shacl#ScalarShape",
+          "http://raml.org/vocabularies/shapes#ScalarShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://raml.org/vocabularies/shapes#Shape",
           "http://raml.org/vocabularies/document#DomainElement"
@@ -340,7 +340,7 @@
         ],
         "http://raml.org/vocabularies/shapes#multipleOf": [
           {
-            "@value": 2
+            "@value": 2.0
           }
         ],
         "http://www.w3.org/ns/shacl#name": [
@@ -545,7 +545,7 @@
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/ObjectTest/property/name/scalar/name",
                 "@type": [
-                  "http://www.w3.org/ns/shacl#ScalarShape",
+                  "http://raml.org/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://raml.org/vocabularies/shapes#Shape",
                   "http://raml.org/vocabularies/document#DomainElement"

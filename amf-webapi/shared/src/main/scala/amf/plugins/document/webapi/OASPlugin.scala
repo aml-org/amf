@@ -2,7 +2,7 @@ package amf.plugins.document.webapi
 
 import amf.ProfileNames
 import amf.ProfileNames.OAS
-import amf.client.render.RenderOptions
+import amf.core.emitter.RenderOptions
 import amf.core.Root
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
@@ -162,6 +162,7 @@ object OAS30Plugin extends OASPlugin {
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = new OasResolutionPipeline().resolve(unit)
+  override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
+    new OasResolutionPipeline().resolve(unit)
 
 }

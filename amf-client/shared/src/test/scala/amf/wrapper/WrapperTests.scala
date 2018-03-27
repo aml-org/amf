@@ -385,7 +385,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     assert(first.mediaType.is("application/json"))
 
     val typeIds = first.schema.getTypeIds.asSeq
-    assert(typeIds.contains("http://www.w3.org/ns/shacl#ScalarShape"))
+    assert(typeIds.contains("http://raml.org/vocabularies/shapes#ScalarShape"))
     assert(typeIds.contains("http://www.w3.org/ns/shacl#Shape"))
     assert(typeIds.contains("http://raml.org/vocabularies/shapes#Shape"))
     assert(typeIds.contains("http://raml.org/vocabularies/document#DomainElement"))

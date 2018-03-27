@@ -1,6 +1,6 @@
 package amf.core
 
-import amf.client.render.RenderOptions
+import amf.core.emitter.RenderOptions
 import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.plugins.{AMFDocumentPlugin, AMFSyntaxPlugin}

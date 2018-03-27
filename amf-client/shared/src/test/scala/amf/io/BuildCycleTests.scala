@@ -1,6 +1,6 @@
 package amf.io
 
-import amf.client.render.RenderOptions
+import amf.core.emitter.RenderOptions
 import amf.common.Tests.checkDiff
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.{AMFCompiler, AMFRenderer, Validation}

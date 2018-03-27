@@ -1,7 +1,7 @@
 package amf.facades
 
 import amf.Core
-import amf.client.render.RenderOptions
+import amf.core.emitter.RenderOptions
 import amf.core.AMFSerializer
 import amf.core.model.document.BaseUnit
 import amf.core.remote._

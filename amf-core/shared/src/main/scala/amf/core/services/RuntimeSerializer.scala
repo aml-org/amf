@@ -1,6 +1,6 @@
 package amf.core.services
 
-import amf.client.render.RenderOptions
+import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
 

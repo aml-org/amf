@@ -1,6 +1,6 @@
 package amf.core.plugins
 
-import amf.client.render.RenderOptions
+import amf.core.emitter.RenderOptions
 import amf.core.Root
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
