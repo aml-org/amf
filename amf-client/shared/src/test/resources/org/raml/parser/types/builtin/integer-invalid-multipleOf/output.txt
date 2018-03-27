@@ -5,9 +5,9 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://raml.org/vocabularies/amf/parser#multiple-of
-  Message: Multiple of facet should be greater than 0
+- Source: http://raml.org/vocabularies/amf/parser#ScalarShape-multipleOf-minExclusive
+  Message: multipleOf facet for a RAML scalar type must be greater than 0
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/integer-invalid-multipleOf/input.raml#/declarations/scalar/TestType
-  Property: 
-  Position: Some(LexicalInformation([(4,4)-(7,0)]))
+  Property: http://raml.org/vocabularies/shapes#multipleOf
+  Position: Some(LexicalInformation([(6,20)-(6,21)]))

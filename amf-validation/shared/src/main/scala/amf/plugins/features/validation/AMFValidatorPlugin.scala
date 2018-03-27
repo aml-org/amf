@@ -1,7 +1,7 @@
 package amf.plugins.features.validation
 
 import amf.ProfileNames
-import amf.client.render.RenderOptions
+import amf.core.emitter.RenderOptions
 import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.BaseUnit
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
@@ -12,12 +12,15 @@ import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport}
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.plugins.document.graph.AMFGraphPlugin
+import amf.plugins.document.graph.parser.ScalarEmitter
 import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
 import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
 import amf.plugins.features.validation.model.{ParsedValidationProfile, ValidationDialectText}
 import amf.plugins.syntax.SYamlSyntaxPlugin
+import org.yaml.model.YDocument.PartBuilder
+import org.yaml.model.{YNode, YType}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -117,10 +120,34 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     }
   }
 
+  object CustomScalarEmitter extends ScalarEmitter {
+    override def scalar(b: PartBuilder, content: String, tag: YType, inArray: Boolean): Unit = {
+      def emit(b: PartBuilder): Unit = {
+
+        val tg: YType = fixTagIfNeeded(tag, content)
+
+        b.obj { e =>
+          forcedType(tag).foreach(t => e.entry("@type", t))
+          e.entry("@value", raw(_, content, tg))
+        }
+      }
+
+      if (inArray) emit(b) else b.list(emit)
+    }
+
+    private def forcedType(tag: YType): Option[String] = {
+      tag match {
+        case YType.Float => Some("http://www.w3.org/2001/XMLSchema#double")
+        case _           => None
+      }
+    }
+  }
+
   override def shaclValidation(model: BaseUnit,
                                validations: EffectiveValidations,
                                messageStyle: String): Future[ValidationReport] = {
-    ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: shacl validation for ${validations.effective.values.size} validations")
+    ExecutionLog.log(
+      s"AMFValidatorPlugin#shaclValidation: shacl validation for ${validations.effective.values.size} validations")
     // println(s"VALIDATIONS: ${validations.effective.values.size} / ${validations.all.values.size} => $profileName")
     // validations.effective.keys.foreach(v => println(s" - $v"))
 
@@ -139,7 +166,11 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
 
     ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: jsLibrary generated")
 
-    val modelJSON = RuntimeSerializer(model, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps)
+    val modelJSON =
+      RuntimeSerializer(model,
+                        "application/ld+json",
+                        "AMF Graph",
+                        RenderOptions().withoutSourceMaps.withCustomEmitter(CustomScalarEmitter))
 
     ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: data graph generated")
     /*
@@ -154,15 +185,18 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
      */
 
     ValidationMutex.synchronized {
-      PlatformValidator.instance.report(
-        modelJSON,
-        "application/ld+json",
-        shapesJSON,
-        "application/ld+json"
-      ).map { case report =>
-        ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: validation finished")
-        report
-      }
+      PlatformValidator.instance
+        .report(
+          modelJSON,
+          "application/ld+json",
+          shapesJSON,
+          "application/ld+json"
+        )
+        .map {
+          case report =>
+            ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: validation finished")
+            report
+        }
     }
   }
 

@@ -2,7 +2,7 @@ package amf.plugins.document.webapi
 
 import amf.ProfileNames
 import amf.ProfileNames.RAML
-import amf.client.render.RenderOptions
+import amf.core.emitter.RenderOptions
 import amf.core.Root
 import amf.core.model.document._
 import amf.core.model.domain.{DomainElement, ExternalDomainElement}
@@ -16,7 +16,12 @@ import amf.plugins.document.webapi.parser.RamlHeader.{Raml10, Raml10Extension, R
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
-import amf.plugins.document.webapi.resolution.pipelines.{Raml08EditingPipeline, Raml08ResolutionPipeline, Raml10EditingPipeline, Raml10ResolutionPipeline}
+import amf.plugins.document.webapi.resolution.pipelines.{
+  Raml08EditingPipeline,
+  Raml08ResolutionPipeline,
+  Raml10EditingPipeline,
+  Raml10ResolutionPipeline
+}
 import amf.plugins.domain.webapi.models.WebApi
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YDocument, YNode}

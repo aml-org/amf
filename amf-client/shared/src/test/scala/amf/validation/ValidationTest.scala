@@ -1,7 +1,7 @@
 package amf.validation
 
 import amf.ProfileNames
-import amf.client.render.RenderOptions
+import amf.core.emitter.RenderOptions
 import amf.common.Tests.checkDiff
 import amf.core.model.document.{BaseUnit, Module, PayloadFragment}
 import amf.core.model.domain.{RecursiveShape, Shape}
@@ -12,7 +12,13 @@ import amf.core.validation.SeverityLevels
 import amf.facades.{AMFCompiler, AMFRenderer, Validation}
 import amf.plugins.document.graph.parser.GraphEmitter
 import amf.plugins.document.webapi.RAML10Plugin
-import amf.plugins.document.webapi.validation.{AnnotationsValidation, ExamplesValidation, PayloadValidation, ShapeFacetsValidation, _}
+import amf.plugins.document.webapi.validation.{
+  AnnotationsValidation,
+  ExamplesValidation,
+  PayloadValidation,
+  ShapeFacetsValidation,
+  _
+}
 import amf.plugins.domain.shapes.models.ArrayShape
 import amf.plugins.features.validation.PlatformValidator
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter

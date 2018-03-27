@@ -1,6 +1,6 @@
 package amf.dumper
 
-import amf.client.render.RenderOptions
+import amf.core.emitter.RenderOptions
 import amf.common.Tests
 import amf.core.remote.Syntax.{Json, Yaml}
 import amf.core.remote.{Amf, Oas, Raml}

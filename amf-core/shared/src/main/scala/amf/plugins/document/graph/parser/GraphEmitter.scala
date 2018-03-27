@@ -1,6 +1,6 @@
 package amf.plugins.document.graph.parser
 
-import amf.client.render.RenderOptions
+import amf.core.emitter.RenderOptions
 import amf.core.annotations.{DomainExtensionAnnotation, ScalarType}
 import amf.core.metamodel.Type.{Any, Array, Bool, Iri, SortedArray, Str}
 import amf.core.metamodel.document.SourceMapModel
@@ -16,13 +16,60 @@ import amf.core.vocabulary.Namespace.SourceMaps
 import amf.core.vocabulary.{Namespace, ValueType}
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YDocument, YNode, YScalar, YType}
+import org.yaml.model._
 
 import scala.collection.mutable.ListBuffer
 
 /**
   * AMF Graph emitter
   */
+trait ScalarEmitter {
+
+  def scalar(b: PartBuilder, content: String, tag: YType = YType.Str, inArray: Boolean = false): Unit = {
+    def emit(b: PartBuilder): Unit = {
+
+      val tg: YType = fixTagIfNeeded(tag, content)
+
+      b.obj(_.entry("@value", raw(_, content, tg)))
+    }
+
+    if (inArray) emit(b) else b.list(emit)
+  }
+
+  protected def fixTagIfNeeded(tag: YType, content: String): YType = {
+    val tg: YType = tag match {
+      case YType.Bool =>
+        if (content != "true" && content != "false") {
+          YType.Str
+        } else {
+          tag
+        }
+      case YType.Int =>
+        try {
+          content.toInt
+          tag
+        } catch {
+          case _: NumberFormatException => YType.Str
+        }
+      case YType.Float =>
+        try {
+          content.toDouble
+          tag
+        } catch {
+          case _: NumberFormatException => YType.Str
+        }
+      case _ => tag
+
+    }
+    tg
+  }
+
+  protected def raw(b: PartBuilder, content: String, tag: YType = YType.Str): Unit =
+    b.+=(YNode(YScalar(content), tag))
+}
+
+object DefaultScalarEmitter extends ScalarEmitter
+
 object GraphEmitter extends MetaModelTypeMapping {
 
   def emit(unit: BaseUnit, options: RenderOptions): YDocument = Emitter(options).root(unit)
@@ -150,8 +197,9 @@ object GraphEmitter extends MetaModelTypeMapping {
       b.entry(
         encoded,
         _.obj { b =>
-          b.entry(DomainExtensionModel.Name.value.iri(), scalar(_, extension.name.value()))
-          field.foreach(f => b.entry(DomainExtensionModel.Element.value.iri(), scalar(_, f.value.iri())))
+          b.entry(DomainExtensionModel.Name.value.iri(), DefaultScalarEmitter.scalar(_, extension.name.value()))
+          field.foreach(f =>
+            b.entry(DomainExtensionModel.Element.value.iri(), DefaultScalarEmitter.scalar(_, f.value.iri())))
           traverse(extension.extension, b)
         }
       )
@@ -181,7 +229,10 @@ object GraphEmitter extends MetaModelTypeMapping {
                         obj(b, elementInArray, inArray = true)
                     }
                   case Str =>
-                    seq.asInstanceOf[Seq[AmfScalar]].headOption.foreach(e => scalar(b, e.toString, inArray = true))
+                    seq
+                      .asInstanceOf[Seq[AmfScalar]]
+                      .headOption
+                      .foreach(e => DefaultScalarEmitter.scalar(b, e.toString, inArray = true))
 
                   case Iri =>
                     seq.asInstanceOf[Seq[AmfScalar]].headOption.foreach(e => iri(b, e.toString, inArray = true))
@@ -198,7 +249,7 @@ object GraphEmitter extends MetaModelTypeMapping {
                           case f: Float => typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true)
                           case d: Double =>
                             typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true)
-                          case other => scalar(b, other.toString, inArray = true)
+                          case other => DefaultScalarEmitter.scalar(b, other.toString, inArray = true)
                         }
                     }
                 }
@@ -217,6 +268,7 @@ object GraphEmitter extends MetaModelTypeMapping {
     }
 
     private def value(t: Type, v: Value, parent: String, sources: (Value) => Unit, b: PartBuilder): Unit = {
+      val scalarEmitter = options.getCustomEmitter.getOrElse(DefaultScalarEmitter)
       t match {
         case t: DomainElement with Linkable if t.isLink =>
           link(b, t)
@@ -232,21 +284,21 @@ object GraphEmitter extends MetaModelTypeMapping {
             case Some(annotation) =>
               typedScalar(b, v.value.asInstanceOf[AmfScalar].toString, annotation.datatype)
             case None =>
-              scalar(b, v.value.asInstanceOf[AmfScalar].toString)
+              scalarEmitter.scalar(b, v.value.asInstanceOf[AmfScalar].toString)
           }
           sources(v)
         case Bool =>
-          scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Bool)
+          scalarEmitter.scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Bool)
           sources(v)
         case Type.Int =>
-          scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Int)
+          scalarEmitter.scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Int)
           sources(v)
         case Type.Double =>
           // this will transform the value to double and will not emit @type TODO: ADD YType.Double
-          scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Float)
+          scalarEmitter.scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Float)
           sources(v)
         case Type.Float =>
-          scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Float)
+          scalarEmitter.scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Float)
           sources(v)
         case Type.Date =>
           val dateTime = v.value.asInstanceOf[AmfScalar].value.asInstanceOf[SimpleDateTime]
@@ -279,22 +331,22 @@ object GraphEmitter extends MetaModelTypeMapping {
                   e.annotations.find(classOf[ScalarType]) match {
                     case Some(annotation) =>
                       typedScalar(b, e.value.asInstanceOf[AmfScalar].toString, annotation.datatype, inArray = true)
-                    case None => scalar(b, e.toString, inArray = true)
+                    case None => scalarEmitter.scalar(b, e.toString, inArray = true)
                   }
                 }
               case Iri => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(b, e.toString, inArray = true))
               case Type.Int =>
                 seq.values
                   .asInstanceOf[Seq[AmfScalar]]
-                  .foreach(e => scalar(b, e.value.toString, YType.Int, inArray = true))
+                  .foreach(e => scalarEmitter.scalar(b, e.value.toString, YType.Int, inArray = true))
               case Type.Float =>
                 seq.values
                   .asInstanceOf[Seq[AmfScalar]]
-                  .foreach(e => scalar(b, e.value.toString, YType.Float, inArray = true))
+                  .foreach(e => scalarEmitter.scalar(b, e.value.toString, YType.Float, inArray = true))
               case Bool =>
                 seq.values
                   .asInstanceOf[Seq[AmfScalar]]
-                  .foreach(e => scalar(b, e.value.toString, YType.Bool, inArray = true))
+                  .foreach(e => scalarEmitter.scalar(b, e.value.toString, YType.Bool, inArray = true))
               case Any =>
                 seq.values.asInstanceOf[Seq[AmfScalar]].foreach { scalarElement =>
                   scalarElement.value match {
@@ -304,7 +356,7 @@ object GraphEmitter extends MetaModelTypeMapping {
                     case i: Int      => typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true)
                     case f: Float    => typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true)
                     case d: Double   => typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true)
-                    case other       => scalar(b, other.toString, inArray = true)
+                    case other       => scalarEmitter.scalar(b, other.toString, inArray = true)
                   }
                 }
               case _ => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(b, e.toString, inArray = true))
@@ -357,45 +409,6 @@ object GraphEmitter extends MetaModelTypeMapping {
       //we can not use java.net.URLEncoder and can not use anything more correct because we does not have actual constraints for it yet.
       //TODO please review it and propose something better
       def emit(b: PartBuilder) = b.obj(_.entry("@id", raw(_, URLEncoder.encode(content))))
-
-      if (inArray) emit(b) else b.list(emit)
-    }
-
-    private def fixTagIfNeeded(tag: YType, content: String): YType = {
-      val tg: YType = tag match {
-        case YType.Bool =>
-          if (content != "true" && content != "false") {
-            YType.Str
-          } else {
-            tag
-          }
-        case YType.Int =>
-          try {
-            content.toInt
-            tag
-          } catch {
-            case _: NumberFormatException => YType.Str
-          }
-        case YType.Float =>
-          try {
-            content.toDouble
-            tag
-          } catch {
-            case _: NumberFormatException => YType.Str
-          }
-        case _ => tag
-
-      }
-      tg
-    }
-
-    private def scalar(b: PartBuilder, content: String, tag: YType = YType.Str, inArray: Boolean = false): Unit = {
-      def emit(b: PartBuilder): Unit = {
-
-        val tg: YType = fixTagIfNeeded(tag, content)
-
-        b.obj(_.entry("@value", raw(_, content, tg)))
-      }
 
       if (inArray) emit(b) else b.list(emit)
     }
@@ -467,8 +480,8 @@ object GraphEmitter extends MetaModelTypeMapping {
     private def createAnnotationValueNode(b: PartBuilder, tuple: (String, String)): Unit = tuple match {
       case (iri, v) =>
         b.obj { b =>
-          b.entry(SourceMapModel.Element.value.iri(), scalar(_, iri))
-          b.entry(SourceMapModel.Value.value.iri(), scalar(_, v))
+          b.entry(SourceMapModel.Element.value.iri(), DefaultScalarEmitter.scalar(_, iri))
+          b.entry(SourceMapModel.Value.value.iri(), DefaultScalarEmitter.scalar(_, v))
         }
     }
   }

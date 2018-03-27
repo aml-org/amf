@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi
 
-import amf.client.render.RenderOptions
+import amf.core.emitter.RenderOptions
 import amf.core.Root
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{ParserContext, SimpleReferenceHandler}

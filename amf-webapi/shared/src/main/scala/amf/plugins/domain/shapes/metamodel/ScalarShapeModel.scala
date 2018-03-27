@@ -4,7 +4,7 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Bool, Iri}
 import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.plugins.domain.shapes.models.ScalarShape
-import amf.core.vocabulary.Namespace.{Shacl, Http}
+import amf.core.vocabulary.Namespace.{Shacl, Http, Shapes}
 import amf.core.vocabulary.ValueType
 
 /**
@@ -18,7 +18,7 @@ object ScalarShapeModel extends AnyShapeModel with CommonShapeFields {
   override val fields
     : List[Field] = List(DataType) ++ commonOASFields ++ AnyShapeModel.fields ++ DomainElementModel.fields
 
-  override val `type`: List[ValueType] = List(Shacl + "ScalarShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
+  override val `type`: List[ValueType] = List(Shapes + "ScalarShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
 
   override def modelInstance = ScalarShape()
 }

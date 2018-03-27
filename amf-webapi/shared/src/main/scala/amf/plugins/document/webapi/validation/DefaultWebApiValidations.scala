@@ -228,25 +228,31 @@ object JsCustomValidations {
   val functions: Map[String, String] = Map(
     "multipleOfValidation" ->
       """|function(shape) {
-           |  var multipleOf = shape["raml-shapes:multipleOf"];
-           |  if ( multipleOf == undefined) return true;
-           |  else return parseInt(multipleOf) > 0;
-           |}
-        """.stripMargin,
+         |  console.log(JSON.stringify(shape));
+         |  var multipleOf = shape["raml-shapes:multipleOf"];
+         |  console.log(multipleOf);
+         |  console.log(parseFloat(multipleOf));
+         |  if ( multipleOf == undefined) return true;
+         |  else return parseFloat(multipleOf) > 0;
+         |}
+      """.stripMargin,
     "maxLengthValidation" ->
       """|function(shape) {
-           |  var maxLength = shape["shacl:maxLength"];
-           |  if ( maxLength == undefined) return true;
-           |  else return parseInt(maxLength) >= 0;
-           |}
-        """.stripMargin,
+         |  var maxLength = shape["shacl:maxLength"];
+         |  if ( maxLength == undefined) return true;
+         |  else return parseFloat(maxLength) >= 0;
+         |}
+      """.stripMargin,
     "minLengthValidation" ->
       """|function(shape) {
-           |  var minLength = shape["shacl:minLength"];
-           |  if ( minLength == undefined) return true;
-           |  else return parseInt(minLength) >= 0;
-           |}
-        """.stripMargin
+         |  console.log(JSON.stringify(shape));
+         |  var minLength = shape["shacl:minLength"];
+         |  console.log(minLength);
+         |  console.log(parseFloat(minLength));
+         |  if ( minLength == undefined) return true;
+         |  else return parseFloat(minLength) >= 0;
+         |}
+      """.stripMargin
   )
 
   def apply(name: String): Option[String] = functions.get(name)

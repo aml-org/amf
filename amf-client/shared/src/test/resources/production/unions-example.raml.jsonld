@@ -142,7 +142,7 @@
                           {
                             "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileId/scalar/schema",
                             "@type": [
-                              "http://www.w3.org/ns/shacl#ScalarShape",
+                              "http://raml.org/vocabularies/shapes#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://raml.org/vocabularies/shapes#Shape",
                               "http://raml.org/vocabularies/document#DomainElement"
@@ -345,7 +345,7 @@
                           {
                             "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/nextPageToken/scalar/schema",
                             "@type": [
-                              "http://www.w3.org/ns/shacl#ScalarShape",
+                              "http://raml.org/vocabularies/shapes#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://raml.org/vocabularies/shapes#Shape",
                               "http://raml.org/vocabularies/document#DomainElement"
@@ -466,7 +466,7 @@
                           {
                             "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/optional/scalar/schema",
                             "@type": [
-                              "http://www.w3.org/ns/shacl#ScalarShape",
+                              "http://raml.org/vocabularies/shapes#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://raml.org/vocabularies/shapes#Shape",
                               "http://raml.org/vocabularies/document#DomainElement"
@@ -988,7 +988,7 @@
                           {
                             "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema",
                             "@type": [
-                              "http://www.w3.org/ns/shacl#ScalarShape",
+                              "http://raml.org/vocabularies/shapes#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://raml.org/vocabularies/shapes#Shape",
                               "http://raml.org/vocabularies/document#DomainElement"
@@ -1216,7 +1216,7 @@
                           {
                             "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/requiredProperty/scalar/schema",
                             "@type": [
-                              "http://www.w3.org/ns/shacl#ScalarShape",
+                              "http://raml.org/vocabularies/shapes#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://raml.org/vocabularies/shapes#Shape",
                               "http://raml.org/vocabularies/document#DomainElement"
@@ -1493,7 +1493,7 @@
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/x-union/union/schema/union/null/scalar/null",
                                 "@type": [
-                                  "http://www.w3.org/ns/shacl#ScalarShape",
+                                  "http://raml.org/vocabularies/shapes#ScalarShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://raml.org/vocabularies/shapes#Shape",
                                   "http://raml.org/vocabularies/document#DomainElement"
@@ -1507,7 +1507,7 @@
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/x-union/union/schema/scalar/null",
                                 "@type": [
-                                  "http://www.w3.org/ns/shacl#ScalarShape",
+                                  "http://raml.org/vocabularies/shapes#ScalarShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://raml.org/vocabularies/shapes#Shape",
                                   "http://raml.org/vocabularies/document#DomainElement"
@@ -1620,7 +1620,7 @@
                           {
                             "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/x-number/scalar/schema",
                             "@type": [
-                              "http://www.w3.org/ns/shacl#ScalarShape",
+                              "http://raml.org/vocabularies/shapes#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://raml.org/vocabularies/shapes#Shape",
                               "http://raml.org/vocabularies/document#DomainElement"
@@ -1767,7 +1767,7 @@
                           {
                             "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/basic/scalar/schema",
                             "@type": [
-                              "http://www.w3.org/ns/shacl#ScalarShape",
+                              "http://raml.org/vocabularies/shapes#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://raml.org/vocabularies/shapes#Shape",
                               "http://raml.org/vocabularies/document#DomainElement"
@@ -2085,7 +2085,7 @@
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/repeatable/array/schema/scalar/null",
                                 "@type": [
-                                  "http://www.w3.org/ns/shacl#ScalarShape",
+                                  "http://raml.org/vocabularies/shapes#ScalarShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://raml.org/vocabularies/shapes#Shape",
                                   "http://raml.org/vocabularies/document#DomainElement"
@@ -2198,7 +2198,7 @@
                           {
                             "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/limit/scalar/schema",
                             "@type": [
-                              "http://www.w3.org/ns/shacl#ScalarShape",
+                              "http://raml.org/vocabularies/shapes#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://raml.org/vocabularies/shapes#Shape",
                               "http://raml.org/vocabularies/document#DomainElement"
@@ -2396,7 +2396,7 @@
                           {
                             "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema",
                             "@type": [
-                              "http://www.w3.org/ns/shacl#ScalarShape",
+                              "http://raml.org/vocabularies/shapes#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://raml.org/vocabularies/shapes#Shape",
                               "http://raml.org/vocabularies/document#DomainElement"
@@ -2587,7 +2587,7 @@
                           {
                             "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/oauth2/parameter/access_token/scalar/schema",
                             "@type": [
-                              "http://www.w3.org/ns/shacl#ScalarShape",
+                              "http://raml.org/vocabularies/shapes#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://raml.org/vocabularies/shapes#Shape",
                               "http://raml.org/vocabularies/document#DomainElement"

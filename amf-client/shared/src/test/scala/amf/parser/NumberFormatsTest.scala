@@ -1,6 +1,6 @@
 package amf.parser
 
-import amf.client.render.RenderOptions
+import amf.core.emitter.RenderOptions
 import amf.common.Diff
 import amf.common.Diff.makeString
 import amf.core.model.document.Fragment

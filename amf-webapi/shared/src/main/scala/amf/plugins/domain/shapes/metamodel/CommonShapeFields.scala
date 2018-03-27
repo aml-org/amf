@@ -22,7 +22,7 @@ trait CommonShapeFields {
 
   val Format = Field(Str, Shapes + "format")
 
-  val MultipleOf = Field(Int, Shapes + "multipleOf")
+  val MultipleOf = Field(Double, Shapes + "multipleOf")
 
   val commonOASFields =
     List(Pattern, MinLength, MaxLength, Minimum, Maximum, ExclusiveMinimum, ExclusiveMaximum, Format, MultipleOf)

@@ -1,7 +1,7 @@
 package amf.javaparser.org.raml
 
 import amf.ProfileNames
-import amf.client.render.RenderOptions
+import amf.core.emitter.RenderOptions
 import amf.core.annotations.SourceVendor
 import amf.core.model.document.{BaseUnit, EncodesModel, Module}
 import amf.core.remote._

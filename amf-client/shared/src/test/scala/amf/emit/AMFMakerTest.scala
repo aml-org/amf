@@ -1,6 +1,6 @@
 package amf.emit
 
-import amf.client.render.RenderOptions
+import amf.core.emitter.RenderOptions
 import amf.common.ListAssertions
 import amf.core.model.document.Document
 import amf.core.parser._
