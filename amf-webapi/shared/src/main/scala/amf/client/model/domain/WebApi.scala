@@ -132,5 +132,13 @@ case class WebApi(override private[amf] val _internal: InternalWebApi) extends D
     */
   def withServer(url: String): Server = _internal.withServer(url)
 
+  /**
+    * Adds one Server to the servers property of this WebApi and returns it for population.
+    * url property of the server is required.
+    * This method marks this Server as default. When generating this Server in RAML or OAS2, it will generate a
+    * 'baseUri', 'host' or 'basePath', instead of a 'servers' annotation.
+    */
+  def withDefaultServer(url: String): Server = _internal.withDefaultServer(url)
+
   def sourceVendor: Option[Vendor] = _internal.sourceVendor
 }
