@@ -3,6 +3,7 @@ package amf.validation
 import amf.ProfileNames
 import amf.client.render.RenderOptions
 import amf.common.Tests.checkDiff
+import amf.core.AMFSerializer
 import amf.core.model.document.{BaseUnit, Module, PayloadFragment}
 import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.core.remote.Syntax.{Json, Syntax, Yaml}
@@ -596,6 +597,19 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       val resolved = RAML10Plugin.resolve(doc)
       assert(Option(resolved).isDefined)
+    }
+  }
+
+  test("Null trait API") {
+    for {
+      validation         <- Validation(platform)
+      doc                <- AMFCompiler(productionPath + "null_trait.raml", platform, RamlYamlHint, validation).build()
+      generated          <- new AMFSerializer(doc, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
+      report             <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(report.results.size == 1)
+      assert(report.results.head.level == "Warning")
+      assert(report.conforms)
     }
   }
 

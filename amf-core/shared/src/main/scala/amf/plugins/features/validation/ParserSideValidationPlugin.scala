@@ -159,7 +159,8 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
       report ++= Seq(validationError)
       aggregatedReport += (parserRun -> report)
     } else {
-      throw new Exception(validationError.toString)
+      if (level == SeverityLevels.VIOLATION)
+        throw new Exception(validationError.toString)
     }
   }
 }
