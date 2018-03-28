@@ -497,6 +497,14 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("libraries.json.jsonld", "libraries.json", AmfJsonHint, Oas, referencesPath)
   }
 
+  test("Test fragment usage raml to amf") {
+    cycle("fragment_usage.raml", "fragment_usage.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Test fragment usage amf to raml") {
+    cycle("fragment_usage.jsonld", "fragment_usage.raml", AmfJsonHint, Raml)
+  }
+
   test("Test data type fragment raml to raml") {
     cycle("data-type-fragment.raml", RamlYamlHint, referencesPath)
   }

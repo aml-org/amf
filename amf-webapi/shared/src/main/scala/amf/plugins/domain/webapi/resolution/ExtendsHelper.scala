@@ -41,7 +41,7 @@ object ExtendsHelper {
 
     val entry = document.as[YMap].entries.head
     declarations(ctx, unit)
-    
+
     val operation: Operation = RuntimeValidator.nestedValidation() {  // we don't emit validation here, final result will be validated after merging
       ctx.factory.operationParser(entry, _ => Operation(), true).parse()
     }
