@@ -60,6 +60,8 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
   override def dependencies(): Seq[AMFPlugin] = Seq()
 
   var aggregatedReport: Map[Int, List[AMFValidationResult]] = Map()
+  // disable temporarily the reporting of validations
+  var enabled: Boolean = true
 
   // The aggregated report
   def reset(): Unit = {
@@ -67,8 +69,6 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
     aggregatedReport = Map()
   }
 
-  // disable temporarily the reporting of validations
-  var enabled: Boolean = true
 
   def withEnabledValidation(enabled: Boolean): RuntimeValidator = {
     this.enabled = enabled
@@ -127,7 +127,7 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
   override def validate(model: BaseUnit, profileName: String, messageStyle: String): Future[AMFValidationReport] = {
     val validations = EffectiveValidations().someEffective(parserSideValidationsProfile)
     // aggregating parser-side validations
-    var results = model.parserRun match {
+    val results = model.parserRun match {
       case Some(runId) =>
         aggregatedReport.getOrElse(runId, Nil).map(r => processAggregatedResult(r, messageStyle, validations))
       case _ => Nil
@@ -162,5 +162,15 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
       if (level == SeverityLevels.VIOLATION)
         throw new Exception(validationError.toString)
     }
+  }
+
+  override def nestedValidation[T]()(k: => T): T = {
+    val oldAggregatedReport = aggregatedReport
+    val oldEnabled = enabled
+    reset()
+    val res = k
+    aggregatedReport = oldAggregatedReport
+    enabled = oldEnabled
+    res
   }
 }

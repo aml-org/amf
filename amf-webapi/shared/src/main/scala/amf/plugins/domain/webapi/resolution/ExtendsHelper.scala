@@ -41,7 +41,10 @@ object ExtendsHelper {
 
     val entry = document.as[YMap].entries.head
     declarations(ctx, unit)
-    val operation = ctx.factory.operationParser(entry, _ => Operation(), true).parse()
+    
+    val operation: Operation = RuntimeValidator.nestedValidation() {  // we don't emit validation here, final result will be validated after merging
+      ctx.factory.operationParser(entry, _ => Operation(), true).parse()
+    }
     if (keepEditingInfo) annotateExtensionId(operation, extensionId)
     new ReferenceResolutionStage(profile, keepEditingInfo).resolveDomainElement(operation)
   }
@@ -68,10 +71,9 @@ object ExtendsHelper {
 
     declarations(ctx, unit)
 
-    val validator = RuntimeValidator.validatorOption
-    ctx.factory.endPointParser(endPointEntry, _ => EndPoint(), None, collector, true).parse()
-    validator.foreach(RuntimeValidator.register)
-
+    RuntimeValidator.nestedValidation() { // we don't emit validation here, final result will be validated after mergin
+      ctx.factory.endPointParser(endPointEntry, _ => EndPoint(), None, collector, true).parse()
+    }
     collector.toList match {
       case e :: Nil =>
         if (keepEditingInfo) annotateExtensionId(e, extensionId)

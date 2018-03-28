@@ -32,6 +32,8 @@ trait RuntimeValidator {
 
   def reset()
 
+  def nestedValidation[T]()(k: => T): T
+
   /**
     * Client code can use this function to register a new validation failure
     */
@@ -78,6 +80,9 @@ object RuntimeValidator {
     validator.validate(model, profileName, messageStyle)
 
   def reset() = validator.reset()
+
+  def nestedValidation[T]()(k: => T): T = validator.nestedValidation()(k)
+
 
   def disableValidations[T]()(f: () => T): T = validator.disableValidations()(f)
 

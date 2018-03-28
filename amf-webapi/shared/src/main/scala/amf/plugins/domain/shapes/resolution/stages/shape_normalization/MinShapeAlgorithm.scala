@@ -11,6 +11,8 @@ import amf.plugins.domain.shapes.models._
 
 import scala.collection.mutable
 
+class InheritanceIncompatibleShapeError(message: String) extends Exception(message)
+
 trait MinShapeAlgorithm extends RestrictionComputation {
 
   // this is inverted, it is safe because recursive shape does not have facets
@@ -98,7 +100,7 @@ trait MinShapeAlgorithm extends RestrictionComputation {
 
       // fallback error
       case _ =>
-        throw new Exception(s"Resolution error: Incompatible types [$baseShape, $superShape]")
+        throw new InheritanceIncompatibleShapeError(s"Resolution error: Incompatible types [$baseShape, $superShape]")
     }
   }
 
