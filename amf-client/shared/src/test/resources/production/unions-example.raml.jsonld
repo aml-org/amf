@@ -517,6 +517,11 @@
                                 ]
                               }
                             ],
+                            "http://www.w3.org/ns/shacl#defaultValueStr": [
+                              {
+                                "@value": "default value"
+                              }
+                            ],
                             "http://raml.org/vocabularies/document#examples": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/optional/scalar/schema/example/null",
@@ -768,12 +773,12 @@
                                   {
                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://www.w3.org/ns/shacl#datatype"
+                                        "@value": "http://www.w3.org/ns/shacl#defaultValueStr"
                                       }
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(68,8)-(69,0)]"
+                                        "@value": "[(71,8)-(72,0)]"
                                       }
                                     ]
                                   },
@@ -786,6 +791,18 @@
                                     "http://raml.org/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(64,6)-(72,0)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://www.w3.org/ns/shacl#datatype"
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(68,8)-(69,0)]"
                                       }
                                     ]
                                   }
@@ -1267,6 +1284,11 @@
                                 ]
                               }
                             ],
+                            "http://www.w3.org/ns/shacl#defaultValueStr": [
+                              {
+                                "@value": "devault required value"
+                              }
+                            ],
                             "http://raml.org/vocabularies/document#examples": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/requiredProperty/scalar/schema/example/null",
@@ -1394,12 +1416,12 @@
                                   {
                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://www.w3.org/ns/shacl#datatype"
+                                        "@value": "http://www.w3.org/ns/shacl#defaultValueStr"
                                       }
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(73,8)-(74,0)]"
+                                        "@value": "[(76,8)-(77,0)]"
                                       }
                                     ]
                                   },
@@ -1412,6 +1434,18 @@
                                     "http://raml.org/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(72,6)-(77,0)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://www.w3.org/ns/shacl#datatype"
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(73,8)-(74,0)]"
                                       }
                                     ]
                                   }

@@ -13,6 +13,7 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
   def displayName: StrField                              = fields.field(DisplayName)
   def description: StrField                              = fields.field(Description)
   def default: DataNode                                  = fields.field(Default)
+  def defaultString: StrField                            = fields.field(DefaultValueString)
   def values: Seq[StrField]                              = fields.field(Values)
   def inherits: Seq[Shape]                               = fields.field(Inherits)
   def customShapeProperties: Seq[ShapeExtension]         = fields.field(CustomShapeProperties)
@@ -34,6 +35,8 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
     add(CustomShapePropertyDefinitions, result)
     result
   }
+
+  def withDefaultStr(value: String): Shape.this.type = set(DefaultValueString, value)
 
   type FacetsMap = Map[String, PropertyShape]
 
@@ -84,7 +87,7 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
             AmfArray(a.values.map {
               case e: Shape if e.id != this.id => e.cloneShape(recursionBase, traversed)
               case e: Shape if e.id == this.id => e
-              case o        => o
+              case o                           => o
             }, a.annotations)
           case o => o
         }
