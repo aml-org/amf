@@ -31,7 +31,8 @@ case class AMFValidation(uri: Option[String],
                          constraint: String,
                          value: String,
                          ramlErrorMessage: String,
-                         openApiErrorMessage: String)
+                         openApiErrorMessage: String,
+                         severity: String)
 
 object AMFValidation {
 
@@ -48,7 +49,8 @@ object AMFValidation {
                  constraint,
                  value,
                  ramlError,
-                 openApiError) =>
+                 openApiError,
+                 severity) =>
         val parsedValue =
           if (constraint.endsWith("pattern")) value
           else Namespace.uri(value).iri() // this might not be a URI, but trying to expand it is still safe
@@ -65,7 +67,8 @@ object AMFValidation {
             Namespace.uri(constraint).iri(),
             parsedValue,
             ramlError,
-            openApiError
+            openApiError,
+            severity
           ))
       case _ => None
     }
@@ -114,7 +117,9 @@ object DefaultAMFValidations extends ImportUtils {
     val groups = validations().groupBy(_.spec)
     groups.map {
       case (profile, validationsInGroup) =>
-        val validations = parseValidation(validationsInGroup)
+        val violationValidations = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.VIOLATION))
+        val infoValidations = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.INFO))
+        val warningValidations = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.WARNING))
 
         // sorting parser side validation for this profile
         val violationParserSideValidations = ParserSideValidations.validations
@@ -138,10 +143,10 @@ object DefaultAMFValidations extends ImportUtils {
         ValidationProfile(
           name = profile,
           baseProfileName = if (profile == ProfileNames.AMF) None else Some(ProfileNames.AMF),
-          infoLevel = infoParserSideValidations,
-          warningLevel = warningParserSideValidations,
-          violationLevel = validations.map(_.name) ++ violationParserSideValidations,
-          validations = validations ++ ParserSideValidations.validations
+          infoLevel = infoParserSideValidations ++ infoValidations.map(_.name),
+          warningLevel = warningParserSideValidations ++ warningValidations.map(_.name),
+          violationLevel = violationParserSideValidations ++ violationValidations.map(_.name),
+          validations = infoValidations ++ warningValidations ++ violationValidations ++ ParserSideValidations.validations
         )
 
     }.toList

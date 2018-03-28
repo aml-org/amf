@@ -25,9 +25,6 @@ val settings = Common.settings ++ Common.publish ++ Seq(
 /** **********************************************
   * AMF-Core
   ********************************************** */
-lazy val importScalaTask = TaskKey[Unit](
-  "tsvScalaImport",
-  "Import validations from AMF TSV files and generates a Scala object with the information")
 lazy val defaultProfilesGenerationTask = TaskKey[Unit](
   "defaultValidationProfilesGeneration",
   "Generates the validation dialect documents for the standard profiles")
@@ -68,8 +65,7 @@ lazy val webapi = crossProject
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
     libraryDependencies += "org.json4s"             %% "json4s-jackson"         % "3.5.2",
-    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-webapi-javadoc.jar",
-    fullRunTask(importScalaTask, Compile, "amf.tasks.tsvimport.ScalaExporter")
+    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-webapi-javadoc.jar"
   )
   .jsSettings(
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
@@ -137,7 +133,6 @@ lazy val validationJS  = validation.js.in(file("./amf-validation/js"))
 lazy val client = crossProject
   .settings(Seq(
     name := "amf-client",
-    fullRunTask(importScalaTask, Compile, "amf.tasks.tsvimport.ScalaExporter"),
     fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter")))
   .dependsOn(core, webapi, vocabularies, validation)
   .in(file("./amf-client"))
