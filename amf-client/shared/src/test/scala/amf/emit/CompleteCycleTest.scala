@@ -505,6 +505,14 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("fragment_usage.jsonld", "fragment_usage.raml", AmfJsonHint, Raml)
   }
 
+  test("Test boolean in key raml to amf") {
+    cycle("boolean_in_key.raml", "boolean_in_key.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Test boolean in key amf to raml") {
+    cycle("boolean_in_key.jsonld", "boolean_in_key.raml", AmfJsonHint, Raml)
+  }
+
   test("Test data type fragment raml to raml") {
     cycle("data-type-fragment.raml", RamlYamlHint, referencesPath)
   }

@@ -196,7 +196,7 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
 
     def dynamicSettings(xSettings: YMap, settings: Settings, properties: String*): Settings = {
       val entries = xSettings.entries.filterNot { entry =>
-        val key: String = entry.key
+        val key: String = entry.key.as[YScalar].text
         properties.contains(key) || isOasAnnotation(key)
       }
 
@@ -273,7 +273,7 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
     }
 
     private def parseScope(scopeEntry: YMapEntry) = {
-      val name: String        = scopeEntry.key
+      val name: String        = scopeEntry.key.as[YScalar].text
       val description: String = scopeEntry.value
 
       Scope(scopeEntry)

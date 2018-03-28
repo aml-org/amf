@@ -11,7 +11,7 @@ import amf.plugins.document.vocabularies.metamodel.domain.{ClassTermModel, Objec
 import amf.plugins.document.vocabularies.model.document.Vocabulary
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.SyntaxErrorReporter
-import org.yaml.model.{YMap, YMapEntry, YPart, YType}
+import org.yaml.model._
 
 import scala.collection.mutable
 
@@ -98,7 +98,7 @@ trait VocabularySyntax { this: VocabularyContext =>
       case "classTerm" => classTerm
       case "propertyTerm" => propertyTerm
     }
-    map.map.keySet.map(_.as[String]).foreach { property =>
+    map.map.keySet.map(_.as[YScalar].text).foreach { property =>
       allowedProps.get(property) match {
         case Some(_) => // correct
         case None => closedNodeViolation(id, property, nodeType, map)
@@ -223,8 +223,8 @@ case class VocabulariesReferencesParser(map: YMap, references: Seq[ParsedReferen
           .as[YMap]
           .entries
           .foreach(e => {
-            val alias: String = e.key
-            val url: String   = e.value
+            val alias: String = e.key.as[YScalar].text
+            val url: String   = e.value.as[YScalar].text
             target(url).foreach {
               case module: DeclaresModel => result += (alias, collectAlias(module, alias -> url))
               case other =>
@@ -242,8 +242,8 @@ case class VocabulariesReferencesParser(map: YMap, references: Seq[ParsedReferen
           .as[YMap]
           .entries
           .foreach(e => {
-            val alias: String = e.key
-            val base: String   = e.value
+            val alias: String = e.key.as[YScalar].text
+            val base: String   = e.value.as[YScalar].text
             val external = External()
             result += external.withAlias(alias).withBase(base)
           })
@@ -326,7 +326,7 @@ class RamlVocabulariesParser(root: Root)(implicit override val ctx: VocabularyCo
 
   def parseClassTerm(classTermDeclaration: YMapEntry): Unit = {
     val classTerm = ClassTerm(Annotations(classTermDeclaration))
-    val classTermAlias = classTermDeclaration.key.as[String]
+    val classTermAlias = classTermDeclaration.key.as[YScalar].text
     classTerm.withName(classTermAlias)
 
     ctx.resolveClassTermAlias(vocabulary.id, classTermAlias, classTermDeclaration.key, strictLocal = false) match {
@@ -408,7 +408,7 @@ class RamlVocabulariesParser(root: Root)(implicit override val ctx: VocabularyCo
       case YType.Null => DatatypePropertyTerm(Annotations(propertyTermDeclaration))
       case _          => propertyTermDeclaration.value.as[YMap].key("range") match {
         case None        => DatatypePropertyTerm(Annotations(propertyTermDeclaration))
-        case Some(value) => value.value.as[String] match {
+        case Some(value) => value.value.as[YScalar].text match {
           case "string" |  "integer" | "float" | "boolean" | "uri" | "any" | "time" | "date" | "dateTime" =>
             DatatypePropertyTerm(Annotations(propertyTermDeclaration))
           case _ => ObjectPropertyTerm(Annotations(propertyTermDeclaration))
@@ -416,7 +416,7 @@ class RamlVocabulariesParser(root: Root)(implicit override val ctx: VocabularyCo
       }
     }
 
-    val propertyTermAlias = propertyTermDeclaration.key.as[String]
+    val propertyTermAlias = propertyTermDeclaration.key.as[YScalar].text
     propertyTerm.withName(propertyTermAlias)
 
     ctx.resolvePropertyTermAlias(vocabulary.id, propertyTermAlias, propertyTermDeclaration.key, strictLocal = false) match {
@@ -441,10 +441,10 @@ class RamlVocabulariesParser(root: Root)(implicit override val ctx: VocabularyCo
         })
 
         propertyTermMap.key("range", entry => {
-          val rangeId = entry.value.as[String] match {
+          val rangeId = entry.value.as[YScalar].text match {
             case "uri" => Some((Namespace.Xsd + "anyUri").iri())
             case "any" => Some((Namespace.Xsd + "anyType").iri())
-            case "string" |  "integer" | "float" | "boolean" | "time" | "date" | "dateTime" =>  Some((Namespace.Xsd + entry.value.as[String]).iri())
+            case "string" |  "integer" | "float" | "boolean" | "time" | "date" | "dateTime" =>  Some((Namespace.Xsd + entry.value.as[YScalar].text).iri())
             case classAlias =>
               ctx.resolveClassTermAlias(vocabulary.id, classAlias, entry.value, strictLocal = true) match {
                 case Some(classTermId) => Some(classTermId)
@@ -464,7 +464,7 @@ class RamlVocabulariesParser(root: Root)(implicit override val ctx: VocabularyCo
           val refs: Seq[String] = entry.value.tagType match {
             case YType.Str => Seq(ValueNode(entry.value).string().toString)
             case YType.Seq =>
-              DefaultArrayNode(entry.value).nodes._1.map(_.as[String])
+              DefaultArrayNode(entry.value).nodes._1.map(_.as[YScalar].text)
               // ArrayNode(entry.value).strings().scalars.map(_.toString)
           }
 
