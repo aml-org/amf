@@ -16,7 +16,7 @@ trait Fragment extends BaseUnit with EncodesModel {
 
   override def adopted(parent: String): this.type = withId(parent)
 
-  override def usage: String = ""
+  override def usage: String = fields(FragmentModel.Usage)
 
   override def encodes: DomainElement = fields(FragmentModel.Encodes)
 
