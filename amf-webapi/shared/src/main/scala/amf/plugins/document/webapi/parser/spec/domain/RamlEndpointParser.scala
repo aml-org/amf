@@ -12,7 +12,7 @@ import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
-import org.yaml.model.{YMap, YMapEntry, YType}
+import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 import scala.collection.mutable
 
@@ -179,7 +179,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
       }
   }
 
-  protected def parsePath(): String = parent.map(_.path.value()).getOrElse("") + entry.key.as[String]
+  protected def parsePath(): String = parent.map(_.path.value()).getOrElse("") + entry.key.as[YScalar].text
 
   protected def uriParametersKey: String
 }

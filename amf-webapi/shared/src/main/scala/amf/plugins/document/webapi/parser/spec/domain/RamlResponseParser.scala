@@ -109,7 +109,7 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
                         })
                       }
                     )
-                    val others = YMap(m.entries.filter(e => !e.key.toString().matches(".*/.*")))
+                    val others = YMap(m.entries.filter(e => !e.key.as[YScalar].text.matches(".*/.*")))
                     if (others.entries.nonEmpty) {
                       if (payloads.isEmpty) {
                         ctx.factory
@@ -118,7 +118,7 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
                           .foreach(payloads += res.withPayload(None).withSchema(_)) // todo
                       } else {
                         others.entries.foreach(e =>
-                          ctx.violation(s"Unexpected key '${e.key}'. Expecting valid media types.", e))
+                          ctx.violation(s"Unexpected key '${e.key.as[YScalar].text}'. Expecting valid media types.", e))
                       }
                     }
                   case _ =>

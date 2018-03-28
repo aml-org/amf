@@ -60,7 +60,7 @@ case class Raml10ParameterParser(entry: YMapEntry, producer: String => Parameter
     extends RamlParameterParser(entry, producer) {
   override def parse(): Parameter = {
 
-    val name: String = entry.key
+    val name: String = entry.key.as[YScalar].text
     val parameter    = producer(name).withParameterName(name).add(Annotations(entry)) // TODO parameter id is using a name that is not final.
 
     val p = entry.value.to[YMap] match {
@@ -146,7 +146,7 @@ case class Raml08ParameterParser(entry: YMapEntry, producer: String => Parameter
     extends RamlParameterParser(entry, producer) {
   def parse(): Parameter = {
 
-    var name: String = entry.key
+    var name: String = entry.key.as[YScalar].text
     val parameter    = producer(name).withParameterName(name).add(Annotations(entry))
 
     entry.value.tagType match {

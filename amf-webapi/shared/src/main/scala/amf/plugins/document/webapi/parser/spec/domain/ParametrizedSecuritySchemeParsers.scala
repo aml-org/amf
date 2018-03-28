@@ -6,7 +6,7 @@ import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRaml
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security._
-import org.yaml.model.{YMap, YNode, YType}
+import org.yaml.model.{YMap, YNode, YScalar, YType}
 
 object RamlParametrizedSecuritySchemeParser {
   def parse(producer: String => ParametrizedSecurityScheme)(node: YNode)(
@@ -35,7 +35,7 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String =>
 
     case YType.Map =>
       val schemeEntry = node.as[YMap].entries.head
-      val name        = schemeEntry.key
+      val name        = schemeEntry.key.as[YScalar].text
       val scheme      = producer(name).add(Annotations(node))
 
       ctx.declarations.findSecurityScheme(name, SearchScope.Named) match {
@@ -78,7 +78,7 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSet
 
   def dynamicSettings(settings: Settings, properties: String*): Settings = {
     val entries = map.entries.filterNot { entry =>
-      val key: String = entry.key
+      val key: String = entry.key.as[YScalar].text
       properties.contains(key) || isRamlAnnotation(key)
     }
 
