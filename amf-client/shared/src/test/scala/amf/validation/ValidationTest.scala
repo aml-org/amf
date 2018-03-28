@@ -506,6 +506,16 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Trailing spaces validation") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(productionPath + "americanflightapi.raml", platform, RamlYamlHint, validation).build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
   test("Example validation of a resource type") {
     for {
       validation <- Validation(platform)
