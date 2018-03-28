@@ -30,9 +30,9 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
     with PlatformSecrets {
 
   /** Default to raml10 context. */
-  implicit val ctx: RamlWebApiContext = profile match {
-    case ProfileNames.RAML08 => new Raml08WebApiContext(ParserContext())
-    case _                   => new Raml10WebApiContext(ParserContext())
+  def ctx(parserRun: Int): RamlWebApiContext = profile match {
+    case ProfileNames.RAML08 => new Raml08WebApiContext(ParserContext(parserCount = parserRun))
+    case _                   => new Raml10WebApiContext(ParserContext(parserCount = parserRun))
   }
 
   override def resolve(model: BaseUnit): BaseUnit = model.transform(findExtendsPredicate, transform(model))
@@ -43,7 +43,7 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
         val node = rt.dataNode.cloneNode()
         node.replaceVariables(context.variables)
 
-        ExtendsHelper.asEndpoint(context.model, profile, node, r.name.value(), r.id, keepEditingInfo, Some(ctx))
+        ExtendsHelper.asEndpoint(context.model, profile, node, r.name.value(), r.id, keepEditingInfo, Some(ctx(context.model.parserRun.get)))
 
       case _ => throw new Exception(s"Cannot find target for parametrized resource type ${r.id}")
     }
@@ -196,7 +196,7 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
           val node: DataNode = t.dataNode.cloneNode()
           node.replaceVariables(local.variables)
 
-          val op = ExtendsHelper.asOperation(profile, node, context.model, t.id, keepEditingInfo, Some(ctx))
+          val op = ExtendsHelper.asOperation(profile, node, context.model, t.id, keepEditingInfo, Some(ctx(context.model.parserRun.get)))
 
           val children = op.traits.map(resolve(_, context))
 

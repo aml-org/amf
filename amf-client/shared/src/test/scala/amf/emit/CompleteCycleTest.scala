@@ -642,6 +642,14 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("number_title.raml", "number_title.raml.jsonld", RamlYamlHint, Amf)
   }
 
+  test("Schema inheritance JSON Schema test") {
+    cycle("schema_inheritance.raml", "schema_inheritance.raml.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("Schema inheritance XML Schema test") {
+    cycle("schema_inheritance2.raml", "schema_inheritance2.raml.jsonld", RamlYamlHint, Amf)
+  }
+
   test("Security schemes raml to amf") {
     cycle("security.raml", "security.raml.jsonld", RamlYamlHint, Amf)
   }

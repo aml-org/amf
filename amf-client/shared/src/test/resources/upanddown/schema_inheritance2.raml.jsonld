@@ -1,0 +1,321 @@
+[
+  {
+    "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance2.raml",
+    "@type": [
+      "http://raml.org/vocabularies/document#Document",
+      "http://raml.org/vocabularies/document#Fragment",
+      "http://raml.org/vocabularies/document#Module",
+      "http://raml.org/vocabularies/document#Unit"
+    ],
+    "http://raml.org/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance2.raml#/web-api",
+        "@type": [
+          "http://schema.org/WebAPI",
+          "http://raml.org/vocabularies/document#RootDomainElement",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "External Types Invalid"
+          }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance2.raml#/web-api/source-map",
+            "@type": [
+              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#source-vendor": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance2.raml#/web-api"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "raml 1.0"
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/name"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(4,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance2.raml#/web-api"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(8,21)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://raml.org/vocabularies/document#declares": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance2.raml#/declarations/Person",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://raml.org/vocabularies/shapes#Shape",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#closed": [
+          {
+            "@value": false
+          }
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance2.raml#/declarations/Person/property/single",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://raml.org/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://raml.org/vocabularies/data#single"
+              }
+            ],
+            "http://raml.org/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance2.raml#/declarations/Person/property/single/scalar/single",
+                "@type": [
+                  "http://raml.org/vocabularies/shapes#ScalarShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://raml.org/vocabularies/shapes#Shape",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "single"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance2.raml#/declarations/Person/property/single/scalar/single/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance2.raml#/declarations/Person/property/single/scalar/single"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(8,6)-(8,21)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "single"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance2.raml#/declarations/Person/property/single/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance2.raml#/declarations/Person/property/single"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(8,6)-(8,21)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "Person"
+          }
+        ],
+        "http://raml.org/vocabularies/shapes#inherits": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance2.raml#/declarations/Person/schema/schema",
+            "@type": [
+              "http://www.w3.org/ns/shacl#SchemaShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://raml.org/vocabularies/shapes#Shape",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#mediaType": [
+              {
+                "@value": "application/xml"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#raw": [
+              {
+                "@value": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"\n           targetNamespace=\"https://www.w3schools.com\"\n           xmlns=\"https://www.w3schools.com\"\n           elementFormDefault=\"qualified\">\n\n    <xs:element name=\"person\">\n        <xs:complexType>\n            <xs:sequence>\n                <xs:element name=\"name\" type=\"xs:string\"\n                            maxOccurs=\"unbounded\"/>\n            </xs:sequence>\n        </xs:complexType>\n    </xs:element>\n\n</xs:schema> "
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "schema"
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance2.raml#/declarations/Person/source-map",
+            "@type": [
+              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#declared-element": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance2.raml#/declarations/Person"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/shapes#inherits"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(6,4)-(7,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#property"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(7,4)-(8,21)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance2.raml#/declarations/Person"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(5,2)-(8,21)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#name"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(5,2)-(5,8)]"
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance2.raml#/declarations/Person"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(6,4)-(6,8)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://raml.org/vocabularies/document#references": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/person.xsd",
+        "@type": [
+          "http://raml.org/vocabularies/document#ExternalFragment",
+          "http://raml.org/vocabularies/document#Fragment",
+          "http://raml.org/vocabularies/document#Unit"
+        ],
+        "http://raml.org/vocabularies/document#encodes": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/person.xsd#/external",
+            "@type": [
+              "http://raml.org/vocabularies/document#ExternalDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/document#raw": [
+              {
+                "@value": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"\n           targetNamespace=\"https://www.w3schools.com\"\n           xmlns=\"https://www.w3schools.com\"\n           elementFormDefault=\"qualified\">\n\n    <xs:element name=\"person\">\n        <xs:complexType>\n            <xs:sequence>\n                <xs:element name=\"name\" type=\"xs:string\"\n                            maxOccurs=\"unbounded\"/>\n            </xs:sequence>\n        </xs:complexType>\n    </xs:element>\n\n</xs:schema> "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
