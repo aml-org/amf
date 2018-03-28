@@ -618,7 +618,8 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
             if (Option(oasParameter.payload).isDefined && Option(oasParameter.payload.schema).isDefined) {
               parameter.withSchema(oasParameter.payload.schema)
             }
-            parameter.fields.getValue(ParameterModel.Binding).annotations += ExplicitField()
+            if (parameter.fields.exists(ParameterModel.Binding))
+              parameter.fields.getValue(ParameterModel.Binding).annotations += ExplicitField()
             ctx.declarations.registerParameter(parameter, oasParameter.payload)
           })
       }
