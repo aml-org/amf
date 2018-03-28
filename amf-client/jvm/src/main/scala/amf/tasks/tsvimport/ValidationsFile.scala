@@ -44,7 +44,8 @@ class ValidationsFile(validationsFile: File) {
             Namespace.uri(constraint.trim).iri(),
             Namespace.uri(value.trim).iri(), // this might not be a URI, but trying to expand it is still safe
             ramlErrorMessage.trim,
-            openAPIErrorMessage.trim
+            openAPIErrorMessage.trim,
+            "Violation"
           ))
       case _ => None
     }

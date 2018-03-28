@@ -494,6 +494,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("No title validation") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(productionPath + "no_title.raml", platform, RamlYamlHint, validation).build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+      assert(report.results.size == 1)
+      assert(report.results.head.level == SeverityLevels.WARNING)
+    }
+  }
+
   test("Example validation of a resource type") {
     for {
       validation <- Validation(platform)
