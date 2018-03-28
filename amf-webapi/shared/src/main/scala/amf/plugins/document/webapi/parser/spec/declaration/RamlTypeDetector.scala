@@ -137,7 +137,8 @@ case class RamlTypeDetector(parent: String,
     }
 
     schema.foreach(s =>
-      ctx.warning("'schema' keyword it's deprecated for 1.0 version, should use 'type' instead", s.key))
+      ctx.warning("'schema' keyword it's deprecated for 1.0 version, should use 'type' instead", s.key)
+    )
 
     `type`.orElse(schema)
   }

@@ -40,6 +40,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   val payloadsPath     = "file://amf-client/shared/src/test/resources/payloads/"
   val productionPath   = "file://amf-client/shared/src/test/resources/production/"
   val validationsPath  = "file://amf-client/shared/src/test/resources/validations/"
+  val upDownPath       = "file://amf-client/shared/src/test/resources/upanddown/"
 
   private def cycle(exampleFile: String, hint: Hint, syntax: Syntax, target: Vendor): Future[String] = {
     Validation(platform).flatMap(v => {
@@ -562,6 +563,29 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.conforms)
     }
   }
+
+  test("json schema inheritance") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(upDownPath + "schema_inheritance.raml", platform, RamlYamlHint, validation).build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.results.size == 1)
+      assert(report.results.head.level == SeverityLevels.WARNING)
+      assert(report.conforms)
+    }
+  }
+
+  test("xml schema inheritance") {
+    for {
+      validation <- Validation(platform)
+      library    <- AMFCompiler(upDownPath + "schema_inheritance2.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+    }
+  }
+
 
   test("Example invalid min and max constraint validations test") {
     for {

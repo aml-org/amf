@@ -70,6 +70,22 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
+  val InvalidTypeInheritanceErrorSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "invalid-type-inheritance").iri(),
+    "Invalid inheritance relationship",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
+  val JsonSchemaInheratinaceWarningSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "json-schema-inheritance").iri(),
+    "Inheriting from JSON Schema",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val ParsingWarningSpecification = ValidationSpecification(
     (Namespace.AmfParser + "parsing-warning").iri(),
     "Parsing warning",
@@ -119,6 +135,18 @@ object ParserSideValidations {
 
     OasFormDataNotFileSpecification.id() -> Map(
       ProfileNames.OAS  -> SeverityLevels.VIOLATION
+    ),
+
+    InvalidTypeInheritanceErrorSpecification.id() -> Map(
+      ProfileNames.RAML -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS  -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF  -> SeverityLevels.VIOLATION
+    ),
+
+    JsonSchemaInheratinaceWarningSpecification.id() -> Map(
+      ProfileNames.RAML -> SeverityLevels.WARNING,
+      ProfileNames.OAS  -> SeverityLevels.WARNING,
+      ProfileNames.AMF  -> SeverityLevels.WARNING
     ),
 
     ClosedShapeSpecification.id() -> Map(
@@ -179,6 +207,8 @@ object ParserSideValidations {
   )
 
   def validations: List[ValidationSpecification] = List(
+    JsonSchemaInheratinaceWarningSpecification,
+    InvalidTypeInheritanceErrorSpecification,
     ClosedShapeSpecification,
     DialectAmbiguousRangeSpecification,
     ParsingErrorSpecification,

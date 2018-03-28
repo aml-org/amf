@@ -37,7 +37,6 @@ class ProductionResolutionTest extends RamlResolutionTest {
   ignore("API Console test api") {
     cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, basePath + "api-console/")
   }
-
 }
 
 class Raml08ResolutionTest extends RamlResolutionTest {
