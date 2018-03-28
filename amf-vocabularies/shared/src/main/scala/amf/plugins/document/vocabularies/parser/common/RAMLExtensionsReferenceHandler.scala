@@ -65,7 +65,7 @@ class RAMLExtensionsReferenceHandler extends ReferenceHandler {
   private def links(part: YPart): Unit = {
     part match {
       case entry: YMapEntry => {
-        if (entry.key.as[String] =="$dialect") {
+        if (entry.key.as[YScalar].text =="$dialect") {
           val dialectRef = entry.value
           ramlInclude(dialectRef.split("#").head)
         }

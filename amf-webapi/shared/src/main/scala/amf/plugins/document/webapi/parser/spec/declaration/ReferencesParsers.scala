@@ -73,7 +73,7 @@ case class ReferencesParser(key: String, map: YMap, references: Seq[ParsedRefere
           .as[YMap]
           .entries
           .foreach(e => {
-            val alias: String = e.key
+            val alias: String = e.key.as[YScalar].text
             val url: String   = library(id, e)
             target(url).foreach {
               case module: DeclaresModel => result += (alias, collectAlias(module, alias -> url))

@@ -5,15 +5,10 @@ import amf.core.parser.{Annotations, _}
 import amf.core.utils.Lazy
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.SpecParserOps
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  AnyDefaultType,
-  DefaultType,
-  NilDefaultType,
-  Raml10TypeParser
-}
+import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, DefaultType, NilDefaultType, Raml10TypeParser}
 import amf.plugins.domain.webapi.metamodel.RequestModel
 import amf.plugins.domain.webapi.models.{Payload, Request}
-import org.yaml.model.{YMap, YType}
+import org.yaml.model.{YMap, YScalar, YType}
 
 import scala.collection.mutable
 
@@ -132,7 +127,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
                     })
                   }
                 )
-                val others = YMap(m.entries.filter(e => !e.key.toString().matches(".*/.*")))
+                val others = YMap(m.entries.filter(e => !e.key.as[YScalar].text.matches(".*/.*")))
                 if (others.entries.nonEmpty) {
                   if (payloads.isEmpty) {
                     ctx.factory
@@ -144,7 +139,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
                       .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
                   } else {
                     others.entries.foreach(e =>
-                      ctx.violation(s"Unexpected key '${e.key}'. Expecting valid media types.", e))
+                      ctx.violation(s"Unexpected key '${e.key.as[YScalar].text}'. Expecting valid media types.", e))
                   }
                 }
               case _ =>

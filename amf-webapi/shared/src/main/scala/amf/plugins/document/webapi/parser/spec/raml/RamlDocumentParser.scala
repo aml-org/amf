@@ -258,7 +258,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
               .as[YMap]
               .entries
               .map { entry =>
-                val typeName = entry.key.as[String]
+                val typeName = entry.key.as[YScalar].text
                 val customProperty = AnnotationTypesParser(
                   entry,
                   customProperty => {

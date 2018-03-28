@@ -21,7 +21,7 @@ case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation
     extends SpecParserOps {
 
   def parse(): Operation = {
-    val method: String = entry.key
+    val method: String = entry.key.as[YScalar].text
 
     val operation = producer(method).add(Annotations(entry))
     operation.set(Method, ScalarNode(entry.key).string())

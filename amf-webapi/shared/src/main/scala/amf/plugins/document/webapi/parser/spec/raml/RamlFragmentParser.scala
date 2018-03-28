@@ -17,7 +17,7 @@ import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, RamlNamedExampleParser}
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import org.yaml.model.YMap
+import org.yaml.model.{YMap, YScalar}
 
 /**
   *
@@ -38,7 +38,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
     val references = ReferencesParser("uses", rootMap, root.references).parse(root.location)
 
     // usage is valid for a fragment, not for the encoded domain element
-    val encodedMap = YMap(rootMap.entries.filter(_.key.as[String] != "usage"))
+    val encodedMap = YMap(rootMap.entries.filter(_.key.as[YScalar].text != "usage"))
 
     val optionFragment = fragmentType match {
       case Raml10DocumentationItem         => Some(DocumentationItemFragmentParser(encodedMap).parse())
