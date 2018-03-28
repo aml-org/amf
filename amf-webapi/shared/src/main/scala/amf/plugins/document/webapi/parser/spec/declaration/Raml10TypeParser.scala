@@ -8,12 +8,7 @@ import amf.core.model.domain.{ScalarNode => DynamicDataNode, _}
 import amf.core.parser.{Annotations, Value, _}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
-import amf.plugins.document.webapi.contexts.{
-  Raml08WebApiContext,
-  Raml10WebApiContext,
-  RamlWebApiContext,
-  WebApiContext
-}
+import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec._
@@ -25,6 +20,7 @@ import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.{YPart, _}
 import org.yaml.parser.YamlParser
 import org.yaml.render.YamlRender
@@ -878,7 +874,10 @@ sealed abstract class RamlTypeParser(ast: YPart,
     }
   }
 
-  case class InheritanceParser(entry: YMapEntry, shape: Shape) extends RamlTypeSyntax {
+  case class InheritanceParser(entry: YMapEntry, shape: Shape)(
+    implicit val ctx: RamlWebApiContext)
+    extends RamlTypeSyntax with RamlExternalTypes {
+
     def parse(): Unit = {
       entry.value.tagType match {
 
@@ -909,6 +908,10 @@ sealed abstract class RamlTypeParser(ast: YPart,
             .foreach(s =>
               shape.set(ShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry)))
 
+        case YType.Str if XMLSchema.unapply(entry.value).isDefined =>
+          val parsed = parseXMLSchemaExpression("schema", entry.value, (xmlSchemaShape) => xmlSchemaShape.withId(shape.id + "/xmlSchema"))
+          shape.set(ShapeModel.Inherits, AmfArray(Seq(parsed), Annotations(entry.value)), Annotations(entry))
+
         case _ if !wellKnownType(entry.value.as[YScalar].text) =>
           val text = entry.value.as[YScalar].text
           // it might be a named type
@@ -920,8 +923,20 @@ sealed abstract class RamlTypeParser(ast: YPart,
                                         AmfArray(Seq(ancestor), Annotations(entry.value)),
                                         Annotations(entry))
             case _ =>
-              val u: UnresolvedShape = unresolved(entry.value)
-              shape.set(ShapeModel.Inherits, AmfArray(Seq(u), Annotations(entry.value)), Annotations(entry))
+              val baseClass = text match {
+                case JSONSchema(_) =>
+                  ctx.warning(
+                    ParserSideValidations.JsonSchemaInheratinaceWarningSpecification.id(),
+                    shape.id,
+                    Some(ShapeModel.Inherits.value.iri()),
+                    "Inheritance from JSON Schema",
+                    entry.value
+                  )
+                  parseJSONSchemaExpression("schema", entry.value, (jsonSchemaShape) => jsonSchemaShape.withId(shape.id + "/jsonSchema"))
+                case _ =>
+                  unresolved(entry.value)
+              }
+              shape.set(ShapeModel.Inherits, AmfArray(Seq(baseClass), Annotations(entry.value)), Annotations(entry))
           }
 
         case _ =>

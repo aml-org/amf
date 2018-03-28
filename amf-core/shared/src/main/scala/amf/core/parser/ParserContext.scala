@@ -11,7 +11,7 @@ import org.yaml.model._
 /**
   * Parser context
   */
-abstract class ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
+trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
 
   val parserCount: Int
   val currentFile: String
