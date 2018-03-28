@@ -192,7 +192,7 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
           .as[YMap]
           .entries
           .foreach(e => {
-            val alias: String = e.key
+            val alias: String = e.key.as[YScalar].text
             val url: String   = library(e)
             target(url).foreach {
               case module: DeclaresModel =>
@@ -297,10 +297,10 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
     }
     declarationsNodeMappings.foreach {
       case (name, nodeMapping) =>
-        map.entries.find(_.key.as[String] == name).foreach { entry =>
+        map.entries.find(_.key.as[YScalar].text == name).foreach { entry =>
           val declarationsId = root.location + "#/" + name.urlEncoded
           entry.value.as[YMap].entries.foreach { declarationEntry =>
-            val id = declarationsId + "/" + declarationEntry.key.as[String].urlEncoded
+            val id = declarationsId + "/" + declarationEntry.key.as[YScalar].text.urlEncoded
             parseNode(id, declarationEntry.value, nodeMapping) match {
               case Some(node) => ctx.declarations.registerDialectDomainElement(declarationEntry.key, node)
               case other      => // TODO: violation here
@@ -393,13 +393,13 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
         val map = propertyEntry.value.as[YMap]
         map.key("$dialect") match {
           case Some(nested) if nested.value.tagType == YType.Str =>
-            val dialectNode = nested.value.as[String]
+            val dialectNode = nested.value.as[YScalar].text
             // TODO: resolve dialect node URI to absolute normalised URI
             RAMLVocabulariesPlugin.registry.findNode(dialectNode) match {
               case Some((dialect, nodeMapping)) =>
                 ctx.nestedDialects ++= Seq(dialect)
                 ctx.withCurrentDialect(dialect) {
-                  val nestedObjectId = pathSegment(id, propertyEntry.key.as[String].urlEncoded)
+                  val nestedObjectId = pathSegment(id, propertyEntry.key.as[YScalar].text.urlEncoded)
                   parseNestedNode(nestedObjectId, propertyEntry.value, nodeMapping) match {
                     case Some(dialectDomainElement) =>
                       node.setObjectField(property, dialectDomainElement, propertyEntry.value)
@@ -426,7 +426,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
                           propertyEntry: YMapEntry): DialectDomainElement = {
     // TODO: check if the node already has a value and that it matches (maybe coming from a declaration)
     propertyMapping.mapKeyProperty().option() match {
-      case Some(propId) => node.setMapKeyField(propId, propertyEntry.key.as[String], propertyEntry.key)
+      case Some(propId) => node.setMapKeyField(propId, propertyEntry.key.as[YScalar].text, propertyEntry.key)
       case None         => node
     }
   }
@@ -438,8 +438,8 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
     discriminator match {
       // Using explicit discriminator
       case Some(propertyName) =>
-        val explicitMapping = nodeMap.entries.find(_.key.as[String] == propertyName).flatMap { entry =>
-          discriminatorMapping.get(entry.value.as[String])
+        val explicitMapping = nodeMap.entries.find(_.key.as[YScalar].text == propertyName).flatMap { entry =>
+          discriminatorMapping.get(entry.value.as[YScalar].text)
         }
         explicitMapping match {
           case Some(nodeMapping) => Seq(nodeMapping)
@@ -447,7 +447,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
         }
       // Inferring based on properties
       case None =>
-        val properties: Set[String] = nodeMap.entries.map(_.key.as[String]).toSet
+        val properties: Set[String] = nodeMap.entries.map(_.key.as[YScalar].text).toSet
         unionMappings.filter { mapping =>
           val mappingRequiredSet: Set[String] =
             mapping.propertiesMapping().filter(_.minCount().value() > 0).map(_.name().value()).toSet
@@ -501,7 +501,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
               if (!node.containsProperty(propertyMapping)) {
                 val propertyName = propertyMapping.name().value()
 
-                nodeMap.entries.find(_.key.as[String] == propertyName) match {
+                nodeMap.entries.find(_.key.as[YScalar].text == propertyName) match {
                   case Some(entry) => parseProperty(id, entry, propertyMapping, node)
                   case None        => // ignore
                 }
@@ -568,7 +568,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
       case range: Seq[String] if range.size == 1 =>
         ctx.dialect.declares.find(_.id == range.head) match {
           case Some(nodeMapping: NodeMapping) =>
-            val nestedObjectId = pathSegment(id, propertyEntry.key.as[String].urlEncoded)
+            val nestedObjectId = pathSegment(id, propertyEntry.key.as[YScalar].text.urlEncoded)
             parseNestedNode(nestedObjectId, propertyEntry.value, nodeMapping) match {
               case Some(dialectDomainElement) =>
                 node.setObjectField(property, dialectDomainElement, propertyEntry.value)
@@ -585,7 +585,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
                              property: PropertyMapping,
                              node: DialectDomainElement): Unit = {
     val nested = propertyEntry.value.as[YMap].entries.map { keyEntry =>
-      val nestedObjectId = pathSegment(id, propertyEntry.key.as[String].urlEncoded) + s"/${keyEntry.key.as[String].urlEncoded}"
+      val nestedObjectId = pathSegment(id, propertyEntry.key.as[YScalar].text.urlEncoded) + s"/${keyEntry.key.as[YScalar].text.urlEncoded}"
       val parsedNode = property.nodesInRange match {
         case range: Seq[String] if range.size > 1 =>
           parseObjectUnion(nestedObjectId, keyEntry.value, property, node)
@@ -613,7 +613,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
                                 node: DialectDomainElement): Unit = {
     val discriminator = property.typeDiscriminatorName().value()
     val nested = propertyEntry.value.as[YMap].entries.map { keyEntry =>
-      val nestedObjectId = pathSegment(id, propertyEntry.key.as[String].urlEncoded) + s"/${keyEntry.key.as[String].urlEncoded}"
+      val nestedObjectId = pathSegment(id, propertyEntry.key.as[YScalar].text.urlEncoded) + s"/${keyEntry.key.as[YScalar].text.urlEncoded}"
 
       val parsedNode = property.nodesInRange match {
         case range: Seq[String] if range.size > 1 =>
@@ -646,13 +646,13 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
       val nested = ctx.dialect.declares.find(_.id == property.objectRange().head.value()) match {
         case Some(nodeMapping: NodeMapping) =>
           propertyEntry.value.as[YMap].entries map { pair: YMapEntry =>
-            val nestedId = id + "/" + propertyEntry.key.as[String].urlEncoded + "/" + pair.key.as[String].urlEncoded
+            val nestedId = id + "/" + propertyEntry.key.as[YScalar].text.urlEncoded + "/" + pair.key.as[YScalar].text.urlEncoded
             val nestedNode = DialectDomainElement(Annotations(pair))
               .withId(nestedId)
               .withDefinedBy(nodeMapping)
               .withInstanceTypes(Seq(nodeMapping.nodetypeMapping.value(), nodeMapping.id))
-            nestedNode.setMapKeyField(propertyKeyMapping.get, pair.key.as[String], pair.key)
-            nestedNode.setMapKeyField(propertyValueMapping.get, pair.value.as[String], pair.value)
+            nestedNode.setMapKeyField(propertyKeyMapping.get, pair.key.as[YScalar].text, pair.key)
+            nestedNode.setMapKeyField(propertyValueMapping.get, pair.value.as[YScalar].text, pair.value)
             Some(nestedNode)
           } collect { case Some(elem: DialectDomainElement) => elem }
         case _ =>
@@ -678,7 +678,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
           case range: Seq[String] if range.size == 1 =>
             ctx.dialect.declares.find(_.id == range.head) match {
               case Some(nodeMapping: NodeMapping) =>
-                val nestedObjectId = pathSegment(id, propertyEntry.key.as[String].urlEncoded) + s"/$nextElem"
+                val nestedObjectId = pathSegment(id, propertyEntry.key.as[YScalar].text.urlEncoded) + s"/$nextElem"
                 parseNestedNode(nestedObjectId, elementNode, nodeMapping) match {
                   case Some(dialectDomainElement) => Some(dialectDomainElement)
                   case None                       => None
@@ -724,7 +724,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
                                                     value)
         None
       case YType.Str if property.literalRange().value() == (Namespace.Xsd + "string").iri() =>
-        Some(value.as[String])
+        Some(value.as[YScalar].text)
       case YType.Str =>
         ctx.inconsistentPropertyRangeValueViolation(node.id,
                                                     property,
@@ -816,7 +816,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
 
         nodeMap.key("$id") match {
           case Some(entry) =>
-            val rawId = entry.value.as[String]
+            val rawId = entry.value.as[YScalar].text
             val externalId = if (rawId.contains("://")) {
               rawId
             } else {
@@ -830,7 +830,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
         node.withInstanceTypes(Seq(mapping.nodetypeMapping.value(), mapping.id))
         mapping.propertiesMapping().foreach { propertyMapping =>
           val propertyName = propertyMapping.name().value()
-          nodeMap.entries.find(_.key.as[String] == propertyName) match {
+          nodeMap.entries.find(_.key.as[YScalar].text == propertyName) match {
             case Some(entry) => parseProperty(id, entry, propertyMapping, node)
             case None        => // ignore
           }

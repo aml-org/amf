@@ -137,7 +137,7 @@ trait DialectSyntax { this: DialectContext =>
       case "propertyMapping"  => propertyMapping
       case "documentsMapping" => documentsMapping
     }
-    map.map.keySet.map(_.as[String]).foreach { property =>
+    map.map.keySet.map(_.as[YScalar].text).foreach { property =>
       allowedProps.get(property) match {
         case Some(_) => // correct
         case None    => closedNodeViolation(id, property, nodeType, map)
@@ -146,7 +146,7 @@ trait DialectSyntax { this: DialectContext =>
 
     allowedProps.foreach {
       case (propName, mandatory) =>
-        val props = map.map.keySet.map(_.as[String])
+        val props = map.map.keySet.map(_.as[YScalar].text)
         if (mandatory) {
           if (!props.contains(propName)) {
             missingPropertyViolation(id, propName, nodeType, map)
@@ -232,7 +232,7 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
           .as[YMap]
           .entries
           .foreach(e => {
-            val alias: String = e.key
+            val alias: String = e.key.as[YScalar].text
             val url: String   = library(e)
             target(url).foreach {
               case module: DeclaresModel =>
@@ -258,7 +258,7 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
           .as[YMap]
           .entries
           .foreach(e => {
-            val alias: String = e.key
+            val alias: String = e.key.as[YScalar].text
             val base: String  = e.value
             val external      = External()
             result += external.withAlias(alias).withBase(base)
@@ -676,8 +676,8 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
         val types = entry.value.as[YMap]
         val typeMapping = types.entries.foldLeft(Map[String, String]()) {
           case (acc, e) =>
-            val nodeMappingId = e.value.as[String]
-            acc + (e.key.as[String] -> nodeMappingId)
+            val nodeMappingId = e.value.as[YScalar].text
+            acc + (e.key.as[YScalar].text -> nodeMappingId)
         }
         propertyMapping.withTypeDiscriminator(typeMapping)
       }
@@ -726,7 +726,7 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
                                    propertyMapping =>
                                      propertyMapping
                                        .withName(entry.key)
-                                       .adopted(nodeMapping.id + "/property/" + entry.key.as[String].urlEncoded))
+                                       .adopted(nodeMapping.id + "/property/" + entry.key.as[YScalar].text.urlEncoded))
             }
             nodeMapping.withPropertiesMapping(properties)
           }
@@ -809,7 +809,7 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
         rootMap.key(
           "encodes",
           entry => {
-            val nodeId = entry.value.as[String]
+            val nodeId = entry.value.as[YScalar].text
             ctx.declarations.findNodeMapping(nodeId, SearchScope.All) match {
               case Some(nodeMapping) => Some(documentsMapping.withEncoded(nodeMapping.id))
               case _                 => None // TODO: violation here
@@ -822,8 +822,8 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
             val declaresMap = entry.value.as[YMap]
             val declarations: Seq[Option[PublicNodeMapping]] = declaresMap.entries.map {
               declarationEntry =>
-                val declarationId   = declarationEntry.value.as[String]
-                val declarationName = declarationEntry.key.as[String]
+                val declarationId   = declarationEntry.value.as[YScalar].text
+                val declarationName = declarationEntry.key.as[YScalar].text
                 val declarationMapping = PublicNodeMapping(declarationEntry)
                   .withName(declarationName)
                   .withId(parent + "/declaration/" + declarationName.urlEncoded)
@@ -846,8 +846,8 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
         entry.value.as[YMap].key("encodes") match {
           case Some(entry: YMapEntry) =>
             val docs = entry.value.as[YMap].entries.map { fragmentEntry =>
-              val fragmentName = fragmentEntry.key.as[String]
-              val nodeId       = fragmentEntry.value.as[String]
+              val fragmentName = fragmentEntry.key.as[YScalar].text
+              val nodeId       = fragmentEntry.value.as[YScalar].text
               val documentsMapping = DocumentMapping(fragmentEntry.value)
                 .withDocumentName(fragmentName)
                 .withId(parent + s"/fragments/${fragmentName.urlEncoded}")
@@ -874,8 +874,8 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
           case Some(libraryEntry) =>
             val declaresMap = libraryEntry.value.as[YMap]
             val declarations: Seq[Option[PublicNodeMapping]] = declaresMap.entries.map { declarationEntry =>
-              val declarationId   = declarationEntry.value.as[String]
-              val declarationName = declarationEntry.key.as[String]
+              val declarationId   = declarationEntry.value.as[YScalar].text
+              val declarationName = declarationEntry.key.as[YScalar].text
               val declarationMapping = PublicNodeMapping(declarationEntry)
                 .withName(declarationName)
                 .withId(parent + "/modules/" + declarationName.urlEncoded)

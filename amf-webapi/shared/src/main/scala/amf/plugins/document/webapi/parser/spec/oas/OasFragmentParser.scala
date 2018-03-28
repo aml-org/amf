@@ -13,7 +13,7 @@ import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, RamlNamedExampleParser}
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import org.yaml.model.YMap
+import org.yaml.model.{YMap, YScalar}
 
 /**
   *
@@ -136,7 +136,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
 
   case class NamedExampleFragmentParser(map: YMap) {
     def parse(): NamedExampleFragment = {
-      val entries      = map.entries.filter(e => e.key.as[String] != "x-fragment-type")
+      val entries      = map.entries.filter(e => e.key.as[YScalar].text != "x-fragment-type")
       val namedExample = NamedExampleFragment().adopted(root.location)
 
       val producer = (name: Option[String]) => {

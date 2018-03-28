@@ -184,7 +184,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) ext
     def parse(): ParametrizedSecurityScheme = node.to[YMap] match {
       case Right(map) =>
         val schemeEntry = map.entries.head
-        val name        = schemeEntry.key
+        val name        = schemeEntry.key.as[YScalar].text
         val scheme      = producer(name).add(Annotations(map))
 
         var declaration = parseTarget(name, scheme, schemeEntry)
@@ -227,7 +227,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) ext
   case class EndpointParser(entry: YMapEntry, producer: String => EndPoint, collector: mutable.ListBuffer[EndPoint]) {
 
     def parse(): Unit = {
-      val path = entry.key.as[String]
+      val path = entry.key.as[YScalar].text
 
       val endpoint = producer(path).add(Annotations(entry))
 

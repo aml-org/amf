@@ -37,7 +37,7 @@ case class RamlTypeDetector(parent: String,
 
     case YType.Map =>
       val map       = node.as[YMap]
-      val filterMap = YMap(map.entries.filter(e => !e.key.toString().matches(".*/.*")))
+      val filterMap = YMap(map.entries.filter(e => !e.key.as[YScalar].text.matches(".*/.*")))
       detectItems(filterMap)
         .orElse(detectProperties(filterMap))
         .orElse(detectAnyOf(filterMap))

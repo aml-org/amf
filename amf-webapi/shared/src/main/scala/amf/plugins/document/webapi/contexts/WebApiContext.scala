@@ -63,7 +63,7 @@ abstract class RamlWebApiContext(private val wrapped: ParserContext, private val
           val totalProperties     = initialProperties ++ propertiesMap.keys.toSet
           val acc: Seq[YMapEntry] = Seq.empty
           ast.entries.foldLeft(acc) { (results: Seq[YMapEntry], entry) =>
-            val key: String = entry.key
+            val key: String = entry.key.as[YScalar].text
             if (ignore(shapeType, key)) {
               results
             } else if (!totalProperties(key)) {
@@ -78,7 +78,7 @@ abstract class RamlWebApiContext(private val wrapped: ParserContext, private val
           case Some(errors: Seq[YMapEntry]) =>
             violation(ClosedShapeSpecification.id(),
                       node,
-                      s"Properties ${errors.map(_.key).mkString(",")} not supported in a $vendor $shapeType node",
+                      s"Properties ${errors.map(_.key.as[YScalar].text).mkString(",")} not supported in a $vendor $shapeType node",
                       errors.head) // pointing only to the first failed error
         }
 
@@ -173,7 +173,7 @@ abstract class WebApiContext(private val wrapped: ParserContext, private val ds:
         }
 
         ast.entries.foreach { entry =>
-          val key: String = entry.key
+          val key: String = entry.key.as[YScalar].text
           if (ignore(shape, key)) {
             // annotation or path in endpoint/webapi => ignore
           } else if (!properties(key)) {

@@ -41,7 +41,7 @@ object AbstractDeclarationParser {
 
   def apply(declaration: AbstractDeclaration, parent: String, entry: YMapEntry)(
       implicit ctx: WebApiContext): AbstractDeclarationParser =
-    new AbstractDeclarationParser(declaration, parent, entry.key, entry.value)
+    new AbstractDeclarationParser(declaration, parent, entry.key.as[YScalar].text, entry.value)
 }
 
 case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: String, key: String, entryValue: YNode)(
@@ -66,7 +66,7 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
                 declaration.set(AbstractDeclarationModel.Description,
                                 AmfScalar(usage.value.as[String], Annotations(usage)))
               })
-            val fields = value.as[YMap].entries.filter(_.key.as[String] != "usage")
+            val fields = value.as[YMap].entries.filter(_.key.as[YScalar].text != "usage")
             YMap(fields)
           case _ =>
             value
