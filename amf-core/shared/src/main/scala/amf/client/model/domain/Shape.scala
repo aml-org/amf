@@ -11,10 +11,12 @@ trait Shape extends DomainElement with Linkable with NamedDomainElement {
 
   override private[amf] val _internal: InternalShape
 
-  def name: StrField               = _internal.name
-  def displayName: StrField        = _internal.displayName
-  def description: StrField        = _internal.description
-  def defaultValue: DataNode       = _internal.default
+  def name: StrField            = _internal.name
+  def displayName: StrField     = _internal.displayName
+  def description: StrField     = _internal.description
+  def defaultValue: DataNode    = _internal.default
+  def defaultValueStr: StrField = _internal.defaultString
+
   def values: ClientList[StrField] = _internal.values.asClient
   def inherits: ClientList[Shape]  = _internal.inherits.asClient
 
@@ -45,6 +47,11 @@ trait Shape extends DomainElement with Linkable with NamedDomainElement {
 
   def withInherits(inherits: ClientList[Shape]): this.type = {
     _internal.withInherits(inherits.asInternal)
+    this
+  }
+
+  def withDefaultStr(value: String): this.type = {
+    _internal.withDefaultStr(value)
     this
   }
 }

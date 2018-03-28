@@ -21,6 +21,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   private val security      = "file://amf-client/shared/src/test/resources/upanddown/unnamed-security-scheme.raml"
   private val music         = "file://amf-client/shared/src/test/resources/production/world-music-api/api.raml"
   private val banking       = "file://amf-client/shared/src/test/resources/production/banking-api/api.raml"
+  private val defaultValue  = "file://amf-client/shared/src/test/resources/api/shape-default.raml"
   private val traits        = "file://amf-client/shared/src/test/resources/production/banking-api/traits/traits.raml"
   private val profile       = "file://amf-client/shared/src/test/resources/api/validation/custom-profile.raml"
   //  private val banking       = "file://amf-client/shared/src/test/resources/api/banking.raml"
@@ -70,6 +71,23 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       val refs = unit.references().asSeq
       assert(refs.size == 4)
       assert(refs.head.location.endsWith("traits/content-cacheable.raml"))
+    }
+  }
+
+  test("Parsing default value string") {
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new RamlParser().parseFileAsync(defaultValue).asFuture
+    } yield {
+      val declares = unit.asInstanceOf[DeclaresModel].declares.asSeq
+      assert(declares.size == 1)
+      assert(declares.head.isInstanceOf[NodeShape])
+      val shape = declares.head.asInstanceOf[NodeShape]
+      assert(
+        shape.defaultValueStr
+          .value()
+          .equals("\n      name: roman\n      lastname: riquelme\n      age: 39".stripMargin))
+      assert(shape.defaultValue.isInstanceOf[ObjectNode])
     }
   }
 

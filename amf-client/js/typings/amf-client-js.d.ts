@@ -149,6 +149,7 @@ declare module "amf-client-js" {
                 withValues(values: string[]): this;
                 inherits(): Shape[];
                 withInherits(baseShapes: Shape[]): this;
+                withDefaultStr(value: String): this;
             }
 
             export class PropertyShape extends DomainElement {

@@ -16,7 +16,12 @@ import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEm
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
-import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, OasTypeDefStringValueMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
+import amf.plugins.document.webapi.parser.{
+  OasTypeDefMatcher,
+  OasTypeDefStringValueMatcher,
+  RamlTypeDefMatcher,
+  RamlTypeDefStringValueMatcher
+}
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef.UndefinedType
@@ -212,12 +217,13 @@ abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references
     fs.entry(ShapeModel.DisplayName).map(f => result += RamlScalarEmitter("displayName", f))
     fs.entry(ShapeModel.Description).map(f => result += RamlScalarEmitter("description", f))
 
-    fs.entry(ShapeModel.Default)
-      .map(f => {
+    fs.entry(ShapeModel.Default) match {
+      case Some(f) =>
         result += EntryPartEmitter("default",
                                    DataNodeEmitter(shape.default, ordering),
                                    position = pos(f.value.annotations))
-      })
+      case None => fs.entry(ShapeModel.DefaultValueString).map(dv => result += ValueEmitter("default", dv))
+    }
 
     fs.entry(ShapeModel.Values).map(f => result += ArrayEmitter("enum", f, ordering))
 
@@ -314,7 +320,7 @@ case class XMLSerializerEmitter(key: String, f: FieldEntry, ordering: SpecOrderi
 }
 
 case class RamlRecursiveShapeEmitter(shape: RecursiveShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-  implicit spec: SpecEmitterContext) {
+    implicit spec: SpecEmitterContext) {
   def emitters(): Seq[EntryEmitter] = {
     val result: ListBuffer[EntryEmitter] = ListBuffer()
     result += MapEntryEmitter("type", "object")
@@ -1000,13 +1006,13 @@ abstract class OasShapeEmitter(shape: Shape, ordering: SpecOrdering, references:
     fs.entry(ShapeModel.DisplayName).map(f => result += ValueEmitter("title", f))
 
     fs.entry(ShapeModel.Description).map(f => result += ValueEmitter("description", f))
-
-    fs.entry(ShapeModel.Default)
-      .map(f => {
+    fs.entry(ShapeModel.Default) match {
+      case Some(f) =>
         result += EntryPartEmitter("default",
                                    DataNodeEmitter(shape.default, ordering),
                                    position = pos(f.value.annotations))
-      })
+      case None => fs.entry(ShapeModel.DefaultValueString).map(dv => result += ValueEmitter("default", dv))
+    }
 
     fs.entry(ShapeModel.Values).map(f => result += ArrayEmitter("enum", f, ordering))
 

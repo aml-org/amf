@@ -27,6 +27,7 @@ import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import org.yaml.model.{YPart, _}
 import org.yaml.parser.YamlParser
+import org.yaml.render.YamlRender
 
 import scala.collection.mutable
 
@@ -1074,6 +1075,8 @@ sealed abstract class RamlTypeParser(ast: YPart,
         "default",
         entry => {
           val dataNodeResult = NodeDataNodeParser(entry.value, shape.id, quiet = false).parse()
+          val str            = YamlRender.render(entry.value)
+          shape.set(ShapeModel.DefaultValueString, AmfScalar(str), Annotations(entry))
           dataNodeResult.dataNode.foreach { dataNode =>
             shape.set(ShapeModel.Default, dataNode, Annotations(entry))
           }

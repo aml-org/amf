@@ -20,6 +20,7 @@ import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import org.yaml.model._
+import org.yaml.render.YamlRender
 
 import scala.collection.mutable
 
@@ -507,6 +508,8 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       map.key(
         "default",
         node => {
+          val str = YamlRender.render(node.value)
+          shape.set(ShapeModel.DefaultValueString, AmfScalar(str), Annotations(node))
           NodeDataNodeParser(node.value, shape.id, quiet = false).parse().dataNode.foreach { dn =>
             shape.set(ShapeModel.Default, dn, Annotations(node))
           }

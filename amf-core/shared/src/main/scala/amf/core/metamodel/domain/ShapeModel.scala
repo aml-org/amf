@@ -22,6 +22,8 @@ trait ShapeModel extends DomainElementModel with LinkableElementModel with KeyFi
 
   val Default = Field(DataNodeModel, Shacl + "defaultValue")
 
+  val DefaultValueString = Field(Str, Shacl + "defaultValueStr")
+
   val Values = Field(SortedArray(Str), Shacl + "in")
 
   /**
@@ -51,7 +53,8 @@ object ShapeModel extends ShapeModel {
                                                                          Description,
                                                                          Default,
                                                                          Values,
-                                                                         Inherits)
+                                                                         Inherits,
+                                                                         DefaultValueString)
 
   override val `type`: List[ValueType] = List(Shacl + "Shape", Shapes + "Shape")
 
