@@ -1,9 +1,11 @@
 package amf.plugins.document.webapi.parser.spec.raml
 
 import amf.core.Root
+import amf.core.parser._
 import amf.core.annotations.SourceVendor
+import amf.core.metamodel.document.FragmentModel
 import amf.core.model.document.Fragment
-import amf.core.model.domain.Shape
+import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Annotations
 import amf.core.remote.Raml10
@@ -35,19 +37,29 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
 
     val references = ReferencesParser("uses", rootMap, root.references).parse(root.location)
 
+    // usage is valid for a fragment, not for the encoded domain element
+    val encodedMap = YMap(rootMap.entries.filter(_.key.as[String] != "usage"))
+
     val optionFragment = fragmentType match {
-      case Raml10DocumentationItem         => Some(DocumentationItemFragmentParser(rootMap).parse())
-      case Raml10DataType                  => Some(DataTypeFragmentParser(rootMap).parse())
-      case Raml10ResourceType              => Some(ResourceTypeFragmentParser(rootMap).parse())
-      case Raml10Trait                     => Some(TraitFragmentParser(rootMap).parse())
-      case Raml10AnnotationTypeDeclaration => Some(AnnotationFragmentParser(rootMap).parse())
-      case Raml10SecurityScheme            => Some(SecuritySchemeFragmentParser(rootMap).parse())
-      case Raml10NamedExample              => Some(NamedExampleFragmentParser(rootMap).parse())
+      case Raml10DocumentationItem         => Some(DocumentationItemFragmentParser(encodedMap).parse())
+      case Raml10DataType                  => Some(DataTypeFragmentParser(encodedMap).parse())
+      case Raml10ResourceType              => Some(ResourceTypeFragmentParser(encodedMap).parse())
+      case Raml10Trait                     => Some(TraitFragmentParser(encodedMap).parse())
+      case Raml10AnnotationTypeDeclaration => Some(AnnotationFragmentParser(encodedMap).parse())
+      case Raml10SecurityScheme            => Some(SecuritySchemeFragmentParser(encodedMap).parse())
+      case Raml10NamedExample              => Some(NamedExampleFragmentParser(encodedMap).parse())
       case _                               => None
     }
 
     optionFragment match {
       case Some(fragment) =>
+        rootMap.key("usage", (usage) => {
+          fragment.set(
+            FragmentModel.Usage,
+            AmfScalar(usage.value.as[String], Annotations(usage.value)),
+            Annotations(usage.value)
+          )
+        })
         fragment.withLocation(root.location)
         UsageParser(rootMap, fragment).parse()
         fragment.add(Annotations(root.parsed.document))
