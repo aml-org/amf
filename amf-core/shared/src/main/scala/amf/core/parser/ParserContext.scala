@@ -104,7 +104,13 @@ abstract class ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
       case range           => Some(annotations.LexicalInformation(Range(range)))
     }
   }
-  override def handle(node: YPart, e: SyamlException): Unit = violation("", e.getMessage, node)
+  override def handle(node: YPart, e: SyamlException): Unit = {
+    e match {
+        // ignoring errors due to trailing white space
+      case lexer: LexerException  if lexer.text.matches("\\s+") => // ignore
+      case _ => violation("", e.getMessage, node)
+    }
+  }
 }
 
 object EmptyFutureDeclarations {
