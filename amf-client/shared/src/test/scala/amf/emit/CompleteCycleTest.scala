@@ -634,6 +634,10 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("json_schema_array.raml", "json_schema_array.raml.jsonld", RamlYamlHint, Amf, base08Path)
   }
 
+  test("Trailing space test") {
+    cycle("americanflightapi.raml", "americanflightapi.raml.jsonld", RamlYamlHint, Amf, base08Path)
+  }
+
   test("Security schemes raml to amf") {
     cycle("security.raml", "security.raml.jsonld", RamlYamlHint, Amf)
   }
