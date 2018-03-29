@@ -507,6 +507,19 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Property overwriting") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(productionPath + "property_overwriting.raml", platform, RamlYamlHint, validation).build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 1)
+      assert(report.results.head.level == SeverityLevels.VIOLATION)
+    }
+  }
+
+
   test("Trailing spaces validation") {
     for {
       validation <- Validation(platform)
