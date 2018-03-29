@@ -36,7 +36,7 @@ trait MinShapeAlgorithm extends RestrictionComputation {
                      .iri() && s == (Namespace.Xsd + "float").iri()) {
           computeMinScalar(baseScalar, superScalar.withDataType((Namespace.Xsd + "integer").iri()))
         } else {
-          throw new Exception(s"Resolution error: Invalid scalar inheritance base type $b < $s ")
+          throw new InheritanceIncompatibleShapeError(s"Resolution error: Invalid scalar inheritance base type $b < $s ")
         }
 
       // Arrays
