@@ -1,0 +1,44 @@
+#%RAML 1.0
+title: Mobile Order API
+version: 1.0
+baseUri: http://localhost:8081/api
+
+/orders:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: Orders
+            examples:
+              single-order:
+                value:
+                  orders:
+                    -
+                      order_id: "ORDER-437563756"
+                      creation_date: "2016-03-30:40-43"
+                      items:
+                        -
+                          product_id: "PRODUCT-1"
+                          quantity: A
+                        -
+                          product_id: "PRODUCT-2"
+                          quantity: 2
+types:
+  ProductItem:
+    type: object
+    properties:
+      product_id: string
+      quantity: integer
+  Order:
+    type: object
+    properties:
+      order_id: string
+      creation_date: string
+      items: ProductItem[]
+  Orders:
+    type: object
+    properties:
+      orders: Order[]
+  Inherit:
+    type: Order
