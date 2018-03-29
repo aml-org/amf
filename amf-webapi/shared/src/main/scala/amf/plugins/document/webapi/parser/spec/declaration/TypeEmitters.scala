@@ -1158,7 +1158,10 @@ case class OasItemsShapeEmitter(array: ArrayShape,
   }
 
   override def position(): Position = {
-    pos(array.fields.getValue(ArrayShapeModel.Items).annotations)
+    Option(array.fields.getValue(ArrayShapeModel.Items)) match {
+      case Some(value) => pos(value.annotations)
+      case _           => ZERO
+    }
   }
 }
 
