@@ -99,7 +99,7 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean)
   protected def expandArray(array: ArrayShape): ArrayShape = {
     expandInherits(array)
     val oldItems = array.fields.getValue(ArrayShapeModel.Items)
-    if (Option(oldItems).isDefined || (Option(oldItems).isEmpty && array.inherits.isEmpty)) // we check the items, but if this shape inherits from another array with items, this is not mandatory locally
+    if (Option(oldItems).isDefined)
       array.fields.setWithoutId(ArrayShapeModel.Items, expand(array.items), oldItems.annotations)
     array
   }
