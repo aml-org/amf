@@ -77,9 +77,10 @@ case class EndPoint(fields: Fields, annotations: Annotations)
     result
   }
 
-  override def adopted(parent: String): this.type = withId(parent + "/end-points/" + path.value().urlEncoded)
-
   override def meta: Obj = EndPointModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/end-points/" + path.value().urlEncoded
 }
 
 object EndPoint {

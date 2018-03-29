@@ -48,8 +48,6 @@ case class Response(fields: Fields, annotations: Annotations) extends DomainElem
     example
   }
 
-  override def adopted(parent: String): this.type = withId(parent + "/" + name.value())
-
   def cloneResponse(parent: String): Response = {
     val cloned = Response(annotations).withName(name.value()).adopted(parent)
 
@@ -74,6 +72,9 @@ case class Response(fields: Fields, annotations: Annotations) extends DomainElem
   override def meta: Obj = ResponseModel
 
   override def linkCopy(): Linkable = Response().withId(id)
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/" + name.value()
 }
 
 object Response {

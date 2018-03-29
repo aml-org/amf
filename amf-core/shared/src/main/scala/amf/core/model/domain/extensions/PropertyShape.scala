@@ -26,7 +26,7 @@ case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape
   def withReadOnly(readOnly: Boolean): this.type = set(ReadOnly, readOnly)
 
   override def adopted(parent: String): this.type = {
-    withId(parent + "/property/" + name.value())
+    simpleAdoption(parent)
     if (Option(range).isDefined) {
       range.adopted(id)
     }
@@ -43,6 +43,9 @@ case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape
     copyFields(cloned, withRecursionBase, traversed)
     cloned.asInstanceOf[this.type]
   }
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/property/" + name.value()
 }
 
 object PropertyShape {

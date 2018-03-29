@@ -51,18 +51,35 @@ object DomainElementMerging {
     main
   }
 
-  def adoptInner(id: String, target: AmfElement): AmfElement = target match {
-    case array: AmfArray =>
-      AmfArray(array.values.map(adoptInner(id, _)), array.annotations)
-    case element: DomainElement =>
-      element.adopted(id)
+  protected case class Adopted() {
+    private var adopted: Seq[String] = Nil
 
+    def +=(id: String): Adopted = {
+      adopted = adopted :+ id
+      this
+    }
+    def notYet(id: String): Boolean = !adopted.contains(id)
+  }
+
+  def adoptInner(id: String, target: AmfElement, adopted: Adopted = Adopted()): AmfElement = target match {
+    case array: AmfArray =>
+      AmfArray(array.values.map(adoptInner(id, _, adopted)), array.annotations)
+    case element: DomainElement if adopted notYet element.id =>
+      adoptElementByType(element, id)
+      adopted += element.id
       element.fields.foreach {
-        case (_, value) => adoptInner(element.id, value.value)
+        case (_, value) => adoptInner(element.id, value.value, adopted)
       }
 
       element
     case _ => target
+  }
+
+  private def adoptElementByType(element: DomainElement, parent: String) = {
+    element match {
+      case simple: Shape => simple.simpleAdoption(parent) // only shapes have recursive simple adoption?
+      case _             => element.adopted(parent)
+    }
   }
 
   private def setNonOptional(target: DomainElement, field: Field, element: Type, other: Value): Unit = {

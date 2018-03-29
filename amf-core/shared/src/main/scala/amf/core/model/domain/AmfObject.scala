@@ -18,16 +18,24 @@ trait AmfObject extends AmfElement {
   def withId(value: String): this.type = {
     val cleanId = if (value.contains("://")) {
       val parts = value.split("://")
-      parts(0) + "://" + parts(1).replace("//","/")
+      parts(0) + "://" + parts(1).replace("//", "/")
     } else {
-      value.replace("//","/")
+      value.replace("//", "/")
     }
     id = cleanId
     this
   }
 
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  def componentId: String
+
   /** Call after object has been adopted by specified parent. */
-  def adopted(parent: String): this.type
+  final def simpleAdoption(parent: String): this.type = {
+    withId(parent + componentId)
+  }
+
+  /** Call after object has been adopted by specified parent. */
+  def adopted(parent: String): this.type = simpleAdoption(parent)
 
   /** Set scalar value. */
   def set(field: Field, value: String): this.type = {

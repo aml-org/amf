@@ -18,9 +18,10 @@ case class License(fields: Fields, annotations: Annotations) extends DomainEleme
   def withUrl(url: String): this.type   = set(Url, url)
   def withName(name: String): this.type = set(Name, name)
 
-  override def adopted(parent: String): this.type = withId(parent + "/license")
-
   override def meta = LicenseModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/license"
 }
 
 object License {

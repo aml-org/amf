@@ -18,11 +18,13 @@ case class ShapeExtension(fields: Fields, annotations: Annotations) extends Doma
 
   def withExtension(extension: DataNode): this.type = set(Extension, extension)
 
+  override def meta = ShapeExtensionModel
+
   // This element will never be serialised in the JSON-LD graph, it is just a placeholder
   // for the extension point. ID is not required for serialisation
-  override def adopted(parent: String): this.type = withId(parent + "/shapeExtension")
 
-  override def meta = ShapeExtensionModel
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/shapeExtension"
 }
 
 object ShapeExtension {

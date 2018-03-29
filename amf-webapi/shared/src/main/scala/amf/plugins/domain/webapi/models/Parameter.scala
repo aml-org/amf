@@ -52,8 +52,6 @@ case class Parameter(fields: Fields, annotations: Annotations)
   def isForm: Boolean   = binding.is("formData")
   def isCookie: Boolean = binding.is("cookie")
 
-  override def adopted(parent: String): this.type = withId(parent + "/parameter/" + name.value())
-
   def withObjectSchema(name: String): NodeShape = {
     val node = NodeShape().withName(name)
     set(ParameterModel.Schema, node)
@@ -98,6 +96,9 @@ case class Parameter(fields: Fields, annotations: Annotations)
   }
 
   override def meta: Obj = ParameterModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/parameter/" + name.value()
 }
 
 object Parameter {

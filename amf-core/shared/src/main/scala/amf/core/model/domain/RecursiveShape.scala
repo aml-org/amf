@@ -24,7 +24,8 @@ case class RecursiveShape(override val fields: Fields, override val annotations:
 
   override def meta: Obj = RecursiveShapeModel
 
-  override def adopted(parent: String): RecursiveShape.this.type = withId(parent + "/recursion")
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/recursion"
 }
 
 object RecursiveShape {

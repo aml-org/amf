@@ -10,22 +10,26 @@ import amf.plugins.document.vocabularies.metamodel.document.VocabularyModel
 import amf.plugins.document.vocabularies.model.domain.{External, VocabularyReference}
 
 case class Vocabulary(fields: Fields, annotations: Annotations) extends BaseUnit with DeclaresModel {
+
   /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
   override def references: Seq[BaseUnit] = fields.field(References)
+
   /** Returns the file location for the document that has been parsed to generate this model */
   override def location: String = fields(Location)
+
   /** Returns the usage comment for de element */
   override def usage: String = fields(Usage)
+
   /** Declared [[DomainElement]]s that can be re-used from other documents. */
   override def declares: Seq[DomainElement] = fields.field(Declares)
 
   // Vocabulary specific fields
-  def name: StrField                      = fields.field(Name)
-  def base: StrField                      = fields.field(Base)
-  def imports: Seq[VocabularyReference]   = fields.field(Imports)
-  def externals: Seq[External]            = fields.field(Externals)
+  def name: StrField                    = fields.field(Name)
+  def base: StrField                    = fields.field(Base)
+  def imports: Seq[VocabularyReference] = fields.field(Imports)
+  def externals: Seq[External]          = fields.field(Externals)
 
-  def withName(name: String)                              = set(Name, name)
+  def withName(name: String) = set(Name, name)
   def withBase(base: String) = {
     withId(base)
     set(Base, base)
@@ -35,10 +39,10 @@ case class Vocabulary(fields: Fields, annotations: Annotations) extends BaseUnit
 
   /** Meta data for the document */
   override def meta: Obj = VocabularyModel
-  /** Call after object has been adopted by specified parent. */
-  override def adopted(parent: String): Vocabulary.this.type = withId(parent)
-}
 
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = ""
+}
 
 object Vocabulary {
   def apply(): Vocabulary = apply(Annotations())

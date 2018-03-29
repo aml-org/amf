@@ -498,8 +498,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("No title validation") {
     for {
       validation <- Validation(platform)
-      library <- AMFCompiler(productionPath + "no_title.raml", platform, RamlYamlHint, validation).build()
-      report <- validation.validate(library, ProfileNames.RAML)
+      library    <- AMFCompiler(productionPath + "no_title.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(library, ProfileNames.RAML)
     } yield {
       assert(report.conforms)
       assert(report.results.size == 1)
@@ -523,8 +523,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Trailing spaces validation") {
     for {
       validation <- Validation(platform)
-      library <- AMFCompiler(productionPath + "americanflightapi.raml", platform, RamlYamlHint, validation).build()
-      report <- validation.validate(library, ProfileNames.RAML)
+      library    <- AMFCompiler(productionPath + "americanflightapi.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(library, ProfileNames.RAML)
     } yield {
       assert(report.conforms)
     }
@@ -590,8 +590,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("json schema inheritance") {
     for {
       validation <- Validation(platform)
-      library <- AMFCompiler(upDownPath + "schema_inheritance.raml", platform, RamlYamlHint, validation).build()
-      report <- validation.validate(library, ProfileNames.RAML)
+      library    <- AMFCompiler(upDownPath + "schema_inheritance.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(library, ProfileNames.RAML)
     } yield {
       assert(report.results.size == 1)
       assert(report.results.head.level == SeverityLevels.WARNING)
@@ -608,7 +608,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(!report.conforms)
     }
   }
-
 
   test("Example invalid min and max constraint validations test") {
     for {
@@ -687,10 +686,10 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   test("Null trait API") {
     for {
-      validation         <- Validation(platform)
-      doc                <- AMFCompiler(productionPath + "null_trait.raml", platform, RamlYamlHint, validation).build()
-      generated          <- new AMFSerializer(doc, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
-      report             <- validation.validate(doc, ProfileNames.RAML)
+      validation <- Validation(platform)
+      doc        <- AMFCompiler(productionPath + "null_trait.raml", platform, RamlYamlHint, validation).build()
+      generated  <- new AMFSerializer(doc, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
+      report     <- validation.validate(doc, ProfileNames.RAML)
     } yield {
       assert(report.results.size == 1)
       assert(report.results.head.level == "Warning")
@@ -1183,6 +1182,17 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.conforms)
       assert(report.results.lengthCompare(1) == 0)
       assert(report.results.head.level == SeverityLevels.WARNING)
+    }
+  }
+
+  test("Test stackoverflow case from Platform") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "/stackoverflow/api.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
     }
   }
 }

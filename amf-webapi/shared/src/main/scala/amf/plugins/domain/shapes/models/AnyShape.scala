@@ -18,8 +18,6 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
     with ShapeHelpers
     with JsonSchemaSerializer {
 
-  override def adopted(parent: String): this.type = withId(parent + "/any/" + name.value())
-
   def documentation: CreativeWork     = fields.field(Documentation)
   def xmlSerialization: XMLSerializer = fields.field(XMLSerialization)
   def examples: Seq[Example]          = fields.field(Examples)
@@ -50,6 +48,8 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
   def validate(fragment: PayloadFragment): Future[AMFValidationReport] =
     PayloadValidator.validate(this, fragment, SeverityLevels.VIOLATION)
 
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/any/" + name.value()
 }
 
 object AnyShape {

@@ -23,10 +23,11 @@ case class Document(fields: Fields, annotations: Annotations) extends BaseUnit w
   /** Returns the usage comment for de element */
   override def usage: String = fields(Usage)
 
-  override def adopted(parent: String): this.type = withId(parent)
-
   /** Meta data for the document */
   override def meta: Obj = DocumentModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = ""
 }
 
 object Document {
@@ -42,11 +43,3 @@ abstract class ExtensionLike[T <: DomainElement](override val fields: Fields, ov
 
   def withExtend(extend: BaseUnit): this.type = set(ExtensionLikeModel.Extends, extend)
 }
-
-
-
-
-
-
-
-

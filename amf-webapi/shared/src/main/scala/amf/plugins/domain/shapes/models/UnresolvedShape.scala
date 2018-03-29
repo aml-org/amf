@@ -17,12 +17,13 @@ case class UnresolvedShape(override val fields: Fields,
 
   override def linkCopy(): AnyShape = this
 
-  override def adopted(parent: String): this.type = withId(parent + "/unresolved")
-
   /** Resolve [[UnresolvedShape]] as link to specified target. */
   def resolve(target: Shape): Shape = target.link(reference, annotations).asInstanceOf[Shape].withName(name.value())
 
   override def meta: Obj = ShapeModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/unresolved"
 }
 
 object UnresolvedShape {

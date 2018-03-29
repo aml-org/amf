@@ -28,10 +28,9 @@ case class TemplatedLink(fields: Fields, annotations: Annotations) extends Domai
 
   override def meta: Obj            = TemplatedLinkModel
   override def linkCopy(): Linkable = TemplatedLink().withId(id)
-  override def adopted(parent: String): TemplatedLink.this.type = {
-    id = parent + s"/templatedLink/${name.option().getOrElse("UnknownTemplatedLink").urlEncoded}"
-    this
-  }
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = s"/templatedLink/${name.option().getOrElse("UnknownTemplatedLink").urlEncoded}"
 }
 
 object TemplatedLink {

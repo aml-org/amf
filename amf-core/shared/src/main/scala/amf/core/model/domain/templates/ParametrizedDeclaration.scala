@@ -15,5 +15,5 @@ abstract class ParametrizedDeclaration(fields: Fields, annotations: Annotations)
   def withTarget(target: AbstractDeclaration): this.type      = set(Target, target)
   def withVariables(variables: Seq[VariableValue]): this.type = setArray(Variables, variables)
 
-  override def adopted(parent: String): this.type = withId(parent + "/" + name.value())
+  override def componentId: String = "/" + name.value()
 }

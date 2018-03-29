@@ -12,11 +12,12 @@ abstract class PropertyTerm extends DomainElement {
 
   override def adopted(parent: String): PropertyTerm.this.type = {
     if (Option(id).isEmpty) {
-      withId(parent)
+      simpleAdoption(parent)
     }
     this
   }
 
+  override def componentId: String = ""
   def name: StrField               = fields.field(Name)
   def displayName: StrField        = fields.field(DisplayName)
   def description: StrField        = fields.field(Description)

@@ -20,9 +20,10 @@ case class Organization(fields: Fields, annotations: Annotations) extends Domain
   def withName(name: String): this.type   = set(Name, name)
   def withEmail(email: String): this.type = set(Email, email)
 
-  override def adopted(parent: String): this.type = withId(parent + "/organization")
-
   override def meta = OrganizationModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/organization"
 }
 
 object Organization {

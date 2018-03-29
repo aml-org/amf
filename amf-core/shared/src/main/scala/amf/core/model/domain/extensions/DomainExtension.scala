@@ -21,11 +21,13 @@ case class DomainExtension(fields: Fields, annotations: Annotations) extends Dom
 
   def isScalarExtension: Boolean = !element.isNullOrEmpty
 
+  def meta: DomainExtensionModel = DomainExtensionModel
+
   // This element will never be serialised in the JSON-LD graph, it is just a placeholder
   // for the extension point. ID is not required for serialisation
-  override def adopted(parent: String): this.type = withId(parent + "/extension")
 
-  def meta: DomainExtensionModel = DomainExtensionModel
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/extension"
 }
 
 object DomainExtension {

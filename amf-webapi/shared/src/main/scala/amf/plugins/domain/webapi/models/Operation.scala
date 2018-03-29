@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.models
 
-import amf.client.model.{BoolField, IntField, StrField}
+import amf.client.model.{BoolField, StrField}
 import amf.core.metamodel.Obj
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
@@ -51,8 +51,6 @@ case class Operation(fields: Fields, annotations: Annotations)
   def withCallbacks(callbacks: Seq[Callback]): this.type        = setArray(Callbacks, callbacks)
   def withServers(servers: Seq[Server]): this.type              = setArray(Servers, servers)
 
-  override def adopted(parent: String): this.type = withId(parent + "/" + method.value())
-
   def withResponse(name: String): Response = {
     val result = Response().withName(name).withStatusCode(if (name == "default") "200" else name)
     add(Responses, result)
@@ -84,6 +82,9 @@ case class Operation(fields: Fields, annotations: Annotations)
   }
 
   override def meta: Obj = OperationModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/" + method.value()
 }
 
 object Operation {

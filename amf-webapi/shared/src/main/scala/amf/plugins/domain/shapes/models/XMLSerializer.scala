@@ -21,10 +21,10 @@ case class XMLSerializer(fields: Fields, annotations: Annotations) extends Domai
   def withNamespace(namespace: String): this.type  = set(Namespace, namespace)
   def withPrefix(prefix: String): this.type        = set(Prefix, prefix)
 
-  /** Call after object has been adopted by specified parent. */
-  override def adopted(parent: String): this.type = withId(parent + "/xml")
-
   override def meta = XMLSerializerModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/xml"
 }
 
 object XMLSerializer {

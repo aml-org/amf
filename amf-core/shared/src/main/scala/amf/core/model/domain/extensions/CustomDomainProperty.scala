@@ -28,15 +28,18 @@ case class CustomDomainProperty(fields: Fields, annotations: Annotations)
   override def adopted(parent: String): this.type =
     if (Option(this.id).isEmpty) {
       if (parent.contains("#")) {
-        withId(parent + "/" + name.value().urlEncoded)
+        withId(parent + "/" + componentId)
       } else {
-        withId(parent + "#" + name.value().urlEncoded)
+        withId(parent + "#" + componentId)
       }
     } else { this }
 
   override def linkCopy(): CustomDomainProperty = CustomDomainProperty().withId(id)
 
   override def meta = CustomDomainPropertyModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = name.value().urlEncoded
 }
 
 object CustomDomainProperty {

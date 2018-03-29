@@ -80,13 +80,14 @@ case class WebApi(fields: Fields, annotations: Annotations) extends DomainElemen
     result
   }
 
-  override def adopted(parent: String): this.type = withId(parent + "#/web-api")
-
   override def meta: Obj = WebApiModel
 
   // todo: should source vendor be in the base unit?
 
   def sourceVendor: Option[Vendor] = annotations.find(classOf[SourceVendor]).map(a => a.vendor)
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "#/web-api"
 }
 
 object WebApi {

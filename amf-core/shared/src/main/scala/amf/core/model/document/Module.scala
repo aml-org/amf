@@ -10,8 +10,6 @@ import org.yaml.model.YDocument
 /** Units containing abstract fragments that can be referenced from other fragments */
 case class Module(fields: Fields, annotations: Annotations) extends BaseUnit with DeclaresModel {
 
-  override def adopted(parent: String): this.type = withId(parent)
-
   /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
   override def references: Seq[BaseUnit] = fields(References)
 
@@ -26,6 +24,9 @@ case class Module(fields: Fields, annotations: Annotations) extends BaseUnit wit
 
   /** Meta data for the document */
   override def meta = ModuleModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = ""
 }
 
 trait DeclaresModel extends AmfObject {
