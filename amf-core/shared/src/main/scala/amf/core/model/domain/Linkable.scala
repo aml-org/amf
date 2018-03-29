@@ -60,7 +60,7 @@ trait Linkable extends AmfObject { this: DomainElement with Linkable =>
             resolve,
             () =>
               ctx.violation(id,
-                            s"Unresolved reference $refName from root context ${ctx.rootContextDocument}",
+                            s"Unresolved reference '$refName' from root context ${ctx.rootContextDocument}",
                             refAst.get)
           ))
       case none => throw new Exception("Cannot create unresolved reference with missing parsing context")
