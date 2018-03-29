@@ -9,7 +9,7 @@ import scala.concurrent.Future
 
 /* this test parse a raml only with declared types, resolve them and serialize a json schema.*/
 
-/* Only validate, beacuse resolution deletes all declared types (this examples are apis with only declared types)
+/* Only validate, because resolution deletes all declared types (this examples are apis with only declared types)
 but resolution for validation normalize shapes.
  */
 
