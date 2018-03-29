@@ -23,7 +23,7 @@ import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityScheme}
-import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter, Response}
+import amf.plugins.domain.webapi.models._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YNode, YScalar, YType}
 
@@ -48,7 +48,7 @@ abstract class SpecEmitterContext(refEmitter: RefEmitter) {
   def oasTypePropertyEmitter(typeName: String, shape: Shape): MapEntryEmitter = {
     shape.annotations.find(classOf[TypePropertyLexicalInfo]) match {
       case Some(lexicalInfo) =>
-          MapEntryEmitter("type", typeName, YType.Str, lexicalInfo.range.start)
+        MapEntryEmitter("type", typeName, YType.Str, lexicalInfo.range.start)
       case None =>
         MapEntryEmitter("type", typeName)
     }
@@ -127,7 +127,7 @@ object RamlScalarEmitter {
   }
 }
 
-class OasSpecEmitterFactory()(implicit val spec: OasSpecEmitterContext) extends SpecEmitterFactory {
+abstract class OasSpecEmitterFactory(implicit val spec: OasSpecEmitterContext) extends SpecEmitterFactory {
   override def tagToReferenceEmitter: (DomainElement, Option[String], Seq[BaseUnit]) => TagToReferenceEmitter =
     OasTagToReferenceEmitter.apply
 
@@ -145,6 +145,18 @@ class OasSpecEmitterFactory()(implicit val spec: OasSpecEmitterContext) extends 
 
   override def annotationTypeEmitter: (CustomDomainProperty, SpecOrdering) => AnnotationTypeEmitter =
     OasAnnotationTypeEmitter.apply
+
+  def serversEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]): OasServersEmitter
+}
+
+case class Oas2SpecEmitterFactory(implicit override val spec: OasSpecEmitterContext) extends OasSpecEmitterFactory {
+  override def serversEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]) =
+    Oas2ServersEmitter(api, f, ordering, references)
+}
+
+case class Oas3SpecEmitterFactory(implicit override val spec: OasSpecEmitterContext) extends OasSpecEmitterFactory {
+  override def serversEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]) =
+    Oas3ServersEmitter(api, f, ordering, references)
 }
 
 trait RamlEmitterVersionFactory extends SpecEmitterFactory {
@@ -305,14 +317,12 @@ abstract class OasSpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) ext
 }
 
 class Oas3SpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) extends OasSpecEmitterContext(refEmitter) {
-  // TODO differentiate when needed.
-  override val factory: OasSpecEmitterFactory = new OasSpecEmitterFactory()(this)
+  override val factory: OasSpecEmitterFactory = Oas3SpecEmitterFactory()(this)
   override val vendor: Vendor                 = Oas3
 }
 
 class Oas2SpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) extends OasSpecEmitterContext(refEmitter) {
-  // TODO differentiate when needed.
-  override val factory: OasSpecEmitterFactory = new OasSpecEmitterFactory()(this)
+  override val factory: OasSpecEmitterFactory = Oas2SpecEmitterFactory()(this)
   override val vendor: Vendor                 = Oas2
 }
 

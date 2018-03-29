@@ -151,7 +151,7 @@ class Fields {
   }
 
   /** Return if the given [[Field]] exists within this [[Fields]] instance. */
-  def exists(f: Field): Boolean = entry(f).isDefined
+  def exists(f: Field): Boolean = fs.contains(f)
 
   def entryJsonld(f: Field): Option[FieldEntry] = {
     if (f.jsonldField) {

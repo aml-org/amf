@@ -15,6 +15,8 @@ import amf.plugins.document.webapi.contexts.{
 }
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, DataNodeEmitter}
 import amf.plugins.document.webapi.parser.spec.{BaseUriSplitter, toRaml}
+import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
+import amf.plugins.domain.shapes.models.ScalarShape
 import amf.plugins.domain.webapi.metamodel.{ServerModel, WebApiModel}
 import amf.plugins.domain.webapi.models.{Parameter, Server, WebApi}
 import org.yaml.model.YDocument
@@ -30,9 +32,15 @@ case class RamlServersEmitter(f: FieldEntry, ordering: SpecOrdering, references:
 
     val result = ListBuffer[EntryEmitter]()
 
-    servers.default.foreach(server => defaultServer(server, result))
-
-    asExtension(servers.servers, result)
+    servers.default match {
+      case Some(server) =>
+        defaultServer(server, result)
+        asExtension(servers.servers, result)
+      case None if servers.servers.nonEmpty =>
+        defaultServer(servers.servers.head, result)
+        asExtension(servers.servers.tail, result)
+      case None => // ignore
+    }
 
     result
   }
@@ -50,8 +58,30 @@ case class RamlServersEmitter(f: FieldEntry, ordering: SpecOrdering, references:
     if (servers.nonEmpty) result += ServersEmitters("(servers)", servers, ordering)
 }
 
-case class OasServersEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
+abstract class OasServersEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: OasSpecEmitterContext) {
+  def emitters(): Seq[EntryEmitter]
+
+  protected def asExtension(key: String, servers: Seq[Server], result: ListBuffer[EntryEmitter]): Unit =
+    if (servers.nonEmpty) result += ServersEmitters(key, servers, ordering)
+}
+
+case class Oas3ServersEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: OasSpecEmitterContext)
+    extends OasServersEmitter(api, f, ordering, references) {
+
+  def emitters(): Seq[EntryEmitter] = {
+    val result = ListBuffer[EntryEmitter]()
+
+    asExtension("servers", f.arrayValues(classOf[Server]), result)
+
+    result
+  }
+}
+
+case class Oas2ServersEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: OasSpecEmitterContext)
+    extends OasServersEmitter(api, f, ordering, references) {
 
   def emitters(): Seq[EntryEmitter] = {
     val servers = Servers(f)
@@ -60,7 +90,7 @@ case class OasServersEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering,
 
     servers.default.foreach(server => defaultServer(server, result))
 
-    asExtension(servers.servers, result)
+    asExtension("x-servers", servers.servers, result)
 
     result
   }
@@ -91,9 +121,6 @@ case class OasServersEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering,
     fs.entry(ServerModel.Variables)
       .map(f => result += RamlParametersEmitter("x-base-uri-parameters", f, ordering, references)(toRaml(spec)))
   }
-
-  private def asExtension(servers: Seq[Server], result: ListBuffer[EntryEmitter]) =
-    if (servers.nonEmpty) result += ServersEmitters("(servers)", servers, ordering)
 }
 
 private case class ServersEmitters(key: String, servers: Seq[Server], ordering: SpecOrdering)(
@@ -132,13 +159,20 @@ private case class OasServerEmitter(server: Server, ordering: SpecOrdering)(impl
   override def position(): Position = pos(server.annotations)
 }
 
-private case class OasServerVariablesEmitter(f: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {
+private case class OasServerVariablesEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+    extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    val vars: Seq[Parameter] = f.arrayValues(classOf[Parameter])
+    val all                 = f.arrayValues(classOf[Parameter])
+    val hasNonOas3Variables = all.exists(!Servers.isVariable(_))
+
     b.entry(
       "variables",
-      _.obj(traverse(variables(vars), _))
+      _.obj(traverse(variables(all), _))
     )
+
+    if (hasNonOas3Variables) {
+      RamlParametersEmitter("x-parameters", f, ordering, Seq())(toRaml(spec)).emit(b)
+    }
   }
 
   private def variables(vars: Seq[Parameter]): Seq[EntryEmitter] =
@@ -165,12 +199,13 @@ private case class OasServerVariableEmitter(variable: Parameter, ordering: SpecO
 
     fs.entry(ShapeModel.Values).map(f => result += ArrayEmitter("enum", f, ordering))
 
-    fs.entry(ShapeModel.Default)
-      .map(f => {
+    fs.entry(ShapeModel.Default) match {
+      case Some(f) =>
         result += EntryPartEmitter("default",
                                    DataNodeEmitter(shape.default, ordering),
                                    position = pos(f.value.annotations))
-      })
+      case None => result += MapEntryEmitter("default", "")
+    }
 
     result
   }
@@ -185,5 +220,21 @@ private object Servers {
     val (default, servers) =
       f.arrayValues(classOf[Server]).partition(_.annotations.find(classOf[SynthesizedField]).isDefined)
     new Servers(default.headOption, servers)
+  }
+
+  def isVariable(parameter: Parameter): Boolean = parameter.schema match {
+    case s: ScalarShape =>
+      val variableFields = Seq(ShapeModel.Name,
+                               ShapeModel.Default,
+                               ShapeModel.DefaultValueString,
+                               ShapeModel.Values,
+                               ScalarShapeModel.DataType,
+                               ShapeModel.Description)
+      s.fields.foreach {
+        case (field, _) =>
+          if (!variableFields.contains(field)) return false
+      }
+      true
+    case _ => false
   }
 }

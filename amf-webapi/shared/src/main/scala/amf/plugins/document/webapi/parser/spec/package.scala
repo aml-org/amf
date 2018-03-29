@@ -29,8 +29,9 @@ package object spec {
     private def appendPrefix(prefix: String, url: String): String = prefix + url
   }
 
+  // TODO oas2? raml10?
   def toOas(ctx: WebApiContext): OasWebApiContext = {
-    new OasWebApiContext(ctx, Some(ctx.declarations))
+    new Oas2WebApiContext(ctx, Some(ctx.declarations))
   }
 
   def toRaml(ctx: WebApiContext): RamlWebApiContext = {

@@ -39,6 +39,8 @@ case class OasModuleEmitter(module: Module)(implicit override val spec: OasSpecE
 
 class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpecEmitterContext)
     extends OasDocumentEmitter(fragment) {
+  override protected def versionEntry(b: YDocument.EntryBuilder): Unit = b.swagger = "2.0"
+
   def emitFragment(): YDocument = {
 
     val ordering: SpecOrdering = SpecOrdering.ordering(Oas, fragment.annotations)

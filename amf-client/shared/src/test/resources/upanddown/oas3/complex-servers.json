@@ -1,0 +1,45 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Amazon S3 REST API",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "https://{basic}.amazon.{withPattern}.com/{object}",
+      "variables": {
+        "basic": {
+          "description": "The name of the bucket",
+          "default": ""
+        },
+        "withPattern": {
+          "description": "The name of the bucket",
+          "default": ""
+        },
+        "object": {
+          "default": ""
+        }
+      },
+      "x-parameters": {
+        "basic": {
+          "description": "The name of the bucket"
+        },
+        "withPattern": {
+          "description": "The name of the bucket",
+          "pattern": "[0-9|-]+"
+        },
+        "object": {
+          "properties": {
+            "base": {
+              "type": "string"
+            },
+            "path": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "paths": {}
+}

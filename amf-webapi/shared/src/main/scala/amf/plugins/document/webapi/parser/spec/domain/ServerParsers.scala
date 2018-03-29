@@ -2,14 +2,14 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{BasePathLexicalInformation, HostLexicalInformation, SynthesizedField}
 import amf.core.model.domain.{AmfArray, AmfScalar}
+import amf.core.parser.{Annotations, _}
 import amf.core.utils.TemplateUri
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, RamlScalarNode, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.{toOas, toRaml}
 import amf.plugins.domain.webapi.metamodel.{ServerModel, WebApiModel}
 import amf.plugins.domain.webapi.models.{Parameter, Server, WebApi}
-import org.yaml.model.{YMap, YMapEntry, YType}
-import amf.core.parser.{Annotations, _}
-import amf.plugins.document.webapi.parser.spec.{toOas, toRaml}
+import org.yaml.model.{YMap, YType}
 
 case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebApiContext) extends SpecParserOps {
   def parse(): Unit = {
@@ -59,8 +59,26 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
   }
 }
 
-case class OasServersParser(map: YMap, api: WebApi)(implicit val ctx: OasWebApiContext) extends SpecParserOps {
-  def parse(): Unit = {
+abstract class OasServersParser(map: YMap, api: WebApi)(implicit val ctx: OasWebApiContext) extends SpecParserOps {
+  def parse(): Unit
+
+  protected def parseServers(key: String): Unit =
+    map.key(key).foreach { entry =>
+      entry.value.as[Seq[YMap]].map(OasServerParser(api.id, _).parse()).foreach { server =>
+        api.add(WebApiModel.Servers, server)
+      }
+    }
+}
+
+case class Oas3ServersParser(map: YMap, api: WebApi)(implicit override val ctx: OasWebApiContext)
+    extends OasServersParser(map, api) {
+
+  override def parse(): Unit = parseServers("servers")
+}
+
+case class Oas2ServersParser(map: YMap, api: WebApi)(implicit override val ctx: OasWebApiContext)
+    extends OasServersParser(map, api) {
+  override def parse(): Unit = {
     if (baseUriExists(map)) {
       var host     = ""
       var basePath = ""
@@ -88,8 +106,10 @@ case class OasServersParser(map: YMap, api: WebApi)(implicit val ctx: OasWebApiC
       map.key(
         "x-base-uri-parameters",
         entry => {
-          val uriParameters =
-            OasHeaderParametersParser(entry.value.as[YMap], server.withVariable).parse()
+          val uriParameters = RamlParametersParser(entry.value.as[YMap], server.withVariable)(toRaml(ctx))
+            .parse()
+            .map(_.withBinding("path"))
+
           server.set(ServerModel.Variables, AmfArray(uriParameters, Annotations(entry.value)), Annotations(entry))
         }
       )
@@ -97,11 +117,7 @@ case class OasServersParser(map: YMap, api: WebApi)(implicit val ctx: OasWebApiC
       api.set(WebApiModel.Servers, AmfArray(Seq(server.add(SynthesizedField())), Annotations()))
     }
 
-    map.key("x-servers").foreach { entry =>
-      entry.value.as[Seq[YMap]].map(OasServerParser(api.id, _).parse()).foreach { server =>
-        api.add(WebApiModel.Servers, server)
-      }
-    }
+    parseServers("x-servers")
   }
 
   def baseUriExists(map: YMap): Boolean = map.key("host").orElse(map.key("basePath")).isDefined
@@ -114,13 +130,15 @@ private case class OasServerParser(parent: String, map: YMap)(implicit val ctx: 
 
     map.key("url", ServerModel.Url in server)
 
+    server.adopted(parent)
+
     map.key("description", ServerModel.Description in server)
 
-    map.key("variables").foreach { entry =>
+    map.key("x-parameters").orElse(map.key("variables")).foreach { entry =>
       val variables = entry.value
         .as[YMap]
         .entries
-        .map(Raml10ParameterParser(_, name => Parameter().withName(name).adopted(parent))(toRaml(ctx)).parse())
+        .map(Raml10ParameterParser(_, server.withVariable)(toRaml(ctx)).parse())
 
       server.set(ServerModel.Variables, AmfArray(variables, Annotations(entry.value)), Annotations(entry))
     }

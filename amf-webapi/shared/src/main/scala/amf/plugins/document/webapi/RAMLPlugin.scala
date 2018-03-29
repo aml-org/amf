@@ -26,7 +26,7 @@ import amf.plugins.domain.webapi.models.WebApi
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YDocument, YNode}
 
-trait RAMLPlugin extends BaseWebApiPlugin {
+sealed trait RAMLPlugin extends BaseWebApiPlugin {
 
   override val ID: String = "RAML " + version
 

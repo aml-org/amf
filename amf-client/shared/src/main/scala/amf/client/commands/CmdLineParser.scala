@@ -9,10 +9,12 @@ object CmdLineParser {
   def knownSpec(f: String): Boolean = {
     ProfileNames.RAML == f ||
     ProfileNames.RAML08 == f ||
+    ProfileNames.OAS3 == f ||
     ProfileNames.OAS == f ||
     ProfileNames.AMF == f ||
     "RAML 1.0" == f ||
     "RAML 0.8" == f ||
+    "OAS 3.0.0" == f ||
     "OAS 2.0" == f ||
     "RAML Vocabulary" == f
 
