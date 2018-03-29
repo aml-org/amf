@@ -823,6 +823,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
         case matrix: MatrixShape => matrix.items
         case tuple: TupleShape   => tuple.items.head
         case array: ArrayShape   => array.items
+        case shape: Shape        => shape
       }
       maybeShape.map {
         case _: ArrayShape  => shape.toMatrixShape

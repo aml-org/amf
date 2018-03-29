@@ -34,6 +34,10 @@ class ProductionResolutionTest extends RamlResolutionTest {
     cycle("example-in-union.raml", "example-in-union.raml.jsonld", RamlYamlHint, Amf)
   }
 
+  test("Recursive union raml to amf") {
+    cycle("recursive-union.raml", "recursive-union.raml.jsonld", RamlYamlHint, Amf)
+  }
+
   ignore("API Console test api") {
     cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, basePath + "api-console/")
   }
