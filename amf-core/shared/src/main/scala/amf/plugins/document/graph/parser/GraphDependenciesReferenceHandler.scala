@@ -33,6 +33,7 @@ object GraphDependenciesReferenceHandler extends ReferenceHandler {
         val collector = ReferenceCollector()
         links.foreach {
           case Some((link, linkEntry)) => collector += (link, UnspecifiedReference, linkEntry)
+          case _                       =>
         }
         collector
     }
