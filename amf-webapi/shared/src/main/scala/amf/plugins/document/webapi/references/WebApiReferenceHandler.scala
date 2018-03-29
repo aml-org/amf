@@ -50,9 +50,9 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     document.node.to[YMap] match {
       case Right(map) =>
         val ext = vendor match {
-          case "RAML 1.0" => Some("extends")
-          case "OAS 2.0"  => Some("x-extends")
-          case _          => None
+          case "RAML 1.0"              => Some("extends")
+          case "OAS 2.0" | "OAS 3.0.0" => Some("x-extends")
+          case _                       => None
         }
 
         ext.foreach { u =>
@@ -77,7 +77,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
   private def links(part: YPart, ctx: ParserContext): Unit = {
     vendor match {
       case "RAML 1.0" | "RAML 0.8" | "RAML" => ramlLinks(part)
-      case "OAS 2.0"                        => oasLinks(part, ctx)
+      case "OAS 2.0" | "OAS 3.0.0"          => oasLinks(part, ctx)
       case _                                => // Ignore
     }
   }
@@ -86,9 +86,9 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     document.to[YMap] match {
       case Right(map) =>
         val uses = vendor match {
-          case "RAML 1.0" => Some("uses")
-          case "OAS 2.0"  => Some("x-uses")
-          case _          => None
+          case "RAML 1.0"              => Some("uses")
+          case "OAS 2.0" | "OAS 3.0.0" => Some("x-uses")
+          case _                       => None
         }
         uses.foreach(u => {
           map

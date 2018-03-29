@@ -38,6 +38,7 @@ class AMFUnitMaker {
       case Payload       => "AMF Payload"
       case Raml10 | Raml => "RAML 1.0"
       case Raml08        => "RAML 0.8"
+      case Oas3          => "OAS 3.0.0"
       case Oas           => "OAS 2.0"
       case Extension     => "RAML Extension"
       case Unknown       => "Unknown Vendor"

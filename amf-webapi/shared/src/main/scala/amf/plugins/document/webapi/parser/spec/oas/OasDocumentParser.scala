@@ -31,9 +31,9 @@ import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 /**
-  * Oas 2.0 spec parser
+  * Oas spec parser
   */
-case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) extends OasSpecParser {
+abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) extends OasSpecParser {
 
   def parseExtension(): Extension = {
     val extension = parseDocument(Extension())
@@ -112,7 +112,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) ext
       }
     )
 
-    OasServersParser(map, api).parse()
+    ctx.factory.serversParser(map, api).parse()
 
     map.key(
       "tags",
@@ -122,14 +122,9 @@ case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) ext
       }
     )
 
-    map.key("consumes", WebApiModel.Accepts in api)
-    map.key("produces", WebApiModel.ContentType in api)
-    map.key("schemes", WebApiModel.Schemes in api)
-
     map.key(
       "security",
       entry => {
-        // TODO check for empty array for resolution ?
         val securedBy =
           entry.value
             .as[Seq[YNode]]
@@ -140,12 +135,14 @@ case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) ext
     )
 
     val documentations = ListBuffer[CreativeWork]()
+
     map.key(
       "externalDocs",
       entry => {
         documentations += OasCreativeWorkParser(entry.value.as[YMap]).parse()
       }
     )
+
     map.key(
       "x-user-documentation",
       entry => {
@@ -154,8 +151,7 @@ case class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) ext
       }
     )
 
-    if (documentations.nonEmpty)
-      api.setArray(WebApiModel.Documentations, documentations)
+    if (documentations.nonEmpty) api.setArray(WebApiModel.Documentations, documentations)
 
     map.key(
       "paths",

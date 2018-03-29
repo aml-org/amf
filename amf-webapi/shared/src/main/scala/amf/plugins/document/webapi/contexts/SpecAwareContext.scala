@@ -1,3 +1,5 @@
 package amf.plugins.document.webapi.contexts
 
-trait SpecAwareContext {}
+trait SpecAwareContext {
+  val factory: SpecVersionFactory
+}

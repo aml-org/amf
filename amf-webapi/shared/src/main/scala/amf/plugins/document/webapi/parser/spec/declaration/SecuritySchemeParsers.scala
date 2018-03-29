@@ -23,7 +23,7 @@ object SecuritySchemeParser {
       implicit ctx: WebApiContext): SecuritySchemeParser = // todo factory for oas too?
     ctx.vendor match {
       case _: Raml => RamlSecuritySchemeParser(entry, entry.key, entry.value, adopt)(toRaml(ctx))
-      case Oas     => OasSecuritySchemeParser(entry, entry.key, entry.value, adopt)
+      case _: Oas  => OasSecuritySchemeParser(entry, entry.key, entry.value, adopt)
       case other   => throw new IllegalArgumentException(s"Unsupported vendor $other in security scheme parsers")
     }
 

@@ -29,7 +29,7 @@ import scala.collection.mutable
 /**
   * OpenAPI Spec Emitter.
   */
-case class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: OasSpecEmitterContext)
+abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: OasSpecEmitterContext)
     extends OasSpecEmitter {
 
   private def retrieveWebApi(): WebApi = document match {
@@ -64,11 +64,13 @@ case class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: Oa
 
     YDocument {
       _.obj { b =>
-        b.swagger = "2.0"
+        versionEntry(b)
         traverse(ordering.sorted(api ++ extension ++ usage ++ declares :+ references), b)
       }
     }
   }
+
+  protected def versionEntry(b: EntryBuilder): Unit
 
   def emitWebApi(ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
     val model  = retrieveWebApi()
@@ -84,7 +86,8 @@ case class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: Oa
 
       result += InfoEmitter(fs, ordering)
 
-      fs.entry(WebApiModel.Servers).map(f => result ++= OasServersEmitter(api, f, ordering, references).emitters())
+      fs.entry(WebApiModel.Servers)
+        .map(f => result ++= spec.factory.serversEmitter(api, f, ordering, references).emitters())
 
       fs.entry(WebApiModel.Accepts)
         .map(f => result += ArrayEmitter("consumes", f, ordering, force = true))

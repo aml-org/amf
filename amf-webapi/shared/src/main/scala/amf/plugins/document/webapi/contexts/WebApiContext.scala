@@ -2,8 +2,8 @@ package amf.plugins.document.webapi.contexts
 
 import amf.core.model.domain.Shape
 import amf.core.parser.{ParserContext, YMapOps}
-import amf.core.remote.{Oas, Raml08, Raml10, Vendor}
-import amf.plugins.document.webapi.parser.spec.oas.OasSyntax
+import amf.core.remote._
+import amf.plugins.document.webapi.parser.spec.oas.{Oas2Syntax, Oas3Syntax}
 import amf.plugins.document.webapi.parser.spec.raml.{Raml08Syntax, Raml10Syntax}
 import amf.plugins.document.webapi.parser.spec.{SpecSyntax, WebApiDeclarations}
 import amf.plugins.features.validation.ParserSideValidations.ClosedShapeSpecification
@@ -39,7 +39,7 @@ abstract class RamlWebApiContext(private val wrapped: ParserContext, private val
 
   private def isInclude(node: YNode) = node.tagType == YType.Include
 
-  val factory: RamlSpecVersionFactory // todo: move up to SpecAwareContext for oas 2.0 and 3.0??
+  val factory: RamlSpecVersionFactory
 
   /**
     * raml types nodes are different from other shapes because they can have 'custom facets' essentially, client
@@ -87,8 +87,10 @@ abstract class RamlWebApiContext(private val wrapped: ParserContext, private val
   }
 }
 
-class OasWebApiContext(private val wrapped: ParserContext, private val ds: Option[WebApiDeclarations] = None)
+abstract class OasWebApiContext(private val wrapped: ParserContext, private val ds: Option[WebApiDeclarations] = None)
     extends WebApiContext(wrapped, ds) {
+
+  val factory: OasSpecVersionFactory
 
   override def link(node: YNode): Either[String, YNode] = {
     node.to[YMap] match {
@@ -104,9 +106,20 @@ class OasWebApiContext(private val wrapped: ParserContext, private val ds: Optio
 
   override def ignore(shape: String, property: String): Boolean =
     property.startsWith("x-") || property == "$ref" || (property.startsWith("/") && shape == "webApi")
+}
 
-  override val syntax: SpecSyntax = OasSyntax
-  override val vendor: Vendor     = Oas
+class Oas2WebApiContext(private val wrapped: ParserContext, private val ds: Option[WebApiDeclarations] = None)
+    extends OasWebApiContext(wrapped, ds) {
+  override val factory: Oas2VersionFactory = Oas2VersionFactory()(this)
+  override val vendor: Vendor              = Oas2
+  override val syntax: SpecSyntax          = Oas2Syntax
+}
+
+class Oas3WebApiContext(private val wrapped: ParserContext, private val ds: Option[WebApiDeclarations] = None)
+    extends OasWebApiContext(wrapped, ds) {
+  override val factory: Oas3VersionFactory = Oas3VersionFactory()(this)
+  override val vendor: Vendor              = Oas3
+  override val syntax: SpecSyntax          = Oas3Syntax
 }
 
 abstract class WebApiContext(private val wrapped: ParserContext, private val ds: Option[WebApiDeclarations] = None)
@@ -138,7 +151,7 @@ abstract class WebApiContext(private val wrapped: ParserContext, private val ds:
 
         while (parts.nonEmpty && !error) {
           tmp.tagType match {
-            case YType.Map => {
+            case YType.Map =>
               val nextPart = parts.head
               parts = parts.tail
               val map = tmp.as[YMap]
@@ -149,7 +162,6 @@ abstract class WebApiContext(private val wrapped: ParserContext, private val ds:
                 case _ =>
                   error = true
               }
-            }
             case _ =>
               error = true
           }

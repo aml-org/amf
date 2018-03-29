@@ -73,7 +73,12 @@ object WellKnownAnnotation {
     "fileTypes",
     "schema",
     "serverDescription",
-    "servers"
+    "servers",
+    "consumes",
+    "produces",
+    "schemes",
+    "variables",
+    "parameters"
   )
 
   def resolveAnnotation(field: String): Option[String] = {
