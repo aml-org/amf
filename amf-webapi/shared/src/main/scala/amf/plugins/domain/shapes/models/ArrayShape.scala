@@ -41,8 +41,10 @@ abstract class DataArrangementShape(fields: Fields, annotations: Annotations) ex
     array
   }
 
+  override def componentId: String = "/array/" + name.value()
+
   override def adopted(parent: String): this.type = {
-    withId(parent + "/array/" + name.value())
+    simpleAdoption(parent)
     fields.entry(Items) match {
       case Some(items) =>
         items.value.value match {
@@ -109,10 +111,10 @@ case class TupleShape(override val fields: Fields, override val annotations: Ann
 
   override def linkCopy() = TupleShape().withId(id)
 
-  override def adopted(parent: String): this.type =
-    withId(parent + "/array/" + name.value())
-
   override def meta: Obj = TupleShapeModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/array/" + name.value()
 }
 
 object TupleShape {

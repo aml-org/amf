@@ -16,9 +16,11 @@ case class SchemaShape(override val fields: Fields, override val annotations: An
   def withMediaType(mediaType: String): SchemaShape = set(MediaType, mediaType)
 
   override def linkCopy(): SchemaShape = SchemaShape().withId(id)
-  override def adopted(parent: String) = withId(parent + "/schema/" + name.value())
 
   override def meta = SchemaShapeModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/schema/" + name.value()
 }
 
 object SchemaShape {

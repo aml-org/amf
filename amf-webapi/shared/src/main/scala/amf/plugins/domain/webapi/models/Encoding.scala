@@ -33,9 +33,10 @@ case class Encoding(fields: Fields, annotations: Annotations) extends DomainElem
     result
   }
 
-  override def adopted(parent: String): this.type = withId(parent + "/" + propertyName)
-
   override def meta: Obj = EncodingModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/" + propertyName
 }
 
 object Encoding {

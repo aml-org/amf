@@ -20,10 +20,10 @@ case class Tag(fields: Fields, annotations: Annotations) extends DomainElement {
   def withDescription(description: String): this.type           = set(Description, description)
   def withDocumentation(documentation: CreativeWork): this.type = set(Documentation, documentation)
 
-  override def adopted(parent: String): this.type = withId(parent + "/tag")
-
   override def meta: TagModel.type = TagModel
 
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/tag"
 }
 
 object Tag {

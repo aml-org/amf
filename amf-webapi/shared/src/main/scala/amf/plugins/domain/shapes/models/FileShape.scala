@@ -15,11 +15,12 @@ case class FileShape(override val fields: Fields, override val annotations: Anno
 
   def withFileTypes(fileTypes: Seq[String]): this.type = set(FileTypes, fileTypes)
 
-  override def adopted(parent: String): this.type = withId(parent + "/" + name.value())
-
   override def linkCopy(): FileShape = FileShape().withId(id)
 
   override def meta: Obj = FileShapeModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/" + name.value()
 }
 
 object FileShape {

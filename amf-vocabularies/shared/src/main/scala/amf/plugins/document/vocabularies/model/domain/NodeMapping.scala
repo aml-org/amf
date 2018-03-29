@@ -11,8 +11,7 @@ import org.yaml.model.YMap
 
 case class NodeMapping(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
 
-  override def meta: Obj                                      = NodeMappingModel
-  override def adopted(parent: String): NodeMapping.this.type = withId(parent + "/" + name.value().urlEncoded)
+  override def meta: Obj = NodeMappingModel
 
   def name: StrField                            = fields.field(Name)
   def nodetypeMapping: StrField                 = fields.field(NodeTypeMapping)
@@ -33,6 +32,9 @@ case class NodeMapping(fields: Fields, annotations: Annotations) extends DomainE
       .withName(unresolvedNodeMapping.name.value())
       .asInstanceOf[T]
   }
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/" + name.value().urlEncoded
 }
 
 object NodeMapping {

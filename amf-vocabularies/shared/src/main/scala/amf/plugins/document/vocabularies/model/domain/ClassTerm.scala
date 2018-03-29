@@ -13,7 +13,7 @@ case class ClassTerm(fields: Fields, annotations: Annotations) extends DomainEle
 
   override def adopted(parent: String): this.type = {
     if (Option(id).isEmpty) {
-      withId(parent)
+      simpleAdoption(parent)
     }
     this
   }
@@ -29,6 +29,9 @@ case class ClassTerm(fields: Fields, annotations: Annotations) extends DomainEle
   def withDescription(description: String): ClassTerm      = set(Description, description)
   def withProperties(properties: Seq[String]): ClassTerm   = set(Properties, AmfArray(properties.map(AmfScalar(_))))
   def withSubClassOf(superClasses: Seq[String]): ClassTerm = set(SubClassOf, AmfArray(superClasses.map(AmfScalar(_))))
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = ""
 }
 
 object ClassTerm {

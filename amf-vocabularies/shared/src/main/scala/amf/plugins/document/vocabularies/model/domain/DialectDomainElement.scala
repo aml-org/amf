@@ -210,7 +210,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     }
 
   override def adopted(newId: String): DialectDomainElement.this.type =
-    if (Option(this.id).isEmpty) withId(newId) else this
+    if (Option(this.id).isEmpty) simpleAdoption(newId) else this
 
   override def linkCopy(): Linkable =
     DialectDomainElement().withId(id).withDefinedBy(definedBy).withInstanceTypes(instanceTypes)
@@ -219,6 +219,9 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     val unresolvedNodeMapping = unresolved.asInstanceOf[DialectDomainElement]
     unresolvedNodeMapping.link(label, annotations).asInstanceOf[DialectDomainElement].asInstanceOf[T]
   }
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = ""
 }
 
 object DialectDomainElement {

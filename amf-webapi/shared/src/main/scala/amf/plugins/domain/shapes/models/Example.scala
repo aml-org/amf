@@ -32,12 +32,12 @@ case class Example(fields: Fields, annotations: Annotations)
   def withStrict(strict: Boolean): this.type          = set(Strict, strict)
   def withMediaType(mediaType: String): this.type     = set(MediaType, mediaType)
 
-  /** Call after object has been adopted by specified parent. */
-  override def adopted(parent: String): Example.this.type = withId(parent + "/example/" + name.value())
-
   override def linkCopy(): Example = Example().withId(id)
 
   override def meta: Obj = ExampleModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/example/" + name.value()
 }
 
 object Example {

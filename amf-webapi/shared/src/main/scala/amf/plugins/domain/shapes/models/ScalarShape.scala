@@ -18,11 +18,12 @@ case class ScalarShape(override val fields: Fields, override val annotations: An
 
   def withDataType(dataType: String): this.type = set(DataType, dataType)
 
-  override def adopted(parent: String): this.type = withId(parent + "/scalar/" + name.value())
-
   override def linkCopy(): ScalarShape = ScalarShape().withId(id)
 
   override def meta: Obj = ScalarShapeModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/scalar/" + name.value()
 }
 
 object ScalarShape {

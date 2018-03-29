@@ -24,10 +24,6 @@ case class Payload(fields: Fields, annotations: Annotations) extends DomainEleme
   def withExamples(examples: Seq[Example]): this.type  = setArray(Examples, examples)
   def withEncoding(encoding: Seq[Encoding]): this.type = setArray(EncodingModel, encoding)
 
-  override def adopted(parent: String): this.type = {
-    withId(parent + "/" + mediaType.option().getOrElse("default"))
-  }
-
   def withObjectSchema(name: String): NodeShape = {
     val node = NodeShape().withName(name)
     set(PayloadModel.Schema, node)
@@ -78,6 +74,9 @@ case class Payload(fields: Fields, annotations: Annotations) extends DomainEleme
   }
 
   override def meta: Obj = PayloadModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/" + mediaType.option().getOrElse("default")
 }
 
 object Payload {

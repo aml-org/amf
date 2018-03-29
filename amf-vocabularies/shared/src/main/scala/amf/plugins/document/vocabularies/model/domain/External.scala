@@ -17,12 +17,13 @@ case class External(fields: Fields, annotations: Annotations) extends DomainElem
   def withAlias(alias: String): External = set(Alias, alias)
   def withBase(base: String): External   = set(Base, base)
 
-  override def adopted(parent: String): External.this.type = alias.option() match {
-    case Some(alias) => withId(parent + "/externals/" + alias.urlEncoded)
-    case None        => throw new Exception("Cannot set ID of external without alias")
-  }
   override def meta: Obj = ExternalModel
 
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = alias.option() match {
+    case Some(alias) => "/externals/" + alias.urlEncoded
+    case None        => throw new Exception("Cannot set ID of external without alias")
+  }
 }
 
 object External {

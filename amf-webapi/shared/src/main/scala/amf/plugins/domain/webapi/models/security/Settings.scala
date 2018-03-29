@@ -19,8 +19,6 @@ class Settings(val fields: Fields, val annotations: Annotations) extends DomainE
   def withAdditionalProperties(additionalProperties: DataNode): this.type =
     set(AdditionalProperties, additionalProperties)
 
-  override def adopted(parent: String): this.type = withId(parent + "/settings/default")
-
   def cloneSettings(parent: String): Settings = {
     val cloned = this match {
       case _: OAuth1Settings        => OAuth1Settings(annotations)
@@ -50,6 +48,9 @@ class Settings(val fields: Fields, val annotations: Annotations) extends DomainE
   }
 
   override def meta: Obj = SettingsModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/settings/default"
 }
 
 object Settings {
@@ -75,9 +76,10 @@ case class OAuth1Settings(override val fields: Fields, override val annotations:
     set(TokenCredentialsUri, tokenCredentialsUri)
   def withSignatures(signatures: Seq[String]): this.type = set(Signatures, signatures)
 
-  override def adopted(parent: String): this.type = withId(parent + "/settings/oauth1")
-
   override def meta: Obj = OAuth1SettingsModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/settings/oauth1"
 }
 
 object OAuth1Settings {
@@ -106,9 +108,10 @@ case class OAuth2Settings(override val fields: Fields, override val annotations:
   def withRefreshUri(refreshUri: String): this.type = set(RefreshUri, refreshUri)
   def withScopes(scopes: Seq[Scope]): this.type     = setArray(Scopes, scopes)
 
-  override def adopted(parent: String): this.type = withId(parent + "/settings/oauth2")
-
   override def meta: Obj = OAuth2SettingsModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/settings/oauth2"
 }
 
 object OAuth2Settings {
@@ -127,9 +130,10 @@ case class ApiKeySettings(override val fields: Fields, override val annotations:
   def withName(name: String): this.type = set(Name, name)
   def withIn(in: String): this.type     = set(In, in)
 
-  override def adopted(parent: String): this.type = withId(parent + "/settings/api-key")
-
   override def meta: Obj = ApiKeySettingsModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/settings/api-key"
 }
 
 object ApiKeySettings {
@@ -148,9 +152,10 @@ case class HttpSettings(override val fields: Fields, override val annotations: A
   def withScheme(scheme: String): this.type             = set(Scheme, scheme)
   def withBearerFormat(bearerFormat: String): this.type = set(BearerFormat, bearerFormat)
 
-  override def adopted(parent: String): this.type = withId(parent + "/settings/http")
-
   override def meta: Obj = HttpSettingsModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/settings/http"
 }
 
 object HttpSettings {
@@ -167,9 +172,10 @@ case class OpenIdConnectSettings(override val fields: Fields, override val annot
 
   def withUrl(url: String): this.type = set(Url, url)
 
-  override def adopted(parent: String): this.type = withId(parent + "/settings/open-id-connect")
-
   override def meta: Obj = OpenIdConnectSettingsModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/settings/open-id-connect"
 }
 
 object OpenIdConnectSettings {

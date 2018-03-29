@@ -26,8 +26,10 @@ abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
   def withName(name: String): this.type = set(Name, name)
 
   override def adopted(parent: String): this.type = {
-    if (Option(id).isEmpty) withId(parent + "/" + name.option().getOrElse("data-node").urlEncoded) else this
+    if (Option(id).isEmpty) simpleAdoption(parent) else this
   }
+
+  override def componentId: String = "/" + name.option().getOrElse("data-node").urlEncoded
 
   /** Replace all raml variables (any name inside double chevrons -> '<<>>') with the provided values. */
   def replaceVariables(values: Set[Variable]): DataNode

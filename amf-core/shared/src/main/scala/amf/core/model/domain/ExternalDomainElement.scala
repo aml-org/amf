@@ -14,9 +14,10 @@ case class ExternalDomainElement(fields: Fields, annotations: Annotations) exten
   def withRaw(text: String): this.type            = set(Raw, text)
   def withMediaType(mediaType: String): this.type = set(MediaType, mediaType)
 
-  override def adopted(parent: String): this.type = withId(parent + "#/external")
-
   override def meta: ExternalDomainElementModel.type = ExternalDomainElementModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "#/external"
 }
 
 object ExternalDomainElement {

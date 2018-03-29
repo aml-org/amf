@@ -18,10 +18,8 @@ case class IriTemplateMapping(fields: Fields, annotations: Annotations) extends 
 
   override def meta: Obj = IriTemplateMappingModel
 
-  override def adopted(parent: String): IriTemplateMapping.this.type = {
-    id = parent + s"/mapping/${templateVariable.option().getOrElse("unknownVar").urlEncoded}"
-    this
-  }
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = s"/mapping/${templateVariable.option().getOrElse("unknownVar").urlEncoded}"
 }
 
 object IriTemplateMapping {

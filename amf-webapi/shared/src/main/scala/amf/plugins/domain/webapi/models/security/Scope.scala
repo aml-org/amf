@@ -15,8 +15,6 @@ case class Scope(fields: Fields, annotations: Annotations) extends DomainElement
   def withName(name: String): this.type               = set(Name, name)
   def withDescription(description: String): this.type = set(Description, description)
 
-  override def adopted(parent: String): this.type = withId(parent + "/" + name.value())
-
   def cloneScope(): Scope = {
     val cloned = Scope(annotations)
 
@@ -28,6 +26,9 @@ case class Scope(fields: Fields, annotations: Annotations) extends DomainElement
   }
 
   override def meta = ScopeModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/" + name.value()
 }
 
 object Scope {

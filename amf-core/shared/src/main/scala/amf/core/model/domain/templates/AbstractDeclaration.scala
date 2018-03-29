@@ -20,5 +20,5 @@ abstract class AbstractDeclaration(fields: Fields, annotations: Annotations)
   def withVariables(variables: Seq[String]): this.type = set(Variables, variables)
   def withDescription(description: String): this.type  = set(Description, description)
 
-  override def adopted(parent: String): this.type = withId(parent + "/" + name.value())
+  override def componentId: String = "/" + name.value()
 }

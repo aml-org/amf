@@ -37,9 +37,9 @@ case class SecurityScheme(fields: Fields, annotations: Annotations)
 
   override def adopted(parent: String): this.type =
     if (parent.contains("#")) {
-      withId(parent + "/" + name.option().getOrElse("fragment"))
+      withId(parent + "/" + componentId)
     } else {
-      withId(parent + "#" + name.option().getOrElse("fragment"))
+      withId(parent + "#" + componentId)
     }
 
   def withHeader(name: String): Parameter = {
@@ -127,6 +127,9 @@ case class SecurityScheme(fields: Fields, annotations: Annotations)
   override def linkCopy(): SecurityScheme = SecurityScheme().withId(id)
 
   override def meta = SecuritySchemeModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = name.option().getOrElse("fragment")
 }
 
 object SecurityScheme {

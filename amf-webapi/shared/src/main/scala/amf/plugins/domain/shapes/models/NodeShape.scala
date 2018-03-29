@@ -54,7 +54,7 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
   }
 
   override def adopted(parent: String): this.type = {
-    withId(parent + "/" + name.value())
+    simpleAdoption(parent)
     properties.foreach(_.adopted(id))
     this
   }
@@ -62,6 +62,9 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
   override def linkCopy(): NodeShape = NodeShape().withId(id)
 
   override def meta = NodeShapeModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/" + name.value()
 }
 
 object NodeShape {

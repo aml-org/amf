@@ -132,9 +132,10 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
     }
   }
 
-  override def adopted(parent: String): this.type = withId(parent)
-
   override def meta: Obj = PropertyMappingModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = ""
 }
 
 object PropertyMapping {

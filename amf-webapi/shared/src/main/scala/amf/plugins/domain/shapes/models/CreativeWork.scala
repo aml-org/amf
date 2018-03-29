@@ -21,12 +21,12 @@ case class CreativeWork(fields: Fields, annotations: Annotations) extends Domain
   def withDescription(description: String): this.type = set(Description, description)
   def withTitle(title: String): this.type             = set(Title, title)
 
-  override def adopted(parent: String): this.type =
-    withId(parent + "/creative-work/" + title.option().orElse(url.option()).map(_.urlEncoded).orNull)
-
   override def linkCopy(): Linkable = CreativeWork().withId(id)
 
   override def meta = CreativeWorkModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/creative-work/" + title.option().orElse(url.option()).map(_.urlEncoded).orNull
 }
 
 object CreativeWork {

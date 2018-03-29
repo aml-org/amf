@@ -36,7 +36,7 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
   def location: String = fields(Location)
   def usage: String    = fields(Usage)
 
-  def adopted(parent: String): this.type = withId(parent)
+  override def componentId: String = ""
 
   def withDefinedBy(dialectId: String): DialectInstance        = set(DefinedBy, dialectId)
   def withGraphDependencies(ids: Seq[String]): DialectInstance = set(GraphDependencies, ids)
@@ -140,7 +140,7 @@ case class DialectInstanceFragment(fields: Fields, annotations: Annotations)
   def location: String               = fields(Location)
   def usage: String                  = fields(Usage)
 
-  def adopted(parent: String): this.type = withId(parent)
+  override def componentId: String = ""
 
   def withDefinedBy(dialectId: String): DialectInstanceFragment     = set(DefinedBy, dialectId)
   def withGraphDepencies(ids: Seq[String]): DialectInstanceFragment = set(GraphDependencies, ids)
@@ -164,7 +164,7 @@ case class DialectInstanceLibrary(fields: Fields, annotations: Annotations)
   def usage: String                  = fields(Usage)
   def definedBy(): String            = fields(DefinedBy)
 
-  def adopted(parent: String): this.type = withId(parent)
+  override def componentId: String = ""
 
   def withDefinedBy(dialectId: String): DialectInstanceLibrary        = set(DefinedBy, dialectId)
   def withGraphDependencies(ids: Seq[String]): DialectInstanceLibrary = set(GraphDependencies, ids)

@@ -56,9 +56,10 @@ case class ParametrizedSecurityScheme(fields: Fields, annotations: Annotations)
     settings
   }
 
-  override def adopted(parent: String): this.type = withId(parent + "/" + name.value())
-
   override def meta: Obj = ParametrizedSecuritySchemeModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/" + name.value()
 }
 
 object ParametrizedSecurityScheme {

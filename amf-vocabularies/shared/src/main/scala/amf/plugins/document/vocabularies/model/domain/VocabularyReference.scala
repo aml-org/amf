@@ -17,12 +17,13 @@ case class VocabularyReference(fields: Fields, annotations: Annotations) extends
   def withAlias(alias: String): VocabularyReference         = set(Alias, alias)
   def withReference(reference: String): VocabularyReference = set(Reference, reference)
 
-  override def adopted(parent: String): VocabularyReference.this.type = alias.option() match {
-    case Some(alias) => withId(parent + "/vocabularyReference/" + alias.urlEncoded)
+  override def meta: Obj = VocabularyReferenceModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = alias.option() match {
+    case Some(alias) => "/vocabularyReference/" + alias.urlEncoded
     case None        => throw new Exception("Cannot set ID of VocabularyReference without alias")
   }
-
-  override def meta: Obj = VocabularyReferenceModel
 }
 
 object VocabularyReference {

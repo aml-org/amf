@@ -1,0 +1,32 @@
+#%RAML 0.8
+title: RBStamm Service API
+schemas:
+  - bank: !include bank-schema.json
+  - banks: |
+      {  "$schema": "http://json-schema.org/draft-03/schema",
+         "type": "array",
+         "items": { "$ref": "bank" }
+      }
+  
+
+
+resourceTypes:
+  - readOnlyCollection:
+      description: Collection of available <<resourcePathName>> in Employee.
+      get:
+        description: Get a list of <<resourcePathName>>.
+        responses:
+          200:
+            body:
+              application/json:
+                schema: <<schemaCollection>>
+/rbs:
+  displayName: Raiffeisen Banken Resource
+  type:
+    readOnlyCollection:
+      schemaCollection: banks
+/byPosition:
+  displayName: Raiffeisen Bank
+  type:
+    readOnlyCollection:
+      schemaCollection: banks

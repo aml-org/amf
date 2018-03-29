@@ -19,10 +19,10 @@ case class PropertyDependencies(fields: Fields, annotations: Annotations) extend
   def withPropertySource(propertySource: String): this.type      = set(PropertySource, propertySource)
   def withPropertyTarget(propertyTarget: Seq[String]): this.type = set(PropertyTarget, propertyTarget)
 
-  /** Call after object has been adopted by specified parent. */
-  override def adopted(parent: String): PropertyDependencies.this.type =
-    withId(parent + "/dependency") // TODO check id for each dependency
   override def meta: Obj = PropertyDependenciesModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/dependency" // TODO check id for each dependency
 }
 
 object PropertyDependencies {

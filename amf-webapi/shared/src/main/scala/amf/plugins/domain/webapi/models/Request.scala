@@ -30,8 +30,6 @@ case class Request(fields: Fields, annotations: Annotations) extends DomainEleme
   def withUriParameters(uriParameters: Seq[Parameter]): this.type       = setArray(UriParameters, uriParameters)
   def withCookieParameters(cookieParameters: Seq[Parameter]): this.type = setArray(CookieParameters, cookieParameters)
 
-  override def adopted(parent: String): this.type = withId(parent + "/request")
-
   def withQueryParameter(name: String): Parameter = {
     val result = Parameter().withName(name)
     add(QueryParameters, result)
@@ -64,6 +62,9 @@ case class Request(fields: Fields, annotations: Annotations) extends DomainEleme
   }
 
   override def meta: Obj = RequestModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/request"
 }
 
 object Request {

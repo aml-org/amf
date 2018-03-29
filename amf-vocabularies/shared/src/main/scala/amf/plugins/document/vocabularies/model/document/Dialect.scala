@@ -50,7 +50,7 @@ case class Dialect(fields: Fields, annotations: Annotations)
   def nameAndVersion(): String = s"${name().value()} ${version().value()}"
   def header: String           = s"%${name().value()} ${version().value()}".replace(" ", "")
 
-  def adopted(parent: String): this.type = withId(parent)
+  override def componentId: String = ""
 
   def withName(name: String): Dialect                          = set(Name, name)
   def withVersion(version: String): Dialect                    = set(Version, version)
@@ -93,7 +93,7 @@ case class DialectLibrary(fields: Fields, annotations: Annotations)
   def location: String = fields(Location)
   def usage: String    = fields(Usage)
 
-  def adopted(parent: String): this.type = withId(parent)
+  override def componentId: String = ""
 
   def withExternals(externals: Seq[External]): DialectLibrary = setArray(Externals, externals)
 
@@ -115,7 +115,7 @@ case class DialectFragment(fields: Fields, annotations: Annotations) extends Bas
   def location: String = fields(Location)
   def usage: String    = fields(Usage)
 
-  def adopted(parent: String): this.type = withId(parent)
+  override def componentId: String = ""
 
   def withExternals(externals: Seq[External]): DialectFragment = setArray(Externals, externals)
   def withEncodes(nodeMapping: NodeMapping): DialectFragment   = set(Encodes, nodeMapping)

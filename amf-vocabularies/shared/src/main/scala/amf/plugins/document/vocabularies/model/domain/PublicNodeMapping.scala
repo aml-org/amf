@@ -22,9 +22,10 @@ case class PublicNodeMapping(fields: Fields, annotations: Annotations) extends D
   def withName(name: String): PublicNodeMapping             = set(Name, name)
   def withMappedNode(mappedNode: String): PublicNodeMapping = set(MappedNode, mappedNode)
 
-  override def adopted(parent: String): this.type = withId(parent)
-
   override def meta: Obj = PublicNodeMappingModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = ""
 }
 
 object PublicNodeMapping {
@@ -44,9 +45,10 @@ case class DocumentMapping(fields: Fields, annotations: Annotations) extends Dom
   def withDeclaredNodes(fragments: Seq[PublicNodeMapping]): DocumentMapping =
     setArrayWithoutId(DeclaredNodes, fragments)
 
-  override def adopted(parent: String): this.type = withId(parent)
-
   override def meta: Obj = DocumentMappingModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = ""
 }
 
 object DocumentMapping {
@@ -64,9 +66,10 @@ case class DocumentsModel(fields: Fields, annotations: Annotations) extends Doma
   def withLibrary(library: DocumentMapping): DocumentsModel          = set(Library, library)
   def withFragments(fragments: Seq[DocumentMapping]): DocumentsModel = setArrayWithoutId(Fragments, fragments)
 
-  override def adopted(parent: String): this.type = withId(parent)
-
   override def meta: Obj = DocumentsModelModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = ""
 }
 
 object DocumentsModel {
