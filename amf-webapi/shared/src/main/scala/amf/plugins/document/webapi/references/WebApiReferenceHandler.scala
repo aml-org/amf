@@ -12,15 +12,14 @@ import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.YamlParser
 
-import scala.collection.mutable.ArrayBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends ReferenceHandler {
 
-  private val references = new ArrayBuffer[Reference]
+  private val references = ReferenceCollector()
 
-  override def collect(parsed: ParsedDocument, ctx: ParserContext): Seq[Reference] = {
+  override def collect(parsed: ParsedDocument, ctx: ParserContext): ReferenceCollector = {
     libraries(parsed.document, ctx)
     links(parsed.document, ctx)
     if (isRamlOverlayOrExtension(vendor, parsed)) overlaysAndExtensions(parsed.document, ctx)
@@ -71,7 +70,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
   }
 
   private def extension(entry: YMapEntry) = {
-    references += Reference(entry.value, ExtensionReference, entry.value)
+    references += (entry.value, ExtensionReference, entry.value)
   }
 
   // todo: we should use vendor.name in every place instead of match handwrited strings
@@ -105,7 +104,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     }
   }
 
-  private def library(entry: YMapEntry) = references += Reference(libraryName(entry), LibraryReference, entry.value)
+  private def library(entry: YMapEntry) = references += (libraryName(entry), LibraryReference, entry.value)
 
   private def libraryName(e: YMapEntry): String = e.value.tagType match {
     case YType.Include => e.value.as[YScalar].text
@@ -123,7 +122,8 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     val ref = map.entries.head
     ref.value.tagType match {
       case YType.Str =>
-        references += Reference(ref.value.as[String], LinkReference, ref.value) // this is not for all scalar, link must be a string
+        references += (ref.value
+          .as[String], LinkReference, ref.value) // this is not for all scalar, link must be a string
       case _ => ctx.violation("", s"Unexpected $$ref with $ref", ref.value)
     }
   }
@@ -142,9 +142,9 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     }
   }
 
-  private def ramlInclude(node: YNode) = {
+  private def ramlInclude(node: YNode): Unit = {
     node.value match {
-      case scalar: YScalar => references += Reference(scalar.text, LinkReference, node)
+      case scalar: YScalar => references += (scalar.text, LinkReference, node)
       case _               => throw new Exception(s"Unexpected !include with ${node.value}")
     }
   }
@@ -159,18 +159,20 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
         val refs    = new WebApiReferenceHandler(vendor, plugin).collect(parsed, ctx)
         val updated = context.update(reference.unit.id) // ??
 
-        val externals = refs.map((r: Reference) => {
+        val externals = refs.toReferences.map((r: Reference) => {
           r.resolve(updated, None, vendor, Cache(), ctx)
             .flatMap(u => {
               val resolved = handleRamlExternalFragment(ParsedReference(u, r), ctx, updated)
 
               resolved.map(res => {
-                val result = r.ast match {
-                  case mut: MutRef =>
-                    mut.target = res.ast
-                  case _ => throw new Exception("Damn it!")
+                r.refs.foreach { refContainer =>
+                  refContainer.node match {
+                    case mut: MutRef => mut.target = res.ast
+                    case _ =>
+                      throw new Exception("Damn it!") // todo: review this with pcolung, we forget to change it?
+                  }
+                // not meaning, only for collect all futures, not matter the type
                 }
-                result
               })
             })
         })

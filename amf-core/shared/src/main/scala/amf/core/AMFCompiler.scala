@@ -103,7 +103,7 @@ class AMFCompiler(val rawUrl: String,
 
   private def parseDomain(document: Root): Future[BaseUnit] = {
     ExecutionLog.log(s"AMFCompiler#parseDomain: parsing syntax $rawUrl")
-    var currentRun = ctx.parserCount
+    val currentRun = ctx.parserCount
     val domainPluginOption = AMFPluginsRegistry.documentPluginForVendor(vendor).find(_.canParse(document)) match {
       case Some(domainPlugin) => Some(domainPlugin)
       case None               => AMFPluginsRegistry.documentPluginForMediaType(document.mediatype).find(_.canParse(document))
@@ -146,7 +146,7 @@ class AMFCompiler(val rawUrl: String,
     val handler = domainPlugin.referenceHandler()
     val refs    = handler.collect(root.parsed, ctx)
 
-    val units = refs.distinct
+    val units = refs.toReferences
       .filter(_.isRemote)
       .map(link => {
         link
@@ -157,7 +157,9 @@ class AMFCompiler(val rawUrl: String,
           })
           .recover {
             case e: FileNotFound =>
-              ctx.violation(link.url, e.getMessage, link.ast)
+              link.refs.map(_.node).foreach { ref =>
+                ctx.violation(link.url, e.getMessage, ref)
+              }
               None
           }
       })

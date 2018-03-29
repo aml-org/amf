@@ -1,39 +1,40 @@
 package amf.plugins.document.graph.parser
 
-import amf.core.parser.{ParsedDocument, ParserContext, Reference, ReferenceHandler}
+import amf.core.parser.{ParsedDocument, ParserContext, ReferenceHandler, _}
 import amf.core.vocabulary.Namespace
-import amf.core.parser._
 import org.yaml.model._
 
 object GraphDependenciesReferenceHandler extends ReferenceHandler {
 
   val graphDependenciesPredicate: String = (Namespace.Document + "graphDependencies").iri()
 
-  override def collect(parsed: ParsedDocument, ctx: ParserContext): Seq[Reference] = {
+  override def collect(parsed: ParsedDocument, ctx: ParserContext): ReferenceCollector = {
     val document  = parsed.document
     val maybeMaps = document.node.toOption[Seq[YMap]]
     maybeMaps.flatMap(s => s.headOption) match {
       case Some(map: YMap) =>
         map.entries.find(_.key.as[String] == graphDependenciesPredicate) match {
           case Some(entry) => processDependencyEntry(entry)
-          case None        => Nil
+          case None        => EmptyReferenceCollector
         }
-      case None => Nil
+      case None => EmptyReferenceCollector
     }
   }
 
-  protected def processDependencyEntry(entry: YMapEntry): Seq[Reference] = {
+  protected def processDependencyEntry(entry: YMapEntry): ReferenceCollector = {
     entry.value.tagType match {
       case YType.Seq =>
-        val links = entry.value.as[YSequence].nodes.map { node =>
+        val links: IndexedSeq[Option[(String, YNode)]] = entry.value.as[YSequence].nodes.map { node =>
           node.tagType match {
             case YType.Map => extractLink(node)
             case _         => None
           }
         }
-        links.collect {
-          case Some((link, linkEntry)) => Reference(link, UnspecifiedReference, linkEntry)
+        val collector = ReferenceCollector()
+        links.foreach {
+          case Some((link, linkEntry)) => collector += (link, UnspecifiedReference, linkEntry)
         }
+        collector
     }
   }
 

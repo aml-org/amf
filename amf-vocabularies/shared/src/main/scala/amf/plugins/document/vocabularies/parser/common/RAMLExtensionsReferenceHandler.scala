@@ -1,33 +1,31 @@
 package amf.plugins.document.vocabularies.parser.common
 
-import amf.core.parser.{LibraryReference, LinkReference, Reference, ReferenceHandler, _}
+import amf.core.parser.{LibraryReference, LinkReference, ReferenceHandler, _}
 import org.yaml.model._
 
-import scala.collection.mutable.ArrayBuffer
-
 class RAMLExtensionsReferenceHandler extends ReferenceHandler {
-  private val references = new ArrayBuffer[Reference]
+  private val collector = ReferenceCollector()
 
-  override def collect(parsed: ParsedDocument, ctx: ParserContext): Seq[Reference] = {
-    if (parsed.comment.isDefined){
-      if (referencesDialect(parsed.comment.get.metaText)){
-        references+=Reference(dialectDefinitionUrl(parsed.comment.get.metaText), SchemaReference, parsed.document.node)
+  override def collect(parsed: ParsedDocument, ctx: ParserContext): ReferenceCollector = {
+    if (parsed.comment.isDefined) {
+      if (referencesDialect(parsed.comment.get.metaText)) {
+        collector += (dialectDefinitionUrl(parsed.comment.get.metaText), SchemaReference, parsed.document.node)
       }
     }
     libraries(parsed.document, ctx)
     links(parsed.document)
-    references
+    collector
   }
 
   def dialectDefinitionUrl(mt: String): String = {
-    val io = mt.indexOf("|");
+    val io = mt.indexOf("|")
     if (io > 0) {
-      var msk = mt.substring(io + 1);
-      val si  = msk.indexOf("<");
-      val se  = msk.lastIndexOf(">");
-      return msk.substring(si + 1, se);
-    }
-    ""
+      val msk = mt.substring(io + 1)
+      val si  = msk.indexOf("<")
+      val se  = msk.lastIndexOf(">")
+      msk.substring(si + 1, se)
+    } else
+      ""
   }
 
   private def libraries(document: YDocument, ctx: ParserContext): Unit = {
@@ -45,43 +43,39 @@ class RAMLExtensionsReferenceHandler extends ReferenceHandler {
     }
   }
 
-  private def referencesDialect(mt:String):Boolean={
-    val io=mt.indexOf("|");
-    if (io>0){
-      var msk=mt.substring(io+1);
-      val si=msk.indexOf("<");
-      val se=msk.lastIndexOf(">");
-      return si>0&&se>si;
-    }
-    false
+  private def referencesDialect(mt: String): Boolean = {
+    val io = mt.indexOf("|")
+    if (io > 0) {
+      val msk = mt.substring(io + 1)
+      val si  = msk.indexOf("<")
+      val se  = msk.lastIndexOf(">")
+      si > 0 && se > si
+    } else
+      false
   }
 
-
-
-  private def library(entry: YMapEntry) = {
-    references += Reference(entry.value, LibraryReference, entry.value)
+  private def library(entry: YMapEntry): Unit = {
+    collector += (entry.value, LibraryReference, entry.value)
   }
 
   private def links(part: YPart): Unit = {
     part match {
-      case entry: YMapEntry => {
-        if (entry.key.as[YScalar].text =="$dialect") {
+      case entry: YMapEntry =>
+        if (entry.key.as[YScalar].text == "$dialect") {
           val dialectRef = entry.value
           ramlInclude(dialectRef.split("#").head)
-        }
-        else {
+        } else {
           part.children.foreach(links)
         }
-      }
-      case node: YNode if node.tagType == YType.Include  => ramlInclude(node)
-      case _                                             => part.children.foreach(links)
+      case node: YNode if node.tagType == YType.Include => ramlInclude(node)
+      case _                                            => part.children.foreach(links)
     }
   }
 
-  private def ramlInclude(node: YNode) = {
+  private def ramlInclude(node: YNode): Unit = {
     node.value match {
 
-      case scalar: YScalar => references += Reference(scalar.text, LinkReference, node)
+      case scalar: YScalar => collector += (scalar.text, LinkReference, node)
       case _               => throw new Exception(s"Unexpected !include or dialect with ${node.value}")
     }
   }

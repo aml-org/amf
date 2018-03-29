@@ -1063,4 +1063,7 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("numeric-facets.jsonld", "numeric-facets.jsonld.json", AmfJsonHint, Oas)
   }
 
+  test("Repeated include xsd") {
+    cycle("include-repeated.raml", "include-repeated.raml.raml", RamlYamlHint, Raml)
+  }
 }
