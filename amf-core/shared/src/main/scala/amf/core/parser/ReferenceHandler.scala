@@ -7,11 +7,15 @@ import scala.concurrent.Future
 trait ReferenceHandler {
 
   /** Collect references on given document. */
-  def collect(document: ParsedDocument, ctx: ParserContext): Seq[Reference] = Nil
+  def collect(document: ParsedDocument, ctx: ParserContext): ReferenceCollector
 
   /** Update parsed reference if needed. */
   def update(reference: ParsedReference, ctx: ParserContext, context: Context): Future[ParsedReference] =
     Future.successful(reference)
 }
 
-object SimpleReferenceHandler extends ReferenceHandler
+object SimpleReferenceHandler extends ReferenceHandler {
+
+  /** Collect references on given document. */
+  override def collect(document: ParsedDocument, ctx: ParserContext): ReferenceCollector = EmptyReferenceCollector
+}

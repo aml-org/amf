@@ -6,7 +6,7 @@ import amf.core.emitter.RenderOptions
 import amf.core.Root
 import amf.core.model.document._
 import amf.core.model.domain.{DomainElement, ExternalDomainElement}
-import amf.core.parser.{EmptyFutureDeclarations, LinkReference, ParserContext}
+import amf.core.parser.{EmptyFutureDeclarations, LinkReference, ParserContext, RefContainer}
 import amf.core.remote.Platform
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.plugins.document.webapi.contexts._
@@ -63,20 +63,24 @@ trait RAMLPlugin extends BaseWebApiPlugin {
   private def inlineExternalReferences(root: Root): Unit = {
     root.references.foreach { ref =>
       ref.unit match {
-        case e: ExternalFragment => inlineFragment(ref.origin.ast, ref.ast, e.encodes)
+        case e: ExternalFragment => inlineFragment(ref.origin.refs, ref.ast, e.encodes)
         case _                   =>
       }
     }
   }
 
-  private def inlineFragment(ast: YNode, document: Option[YNode], encodes: ExternalDomainElement): Unit = {
-    ast match {
-      case mut: MutRef =>
-        document match {
-          case None => mut.target = Some(YNode(encodes.raw.value()))
-          case _    => mut.target = document
-        }
-      case _ =>
+  private def inlineFragment(origins: Seq[RefContainer],
+                             document: Option[YNode],
+                             encodes: ExternalDomainElement): Unit = {
+    origins.foreach { refContainer =>
+      refContainer.node match {
+        case mut: MutRef =>
+          document match {
+            case None => mut.target = Some(YNode(encodes.raw.value()))
+            case _    => mut.target = document
+          }
+        case _ =>
+      }
     }
   }
 
