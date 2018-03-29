@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: API
+
+types:
+  SomeType:
+    type: SomeUnion
+
+  SomeUnion:
+    type: AnotherType[] | OneMoreType[]
+
+  AnotherType:
+    type: SomeType
+
+  OneMoreType:
+    type: AnotherType
+
+
+/test:
+  get:
+    body:
+      application/json:
+        type: SomeType
