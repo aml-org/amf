@@ -1162,8 +1162,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       assert(report.results.nonEmpty)
       val results = report.results.filter(_.level == SeverityLevels.VIOLATION)
-      assert(results.lengthCompare(2) == 0)
-      assert(results.head.message.contains("Data at / must be a scalar"))
+      assert(results.lengthCompare(1) == 0)
+      assert(results.head.message.contains("Data at / must be one of the valid union types"))
     }
   }
 

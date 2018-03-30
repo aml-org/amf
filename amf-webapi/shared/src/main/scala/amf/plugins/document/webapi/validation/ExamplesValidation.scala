@@ -48,19 +48,7 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
   protected def validateExample(shape: Shape, example: Example): Future[Seq[AMFValidationResult]] = {
     RuntimeValidator.nestedValidation(IgnoreValidationsMerger) {
       try {
-        shape match {
-          case union: UnionShape =>
-            val partial: Seq[Future[Option[AMFValidationResult]]] = union.anyOf.map { s =>
-              validateShape(s, example)
-            }
-            Future
-              .sequence(partial)
-              .map(_.flatten)
-              .map(result => if (result.lengthCompare(union.anyOf.size) == 0) result else Nil)
-          case _ =>
-            validateShape(shape, example).map(_.toSeq)
-        }
-
+        validateShape(shape, example).map(_.toSeq)
       } catch {
         case e: Exception => payloadParsingException(e, example)
       }
