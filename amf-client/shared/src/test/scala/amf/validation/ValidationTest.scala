@@ -1223,4 +1223,16 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.conforms)
     }
   }
+
+  test("Test out of range status code") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "/webapi/invalid_status_code.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.results.exists(_.message.contains("Status code must be numeric and in the 1xx-5xx range")))
+      assert(!report.conforms)
+    }
+  }
 }
