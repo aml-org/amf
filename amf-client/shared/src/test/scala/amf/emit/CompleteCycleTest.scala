@@ -513,6 +513,9 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("boolean_in_key.jsonld", "boolean_in_key.raml", AmfJsonHint, Raml)
   }
 
+  test("Test missing example raml to raml") {
+    cycle("missing_example.raml", "missing_example.raml.raml", RamlYamlHint, Raml)
+  }
 
   test("Test data type fragment raml to raml") {
     cycle("data-type-fragment.raml", RamlYamlHint, referencesPath)
