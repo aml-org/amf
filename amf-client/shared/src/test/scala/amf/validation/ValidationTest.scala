@@ -1239,14 +1239,29 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Security scheme and traits test") {
     for {
       validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "/securitySchemes/security1.raml", platform, RamlYamlHint, validation).build()
-      resolved   <- Future { RAML10Plugin.resolve(doc) }
-      generated  <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
-      report     <- validation.validate(doc, ProfileNames.RAML)
+      doc <- AMFCompiler(validationsPath + "/securitySchemes/security1.raml", platform, RamlYamlHint, validation).build()
+      resolved <- Future {
+        RAML10Plugin.resolve(doc)
+      }
+      generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
+      report <- validation.validate(doc, ProfileNames.RAML)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 2)
       assert(report.results.exists(_.message.contains("Security scheme 'undefined' not found in declarations.")))
+
+    }
+  }
+
+  test("Chained references violation test") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "/chained/api.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      println(report)
+      assert(!report.conforms)
     }
   }
 }
