@@ -54,6 +54,14 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
+  val DuplicatedPropertySpecification = ValidationSpecification(
+    (Namespace.AmfParser + "duplicated-property").iri(),
+    "Duplicated property in node",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val MissingPropertySpecification = ValidationSpecification(
     (Namespace.AmfParser + "mandatory-property-shape").iri(),
     "Missing mandatory property",
@@ -142,14 +150,17 @@ object ParserSideValidations {
       ProfileNames.OAS  -> SeverityLevels.VIOLATION,
       ProfileNames.AMF  -> SeverityLevels.VIOLATION
     ),
-
     JsonSchemaInheratinaceWarningSpecification.id() -> Map(
       ProfileNames.RAML -> SeverityLevels.WARNING,
       ProfileNames.OAS  -> SeverityLevels.WARNING,
       ProfileNames.AMF  -> SeverityLevels.WARNING
     ),
-
     ClosedShapeSpecification.id() -> Map(
+      ProfileNames.RAML -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS  -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF  -> SeverityLevels.VIOLATION
+    ),
+    DuplicatedPropertySpecification.id() -> Map(
       ProfileNames.RAML -> SeverityLevels.VIOLATION,
       ProfileNames.OAS  -> SeverityLevels.VIOLATION,
       ProfileNames.AMF  -> SeverityLevels.VIOLATION
@@ -210,6 +221,7 @@ object ParserSideValidations {
     JsonSchemaInheratinaceWarningSpecification,
     InvalidTypeInheritanceErrorSpecification,
     ClosedShapeSpecification,
+    DuplicatedPropertySpecification,
     DialectAmbiguousRangeSpecification,
     ParsingErrorSpecification,
     ParsingWarningSpecification,
