@@ -3,7 +3,7 @@ package amf.emit
 import amf.core.annotations.SynthesizedField
 import amf.core.model.document.{Document, Module}
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.domain.shapes.models.CreativeWork
+import amf.plugins.domain.shapes.models.{CreativeWork, ScalarShape}
 import amf.plugins.domain.webapi.models.{License, Organization, WebApi}
 
 /**
@@ -20,6 +20,8 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
   def `document/api/full`: Document = doc(advanced())
 
   def `module/bare`: Module = libraryBare()
+
+  def `document/api/stringExamples`: Document = doc(stringExamples())
 
   private def bare(): WebApi = {
     val api = WebApi()
@@ -91,6 +93,22 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
       )
 
     api
+  }
+
+  private def stringExamples(): WebApi = {
+    val webApi   = WebApi().withName("test examples")
+    val endpoint = webApi.withEndPoint("/endpoint")
+    val response = endpoint.withOperation("get").withResponse("200")
+    response.withExample("application/json").withValue("name: Cristian\nlastName: Pavon\n")
+    val payload       = response.withPayload(Some("application/json"))
+    val shape         = payload.withObjectSchema("person")
+    val nameShape     = ScalarShape().withDataType("http://www.w3.org/2001/XMLSchema#string")
+    val lastNameShape = ScalarShape().withDataType("http://www.w3.org/2001/XMLSchema#string")
+    shape.withProperty("name").withMinCount(1).withRange(nameShape)
+    shape.withProperty("lastName").withMinCount(1).withRange(lastNameShape)
+    shape.withExample(None).withValue("name: roman\nlastName: riquelme\n")
+
+    webApi
   }
 
   def libraryBare(): Module = {
