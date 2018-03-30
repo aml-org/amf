@@ -3,9 +3,19 @@ package amf.core.services
 import amf.core.annotations.LexicalInformation
 import amf.core.model.document.BaseUnit
 import amf.core.validation.core.ValidationReport
-import amf.core.validation.{AMFValidationReport, EffectiveValidations}
+import amf.core.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations}
 
 import scala.concurrent.Future
+
+trait ValidationsMerger {
+  val parserRun: Int
+  def merge(result: AMFValidationResult): Boolean
+}
+
+object IgnoreValidationsMerger extends ValidationsMerger {
+  override val parserRun: Int = -1
+  override def merge(result: AMFValidationResult): Boolean = false
+}
 
 /**
   * Validation of AMF models
@@ -32,7 +42,7 @@ trait RuntimeValidator {
 
   def reset()
 
-  def nestedValidation[T]()(k: => T): T
+  def nestedValidation[T](merger: ValidationsMerger)(k: => T): T
 
   /**
     * Client code can use this function to register a new validation failure
@@ -81,7 +91,7 @@ object RuntimeValidator {
 
   def reset() = validator.reset()
 
-  def nestedValidation[T]()(k: => T): T = validator.nestedValidation()(k)
+  def nestedValidation[T](merger: ValidationsMerger)(k: => T): T = validator.nestedValidation(merger)(k)
 
 
   def disableValidations[T]()(f: () => T): T = validator.disableValidations()(f)

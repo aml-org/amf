@@ -6,6 +6,7 @@ import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRaml
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security._
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.{YMap, YNode, YScalar, YType}
 
 object RamlParametrizedSecuritySchemeParser {
@@ -29,7 +30,12 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String =>
           scheme
         }
         case None =>
-          ctx.violation(scheme.id, s"Security scheme '$name' not found in declarations.", node)
+          ctx.violation(
+            ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id(),
+            scheme.id,
+            s"Security scheme '$name' not found in declarations.",
+            node
+          )
           scheme
       }
 
@@ -47,7 +53,11 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String =>
 
           scheme.set(ParametrizedSecuritySchemeModel.Settings, settings)
         case None =>
-          ctx.violation(s"Security scheme '$name' not found in declarations (and name cannot be 'null').", node)
+          ctx.violation(
+            ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id(),
+            scheme.id,
+            s"Security scheme '$name' not found in declarations (and name cannot be 'null').",
+            node)
       }
 
       scheme
