@@ -416,6 +416,82 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
     new AMFRenderer(`document/api/full`, Amf, Json, RenderOptions()).renderToString.map(assert(_, expected))
   }
 
+  test("Test string examples raml/yaml") {
+    val expected =
+      """#%RAML 1.0
+        |title: test examples
+        |/endpoint:
+        | get:
+        |   responses:
+        |     200:
+        |       body:
+        |        application/json:
+        |         example:
+        |           name: roman
+        |           lastName: riquelme
+        |         properties:
+        |           name:
+        |             type: string
+        |           lastName:
+        |             type: string
+        |       (examples):
+        |         application/json:
+        |           name: Cristian
+        |           lastName: Pavon""".stripMargin
+
+    new AMFRenderer(`document/api/stringExamples`, Raml, Yaml, RenderOptions()).renderToString.map(assert(_, expected))
+  }
+
+  test("Test string examples oas/json") {
+    val expected =
+      """{
+        |  "swagger": "2.0",
+        |  "info": {
+        |    "title": "test examples",
+        |    "version": "1.0"
+        |  },
+        |  "paths": {
+        |   "/endpoint": {
+        |     "get": {
+        |       "responses": {
+        |         "200": {
+        |           "description": "",
+        |           "x-media-type": "application/json",
+        |           "schema": {
+        |              "example": {
+        |                "name": "roman",
+        |                "lastName": "riquelme"
+        |              },
+        |              "type": "object",
+        |              "required": [
+        |                "name",
+        |                "lastName"
+        |              ],
+        |              "properties": {
+        |                "name": {
+        |                  "type": "string"
+        |                },
+        |                "lastName": {
+        |                  "type": "string"
+        |                }
+        |              }
+        |           },
+        |           "examples": {
+        |             "application/json": {
+        |               "name": "Cristian",
+        |               "lastName": "Pavon"
+        |             }
+        |           }
+        |         }
+        |       }
+        |     }
+        |   }
+        |  }
+        |}""".stripMargin
+
+    new AMFRenderer(`document/api/stringExamples`, Oas, Json, RenderOptions()).renderToString.map(assert(_, expected))
+  }
+
   private def assert(actual: String, expected: String): Assertion = {
     Tests.checkDiff(actual, expected)
     succeed
