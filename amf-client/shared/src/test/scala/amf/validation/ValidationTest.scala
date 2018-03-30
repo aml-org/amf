@@ -513,9 +513,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       library    <- AMFCompiler(productionPath + "no_title.raml", platform, RamlYamlHint, validation).build()
       report     <- validation.validate(library, ProfileNames.RAML)
     } yield {
-      assert(report.conforms)
-      assert(report.results.size == 1)
-      assert(report.results.head.level == SeverityLevels.WARNING)
+      assert(!report.conforms)
     }
   }
 
@@ -1261,6 +1259,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report <- validation.validate(library, ProfileNames.RAML)
     } yield {
       println(report)
+      assert(!report.conforms)
+    }
+  }
+
+  test("Test empty string in title") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "/webapi/invalid_title1.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.results.exists(_.message.contains("API name must not be an empty string")))
       assert(!report.conforms)
     }
   }
