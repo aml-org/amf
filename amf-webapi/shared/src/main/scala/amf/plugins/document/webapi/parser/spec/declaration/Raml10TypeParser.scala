@@ -42,6 +42,14 @@ object Raml10TypeParser {
   }
 }
 
+trait ExampleParser {
+  def parseExamples(shape: AnyShape, map: YMap, options: ExampleOptions = DefaultExampleOptions)(implicit ctx: WebApiContext): Unit = {
+    val examples = RamlExamplesParser(map, "example", "examples", shape.withExample, options).parse()
+    if (examples.nonEmpty)
+      shape.setArray(AnyShapeModel.Examples, examples)
+  }
+}
+
 trait RamlTypeSyntax {
   def parseWellKnownTypeRef(ramlType: String): Shape = {
     ramlType match {
@@ -344,14 +352,14 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
   }
 }
 
-trait RamlExternalTypes {
+trait RamlExternalTypes extends ExampleParser {
   implicit val ctx: RamlWebApiContext
 
-  protected def parseXMLSchemaExpression(name: String, value: YNode, adopt: Shape => Shape): AnyShape = {
+  protected def parseXMLSchemaExpression(name: String, value: YNode, adopt: Shape => Shape, parseExample: Boolean = false): AnyShape = {
     value.tagType match {
       case YType.Map =>
         val map = value.as[YMap]
-        typeOrSchema(map) match {
+        val parsedSchema = typeOrSchema(map) match {
           case Some(typeEntry: YMapEntry) if typeEntry.value.toOption[YScalar].isDefined =>
             val shape =
               SchemaShape().withRaw(typeEntry.value.as[YScalar].text).withMediaType("application/xml")
@@ -364,6 +372,7 @@ trait RamlExternalTypes {
             ctx.violation(shape.id, "Cannot parse XML Schema expression out of a non string value", value)
             shape
         }
+        parsedSchema
       case YType.Seq =>
         val shape = SchemaShape()
         adopt(shape)
@@ -377,7 +386,7 @@ trait RamlExternalTypes {
     }
   }
 
-  protected def parseJSONSchemaExpression(name: String, value: YNode, adopt: Shape => Shape): AnyShape = {
+  protected def parseJSONSchemaExpression(name: String, value: YNode, adopt: Shape => Shape, parseExample: Boolean = false): AnyShape = {
     val (text, valueAST) = value.tagType match {
       case YType.Map =>
         val map = value.as[YMap]
@@ -421,6 +430,10 @@ trait RamlExternalTypes {
           shape
       }
     ctx.localJSONSchemaContext = None // we reset the JSON schema context after parsing
+
+    // parsing the potential example
+    if (parseExample && value.tagType == YType.Map) parseExamples(parsed, value.as[YMap])
+
     parsed
   }
 
@@ -457,8 +470,8 @@ sealed abstract class RamlTypeParser(ast: YPart,
         node.toOption[YMap].flatMap(m => m.key("format").orElse(m.key("(format)")).map(_.value.toString())),
         defaultType)
     val result = info.map {
-      case XMLSchemaType                         => parseXMLSchemaExpression(name, node, adopt)
-      case JSONSchemaType                        => parseJSONSchemaExpression(name, node, adopt)
+      case XMLSchemaType                         => parseXMLSchemaExpression(name, node, adopt, parseExample = true)
+      case JSONSchemaType                        => parseJSONSchemaExpression(name, node, adopt, parseExample = true)
       case TypeExpressionType                    => parseTypeExpression()
       case UnionType                             => parseUnionType()
       case ObjectType | FileType | UndefinedType => parseObjectType()
@@ -629,22 +642,17 @@ sealed abstract class RamlTypeParser(ast: YPart,
     }
   }
 
-  abstract class AnyShapeParser() extends ShapeParser {
+  abstract class AnyShapeParser() extends ShapeParser with ExampleParser {
 
     override val shape: AnyShape
     val options: ExampleOptions = DefaultExampleOptions
 
     override def parse(): AnyShape = {
       super.parse()
-      parseExamples()
+      parseExamples(shape, map, options)
       shape
     }
 
-    protected def parseExamples(): Unit = {
-      val examples = RamlExamplesParser(map, "example", "examples", shape.withExample, options).parse()
-      if (examples.nonEmpty)
-        shape.setArray(AnyShapeModel.Examples, examples)
-    }
   }
 
   case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap)

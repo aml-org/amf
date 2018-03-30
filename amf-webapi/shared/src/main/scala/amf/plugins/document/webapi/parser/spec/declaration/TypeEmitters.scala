@@ -149,9 +149,9 @@ case class Raml10TypeEmitter(shape: AnyShape,
     shape match {
       case _ if Option(shape).isDefined && shape.fromTypeExpression => Seq(RamlTypeExpressionEmitter(shape))
       case l: Linkable if l.isLink                                  => Seq(spec.localReference(shape))
-      case schema: SchemaShape                                      => Seq(RamlSchemaShapeEmitter(schema))
+      case schema: SchemaShape                                      => Seq(RamlSchemaShapeEmitter(schema, ordering, references))
       case node: NodeShape if node.annotations.find(classOf[ParsedJSONSchema]).isDefined =>
-        Seq(RamlJsonShapeEmitter(node))
+        Seq(RamlJsonShapeEmitter(node, ordering, references))
       case node: NodeShape =>
         val copiedNode = node.copy(fields = node.fields.filter(f => !ignored.contains(f._1)))
         RamlNodeShapeEmitter(copiedNode, ordering, references).emitters()
@@ -262,11 +262,22 @@ abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references
   }
 }
 
-case class RamlJsonShapeEmitter(shape: Shape) extends PartEmitter {
+case class RamlJsonShapeEmitter(shape: AnyShape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit spec: SpecEmitterContext)
+  extends PartEmitter
+  with ExamplesEmitter {
+
   override def emit(b: PartBuilder): Unit = {
     shape.annotations.find(classOf[ParsedJSONSchema]) match {
-      case Some(json) => raw(b, json.rawText)
-      case None       => // Ignore
+      case Some(json) =>
+        if (shape.examples.nonEmpty) {
+          val results = mutable.ListBuffer[EntryEmitter]()
+          emitExamples(shape, results, ordering, references)
+          results += MapEntryEmitter("type", json.rawText)
+          b.obj(traverse(ordering.sorted(results), _))
+        } else {
+          raw(b, json.rawText)
+        }
+      case None => // Ignore
     }
   }
 
@@ -275,8 +286,20 @@ case class RamlJsonShapeEmitter(shape: Shape) extends PartEmitter {
   }
 }
 
-case class RamlSchemaShapeEmitter(shape: SchemaShape) extends PartEmitter {
-  override def emit(b: PartBuilder): Unit = raw(b, shape.raw.value())
+case class RamlSchemaShapeEmitter(shape: SchemaShape, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit spec: SpecEmitterContext) extends PartEmitter {
+  override def emit(b: PartBuilder): Unit = {
+    if (shape.examples.nonEmpty) {
+      val fs     = shape.fields
+      val result = mutable.ListBuffer[EntryEmitter]()
+      result ++= RamlAnyShapeEmitter(shape, ordering, references).emitters()
+      fs.entry(SchemaShapeModel.Raw).foreach { f =>
+        result += ValueEmitter("type", f)
+      }
+      b.obj(traverse(ordering.sorted(result), _))
+    } else {
+      raw(b, shape.raw.value())
+    }
+  }
 
   override def position(): Position = pos(shape.annotations)
 }
@@ -433,12 +456,8 @@ object RamlAnyShapeEmitter {
     new RamlAnyShapeEmitter(shape, ordering, references)(spec)
 }
 
-class RamlAnyShapeEmitter(shape: AnyShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: SpecEmitterContext)
-    extends RamlShapeEmitter(shape, ordering, references) {
-  override def emitters(): Seq[EntryEmitter] = {
-    var results = ListBuffer(super.emitters(): _*)
-
+trait ExamplesEmitter {
+  def emitExamples(shape: AnyShape, results: ListBuffer[EntryEmitter], ordering: SpecOrdering, references: Seq[BaseUnit])(implicit spec: SpecEmitterContext): Unit = {
     shape.fields
       .entry(AnyShapeModel.Examples)
       .map(f => {
@@ -449,10 +468,21 @@ class RamlAnyShapeEmitter(shape: AnyShape, ordering: SpecOrdering, references: S
           results += SingleExampleEmitter("example", a, ordering)
         }
         results += MultipleExampleEmitter("examples",
-                                          named ++ (if (anonymous.lengthCompare(1) > 0) examples.tail else None),
-                                          ordering,
-                                          references)
+          named ++ (if (anonymous.lengthCompare(1) > 0) examples.tail else None),
+          ordering,
+          references)
       })
+  }
+}
+
+class RamlAnyShapeEmitter(shape: AnyShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: SpecEmitterContext)
+    extends RamlShapeEmitter(shape, ordering, references)
+    with ExamplesEmitter {
+  override def emitters(): Seq[EntryEmitter] = {
+    var results = ListBuffer(super.emitters(): _*)
+
+    emitExamples(shape, results, ordering, references)
 
     results
   }
@@ -468,24 +498,11 @@ object RamlAnyShapeInstanceEmitter {
 
 class RamlAnyShapeInstanceEmitter(shape: AnyShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: SpecEmitterContext)
-    extends RamlShapeEmitter(shape, ordering, references) {
+    extends RamlShapeEmitter(shape, ordering, references) with ExamplesEmitter {
   override def emitters(): Seq[EntryEmitter] = {
     var results = ListBuffer(super.emitters(): _*)
 
-    shape.fields
-      .entry(AnyShapeModel.Examples)
-      .map(f => {
-        val (anonymous, named) =
-          shape.examples.partition(e => !e.fields.fieldsMeta().contains(ExampleModel.Name) && !e.isLink)
-        val examples = f.array.values.collect({ case e: Example => e })
-        anonymous.headOption.foreach { a =>
-          results += SingleExampleEmitter("example", a, ordering)
-        }
-        results += MultipleExampleEmitter("examples",
-                                          named ++ (if (anonymous.lengthCompare(1) > 0) examples.tail else None),
-                                          ordering,
-                                          references)
-      })
+    emitExamples(shape, results, ordering, references)
 
     if (!typeEmitted) {
       val entry = MapEntryEmitter("type", "any")
@@ -1484,9 +1501,9 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
 
           override def position(): Position = pos(union.annotations)
         })
-      case schema: SchemaShape => Seq(RamlSchemaShapeEmitter(schema))
-      case shape: Shape if shape.annotations.find(classOf[ParsedJSONSchema]).isDefined =>
-        Seq(RamlJsonShapeEmitter(shape))
+      case schema: SchemaShape => Seq(RamlSchemaShapeEmitter(schema, ordering, Nil))
+      case shape: AnyShape if shape.annotations.find(classOf[ParsedJSONSchema]).isDefined =>
+        Seq(RamlJsonShapeEmitter(shape, ordering, Nil))
       case nil: NilShape =>
         RamlNilShapeEmitter(nil, ordering, Seq()).emitters()
       case other =>

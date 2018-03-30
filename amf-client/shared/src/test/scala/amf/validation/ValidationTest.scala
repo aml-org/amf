@@ -976,7 +976,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Raml 0.8 Query Parameter Negative test case") {
-
     for {
       validation <- Validation(platform)
       library <- AMFCompiler(validationsPath + "/08/date-query-parameter.raml", platform, RamlYamlHint, validation)
