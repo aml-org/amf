@@ -378,6 +378,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  
+  test("Duplicated title property test") {
+    for {
+      validation <- Validation(platform)
+      library    <- AMFCompiler(validationsPath + "webapi/dup_title.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.head.message.contains("Property 'title' is duplicated"))
+    }
+  }
+
   test("Shape facets validations test") {
     for {
       validation <- Validation(platform)

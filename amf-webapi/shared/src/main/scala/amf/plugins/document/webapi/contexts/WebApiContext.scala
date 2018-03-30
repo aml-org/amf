@@ -6,7 +6,7 @@ import amf.core.remote._
 import amf.plugins.document.webapi.parser.spec.oas.{Oas2Syntax, Oas3Syntax}
 import amf.plugins.document.webapi.parser.spec.raml.{Raml08Syntax, Raml10Syntax}
 import amf.plugins.document.webapi.parser.spec.{SpecSyntax, WebApiDeclarations}
-import amf.plugins.features.validation.ParserSideValidations.ClosedShapeSpecification
+import amf.plugins.features.validation.ParserSideValidations.{ClosedShapeSpecification, DuplicatedPropertySpecification}
 import org.yaml.model._
 
 class Raml10WebApiContext(private val wrapped: ParserContext, private val ds: Option[WebApiDeclarations] = None)
@@ -176,8 +176,24 @@ abstract class WebApiContext(private val wrapped: ParserContext, private val ds:
   def link(node: YNode): Either[String, YNode]
   def ignore(shape: String, property: String): Boolean
 
+  def checkDuplicates(node: String, ast: YMap, shape: String, annotation: Boolean) = {
+    ast.entries.foldLeft(Set[String]()) { case (acc, entry) =>
+      acc.contains(entry.key.toString()) match {
+        case true =>
+          violation(DuplicatedPropertySpecification.id(),
+            node,
+            s"Property '${entry.key}' is duplicated",
+            entry)
+          acc
+        case false =>
+          acc ++ Set(entry.key.toString())
+      }
+    }
+  }
+
   /** Validate closed shape. */
   def closedShape(node: String, ast: YMap, shape: String, annotation: Boolean = false): Unit = {
+    checkDuplicates(node, ast, shape, annotation)
     syntax.nodes.get(shape) match {
       case Some(props) =>
         val properties = if (annotation) {
