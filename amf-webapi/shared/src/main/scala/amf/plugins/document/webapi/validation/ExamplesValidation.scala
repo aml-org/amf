@@ -3,8 +3,9 @@ package amf.plugins.document.webapi.validation
 import amf.core.annotations.LexicalInformation
 import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.model.domain.Shape
+import amf.core.parser.ParserContext
 import amf.core.remote.Platform
-import amf.core.services.{PayloadValidator, RuntimeValidator}
+import amf.core.services.{IgnoreValidationsMerger, PayloadValidator, RuntimeValidator}
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels}
 import amf.core.vocabulary.Namespace
 import amf.plugins.domain.shapes.metamodel.ExampleModel
@@ -22,8 +23,7 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
 
     // We run regular payload validation for the supported examples
     val results = examples map {
-      case (shape, example) =>
-        validateExample(shape, example)
+      case (shape, example) => validateExample(shape, example)
     }
 
     val futureResult: Future[Seq[AMFValidationResult]] = Future.sequence(results).map(_.flatten)
@@ -46,7 +46,7 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
   }
 
   protected def validateExample(shape: Shape, example: Example): Future[Seq[AMFValidationResult]] = {
-    RuntimeValidator.nestedValidation() {
+    RuntimeValidator.nestedValidation(IgnoreValidationsMerger) {
       try {
         shape match {
           case union: UnionShape =>
