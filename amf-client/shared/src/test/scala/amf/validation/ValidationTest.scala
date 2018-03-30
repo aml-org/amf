@@ -1157,6 +1157,23 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Invalid example no media types") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "/examples/example-no-media-type.raml",
+        platform,
+        RamlYamlHint,
+        validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.results.nonEmpty)
+      val results = report.results.filter(_.level == SeverityLevels.VIOLATION)
+      assert(results.length == 2)
+      assert(results.exists(_.message.contains("Invalid media type")))
+    }
+  }
+
   test("Valid examples validation over union shapes") {
     for {
       validation <- Validation(platform)
