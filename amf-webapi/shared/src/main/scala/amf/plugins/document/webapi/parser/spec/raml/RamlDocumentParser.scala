@@ -107,6 +107,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
     map.key(
       "mediaType",
       entry => {
+        ctx.globalMediatype = true
         val annotations = Annotations(entry)
         val value = entry.value.tagType match {
           case YType.Seq =>

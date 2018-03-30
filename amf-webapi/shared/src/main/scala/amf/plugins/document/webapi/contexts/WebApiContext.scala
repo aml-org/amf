@@ -27,6 +27,8 @@ abstract class RamlWebApiContext(private val wrapped: ParserContext, private val
     extends WebApiContext(wrapped, ds)
     with RamlSpecAwareContext {
 
+  var globalMediatype: Boolean = false
+
   override def link(node: YNode): Either[String, YNode] = {
     node match {
       case _ if isInclude(node) => Left(node.as[YScalar].text)
