@@ -8,6 +8,7 @@ import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecPar
 import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, DefaultType, NilDefaultType}
 import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Payload, Response}
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 import scala.collection.mutable
@@ -112,6 +113,13 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
                     val others = YMap(m.entries.filter(e => !e.key.as[YScalar].text.matches(".*/.*")))
                     if (others.entries.nonEmpty) {
                       if (payloads.isEmpty) {
+                        if (others.entries.map(_.key.as[YScalar].text) == List("example") && !ctx.globalMediatype) {
+                          ctx.violation(
+                            ParserSideValidations.ParsingErrorSpecification.id(),
+                            res.id,
+                            "Invalid media type",
+                            m)
+                        }
                         ctx.factory
                           .typeParser(entry, shape => shape.withName("default").adopted(res.id), false, defaultType)
                           .parse()
