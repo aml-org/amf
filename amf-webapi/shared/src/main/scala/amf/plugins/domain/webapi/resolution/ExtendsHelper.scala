@@ -7,11 +7,13 @@ import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
 import amf.core.model.domain.{AmfArray, DataNode, DomainElement, NamedDomainElement}
 import amf.core.parser.ParserContext
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolvedNamedEntity}
-import amf.core.services.RuntimeValidator
+import amf.core.services.{RuntimeValidator, ValidationsMerger}
+import amf.core.validation.AMFValidationResult
 import amf.plugins.document.webapi.annotations.ExtensionProvenance
 import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model._
 
 import scala.collection.mutable.ListBuffer
@@ -42,7 +44,12 @@ object ExtendsHelper {
     val entry = document.as[YMap].entries.head
     declarations(ctx, unit)
 
-    val operation: Operation = RuntimeValidator.nestedValidation() {  // we don't emit validation here, final result will be validated after merging
+    val mergeMissingSecuritySchemes = new ValidationsMerger {
+      override val parserRun: Int = ctx.parserCount
+      override def merge(result: AMFValidationResult): Boolean = result.validationId == ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id()
+    }
+
+    val operation: Operation = RuntimeValidator.nestedValidation(mergeMissingSecuritySchemes) {  // we don't emit validation here, final result will be validated after merging
       ctx.factory.operationParser(entry, _ => Operation(), true).parse()
     }
     if (keepEditingInfo) annotateExtensionId(operation, extensionId)
@@ -71,7 +78,11 @@ object ExtendsHelper {
 
     declarations(ctx, unit)
 
-    RuntimeValidator.nestedValidation() { // we don't emit validation here, final result will be validated after mergin
+    val mergeMissingSecuritySchemes = new ValidationsMerger {
+      override val parserRun: Int = ctx.parserCount
+      override def merge(result: AMFValidationResult): Boolean = result.validationId == ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id()
+    }
+    RuntimeValidator.nestedValidation(mergeMissingSecuritySchemes) { // we don't emit validation here, final result will be validated after mergin
       ctx.factory.endPointParser(endPointEntry, _ => EndPoint(), None, collector, true).parse()
     }
     collector.toList match {

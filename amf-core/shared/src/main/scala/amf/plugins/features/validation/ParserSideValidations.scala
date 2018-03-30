@@ -39,6 +39,14 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
+  val UnknownSecuritySchemeErrorSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "unknown-security-scheme").iri(),
+    "Cannot find the security scheme",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val DialectAmbiguousRangeSpecification = ValidationSpecification(
     (Namespace.AmfParser + "dialect-ambiguous-range").iri(),
     "Ambiguous entity range",
@@ -155,6 +163,11 @@ object ParserSideValidations {
       ProfileNames.OAS  -> SeverityLevels.WARNING,
       ProfileNames.AMF  -> SeverityLevels.WARNING
     ),
+    UnknownSecuritySchemeErrorSpecification.id() -> Map(
+      ProfileNames.RAML -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS  -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF  -> SeverityLevels.VIOLATION
+    ),
     ClosedShapeSpecification.id() -> Map(
       ProfileNames.RAML -> SeverityLevels.VIOLATION,
       ProfileNames.OAS  -> SeverityLevels.VIOLATION,
@@ -218,6 +231,7 @@ object ParserSideValidations {
   )
 
   def validations: List[ValidationSpecification] = List(
+    UnknownSecuritySchemeErrorSpecification,
     JsonSchemaInheratinaceWarningSpecification,
     InvalidTypeInheritanceErrorSpecification,
     ClosedShapeSpecification,

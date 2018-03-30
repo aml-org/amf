@@ -4,7 +4,7 @@ import amf.ProfileNames
 import amf.core.annotations.LexicalInformation
 import amf.core.model.document.BaseUnit
 import amf.core.plugins.{AMFFeaturePlugin, AMFPlugin}
-import amf.core.services.RuntimeValidator
+import amf.core.services.{IgnoreValidationsMerger, RuntimeValidator, ValidationsMerger}
 import amf.core.validation._
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationResult}
 
@@ -164,13 +164,26 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
     }
   }
 
-  override def nestedValidation[T]()(k: => T): T = {
-    val oldAggregatedReport = aggregatedReport
+  override def nestedValidation[T](merger: ValidationsMerger)(k: => T): T = {
+    var oldAggregatedReport = aggregatedReport.getOrElse(merger.parserRun, Nil)
     val oldEnabled = enabled
-    reset()
+
+    // reset
+    enabled = true
+    aggregatedReport = aggregatedReport.updated(merger.parserRun, Nil)
+
     val res = k
-    aggregatedReport = oldAggregatedReport
-    enabled = oldEnabled
+
+    // undo reset
+    if (merger.parserRun == IgnoreValidationsMerger.parserRun) {
+      aggregatedReport = aggregatedReport.updated(merger.parserRun, Nil) // clean the ignore merger validations
+    } else {
+      val toMerge = aggregatedReport.getOrElse(merger.parserRun, Nil).filter(merger.merge)
+      aggregatedReport = aggregatedReport.updated(merger.parserRun, oldAggregatedReport ++ toMerge)
+      enabled = oldEnabled
+    }
+
+
     res
   }
 }
