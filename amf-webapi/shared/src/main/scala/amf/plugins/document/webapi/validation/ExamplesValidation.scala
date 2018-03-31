@@ -3,13 +3,12 @@ package amf.plugins.document.webapi.validation
 import amf.core.annotations.LexicalInformation
 import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.model.domain.Shape
-import amf.core.parser.ParserContext
 import amf.core.remote.Platform
 import amf.core.services.{IgnoreValidationsMerger, PayloadValidator, RuntimeValidator}
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels}
 import amf.core.vocabulary.Namespace
 import amf.plugins.domain.shapes.metamodel.ExampleModel
-import amf.plugins.domain.shapes.models.{AnyShape, Example, UnionShape}
+import amf.plugins.domain.shapes.models.{AnyShape, Example}
 import amf.plugins.features.validation.ParserSideValidations
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -45,10 +44,10 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
     allExamples
   }
 
-  protected def validateExample(shape: Shape, example: Example): Future[Seq[AMFValidationResult]] = {
+  protected def validateExample(shape: Shape, example: Example): Future[Option[AMFValidationResult]] = {
     RuntimeValidator.nestedValidation(IgnoreValidationsMerger) {
       try {
-        validateShape(shape, example).map(_.toSeq)
+        validateShape(shape, example)
       } catch {
         case e: Exception => payloadParsingException(e, example)
       }
@@ -62,7 +61,7 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
       example.mediaType.option().getOrElse(PayloadValidator.guessMediaType(example.value.value())))
     fragment.withRaw(example.value.value())
     PayloadValidator.validate(shape, fragment, SeverityLevels.WARNING) map { report =>
-      if (report.results.isEmpty) { // before was conforms, now we have to considerer warnings for not supported plugin
+      if (report.results.isEmpty) { // before was conforms, now we have to considered warnings for not supported plugin
         None
       } else {
         val severity = findSeverity(report)
@@ -98,8 +97,8 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
     )
   }
 
-  protected def payloadParsingException(exception: Exception, example: Example): Future[Seq[AMFValidationResult]] = {
-    val promise = Promise[Seq[AMFValidationResult]]()
+  protected def payloadParsingException(exception: Exception, example: Example): Future[Option[AMFValidationResult]] = {
+    val promise = Promise[Option[AMFValidationResult]]()
     val validationResult = new AMFValidationResult(
       message = "Payload parsing validation error: " + exception.getMessage,
       level = SeverityLevels.VIOLATION,
@@ -109,7 +108,7 @@ class ExamplesValidation(model: BaseUnit, platform: Platform) {
       position = example.annotations.find(classOf[LexicalInformation]),
       source = example
     )
-    promise.success(Seq(validationResult))
+    promise.success(Some(validationResult))
     promise.future
   }
 
