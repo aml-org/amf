@@ -6,7 +6,7 @@ import amf.core.remote.RamlYamlHint
 import amf.core.validation.AMFValidationResult
 import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.features.validation.ParserSideValidations
-import org.scalatest.Matchers._
+import org.scalatest.Matchers.{startWith, _}
 import org.scalatest.{AsyncFunSuite, Succeeded}
 
 import scala.concurrent.ExecutionContext
@@ -85,6 +85,27 @@ class RamlParserErrorTest extends AsyncFunSuite with CompilerTestBuilder {
         tracks.level should be("Violation")
         tracks.message should be("Expecting !!str and !!seq provided")
         tracks.position.map(_.range) should be(Some(Range((120, 10), (120, 12))))
+      }
+    )
+  }
+
+  test("Inline external fragment from non mutable ref") {
+    validate(
+      "/inline-non-mutable-ref/api.raml",
+      invalidRef => {
+        invalidRef.level should be("Violation")
+        invalidRef.message should be("Cannot inline a fragment in a not mutable node")
+        invalidRef.position.map(_.range) should be(Some(Range((3, 8), (3, 17))))
+      },
+      invalidModule => {
+        invalidModule.level should be("Violation")
+        invalidModule.message should startWith("Expected module but found: ExternalFragment(")
+        invalidModule.position.map(_.range) should be(Some(Range((3, 2), (5, 0))))
+      },
+      unresolvedRef => {
+        unresolvedRef.level should be("Violation")
+        unresolvedRef.message should startWith("Unresolved reference 'lib1.B' from root context")
+        unresolvedRef.position.map(_.range) should be(Some(Range((9, 9), (9, 15))))
       }
     )
   }
