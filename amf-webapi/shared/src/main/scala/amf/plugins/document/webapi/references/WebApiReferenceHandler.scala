@@ -168,8 +168,8 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
                 r.refs.foreach { refContainer =>
                   refContainer.node match {
                     case mut: MutRef => mut.target = res.ast
-                    case _ =>
-                      throw new Exception("Damn it!") // todo: review this with pcolung, we forget to change it?
+                    case other =>
+                      ctx.violation("Cannot inline a fragment in a not mutable node", other)
                   }
                 // not meaning, only for collect all futures, not matter the type
                 }
