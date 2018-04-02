@@ -276,6 +276,7 @@ class LinkNode(var alias: String, var value: String, override val fields: Fields
 
   val Value: Field = Field(Str, Namespace.Data + "value")
   val Alias: Field = Field(Str, Namespace.Data + "alias")
+  var linkedDomainElement: Option[DomainElement] = None
 
   override def dynamicFields: List[Field] = List(Value) ++ DataNodeModel.fields
 
@@ -296,8 +297,14 @@ class LinkNode(var alias: String, var value: String, override val fields: Fields
 
     cloned.value = value
     cloned.alias = alias
+    cloned.linkedDomainElement = linkedDomainElement
 
     cloned
+  }
+
+  def withLinkedDomainElement(domainElement: DomainElement): LinkNode = {
+    linkedDomainElement = Some(domainElement)
+    this
   }
 }
 

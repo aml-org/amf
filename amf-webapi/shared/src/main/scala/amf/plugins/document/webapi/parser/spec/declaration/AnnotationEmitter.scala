@@ -15,6 +15,7 @@ import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YNode, YType}
 
+import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -101,7 +102,7 @@ abstract class FacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: S
   override def position(): Position = pos(shapeExtension.annotations)
 }
 
-case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering) extends PartEmitter {
+case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering, resolvedLinks: Boolean = false, referencesCollector: mutable.Map[String,DomainElement] = mutable.Map()) extends PartEmitter {
   private val xsdString: String  = (Namespace.Xsd + "string").iri()
   private val xsdInteger: String = (Namespace.Xsd + "integer").iri()
   private val xsdFloat: String   = (Namespace.Xsd + "float").iri()
@@ -135,7 +136,7 @@ case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering) extends P
 
   def objectEmitters(objectNode: ObjectNode): Seq[EntryEmitter] = {
     objectNode.properties.keys.map { property =>
-      DataPropertyEmitter(property, objectNode, ordering)
+      DataPropertyEmitter(property, objectNode, ordering, resolvedLinks, referencesCollector)
     }.toSeq
   }
 
@@ -143,7 +144,7 @@ case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering) extends P
     b.obj(b => ordering.sorted(objectEmitters(objectNode)).foreach(_.emit(b)))
   }
 
-  def arrayEmitters(arrayNode: ArrayNode): Seq[PartEmitter] = arrayNode.members.map(DataNodeEmitter(_, ordering))
+  def arrayEmitters(arrayNode: ArrayNode): Seq[PartEmitter] = arrayNode.members.map(DataNodeEmitter(_, ordering, resolvedLinks, referencesCollector))
 
   def emitArray(arrayNode: ArrayNode, b: PartBuilder): Unit = {
     b.list(b => {
@@ -158,8 +159,15 @@ case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering) extends P
   def emitLink(link: LinkNode, b: PartBuilder): Unit =
     linkEmitters(link).foreach(_.emit(b))
 
-  def linkEmitters(link: LinkNode): Seq[PartEmitter] =
-    Seq(LinkScalaEmitter(link.alias, link.annotations))
+  def linkEmitters(link: LinkNode): Seq[PartEmitter] = {
+    link.linkedDomainElement.foreach(elem => referencesCollector.update(link.alias, elem))
+    if (resolvedLinks) {
+      Seq(LinkScalaEmitter(link.alias, link.annotations))
+    } else {
+      Seq(LinkScalaEmitter(link.value, link.annotations))
+    }
+  }
+
 
   def scalarEmitter(scalar: ScalarNode): PartEmitter = {
     scalar.dataType match {
@@ -175,7 +183,7 @@ case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering) extends P
   override def position(): Position = pos(dataNode.annotations)
 }
 
-case class DataPropertyEmitter(property: String, dataNode: ObjectNode, ordering: SpecOrdering) extends EntryEmitter {
+case class DataPropertyEmitter(property: String, dataNode: ObjectNode, ordering: SpecOrdering, resolvedLinks: Boolean = false, referencesCollector: mutable.Map[String, DomainElement] = mutable.Map()) extends EntryEmitter {
   val annotations: Annotations = dataNode.propertyAnnotations(property)
   val propertyValue: DataNode  = dataNode.properties(property)
 
@@ -184,7 +192,7 @@ case class DataPropertyEmitter(property: String, dataNode: ObjectNode, ordering:
       property.urlDecoded,
       b => {
         // In the current implementation ther can only be one value, we are NOT flattening arrays
-        DataNodeEmitter(propertyValue, ordering).emit(b)
+        DataNodeEmitter(propertyValue, ordering, resolvedLinks, referencesCollector).emit(b)
       }
     )
   }

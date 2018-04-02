@@ -9,6 +9,17 @@ import amf.plugins.document.webapi.parser.spec.{SpecSyntax, WebApiDeclarations}
 import amf.plugins.features.validation.ParserSideValidations.{ClosedShapeSpecification, DuplicatedPropertySpecification}
 import org.yaml.model._
 
+class PayloadContext(private val wrapped: ParserContext, private val  ds: Option[WebApiDeclarations] = None) extends RamlWebApiContext(wrapped, ds) {
+  override protected def clone(declarations: WebApiDeclarations): RamlWebApiContext = {
+    new PayloadContext(wrapped, Some(declarations))
+  }
+  override val factory: RamlSpecVersionFactory = new Raml10VersionFactory()(this)
+  override val syntax: SpecSyntax = new SpecSyntax {
+    override val nodes: Map[String, Set[String]] = Map()
+  }
+  override val vendor: Vendor = Payload
+}
+
 class Raml10WebApiContext(private val wrapped: ParserContext, private val ds: Option[WebApiDeclarations] = None)
     extends RamlWebApiContext(wrapped, ds) {
   override val factory: RamlSpecVersionFactory = new Raml10VersionFactory()(this)
