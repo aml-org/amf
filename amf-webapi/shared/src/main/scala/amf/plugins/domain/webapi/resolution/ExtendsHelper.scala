@@ -80,10 +80,14 @@ object ExtendsHelper {
 
     val mergeMissingSecuritySchemes = new ValidationsMerger {
       override val parserRun: Int = ctx.parserCount
-      override def merge(result: AMFValidationResult): Boolean = result.validationId == ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id()
+      override def merge(result: AMFValidationResult): Boolean = {
+        result.validationId == ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id()
+      }
     }
     RuntimeValidator.nestedValidation(mergeMissingSecuritySchemes) { // we don't emit validation here, final result will be validated after mergin
-      ctx.factory.endPointParser(endPointEntry, _ => EndPoint(), None, collector, true).parse()
+      ctx.adapt(name) { ctxForTrait =>
+        ctxForTrait.factory.endPointParser(endPointEntry, _ => EndPoint().withId(extensionId + "/applied"), None, collector, true).parse()
+      }
     }
     collector.toList match {
       case e :: Nil =>

@@ -41,6 +41,14 @@ class ProductionResolutionTest extends RamlResolutionTest {
   ignore("API Console test api") {
     cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, basePath + "api-console/")
   }
+
+  test("test resource type") {
+    cycle("input.raml", "input.resolved.raml", RamlYamlHint, Raml,"amf-client/shared/src/test/resources/org/raml/api/v10/library-references-absolute/" )
+  }
+
+  test("test resource type non string scalar parameter example") {
+    cycle("input.raml", "input.resolved.raml", RamlYamlHint, Raml,"amf-client/shared/src/test/resources/org/raml/parser/resource-types/non-string-scalar-parameter/" )
+  }
 }
 
 class Raml08ResolutionTest extends RamlResolutionTest {
