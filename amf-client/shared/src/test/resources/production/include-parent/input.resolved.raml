@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: Including parent resources
+/blabla:
+  get:
+    responses:
+      400:
+        body:
+          application/json:
+            type: object
+            displayName: Platform Fault Datatype
+            additionalProperties: true
+            properties:
+              message:
+                required: true
+                type: string

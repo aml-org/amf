@@ -196,7 +196,7 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
           val node: DataNode = t.dataNode.cloneNode()
           node.replaceVariables(local.variables)
 
-          val op = ExtendsHelper.asOperation(profile, node, context.model, t.id, keepEditingInfo, Some(ctx(context.model.parserRun.get)))
+          val op = ExtendsHelper.asOperation(profile, node, context.model, t.name.option().getOrElse(""), t.id, keepEditingInfo, Some(ctx(context.model.parserRun.get)))
 
           val children = op.traits.map(resolve(_, context))
 

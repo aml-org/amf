@@ -13,9 +13,13 @@ import scala.collection.mutable
   * @param source the link node that has been resolved
   * @param resolved the piece of domain linked through the resolved link node
   */
-class ResolvedLinkNode(source: LinkNode, resolved: DomainElement)
+class ResolvedLinkNode(val source: LinkNode, val resolved: DomainElement)
 // resolved so alias -> value
-    extends LinkNode(source.value, source.value, source.fields, source.annotations)
+    extends LinkNode(source.value, source.value, source.fields, source.annotations) {
+  linkedDomainElement = Some(resolved)
+
+  override def cloneNode(): ResolvedLinkNode = new ResolvedLinkNode(source, resolved)
+}
 
 /**
   * Class to store the mapping of named assigned to the linked entity when resolved.
@@ -94,12 +98,21 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
     }
 
   def resolveDynamicLink(l: LinkNode): Option[DomainElement] = {
-    modelResolver.get.findFragment(l.value) match {
-      case Some(elem) =>
-        val resolved = new ResolvedLinkNode(l, elem).withId(l.id)
-        if (keepEditingInfo) resolved.annotations += ResolvedLinkAnnotation(l.id)
-        Some(resolved)
-      case _          => Some(l)
+    l match {
+      case r: ResolvedLinkNode => Some(r)
+      case _ =>
+        modelResolver.get.findFragment(l.value) match {
+          case Some(elem) =>
+            val resolved = new ResolvedLinkNode(l, elem).withId(l.id)
+            if (keepEditingInfo) resolved.annotations += ResolvedLinkAnnotation(l.id)
+            Some(resolved)
+          case None if l.linkedDomainElement.isDefined =>
+            val resolved = new ResolvedLinkNode(l, l.linkedDomainElement.get).withId(l.id)
+            if (keepEditingInfo) resolved.annotations += ResolvedLinkAnnotation(l.id)
+            Some(resolved)
+          case _          =>
+            Some(l)
+        }
     }
   }
 

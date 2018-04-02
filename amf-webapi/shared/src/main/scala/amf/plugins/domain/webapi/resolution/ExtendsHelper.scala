@@ -6,7 +6,6 @@ import amf.core.emitter.SpecOrdering
 import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
 import amf.core.model.domain.{AmfArray, DataNode, DomainElement, NamedDomainElement}
 import amf.core.parser.ParserContext
-import amf.core.parser.Position.ZERO
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolvedNamedEntity}
 import amf.core.services.{RuntimeValidator, ValidationsMerger}
 import amf.core.validation.AMFValidationResult
@@ -17,6 +16,7 @@ import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model._
 
+import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 object ExtendsHelper {
@@ -28,22 +28,25 @@ object ExtendsHelper {
   def asOperation[T <: BaseUnit](profile: String,
                                  node: DataNode,
                                  unit: T,
+                                 name: String,
                                  extensionId: String,
                                  keepEditingInfo: Boolean,
                                  context: Option[RamlWebApiContext] = None): Operation = {
     val ctx = context.getOrElse(custom(profile))
 
+    val referencesCollector = mutable.Map[String,DomainElement]()
     val document = YDocument {
       _.obj {
         _.entry(
           "extends",
-          DataNodeEmitter(node, SpecOrdering.Default).emit(_)
+          DataNodeEmitter(node, SpecOrdering.Default, resolvedLinks = true, referencesCollector).emit(_)
         )
       }
     }
 
     val entry = document.as[YMap].entries.head
     declarations(ctx, unit)
+    referencesCollector.foreach { case (alias,ref) => ctx.declarations.fragments += (alias -> ref) }
 
     val mergeMissingSecuritySchemes = new ValidationsMerger {
       override val parserRun: Int = ctx.parserCount
@@ -51,7 +54,9 @@ object ExtendsHelper {
     }
 
     val operation: Operation = RuntimeValidator.nestedValidation(mergeMissingSecuritySchemes) {  // we don't emit validation here, final result will be validated after merging
-      ctx.factory.operationParser(entry, _ => Operation(), true).parse()
+      ctx.adapt(name) { ctxForTrait =>
+        ctx.factory.operationParser(entry, _ => Operation(), true).parse()
+      }
     }
     checkNoNestedEndpoints(entry, ctx, node, extensionId)
 
@@ -87,11 +92,12 @@ object ExtendsHelper {
                                 context: Option[RamlWebApiContext] = None): EndPoint = {
     val ctx = context.getOrElse(custom(profile))
 
+    val referencesCollector = mutable.Map[String,DomainElement]()
     val document = YDocument {
       _.obj {
         _.entry(
           "/endpoint",
-          DataNodeEmitter(dataNode, SpecOrdering.Default).emit(_)
+          DataNodeEmitter(dataNode, SpecOrdering.Default, resolvedLinks = true, referencesCollector).emit(_)
         )
       }
     }
@@ -99,6 +105,7 @@ object ExtendsHelper {
     val collector     = ListBuffer[EndPoint]()
 
     declarations(ctx, unit)
+    referencesCollector.foreach { case (alias,ref) => ctx.declarations.fragments += (alias -> ref) }
 
     val mergeMissingSecuritySchemes = new ValidationsMerger {
       override val parserRun: Int = ctx.parserCount
