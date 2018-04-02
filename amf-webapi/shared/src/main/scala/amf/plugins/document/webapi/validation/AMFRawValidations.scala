@@ -37,6 +37,8 @@ object AMFRawValidations {
     "		AMF	Domain	schema-org:WebAPI	schema-org:provider	PropertyShape	sh:path	sh:maxCount	1	API provider must be a single value	Info object 'contact' must be a single value	Violation",
     "		AMF	Domain	schema-org:WebAPI	raml-http:endpoint	PropertyShape	sh:path	sh:class	raml-http:EndPoint	API paths must link Resources	Paths object must link PathItem objects	Violation",
     "		AMF	Domain	schema-org:WebAPI	raml-http:parameter	PropertyShape	sh:path	sh:class	raml-http:Parameter	API parameters must be valid parameters	Swagger object 'parameters' must be valid Parameter objects	Violation",
+    "		RAML	Domain	schema-org:CreativeWork	schema-org:title	PropertyShape	sh:path	sh:minCount	1	API documentation item title is mandatory	Documentation object 'x-title' is mandatory	Violation",
+    "		RAML	Domain	schema-org:CreativeWork	schema-org:description	PropertyShape	sh:path	sh:minCount	1	API documentation item content is mandatory	Documentation object 'description' is mandatory	Violation",
     "		AMF	Domain	schema-org:Organization	schema-org:url	PropertyShape	sh:path	sh:maxCount	1	API provider URL must be a single value	Contact object 'url' must be a single value	Violation",
     "		AMF	Domain	schema-org:Organization	schema-org:email	PropertyShape	sh:path	sh:datatype	xsd:string	API provider email must be a string	Contact object 'email' must be a string	Violation",
     "		AMF	Domain	schema-org:Organization	schema-org:email	PropertyShape	sh:path	sh:maxCount	1	API provider must be a single value	Contact object 'email' must be a single value	Violation",
