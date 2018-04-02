@@ -14,6 +14,9 @@ class Raml10WebApiContext(private val wrapped: ParserContext, private val ds: Op
   override val factory: RamlSpecVersionFactory = new Raml10VersionFactory()(this)
   override val vendor: Vendor                  = Raml10
   override val syntax: SpecSyntax              = Raml10Syntax
+
+  override protected def clone(declarations: WebApiDeclarations): RamlWebApiContext =
+    new Raml10WebApiContext(wrapped, Some(declarations))
 }
 
 class Raml08WebApiContext(private val wrapped: ParserContext, private val ds: Option[WebApiDeclarations] = None)
@@ -21,6 +24,9 @@ class Raml08WebApiContext(private val wrapped: ParserContext, private val ds: Op
   override val factory: RamlSpecVersionFactory = new Raml08VersionFactory()(this)
   override val vendor: Vendor                  = Raml08
   override val syntax: SpecSyntax              = Raml08Syntax
+
+  override protected def clone(declarations: WebApiDeclarations): RamlWebApiContext =
+    new Raml08WebApiContext(wrapped, Some(declarations))
 }
 
 abstract class RamlWebApiContext(private val wrapped: ParserContext, private val ds: Option[WebApiDeclarations] = None)
@@ -28,6 +34,31 @@ abstract class RamlWebApiContext(private val wrapped: ParserContext, private val
     with RamlSpecAwareContext {
 
   var globalMediatype: Boolean = false
+
+  protected def clone(declarations: WebApiDeclarations): RamlWebApiContext
+
+  /**
+    * Adapt this context for a nested library, used when evaluating resource type / traits
+    * Using a path to the library whose context is going to be looked up, e.g. lib.TypeA
+    */
+  def adapt[T](path: String)(k: RamlWebApiContext => T): T = {
+    val pathElements = path.split("\\.").dropRight(1)
+    val adaptedDeclarations = findDeclarations(pathElements, declarations)
+    k(clone(declarations.merge(adaptedDeclarations)))
+  }
+
+  protected def findDeclarations(path: Seq[String], declarations: WebApiDeclarations): WebApiDeclarations = {
+    if (path.isEmpty) {
+      declarations
+    } else {
+      val nextLibrary = path.head
+      declarations.libraries.get(nextLibrary) match {
+        case Some(library: WebApiDeclarations) =>
+          findDeclarations(path.tail, library)
+        case _ => throw new Exception(s"Cannot find declarations in context '${path.mkString(".")}")
+      }
+    }
+  }
 
   override def link(node: YNode): Either[String, YNode] = {
     node match {
