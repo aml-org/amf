@@ -82,37 +82,37 @@ resourceTypes:
         200:
           body:
             application/json:
-              #type: <<model>>[]
+              type: <<model>>[]
     post:
       description: Create a new <<model>>
       responses:
         200:
           body:
             application/json:
-              #type: <<model>>
+              type: <<model>>
   member:
     is: [filter, expand, format, select]
     get:
-      #description: Read <<model>>
+      description: Read <<model>>
       responses:
         200:
           body:
             application/json:
-              #type: <<model>>
+              type: <<model>>
     delete:
-      #description: Delete <<model>>
+      description: Delete <<model>>
       responses:
         200:
           body:
             application/json:
-              #type: <<model>>
+              type: <<model>>
     put:
-      #description: Update <<model>>
+      description: Update <<model>>
       body:
         application/json:
-          #type: <<model>>
+          type: <<model>>
       responses:
         204:
           body:
             application/json:
-              #type: <<model>>
+              type: <<model>>

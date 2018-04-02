@@ -19,11 +19,12 @@ object VariableReplacer {
     s.value match {
       case VariableRegex(name, transformations) =>
         values.find(_.name == name) match {
-          case Some(Variable(_, _: ScalarNode)) =>
+          case Some(Variable(_, scalar: ScalarNode)) if scalar.dataType.isEmpty || scalar.dataType.get.endsWith("#string") =>
             s.value = VariableRegex.replaceAllIn(s.value, replaceMatch(values.map(v => v.name -> v.value).toMap)(_))
             s
           case Some(_) if transformations.nonEmpty =>
             throw new Exception(s"Cannot apply transformations '$transformations' to variable '$name'.")
+          case Some(Variable(_, scalar: ScalarNode))=> scalar
           case Some(Variable(_, node)) => node
           case None                    => throw new Exception(s"Cannot find variable '$name'.")
         }

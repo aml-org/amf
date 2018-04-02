@@ -1,0 +1,23 @@
+#%RAML 1.0
+title: Infer Level
+/levels:
+  /{level}:
+    put:
+      body:
+        application/json:
+          example: 80
+          type: number
+          minimum: 0
+          maximum: 100
+          format: int
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: 80
+              type: number
+              minimum: 0
+              maximum: 100
+              format: int
+    description: Entity representing a level
