@@ -6,6 +6,7 @@ import amf.core.emitter.SpecOrdering
 import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
 import amf.core.model.domain.{AmfArray, DataNode, DomainElement, NamedDomainElement}
 import amf.core.parser.ParserContext
+import amf.core.parser.Position.ZERO
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolvedNamedEntity}
 import amf.core.services.{RuntimeValidator, ValidationsMerger}
 import amf.core.validation.AMFValidationResult
@@ -52,8 +53,29 @@ object ExtendsHelper {
     val operation: Operation = RuntimeValidator.nestedValidation(mergeMissingSecuritySchemes) {  // we don't emit validation here, final result will be validated after merging
       ctx.factory.operationParser(entry, _ => Operation(), true).parse()
     }
+    checkNoNestedEndpoints(entry, ctx, node, extensionId)
+
     if (keepEditingInfo) annotateExtensionId(operation, extensionId)
     new ReferenceResolutionStage(profile, keepEditingInfo).resolveDomainElement(operation)
+  }
+
+  def checkNoNestedEndpoints(entry: YMapEntry, ctx: RamlWebApiContext, node: DataNode, extensionId: String) = {
+    entry.value.tagType match {
+      case YType.Map =>
+        entry.value.as[YMap].map.keySet.foreach { propertyNode =>
+          val property = propertyNode.as[YScalar].text
+          if (property.startsWith("/")) {
+            ctx.violation(
+              ParserSideValidations.ParsingErrorSpecification.id(),
+              extensionId,
+              None,
+              s"Nested endpoint in trait: '$property'",
+              node.annotations.find(classOf[LexicalInformation])
+            )
+          }
+        }
+      case _ => // ignore
+    }
   }
 
   def asEndpoint[T <: BaseUnit](unit: T,
