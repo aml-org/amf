@@ -1,10 +1,11 @@
 package amf.plugins.document.webapi.parser.spec.common
 
-import amf.core.model.document.ExternalFragment
+import amf.core.model.document.{EncodesModel, ExternalFragment}
 import amf.core.model.domain.{DataNode, LinkNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
+import amf.plugins.document.webapi.contexts.WebApiContext
 import org.yaml.model._
 import org.yaml.parser.YamlParser
 
@@ -30,7 +31,7 @@ class IdCounter {
 case class DataNodeParser(node: YNode,
                           parameters: AbstractVariables = AbstractVariables(),
                           parent: Option[String] = None,
-                          idCounter: IdCounter = new IdCounter)(implicit ctx: ParserContext) {
+                          idCounter: IdCounter = new IdCounter)(implicit ctx: WebApiContext) {
   def parse(): DataNode = {
     node.tag.tagType match {
       case YType.Str =>
@@ -69,8 +70,15 @@ case class DataNodeParser(node: YNode,
           case Some(ref) if ref.unit.isInstanceOf[ExternalFragment] =>
             val includedText = ref.unit.asInstanceOf[ExternalFragment].encodes.raw.value()
             parseIncludedAST(includedText)
+          case Some(ref) if ref.unit.isInstanceOf[EncodesModel] =>
+            parseLink(reference.text).withLinkedDomainElement(ref.unit.asInstanceOf[EncodesModel].encodes)
           case _ =>
-            parseLink(reference.text)
+            ctx.declarations.fragments.get(reference.text) match {
+              case Some(domainElement) =>
+                parseLink(reference.text).withLinkedDomainElement(domainElement)
+              case _ =>
+                parseLink(reference.text)
+            }
         }
       case _ =>
         parseLink(node.value.toString)
