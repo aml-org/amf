@@ -7,6 +7,7 @@ import amf.core.parser.{ParserContext, SimpleReferenceHandler}
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.remote.Platform
 import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.plugins.document.webapi.contexts.{PayloadContext, WebApiContext}
 import amf.plugins.document.webapi.parser.PayloadParser
 import amf.plugins.document.webapi.resolution.pipelines.CanonicalShapePipeline
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
@@ -39,7 +40,7 @@ object PayloadPlugin extends AMFDocumentPlugin {
   )
 
   override def parse(root: Root, parentContext: ParserContext, platform: Platform) = {
-    implicit val ctx = parentContext
+    implicit val ctx = new PayloadContext(parentContext)
     Some(PayloadParser(root.parsed.document, root.location, root.mediatype).parseUnit())
   }
 

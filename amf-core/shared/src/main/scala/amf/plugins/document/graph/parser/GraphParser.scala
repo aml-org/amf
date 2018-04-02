@@ -33,10 +33,10 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
   }
 
   case class Parser(var nodes: Map[String, AmfElement]) {
-    private val unresolvedReferences = mutable.Map[String, Seq[DomainElement with Linkable]]()
-    private val referencesMap        = mutable.Map[String, DomainElement with Linkable]()
+    private val unresolvedReferences = mutable.Map[String, Seq[DomainElement]]()
+    private val referencesMap        = mutable.Map[String, DomainElement]()
 
-    val dynamicGraphParser = new DynamicGraphParser(nodes)
+    val dynamicGraphParser = new DynamicGraphParser(nodes, referencesMap, unresolvedReferences)
 
     def parse(document: YDocument, location: String): BaseUnit = {
       val maybeMaps        = document.node.toOption[Seq[YMap]]
@@ -142,8 +142,12 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
       instance match {
         case link: DomainElement with Linkable =>
           referencesMap += (link.id -> link)
-          unresolvedReferences.getOrElse(link.id, Nil).foreach { unresolved: Linkable =>
-            unresolved.linkTarget = Some(link)
+          unresolvedReferences.getOrElse(link.id, Nil).foreach {
+            case unresolved: Linkable =>
+              unresolved.linkTarget = Some(link)
+            case unresolved: LinkNode =>
+              unresolved.withLinkedDomainElement(link)
+            case _ => throw new Exception("Only linkable elements can be linked")
           }
           unresolvedReferences.update(link.id, Nil)
         case _ => // ignore
@@ -154,7 +158,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
       referencesMap.get(targetId) match {
         case Some(target) => instance.linkTarget = Some(target)
         case None =>
-          val unresolved: Seq[DomainElement with Linkable] = unresolvedReferences.getOrElse(targetId, Nil)
+          val unresolved: Seq[DomainElement] = unresolvedReferences.getOrElse(targetId, Nil)
           unresolvedReferences += (targetId -> (unresolved ++ Seq(instance)))
       }
     }

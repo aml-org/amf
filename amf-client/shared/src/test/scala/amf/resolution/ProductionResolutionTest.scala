@@ -49,6 +49,10 @@ class ProductionResolutionTest extends RamlResolutionTest {
   test("test resource type non string scalar parameter example") {
     cycle("input.raml", "input.resolved.raml", RamlYamlHint, Raml,"amf-client/shared/src/test/resources/org/raml/parser/resource-types/non-string-scalar-parameter/" )
   }
+
+  test("test problem inclusion parent test") {
+    cycle("input.raml", "input.resolved.raml", RamlYamlHint, Raml,basePath + "include-parent/" )
+  }
 }
 
 class Raml08ResolutionTest extends RamlResolutionTest {

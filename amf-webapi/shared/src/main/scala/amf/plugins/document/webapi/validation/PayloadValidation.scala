@@ -4,11 +4,15 @@ import amf.core.model.document.PayloadFragment
 import amf.core.model.domain._
 import amf.core.parser.ParserContext
 import amf.core.plugins.{AMFPayloadValidationPlugin, AMFPlugin}
+import amf.core.remote.{Raml, Vendor}
 import amf.core.services.RuntimeValidator
 import amf.core.validation.core.ValidationSpecification
 import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels}
 import amf.core.vocabulary.Namespace
+import amf.plugins.document.webapi.contexts.{PayloadContext, Raml10VersionFactory, SpecVersionFactory, WebApiContext}
+import amf.plugins.document.webapi.parser.spec.{SpecSyntax, WebApiDeclarations}
 import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
+import amf.plugins.document.webapi.parser.spec.raml.Raml10Syntax
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
 import org.yaml.model.{YDocument, YNode}
 import org.yaml.parser.YamlParser
@@ -118,12 +122,14 @@ object PayloadValidatorPlugin extends AMFPayloadValidationPlugin {
 
   override val payloadMediaType: Seq[String] = Seq("application/json", "application/yaml", "text/vnd.yaml")
 
+  val defaultCtx = new PayloadContext(ParserContext())
+
   override def validatePayload(shape: Shape, payload: String, mediaType: String): Future[AMFValidationReport] = {
     val fragment = PayloadFragment().withMediaType(mediaType)
 
     YamlParser(payload).parse(keepTokens = true).collectFirst({ case doc: YDocument => doc.node }) match {
       case Some(node: YNode) =>
-        fragment.withEncodes(DataNodeParser(node, parent = Option(fragment.id))(ParserContext()).parse())
+        fragment.withEncodes(DataNodeParser(node, parent = Option(fragment.id))(defaultCtx).parse())
       case None => fragment.withEncodes(ScalarNode(payload, None))
     }
     validatePayload(shape, fragment)
