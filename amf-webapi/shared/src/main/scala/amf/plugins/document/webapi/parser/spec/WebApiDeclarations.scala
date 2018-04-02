@@ -22,10 +22,10 @@ import org.yaml.model.YPart
   * Declarations object.
   */
 class WebApiDeclarations(alias: Option[String],
-                         libs: Map[String, WebApiDeclarations] = Map(),
-                         frags: Map[String, DomainElement] = Map(),
+                         var libs: Map[String, WebApiDeclarations] = Map(),
+                         var frags: Map[String, DomainElement] = Map(),
                          var shapes: Map[String, Shape] = Map(),
-                         anns: Map[String, CustomDomainProperty] = Map(),
+                         var anns: Map[String, CustomDomainProperty] = Map(),
                          var resourceTypes: Map[String, ResourceType] = Map(),
                          var parameters: Map[String, Parameter] = Map(),
                          var payloads: Map[String, Payload] = Map(),
@@ -35,6 +35,35 @@ class WebApiDeclarations(alias: Option[String],
                          errorHandler: Option[ErrorHandler],
                          futureDeclarations: FutureDeclarations)
     extends Declarations(libs, frags, anns, errorHandler, futureDeclarations = futureDeclarations) {
+
+  def merge(other: WebApiDeclarations): WebApiDeclarations = {
+   val merged = new WebApiDeclarations(alias = alias, errorHandler = errorHandler, futureDeclarations = EmptyFutureDeclarations())
+    libs.foreach { case (k,s) => merged.libs += (k -> s) }
+    other.libs.foreach { case (k,s) => merged.libs += (k -> s) }
+    frags.foreach { case (k,s) => merged.frags += (k -> s) }
+    other.frags.foreach { case (k,s) => merged.frags += (k -> s) }
+    libraries.foreach { case (k,s) => merged.libraries += (k -> s) }
+    other.libraries.foreach { case (k,s) => merged.libraries += (k -> s) }
+    fragments.foreach { case (k,s) => merged.fragments += (k -> s) }
+    other.fragments.foreach { case (k,s) => merged.fragments += (k -> s) }
+    shapes.foreach { case (k, s) => merged.shapes += (k -> s)}
+    other.shapes.foreach { case (k, s) => merged.shapes += (k -> s)}
+    anns.foreach { case (k, s) => merged.anns += (k -> s)}
+    other.anns.foreach { case (k, s) => merged.anns += (k -> s)}
+    resourceTypes.foreach { case (k, s) => merged.resourceTypes += (k -> s)}
+    other.resourceTypes.foreach { case (k, s) => merged.resourceTypes += (k -> s)}
+    parameters.foreach { case (k, s) => merged.parameters += (k -> s)}
+    other.parameters.foreach { case (k, s) => merged.parameters += (k -> s)}
+    payloads.foreach { case (k, s) => merged.payloads += (k -> s)}
+    other.payloads.foreach { case (k, s) => merged.payloads += (k -> s)}
+    traits.foreach { case (k, s) => merged.traits += (k -> s)}
+    other.traits.foreach { case (k, s) => merged.traits += (k -> s)}
+    securitySchemes.foreach { case (k, s) => merged.securitySchemes += (k -> s)}
+    other.securitySchemes.foreach { case (k, s) => merged.securitySchemes += (k -> s)}
+    responses.foreach { case (k, s) => merged.responses += (k -> s)}
+    other.responses.foreach { case (k, s) => merged.responses += (k -> s)}
+    merged
+  }
 
   override def +=(element: DomainElement): WebApiDeclarations = {
     element match {

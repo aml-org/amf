@@ -41,6 +41,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   val productionPath   = "file://amf-client/shared/src/test/resources/production/"
   val validationsPath  = "file://amf-client/shared/src/test/resources/validations/"
   val upDownPath       = "file://amf-client/shared/src/test/resources/upanddown/"
+  val parserPath       = "file://amf-client/shared/src/test/resources/org/raml/parser/"
 
   private def cycle(exampleFile: String, hint: Hint, syntax: Syntax, target: Vendor): Future[String] = {
     Validation(platform).flatMap(v => {
@@ -1258,7 +1259,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         .build()
       report <- validation.validate(library, ProfileNames.RAML)
     } yield {
-      println(report)
       assert(!report.conforms)
     }
   }
@@ -1272,6 +1272,30 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       assert(report.results.exists(_.message.contains("API name must not be an empty string")))
       assert(!report.conforms)
+    }
+  }
+
+  test("Test resource type invalid examples args validation") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(productionPath + "/parameterized-references/input.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.results.length == 4)
+      assert(report.results.exists(_.message.contains("must be within")))
+      assert(!report.conforms)
+    }
+  }
+
+  test("Test resource type non string scalar parameter example") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(parserPath + "resource-types/non-string-scalar-parameter/input.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
     }
   }
 }
