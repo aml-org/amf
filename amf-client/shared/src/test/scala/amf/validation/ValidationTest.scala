@@ -1299,15 +1299,28 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+
   test("Invalid key in trait test") {
     for {
       validation <- Validation(platform)
-      library    <- AMFCompiler(validationsPath + "/traits/trait1.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(library, ProfileNames.RAML)
+      library <- AMFCompiler(validationsPath + "/traits/trait1.raml", platform, RamlYamlHint, validation).build()
+      report <- validation.validate(library, ProfileNames.RAML)
     } yield {
       assert(!report.conforms)
       assert(report.results.length == 1)
       assert(report.results.exists(_.message.contains("Nested endpoint in trait")))
+    }
+  }
+
+  test("Mandatory RAML documentation properties test") {
+    for {
+      validation <- Validation(platform)
+      library    <- AMFCompiler(validationsPath + "/documentation/api.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 2)
+      assert(report.results.exists(_.message.contains("documentation item")))
     }
   }
 }
