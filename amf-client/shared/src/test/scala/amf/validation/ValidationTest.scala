@@ -1345,4 +1345,16 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.exists(_.message.contains("documentation item")))
     }
   }
+
+  test("Invalid path template syntax text") {
+    for {
+      validation <- Validation(platform)
+      doc        <- AMFCompiler(validationsPath + "production/unbalanced_paths.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 2)
+      assert(report.results.exists(_.message.contains("Invalid path template syntax")))
+    }
+  }
 }

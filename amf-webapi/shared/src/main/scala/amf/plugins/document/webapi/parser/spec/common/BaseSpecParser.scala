@@ -9,6 +9,7 @@ import amf.core.parser._
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.RamlScalarNode.collectDomainExtensions
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model._
 
 import scala.collection.mutable.ListBuffer
@@ -16,6 +17,20 @@ import scala.collection.mutable.ListBuffer
 trait WebApiBaseSpecParser extends BaseSpecParser with SpecParserOps
 
 trait SpecParserOps {
+
+  protected def checkBalancedParams(path: String, value: YNode, node: String, property: String, ctx: WebApiContext) = {
+    val pattern1 = "\\{[^\\}]*\\{".r
+    val pattern2 = "\\}[^\\{]*\\}".r
+    if (pattern1.findFirstMatchIn(path).nonEmpty || pattern2.findFirstMatchIn(path).nonEmpty) {
+      ctx.violation(
+        ParserSideValidations.PathTemplateUnbalancedParameters.id(),
+        node,
+        Some(property),
+        "Invalid path template syntax",
+        value
+      )
+    }
+  }
 
   class ObjectField(target: Target, field: Field)(implicit iv: WebApiContext) extends Function1[YMapEntry, Unit] {
 

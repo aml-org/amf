@@ -21,6 +21,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
 
         (ServerModel.Url in server).allowingAnnotations(entry)
 
+        checkBalancedParams(value, entry.value, server.id, ServerModel.Url.value.iri(), ctx)
         if (!TemplateUri.isValid(value))
           ctx.violation(api.id, TemplateUri.invalidMsg(value), entry.value)
 
