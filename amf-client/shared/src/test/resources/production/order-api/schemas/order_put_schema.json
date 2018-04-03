@@ -1,0 +1,101 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://jsonschema.net",
+  "type": "object",
+  "properties": {
+    "id": {
+      "id": "http://jsonschema.net/id",
+      "type": "string"
+    },
+    "userId": {
+      "id": "http://jsonschema.net/userId",
+      "type": "string"
+    },
+    "billingAddress": {
+      "id": "http://jsonschema.net/billingAddress",
+      "type": "object",
+      "properties": {
+        "address1": {
+          "id": "http://jsonschema.net/billingAddress/address1",
+          "type": "string"
+        },
+        "address2": {
+          "id": "http://jsonschema.net/billingAddress/address2",
+          "type": "string"
+        },
+        "city": {
+          "id": "http://jsonschema.net/billingAddress/city",
+          "type": "string"
+        },
+        "state": {
+          "id": "http://jsonschema.net/billingAddress/state",
+          "type": "string"
+        },
+        "postalCode": {
+          "id": "http://jsonschema.net/billingAddress/postalCode",
+          "type": "string"
+        },
+        "country": {
+          "id": "http://jsonschema.net/billingAddress/country",
+          "type": "string"
+        }
+      }
+    },
+    "payment": {
+      "id": "http://jsonschema.net/payment",
+      "type": "object",
+      "properties": {
+        "name": {
+          "id": "http://jsonschema.net/payment/name",
+          "type": "string"
+        },
+        "number": {
+          "id": "http://jsonschema.net/payment/number",
+          "type": "string"
+        },
+        "type": {
+          "id": "http://jsonschema.net/payment/type",
+          "type": "string"
+        }
+      }
+    },
+    "products": {
+      "id": "http://jsonschema.net/products",
+      "type": "array",
+      "items": {
+        "id": "http://jsonschema.net/products/0",
+        "type": "object",
+        "properties": {
+          "id": {
+            "id": "http://jsonschema.net/products/0/id",
+            "type": "string"
+          },
+          "productName": {
+            "id": "http://jsonschema.net/products/0/productName",
+            "type": "string"
+          },
+          "quantity": {
+            "id": "http://jsonschema.net/products/0/quantity",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "status": {
+      "id": "http://jsonschema.net/status",
+      "type": "string"
+    },
+    "price": {
+      "id": "http://jsonschema.net/price",
+      "type": "string"
+    },
+    "creationDate": {
+      "id": "http://jsonschema.net/creationDate",
+      "type": "string"
+    },
+    "trackingNumber": {
+      "id": "http://jsonschema.net/trackingNumber",
+      "type": "string"
+    }
+  }
+}

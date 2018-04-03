@@ -1,0 +1,85 @@
+#%RAML 1.0
+title: HTTP Bin
+baseUri: https://httpbin.org/
+
+types:
+  SlidesListResult:
+    schema: !include get-slides.xsd
+
+  JsonPostRequest:
+    type: object
+    properties:
+      formKeyString: string
+      formKeyBoolean: boolean
+      formKeyNumber: integer
+
+  JsonPostResult:
+    type: object
+    properties:
+      args:
+        type: object
+        properties:
+          queryParam1: string
+          queryParam2?: string
+          queryParam3?: string
+      data: string
+      files: object
+      form:
+        type: object
+        properties:
+          formKeyString: string
+          formKeyBoolean: boolean
+          formKeyNumber: integer
+      headers: object
+      json: object
+      origin: string
+      url: string
+
+  JsonGetResult:
+    schema: !include get-json.json
+
+
+/xml:
+  get:
+    responses:
+      200:
+        body:
+          application/xml:
+            type: SlidesListResult
+/get:
+  get:
+    headers:
+      Authorization:
+        type: string
+        required: true
+      Accept:
+        type: array
+      Host:
+        type: string
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+            type: JsonGetResult
+
+/post:
+  post:
+    queryParameters:
+      queryParam1:
+        type: string
+        required: true
+      queryParam2:
+        type: string
+        required: false
+      queryParam3:
+        type: string
+        required: false
+    body:
+      application/json:
+        type: JsonPostRequest
+    responses:
+      200:
+        body:
+          application/json:
+            type: JsonPostResult

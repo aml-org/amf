@@ -848,7 +848,7 @@ case class RamlTupleItemsShapeEmitter(tuple: TupleShape, ordering: SpecOrdering,
     ) */
   }
 
-  override def position(): Position = pos(tuple.fields.getValue(ArrayShapeModel.Items).annotations)
+  override def position(): Position = pos(tuple.fields.getValue(TupleShapeModel.TupleItems).annotations)
 }
 
 case class RamlPropertiesShapeEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(

@@ -1,0 +1,165 @@
+#%RAML 1.0
+title: Customer System API
+version: 4.0
+baseUri: https://localhost:8081/api
+mediaType: [ application/json ]
+
+types:
+  error:
+    properties:
+      message: string
+      code?: string
+
+  address:
+    properties:
+      address?:
+        type: array
+        items: string
+        minItems: 1
+      city?: string
+      state?: string
+      postalCode?: string
+      country?:
+        type: string
+        displayName: Country Name
+        description: Country Name
+
+  customer:
+    properties:
+      id?:
+        type: string
+      customerName:
+        type: string
+      phone:
+        type: string
+      email:
+        type: string
+      billingAddress?:
+        type: address
+      shippingAddress?:
+        type: address
+
+  seller:
+    properties:
+      id?:
+        type: string
+      sellerName:
+        type: string
+      phone:
+        type: string
+      email:
+        type: string
+
+/customer:
+  displayName: Customers
+  description: |
+    Working with customers:
+    * Retrieving all customers
+    * Creating customers
+  get:
+    description: |
+      Retrieve all the Customers.
+    queryParameters:
+      email:
+        displayName: The account email address
+        minLength: 0
+        maxLength: 255
+        required: false
+      date:
+        type: datetime
+    responses:
+      200:
+        body:
+          application/json:
+            type: customer[]
+  post:
+    description: |
+      Create a new Customer
+    body:
+      application/json:
+        type: customer
+    responses:
+      201:
+        description: Created
+        body:
+          application/json:
+  /{id}:
+    displayName: Customer ID
+    uriParameters:
+      id:
+        type: number
+        example: 4.3
+        description: Represents the customer unique id
+    get:
+      description: Get Customer by ID
+      headers:
+        GET-TYPES:
+          type: array
+        Accept:
+          type: string
+      responses:
+        400:
+          body:
+            application/json:
+              type: error
+              example: |
+                {
+                  "message": "Bad message"
+                }
+        200:
+          body:
+            application/json:
+              type: customer
+        404:
+          body:
+            application/json:
+              type: error
+              example: |
+                {
+                  "message": "Resource not found"
+                }
+    put:
+      body:
+        application/json:
+          type: customer
+      responses:
+        204:
+    delete:
+      responses:
+        204:
+
+/person:
+  displayName: Person
+  /{id}:
+    displayName: Person ID
+    uriParameters:
+      id:
+        type: number
+        example: 4.3
+        description: Represents the person unique id
+    get:
+      description: Get person by ID
+      queryParameters:
+        names:
+          type: array
+      responses:
+        400:
+          body:
+            application/json:
+              type: error
+              example: |
+                {
+                  "message": "Bad message"
+                }
+        200:
+          body:
+            application/json:
+              type: customer | seller
+        404:
+          body:
+            application/json:
+              type: error
+              example: |
+                {
+                  "message": "Resource not found"
+                }
