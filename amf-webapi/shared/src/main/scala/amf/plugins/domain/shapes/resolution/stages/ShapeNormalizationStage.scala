@@ -106,14 +106,17 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean)
 
   protected def expandMatrix(matrix: MatrixShape): MatrixShape = {
     val oldItems = matrix.fields.getValue(MatrixShapeModel.Items)
-    matrix.fields.setWithoutId(MatrixShapeModel.Items, expand(matrix.items), oldItems.annotations)
+    if (Option(oldItems).isDefined)
+      matrix.fields.setWithoutId(MatrixShapeModel.Items, expand(matrix.items), oldItems.annotations)
     matrix
   }
 
   protected def expandTuple(tuple: TupleShape): TupleShape = {
-    val oldItems      = tuple.fields.getValue(ArrayShapeModel.Items)
-    val newItemShapes = tuple.items.map(shape => expand(shape))
-    tuple.setArrayWithoutId(TupleShapeModel.Items, newItemShapes, oldItems.annotations)
+    val oldItems      = tuple.fields.getValue(TupleShapeModel.TupleItems)
+    if (Option(oldItems).isDefined) {
+      val newItemShapes = tuple.items.map(shape => expand(shape))
+      tuple.setArrayWithoutId(TupleShapeModel.TupleItems, newItemShapes, oldItems.annotations)
+    }
     tuple
   }
 
@@ -351,9 +354,9 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean)
     }
 
     if (acc.length == 1) {
-      tuple.fields.setWithoutId(TupleShapeModel.Items,
+      tuple.fields.setWithoutId(TupleShapeModel.TupleItems,
                                 AmfArray(acc.head),
-                                tuple.fields.getValue(TupleShapeModel.Items).annotations)
+                                tuple.fields.getValue(TupleShapeModel.TupleItems).annotations)
       tuple
     } else {
       val tuples = acc.map { items =>
