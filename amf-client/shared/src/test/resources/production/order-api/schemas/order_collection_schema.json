@@ -1,0 +1,131 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://jsonschema.net",
+  "type": "array",
+  "items": [
+    {
+      "id": "http://jsonschema.net/0",
+      "type": "object",
+      "properties": {
+        "id": {
+          "id": "http://jsonschema.net/0/id",
+          "type": "string"
+        },
+        "userId": {
+          "id": "http://jsonschema.net/0/userId",
+          "type": "string"
+        },
+        "billingAddress": {
+          "id": "http://jsonschema.net/0/billingAddress",
+          "type": "array",
+          "items": {
+            "id": "http://jsonschema.net/0/billingAddress/0",
+            "type": "object",
+            "properties": {
+              "address1": {
+                "id": "http://jsonschema.net/0/billingAddress/0/address1",
+                "type": "string"
+              },
+              "address2": {
+                "id": "http://jsonschema.net/0/billingAddress/0/address2",
+                "type": "string"
+              },
+              "city": {
+                "id": "http://jsonschema.net/0/billingAddress/0/city",
+                "type": "string"
+              },
+              "state": {
+                "id": "http://jsonschema.net/0/billingAddress/0/state",
+                "type": "string"
+              },
+              "postalCode": {
+                "id": "http://jsonschema.net/0/billingAddress/0/postalCode",
+                "type": "string"
+              },
+              "country": {
+                "id": "http://jsonschema.net/0/billingAddress/0/country",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "products": {
+          "id": "http://jsonschema.net/0/products",
+          "type": "array",
+          "items": [
+            {
+              "id": "http://jsonschema.net/0/products/0",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "id": "http://jsonschema.net/0/products/0/id",
+                  "type": "string"
+                },
+                "productName": {
+                  "id": "http://jsonschema.net/0/products/0/productName",
+                  "type": "string"
+                },
+                "quantity": {
+                  "id": "http://jsonschema.net/0/products/0/quantity",
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "id": "http://jsonschema.net/0/products/1",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "id": "http://jsonschema.net/0/products/1/id",
+                  "type": "string"
+                },
+                "productName": {
+                  "id": "http://jsonschema.net/0/products/1/productName",
+                  "type": "string"
+                },
+                "quantity": {
+                  "id": "http://jsonschema.net/0/products/1/quantity",
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "id": "http://jsonschema.net/0/products/2",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "id": "http://jsonschema.net/0/products/2/id",
+                  "type": "string"
+                },
+                "productName": {
+                  "id": "http://jsonschema.net/0/products/2/productName",
+                  "type": "string"
+                },
+                "quantity": {
+                  "id": "http://jsonschema.net/0/products/2/quantity",
+                  "type": "string"
+                }
+              }
+            }
+          ]
+        },
+        "status": {
+          "id": "http://jsonschema.net/0/status",
+          "type": "string"
+        },
+        "price": {
+          "id": "http://jsonschema.net/0/price",
+          "type": "string"
+        },
+        "creationDate": {
+          "id": "http://jsonschema.net/0/creationDate",
+          "type": "string"
+        },
+        "trackingNumber": {
+          "id": "http://jsonschema.net/0/trackingNumber",
+          "type": "string"
+        }
+      }
+    }
+  ]
+}

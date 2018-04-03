@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://jsonschema.net",
+  "type": "array",
+  "properties": {
+    "id": {
+      "id": "http://jsonschema.net/id",
+      "type": "string"
+    },
+    "price": {
+      "id": "http://jsonschema.net/price",
+      "type": "string"
+    },
+    "products": {
+      "id": "http://jsonschema.net/products",
+      "type": "array",
+      "items": {
+        "id": "http://jsonschema.net/products/0",
+        "type": "object",
+        "properties": {
+          "productId": {
+            "id": "http://jsonschema.net/products/0/productId",
+            "type": "string"
+          },
+          "quantity": {
+            "id": "http://jsonschema.net/products/0/quantity",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "status": {
+      "id": "http://jsonschema.net/status",
+      "type": "string"
+    },
+    "trackingNumber": {
+      "id": "http://jsonschema.net/trackingNumber",
+      "type": "string"
+    },
+    "userId": {
+      "id": "http://jsonschema.net/userId",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "price",
+    "products",
+    "status",
+    "trackingNumber",
+    "userId"
+  ]
+}

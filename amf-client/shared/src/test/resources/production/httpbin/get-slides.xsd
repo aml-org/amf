@@ -1,0 +1,26 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="slideshow">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="slide" maxOccurs="unbounded" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element type="xs:string" name="title"/>
+                            <xs:element name="item" maxOccurs="unbounded" minOccurs="0">
+                                <xs:complexType mixed="true">
+                                    <xs:sequence>
+                                        <xs:any minOccurs="0" namespace="##any" processContents="lax"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute type="xs:string" name="type" use="optional"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="title"/>
+            <xs:attribute type="xs:string" name="date"/>
+            <xs:attribute type="xs:string" name="author"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

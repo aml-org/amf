@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalogs xmlns="http://www.mulesoft.org/schema/mule/types" >
+
+    <catalog name="get-xmls-response-type" format="application/xml">
+        <schema format="application/xml+schema" location="./get-xmls-response-data-schema.xsd" />
+    </catalog>
+
+    <catalog name="get-gets-response-type" format="application/json">
+        <schema format="application/json+schema" location="./get-gets-response-data-schema.json" />
+    </catalog>
+
+    <catalog name="accept" format="application/json">
+        <schema format="application/json+schema" location="./accept-schema.json" />
+    </catalog>
+
+    <catalog name="create-post-request-type" format="application/json">
+        <schema format="application/json+schema" location="./create-post-request-data-schema.json" />
+    </catalog>
+
+    <catalog name="create-post-response-type" format="application/json">
+        <schema format="application/json+schema" location="./create-post-response-data-schema.json" />
+    </catalog>
+
+</catalogs>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module
+    name="bin"
+    prefix="bin"
+    namespace="http://www.mulesoft.org/schema/mule/bin"
+    xmlns="http://www.mulesoft.org/schema/mule/module"
+    xmlns:mule="http://www.mulesoft.org/schema/mule/core"
+    xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+    xmlns:http="http://www.mulesoft.org/schema/mule/http"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+           http://www.mulesoft.org/schema/mule/module http://www.mulesoft.org/schema/mule/module/current/mule-module.xsd
+           http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+           http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+
+    <property name="property_host" displayName="host" type="string" defaultValue="httpbin.org" summary="Host for consuming API"/>
+    <property name="property_port" displayName="port" type="string" defaultValue="443" summary="Port for consuming API"/>
+    <property name="property_basePath" displayName="basePath" type="string" summary="Basepath for consuming API"/>
+    <property name="property_protocol" displayName="protocol" type="string" defaultValue="HTTPS" summary="Protocol for consuming API"/>
+
+    <http:request-config name="bin-httpreq-config" basePath="#[vars.property_basePath]">
+        <http:request-connection host="#[vars.property_host]" protocol="#[vars.property_protocol]" port="#[vars.property_port]"></http:request-connection>
+    </http:request-config>
+
+    <operation name="get-xmls">
+        <body>
+            <http:request config-ref="bin-httpreq-config" path="/xml" method="GET">
+                <mule:error-mapping sourceType="HTTP:PARSING" targetType="BIN:PARSING" />
+                <mule:error-mapping sourceType="HTTP:TIMEOUT" targetType="BIN:TIMEOUT" />
+                <mule:error-mapping sourceType="HTTP:SECURITY" targetType="BIN:SECURITY" />
+                <mule:error-mapping sourceType="HTTP:CONNECTIVITY" targetType="BIN:CONNECTIVITY" />
+                <mule:error-mapping sourceType="HTTP:BAD_REQUEST" targetType="BIN:BAD_REQUEST" />
+                <mule:error-mapping sourceType="HTTP:UNAUTHORIZED" targetType="BIN:UNAUTHORIZED" />
+                <mule:error-mapping sourceType="HTTP:FORBIDDEN" targetType="BIN:FORBIDDEN" />
+                <mule:error-mapping sourceType="HTTP:METHOD_NOT_ALLOWED" targetType="BIN:METHOD_NOT_ALLOWED" />
+                <mule:error-mapping sourceType="HTTP:NOT_FOUND" targetType="BIN:NOT_FOUND" />
+                <mule:error-mapping sourceType="HTTP:NOT_ACCEPTABLE" targetType="BIN:NOT_ACCEPTABLE" />
+                <mule:error-mapping sourceType="HTTP:UNSUPPORTED_MEDIA_TYPE" targetType="BIN:UNSUPPORTED_MEDIA_TYPE" />
+                <mule:error-mapping sourceType="HTTP:TOO_MANY_REQUESTS" targetType="BIN:TOO_MANY_REQUESTS" />
+                <mule:error-mapping sourceType="HTTP:INTERNAL_SERVER_ERROR" targetType="BIN:INTERNAL_SERVER_ERROR" />
+                <mule:error-mapping sourceType="HTTP:SERVICE_UNAVAILABLE" targetType="BIN:SERVICE_UNAVAILABLE" />
+                <mule:error-mapping sourceType="HTTP:RETRY_EXHAUSTED" targetType="BIN:RETRY_EXHAUSTED" />
+                <http:headers>
+                    <![CDATA[#[ { 'Accept': 'application/xml' } filterObject $ != null ]]]>
+                </http:headers>
+            </http:request>
+            <mule:set-payload value="#[payload]" mimeType="application/xml"/>
+        </body>
+        <output type="get-xmls-response-type::slideshow"/>
+        <errors>
+            <error type="PARSING"/>
+            <error type="TIMEOUT"/>
+            <error type="SECURITY"/>
+            <error type="CONNECTIVITY"/>
+            <error type="BAD_REQUEST"/>
+            <error type="UNAUTHORIZED"/>
+            <error type="FORBIDDEN"/>
+            <error type="METHOD_NOT_ALLOWED"/>
+            <error type="NOT_FOUND"/>
+            <error type="NOT_ACCEPTABLE"/>
+            <error type="UNSUPPORTED_MEDIA_TYPE"/>
+            <error type="TOO_MANY_REQUESTS"/>
+            <error type="INTERNAL_SERVER_ERROR"/>
+            <error type="SERVICE_UNAVAILABLE"/>
+            <error type="RETRY_EXHAUSTED"/>
+        </errors>
+    </operation>
+
+    <operation name="get-gets">
+        <parameters>
+            <parameter name="authorization" type="string" use="REQUIRED"/>
+            <parameter name="accept" type="accept" use="REQUIRED"/>
+            <parameter name="host" type="string" use="OPTIONAL"/>
+        </parameters>
+        <body>
+            <http:request config-ref="bin-httpreq-config" path="/get" method="GET">
+                <mule:error-mapping sourceType="HTTP:PARSING" targetType="BIN:PARSING" />
+                <mule:error-mapping sourceType="HTTP:TIMEOUT" targetType="BIN:TIMEOUT" />
+                <mule:error-mapping sourceType="HTTP:SECURITY" targetType="BIN:SECURITY" />
+                <mule:error-mapping sourceType="HTTP:CONNECTIVITY" targetType="BIN:CONNECTIVITY" />
+                <mule:error-mapping sourceType="HTTP:BAD_REQUEST" targetType="BIN:BAD_REQUEST" />
+                <mule:error-mapping sourceType="HTTP:UNAUTHORIZED" targetType="BIN:UNAUTHORIZED" />
+                <mule:error-mapping sourceType="HTTP:FORBIDDEN" targetType="BIN:FORBIDDEN" />
+                <mule:error-mapping sourceType="HTTP:METHOD_NOT_ALLOWED" targetType="BIN:METHOD_NOT_ALLOWED" />
+                <mule:error-mapping sourceType="HTTP:NOT_FOUND" targetType="BIN:NOT_FOUND" />
+                <mule:error-mapping sourceType="HTTP:NOT_ACCEPTABLE" targetType="BIN:NOT_ACCEPTABLE" />
+                <mule:error-mapping sourceType="HTTP:UNSUPPORTED_MEDIA_TYPE" targetType="BIN:UNSUPPORTED_MEDIA_TYPE" />
+                <mule:error-mapping sourceType="HTTP:TOO_MANY_REQUESTS" targetType="BIN:TOO_MANY_REQUESTS" />
+                <mule:error-mapping sourceType="HTTP:INTERNAL_SERVER_ERROR" targetType="BIN:INTERNAL_SERVER_ERROR" />
+                <mule:error-mapping sourceType="HTTP:SERVICE_UNAVAILABLE" targetType="BIN:SERVICE_UNAVAILABLE" />
+                <mule:error-mapping sourceType="HTTP:RETRY_EXHAUSTED" targetType="BIN:RETRY_EXHAUSTED" />
+                <http:headers>
+                    <![CDATA[#[ { 'Authorization': vars['authorization'],'Accept': vars['accept'],'Host': vars['host'] } filterObject $ != null ]]]>
+                </http:headers>
+            </http:request>
+            <mule:set-payload value="#[payload]" mimeType="application/json"/>
+        </body>
+        <output type="get-gets-response-type"/>
+        <errors>
+            <error type="PARSING"/>
+            <error type="TIMEOUT"/>
+            <error type="SECURITY"/>
+            <error type="CONNECTIVITY"/>
+            <error type="BAD_REQUEST"/>
+            <error type="UNAUTHORIZED"/>
+            <error type="FORBIDDEN"/>
+            <error type="METHOD_NOT_ALLOWED"/>
+            <error type="NOT_FOUND"/>
+            <error type="NOT_ACCEPTABLE"/>
+            <error type="UNSUPPORTED_MEDIA_TYPE"/>
+            <error type="TOO_MANY_REQUESTS"/>
+            <error type="INTERNAL_SERVER_ERROR"/>
+            <error type="SERVICE_UNAVAILABLE"/>
+            <error type="RETRY_EXHAUSTED"/>
+        </errors>
+    </operation>
+
+    <operation name="create-post">
+        <parameters>
+            <parameter name="create-post-request-data" type="create-post-request-type" use="REQUIRED" role="PRIMARY"/>
+            <parameter name="query-param1" type="string" use="REQUIRED"/>
+            <parameter name="query-param2" type="string" use="OPTIONAL"/>
+            <parameter name="query-param3" type="string" use="OPTIONAL"/>
+        </parameters>
+        <body>
+            <http:request config-ref="bin-httpreq-config" path="/post" method="POST">
+                <mule:error-mapping sourceType="HTTP:PARSING" targetType="BIN:PARSING" />
+                <mule:error-mapping sourceType="HTTP:TIMEOUT" targetType="BIN:TIMEOUT" />
+                <mule:error-mapping sourceType="HTTP:SECURITY" targetType="BIN:SECURITY" />
+                <mule:error-mapping sourceType="HTTP:CONNECTIVITY" targetType="BIN:CONNECTIVITY" />
+                <mule:error-mapping sourceType="HTTP:BAD_REQUEST" targetType="BIN:BAD_REQUEST" />
+                <mule:error-mapping sourceType="HTTP:UNAUTHORIZED" targetType="BIN:UNAUTHORIZED" />
+                <mule:error-mapping sourceType="HTTP:FORBIDDEN" targetType="BIN:FORBIDDEN" />
+                <mule:error-mapping sourceType="HTTP:METHOD_NOT_ALLOWED" targetType="BIN:METHOD_NOT_ALLOWED" />
+                <mule:error-mapping sourceType="HTTP:NOT_FOUND" targetType="BIN:NOT_FOUND" />
+                <mule:error-mapping sourceType="HTTP:NOT_ACCEPTABLE" targetType="BIN:NOT_ACCEPTABLE" />
+                <mule:error-mapping sourceType="HTTP:UNSUPPORTED_MEDIA_TYPE" targetType="BIN:UNSUPPORTED_MEDIA_TYPE" />
+                <mule:error-mapping sourceType="HTTP:TOO_MANY_REQUESTS" targetType="BIN:TOO_MANY_REQUESTS" />
+                <mule:error-mapping sourceType="HTTP:INTERNAL_SERVER_ERROR" targetType="BIN:INTERNAL_SERVER_ERROR" />
+                <mule:error-mapping sourceType="HTTP:SERVICE_UNAVAILABLE" targetType="BIN:SERVICE_UNAVAILABLE" />
+                <mule:error-mapping sourceType="HTTP:RETRY_EXHAUSTED" targetType="BIN:RETRY_EXHAUSTED" />
+                <http:body>
+                    #[output application/json --- vars['create-post-request-data']]
+                </http:body>
+                <http:headers>
+                    <![CDATA[#[ { 'Accept': 'application/json' } filterObject $ != null ]]]>
+                </http:headers>
+                <http:query-params>
+                    <![CDATA[#[ { 'queryParam1': vars['query-param1'],'queryParam2': vars['query-param2'],'queryParam3': vars['query-param3'] } filterObject $ != null ]]]>
+                </http:query-params>
+            </http:request>
+            <mule:set-payload value="#[payload]" mimeType="application/json"/>
+        </body>
+        <output type="create-post-response-type"/>
+        <errors>
+            <error type="PARSING"/>
+            <error type="TIMEOUT"/>
+            <error type="SECURITY"/>
+            <error type="CONNECTIVITY"/>
+            <error type="BAD_REQUEST"/>
+            <error type="UNAUTHORIZED"/>
+            <error type="FORBIDDEN"/>
+            <error type="METHOD_NOT_ALLOWED"/>
+            <error type="NOT_FOUND"/>
+            <error type="NOT_ACCEPTABLE"/>
+            <error type="UNSUPPORTED_MEDIA_TYPE"/>
+            <error type="TOO_MANY_REQUESTS"/>
+            <error type="INTERNAL_SERVER_ERROR"/>
+            <error type="SERVICE_UNAVAILABLE"/>
+            <error type="RETRY_EXHAUSTED"/>
+        </errors>
+    </operation>
+
+</module>

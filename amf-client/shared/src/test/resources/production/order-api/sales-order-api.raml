@@ -1,0 +1,108 @@
+#%RAML 1.0
+title: Sales Order API
+version: 1.0
+baseUri: https://mocksvc.mulesoft.com/mocks/18f878aa-683e-4f79-94a6-feffe69aec41/api # baseUri: http://mythical-order-api.cloudhub.io/api
+traits:
+  collection: !include /traits/trait-collection.raml
+
+/order:
+  displayName: Order
+  get:
+    is: [ collection ]
+    description: Lists the user orders
+    queryParameters:
+      trackingNumber:
+        displayName: Order Tracking Number
+        required: false
+        type: string
+    responses:
+      200:
+        body:
+          application/json:
+            schema: !include schemas/order_collection_schema.json
+            example: !include examples/order_collection_example.json
+      404:
+        body:
+          application/json:
+            example: |
+              {
+                "message": "Resource not found"
+              }
+  post:
+    description: Create a new Order.
+    body:
+      application/json:
+        example: !include examples/order_post_request.json
+        schema: !include schemas/order_post_request_schema.json
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include examples/order_post_response.json
+            schema: !include schemas/order_post_response_schema.json
+      400:
+        body:
+          application/json:
+            example: |
+              {
+                "message": "Bad Request"
+              }
+  /{id}:
+    displayName: Order ID
+    description: Get Order by ID
+    uriParameters:
+      id:
+        type: string
+        example: "1000"
+        required: true
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/order_example.json
+        404:
+          body:
+            application/json:
+              example: |
+                {
+                  "message": "Resource not found"
+                }
+    put:
+      body:
+        application/json:
+          schema: !include schemas/order_put_schema.json
+          example: !include examples/order_put_example.json
+      responses:
+        204:
+        400:
+          body:
+            application/json:
+              example: |
+                {
+                  "message": "Bad Request"
+                }
+        404:
+          body:
+            application/json:
+              example: |
+                {
+                  "message": "Order not found"
+                }                    
+    delete:
+      responses:
+        204:
+        400:
+          body:
+            application/json:
+              example: |
+                {
+                  "message": "Bad Request"
+                }
+        404:
+          body:
+            application/json:
+              example: |
+                {
+                  "message": "Order not found"
+                }                    

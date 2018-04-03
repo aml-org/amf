@@ -1,0 +1,485 @@
+#%RAML 1.0
+title: Customer System API
+version: 4.0
+baseUri: https://localhost:8081/api
+/customer:
+  displayName: Customers
+  description: |
+    Working with customers:
+    * Retrieving all customers
+    * Creating customers
+  get:
+    description: |
+      Retrieve all the Customers.
+    queryParameters:
+      email:
+        displayName: The account email address
+        minLength: 0
+        maxLength: 255
+        required: false
+      date:
+        type: datetime
+    responses:
+      200:
+        body:
+          application/json:
+            type: array
+            items:
+              additionalProperties: true
+              properties:
+                id:
+                  type: string
+                  required: false
+                customerName:
+                  type: string
+                  required: true
+                phone:
+                  type: string
+                  required: true
+                email:
+                  type: string
+                  required: true
+                billingAddress:
+                  type: object
+                  required: false
+                  additionalProperties: true
+                  properties:
+                    address:
+                      type: array
+                      minItems: 1
+                      required: false
+                      items:
+                        type: string
+                    city:
+                      required: false
+                      type: string
+                    state:
+                      required: false
+                      type: string
+                    postalCode:
+                      required: false
+                      type: string
+                    country:
+                      type: string
+                      displayName: Country Name
+                      description: Country Name
+                      required: false
+                shippingAddress:
+                  type: object
+                  required: false
+                  additionalProperties: true
+                  properties:
+                    address:
+                      type: array
+                      minItems: 1
+                      required: false
+                      items:
+                        type: string
+                    city:
+                      required: false
+                      type: string
+                    state:
+                      required: false
+                      type: string
+                    postalCode:
+                      required: false
+                      type: string
+                    country:
+                      type: string
+                      displayName: Country Name
+                      description: Country Name
+                      required: false
+    body: {}
+  post:
+    description: |
+      Create a new Customer
+    responses:
+      201:
+        description: Created
+        body:
+          application/json:
+            type: any
+    body:
+      application/json:
+        type: object
+        additionalProperties: true
+        properties:
+          id:
+            type: string
+            required: false
+          customerName:
+            type: string
+            required: true
+          phone:
+            type: string
+            required: true
+          email:
+            type: string
+            required: true
+          billingAddress:
+            type: object
+            required: false
+            additionalProperties: true
+            properties:
+              address:
+                type: array
+                minItems: 1
+                required: false
+                items:
+                  type: string
+              city:
+                required: false
+                type: string
+              state:
+                required: false
+                type: string
+              postalCode:
+                required: false
+                type: string
+              country:
+                type: string
+                displayName: Country Name
+                description: Country Name
+                required: false
+          shippingAddress:
+            type: object
+            required: false
+            additionalProperties: true
+            properties:
+              address:
+                type: array
+                minItems: 1
+                required: false
+                items:
+                  type: string
+              city:
+                required: false
+                type: string
+              state:
+                required: false
+                type: string
+              postalCode:
+                required: false
+                type: string
+              country:
+                type: string
+                displayName: Country Name
+                description: Country Name
+                required: false
+  /{id}:
+    displayName: Customer ID
+    uriParameters:
+      id:
+        type: number
+        example: 4.3
+        description: Represents the customer unique id
+    get:
+      description: Get Customer by ID
+      headers:
+        GET-TYPES:
+          type: array
+        Accept:
+          type: string
+      responses:
+        400:
+          body:
+            application/json:
+              type: object
+              example:
+                message: Bad message
+              additionalProperties: true
+              properties:
+                message:
+                  required: true
+                  type: string
+                code:
+                  required: false
+                  type: string
+        200:
+          body:
+            application/json:
+              type: object
+              additionalProperties: true
+              properties:
+                id:
+                  type: string
+                  required: false
+                customerName:
+                  type: string
+                  required: true
+                phone:
+                  type: string
+                  required: true
+                email:
+                  type: string
+                  required: true
+                billingAddress:
+                  type: object
+                  required: false
+                  additionalProperties: true
+                  properties:
+                    address:
+                      type: array
+                      minItems: 1
+                      required: false
+                      items:
+                        type: string
+                    city:
+                      required: false
+                      type: string
+                    state:
+                      required: false
+                      type: string
+                    postalCode:
+                      required: false
+                      type: string
+                    country:
+                      type: string
+                      displayName: Country Name
+                      description: Country Name
+                      required: false
+                shippingAddress:
+                  type: object
+                  required: false
+                  additionalProperties: true
+                  properties:
+                    address:
+                      type: array
+                      minItems: 1
+                      required: false
+                      items:
+                        type: string
+                    city:
+                      required: false
+                      type: string
+                    state:
+                      required: false
+                      type: string
+                    postalCode:
+                      required: false
+                      type: string
+                    country:
+                      type: string
+                      displayName: Country Name
+                      description: Country Name
+                      required: false
+        404:
+          body:
+            application/json:
+              type: object
+              example:
+                message: Resource not found
+              additionalProperties: true
+              properties:
+                message:
+                  required: true
+                  type: string
+                code:
+                  required: false
+                  type: string
+      body: {}
+    put:
+      responses:
+        204:
+          body: {}
+      body:
+        application/json:
+          type: object
+          additionalProperties: true
+          properties:
+            id:
+              type: string
+              required: false
+            customerName:
+              type: string
+              required: true
+            phone:
+              type: string
+              required: true
+            email:
+              type: string
+              required: true
+            billingAddress:
+              type: object
+              required: false
+              additionalProperties: true
+              properties:
+                address:
+                  type: array
+                  minItems: 1
+                  required: false
+                  items:
+                    type: string
+                city:
+                  required: false
+                  type: string
+                state:
+                  required: false
+                  type: string
+                postalCode:
+                  required: false
+                  type: string
+                country:
+                  type: string
+                  displayName: Country Name
+                  description: Country Name
+                  required: false
+            shippingAddress:
+              type: object
+              required: false
+              additionalProperties: true
+              properties:
+                address:
+                  type: array
+                  minItems: 1
+                  required: false
+                  items:
+                    type: string
+                city:
+                  required: false
+                  type: string
+                state:
+                  required: false
+                  type: string
+                postalCode:
+                  required: false
+                  type: string
+                country:
+                  type: string
+                  displayName: Country Name
+                  description: Country Name
+                  required: false
+    delete:
+      responses:
+        204:
+          body: {}
+/person:
+  displayName: Person
+  /{id}:
+    displayName: Person ID
+    uriParameters:
+      id:
+        type: number
+        example: 4.3
+        description: Represents the person unique id
+    get:
+      description: Get person by ID
+      queryParameters:
+        names:
+          type: array
+      responses:
+        400:
+          body:
+            application/json:
+              type: object
+              example:
+                message: Bad message
+              additionalProperties: true
+              properties:
+                message:
+                  required: true
+                  type: string
+                code:
+                  required: false
+                  type: string
+        200:
+          body:
+            application/json:
+              anyOf:
+                -
+                  type: object
+                  additionalProperties: true
+                  properties:
+                    id:
+                      type: string
+                      required: false
+                    customerName:
+                      type: string
+                      required: true
+                    phone:
+                      type: string
+                      required: true
+                    email:
+                      type: string
+                      required: true
+                    billingAddress:
+                      type: object
+                      required: false
+                      additionalProperties: true
+                      properties:
+                        address:
+                          type: array
+                          minItems: 1
+                          required: false
+                          items:
+                            type: string
+                        city:
+                          required: false
+                          type: string
+                        state:
+                          required: false
+                          type: string
+                        postalCode:
+                          required: false
+                          type: string
+                        country:
+                          type: string
+                          displayName: Country Name
+                          description: Country Name
+                          required: false
+                    shippingAddress:
+                      type: object
+                      required: false
+                      additionalProperties: true
+                      properties:
+                        address:
+                          type: array
+                          minItems: 1
+                          required: false
+                          items:
+                            type: string
+                        city:
+                          required: false
+                          type: string
+                        state:
+                          required: false
+                          type: string
+                        postalCode:
+                          required: false
+                          type: string
+                        country:
+                          type: string
+                          displayName: Country Name
+                          description: Country Name
+                          required: false
+                -
+                  type: object
+                  additionalProperties: true
+                  properties:
+                    id:
+                      type: string
+                      required: false
+                    sellerName:
+                      type: string
+                      required: true
+                    phone:
+                      type: string
+                      required: true
+                    email:
+                      type: string
+                      required: true
+        404:
+          body:
+            application/json:
+              type: object
+              example:
+                message: Resource not found
+              additionalProperties: true
+              properties:
+                message:
+                  required: true
+                  type: string
+                code:
+                  required: false
+                  type: string
+      body: {}

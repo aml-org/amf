@@ -1,0 +1,368 @@
+#%RAML 1.0
+title: Sales Order API
+version: 1.0
+baseUri: https://mocksvc.mulesoft.com/mocks/18f878aa-683e-4f79-94a6-feffe69aec41/api
+/order:
+  displayName: Order
+  get:
+    description: Lists the user orders
+    queryParameters:
+      maxResults:
+        description: |
+          The maximum number of entries to return. This is optional.
+        displayName: Maximum Number of Records.
+        type: integer
+        default: 25
+      offset:
+        description: |
+          The 1-based index of the first result to be retrieved (for paging).
+        displayName: Starting from Record
+        type: integer
+        default: 0
+      trackingNumber:
+        displayName: Order Tracking Number
+        required: false
+        type: string
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              -
+                id: 1
+                userId: 1001
+                billingAddress:
+                  -
+                    address1: Towne
+                    address2: 5813
+                    city: Fresno
+                    state: California
+                    postalCode: 93794
+                    country: United States
+                products:
+                  -
+                    id: 1
+                    productName: Lakeside
+                    quantity: 1
+                  -
+                    id: 2
+                    productName: Copper Creek
+                    quantity: 1
+                  -
+                    id: 3
+                    productName: Rockhill
+                    quantity: 1
+                status: new
+                price: 727
+                creationDate: 08/17/2017
+                trackingNumber: 6a521ed9-c208-437d-8b9c-62f1875e4336
+              -
+                id: 2
+                userID: 1012
+                customerName: Fred Carr
+                customerEmail: fcarr1@live.com
+                billingAddress:
+                  -
+                    address1: Ridgeview
+                    address2: 619
+                    city: Virginia Beach
+                    state: Virginia
+                    postalCode: 23454
+                    country: United States
+                products:
+                  -
+                    id: 1
+                    productName: Brookside
+                    quantity: 1
+                  -
+                    id: 2
+                    productName: Gean Estates
+                    quantity: 1
+                status: new
+                price: 1645
+                creationDate: 08/17/2017
+                trackingNumber: 7d0d25a4-b4bd-4b28-ba30-785415eedad2
+            (tuple): true
+      404:
+        body:
+          application/json:
+            example:
+              message: Resource not found
+            type: any
+  post:
+    description: Create a new Order.
+    body:
+      application/json:
+        example:
+          products:
+            -
+              id: 1
+              productName: Estates at Rockhill
+              quantity: 1
+          status: new
+          price: 625
+        type: |-
+          {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "id": "http://jsonschema.net",
+            "type": "object",
+            "properties": {
+              "products": {
+                "id": "http://jsonschema.net/products",
+                "type": "array",
+                "items": {
+                  "id": "http://jsonschema.net/products/0",
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "id": "http://jsonschema.net/products/0/id",
+                      "type": "string"
+                    },
+                    "productName": {
+                      "id": "http://jsonschema.net/products/0/productName",
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "id": "http://jsonschema.net/products/0/quantity",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "productName",
+                    "quantity"
+                  ]
+                },
+                "required": [
+                  "0"
+                ]
+              },
+              "status": {
+                "id": "http://jsonschema.net/status",
+                "type": "string"
+              },
+              "price": {
+                "id": "http://jsonschema.net/price",
+                "type": "string"
+              }
+            },
+            "required": [
+              "products",
+              "status",
+              "price"
+            ]
+          }
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+              id: 1
+            type: |-
+              {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "id": "http://jsonschema.net",
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "id": "http://jsonschema.net/id",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
+      400:
+        body:
+          application/json:
+            example:
+              message: Bad Request
+            type: any
+  /{id}:
+    displayName: Order ID
+    description: Get Order by ID
+    uriParameters:
+      id:
+        type: string
+        example: 1000
+        required: true
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                id: 40
+                price: 625
+                products:
+                  -
+                    productId: 1
+                    quantity: 1
+                status: new
+                trackingNumber: 1964401a-a8b3-40c1-b86e-d8b9f75b5842
+                userId: bigboy
+              type: any
+        404:
+          body:
+            application/json:
+              example:
+                message: Resource not found
+              type: any
+    put:
+      body:
+        application/json:
+          example:
+            id: 1
+            userId: 1001
+            billingAddress:
+              address1: Graceland
+              address2: 646
+              city: Philadelphia
+              state: Pennsylvania
+              postalCode: 19172
+              country: United States
+            payment:
+              name: John Doe
+              number: 1323-12313-121321
+              type: VISA
+            products:
+              -
+                id: 1
+                productName: Artesia at Lakeside
+                quantity: 1
+            status: new
+            price: 1304
+            creationDate: 12/01/2015
+            trackingNumber: 6a381a7a-65b8-4858-b884-d2897b7a5564
+          type: |-
+            {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "id": "http://jsonschema.net",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "id": "http://jsonschema.net/id",
+                  "type": "string"
+                },
+                "userId": {
+                  "id": "http://jsonschema.net/userId",
+                  "type": "string"
+                },
+                "billingAddress": {
+                  "id": "http://jsonschema.net/billingAddress",
+                  "type": "object",
+                  "properties": {
+                    "address1": {
+                      "id": "http://jsonschema.net/billingAddress/address1",
+                      "type": "string"
+                    },
+                    "address2": {
+                      "id": "http://jsonschema.net/billingAddress/address2",
+                      "type": "string"
+                    },
+                    "city": {
+                      "id": "http://jsonschema.net/billingAddress/city",
+                      "type": "string"
+                    },
+                    "state": {
+                      "id": "http://jsonschema.net/billingAddress/state",
+                      "type": "string"
+                    },
+                    "postalCode": {
+                      "id": "http://jsonschema.net/billingAddress/postalCode",
+                      "type": "string"
+                    },
+                    "country": {
+                      "id": "http://jsonschema.net/billingAddress/country",
+                      "type": "string"
+                    }
+                  }
+                },
+                "payment": {
+                  "id": "http://jsonschema.net/payment",
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "id": "http://jsonschema.net/payment/name",
+                      "type": "string"
+                    },
+                    "number": {
+                      "id": "http://jsonschema.net/payment/number",
+                      "type": "string"
+                    },
+                    "type": {
+                      "id": "http://jsonschema.net/payment/type",
+                      "type": "string"
+                    }
+                  }
+                },
+                "products": {
+                  "id": "http://jsonschema.net/products",
+                  "type": "array",
+                  "items": {
+                    "id": "http://jsonschema.net/products/0",
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "id": "http://jsonschema.net/products/0/id",
+                        "type": "string"
+                      },
+                      "productName": {
+                        "id": "http://jsonschema.net/products/0/productName",
+                        "type": "string"
+                      },
+                      "quantity": {
+                        "id": "http://jsonschema.net/products/0/quantity",
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "status": {
+                  "id": "http://jsonschema.net/status",
+                  "type": "string"
+                },
+                "price": {
+                  "id": "http://jsonschema.net/price",
+                  "type": "string"
+                },
+                "creationDate": {
+                  "id": "http://jsonschema.net/creationDate",
+                  "type": "string"
+                },
+                "trackingNumber": {
+                  "id": "http://jsonschema.net/trackingNumber",
+                  "type": "string"
+                }
+              }
+            }
+      responses:
+        204: {}
+        400:
+          body:
+            application/json:
+              example:
+                message: Bad Request
+              type: any
+        404:
+          body:
+            application/json:
+              example:
+                message: Order not found
+              type: any
+    delete:
+      responses:
+        204: {}
+        400:
+          body:
+            application/json:
+              example:
+                message: Bad Request
+              type: any
+        404:
+          body:
+            application/json:
+              example:
+                message: Order not found
+              type: any

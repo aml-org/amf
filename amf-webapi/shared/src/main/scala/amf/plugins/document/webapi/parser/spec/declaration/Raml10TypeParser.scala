@@ -810,11 +810,11 @@ sealed abstract class RamlTypeParser(ast: YPart,
           .parse()
       } yield {
         item match {
-          case array: ArrayShape   => shape.withItems(array).toMatrixShape
+          case array: ArrayShape => shape.withItems(array).toMatrixShape
           case matrix: MatrixShape => shape.withItems(matrix).toMatrixShape
-          case other: Shape        => shape.withItems(other)
+          case other: Shape => shape.withItems(other)
         }
-      }).orElse(arrayShapeTypeFromInherits())
+      }).orElse(arrayShapeTypeFromInherits()).orElse(Some(shape))
 
       finalShape match {
         case Some(parsed: AnyShape) =>
@@ -854,9 +854,9 @@ sealed abstract class RamlTypeParser(ast: YPart,
       map.key("maxItems", (ArrayShapeModel.MaxItems in shape).allowingAnnotations)
       map.key("uniqueItems", (ArrayShapeModel.UniqueItems in shape).allowingAnnotations)
 
-      map.key(
-        "items",
-        entry => {
+      val itemsField = map.key("items")
+      itemsField match {
+        case Some(entry) =>
           val items = entry.value
             .as[YSequence]
             .nodes
@@ -875,7 +875,6 @@ sealed abstract class RamlTypeParser(ast: YPart,
             }
           shape.withItems(items.filter(_.isDefined).map(_.get))
         }
-      )
 
       ctx.closedRamlTypeShape(shape, map, "arrayShape", isAnnotation)
 

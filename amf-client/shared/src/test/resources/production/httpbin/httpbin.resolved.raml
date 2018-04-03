@@ -1,0 +1,175 @@
+#%RAML 1.0
+title: HTTP Bin
+baseUri: https://httpbin.org/
+/xml:
+  get:
+    responses:
+      200:
+        body:
+          application/xml: |-
+            <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                <xs:element name="slideshow">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="slide" maxOccurs="unbounded" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="title"/>
+                                        <xs:element name="item" maxOccurs="unbounded" minOccurs="0">
+                                            <xs:complexType mixed="true">
+                                                <xs:sequence>
+                                                    <xs:any minOccurs="0" namespace="##any" processContents="lax"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute type="xs:string" name="type" use="optional"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute type="xs:string" name="title"/>
+                        <xs:attribute type="xs:string" name="date"/>
+                        <xs:attribute type="xs:string" name="author"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:schema>
+/get:
+  get:
+    headers:
+      Authorization:
+        type: string
+        required: true
+      Accept:
+        type: array
+      Host:
+        type: string
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+            type: object
+            additionalProperties: true
+            properties:
+              args:
+                type: object
+                required: false
+                additionalProperties: true
+                properties: {}
+              headers:
+                type: object
+                required: false
+                additionalProperties: true
+                properties:
+                  Accept:
+                    type: string
+                    required: false
+                  Accept-Encoding:
+                    type: string
+                    required: false
+                  Accept-Language:
+                    type: string
+                    required: false
+                  Cache-Control:
+                    type: string
+                    required: false
+                  Connection:
+                    type: string
+                    required: false
+                  Host:
+                    type: string
+                    required: false
+                  Postman-Token:
+                    type: string
+                    required: false
+                  User-Agent:
+                    type: string
+                    required: false
+              origin:
+                type: string
+                required: false
+              url:
+                type: string
+                required: false
+/post:
+  post:
+    queryParameters:
+      queryParam1:
+        type: string
+        required: true
+      queryParam2:
+        type: string
+        required: false
+      queryParam3:
+        type: string
+        required: false
+    body:
+      application/json:
+        type: object
+        additionalProperties: true
+        properties:
+          formKeyString:
+            required: true
+            type: string
+          formKeyBoolean:
+            required: true
+            type: boolean
+          formKeyNumber:
+            required: true
+            type: integer
+    responses:
+      200:
+        body:
+          application/json:
+            type: object
+            additionalProperties: true
+            properties:
+              args:
+                type: object
+                required: true
+                additionalProperties: true
+                properties:
+                  queryParam1:
+                    required: true
+                    type: string
+                  queryParam2:
+                    required: false
+                    type: string
+                  queryParam3:
+                    required: false
+                    type: string
+              data:
+                required: true
+                type: string
+              files:
+                required: true
+                additionalProperties: true
+                properties: {}
+              form:
+                type: object
+                required: true
+                additionalProperties: true
+                properties:
+                  formKeyString:
+                    required: true
+                    type: string
+                  formKeyBoolean:
+                    required: true
+                    type: boolean
+                  formKeyNumber:
+                    required: true
+                    type: integer
+              headers:
+                required: true
+                additionalProperties: true
+                properties: {}
+              json:
+                required: true
+                additionalProperties: true
+                properties: {}
+              origin:
+                required: true
+                type: string
+              url:
+                required: true
+                type: string

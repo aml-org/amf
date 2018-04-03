@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {},
+  "id": "http://example.com/example.json",
+  "properties": {
+    "args": {
+      "id": "/properties/args",
+      "properties": {},
+      "type": "object"
+    },
+    "headers": {
+      "id": "/properties/headers",
+      "properties": {
+        "Accept": {
+          "id": "/properties/headers/properties/Accept",
+          "type": "string"
+        },
+        "Accept-Encoding": {
+          "id": "/properties/headers/properties/Accept-Encoding",
+          "type": "string"
+        },
+        "Accept-Language": {
+          "id": "/properties/headers/properties/Accept-Language",
+          "type": "string"
+        },
+        "Cache-Control": {
+          "id": "/properties/headers/properties/Cache-Control",
+          "type": "string"
+        },
+        "Connection": {
+          "id": "/properties/headers/properties/Connection",
+          "type": "string"
+        },
+        "Host": {
+          "id": "/properties/headers/properties/Host",
+          "type": "string"
+        },
+        "Postman-Token": {
+          "id": "/properties/headers/properties/Postman-Token",
+          "type": "string"
+        },
+        "User-Agent": {
+          "id": "/properties/headers/properties/User-Agent",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "origin": {
+      "id": "/properties/origin",
+      "type": "string"
+    },
+    "url": {
+      "id": "/properties/url",
+      "type": "string"
+    }
+  },
+  "type": "object"
+}
