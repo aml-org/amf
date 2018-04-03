@@ -38,15 +38,15 @@ class ProductionResolutionTest extends RamlResolutionTest {
     cycle("recursive-union.raml", "recursive-union.raml.jsonld", RamlYamlHint, Amf)
   }
 
-  test("HERE_HERE Complex types raml to raml") {
+  test("Complex types raml to raml") {
     cycle("complex_types.raml", "complex_types.resolved.raml", RamlYamlHint, Raml)
   }
 
-  test("HERE_HERE httpbin example") {
+  test("httpbin example") {
     cycle("httpbin.raml", "httpbin.resolved.raml", RamlYamlHint, Raml, basePath + "httpbin/")
   }
 
-  test("HERE_HERE sales-order example") {
+  test("sales-order example") {
     cycle("sales-order-api.raml", "sales-order-api.resolved.raml", RamlYamlHint, Raml, basePath + "order-api/")
   }
 

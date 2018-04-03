@@ -11,6 +11,7 @@ import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security.{Scope, SecurityScheme, Settings}
 import amf.plugins.domain.webapi.models.{Parameter, Response}
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -87,6 +88,15 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
             scheme.set(SecuritySchemeModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
           }
         )
+
+        if (map.key("queryParameters").isDefined && map.key("queryString").isDefined) {
+          ctx.violation(
+            ParserSideValidations.ExclusivePropertiesSpecification.id(),
+            scheme.id,
+            s"Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together",
+            map
+          )
+        }
 
         value.key(
           "queryParameters",

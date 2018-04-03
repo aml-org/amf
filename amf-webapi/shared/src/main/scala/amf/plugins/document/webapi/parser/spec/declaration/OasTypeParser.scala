@@ -362,7 +362,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
     private def parseExample() = {
       val examples: Seq[Example] =
-        RamlExamplesParser(map, "example", "x-examples", shape.withExample, options).parse()
+        RamlExamplesParser(map, "example", "x-examples", None, shape.withExample, options).parse()
       if (examples.nonEmpty)
         shape.setArray(AnyShapeModel.Examples, examples)
     }
