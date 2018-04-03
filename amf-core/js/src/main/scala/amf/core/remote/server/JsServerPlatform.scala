@@ -26,17 +26,29 @@ class JsServerPlatform extends Platform {
   }
 
   /** Resolve specified file. */
-  override protected def fetchFile(path: String): Future[Content] =
+  override protected def fetchFile(path: String): Future[Content] = {
     fs.asyncFile(path)
       .read()
       .map(
         content =>
           Content(new CharSequenceStream(path, content),
+            ensureFileAuthority(path),
+            extension(path).flatMap(mimeFromExtension)))
+      .recoverWith {
+        case io: IOException => { // exception for local file system where we accept paths including spaces
+          fs.asyncFile(path.replace("%20", " "))
+            .read()
+            .map(
+              content =>
+                Content(new CharSequenceStream(path, content),
                   ensureFileAuthority(path),
                   extension(path).flatMap(mimeFromExtension)))
-      .recover {
-        case io: IOException => throw FileNotFound(io)
+            .recover {
+              case io: IOException => throw FileNotFound(io)
+            }
+        }
       }
+  }
 
   /** Resolve specified url. */
   override protected def fetchHttp(url: String): Future[Content] = {

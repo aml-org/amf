@@ -1069,4 +1069,8 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Repeated include xsd") {
     cycle("include-repeated.raml", "include-repeated.raml.raml", RamlYamlHint, Raml)
   }
+
+  test("Path with empty spaces") {
+    cycle("bells with spaces.raml", "bells with spaces.jsonld", RamlYamlHint, Amf)
+  }
 }

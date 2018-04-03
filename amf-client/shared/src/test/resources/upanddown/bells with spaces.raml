@@ -1,0 +1,25 @@
+#%RAML 1.0
+---
+title: Bells API
+version: v1
+baseUri: http://localhost/api
+
+types:
+    Bell:
+        type: object
+        properties:
+            id: integer
+            name: string
+
+/bells:
+    get:
+        responses:
+            200:
+                body:
+                    application/json:
+                        type: Bell
+
+    post:
+        body:
+            application/json:
+                type: Bell

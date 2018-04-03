@@ -32,7 +32,7 @@ class AMFCompiler(val rawUrl: String,
                   private val cache: Cache = Cache(),
                   private val baseContext: Option[ParserContext] = None) {
 
-  val url: String                   = new java.net.URI(rawUrl).normalize().toString
+  val url: String                   = new java.net.URI(escapeFileSystemPath(rawUrl)).normalize().toString
   private lazy val context: Context = base.map(_.update(url)).getOrElse(core.remote.Context(remote, url))
   private lazy val location         = context.current
   private val ctx: ParserContext =
@@ -181,6 +181,8 @@ class AMFCompiler(val rawUrl: String,
     case Left(content) =>
       throw new Exception(s"Cannot parse document with mime type ${content.mime.getOrElse("none")}")
   }
+
+  protected def escapeFileSystemPath(rawUrl: String): String = rawUrl.replace(" ", "%20")
 }
 
 object AMFCompiler {

@@ -43,10 +43,19 @@ class JvmPlatform extends Platform {
   /** Resolve specified file. */
   override protected def fetchFile(path: String): Future[Content] = Future {
     try {
-
       Content(new FileStream(path), ensureFileAuthority(path), extension(path).flatMap(mimeFromExtension))
     } catch {
-      case e: FileNotFoundException => throw FileNotFound(e)
+      case e: FileNotFoundException =>
+        if (path.contains("%20")) { // exception for local file system where we accept paths including spaces
+          val escapedPath = path.replace("%20", " ")
+          try {
+            Content(new FileStream(escapedPath), ensureFileAuthority(path), extension(path).flatMap(mimeFromExtension))
+          } catch {
+            case e: FileNotFoundException => throw FileNotFound(e)
+          }
+        } else {
+          throw FileNotFound(e)
+        }
     }
   }
 
