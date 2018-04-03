@@ -773,6 +773,8 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
         None
       case YType.Str if property.literalRange().value() == (Namespace.Xsd + "string").iri() =>
         Some(value.as[YScalar].text)
+      case YType.Str if property.literalRange().value() == (Namespace.Xsd + "anyUri").iri() =>
+        Some(value.as[YScalar].text)
       case YType.Str =>
         ctx.inconsistentPropertyRangeValueViolation(node.id,
                                                     property,

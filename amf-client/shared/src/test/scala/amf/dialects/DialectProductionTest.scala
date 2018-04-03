@@ -32,6 +32,25 @@ class DialectProductionTest extends BuildCycleTests {
     withDialect("example3.raml", "example3_instance.raml", "example3_instance.jsonld", VocabularyYamlHint, Amf, basePath + "cfg/")
   }
 
+  test("Can parse ABOUT dialect") {
+    cycle("ABOUT-dialect.raml", "ABOUT-dialect.jsonld", VocabularyYamlHint, Amf, basePath + "ABOUT/")
+  }
+
+  test("Can parse and generated ABOUT dialect") {
+    cycle("ABOUT-dialect.raml", "ABOUT-dialect.raml.raml", VocabularyYamlHint, RamlVocabulary, basePath + "ABOUT/")
+  }
+
+  test("Can parse and generate ABOUT dialect instance"){
+    withDialect("ABOUT-dialect.raml", "ABOUT.yaml", "ABOUT.yaml.raml", VocabularyYamlHint, RamlVocabulary, basePath + "ABOUT/")
+  }
+
+  test("Can parse ABOUT-github dialect") {
+    cycle("ABOUT-GitHub-dialect.raml", "ABOUT-GitHub-dialect.raml.raml", VocabularyYamlHint, RamlVocabulary, basePath + "ABOUT/github/")
+  }
+
+  test("Can parse and generate ABOUT-github dialect instance"){
+    withDialect("ABOUT-GitHub-dialect.raml", "example.yaml", "example.yaml.raml", VocabularyYamlHint, RamlVocabulary, basePath + "ABOUT/github/")
+  }
 
   protected def withDialect(dialect: String,
                             source: String,
