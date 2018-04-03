@@ -4,8 +4,8 @@ import amf.core.Root
 import amf.core.annotations.{ExplicitField, SingleValueArray, SourceVendor}
 import amf.core.metamodel.Field
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
-import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
+import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
@@ -20,8 +20,8 @@ import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarations
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.{CreativeWork, NodeShape}
-import amf.plugins.domain.webapi.metamodel.{EndPointModel, _}
 import amf.plugins.domain.webapi.metamodel.security.{OAuth2SettingsModel, ParametrizedSecuritySchemeModel, ScopeModel}
+import amf.plugins.domain.webapi.metamodel.{EndPointModel, _}
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
@@ -227,6 +227,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
       val endpoint = producer(path).add(Annotations(entry))
 
+      checkBalancedParams(path, entry.value, endpoint.id, EndPointModel.Path.value.iri(), ctx)
       endpoint.set(EndPointModel.Path, AmfScalar(path, Annotations(entry.key)))
 
       if (!TemplateUri.isValid(path))

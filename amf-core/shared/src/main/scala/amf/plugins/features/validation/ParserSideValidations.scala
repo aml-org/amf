@@ -15,6 +15,14 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
+  val PathTemplateUnbalancedParameters = ValidationSpecification(
+    (Namespace.AmfParser + "path-template-unbalanced-parameters").iri(),
+    "Nested parameters are not allowed in path templates",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val OasBodyAndFormDataParameterSpecification = ValidationSpecification(
     (Namespace.AmfParser + "oas-not-body-and-form-data-parameters").iri(),
     "Operation cannot have a body parameter and a formData parameter",
@@ -158,6 +166,11 @@ object ParserSideValidations {
       ProfileNames.OAS  -> SeverityLevels.VIOLATION,
       ProfileNames.AMF  -> SeverityLevels.VIOLATION
     ),
+    PathTemplateUnbalancedParameters.id() -> Map(
+      ProfileNames.RAML -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS  -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF  -> SeverityLevels.VIOLATION
+    ),
     OasBodyAndFormDataParameterSpecification.id() -> Map(
       ProfileNames.OAS  -> SeverityLevels.VIOLATION
     ),
@@ -244,6 +257,7 @@ object ParserSideValidations {
 
   def validations: List[ValidationSpecification] = List(
     ExclusivePropertiesSpecification,
+    PathTemplateUnbalancedParameters,
     UnknownSecuritySchemeErrorSpecification,
     JsonSchemaInheratinaceWarningSpecification,
     InvalidTypeInheritanceErrorSpecification,
