@@ -594,16 +594,16 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
                           propertyEntry: YMapEntry,
                           property: PropertyMapping,
                           node: DialectDomainElement): Unit = {
+    val nestedObjectId = pathSegment(id, propertyEntry.key.as[YScalar].text.urlEncoded)
     property.nodesInRange match {
       case range: Seq[String] if range.size > 1 =>
-        parseObjectUnion(id, propertyEntry.value, property, node) match {
+        parseObjectUnion(nestedObjectId, propertyEntry.value, property, node) match {
           case Some(parsedRange) => node.setObjectField(property, parsedRange, propertyEntry.value)
           case None              => // ignore
         }
       case range: Seq[String] if range.size == 1 =>
         ctx.dialect.declares.find(_.id == range.head) match {
           case Some(nodeMapping: NodeMapping) =>
-            val nestedObjectId = pathSegment(id, propertyEntry.key.as[YScalar].text.urlEncoded)
             parseNestedNode(nestedObjectId, propertyEntry.value, nodeMapping) match {
               case Some(dialectDomainElement) =>
                 node.setObjectField(property, dialectDomainElement, propertyEntry.value)
