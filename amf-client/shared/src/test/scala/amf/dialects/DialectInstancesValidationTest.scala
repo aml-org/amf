@@ -15,6 +15,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val basePath = "file://amf-client/shared/src/test/resources/vocabularies2/validation/"
+  val productionPath = "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/"
 
   test("validation dialect 1 example 1 correct") {
     validate("dialect1.raml", "instance1_correct1.raml", 0)
@@ -112,6 +113,26 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
                             0)
   }
 
+  test("custom validation profile for ABOUT dialect default profile") {
+    customValidationProfile(
+      "ABOUT-dialect.raml",
+      "ABOUT.yaml",
+      "ABOUT-validation.raml",
+      "ABOUT-validation",
+      2,
+      productionPath)
+  }
+
+  test("Custom validation profile for ABOUT dialect default profile negative case") {
+    customValidationProfile(
+      "ABOUT-dialect.raml",
+      "ABOUT.custom.errors.yaml",
+      "ABOUT-validation.raml",
+      "ABOUT-validation",
+      5,
+      productionPath)
+  }
+
   protected def validate(dialect: String, instance: String, numErrors: Int) = {
     amf.core.AMF.registerPlugin(RAMLVocabulariesPlugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
@@ -155,14 +176,15 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
                                         instance: String,
                                         profile: String,
                                         name: String,
-                                        numErrors: Int) = {
+                                        numErrors: Int,
+                                        directory: String = basePath) = {
     amf.core.AMF.registerPlugin(RAMLVocabulariesPlugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     for {
       _ <- amf.core.AMF.init()
       dialect <- {
         new AMFCompiler(
-          basePath + dialect,
+          directory + dialect,
           platform,
           None,
           Some("application/yaml"),
@@ -171,12 +193,12 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
       }
       profile <- {
         AMFValidatorPlugin.enabled = true
-        AMFValidatorPlugin.loadValidationProfile(basePath + profile)
+        AMFValidatorPlugin.loadValidationProfile(directory + profile)
       }
       instance <- {
         AMFValidatorPlugin.enabled = true
         new AMFCompiler(
-          basePath + instance,
+          directory + instance,
           platform,
           None,
           Some("application/yaml"),
