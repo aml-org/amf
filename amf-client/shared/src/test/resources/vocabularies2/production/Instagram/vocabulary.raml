@@ -1,0 +1,28 @@
+#%RAML 1.0 Vocabulary
+
+# Name of the vocabulary
+vocabulary: Custom Vocabulary
+
+usage: Learn AMF
+
+# Namespace for the vocabulary (must be a URI prefix)
+# All terms in the vocabulary will be URIs in this namespace
+base: http://mulesoft.com/vocabularies/amf-learning#
+
+classTerms:
+
+  # URI for this term: http://mulesoft.com/vocabularies/amf-learning#Person
+  Person:
+    displayName: Person
+    description: Person description
+    properties:
+      - name
+
+propertyTerms:
+
+  # scalar range, datatype property
+  # URI for this term: http://mulesoft.com/vocabularies/amf-learning#name
+  name:
+    displayName: Name
+    description: Name description
+    range: string
