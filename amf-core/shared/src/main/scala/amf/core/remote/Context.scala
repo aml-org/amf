@@ -10,7 +10,7 @@ class Context protected (val platform: Platform,
   def hasCycles: Boolean = history.count(_.equals(current)) == 2
 
   def current: String = if (history.isEmpty) "" else history.last
-  def root: String    = history.head
+  def root: String    = if (history.isEmpty) "" else history.head
 
   def update(url: String): Context = Context(platform, history, resolve(url), mappings)
 
