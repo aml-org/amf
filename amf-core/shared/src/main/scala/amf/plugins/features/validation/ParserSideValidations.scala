@@ -7,6 +7,14 @@ import amf.core.vocabulary.Namespace
 
 object ParserSideValidations {
 
+  val ExclusivePropertiesSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "exclusive-properties-error").iri(),
+    "Exclusive properties declared together",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val OasBodyAndFormDataParameterSpecification = ValidationSpecification(
     (Namespace.AmfParser + "oas-not-body-and-form-data-parameters").iri(),
     "Operation cannot have a body parameter and a formData parameter",
@@ -145,10 +153,14 @@ object ParserSideValidations {
 
 
   val levels: Map[String, Map[String, String]] = Map(
+    ExclusivePropertiesSpecification.id() -> Map(
+      ProfileNames.RAML -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS  -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF  -> SeverityLevels.VIOLATION
+    ),
     OasBodyAndFormDataParameterSpecification.id() -> Map(
       ProfileNames.OAS  -> SeverityLevels.VIOLATION
     ),
-
     OasFormDataNotFileSpecification.id() -> Map(
       ProfileNames.OAS  -> SeverityLevels.VIOLATION
     ),
@@ -231,6 +243,7 @@ object ParserSideValidations {
   )
 
   def validations: List[ValidationSpecification] = List(
+    ExclusivePropertiesSpecification,
     UnknownSecuritySchemeErrorSpecification,
     JsonSchemaInheratinaceWarningSpecification,
     InvalidTypeInheritanceErrorSpecification,
