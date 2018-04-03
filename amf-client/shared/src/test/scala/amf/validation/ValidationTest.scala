@@ -844,6 +844,17 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Exclusive example vs examples validation") {
+    for {
+      validation <- Validation(platform)
+      doc        <- AMFCompiler(validationsPath + "production/example_examples.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(report.results.exists(_.message.contains("Properties 'example' and 'examples' are exclusive and cannot be declared together")))
+      assert(!report.conforms)
+    }
+  }
+
   test("Annotation target usage") {
     for {
       validation <- Validation(platform)

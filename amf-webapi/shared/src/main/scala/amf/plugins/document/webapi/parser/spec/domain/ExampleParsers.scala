@@ -8,6 +8,7 @@ import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSch
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.Example
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model._
 import org.yaml.parser.YamlParser
 import org.yaml.render.YamlRender
@@ -44,11 +45,21 @@ case class OasResponseExampleParser(yMapEntry: YMapEntry)(implicit ctx: WebApiCo
 case class RamlExamplesParser(map: YMap,
                               singleExampleKey: String,
                               multipleExamplesKey: String,
+                              parentId: Option[String],
                               producer: Option[String] => Example,
                               options: ExampleOptions)(implicit ctx: WebApiContext) {
-  def parse(): Seq[Example] =
+  def parse(): Seq[Example] = {
+    if (map.key(singleExampleKey).isDefined && map.key(multipleExamplesKey).isDefined && parentId.isDefined) {
+      ctx.violation(
+        ParserSideValidations.ExclusivePropertiesSpecification.id(),
+        parentId.get,
+        s"Properties '$singleExampleKey' and '$multipleExamplesKey' are exclusive and cannot be declared together",
+        map
+      )
+    }
     RamlMultipleExampleParser(multipleExamplesKey, map, producer, options).parse() ++
       RamlSingleExampleParser(singleExampleKey, map, producer, options).parse()
+  }
 
 }
 

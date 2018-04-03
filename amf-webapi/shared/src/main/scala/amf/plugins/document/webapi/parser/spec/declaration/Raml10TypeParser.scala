@@ -44,7 +44,7 @@ object Raml10TypeParser {
 
 trait ExampleParser {
   def parseExamples(shape: AnyShape, map: YMap, options: ExampleOptions = DefaultExampleOptions)(implicit ctx: WebApiContext): Unit = {
-    val examples = RamlExamplesParser(map, "example", "examples", shape.withExample, options).parse()
+    val examples = RamlExamplesParser(map, "example", "examples", Option(shape.id), shape.withExample, options).parse()
     if (examples.nonEmpty)
       shape.setArray(AnyShapeModel.Examples, examples)
   }
