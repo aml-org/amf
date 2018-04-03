@@ -855,6 +855,17 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Exclusive queryString vs queryParameters validation") {
+    for {
+      validation <- Validation(platform)
+      doc        <- AMFCompiler(validationsPath + "production/query_string_parameters.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(report.results.exists(_.message.contains("Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together")))
+      assert(!report.conforms)
+    }
+  }
+
   test("Annotation target usage") {
     for {
       validation <- Validation(platform)
