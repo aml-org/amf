@@ -51,7 +51,11 @@ class ProductionResolutionTest extends RamlResolutionTest {
   }
 
   test("test problem inclusion parent test") {
-    cycle("input.raml", "input.resolved.raml", RamlYamlHint, Raml,basePath + "include-parent/" )
+    cycle("input.raml", "input.resolved.raml", RamlYamlHint, Raml, basePath + "include-parent/")
+  }
+
+  test("test overlay documentation") {
+    cycle("overlay.raml", "api.resolved.raml", RamlYamlHint, Raml,basePath + "overlay-documentation/")
   }
 }
 
