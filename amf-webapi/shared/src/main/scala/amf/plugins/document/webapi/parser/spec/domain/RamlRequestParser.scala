@@ -21,13 +21,23 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
     extends RamlRequestParser(map, producer, parseOptional) {
 
   override def parse(request: Lazy[Request], target: Target): Unit = {
-
     map.key(
       "queryString",
       queryEntry => {
         Raml10TypeParser(queryEntry, (shape) => shape.adopted(request.getOrCreate.id))
           .parse()
-          .map(q => request.getOrCreate.withQueryString(q))
+          .map(q => {
+            val finalRequest = request.getOrCreate
+            if (map.key("queryParameters").isDefined) {
+              ctx.violation(
+                ParserSideValidations.ExclusivePropertiesSpecification.id(),
+                finalRequest.id,
+                s"Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together",
+                map
+              )
+            }
+            finalRequest.withQueryString(q)
+          })
       }
     )
   }
