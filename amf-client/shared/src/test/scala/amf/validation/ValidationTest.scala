@@ -28,8 +28,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath         = "file://amf-client/shared/src/test/resources/vocabularies/"
-  val vocabulariesPath = "file://amf-client/shared/src/test/resources/vocabularies/"
+  val basePath         = "file://amf-client/shared/src/test/resources/vocabularies2/production/validation/"
+  val vocabulariesPath = "file://amf-client/shared/src/test/resources/vocabularies2/production/validation/"
   val examplesPath     = "file://amf-client/shared/src/test/resources/validations/"
   val payloadsPath     = "file://amf-client/shared/src/test/resources/payloads/"
   val productionPath   = "file://amf-client/shared/src/test/resources/production/"
