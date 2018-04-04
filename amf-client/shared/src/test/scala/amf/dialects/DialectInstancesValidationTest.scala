@@ -129,7 +129,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
       "ABOUT.custom.errors.yaml",
       "ABOUT-validation.raml",
       "ABOUT-validation",
-      5,
+      4,
       productionPath)
   }
 

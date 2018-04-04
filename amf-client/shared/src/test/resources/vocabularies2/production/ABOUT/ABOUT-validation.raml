@@ -11,9 +11,6 @@ violation:
   - repository-is-url
   - keywords-are-not-present
 
-info:
-  - repository-is-not-git-url
-
 validations:
 
   development-status-from-repostatus:
@@ -44,13 +41,6 @@ validations:
     propertyConstraints:
       schema-org.codeRepository:
         pattern: "http.*"
-
-  repository-is-not-git-url:
-    message: "non human oriented URL detected in repository"
-    targetClass: about.SoftwareProject
-    propertyConstraints:
-      schema-org.codeRepository:
-        pattern: '.*(?<!\.git)$'
 
   keywords-are-not-present:
     message: "keywords were not defined"
