@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.validation
 
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
-import amf.core.services.RuntimeValidator
+import amf.core.services.{RuntimeSerializer, RuntimeValidator}
 import amf.core.validation._
 import amf.core.validation.core.{ValidationProfile, ValidationResult, ValidationSpecification}
 import amf.core.vocabulary.Namespace
