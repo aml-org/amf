@@ -6,7 +6,12 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DataNode
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.{FieldEntry, Fields, Position}
-import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
+import amf.plugins.document.webapi.contexts.{
+  OasSpecEmitterContext,
+  RamlScalarEmitter,
+  RamlSpecEmitterContext,
+  SpecEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.oas.{OasSecuritySchemeType, OasSecuritySchemeTypeMapping}
 import amf.plugins.domain.shapes.models.AnyShape
@@ -15,6 +20,7 @@ import amf.plugins.domain.webapi.models.security._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
+import amf.core.utils.Strings
 
 import scala.collection.mutable.ListBuffer
 
@@ -37,11 +43,12 @@ case class OasSecuritySchemesEmitters(securitySchemes: Seq[SecurityScheme], orde
                          _)))
     if (extensionDefinitions.nonEmpty)
       b.entry(
-        "x-securitySchemes",
+        "securitySchemes".asOasExtension,
         _.obj(
           traverse(
             ordering.sorted(extensionDefinitions.map(s => OasNamedSecuritySchemeEmitter(s._2, s._1, ordering)).toSeq),
-            _)))
+            _))
+      )
 
   }
 
@@ -150,11 +157,11 @@ case class OasSecuritySchemeEmitter(securityScheme: SecurityScheme,
       .map(f => {
         results += MapEntryEmitter("type", mapType.text, position = pos(f.value.annotations))
 
-      }) // todo x-apiKey type??
-    fs.entry(SecuritySchemeModel.DisplayName).map(f => results += ValueEmitter("x-displayName", f))
+      })
+    fs.entry(SecuritySchemeModel.DisplayName).map(f => results += ValueEmitter("displayName".asOasExtension, f))
     fs.entry(SecuritySchemeModel.Description).map(f => results += ValueEmitter("description", f))
 
-    results += Raml10DescribedByEmitter("x-describedBy", securityScheme, ordering, Nil)(toRaml(spec))
+    results += Raml10DescribedByEmitter("describedBy".asOasExtension, securityScheme, ordering, Nil)(toRaml(spec))
 
     fs.entry(SecuritySchemeModel.Settings).map(f => results ++= OasSecuritySettingsEmitter(f, ordering).emitters())
 
@@ -318,7 +325,8 @@ case class OasOAuth2SettingsEmitters(settings: Settings, ordering: SpecOrdering)
 
     // Annotations collected from the "paths" element that has no direct representation in any model element
     // They will be passed to the EndpointsEmitter
-    val orphanAnnotations = settings.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
+    val orphanAnnotations =
+      settings.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
 
     fs.entry(OAuth2SettingsModel.Scopes)
       .foreach(f => externals += OasOAuth2ScopeEmitter("scopes", f, ordering, orphanAnnotations))
@@ -367,9 +375,13 @@ case class RamlOAuth2ScopeEmitter(key: String, f: FieldEntry, ordering: SpecOrde
   override def position(): Position = pos(f.value.annotations)
 }
 
-case class OasOAuth2ScopeEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, orphanAnnotations: Seq[DomainExtension])(implicit spec: SpecEmitterContext) extends EntryEmitter {
+case class OasOAuth2ScopeEmitter(key: String,
+                                 f: FieldEntry,
+                                 ordering: SpecOrdering,
+                                 orphanAnnotations: Seq[DomainExtension])(implicit spec: SpecEmitterContext)
+    extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    val emitters =  OasScopeValuesEmitters(f).emitters() ++ scopesElementAnnotations()
+    val emitters = OasScopeValuesEmitters(f).emitters() ++ scopesElementAnnotations()
     b.entry(key, _.obj(traverse(ordering.sorted(emitters), _)))
   } // todo : name and description?
 
@@ -388,7 +400,8 @@ case class OasScopeValuesEmitters(f: FieldEntry) {
 case class OasSettingsTypeEmitter(settingsEntries: Seq[EntryEmitter], settings: Settings, ordering: SpecOrdering)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    sourceOr(settings.annotations, b.entry("x-settings", _.obj(traverse(ordering.sorted(settingsEntries), _))))
+    sourceOr(settings.annotations,
+             b.entry("settings".asOasExtension, _.obj(traverse(ordering.sorted(settingsEntries), _))))
   }
 
   override def position(): Position = settingsEntries.headOption.map(_.position()).getOrElse(Position.ZERO)

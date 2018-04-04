@@ -23,6 +23,7 @@ import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
+import amf.core.utils.Strings
 
 import scala.collection.mutable
 
@@ -40,7 +41,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
   def extensionEmitter(): Seq[EntryEmitter] =
     document.fields
       .entry(ExtensionLikeModel.Extends)
-      .map(f => OasNamedRefEmitter("x-extends", f.scalar.toString, pos = pos(f.value.annotations)))
+      .map(f => OasNamedRefEmitter("extends".asOasExtension, f.scalar.toString, pos = pos(f.value.annotations)))
       .toList ++ retrieveHeader()
 
   private def retrieveHeader() = document match {
@@ -60,7 +61,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
     val api        = emitWebApi(ordering, references.references)
     val extension  = extensionEmitter()
     val usage: Option[ValueEmitter] =
-      doc.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("x-usage", f))
+      doc.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("usage".asOasExtension, f))
 
     YDocument {
       _.obj { b =>
@@ -181,9 +182,10 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
           _.obj { b =>
             val result = mutable.ListBuffer[EntryEmitter]()
 
-            fs.entry(EndPointModel.Name).map(f => result += ValueEmitter("x-displayName", f))
-            fs.entry(EndPointModel.Description).map(f => result += ValueEmitter("x-description", f))
-            fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter("x-", f, ordering).emitters())
+            fs.entry(EndPointModel.Name).map(f => result += ValueEmitter("displayName".asOasExtension, f))
+            fs.entry(EndPointModel.Description).map(f => result += ValueEmitter("description".asOasExtension, f))
+            fs.entry(DomainElementModel.Extends)
+              .map(f => result ++= ExtendsEmitter(f, ordering, oasExtension = true).emitters())
 
             val parameters =
               Parameters.classified(endpoint.path.value(), endpoint.parameters, endpoint.payloads.headOption)
@@ -200,7 +202,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
               .map(f => result ++= operations(f, ordering, parameters.body.isDefined, references))
 
             fs.entry(EndPointModel.Security)
-              .map(f => result += ParametrizedSecuritiesSchemeEmitter("x-security", f, ordering))
+              .map(f => result += ParametrizedSecuritiesSchemeEmitter("security".asOasExtension, f, ordering))
 
             result ++= AnnotationsEmitter(endpoint, ordering).emitters
 
@@ -249,7 +251,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
             fs.entry(OperationModel.Schemes).map(f => result += ArrayEmitter("schemes", f, ordering))
             fs.entry(OperationModel.Accepts).map(f => result += ArrayEmitter("consumes", f, ordering))
             fs.entry(OperationModel.ContentType).map(f => result += ArrayEmitter("produces", f, ordering))
-            fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter("x-", f, ordering).emitters())
+            fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter(f, ordering, true).emitters())
             Option(operation.request).foreach(req =>
               result ++= requestEmitters(req, ordering, endpointPayloadEmitted, references))
             // Annotations collected from the "responses" element that has no direct representation in any model element
@@ -287,7 +289,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
         result ++= OasParametersEmitter("parameters", parameters, ordering, payloads.default, references).emitters()
 
       if (payloads.other.nonEmpty)
-        result += OasPayloadsEmitter("x-request-payloads", payloads.other, ordering, references)
+        result += OasPayloadsEmitter("requestPayloads".asOasExtension, payloads.other, ordering, references)
 
       val fs = request.fields
 
@@ -304,7 +306,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
       fs.entry(RequestModel.UriParameters)
         .map { f =>
           if (f.array.values.nonEmpty)
-            result += RamlParametersEmitter("x-baseUriParameters", f, ordering, references)(toRaml(spec))
+            result += RamlParametersEmitter("baseUriParameters".asOasExtension, f, ordering, references)(toRaml(spec))
         }
 
       result ++= AnnotationsEmitter(request, ordering).emitters
@@ -428,7 +430,7 @@ class OasSpecEmitter(implicit val spec: OasSpecEmitterContext) extends BaseSpecE
       if (modules.nonEmpty) {
         val idCounter: IdCounter = new IdCounter
         b.entry(
-          "x-uses",
+          "uses".asOasExtension,
           _.obj { b =>
             traverse(
               ordering.sorted(references.map(r => ReferenceEmitter(r, ordering, () => idCounter.genId("uses")))),

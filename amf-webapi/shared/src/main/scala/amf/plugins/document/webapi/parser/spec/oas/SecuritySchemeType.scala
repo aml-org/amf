@@ -1,5 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
+import amf.core.utils.Strings
+
 /**
   * Created by hernan.najles on 10/17/17.
   */
@@ -12,9 +14,11 @@ object OasSecuritySchemeTypeMapping {
   object ApiKeyOas    extends OasSecuritySchemeType("apiKey", true)
 
   def fromText(text: String): OasSecuritySchemeType = text match {
-    case "OAuth 2.0"            => OasSecuritySchemeType("oauth2", true)
-    case "Basic Authentication" => OasSecuritySchemeType("basic", true)
-    case "x-apiKey"             => OasSecuritySchemeType("apiKey", true)
-    case s                      => OasSecuritySchemeType(s, false)
+    case "OAuth 2.0"            => OasSecuritySchemeType("oauth2", isOas = true)
+    case "Basic Authentication" => OasSecuritySchemeType("basic", isOas = true)
+    case `apiKeyConst`          => OasSecuritySchemeType("apiKey", isOas = true)
+    case s                      => OasSecuritySchemeType(s, isOas = false)
   }
+
+  val apiKeyConst: String = "apiKey".asOasExtension
 }

@@ -30,17 +30,17 @@ class AnnotationsTest extends FunSuite with Matchers with Inspectors {
   )
 
   private val knownFixture = Seq(
-    ("x-title", None),
-    ("x-facets", None),
-    ("(examples)", None),
-    ("x-examples", None),
-    ("x-fileTypes", None),
-    ("(license)", None),
-    ("x-base-uri-parameters", None),
-    ("(base-uri-parameters)", None),
-    ("x-annotationTypes", None),
-    ("(oas-deprecated)", None),
-    ("(summary)", None)
+    ("x-amf-title", None),
+    ("x-amf-facets", None),
+    ("(amf-examples)", None),
+    ("x-amf-examples", None),
+    ("x-amf-fileTypes", None),
+    ("(amf-license)", None),
+    ("x-amf-baseUriParameters", None),
+    ("(amf-baseUriParameters)", None),
+    ("x-amf-annotationTypes", None),
+    ("(amf-oasDeprecated)", None),
+    ("(amf-summary)", None)
   )
 
   test("Test is raml annotation") {

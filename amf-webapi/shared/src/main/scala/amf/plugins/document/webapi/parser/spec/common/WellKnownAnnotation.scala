@@ -11,14 +11,11 @@ object WellKnownAnnotation {
     "contact",
     "externalDocs",
     "license",
-    "base-uri-parameters",
-    "oas-deprecated",
+    "baseUriParameters",
+    "oasDeprecated",
     "summary",
     "externalDocs",
     "payloads",
-    "request-payloads",
-    "response-payloads",
-    "media-type",
     "readOnly",
     "dependencies",
     "tuple",
@@ -39,35 +36,29 @@ object WellKnownAnnotation {
   )
 
   private val oasKnownAnnotations = Set(
-    "base-uri-parameters",
+    "baseUriParameters",
     "annotationTypes",
-    "request-payloads",
-    "response-payloads",
+    "requestPayloads",
+    "responsePayloads",
     "uses",
-    "media-type",
+    "mediaType",
     "traits",
     "resourceTypes",
     "is",
     "type",
-    "extension-type",
-    "fragment-type",
+    "extensionType",
+    "fragmentType",
     "usage",
     "title",
-    "user-documentation",
+    "userDocumentation",
     "description",
     "displayName",
     "extends",
-    "displayName",
     "describedBy",
-    "discriminator-value",
-    "requestTokenUri",
-    "authorizationUri",
-    "tokenCredentialsUri",
-    "signatures",
+    "discriminatorValue",
     "settings",
     "securitySchemes",
     "queryParameters",
-    "headers",
     "queryString",
     "examples",
     "fileTypes",
@@ -77,17 +68,18 @@ object WellKnownAnnotation {
     "consumes",
     "produces",
     "schemes",
-    "variables",
-    "parameters"
+    "parameters",
+    "facets"
   )
 
-  def resolveAnnotation(field: String): Option[String] = {
-    field match {
-      case ramlAnnotation(value) => Some(value).filterNot(ramlKnownAnnotations.contains)
-      case oasAnnotation(value)  => Some(value).filterNot(oasKnownAnnotations.contains).filterNot(_.equals("facets"))
-      case _                     => None
-    }
+  def resolveAnnotation(field: String): Option[String] = field match {
+    case ramlAnnotation(value) if notContains(ramlKnownAnnotations, value) => Some(value)
+    case oasAnnotation(value) if notContains(oasKnownAnnotations, value)   => Some(value)
+    case _                                                                 => None
   }
+
+  private def notContains(annotations: Set[String], value: String) =
+    !annotations.contains(value.stripPrefix(amfPrefix))
 
   def isOasAnnotation(field: String): Boolean = field match {
     case oasAnnotation(_) => true
@@ -99,6 +91,7 @@ object WellKnownAnnotation {
     case _                 => false
   }
 
+  private val amfPrefix             = "amf-"
   private val ramlAnnotation: Regex = "^\\((.+)\\)$".r
   private val oasAnnotation: Regex  = "^[xX]-(.+)".r
 }

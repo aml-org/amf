@@ -123,13 +123,13 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
     )
 
     map.key("version", (WebApiModel.Version in api).allowingAnnotations)
-    map.key("(termsOfService)", WebApiModel.TermsOfService in api)
+    map.key("termsOfService".asRamlAnnotation, WebApiModel.TermsOfService in api)
     map.key("protocols", (WebApiModel.Schemes in api).allowingSingleValue)
-    map.key("(contact)", WebApiModel.Provider in api using OrganizationParser.parse)
-    map.key("(license)", WebApiModel.License in api using LicenseParser.parse)
+    map.key("contact".asRamlAnnotation, WebApiModel.Provider in api using OrganizationParser.parse)
+    map.key("license".asRamlAnnotation, WebApiModel.License in api using LicenseParser.parse)
 
     map.key(
-      "(tags)",
+      "tags".asRamlAnnotation,
       entry => {
         val tags = entry.value.as[Seq[YMap]].map(tag => TagsParser(tag, (tag: Tag) => tag.adopted(api.id)).parse())
         api.set(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
@@ -223,12 +223,24 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
     val parent = root.location + "#/declarations"
     parseTypeDeclarations(map, parent)
     parseAnnotationTypeDeclarations(map, parent)
-    AbstractDeclarationsParser("traits", entry => Trait(entry).withName(entry.key.as[String]).withId(parent + s"/traits/${entry.key.as[String].urlEncoded}"), map, parent).parse()
-    AbstractDeclarationsParser("resourceTypes", entry => ResourceType(entry).withName(entry.key.as[String]).withId(parent + s"/resourceTypes/${entry.key.as[String].urlEncoded}"), map, parent)
-      .parse()
+    AbstractDeclarationsParser(
+      "traits",
+      entry =>
+        Trait(entry).withName(entry.key.as[String]).withId(parent + s"/traits/${entry.key.as[String].urlEncoded}"),
+      map,
+      parent).parse()
+    AbstractDeclarationsParser(
+      "resourceTypes",
+      entry =>
+        ResourceType(entry)
+          .withName(entry.key.as[String])
+          .withId(parent + s"/resourceTypes/${entry.key.as[String].urlEncoded}"),
+      map,
+      parent
+    ).parse()
     parseSecuritySchemeDeclarations(map, parent)
-    parseParameterDeclarations("(parameters)", map, root.location + "#/parameters")
-    parseResponsesDeclarations("(responses)", map, root.location + "#/responses")
+    parseParameterDeclarations("parameters".asRamlAnnotation, map, root.location + "#/parameters")
+    parseResponsesDeclarations("responses".asRamlAnnotation, map, root.location + "#/responses")
   }
 
   def parseResponsesDeclarations(key: String, map: YMap, parentPath: String): Unit = {

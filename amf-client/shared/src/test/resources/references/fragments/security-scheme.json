@@ -1,7 +1,7 @@
 {
-  "x-fragment-type": "2.0 SecurityScheme",
+  "x-amf-fragmentType": "2.0 SecurityScheme",
   "type": "oauth2",
-  "x-describedBy": {
+  "x-amf-describedBy": {
     "headers": {
       "Authorization": {
         "description": "Used to send a valid OAuth 2 access token.",
@@ -25,7 +25,7 @@
     "profile": "",
     "history": ""
   },
-  "x-settings": {
+  "x-amf-settings": {
     "authorizationGrants": [
       "authorization_code",
       "implicit",

@@ -13,8 +13,8 @@ types:
     type: number
     minimum: 2
     maximum: 25
-    (exclusiveMinimum): false
-    (exclusiveMaximum): false
+    (amf-exclusiveMinimum): false
+    (amf-exclusiveMaximum): false
     format: int32
     multipleOf: 2
   ObjectTest:
@@ -22,13 +22,13 @@ types:
     description: ooo person
     default:
       name: john doe
-    (externalDocs):
+    (amf-externalDocs):
       url: externalDocsUrl
       description: externalDocsDescription
     properties:
       name:
         type: string
-        (readOnly): false
+        (amf-readOnly): false
     minProperties: 1
     maxProperties: 5
     discriminator: ddd

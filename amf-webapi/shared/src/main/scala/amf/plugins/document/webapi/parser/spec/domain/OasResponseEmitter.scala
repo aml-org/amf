@@ -13,6 +13,7 @@ import amf.plugins.document.webapi.parser.spec.toRaml
 import amf.plugins.domain.webapi.metamodel.{PayloadModel, RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Payload, Response}
 import org.yaml.model.YDocument.EntryBuilder
+import amf.core.utils.Strings
 
 import scala.collection.mutable
 
@@ -43,7 +44,9 @@ case class OasResponseEmitter(response: Response, ordering: SpecOrdering, refere
                 val payloads = OasPayloads(response.payloads)
 
                 payloads.default.foreach(payload => {
-                  payload.fields.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("x-media-type", f))
+                  payload.fields
+                    .entry(PayloadModel.MediaType)
+                    .map(f => result += ValueEmitter("mediaType".asOasExtension, f))
                   payload.fields
                     .entry(PayloadModel.Schema)
                     .map { f =>
@@ -54,7 +57,7 @@ case class OasResponseEmitter(response: Response, ordering: SpecOrdering, refere
                 })
 
                 if (payloads.other.nonEmpty)
-                  result += OasPayloadsEmitter("x-response-payloads", payloads.other, ordering, references)
+                  result += OasPayloadsEmitter("responsePayloads".asOasExtension, payloads.other, ordering, references)
 
                 fs.entry(ResponseModel.Examples)
                   .map(f => result += OasResponseExamplesEmitter("examples", f, ordering))

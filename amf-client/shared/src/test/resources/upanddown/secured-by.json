@@ -5,16 +5,16 @@
       "oauth_2_0": []
     }
   ],
-  "x-securitySchemes": {
+  "x-amf-securitySchemes": {
     "oauth_1_0": {
       "description": "OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.",
       "type": "OAuth 1.0",
-      "x-settings": {
+      "x-amf-settings": {
         "requestTokenUri": "https://api.mysampleapi.com/1/oauth/request_token",
         "authorizationUri": "https://api.mysampleapi.com/1/oauth/authorize",
         "tokenCredentialsUri": "https://api.mysampleapi.com/1/oauth/access_token"
       },
-      "x-describedBy": {
+      "x-amf-describedBy": {
         "headers": {
           "Authorization": {
             "description": "Used to send a valid OAuth 2 access token.",

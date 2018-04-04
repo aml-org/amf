@@ -11,8 +11,8 @@ types:
     pattern: blabla.+
   IntegerTest:
     type: number
-    (exclusiveMinimum): false
-    (exclusiveMaximum): false
+    (amf-exclusiveMinimum): false
+    (amf-exclusiveMaximum): false
     minimum: 2
     maximum: 25
     multipleOf: 2
@@ -22,7 +22,7 @@ types:
     description: ooo person
     default:
       name: john doe
-    (externalDocs):
+    (amf-externalDocs):
       url: externalDocsUrl
       description: externalDocsDescription
     xml:
@@ -40,6 +40,6 @@ types:
     properties:
       name:
         type: string
-        (readOnly): false
+        (amf-readOnly): false
 title: test title
 version: 1.0

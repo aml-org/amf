@@ -10,6 +10,7 @@ import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Payload, Response}
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
+import amf.core.utils.Strings
 
 import scala.collection.mutable
 
@@ -114,19 +115,20 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
                     if (others.entries.nonEmpty) {
                       if (payloads.isEmpty) {
                         if (others.entries.map(_.key.as[YScalar].text) == List("example") && !ctx.globalMediatype) {
-                          ctx.violation(
-                            ParserSideValidations.ParsingErrorSpecification.id(),
-                            res.id,
-                            "Invalid media type",
-                            m)
+                          ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+                                        res.id,
+                                        "Invalid media type",
+                                        m)
                         }
                         ctx.factory
                           .typeParser(entry, shape => shape.withName("default").adopted(res.id), false, defaultType)
                           .parse()
                           .foreach(payloads += res.withPayload(None).withSchema(_)) // todo
                       } else {
-                        others.entries.foreach(e =>
-                          ctx.violation(s"Unexpected key '${e.key.as[YScalar].text}'. Expecting valid media types.", e))
+                        others.entries.foreach(
+                          e =>
+                            ctx.violation(s"Unexpected key '${e.key.as[YScalar].text}'. Expecting valid media types.",
+                                          e))
                       }
                     }
                   case _ =>
@@ -137,7 +139,7 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
           }
         )
 
-        val examples = OasResponseExamplesParser("(examples)", map).parse()
+        val examples = OasResponseExamplesParser("examples".asRamlAnnotation, map).parse()
         if (examples.nonEmpty) res.set(ResponseModel.Examples, AmfArray(examples))
 
         ctx.closedShape(res.id, map, "response")

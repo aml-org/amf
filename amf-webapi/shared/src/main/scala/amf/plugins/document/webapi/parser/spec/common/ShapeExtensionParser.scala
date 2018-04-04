@@ -7,17 +7,18 @@ import amf.core.parser._
 import amf.core.remote.{Oas, Raml}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import org.yaml.model.YMap
+import amf.core.utils.Strings
 
 case class ShapeExtensionParser(shape: Shape, map: YMap, ctx: WebApiContext) {
   def parse(): Unit = {
     val shapeExtensionDefinitions = shape.collectCustomShapePropertyDefinitions(onlyInherited = true)
-    shapeExtensionDefinitions.flatMap(_.values).distinct.foreach { shapeExensionDefinition =>
+    shapeExtensionDefinitions.flatMap(_.values).distinct.foreach { shapeExtensionDefinition =>
       val extensionKey = ctx.vendor match {
-        case r: Raml => shapeExensionDefinition.name.value()
-        case Oas     => s"x-facet-${shapeExensionDefinition.name.value()}"
+        case _: Raml => shapeExtensionDefinition.name.value() // TODO check this.
+        case _: Oas  => s"facet-${shapeExtensionDefinition.name.value()}".asOasExtension
         case _ =>
           ctx.violation(shape.id, s"Cannot parse shape extension for vendor ${ctx.vendor}", map)
-          shapeExensionDefinition.name.value()
+          shapeExtensionDefinition.name.value()
       }
       map.key(
         extensionKey,
@@ -25,7 +26,7 @@ case class ShapeExtensionParser(shape: Shape, map: YMap, ctx: WebApiContext) {
           val dataNode =
             DataNodeParser(entry.value, parent = Some(shape.id + s"/extension/$extensionKey"))(ctx).parse()
           val extension = ShapeExtension(entry)
-            .withDefinedBy(shapeExensionDefinition)
+            .withDefinedBy(shapeExtensionDefinition)
             .withExtension(dataNode)
           shape.add(ShapeModel.CustomShapeProperties, extension)
         }

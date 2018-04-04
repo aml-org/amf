@@ -22,12 +22,14 @@ import scala.collection.mutable.ListBuffer
   *
   */
 case class AnnotationsEmitter(element: DomainElement, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
-  def emitters: Seq[EntryEmitter] = element.customDomainProperties
-    .filter(!_.extension.annotations.contains(classOf[OrphanOasExtension]))
-    .map(spec.factory.annotationEmitter(_, ordering))
+  def emitters: Seq[EntryEmitter] =
+    element.customDomainProperties
+      .filter(!_.extension.annotations.contains(classOf[OrphanOasExtension]))
+      .map(spec.factory.annotationEmitter(_, ordering))
 }
 
-case class OrphanAnnotationsEmitter(orphans: Seq[DomainExtension], ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
+case class OrphanAnnotationsEmitter(orphans: Seq[DomainExtension], ordering: SpecOrdering)(
+    implicit spec: SpecEmitterContext) {
   def emitters: Seq[EntryEmitter] = orphans.map(spec.factory.annotationEmitter(_, ordering))
 }
 
@@ -74,7 +76,7 @@ case class OasFacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: Sp
     implicit spec: SpecEmitterContext)
     extends FacetsInstanceEmitter(shapeExtension, ordering) {
 
-  override val name: String = "x-facet-" + shapeExtension.definedBy.name.value()
+  override val name: String = s"facet-${shapeExtension.definedBy.name.value()}".asOasExtension
 }
 
 case class RamlFacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: SpecOrdering)(
@@ -102,7 +104,11 @@ abstract class FacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: S
   override def position(): Position = pos(shapeExtension.annotations)
 }
 
-case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering, resolvedLinks: Boolean = false, referencesCollector: mutable.Map[String,DomainElement] = mutable.Map()) extends PartEmitter {
+case class DataNodeEmitter(dataNode: DataNode,
+                           ordering: SpecOrdering,
+                           resolvedLinks: Boolean = false,
+                           referencesCollector: mutable.Map[String, DomainElement] = mutable.Map())
+    extends PartEmitter {
   private val xsdString: String  = (Namespace.Xsd + "string").iri()
   private val xsdInteger: String = (Namespace.Xsd + "integer").iri()
   private val xsdFloat: String   = (Namespace.Xsd + "float").iri()
@@ -125,12 +131,13 @@ case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering, resolvedL
       case obj: ObjectNode    => objectEmitters(obj)
       case link: LinkNode     => linkEmitters(link)
     }) collect {
-      case e: EntryEmitter      => e
-      case t: TextScalarEmitter => new EntryEmitter() {
-        override def emit(b: EntryBuilder): Unit = b.entry(YNode("@value"), t.value)
-        override def position(): Position = t.position()
-      }
-      case other                => throw new Exception(s"Unsupported seq of emitter type in data node emitters $other")
+      case e: EntryEmitter => e
+      case t: TextScalarEmitter =>
+        new EntryEmitter() {
+          override def emit(b: EntryBuilder): Unit = b.entry(YNode("@value"), t.value)
+          override def position(): Position        = t.position()
+        }
+      case other => throw new Exception(s"Unsupported seq of emitter type in data node emitters $other")
     }
   }
 
@@ -144,7 +151,8 @@ case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering, resolvedL
     b.obj(b => ordering.sorted(objectEmitters(objectNode)).foreach(_.emit(b)))
   }
 
-  def arrayEmitters(arrayNode: ArrayNode): Seq[PartEmitter] = arrayNode.members.map(DataNodeEmitter(_, ordering, resolvedLinks, referencesCollector))
+  def arrayEmitters(arrayNode: ArrayNode): Seq[PartEmitter] =
+    arrayNode.members.map(DataNodeEmitter(_, ordering, resolvedLinks, referencesCollector))
 
   def emitArray(arrayNode: ArrayNode, b: PartBuilder): Unit = {
     b.list(b => {
@@ -168,7 +176,6 @@ case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering, resolvedL
     }
   }
 
-
   def scalarEmitter(scalar: ScalarNode): PartEmitter = {
     scalar.dataType match {
       case Some(t) if t == xsdString  => TextScalarEmitter(scalar.value, scalar.annotations, YType.Str)
@@ -183,7 +190,12 @@ case class DataNodeEmitter(dataNode: DataNode, ordering: SpecOrdering, resolvedL
   override def position(): Position = pos(dataNode.annotations)
 }
 
-case class DataPropertyEmitter(property: String, dataNode: ObjectNode, ordering: SpecOrdering, resolvedLinks: Boolean = false, referencesCollector: mutable.Map[String, DomainElement] = mutable.Map()) extends EntryEmitter {
+case class DataPropertyEmitter(property: String,
+                               dataNode: ObjectNode,
+                               ordering: SpecOrdering,
+                               resolvedLinks: Boolean = false,
+                               referencesCollector: mutable.Map[String, DomainElement] = mutable.Map())
+    extends EntryEmitter {
   val annotations: Annotations = dataNode.propertyAnnotations(property)
   val propertyValue: DataNode  = dataNode.properties(property)
 

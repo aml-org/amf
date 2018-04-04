@@ -7,6 +7,7 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmitterContext, SpecEmitterContext}
 import org.yaml.model.YDocument.EntryBuilder
+import amf.core.utils.Strings
 
 case class RamlCustomFacetsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext)
@@ -22,7 +23,7 @@ case class OasCustomFacetsEmitter(f: FieldEntry, ordering: SpecOrdering, referen
     implicit spec: OasSpecEmitterContext)
     extends CustomFacetsEmitter(f, ordering, references) {
 
-  override val key: String = "x-facets"
+  override val key: String = "facets".asOasExtension
 
   override def shapeEmitter: (PropertyShape, SpecOrdering, Seq[BaseUnit]) => EntryEmitter =
     OasPropertyShapeEmitter.apply

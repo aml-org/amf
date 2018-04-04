@@ -6,16 +6,16 @@
   "basePath": "/some/base/uri",
   "paths": {
     "/levelzero": {
-      "x-displayName": "Name"
+      "x-amf-displayName": "Name"
     },
     "/levelzero/level-one": {
-      "x-displayName": "One display name",
-      "x-description": "and this description!",
+      "x-amf-displayName": "One display name",
+      "x-amf-description": "and this description!",
       "parameters": [
         {
           "name": "paramName",
           "in": "body",
-          "x-media-type": "application/json",
+          "x-amf-mediaType": "application/json",
           "schema": {
             "type": "integer"
           }
@@ -39,7 +39,7 @@
           {
             "name": "otherParamName",
             "in": "body",
-            "x-media-type": "application/xml",
+            "x-amf-mediaType": "application/xml",
             "schema": {
               "type": "string"
             }

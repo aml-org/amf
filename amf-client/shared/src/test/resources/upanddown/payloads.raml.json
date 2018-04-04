@@ -8,13 +8,13 @@
   "paths": {
     "/levelzero": {},
     "/levelzero/level-one": {
-      "x-displayName": "One display name",
-      "x-description": "and this description!",
+      "x-amf-displayName": "One display name",
+      "x-amf-description": "and this description!",
       "get": {
         "operationId": "Some title",
         "parameters": [
           {
-            "x-media-type": "application/json",
+            "x-amf-mediaType": "application/json",
             "in": "body",
             "schema": {
               "type": "string"
@@ -32,8 +32,8 @@
           },
           "404": {
             "description": "Not found!",
-            "x-media-type": "application/json",
-            "x-response-payloads": [
+            "x-amf-mediaType": "application/json",
+            "x-amf-responsePayloads": [
               {
                 "mediaType": "application/xml"
               }

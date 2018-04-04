@@ -7,7 +7,7 @@
   "paths": {},
   "definitions": {
     "CustomDate": {
-      "x-facets": {
+      "x-amf-facets": {
         "onlyFutureDates": {
           "type": "boolean"
         },
@@ -19,7 +19,7 @@
       "format": "date-only"
     },
     "PossibleMeetingDate": {
-      "x-facet-noHolidays": true,
+      "x-amf-facet-noHolidays": true,
       "type": "string",
       "format": "date-only"
     }

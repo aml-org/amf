@@ -8,6 +8,7 @@ import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.ReferencesParser
 import org.yaml.model._
+import amf.core.utils.Strings
 
 /**
   *
@@ -23,7 +24,7 @@ case class OasModuleParser(root: Root)(implicit val ctx: OasWebApiContext) exten
     module.set(BaseUnitModel.Location, root.location)
 
     root.parsed.document.toOption[YMap].foreach { rootMap =>
-      val references = ReferencesParser("x-uses", rootMap, root.references).parse(root.location)
+      val references = ReferencesParser("uses".asOasExtension, rootMap, root.references).parse(root.location)
 
       parseDeclarations(root, rootMap)
 

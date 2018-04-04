@@ -27,13 +27,7 @@ case class ReferenceDeclarations(references: mutable.Map[String, BaseUnit] = mut
     // todo : ignore domain entities of vocabularies?
     unit match {
       case d: DeclaresModel =>
-        d.declares
-          .filter({
-            // TODO: removed in modularization, should I reintroduce it later? @modularization
-            /* case _: DomainEntity => false */
-            case _ => true
-          })
-          .foreach(library += _)
+        d.declares.foreach(library += _)
     }
   }
 

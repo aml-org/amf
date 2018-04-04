@@ -33,7 +33,7 @@
   },
   "paths": {
     "/levelzero": {
-      "x-displayName": "Name",
+      "x-amf-displayName": "Name",
       "get": {
         "operationId": "Some title",
         "description": "Some description",
@@ -70,8 +70,8 @@
       }
     },
     "/levelzero/level-one": {
-      "x-displayName": "One display name",
-      "x-description": "and this description!",
+      "x-amf-displayName": "One display name",
+      "x-amf-description": "and this description!",
       "get": {
         "operationId": "Some title level one",
         "description": "Some description level one",
@@ -89,10 +89,10 @@
       }
     },
     "/levelzero/another-level-one": {
-      "x-displayName": "some other display name"
+      "x-amf-displayName": "some other display name"
     },
     "/another-levelzero": {
-      "x-displayName": "Root name",
+      "x-amf-displayName": "Root name",
       "post": {
         "operationId": "Some title another level 0",
         "description": "Some description another level 0",

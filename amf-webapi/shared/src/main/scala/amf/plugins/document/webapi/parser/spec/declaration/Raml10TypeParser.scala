@@ -9,7 +9,12 @@ import amf.core.model.domain.{ScalarNode => DynamicDataNode, _}
 import amf.core.parser.{Annotations, Value, _}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
-import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext, WebApiContext}
+import amf.plugins.document.webapi.contexts.{
+  Raml08WebApiContext,
+  Raml10WebApiContext,
+  RamlWebApiContext,
+  WebApiContext
+}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec._
@@ -25,6 +30,7 @@ import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.{YPart, _}
 import org.yaml.parser.YamlParser
 import org.yaml.render.YamlRender
+import amf.core.utils.Strings
 
 import scala.collection.mutable
 
@@ -37,14 +43,15 @@ object Raml10TypeParser {
       new Raml10WebApiContext(ctx, Some(ctx.declarations)))
 
   def parse(adopt: Shape => Shape, isAnnotation: Boolean = false, defaultType: DefaultType = StringDefaultType)(
-      node: YNode)(implicit ctx: RamlWebApiContext) = {
+      node: YNode)(implicit ctx: RamlWebApiContext): Option[Shape] = {
     val head = node.as[YMap].entries.head
     apply(head, adopt, isAnnotation, defaultType).parse()
   }
 }
 
 trait ExampleParser {
-  def parseExamples(shape: AnyShape, map: YMap, options: ExampleOptions = DefaultExampleOptions)(implicit ctx: WebApiContext): Unit = {
+  def parseExamples(shape: AnyShape, map: YMap, options: ExampleOptions = DefaultExampleOptions)(
+      implicit ctx: WebApiContext): Unit = {
     val examples = RamlExamplesParser(map, "example", "examples", Option(shape.id), shape.withExample, options).parse()
     if (examples.nonEmpty)
       shape.setArray(AnyShapeModel.Examples, examples)
@@ -365,7 +372,10 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
 trait RamlExternalTypes extends ExampleParser {
   implicit val ctx: RamlWebApiContext
 
-  protected def parseXMLSchemaExpression(name: String, value: YNode, adopt: Shape => Shape, parseExample: Boolean = false): AnyShape = {
+  protected def parseXMLSchemaExpression(name: String,
+                                         value: YNode,
+                                         adopt: Shape => Shape,
+                                         parseExample: Boolean = false): AnyShape = {
     value.tagType match {
       case YType.Map =>
         val map = value.as[YMap]
@@ -396,7 +406,10 @@ trait RamlExternalTypes extends ExampleParser {
     }
   }
 
-  protected def parseJSONSchemaExpression(name: String, value: YNode, adopt: Shape => Shape, parseExample: Boolean = false): AnyShape = {
+  protected def parseJSONSchemaExpression(name: String,
+                                          value: YNode,
+                                          adopt: Shape => Shape,
+                                          parseExample: Boolean = false): AnyShape = {
     val (text, valueAST) = value.tagType match {
       case YType.Map =>
         val map = value.as[YMap]
@@ -477,7 +490,9 @@ sealed abstract class RamlTypeParser(ast: YPart,
       RamlTypeDetection(
         node,
         "",
-        node.toOption[YMap].flatMap(m => m.key("format").orElse(m.key("(format)")).map(_.value.toString())),
+        node
+          .toOption[YMap]
+          .flatMap(m => m.key("format").orElse(m.key("format".asRamlAnnotation)).map(_.value.toString())),
         defaultType)
     val result = info.map {
       case XMLSchemaType                         => parseXMLSchemaExpression(name, node, adopt, parseExample = true)
@@ -646,8 +661,8 @@ sealed abstract class RamlTypeParser(ast: YPart,
       map.key("pattern", (ScalarShapeModel.Pattern in shape).allowingAnnotations)
       map.key("minLength", (ScalarShapeModel.MinLength in shape).allowingAnnotations)
       map.key("maxLength", (ScalarShapeModel.MaxLength in shape).allowingAnnotations)
-      map.key("(exclusiveMinimum)", ScalarShapeModel.ExclusiveMinimum in shape)
-      map.key("(exclusiveMaximum)", ScalarShapeModel.ExclusiveMaximum in shape)
+      map.key("exclusiveMinimum".asRamlAnnotation, ScalarShapeModel.ExclusiveMinimum in shape)
+      map.key("exclusiveMaximum".asRamlAnnotation, ScalarShapeModel.ExclusiveMaximum in shape)
     }
   }
 
@@ -765,20 +780,20 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
       map.key("fileTypes", FileShapeModel.FileTypes in shape)
 
-      map.key("(minimum)", entry => { // todo pope
+      map.key("minimum".asRamlAnnotation, entry => { // todo pope
         val value = ScalarNode(entry.value)
         shape.set(ScalarShapeModel.Minimum, value.text(), Annotations(entry))
       })
 
-      map.key("(maximum)", entry => { // todo pope
+      map.key("maximum".asRamlAnnotation, entry => { // todo pope
         val value = ScalarNode(entry.value)
         shape.set(ScalarShapeModel.Maximum, value.text(), Annotations(entry))
       })
 
-      map.key("(format)", ScalarShapeModel.Format in shape)
+      map.key("format".asRamlAnnotation, ScalarShapeModel.Format in shape)
       // We don't need to parse (format) extension because in oas must not be emitted, and in raml will be emitted.
 
-      map.key("(multipleOf)", ScalarShapeModel.MultipleOf in shape)
+      map.key("multipleOf".asRamlAnnotation, ScalarShapeModel.MultipleOf in shape)
 
       ctx.closedRamlTypeShape(shape, map, "fileShape", isAnnotation)
 
@@ -789,7 +804,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
   case class DataArrangementParser(name: String, ast: YPart, map: YMap, adopt: Shape => Unit) {
 
     def lookAhead(): Either[TupleShape, ArrayShape] = {
-      map.key("(tuple)") match {
+      map.key("tuple".asRamlAnnotation) match {
         case Some(entry) =>
           entry.value.to[Seq[YNode]] match {
             // this is a sequence, we need to create a tuple
@@ -821,7 +836,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
       super.parse()
 
       map.key("uniqueItems", (ArrayShapeModel.UniqueItems in shape).allowingAnnotations)
-      map.key("(collectionFormat)", ArrayShapeModel.CollectionFormat in shape)
+      map.key("collectionFormat".asRamlAnnotation, ArrayShapeModel.CollectionFormat in shape)
 
       val finalShape = (for {
         itemsEntry <- map.key("items")
@@ -901,9 +916,9 @@ sealed abstract class RamlTypeParser(ast: YPart,
     }
   }
 
-  case class InheritanceParser(entry: YMapEntry, shape: Shape)(
-    implicit val ctx: RamlWebApiContext)
-    extends RamlTypeSyntax with RamlExternalTypes {
+  case class InheritanceParser(entry: YMapEntry, shape: Shape)(implicit val ctx: RamlWebApiContext)
+      extends RamlTypeSyntax
+      with RamlExternalTypes {
 
     def parse(): Unit = {
       entry.value.tagType match {
@@ -936,7 +951,9 @@ sealed abstract class RamlTypeParser(ast: YPart,
               shape.set(ShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry)))
 
         case YType.Str if XMLSchema.unapply(entry.value).isDefined =>
-          val parsed = parseXMLSchemaExpression("schema", entry.value, (xmlSchemaShape) => xmlSchemaShape.withId(shape.id + "/xmlSchema"))
+          val parsed = parseXMLSchemaExpression("schema",
+                                                entry.value,
+                                                (xmlSchemaShape) => xmlSchemaShape.withId(shape.id + "/xmlSchema"))
           shape.set(ShapeModel.Inherits, AmfArray(Seq(parsed), Annotations(entry.value)), Annotations(entry))
 
         case _ if !wellKnownType(entry.value.as[YScalar].text) =>
@@ -959,7 +976,9 @@ sealed abstract class RamlTypeParser(ast: YPart,
                     "Inheritance from JSON Schema",
                     entry.value
                   )
-                  parseJSONSchemaExpression("schema", entry.value, (jsonSchemaShape) => jsonSchemaShape.withId(shape.id + "/jsonSchema"))
+                  parseJSONSchemaExpression("schema",
+                                            entry.value,
+                                            (jsonSchemaShape) => jsonSchemaShape.withId(shape.id + "/jsonSchema"))
                 case _ =>
                   unresolved(entry.value)
               }
@@ -1001,7 +1020,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
       shape.set(NodeShapeModel.Closed, value = false)
       map.key("additionalProperties", (NodeShapeModel.Closed in shape).negated.explicit)
 
-      map.key("(additionalProperties)").foreach { entry =>
+      map.key("additionalProperties".asRamlAnnotation).foreach { entry =>
         OasTypeParser(entry, s => s.adopted(shape.id)).parse().foreach { s =>
           shape.set(NodeShapeModel.AdditionalPropertiesSchema, s, Annotations(entry))
         }
@@ -1027,7 +1046,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
       shape.properties.foreach(p => properties += (p.name.value() -> p))
 
       map.key(
-        "(dependencies)",
+        "dependencies".asRamlAnnotation,
         entry => {
           val dependencies: Seq[PropertyDependencies] =
             ShapeDependenciesParser(entry.value.as[YMap], properties).parse()
@@ -1071,7 +1090,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
                 }
               )
 
-              map.key("(readOnly)", PropertyShapeModel.ReadOnly in property)
+              map.key("readOnly".asRamlAnnotation, PropertyShapeModel.ReadOnly in property)
             case _ =>
           }
 
@@ -1137,7 +1156,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
       map.key("enum", ShapeModel.Values in shape)
       map.key("minItems", (ArrayShapeModel.MinItems in shape).allowingAnnotations)
       map.key("maxItems", (ArrayShapeModel.MaxItems in shape).allowingAnnotations)
-      map.key("(externalDocs)", AnyShapeModel.Documentation in shape using OasCreativeWorkParser.parse)
+      map.key("externalDocs".asRamlAnnotation, AnyShapeModel.Documentation in shape using OasCreativeWorkParser.parse)
 
       map.key(
         "xml",

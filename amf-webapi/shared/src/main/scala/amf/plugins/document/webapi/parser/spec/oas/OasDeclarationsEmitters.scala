@@ -15,6 +15,7 @@ import amf.plugins.document.webapi.parser.spec.domain.{OasResponseEmitter, Param
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.models.{Parameter, Response}
 import org.yaml.model.YDocument.EntryBuilder
+import amf.core.utils.Strings
 
 import scala.collection.mutable.ListBuffer
 
@@ -34,10 +35,13 @@ case class OasDeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOr
       result += OasAnnotationsTypesEmitter(declarations.annotations.values.toSeq, ordering)
 
     if (declarations.resourceTypes.nonEmpty)
-      result += AbstractDeclarationsEmitter("x-resourceTypes", declarations.resourceTypes.values.toSeq, ordering, Nil)
+      result += AbstractDeclarationsEmitter("resourceTypes".asOasExtension,
+                                            declarations.resourceTypes.values.toSeq,
+                                            ordering,
+                                            Nil)
 
     if (declarations.traits.nonEmpty)
-      result += AbstractDeclarationsEmitter("x-traits", declarations.traits.values.toSeq, ordering, Nil)
+      result += AbstractDeclarationsEmitter("traits".asOasExtension, declarations.traits.values.toSeq, ordering, Nil)
 
     if (declarations.securitySchemes.nonEmpty)
       result += OasSecuritySchemesEmitters(declarations.securitySchemes.values.toSeq, ordering)
@@ -107,7 +111,7 @@ case class OasAnnotationsTypesEmitter(properties: Seq[CustomDomainProperty], ord
     implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    b.entry("x-annotationTypes",
+    b.entry("annotationTypes".asOasExtension,
             _.obj(traverse(ordering.sorted(properties.map(OasNamedPropertyTypeEmitter(_, ordering))), _)))
   }
 
@@ -163,7 +167,7 @@ case class OasCreativeWorkEmitters(documents: Seq[CreativeWork], ordering: SpecO
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-      "x-user-documentation",
+      "userDocumentation".asOasExtension,
       _.list(traverse(ordering.sorted(documents.map(RamlCreativeWorkEmitter(_, ordering, withExtension = false))), _))
     )
   }

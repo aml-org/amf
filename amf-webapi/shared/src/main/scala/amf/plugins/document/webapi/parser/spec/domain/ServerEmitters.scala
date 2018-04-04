@@ -21,6 +21,7 @@ import amf.plugins.domain.webapi.metamodel.{ServerModel, WebApiModel}
 import amf.plugins.domain.webapi.models.{Parameter, Server, WebApi}
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
+import amf.core.utils.Strings
 
 import scala.collection.mutable.ListBuffer
 
@@ -49,13 +50,13 @@ case class RamlServersEmitter(f: FieldEntry, ordering: SpecOrdering, references:
     val fs = default.fields
 
     fs.entry(ServerModel.Url).map(f => result += RamlScalarEmitter("baseUri", f))
-    fs.entry(ServerModel.Description).map(f => result += RamlScalarEmitter("(serverDescription)", f))
+    fs.entry(ServerModel.Description).map(f => result += RamlScalarEmitter("serverDescription".asRamlAnnotation, f))
     fs.entry(ServerModel.Variables)
       .map(f => result += RamlParametersEmitter("baseUriParameters", f, ordering, references))
   }
 
   private def asExtension(servers: Seq[Server], result: ListBuffer[EntryEmitter]) =
-    if (servers.nonEmpty) result += ServersEmitters("(servers)", servers, ordering)
+    if (servers.nonEmpty) result += ServersEmitters("servers".asRamlAnnotation, servers, ordering)
 }
 
 abstract class OasServersEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
@@ -90,7 +91,7 @@ case class Oas2ServersEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering
 
     servers.default.foreach(server => defaultServer(server, result))
 
-    asExtension("x-servers", servers.servers, result)
+    asExtension("servers".asOasExtension, servers.servers, result)
 
     result
   }
@@ -116,10 +117,11 @@ case class Oas2ServersEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering
                                ordering)
     }
 
-    fs.entry(ServerModel.Description).map(f => result += RamlScalarEmitter("x-serverDescription", f))
+    fs.entry(ServerModel.Description).map(f => result += RamlScalarEmitter("serverDescription".asOasExtension, f))
 
     fs.entry(ServerModel.Variables)
-      .map(f => result += RamlParametersEmitter("x-base-uri-parameters", f, ordering, references)(toRaml(spec)))
+      .map(f =>
+        result += RamlParametersEmitter("baseUriParameters".asOasExtension, f, ordering, references)(toRaml(spec)))
   }
 }
 
@@ -171,7 +173,7 @@ private case class OasServerVariablesEmitter(f: FieldEntry, ordering: SpecOrderi
     )
 
     if (hasNonOas3Variables) {
-      RamlParametersEmitter("x-parameters", f, ordering, Seq())(toRaml(spec)).emit(b)
+      RamlParametersEmitter("parameters".asOasExtension, f, ordering, Seq())(toRaml(spec)).emit(b)
     }
   }
 

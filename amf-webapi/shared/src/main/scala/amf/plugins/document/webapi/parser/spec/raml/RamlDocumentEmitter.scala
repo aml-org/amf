@@ -23,6 +23,7 @@ import amf.plugins.domain.webapi.models._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode}
 import org.yaml.render.YamlRender
+import amf.core.utils.Strings
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -63,7 +64,7 @@ case class Raml08RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
 //      result += DeclaredParametersEmitter(declarations.parameters.values.toSeq, ordering, document.references) // todo here or move to 1.0 only?
 
     if (declarations.responses.nonEmpty)
-      result += OasDeclaredResponsesEmitter("(responses)",
+      result += OasDeclaredResponsesEmitter("responses".asRamlAnnotation,
                                             declarations.responses.values.toSeq,
                                             ordering,
                                             document.references)(toOas(spec))
@@ -162,7 +163,7 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
       result += DeclaredParametersEmitter(declarations.parameters.values.toSeq, ordering, document.references) // todo here or move to 1.0 only?
 
     if (declarations.responses.nonEmpty)
-      result += OasDeclaredResponsesEmitter("(responses)",
+      result += OasDeclaredResponsesEmitter("responses".asRamlAnnotation,
                                             declarations.responses.values.toSeq,
                                             ordering,
                                             document.references)(toOas(spec))
@@ -174,7 +175,7 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
       extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
       b.entry(
-        "(parameters)",
+        "parameters".asRamlAnnotation,
         _.obj(traverse(ordering.sorted(parameters.map(NamedParameterEmitter(_, ordering, references))), _))
       )
     }
@@ -312,18 +313,19 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
 
       fs.entry(WebApiModel.Version).map(f => result += RamlScalarEmitter("version", f))
 
-      fs.entry(WebApiModel.TermsOfService).map(f => result += ValueEmitter("(termsOfService)", f))
+      fs.entry(WebApiModel.TermsOfService).map(f => result += ValueEmitter("termsOfService".asRamlAnnotation, f))
 
       fs.entry(WebApiModel.Schemes).map(f => result += ArrayEmitter("protocols", f, ordering))
 
-      fs.entry(WebApiModel.Provider).map(f => result += OrganizationEmitter("(contact)", f, ordering))
+      fs.entry(WebApiModel.Provider).map(f => result += OrganizationEmitter("contact".asRamlAnnotation, f, ordering))
 
       fs.entry(WebApiModel.Tags)
-        .map(f => result += TagsEmitter("(tags)", f.array.values.asInstanceOf[Seq[Tag]], ordering)(toOas(spec)))
+        .map(f =>
+          result += TagsEmitter("tags".asRamlAnnotation, f.array.values.asInstanceOf[Seq[Tag]], ordering)(toOas(spec)))
 
       fs.entry(WebApiModel.Documentations).map(f => result += UserDocumentationsEmitter(f, ordering))
 
-      fs.entry(WebApiModel.License).map(f => result += LicenseEmitter("(license)", f, ordering))
+      fs.entry(WebApiModel.License).map(f => result += LicenseEmitter("license".asRamlAnnotation, f, ordering))
 
       fs.entry(WebApiModel.EndPoints).map(f => result ++= endpoints(f, ordering, vendor))
 
@@ -449,7 +451,7 @@ case class OasExtCreativeWorkEmitter(f: FieldEntry, ordering: SpecOrdering)(impl
     sourceOr(
       f.value.annotations,
       b.entry(
-        "(externalDocs)",
+        "externalDocs".asRamlAnnotation,
         OasCreativeWorkEmitter(f.value.value.asInstanceOf[CreativeWork], ordering).emit(_)
       )
     )

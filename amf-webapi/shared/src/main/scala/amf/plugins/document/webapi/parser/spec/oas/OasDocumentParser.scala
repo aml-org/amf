@@ -26,6 +26,7 @@ import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import org.yaml.model.{YNode, _}
+import amf.core.utils.Strings
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -48,7 +49,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     UsageParser(map, document).parse()
 
     map
-      .key("x-extends")
+      .key("extends".asOasExtension)
       .foreach(e => {
         ctx.link(e.value) match {
           case Left(url) =>
@@ -77,7 +78,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
     val map = root.parsed.document.as[YMap]
 
-    val references = ReferencesParser("x-uses", map, root.references).parse(root.location)
+    val references = ReferencesParser("uses".asOasExtension, map, root.references).parse(root.location)
     parseDeclarations(root: Root, map)
 
     val api = parseWebApi(map).add(SourceVendor(root.vendor))
@@ -144,7 +145,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     )
 
     map.key(
-      "x-user-documentation",
+      "userDocumentation".asOasExtension,
       entry => {
         documentations ++= UserDocumentationParser(entry.value.as[Seq[YNode]])
           .parse()
@@ -243,8 +244,8 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         case Right(map) =>
           ctx.closedShape(endpoint.id, map, "pathItem")
 
-          map.key("x-displayName", EndPointModel.Name in endpoint)
-          map.key("x-description", EndPointModel.Description in endpoint)
+          map.key("displayName".asOasExtension, EndPointModel.Name in endpoint)
+          map.key("description".asOasExtension, EndPointModel.Description in endpoint)
 
           var parameters = Parameters()
           val entries    = ListBuffer[YMapEntry]()
@@ -258,7 +259,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             }
 
           // This is because there may be complex path parameters coming from RAML1
-          map.key("x-uriParameters").foreach { entry =>
+          map.key("uriParameters".asOasExtension).foreach { entry =>
             entries += entry
             val uriParameters =
               RamlParametersParser(entry.value.as[YMap], name => Parameter().withName(name).adopted(endpoint.id))(
@@ -278,12 +279,12 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             endpoint.set(EndPointModel.Payloads, AmfArray(Seq(payload)), Annotations(entries.head))
           }
 
-          map.key("x-is",
+          map.key("is".asOasExtension,
                   (EndPointModel.Extends in endpoint using ParametrizedDeclarationParser
                     .parse(endpoint.withTrait)).allowingSingleValue)
 
           map.key(
-            "x-type",
+            "type".asOasExtension,
             entry =>
               ParametrizedDeclarationParser(entry.value,
                                             endpoint.withResourceType,
@@ -296,7 +297,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
           AnnotationParser(endpoint, map).parse()
 
           map.key(
-            "x-security",
+            "security".asOasExtension,
             entry => {
               // TODO check for empty array for resolution ?
               val securedBy = entry.value
@@ -335,7 +336,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         }
 
       map
-        .key("x-queryParameters")
+        .key("queryParameters".asOasExtension)
         .foreach(
           entry => {
             entries += entry
@@ -350,7 +351,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         )
 
       map
-        .key("x-headers")
+        .key("headers".asOasExtension)
         .foreach(
           entry => {
             entries += entry
@@ -366,7 +367,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
       // baseUriParameters from raml08. Only complex parameters will be written here, simple ones will be in the parameters with binding path.
       map.key(
-        "x-baseUriParameters",
+        "baseUriParameters".asOasExtension,
         entry => {
           entry.value.as[YMap].entries.headOption.foreach { paramEntry =>
             val parameter = Raml08ParameterParser(paramEntry, request.getOrCreate.withQueryParameter)(spec.toRaml(ctx))
@@ -399,7 +400,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       parameters.body.foreach(payloads += _)
 
       map.key(
-        "x-request-payloads",
+        "requestPayloads".asOasExtension,
         entry =>
           entry.value
             .as[Seq[YMap]]
@@ -409,7 +410,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       if (payloads.nonEmpty) request.getOrCreate.set(RequestModel.Payloads, AmfArray(payloads))
 
       map.key(
-        "x-queryString",
+        "queryString".asOasExtension,
         queryEntry => {
           Raml10TypeParser(queryEntry, (shape) => shape.adopted(request.getOrCreate.id))
             .parse()
@@ -438,7 +439,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       map.key("tags", OperationModel.Tags in operation)
 
       map.key(
-        "x-is",
+        "is".asOasExtension,
         entry => {
           val traits = entry.value
             .as[Seq[YNode]]
@@ -502,9 +503,9 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
     val parent = root.location + "#/declarations"
     parseTypeDeclarations(map, parent)
     parseAnnotationTypeDeclarations(map, parent)
-    AbstractDeclarationsParser("x-resourceTypes", (entry: YMapEntry) => ResourceType(entry), map, parent)
+    AbstractDeclarationsParser("resourceTypes".asOasExtension, (entry: YMapEntry) => ResourceType(entry), map, parent)
       .parse()
-    AbstractDeclarationsParser("x-traits", (entry: YMapEntry) => Trait(entry), map, parent).parse()
+    AbstractDeclarationsParser("traits".asOasExtension, (entry: YMapEntry) => Trait(entry), map, parent).parse()
     parseSecuritySchemeDeclarations(map, parent)
     parseParameterDeclarations(map, parent)
     parseResponsesDeclarations("responses", map, parent)
@@ -515,7 +516,7 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
   def parseAnnotationTypeDeclarations(map: YMap, customProperties: String): Unit = {
 
     map.key(
-      "x-annotationTypes",
+      "annotationTypes".asOasExtension,
       e => {
         e.value
           .as[YMap]
@@ -577,7 +578,7 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
     )
 
     map.key(
-      "x-securitySchemes",
+      "securitySchemes".asOasExtension,
       e => {
         e.value.as[YMap].entries.foreach { entry =>
           ctx.declarations += SecuritySchemeParser(
@@ -643,7 +644,7 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
 
   case class UsageParser(map: YMap, baseUnit: BaseUnit) {
     def parse(): Unit = {
-      map.key("x-usage", entry => {
+      map.key("usage".asOasExtension, entry => {
         val value = ScalarNode(entry.value)
         baseUnit.set(BaseUnitModel.Usage, value.string(), Annotations(entry))
       })

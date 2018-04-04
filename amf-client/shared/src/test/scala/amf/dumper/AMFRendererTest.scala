@@ -55,7 +55,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |mediaType:
         |  - application/json
         |version: 1.1
-        |(termsOfService): termsOfService
+        |(amf-termsOfService): termsOfService
         |protocols:
         |  - http
         |  - https""".stripMargin
@@ -434,7 +434,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |             type: string
         |           lastName:
         |             type: string
-        |       (examples):
+        |       (amf-examples):
         |         application/json:
         |           name: Cristian
         |           lastName: Pavon""".stripMargin
@@ -456,7 +456,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |       "responses": {
         |         "200": {
         |           "description": "",
-        |           "x-media-type": "application/json",
+        |           "x-amf-mediaType": "application/json",
         |           "schema": {
         |              "example": {
         |                "name": "roman",

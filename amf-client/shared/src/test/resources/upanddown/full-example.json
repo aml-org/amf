@@ -16,7 +16,7 @@
     }
   },
   "host": "api.example.com",
-  "x-base-uri-parameters": {
+  "x-amf-baseUriParameters": {
     "uriParameter1": {
       "description": "testUriDisplay",
       "required": false
@@ -42,11 +42,11 @@
   },
   "paths": {
     "/levelzero": {
-      "x-displayName": "Name"
+      "x-amf-displayName": "Name"
     },
     "/levelzero/{two}/level-one/{three}": {
-      "x-displayName": "One display name",
-      "x-description": "and this description!",
+      "x-amf-displayName": "One display name",
+      "x-amf-description": "and this description!",
       "parameters": [
         {
           "name": "two",
@@ -84,11 +84,11 @@
             "schema": {
               "type": "string"
             },
-            "x-media-type": "application/json",
+            "x-amf-mediaType": "application/json",
             "in": "body"
           }
         ],
-        "x-request-payloads": [
+        "x-amf-requestPayloads": [
           {
             "mediaType": "application/xml",
             "schema": {
@@ -113,11 +113,11 @@
                 "type": "integer"
               }
             },
-            "x-media-type": "application/yaml",
+            "x-amf-mediaType": "application/yaml",
             "schema": {
               "type": "string"
             },
-            "x-response-payloads": [
+            "x-amf-responsePayloads": [
               {
                 "mediaType": "application/x-www-form-urlencoded; charset=UTF-8"
               }

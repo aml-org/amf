@@ -13,6 +13,7 @@ import amf.plugins.domain.webapi.models.security.{Scope, SecurityScheme, Setting
 import amf.plugins.domain.webapi.models.{Parameter, Response}
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model._
+import amf.core.utils.Strings
 
 import scala.collection.mutable
 
@@ -163,7 +164,7 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
             val t: String = entry.value.as[YScalar].text match {
               case "oauth2" => "OAuth 2.0"
               case "basic"  => "Basic Authentication"
-              case "apiKey" => "x-apiKey"
+              case "apiKey" => "apiKey".asOasExtension
               case s        => s
             }
 
@@ -171,10 +172,10 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
           }
         )
 
-        map.key("x-displayName", SecuritySchemeModel.DisplayName in scheme)
+        map.key("displayName".asOasExtension, SecuritySchemeModel.DisplayName in scheme)
         map.key("description", SecuritySchemeModel.Description in scheme)
 
-        RamlDescribedByParser("x-describedBy", map, scheme)(toRaml(ctx)).parse()
+        RamlDescribedByParser("describedBy".asOasExtension, map, scheme)(toRaml(ctx)).parse()
 
         OasSecuritySettingsParser(map, scheme)
           .parse()
@@ -189,12 +190,12 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
   case class OasSecuritySettingsParser(map: YMap, scheme: SecurityScheme) {
     def parse(): Option[Settings] = {
       val result = scheme.`type`.value() match {
-        case "OAuth 1.0" => Some(oauth1())
-        case "OAuth 2.0" => Some(oauth2())
-        case "x-apiKey"  => Some(apiKey())
+        case "OAuth 1.0"    => Some(oauth1())
+        case "OAuth 2.0"    => Some(oauth2())
+        case "x-amf-apiKey" => Some(apiKey())
         case _ =>
           map
-            .key("x-settings")
+            .key("settings".asOasExtension)
             .map(entry => dynamicSettings(entry.value.as[YMap], scheme.withDefaultSettings()))
       }
 
@@ -234,7 +235,7 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
       })
 
       map.key(
-        "x-settings",
+        "settings".asOasExtension,
         entry => dynamicSettings(entry.value.as[YMap], settings, "name", "in")
       )
 
@@ -267,7 +268,7 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
       )
 
       map.key(
-        "x-settings",
+        "settings".asOasExtension,
         entry => {
           val xSettings = entry.value.as[YMap]
 
@@ -295,7 +296,7 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
       val settings = scheme.withOAuth1Settings()
 
       map.key(
-        "x-settings",
+        "settings".asOasExtension,
         entry => {
           val map = entry.value.as[YMap]
 
