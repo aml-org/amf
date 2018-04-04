@@ -87,7 +87,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
       case Right(map) =>
         val uses = vendor match {
           case "RAML 1.0"              => Some("uses")
-          case "OAS 2.0" | "OAS 3.0.0" => Some("x-uses")
+          case "OAS 2.0" | "OAS 3.0.0" => Some("x-amf-uses")
           case _                       => None
         }
         uses.foreach(u => {

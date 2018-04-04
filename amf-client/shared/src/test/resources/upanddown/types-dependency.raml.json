@@ -20,13 +20,13 @@
   ],
   "paths": {
     "/level-zero": {
-      "x-displayName": "One display name",
-      "x-description": "and this description!",
+      "x-amf-displayName": "One display name",
+      "x-amf-description": "and this description!",
       "get": {
         "operationId": "Some title",
         "parameters": [
           {
-            "x-media-type": "application/raml",
+            "x-amf-mediaType": "application/raml",
             "in": "body",
             "schema": {
               "type": "object",
@@ -71,7 +71,7 @@
             }
           }
         ],
-        "x-queryParameters": {
+        "x-amf-queryParameters": {
           "param1": {
             "description": "Some descr",
             "properties": {
@@ -97,7 +97,7 @@
                     "type": "integer"
                   }
                 },
-                "(dependencies)": {
+                "(amf-dependencies)": {
                   "city": [
                     "postal"
                   ],

@@ -10,6 +10,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.domain.webapi.metamodel.{PayloadModel, RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
 import org.yaml.model.{YMap, YMapEntry}
+import amf.core.utils.Strings
 
 import scala.collection.mutable
 
@@ -46,7 +47,7 @@ case class OasResponseParser(entry: YMapEntry, producer: String => Response)(imp
         defaultPayload(map, res.id).foreach(payloads += _)
 
         map.key(
-          "x-response-payloads",
+          "responsePayloads".asOasExtension,
           entry =>
             entry.value
               .as[Seq[YMap]]
@@ -77,7 +78,7 @@ case class OasResponseParser(entry: YMapEntry, producer: String => Response)(imp
   private def defaultPayload(entries: YMap, parentId: String): Option[Payload] = {
     val payload = Payload().add(DefaultPayload())
 
-    entries.key("x-media-type",
+    entries.key("mediaType".asOasExtension,
                 entry => payload.set(PayloadModel.MediaType, ScalarNode(entry.value).string(), Annotations(entry)))
     // TODO add parent id to payload?
     payload.adopted(parentId)

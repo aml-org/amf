@@ -13,6 +13,7 @@ import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
+import amf.core.utils.Strings
 
 import scala.collection.mutable
 
@@ -133,7 +134,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     parameters = parameters.add(Parameters(path = implicitExplicitPathParams))
 
     map.key(
-      "(parameters)",
+      "parameters".asRamlAnnotation,
       entry => {
         parameters =
           parameters.add(OasParametersParser(entry.value.as[Seq[YMap]], endpoint.id)(spec.toOas(ctx)).parse())
@@ -148,7 +149,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     }
 
     map.key(
-      "(payloads)",
+      "payloads".asRamlAnnotation,
       entry => {
         endpoint.set(EndPointModel.Payloads,
                      AmfArray(Seq(Raml10PayloadParser(entry, endpoint.withPayload).parse()), Annotations(entry.value)),

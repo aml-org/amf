@@ -6,17 +6,17 @@
   "basePath": "/some/base/uri",
   "paths": {
     "/levelzero": {
-      "x-displayName": "Name"
+      "x-amf-displayName": "Name"
     },
     "/levelzero/level-one": {
-      "x-displayName": "One display name",
-      "x-description": "and this description!"
+      "x-amf-displayName": "One display name",
+      "x-amf-description": "and this description!"
     },
     "/levelzero/another-level-one": {
-      "x-displayName": "some other display name"
+      "x-amf-displayName": "some other display name"
     },
     "/another-levelzero": {
-      "x-displayName": "Root name"
+      "x-amf-displayName": "Root name"
     }
   }
 }

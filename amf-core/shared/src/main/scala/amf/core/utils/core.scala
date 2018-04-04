@@ -60,6 +60,10 @@ package object utils {
       }
       result.toString()
     }
+
+    def asRamlAnnotation = s"(amf-$str)"
+
+    def asOasExtension = s"x-amf-$str"
   }
 
   case class QName(qualification: String, name: String) {

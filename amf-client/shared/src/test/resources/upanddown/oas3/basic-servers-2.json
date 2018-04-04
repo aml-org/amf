@@ -6,8 +6,8 @@
   },
   "host": "{username}.gigantic-server.com:{port}",
   "basePath": "/{basePath}",
-  "x-serverDescription": "The production API server",
-  "x-base-uri-parameters": {
+  "x-amf-serverDescription": "The production API server",
+  "x-amf-baseUriParameters": {
     "username": {
       "description": "this value is assigned by the service provider, in this example `gigantic-server.com`",
       "default": "demo"

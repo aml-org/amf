@@ -36,9 +36,9 @@ amf.Core.init().then(function () {
 var spotifyRamlApi = "#%RAML 1.0\n" +
     "title: test title\n" +
     "description: test description\n" +
-    "(termsOfService): terms of service\n" +
+    "(amf-termsOfService): terms of service\n" +
     "version: 1.1\n" +
-    "(license):\n" +
+    "(amf-license):\n" +
     "  url: licenseUrl\n" +
     "  name: licenseName\n" +
     "baseUri: http://api.example.com/path\n" +
@@ -48,10 +48,10 @@ var spotifyRamlApi = "#%RAML 1.0\n" +
     "  - ftp\n" +
     "  - http\n" +
     "  - https\n" +
-    "(contact):\n" +
+    "(amf-contact):\n" +
     "  url: contactUrl\n" +
     "  name: contactName\n" +
     "  email: contactEmail\n" +
-    "(externalDocs):\n" +
+    "(amf-externalDocs):\n" +
     "  url: externalDocsUrl\n" +
     "  description: externalDocsDescription";

@@ -109,7 +109,7 @@ protocols:
       offered at a given location. The response includes the display name
       and other details about each product, and lists the products in the
       proper display order.
-    (summary): Product Types
+    (amf-summary): Product Types
     queryParameters:
       latitude:
         description: Latitude component of location.
@@ -141,7 +141,7 @@ protocols:
       situations requiring currency conversion. When surge is active for a particular
       product, its surge_multiplier will be greater than 1, but the price estimate
       already factors in this multiplier.
-    (summary): Price Estimates
+    (amf-summary): Price Estimates
     queryParameters:
       start_latitude:
         description: Latitude component of start location.
@@ -175,7 +175,7 @@ protocols:
 /estimates/time:
   get:
     description: The Time Estimates endpoint returns ETAs for all products offered at a given location, with the responses expressed as integers in seconds. We recommend that this endpoint be called every minute to provide the most accurate, up-to-date ETAs.
-    (summary): Time Estimates
+    (amf-summary): Time Estimates
     queryParameters:
       start_latitude:
         description: Latitude component of start location.
@@ -190,7 +190,7 @@ protocols:
       customer_uuid?:
         description: Unique customer identifier to be used for experience customization.
         type: string
-        (format): uuid
+        (amf-format): uuid
       product_id?:
         description: Unique identifier representing a specific product for a given latitude & longitude.
         type: string
@@ -206,7 +206,7 @@ protocols:
 /me:
   get:
     description: The User Profile endpoint returns information about the Uber user that has authorized with the application.
-    (summary): User Profile
+    (amf-summary): User Profile
     responses:
       200:
         description: Profile information for a user
@@ -217,7 +217,7 @@ protocols:
 /history:
   get:
     description: The User Activity endpoint returns data about a user's lifetime activity with Uber. The response will include pickup locations and times, dropoff locations and times, the distance of past requests, and information about which products were requested.<br><br>The history array in the response will have a maximum length based on the limit parameter. The response value count may exceed limit, therefore subsequent API requests may be necessary.
-    (summary): User Activity
+    (amf-summary): User Activity
     queryParameters:
       offset?:
         description: Offset the list of returned results by this amount. Default is zero.

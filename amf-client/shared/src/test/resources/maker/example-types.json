@@ -44,8 +44,8 @@
   "produces": ["application/yaml"],
   "paths": {
     "/level-zero": {
-      "x-displayName": "One display name",
-      "x-description": "and this description!",
+      "x-amf-displayName": "One display name",
+      "x-amf-description": "and this description!",
       "get": {
         "operationId": "Some title",
         "parameters": [
@@ -95,7 +95,7 @@
             "in": "header"
           }
         ],
-        "x-request-payloads": [
+        "x-amf-requestPayloads": [
           {
             "mediaType": "application/raml",
             "schema": {
@@ -130,7 +130,7 @@
                 }
               }
             },
-            "x-response-payloads": [
+            "x-amf-responsePayloads": [
               {
                 "mediaType": "application/xml",
                 "schema": {

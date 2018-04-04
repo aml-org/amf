@@ -1,9 +1,9 @@
 #%RAML 1.0
 title: test title
 description: test description
-(termsOfService): terms of service
+(amf-termsOfService): terms of service
 version: 1.1
-(license):
+(amf-license):
   url: http://test.com/licenseUrl
   name: licenseName
 mediaType:
@@ -11,35 +11,35 @@ mediaType:
 protocols:
   - http
   - https
-(contact):
+(amf-contact):
   url: http://test.com/contactUrl
   name: contactName
   email: contactEmail
 documentation:
   -
     content: externalDocsDescription
-    (url): http://test.com/externalDocsUrl
+    (amf-url): http://test.com/externalDocsUrl
 /levelzero:
   displayName: Name
   get:
     displayName: Some title
     description: Some description
-    (oas-deprecated): true
-    (summary): This is a summary
-    (externalDocs):
+    (amf-oasDeprecated): true
+    (amf-summary): This is a summary
+    (amf-externalDocs):
       url: http://test.com/urlExternalDocs
       description: descriptionExternalDocs
     protocols:
       - http
       - https
-    (consumes):
+    (amf-consumes):
       - application/xml
-    (produces):
+    (amf-produces):
       - application/json
   post:
     displayName: Some title
     description: Some description
-    (externalDocs):
+    (amf-externalDocs):
       url: http://test.com/urlExternalDocs
       description: descriptionExternalDocs
     protocols:
@@ -51,9 +51,9 @@ documentation:
     get:
       displayName: Some title level one
       description: Some description level one
-      (oas-deprecated): true
-      (summary): This is a summary level one
-      (externalDocs):
+      (amf-oasDeprecated): true
+      (amf-summary): This is a summary level one
+      (amf-externalDocs):
         url: http://test.com/urlExternalDocs
         description: descriptionExternalDocs level one
       protocols:
@@ -66,7 +66,7 @@ documentation:
   post:
     displayName: Some title another level 0
     description: Some description another level 0
-    (externalDocs):
+    (amf-externalDocs):
       url: http://test.com/urlExternalDocs
       description: descriptionExternalDocs another level 0
     protocols:

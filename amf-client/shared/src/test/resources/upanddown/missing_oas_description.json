@@ -10,9 +10,9 @@
         "responses": {
           "200": {
             "description": "",
-            "x-media-type": "application/json",
+            "x-amf-mediaType": "application/json",
             "schema": {
-              "x-examples": {
+              "x-amf-examples": {
                 "example1": {
                   "value": {
                     "a": 1
@@ -32,7 +32,7 @@
       }
     }
   },
-  "x-annotationTypes": {
+  "x-amf-annotationTypes": {
     "condition": {
       "schema": {
         "type": "string"

@@ -22,6 +22,7 @@ import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import org.yaml.model._
 import org.yaml.render.YamlRender
+import amf.core.utils.Strings
 
 import scala.collection.mutable
 
@@ -148,7 +149,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
   }
 
   private def parseObjectType(): AnyShape = {
-    if (map.key("x-schema").isDefined) {
+    if (map.key("schema".asOasExtension).isDefined) {
       val shape = SchemaShape(ast).withName(name)
       adopt(shape)
       SchemaShapeParser(shape, map).parse()
@@ -362,7 +363,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
     private def parseExample() = {
       val examples: Seq[Example] =
-        RamlExamplesParser(map, "example", "x-examples", None, shape.withExample, options).parse()
+        RamlExamplesParser(map, "example", "examples".asOasExtension, None, shape.withExample, options).parse()
       if (examples.nonEmpty)
         shape.setArray(AnyShapeModel.Examples, examples)
     }
@@ -392,7 +393,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       }
 
       map.key("discriminator", NodeShapeModel.Discriminator in shape)
-      map.key("x-discriminator-value", NodeShapeModel.DiscriminatorValue in shape)
+      map.key("discriminatorValue".asOasExtension, NodeShapeModel.DiscriminatorValue in shape)
 
       val requiredFields = map
         .key("required")
@@ -522,7 +523,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       map.key("xml", AnyShapeModel.XMLSerialization in shape using XMLSerializerParser.parse(shape.name.value()))
 
       map.key(
-        "x-facets",
+        "facets".asOasExtension,
         entry => {
           val properties: Seq[PropertyShape] =
             PropertiesParser(entry.value.as[YMap], shape.withCustomShapePropertyDefinition, Map()).parse()
@@ -547,7 +548,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
       parseScalar(map, shape)
 
-      map.key("x-fileTypes", FileShapeModel.FileTypes in shape)
+      map.key("fileTypes".asOasExtension, FileShapeModel.FileTypes in shape)
 
       shape
     }
@@ -558,7 +559,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
     override def parse(): AnyShape = {
       map.key(
-        "x-schema", { entry =>
+        "schema".asOasExtension, { entry =>
           entry.value.to[String] match {
             case Right(str) => shape.withRaw(str)
             case _ =>
@@ -569,7 +570,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       )
 
       map.key(
-        "x-media-type", { entry =>
+        "mediaType".asOasExtension, { entry =>
           entry.value.to[String] match {
             case Right(str) =>
               shape.withMediaType(str)

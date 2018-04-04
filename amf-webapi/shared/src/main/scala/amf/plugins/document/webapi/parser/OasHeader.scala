@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.parser
 import amf.core.Root
 import amf.core.parser._
 import org.yaml.model.YMap
+import amf.core.utils.Strings
 
 /**
   *
@@ -13,9 +14,9 @@ class OasHeader(val key: String, val value: String) {
 
 object OasHeader {
 
-  val extensionName = "x-fragment-type"
+  val extensionName: String = "fragmentType".asOasExtension
 
-  val extensionType = "x-extension-type"
+  val extensionType: String = "extensionType".asOasExtension
 
   val swagger = "swagger"
 

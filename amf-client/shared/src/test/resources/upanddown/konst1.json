@@ -9,7 +9,7 @@
       "get": {
         "parameters": [
           {
-            "x-media-type": "application/json",
+            "x-amf-mediaType": "application/json",
             "in": "body",
             "schema": {
               "x-a": "stringValue5",
@@ -45,7 +45,7 @@
       }
     }
   },
-  "x-annotationTypes": {
+  "x-amf-annotationTypes": {
     "a": {
       "schema": {
         "type": "string"

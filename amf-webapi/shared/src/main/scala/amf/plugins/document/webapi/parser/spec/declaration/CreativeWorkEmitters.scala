@@ -7,6 +7,7 @@ import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, SpecEmitterConte
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.shapes.models.CreativeWork
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
+import amf.core.utils.Strings
 
 import scala.collection.mutable.ListBuffer
 
@@ -20,7 +21,8 @@ case class RamlCreativeWorkItemsEmitter(documentation: CreativeWork, ordering: S
 
     val fs = documentation.fields
 
-    fs.entry(CreativeWorkModel.Url).map(f => result += ValueEmitter(if (withExtention) "(url)" else "url", f))
+    fs.entry(CreativeWorkModel.Url)
+      .map(f => result += ValueEmitter(if (withExtention) "url".asRamlAnnotation else "url", f))
 
     fs.entry(CreativeWorkModel.Description).map(f => result += RamlScalarEmitter("content", f))
 
@@ -54,7 +56,7 @@ case class OasCreativeWorkItemsEmitter(document: CreativeWork, ordering: SpecOrd
 
     fs.entry(CreativeWorkModel.Description).map(f => result += ValueEmitter("description", f))
 
-    fs.entry(CreativeWorkModel.Title).map(f => result += ValueEmitter("x-title", f))
+    fs.entry(CreativeWorkModel.Title).map(f => result += ValueEmitter("title".asOasExtension, f))
 
     result ++= AnnotationsEmitter(document, ordering).emitters
 

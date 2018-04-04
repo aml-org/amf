@@ -8,31 +8,33 @@ import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.parser.spec.domain.SingleValueArrayEmitter
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
+import amf.core.utils.Strings
 
 import scala.collection.mutable.ListBuffer
 
 /**
   *
   */
-case class ExtendsEmitter(prefix: String, field: FieldEntry, ordering: SpecOrdering) {
+case class ExtendsEmitter(field: FieldEntry, ordering: SpecOrdering, oasExtension: Boolean = false) {
   def emitters(): Seq[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter]()
 
     val resourceTypes: Seq[ParametrizedResourceType] = field.array.values.collect {
       case a: ParametrizedResourceType => a
     }
-    if (resourceTypes.nonEmpty) result += EndPointExtendsEmitter(prefix, resourceTypes, ordering)
+    if (resourceTypes.nonEmpty) result += EndPointExtendsEmitter(extension("type"), resourceTypes, ordering)
 
     val traits: Seq[ParametrizedTrait] = field.array.values.collect { case a: ParametrizedTrait => a }
-    if (traits.nonEmpty) result += TraitExtendsEmitter(prefix, field, ordering)
+    if (traits.nonEmpty) result += TraitExtendsEmitter(extension("is"), field, ordering)
 
     result
   }
+
+  private def extension(key: String) = if (oasExtension) key.asOasExtension else key
 }
 
-case class TraitExtendsEmitter(prefix: String, f: FieldEntry, ordering: SpecOrdering) extends SingleValueArrayEmitter {
+case class TraitExtendsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends SingleValueArrayEmitter {
   override type Element = ParametrizedTrait
-  override val key: String = prefix + "is"
 
   override protected def collect(elements: Seq[AmfElement]): Seq[ParametrizedTrait] = elements.collect {
     case a: ParametrizedTrait => a
@@ -41,11 +43,11 @@ case class TraitExtendsEmitter(prefix: String, f: FieldEntry, ordering: SpecOrde
   override def emit(element: ParametrizedTrait): PartEmitter = ParametrizedDeclarationEmitter(element, ordering)
 }
 
-case class EndPointExtendsEmitter(prefix: String, resourceTypes: Seq[ParametrizedResourceType], ordering: SpecOrdering)
+case class EndPointExtendsEmitter(key: String, resourceTypes: Seq[ParametrizedResourceType], ordering: SpecOrdering)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-      prefix + "type",
+      key,
       ParametrizedDeclarationEmitter(resourceTypes.head, ordering).emit(_)
     )
   }

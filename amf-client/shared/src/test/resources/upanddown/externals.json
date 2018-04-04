@@ -15,7 +15,7 @@
       "post": {
         "parameters": [
           {
-            "x-media-type": "application/json",
+            "x-amf-mediaType": "application/json",
             "in": "body",
             "schema": {
               "type": "object",
@@ -27,13 +27,13 @@
             }
           }
         ],
-        "x-request-payloads": [
+        "x-amf-requestPayloads": [
           {
             "mediaType": "text/xml",
             "schema": {
               "type": "object",
-              "x-media-type": "application/xml",
-              "x-schema": "<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' targetNamespace='http://tempuri.org/po.xsd'></xs:schema>"
+              "x-amf-mediaType": "application/xml",
+              "x-amf-schema": "<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' targetNamespace='http://tempuri.org/po.xsd'></xs:schema>"
             }
           }
         ],
@@ -44,7 +44,7 @@
       "post": {
         "parameters": [
           {
-            "x-media-type": "application/json",
+            "x-amf-mediaType": "application/json",
             "in": "body",
             "schema": {
               "type": "object",
@@ -56,13 +56,13 @@
             }
           }
         ],
-        "x-request-payloads": [
+        "x-amf-requestPayloads": [
           {
             "mediaType": "text/xml",
             "schema": {
               "type": "object",
-              "x-media-type": "application/xml",
-              "x-schema": "<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' targetNamespace='http://tempuri.org/po.xsd'></xs:schema>"
+              "x-amf-mediaType": "application/xml",
+              "x-amf-schema": "<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' targetNamespace='http://tempuri.org/po.xsd'></xs:schema>"
             }
           }
         ],

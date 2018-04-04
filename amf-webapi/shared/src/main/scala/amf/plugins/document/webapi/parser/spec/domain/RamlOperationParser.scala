@@ -10,6 +10,7 @@ import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.metamodel.OperationModel.Method
 import amf.plugins.domain.webapi.models.{Operation, Response}
 import org.yaml.model._
+import amf.core.utils.Strings
 
 import scala.collection.mutable
 
@@ -48,13 +49,14 @@ case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation
     ctx.closedShape(operation.id, map, "operation")
 
     map.key("displayName", OperationModel.Name in operation)
-    map.key("(oas-deprecated)", OperationModel.Deprecated in operation)
-    map.key("(summary)", OperationModel.Summary in operation)
-    map.key("(externalDocs)", OperationModel.Documentation in operation using OasCreativeWorkParser.parse)
+    map.key("oasDeprecated".asRamlAnnotation, OperationModel.Deprecated in operation)
+    map.key("summary".asRamlAnnotation, OperationModel.Summary in operation)
+    map.key("externalDocs".asRamlAnnotation,
+            OperationModel.Documentation in operation using OasCreativeWorkParser.parse)
     map.key("protocols", (OperationModel.Schemes in operation).allowingSingleValue)
-    map.key("(consumes)", OperationModel.Accepts in operation)
-    map.key("(produces)", OperationModel.ContentType in operation)
-    map.key("(tags)", OperationModel.Tags in operation)
+    map.key("consumes".asRamlAnnotation, OperationModel.Accepts in operation)
+    map.key("produces".asRamlAnnotation, OperationModel.ContentType in operation)
+    map.key("tags".asRamlAnnotation, OperationModel.Tags in operation)
     val DeclarationParser = ParametrizedDeclarationParser.parse(operation.withTrait) _
     map.key("is", (DomainElementModel.Extends in operation using DeclarationParser).allowingSingleValue.optional)
 

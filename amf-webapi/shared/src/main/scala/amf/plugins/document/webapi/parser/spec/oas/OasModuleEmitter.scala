@@ -14,6 +14,7 @@ import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.NamedExampleEmitter
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
+import amf.core.utils.Strings
 
 /**
   *
@@ -26,7 +27,7 @@ case class OasModuleEmitter(module: Module)(implicit override val spec: OasSpecE
 
     val references = Seq(ReferencesEmitter(module.references, ordering))
     val declares   = OasDeclarationsEmitter(module.declares, ordering, module.references).emitters
-    val usages     = module.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("x-usage", f))
+    val usages     = module.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("usage".asOasExtension, f))
 
     YDocument {
       _.obj { b =>
@@ -57,7 +58,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
     }
     val references = ReferencesEmitter(fragment.references, ordering)
     val usage: Option[ValueEmitter] =
-      fragment.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("x-usage", f))
+      fragment.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("usage".asOasExtension, f))
 
     YDocument {
       _.obj { b =>

@@ -30,7 +30,8 @@ case class Raml10EndPointEmitter(endpoint: EndPoint,
   override protected def emitters(fs: Fields): ListBuffer[EntryEmitter] = {
     val result = super.emitters(fs)
 
-    fs.entry(EndPointModel.Payloads).map(f => result += Raml10PayloadsEmitter("(payloads)", f, ordering, references))
+    fs.entry(EndPointModel.Payloads)
+      .map(f => result += Raml10PayloadsEmitter("payloads".asRamlAnnotation, f, ordering, references))
 
     fs.entry(EndPointModel.Parameters)
       .map { f =>
@@ -38,7 +39,7 @@ case class Raml10EndPointEmitter(endpoint: EndPoint,
 
           val (path, other) = f.array.values.asInstanceOf[Seq[Parameter]].partition(p => p.isPath)
 
-          result ++= OasParametersEmitter("(parameters)", other, ordering, references = references)(
+          result ++= OasParametersEmitter("parameters".asRamlAnnotation, other, ordering, references = references)(
             amf.plugins.document.webapi.parser.spec.toOas(spec)).ramlEndpointEmitters()
 
           if (path.nonEmpty) {
@@ -65,22 +66,31 @@ case class Raml08EndPointEmitter(endpoint: EndPoint,
   override protected def keyParameter: String = "uriParameters"
 
   override protected def emitters(fs: Fields): ListBuffer[EntryEmitter] = {
-    val result = super.emitters(fs)
+    val result                 = super.emitters(fs)
     val variables: Seq[String] = TemplateUri.variables(endpoint.path.value())
     fs.entry(EndPointModel.Parameters)
       .map { f =>
         if (f.array.values.exists(f => !f.annotations.contains(classOf[SynthesizedField]))) {
-          var uriParameters: Seq[Parameter] = Nil
+          var uriParameters: Seq[Parameter]  = Nil
           var pathParameters: Seq[Parameter] = Nil
-          f.array.values.foreach { case p: Parameter =>
-            if (variables.contains(p.name.value()) || variables.contains(p.parameterName.value()))
-              pathParameters ++= Seq(p)
-            else
-              uriParameters ++= Seq(p)
+          f.array.values.foreach {
+            case p: Parameter =>
+              if (variables.contains(p.name.value()) || variables.contains(p.parameterName.value()))
+                pathParameters ++= Seq(p)
+              else
+                uriParameters ++= Seq(p)
           }
 
-          result += RamlParametersEmitter("uriParameters", FieldEntry(EndPointModel.Parameters, Value(AmfArray(pathParameters), f.value.annotations)), ordering, references)
-          result += RamlParametersEmitter("baseUriParameters", FieldEntry(EndPointModel.Parameters, Value(AmfArray(uriParameters), f.value.annotations)), ordering, references)
+          result += RamlParametersEmitter("uriParameters",
+                                          FieldEntry(EndPointModel.Parameters,
+                                                     Value(AmfArray(pathParameters), f.value.annotations)),
+                                          ordering,
+                                          references)
+          result += RamlParametersEmitter("baseUriParameters",
+                                          FieldEntry(EndPointModel.Parameters,
+                                                     Value(AmfArray(uriParameters), f.value.annotations)),
+                                          ordering,
+                                          references)
         }
       }
 
@@ -121,7 +131,7 @@ abstract class RamlEndPointEmitter(ordering: SpecOrdering,
 
     fs.entry(EndPointModel.Description).map(f => result += RamlScalarEmitter("description", f))
 
-    fs.entry(EndPointModel.Extends).map(f => result ++= ExtendsEmitter("", f, ordering).emitters())
+    fs.entry(EndPointModel.Extends).map(f => result ++= ExtendsEmitter(f, ordering).emitters())
 
     fs.entry(EndPointModel.Operations).map(f => result ++= operations(f, ordering))
 

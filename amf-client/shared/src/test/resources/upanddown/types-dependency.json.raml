@@ -5,7 +5,7 @@ description: test description
 mediaType:
   - application/yaml
 version: 1.1
-(termsOfService): terms of service
+(amf-termsOfService): terms of service
 protocols:
   - http
   - https
@@ -32,7 +32,7 @@ protocols:
               type: integer
             postal:
               type: integer
-          (dependencies):
+          (amf-dependencies):
             city:
               - postal
             street:
@@ -54,7 +54,7 @@ protocols:
             type: integer
           postal:
             type: integer
-        (dependencies):
+        (amf-dependencies):
           credit_card:
             - city
             - postal

@@ -1,15 +1,15 @@
 #%RAML 1.0
-(parameters):
+(amf-parameters):
   a:
     required: true
     type: string
-    (binding): path
+    (amf-binding): path
   payload?:
     type: object
     properties:
       prop:
         type: string
-    (binding): body
+    (amf-binding): body
 title: test
 version: 1.0
 /a/{a}:

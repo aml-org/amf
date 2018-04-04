@@ -21,6 +21,7 @@ import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType, _}
+import amf.core.utils.Strings
 
 /**
   *
@@ -67,7 +68,7 @@ case class Raml10ParameterParser(entry: YMapEntry, producer: String => Parameter
       case Right(map) =>
         map.key("required", (ParameterModel.Required in parameter).explicit.allowingAnnotations)
         map.key("description", (ParameterModel.Description in parameter).allowingAnnotations)
-        map.key("(binding)", (ParameterModel.Binding in parameter).explicit)
+        map.key("binding".asRamlAnnotation, (ParameterModel.Binding in parameter).explicit)
 
         Raml10TypeParser(entry, shape => shape.withName("schema").adopted(parameter.id))
           .parse()
@@ -240,7 +241,7 @@ case class OasParameterParser(map: YMap, parentId: String, name: Option[String])
             }
           )
 
-          map.key("x-media-type", PayloadModel.MediaType in p.payload)
+          map.key("mediaType".asOasExtension, PayloadModel.MediaType in p.payload)
 
         } else {
 

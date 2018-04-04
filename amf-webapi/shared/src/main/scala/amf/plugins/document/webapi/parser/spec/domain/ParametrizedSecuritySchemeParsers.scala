@@ -8,6 +8,7 @@ import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.{YMap, YNode, YScalar, YType}
+import amf.core.utils.Strings
 
 object RamlParametrizedSecuritySchemeParser {
   def parse(producer: String => ParametrizedSecurityScheme)(node: YNode)(
@@ -25,10 +26,9 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String =>
       val scheme       = producer(name).add(Annotations(node))
 
       ctx.declarations.findSecurityScheme(name, SearchScope.Named) match {
-        case Some(declaration) => {
+        case Some(declaration) =>
           scheme.fields.setWithoutId(ParametrizedSecuritySchemeModel.Scheme, declaration, Annotations())
           scheme
-        }
         case None =>
           ctx.violation(
             ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id(),
@@ -57,7 +57,8 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String =>
             ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id(),
             scheme.id,
             s"Security scheme '$name' not found in declarations (and name cannot be 'null').",
-            node)
+            node
+          )
       }
 
       scheme
@@ -75,16 +76,18 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSet
     extends SpecParserOps {
   def parse(): Settings = {
     val result = `type` match {
-      case "OAuth 1.0" => oauth1()
-      case "OAuth 2.0" => oauth2()
-      case "x-apiKey"  => apiKey()
-      case _           => dynamicSettings(scheme.withDefaultSettings())
+      case "OAuth 1.0"   => oauth1()
+      case "OAuth 2.0"   => oauth2()
+      case `apiKeyConst` => apiKey()
+      case _             => dynamicSettings(scheme.withDefaultSettings())
     }
 
     AnnotationParser(result, map)(ctx).parse()
 
     result.add(Annotations(map))
   }
+
+  val apiKeyConst: String = "apiKey".asOasExtension
 
   def dynamicSettings(settings: Settings, properties: String*): Settings = {
     val entries = map.entries.filterNot { entry =>
@@ -111,7 +114,7 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSet
 
     map.key("authorizationUri", OAuth2SettingsModel.AuthorizationUri in settings)
     map.key("accessTokenUri", (OAuth2SettingsModel.AccessTokenUri in settings).allowingAnnotations)
-    map.key("(flow)", OAuth2SettingsModel.Flow in settings)
+    map.key("flow".asRamlAnnotation, OAuth2SettingsModel.Flow in settings)
     map.key("authorizationGrants", (OAuth2SettingsModel.AuthorizationGrants in settings).allowingSingleValue)
 
     val ScopeParser = (n: YNode) => Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(scheme.id)

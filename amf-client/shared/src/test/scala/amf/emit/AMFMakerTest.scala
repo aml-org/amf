@@ -59,19 +59,20 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
     assertNode(root, ("description", "test description"))
 
     assertNode(root, ("version", "1.1"))
-    assertNode(root, ("(termsOfService)", "termsOfService"))
-    assertNode(root, ("(license)", List(("url", "licenseUrl"), ("name", "licenseName"))))
+    assertNode(root, ("(amf-termsOfService)", "termsOfService"))
+    assertNode(root, ("(amf-license)", List(("url", "licenseUrl"), ("name", "licenseName"))))
 
     assertNode(root, ("protocols", Array("http", "https")))
     assertNode(root, ("baseUri", "localhost.com/api"))
 
     assertNode(root, ("mediaType", Array("application/json")))
 
-    assertNode(root,
-               ("(contact)", List(("url", "organizationUrl"), ("name", "organizationName"), ("email", "test@test"))))
+    assertNode(
+      root,
+      ("(amf-contact)", List(("url", "organizationUrl"), ("name", "organizationName"), ("email", "test@test"))))
 
 //    assertNode(root,
-//               ("(externalDocs)",
+//               ("(amf-externalDocs)",
 //                List(
 //                  ("url", "creativoWorkUrl"),
 //                  ("description", "creativeWorkDescription")

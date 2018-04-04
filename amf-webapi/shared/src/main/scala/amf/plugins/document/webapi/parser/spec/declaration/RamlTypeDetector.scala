@@ -12,6 +12,7 @@ import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model._
+import amf.core.utils.Strings
 
 /**
   *
@@ -77,7 +78,7 @@ case class RamlTypeDetector(parent: String,
           }
         case _ => // todo add if wellknowtype?
           val t = scalar.text
-          //      val f = map.key("(format)").map(_.value.value.toScalar.text).getOrElse("")
+          //      val f = map.key("format".asRamlAnnotation).map(_.value.value.toScalar.text).getOrElse("")
           if (format.isDefined) format.map(f => matchType(t, f))
           else Some(matchType(t))
       }
@@ -102,16 +103,17 @@ case class RamlTypeDetector(parent: String,
     if (map.entries.nonEmpty) {
       // let's try to detect based on the explicit value of 'type'
       val fromExplicitType = typeOrSchema(map).flatMap(
-          e => {
-            // let's call ourselves recrusively with the value of type
-            val result = RamlTypeDetector(parent,
-                             map.key("format").orElse(map.key("(format)")).map(_.value.toString()),
+        e => {
+          // let's call ourselves recrusively with the value of type
+          val result =
+            RamlTypeDetector(parent,
+                             map.key("format").orElse(map.key("format".asRamlAnnotation)).map(_.value.toString()),
                              recursive = true).detect(e.value)
-            result match {
-              case Some(t) if t == UndefinedType => None
-              case Some(other)                   => Some(other)
-            }
+          result match {
+            case Some(t) if t == UndefinedType => None
+            case Some(other)                   => Some(other)
           }
+        }
       )
 
       fromExplicitType match {
@@ -137,8 +139,7 @@ case class RamlTypeDetector(parent: String,
     }
 
     schema.foreach(s =>
-      ctx.warning("'schema' keyword it's deprecated for 1.0 version, should use 'type' instead", s.key)
-    )
+      ctx.warning("'schema' keyword it's deprecated for 1.0 version, should use 'type' instead", s.key))
 
     `type`.orElse(schema)
   }

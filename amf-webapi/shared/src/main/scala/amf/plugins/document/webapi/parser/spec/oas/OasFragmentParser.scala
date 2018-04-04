@@ -14,6 +14,7 @@ import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, RamlNamed
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import org.yaml.model.{YMap, YScalar}
+import amf.core.utils.Strings
 
 /**
   *
@@ -30,7 +31,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
         YMap.empty
     }
 
-    val references = ReferencesParser("x-uses", map, root.references).parse(root.location)
+    val references = ReferencesParser("uses".asOasExtension, map, root.references).parse(root.location)
 
     val fragment = (detectType() map {
       case Oas20DocumentationItem         => DocumentationItemFragmentParser(map).parse()
@@ -102,7 +103,10 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       val resourceType = ResourceTypeFragment().adopted(root.location)
 
       val abstractDeclaration =
-        new AbstractDeclarationParser(ResourceType(map).withId(resourceType.id + "#/"), resourceType.id, "resourceType", map).parse()
+        new AbstractDeclarationParser(ResourceType(map).withId(resourceType.id + "#/"),
+                                      resourceType.id,
+                                      "resourceType",
+                                      map).parse()
 
       resourceType.withEncodes(abstractDeclaration)
 
@@ -114,7 +118,8 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       val traitFragment = TraitFragment().adopted(root.location)
 
       val abstractDeclaration =
-        new AbstractDeclarationParser(Trait(map).withId(traitFragment.id + "#/"), traitFragment.id, "trait", map).parse()
+        new AbstractDeclarationParser(Trait(map).withId(traitFragment.id + "#/"), traitFragment.id, "trait", map)
+          .parse()
 
       traitFragment.withEncodes(abstractDeclaration)
     }
@@ -136,7 +141,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
 
   case class NamedExampleFragmentParser(map: YMap) {
     def parse(): NamedExampleFragment = {
-      val entries      = map.entries.filter(e => e.key.as[YScalar].text != "x-fragment-type")
+      val entries      = map.entries.filter(e => e.key.as[YScalar].text != "fragmentType".asOasExtension)
       val namedExample = NamedExampleFragment().adopted(root.location)
 
       val producer = (name: Option[String]) => {

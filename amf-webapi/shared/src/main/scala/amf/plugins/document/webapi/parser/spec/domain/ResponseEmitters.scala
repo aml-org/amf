@@ -9,6 +9,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
 import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.Response
 import org.yaml.model.YDocument.EntryBuilder
+import amf.core.utils.Strings
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -42,7 +43,8 @@ case class Raml10ResponseEmitter(response: Response, ordering: SpecOrdering, ref
   override protected def emitters(fs: Fields): ListBuffer[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter]()
 
-    fs.entry(ResponseModel.Examples).map(f => result += OasResponseExamplesEmitter("(examples)", f, ordering))
+    fs.entry(ResponseModel.Examples)
+      .map(f => result += OasResponseExamplesEmitter("examples".asRamlAnnotation, f, ordering))
 
     result ++= AnnotationsEmitter(response, ordering).emitters
 

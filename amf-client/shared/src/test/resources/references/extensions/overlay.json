@@ -1,13 +1,13 @@
 {
   "swagger": "2.0",
-  "x-extension-type": "2.0 Overlay",
-  "x-extends": {
+  "x-amf-extensionType": "2.0 Overlay",
+  "x-amf-extends": {
     "$ref": "../../upanddown/banking-api.raml"
   },
   "paths": {
     "/books": {
-      "x-description": "La colección de libros de la biblioteca"
+      "x-amf-description": "La colección de libros de la biblioteca"
     }
   },
-  "x-usage": "Spanish localization"
+  "x-amf-usage": "Spanish localization"
 }

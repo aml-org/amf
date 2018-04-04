@@ -65,7 +65,7 @@
                 }
               }
             },
-            "x-media-type": "application/json",
+            "x-amf-mediaType": "application/json",
             "in": "body"
           }
         ],
@@ -75,7 +75,7 @@
         "description": "Returns an organization entity.",
         "responses": {
           "201": {
-            "x-media-type": "application/json",
+            "x-amf-mediaType": "application/json",
             "schema": {
               "type": "object",
               "allOf": [
@@ -86,7 +86,7 @@
               "example": {
                 "name": "Acme"
               },
-              "x-examples": {
+              "x-amf-examples": {
                 "softwareCorp": {
                   "value": {
                     "name": "Software Corp",

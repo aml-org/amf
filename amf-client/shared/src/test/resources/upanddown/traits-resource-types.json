@@ -4,7 +4,7 @@
     "title": "API",
     "version": "1"
   },
-  "x-resourceTypes": {
+  "x-amf-resourceTypes": {
     "searchableCollection": {
       "get": {
         "queryParameters": {
@@ -18,7 +18,7 @@
       }
     }
   },
-  "x-traits": {
+  "x-amf-traits": {
     "secured": {
       "queryParameters": {
         "<<tokenName>>": {
@@ -39,17 +39,17 @@
   },
   "paths": {
     "/books": {
-      "x-type": {
+      "x-amf-type": {
         "searchableCollection": {
           "queryParamName": "title",
           "fallbackParamName": "digest_all_fields"
         }
       },
-      "x-is": [
+      "x-amf-is": [
         "descr"
       ],
       "get": {
-        "x-is": [
+        "x-amf-is": [
           {
             "secured": {
               "tokenName": "access_token"

@@ -5,7 +5,7 @@
     "version": "1.0"
   },
   "host": "compumundo.hipermega{Name}",
-  "x-base-uri-parameters": {
+  "x-amf-baseUriParameters": {
     "Name?": {
       "type": "string"
     }
@@ -13,7 +13,7 @@
   "paths": {
     "/resource": {
       "get": {
-        "x-baseUriParameters": {
+        "x-amf-baseUriParameters": {
           "Name3?": {
             "type": "string"
           }

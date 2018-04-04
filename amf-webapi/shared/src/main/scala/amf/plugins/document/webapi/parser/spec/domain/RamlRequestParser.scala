@@ -5,11 +5,17 @@ import amf.core.parser.{Annotations, _}
 import amf.core.utils.Lazy
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.SpecParserOps
-import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, DefaultType, NilDefaultType, Raml10TypeParser}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  AnyDefaultType,
+  DefaultType,
+  NilDefaultType,
+  Raml10TypeParser
+}
 import amf.plugins.domain.webapi.metamodel.RequestModel
 import amf.plugins.domain.webapi.models.{Payload, Request}
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.{YMap, YScalar, YType}
+import amf.core.utils.Strings
 
 import scala.collection.mutable
 
@@ -42,7 +48,7 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
     )
   }
 
-  override protected val baseUriParametersKey: String = "(baseUriParameters)"
+  override protected val baseUriParametersKey: String = "baseUriParameters".asRamlAnnotation
 
   override protected val defaultType: DefaultType = AnyDefaultType
 }
@@ -142,11 +148,10 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
                 if (others.entries.nonEmpty) {
                   if (payloads.isEmpty) {
                     if (others.entries.map(_.key.as[YScalar].text) == List("example") && !ctx.globalMediatype) {
-                      ctx.violation(
-                        ParserSideValidations.ParsingErrorSpecification.id(),
-                        request.getOrCreate.id,
-                        "Invalid media type",
-                        m)
+                      ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+                                    request.getOrCreate.id,
+                                    "Invalid media type",
+                                    m)
                     }
                     ctx.factory
                       .typeParser(entry,

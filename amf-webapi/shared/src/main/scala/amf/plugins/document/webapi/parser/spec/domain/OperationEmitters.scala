@@ -12,6 +12,7 @@ import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork}
 import amf.plugins.domain.webapi.metamodel.{OperationModel, RequestModel}
 import amf.plugins.domain.webapi.models.Operation
 import org.yaml.model.YDocument.EntryBuilder
+import amf.core.utils.Strings
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -45,7 +46,7 @@ case class Raml10OperationEmitter(operation: Operation, ordering: SpecOrdering, 
 
   }
 
-  override protected val baseUriParameterKey: String = "(baseUriParameters)"
+  override protected val baseUriParameterKey: String = "baseUriParameters".asRamlAnnotation
 }
 
 case class Raml08OperationEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(
@@ -68,23 +69,26 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
 
     fs.entry(OperationModel.Description).map(f => result += RamlScalarEmitter("description", f))
 
-    fs.entry(OperationModel.Deprecated).map(f => result += ValueEmitter("(oas-deprecated)", f))
+    fs.entry(OperationModel.Deprecated).map(f => result += ValueEmitter("oasDeprecated".asRamlAnnotation, f))
 
-    fs.entry(OperationModel.Summary).map(f => result += ValueEmitter("(summary)", f))
+    fs.entry(OperationModel.Summary).map(f => result += ValueEmitter("summary".asRamlAnnotation, f))
 
-    fs.entry(OperationModel.Tags).map(f => result += ArrayEmitter("(tags)", f, ordering))
+    fs.entry(OperationModel.Tags).map(f => result += ArrayEmitter("tags".asRamlAnnotation, f, ordering))
 
     fs.entry(OperationModel.Documentation)
-      .map(f =>
-        result += OasEntryCreativeWorkEmitter("(externalDocs)", f.value.value.asInstanceOf[CreativeWork], ordering))
+      .map(
+        f =>
+          result += OasEntryCreativeWorkEmitter("externalDocs".asRamlAnnotation,
+                                                f.value.value.asInstanceOf[CreativeWork],
+                                                ordering))
 
     fs.entry(OperationModel.Schemes).map(f => result += ArrayEmitter("protocols", f, ordering))
 
-    fs.entry(OperationModel.Accepts).map(f => result += ArrayEmitter("(consumes)", f, ordering))
+    fs.entry(OperationModel.Accepts).map(f => result += ArrayEmitter("consumes".asRamlAnnotation, f, ordering))
 
-    fs.entry(OperationModel.ContentType).map(f => result += ArrayEmitter("(produces)", f, ordering))
+    fs.entry(OperationModel.ContentType).map(f => result += ArrayEmitter("produces".asRamlAnnotation, f, ordering))
 
-    fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter("", f, ordering).emitters())
+    fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter(f, ordering).emitters())
 
     Option(operation.request).foreach { req =>
       val fields = req.fields

@@ -5,7 +5,7 @@
     "version": "1.0"
   },
   "host": "some.{one}.com",
-  "x-base-uri-parameters": {
+  "x-amf-baseUriParameters": {
     "one": {
       "description": "One base uri param",
       "required": true
@@ -22,8 +22,8 @@
       ]
     },
     "/levelzero/some{two}/level-one": {
-      "x-displayName": "One display name",
-      "x-description": "and this description!",
+      "x-amf-displayName": "One display name",
+      "x-amf-description": "and this description!",
       "parameters": [
         {
           "name": "two",
@@ -41,7 +41,7 @@
             "type": "string"
           }
         ],
-        "x-queryParameters": {
+        "x-amf-queryParameters": {
           "param1": {
             "description": "Some descr",
             "type": "object",

@@ -10,7 +10,7 @@
         "responses": {
           "200": {
             "description": "",
-            "x-media-type": "application/json",
+            "x-amf-mediaType": "application/json",
             "schema": {
               "type": "object",
               "required": [
@@ -38,10 +38,10 @@
       }
     },
     "/test2": {
-      "x-type": "ta"
+      "x-amf-type": "ta"
     },
     "/test3": {
-      "x-type": "tb"
+      "x-amf-type": "tb"
     }
   },
   "definitions": {
@@ -52,7 +52,7 @@
       "$ref": "referred.raml"
     }
   },
-  "x-annotationTypes": {
+  "x-amf-annotationTypes": {
     "annotA": {
       "schema": {
         "type": "string"
@@ -62,7 +62,7 @@
       "$ref": "referred_annotation.raml"
     }
   },
-  "x-resourceTypes": {
+  "x-amf-resourceTypes": {
     "ta": {
       "description": "test"
     },
@@ -70,7 +70,7 @@
       "$ref": "referred_resource_type.raml"
     }
   },
-  "x-securitySchemes": {
+  "x-amf-securitySchemes": {
     "oauth20": {
       "$ref": "../references/fragments/security-scheme.raml"
     }

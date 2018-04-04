@@ -7,7 +7,12 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{FieldEntry, Fields, Position}
-import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
+import amf.plugins.document.webapi.contexts.{
+  OasSpecEmitterContext,
+  RamlScalarEmitter,
+  RamlSpecEmitterContext,
+  SpecEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
@@ -17,6 +22,7 @@ import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType
+import amf.core.utils.Strings
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -96,7 +102,7 @@ case class Raml10ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
               v.annotations.find(classOf[ExplicitField]) match {
                 case Some(_) =>
                   fs.entry(ParameterModel.Binding).map { f =>
-                    result += ValueEmitter("(binding)", f)
+                    result += ValueEmitter("binding".asRamlAnnotation, f)
                   }
                 case None => // ignore
               }
@@ -194,7 +200,7 @@ case class OasParametersEmitter(key: String,
     if (ramlParameters.nonEmpty) {
       val path = ramlParameters.filter(_.isPath)
       if (path.nonEmpty)
-        results += XRamlParameterEmitter("x-uriParameters", path)
+        results += XRamlParameterEmitter("uriParameters".asOasExtension, path)
     }
     results
   }
@@ -214,9 +220,9 @@ case class OasParametersEmitter(key: String,
       val query  = ramlParameters.filter(_.isQuery)
       val header = ramlParameters.filter(_.isHeader)
       if (query.nonEmpty)
-        results += XRamlParameterEmitter("x-queryParameters", query)
+        results += XRamlParameterEmitter("queryParameters".asOasExtension, query)
       if (header.nonEmpty)
-        results += XRamlParameterEmitter("x-headers", header)
+        results += XRamlParameterEmitter("headers".asOasExtension, header)
     }
     results
   }
@@ -272,7 +278,9 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
         val result = mutable.ListBuffer[EntryEmitter]()
         val fs     = parameter.fields
 
-        fs.entry(ParameterModel.ParameterName).orElse(fs.entry(ParameterModel.Name)).map(f => result += ValueEmitter("name", f))
+        fs.entry(ParameterModel.ParameterName)
+          .orElse(fs.entry(ParameterModel.Name))
+          .map(f => result += ValueEmitter("name", f))
 
         fs.entry(ParameterModel.Description).map(f => result += ValueEmitter("description", f))
 
@@ -288,9 +296,9 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
               result += OasSchemaEmitter(f, ordering, references)
             } else {
               result ++= OasTypeEmitter(f.value.value.asInstanceOf[Shape],
-                ordering,
-                Seq(ShapeModel.Description),
-                references).entries()
+                                        ordering,
+                                        Seq(ShapeModel.Description),
+                                        references).entries()
             }
           }
 
@@ -317,16 +325,13 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
         val fs = payload.schema.fields
         fs.entry(FileShapeModel.Name).map(f => result += ValueEmitter("name", f))
         fs.entry(FileShapeModel.Description).map(f => result += ValueEmitter("description", f))
-        result += MapEntryEmitter("in","formData")
-        result ++= OasTypeEmitter(payload.schema,
-          ordering,
-          Seq(ShapeModel.Description),
-          references).entries()
+        result += MapEntryEmitter("in", "formData")
+        result ++= OasTypeEmitter(payload.schema, ordering, Seq(ShapeModel.Description), references).entries()
         result ++= AnnotationsEmitter(payload, ordering).emitters
 
       } else {
 
-        payload.fields.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("x-media-type", f))
+        payload.fields.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("mediaType".asOasExtension, f))
         result += MapEntryEmitter("in", "body")
         payload.fields
           .entry(PayloadModel.Schema)

@@ -14,13 +14,13 @@
   ],
   "externalDocs": {
     "description": "Documentation content",
-    "x-title": "Documentation title",
+    "x-amf-title": "Documentation title",
     "x-AnnotationInDocumentationRoot": "sjf"
   },
   "paths": {
     "/customers": {
-      "x-displayName": "EndPoint display name",
-      "x-description": "EndPoint description",
+      "x-amf-displayName": "EndPoint display name",
+      "x-amf-description": "EndPoint description",
       "x-AnnotationInEndPointAlpha": "alpha",
       "x-AnnotationInEndPointBeta": "beta"
     },
@@ -40,7 +40,7 @@
         "responses": {
           "200": {
             "description": "Response description",
-            "x-media-type": "application/json"
+            "x-amf-mediaType": "application/json"
           }
         },
         "x-AnnotationInOperation": "sjf"

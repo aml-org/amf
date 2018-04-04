@@ -98,7 +98,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
       case Root(root, _, references, UnspecifiedReference, _, _) =>
         val body = root.document.as[YMap]
         body.entries.size should be(3)
-        assertUses(body.key("x-uses").get, references.map(_.unit))
+        assertUses(body.key("x-amf-uses").get, references.map(_.unit))
       case Root(root, _, _, refKind, _, _) => throw new Exception(s"Unespected type of referenceKind parsed $refKind")
     }
   }
