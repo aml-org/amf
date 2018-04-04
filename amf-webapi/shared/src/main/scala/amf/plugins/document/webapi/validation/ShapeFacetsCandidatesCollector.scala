@@ -14,7 +14,7 @@ import amf.plugins.domain.webapi.models.{Parameter, Payload, Request}
 
 class ShapeFacetsCandidatesCollector(model: BaseUnit, platform: Platform) {
 
-  def validate(): Future[Seq[AMFValidationResult]] = {
+  def collect(): Seq[ValidationCandidate] = {
     val shapesWithFacets = findShapesWithFacets()
     shapesWithFacets map {
       case (shape, facetDefinitons) =>
@@ -27,9 +27,7 @@ class ShapeFacetsCandidatesCollector(model: BaseUnit, platform: Platform) {
         val fragment      = PayloadFragment(facetsPayload, "application/yaml")
         ValidationCandidate(facetsShape, fragment)
     }
-
     // Finally we collect all the results
-    Future.sequence(listResults).map(_.flatten)
   }
 
   protected def findShapesWithFacets(): Seq[(Shape, Seq[Shape#FacetsMap])] = {

@@ -6,18 +6,9 @@ Number of results: 1
 Level: Violation
 
 - Source: 
-  Message: 
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/type-with-example/input.raml#/web-api/end-points/%2Fok0/post/request/default/default_validation_firstName_validation_minCount/prop
   Message: Data at //firstName must have min. cardinality 1
-  Property: http://raml.org/vocabularies/data#firstName
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/type-with-example/input.raml#/web-api/end-points/%2Fok0/post/request/default/default_validation_lastName_validation_minCount/prop
-  Message: Data at //lastName must have min. cardinality 1
-  Property: http://raml.org/vocabularies/data#lastName
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/type-with-example/input.raml#/web-api/end-points/%2Fok0/post/request/default/default_validation_validation_type/prop
-  Message: Data at / must be an object
-  Property: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+Data at //lastName must have min. cardinality 1
+Data at / must be an object
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/type-with-example/input.raml#/web-api/end-points/%2Fok0/post/request/default/example/null/scalar_1

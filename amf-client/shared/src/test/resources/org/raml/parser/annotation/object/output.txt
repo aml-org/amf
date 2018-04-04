@@ -14,14 +14,7 @@ Level: Violation
 
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/object/input.raml#/declarations/user/schema_validation
   Message: Object at / must be valid
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/object/input.raml#/declarations/user/schema/property/alive/scalar/alive_validation_range/prop
-  Message: Scalar at //alive must have data type http://www.w3.org/2001/XMLSchema#boolean
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/object/input.raml#/web-api/end-points/%2Fbad1/user/object_1/scalar_3
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(26,13)-(26,15)]))
-
+Scalar at //alive must have data type http://www.w3.org/2001/XMLSchema#boolean
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/object/input.raml#/web-api/end-points/%2Fbad1/user/object_1

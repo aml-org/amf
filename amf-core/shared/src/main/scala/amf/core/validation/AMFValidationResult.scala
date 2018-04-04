@@ -50,6 +50,15 @@ case class AMFValidationResult(message: String,
 
 object AMFValidationResult {
 
+  def apply(message: String,
+            level: String,
+            targetNode: String,
+            targetProperty: Option[String],
+            validationId: String,
+            position: Option[LexicalInformation],
+            source: Any): AMFValidationResult =
+    new AMFValidationResult(message, level, targetNode, targetProperty, validationId, position, source)
+
   def fromSHACLValidation(model: BaseUnit,
                           message: String,
                           level: String,
