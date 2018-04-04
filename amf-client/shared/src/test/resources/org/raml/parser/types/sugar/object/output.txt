@@ -7,14 +7,7 @@ Level: Violation
 
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/sugar/object/input.raml#/declarations/Person_validation
   Message: Object at / must be valid
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/sugar/object/input.raml#/declarations/Person/property/name/scalar/name_validation_range/prop
-  Message: Scalar at //name must have data type http://www.w3.org/2001/XMLSchema#integer
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/sugar/object/input.raml#/declarations/Person/example/null/object_1/scalar_2
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(8,14)-(8,18)]))
-
+Scalar at //name must have data type http://www.w3.org/2001/XMLSchema#integer
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/sugar/object/input.raml#/declarations/Person/example/null/object_1

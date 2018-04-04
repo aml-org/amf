@@ -6,33 +6,13 @@ Number of results: 1
 Level: Violation
 
 - Source: 
-  Message: 
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/User_validation
   Message: Object at / must be valid
-  Property: http://raml.org/vocabularies/data#lastName
+Object at / must be valid
 
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/User_validation
-  Message: Object at / must be valid
-  Property: http://raml.org/vocabularies/data#name
-
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/User/property/name/scalar/name_validation_validation_maxLength/prop
-  Message: Data at //name must have length smaller than 5
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/User/example/null/object_1/scalar_2
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(2,10)-(2,18)]))
-
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/User/property/lastName/scalar/lastName_validation_validation_minLength/prop
-  Message: Data at //lastName must have length greater than 10
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/User/example/null/object_1/scalar_3
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(3,14)-(3,22)]))
-
+Data at //name must have length smaller than 5
+Data at //lastName must have length greater than 10
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/User/example/null/object_1
   Property: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/User/example/null/object_1
-  Position: Some(LexicalInformation([(1,0)-(4,1)]))
+  Position: Some(LexicalInformation([(13,13)-(17,7)]))

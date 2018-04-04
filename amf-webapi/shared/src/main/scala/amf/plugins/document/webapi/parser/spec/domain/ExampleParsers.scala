@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.SynthesizedField
+import amf.core.annotations.{LexicalInformation, SynthesizedField}
 import amf.core.model.domain.{AmfScalar, DataNode}
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -193,7 +193,8 @@ case class NodeDataNodeParser(node: YNode, parentId: String, quiet: Boolean)(imp
       case wh: WarningOnlyHandler if wh.hasRegister => DataNodeParserResult(exampleNode, None)
       case _ =>
         val dataNode = DataNodeParser(exampleNode, parent = Some(parentId)).parse()
-        dataNode.annotations ++= Annotations(exampleNode)
+        dataNode.annotations.reject(_.isInstanceOf[LexicalInformation])
+        dataNode.annotations += LexicalInformation(Range(node.value.range))
         DataNodeParserResult(exampleNode, Some(dataNode))
     }
   }

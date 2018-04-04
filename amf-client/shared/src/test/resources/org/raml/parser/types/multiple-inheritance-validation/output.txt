@@ -6,31 +6,11 @@ Number of results: 1
 Level: Violation
 
 - Source: 
-  Message: 
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/multiple-inheritance-validation/input.raml#/web-api/end-points/%2Fresource/get/200/application/json/schema_validation
   Message: Object at / must be valid
-  Property: http://raml.org/vocabularies/data#age
+Object at / must be valid
 
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/multiple-inheritance-validation/input.raml#/web-api/end-points/%2Fresource/get/200/application/json/schema_validation
-  Message: Object at / must be valid
-  Property: http://raml.org/vocabularies/data#id
-
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/multiple-inheritance-validation/input.raml#/web-api/end-points/%2Fresource/get/200/application/json/schema/property/id/scalar/id_validation_range/prop
-  Message: Scalar at //id must have data type http://www.w3.org/2001/XMLSchema#string
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/multiple-inheritance-validation/input.raml#/web-api/end-points/%2Fresource/get/200/application/json/schema/example/null/object_1/scalar_3
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(28,18)-(28,19)]))
-
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/multiple-inheritance-validation/input.raml#/web-api/end-points/%2Fresource/get/200/application/json/schema/property/age/scalar/age_validation_range/prop
-  Message: Scalar at //age must have data type http://www.w3.org/2001/XMLSchema#integer
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/multiple-inheritance-validation/input.raml#/web-api/end-points/%2Fresource/get/200/application/json/schema/example/null/object_1/scalar_4
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(29,19)-(29,25)]))
-
+Scalar at //id must have data type http://www.w3.org/2001/XMLSchema#string
+Scalar at //age must have data type http://www.w3.org/2001/XMLSchema#integer
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/multiple-inheritance-validation/input.raml#/web-api/end-points/%2Fresource/get/200/application/json/schema/example/null/object_1

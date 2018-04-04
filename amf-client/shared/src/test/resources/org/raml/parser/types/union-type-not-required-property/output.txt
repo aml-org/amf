@@ -7,14 +7,7 @@ Level: Violation
 
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml#/declarations/Item_validation
   Message: Object at / must be valid
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml#/declarations/Item/property/testProperty/union/testProperty_validation
-  Message: Data at //testProperty must be one of the valid union types
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml#/declarations/Item/example/null/object_1/array_2
-  Property: 
-  Position: Some(LexicalInformation([(20,18)-(38,0)]))
-
+Data at //testProperty must be one of the valid union types
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml#/declarations/Item/example/null/object_1
