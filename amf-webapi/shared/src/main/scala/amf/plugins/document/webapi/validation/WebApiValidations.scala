@@ -2,13 +2,14 @@ package amf.plugins.document.webapi.validation
 
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
-import amf.core.services.{RuntimeSerializer, RuntimeValidator}
+import amf.core.services.RuntimeValidator
 import amf.core.validation._
 import amf.core.validation.core.{ValidationProfile, ValidationResult, ValidationSpecification}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 trait WebApiValidations extends ValidationResultProcessor {
 
@@ -25,7 +26,7 @@ trait WebApiValidations extends ValidationResultProcessor {
                                               profile: String,
                                               validations: EffectiveValidations,
                                               messageStyle: String,
-                                              platform: Platform) = {
+                                              platform: Platform): Future[AMFValidationReport] = {
 
     // Before validating we need to resolve to get all the model information
     val baseUnit = new ValidationResolutionPipeline(profile).resolve(unresolvedUnit)
@@ -33,10 +34,8 @@ trait WebApiValidations extends ValidationResultProcessor {
     aggregatedReport = List()
 
     for {
-      examplesReport    <- ExamplesValidation(baseUnit, platform).validate()
-      shapeFacetsReport <- ShapeFacetsValidation(baseUnit, platform).validate()
-      annotationsReport <- AnnotationsValidation(baseUnit, platform).validate()
-      shaclReport       <- RuntimeValidator.shaclValidation(baseUnit, validations, messageStyle)
+      examplesResults <- UnitPayloadsValidation(baseUnit, platform).validate()
+      shaclReport     <- RuntimeValidator.shaclValidation(baseUnit, validations, messageStyle)
     } yield {
 
       // aggregating parser-side validations
@@ -49,19 +48,7 @@ trait WebApiValidations extends ValidationResultProcessor {
         .map(_.get)
 
       // adding example validations
-      results ++= examplesReport
-        .map(r => buildValidationWithCustomLevelForProfile(baseUnit, r, messageStyle, validations))
-        .filter(_.isDefined)
-        .map(_.get)
-
-      // adding shape facets validations
-      results ++= shapeFacetsReport
-        .map(r => buildValidationWithCustomLevelForProfile(baseUnit, r, messageStyle, validations))
-        .filter(_.isDefined)
-        .map(_.get)
-
-      // adding annotations validations
-      results ++= annotationsReport
+      results ++= examplesResults
         .map(r => buildValidationWithCustomLevelForProfile(baseUnit, r, messageStyle, validations))
         .filter(_.isDefined)
         .map(_.get)

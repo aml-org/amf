@@ -11,11 +11,16 @@ class EffectiveValidations(val effective: mutable.HashMap[String, ValidationSpec
                            val violation: mutable.HashMap[String, ValidationSpecification] = mutable.HashMap(),
                            val all: mutable.HashMap[String, ValidationSpecification] = mutable.HashMap()) {
 
+  def update(other: ValidationSpecification) = {
+    all.get(other.name) match {
+      case Some(added) => all.update(other.name, other withTargets added)
+      case None        => all += other.name -> other
+    }
+  }
+
   def someEffective(profile: ValidationProfile): EffectiveValidations = {
     // we aggregate all of the validations to the total validations map
-    profile.validations.foreach { spec =>
-      all += spec.name -> spec
-    }
+    profile.validations.foreach { update }
 
     profile.infoLevel.foreach(id => setLevel(id, SeverityLevels.INFO))
     profile.warningLevel.foreach(id => setLevel(id, SeverityLevels.WARNING))
@@ -31,7 +36,7 @@ class EffectiveValidations(val effective: mutable.HashMap[String, ValidationSpec
     this
   }
 
-  def allEffective(specifications: Seq[ValidationSpecification]) = {
+  def allEffective(specifications: Seq[ValidationSpecification]): EffectiveValidations = {
     specifications foreach { spec =>
       all += (spec.name       -> spec)
       effective += (spec.name -> spec)
@@ -39,7 +44,6 @@ class EffectiveValidations(val effective: mutable.HashMap[String, ValidationSpec
     }
     this
   }
-
 
   private def setLevel(id: String, targetLevel: String) = {
     val validationName = if (!id.startsWith("http://") && !id.startsWith("https://") && !id.startsWith("file:/")) {

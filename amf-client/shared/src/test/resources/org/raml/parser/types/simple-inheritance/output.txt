@@ -5,20 +5,8 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://raml.org/vocabularies/amf/parser#example-validation-error
-  Message: Model: http://test.com/payload
-Profile: Payload
-Conforms? false
-Number of results: 2
-
-Level: Violation
-
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/simple-inheritance/input.raml#/declarations/Office_validation
   Message: Object at / must be valid
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/simple-inheritance/input.raml#/declarations/Office/example/null/object_1
-  Property: http://raml.org/vocabularies/data#age
-  Position: Some(LexicalInformation([(1,0)-(5,1)]))
 
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/simple-inheritance/input.raml#/declarations/Office/property/age/scalar/age_validation_validation_minimum/prop
   Message: Data at //age must be greater than or equal to 0
@@ -27,7 +15,8 @@ Level: Violation
   Property: http://raml.org/vocabularies/data#value
   Position: Some(LexicalInformation([(4,9)-(4,11)]))
 
+
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/simple-inheritance/input.raml#/declarations/Office/example/null
-  Property: http://raml.org/vocabularies/document#value
-  Position: Some(LexicalInformation([(15,12)-(21,0)]))
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/simple-inheritance/input.raml#/declarations/Office/example/null/object_1
+  Property: http://raml.org/vocabularies/data#age
+  Position: Some(LexicalInformation([(1,0)-(5,1)]))
