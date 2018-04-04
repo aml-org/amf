@@ -53,6 +53,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     val endpoint = producer(path).add(Annotations(entry))
     parent.map(p => endpoint.add(ParentEndPoint(p)))
 
+    checkBalancedParams(path, entry.value, endpoint.id, EndPointModel.Path.value.iri(), ctx)
     endpoint.set(Path, AmfScalar(path, Annotations(entry.key)))
 
     if (!TemplateUri.isValid(path))
