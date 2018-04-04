@@ -7,6 +7,14 @@ import amf.core.vocabulary.Namespace
 
 object ParserSideValidations {
 
+  val ChainedReferenceSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "chained-reference-error").iri(),
+    "Refereces cannot be chained",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val ExclusivePropertiesSpecification = ValidationSpecification(
     (Namespace.AmfParser + "exclusive-properties-error").iri(),
     "Exclusive properties declared together",
@@ -161,6 +169,11 @@ object ParserSideValidations {
 
 
   val levels: Map[String, Map[String, String]] = Map(
+    ChainedReferenceSpecification.id() -> Map(
+      ProfileNames.RAML -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS  -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF  -> SeverityLevels.VIOLATION
+    ),
     ExclusivePropertiesSpecification.id() -> Map(
       ProfileNames.RAML -> SeverityLevels.VIOLATION,
       ProfileNames.OAS  -> SeverityLevels.VIOLATION,
@@ -256,6 +269,7 @@ object ParserSideValidations {
   )
 
   def validations: List[ValidationSpecification] = List(
+    ChainedReferenceSpecification,
     ExclusivePropertiesSpecification,
     PathTemplateUnbalancedParameters,
     UnknownSecuritySchemeErrorSpecification,
