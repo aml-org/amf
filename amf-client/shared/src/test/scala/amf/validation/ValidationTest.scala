@@ -1,9 +1,9 @@
 package amf.validation
 
 import amf.ProfileNames
-import amf.core.emitter.RenderOptions
 import amf.common.Tests.checkDiff
 import amf.core.AMFSerializer
+import amf.core.emitter.RenderOptions
 import amf.core.model.document.{BaseUnit, Module, PayloadFragment}
 import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.core.remote.Syntax.{Json, Syntax, Yaml}
@@ -13,13 +13,7 @@ import amf.core.validation.SeverityLevels
 import amf.facades.{AMFCompiler, AMFRenderer, Validation}
 import amf.plugins.document.graph.parser.GraphEmitter
 import amf.plugins.document.webapi.RAML10Plugin
-import amf.plugins.document.webapi.validation.{
-  AnnotationsValidation,
-  ExamplesValidation,
-  PayloadValidation,
-  ShapeFacetsValidation,
-  _
-}
+import amf.plugins.document.webapi.validation.{AnnotationsValidation, ExamplesValidation, PayloadValidation, ShapeFacetsValidation, _}
 import amf.plugins.domain.shapes.models.ArrayShape
 import amf.plugins.features.validation.PlatformValidator
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
@@ -1211,6 +1205,17 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       library <- AMFCompiler(validationsPath + "/shapes/examples-in-unions.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
+  test("Valid examples validation over union shapes 2") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "/shapes/unions_examples.raml", platform, RamlYamlHint, validation)
         .build()
       report <- validation.validate(library, ProfileNames.RAML)
     } yield {

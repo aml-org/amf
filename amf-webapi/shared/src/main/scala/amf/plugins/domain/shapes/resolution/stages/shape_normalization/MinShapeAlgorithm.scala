@@ -285,8 +285,21 @@ trait MinShapeAlgorithm extends RestrictionComputation {
       minShape(baseShape, superUnionElement)
     }
 
+    var accExamples = List[Example]()
+
+    val unionShapesWithIds = newUnionItems.zipWithIndex.map { case (shape, i) =>
+      shape.id = shape.id + s"_$i"
+      shape match {
+        case any: AnyShape =>
+          accExamples ++= any.examples
+          any.fields.remove(AnyShapeModel.Examples)
+        case _ => // ignore
+      }
+      shape
+    }
+
     superUnion.fields.setWithoutId(UnionShapeModel.AnyOf,
-                                   AmfArray(newUnionItems),
+                                   AmfArray(unionShapesWithIds),
                                    superUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
 
     computeNarrowRestrictions(allShapeFields, baseShape, superUnion, filteredFields = Seq(UnionShapeModel.AnyOf))
@@ -296,6 +309,9 @@ trait MinShapeAlgorithm extends RestrictionComputation {
           superUnion.fields.setWithoutId(field, value.value, value.annotations)
         }
     }
+
+    if (accExamples.nonEmpty)
+      superUnion.fields.setWithoutId(AnyShapeModel.Examples, AmfArray(accExamples))
 
     superUnion
   }
