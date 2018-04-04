@@ -5,22 +5,9 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://raml.org/vocabularies/amf/parser#example-validation-error
-  Message: Model: http://test.com/payload
-Profile: Payload
-Conforms? false
-Number of results: 1
-
-Level: Violation
-
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/enum-boolean/input.raml#/declarations/scalar/goodBooleanEnum_validation_validation_enum/prop
   Message: Data at / must be within the values (true)
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/enum-boolean/input.raml#/declarations/scalar/goodBooleanEnum/example/two/scalar_1
   Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(10,10)-(10,15)]))
-
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/enum-boolean/input.raml#/declarations/scalar/goodBooleanEnum/example/two
-  Property: http://raml.org/vocabularies/document#value
   Position: Some(LexicalInformation([(10,10)-(10,15)]))

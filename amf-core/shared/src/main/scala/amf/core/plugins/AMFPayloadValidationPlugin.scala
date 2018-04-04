@@ -2,15 +2,18 @@ package amf.core.plugins
 
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.Shape
-import amf.core.validation.AMFValidationReport
+import amf.core.validation.{AMFValidationReport, ValidationShapeSet}
 
 import scala.concurrent.Future
 
 trait AMFPayloadValidationPlugin extends AMFPlugin {
 
-  def validatePayload(shape: Shape, payload: String, mediaType: String): Future[AMFValidationReport]
+  protected def parsePayload(payload: String, mediaType: String): PayloadFragment
 
-  def validatePayload(shape: Shape, payloadFragment: PayloadFragment): Future[AMFValidationReport]
+  final def validatePayload(shape: Shape, payload: String, mediaType: String): Future[AMFValidationReport] =
+    validateSet(ValidationShapeSet(shape, parsePayload(payload, mediaType)))
+
+  def validateSet(set: ValidationShapeSet): Future[AMFValidationReport]
 
   val payloadMediaType: Seq[String]
 

@@ -55,17 +55,19 @@ class ValidationJSONLDEmitter(targetProfile: String) {
         p.entry((Namespace.Shacl + "message").iri(), genValue(_, message))
       }
 
-      for {
-        targetInstance <- validation.targetInstance
-      } yield {
-        p.entry((Namespace.Shacl + "targetNode").iri(), link(_, expandRamlId(targetInstance)))
-      }
+      if (validation.targetInstance.nonEmpty)
+        p.entry((Namespace.Shacl + "targetNode").iri(), _.list(p => {
+          validation.targetInstance.foreach { ti =>
+            link(p, expandRamlId(ti))
+          }
+        }))
 
-      for {
-        targetClass <- validation.targetClass
-      } yield {
-        p.entry((Namespace.Shacl + "targetClass").iri(), link(_, expandRamlId(targetClass)))
-      }
+      if (validation.targetClass.nonEmpty)
+        p.entry((Namespace.Shacl + "targetClass").iri(), _.list(p => {
+          validation.targetClass.foreach { tc =>
+            link(p, expandRamlId(tc))
+          }
+        }))
 
       for {
         closedShape <- validation.closed
@@ -75,11 +77,12 @@ class ValidationJSONLDEmitter(targetProfile: String) {
         }
       }
 
-      for {
-        targetObject <- validation.targetObject
-      } yield {
-        p.entry((Namespace.Shacl + "targetObjectsOf").iri(), link(_, Namespace.expand(targetObject).iri()))
-      }
+      if (validation.targetObject.nonEmpty)
+        p.entry((Namespace.Shacl + "targetObjectsOf").iri(), _.list(p => {
+          validation.targetObject.foreach { to =>
+            link(p, expandRamlId(to))
+          }
+        }))
 
       if (validation.unionConstraints.nonEmpty) {
         p.entry((Namespace.Shacl + "or").iri(), _.obj {

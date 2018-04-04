@@ -5,22 +5,9 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://raml.org/vocabularies/amf/parser#example-validation-error
-  Message: Model: http://test.com/payload
-Profile: Payload
-Conforms? false
-Number of results: 1
-
-Level: Violation
-
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/datetime/input.raml#/declarations/scalar/when_validation_range/prop
   Message: Scalar at / must have data type http://www.w3.org/2001/XMLSchema#dateTime
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/datetime/input.raml#/declarations/scalar/when/example/null/scalar_1
   Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(6,17)-(6,24)]))
-
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/datetime/input.raml#/declarations/scalar/when/example/null
-  Property: http://raml.org/vocabularies/document#value
   Position: Some(LexicalInformation([(6,17)-(6,24)]))

@@ -4,22 +4,16 @@ import amf.ProfileNames
 import amf.common.Tests.checkDiff
 import amf.core.AMFSerializer
 import amf.core.emitter.RenderOptions
-import amf.core.model.document.{BaseUnit, Module, PayloadFragment}
+import amf.core.model.document.{Module, PayloadFragment}
 import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.core.remote.Syntax.{Json, Syntax, Yaml}
 import amf.core.remote._
 import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
-import amf.core.validation.SeverityLevels
+import amf.core.validation.{SeverityLevels, ValidationCandidate}
 import amf.facades.{AMFCompiler, AMFRenderer, Validation}
 import amf.plugins.document.graph.parser.GraphEmitter
 import amf.plugins.document.webapi.RAML10Plugin
-import amf.plugins.document.webapi.validation.{
-  AnnotationsValidation,
-  ExamplesValidation,
-  PayloadValidation,
-  ShapeFacetsValidation,
-  _
-}
+import amf.plugins.document.webapi.validation.{AMFShapeValidations, PayloadValidation, UnitPayloadsValidation}
 import amf.plugins.domain.shapes.models.ArrayShape
 import amf.plugins.features.validation.PlatformValidator
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
@@ -255,7 +249,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         case "json" => PayloadJsonHint
         case "yaml" => PayloadYamlHint
       }
-      val pair: Future[(PayloadValidation, BaseUnit)] = for {
+      val validation: Future[PayloadValidation] = for {
         validation <- Validation(platform).map(_.withEnabledValidation(false))
         library    <- AMFCompiler(payloadsPath + "payloads.raml", platform, RamlYamlHint, validation).build()
         payload    <- AMFCompiler(payloadsPath + payloadFile, platform, hint, validation).build()
@@ -267,12 +261,13 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
             case s: Shape => s.name.is(shapeName)
           }
           .get
-        (PayloadValidation(targetType.asInstanceOf[Shape]), payload)
+        val candidates =
+          Seq(ValidationCandidate(targetType.asInstanceOf[Shape], payload.asInstanceOf[PayloadFragment]))
+        PayloadValidation(candidates)
       }
 
-      pair flatMap {
-        case (validation, payload) =>
-          validation.validate(payload.asInstanceOf[PayloadFragment])
+      validation flatMap {
+        _ validate ()
       } map { report =>
         report.results.foreach { result =>
           assert(result.position.isDefined)
@@ -360,7 +355,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       library <- AMFCompiler(examplesPath + "examples_validation.raml", platform, RamlYamlHint, validation)
         .build()
-      results <- ExamplesValidation(library, platform).validate()
+      results <- UnitPayloadsValidation(library, platform).validate()
     } yield {
       assert(results.length == 4)
       assert(results.count(_.level == SeverityLevels.WARNING) == 1)
@@ -395,7 +390,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       library <- AMFCompiler(examplesPath + "facets/custom-facets.raml", platform, RamlYamlHint, validation)
         .build()
-      results <- ShapeFacetsValidation(library, platform).validate()
+      results <- UnitPayloadsValidation(library, platform).validate()
     } yield {
       assert(results.length == 1)
     }
@@ -417,7 +412,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       library <- AMFCompiler(examplesPath + "annotations/annotations.raml", platform, RamlYamlHint, validation)
         .build()
-      results <- AnnotationsValidation(library, platform).validate()
+      results <- UnitPayloadsValidation(library, platform).validate()
     } yield {
       assert(results.length == 1)
     }
@@ -428,9 +423,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       library <- AMFCompiler(examplesPath + "annotations/annotations_enum.raml", platform, RamlYamlHint, validation)
         .build()
-      results <- AnnotationsValidation(library, platform).validate()
+      results <- UnitPayloadsValidation(library, platform).validate()
     } yield {
-      assert(results.length == 4)
+      assert(results.length == 2)
     }
   }
 

@@ -5,36 +5,21 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://raml.org/vocabularies/amf/parser#example-validation-error
-  Message: Model: http://test.com/payload
-Profile: Payload
-Conforms? false
-Number of results: 3
-
-Level: Violation
-
+- Source: 
+  Message: 
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/type-with-example/input.raml#/web-api/end-points/%2Fok0/post/request/default/default_validation_firstName_validation_minCount/prop
   Message: Data at //firstName must have min. cardinality 1
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/type-with-example/input.raml#/web-api/end-points/%2Fok0/post/request/default/example/null/scalar_1
   Property: http://raml.org/vocabularies/data#firstName
-  Position: Some(LexicalInformation([(28,15)-(28,20)]))
 
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/type-with-example/input.raml#/web-api/end-points/%2Fok0/post/request/default/default_validation_lastName_validation_minCount/prop
   Message: Data at //lastName must have min. cardinality 1
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/type-with-example/input.raml#/web-api/end-points/%2Fok0/post/request/default/example/null/scalar_1
   Property: http://raml.org/vocabularies/data#lastName
-  Position: Some(LexicalInformation([(28,15)-(28,20)]))
 
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/type-with-example/input.raml#/web-api/end-points/%2Fok0/post/request/default/default_validation_validation_type/prop
   Message: Data at / must be an object
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/type-with-example/input.raml#/web-api/end-points/%2Fok0/post/request/default/example/null/scalar_1
   Property: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-  Position: Some(LexicalInformation([(28,15)-(28,20)]))
 
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/type-with-example/input.raml#/web-api/end-points/%2Fok0/post/request/default/example/null
-  Property: http://raml.org/vocabularies/document#value
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/type-with-example/input.raml#/web-api/end-points/%2Fok0/post/request/default/example/null/scalar_1
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/type-with-example/input.raml#/web-api/end-points/%2Fok0/post/request/default/example/null/scalar_1
   Position: Some(LexicalInformation([(28,15)-(28,20)]))
