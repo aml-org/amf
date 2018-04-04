@@ -1,0 +1,201 @@
+[
+  {
+    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example3_instance.raml#",
+    "@type": [
+      "http://raml.org/vocabularies/meta#DialectInstance",
+      "http://raml.org/vocabularies/document#Document",
+      "http://raml.org/vocabularies/document#Fragment",
+      "http://raml.org/vocabularies/document#Module",
+      "http://raml.org/vocabularies/document#Unit"
+    ],
+    "http://raml.org/vocabularies/meta#definedBy": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example3.raml#"
+      }
+    ],
+    "http://raml.org/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example3_instance.raml#/",
+        "@type": [
+          "http://raml.org/vocabularies/cfg#Configuration",
+          "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example3.raml#/declarations/ConfigurationNode",
+          "http://raml.org/vocabularies/meta#DialectDomainElement",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://raml.org/vocabularies/cfg#configuredAsset": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example3_instance.raml#/assets/0",
+            "@type": [
+              "http://raml.org/vocabularies/cfg#VDPAsset",
+              "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example3.raml#/declarations/VDPAssetNode",
+              "http://raml.org/vocabularies/meta#DialectDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/cfg#gavGroup": [
+              {
+                "@value": "com.mulesoft.tokenizer"
+              }
+            ],
+            "http://raml.org/vocabularies/cfg#gavArtifact": [
+              {
+                "@value": "vdp-from-exchange"
+              }
+            ],
+            "http://raml.org/vocabularies/cfg#classifier": [
+              {
+                "@value": "vdp"
+              }
+            ],
+            "http://raml.org/vocabularies/cfg#version": [
+              {
+                "@value": "1.0.0"
+              }
+            ],
+            "http://raml.org/vocabularies/cfg#packaging": [
+              {
+                "@value": "vdp"
+              }
+            ],
+            "http://raml.org/vocabularies/cfg#fileName": [
+              {
+                "@value": "vdp-binary"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example3_instance.raml#/assets/0/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example3_instance.raml#/assets/0"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(5,0)-(13,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example3_instance.raml#/assets/1",
+            "@type": [
+              "http://raml.org/vocabularies/cfg#CSMAsset",
+              "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example3.raml#/declarations/CSMAssetNode",
+              "http://raml.org/vocabularies/meta#DialectDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/cfg#type": [
+              {
+                "@value": "CSM"
+              }
+            ],
+            "http://raml.org/vocabularies/cfg#secretType": [
+              {
+                "@value": "sharedSecrets"
+              }
+            ],
+            "http://raml.org/vocabularies/cfg#secretId": [
+              {
+                "@value": "44e94628-54ee-11e7-b114-b2f933d5fe66"
+              }
+            ],
+            "http://raml.org/vocabularies/cfg#version": [
+              {
+                "@value": "v1"
+              }
+            ],
+            "http://raml.org/vocabularies/cfg#secretGroup": [
+              {
+                "@value": "xyz"
+              }
+            ],
+            "http://raml.org/vocabularies/cfg#packaging": [
+              {
+                "@value": "secret"
+              }
+            ],
+            "http://raml.org/vocabularies/cfg#fileName": [
+              {
+                "@value": "vdp-key"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example3_instance.raml#/assets/1/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example3_instance.raml#/assets/1"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(14,0)-(22,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example3_instance.raml#/source-map",
+            "@type": [
+              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example3_instance.raml#/"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(3,0)-(22,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://raml.org/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example3_instance.raml#/source-map",
+        "@type": [
+          "http://raml.org/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://raml.org/vocabularies/document-source-maps#lexical": [
+          {
+            "http://raml.org/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example3_instance.raml#"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(3,0)-(22,0)]"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
