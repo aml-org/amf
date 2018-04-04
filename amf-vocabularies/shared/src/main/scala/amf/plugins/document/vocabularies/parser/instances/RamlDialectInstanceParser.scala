@@ -199,7 +199,7 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
                 collectAlias(dialectInstance, alias -> module.id)
                 result += (alias, module)
               case other =>
-                ctx.violation(id, s"Expected vocabulary module but found: $other", e) // todo Uses should only reference modules...
+                ctx.violation(id, s"Expected vocabulary module but found: '$other'", e) // todo Uses should only reference modules...
             }
           })
       }
@@ -303,7 +303,11 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
             val id = declarationsId + "/" + declarationEntry.key.as[YScalar].text.urlEncoded
             parseNode(id, declarationEntry.value, nodeMapping) match {
               case Some(node) => ctx.declarations.registerDialectDomainElement(declarationEntry.key, node)
-              case other      => // TODO: violation here
+              case other      =>
+                ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+                  id,
+                  s"Cannot parse declaration for node with key '$name'",
+                  entry.value)
             }
           }
         }
@@ -348,7 +352,11 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
       case ObjectPropertyCollection  => parseObjectCollectionProperty(id, propertyEntry, property, node)
       case ObjectMapProperty         => parseObjectMapProperty(id, propertyEntry, property, node)
       case ObjectPairProperty        => parseObjectPairProperty(id, propertyEntry, property, node)
-      case _                         => // TODO: throw exception
+      case _                         =>
+        ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+          id,
+          s"Unknown type of node property ${property.id}",
+          propertyEntry)
     }
   }
 
@@ -431,10 +439,12 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
     }
   }
 
-  def findCompatibleMapping(unionMappings: Seq[NodeMapping],
+  def findCompatibleMapping(id: String,
+                            unionMappings: Seq[NodeMapping],
                             discriminatorMapping: Map[String, NodeMapping],
                             discriminator: Option[String],
-                            nodeMap: YMap): Seq[NodeMapping] = {
+                            nodeMap: YMap,
+                            mapProperties: Seq[String]): Seq[NodeMapping] = {
     discriminator match {
       // Using explicit discriminator
       case Some(propertyName) =>
@@ -443,15 +453,23 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
         }
         explicitMapping match {
           case Some(nodeMapping) => Seq(nodeMapping)
-          case None              => Nil
+          case None              =>
+            ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+              id,
+              s"Cannot find discriminator value for discriminator '$propertyName'",
+              nodeMap)
+            Nil
         }
       // Inferring based on properties
       case None =>
         val properties: Set[String] = nodeMap.entries.map(_.key.as[YScalar].text).toSet
         unionMappings.filter { mapping =>
-          val mappingRequiredSet: Set[String] =
-            mapping.propertiesMapping().filter(_.minCount().value() > 0).map(_.name().value()).toSet
-          val mappingSet: Set[String] = mapping.propertiesMapping().map(_.name().value()).toSet
+          val baseProperties = mapping.propertiesMapping().filter(pm => !mapProperties.contains(pm.nodePropertyMapping().value()))
+          val mappingRequiredSet: Set[String] = baseProperties
+            .filter(_.minCount().value() > 0)
+            .map(_.name().value()).toSet
+          val mappingSet: Set[String] = baseProperties
+            .map(_.name().value()).toSet
 
           // There are not additional properties in the set and all required properties are in the set
           properties.diff(mappingSet).isEmpty && mappingRequiredSet.diff(properties).isEmpty
@@ -462,12 +480,18 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
   def parseObjectUnion(id: String,
                        ast: YNode,
                        property: PropertyMapping,
-                       node: DialectDomainElement): Option[DialectDomainElement] = {
+                       node: DialectDomainElement,
+                       mapProperties: Seq[String] = Nil): Option[DialectDomainElement] = {
     // potential node range based in the objectRange
     val unionMappings = property.objectRange().map { nodeMappingId =>
       ctx.dialect.declares.find(_.id == nodeMappingId.value()) match {
         case Some(nodeMapping) => Some(nodeMapping)
-        case None              => None // TODO: violation here
+        case None              =>
+          ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+            id,
+            s"Cannot find mapping for property ${property.id} in union",
+            ast)
+          None
       }
     } collect { case Some(mapping: NodeMapping) => mapping }
     // potential node range based in discriminators map
@@ -476,7 +500,12 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
         case (acc, (alias, mappingId)) =>
           ctx.dialect.declares.find(_.id == mappingId) match {
             case Some(nodeMapping: NodeMapping) => acc + (alias -> nodeMapping)
-            case _                              => acc // TODO: violation here
+            case _                              =>
+              ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+                id,
+                s"Cannot find mapping for property $mappingId in discriminator value '$alias' in union",
+                ast)
+              acc
           }
       }
     // all possible mappings combining objectRange and type discriminator
@@ -485,12 +514,18 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
     ast.tagType match {
       case YType.Map =>
         val nodeMap = ast.as[YMap]
-        val mappings = findCompatibleMapping(unionMappings,
-                                             discriminatorsMapping,
-                                             property.typeDiscriminatorName().option(),
-                                             nodeMap)
+        val mappings = findCompatibleMapping(id,
+                                    unionMappings,
+                         discriminatorsMapping,
+                                property.typeDiscriminatorName().option(),
+                                             nodeMap,
+                                             mapProperties)
         if (mappings.isEmpty) {
-          // TODO: violation here
+          ctx.violation(
+            ParserSideValidations.DialectAmbiguousRangeSpecification.id(),
+            id,
+            s"Ambiguous node in union range, found 0 compatible mappings from ${allPossibleMappings.size} mappings: [${allPossibleMappings.map(_.id).mkString(",")}]",
+            ast)
           None
         } else if (mappings.size == 1) {
           val node: DialectDomainElement = DialectDomainElement(nodeMap).withId(id).withDefinedBy(mappings.head)
@@ -588,7 +623,12 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
       val nestedObjectId = pathSegment(id, propertyEntry.key.as[YScalar].text.urlEncoded) + s"/${keyEntry.key.as[YScalar].text.urlEncoded}"
       val parsedNode = property.nodesInRange match {
         case range: Seq[String] if range.size > 1 =>
-          parseObjectUnion(nestedObjectId, keyEntry.value, property, node)
+          val mapProperties = Seq(
+            property.mapValueProperty().option(),
+            property.mapKeyProperty().option())
+            .filter(_.isDefined)
+            .map(_.get)
+          parseObjectUnion(nestedObjectId, keyEntry.value, property, node, mapProperties)
         case range: Seq[String] if range.size == 1 =>
           ctx.dialect.declares.find(_.id == range.head) match {
             case Some(nodeMapping: NodeMapping) =>
@@ -656,13 +696,21 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
             Some(nestedNode)
           } collect { case Some(elem: DialectDomainElement) => elem }
         case _ =>
-          // TODO: raise violation
+          ctx.violation(
+            ParserSideValidations.ParsingErrorSpecification.id(),
+            id,
+            s"Cannot find mapping for property range of mapValue property: ${property.objectRange().head.value()}",
+            propertyEntry)
           Nil
       }
 
       node.setObjectField(property, nested, propertyEntry.key)
     } else {
-      // TODO: raise violation
+      ctx.violation(
+        ParserSideValidations.ParsingErrorSpecification.id(),
+        id,
+        s"Both 'mapKey' and 'mapValue' are mandatory in a map pair property mapping",
+        propertyEntry)
     }
   }
 
@@ -672,13 +720,13 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
                                     node: DialectDomainElement): Unit = {
     val res = propertyEntry.value.as[YSequence].nodes.zipWithIndex.map {
       case (elementNode, nextElem) =>
+        val nestedObjectId = pathSegment(id, propertyEntry.key.as[YScalar].text.urlEncoded) + s"/$nextElem"
         property.nodesInRange match {
           case range: Seq[String] if range.size > 1 =>
-            parseObjectUnion(id, elementNode, property, node)
+            parseObjectUnion(nestedObjectId, elementNode, property, node)
           case range: Seq[String] if range.size == 1 =>
             ctx.dialect.declares.find(_.id == range.head) match {
               case Some(nodeMapping: NodeMapping) =>
-                val nestedObjectId = pathSegment(id, propertyEntry.key.as[YScalar].text.urlEncoded) + s"/$nextElem"
                 parseNestedNode(nestedObjectId, elementNode, nodeMapping) match {
                   case Some(dialectDomainElement) => Some(dialectDomainElement)
                   case None                       => None
