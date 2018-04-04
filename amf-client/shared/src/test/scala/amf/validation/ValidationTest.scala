@@ -1282,6 +1282,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report <- validation.validate(library, ProfileNames.RAML)
     } yield {
       assert(!report.conforms)
+      assert(report.results.exists(_.message.contains("Chained reference")))
     }
   }
 

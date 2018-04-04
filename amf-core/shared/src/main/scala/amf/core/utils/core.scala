@@ -18,6 +18,8 @@ package object utils {
       else "\"" + str + "\"" // Should escape inner quotes if any...
     }
 
+    def validReferencePath: Boolean = str.split("\\.").length < 3
+
     private def isQuoted =
       Option(str).exists(s => (s.startsWith("\"") && s.endsWith("\"")) || (s.startsWith("'") && s.endsWith("'")))
 

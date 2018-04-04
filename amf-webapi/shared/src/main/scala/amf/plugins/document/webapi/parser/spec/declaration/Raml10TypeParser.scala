@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
+import amf.core.utils._
 import amf.core.annotations.{DefaultNode, ExplicitField, SourceAST, SynthesizedField}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
@@ -178,7 +179,16 @@ case class Raml08TypeParser(ast: YPart,
           val shape = UnresolvedShape(text, node).withName(text)
           shape.withContext(ctx)
           adopt(shape)
-          shape.unresolved(text, node)
+          if(!text.validReferencePath) {
+            ctx.violation(
+              ParserSideValidations.ChainedReferenceSpecification.id(),
+              shape.id,
+              s"Chained reference '$text",
+              node
+            )
+          } else {
+            shape.unresolved(text, node)
+          }
           shape
       }
       Some(shape)
@@ -600,7 +610,16 @@ sealed abstract class RamlTypeParser(ast: YPart,
               val shape = UnresolvedShape(text, node).withName(text)
               shape.withContext(ctx)
               adopt(shape)
-              shape.unresolved(text, node)
+              if(!text.validReferencePath) {
+                ctx.violation(
+                  ParserSideValidations.ChainedReferenceSpecification.id(),
+                  shape.id,
+                  s"Chained reference '$text",
+                  node
+                )
+              } else {
+                shape.unresolved(text, node)
+              }
               shape
           }
       }
@@ -956,7 +975,16 @@ sealed abstract class RamlTypeParser(ast: YPart,
       val reference = node.as[YScalar].text
       val shape     = UnresolvedShape(reference, node)
       shape.withContext(ctx)
-      shape.unresolved(reference, node)
+      if(!reference.validReferencePath) {
+        ctx.violation(
+          ParserSideValidations.ChainedReferenceSpecification.id(),
+          shape.id,
+          s"Chained reference '$reference",
+          node
+        )
+      } else {
+        shape.unresolved(reference, node)
+      }
       adopt(shape)
       shape
     }
