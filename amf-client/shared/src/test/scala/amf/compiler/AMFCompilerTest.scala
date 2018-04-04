@@ -29,7 +29,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("Vocabulary") {
-    build("file://amf-client/shared/src/test/resources/vocabularies/raml_doc.raml", ExtensionYamlHint) map {
+    build("file://amf-client/shared/src/test/resources/vocabularies2/production/raml_doc.raml", ExtensionYamlHint) map {
       _ should not be null
     }
   }

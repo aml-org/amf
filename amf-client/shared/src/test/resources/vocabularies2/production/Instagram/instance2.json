@@ -1,0 +1,110 @@
+[
+  {
+    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#",
+    "@type": [
+      "http://raml.org/vocabularies/meta#DialectInstance",
+      "http://raml.org/vocabularies/document#Document",
+      "http://raml.org/vocabularies/document#Fragment",
+      "http://raml.org/vocabularies/document#Module",
+      "http://raml.org/vocabularies/document#Unit"
+    ],
+    "http://raml.org/vocabularies/meta#definedBy": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#"
+      }
+    ],
+    "http://raml.org/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#/",
+        "@type": [
+          "http://www.w3.org/ns/ldp#BasicContainer",
+          "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/ContainerNode",
+          "http://raml.org/vocabularies/meta#DialectDomainElement",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/ldp#contains": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#/container",
+            "@type": [
+              "http://mulesoft.com/vocabularies/amf-learning#Person",
+              "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/PersonNode",
+              "http://raml.org/vocabularies/meta#DialectDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://mulesoft.com/vocabularies/amf-learning#name": [
+              {
+                "@value": "Pablo Marmol"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#/container/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#/container"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(4,0)-(4,18)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#/source-map",
+            "@type": [
+              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#/"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(3,0)-(4,18)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://raml.org/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#/source-map",
+        "@type": [
+          "http://raml.org/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://raml.org/vocabularies/document-source-maps#lexical": [
+          {
+            "http://raml.org/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(3,0)-(4,18)]"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

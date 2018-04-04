@@ -32,6 +32,35 @@ class DialectProductionTest extends BuildCycleTests {
     withDialect("example3.raml", "example3_instance.raml", "example3_instance.jsonld", VocabularyYamlHint, Amf, basePath + "cfg/")
   }
 
+  test("Can parse ABOUT dialect") {
+    cycle("ABOUT-dialect.raml", "ABOUT-dialect.jsonld", VocabularyYamlHint, Amf, basePath + "ABOUT/")
+  }
+
+  test("Can parse and generated ABOUT dialect") {
+    cycle("ABOUT-dialect.raml", "ABOUT-dialect.raml.raml", VocabularyYamlHint, RamlVocabulary, basePath + "ABOUT/")
+  }
+
+  test("Can parse and generate ABOUT dialect instance"){
+    withDialect("ABOUT-dialect.raml", "ABOUT.yaml", "ABOUT.yaml.raml", VocabularyYamlHint, RamlVocabulary, basePath + "ABOUT/")
+  }
+
+  test("Can parse and generate ABOUT-github dialect instance"){
+    withDialect("ABOUT-GitHub-dialect.raml", "example.yaml", "example.yaml.raml", VocabularyYamlHint, RamlVocabulary, basePath + "ABOUT/github/")
+  }
+
+  test("Can parse and generated Instagram dialect") {
+    cycle("dialect.raml", "dialect.json", VocabularyYamlHint, Amf, basePath + "Instagram/")
+  }
+
+
+  test("Can parse and generate Instance dialect instance 1"){
+    withDialect("dialect.raml", "instance1.raml", "instance1.json", VocabularyYamlHint, Amf, basePath + "Instagram/")
+  }
+
+  test("Can parse and generate Instance dialect instance 2"){
+    withDialect("dialect.raml", "instance2.raml", "instance2.json", VocabularyYamlHint, Amf, basePath + "Instagram/")
+  }
+
 
   protected def withDialect(dialect: String,
                             source: String,
