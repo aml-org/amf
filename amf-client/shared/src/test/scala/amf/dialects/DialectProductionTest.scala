@@ -44,10 +44,6 @@ class DialectProductionTest extends BuildCycleTests {
     withDialect("ABOUT-dialect.raml", "ABOUT.yaml", "ABOUT.yaml.raml", VocabularyYamlHint, RamlVocabulary, basePath + "ABOUT/")
   }
 
-  test("Can parse ABOUT-github dialect") {
-    cycle("ABOUT-GitHub-dialect.raml", "ABOUT-GitHub-dialect.raml.raml", VocabularyYamlHint, RamlVocabulary, basePath + "ABOUT/github/")
-  }
-
   test("Can parse and generate ABOUT-github dialect instance"){
     withDialect("ABOUT-GitHub-dialect.raml", "example.yaml", "example.yaml.raml", VocabularyYamlHint, RamlVocabulary, basePath + "ABOUT/github/")
   }
