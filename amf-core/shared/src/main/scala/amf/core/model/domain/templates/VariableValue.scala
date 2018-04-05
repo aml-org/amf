@@ -1,9 +1,9 @@
 package amf.core.model.domain.templates
 
-import amf.client.model.StrField
 import amf.core.metamodel.Obj
 import amf.core.metamodel.domain.templates.VariableValueModel
 import amf.core.metamodel.domain.templates.VariableValueModel.{Name, Value}
+import amf.core.model.StrField
 import amf.core.model.domain.{DataNode, DomainElement}
 import amf.core.parser.{Annotations, Fields}
 import org.yaml.model.YPart

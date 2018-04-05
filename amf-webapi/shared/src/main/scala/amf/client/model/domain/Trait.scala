@@ -13,9 +13,6 @@ case class Trait(override private[amf] val _internal: InternalTrait) extends Abs
   @JSExportTopLevel("model.domain.Trait")
   def this() = this(InternalTrait())
 
-  override def linkTarget: Option[DomainElement] =
-    _internal.linkTarget.map({ case l: InternalTrait => l }).asClient
-
   override def linkCopy(): Trait = _internal.linkCopy()
 
   def asOperation[T <: BaseUnit](unit: T, profile: String = ProfileNames.RAML): Operation =

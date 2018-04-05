@@ -1,8 +1,8 @@
 package amf.core.parser
 
-import amf.client.model._
 import amf.core.metamodel.Type._
 import amf.core.metamodel.{Field, Obj, Type}
+import amf.core.model._
 import amf.core.model.domain._
 
 import scala.collection.immutable.ListMap
@@ -214,7 +214,7 @@ class Value(var value: AmfElement, val annotations: Annotations) {
 
   override def toString: String = value.toString
 
-  def checkUnresolved() = value match {
+  def checkUnresolved(): Unit = value match {
     case linkable: Linkable if linkable.isUnresolved =>
       // this is a callback that will be registered
       // in the declarations of the parser context

@@ -118,7 +118,7 @@ private case class RamlScalarValueEmitter(key: String,
 object RamlScalarEmitter {
   def apply(key: String, f: FieldEntry, mediaType: Option[YType] = None)(
       implicit spec: SpecEmitterContext): EntryEmitter = {
-    val extensions = f.value.annotations.collect({ case e: DomainExtensionAnnotation => e })
+    val extensions = f.value.value.annotations.collect({ case e: DomainExtensionAnnotation => e })
     if (extensions.nonEmpty && spec.vendor == Raml10) {
       RamlScalarValueEmitter(key, f, extensions.map(_.extension), mediaType)
     } else {

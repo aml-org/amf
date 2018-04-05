@@ -205,8 +205,6 @@ object RAML10Plugin extends RAMLPlugin {
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
   override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = {
-    println(s"RESOLVING PIPELING ${pipelineId} EIDITING? ${ResolutionPipeline.EDITING_PIPELINE == pipelineId}")
-    println(unit.getClass.getName)
     pipelineId match {
       case ResolutionPipeline.DEFAULT_PIPELINE => new Raml10ResolutionPipeline().resolve(unit)
       case ResolutionPipeline.EDITING_PIPELINE => new Raml10EditingPipeline().resolve(unit)

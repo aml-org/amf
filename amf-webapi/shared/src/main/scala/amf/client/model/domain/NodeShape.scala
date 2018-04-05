@@ -58,8 +58,5 @@ case class NodeShape(override private[amf] val _internal: InternalNodeShape) ext
 
   def withInheritsScalar(name: String): ScalarShape = _internal.withInheritsScalar(name)
 
-  override def linkTarget: Option[DomainElement] =
-    _internal.linkTarget.map({ case l: InternalNodeShape => l }).asClient
-
   override def linkCopy(): NodeShape = _internal.linkCopy()
 }

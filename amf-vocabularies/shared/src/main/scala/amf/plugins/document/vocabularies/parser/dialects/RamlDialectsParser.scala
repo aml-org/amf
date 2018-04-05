@@ -504,8 +504,7 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
       .withLocation(dialect.location)
       .withReferences(dialect.references)
 
-    if (Option(dialect.usage).isDefined)
-      fragment.withUsage(dialect.usage)
+    dialect.usage.option().foreach(usage => fragment.withUsage(usage))
 
     val externals = dialect.externals
     if (externals.nonEmpty) fragment.withExternals(dialect.externals)
@@ -519,8 +518,7 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
       .withLocation(dialect.location)
       .withReferences(dialect.references)
 
-    if (Option(dialect.usage).isDefined)
-      library.withUsage(dialect.usage)
+    dialect.usage.option().foreach(usage => library.withUsage(usage))
 
     val declares = dialect.declares
     if (declares.nonEmpty) library.withDeclares(declares)

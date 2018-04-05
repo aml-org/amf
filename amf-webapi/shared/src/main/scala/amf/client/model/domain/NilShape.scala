@@ -11,7 +11,5 @@ case class NilShape(override private[amf] val _internal: InternalNilShape) exten
   @JSExportTopLevel("model.domain.NilShape")
   def this() = this(InternalNilShape())
 
-  override def linkTarget: Option[DomainElement] = _internal.linkTarget.map({ case l: InternalNilShape => l }).asClient
-
   override def linkCopy(): NilShape = _internal.linkCopy()
 }

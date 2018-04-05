@@ -2,7 +2,7 @@ package amf.client.model.domain
 
 import amf.client.model.StrField
 import amf.plugins.domain.webapi.models.{Organization => InternalOrganization}
-
+import amf.client.convert.WebApiClientConverters._
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**

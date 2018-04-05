@@ -90,8 +90,5 @@ case class SecurityScheme(override private[amf] val _internal: InternalSecurityS
 
   def withOpenIdConnectSettings(): OpenIdConnectSettings = _internal.withOpenIdConnectSettings()
 
-  override def linkTarget: Option[DomainElement] =
-    _internal.linkTarget.map { case ss: InternalSecurityScheme => ss }.asClient
-
   override def linkCopy(): SecurityScheme = _internal.linkCopy()
 }

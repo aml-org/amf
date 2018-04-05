@@ -1,6 +1,3 @@
 package amf.client.model
 
-trait BaseAnyValField extends BaseField with ValueField {
-
-  override type ValueType <: AnyVal
-}
+trait BaseAnyValField[T <: AnyVal] extends BaseField with ValueField[T]

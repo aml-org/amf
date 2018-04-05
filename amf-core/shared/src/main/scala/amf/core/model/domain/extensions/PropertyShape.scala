@@ -1,9 +1,9 @@
 package amf.core.model.domain.extensions
 
-import amf.client.model.{BoolField, IntField, StrField}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel._
+import amf.core.model.{BoolField, IntField, StrField}
 import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, Fields}
 

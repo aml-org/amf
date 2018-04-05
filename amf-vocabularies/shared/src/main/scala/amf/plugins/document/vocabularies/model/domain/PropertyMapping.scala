@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.model.domain
 
-import amf.client.model._
 import amf.core.metamodel.{Field, Obj, Type}
+import amf.core.model._
 import amf.core.model.domain.{AmfScalar, DomainElement}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.vocabulary.{Namespace, ValueType}

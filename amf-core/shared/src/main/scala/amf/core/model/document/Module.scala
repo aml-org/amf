@@ -16,12 +16,6 @@ case class Module(fields: Fields, annotations: Annotations) extends BaseUnit wit
   /** Declared DomainElements that can be re-used from other documents. */
   override def declares: Seq[DomainElement] = fields(Declares)
 
-  /** Returns the usage comment for de element */
-  override def usage: String = fields(Usage)
-
-  /** Returns the file location for the document that has been parsed to generate this model */
-  override def location: String = fields(Location)
-
   /** Meta data for the document */
   override def meta = ModuleModel
 

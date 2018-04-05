@@ -1,11 +1,11 @@
 package amf.core.model.domain
 
-import amf.client.model.StrField
 import amf.core.annotations.{DataNodePropertiesAnnotations, LexicalInformation, ScalarType}
 import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.domain.DataNodeModel
 import amf.core.metamodel.domain.DataNodeModel._
 import amf.core.metamodel.{Field, Obj}
+import amf.core.model.StrField
 import amf.core.model.domain.templates.Variable
 import amf.core.parser.{Annotations, Fields}
 import amf.core.resolution.VariableReplacer
@@ -274,8 +274,8 @@ object ArrayNode {
 class LinkNode(var alias: String, var value: String, override val fields: Fields, val annotations: Annotations)
     extends DataNode(annotations) {
 
-  val Value: Field = Field(Str, Namespace.Data + "value")
-  val Alias: Field = Field(Str, Namespace.Data + "alias")
+  val Value: Field                               = Field(Str, Namespace.Data + "value")
+  val Alias: Field                               = Field(Str, Namespace.Data + "alias")
   var linkedDomainElement: Option[DomainElement] = None
 
   override def dynamicFields: List[Field] = List(Value) ++ DataNodeModel.fields

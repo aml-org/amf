@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.model.document
 
-import amf.client.model.StrField
 import amf.core.metamodel.Obj
+import amf.core.model.StrField
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.{AmfObject, DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
@@ -32,9 +32,6 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
   def graphDependencies: Seq[StrField] = fields.field(GraphDependencies)
   def definedBy(): StrField            = fields.field(DefinedBy)
   def declares: Seq[DomainElement]     = fields.field(Declares)
-
-  def location: String = fields(Location)
-  def usage: String    = fields(Usage)
 
   override def componentId: String = ""
 
@@ -137,8 +134,6 @@ case class DialectInstanceFragment(fields: Fields, annotations: Annotations)
   def graphDependencies: Seq[String] = fields(GraphDependencies)
   def encodes: DomainElement         = fields(Encodes)
   def definedBy(): String            = fields(DefinedBy)
-  def location: String               = fields(Location)
-  def usage: String                  = fields(Usage)
 
   override def componentId: String = ""
 
@@ -159,9 +154,7 @@ case class DialectInstanceLibrary(fields: Fields, annotations: Annotations)
 
   def references: Seq[BaseUnit]      = fields(References)
   def graphDependencies: Seq[String] = fields(GraphDependencies)
-  def location: String               = fields(Location)
   def declares: Seq[DomainElement]   = fields(Declares)
-  def usage: String                  = fields(Usage)
   def definedBy(): String            = fields(DefinedBy)
 
   override def componentId: String = ""

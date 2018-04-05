@@ -1,6 +1,7 @@
 package amf.wrapper
 
 import amf.client.AMF
+import amf.client.convert.NativeOps
 import amf.client.model.document._
 import amf.client.model.domain._
 import amf.client.parse._
@@ -26,6 +27,8 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   private val profile       = "file://amf-client/shared/src/test/resources/api/validation/custom-profile.raml"
   //  private val banking       = "file://amf-client/shared/src/test/resources/api/banking.raml"
   private val raml_doc = "file://vocabularies/vocabularies/raml_doc.raml"
+  private val scalarAnnotations =
+    "file://amf-client/shared/src/test/resources/org/raml/parser/annotation/scalar-nodes/input.raml"
 
   test("Parsing raml 1.0 test (detect)") {
     for {
@@ -227,6 +230,20 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Scalar Annotations") {
+    for {
+      _    <- AMF.init().asFuture
+      unit <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(scalarAnnotations).asFuture
+    } yield {
+      val api         = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+      val annotations = api.name.annotations().custom().asSeq
+      annotations should have size 1
+      val annotation = annotations.head
+      annotation.name.value() should be("foo")
+      annotation.extension.asInstanceOf[ScalarNode].value should be("annotated title")
+    }
+  }
+
   test("Vocabulary generation") {
 
 //    import amf.client.convert.VocabulariesClientConverter._ //todo uncomment to import *.asClient
@@ -250,9 +267,9 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
             .withReference("http://raml.org/vocabularies/doc#")
         ).toClient)*/
 
-    assert(vocab.base.option().isDefined)
+    assert(vocab.base.option.asOption.isDefined)
     assert(vocab.base.is("http://test.com/vocab#"))
-    assert(vocab.description.option().isDefined)
+    assert(vocab.description.option.asOption.isDefined)
     assert(vocab.description.is("Just a small sample vocabulary"))
 
     val propertyTerm = new DatatypePropertyTerm()

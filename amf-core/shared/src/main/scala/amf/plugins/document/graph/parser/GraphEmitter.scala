@@ -168,7 +168,7 @@ object GraphEmitter extends MetaModelTypeMapping {
       var count = 1
       element.fields.foreach {
         case (f, v) =>
-          v.annotations
+          v.value.annotations
             .collect({ case e: DomainExtensionAnnotation => e })
             .foreach(e => {
               val extension = e.extension

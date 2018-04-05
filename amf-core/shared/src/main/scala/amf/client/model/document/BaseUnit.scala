@@ -1,7 +1,7 @@
 package amf.client.model.document
 
 import amf.client.convert.CoreClientConverters._
-import amf.client.model.AmfObjectWrapper
+import amf.client.model.{AmfObjectWrapper, StrField}
 import amf.client.model.domain.DomainElement
 import amf.core.model.document.{BaseUnit => InternalBaseUnit}
 import amf.core.unsafe.PlatformSecrets
@@ -19,13 +19,13 @@ trait BaseUnit extends AmfObjectWrapper with PlatformSecrets {
   def references(): ClientList[BaseUnit] = _internal.references.asClient
 
   /** Raw text  used to generated this unit */
-  def raw: String = _internal.raw.orNull
+  def raw: ClientOption[String] = _internal.raw.asClient
 
   /** Returns the file location for the document that has been parsed to generate this model */
   def location: String = _internal.location
 
   /** Returns the usage comment for de element */
-  def usage: String = _internal.usage
+  def usage: StrField = _internal.usage
 
   def withReferences(references: ClientList[BaseUnit]): this.type = {
     _internal.withReferences(references.asInternal)
@@ -42,7 +42,12 @@ trait BaseUnit extends AmfObjectWrapper with PlatformSecrets {
     this
   }
 
-  def findById(id: String): DomainElement = _internal.findById(Namespace.uri(id).iri()).asClient.orNull
+  def withUsage(usage: String): this.type = {
+    _internal.withUsage(usage)
+    this
+  }
+
+  def findById(id: String): ClientOption[DomainElement] = _internal.findById(Namespace.uri(id).iri()).asClient
 
   def findByType(typeId: String): ClientList[DomainElement] =
     _internal.findByType(Namespace.expand(typeId).iri()).asClient

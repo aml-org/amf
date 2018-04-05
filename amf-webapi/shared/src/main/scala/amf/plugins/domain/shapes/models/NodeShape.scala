@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes.models
 
-import amf.client.model.{BoolField, IntField, StrField}
+import amf.core.model.{BoolField, IntField, StrField}
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel

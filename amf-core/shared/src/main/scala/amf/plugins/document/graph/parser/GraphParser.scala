@@ -234,7 +234,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
           .find(f => e.element.is(f.value.iri()))
           .foreach(f => {
             instance.fields.entry(f).foreach {
-              case FieldEntry(_, value) => value.annotations += DomainExtensionAnnotation(e)
+              case FieldEntry(_, value) => value.value.annotations += DomainExtensionAnnotation(e)
             }
           })
       }
@@ -284,7 +284,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
           case Some(entry) => entry.value.as[YScalar].text
           case _           => node.as[YScalar].text
         }
-      case _ =>  node.as[YScalar].text
+      case _ => node.as[YScalar].text
     }
     AmfScalar(value)
   }
@@ -296,7 +296,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
           case Some(entry) => entry.value.as[YScalar].text.toBoolean
           case _           => node.as[YScalar].text.toBoolean
         }
-      case _ =>  node.as[YScalar].text.toBoolean
+      case _ => node.as[YScalar].text.toBoolean
     }
     AmfScalar(value)
   }
@@ -308,7 +308,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
           case Some(entry) => entry.value.as[YScalar].text.toInt
           case _           => node.as[YScalar].text.toInt
         }
-      case _ =>  node.as[YScalar].text.toInt
+      case _ => node.as[YScalar].text.toInt
     }
     AmfScalar(value)
   }
@@ -320,7 +320,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
           case Some(entry) => entry.value.as[YScalar].text.toDouble
           case _           => node.as[YScalar].text.toDouble
         }
-      case _ =>  node.as[YScalar].text.toDouble
+      case _ => node.as[YScalar].text.toDouble
     }
     AmfScalar(value)
   }
@@ -332,7 +332,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
           case Some(entry) => SimpleDateTime.parse(entry.value.as[YScalar].text).get
           case _           => SimpleDateTime.parse(node.as[YScalar].text).get
         }
-      case _ =>  SimpleDateTime.parse(node.as[YScalar].text).get
+      case _ => SimpleDateTime.parse(node.as[YScalar].text).get
     }
     AmfScalar(value)
   }
@@ -344,9 +344,9 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
           case Some(entry) => {
             entry.value.as[YScalar].text.toDouble
           }
-          case _           => node.as[YScalar].text.toDouble
+          case _ => node.as[YScalar].text.toDouble
         }
-      case _ =>  node.as[YScalar].text.toDouble
+      case _ => node.as[YScalar].text.toDouble
     }
     AmfScalar(value)
   }
