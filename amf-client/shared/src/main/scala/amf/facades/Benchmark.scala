@@ -43,7 +43,7 @@ object Benchmark extends PlatformSecrets {
       Await.result(current, Duration.Inf)
     }
     println("All runs finished")
-    ExecutionLog.buildReport
+    ExecutionLog.buildReport()
   }
 
 }
