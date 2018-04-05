@@ -227,6 +227,8 @@ trait DataNodeConverter {
       case o: ObjectNode => ObjectNodeMatcher.asClient(o)
       case s: ScalarNode => ScalarNodeMatcher.asClient(s)
       case a: ArrayNode  => ArrayNodeMatcher.asClient(a)
+      case _ => // noinspection ScalaStyle
+        null
     }
     override def asInternal(from: ClientDataNode): DataNode = from._internal
   }

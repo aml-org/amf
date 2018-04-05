@@ -374,6 +374,15 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     testParseStringWithBaseUrl(baseUrl)
   }
 
+  test("Build shape without default value") {
+
+    val shape = new ScalarShape()
+    shape.withDataType("string")
+    shape.withName("name")
+
+    assert(shape.defaultValue == null)
+  }
+
   private def testParseStringWithBaseUrl(baseUrl: String) = {
     val spec =
       """#%RAML 1.0
