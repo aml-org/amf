@@ -465,6 +465,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("MinLength, maxlength facets validations test") {
+    for {
+      validation <- Validation(platform)
+      doc        <- AMFCompiler(examplesPath + "types/lengths.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      report.results.foreach(result => assert(result.position.isDefined))
+      val (violations, warnings) = report.results.partition(r => r.level.equals(SeverityLevels.VIOLATION))
+      assert(violations.lengthCompare(1) == 0)
+    }
+  }
+
   test("Mutually exclusive 'type' and 'schema' facets validations test") {
     for {
       validation <- Validation(platform)
