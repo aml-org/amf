@@ -1,8 +1,9 @@
 package amf.client.model.domain
 
 import amf.client.convert.CoreClientConverters._
+import amf.client.convert.InternalClientMatcher
 import amf.client.model.StrField
-import amf.core.model.domain.{NamedDomainElement, Shape => InternalShape}
+import amf.core.model.domain.{Shape => InternalShape}
 
 import scala.scalajs.js.annotation.JSExportAll
 

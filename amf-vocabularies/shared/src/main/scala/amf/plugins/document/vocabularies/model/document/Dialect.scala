@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.model.document
 
-import amf.client.model.StrField
 import amf.core.metamodel.Obj
+import amf.core.model.StrField
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
@@ -43,9 +43,6 @@ case class Dialect(fields: Fields, annotations: Annotations)
   def version(): StrField          = fields.field(Version)
   def externals: Seq[External]     = fields.field(Externals)
   def documents(): DocumentsModel  = fields.field(Documents)
-
-  def location: String = fields(Location)
-  def usage: String    = fields(Usage)
 
   def nameAndVersion(): String = s"${name().value()} ${version().value()}"
   def header: String           = s"%${name().value()} ${version().value()}".replace(" ", "")
@@ -90,9 +87,6 @@ case class DialectLibrary(fields: Fields, annotations: Annotations)
   def declares: Seq[DomainElement] = fields.field(Declares)
   def externals: Seq[External]     = fields.field(Externals)
 
-  def location: String = fields(Location)
-  def usage: String    = fields(Usage)
-
   override def componentId: String = ""
 
   def withExternals(externals: Seq[External]): DialectLibrary = setArray(Externals, externals)
@@ -111,9 +105,6 @@ case class DialectFragment(fields: Fields, annotations: Annotations) extends Bas
   def references: Seq[BaseUnit]     = fields.field(References)
   def externals: Seq[External]      = fields.field(Externals)
   override def encodes: NodeMapping = fields.field(Encodes)
-
-  def location: String = fields(Location)
-  def usage: String    = fields(Usage)
 
   override def componentId: String = ""
 

@@ -1,8 +1,8 @@
 package amf.core.model.domain
 
-import amf.client.model.StrField
 import amf.core.metamodel.domain.ExternalDomainElementModel
 import amf.core.metamodel.domain.ExternalDomainElementModel.{MediaType, Raw}
+import amf.core.model.StrField
 import amf.core.parser.{Annotations, Fields}
 import org.yaml.model.YMap
 

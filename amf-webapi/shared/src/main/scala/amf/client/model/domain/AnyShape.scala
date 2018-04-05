@@ -32,8 +32,6 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
     this
   }
 
-  override def linkTarget: Option[DomainElement] = _internal.linkTarget.map({ case s: InternalAnyShape => s }).asClient
-
   override def linkCopy(): AnyShape = _internal.linkCopy()
 //  def build(shape: InternalAnyShape): Shape = platform.wrap[Shape](shape) ???
 

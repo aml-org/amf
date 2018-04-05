@@ -58,8 +58,5 @@ case class Example(override private[amf] val _internal: InternalExample) extends
     this
   }
 
-  override def linkTarget: Option[DomainElement] =
-    _internal.linkTarget.map({ case e: InternalExample => e }).asClient
-
   override def linkCopy(): Example = _internal.linkCopy()
 }

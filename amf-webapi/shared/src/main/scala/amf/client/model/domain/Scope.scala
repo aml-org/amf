@@ -1,5 +1,6 @@
 package amf.client.model.domain
 
+import amf.client.convert.WebApiClientConverters._
 import amf.client.model.StrField
 import amf.plugins.domain.webapi.models.security.{Scope => InternalScope}
 

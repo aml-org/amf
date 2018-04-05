@@ -25,8 +25,5 @@ case class SchemaShape(override private[amf] val _internal: InternalSchemaShape)
     this
   }
 
-  override def linkTarget: Option[DomainElement] =
-    _internal.linkTarget.map({ case l: InternalSchemaShape => l }).asClient
-
   override def linkCopy(): SchemaShape = _internal.linkCopy()
 }

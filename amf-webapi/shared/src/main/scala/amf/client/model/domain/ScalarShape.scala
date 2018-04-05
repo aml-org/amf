@@ -64,8 +64,5 @@ case class ScalarShape(override private[amf] val _internal: InternalScalarShape)
     this
   }
 
-  override def linkTarget: Option[DomainElement] =
-    _internal.linkTarget.map({ case l: InternalScalarShape => l }).asClient
-
   override def linkCopy(): ScalarShape = _internal.linkCopy()
 }

@@ -7,28 +7,41 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
+import scala.scalajs.js.{Dictionary, Promise, UndefOr}
 
 trait CoreBaseClientConverter extends CoreBaseConverter {
 
-  override type ClientList[E] = js.Array[E]
-  override type ClientMap[V]  = js.Dictionary[V]
+  override type ClientOption[E] = js.UndefOr[E]
+  override type ClientList[E]   = js.Array[E]
+  override type ClientMap[V]    = js.Dictionary[V]
 
   override type ClientFuture[T] = js.Promise[T]
 
   override type ClientResultHandler[T] = JsHandler[T] with Handler[T]
   override type ClientFileHandler      = JsFileHandler with FileHandler
 
-  override private[amf] def asClientList[A, B](from: Seq[A], matcher: InternalClientMatcher[A, B]): js.Array[B] =
+  override protected def asClientOption[Internal, Client](
+      from: Option[Internal],
+      matcher: InternalClientMatcher[Internal, Client]): UndefOr[Client] =
+    from.map(matcher.asClient).orUndefined
+
+  override private[convert] def asClientList[A, B](from: Seq[A], matcher: InternalClientMatcher[A, B]): js.Array[B] =
     from.map(matcher.asClient).toJSArray
 
-  override private[convert] def asClientMap[Internal, Client](from: mutable.Map[String, Internal],
-                                                              matcher: InternalClientMatcher[Internal, Client]) = {
+  override protected def asClientMap[Internal, Client](
+      from: mutable.Map[String, Internal],
+      matcher: InternalClientMatcher[Internal, Client]): Dictionary[Client] = {
     from.map { case (k, v) => k -> matcher.asClient(v) }.toJSDictionary
   }
 
-  override private[convert] def asInternalSeq[Client, Internal](from: js.Array[Client],
-                                                                matcher: ClientInternalMatcher[Client, Internal]) =
+  override protected def asInternalSeq[Client, Internal](
+      from: js.Array[Client],
+      matcher: ClientInternalMatcher[Client, Internal]): Seq[Internal] =
     from.toSeq.map(matcher.asInternal)
 
-  override private[convert] def asClientFuture[T](from: Future[T]) = from.toJSPromise
+  override protected def asClientFuture[T](from: Future[T]): Promise[T] = from.toJSPromise
+
+  override protected def toScalaOption[E](from: UndefOr[E]): Option[E] = from.toOption
+
+  override protected def toClientOption[E](from: Option[E]): ClientOption[E] = from.orUndefined
 }

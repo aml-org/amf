@@ -1,29 +1,31 @@
 package amf.client.model
 
+import amf.client.convert.CoreClientConverters._
+
 import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
-trait ValueField {
+trait ValueField[T] {
 
-  type ValueType
+  protected val _option: Option[T]
 
-  /** Return string value as option. */
-  def option(): Option[ValueType]
+  /** Return value as option. */
+  val option: ClientOption[T]
 
   /** Return value or null. */
-  def value(): ValueType
+  def value(): T
 
   /** Return true if string value is equals to non-null given value. */
-  def is(other: ValueType): Boolean = option().fold(false)(_ == other)
+  def is(other: T): Boolean = _option.fold(false)(_ == other)
 
   /** Return true if string value is not-null and accepted by given function. */
-  def is(accepts: ValueType => Boolean): Boolean = option().fold(false)(accepts(_))
+  def is(accepts: T => Boolean): Boolean = _option.fold(false)(accepts(_))
 
   /** Returns true if field is null. */
-  def isNull: Boolean = option().isEmpty
+  def isNull: Boolean = _option.isEmpty
 
   /** Returns true if field is non null. */
-  def nonNull: Boolean = option().isDefined
+  def nonNull: Boolean = _option.isDefined
 
-  override def toString: String = option().map(_.toString).orNull // null
+  override def toString: String = _option.map(_.toString).orNull
 }

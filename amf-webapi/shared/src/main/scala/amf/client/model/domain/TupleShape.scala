@@ -18,8 +18,5 @@ case class TupleShape(private[amf] override val _internal: InternalTupleShape) e
     this
   }
 
-  override def linkTarget: Option[DomainElement] =
-    _internal.linkTarget.map({ case l: InternalTupleShape => l }).asClient
-
   override def linkCopy(): TupleShape = _internal.linkCopy()
 }

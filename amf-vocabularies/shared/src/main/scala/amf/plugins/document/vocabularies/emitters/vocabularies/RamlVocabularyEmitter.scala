@@ -303,9 +303,9 @@ case class RamlVocabularyEmitter(vocabulary: Vocabulary) extends AliasMapper {
           .getOrElse(ZERO)
     })
 
-    if (Option(vocabulary.usage).isDefined) {
+    if (vocabulary.usage.nonEmpty) {
       emitters ++= Seq(new EntryEmitter {
-        override def emit(b: EntryBuilder): Unit = MapEntryEmitter("usage", vocabulary.usage).emit(b)
+        override def emit(b: EntryBuilder): Unit = MapEntryEmitter("usage", vocabulary.usage.value()).emit(b)
 
         override def position(): Position =
           vocabulary.fields

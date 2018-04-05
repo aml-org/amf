@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes.models
 
-import amf.client.model._
+import amf.core.model.{BoolField, DoubleField, IntField, StrField}
 import amf.core.model.domain.Shape
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel._
 
