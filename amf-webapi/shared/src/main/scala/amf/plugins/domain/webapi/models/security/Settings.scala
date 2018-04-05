@@ -1,8 +1,7 @@
 package amf.plugins.domain.webapi.models.security
 
-import amf.client.model.StrField
 import amf.core.metamodel.Obj
-import amf.core.model.domain
+import amf.core.model.{StrField, domain}
 import amf.core.model.domain.{AmfArray, DataNode, DomainElement}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.security.ApiKeySettingsModel._

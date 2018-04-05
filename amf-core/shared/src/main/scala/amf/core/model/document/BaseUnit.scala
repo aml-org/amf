@@ -1,8 +1,10 @@
 package amf.core.model.document
 
 import amf.core.metamodel.document.DocumentModel.References
+import amf.core.metamodel.document.BaseUnitModel.{Usage, Location}
 import amf.core.metamodel.document.{BaseUnitModel, DocumentModel}
 import amf.core.metamodel.{MetaModelTypeMapping, Obj}
+import amf.core.model.StrField
 import amf.core.model.domain._
 import amf.core.parser.{FieldEntry, Value}
 
@@ -15,7 +17,6 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
   var parserRun: Option[Int] = None
 
   /** Raw text  used to generated this unit */
-
   var raw: Option[String] = None
 
   /** Meta data for the document */
@@ -25,10 +26,10 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
   def references: Seq[BaseUnit]
 
   /** Returns the file location for the document that has been parsed to generate this model */
-  def location: String
+  def location: String = fields(Location)
 
-  /** Returns the usage comment for de element */
-  def usage: String
+  /** Returns the usage. */
+  def usage: StrField = fields.field(Usage)
 
   /** Set the raw value for the base unit */
   def withRaw(raw: String): BaseUnit = {
@@ -38,9 +39,9 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
 
   def withReferences(references: Seq[BaseUnit]): this.type = setArrayWithoutId(References, references)
 
-  def withLocation(location: String): this.type = set(BaseUnitModel.Location, location)
+  def withLocation(location: String): this.type = set(Location, location)
 
-  def withUsage(usage: String): this.type = set(BaseUnitModel.Usage, usage)
+  def withUsage(usage: String): this.type = set(Usage, usage)
 
   /**
     * finds in the nested model structure an AmfObject with the requested Id
@@ -206,9 +207,9 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
   }
 
   protected def transformByCondition(element: AmfObject,
-                                   predicate: (AmfObject) => Boolean,
-                                   transformation: (AmfObject, Boolean) => Option[AmfObject],
-                                   cycles: Set[String] = Set.empty): AmfObject = {
+                                     predicate: (AmfObject) => Boolean,
+                                     transformation: (AmfObject, Boolean) => Option[AmfObject],
+                                     cycles: Set[String] = Set.empty): AmfObject = {
     if (!cycles.contains(element.id)) {
       // not visited yet
       if (predicate(element)) { // matches predicate, we transform

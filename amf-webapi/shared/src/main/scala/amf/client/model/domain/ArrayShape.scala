@@ -18,8 +18,5 @@ case class ArrayShape(private[amf] override val _internal: InternalArrayShape) e
     this
   }
 
-  override def linkTarget: Option[DomainElement] =
-    _internal.linkTarget.map({ case l: InternalArrayShape => l }).asClient
-
   override def linkCopy(): ArrayShape = ArrayShape(_internal.linkCopy())
 }

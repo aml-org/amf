@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes.models
 
-import amf.client.model.StrField
+import amf.core.model.StrField
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils._

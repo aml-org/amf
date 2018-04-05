@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi.models
 
-import amf.client.model.{BoolField, StrField}
 import amf.core.metamodel.Obj
+import amf.core.model.{BoolField, StrField}
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.RequestModel

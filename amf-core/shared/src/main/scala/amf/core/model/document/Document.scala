@@ -14,14 +14,9 @@ case class Document(fields: Fields, annotations: Annotations) extends BaseUnit w
 
   override def references: Seq[BaseUnit] = fields(References)
 
-  override def location: String = fields(Location)
-
   override def encodes: DomainElement = fields(Encodes)
 
   override def declares: Seq[DomainElement] = fields(Declares)
-
-  /** Returns the usage comment for de element */
-  override def usage: String = fields(Usage)
 
   /** Meta data for the document */
   override def meta: Obj = DocumentModel

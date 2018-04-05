@@ -1,7 +1,7 @@
 package amf.core.model.domain
 
-import amf.client.model.StrField
 import amf.core.metamodel.domain.ShapeModel._
+import amf.core.model.StrField
 import amf.core.model.domain.extensions.{PropertyShape, ShapeExtension}
 
 /**

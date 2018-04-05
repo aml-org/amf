@@ -1,11 +1,11 @@
 package amf.core.model.domain
 
-import amf.client.model.StrField
 import amf.core.annotations.{DataNodePropertiesAnnotations, LexicalInformation, ScalarType}
 import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.domain.DataNodeModel
 import amf.core.metamodel.domain.DataNodeModel._
 import amf.core.metamodel.{Field, Obj}
+import amf.core.model.StrField
 import amf.core.model.domain.templates.Variable
 import amf.core.parser.{Annotations, Fields}
 import amf.core.resolution.VariableReplacer

@@ -1,6 +1,6 @@
 package amf.core.model.domain
 
-import amf.client.model.StrField
+import amf.core.model.StrField
 
 /**
   * All DomainElements supporting name

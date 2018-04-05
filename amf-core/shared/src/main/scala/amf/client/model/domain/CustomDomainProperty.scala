@@ -50,8 +50,5 @@ case class CustomDomainProperty(private[amf] val _internal: InternalCustomDomain
     this
   }
 
-  override def linkTarget: Option[DomainElement] =
-    _internal.linkTarget.map({ case p: InternalCustomDomainProperty => p }).asClient
-
   override def linkCopy(): CustomDomainProperty = _internal.linkCopy()
 }

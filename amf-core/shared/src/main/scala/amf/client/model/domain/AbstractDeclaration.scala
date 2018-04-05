@@ -37,7 +37,7 @@ class AbstractDeclaration(private[amf] val _internal: InternalAbstractDeclaratio
     this
   }
 
-  override def linkTarget: Option[DomainElement] = throw new Exception("AbstractDeclaration is abstract")
+  override def linkTarget: ClientOption[DomainElement] = throw new Exception("AbstractDeclaration is abstract")
 
   override def linkCopy(): AbstractDeclaration = throw new Exception("AbstractDeclaration is abstract")
 }

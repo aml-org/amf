@@ -1,5 +1,6 @@
 package amf.client.model.domain
 
+import amf.client.convert.CoreClientConverters._
 import amf.client.model.StrField
 import amf.core.model.domain.{ExternalDomainElement => InternalExternalDomainElement}
 
