@@ -72,6 +72,10 @@ class ExtendsResolutionTest extends ResolutionTest {
     cycle("resource_level.raml", "resource_level.raml.raml", RamlYamlHint, Raml)
   }
 
+  test("Resolution null variable") {
+    cycle("null_variable.raml", "null_variable.raml.raml", RamlYamlHint, Raml)
+  }
+
   test("08 Optional response resolution") {
     cycle("optional-response.raml", "optional-response.raml.raml", RamlYamlHint, Raml08, basePath + "08/")
   }
