@@ -230,14 +230,17 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
-  ignore("Scalar Annotations") {
+  test("Scalar Annotations") {
     for {
       _    <- AMF.init().asFuture
       unit <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(scalarAnnotations).asFuture
     } yield {
-      val api = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
-//      api.name.annotations()...
-      succeed
+      val api         = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+      val annotations = api.name.annotations().custom().asSeq
+      annotations should have size 1
+      val annotation = annotations.head
+      annotation.name.value() should be("foo")
+      annotation.extension.asInstanceOf[ScalarNode].value should be("annotated title")
     }
   }
 

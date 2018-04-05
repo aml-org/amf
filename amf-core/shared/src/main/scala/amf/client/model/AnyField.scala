@@ -2,7 +2,6 @@ package amf.client.model
 
 import amf.client.convert.CoreClientConverters._
 import amf.core.model.{AnyField => InternalAnyField}
-import amf.core.parser.Annotations
 
 import scala.scalajs.js.annotation.JSExportAll
 
