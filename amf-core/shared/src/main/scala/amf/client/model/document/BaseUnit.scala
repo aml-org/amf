@@ -19,7 +19,7 @@ trait BaseUnit extends AmfObjectWrapper with PlatformSecrets {
   def references(): ClientList[BaseUnit] = _internal.references.asClient
 
   /** Raw text  used to generated this unit */
-  def raw: String = _internal.raw.orNull
+  def raw: ClientOption[String] = _internal.raw.asClient
 
   /** Returns the file location for the document that has been parsed to generate this model */
   def location: String = _internal.location
