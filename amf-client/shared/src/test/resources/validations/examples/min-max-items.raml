@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: arrays tests example
+types:
+  Colors:
+    type: string[]
+    minItems: 2
+    maxItems: 3
+    examples:
+      ok: [blue, red]
+      bad-min: [blue]
+      bad-max: [blue, red, gray, black]
