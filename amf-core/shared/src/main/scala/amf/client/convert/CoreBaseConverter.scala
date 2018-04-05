@@ -22,7 +22,8 @@ import amf.client.model.{
   DoubleField => ClientDoubleField,
   FloatField => ClientFloatField,
   IntField => ClientIntField,
-  StrField => ClientStrField
+  StrField => ClientStrField,
+  Annotations => ClientAnnotations
 }
 import amf.client.validate.{ValidationReport => ClientValidatorReport, ValidationResult => ClientValidationResult}
 import amf.core.model._
@@ -30,6 +31,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
 import amf.core.model.domain.templates.{AbstractDeclaration, ParametrizedDeclaration, VariableValue}
+import amf.core.parser.Annotations
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.{AMFValidationReport, AMFValidationResult}
 
@@ -181,6 +183,10 @@ trait FieldConverter extends CollectionConverter {
 
   implicit object AnyFieldMatcher extends InternalClientMatcher[AnyField, ClientAnyField] {
     override def asClient(from: AnyField): ClientAnyField = ClientAnyField(from)
+  }
+
+  implicit object AnnotationsFieldMatcher extends InternalClientMatcher[Annotations, ClientAnnotations] {
+    override def asClient(from: Annotations): ClientAnnotations = ClientAnnotations(from)
   }
 }
 

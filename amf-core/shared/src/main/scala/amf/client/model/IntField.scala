@@ -1,7 +1,6 @@
 package amf.client.model
 
 import amf.client.convert.CoreClientConverters._
-import amf.core.parser.Annotations
 import amf.core.model.{IntField => InternalIntField}
 
 import scala.scalajs.js.annotation.JSExportAll

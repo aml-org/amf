@@ -1,10 +1,9 @@
 package amf.client.model
 
 import amf.client.convert.CoreClientConverters._
+import amf.core.model.{BoolField => InternalBoolField}
 
 import scala.scalajs.js.annotation.JSExportAll
-import amf.core.model.{BoolField => InternalBoolField}
-import amf.core.parser.Annotations
 
 @JSExportAll
 case class BoolField(private val _internal: InternalBoolField) extends BaseAnyValField[Boolean] {

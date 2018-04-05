@@ -7,7 +7,6 @@ import amf.core.model.domain.extensions.DomainExtension
 import amf.core.model.domain.{ArrayNode => _, ScalarNode => _, _}
 import amf.core.parser._
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.spec.common.RamlScalarNode.collectDomainExtensions
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model._
@@ -34,6 +33,9 @@ trait SpecParserOps {
 
   class ObjectField(target: Target, field: Field)(implicit iv: WebApiContext) extends Function1[YMapEntry, Unit] {
 
+    // Custom annotations
+    private val custom: Annotations = Annotations()
+    // Entry annotations
     private val annotations: Annotations = Annotations()
 
     private var mapped: Option[YNode => AmfElement]    = None
@@ -100,7 +102,7 @@ trait SpecParserOps {
             case ArrayLike(element)         => parseArray(node, element)
             case element                    => parseScalar(node, element)
           }
-
+          value.annotations ++= custom
           target.foreach(_.set(field, value, Annotations(entry) ++= annotations))
       }
     }
@@ -134,8 +136,17 @@ trait SpecParserOps {
 
     private def parseScalarValued(node: YNode) = {
       val result = RamlScalarNode(node)
-      annotations ++= Annotations(collectDomainExtensions(null, result).map(DomainExtensionAnnotation))
+      custom ++= Annotations(collectDomainExtensions(null, result).map(DomainExtensionAnnotation))
       result
+    }
+
+    private def collectDomainExtensions(parent: String, n: ScalarNode): Seq[DomainExtension] = {
+      n match {
+        case n: RamlScalarValuedNode =>
+          AnnotationParser.parseExtensions(s"$parent/annotation", n.obj)
+        case n: DefaultScalarNode =>
+          Nil
+      }
     }
   }
 
@@ -210,15 +221,6 @@ object RamlScalarNode {
     node.value match {
       case obj: YMap => createScalarValuedNode(obj)
       case _         => ScalarNode(node)
-    }
-  }
-
-  def collectDomainExtensions(parent: String, n: ScalarNode)(implicit ctx: WebApiContext): Seq[DomainExtension] = {
-    n match {
-      case n: RamlScalarValuedNode =>
-        AnnotationParser.parseExtensions(s"$parent/oooooo", n.obj)
-      case n: DefaultScalarNode =>
-        Nil
     }
   }
 

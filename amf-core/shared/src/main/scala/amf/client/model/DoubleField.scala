@@ -3,8 +3,6 @@ package amf.client.model
 import amf.client.convert.CoreClientConverters._
 import amf.core.model.{DoubleField => InternalDoubleField}
 
-import amf.core.parser.Annotations
-
 import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
