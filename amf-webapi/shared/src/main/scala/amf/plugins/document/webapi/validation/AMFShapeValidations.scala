@@ -6,7 +6,7 @@ import amf.core.model.domain.{AmfArray, AmfScalar, RecursiveShape, Shape}
 import amf.core.validation.core.{PropertyConstraint, ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.resolution.pipelines.CanonicalShapePipeline
-import amf.plugins.domain.shapes.metamodel.{NodeShapeModel, ScalarShapeModel}
+import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, NodeShapeModel, ScalarShapeModel}
 import amf.plugins.domain.shapes.models.TypeDef.NumberType
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
@@ -92,6 +92,8 @@ class AMFShapeValidations(shape: Shape) {
       node = Some(validationId(array.items))
     )
     validation = validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(itemsConstraint))
+    validation = checkMinItems(context, validation, array)
+    validation = checkMaxItems(context, validation, array)
     validation = checkArrayType(array, context, validation)
     List(validation) ++ nestedConstraints
   }
@@ -393,6 +395,42 @@ class AMFShapeValidations(shape: Shape) {
           name = validation.name + "_validation_exclusiveMaximum/prop",
           message = Some(msg),
           maxExclusive = Some(s"$exclusiveMaximum"),
+          datatype = effectiveDataType(shape)
+        )
+        validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(propertyValidation))
+      case None => validation
+    }
+  }
+
+  protected def checkMinItems(context: String,
+                              validation: ValidationSpecification,
+                              shape: Shape with ArrayShape): ValidationSpecification = {
+    shape.fields.?[AmfScalar](ArrayShapeModel.MinItems) match {
+      case Some(itemsMinimum) =>
+        val msg = s"Number of items at $context must be greater than $itemsMinimum"
+        val propertyValidation = PropertyConstraint(
+          ramlPropertyId = (Namespace.Rdf + "member").iri(),
+          name = validation.name + "_validation_minItems/prop",
+          message = Some(msg),
+          minCount = Some(s"$itemsMinimum"),
+          datatype = effectiveDataType(shape)
+        )
+        validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(propertyValidation))
+      case None => validation
+    }
+  }
+
+  protected def checkMaxItems(context: String,
+                              validation: ValidationSpecification,
+                              shape: Shape with ArrayShape): ValidationSpecification = {
+    shape.fields.?[AmfScalar](ArrayShapeModel.MaxItems) match {
+      case Some(itemsMaximum) =>
+        val msg = s"Number of items at $context must be smaller than $itemsMaximum"
+        val propertyValidation = PropertyConstraint(
+          ramlPropertyId = (Namespace.Rdf + "member").iri(),
+          name = validation.name + "_validation_maxItems/prop",
+          message = Some(msg),
+          maxCount = Some(s"$itemsMaximum"),
           datatype = effectiveDataType(shape)
         )
         validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(propertyValidation))

@@ -48,9 +48,9 @@ case class PayloadValidation(shape: Shape) extends WebApiValidations {
 
   protected def addProfileTargets(dataNode: DataNode): Unit = {
     val entryValidation           = profile.get.validations.head
-    val entryValdiationWithTarget = entryValidation.copy(targetInstance = Seq(dataNode.id))
+    val entryValidationWithTarget = entryValidation.copy(targetInstance = Seq(dataNode.id))
     val restValidations           = profile.get.validations.tail
-    var finalValidations          = Seq(entryValdiationWithTarget) ++ restValidations
+    var finalValidations          = Seq(entryValidationWithTarget) ++ restValidations
     finalValidations = processTargets(entryValidation, dataNode, finalValidations)
 
     profile = Some(profile.get.copy(validations = finalValidations))

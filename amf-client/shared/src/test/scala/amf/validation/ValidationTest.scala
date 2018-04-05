@@ -13,7 +13,13 @@ import amf.core.validation.SeverityLevels
 import amf.facades.{AMFCompiler, AMFRenderer, Validation}
 import amf.plugins.document.graph.parser.GraphEmitter
 import amf.plugins.document.webapi.RAML10Plugin
-import amf.plugins.document.webapi.validation.{AnnotationsValidation, ExamplesValidation, PayloadValidation, ShapeFacetsValidation, _}
+import amf.plugins.document.webapi.validation.{
+  AnnotationsValidation,
+  ExamplesValidation,
+  PayloadValidation,
+  ShapeFacetsValidation,
+  _
+}
 import amf.plugins.domain.shapes.models.ArrayShape
 import amf.plugins.features.validation.PlatformValidator
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
@@ -373,7 +379,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  
   test("Duplicated title property test") {
     for {
       validation <- Validation(platform)
@@ -527,15 +532,14 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Property overwriting") {
     for {
       validation <- Validation(platform)
-      library <- AMFCompiler(productionPath + "property_overwriting.raml", platform, RamlYamlHint, validation).build()
-      report <- validation.validate(library, ProfileNames.RAML)
+      library    <- AMFCompiler(productionPath + "property_overwriting.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(library, ProfileNames.RAML)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
       assert(report.results.head.level == SeverityLevels.VIOLATION)
     }
   }
-
 
   test("Trailing spaces validation") {
     for {
@@ -550,8 +554,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Invalid media type") {
     for {
       validation <- Validation(platform)
-      library <- AMFCompiler(productionPath + "invalid_media_type.raml", platform, RamlYamlHint, validation).build()
-      report <- validation.validate(library, ProfileNames.RAML)
+      library    <- AMFCompiler(productionPath + "invalid_media_type.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(library, ProfileNames.RAML)
     } yield {
       assert(!report.conforms)
     }
@@ -853,10 +857,13 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Exclusive example vs examples validation") {
     for {
       validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "production/example_examples.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(doc, ProfileNames.RAML)
+      doc <- AMFCompiler(validationsPath + "production/example_examples.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
     } yield {
-      assert(report.results.exists(_.message.contains("Properties 'example' and 'examples' are exclusive and cannot be declared together")))
+      assert(
+        report.results.exists(
+          _.message.contains("Properties 'example' and 'examples' are exclusive and cannot be declared together")))
       assert(!report.conforms)
     }
   }
@@ -864,10 +871,15 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Exclusive queryString vs queryParameters validation") {
     for {
       validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "production/query_string_parameters.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(doc, ProfileNames.RAML)
+      doc <- AMFCompiler(validationsPath + "production/query_string_parameters.raml",
+                         platform,
+                         RamlYamlHint,
+                         validation).build()
+      report <- validation.validate(doc, ProfileNames.RAML)
     } yield {
-      assert(report.results.exists(_.message.contains("Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together")))
+      assert(
+        report.results.exists(_.message.contains(
+          "Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together")))
       assert(!report.conforms)
     }
   }
@@ -1200,9 +1212,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       library <- AMFCompiler(validationsPath + "/examples/example-no-media-type.raml",
-        platform,
-        RamlYamlHint,
-        validation)
+                             platform,
+                             RamlYamlHint,
+                             validation)
         .build()
       report <- validation.validate(library, ProfileNames.RAML)
     } yield {
@@ -1277,12 +1289,13 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Security scheme and traits test") {
     for {
       validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "/securitySchemes/security1.raml", platform, RamlYamlHint, validation).build()
+      doc <- AMFCompiler(validationsPath + "/securitySchemes/security1.raml", platform, RamlYamlHint, validation)
+        .build()
       resolved <- Future {
         RAML10Plugin.resolve(doc)
       }
       generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
-      report <- validation.validate(doc, ProfileNames.RAML)
+      report    <- validation.validate(doc, ProfileNames.RAML)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 2)
@@ -1318,7 +1331,10 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Test resource type invalid examples args validation") {
     for {
       validation <- Validation(platform)
-      library <- AMFCompiler(productionPath + "/parameterized-references/input.raml", platform, RamlYamlHint, validation)
+      library <- AMFCompiler(productionPath + "/parameterized-references/input.raml",
+                             platform,
+                             RamlYamlHint,
+                             validation)
         .build()
       report <- validation.validate(library, ProfileNames.RAML)
     } yield {
@@ -1331,7 +1347,10 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Test resource type non string scalar parameter example") {
     for {
       validation <- Validation(platform)
-      doc <- AMFCompiler(parserPath + "resource-types/non-string-scalar-parameter/input.raml", platform, RamlYamlHint, validation)
+      doc <- AMFCompiler(parserPath + "resource-types/non-string-scalar-parameter/input.raml",
+                         platform,
+                         RamlYamlHint,
+                         validation)
         .build()
       report <- validation.validate(doc, ProfileNames.RAML)
     } yield {
@@ -1339,12 +1358,11 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-
   test("Invalid key in trait test") {
     for {
       validation <- Validation(platform)
-      library <- AMFCompiler(validationsPath + "/traits/trait1.raml", platform, RamlYamlHint, validation).build()
-      report <- validation.validate(library, ProfileNames.RAML)
+      library    <- AMFCompiler(validationsPath + "/traits/trait1.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(library, ProfileNames.RAML)
     } yield {
       assert(!report.conforms)
       assert(report.results.length == 1)
@@ -1367,12 +1385,25 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Invalid path template syntax text") {
     for {
       validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "production/unbalanced_paths.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(doc, ProfileNames.RAML)
+      doc <- AMFCompiler(validationsPath + "production/unbalanced_paths.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
     } yield {
       assert(!report.conforms)
       assert(report.results.length == 2)
       assert(report.results.exists(_.message.contains("Invalid path template syntax")))
+    }
+  }
+
+  test("Test minItems maxItems examples") {
+    for {
+      validation <- Validation(platform)
+      doc        <- AMFCompiler(examplesPath + "/examples/min-max-items.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 2)
+      assert(report.results.exists(_.message.contains("Number of items at")))
     }
   }
 }
