@@ -1073,4 +1073,8 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Path with empty spaces") {
     cycle("bells with spaces.raml", "bells with spaces.jsonld", RamlYamlHint, Amf)
   }
+
+  test("File types single value") {
+    cycle("file_types.raml", "file_types.jsonld", RamlYamlHint, Amf)
+  }
 }
