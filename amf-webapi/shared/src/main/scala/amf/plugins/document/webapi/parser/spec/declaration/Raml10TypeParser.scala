@@ -778,7 +778,21 @@ sealed abstract class RamlTypeParser(ast: YPart,
       super.parse()
       parseOASFields(map, shape)
 
-      map.key("fileTypes", FileShapeModel.FileTypes in shape)
+      map.key("fileTypes") match {
+        case Some(entry) if entry.value.tagType == YType.Seq =>
+          shape.setArray(FileShapeModel.FileTypes, entry.value.as[YSequence].nodes.map { n: YNode => AmfScalar(n.as[YScalar].text) }, Annotations(entry.value))
+        case Some(entry) if entry.value.tagType == YType.Str =>
+          shape.setArray(FileShapeModel.FileTypes, Seq(AmfScalar(entry.value.as[YScalar].text)), Annotations(entry.value))
+        case Some(entry) => ctx.violation(
+          ParserSideValidations.ParsingErrorSpecification.id(),
+          shape.id,
+          Some(FileShapeModel.FileTypes.value.iri()),
+          s"Unexpected syntax for the fileTypes property: ${entry.value.tagType}",
+          entry.value
+        )
+        case _ => // ignore
+      }
+
 
       map.key("minimum".asRamlAnnotation, entry => { // todo pope
         val value = ScalarNode(entry.value)
