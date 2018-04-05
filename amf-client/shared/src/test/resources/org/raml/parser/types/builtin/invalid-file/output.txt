@@ -1,16 +1,9 @@
 Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/invalid-file/input.raml
 Profile: RAML
 Conforms? false
-Number of results: 3
+Number of results: 2
 
 Level: Violation
-
-- Source: http://raml.org/vocabularies/amf/parser#parsing-error
-  Message: Not a YSequence
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/invalid-file/input.raml
-  Property: 
-  Position: Some(LexicalInformation([(7,12)-(7,27)]))
 
 - Source: http://raml.org/vocabularies/amf/parser#parsing-error
   Message: Expecting !!int and !!float provided
