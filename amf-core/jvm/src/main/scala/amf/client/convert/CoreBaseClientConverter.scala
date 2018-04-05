@@ -28,7 +28,7 @@ trait CoreBaseClientConverter extends CoreBaseConverter {
       matcher: InternalClientMatcher[Internal, Client]): Optional[Client] =
     from.map(matcher.asClient).asJava
 
-  override protected def asClientList[A, B](from: Seq[A], matcher: InternalClientMatcher[A, B]): util.List[B] =
+  override private[convert] def asClientList[A, B](from: Seq[A], matcher: InternalClientMatcher[A, B]): util.List[B] =
     from.map(matcher.asClient).asJava
 
   override protected def asClientMap[Internal, Client](

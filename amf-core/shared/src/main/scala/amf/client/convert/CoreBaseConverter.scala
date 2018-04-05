@@ -147,8 +147,8 @@ trait CollectionConverter {
 
   protected def toClientOption[E](from: Option[E]): ClientOption[E]
 
-  protected def asClientList[Internal, Client](from: Seq[Internal],
-                                               m: InternalClientMatcher[Internal, Client]): ClientList[Client]
+  private[convert] def asClientList[Internal, Client](from: Seq[Internal],
+                                                      m: InternalClientMatcher[Internal, Client]): ClientList[Client]
 
   protected def asClientMap[Internal, Client](from: mutable.Map[String, Internal],
                                               m: InternalClientMatcher[Internal, Client]): ClientMap[Client]

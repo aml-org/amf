@@ -25,7 +25,7 @@ trait CoreBaseClientConverter extends CoreBaseConverter {
       matcher: InternalClientMatcher[Internal, Client]): UndefOr[Client] =
     from.map(matcher.asClient).orUndefined
 
-  override protected def asClientList[A, B](from: Seq[A], matcher: InternalClientMatcher[A, B]): js.Array[B] =
+  override private[convert] def asClientList[A, B](from: Seq[A], matcher: InternalClientMatcher[A, B]): js.Array[B] =
     from.map(matcher.asClient).toJSArray
 
   override protected def asClientMap[Internal, Client](
