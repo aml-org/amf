@@ -68,6 +68,10 @@ class ExtendsResolutionTest extends ResolutionTest {
     cycle("traits-using-library.raml", "traits-using-library.raml.raml", RamlYamlHint, Raml)
   }
 
+  test("Resource level trait") {
+    cycle("resource_level.raml", "resource_level.raml.raml", RamlYamlHint, Raml)
+  }
+
   test("08 Optional response resolution") {
     cycle("optional-response.raml", "optional-response.raml.raml", RamlYamlHint, Raml08, basePath + "08/")
   }

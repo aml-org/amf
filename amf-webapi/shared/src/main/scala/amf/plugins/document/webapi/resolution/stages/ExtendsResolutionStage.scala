@@ -35,7 +35,10 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
     case _                   => new Raml10WebApiContext(ParserContext(parserCount = parserRun))
   }
 
-  override def resolve(model: BaseUnit): BaseUnit = model.transform(findExtendsPredicate, transform(model))
+  override def resolve(model: BaseUnit): BaseUnit = {
+    println("HEY")
+    model.transform(findExtendsPredicate, transform(model))
+  }
 
   def asEndPoint(r: ParametrizedResourceType, context: Context): EndPoint = {
     Option(r.target) match {
