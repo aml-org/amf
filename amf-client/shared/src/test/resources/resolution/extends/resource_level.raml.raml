@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: Example API
+version: v1
+/users:
+  get:
+    headers:
+      access_token:
+        description: Access Token
+        required: true
+        example: 5757gh76
+    description: Some requests require authentication.
+/other: {}
