@@ -1,7 +1,7 @@
 package amf.core.model.domain.templates
 
-import amf.client.model.StrField
 import amf.core.metamodel.domain.templates.AbstractDeclarationModel._
+import amf.core.model.StrField
 import amf.core.model.domain.{DataNode, DomainElement, Linkable, NamedDomainElement}
 import amf.core.parser.{Annotations, Fields}
 

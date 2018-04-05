@@ -17,7 +17,5 @@ case class RecursiveShape(private[amf] override val _internal: InternalRecursive
     this
   }
 
-  override def linkTarget: Option[DomainElement] = _internal.linkTarget.asClient
-
   override def linkCopy(): Linkable = throw new Exception("Recursive shape cannot be linked")
 }

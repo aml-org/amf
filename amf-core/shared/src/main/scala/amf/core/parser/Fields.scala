@@ -1,8 +1,8 @@
 package amf.core.parser
 
-import amf.client.model._
 import amf.core.metamodel.Type._
 import amf.core.metamodel.{Field, Obj, Type}
+import amf.core.model._
 import amf.core.model.domain._
 
 import scala.collection.immutable.ListMap

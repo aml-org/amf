@@ -64,7 +64,5 @@ case class FileShape(override private[amf] val _internal: InternalFileShape) ext
     this
   }
 
-  override def linkTarget: Option[FileShape] = _internal.linkTarget.map({ case l: InternalFileShape => l }).asClient
-
   override def linkCopy(): FileShape = _internal.linkCopy()
 }

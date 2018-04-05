@@ -1,8 +1,8 @@
 package amf.core.model.domain.extensions
 
-import amf.client.model.StrField
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.metamodel.domain.extensions.DomainExtensionModel.{DefinedBy, Element, Extension, Name}
+import amf.core.model.StrField
 import amf.core.model.domain.{DataNode, DomainElement}
 import amf.core.parser.{Annotations, Fields}
 import org.yaml.model.YPart

@@ -20,18 +20,8 @@ class Vocabulary(private[amf] val _internal: InternalVocabulary) extends BaseUni
   @JSExportTopLevel("model.document.Vocabulary")
   def this() = this(InternalVocabulary())
 
-  def name: StrField = _internal.name
-  def description: StrField = new StrField {
-
-    /** Return string value as option. */
-    override def option(): Option[String] = Option(_internal.usage)
-
-    /** Return annotations. */
-    override def annotations(): Annotations = _internal.fields.entry(VocabularyModel.Usage) match {
-      case Some(fieldEntry) => fieldEntry.value.annotations
-      case None             => Annotations()
-    }
-  }
+  def name: StrField        = _internal.name
+  def description: StrField = _internal.usage // Just an alias... do we need description field?
 
   def base: StrField                           = _internal.base
   def imports: ClientList[VocabularyReference] = _internal.imports.asClient
@@ -43,10 +33,6 @@ class Vocabulary(private[amf] val _internal: InternalVocabulary) extends BaseUni
   }
   def withBase(base: String): Vocabulary = {
     _internal.withBase(base)
-    this
-  }
-  def withUsage(usage: String): Vocabulary = {
-    _internal.withUsage(usage)
     this
   }
   def withExternals(externals: ClientList[External]): Vocabulary = {

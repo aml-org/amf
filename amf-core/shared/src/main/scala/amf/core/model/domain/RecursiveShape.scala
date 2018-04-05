@@ -1,9 +1,9 @@
 package amf.core.model.domain
 
-import amf.client.model.StrField
 import amf.core.metamodel.Obj
 import amf.core.metamodel.domain.RecursiveShapeModel
 import amf.core.metamodel.domain.RecursiveShapeModel._
+import amf.core.model.StrField
 import amf.core.parser.{Annotations, Fields}
 import org.yaml.model.YPart
 

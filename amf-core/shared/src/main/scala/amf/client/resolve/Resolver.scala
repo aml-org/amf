@@ -9,6 +9,6 @@ import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
 class Resolver(vendor: String) {
-  def resolve(unit: BaseUnit): BaseUnit = RuntimeResolver.resolve(vendor, unit, ResolutionPipeline.DEFAULT_PIPELINE)
-  def resolve(unit: BaseUnit, pipelineId: String) = RuntimeResolver.resolve(vendor, unit, pipelineId)
+  def resolve(unit: BaseUnit): BaseUnit                   = resolve(unit, ResolutionPipeline.DEFAULT_PIPELINE)
+  def resolve(unit: BaseUnit, pipeline: String): BaseUnit = RuntimeResolver.resolve(vendor, unit, pipeline)
 }

@@ -662,7 +662,7 @@ case class RamlDialectEmitter(dialect: Dialect) extends RamlDialectDocumentsEmit
 
     if (Option(dialect.usage).isDefined) {
       emitters ++= Seq(new EntryEmitter {
-        override def emit(b: EntryBuilder): Unit = MapEntryEmitter("usage", dialect.usage).emit(b)
+        override def emit(b: EntryBuilder): Unit = MapEntryEmitter("usage", dialect.usage.value()).emit(b)
 
         override def position(): Position =
           dialect.fields
@@ -713,7 +713,7 @@ case class RamlDialectLibraryEmitter(library: DialectLibrary) extends RamlDialec
 
     if (Option(dialect.usage).isDefined) {
       emitters ++= Seq(new EntryEmitter {
-        override def emit(b: EntryBuilder): Unit = MapEntryEmitter("usage", dialect.usage).emit(b)
+        override def emit(b: EntryBuilder): Unit = MapEntryEmitter("usage", dialect.usage.value()).emit(b)
 
         override def position(): Position =
           dialect.fields

@@ -16,8 +16,16 @@ import amf.client.model.domain.{
   Shape => ClientShape,
   VariableValue => ClientVariableValue
 }
-import amf.client.model.{AnyField, DoubleField, StrField}
+import amf.client.model.{
+  AnyField => ClientAnyField,
+  BoolField => ClientBoolField,
+  DoubleField => ClientDoubleField,
+  FloatField => ClientFloatField,
+  IntField => ClientIntField,
+  StrField => ClientStrField
+}
 import amf.client.validate.{ValidationReport => ClientValidatorReport, ValidationResult => ClientValidationResult}
+import amf.core.model._
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
@@ -33,6 +41,7 @@ trait CoreBaseConverter
     extends PlatformSecrets
     with CollectionConverter
     with FutureConverter
+    with FieldConverter
     with HandlerConverter
     with CustomDomainPropertyConverter
     with ShapeConverter
@@ -51,17 +60,13 @@ trait CoreBaseConverter
   implicit def asInternal[Internal, Client](from: Client)(
       implicit m: ClientInternalMatcher[Client, Internal]): Internal = m.asInternal(from)
 
-  implicit object StrFieldMatcher extends IdentityMatcher[StrField]
-
-  implicit object DoubleFieldMatcher extends IdentityMatcher[DoubleField]
-
-  implicit object AnyFieldMatcher extends IdentityMatcher[AnyField]
-
-  implicit object StringMatcher extends IdentityMatcher[String]
-
-  implicit object AnyMatcher extends IdentityMatcher[Any]
-
-  implicit object UnitMatcher extends IdentityMatcher[Unit]
+  implicit object StringMatcher  extends IdentityMatcher[String]
+  implicit object BooleanMatcher extends IdentityMatcher[Boolean]
+  implicit object IntMatcher     extends IdentityMatcher[Int]
+  implicit object DoubleMatcher  extends IdentityMatcher[Double]
+  implicit object FloatMatcher   extends IdentityMatcher[Float]
+  implicit object AnyMatcher     extends IdentityMatcher[Any]
+  implicit object UnitMatcher    extends IdentityMatcher[Unit]
 
   trait IdentityMatcher[T] extends InternalClientMatcher[T, T] with ClientInternalMatcher[T, T] {
     override def asClient(from: T): T   = from
@@ -93,17 +98,27 @@ trait FutureConverter {
     def asClient: ClientFuture[Client] = asClientFuture(from.map(m.asClient))
   }
 
-  private[convert] def asClientFuture[T](from: Future[T]): ClientFuture[T]
+  protected def asClientFuture[T](from: Future[T]): ClientFuture[T]
 }
 
 trait CollectionConverter {
 
+  type ClientOption[E]
   type ClientList[E]
   type ClientMap[V]
 
-  implicit class InternalSeqOps[Internal, Client](from: Seq[Internal])(
+  trait ClientOptionLike[E] {
+    def isEmpty: Boolean
+    def folded[B](ifEmpty: => B)(f: E => B): B
+    def mapped[B](f: E => B): ClientOption[B]
+    def getOrNull: E
+    def getOrElse[B >: E](default: => B): B
+  }
+
+  implicit class InternalOptionOps[Internal, Client](from: Option[Internal])(
       implicit m: InternalClientMatcher[Internal, Client]) {
-    def asClient: ClientList[Client] = asClientList(from, m)
+    def asClient: ClientOption[Client] = asClientOption(from, m)
+//    def toClient: ClientOption[Internal] = toClientOption(from)
   }
 
   implicit class ClientListOps[Internal, Client](from: ClientList[Client])(
@@ -111,24 +126,62 @@ trait CollectionConverter {
     def asInternal: Seq[Internal] = asInternalSeq(from, m)
   }
 
+  implicit class ClientOptionOps[Client](from: ClientOption[Client]) {
+    def toScala: Option[Client] = toScalaOption(from)
+  }
+
   implicit class InternalMapOps[Internal, Client](from: mutable.Map[String, Internal])(
       implicit m: InternalClientMatcher[Internal, Client]) {
     def asClient: ClientMap[Client] = asClientMap(from, m)
   }
 
-  implicit class InternalOptionOps[Internal, Client](from: Option[Internal])(
+  implicit class InternalSeqOps[Internal, Client](from: Seq[Internal])(
       implicit m: InternalClientMatcher[Internal, Client]) {
-    def asClient: Option[Client] = from.map(m.asClient)
+    def asClient: ClientList[Client] = asClientList(from, m)
   }
 
-  private[amf] def asClientList[Internal, Client](from: Seq[Internal],
-                                                  m: InternalClientMatcher[Internal, Client]): ClientList[Client]
+  protected def asClientOption[Internal, Client](from: Option[Internal],
+                                                 m: InternalClientMatcher[Internal, Client]): ClientOption[Client]
 
-  private[convert] def asClientMap[Internal, Client](from: mutable.Map[String, Internal],
-                                                     m: InternalClientMatcher[Internal, Client]): ClientMap[Client]
+  protected def toScalaOption[E](from: ClientOption[E]): Option[E]
 
-  private[convert] def asInternalSeq[Client, Internal](from: ClientList[Client],
-                                                       m: ClientInternalMatcher[Client, Internal]): Seq[Internal]
+  protected def toClientOption[E](from: Option[E]): ClientOption[E]
+
+  protected def asClientList[Internal, Client](from: Seq[Internal],
+                                               m: InternalClientMatcher[Internal, Client]): ClientList[Client]
+
+  protected def asClientMap[Internal, Client](from: mutable.Map[String, Internal],
+                                              m: InternalClientMatcher[Internal, Client]): ClientMap[Client]
+
+  protected def asInternalSeq[Client, Internal](from: ClientList[Client],
+                                                m: ClientInternalMatcher[Client, Internal]): Seq[Internal]
+}
+
+trait FieldConverter extends CollectionConverter {
+
+  implicit object StrFieldMatcher extends InternalClientMatcher[StrField, ClientStrField] {
+    override def asClient(from: StrField): ClientStrField = ClientStrField(from)
+  }
+
+  implicit object IntFieldMatcher extends InternalClientMatcher[IntField, ClientIntField] {
+    override def asClient(from: IntField): ClientIntField = ClientIntField(from)
+  }
+
+  implicit object BoolFieldMatcher extends InternalClientMatcher[BoolField, ClientBoolField] {
+    override def asClient(from: BoolField): ClientBoolField = ClientBoolField(from)
+  }
+
+  implicit object DoubleFieldMatcher extends InternalClientMatcher[DoubleField, ClientDoubleField] {
+    override def asClient(from: DoubleField): ClientDoubleField = ClientDoubleField(from)
+  }
+
+  implicit object FloatFieldMatcher extends InternalClientMatcher[FloatField, ClientFloatField] {
+    override def asClient(from: FloatField): ClientFloatField = ClientFloatField(from)
+  }
+
+  implicit object AnyFieldMatcher extends InternalClientMatcher[AnyField, ClientAnyField] {
+    override def asClient(from: AnyField): ClientAnyField = ClientAnyField(from)
+  }
 }
 
 trait HandlerConverter {
@@ -144,7 +197,6 @@ trait DomainExtensionConverter {
 
     override def asInternal(from: ClientDomainExtension): DomainExtension = from._internal
   }
-
 }
 
 trait DataNodeConverter {

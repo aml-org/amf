@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi.models
 
-import amf.client.model.StrField
 import amf.core.metamodel.Obj
+import amf.core.model.StrField
 import amf.core.model.domain.{AmfArray, DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.models.Example
