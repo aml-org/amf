@@ -38,8 +38,8 @@ object RenderOptions {
 
   def apply(client: ClientRenderOptions): RenderOptions = {
     if (client.isWithSourceMaps)
-      new RenderOptions().withoutSourceMaps
+      new RenderOptions().withSourceMaps
     else
-      new RenderOptions()
+      new RenderOptions().withoutSourceMaps
   }
 }
