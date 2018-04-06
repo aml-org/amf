@@ -39,9 +39,25 @@ case class AMFValidationResult(message: String,
       case x => x
     }
   }
+
+  val completeMessage: String = {
+    var str = s"\n- Source: $validationId\n"
+    str += s"  Message: $message\n"
+    str += s"  Property: ${targetProperty.getOrElse("")}\n"
+    str
+  }
 }
 
 object AMFValidationResult {
+
+  def apply(message: String,
+            level: String,
+            targetNode: String,
+            targetProperty: Option[String],
+            validationId: String,
+            position: Option[LexicalInformation],
+            source: Any): AMFValidationResult =
+    new AMFValidationResult(message, level, targetNode, targetProperty, validationId, position, source)
 
   def fromSHACLValidation(model: BaseUnit,
                           message: String,

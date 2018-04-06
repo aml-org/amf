@@ -109,6 +109,13 @@ case class ValidationSpecification(name: String,
   }
 
   def isParserSide() = targetInstance.nonEmpty && targetInstance.head == ValidationSpecification.PARSER_SIDE_VALIDATION
+
+  def withTargets(other: ValidationSpecification): ValidationSpecification =
+    copy(
+      targetInstance = (this.targetInstance ++ other.targetInstance).distinct,
+      targetClass = (this.targetClass ++ other.targetClass).distinct,
+      targetObject = (this.targetObject ++ other.targetObject).distinct
+    )
 }
 
 object ValidationSpecification {

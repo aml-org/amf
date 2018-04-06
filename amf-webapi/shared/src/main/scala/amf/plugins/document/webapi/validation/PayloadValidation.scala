@@ -1,59 +1,66 @@
 package amf.plugins.document.webapi.validation
 
-import amf.core.model.document.PayloadFragment
+import amf.core.model.document.{Module, PayloadFragment}
 import amf.core.model.domain._
 import amf.core.parser.ParserContext
 import amf.core.plugins.{AMFPayloadValidationPlugin, AMFPlugin}
-import amf.core.remote.{Raml, Vendor}
 import amf.core.services.RuntimeValidator
-import amf.core.validation.core.ValidationSpecification
-import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels}
+import amf.core.validation._
+import amf.core.validation.core.{ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.webapi.contexts.{PayloadContext, Raml10VersionFactory, SpecVersionFactory, WebApiContext}
-import amf.plugins.document.webapi.parser.spec.{SpecSyntax, WebApiDeclarations}
+import amf.plugins.document.webapi.contexts.PayloadContext
 import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
-import amf.plugins.document.webapi.parser.spec.raml.Raml10Syntax
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
 import org.yaml.model.{YDocument, YNode}
 import org.yaml.parser.YamlParser
 
+import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-object PayloadValidation {
-  def apply(shape: Shape): PayloadValidation = new PayloadValidation(shape)
-}
+case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
+                             validations: EffectiveValidations = EffectiveValidations())
+    extends WebApiValidations {
 
-case class PayloadValidation(shape: Shape) extends WebApiValidations {
-  var profile = Some(new AMFShapeValidations(shape).profile())
+  val profiles: ListBuffer[ValidationProfile] = ListBuffer[ValidationProfile]()
 
-  def validate(payloadFragment: PayloadFragment): Future[AMFValidationReport] = {
+  def validate(): Future[AMFValidationReport] = {
 
-    val dataNode = payloadFragment.encodes
-    addProfileTargets(dataNode)
-    val validations = EffectiveValidations().someEffective(profile.get)
-    RuntimeValidator.shaclValidation(payloadFragment, validations) map { report =>
+    validationCandidates.foreach { vc =>
+      val dataNode = vc.payload.encodes
+      addProfileTargets(dataNode, vc.shape)
+    }
+
+    val bu = Module().withId("http://test.com/payload").withDeclares(validationCandidates.map(_.payload.encodes))
+
+    val finalValidations = EffectiveValidations()
+    profiles.foreach { p =>
+      finalValidations.someEffective(p)
+    }
+
+    RuntimeValidator.shaclValidation(bu, finalValidations) map { report =>
       val results = report.results
-        .map(r => buildPayloadValidationResult(payloadFragment, r, validations))
+        .map(r => buildPayloadValidationResult(bu, r, finalValidations))
         .filter(_.isDefined)
         .map(_.get)
       AMFValidationReport(
         conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
-        model = payloadFragment.id,
-        profile = profile.get.name,
+        model = bu.id,
+        profile = profiles.head.name,
         results = results
       )
     }
   }
 
-  protected def addProfileTargets(dataNode: DataNode): Unit = {
-    val entryValidation           = profile.get.validations.head
+  protected def addProfileTargets(dataNode: DataNode, shape: Shape): Unit = {
+    val localProfile              = new AMFShapeValidations(shape).profile()
+    val entryValidation           = localProfile.validations.head
     val entryValidationWithTarget = entryValidation.copy(targetInstance = Seq(dataNode.id))
-    val restValidations           = profile.get.validations.tail
+    val restValidations           = localProfile.validations.tail
     var finalValidations          = Seq(entryValidationWithTarget) ++ restValidations
     finalValidations = processTargets(entryValidation, dataNode, finalValidations)
 
-    profile = Some(profile.get.copy(validations = finalValidations))
+    profiles += localProfile.copy(validations = finalValidations)
   }
 
   protected def processTargets(validation: ValidationSpecification,
@@ -117,14 +124,11 @@ object PayloadValidatorPlugin extends AMFPayloadValidationPlugin {
 
   override def init(): Future[AMFPlugin] = Future.successful(this)
 
-  override def validatePayload(shape: Shape, payloadFragment: PayloadFragment): Future[AMFValidationReport] =
-    PayloadValidation(shape).validate(payloadFragment)
-
   override val payloadMediaType: Seq[String] = Seq("application/json", "application/yaml", "text/vnd.yaml")
 
   val defaultCtx = new PayloadContext(ParserContext())
 
-  override def validatePayload(shape: Shape, payload: String, mediaType: String): Future[AMFValidationReport] = {
+  override def parsePayload(payload: String, mediaType: String): PayloadFragment = {
     val fragment = PayloadFragment().withMediaType(mediaType)
 
     YamlParser(payload).parse(keepTokens = true).collectFirst({ case doc: YDocument => doc.node }) match {
@@ -132,8 +136,9 @@ object PayloadValidatorPlugin extends AMFPayloadValidationPlugin {
         fragment.withEncodes(DataNodeParser(node, parent = Option(fragment.id))(defaultCtx).parse())
       case None => fragment.withEncodes(ScalarNode(payload, None))
     }
-    validatePayload(shape, fragment)
-
+    fragment
   }
 
+  override def validateSet(set: ValidationShapeSet): Future[AMFValidationReport] =
+    PayloadValidation(set.candidates).validate()
 }
