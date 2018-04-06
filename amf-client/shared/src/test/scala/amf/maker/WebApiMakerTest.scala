@@ -162,9 +162,9 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
             Parameter()
               .withName("two")
               .withParameterName("two")
-              .withRequired(true)
+              .withRequired(false)
               .withBinding("path")
-              .withSchema(ScalarShape().withName("two").withDataType("http://www.w3.org/2001/XMLSchema#string"))
+              .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
           ))
         .withOperations(List(
           Operation()

@@ -1077,4 +1077,12 @@ class CompleteCycleTest extends BuildCycleTests {
   test("File types single value") {
     cycle("file_types.raml", "file_types.jsonld", RamlYamlHint, Amf)
   }
+
+  test("int uri param raml to amf") {
+    cycle("int_uri_param.raml", "int_uri_param.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("int uri param raml to raml") {
+    cycle("int_uri_param.raml", "int_uri_param.raml.raml", RamlYamlHint, Raml)
+  }
 }
