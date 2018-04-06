@@ -11,7 +11,7 @@ import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecPar
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
-import amf.plugins.domain.webapi.models.{EndPoint, Operation}
+import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 import amf.core.utils.Strings
 
@@ -169,13 +169,26 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     )
   }
 
-  private def implicitPathParams(endpoint: EndPoint, filter: String => Boolean = _ => true) = {
+  private def implicitPathParams(endpoint: EndPoint, filter: String => Boolean = _ => true): Seq[Parameter] = {
+    val parentParams: Map[String, Parameter] = parent.map(
+      _.parameters.filter(_.binding.value() == "path")
+        .foldLeft(Map[String, Parameter]()) { case (acc, p) =>
+          acc.updated(p.name.value(), p)
+        }
+    ).getOrElse(Map())
+
     TemplateUri
       .variables(parsePath())
       .filter(filter)
       .map { variable =>
-        val implicitParam = endpoint.withParameter(variable).withBinding("path").withRequired(true)
-        implicitParam.withScalarSchema(variable).withDataType((Namespace.Xsd + "string").iri())
+        val implicitParam = parentParams.get(variable) match {
+          case Some(param) =>
+            param.cloneParameter(endpoint.id)
+          case None =>
+            val pathParam = endpoint.withParameter(variable).withBinding("path").withRequired(true)
+            pathParam.withScalarSchema(variable).withDataType((Namespace.Xsd + "string").iri())
+            pathParam
+        }
         implicitParam.annotations += SynthesizedField()
         implicitParam
       }
