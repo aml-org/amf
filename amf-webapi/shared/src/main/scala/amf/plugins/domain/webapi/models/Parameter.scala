@@ -80,7 +80,7 @@ case class Parameter(fields: Fields, annotations: Annotations)
   override def linkCopy(): Parameter = Parameter().withBinding(binding.value()).withId(id)
 
   def cloneParameter(parent: String): Parameter = {
-    val cloned = Parameter(annotations).withName(name.value()).adopted(parent)
+    val cloned = Parameter(Annotations(annotations)).withName(name.value()).adopted(parent)
 
     this.fields.foreach {
       case (f, v) =>
