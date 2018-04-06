@@ -5,54 +5,17 @@ Number of results: 5
 
 Level: Violation
 
-- Source: http://raml.org/vocabularies/amf/parser#example-validation-error
-  Message: Model: http://test.com/payload
-Profile: Payload
-Conforms? false
-Number of results: 4
-
-Level: Violation
-
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/Office_validation
   Message: Object at / must be valid
+Array items at //employees must be valid
+Data at //employees/items/age must be greater than or equal to 0
+Data at //employees/items/email must match pattern ^.+@.+\..+$
+Scalar at //employees/items/name must have data type http://www.w3.org/2001/XMLSchema#string
+
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/Office/example/null/object_1
   Property: http://raml.org/vocabularies/data#employees
-  Position: Some(LexicalInformation([(1,0)-(24,1)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/Office/property/employees/array/employees_validation/prop
-  Message: Array items at //employees must be valid
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/Office/example/null/object_1/array_2
-  Property: http://www.w3.org/1999/02/22-rdf-syntax-ns#member
-  Position: Some(LexicalInformation([(2,15)-(23,5)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/Office/property/employees/array/employees_validation/prop
-  Message: Array items at //employees must be valid
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/Office/example/null/object_1/array_2
-  Property: http://www.w3.org/1999/02/22-rdf-syntax-ns#member
-  Position: Some(LexicalInformation([(2,15)-(23,5)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/Office/property/employees/array/employees_validation/prop
-  Message: Array items at //employees must be valid
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/Office/example/null/object_1/array_2
-  Property: http://www.w3.org/1999/02/22-rdf-syntax-ns#member
-  Position: Some(LexicalInformation([(2,15)-(23,5)]))
-
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/Office/example/null
-  Property: http://raml.org/vocabularies/document#value
-  Position: Some(LexicalInformation([(18,12)-(43,0)]))
-
-- Source: http://raml.org/vocabularies/amf/parser#example-validation-error
-  Message: Model: http://test.com/payload
-Profile: Payload
-Conforms? false
-Number of results: 1
-
-Level: Violation
+  Position: Some(LexicalInformation([(18,13)-(43,0)]))
 
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/array/Colors_validation_validation_minItems/prop
   Message: Number of items at / must be greater than 2
@@ -61,19 +24,6 @@ Level: Violation
   Property: http://www.w3.org/1999/02/22-rdf-syntax-ns#member
   Position: Some(LexicalInformation([(49,15)-(49,21)]))
 
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/array/Colors/example/bad-min
-  Property: http://raml.org/vocabularies/document#value
-  Position: Some(LexicalInformation([(49,15)-(49,21)]))
-
-- Source: http://raml.org/vocabularies/amf/parser#example-validation-error
-  Message: Model: http://test.com/payload
-Profile: Payload
-Conforms? false
-Number of results: 1
-
-Level: Violation
-
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/array/Colors_validation_validation_maxItems/prop
   Message: Number of items at / must be smaller than 3
   Level: Violation
@@ -81,61 +31,20 @@ Level: Violation
   Property: http://www.w3.org/1999/02/22-rdf-syntax-ns#member
   Position: Some(LexicalInformation([(50,15)-(50,39)]))
 
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/array/Colors/example/bad-max
-  Property: http://raml.org/vocabularies/document#value
-  Position: Some(LexicalInformation([(50,15)-(50,39)]))
-
-- Source: http://raml.org/vocabularies/amf/parser#example-validation-error
-  Message: Model: http://test.com/payload
-Profile: Payload
-Conforms? false
-Number of results: 2
-
-Level: Violation
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/array/Colors_validation_validation_minItems/prop
+- Source: 
   Message: Number of items at / must be greater than 2
+Data at / must be an array
+
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/array/Colors/example/bad-type/scalar_1
-  Property: http://www.w3.org/1999/02/22-rdf-syntax-ns#member
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/array/Colors/example/bad-type/scalar_1
   Position: Some(LexicalInformation([(51,16)-(51,20)]))
 
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/array/Colors_validation_validation_type/prop
-  Message: Data at / must be an array
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/array/Colors/example/bad-type/scalar_1
-  Property: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-  Position: Some(LexicalInformation([(51,16)-(51,20)]))
-
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/array/Colors/example/bad-type
-  Property: http://raml.org/vocabularies/document#value
-  Position: Some(LexicalInformation([(51,16)-(51,20)]))
-
-- Source: http://raml.org/vocabularies/amf/parser#example-validation-error
-  Message: Model: http://test.com/payload
-Profile: Payload
-Conforms? false
-Number of results: 2
-
-Level: Violation
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/array/Colors_validation_validation_minItems/prop
+- Source: 
   Message: Number of items at / must be greater than 2
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/array/Colors/example/bad-type2/object_1
-  Property: http://www.w3.org/1999/02/22-rdf-syntax-ns#member
-  Position: Some(LexicalInformation([(53,0)-(54,19)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/array/Colors_validation_validation_type/prop
-  Message: Data at / must be an array
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/array/Colors/example/bad-type2/object_1
-  Property: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
-  Position: Some(LexicalInformation([(53,0)-(54,19)]))
+Data at / must be an array
 
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/array/Colors/example/bad-type2
-  Property: http://raml.org/vocabularies/document#value
-  Position: Some(LexicalInformation([(52,16)-(54,19)]))
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/array/Colors/example/bad-type2/object_1
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/array/Colors/example/bad-type2/object_1
+  Position: Some(LexicalInformation([(53,0)-(54,19)]))

@@ -5,43 +5,14 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://raml.org/vocabularies/amf/parser#example-validation-error
-  Message: Model: http://test.com/payload
-Profile: Payload
-Conforms? false
-Number of results: 4
-
-Level: Violation
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/User_validation
+- Source: 
   Message: Object at / must be valid
+Object at / must be valid
+
+Data at //name must have length smaller than 5
+Data at //lastName must have length greater than 10
+
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/User/example/null/object_1
-  Property: http://raml.org/vocabularies/data#lastName
-  Position: Some(LexicalInformation([(1,0)-(4,1)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/User_validation
-  Message: Object at / must be valid
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/User/example/null/object_1
-  Property: http://raml.org/vocabularies/data#name
-  Position: Some(LexicalInformation([(1,0)-(4,1)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/User/property/name/scalar/name_validation_validation_maxLength/prop
-  Message: Data at //name must have length smaller than 5
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/User/example/null/object_1/scalar_2
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(2,10)-(2,18)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/User/property/lastName/scalar/lastName_validation_validation_minLength/prop
-  Message: Data at //lastName must have length greater than 10
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/User/example/null/object_1/scalar_3
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(3,14)-(3,22)]))
-
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/User/example/null
-  Property: http://raml.org/vocabularies/document#value
-  Position: Some(LexicalInformation([(13,12)-(17,7)]))
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/User/example/null/object_1
+  Position: Some(LexicalInformation([(13,13)-(17,7)]))

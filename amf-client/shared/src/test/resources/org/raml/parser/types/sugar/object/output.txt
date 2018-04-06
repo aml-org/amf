@@ -5,29 +5,11 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://raml.org/vocabularies/amf/parser#example-validation-error
-  Message: Model: http://test.com/payload
-Profile: Payload
-Conforms? false
-Number of results: 2
-
-Level: Violation
-
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/sugar/object/input.raml#/declarations/Person_validation
   Message: Object at / must be valid
+Scalar at //name must have data type http://www.w3.org/2001/XMLSchema#integer
+
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/sugar/object/input.raml#/declarations/Person/example/null/object_1
   Property: http://raml.org/vocabularies/data#name
-  Position: Some(LexicalInformation([(8,0)-(8,18)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/sugar/object/input.raml#/declarations/Person/property/name/scalar/name_validation_range/prop
-  Message: Scalar at //name must have data type http://www.w3.org/2001/XMLSchema#integer
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/sugar/object/input.raml#/declarations/Person/example/null/object_1/scalar_2
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(8,14)-(8,18)]))
-
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/sugar/object/input.raml#/declarations/Person/example/null
-  Property: http://raml.org/vocabularies/document#value
   Position: Some(LexicalInformation([(8,0)-(8,18)]))

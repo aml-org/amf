@@ -5,50 +5,13 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://raml.org/vocabularies/amf/parser#example-validation-error
-  Message: Model: http://test.com/payload
-Profile: Payload
-Conforms? false
-Number of results: 5
-
-Level: Violation
-
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/array/input.raml#/declarations/array/Emails_validation/prop
   Message: Array items at / must be valid
+Object at //items must be valid
+Scalar at //items/address must have data type http://www.w3.org/2001/XMLSchema#string
+Scalar at //items/active must have data type http://www.w3.org/2001/XMLSchema#boolean
+
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/array/input.raml#/declarations/array/Emails/example/null/array_1
   Property: http://www.w3.org/1999/02/22-rdf-syntax-ns#member
-  Position: Some(LexicalInformation([(10,12)-(14,29)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/array/input.raml#/declarations/array/Emails/Email_validation
-  Message: Object at //items must be valid
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/array/input.raml#/declarations/array/Emails/example/null/array_1/object_5
-  Property: http://raml.org/vocabularies/data#active
-  Position: Some(LexicalInformation([(13,8)-(14,29)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/array/input.raml#/declarations/array/Emails/Email_validation
-  Message: Object at //items must be valid
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/array/input.raml#/declarations/array/Emails/example/null/array_1/object_5
-  Property: http://raml.org/vocabularies/data#address
-  Position: Some(LexicalInformation([(13,8)-(14,29)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/array/input.raml#/declarations/array/Emails/Email/property/address/scalar/address_validation_range/prop
-  Message: Scalar at //items/address must have data type http://www.w3.org/2001/XMLSchema#string
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/array/input.raml#/declarations/array/Emails/example/null/array_1/object_5/scalar_6
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(13,17)-(13,22)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/array/input.raml#/declarations/array/Emails/Email/property/active/scalar/active_validation_range/prop
-  Message: Scalar at //items/active must have data type http://www.w3.org/2001/XMLSchema#boolean
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/array/input.raml#/declarations/array/Emails/example/null/array_1/object_5/scalar_7
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(14,16)-(14,29)]))
-
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/array/input.raml#/declarations/array/Emails/example/null
-  Property: http://raml.org/vocabularies/document#value
-  Position: Some(LexicalInformation([(10,12)-(14,29)]))
+  Position: Some(LexicalInformation([(11,0)-(14,29)]))

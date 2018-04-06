@@ -1,12 +1,10 @@
 package amf.plugins.document.webapi.validation
 
-import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.document.{BaseUnit, DeclaresModel, PayloadFragment}
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{DataNode, ObjectNode, Shape}
 import amf.core.remote.Platform
-import amf.core.services.PayloadValidator
-import amf.core.validation.{AMFValidationResult, SeverityLevels}
+import amf.core.validation.ValidationCandidate
 import amf.core.vocabulary.Namespace
 import amf.plugins.domain.shapes.models.{NodeShape, UnionShape}
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
@@ -14,20 +12,22 @@ import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel, Reques
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Request}
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+class ShapeFacetsCandidatesCollector(model: BaseUnit, platform: Platform) {
 
-class ShapeFacetsValidation(model: BaseUnit, platform: Platform) {
-
-  def validate(): Future[Seq[AMFValidationResult]] = {
+  def collect(): Seq[ValidationCandidate] = {
     val shapesWithFacets = findShapesWithFacets()
-    val listResults = shapesWithFacets map {
-      case (shape: Shape, facetDefinitons: Seq[Shape#FacetsMap]) =>
-        validateFacets(shape, facetDefinitons)
+    shapesWithFacets map {
+      case (shape, facetDefinitons) =>
+        val effectiveShape = shape match {
+          case _ if shape.isLink && shape.linkTarget.isDefined => shape.linkTarget.get.asInstanceOf[Shape]
+          case _                                               => shape
+        }
+        val facetsPayload = toFacetsPayload(effectiveShape)
+        val facetsShape   = toFacetsDefinitionShape(effectiveShape, facetDefinitons)
+        val fragment      = PayloadFragment(facetsPayload, "application/yaml")
+        ValidationCandidate(facetsShape, fragment)
     }
-
     // Finally we collect all the results
-    Future.sequence(listResults).map(_.flatten)
   }
 
   protected def findShapesWithFacets(): Seq[(Shape, Seq[Shape#FacetsMap])] = {
@@ -99,27 +99,6 @@ class ShapeFacetsValidation(model: BaseUnit, platform: Platform) {
     } map (_.get)
   }
 
-  // Create a data node with the facets and a shape with the facet definitions.
-  // Validate as a payload afterwards.
-  protected def validateFacets(shape: Shape, facetDefinitons: Seq[Shape#FacetsMap]): Future[Seq[AMFValidationResult]] = {
-    val effectiveShape = shape match {
-      case _ if shape.isLink && shape.linkTarget.isDefined => shape.linkTarget.get.asInstanceOf[Shape]
-      case _                                               => shape
-    }
-    val facetsPayload = toFacetsPayload(effectiveShape)
-    val facetsShape   = toFacetsDefinitionShape(effectiveShape, facetDefinitons)
-    val fragment      = PayloadFragment(facetsPayload, "application/yaml")
-    PayloadValidator.validate(facetsShape, fragment, SeverityLevels.WARNING) map { report =>
-      if (report.conforms) {
-        Seq.empty
-      } else {
-        report.results.map { result =>
-          result.copy(targetProperty = Some(ShapeModel.CustomShapeProperties.value.iri()))
-        }
-      }
-    }
-  }
-
   // We collect the facet instances and build a data node with them
   protected def toFacetsPayload(shape: Shape): DataNode = {
     val payload = ObjectNode(shape.annotations).withId(shape.id)
@@ -148,6 +127,7 @@ class ShapeFacetsValidation(model: BaseUnit, platform: Platform) {
   }
 }
 
-object ShapeFacetsValidation {
-  def apply(model: BaseUnit, platform: Platform) = new ShapeFacetsValidation(model, platform)
+object ShapeFacetsCandidatesCollector {
+  def apply(model: BaseUnit, platform: Platform): Seq[ValidationCandidate] =
+    new ShapeFacetsCandidatesCollector(model, platform).collect()
 }

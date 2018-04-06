@@ -5,36 +5,12 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://raml.org/vocabularies/amf/parser#example-validation-error
-  Message: Model: http://test.com/payload
-Profile: Payload
-Conforms? false
-Number of results: 3
-
-Level: Violation
-
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/complex/input.raml#/web-api/end-points/%2Forgs%2F%7BorgId%7D/get/200/application/json/schema_validation
   Message: Object at / must be valid
+Property phone at //Head must have a valid value
+Data at //Head/phone must match pattern ^[0-9|-]+$
+
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/complex/input.raml#/web-api/end-points/%2Forgs%2F%7BorgId%7D/get/200/application/json/schema/example/null/object_1
   Property: http://raml.org/vocabularies/data#Head
-  Position: Some(LexicalInformation([(44,0)-(59,31)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/complex/input.raml#/web-api/end-points/%2Forgs%2F%7BorgId%7D/get/200/application/json/schema/property/Head/Manager_validation_validation_node_prop_phone
-  Message: Property phone at //Head must have a valid value
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/complex/input.raml#/web-api/end-points/%2Forgs%2F%7BorgId%7D/get/200/application/json/schema/example/null/object_1/object_8
-  Property: http://raml.org/vocabularies/data#phone
-  Position: Some(LexicalInformation([(51,0)-(59,31)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/complex/input.raml#/web-api/end-points/%2Forgs%2F%7BorgId%7D/get/200/application/json/schema/property/Head/Manager/property/phone/scalar/Phone_validation_validation_pattern/prop
-  Message: Data at //Head/phone must match pattern ^[0-9|-]+$
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/complex/input.raml#/web-api/end-points/%2Forgs%2F%7BorgId%7D/get/200/application/json/schema/example/null/object_1/object_8/scalar_17
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(59,23)-(59,31)]))
-
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/complex/input.raml#/web-api/end-points/%2Forgs%2F%7BorgId%7D/get/200/application/json/schema/example/null
-  Property: http://raml.org/vocabularies/document#value
   Position: Some(LexicalInformation([(44,0)-(59,31)]))
