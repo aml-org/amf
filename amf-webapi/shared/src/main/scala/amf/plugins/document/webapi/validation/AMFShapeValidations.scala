@@ -11,6 +11,8 @@ import amf.plugins.domain.shapes.models.TypeDef.NumberType
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 import amf.plugins.features.validation.ParserSideValidations
+import com.sun.xml.internal.org.jvnet.fastinfoset.Vocabulary
+import org.yaml.model.YDocument.EntryBuilder
 
 class AMFShapeValidations(shape: Shape) {
 
@@ -175,20 +177,64 @@ class AMFShapeValidations(shape: Shape) {
       List(validation)
     } else {
       val msg = s"Scalar at $context must be valid"
-      var validation = new ValidationSpecification(
-        name = validationId(scalar),
-        message = msg,
-        ramlMessage = Some(msg),
-        oasMessage = Some(msg),
-        targetClass = Seq.empty,
-        propertyConstraints = Seq(
-          PropertyConstraint(
-            ramlPropertyId = (Namespace.Data + "value").iri(),
-            name = scalar.id + "_validation_range/prop",
-            message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
-            datatype = Some(scalar.dataType.value())
-          ))
-      )
+
+      var validation = if (scalar.dataType.value() == (Namespace.Xsd + "string").iri()) {
+        val custom = Some((b: EntryBuilder, parentId: String) => {
+          b.entry(
+            (Namespace.Shacl + "or").iri(),
+            _.obj(_.entry(
+              "@list",
+              _.list { l =>
+                l.obj { v =>
+                  v.entry((Namespace.Shacl + "datatype").iri(),
+                    _.obj(_.entry("@id", (Namespace.Xsd + "string").iri().trim)))
+                }
+                l.obj { v =>
+                  v.entry((Namespace.Shacl + "datatype").iri(),
+                    _.obj(_.entry("@id", (Namespace.Xsd + "time").iri().trim)))
+                }
+                l.obj { v =>
+                  v.entry((Namespace.Shacl + "datatype").iri(),
+                    _.obj(_.entry("@id", (Namespace.Xsd + "date").iri().trim)))
+                }
+                l.obj { v =>
+                  v.entry((Namespace.Shacl + "datatype").iri(),
+                    _.obj(_.entry("@id", (Namespace.Xsd + "dateTime").iri().trim)))
+                }
+              }
+            ))
+          )
+        })
+        new ValidationSpecification(
+          name = validationId(scalar),
+          message = msg,
+          ramlMessage = Some(msg),
+          oasMessage = Some(msg),
+          targetClass = Seq.empty,
+          propertyConstraints = Seq(
+            PropertyConstraint(
+              ramlPropertyId = (Namespace.Data + "value").iri(),
+              name = scalar.id + "_validation_range/prop",
+              message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
+              custom = custom
+            ))
+        )
+      }  else {
+        new ValidationSpecification(
+          name = validationId(scalar),
+          message = msg,
+          ramlMessage = Some(msg),
+          oasMessage = Some(msg),
+          targetClass = Seq.empty,
+          propertyConstraints = Seq(
+            PropertyConstraint(
+              ramlPropertyId = (Namespace.Data + "value").iri(),
+              name = scalar.id + "_validation_range/prop",
+              message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
+              datatype = Some(scalar.dataType.value())
+            ))
+        )
+      }
       validation = checkScalarType(scalar, context, validation)
       validation = checkPattern(context, validation, scalar)
       validation = checkMinLength(context, validation, scalar)
