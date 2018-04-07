@@ -385,6 +385,17 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Validates example1.raml") {
+    for {
+      validation <- Validation(platform)
+      document   <- AMFCompiler(validationsPath + "production/example1.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(document, ProfileNames.RAML)
+    } yield {
+      println(report)
+      assert(report.conforms)
+    }
+  }
+
   test("Shape facets validations test") {
     for {
       validation <- Validation(platform)

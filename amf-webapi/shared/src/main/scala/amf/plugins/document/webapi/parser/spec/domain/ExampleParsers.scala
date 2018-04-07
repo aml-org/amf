@@ -179,11 +179,18 @@ case class NodeDataNodeParser(node: YNode, parentId: String, quiet: Boolean)(imp
 
     val errorHandler = if (quiet) WarningOnlyHandler(ctx.rootContextDocument) else ctx
     val exampleNode = node.toOption[YScalar] match {
-      case Some(scalar) if JSONSchema.unapply(scalar.text).isDefined || XMLSchema.unapply(scalar.text).isDefined =>
+      case Some(scalar) if JSONSchema.unapply(scalar.text).isDefined =>
         node
           .toOption[YScalar]
           .flatMap { scalar =>
             YamlParser(scalar.text)(errorHandler).parse(true).collectFirst({ case doc: YDocument => doc.node })
+          }
+          .getOrElse(node)
+      case Some(scalar) if XMLSchema.unapply(scalar.text).isDefined =>
+        node
+          .toOption[YScalar]
+          .flatMap { scalar =>
+            YamlParser(scalar.text.replace(":","%3A"))(errorHandler).parse(true).collectFirst({ case doc: YDocument => doc.node })
           }
           .getOrElse(node)
       case _ => node

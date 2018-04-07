@@ -6,7 +6,7 @@ import amf.core.services.PayloadValidator
 import amf.core.validation.ValidationCandidate
 import amf.core.vocabulary.Namespace
 import amf.plugins.domain.shapes.metamodel.ExampleModel
-import amf.plugins.domain.shapes.models.{AnyShape, Example}
+import amf.plugins.domain.shapes.models.{AnyShape, Example, ScalarShape}
 
 class ExamplesValidationCollector(model: BaseUnit) {
 
@@ -14,7 +14,7 @@ class ExamplesValidationCollector(model: BaseUnit) {
     // we find all examples with strict validation
     val examples: Seq[(Shape, Example)] = findExamples()
     // We run regular payload validation for the supported examples
-    examples.map { case (shape, example) => ValidationCandidate(shape, buildFragment(example)) }
+    examples.map { case (shape, example) => ValidationCandidate(shape, buildFragment(shape, example)) }
   }
 
   protected def findExamples(): Seq[(Shape, Example)] = {
@@ -32,9 +32,9 @@ class ExamplesValidationCollector(model: BaseUnit) {
     allExamples
   }
 
-  private def buildFragment(example: Example) =
+  private def buildFragment(shape: Shape, example: Example) =
     PayloadFragment(example.structuredValue,
-                    example.mediaType.option().getOrElse(PayloadValidator.guessMediaType(example.value.value())))
+                    example.mediaType.option().getOrElse(PayloadValidator.guessMediaType(shape.isInstanceOf[ScalarShape], example.value.value())))
 
 }
 

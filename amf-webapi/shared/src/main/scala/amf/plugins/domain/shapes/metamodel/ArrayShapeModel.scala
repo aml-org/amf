@@ -42,11 +42,12 @@ object MatrixShapeModel extends DataArrangementShape with DomainElementModel {
 }
 
 object TupleShapeModel extends DataArrangementShape with DomainElementModel {
+  val AdditionalItems = Field(Bool, Shapes + "additionalItems")
   val TupleItems = Field(SortedArray(ShapeModel), Shapes + "items")
   override val `type`
     : List[ValueType]        = List(Shapes + "TupleShape", Shapes + "ArrayShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
   override def modelInstance = TupleShape()
 
   override val fields
-    : List[Field] = List(TupleItems, MinItems, MaxItems, UniqueItems, CollectionFormat) ++ AnyShapeModel.fields ++ DomainElementModel.fields
+    : List[Field] = List(TupleItems, MinItems, MaxItems, UniqueItems, AdditionalItems, CollectionFormat) ++ AnyShapeModel.fields ++ DomainElementModel.fields
 }

@@ -37,7 +37,7 @@ object PayloadValidator {
 
   def validate(shape: Shape, payload: String, severity: String): Future[AMFValidationReport] = {
 
-    val mediaType = guessMediaType(payload)
+    val mediaType = guessMediaType(isScalar = false, payload)
     plugin(mediaType, shape).validatePayload(shape, payload, mediaType)
   }
 
@@ -49,9 +49,9 @@ object PayloadValidator {
       }
       .getOrElse(AnyMatchPayloadPlugin)
 
-  def guessMediaType(value: String): String = {
-    if (isXml(value)) "application/xml"
-    else if (isJson(value)) "application/json"
+  def guessMediaType(isScalar: Boolean, value: String): String = {
+    if (isXml(value) && !isScalar) "application/xml"
+    else if (isJson(value) && !isScalar) "application/json"
     else "text/vnd.yaml" // by default, we will try to parse it as YAML
   }
 
@@ -75,7 +75,7 @@ object PayloadValidator {
     override def validateSet(set: ValidationShapeSet): Future[AMFValidationReport] = Future {
       val results = set.candidates.map { c =>
         AMFValidationResult(
-          s"Any validator plugin matches for shape $c.shape and mediatype: ${c.payload.mediaType}",
+          s"Unsupported validation for mediatype: ${c.payload.mediaType} and shape ${c.shape.id}",
           set.defaultSeverity,
           c.payload.encodes.id,
           Some((Namespace.Document + "value").iri()),

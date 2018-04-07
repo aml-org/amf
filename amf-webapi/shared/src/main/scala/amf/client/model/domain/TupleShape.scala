@@ -1,6 +1,7 @@
 package amf.client.model.domain
 
 import amf.client.convert.WebApiClientConverters._
+import amf.client.model.BoolField
 import amf.plugins.domain.shapes.models.{TupleShape => InternalTupleShape}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -15,6 +16,13 @@ case class TupleShape(private[amf] override val _internal: InternalTupleShape) e
 
   def withItems(items: ClientList[Shape]): this.type = {
     _internal.withItems(items.asInternal)
+    this
+  }
+
+  def additionalItems: BoolField = _internal.additionalItems
+
+  def withAdditionalItems(additionalItems: Boolean): this.type = {
+    _internal.withAdditionalItems(additionalItems)
     this
   }
 
