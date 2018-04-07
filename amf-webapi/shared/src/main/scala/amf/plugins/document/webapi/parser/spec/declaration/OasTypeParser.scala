@@ -277,7 +277,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       map.key("minItems", ArrayShapeModel.MinItems in shape)
       map.key("maxItems", ArrayShapeModel.MaxItems in shape)
       map.key("uniqueItems", ArrayShapeModel.UniqueItems in shape)
-
+      map.key("additionalItems", TupleShapeModel.AdditionalItems in shape)
       map.key(
         "items",
         entry => {
@@ -323,7 +323,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
       val finalShape = for {
         entry <- map.key("items")
-        item <- OasTypeParser(entry, items => items.adopted(shape.id + "/items"))
+        item <- OasTypeParser(entry, items => items.adopted(shape.id + "/items"), oasNode)
           .parse()
       } yield {
         item match {
@@ -484,7 +484,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text).iri())
       entry.value.toOption[YMap].foreach(_.key("readOnly", PropertyShapeModel.ReadOnly in property))
 
-      OasTypeParser(entry, shape => shape.adopted(property.id))
+      OasTypeParser(entry, shape => shape.adopted(property.id), oasNode)
         .parse()
         .foreach(property.set(PropertyShapeModel.Range, _))
 
