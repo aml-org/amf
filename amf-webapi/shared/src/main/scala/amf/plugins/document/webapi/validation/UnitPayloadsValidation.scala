@@ -68,11 +68,11 @@ sealed case class DataNodeEntry(d: DataNode, sonsKeys: Seq[String]) {
           if (sortedResults.exists(_.level == SeverityLevels.VIOLATION)) SeverityLevels.VIOLATION
           else SeverityLevels.WARNING
         var messages = ""
-        sortedResults.foreach { r =>
-          messages = messages + r.message + "\n"
+        sortedResults.map(_.message).distinct.foreach { r =>
+          messages = messages + r + "\n"
         }
         val finalMessage = additionalMessage.fold(messages)({ a =>
-          messages + "\n" + a
+          messages + a
         })
         AMFValidationResult(finalMessage,
                             severity,
