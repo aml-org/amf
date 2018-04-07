@@ -1,0 +1,120 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "additionalProperties": false,
+  "definitions": {},
+  "id": "http://example.com/example.json",
+  "properties": {
+    "hierarchies": {
+      "additionalProperties": false,
+      "id": "/properties/hierarchies",
+      "properties": {
+        "level1": {
+          "additionalItems": false,
+          "id": "/properties/hierarchies/properties/level1",
+          "items": {
+            "additionalProperties": false,
+            "id": "/properties/hierarchies/properties/level1/items",
+            "properties": {
+              "key": {
+                "id": "/properties/hierarchies/properties/level1/items/properties/key",
+                "type": "string"
+              },
+              "value": {
+                "id": "/properties/hierarchies/properties/level1/items/properties/value",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "level2": {
+          "additionalItems": false,
+          "id": "/properties/hierarchies/properties/level2",
+          "items": {
+            "additionalProperties": false,
+            "id": "/properties/hierarchies/properties/level2/items",
+            "properties": {
+              "key": {
+                "id": "/properties/hierarchies/properties/level2/items/properties/key",
+                "type": "string"
+              },
+              "value": {
+                "id": "/properties/hierarchies/properties/level2/items/properties/value",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "level3": {
+          "additionalItems": false,
+          "id": "/properties/hierarchies/properties/level3",
+          "items": {
+            "additionalProperties": false,
+            "id": "/properties/hierarchies/properties/level3/items",
+            "properties": {
+              "key": {
+                "id": "/properties/hierarchies/properties/level3/items/properties/key",
+                "type": "string"
+              },
+              "value": {
+                "id": "/properties/hierarchies/properties/level3/items/properties/value",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "level4": {
+          "additionalItems": false,
+          "id": "/properties/hierarchies/properties/level4",
+          "items": {
+            "additionalProperties": false,
+            "id": "/properties/hierarchies/properties/level4/items",
+            "properties": {
+              "key": {
+                "id": "/properties/hierarchies/properties/level4/items/properties/key",
+                "type": "string"
+              },
+              "value": {
+                "id": "/properties/hierarchies/properties/level4/items/properties/value",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "level5": {
+          "additionalItems": false,
+          "id": "/properties/hierarchies/properties/level5",
+          "items": {
+            "additionalProperties": false,
+            "id": "/properties/hierarchies/properties/level5/items",
+            "properties": {
+              "key": {
+                "id": "/properties/hierarchies/properties/level5/items/properties/key",
+                "type": "string"
+              },
+              "value": {
+                "id": "/properties/hierarchies/properties/level5/items/properties/value",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "type": {
+          "id": "/properties/hierarchies/properties/type",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

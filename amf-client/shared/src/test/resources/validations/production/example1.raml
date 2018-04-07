@@ -1,0 +1,34 @@
+#%RAML 1.0
+baseUri: https://mocksvc.mulesoft.com/mocks/cf4ef33e-5a88-4ad0-8353-ee92d5339bd6
+title: AMF Validation Bugs
+
+types:
+  contribution:
+    type: object
+    properties:
+      startTime:
+        type: string
+        example: '15:00'
+        description: 'Start time of this window in the timezone of the applicable location. (format: HH:mm)'
+        required: false
+      biography:
+        type: string
+        required: false
+        description: Contributor's biography information
+        example: "<p></p><p><strong>Felicity Hayes-McCoy </strong>built a successful UK-based career as an actress and writer, working in theatre, music theatre, radio, TV, and digital media. She is the author of two memoirs, <em>The House on an Irish Hillside </em>and <em>A Woven Silence: Memory, History &#38; Remembrance</em>, in addition to an illustrated book <em>Enough Is Plenty: The Year on the Dingle Peninsula</em>. She and her husband divide their time between London and Ireland.</p>"
+
+/contribution/{id}:
+  uriParameters:
+    id:
+      required: true
+      type: number
+  get:
+    description: Get a contribution by id
+    body:
+      application/json:
+        type: contribution
+    responses:
+      200:
+        body:
+          application/json:
+            schema: !include get-response.json

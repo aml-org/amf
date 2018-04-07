@@ -35,8 +35,10 @@ case class DataNodeParser(node: YNode,
   def parse(): DataNode = {
     node.tag.tagType match {
       case YType.Str =>
-        if (node.as[YScalar].text.matches("^\\d{2}:\\d{2}(:\\d{2})?$")) {
+        if (node.as[YScalar].text.matches("^\\d{2}:\\d{2}:\\d{2}$")) {
           parseScalar(node.as[YScalar], "time")
+        }  else if (node.as[YScalar].text.matches("^\\d{2}:\\d{2}$")) {
+          parseScalar(YScalar(node.as[YScalar].text + ":00"), "time")
         } else if (node.as[YScalar].text.matches("^\\d{4}-\\d{1,2}-\\d{1,2}?$")) {
           parseScalar(node.as[YScalar], "date")
         } else {
