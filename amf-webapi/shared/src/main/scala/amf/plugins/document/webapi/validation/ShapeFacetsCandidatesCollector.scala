@@ -17,13 +17,13 @@ class ShapeFacetsCandidatesCollector(model: BaseUnit, platform: Platform) {
   def collect(): Seq[ValidationCandidate] = {
     val shapesWithFacets = findShapesWithFacets()
     shapesWithFacets map {
-      case (shape, facetDefinitons) =>
+      case (shape: Shape, facetDefinitions: Seq[Shape#FacetsMap]) =>
         val effectiveShape = shape match {
           case _ if shape.isLink && shape.linkTarget.isDefined => shape.linkTarget.get.asInstanceOf[Shape]
           case _                                               => shape
         }
         val facetsPayload = toFacetsPayload(effectiveShape)
-        val facetsShape   = toFacetsDefinitionShape(effectiveShape, facetDefinitons)
+        val facetsShape   = toFacetsDefinitionShape(effectiveShape, facetDefinitions)
         val fragment      = PayloadFragment(facetsPayload, "application/yaml")
         ValidationCandidate(facetsShape, fragment)
     }
@@ -94,8 +94,8 @@ class ShapeFacetsCandidatesCollector(model: BaseUnit, platform: Platform) {
       case _ => None
 
     } filter {
-      case Some((shape: Shape, facetDefinitons: Seq[Shape#FacetsMap])) => facetDefinitons.nonEmpty
-      case _                                                           => false
+      case Some((shape: Shape, facetDefinitions: Seq[Shape#FacetsMap])) => facetDefinitions.exists(_.nonEmpty)
+      case _                                                            => false
     } map (_.get)
   }
 

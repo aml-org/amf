@@ -1424,4 +1424,32 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.exists(_.message.contains("Number of items at")))
     }
   }
+
+  test("Test validate declared type with two uses") {
+    for {
+      validation <- Validation(platform)
+      doc        <- AMFCompiler(examplesPath + "/examples/declared-type-ref.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 1)
+      assert(report.results.head.message.trim.equals(
+        "Object at / must be valid\nScalar at //name must have data type http://www.w3.org/2001/XMLSchema#string\nScalar at //lastName must have data type http://www.w3.org/2001/XMLSchema#string"))
+    }
+  }
+
+  test("Test declared type with two uses adding example") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(examplesPath + "/examples/declared-type-ref-add-example.raml",
+                         platform,
+                         RamlYamlHint,
+                         validation).build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 2)
+      assert(!report.results.head.targetNode.equals(report.results.last.targetNode))
+    }
+  }
 }

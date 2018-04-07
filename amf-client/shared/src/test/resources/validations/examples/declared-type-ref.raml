@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: declared type
+
+types:
+  Person:
+    properties:
+      name: string
+      lastName: string
+    example:
+      name: 5
+      lastName: 6
+
+/endpoint:
+  get:
+    body:
+      application/json:
+        type: Person
+  post:
+      body:
+        application/json:
+          type: Person
