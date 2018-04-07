@@ -32,6 +32,8 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
     this
   }
 
+  def withExample(mediaType: String): Example = _internal.withExample(Some(mediaType))
+
   override def linkCopy(): AnyShape = _internal.linkCopy()
 //  def build(shape: InternalAnyShape): Shape = platform.wrap[Shape](shape) ???
 
