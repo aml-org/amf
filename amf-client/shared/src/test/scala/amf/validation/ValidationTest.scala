@@ -546,6 +546,17 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Nil value validation") {
+    for {
+      validation <- Validation(platform)
+      library    <- AMFCompiler(validationsPath + "nil_validation.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 1)
+    }
+  }
+
   test("Property overwriting") {
     for {
       validation <- Validation(platform)
