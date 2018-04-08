@@ -1,0 +1,16 @@
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/type-inline/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: 
+  Message: Data at //firstName must have min. cardinality 1
+Data at //lastName must have min. cardinality 1
+Data at / must be an object
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/type-inline/input.raml#/web-api/end-points/%2Fok0/post/request/default/example/null/scalar_1
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/type-inline/input.raml#/web-api/end-points/%2Fok0/post/request/default/example/null/scalar_1
+  Position: Some(LexicalInformation([(8,15)-(8,20)]))

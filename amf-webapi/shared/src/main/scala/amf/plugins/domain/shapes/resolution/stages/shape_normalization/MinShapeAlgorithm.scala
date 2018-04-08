@@ -36,7 +36,8 @@ trait MinShapeAlgorithm extends RestrictionComputation {
                      .iri() && s == (Namespace.Xsd + "float").iri()) {
           computeMinScalar(baseScalar, superScalar.withDataType((Namespace.Xsd + "integer").iri()))
         } else {
-          throw new InheritanceIncompatibleShapeError(s"Resolution error: Invalid scalar inheritance base type $b < $s ")
+          throw new InheritanceIncompatibleShapeError(
+            s"Resolution error: Invalid scalar inheritance base type $b < $s ")
         }
 
       // Arrays
@@ -100,7 +101,8 @@ trait MinShapeAlgorithm extends RestrictionComputation {
 
       // fallback error
       case _ =>
-        throw new InheritanceIncompatibleShapeError(s"Resolution error: Incompatible types [$baseShape, $superShape]")
+        throw new InheritanceIncompatibleShapeError(
+          s"Resolution error: Incompatible types [${baseShape.getClass}, ${superShape.getClass}]")
     }
   }
 
@@ -208,7 +210,7 @@ trait MinShapeAlgorithm extends RestrictionComputation {
         if (keepEditingInfo) {
           superProp.map(inheritProp(superNode)).getOrElse { baseProp.get.cloneShape() }
         } else {
-          superProp.map(_.cloneShape()).getOrElse{ baseProp.get.cloneShape() }
+          superProp.map(_.cloneShape()).getOrElse { baseProp.get.cloneShape() }
         }
     }
 
@@ -287,15 +289,16 @@ trait MinShapeAlgorithm extends RestrictionComputation {
 
     var accExamples = List[Example]()
 
-    val unionShapesWithIds = newUnionItems.zipWithIndex.map { case (shape, i) =>
-      shape.id = shape.id + s"_$i"
-      shape match {
-        case any: AnyShape =>
-          accExamples ++= any.examples
-          any.fields.remove(AnyShapeModel.Examples)
-        case _ => // ignore
-      }
-      shape
+    val unionShapesWithIds = newUnionItems.zipWithIndex.map {
+      case (shape, i) =>
+        shape.id = shape.id + s"_$i"
+        shape match {
+          case any: AnyShape =>
+            accExamples ++= any.examples
+            any.fields.remove(AnyShapeModel.Examples)
+          case _ => // ignore
+        }
+        shape
     }
 
     superUnion.fields.setWithoutId(UnionShapeModel.AnyOf,
