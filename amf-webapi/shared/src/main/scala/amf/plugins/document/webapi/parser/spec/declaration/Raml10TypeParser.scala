@@ -497,6 +497,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
     val result = info.map {
       case XMLSchemaType                         => parseXMLSchemaExpression(name, node, adopt, parseExample = true)
       case JSONSchemaType                        => parseJSONSchemaExpression(name, node, adopt, parseExample = true)
+      case NilUnionType                          => parseNilUnion()
       case TypeExpressionType                    => parseTypeExpression()
       case UnionType                             => parseUnionType()
       case ObjectType | FileType | UndefinedType => parseObjectType()
@@ -526,6 +527,33 @@ sealed abstract class RamlTypeParser(ast: YPart,
     }
 
     result
+  }
+
+  private def parseNilUnion() = {
+    val union = UnionShape().withName(name)
+    adopt(union)
+
+    val parsed = node.value match {
+      case s: YScalar =>
+        val toParse = YMapEntry(YNode(""), YNode(s.text.replace("?","")))
+        ctx.factory.typeParser(toParse, (s) => s.withId(union.id), isAnnotation, defaultType).parse().get
+      case m: YMap =>
+        val newEntries = m.entries.map { entry =>
+          if (entry.key.as[String] == "type") {
+            YMapEntry("type", entry.value.as[String].replace("?",""))
+          } else {
+            entry
+          }
+        }
+        val toParse = YMapEntry(YNode(""), YMap(newEntries))
+        ctx.factory.typeParser(toParse, (s) => s.withId(union.id), isAnnotation, defaultType).parse().get
+    }
+    union.withAnyOf(
+      Seq(
+        parsed,
+        NilShape().withId(union.id)
+      )
+    )
   }
 
   // These are the actual custom facets, just regular properties in the AST map that have been
