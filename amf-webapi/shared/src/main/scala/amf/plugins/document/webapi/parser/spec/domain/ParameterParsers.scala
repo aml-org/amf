@@ -7,13 +7,7 @@ import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  Raml08TypeParser,
-  Raml10TypeParser,
-  RamlTypeSyntax,
-  StringDefaultType,
-  _
-}
+import amf.plugins.document.webapi.parser.spec.declaration.{Raml08TypeParser, Raml10TypeParser, RamlTypeSyntax, StringDefaultType, _}
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
 import amf.plugins.domain.shapes.models.FileShape
 import amf.plugins.domain.webapi.annotations.ParameterBindingInBodyLexicalInfo
@@ -22,6 +16,7 @@ import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType, _}
 import amf.core.utils.Strings
+import amf.plugins.document.webapi.annotations.FormBodyParameter
 
 /**
   *
@@ -246,7 +241,6 @@ case class OasParameterParser(map: YMap, parentId: String, name: Option[String])
         } else {
 
           ctx.closedShape(parameter.id, map, "parameter")
-
           OasTypeParser(
             map,
             "",
@@ -254,13 +248,22 @@ case class OasParameterParser(map: YMap, parentId: String, name: Option[String])
             shape => shape.withName("schema").adopted(parameter.id),
             "parameter"
           ).parse()
-            .map { schema =>
-              if (p.isFormData) {
-                shapeFromOasParameter(parameter, schema)
-                p.payload.set(PayloadModel.Schema, schema, Annotations(map))
-              } else parameter.set(ParameterModel.Schema, schema, Annotations(map))
-            }
+           .map { schema =>
+             if (p.isFormData) {
+               shapeFromOasParameter(parameter, schema)
+               p.payload.set(PayloadModel.Schema, schema, Annotations(map))
+             } else parameter.set(ParameterModel.Schema, schema, Annotations(map))
+           }.orElse {
+            ctx.violation(
+              ParserSideValidations.ParsingErrorSpecification.id(),
+              p.payload.id,
+              "Cannot find valid schema for parameter",
+              map
+            )
+            None
+          }
 
+          if (p.isFormData) p.payload.annotations += FormBodyParameter()
         }
 
         AnnotationParser(parameter, map).parse()

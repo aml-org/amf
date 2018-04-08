@@ -48,6 +48,7 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: Rende
       case Raml10 | Raml  => "RAML 1.0"
       case Oas3           => "OAS 3.0.0"
       case Oas2           => "OAS 2.0"
+      case Oas2Yaml       => "OAS 2.0"
       case Oas            => "OAS 2.0"
       case Extension      => "RAML Vocabularies"
       case _              => "Unknown Vendor"
@@ -58,7 +59,7 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: Rende
       case Payload                                 => "application/amf+json"
       case Raml10 | Raml08 | Raml | RamlVocabulary => "application/yaml"
       case Oas | Oas2 | Oas3                       => "application/json"
-      case Extension                               => "application/yaml"
+      case Extension | Oas2Yaml                    => "application/yaml"
       case _                                       => "text/plain"
     }
 

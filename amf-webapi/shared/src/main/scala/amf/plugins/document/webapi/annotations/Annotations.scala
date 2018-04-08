@@ -19,6 +19,17 @@ object ParsedJSONSchema extends AnnotationGraphLoader {
   }
 }
 
+case class FormBodyParameter() extends SerializableAnnotation with PerpetualAnnotation {
+  override val name: String  = "form-body-parameter"
+  override val value: String = "true"
+}
+
+object FormBodyParameter extends AnnotationGraphLoader {
+  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
+    FormBodyParameter()
+  }
+}
+
 case class DeclaredElement() extends SerializableAnnotation {
   override val name: String = "declared-element"
 

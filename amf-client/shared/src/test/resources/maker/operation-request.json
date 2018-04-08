@@ -28,7 +28,8 @@
             "name": "param1",
             "description": "Some descr",
             "in": "query",
-            "required": true
+            "required": true,
+            "type": "string"
           },
           {
             "name": "param2?",
@@ -53,6 +54,7 @@
           {
             "name": "Header-One",
             "in": "header",
+            "type": "string",
             "required": false
           }
         ]

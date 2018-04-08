@@ -7,12 +7,7 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{FieldEntry, Fields, Position}
-import amf.plugins.document.webapi.contexts.{
-  OasSpecEmitterContext,
-  RamlScalarEmitter,
-  RamlSpecEmitterContext,
-  SpecEmitterContext
-}
+import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
@@ -23,6 +18,7 @@ import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType
 import amf.core.utils.Strings
+import amf.plugins.document.webapi.annotations.FormBodyParameter
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -320,7 +316,7 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
     b.obj { b =>
       val result = mutable.ListBuffer[EntryEmitter]()
 
-      if (Option(payload.schema).exists(_.isInstanceOf[FileShape])) {
+      if (Option(payload.schema).exists(_.isInstanceOf[FileShape]) || payload.annotations.find(classOf[FormBodyParameter]).isDefined) {
 
         val fs = payload.schema.fields
         fs.entry(FileShapeModel.Name).map(f => result += ValueEmitter("name", f))
@@ -330,14 +326,12 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
         result ++= AnnotationsEmitter(payload, ordering).emitters
 
       } else {
-
         payload.fields.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("mediaType".asOasExtension, f))
         result += MapEntryEmitter("in", "body")
         payload.fields
           .entry(PayloadModel.Schema)
           .map(f => result += OasSchemaEmitter(f, ordering, references))
         result ++= AnnotationsEmitter(payload, ordering).emitters
-
       }
 
       traverse(ordering.sorted(result), b)
