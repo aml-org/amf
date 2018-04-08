@@ -1,12 +1,15 @@
 package amf.javaparser.org.raml
 
 import amf.ProfileNames
-import amf.core.emitter.RenderOptions
 import amf.core.annotations.SourceVendor
+import amf.core.emitter.RenderOptions
 import amf.core.model.document.{BaseUnit, EncodesModel, Module}
 import amf.core.remote._
+import amf.core.resolution.pipelines.ResolutionPipeline.EDITING_PIPELINE
 import amf.core.validation.AMFValidationReport
 import amf.facades.{AMFCompiler, AMFRenderer, Validation}
+import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
+import amf.plugins.document.webapi.{OAS20Plugin, OAS30Plugin, RAML08Plugin, RAML10Plugin}
 import amf.resolution.ResolutionTest
 import org.mulesoft.common.io.{Fs, SyncFile}
 import org.scalatest.compatible.Assertion
@@ -72,6 +75,19 @@ trait ModelResolutionTest extends ModelValidationTest {
 
   override def transform(unit: BaseUnit, d: String, vendor: Vendor): BaseUnit =
     transform(unit, CycleConfig("", "", hintFromTarget(vendor), vendor, d))
+
+  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
+    val res = config.target match {
+      case Raml08        => RAML08Plugin.resolve(unit, EDITING_PIPELINE) // use edition pipeline to avoid remove declarations
+      case Raml | Raml10 => RAML10Plugin.resolve(unit, EDITING_PIPELINE)
+      case Oas3          => OAS30Plugin.resolve(unit, EDITING_PIPELINE)
+      case Oas | Oas2    => OAS20Plugin.resolve(unit, EDITING_PIPELINE)
+      case Amf           => new AmfEditingPipeline().resolve(unit)
+      case target        => throw new Exception(s"Cannot resolve $target")
+      //    case _ => unit
+    }
+    res
+  }
 
   private def hintFromTarget(t: Vendor) = t match {
     case _: Raml => RamlYamlHint

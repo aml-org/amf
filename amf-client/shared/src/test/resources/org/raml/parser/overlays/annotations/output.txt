@@ -6,3 +6,17 @@ title: master
   (object):
     lat: -34.6
     long: -58.4
+annotationTypes:
+  object:
+    additionalProperties: true
+    properties:
+      lat:
+        required: true
+        type: number
+      long:
+        required: true
+        type: number
+  scalar:
+    type: string
+  another-scalar:
+    type: string

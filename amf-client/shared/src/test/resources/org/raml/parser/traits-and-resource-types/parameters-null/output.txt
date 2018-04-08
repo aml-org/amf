@@ -1,6 +1,9 @@
 #%RAML 1.0
 title: Example API
 version: v1
+traits:
+  secured:
+    description: <<description>>
 /users:
   get:
     description: null

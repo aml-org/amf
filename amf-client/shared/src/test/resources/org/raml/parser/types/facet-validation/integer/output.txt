@@ -1,2 +1,6 @@
 #%RAML 1.0
 title: Some API
+types:
+  BaseType:
+    type: number
+    multipleOf: 0.5

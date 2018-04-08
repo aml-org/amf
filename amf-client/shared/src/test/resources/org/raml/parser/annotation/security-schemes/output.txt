@@ -1,2 +1,14 @@
 #%RAML 1.0
 title: Test
+annotationTypes:
+  TestAnnotation:
+    type: string
+securitySchemes:
+  TestScheme:
+    type: OAuth 1.0
+    describedBy:
+      (TestAnnotation): stringValue1
+    settings:
+      requestTokenUri: https://example.com/requesttoken
+      authorizationUri: https://example.com/authorize
+      tokenCredentialsUri: https://example.com/credentials

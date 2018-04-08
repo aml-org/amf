@@ -1,0 +1,90 @@
+#%RAML 1.0
+title: Mobile Order API
+version: 1.0
+baseUri: http://localhost:8081/api
+/orders:
+  displayName: Orders
+  description: Orders collection resource used to create new orders.
+  get:
+    description: lists all orders of a specific user
+    queryParameters:
+      size:
+        description: the amount of elements of each result page
+        required: false
+        example: 10
+        type: integer
+      page:
+        description: the page number
+        required: false
+        example: 0
+        type: integer
+      userId:
+        type: string
+        description: use to query all orders of a user
+        required: true
+        example: 1964401a-a8b3-40c1-b86e-d8b9f75b5842
+    responses:
+      200:
+        body:
+          application/json:
+            type: object
+            examples:
+              single-order:
+                orders:
+                  -
+                    order_id: ORDER-437563756
+                    creation_date: 2016-03-30
+                    items:
+                      -
+                        product_id: PRODUCT-1
+                        quantity: 5
+                      -
+                        product_id: PRODUCT-2
+                        quantity: 2
+              multiple-orders:
+                orders:
+                  -
+                    order_id: ORDER-437563756
+                    creation_date: 2016-03-30
+                    items:
+                      -
+                        product_id: PRODUCT-1
+                        quantity: 5
+                      -
+                        product_id: PRODUCT-2
+                        quantity: 2
+                  -
+                    order_id: ORDER-437542111
+                    creation_date: 2016-03-30
+                    items:
+                      -
+                        product_id: PRODUCT-7
+                        quantity: 2
+            additionalProperties: true
+            properties:
+              orders:
+                required: true
+                items:
+                  type: object
+                  additionalProperties: true
+                  properties:
+                    order_id:
+                      required: true
+                      type: string
+                    creation_date:
+                      required: true
+                      type: string
+                    items:
+                      required: true
+                      items:
+                        type: object
+                        additionalProperties: true
+                        properties:
+                          product_id:
+                            required: true
+                            type: string
+                          quantity:
+                            required: true
+                            type: integer
+uses:
+  assets: assets-lib.raml

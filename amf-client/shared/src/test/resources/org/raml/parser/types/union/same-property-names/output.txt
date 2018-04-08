@@ -1,2 +1,82 @@
 #%RAML 1.0
 title: API
+types:
+  SimpleType1:
+    additionalProperties: true
+    properties:
+      property1:
+        required: true
+        type: string
+      property2:
+        required: true
+        type: string
+  SimpleType2:
+    additionalProperties: true
+    properties:
+      property1:
+        required: true
+        type: number
+      property2:
+        required: true
+        type: number
+  TypeWithUnionProps:
+    type: object
+    example:
+      unionArray:
+        -
+          property1: 1
+          property2: 2
+        -
+          property1: 1
+          property2: 2
+    additionalProperties: true
+    properties:
+      unionArray:
+        required: true
+        anyOf:
+          -
+            required: true
+            items:
+              type: object
+              additionalProperties: true
+              properties:
+                property1:
+                  required: true
+                  type: string
+                property2:
+                  required: true
+                  type: string
+          -
+            required: true
+            items:
+              type: object
+              additionalProperties: true
+              properties:
+                property1:
+                  required: true
+                  type: number
+                property2:
+                  required: true
+                  type: number
+  SimpleUnion:
+    anyOf:
+      -
+        type: object
+        additionalProperties: true
+        properties:
+          property1:
+            required: true
+            type: string
+          property2:
+            required: true
+            type: string
+      -
+        type: object
+        additionalProperties: true
+        properties:
+          property1:
+            required: true
+            type: number
+          property2:
+            required: true
+            type: number

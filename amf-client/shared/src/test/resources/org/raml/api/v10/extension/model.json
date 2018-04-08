@@ -1,5 +1,12 @@
 #%RAML 1.0
 version: v1
+types:
+  User:
+    additionalProperties: true
+    properties:
+      name:
+        required: true
+        type: string
 /extended:
   post:
     body:
@@ -10,6 +17,15 @@ version: v1
           name:
             required: true
             type: string
+traits:
+  dynamic:
+    body:
+      text/xml:
+        type: <<model>>
+  parametrized:
+    body:
+      application/json:
+        type: <<model>>
 /resource:
   post:
     body:

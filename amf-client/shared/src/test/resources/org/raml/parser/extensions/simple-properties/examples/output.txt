@@ -1,3 +1,23 @@
 #%RAML 1.0
 title: master
 baseUri: http://api.com/master
+types:
+  User:
+    examples:
+      pepo:
+        name: pipo
+        age: 77
+      cacho:
+        name: cacho
+        age: 55
+      tato:
+        name: tato
+        age: 88
+    additionalProperties: true
+    properties:
+      name:
+        required: true
+        type: string
+      age:
+        required: false
+        type: integer

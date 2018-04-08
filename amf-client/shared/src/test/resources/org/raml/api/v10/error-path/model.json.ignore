@@ -1,299 +1,65 @@
 Model: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 Profile: RAML
 Conforms? false
-Number of results: 8
+Number of results: 5
 
 Level: Violation
 
-- Source: http://raml.org/vocabularies/amf/parser#example-validation-error
-  Message: Model: http://test.com/payload
-Profile: Payload
-Conforms? false
-Number of results: 3
-
-Level: Violation
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User/property/family/array/family/scalar/null_validation_range/prop
-  Message: Scalar at //family/items must have data type http://www.w3.org/2001/XMLSchema#string
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1/array_4/scalar_6
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(5,12)-(5,16)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User/property/family/array/family_validation/prop
-  Message: Array items at //family must be valid
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1/array_4
-  Property: http://www.w3.org/1999/02/22-rdf-syntax-ns#member
-  Position: Some(LexicalInformation([(3,15)-(6,0)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User_validation
+- Source: 
   Message: Object at / must be valid
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1
-  Property: http://raml.org/vocabularies/data#family
-  Position: Some(LexicalInformation([(1,0)-(6,0)]))
+Property family at / must have a valid value
+Array items at //family must be valid
+Scalar at //family/items must have data type http://www.w3.org/2001/XMLSchema#string
 
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User/example/badExample
-  Property: http://raml.org/vocabularies/document#value
-  Position: Some(LexicalInformation([(25,17)-(31,0)]))
+  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User/example/badExample/object_1
+  Property: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User/example/badExample/object_1
+  Position: Some(LexicalInformation([(26,0)-(31,0)]))
 
-- Source: http://raml.org/vocabularies/amf/parser#example-validation-error
-  Message: Model: http://test.com/payload
-Profile: Payload
-Conforms? false
-Number of results: 2
-
-Level: Violation
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User_validation_age_validation_minCount/prop
+- Source: 
   Message: Data at //age must have min. cardinality 1
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1
-  Property: http://raml.org/vocabularies/data#age
-  Position: Some(LexicalInformation([(1,0)-(2,0)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User_validation_family_validation_minCount/prop
-  Message: Data at //family must have min. cardinality 1
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1
-  Property: http://raml.org/vocabularies/data#family
-  Position: Some(LexicalInformation([(1,0)-(2,0)]))
+Data at //family must have min. cardinality 1
 
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User/example/anotherBadExample
-  Property: http://raml.org/vocabularies/document#value
-  Position: Some(LexicalInformation([(31,24)-(33,0)]))
+  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User/example/anotherBadExample/object_1
+  Property: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User/example/anotherBadExample/object_1
+  Position: Some(LexicalInformation([(32,0)-(33,0)]))
 
-- Source: http://raml.org/vocabularies/amf/parser#example-validation-error
-  Message: Model: http://test.com/payload
-Profile: Payload
-Conforms? false
-Number of results: 4
-
-Level: Violation
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User/property/name/scalar/name_validation_range/prop
-  Message: Scalar at //name must have data type http://www.w3.org/2001/XMLSchema#string
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1/scalar_2
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(1,14)-(1,18)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User/property/age/scalar/age_validation_range/prop
-  Message: Scalar at //age must have data type http://www.w3.org/2001/XMLSchema#integer
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1/scalar_3
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(2,13)-(2,21)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User_validation
-  Message: Object at / must be valid
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1
-  Property: http://raml.org/vocabularies/data#age
-  Position: Some(LexicalInformation([(1,0)-(6,0)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User_validation
-  Message: Object at / must be valid
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1
-  Property: http://raml.org/vocabularies/data#name
-  Position: Some(LexicalInformation([(1,0)-(6,0)]))
-
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User/example/anotherOne
-  Property: http://raml.org/vocabularies/document#value
-  Position: Some(LexicalInformation([(33,17)-(39,0)]))
-
-- Source: http://raml.org/vocabularies/amf/parser#example-validation-error
-  Message: Model: http://test.com/payload
-Profile: Payload
-Conforms? false
-Number of results: 6
-
-Level: Violation
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/property/users/array/users/User_validation_validation_node_prop_age
-  Message: Property age at //users/items must have a valid value
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1/array_2/object_16
-  Property: http://raml.org/vocabularies/data#age
-  Position: Some(LexicalInformation([(13,12)-(18,0)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/property/users/array/users_validation/prop
-  Message: Array items at //users must be valid
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1/array_2
-  Property: http://www.w3.org/1999/02/22-rdf-syntax-ns#member
-  Position: Some(LexicalInformation([(1,14)-(18,0)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/property/users/array/users_validation/prop
-  Message: Array items at //users must be valid
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1/array_2
-  Property: http://www.w3.org/1999/02/22-rdf-syntax-ns#member
-  Position: Some(LexicalInformation([(1,14)-(18,0)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book_validation_/slashedProperty_validation_minCount/prop
-  Message: Data at ///slashedProperty must have min. cardinality 1
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1
-  Property: http://raml.org/vocabularies/data#/slashedProperty
-  Position: Some(LexicalInformation([(1,0)-(22,0)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book_validation
-  Message: Object at / must be valid
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1
-  Property: http://raml.org/vocabularies/data#users
-  Position: Some(LexicalInformation([(1,0)-(22,0)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/property/users/array/users/User/property/age/scalar/age_validation_range/prop
-  Message: Scalar at //users/items/age must have data type http://www.w3.org/2001/XMLSchema#integer
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1/array_2/object_16/scalar_18
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(14,17)-(14,25)]))
-
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/example/one
-  Property: http://raml.org/vocabularies/document#value
-  Position: Some(LexicalInformation([(50,10)-(72,0)]))
-
-- Source: http://raml.org/vocabularies/amf/parser#example-validation-error
-  Message: Model: http://test.com/payload
-Profile: Payload
-Conforms? false
-Number of results: 3
-
-Level: Violation
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book_validation
-  Message: Object at / must be valid
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1
-  Property: http://raml.org/vocabularies/data#authors
-  Position: Some(LexicalInformation([(1,0)-(12,0)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book_validation_/slashedProperty_validation_minCount/prop
-  Message: Data at ///slashedProperty must have min. cardinality 1
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1
-  Property: http://raml.org/vocabularies/data#/slashedProperty
-  Position: Some(LexicalInformation([(1,0)-(12,0)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/property/authors/array/authors_validation/prop
-  Message: Array items at //authors must be valid
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1/array_9
-  Property: http://www.w3.org/1999/02/22-rdf-syntax-ns#member
-  Position: Some(LexicalInformation([(7,16)-(11,0)]))
-
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/example/two
-  Property: http://raml.org/vocabularies/document#value
-  Position: Some(LexicalInformation([(72,10)-(84,0)]))
-
-- Source: http://raml.org/vocabularies/amf/parser#example-validation-error
-  Message: Model: http://test.com/payload
-Profile: Payload
-Conforms? false
-Number of results: 3
-
-Level: Violation
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/property/users/array/users/User_validation_validation_node_prop_family
-  Message: Property family at / must have a valid value
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1
-  Property: http://raml.org/vocabularies/data#family
-  Position: Some(LexicalInformation([(1,0)-(6,0)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/property/users/array/users/User/property/family/array/family/scalar/null_validation_range/prop
-  Message: Scalar at //family/items must have data type http://www.w3.org/2001/XMLSchema#string
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1/array_4/scalar_6
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(5,12)-(5,16)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/property/users/array/users/User/property/family/array/family_validation/prop
-  Message: Array items at //family must be valid
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1/array_4
-  Property: http://www.w3.org/1999/02/22-rdf-syntax-ns#member
-  Position: Some(LexicalInformation([(3,15)-(6,0)]))
-
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User/example/badExample
-  Property: http://raml.org/vocabularies/document#value
-  Position: Some(LexicalInformation([(25,17)-(31,0)]))
-
-- Source: http://raml.org/vocabularies/amf/parser#example-validation-error
-  Message: Model: http://test.com/payload
-Profile: Payload
-Conforms? false
-Number of results: 2
-
-Level: Violation
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/property/users/array/users/User_validation_family_validation_minCount/prop
-  Message: Data at //family must have min. cardinality 1
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1
-  Property: http://raml.org/vocabularies/data#family
-  Position: Some(LexicalInformation([(1,0)-(2,0)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/property/users/array/users/User_validation_age_validation_minCount/prop
-  Message: Data at //age must have min. cardinality 1
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1
-  Property: http://raml.org/vocabularies/data#age
-  Position: Some(LexicalInformation([(1,0)-(2,0)]))
-
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User/example/anotherBadExample
-  Property: http://raml.org/vocabularies/document#value
-  Position: Some(LexicalInformation([(31,24)-(33,0)]))
-
-- Source: http://raml.org/vocabularies/amf/parser#example-validation-error
-  Message: Model: http://test.com/payload
-Profile: Payload
-Conforms? false
-Number of results: 4
-
-Level: Violation
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/property/users/array/users/User_validation_validation_node_prop_name
-  Message: Property name at / must have a valid value
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1
-  Property: http://raml.org/vocabularies/data#name
-  Position: Some(LexicalInformation([(1,0)-(6,0)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/property/users/array/users/User_validation_validation_node_prop_age
+- Source: 
   Message: Property age at / must have a valid value
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1
-  Property: http://raml.org/vocabularies/data#age
-  Position: Some(LexicalInformation([(1,0)-(6,0)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/property/users/array/users/User/property/name/scalar/name_validation_range/prop
-  Message: Scalar at //name must have data type http://www.w3.org/2001/XMLSchema#string
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1/scalar_2
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(1,14)-(1,18)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/property/users/array/users/User/property/age/scalar/age_validation_range/prop
-  Message: Scalar at //age must have data type http://www.w3.org/2001/XMLSchema#integer
-  Level: Violation
-  Target: http://amfparser.org/test_payload/object_1/scalar_3
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(2,13)-(2,21)]))
+Object at / must be valid
+Property name at / must have a valid value
+Scalar at //name must have data type http://www.w3.org/2001/XMLSchema#string
+Scalar at //age must have data type http://www.w3.org/2001/XMLSchema#integer
 
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User/example/anotherOne
-  Property: http://raml.org/vocabularies/document#value
-  Position: Some(LexicalInformation([(33,17)-(39,0)]))
+  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User/example/anotherOne/object_1
+  Property: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User/example/anotherOne/object_1
+  Position: Some(LexicalInformation([(34,0)-(39,0)]))
+
+- Source: 
+  Message: Data at ///slashedProperty must have min. cardinality 1
+Object at / must be valid
+Array items at //users must be valid
+Array items at //family must be valid
+Scalar at //family/items must have data type http://www.w3.org/2001/XMLSchema#string
+Property age at / must have a valid value
+Scalar at //age must have data type http://www.w3.org/2001/XMLSchema#integer
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/example/one/object_1
+  Property: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/example/one/object_1
+  Position: Some(LexicalInformation([(51,0)-(72,0)]))
+
+- Source: 
+  Message: Data at ///slashedProperty must have min. cardinality 1
+Object at / must be valid
+Array items at //authors must be valid
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/example/two/object_1
+  Property: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/example/two/object_1
+  Position: Some(LexicalInformation([(73,0)-(84,0)]))
+
+
+missing violation over:     example: [[1,invalid], [3,invalid]]

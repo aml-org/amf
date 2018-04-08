@@ -1,5 +1,210 @@
 #%RAML 1.0
 title: My API with Types
+types:
+  Org:
+    type: object
+    additionalProperties: true
+    properties:
+      onCall:
+        type: object
+        required: true
+        additionalProperties: true
+        properties:
+          firstname:
+            required: true
+            type: string
+          lastname:
+            required: true
+            type: string
+          title:
+            required: false
+            type: string
+          clearanceLevel:
+            enum:
+              - low
+              - high
+            required: true
+          phone:
+            type: string
+            pattern: [0-9|-]+
+            required: true
+      Head:
+        type: object
+        required: true
+        additionalProperties: true
+        properties:
+          firstname:
+            required: true
+            type: string
+          lastname:
+            required: true
+            type: string
+          title:
+            required: false
+            type: string
+          reports:
+            required: true
+            items:
+              type: object
+              additionalProperties: true
+              properties:
+                firstname:
+                  required: true
+                  type: string
+                lastname:
+                  required: true
+                  type: string
+                title:
+                  required: false
+                  type: string
+          phone:
+            type: string
+            pattern: [0-9|-]+
+            required: true
+  Person:
+    type: object
+    additionalProperties: true
+    properties:
+      firstname:
+        required: true
+        type: string
+      lastname:
+        required: true
+        type: string
+      title:
+        required: false
+        type: string
+  Phone:
+    type: string
+    pattern: [0-9|-]+
+  Manager:
+    type: object
+    additionalProperties: true
+    properties:
+      firstname:
+        required: true
+        type: string
+      lastname:
+        required: true
+        type: string
+      title:
+        required: false
+        type: string
+      reports:
+        required: true
+        items:
+          type: object
+          additionalProperties: true
+          properties:
+            firstname:
+              required: true
+              type: string
+            lastname:
+              required: true
+              type: string
+            title:
+              required: false
+              type: string
+      phone:
+        type: string
+        pattern: [0-9|-]+
+        required: true
+  Admin:
+    type: object
+    additionalProperties: true
+    properties:
+      firstname:
+        required: true
+        type: string
+      lastname:
+        required: true
+        type: string
+      title:
+        required: false
+        type: string
+      clearanceLevel:
+        enum:
+          - low
+          - high
+        required: true
+  AlertableAdmin:
+    type: object
+    additionalProperties: true
+    properties:
+      firstname:
+        required: true
+        type: string
+      lastname:
+        required: true
+        type: string
+      title:
+        required: false
+        type: string
+      clearanceLevel:
+        enum:
+          - low
+          - high
+        required: true
+      phone:
+        type: string
+        pattern: [0-9|-]+
+        required: true
+  Alertable:
+    anyOf:
+      -
+        type: object
+        additionalProperties: true
+        properties:
+          firstname:
+            required: true
+            type: string
+          lastname:
+            required: true
+            type: string
+          title:
+            required: false
+            type: string
+          reports:
+            required: true
+            items:
+              type: object
+              additionalProperties: true
+              properties:
+                firstname:
+                  required: true
+                  type: string
+                lastname:
+                  required: true
+                  type: string
+                title:
+                  required: false
+                  type: string
+          phone:
+            type: string
+            pattern: [0-9|-]+
+            required: true
+      -
+        type: object
+        additionalProperties: true
+        properties:
+          firstname:
+            required: true
+            type: string
+          lastname:
+            required: true
+            type: string
+          title:
+            required: false
+            type: string
+          clearanceLevel:
+            enum:
+              - low
+              - high
+            required: true
+          phone:
+            type: string
+            pattern: [0-9|-]+
+            required: true
 /orgs/{orgId}:
   get:
     responses:

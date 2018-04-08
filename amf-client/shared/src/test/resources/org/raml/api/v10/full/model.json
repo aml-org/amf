@@ -34,6 +34,233 @@ documentation:
     content: |
       multi
       line
+types:
+  UserJson: |
+    {
+     "$schema": "http://json-schema.org/draft-04/schema",
+     "type": "object",
+     "properties": {
+       "firstname":  { "type": "string" },
+       "lastname":  { "type": "string" },
+       "age":  { "type": "integer" }
+     },
+     "required": [ "firstname", "lastname" ]
+    }
+  User:
+    type: object
+    examples:
+      batman:
+        firstname: bruce
+        lastname: wayne
+        age: 77
+        height: 1.82
+      daredevil:
+        firstname: matt
+        lastname: murdock
+        age: 52
+      quicksilver:
+        firstname: pietro
+        lastname: maximoff
+        age: 104
+        height: 1.563
+        goggles: true
+    additionalProperties: true
+    properties:
+      firstname:
+        required: true
+        type: string
+      lastname:
+        required: true
+        type: string
+      age:
+        type: integer
+        minimum: 0
+        maximum: 144
+        required: true
+      height:
+        required: false
+        type: number
+      goggles:
+        required: false
+        type: boolean
+  SuperUser:
+    type: object
+    additionalProperties: true
+    properties:
+      firstname:
+        required: true
+        type: string
+      lastname:
+        required: true
+        type: string
+      age:
+        type: integer
+        minimum: 0
+        maximum: 144
+        required: true
+      height:
+        required: false
+        type: number
+      goggles:
+        required: false
+        type: boolean
+      skills:
+        type: array
+        maxItems: 3
+        required: true
+        items:
+          type: string
+  Users:
+    type: array
+    minItems: 2
+    items:
+      type: object
+      examples:
+        batman:
+          firstname: bruce
+          lastname: wayne
+          age: 77
+          height: 1.82
+        daredevil:
+          firstname: matt
+          lastname: murdock
+          age: 52
+        quicksilver:
+          firstname: pietro
+          lastname: maximoff
+          age: 104
+          height: 1.563
+          goggles: true
+      additionalProperties: true
+      properties:
+        firstname:
+          required: true
+          type: string
+        lastname:
+          required: true
+          type: string
+        age:
+          type: integer
+          minimum: 0
+          maximum: 144
+          required: true
+        height:
+          required: false
+          type: number
+        goggles:
+          required: false
+          type: boolean
+  nString:
+    maxLength: 10
+  TypeWithCustomFacets:
+    type: string
+    facets:
+      facet1?:
+        type: integer
+      facet2?:
+        type: integer
+      facet3?:
+        type: integer
+        required: true
+      facet4?:
+        type: integer
+        required: false
+  UserXml: |
+    <xs:schema attributeFormDefault="unqualified"
+              elementFormDefault="qualified"
+              xmlns:xs="http://www.w3.org/2001/XMLSchema">
+     <xs:element name="api-request">
+       <xs:complexType>
+         <xs:sequence>
+           <xs:element type="xs:string" name="input"/>
+         </xs:sequence>
+       </xs:complexType>
+     </xs:element>
+    </xs:schema>
+traits:
+  traitOne:
+    displayName: uno
+    description: method description
+    usage: late night
+  traitTwo:
+    displayName: dos
+    description: <<text>>
+resourceTypes:
+  first:
+    usage: first usage
+securitySchemes:
+  oauth_2_0:
+    displayName: OAuth2
+    description: oauth 2.0
+    type: OAuth 2.0
+    describedBy:
+      headers:
+        Authorization:
+          description: |
+            Used to send a valid OAuth 2 access token. Do not use
+            with the "access_token" query string parameter.
+          type: string
+      queryParameters:
+        access_token:
+          description: |
+            Used to send a valid OAuth 2 access token. Do not use with
+            the "Authorization" header.
+          type: string
+      responses:
+        401:
+          description: |
+            Bad or expired token. This can happen if the user or Dropbox
+            revoked or expired an access token. To fix, re-authenticate
+            the user.
+        403:
+          description: |
+            Bad OAuth request (wrong consumer key, bad nonce, expired
+            timestamp...). Unfortunately, re-authenticating the user won't help here.
+    settings:
+      authorizationUri: https://www.dropbox.com/1/oauth2/authorize
+      accessTokenUri: https://api.dropbox.com/1/oauth2/token
+      authorizationGrants:
+        - authorization_code
+        - implicit
+  oauth_1_0:
+    description: OAuth 1.0 continues to be supported
+    type: OAuth 1.0
+    settings:
+      requestTokenUri: https://api.dropbox.com/1/oauth/request_token
+      authorizationUri: https://www.dropbox.com/1/oauth/authorize
+      tokenCredentialsUri: https://api.dropbox.com/1/oauth/access_token
+      signatures:
+        - HMAC-SHA1
+        - PLAINTEXT
+annotationTypes:
+  basic:
+    type: string
+  complex:
+    allowedTargets:
+      - API
+      - Resource
+    additionalProperties: true
+    properties:
+      controls:
+        description: where is hypermedia
+        required: true
+        additionalProperties: true
+        properties:
+          url:
+            required: false
+            default: href
+          property:
+            required: true
+            type: string
+          names:
+            type: array
+            required: true
+            items:
+              type: string
+      permanentUri:
+        type: boolean
+        required: false
+        default: true
 (basic): sometimes
 (complex):
   controls:

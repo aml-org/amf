@@ -2,6 +2,11 @@
 title: TCK test. Trait 002
 version: v1
 baseUri: http://api.samplehost.com
+traits:
+  trait1:
+    queryParameters:
+      param1: <<type1>>
+    body: <<body1>>
 /resource:
   get:
     queryParameters:
