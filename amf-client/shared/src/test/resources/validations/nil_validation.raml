@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: null type
+types:
+    User:
+        properties:
+            name:
+            middlename: nil
+            lastname: null
+        examples:
+            correct-type:
+                name: tim
+                middlename: null
+                lastname: duncan
+            wrong-type:
+               name: tim
+               middlename: other
+               lastname: duncan

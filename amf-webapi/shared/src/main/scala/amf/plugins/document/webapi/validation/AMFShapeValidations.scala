@@ -34,6 +34,7 @@ class AMFShapeValidations(shape: Shape) {
       case scalar: ScalarShape   => scalarConstraints(context, scalar)
       case array: ArrayShape     => arrayConstraints(context, array)
       case obj: NodeShape        => nodeConstraints(context, obj)
+      case nil: NilShape         => nilConstraints(context, nil)
       case recur: RecursiveShape => recursiveShapeConstraints(context, recur)
       case _: AnyShape           => List.empty
       case _                     => List.empty
@@ -152,6 +153,26 @@ class AMFShapeValidations(shape: Shape) {
       case Some(value) if value.toBool => validation.copy(closed = Some(true))
       case _                           => validation
     }
+  }
+
+  protected def nilConstraints(context: String, nil: NilShape): List[ValidationSpecification] = {
+    val msg = s"Property at $context must be null"
+    var validation = new ValidationSpecification(
+      name = validationId(nil),
+      message = msg,
+      ramlMessage = Some(msg),
+      oasMessage = Some(msg),
+      targetClass = Seq.empty,
+      propertyConstraints = Seq(
+        PropertyConstraint(
+          ramlPropertyId = (Namespace.Data + "value").iri(),
+          name = nil.id + "_validation_range/prop",
+          message = Some(msg),
+          datatype = Some((Namespace.Xsd + "nil").iri())
+        )
+      )
+    )
+    List(validation)
   }
 
   protected def scalarConstraints(context: String, scalar: ScalarShape): List[ValidationSpecification] = {
