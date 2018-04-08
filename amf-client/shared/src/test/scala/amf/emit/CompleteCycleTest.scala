@@ -1089,4 +1089,8 @@ class CompleteCycleTest extends BuildCycleTests {
   test("file type expression raml to amf") {
     cycle("file_type_expression.raml", "file_type_expression.jsonld", RamlYamlHint, Amf)
   }
+
+  test("type nil shortcut raml to amf") {
+    cycle("type_nil_shortcut.raml", "type_nil_shortcut.jsonld", RamlYamlHint, Amf)
+  }
 }
