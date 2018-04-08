@@ -1,0 +1,13 @@
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/invalid/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://raml.org/vocabularies/amf/parser#WebAPI-accepts-pattern
+  Message: API default media types produced must be valid
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/invalid/input.raml#/web-api
+  Property: http://raml.org/vocabularies/http#accepts
+  Position: Some(LexicalInformation([(3,0)-(3,26)]))

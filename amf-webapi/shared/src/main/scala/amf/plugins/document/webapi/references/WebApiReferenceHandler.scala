@@ -194,7 +194,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
             .withIncludeTag("!include")
             .parse()
             .collectFirst({ case d: YDocument => d })
-            .head)
+            .getOrElse(YDocument(YNode.Null)))
       case e: ExternalFragment =>
         Left(e.encodes.raw.value())
       case o if hasDocumentAST(o) =>

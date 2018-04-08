@@ -1,0 +1,20 @@
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/invalid-type-inheritance/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://raml.org/vocabularies/amf/parser#invalid-type-inheritance
+  Message: Resolution error: Incompatible types [class amf.plugins.domain.shapes.models.NodeShape, class amf.plugins.domain.shapes.models.UnresolvedShape]
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/invalid-type-inheritance/input.raml#/declarations/Employee
+  Property: http://raml.org/vocabularies/shapes#inherits
+  Position: Some(LexicalInformation([(4,1)-(8,19)]))
+
+- Source: http://raml.org/vocabularies/amf/parser#parsing-error
+  Message: Unresolved reference 'UnexistentType' from root context file://amf-client/shared/src/test/resources/org/raml/parser/invalid-type-inheritance/input.raml
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/invalid-type-inheritance/input.raml#/declarations/Employee/unresolved
+  Property: 
+  Position: Some(LexicalInformation([(5,9)-(5,23)]))
