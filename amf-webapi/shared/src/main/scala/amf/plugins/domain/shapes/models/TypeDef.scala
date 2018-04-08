@@ -64,4 +64,5 @@ object TypeDef {
   object XMLSchemaType        extends TypeDef
   object JSONSchemaType       extends TypeDef
   object MultipleMatch        extends TypeDef
+  object NilUnionType         extends TypeDef
 }
