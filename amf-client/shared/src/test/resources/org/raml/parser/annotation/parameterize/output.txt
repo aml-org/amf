@@ -2,6 +2,36 @@
 title: TCK Sample. RAML 1.0 Annotations 001.
 version: v1
 baseUri: http://api.samplehost.com/{version}
+resourceTypes:
+  rt1:
+    get:
+      (<<annotation>>): simpleAnnotationValue
+      (objectAnnotation):
+        property1:
+          field1: <<annotationField>>
+          field2: 15
+        property2: baseProperty2_value
+annotationTypes:
+  simpleAnnotation:
+    minLength: 8
+    maxLength: 64
+    pattern: [a-zA-Z0-9]{8,32}
+  objectAnnotation:
+    additionalProperties: true
+    properties:
+      property1:
+        required: true
+        additionalProperties: true
+        properties:
+          field1:
+            required: false
+            type: string
+          field2:
+            type: number
+            required: true
+      property2:
+        required: false
+        type: string
 /resource:
   get:
     (objectAnnotation):

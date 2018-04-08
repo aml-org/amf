@@ -1,5 +1,25 @@
 #%RAML 1.0
 title: Test API
+types:
+  MyType1:
+    maxProperties: 7
+    additionalProperties: true
+    properties:
+      lala:
+        required: true
+        type: string
+annotationTypes:
+  MyAnnotationType1:
+    additionalProperties: true
+    properties:
+      pp:
+        maxProperties: 7
+        required: true
+        additionalProperties: true
+        properties:
+          lala:
+            required: true
+            type: string
 (MyAnnotationType1):
   pp:
     lala: lala

@@ -1,4 +1,10 @@
 #%RAML 1.0
 title: Empty Trait API
+traits:
+  empty:
+    @value: null
+resourceTypes:
+  empty:
+    @value: null
 /orders:
   get: {}

@@ -1,5 +1,28 @@
 #%RAML 1.0
 title: New API
+types:
+  Person:
+    type: object
+    additionalProperties: true
+    properties:
+      id:
+        required: true
+        type: string
+  User:
+    type: object
+    additionalProperties: true
+    properties:
+      name:
+        required: true
+        type: string
+      friend:
+        type: object
+        required: true
+        additionalProperties: true
+        properties:
+          id:
+            required: true
+            type: string
 /foo:
   get:
     body:

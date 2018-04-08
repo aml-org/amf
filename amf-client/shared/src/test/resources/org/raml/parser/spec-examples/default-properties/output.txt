@@ -1,2 +1,15 @@
 #%RAML 1.0
 title: My API With Types
+types:
+  Person:
+    additionalProperties: true
+    properties:
+      name:
+        required: true
+        type: string
+      age:
+        required: false
+        type: number
+      //:
+        type: string
+        required: true

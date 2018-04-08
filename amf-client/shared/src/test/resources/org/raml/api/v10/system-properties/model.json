@@ -1,0 +1,30 @@
+#%RAML 1.0
+title: Test API
+version: 1.0
+/subscription:
+  post:
+    body:
+      application/json:
+        example:
+          numberOfPeople: 90
+          startDate: 2016-08-23T18:25:43-05:00
+        type: |-
+          {
+          	"$schema": "http://json-schema.org/draft-04/schema#",
+          	"type": "object",
+          	"properties": {
+          		"numberOfPeople": {
+          			"type": "number",
+          			"minimum": 0,
+          			"maximum": 90
+          		},
+          		"startDate": {
+          			"type": "string",
+          			"format": "date"
+          		}
+          	},
+          	"required": [
+          		"numberOfPeople",
+          		"startDate"
+          	]
+          }

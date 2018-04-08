@@ -1,4 +1,8 @@
 #%RAML 1.0
+traits:
+  env-org-pair:
+    description: master description
+    displayName: overlayDisplayName
 /servers:
   get:
     displayName: overlayDisplayName

@@ -1,2 +1,44 @@
 #%RAML 1.0
 title: My API With Types
+types:
+  Person:
+    type: object
+    discriminator: kind
+    additionalProperties: true
+    properties:
+      name:
+        required: true
+        type: string
+      kind:
+        required: true
+        type: string
+  Employee:
+    discriminator: kind
+    type: object
+    discriminatorValue: employee
+    additionalProperties: true
+    properties:
+      name:
+        required: true
+        type: string
+      kind:
+        required: true
+        type: string
+      employeeId:
+        required: true
+        type: string
+  User:
+    discriminator: kind
+    type: object
+    discriminatorValue: user
+    additionalProperties: true
+    properties:
+      name:
+        required: true
+        type: string
+      kind:
+        required: true
+        type: string
+      userId:
+        required: true
+        type: string

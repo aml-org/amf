@@ -1,5 +1,30 @@
 #%RAML 1.0
 title: xml body
+types:
+  User:
+    type: object
+    examples:
+      batman:
+        firstname: bruce
+        lastname: wayne
+        age: 77
+      daredevil:
+        firstname: matt
+        lastname: murdock
+        age: 52
+    additionalProperties: true
+    properties:
+      firstname:
+        required: true
+        type: string
+      lastname:
+        required: true
+        type: string
+      age:
+        type: integer
+        minimum: 0
+        maximum: 144
+        required: true
 /top:
   get:
     body:

@@ -1,6 +1,14 @@
 #%RAML 1.0
 title: Auto-generated RAML
 version: 0.1
+resourceTypes:
+  collection:
+    get:
+      description: List of a
+      responses:
+        200:
+          body:
+            application/json: null
 /orders:
   get:
     description: List of a
@@ -10,3 +18,5 @@ version: 0.1
           application/json:
             type: nil
   displayName: orders
+uses:
+  model: odata.raml

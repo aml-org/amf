@@ -1,2 +1,30 @@
 #%RAML 1.0
 title: arrays
+types:
+  Human:
+    type: object
+    additionalProperties: true
+    properties:
+      family:
+        required: true
+        additionalProperties: true
+        properties:
+          count:
+            required: true
+            type: integer
+          members:
+            required: true
+      name:
+        required: true
+        type: string
+  Address:
+    type: string
+  Email:
+    additionalProperties: true
+    properties:
+      base:
+        required: true
+        type: string
+      domain:
+        required: true
+        type: string

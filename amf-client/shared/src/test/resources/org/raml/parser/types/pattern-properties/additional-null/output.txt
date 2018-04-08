@@ -1,5 +1,15 @@
 #%RAML 1.0
 title: Sample API
+types:
+  Person:
+    additionalProperties: true
+    properties:
+      name:
+        required: true
+        type: string
+      age:
+        required: true
+        type: integer
 /res:
   get:
     body:

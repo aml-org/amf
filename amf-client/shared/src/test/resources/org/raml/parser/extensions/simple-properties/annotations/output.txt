@@ -4,3 +4,13 @@ baseUri: http://api.com/master
 (User):
   name: mike
   height: 178
+annotationTypes:
+  User:
+    additionalProperties: true
+    properties:
+      name:
+        required: true
+        type: string
+      age:
+        required: false
+        type: integer
