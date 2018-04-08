@@ -6,7 +6,7 @@ import amf.core.remote.Platform
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
-import amf.plugins.document.webapi.annotations.{DeclaredElement, ExtensionProvenance, LocalLinkPath, ParsedJSONSchema}
+import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
 import amf.plugins.document.webapi.metamodel.{ExtensionModel, OverlayModel}
@@ -43,7 +43,8 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
     "parsed-json-schema"   -> ParsedJSONSchema,
     "declared-element"     -> DeclaredElement,
     "local-link-path"      -> LocalLinkPath,
-    "extension-provenance" -> ExtensionProvenance
+    "extension-provenance" -> ExtensionProvenance,
+    "form-body-parameter"  -> FormBodyParameter
   )
 
   val validationProfile: String

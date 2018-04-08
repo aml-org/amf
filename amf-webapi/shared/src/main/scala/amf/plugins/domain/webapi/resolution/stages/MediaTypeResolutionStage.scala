@@ -87,10 +87,16 @@ class MediaTypeResolutionStage(profile: String) extends ResolutionStage(profile)
     noMediaType.foreach { payload =>
       mediaTypes.foreach { mediaType =>
         // Schema must not be empty, or it would be an empty payload ¯\_(ツ)_/¯
-        result = result :+ Payload(payload.annotations)
-          .withMediaType(mediaType)
-          .adopted(parent)
-          .withSchema(payload.schema.cloneShape())
+        result = result :+ {
+          val parsedPayload = Payload(payload.annotations)
+            .withMediaType(mediaType)
+            .adopted(parent)
+          if (Option(payload.schema).isDefined) {
+            parsedPayload.withSchema(payload.schema.cloneShape())
+          } else {
+            parsedPayload
+          }
+        }
       }
     }
 

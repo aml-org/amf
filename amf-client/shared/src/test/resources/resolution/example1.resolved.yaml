@@ -1,0 +1,16 @@
+swagger: 2.0
+paths:
+  /resource:
+    post:
+      parameters:
+        -
+          name: OperationFormParam
+          description: some body parameter
+          type: string
+          in: formData
+      consumes:
+        - application/json
+      responses: {}
+info:
+  title: API
+  version: 1.0
