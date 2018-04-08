@@ -54,6 +54,9 @@ case class RamlTypeDetector(parent: String,
           ctx.violation(parent, "Trait/Resource Type parameter in type", node)
           None
 
+        case t: String if t.endsWith("?") && wellKnownType(t.replace("?","")) =>
+          Some(NilUnionType)
+
         case XMLSchema(_) => Some(XMLSchemaType)
 
         case JSONSchema(_) => Some(JSONSchemaType)
