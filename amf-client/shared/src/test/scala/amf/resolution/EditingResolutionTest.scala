@@ -17,6 +17,7 @@ class EditingResolutionTest extends BuildCycleTests {
 
   val extendsPath    = "amf-client/shared/src/test/resources/resolution/extends/"
   val productionPath = "amf-client/shared/src/test/resources/production/"
+  val resolutionPath = "amf-client/shared/src/test/resources/resolution/"
 
   test("Simple extends resolution to Raml") {
     cycle("simple-merge.raml", "simple-merge.editing.jsonld", RamlYamlHint, Amf, extendsPath)
@@ -24,6 +25,10 @@ class EditingResolutionTest extends BuildCycleTests {
 
   test("Types resolution to Raml") {
     cycle("data.raml", "data.editing.jsonld", RamlYamlHint, Amf, extendsPath)
+  }
+
+  test("Example1 resolution to Raml") {
+    cycle("example1.yaml", "example1.resolved.yaml", OasYamlHint, Oas2Yaml, resolutionPath)
   }
 
   // TODO: FIXME
@@ -34,17 +39,17 @@ class EditingResolutionTest extends BuildCycleTests {
    */
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = config.target match {
-    case Raml08        => RAML08Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
-    case Raml | Raml10 => RAML10Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
-    case Oas3          => OAS30Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
-    case Oas | Oas2    => OAS20Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
-    case Amf           => new AmfEditingPipeline().resolve(unit)
-    case target        => throw new Exception(s"Cannot resolve $target")
+    case Raml08                => RAML08Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
+    case Raml | Raml10         => RAML10Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
+    case Oas3                  => OAS30Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
+    case Oas | Oas2 | Oas2Yaml => OAS20Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
+    case Amf                   => new AmfEditingPipeline().resolve(unit)
+    case target                => throw new Exception(s"Cannot resolve $target")
     //    case _ => unit
   }
 
   override def render(unit: BaseUnit, config: CycleConfig): Future[String] = {
-    new AMFRenderer(unit, Amf, Amf.defaultSyntax, RenderOptions().withSourceMaps).renderToString
+    new AMFRenderer(unit, config.target, config.target.defaultSyntax, RenderOptions().withSourceMaps).renderToString
   }
 
   override val basePath: String = ""
