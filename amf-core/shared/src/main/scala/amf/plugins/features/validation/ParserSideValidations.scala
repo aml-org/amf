@@ -134,6 +134,14 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
+  val UnsupportedExampleMediaTypeWarningSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "unsupported-example-media-type").iri(),
+    "Cannot validate example with unsupported media type",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val InconsistentPropertyRangeValueSpecification = ValidationSpecification(
     (Namespace.AmfParser + "inconsistent-property-range-value").iri(),
     "Range value does not match the expected type",
@@ -150,7 +158,6 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
-
   val MissingTermSpecification = ValidationSpecification(
     (Namespace.AmfParser + "missing-vocabulary-term").iri(),
     "Missing vocabulary term",
@@ -166,7 +173,6 @@ object ParserSideValidations {
     None,
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
-
 
   val levels: Map[String, Map[String, String]] = Map(
     ChainedReferenceSpecification.id() -> Map(
@@ -185,12 +191,11 @@ object ParserSideValidations {
       ProfileNames.AMF  -> SeverityLevels.VIOLATION
     ),
     OasBodyAndFormDataParameterSpecification.id() -> Map(
-      ProfileNames.OAS  -> SeverityLevels.VIOLATION
+      ProfileNames.OAS -> SeverityLevels.VIOLATION
     ),
     OasFormDataNotFileSpecification.id() -> Map(
-      ProfileNames.OAS  -> SeverityLevels.VIOLATION
+      ProfileNames.OAS -> SeverityLevels.VIOLATION
     ),
-
     InvalidTypeInheritanceErrorSpecification.id() -> Map(
       ProfileNames.RAML -> SeverityLevels.VIOLATION,
       ProfileNames.OAS  -> SeverityLevels.VIOLATION,
@@ -232,6 +237,11 @@ object ParserSideValidations {
       ProfileNames.AMF  -> SeverityLevels.VIOLATION
     ),
     ParsingWarningSpecification.id() -> Map(
+      ProfileNames.RAML -> SeverityLevels.WARNING,
+      ProfileNames.OAS  -> SeverityLevels.WARNING,
+      ProfileNames.AMF  -> SeverityLevels.WARNING
+    ),
+    UnsupportedExampleMediaTypeWarningSpecification.id() -> Map(
       ProfileNames.RAML -> SeverityLevels.WARNING,
       ProfileNames.OAS  -> SeverityLevels.WARNING,
       ProfileNames.AMF  -> SeverityLevels.WARNING
@@ -286,6 +296,7 @@ object ParserSideValidations {
     MissingPropertyRangeSpecification,
     MissingTermSpecification,
     MissingFragmentSpecification,
-    MissingPropertySpecification
+    MissingPropertySpecification,
+    UnsupportedExampleMediaTypeWarningSpecification
   )
 }

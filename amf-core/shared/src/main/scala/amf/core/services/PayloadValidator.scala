@@ -79,7 +79,9 @@ object PayloadValidator {
           set.defaultSeverity,
           c.payload.encodes.id,
           Some((Namespace.Document + "value").iri()),
-          ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification.id(),
+          if (set.defaultSeverity == SeverityLevels.VIOLATION)
+            ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification.id()
+          else ParserSideValidations.UnsupportedExampleMediaTypeWarningSpecification.id(),
           c.payload.encodes.annotations.find(classOf[LexicalInformation]),
           null
         )
