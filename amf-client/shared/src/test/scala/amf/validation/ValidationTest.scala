@@ -1195,6 +1195,21 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("float numeric constraints") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "/shapes/floats.raml",
+        platform,
+        RamlYamlHint,
+        validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 4)
+    }
+  }
+
   test("Shape with items in oas") {
     for {
       validation <- Validation(platform)
