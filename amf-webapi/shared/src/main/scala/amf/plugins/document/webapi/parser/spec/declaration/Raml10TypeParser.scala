@@ -744,18 +744,24 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
       map.key("minimum", entry => { // todo pope
         val value = ScalarNode(entry.value)
+        ensurePrecision(shape.dataType.option(), entry.value.toString(), entry.value)
         shape.set(ScalarShapeModel.Minimum, value.text(), Annotations(entry))
       })
 
       map.key("maximum", entry => { // todo pope
         val value = ScalarNode(entry.value)
+        ensurePrecision(shape.dataType.option(), entry.value.toString(), entry.value)
         shape.set(ScalarShapeModel.Maximum, value.text(), Annotations(entry))
       })
 
       map.key("format", (ScalarShapeModel.Format in shape).allowingAnnotations)
       // We don't need to parse (format) extension because in oas must not be emitted, and in raml will be emitted.
 
-      map.key("multipleOf", (ScalarShapeModel.MultipleOf in shape).allowingAnnotations)
+      map.key("multipleOf", entry => { // todo pope
+        val value = ScalarNode(entry.value)
+        ensurePrecision(shape.dataType.option(), entry.value.toString(), entry.value)
+        shape.set(ScalarShapeModel.MultipleOf, value.text(), Annotations(entry))
+      })
 
       val syntaxType = shape.dataType.option().getOrElse("#shape").split("#").last match {
         case "integer" | "float" | "double" | "long" | "number" => "numberScalarShape"
@@ -769,6 +775,19 @@ sealed abstract class RamlTypeParser(ast: YPart,
       // shape.set(ScalarShapeModel.Repeat, value = false) // 0.8 support, not exists in 1/.0, set default
 
       shape
+    }
+
+    protected def ensurePrecision(dataType: Option[String], value: String, ast: YNode) = {
+      if (dataType.isDefined && dataType.get.endsWith("#integer")) {
+        if (value.contains(".")) {
+          ctx.violation(
+            ParserSideValidations.ParsingErrorSpecification.id(),
+            shape.id,
+            "Wrong precision for integer numeric facet value",
+            ast
+          )
+        }
+      }
     }
   }
 
@@ -845,7 +864,10 @@ sealed abstract class RamlTypeParser(ast: YPart,
       map.key("format".asRamlAnnotation, ScalarShapeModel.Format in shape)
       // We don't need to parse (format) extension because in oas must not be emitted, and in raml will be emitted.
 
-      map.key("multipleOf".asRamlAnnotation, ScalarShapeModel.MultipleOf in shape)
+      map.key("multipleOf", entry => { // todo pope
+        val value = ScalarNode(entry.value)
+        shape.set(ScalarShapeModel.MultipleOf, value.text(), Annotations(entry))
+      })
 
       ctx.closedRamlTypeShape(shape, map, "fileShape", isAnnotation)
 
