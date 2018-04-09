@@ -79,6 +79,7 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMapping] = Map(),
 
 trait DialectSyntax { this: DialectContext =>
   val dialect: Map[String, Boolean] = Map(
+    "$dialect"     -> false,
     "dialect"      -> true,
     "version"      -> true,
     "usage"        -> false,

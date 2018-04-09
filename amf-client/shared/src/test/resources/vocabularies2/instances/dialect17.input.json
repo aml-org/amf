@@ -1,0 +1,24 @@
+{
+  "$dialect": "RAML 1.0 Dialect",
+  "dialect": "TestInstance",
+  "version": "1.17",
+  "nodeMappings": {
+    "RootNode": {
+      "classTerm": "tmp.str",
+      "mapping": {
+        "str": {
+          "propertyTerm": "tmp.str",
+          "range": "string"
+        }
+      }
+    }
+  },
+  "documents": {
+    "root": {
+      "encodes": "RootNode"
+    }
+  },
+  "external": {
+    "tmp": "http://test/com/tmp#"
+  }
+}

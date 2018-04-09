@@ -942,6 +942,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
       val itemsField = map.key("items")
       itemsField match {
+        case None => // ignore
         case Some(entry) =>
           val items = entry.value
             .as[YSequence]
