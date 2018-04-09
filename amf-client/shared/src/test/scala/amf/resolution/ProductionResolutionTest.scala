@@ -55,11 +55,21 @@ class ProductionResolutionTest extends RamlResolutionTest {
   }
 
   test("test resource type") {
-    cycle("input.raml", "input.resolved.raml", RamlYamlHint, Raml,"amf-client/shared/src/test/resources/org/raml/api/v10/library-references-absolute/" )
+    cycle("input.raml",
+          "input.resolved.raml",
+          RamlYamlHint,
+          Raml,
+          "amf-client/shared/src/test/resources/org/raml/api/v10/library-references-absolute/")
   }
 
   test("test resource type non string scalar parameter example") {
-    cycle("input.raml", "input.resolved.raml", RamlYamlHint, Raml,"amf-client/shared/src/test/resources/org/raml/parser/resource-types/non-string-scalar-parameter/" )
+    cycle(
+      "input.raml",
+      "input.resolved.raml",
+      RamlYamlHint,
+      Raml,
+      "amf-client/shared/src/test/resources/org/raml/parser/resource-types/non-string-scalar-parameter/"
+    )
   }
 
   test("test problem inclusion parent test") {
@@ -67,7 +77,15 @@ class ProductionResolutionTest extends RamlResolutionTest {
   }
 
   test("test overlay documentation") {
-    cycle("overlay.raml", "api.resolved.raml", RamlYamlHint, Raml,basePath + "overlay-documentation/")
+    cycle("overlay.raml", "api.resolved.raml", RamlYamlHint, Raml, basePath + "overlay-documentation/")
+  }
+
+  test("test bad tabulation at end flow map of traits definitions") {
+    cycle("healthcare-system-api.raml",
+          "healthcare-system-api.resolved.raml",
+          RamlYamlHint,
+          Raml,
+          basePath + "Healthcare-FHIR-System-API/")
   }
 }
 
