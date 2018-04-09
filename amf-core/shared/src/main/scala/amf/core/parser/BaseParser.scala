@@ -19,6 +19,8 @@ trait TypedNode {
   /** Returns boolean AmfScalar of boolean node. */
   def boolean(): Element
 
+  def double(): Element
+
   /** Returns negated boolean AmfScalar of boolean node. */
   def negated(): Element
 }
@@ -49,9 +51,9 @@ case class DefaultScalarNode(node: YNode)(implicit iv: IllegalTypeHandler) exten
   override def string(): AmfScalar  = scalar(_.as[String])
   override def text(): AmfScalar    = scalar(_.as[YScalar].text)
   override def integer(): AmfScalar = scalar(_.as[Int])
+  override def double(): AmfScalar = scalar(_.as[Double])
   override def boolean(): AmfScalar = scalar(_.as[Boolean])
   override def negated(): AmfScalar = scalar(!_.as[Boolean])
-
   private def scalar(fn: YNode => Any) = AmfScalar(fn(node), Annotations(node.value))
 }
 
@@ -62,6 +64,7 @@ trait BaseArrayNode extends ArrayNode {
   override def string(): AmfArray                     = array(scalar(_.as[String]))
   override def text(): AmfArray                       = array(scalar(_.as[YScalar].text))
   override def integer(): AmfArray                    = array(scalar(_.as[Int]))
+  override def double(): AmfArray                     = array(scalar(_.as[Double]))
   override def boolean(): AmfArray                    = array(scalar(_.as[Boolean]))
   override def negated(): AmfArray                    = array(scalar(!_.as[Boolean]))
   override def obj(fn: YNode => AmfElement): AmfArray = array(fn)
