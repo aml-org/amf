@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: Healthcare FHIR System API
+version: v1
+
+resourceTypes:
+  fhirResourceType:
+    description: fhirResourceType description
+
+traits:
+  appointmentSearch:
+    queryParameters:
+      param: string
+
+### API definition ###
+/Appointment:
+  type: {fhirResourceType: {
+      postExample : !include post_appointment.json,
+      getExample  : !include get_appointment.json,
+    }
+  }
+  get:
+    is: [ appointmentSearch ]
