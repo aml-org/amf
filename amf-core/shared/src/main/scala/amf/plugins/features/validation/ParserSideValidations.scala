@@ -63,6 +63,14 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
+  val UnsupportedExampleMediaTypeWarningSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "unsupported-example-media-type-warning").iri(),
+    "Cannot validate example with unsupported media type",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val UnknownSecuritySchemeErrorSpecification = ValidationSpecification(
     (Namespace.AmfParser + "unknown-security-scheme").iri(),
     "Cannot find the security scheme",
@@ -234,6 +242,11 @@ object ParserSideValidations {
       ProfileNames.AMF  -> SeverityLevels.WARNING
     ),
     UnsupportedExampleMediaTypeErrorSpecification.id() -> Map(
+      ProfileNames.RAML -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS  -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF  -> SeverityLevels.VIOLATION
+    ),
+    UnsupportedExampleMediaTypeWarningSpecification.id() -> Map(
       ProfileNames.RAML -> SeverityLevels.WARNING,
       ProfileNames.OAS  -> SeverityLevels.WARNING,
       ProfileNames.AMF  -> SeverityLevels.WARNING
@@ -279,6 +292,7 @@ object ParserSideValidations {
     ParsingWarningSpecification,
     ExampleValidationErrorSpecification,
     UnsupportedExampleMediaTypeErrorSpecification,
+    UnsupportedExampleMediaTypeWarningSpecification,
     InconsistentPropertyRangeValueSpecification,
     MissingPropertyRangeSpecification,
     MissingTermSpecification,
