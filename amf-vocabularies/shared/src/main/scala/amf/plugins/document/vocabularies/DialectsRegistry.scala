@@ -26,7 +26,9 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     } collectFirst { case (dialect, Some(nodeMapping: NodeMapping)) => (dialect, nodeMapping) }
   }
 
-  def knowsHeader(header: String): Boolean = map.contains(headerKey(header))
+  def knowsHeader(header: String): Boolean = {
+    header == "%RAML 1.0 Vocabulary" || header == "%RAML 1.0 Dialect" || header == "%RAML Library / RAML 1.0 Dialect" || map.contains(headerKey(header))
+  }
 
   def knowsDialectInstance(instance: DialectInstance): Boolean = dialectFor(instance).isDefined
 

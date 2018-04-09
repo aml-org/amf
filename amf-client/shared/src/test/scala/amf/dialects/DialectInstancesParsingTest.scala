@@ -84,6 +84,10 @@ class DialectInstancesParsingTest extends BuildCycleTests {
     withDialect("dialect16a.raml", "example16a.raml", "example16a.json", VocabularyYamlHint, Amf)
   }
 
+  test("parse 17 test") {
+    withDialect("dialect17.input.json", "example17.input.json", "example17.output.json", VocabularyJsonHint, Amf)
+  }
+
   test("generate 1 test") {
     withDialect("dialect1.raml", "example1.json", "example1.raml", AmfJsonHint, RamlVocabulary)
   }
