@@ -69,6 +69,7 @@ class VocabularyDeclarations(var externals: Map[String, External] = Map(),
 trait VocabularySyntax { this: VocabularyContext =>
 
   val vocabulary: Map[String,String] = Map(
+    "$dialect" -> "string",
     "base" -> "string",
     "usage" -> "string",
     "vocabulary" -> "string",

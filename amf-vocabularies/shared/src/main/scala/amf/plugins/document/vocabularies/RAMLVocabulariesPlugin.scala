@@ -26,12 +26,9 @@ import amf.plugins.document.vocabularies.parser.common.RAMLExtensionsReferenceHa
 import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, RamlDialectsParser}
 import amf.plugins.document.vocabularies.parser.instances.{DialectInstanceContext, RamlDialectInstanceParser}
 import amf.plugins.document.vocabularies.parser.vocabularies.{RamlVocabulariesParser, VocabularyContext}
-import amf.plugins.document.vocabularies.resolution.pipelines.{
-  DialectInstanceResolutionPipeline,
-  DialectResolutionPipeline
-}
+import amf.plugins.document.vocabularies.resolution.pipelines.{DialectInstanceResolutionPipeline, DialectResolutionPipeline}
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
-import org.yaml.model.{YComment, YDocument}
+import org.yaml.model.{YComment, YDocument, YMap, YNode}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -43,7 +40,21 @@ trait RamlHeaderExtractor {
     document.children.find(v => v.isInstanceOf[YComment]).asInstanceOf[Option[YComment]]
 }
 
-object DialectHeader extends RamlHeaderExtractor {
+trait JsonHeaderExtractor {
+  def dialect(root: Root): Option[String] = {
+    val parsed: Seq[Option[String]] = root.parsed.document.children.collect { case n: YNode =>
+      n.asOption[YMap] match {
+        case Some(m) => m.entries.find(_.key.as[String] == "$dialect") map { entry => entry.value.as[String] }
+        case None    => None
+      }
+
+    }
+    parsed.collectFirst { case Some(metaText) => metaText }
+  }
+
+}
+
+object DialectHeader extends RamlHeaderExtractor with JsonHeaderExtractor {
   def apply(root: Root): Boolean = comment(root) match {
     case Some(comment: YComment) =>
       comment.metaText match {
@@ -54,13 +65,17 @@ object DialectHeader extends RamlHeaderExtractor {
         case t if t.startsWith("%")                    => true
         case _                                         => false
       }
-    case _ => false
+    case _ => dialect(root) match {
+      case Some(_) => true
+      case _       => false
+    }
   }
 }
 
 object RAMLVocabulariesPlugin
     extends AMFDocumentPlugin
     with RamlHeaderExtractor
+    with JsonHeaderExtractor
     with AMFValidationPlugin
     with ValidationResultProcessor {
 
@@ -118,16 +133,28 @@ object RAMLVocabulariesPlugin
     "text/yaml",
     "text/x-yaml",
     "application/yaml",
-    "application/x-yaml"
+    "application/x-yaml",
+    "application/json"
   )
 
+  /*
+
+   */
   /**
     * Parses an accepted document returning an optional BaseUnit
     */
   override def parse(document: Root, parentContext: ParserContext, platform: Platform): Option[BaseUnit] = {
-    comment(document) match {
-      case Some(comment) =>
-        comment.metaText match {
+    val maybeMetaText = comment(document) match {
+      case Some(comment) => Some(comment.metaText)
+      case _             => dialect(document) match {
+        case Some(metaText) => Some("%" + metaText)
+        case None           => None
+      }
+    }
+    maybeMetaText match {
+      case None           => None
+      case Some(metaText) =>
+        metaText match {
           case ExtensionHeader.VocabularyHeader =>
             Some(new RamlVocabulariesParser(document)(new VocabularyContext(parentContext)).parseDocument())
           case ExtensionHeader.DialectLibraryHeader =>
@@ -137,7 +164,6 @@ object RAMLVocabulariesPlugin
           case ExtensionHeader.DialectHeader => parseAndRegisterDialect(document, parentContext)
           case header                        => parseDialectInstance(header, document, parentContext)
         }
-      case _ => None
     }
   }
 
@@ -175,7 +201,7 @@ object RAMLVocabulariesPlugin
     case _                         => false
   }
 
-  override def referenceHandler(): ReferenceHandler = new RAMLExtensionsReferenceHandler()
+  override def referenceHandler(): ReferenceHandler = new RAMLExtensionsReferenceHandler(registry)
 
   override def dependencies(): Seq[AMFPlugin] = Seq()
 

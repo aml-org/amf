@@ -1,9 +1,10 @@
 package amf.plugins.document.vocabularies.parser.common
 
 import amf.core.parser.{LibraryReference, LinkReference, ReferenceHandler, _}
+import amf.plugins.document.vocabularies.DialectsRegistry
 import org.yaml.model._
 
-class RAMLExtensionsReferenceHandler extends ReferenceHandler {
+class RAMLExtensionsReferenceHandler(registry: DialectsRegistry) extends ReferenceHandler {
   private val collector = ReferenceCollector()
 
   override def collect(parsed: ParsedDocument, ctx: ParserContext): ReferenceCollector = {
@@ -63,7 +64,9 @@ class RAMLExtensionsReferenceHandler extends ReferenceHandler {
       case entry: YMapEntry =>
         if (entry.key.as[YScalar].text == "$dialect") {
           val dialectRef = entry.value
-          ramlInclude(dialectRef.split("#").head)
+          if (!registry.knowsHeader(s"%${dialectRef.as[String]}")) {
+            ramlInclude(dialectRef.split("#").head)
+          }
         } else {
           part.children.foreach(links)
         }

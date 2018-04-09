@@ -11,6 +11,8 @@ object RamlYamlHint extends Hint(Raml, Yaml)
 
 object VocabularyYamlHint extends Hint(RamlVocabulary, Yaml)
 
+object VocabularyJsonHint extends Hint(RamlVocabulary, Json)
+
 object RamlJsonHint extends Hint(Raml, Json)
 
 object OasYamlHint extends Hint(Oas, Yaml)
