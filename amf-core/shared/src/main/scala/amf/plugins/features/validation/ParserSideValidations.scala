@@ -134,14 +134,6 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
-  val UnsupportedExampleMediaTypeWarningSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "unsupported-example-media-type").iri(),
-    "Cannot validate example with unsupported media type",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
-  )
-
   val InconsistentPropertyRangeValueSpecification = ValidationSpecification(
     (Namespace.AmfParser + "inconsistent-property-range-value").iri(),
     "Range value does not match the expected type",
@@ -241,11 +233,6 @@ object ParserSideValidations {
       ProfileNames.OAS  -> SeverityLevels.WARNING,
       ProfileNames.AMF  -> SeverityLevels.WARNING
     ),
-    UnsupportedExampleMediaTypeWarningSpecification.id() -> Map(
-      ProfileNames.RAML -> SeverityLevels.WARNING,
-      ProfileNames.OAS  -> SeverityLevels.WARNING,
-      ProfileNames.AMF  -> SeverityLevels.WARNING
-    ),
     UnsupportedExampleMediaTypeErrorSpecification.id() -> Map(
       ProfileNames.RAML -> SeverityLevels.WARNING,
       ProfileNames.OAS  -> SeverityLevels.WARNING,
@@ -296,7 +283,6 @@ object ParserSideValidations {
     MissingPropertyRangeSpecification,
     MissingTermSpecification,
     MissingFragmentSpecification,
-    MissingPropertySpecification,
-    UnsupportedExampleMediaTypeWarningSpecification
+    MissingPropertySpecification
   )
 }
