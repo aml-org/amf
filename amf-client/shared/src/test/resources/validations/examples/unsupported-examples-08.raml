@@ -1,0 +1,48 @@
+#%RAML 0.8
+title: InnovatieGateway
+version: 1.0.0
+#baseUri: http://innovatiegateway/{version}
+baseUri: http://a80-101-178-124.adsl.xs4all.nl:22111
+protocols: [ HTTP, HTTPS ]
+/publicatie:
+  displayName: Beeldstanden
+  get:
+    description: hiermee worden beeldstand publicaties opgehaald
+
+    responses:
+      200:
+        body:
+          text/html:
+            example: |
+              <<!DOCTYPE html SYSTEM "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+              <html xmlns="http://www.w3.org/1999/xhtml">
+                  <head>
+                      <title>Dit is een publicatie</title>
+                  </head>
+                  <body>
+                      <h1>De Publicatieservice spreekt</h1>
+                      <p>Er is een aanvraag binnengekomen</p>
+                      <p>ip aanvrager : <b>0.0.0.0:80</b></p>
+                      <p>tijdstip : <b>nu</b></p>
+
+                  </body>
+              </html>
+
+      500:
+        body:
+            text/html:
+              example: |
+                <<!DOCTYPE html SYSTEM "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+                <html xmlns="http://www.w3.org/1999/xhtml">
+                    <head>
+                        <title>Dit is een publicatie</title>
+                    </head>
+                    <body>
+                        <h1>De Publicatieservice geeft een fouttmelding</h1>
+                        <p>Er is een aanvraag binnengekomen</p>
+                        <p>ip aanvrager : <b>0.0.0.0:80</b></p>
+                        <p>tijdstip : <b>nu</b></p>
+
+                    </body>
+                </html>
+

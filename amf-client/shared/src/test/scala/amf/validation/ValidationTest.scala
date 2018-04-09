@@ -1198,10 +1198,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("float numeric constraints") {
     for {
       validation <- Validation(platform)
-      library <- AMFCompiler(validationsPath + "/shapes/floats.raml",
-        platform,
-        RamlYamlHint,
-        validation)
+      library <- AMFCompiler(validationsPath + "/shapes/floats.raml", platform, RamlYamlHint, validation)
         .build()
       report <- validation.validate(library, ProfileNames.RAML)
     } yield {
@@ -1475,6 +1472,19 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(!report.conforms)
       assert(report.results.length == 2)
       assert(!report.results.head.targetNode.equals(report.results.last.targetNode))
+    }
+  }
+
+  test("Test unsupported example with raml08 profile") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(examplesPath + "/examples/unsupported-examples-08.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML08)
+    } yield {
+      assert(report.conforms)
+      assert(report.results.length == 2)
+      assert(report.results.filter(_.level == SeverityLevels.WARNING).lengthCompare(2) == 0)
     }
   }
 }
