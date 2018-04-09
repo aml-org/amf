@@ -34,6 +34,7 @@ class AMFUnitMaker {
 
   def make(unit: BaseUnit, vendor: Vendor, options: RenderOptions): YDocument = {
     val vendorString = vendor match {
+      case RamlVocabulary => "Raml Vocabulary"
       case Amf           => "AMF Graph"
       case Payload       => "AMF Payload"
       case Raml10 | Raml => "RAML 1.0"
@@ -42,15 +43,18 @@ class AMFUnitMaker {
       case Oas           => "OAS 2.0"
       case Extension     => "RAML Extension"
       case Unknown       => "Unknown Vendor"
+      case _             => ""
     }
 
     val mediaType = vendor match {
+      case RamlVocabulary => "application/yaml"
       case Amf       => "application/ld+json"
       case Payload   => "application/amf+json"
       case r: Raml   => "application/yaml"
       case Oas       => "application/json"
       case Extension => "application/yaml"
       case Unknown   => "text/plain"
+      case _         => ""
     }
 
     new AMFSerializer(unit, mediaType, vendorString, options).make()
