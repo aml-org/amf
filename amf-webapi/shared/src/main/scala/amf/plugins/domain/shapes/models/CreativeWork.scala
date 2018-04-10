@@ -25,8 +25,13 @@ case class CreativeWork(fields: Fields, annotations: Annotations) extends Domain
 
   override def meta = CreativeWorkModel
 
+  private def searchIdPart: Option[String] = linkTarget match {
+    case Some(target: CreativeWork) => target.title.option().orElse(target.url.option()).map(_.urlEncoded)
+    case _                          => title.option().orElse(url.option()).map(_.urlEncoded)
+  }
+
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/creative-work/" + title.option().orElse(url.option()).map(_.urlEncoded).orNull
+  override def componentId: String = "/creative-work/" + searchIdPart.orNull
 }
 
 object CreativeWork {

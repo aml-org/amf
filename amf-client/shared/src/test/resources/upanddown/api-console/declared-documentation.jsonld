@@ -1,0 +1,262 @@
+[
+  {
+    "@id": "file://amf-client/shared/src/test/resources/upanddown/api-console/declared-documentation.raml",
+    "@type": [
+      "http://raml.org/vocabularies/document#Document",
+      "http://raml.org/vocabularies/document#Fragment",
+      "http://raml.org/vocabularies/document#Module",
+      "http://raml.org/vocabularies/document#Unit"
+    ],
+    "http://raml.org/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/api-console/declared-documentation.raml#/web-api",
+        "@type": [
+          "http://schema.org/WebAPI",
+          "http://raml.org/vocabularies/document#RootDomainElement",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://schema.org/documentation": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/api-console/declared-documentation.raml#/web-api/creative-work/Read%20this!",
+            "@type": [
+              "http://schema.org/CreativeWork",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/title": [
+              {
+                "@value": "Read this!"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "# This is an example API spec\n"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/api-console/declared-documentation.raml#/web-api/creative-work/Read%20this!/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(4,4)-(6,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/api-console/declared-documentation.raml#/web-api/creative-work/Read%20this!"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(3,4)-(6,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/title"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(3,4)-(4,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/api-console/declared-documentation.raml#/web-api/creative-work/About",
+            "@type": [
+              "http://schema.org/CreativeWork",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/document#link-target": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/api-console/about.raml/creative-work/About"
+              }
+            ],
+            "http://raml.org/vocabularies/document#link-label": [
+              {
+                "@value": "about.raml"
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/api-console/declared-documentation.raml#/web-api/source-map",
+            "@type": [
+              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#source-vendor": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/api-console/declared-documentation.raml#/web-api"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "raml 1.0"
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/documentation"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(6,23)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/api-console/declared-documentation.raml#/web-api"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(6,23)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://raml.org/vocabularies/document#references": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/api-console/about.raml",
+        "@type": [
+          "http://raml.org/vocabularies/document#UserDocumentation",
+          "http://raml.org/vocabularies/document#Fragment",
+          "http://raml.org/vocabularies/document#Unit"
+        ],
+        "http://raml.org/vocabularies/document#encodes": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/api-console/about.raml/creative-work/About",
+            "@type": [
+              "http://schema.org/CreativeWork",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/title": [
+              {
+                "@value": "About"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "# About the example API\n\nThe `Example API` provides all definitions of the RAML 1.0 like types, security schemes, resource types and so on.\nMagic variables are special strings that are passed to any string property in the request and it will be replaced with other string that is defined for\nthis variable.\n\n## Example\nLet's say you want to generate a random number in the request. So the property\nvalue like:\n```\nhttp://www.domain.com/?time=${now}\n```\ncan produce:\n```\nhttp://www.domain.com/?time=12312312312\n```\n\n## Build-in magic variables.\n| Variable | Description | Example |\n| --- | --- | --- |\n| `${random}` | Will generate random number in range from 0 to Number.MAX_SAFE_INTEGER | 9007199254740991 |\n| `${random:NUMBER}` | A variation of `${random}` where the result will be remembered and can be used in other property. If the same `NUMBER` occurs again then previously generated value will be used. | 7199254740 |\n| `${now}` | Inserts current epoch time | 12312312312 |\n\n## Magic variables scopes\nThere are two types of magic variables:\n* **global** - Applied to every request,\n* **scoped** - Applied to a request enclosed in a project.\n\n### Global variables\nVariables of this type will be applied to every outgoing request.\n\n### Scoped variables.\nScoped variables are associated with a project and are applied to those request\nthat are added to corresponding project.\n\n## User magic variables\nThis element supports user defined variables. Variables defined by the user are kept\nin IndexedDB locally and retreived\nby the element on run time. Users can decide either the variable is global or scoped.\n\n## Database structure\n| Property | Type | Is key | Description |\n| --- | --- | --- | --- |\n| id | Number | Yes, key path | An autoincremental key for the rule |\n| variable | String | Yes | A variable name. It must be consisted with [0-9A-Za-z${}_-] |\n| value | String | No | Replacement value. Replacement value may include other magic variables |\n| type | String | Yes | Either `global` or `scoped` (for now) |\n| project | Number | Yes | Relevant if the `type` is set to `scoped`. The rule will be applied to the requests that are associated with this project. If not set if will be omnited. |\n\n## Usage\nThe element's `value` property contains a value that will be parsed during the work.\nIt may be either String or Object.\n\nWhile String is obvious, the Object will be treated differently. It will parse only\nstring values of each first level key.\nThis means that no deep objects will be taken into consideration.\nBefore start applying new magic variables the program should call `clear()`\nfunction to clear the groups defined by previous use.\nThe element will keep groups generated data so it can be uses many times on\ndifferent strings resulting with the same group values.\n\nJavaScript code:\n```javascript\n...\nthis.$.mv.clear();\nthis.set('headersList', headers);\nthis.$.mv.parse();\n...\n_onParsed = (e) => {\n  var headers = e.detail.result;\n};\n...\n```\nThe parse method returns a Promise which will be fulfilled when it finish parsing data:\n```javascript\n...\nthis.set('headersList', headers);\nthis.$.mv.parse()\n.then((result) => {\n  // parsed data\n});\n...\n```\n"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/api-console/about.raml/creative-work/About/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#source-vendor": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/api-console/about.raml/creative-work/About"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "raml 1.0"
+                      }
+                    ]
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(3,0)-(88,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/api-console/about.raml/creative-work/About"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(2,0)-(88,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/title"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(2,0)-(3,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/api-console/about.raml/source-map",
+            "@type": [
+              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/api-console/about.raml"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(88,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

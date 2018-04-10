@@ -26,7 +26,7 @@ object ExampleModel extends DomainElementModel with LinkableElementModel with Ke
   override val key: Field = Name
 
   override def fields: List[Field] =
-    List(Name, DisplayName, Summary, Description, Value, ExternalValue, Strict, MediaType, StructuredValue) ++ DomainElementModel.fields
+    List(Name, DisplayName, Summary, Description, Value, ExternalValue, Strict, MediaType, StructuredValue) ++ DomainElementModel.fields ++ LinkableElementModel.fields
 
   override val `type`: List[ValueType] = Document + "Example" :: DomainElementModel.`type`
 
