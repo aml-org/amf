@@ -64,10 +64,12 @@ class JSLibraryEmitter(profile: Option[ValidationProfile] = None) {
        |        return parseInt(v.value);
        |    } else if(v.datatype.value === "http://www.w3.org/2001/XMLSchema#float") {
        |        return parseFloat(v.value);
+       |    } else if(v.datatype.value === "http://www.w3.org/2001/XMLSchema#double") {
+       |        return v.value;
        |    } else if(v.datatype.value === "http://www.w3.org/2001/XMLSchema#boolean") {
        |        return v.value === "true";
        |    } else {
-       |        return value;
+       |        return v.value;
        |    }
        |}
        |
