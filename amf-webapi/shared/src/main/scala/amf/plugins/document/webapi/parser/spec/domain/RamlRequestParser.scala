@@ -2,20 +2,14 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.model.domain.{AmfArray, DomainElement}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.Lazy
+import amf.core.utils.{Lazy, Strings}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.SpecParserOps
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  AnyDefaultType,
-  DefaultType,
-  NilDefaultType,
-  Raml10TypeParser
-}
+import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, DefaultType, Raml10TypeParser}
 import amf.plugins.domain.webapi.metamodel.RequestModel
 import amf.plugins.domain.webapi.models.{Payload, Request}
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.{YMap, YScalar, YType}
-import amf.core.utils.Strings
 
 import scala.collection.mutable
 
@@ -61,7 +55,7 @@ case class Raml08RequestParser(map: YMap, producer: () => Request, parseOptional
 
   override def parse(request: Lazy[Request], target: Target): Unit = Unit
 
-  override protected val defaultType: DefaultType = NilDefaultType
+  override protected val defaultType: DefaultType = AnyDefaultType
 }
 
 abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOptional: Boolean = false)(

@@ -3,14 +3,14 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.SynthesizedField
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, ScalarNode, _}
+import amf.core.utils.Strings
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
-import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, DefaultType, NilDefaultType}
+import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, DefaultType}
 import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Payload, Response}
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
-import amf.core.utils.Strings
 
 import scala.collection.mutable
 
@@ -34,7 +34,7 @@ case class Raml08ResponseParser(entry: YMapEntry, producer: (String) => Response
     extends RamlResponseParser(entry, producer, parseOptional) {
   override protected def parseMap(response: Response, map: YMap): Unit = Unit
 
-  override protected val defaultType: DefaultType = NilDefaultType
+  override protected val defaultType: DefaultType = AnyDefaultType
 }
 
 abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Response, parseOptional: Boolean = false)(
