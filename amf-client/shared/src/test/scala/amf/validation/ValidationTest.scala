@@ -1525,4 +1525,14 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.exists(_.message.contains("MaxLength must be greater than or equal to minLength")))
     }
   }
+
+  test("Test validation of body with only example (default any shape)") {
+    for {
+      validation <- Validation(platform)
+      doc        <- AMFCompiler(examplesPath + "/examples/only-example-body.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
 }

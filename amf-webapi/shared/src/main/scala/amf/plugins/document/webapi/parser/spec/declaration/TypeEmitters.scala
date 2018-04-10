@@ -1518,6 +1518,8 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
       case schema: SchemaShape => Seq(RamlSchemaShapeEmitter(schema, ordering, Nil))
       case shape: AnyShape if shape.annotations.find(classOf[ParsedJSONSchema]).isDefined =>
         Seq(RamlJsonShapeEmitter(shape, ordering, Nil))
+      case shape: AnyShape =>
+        RamlAnyShapeEmitter(shape, ordering, Nil).emitters()
       case nil: NilShape =>
         RamlNilShapeEmitter(nil, ordering, Seq()).emitters()
       case other =>

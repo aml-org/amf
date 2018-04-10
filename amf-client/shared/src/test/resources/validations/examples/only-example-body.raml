@@ -1,0 +1,13 @@
+#%RAML 0.8
+title: HMIS Authorization Service
+version: 1.0.0
+protocols:
+  -  HTTPS
+mediaType: application/yaml
+/authorize:
+  get:
+    responses:
+      200:
+        body:
+          example : |
+            Location: https://client.example.com/cb?code=SplxlOBeZQQYbYS6WxSbIA&state=xyz

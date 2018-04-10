@@ -1,12 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.utils._
 import amf.core.annotations.{DefaultNode, ExplicitField, SourceAST, SynthesizedField}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{ScalarNode => DynamicDataNode, _}
 import amf.core.parser.{Annotations, Value, _}
+import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.{
@@ -30,7 +30,6 @@ import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.{YPart, _}
 import org.yaml.parser.YamlParser
 import org.yaml.render.YamlRender
-import amf.core.utils.Strings
 
 import scala.collection.mutable
 
@@ -104,11 +103,6 @@ object StringDefaultType extends DefaultType {
 // In a body or body / application/json context it its any
 object AnyDefaultType extends DefaultType {
   override val typeDef: TypeDef = TypeDef.AnyType
-}
-
-// In a body or body / application/json context raml 08 it its nil
-object NilDefaultType extends DefaultType {
-  override val typeDef: TypeDef = TypeDef.NilType
 }
 
 case class Raml10TypeParser(ast: YPart,
@@ -186,7 +180,7 @@ case class Raml08TypeParser(ast: YPart,
           val shape = UnresolvedShape(text, node).withName(text)
           shape.withContext(ctx)
           adopt(shape)
-          if(!text.validReferencePath) {
+          if (!text.validReferencePath) {
             ctx.violation(
               ParserSideValidations.ChainedReferenceSpecification.id(),
               shape.id,
@@ -535,12 +529,12 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
     val parsed = node.value match {
       case s: YScalar =>
-        val toParse = YMapEntry(YNode(""), YNode(s.text.replace("?","")))
+        val toParse = YMapEntry(YNode(""), YNode(s.text.replace("?", "")))
         ctx.factory.typeParser(toParse, (s) => s.withId(union.id), isAnnotation, defaultType).parse().get
       case m: YMap =>
         val newEntries = m.entries.map { entry =>
           if (entry.key.as[String] == "type") {
-            YMapEntry("type", entry.value.as[String].replace("?",""))
+            YMapEntry("type", entry.value.as[String].replace("?", ""))
           } else {
             entry
           }
@@ -658,7 +652,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
               val shape = UnresolvedShape(text, node).withName(text)
               shape.withContext(ctx)
               adopt(shape)
-              if(!text.validReferencePath) {
+              if (!text.validReferencePath) {
                 ctx.violation(
                   ParserSideValidations.ChainedReferenceSpecification.id(),
                   shape.id,
@@ -742,26 +736,35 @@ sealed abstract class RamlTypeParser(ast: YPart,
             .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations() += Inferred()))(
           entry => shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations(entry)))
 
-      map.key("minimum", entry => { // todo pope
-        val value = ScalarNode(entry.value)
-        ensurePrecision(shape.dataType.option(), entry.value.toString(), entry.value)
-        shape.set(ScalarShapeModel.Minimum, value.text(), Annotations(entry))
-      })
+      map.key(
+        "minimum",
+        entry => { // todo pope
+          val value = ScalarNode(entry.value)
+          ensurePrecision(shape.dataType.option(), entry.value.toString(), entry.value)
+          shape.set(ScalarShapeModel.Minimum, value.text(), Annotations(entry))
+        }
+      )
 
-      map.key("maximum", entry => { // todo pope
-        val value = ScalarNode(entry.value)
-        ensurePrecision(shape.dataType.option(), entry.value.toString(), entry.value)
-        shape.set(ScalarShapeModel.Maximum, value.text(), Annotations(entry))
-      })
+      map.key(
+        "maximum",
+        entry => { // todo pope
+          val value = ScalarNode(entry.value)
+          ensurePrecision(shape.dataType.option(), entry.value.toString(), entry.value)
+          shape.set(ScalarShapeModel.Maximum, value.text(), Annotations(entry))
+        }
+      )
 
       map.key("format", (ScalarShapeModel.Format in shape).allowingAnnotations)
       // We don't need to parse (format) extension because in oas must not be emitted, and in raml will be emitted.
 
-      map.key("multipleOf", entry => { // todo pope
-        val value = ScalarNode(entry.value)
-        ensurePrecision(shape.dataType.option(), entry.value.toString(), entry.value)
-        shape.set(ScalarShapeModel.MultipleOf, value.text(), Annotations(entry))
-      })
+      map.key(
+        "multipleOf",
+        entry => { // todo pope
+          val value = ScalarNode(entry.value)
+          ensurePrecision(shape.dataType.option(), entry.value.toString(), entry.value)
+          shape.set(ScalarShapeModel.MultipleOf, value.text(), Annotations(entry))
+        }
+      )
 
       val syntaxType = shape.dataType.option().getOrElse("#shape").split("#").last match {
         case "integer" | "float" | "double" | "long" | "number" => "numberScalarShape"
@@ -837,19 +840,23 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
       map.key("fileTypes") match {
         case Some(entry) if entry.value.tagType == YType.Seq =>
-          shape.setArray(FileShapeModel.FileTypes, entry.value.as[YSequence].nodes.map { n: YNode => AmfScalar(n.as[YScalar].text) }, Annotations(entry.value))
+          shape.setArray(FileShapeModel.FileTypes, entry.value.as[YSequence].nodes.map { n: YNode =>
+            AmfScalar(n.as[YScalar].text)
+          }, Annotations(entry.value))
         case Some(entry) if entry.value.tagType == YType.Str =>
-          shape.setArray(FileShapeModel.FileTypes, Seq(AmfScalar(entry.value.as[YScalar].text)), Annotations(entry.value))
-        case Some(entry) => ctx.violation(
-          ParserSideValidations.ParsingErrorSpecification.id(),
-          shape.id,
-          Some(FileShapeModel.FileTypes.value.iri()),
-          s"Unexpected syntax for the fileTypes property: ${entry.value.tagType}",
-          entry.value
-        )
+          shape.setArray(FileShapeModel.FileTypes,
+                         Seq(AmfScalar(entry.value.as[YScalar].text)),
+                         Annotations(entry.value))
+        case Some(entry) =>
+          ctx.violation(
+            ParserSideValidations.ParsingErrorSpecification.id(),
+            shape.id,
+            Some(FileShapeModel.FileTypes.value.iri()),
+            s"Unexpected syntax for the fileTypes property: ${entry.value.tagType}",
+            entry.value
+          )
         case _ => // ignore
       }
-
 
       map.key("minimum".asRamlAnnotation, entry => { // todo pope
         val value = ScalarNode(entry.value)
@@ -918,9 +925,9 @@ sealed abstract class RamlTypeParser(ast: YPart,
           .parse()
       } yield {
         item match {
-          case array: ArrayShape => shape.withItems(array).toMatrixShape
+          case array: ArrayShape   => shape.withItems(array).toMatrixShape
           case matrix: MatrixShape => shape.withItems(matrix).toMatrixShape
-          case other: Shape => shape.withItems(other)
+          case other: Shape        => shape.withItems(other)
         }
       }).orElse(arrayShapeTypeFromInherits()).orElse(Some(shape))
 
@@ -983,7 +990,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
                 ).parse()
             }
           shape.withItems(items.filter(_.isDefined).map(_.get))
-        }
+      }
 
       ctx.closedRamlTypeShape(shape, map, "arrayShape", isAnnotation)
 
@@ -1069,7 +1076,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
       val reference = node.as[YScalar].text
       val shape     = UnresolvedShape(reference, node)
       shape.withContext(ctx)
-      if(!reference.validReferencePath) {
+      if (!reference.validReferencePath) {
         ctx.violation(
           ParserSideValidations.ChainedReferenceSpecification.id(),
           shape.id,
