@@ -138,7 +138,7 @@ private case class ServersEmitters(key: String, servers: Seq[Server], ordering: 
   private def orderedServers(servers: Seq[Server]): Seq[PartEmitter] =
     ordering.sorted(servers.map(e => OasServerEmitter(e, ordering)))
 
-  override def position(): Position = pos(servers.head.annotations)
+  override def position(): Position = servers.headOption.map(_.annotations).map(pos).getOrElse(Position.ZERO)
 }
 
 private case class OasServerEmitter(server: Server, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)

@@ -172,7 +172,7 @@ case class OasCreativeWorkEmitters(documents: Seq[CreativeWork], ordering: SpecO
     )
   }
 
-  override def position(): Position = pos(documents.head.annotations)
+  override def position(): Position = documents.headOption.map(_.annotations).map(pos).getOrElse(Position.ZERO)
 }
 
 case class OasDeclaredResponsesEmitter(key: String,
