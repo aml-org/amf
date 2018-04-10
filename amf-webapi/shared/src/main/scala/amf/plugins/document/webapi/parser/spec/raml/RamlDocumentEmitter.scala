@@ -442,7 +442,7 @@ case class UserDocumentationsEmitter(f: FieldEntry, ordering: SpecOrdering)(impl
     )
   }
 
-  override def position(): Position = pos(f.array.values.head.annotations)
+  override def position(): Position = f.array.values.headOption.map(_.annotations).map(pos).getOrElse(Position.ZERO)
 }
 
 case class OasExtCreativeWorkEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit val spec: SpecEmitterContext)
