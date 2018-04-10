@@ -1,8 +1,8 @@
 package amf.plugins.features.validation
 
 import amf.ProfileNames
-import amf.core.emitter.RenderOptions
 import amf.core.benchmark.ExecutionLog
+import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.registries.AMFPluginsRegistry
@@ -20,7 +20,7 @@ import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSO
 import amf.plugins.features.validation.model.{ParsedValidationProfile, ValidationDialectText}
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import org.yaml.model.YDocument.PartBuilder
-import org.yaml.model.{YNode, YType}
+import org.yaml.model.YType
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -183,7 +183,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
       println("===========================")
       println(jsLibrary)
       println("===========================")
-    */
+     */
 
     ValidationMutex.synchronized {
       PlatformValidator.instance
@@ -202,23 +202,23 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
   }
 
   override def validate(model: BaseUnit, profileName: String, messageStyle: String): Future[AMFValidationReport] = {
-      profilesPlugins.get(profileName) match {
-        case Some(domainPlugin: AMFValidationPlugin) =>
-          val validations = computeValidations(profileName)
-          domainPlugin.validationRequest(model, profileName, validations, platform) flatMap { modelValidations =>
-            super.validate(model, profileName, messageStyle) map { parserSideValidation =>
-              modelValidations.copy(
-                conforms = modelValidations.conforms && parserSideValidation.conforms,
-                results = modelValidations.results ++ parserSideValidation.results
-              )
-            }
+    profilesPlugins.get(profileName) match {
+      case Some(domainPlugin: AMFValidationPlugin) =>
+        val validations = computeValidations(profileName)
+        domainPlugin.validationRequest(model, profileName, validations, platform) flatMap { modelValidations =>
+          super.validate(model, profileName, messageStyle) map { parserSideValidation =>
+            modelValidations.copy(
+              conforms = modelValidations.conforms && parserSideValidation.conforms,
+              results = modelValidations.results ++ parserSideValidation.results
+            )
           }
-        case _ =>
-          Future {
-            profileNotFoundWarningReport(model, profileName)
-          }
-      }
+        }
+      case _ =>
+        Future {
+          profileNotFoundWarningReport(model, profileName)
+        }
     }
+  }
 
   def profileNotFoundWarningReport(model: BaseUnit, profileName: String) = {
     AMFValidationReport(conforms = true, model.location, profileName, Seq())

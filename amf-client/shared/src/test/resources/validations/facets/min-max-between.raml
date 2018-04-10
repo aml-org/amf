@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: Some API
+
+types:
+    valid:
+        type: integer
+        minimum: 5
+        maximum: 15
+    invalid:
+        type: integer
+        minimum: 20     # minimum value should be smaller than maximum value
+        maximum: 10

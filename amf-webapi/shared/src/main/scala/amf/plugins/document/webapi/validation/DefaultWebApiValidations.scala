@@ -118,8 +118,8 @@ object DefaultAMFValidations extends ImportUtils {
     groups.map {
       case (profile, validationsInGroup) =>
         val violationValidations = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.VIOLATION))
-        val infoValidations = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.INFO))
-        val warningValidations = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.WARNING))
+        val infoValidations      = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.INFO))
+        val warningValidations   = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.WARNING))
 
         // sorting parser side validation for this profile
         val violationParserSideValidations = ParserSideValidations.validations
@@ -231,31 +231,31 @@ object DefaultAMFValidations extends ImportUtils {
 
 object JsCustomValidations {
   val functions: Map[String, String] = Map(
-    "multipleOfValidation" ->
+    "minimumMaximumValidation" ->
       """|function(shape) {
-         |  console.log(JSON.stringify(shape));
-         |  var multipleOf = shape["raml-shapes:multipleOf"];
-         |  console.log(multipleOf);
-         |  console.log(parseFloat(multipleOf));
-         |  if ( multipleOf == undefined) return true;
-         |  else return parseFloat(multipleOf) > 0;
+         |  //console.log(JSON.stringify(shape));
+         |  var minimum = shape["shacl:minInclusive"];
+         |  var maximum = shape["shacl:maxInclusive"];
+         |  if (minimum == undefined || maximum == undefined) return true;
+         |  else return (parseFloat(minimum) < parseFloat(maximum));
          |}
       """.stripMargin,
-    "maxLengthValidation" ->
+    "minItemsMaxItemsValidation" ->
       """|function(shape) {
-         |  var maxLength = shape["shacl:maxLength"];
-         |  if ( maxLength == undefined) return true;
-         |  else return parseFloat(maxLength) >= 0;
+         |  //console.log(JSON.stringify(shape));
+         |  var minCount = shape["shacl:minCount"];
+         |  var maxCount = shape["shacl:maxCount"];
+         |  if (minCount == undefined || maxCount == undefined) return true;
+         |  else return (parseInt(minCount) < parseInt(maxCount));
          |}
       """.stripMargin,
-    "minLengthValidation" ->
+    "minLengthMaxLengthValidation" ->
       """|function(shape) {
-         |  console.log(JSON.stringify(shape));
+         |  //console.log(JSON.stringify(shape));
          |  var minLength = shape["shacl:minLength"];
-         |  console.log(minLength);
-         |  console.log(parseFloat(minLength));
-         |  if ( minLength == undefined) return true;
-         |  else return parseFloat(minLength) >= 0;
+         |  var maxLength = shape["shacl:maxLength"];
+         |  if (minLength == undefined || maxLength == undefined) return true;
+         |  else return (parseInt(minLength) < parseInt(maxLength));
          |}
       """.stripMargin
   )

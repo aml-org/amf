@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: Some API
+
+types:
+    valid:
+        type: array
+        minItems: 5
+        maxItems: 15
+    invalid:
+        type: array
+        minItems: 20     # minimum value should be smaller than maximum value
+        maxItems: 10

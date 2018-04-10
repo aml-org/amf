@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: Some API
+
+types:
+    valid:
+        type: string
+        minLength: 5
+        maxLength: 15
+    invalid:
+        type: string
+        minLength: 20     # minimum value should be smaller than maximum value
+        maxLength: 10

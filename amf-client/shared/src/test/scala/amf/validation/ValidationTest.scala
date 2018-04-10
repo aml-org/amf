@@ -1487,4 +1487,42 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.filter(_.level == SeverityLevels.WARNING).lengthCompare(2) == 0)
     }
   }
+
+  test("Test minimum maximum constraint between facets examples") {
+    for {
+      validation <- Validation(platform)
+      doc        <- AMFCompiler(validationsPath + "/facets/min-max-between.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 1)
+      assert(report.results.exists(_.message.contains("Maximum must be greater than or equal to minimum")))
+    }
+  }
+
+  test("Test minItems maxItems constraint between facets examples") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "/facets/min-max-items-between.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 1)
+      assert(report.results.exists(_.message.contains("MaxItems must be greater than or equal to minItems")))
+    }
+  }
+
+  test("Test minLength maxLength constraint between facets examples") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "/facets/min-max-length-between.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 1)
+      assert(report.results.exists(_.message.contains("MaxLength must be greater than or equal to minLength")))
+    }
+  }
 }
