@@ -1093,4 +1093,12 @@ class CompleteCycleTest extends BuildCycleTests {
   test("type nil shortcut raml to amf") {
     cycle("type_nil_shortcut.raml", "type_nil_shortcut.jsonld", RamlYamlHint, Amf)
   }
+
+  test("Declared documentation raml to amf") {
+    cycle("declared-documentation.raml",
+          "declared-documentation.jsonld",
+          RamlYamlHint,
+          Amf,
+          basePath + "/api-console/")
+  }
 }

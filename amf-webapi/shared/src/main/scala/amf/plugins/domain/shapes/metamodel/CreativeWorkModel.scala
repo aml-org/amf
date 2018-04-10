@@ -2,7 +2,7 @@ package amf.plugins.domain.shapes.metamodel
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Iri, Str}
-import amf.core.metamodel.domain.DomainElementModel
+import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel}
 import amf.core.vocabulary.Namespace.Schema
 import amf.core.vocabulary.ValueType
 import amf.plugins.domain.shapes.models.CreativeWork
@@ -10,7 +10,7 @@ import amf.plugins.domain.shapes.models.CreativeWork
 /**
   * Creative work metamodel
   */
-object CreativeWorkModel extends DomainElementModel {
+object CreativeWorkModel extends DomainElementModel with LinkableElementModel {
 
   val Url = Field(Iri, Schema + "url")
 
@@ -20,7 +20,8 @@ object CreativeWorkModel extends DomainElementModel {
 
   override val `type`: List[ValueType] = Schema + "CreativeWork" :: DomainElementModel.`type`
 
-  override def fields: List[Field] = Url :: Title :: Description :: DomainElementModel.fields
+  override def fields: List[Field] =
+    Url :: Title :: Description :: (DomainElementModel.fields ++ LinkableElementModel.fields)
 
   override def modelInstance = CreativeWork()
 }
