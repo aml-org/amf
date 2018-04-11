@@ -64,7 +64,7 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
   override def meta = NodeShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/" + name.value()
+  override def componentId: String = "/" + name.option().getOrElse("default-node")
 }
 
 object NodeShape {

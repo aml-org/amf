@@ -37,7 +37,7 @@ case class Example(fields: Fields, annotations: Annotations)
   override def meta: Obj = ExampleModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/example/" + name.value()
+  override def componentId: String = "/example/" + name.option().getOrElse("default-example")
 }
 
 object Example {

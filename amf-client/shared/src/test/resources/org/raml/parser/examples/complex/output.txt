@@ -11,6 +11,6 @@ Property phone at //Head must have a valid value
 Data at //Head/phone must match pattern ^[0-9|-]+$
 
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/complex/input.raml#/web-api/end-points/%2Forgs%2F%7BorgId%7D/get/200/application/json/schema/example/null/object_1
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/complex/input.raml#/web-api/end-points/%2Forgs%2F%7BorgId%7D/get/200/application/json/schema/example/default-example/object_1
   Property: http://raml.org/vocabularies/data#Head
   Position: Some(LexicalInformation([(44,0)-(59,31)]))
