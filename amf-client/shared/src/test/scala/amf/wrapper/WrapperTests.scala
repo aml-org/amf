@@ -5,7 +5,7 @@ import amf.client.convert.NativeOps
 import amf.client.model.document._
 import amf.client.model.domain._
 import amf.client.parse._
-import amf.client.render.{AmfGraphRenderer, Oas20Renderer, Raml08Renderer, Raml10Renderer}
+import amf.client.render._
 import amf.client.resolve.Raml10Resolver
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
@@ -372,6 +372,30 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   test("Parsing text document with base url (domain only)") {
     val baseUrl = "http://test.com"
     testParseStringWithBaseUrl(baseUrl)
+  }
+
+  test("Generate unit with source maps") {
+    val options = new RenderOptions().withSourceMaps
+
+    for {
+      _      <- AMF.init().asFuture
+      unit   <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(banking).asFuture
+      jsonld <- amf.Core.generator("AMF Graph", "application/ld+json").generateString(unit, options).asFuture
+    } yield {
+      jsonld should include("[(3,0)-(252,0)]")
+    }
+  }
+
+  test("Generate unit without source maps") {
+    val options = new RenderOptions().withoutSourceMaps
+
+    for {
+      _      <- AMF.init().asFuture
+      unit   <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(banking).asFuture
+      jsonld <- amf.Core.generator("AMF Graph", "application/ld+json").generateString(unit, options).asFuture
+    } yield {
+      jsonld should not include "[(3,0)-(252,0)]"
+    }
   }
 
   test("Build shape without default value") {
