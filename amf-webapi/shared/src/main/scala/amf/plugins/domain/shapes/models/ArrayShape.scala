@@ -41,7 +41,7 @@ abstract class DataArrangementShape(fields: Fields, annotations: Annotations) ex
     array
   }
 
-  override def componentId: String = "/array/" + name.value()
+  override def componentId: String = "/array/" + name.option().getOrElse("default-array")
 
   override def adopted(parent: String): this.type = {
     simpleAdoption(parent)
@@ -115,8 +115,6 @@ case class TupleShape(override val fields: Fields, override val annotations: Ann
 
   override def meta: Obj = TupleShapeModel
 
-  /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/array/" + name.value()
 }
 
 object TupleShape {

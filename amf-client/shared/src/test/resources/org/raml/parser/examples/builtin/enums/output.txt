@@ -8,13 +8,13 @@ Level: Violation
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/builtin/enums/input.raml#/declarations/scalar/countryBad_validation_validation_enum/prop
   Message: Data at / must be within the values (usa,rus)
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/builtin/enums/input.raml#/declarations/scalar/countryBad/example/null/scalar_1
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/builtin/enums/input.raml#/declarations/scalar/countryBad/example/default-example/scalar_1
   Property: http://raml.org/vocabularies/data#value
   Position: Some(LexicalInformation([(11,13)-(11,16)]))
 
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/builtin/enums/input.raml#/declarations/scalar/sizesBad_validation_validation_enum/prop
   Message: Data at / must be within the values (1,2,3)
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/builtin/enums/input.raml#/declarations/scalar/sizesBad/example/null/scalar_1
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/builtin/enums/input.raml#/declarations/scalar/sizesBad/example/default-example/scalar_1
   Property: http://raml.org/vocabularies/data#value
   Position: Some(LexicalInformation([(19,13)-(19,14)]))

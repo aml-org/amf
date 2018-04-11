@@ -20,7 +20,7 @@ case class SchemaShape(override val fields: Fields, override val annotations: An
   override def meta = SchemaShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/schema/" + name.value()
+  override def componentId: String = "/schema/" + name.option().getOrElse("default-schema")
 }
 
 object SchemaShape {

@@ -18,8 +18,6 @@ case class VariableValue(fields: Fields, annotations: Annotations) extends Domai
   def withName(name: String): this.type     = set(Name, name)
   def withValue(value: DataNode): this.type = set(Value, value)
 
-  override def adopted(parent: String): this.type = withId(parent + "/" + name.value())
-
   override def meta: Obj = VariableValueModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */

@@ -39,7 +39,7 @@ case class CustomDomainProperty(fields: Fields, annotations: Annotations)
   override def meta = CustomDomainPropertyModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = name.value().urlEncoded
+  override def componentId: String = name.option().map(_.urlEncoded).getOrElse("")
 }
 
 object CustomDomainProperty {
