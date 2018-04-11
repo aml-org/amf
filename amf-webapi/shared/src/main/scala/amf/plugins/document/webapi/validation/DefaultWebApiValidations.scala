@@ -237,7 +237,7 @@ object JsCustomValidations {
          |  var minimum = shape["shacl:minInclusive"];
          |  var maximum = shape["shacl:maxInclusive"];
          |  if (minimum == undefined || maximum == undefined) return true;
-         |  else return (parseFloat(minimum) < parseFloat(maximum));
+         |  else return (parseFloat(minimum) <= parseFloat(maximum));
          |}
       """.stripMargin,
     "minItemsMaxItemsValidation" ->
@@ -246,7 +246,7 @@ object JsCustomValidations {
          |  var minCount = shape["shacl:minCount"];
          |  var maxCount = shape["shacl:maxCount"];
          |  if (minCount == undefined || maxCount == undefined) return true;
-         |  else return (parseInt(minCount) < parseInt(maxCount));
+         |  else return (parseInt(minCount) <= parseInt(maxCount));
          |}
       """.stripMargin,
     "minLengthMaxLengthValidation" ->
@@ -255,7 +255,7 @@ object JsCustomValidations {
          |  var minLength = shape["shacl:minLength"];
          |  var maxLength = shape["shacl:maxLength"];
          |  if (minLength == undefined || maxLength == undefined) return true;
-         |  else return (parseInt(minLength) < parseInt(maxLength));
+         |  else return (parseInt(minLength) <= parseInt(maxLength));
          |}
       """.stripMargin
   )
