@@ -62,7 +62,13 @@ documentation:
         type: jsonSchema
       text/xml:
         type: xmlSchema
-        example: <saasTxn> <tenant>100</tenant> <objectType>Business Partner</objectType> <objectKey>12345</objectKey> <txnType>Update</txnType> </saasTxn>
+        example: |
+          <saasTxn>
+          <tenant>100</tenant>
+          <objectType>Business Partner</objectType>
+          <objectKey>12345</objectKey>
+          <txnType>Update</txnType>
+          </saasTxn>
     responses:
       201:
         description: A new transaction was created on the queue.

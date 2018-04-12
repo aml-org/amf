@@ -354,8 +354,10 @@ annotationTypes:
                 type: boolean
           application/xml:
             examples:
-              first: <first/>
-              second: <second/>
+              first: |
+                <first/>
+              second: |
+                <second/>
             type: |
               <?xml version="1.0" encoding="utf-16"?>
               <xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
@@ -395,8 +397,10 @@ annotationTypes:
             type: boolean
       application/xml:
         examples:
-          first: <first/>
-          second: <second/>
+          first: |
+            <first/>
+          second: |
+            <second/>
         type: |
           <?xml version="1.0" encoding="utf-16"?>
           <xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
