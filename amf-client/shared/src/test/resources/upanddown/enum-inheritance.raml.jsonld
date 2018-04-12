@@ -342,160 +342,14 @@
               "http://raml.org/vocabularies/shapes#Shape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
-            "http://www.w3.org/ns/shacl#closed": [
+            "http://raml.org/vocabularies/document#link-target": [
               {
-                "@value": false
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin"
               }
             ],
-            "http://www.w3.org/ns/shacl#property": [
+            "http://raml.org/vocabularies/document#link-label": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin/property/clearanceLevel",
-                "@type": [
-                  "http://www.w3.org/ns/shacl#PropertyShape",
-                  "http://www.w3.org/ns/shacl#Shape",
-                  "http://raml.org/vocabularies/shapes#Shape"
-                ],
-                "http://www.w3.org/ns/shacl#path": [
-                  {
-                    "@id": "http://raml.org/vocabularies/data#clearanceLevel"
-                  }
-                ],
-                "http://raml.org/vocabularies/shapes#range": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin/property/clearanceLevel/scalar/clearanceLevel",
-                    "@type": [
-                      "http://raml.org/vocabularies/shapes#ScalarShape",
-                      "http://www.w3.org/ns/shacl#Shape",
-                      "http://raml.org/vocabularies/shapes#Shape",
-                      "http://raml.org/vocabularies/document#DomainElement"
-                    ],
-                    "http://www.w3.org/ns/shacl#datatype": [
-                      {
-                        "@id": "http://www.w3.org/2001/XMLSchema#string"
-                      }
-                    ],
-                    "http://www.w3.org/ns/shacl#name": [
-                      {
-                        "@value": "clearanceLevel"
-                      }
-                    ],
-                    "http://www.w3.org/ns/shacl#in": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin/property/clearanceLevel/scalar/clearanceLevel/list",
-                        "http://www.w3.org/1999/02/22-rdf-syntax-ns#first": [
-                          {
-                            "@value": "low"
-                          }
-                        ],
-                        "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest": [
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin/property/clearanceLevel/scalar/clearanceLevel/list/list",
-                            "http://www.w3.org/1999/02/22-rdf-syntax-ns#first": [
-                              {
-                                "@value": "middle"
-                              }
-                            ],
-                            "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest": [
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin/property/clearanceLevel/scalar/clearanceLevel/list/list/list",
-                                "http://www.w3.org/1999/02/22-rdf-syntax-ns#first": [
-                                  {
-                                    "@value": "high"
-                                  }
-                                ],
-                                "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest": [
-                                  {
-                                    "@id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ],
-                    "http://raml.org/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin/property/clearanceLevel/scalar/clearanceLevel/source-map",
-                        "@type": [
-                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://raml.org/vocabularies/document-source-maps#default-node": [
-                          {
-                            "http://raml.org/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin/property/clearanceLevel/scalar/clearanceLevel"
-                              }
-                            ],
-                            "http://raml.org/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": ""
-                              }
-                            ]
-                          }
-                        ],
-                        "http://raml.org/vocabularies/document-source-maps#lexical": [
-                          {
-                            "http://raml.org/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "http://www.w3.org/ns/shacl#in"
-                              }
-                            ],
-                            "http://raml.org/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(8,8)-(9,0)]"
-                              }
-                            ]
-                          },
-                          {
-                            "http://raml.org/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin/property/clearanceLevel/scalar/clearanceLevel"
-                              }
-                            ],
-                            "http://raml.org/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(7,6)-(9,0)]"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#minCount": [
-                  {
-                    "@value": 1
-                  }
-                ],
-                "http://www.w3.org/ns/shacl#name": [
-                  {
-                    "@value": "clearanceLevel"
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin/property/clearanceLevel/source-map",
-                    "@type": [
-                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://raml.org/vocabularies/document-source-maps#lexical": [
-                      {
-                        "http://raml.org/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin/property/clearanceLevel"
-                          }
-                        ],
-                        "http://raml.org/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(7,6)-(9,0)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
+                "@value": "Admin"
               }
             ],
             "http://www.w3.org/ns/shacl#name": [
@@ -509,68 +363,16 @@
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://raml.org/vocabularies/document-source-maps#declared-element": [
-                  {
-                    "http://raml.org/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin"
-                      }
-                    ],
-                    "http://raml.org/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": ""
-                      }
-                    ]
-                  }
-                ],
                 "http://raml.org/vocabularies/document-source-maps#lexical": [
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://www.w3.org/ns/shacl#name"
-                      }
-                    ],
-                    "http://raml.org/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(4,2)-(4,7)]"
-                      }
-                    ]
-                  },
-                  {
-                    "http://raml.org/vocabularies/document-source-maps#element": [
-                      {
                         "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(4,2)-(9,0)]"
-                      }
-                    ]
-                  },
-                  {
-                    "http://raml.org/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://www.w3.org/ns/shacl#property"
-                      }
-                    ],
-                    "http://raml.org/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(6,4)-(9,0)]"
-                      }
-                    ]
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
-                  {
-                    "http://raml.org/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin"
-                      }
-                    ],
-                    "http://raml.org/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(5,4)-(5,8)]"
+                        "@value": "[(10,10)-(10,15)]"
                       }
                     ]
                   }

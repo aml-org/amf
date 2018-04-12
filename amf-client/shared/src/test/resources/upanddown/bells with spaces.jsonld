@@ -156,187 +156,14 @@
                                   "http://raml.org/vocabularies/shapes#Shape",
                                   "http://raml.org/vocabularies/document#DomainElement"
                                 ],
-                                "http://www.w3.org/ns/shacl#closed": [
+                                "http://raml.org/vocabularies/document#link-target": [
                                   {
-                                    "@value": false
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%2520with%2520spaces.raml#/declarations/Bell"
                                   }
                                 ],
-                                "http://www.w3.org/ns/shacl#property": [
+                                "http://raml.org/vocabularies/document#link-label": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/id",
-                                    "@type": [
-                                      "http://www.w3.org/ns/shacl#PropertyShape",
-                                      "http://www.w3.org/ns/shacl#Shape",
-                                      "http://raml.org/vocabularies/shapes#Shape"
-                                    ],
-                                    "http://www.w3.org/ns/shacl#path": [
-                                      {
-                                        "@id": "http://raml.org/vocabularies/data#id"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/shapes#range": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/id/scalar/id",
-                                        "@type": [
-                                          "http://raml.org/vocabularies/shapes#ScalarShape",
-                                          "http://www.w3.org/ns/shacl#Shape",
-                                          "http://raml.org/vocabularies/shapes#Shape",
-                                          "http://raml.org/vocabularies/document#DomainElement"
-                                        ],
-                                        "http://www.w3.org/ns/shacl#datatype": [
-                                          {
-                                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                                          }
-                                        ],
-                                        "http://www.w3.org/ns/shacl#name": [
-                                          {
-                                            "@value": "id"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#sources": [
-                                          {
-                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/id/scalar/id/source-map",
-                                            "@type": [
-                                              "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                                            ],
-                                            "http://raml.org/vocabularies/document-source-maps#lexical": [
-                                              {
-                                                "http://raml.org/vocabularies/document-source-maps#element": [
-                                                  {
-                                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/id/scalar/id"
-                                                  }
-                                                ],
-                                                "http://raml.org/vocabularies/document-source-maps#value": [
-                                                  {
-                                                    "@value": "[(11,12)-(12,0)]"
-                                                  }
-                                                ]
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#minCount": [
-                                      {
-                                        "@value": 1
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#name": [
-                                      {
-                                        "@value": "id"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/document-source-maps#sources": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/id/source-map",
-                                        "@type": [
-                                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#lexical": [
-                                          {
-                                            "http://raml.org/vocabularies/document-source-maps#element": [
-                                              {
-                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/id"
-                                              }
-                                            ],
-                                            "http://raml.org/vocabularies/document-source-maps#value": [
-                                              {
-                                                "@value": "[(11,12)-(12,0)]"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/name",
-                                    "@type": [
-                                      "http://www.w3.org/ns/shacl#PropertyShape",
-                                      "http://www.w3.org/ns/shacl#Shape",
-                                      "http://raml.org/vocabularies/shapes#Shape"
-                                    ],
-                                    "http://www.w3.org/ns/shacl#path": [
-                                      {
-                                        "@id": "http://raml.org/vocabularies/data#name"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/shapes#range": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/name/scalar/name",
-                                        "@type": [
-                                          "http://raml.org/vocabularies/shapes#ScalarShape",
-                                          "http://www.w3.org/ns/shacl#Shape",
-                                          "http://raml.org/vocabularies/shapes#Shape",
-                                          "http://raml.org/vocabularies/document#DomainElement"
-                                        ],
-                                        "http://www.w3.org/ns/shacl#datatype": [
-                                          {
-                                            "@id": "http://www.w3.org/2001/XMLSchema#string"
-                                          }
-                                        ],
-                                        "http://www.w3.org/ns/shacl#name": [
-                                          {
-                                            "@value": "name"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#sources": [
-                                          {
-                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/name/scalar/name/source-map",
-                                            "@type": [
-                                              "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                                            ],
-                                            "http://raml.org/vocabularies/document-source-maps#lexical": [
-                                              {
-                                                "http://raml.org/vocabularies/document-source-maps#element": [
-                                                  {
-                                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/name/scalar/name"
-                                                  }
-                                                ],
-                                                "http://raml.org/vocabularies/document-source-maps#value": [
-                                                  {
-                                                    "@value": "[(12,12)-(14,0)]"
-                                                  }
-                                                ]
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#minCount": [
-                                      {
-                                        "@value": 1
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#name": [
-                                      {
-                                        "@value": "name"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/document-source-maps#sources": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/name/source-map",
-                                        "@type": [
-                                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#lexical": [
-                                          {
-                                            "http://raml.org/vocabularies/document-source-maps#element": [
-                                              {
-                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/name"
-                                              }
-                                            ],
-                                            "http://raml.org/vocabularies/document-source-maps#value": [
-                                              {
-                                                "@value": "[(12,12)-(14,0)]"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ]
+                                    "@value": "Bell"
                                   }
                                 ],
                                 "http://www.w3.org/ns/shacl#name": [
@@ -350,68 +177,16 @@
                                     "@type": [
                                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                     ],
-                                    "http://raml.org/vocabularies/document-source-maps#declared-element": [
-                                      {
-                                        "http://raml.org/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": ""
-                                          }
-                                        ]
-                                      }
-                                    ],
                                     "http://raml.org/vocabularies/document-source-maps#lexical": [
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://www.w3.org/ns/shacl#name"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(8,4)-(8,8)]"
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "http://raml.org/vocabularies/document-source-maps#element": [
-                                          {
                                             "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(8,4)-(14,0)]"
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "http://raml.org/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "http://www.w3.org/ns/shacl#property"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(10,8)-(14,0)]"
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
-                                      {
-                                        "http://raml.org/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(9,8)-(9,12)]"
+                                            "@value": "[(20,30)-(20,34)]"
                                           }
                                         ]
                                       }
@@ -623,187 +398,14 @@
                                   "http://raml.org/vocabularies/shapes#Shape",
                                   "http://raml.org/vocabularies/document#DomainElement"
                                 ],
-                                "http://www.w3.org/ns/shacl#closed": [
+                                "http://raml.org/vocabularies/document#link-target": [
                                   {
-                                    "@value": false
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%2520with%2520spaces.raml#/declarations/Bell"
                                   }
                                 ],
-                                "http://www.w3.org/ns/shacl#property": [
+                                "http://raml.org/vocabularies/document#link-label": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/id",
-                                    "@type": [
-                                      "http://www.w3.org/ns/shacl#PropertyShape",
-                                      "http://www.w3.org/ns/shacl#Shape",
-                                      "http://raml.org/vocabularies/shapes#Shape"
-                                    ],
-                                    "http://www.w3.org/ns/shacl#path": [
-                                      {
-                                        "@id": "http://raml.org/vocabularies/data#id"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/shapes#range": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/id/scalar/id",
-                                        "@type": [
-                                          "http://raml.org/vocabularies/shapes#ScalarShape",
-                                          "http://www.w3.org/ns/shacl#Shape",
-                                          "http://raml.org/vocabularies/shapes#Shape",
-                                          "http://raml.org/vocabularies/document#DomainElement"
-                                        ],
-                                        "http://www.w3.org/ns/shacl#datatype": [
-                                          {
-                                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                                          }
-                                        ],
-                                        "http://www.w3.org/ns/shacl#name": [
-                                          {
-                                            "@value": "id"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#sources": [
-                                          {
-                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/id/scalar/id/source-map",
-                                            "@type": [
-                                              "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                                            ],
-                                            "http://raml.org/vocabularies/document-source-maps#lexical": [
-                                              {
-                                                "http://raml.org/vocabularies/document-source-maps#element": [
-                                                  {
-                                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/id/scalar/id"
-                                                  }
-                                                ],
-                                                "http://raml.org/vocabularies/document-source-maps#value": [
-                                                  {
-                                                    "@value": "[(11,12)-(12,0)]"
-                                                  }
-                                                ]
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#minCount": [
-                                      {
-                                        "@value": 1
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#name": [
-                                      {
-                                        "@value": "id"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/document-source-maps#sources": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/id/source-map",
-                                        "@type": [
-                                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#lexical": [
-                                          {
-                                            "http://raml.org/vocabularies/document-source-maps#element": [
-                                              {
-                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/id"
-                                              }
-                                            ],
-                                            "http://raml.org/vocabularies/document-source-maps#value": [
-                                              {
-                                                "@value": "[(11,12)-(12,0)]"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/name",
-                                    "@type": [
-                                      "http://www.w3.org/ns/shacl#PropertyShape",
-                                      "http://www.w3.org/ns/shacl#Shape",
-                                      "http://raml.org/vocabularies/shapes#Shape"
-                                    ],
-                                    "http://www.w3.org/ns/shacl#path": [
-                                      {
-                                        "@id": "http://raml.org/vocabularies/data#name"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/shapes#range": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/name/scalar/name",
-                                        "@type": [
-                                          "http://raml.org/vocabularies/shapes#ScalarShape",
-                                          "http://www.w3.org/ns/shacl#Shape",
-                                          "http://raml.org/vocabularies/shapes#Shape",
-                                          "http://raml.org/vocabularies/document#DomainElement"
-                                        ],
-                                        "http://www.w3.org/ns/shacl#datatype": [
-                                          {
-                                            "@id": "http://www.w3.org/2001/XMLSchema#string"
-                                          }
-                                        ],
-                                        "http://www.w3.org/ns/shacl#name": [
-                                          {
-                                            "@value": "name"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#sources": [
-                                          {
-                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/name/scalar/name/source-map",
-                                            "@type": [
-                                              "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                                            ],
-                                            "http://raml.org/vocabularies/document-source-maps#lexical": [
-                                              {
-                                                "http://raml.org/vocabularies/document-source-maps#element": [
-                                                  {
-                                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/name/scalar/name"
-                                                  }
-                                                ],
-                                                "http://raml.org/vocabularies/document-source-maps#value": [
-                                                  {
-                                                    "@value": "[(12,12)-(14,0)]"
-                                                  }
-                                                ]
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#minCount": [
-                                      {
-                                        "@value": 1
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#name": [
-                                      {
-                                        "@value": "name"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/document-source-maps#sources": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/name/source-map",
-                                        "@type": [
-                                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#lexical": [
-                                          {
-                                            "http://raml.org/vocabularies/document-source-maps#element": [
-                                              {
-                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell/property/name"
-                                              }
-                                            ],
-                                            "http://raml.org/vocabularies/document-source-maps#value": [
-                                              {
-                                                "@value": "[(12,12)-(14,0)]"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ]
+                                    "@value": "Bell"
                                   }
                                 ],
                                 "http://www.w3.org/ns/shacl#name": [
@@ -817,68 +419,16 @@
                                     "@type": [
                                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                     ],
-                                    "http://raml.org/vocabularies/document-source-maps#declared-element": [
-                                      {
-                                        "http://raml.org/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": ""
-                                          }
-                                        ]
-                                      }
-                                    ],
                                     "http://raml.org/vocabularies/document-source-maps#lexical": [
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://www.w3.org/ns/shacl#name"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(8,4)-(8,8)]"
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "http://raml.org/vocabularies/document-source-maps#element": [
-                                          {
                                             "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(8,4)-(14,0)]"
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "http://raml.org/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "http://www.w3.org/ns/shacl#property"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(10,8)-(14,0)]"
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
-                                      {
-                                        "http://raml.org/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/bells%20with%20spaces.raml#/declarations/Bell"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(9,8)-(9,12)]"
+                                            "@value": "[(25,22)-(25,26)]"
                                           }
                                         ]
                                       }

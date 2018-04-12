@@ -4,7 +4,7 @@ import amf.core.model.document.Document
 import amf.core.remote._
 import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.domain.shapes.models.DomainExtensions._
-import amf.plugins.domain.shapes.models.NodeShape
+import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 import amf.plugins.domain.webapi.models.WebApi
 import org.scalatest.{Assertion, Succeeded}
 
@@ -121,7 +121,18 @@ class DocumentMakerTest extends WebApiMakerTest {
       case _   => 1
     }
 
+    val id = vendor match {
+      case Oas => "file://amf-client/shared/src/test/resources/maker/inherits-declared-types.json#/declarations/Human"
+      case _   => "file://amf-client/shared/src/test/resources/maker/inherits-declared-types.raml#/declarations/Human"
+    }
+
+    val linkLabel = vendor match {
+      case Oas => "#/definitions/Human"
+      case _   => "Human"
+    }
+
     val human = NodeShape()
+      .withId(id)
       .withName("Human")
       .withClosed(false)
 
@@ -153,7 +164,7 @@ class DocumentMakerTest extends WebApiMakerTest {
       .withMinCount(minCount)
       .withScalarSchema("omnipotent")
       .withDataType("http://www.w3.org/2001/XMLSchema#boolean")
-    person.withInherits(Seq(human))
+    person.withInherits(Seq(human.link(linkLabel).asInstanceOf[AnyShape].withName("Human")))
 
     val address = person
       .withProperty("address")
