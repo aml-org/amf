@@ -6,6 +6,7 @@ import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{Annotations, ScalarNode, _}
+import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, Inferred}
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, WebApiContext}
@@ -22,7 +23,6 @@ import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import org.yaml.model._
 import org.yaml.render.YamlRender
-import amf.core.utils.Strings
 
 import scala.collection.mutable
 
@@ -118,34 +118,40 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
   private def parseLinkType(): Option[AnyShape] = {
     map
       .key("$ref")
-      .map(e => OasDefinitions.stripDefinitionsPrefix(e.value))
-      .map(text =>
-        ctx.declarations.findType(text, SearchScope.All) match {
-          case Some(s) =>
-            val copied = s.link(text, Annotations(ast)).asInstanceOf[AnyShape].withName(name)
-            adopt(copied)
-            copied
-          case None =>
-            ctx.findLocalJSONPath(map.key("$ref").map(_.value.as[String]).getOrElse("")) match {
-              case Some((name, shapeNode)) =>
-                OasTypeParser(YMapEntry(name, shapeNode), adopt, oasNode).parse() match {
-                  case Some(shape) => shape
+      .flatMap { e =>
+        e.value.tagType match {
+          case YType.Null => None // we dont have to register violation because web api reference handler already do it
+          case _ =>
+            val text = OasDefinitions.stripDefinitionsPrefix(e.value)
+            ctx.declarations.findType(text, SearchScope.All) match {
+              case Some(s) =>
+                val copied = s.link(text, Annotations(ast)).asInstanceOf[AnyShape].withName(name)
+                adopt(copied)
+                Some(copied)
+              case None =>
+                ctx.findLocalJSONPath(map.key("$ref").map(_.value.as[String]).getOrElse("")) match {
+                  case Some((name, shapeNode)) =>
+                    OasTypeParser(YMapEntry(name, shapeNode), adopt, oasNode)
+                      .parse()
+                      .orElse({
+                        val shape = UnresolvedShape(text, map).withName(text)
+                        shape.withContext(ctx)
+                        shape.unresolved(text, map)
+                        adopt(shape)
+                        Some(shape)
+                      })
                   case None =>
                     val shape = UnresolvedShape(text, map).withName(text)
                     shape.withContext(ctx)
                     shape.unresolved(text, map)
                     adopt(shape)
-                    shape
+                    Some(shape)
                 }
-
-              case None =>
-                val shape = UnresolvedShape(text, map).withName(text)
-                shape.withContext(ctx)
-                shape.unresolved(text, map)
-                adopt(shape)
-                shape
             }
-      })
+
+        }
+
+      }
   }
 
   private def parseObjectType(): AnyShape = {
@@ -459,7 +465,10 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
         .key("$ref")
         .flatMap { entry =>
           ctx.declarations.shapes.get(entry.value.as[String].stripPrefix("#/definitions/")) map { declaration =>
-            declaration.link(entry.value.as[String], Annotations(entry.value)).asInstanceOf[AnyShape].withName(declaration.name.option().getOrElse("schema"))
+            declaration
+              .link(entry.value.as[String], Annotations(entry.value))
+              .asInstanceOf[AnyShape]
+              .withName(declaration.name.option().getOrElse("schema"))
           }
         }
     }

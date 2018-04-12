@@ -8,6 +8,7 @@ import amf.core.remote.{Cache, Context}
 import amf.plugins.document.webapi.BaseWebApiPlugin
 import amf.plugins.document.webapi.parser.RamlHeader
 import amf.plugins.document.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
+import amf.plugins.document.webapi.parser.spec.declaration.LibraryLocationParser
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.YamlParser
@@ -95,7 +96,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
             .key(u)
             .foreach(entry => {
               entry.value.to[YMap] match {
-                case Right(m) => m.entries.foreach(library)
+                case Right(m) => m.entries.foreach(library(_, ctx))
                 case _        => ctx.violation("", s"Expected map but found: ${entry.value}", entry.value)
               }
             })
@@ -104,12 +105,11 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     }
   }
 
-  private def library(entry: YMapEntry) = references += (libraryName(entry), LibraryReference, entry.value)
-
-  private def libraryName(e: YMapEntry): String = e.value.tagType match {
-    case YType.Include => e.value.as[YScalar].text
-    case _             => e.value
-  }
+  private def library(entry: YMapEntry, ctx: ParserContext): Unit =
+    LibraryLocationParser(entry) match {
+      case Some(location) => references += (location, LibraryReference, entry.value)
+      case _              => ctx.violation("Missing library location", entry)
+    }
 
   def oasLinks(part: YPart, ctx: ParserContext): Unit = {
     part match {
