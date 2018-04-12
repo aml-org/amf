@@ -144,187 +144,14 @@
                                   "http://raml.org/vocabularies/shapes#Shape",
                                   "http://raml.org/vocabularies/document#DomainElement"
                                 ],
-                                "http://www.w3.org/ns/shacl#closed": [
+                                "http://raml.org/vocabularies/document#link-target": [
                                   {
-                                    "@value": false
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/Person"
                                   }
                                 ],
-                                "http://www.w3.org/ns/shacl#property": [
+                                "http://raml.org/vocabularies/document#link-label": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/Person/property/name",
-                                    "@type": [
-                                      "http://www.w3.org/ns/shacl#PropertyShape",
-                                      "http://www.w3.org/ns/shacl#Shape",
-                                      "http://raml.org/vocabularies/shapes#Shape"
-                                    ],
-                                    "http://www.w3.org/ns/shacl#path": [
-                                      {
-                                        "@id": "http://raml.org/vocabularies/data#name"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/shapes#range": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/Person/property/name/scalar/name",
-                                        "@type": [
-                                          "http://raml.org/vocabularies/shapes#ScalarShape",
-                                          "http://www.w3.org/ns/shacl#Shape",
-                                          "http://raml.org/vocabularies/shapes#Shape",
-                                          "http://raml.org/vocabularies/document#DomainElement"
-                                        ],
-                                        "http://www.w3.org/ns/shacl#datatype": [
-                                          {
-                                            "@id": "http://www.w3.org/2001/XMLSchema#string"
-                                          }
-                                        ],
-                                        "http://www.w3.org/ns/shacl#name": [
-                                          {
-                                            "@value": "name"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#sources": [
-                                          {
-                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/Person/property/name/scalar/name/source-map",
-                                            "@type": [
-                                              "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                                            ],
-                                            "http://raml.org/vocabularies/document-source-maps#lexical": [
-                                              {
-                                                "http://raml.org/vocabularies/document-source-maps#element": [
-                                                  {
-                                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/Person/property/name/scalar/name"
-                                                  }
-                                                ],
-                                                "http://raml.org/vocabularies/document-source-maps#value": [
-                                                  {
-                                                    "@value": "[(18,6)-(19,0)]"
-                                                  }
-                                                ]
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#minCount": [
-                                      {
-                                        "@value": 1
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#name": [
-                                      {
-                                        "@value": "name"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/document-source-maps#sources": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/Person/property/name/source-map",
-                                        "@type": [
-                                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#lexical": [
-                                          {
-                                            "http://raml.org/vocabularies/document-source-maps#element": [
-                                              {
-                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/Person/property/name"
-                                              }
-                                            ],
-                                            "http://raml.org/vocabularies/document-source-maps#value": [
-                                              {
-                                                "@value": "[(18,6)-(19,0)]"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/Person/property/age",
-                                    "@type": [
-                                      "http://www.w3.org/ns/shacl#PropertyShape",
-                                      "http://www.w3.org/ns/shacl#Shape",
-                                      "http://raml.org/vocabularies/shapes#Shape"
-                                    ],
-                                    "http://www.w3.org/ns/shacl#path": [
-                                      {
-                                        "@id": "http://raml.org/vocabularies/data#age"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/shapes#range": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/Person/property/age/scalar/age",
-                                        "@type": [
-                                          "http://raml.org/vocabularies/shapes#ScalarShape",
-                                          "http://www.w3.org/ns/shacl#Shape",
-                                          "http://raml.org/vocabularies/shapes#Shape",
-                                          "http://raml.org/vocabularies/document#DomainElement"
-                                        ],
-                                        "http://www.w3.org/ns/shacl#datatype": [
-                                          {
-                                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                                          }
-                                        ],
-                                        "http://www.w3.org/ns/shacl#name": [
-                                          {
-                                            "@value": "age"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#sources": [
-                                          {
-                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/Person/property/age/scalar/age/source-map",
-                                            "@type": [
-                                              "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                                            ],
-                                            "http://raml.org/vocabularies/document-source-maps#lexical": [
-                                              {
-                                                "http://raml.org/vocabularies/document-source-maps#element": [
-                                                  {
-                                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/Person/property/age/scalar/age"
-                                                  }
-                                                ],
-                                                "http://raml.org/vocabularies/document-source-maps#value": [
-                                                  {
-                                                    "@value": "[(19,6)-(20,0)]"
-                                                  }
-                                                ]
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#minCount": [
-                                      {
-                                        "@value": 1
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#name": [
-                                      {
-                                        "@value": "age"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/document-source-maps#sources": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/Person/property/age/source-map",
-                                        "@type": [
-                                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#lexical": [
-                                          {
-                                            "http://raml.org/vocabularies/document-source-maps#element": [
-                                              {
-                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/Person/property/age"
-                                              }
-                                            ],
-                                            "http://raml.org/vocabularies/document-source-maps#value": [
-                                              {
-                                                "@value": "[(19,6)-(20,0)]"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ]
+                                    "@value": "Person"
                                   }
                                 ],
                                 "http://www.w3.org/ns/shacl#name": [
@@ -338,54 +165,16 @@
                                     "@type": [
                                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                     ],
-                                    "http://raml.org/vocabularies/document-source-maps#declared-element": [
-                                      {
-                                        "http://raml.org/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/Person"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": ""
-                                          }
-                                        ]
-                                      }
-                                    ],
                                     "http://raml.org/vocabularies/document-source-maps#lexical": [
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://www.w3.org/ns/shacl#name"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(16,2)-(16,8)]"
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "http://raml.org/vocabularies/document-source-maps#element": [
-                                          {
                                             "@value": "file://amf-client/shared/src/test/resources/upanddown/numeric-facets.raml#/declarations/Person"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(16,2)-(20,0)]"
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "http://raml.org/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "http://www.w3.org/ns/shacl#property"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(17,4)-(20,0)]"
+                                            "@value": "[(25,14)-(25,20)]"
                                           }
                                         ]
                                       }

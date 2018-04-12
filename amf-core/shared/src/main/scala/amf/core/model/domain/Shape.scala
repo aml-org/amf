@@ -38,6 +38,19 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
 
   def withDefaultStr(value: String): Shape.this.type = set(DefaultValueString, value)
 
+  def effectiveInherits: Seq[Shape] = {
+    inherits.map { base =>
+      if (base.linkTarget.isDefined) {
+        base.effectiveLinkTarget match {
+          case linkedShape: Shape => linkedShape
+          case _                  => base // TODO: what should we do here?
+        }
+      } else {
+        base
+      }
+    }
+  }
+
   type FacetsMap = Map[String, PropertyShape]
 
   // @todo should be memoize this?
@@ -61,7 +74,7 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
       // for each base shape compute sequence(s) of facets map and merge it with the
       // initial facets maps computed for this shape. This multiplies the number of
       // final facets maps
-      inherits.foldLeft(initialSequence) { (acc: Seq[FacetsMap], baseShape: Shape) =>
+      effectiveInherits.foldLeft(initialSequence) { (acc: Seq[FacetsMap], baseShape: Shape) =>
         baseShape.collectCustomShapePropertyDefinitions().flatMap { facetsMap: FacetsMap =>
           acc.map { accFacetsMap =>
             accFacetsMap ++ facetsMap

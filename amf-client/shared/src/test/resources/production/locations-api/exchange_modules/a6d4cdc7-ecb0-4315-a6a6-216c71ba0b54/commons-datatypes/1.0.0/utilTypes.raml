@@ -1,0 +1,25 @@
+#%RAML 1.0 Library
+
+usage: Catalog Types
+types:
+  MonetaryAmountData:
+    properties:
+      value: number
+      currency:
+    
+  CategoryData:
+    properties: 
+      id: number
+      name: string
+
+  ImageData:
+    properties: 
+      id: number
+      url: string
+
+  ReviewData:
+    properties:
+      reviewer_name: string
+      review: string
+      date: date-only
+      rate: number

@@ -9,6 +9,11 @@ trait Linkable extends AmfObject { this: DomainElement with Linkable =>
   var linkTarget: Option[DomainElement]    = None
   var linkAnnotations: Option[Annotations] = None
 
+  def effectiveLinkTarget: DomainElement = linkTarget.map {
+    case linkable: Linkable if linkTarget.isDefined => linkable.effectiveLinkTarget
+    case other => other
+  }.getOrElse(this)
+
   def isLink: Boolean           = linkTarget.isDefined
   def linkLabel: Option[String] = Option(fields(LinkableElementModel.Label))
 

@@ -284,154 +284,14 @@
                                   "http://raml.org/vocabularies/shapes#Shape",
                                   "http://raml.org/vocabularies/document#DomainElement"
                                 ],
-                                "http://www.w3.org/ns/shacl#closed": [
+                                "http://raml.org/vocabularies/document#link-target": [
                                   {
-                                    "@value": false
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/file_type_expression.raml#/declarations/wrappedFile"
                                   }
                                 ],
-                                "http://www.w3.org/ns/shacl#property": [
+                                "http://raml.org/vocabularies/document#link-label": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/file_type_expression.raml#/declarations/wrappedFile/property/fileprop",
-                                    "@type": [
-                                      "http://www.w3.org/ns/shacl#PropertyShape",
-                                      "http://www.w3.org/ns/shacl#Shape",
-                                      "http://raml.org/vocabularies/shapes#Shape"
-                                    ],
-                                    "http://www.w3.org/ns/shacl#path": [
-                                      {
-                                        "@id": "http://raml.org/vocabularies/data#fileprop"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/shapes#range": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/file_type_expression.raml#/declarations/wrappedFile/property/fileprop/default-file",
-                                        "@type": [
-                                          "http://raml.org/vocabularies/shapes#FileShape",
-                                          "http://www.w3.org/ns/shacl#Shape",
-                                          "http://raml.org/vocabularies/shapes#Shape"
-                                        ]
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#minCount": [
-                                      {
-                                        "@value": 1
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#name": [
-                                      {
-                                        "@value": "fileprop"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/document-source-maps#sources": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/file_type_expression.raml#/declarations/wrappedFile/property/fileprop/source-map",
-                                        "@type": [
-                                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#lexical": [
-                                          {
-                                            "http://raml.org/vocabularies/document-source-maps#element": [
-                                              {
-                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/file_type_expression.raml#/declarations/wrappedFile/property/fileprop"
-                                              }
-                                            ],
-                                            "http://raml.org/vocabularies/document-source-maps#value": [
-                                              {
-                                                "@value": "[(11,6)-(12,0)]"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/file_type_expression.raml#/declarations/wrappedFile/property/stringprop",
-                                    "@type": [
-                                      "http://www.w3.org/ns/shacl#PropertyShape",
-                                      "http://www.w3.org/ns/shacl#Shape",
-                                      "http://raml.org/vocabularies/shapes#Shape"
-                                    ],
-                                    "http://www.w3.org/ns/shacl#path": [
-                                      {
-                                        "@id": "http://raml.org/vocabularies/data#stringprop"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/shapes#range": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/file_type_expression.raml#/declarations/wrappedFile/property/stringprop/scalar/stringprop",
-                                        "@type": [
-                                          "http://raml.org/vocabularies/shapes#ScalarShape",
-                                          "http://www.w3.org/ns/shacl#Shape",
-                                          "http://raml.org/vocabularies/shapes#Shape",
-                                          "http://raml.org/vocabularies/document#DomainElement"
-                                        ],
-                                        "http://www.w3.org/ns/shacl#datatype": [
-                                          {
-                                            "@id": "http://www.w3.org/2001/XMLSchema#string"
-                                          }
-                                        ],
-                                        "http://www.w3.org/ns/shacl#name": [
-                                          {
-                                            "@value": "stringprop"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#sources": [
-                                          {
-                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/file_type_expression.raml#/declarations/wrappedFile/property/stringprop/scalar/stringprop/source-map",
-                                            "@type": [
-                                              "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                                            ],
-                                            "http://raml.org/vocabularies/document-source-maps#lexical": [
-                                              {
-                                                "http://raml.org/vocabularies/document-source-maps#element": [
-                                                  {
-                                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/file_type_expression.raml#/declarations/wrappedFile/property/stringprop/scalar/stringprop"
-                                                  }
-                                                ],
-                                                "http://raml.org/vocabularies/document-source-maps#value": [
-                                                  {
-                                                    "@value": "[(12,6)-(14,0)]"
-                                                  }
-                                                ]
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#minCount": [
-                                      {
-                                        "@value": 1
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#name": [
-                                      {
-                                        "@value": "stringprop"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/document-source-maps#sources": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/file_type_expression.raml#/declarations/wrappedFile/property/stringprop/source-map",
-                                        "@type": [
-                                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#lexical": [
-                                          {
-                                            "http://raml.org/vocabularies/document-source-maps#element": [
-                                              {
-                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/file_type_expression.raml#/declarations/wrappedFile/property/stringprop"
-                                              }
-                                            ],
-                                            "http://raml.org/vocabularies/document-source-maps#value": [
-                                              {
-                                                "@value": "[(12,6)-(14,0)]"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ]
+                                    "@value": "wrappedFile"
                                   }
                                 ],
                                 "http://www.w3.org/ns/shacl#name": [
@@ -445,68 +305,16 @@
                                     "@type": [
                                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                     ],
-                                    "http://raml.org/vocabularies/document-source-maps#declared-element": [
-                                      {
-                                        "http://raml.org/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/file_type_expression.raml#/declarations/wrappedFile"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": ""
-                                          }
-                                        ]
-                                      }
-                                    ],
                                     "http://raml.org/vocabularies/document-source-maps#lexical": [
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://www.w3.org/ns/shacl#name"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(8,2)-(8,13)]"
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "http://raml.org/vocabularies/document-source-maps#element": [
-                                          {
                                             "@value": "file://amf-client/shared/src/test/resources/upanddown/file_type_expression.raml#/declarations/wrappedFile"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(8,2)-(14,0)]"
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "http://raml.org/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "http://www.w3.org/ns/shacl#property"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(10,4)-(14,0)]"
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
-                                      {
-                                        "http://raml.org/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/file_type_expression.raml#/declarations/wrappedFile"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(9,4)-(9,8)]"
+                                            "@value": "[(24,18)-(24,29)]"
                                           }
                                         ]
                                       }
