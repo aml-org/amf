@@ -948,10 +948,12 @@ sealed abstract class RamlTypeParser(ast: YPart,
         case array: ArrayShape   => array.items
         case shape: Shape        => shape
       }
-      maybeShape.map {
-        case _: ArrayShape  => shape.toMatrixShape
-        case _: MatrixShape => shape.toMatrixShape
-        case _: Shape       => shape
+      maybeShape match {
+        case Some(_: ArrayShape)  => Some(shape.toMatrixShape)
+        case Some(_: MatrixShape) => Some(shape.toMatrixShape)
+        case Some(_: TupleShape)  => Some(shape.toMatrixShape)
+        case Some(_: Shape)       => Some(shape)
+        case _                    => None
       }
     }
   }
@@ -1046,7 +1048,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
             case Some(ancestor) =>
               // set without ID!, we keep the ID of the referred element
               shape.fields.setWithoutId(ShapeModel.Inherits,
-                                        AmfArray(Seq(ancestor), Annotations(entry.value)),
+                                        AmfArray(Seq(ancestor.link(text, Annotations(entry.value)).asInstanceOf[AnyShape].withName(ancestor.name.option().getOrElse("schema"))), Annotations(entry.value)),
                                         Annotations(entry))
             case _ =>
               val baseClass = text match {

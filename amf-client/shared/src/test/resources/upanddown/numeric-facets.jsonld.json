@@ -22,7 +22,9 @@
           "param1": {
             "description": "Some person",
             "type": [
-              "Person"
+              {
+                "$ref": "Person"
+              }
             ]
           }
         },
