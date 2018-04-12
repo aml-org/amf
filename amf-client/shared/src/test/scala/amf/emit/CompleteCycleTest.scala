@@ -1103,6 +1103,10 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("locations-api.raml", "locations-api.raml", RamlYamlHint, Raml, productionPath + "locations-api/")
   }
 
+  test("Example in included type fragment") {
+    cycle("simple_example_type.raml", "simple_example_type.jsonld", RamlYamlHint, Amf)
+  }
+
   test("Declared documentation raml to amf") {
     cycle("declared-documentation.raml",
           "declared-documentation.jsonld",
