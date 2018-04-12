@@ -68,12 +68,14 @@ case class ReferencesParser(key: String, map: YMap, references: Seq[ParsedRefere
           .entries
           .foreach(e => {
             val alias: String = e.key.as[YScalar].text
-            val url: String   = library(id, e)
-            target(url).foreach {
-              case module: DeclaresModel => result += (alias, collectAlias(module, alias -> url))
-              case other =>
-                ctx
-                  .violation(id, s"Expected module but found: $other", e) // todo Uses should only reference modules...
+            val urlOption     = LibraryLocationParser(e)
+            urlOption.foreach { url =>
+              target(url).foreach {
+                case module: DeclaresModel => result += (alias, collectAlias(module, alias -> url))
+                case other =>
+                  ctx
+                    .violation(id, s"Expected module but found: $other", e) // todo Uses should only reference modules...
+              }
             }
           })
     )

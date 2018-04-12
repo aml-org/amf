@@ -1535,4 +1535,27 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.conforms)
     }
   }
+
+  test("Empty library entry") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(productionPath + "/libraries/empty-library-entry.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 1)
+    }
+  }
+
+  test("Empty type ref") {
+    for {
+      validation <- Validation(platform)
+      doc        <- AMFCompiler(productionPath + "/types/empty-type-ref.yaml", platform, OasYamlHint, validation).build()
+      report     <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 2)
+    }
+  }
 }
