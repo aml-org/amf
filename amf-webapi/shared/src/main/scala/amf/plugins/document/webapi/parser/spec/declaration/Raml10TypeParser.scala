@@ -370,7 +370,7 @@ trait RamlExternalTypes extends ExampleParser {
                                          value: YNode,
                                          adopt: Shape => Shape,
                                          parseExample: Boolean = false): AnyShape = {
-    value.tagType match {
+    val parsed = value.tagType match {
       case YType.Map =>
         val map = value.as[YMap]
         val parsedSchema = typeOrSchema(map) match {
@@ -393,11 +393,17 @@ trait RamlExternalTypes extends ExampleParser {
         ctx.violation(shape.id, "Cannot parse XML Schema expression out of a non string value", value)
         shape
       case _ =>
-        val shape = SchemaShape().withRaw(value.as[YScalar].text).withMediaType("application/xml")
+        val raw = value.as[YScalar].text
+        val shape = SchemaShape().withRaw(raw).withMediaType("application/xml")
         shape.withName(name)
         adopt(shape)
         shape
     }
+
+    // parsing the potential example
+    if (parseExample && value.tagType == YType.Map) parseExamples(parsed, value.as[YMap])
+
+    parsed
   }
 
   protected def parseJSONSchemaExpression(name: String,
