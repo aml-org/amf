@@ -352,12 +352,16 @@ annotationTypes:
               goggles:
                 required: false
                 type: boolean
-          application/xml: |
-            <?xml version="1.0" encoding="utf-16"?>
-            <xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-              <xsd:element name="first" type="xsd:string" />
-              <xsd:element name="second" type="xsd:string" />
-            </xsd:schema>
+          application/xml:
+            examples:
+              first: <first/>
+              second: <second/>
+            type: |
+              <?xml version="1.0" encoding="utf-16"?>
+              <xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+                <xsd:element name="first" type="xsd:string" />
+                <xsd:element name="second" type="xsd:string" />
+              </xsd:schema>
       400:
         body:
           text/plain:
@@ -389,12 +393,16 @@ annotationTypes:
           goggles:
             required: false
             type: boolean
-      application/xml: |
-        <?xml version="1.0" encoding="utf-16"?>
-        <xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-          <xsd:element name="first" type="xsd:string" />
-          <xsd:element name="second" type="xsd:string" />
-        </xsd:schema>
+      application/xml:
+        examples:
+          first: <first/>
+          second: <second/>
+        type: |
+          <?xml version="1.0" encoding="utf-16"?>
+          <xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:element name="first" type="xsd:string" />
+            <xsd:element name="second" type="xsd:string" />
+          </xsd:schema>
     securedBy: []
   /child/{childId}:
     description: child description
