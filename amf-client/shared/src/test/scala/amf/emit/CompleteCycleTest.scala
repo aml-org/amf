@@ -8,6 +8,7 @@ class CompleteCycleTest extends BuildCycleTests {
   override val basePath = "amf-client/shared/src/test/resources/upanddown/"
   val base08Path        = "amf-client/shared/src/test/resources/upanddown/raml08/"
   val referencesPath    = "amf-client/shared/src/test/resources/references/"
+  val productionPath    = "amf-client/shared/src/test/resources/production/"
 
   test("Full raml to raml test") {
     cycle("full-example.raml", "full-example.raml.raml", RamlYamlHint, Raml)
@@ -1092,6 +1093,14 @@ class CompleteCycleTest extends BuildCycleTests {
 
   test("type nil shortcut raml to amf") {
     cycle("type_nil_shortcut.raml", "type_nil_shortcut.jsonld", RamlYamlHint, Amf)
+  }
+
+  test("production from exchange raml to amf") {
+    cycle("locations-api.raml", "locations-api.jsonld", RamlYamlHint, Amf, productionPath + "locations-api/")
+  }
+
+  test("production from exchange raml to raml") {
+    cycle("locations-api.raml", "locations-api.raml", RamlYamlHint, Raml, productionPath + "locations-api/")
   }
 
   test("Declared documentation raml to amf") {

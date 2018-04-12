@@ -457,7 +457,11 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     private def declarationsRef(entries: YMap): Option[Shape] = {
       entries
         .key("$ref")
-        .map(entry => ctx.declarations.shapes(entry.value.as[String].stripPrefix("#/definitions/")))
+        .flatMap { entry =>
+          ctx.declarations.shapes.get(entry.value.as[String].stripPrefix("#/definitions/")) map { declaration =>
+            declaration.link(entry.value.as[String], Annotations(entry.value)).asInstanceOf[AnyShape].withName(declaration.name.option().getOrElse("schema"))
+          }
+        }
     }
   }
 

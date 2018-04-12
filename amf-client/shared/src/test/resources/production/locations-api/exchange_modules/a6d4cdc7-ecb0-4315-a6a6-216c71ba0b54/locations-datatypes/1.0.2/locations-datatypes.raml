@@ -1,0 +1,29 @@
+#%RAML 1.0 Library
+
+usage: Locations Types
+
+uses:
+  address: ../../commons-datatypes/1.0.0/locationTypes.raml
+  
+types:
+  NewLocation:
+    type: address.AddressData
+    properties:
+      addressType:
+        enum: [OFFICE, STORE, WAREHOUSE]
+
+  Location:
+    type: NewLocation
+    properties:
+      id: number
+
+  Locations:
+    type: Location[]
+  str: string
+  obj:
+    type: object
+    properties:
+      a: string
+  arr:
+    type: array
+    items: string
