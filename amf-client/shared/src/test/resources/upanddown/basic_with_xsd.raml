@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: test title
+description: test description
+mediaType: application/yaml
+version: 1.1
+baseUri: api.example.com/path
+
+/test:
+  get:
+    body:
+      application/xml:
+        type: !include person.xsd
+        example: !include person.xml
