@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.{DefaultNode, ExplicitField, SourceAST, SynthesizedField}
+import amf.core.annotations._
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
@@ -22,11 +22,13 @@ import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.plugins.features.validation.ParserSideValidations
+import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YPart, _}
 import org.yaml.parser.YamlParser
 import org.yaml.render.YamlRender
 
 import scala.collection.mutable
+import scala.language.postfixOps
 
 object Raml10TypeParser {
   def apply(ast: YMapEntry,
@@ -372,6 +374,8 @@ trait RamlExternalTypes extends RamlSpecParser with ExampleParser with RamlTypeS
           case Some(typeEntry: YMapEntry) if typeEntry.value.toOption[YScalar].isDefined =>
             val shape =
               SchemaShape().withRaw(typeEntry.value.as[YScalar].text).withMediaType("application/xml")
+
+            sourceRefAnnotation(typeEntry.value, shape)
             shape.withName(name)
             adopt(shape)
             shape
@@ -405,12 +409,18 @@ trait RamlExternalTypes extends RamlSpecParser with ExampleParser with RamlTypeS
       case _ =>
         val raw = value.as[YScalar].text
         val shape = SchemaShape().withRaw(raw).withMediaType("application/xml")
+        sourceRefAnnotation(value, shape)
         shape.withName(name)
         adopt(shape)
         shape
     }
 
     parsed
+  }
+
+  private def sourceRefAnnotation(node: YNode, shape: SchemaShape): Unit = node match {
+    case mut: MutRef => shape.annotations += ExternalSource(mut)
+    case _           =>
   }
 
   protected def parseJSONSchemaExpression(name: String,

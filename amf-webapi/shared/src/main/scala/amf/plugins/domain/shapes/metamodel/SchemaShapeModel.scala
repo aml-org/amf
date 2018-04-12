@@ -3,9 +3,9 @@ package amf.plugins.domain.shapes.metamodel
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Str
 import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
-import amf.plugins.domain.shapes.models.SchemaShape
 import amf.core.vocabulary.Namespace.Shacl
 import amf.core.vocabulary.ValueType
+import amf.plugins.domain.shapes.models.SchemaShape
 
 object SchemaShapeModel extends AnyShapeModel {
   val MediaType = Field(Str, Shacl + "mediaType")
@@ -16,4 +16,6 @@ object SchemaShapeModel extends AnyShapeModel {
   override val `type`: List[ValueType] = List(Shacl + "SchemaShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
 
   override def modelInstance = SchemaShape()
+
+  override val dynamic = true
 }

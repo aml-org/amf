@@ -1133,4 +1133,12 @@ class CompleteCycleTest extends BuildCycleTests {
       OasYamlHint,
       Amf)
   }
+
+  test("Test render api financial") {
+    cycle("infor-financial-api.raml",
+          "infor-financial-api.raml",
+          RamlYamlHint,
+          Amf,
+          "amf-client/shared/src/test/resources/production/financial-api/")
+  }
 }
