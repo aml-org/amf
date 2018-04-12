@@ -18,6 +18,7 @@ class EditingResolutionTest extends BuildCycleTests {
   val extendsPath    = "amf-client/shared/src/test/resources/resolution/extends/"
   val productionPath = "amf-client/shared/src/test/resources/production/"
   val resolutionPath = "amf-client/shared/src/test/resources/resolution/"
+  val cyclePath = "amf-client/shared/src/test/resources/upanddown/"
 
   test("Simple extends resolution to Raml") {
     cycle("simple-merge.raml", "simple-merge.editing.jsonld", RamlYamlHint, Amf, extendsPath)
@@ -29,6 +30,10 @@ class EditingResolutionTest extends BuildCycleTests {
 
   test("Example1 resolution to Raml") {
     cycle("example1.yaml", "example1.resolved.yaml", OasYamlHint, Oas2Yaml, resolutionPath)
+  }
+
+  test("Include type resolution to Raml") {
+    cycle("simple_example_type.raml", "simple_example_type.resolved.jsonld", RamlYamlHint, Amf, cyclePath)
   }
 
   // TODO: FIXME
