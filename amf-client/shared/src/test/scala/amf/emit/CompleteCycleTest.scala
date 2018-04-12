@@ -1095,6 +1095,10 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("type_nil_shortcut.raml", "type_nil_shortcut.jsonld", RamlYamlHint, Amf)
   }
 
+  test("xsd example raml to amf") {
+    cycle("basic_with_xsd.raml", "basic_with_xsd.jsonld", RamlYamlHint, Amf)
+  }
+
   test("production from exchange raml to amf") {
     cycle("locations-api.raml", "locations-api.jsonld", RamlYamlHint, Amf, productionPath + "locations-api/")
   }
