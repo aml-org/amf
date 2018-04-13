@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "type": "array",
+    "items":
+        {
+            "type": "object",
+            "properties": {
+                "login": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "avatar_url": {
+                    "type": "string"
+                }
+            }
+        }
+}

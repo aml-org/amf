@@ -10,6 +10,8 @@ class RenderOptions {
 
   private var sources: Boolean                     = false
   private var customEmitter: Option[ScalarEmitter] = None
+  private var compactUris: Boolean                 = false
+  private var rawSourceMaps: Boolean               = false
 
   /** Include source maps when rendering to graph. */
   def withSourceMaps: RenderOptions = {
@@ -23,13 +25,34 @@ class RenderOptions {
     this
   }
 
+  def withCompactUris: RenderOptions = {
+    compactUris = true
+    this
+  }
+
+  def withoutCompactUris: RenderOptions = {
+    compactUris = false
+    this
+  }
+
+  def withRawSourceMaps: RenderOptions = {
+    rawSourceMaps = true
+    this
+  }
+
+  def withoutRawSourceMaps: RenderOptions = {
+    rawSourceMaps = false
+    this
+  }
+
   def withCustomEmitter(emitter: ScalarEmitter): RenderOptions = {
     customEmitter = Some(emitter)
     this
   }
 
+  def isCompactUris: Boolean = compactUris
   def isWithSourceMaps: Boolean = sources
-
+  def isWithRawSoureMaps: Boolean = rawSourceMaps
   def getCustomEmitter: Option[ScalarEmitter] = customEmitter
 }
 
