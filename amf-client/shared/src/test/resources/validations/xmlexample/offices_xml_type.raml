@@ -1,0 +1,21 @@
+#%RAML 1.0
+---
+title: Offices API
+baseUri: http://localhost/office
+
+types:
+    Office:
+        schema: !include office.xsd
+        example: !include   office_example.xml
+
+/location:
+    post:
+        body:
+            application/xml:
+                type: Office
+        responses:
+            200:
+                body:
+                    application/xml:
+                        example: |
+                            <office id="1" />

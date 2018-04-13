@@ -1558,4 +1558,15 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.size == 2)
     }
   }
+
+  test("Example xml with sons results test") {
+    for {
+      validation <- Validation(platform)
+      doc        <- AMFCompiler(examplesPath + "/xmlexample/offices_xml_type.raml", platform, OasYamlHint, validation).build()
+      report     <- validation.validate(doc, ProfileNames.AMF)
+    } yield {
+      assert(report.conforms)
+      assert(report.results.count(_.level == SeverityLevels.WARNING) == 3) // all warnings
+    }
+  }
 }
