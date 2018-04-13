@@ -419,8 +419,12 @@ trait RamlExternalTypes extends RamlSpecParser with ExampleParser with RamlTypeS
   }
 
   private def sourceRefAnnotation(node: YNode, shape: SchemaShape): Unit = node match {
-    case mut: MutRef => shape.annotations += ExternalSource(mut)
-    case _           =>
+    case mut: MutRef if mut.origValue.isInstanceOf[YScalar] =>
+      val text = mut.origValue.asInstanceOf[YScalar].text
+      ctx.declarations.fragments
+        .get(text)
+        .foreach(e => shape.annotations += ExternalSource(e.id, text)) // todo
+    case _ =>
   }
 
   protected def parseJSONSchemaExpression(name: String,

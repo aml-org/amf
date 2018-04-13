@@ -2,7 +2,6 @@ package amf.plugins.domain.shapes.models
 
 import amf.core.annotations.ExternalSource
 import amf.core.metamodel.Field
-import amf.core.metamodel.domain.LinkableElementModel
 import amf.core.model.StrField
 import amf.core.model.domain.{AmfElement, AmfScalar, DynamicDomainElement}
 import amf.core.parser.{Annotations, Fields}
@@ -28,14 +27,14 @@ case class SchemaShape(override val fields: Fields, override val annotations: An
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/schema/" + name.option().getOrElse("default-schema")
 
-  override def dynamicFields: List[Field] = LinkableElementModel.TargetId :: SchemaShapeModel.fields
+  override def dynamicFields: List[Field] = SchemaShapeModel.fields
 
   override def dynamicType: List[ValueType] = SchemaShapeModel.`type`
 
   override def valueForField(f: Field): Option[AmfElement] = f match {
     case Raw if annotations.contains(classOf[ExternalSource]) => None
     case TargetId if annotations.contains(classOf[ExternalSource]) =>
-      annotations.find(classOf[ExternalSource]).map(e => AmfScalar(e.origTarget))
+      annotations.find(classOf[ExternalSource]).map(e => AmfScalar(e.oriId))
     case TargetId => None
     case _        => fields.entry(f).map(_.value.value)
   }

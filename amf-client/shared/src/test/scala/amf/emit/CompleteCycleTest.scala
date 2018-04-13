@@ -1136,7 +1136,7 @@ class CompleteCycleTest extends BuildCycleTests {
 
   test("Test render api financial") {
     cycle("infor-financial-api.raml",
-          "infor-financial-api.raml",
+          "infor-financial-api.raml.jsonld",
           RamlYamlHint,
           Amf,
           "amf-client/shared/src/test/resources/production/financial-api/")

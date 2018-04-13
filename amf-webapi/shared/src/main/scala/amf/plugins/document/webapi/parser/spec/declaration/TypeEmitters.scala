@@ -297,7 +297,7 @@ case class RamlSchemaShapeEmitter(shape: SchemaShape, ordering: SpecOrdering, re
   override def emit(b: PartBuilder): Unit = {
     shape.annotations.find(classOf[ExternalSource]) match {
       case Some(externalSource) =>
-        raw(b, externalSource.origTarget, externalSource.origTag.tagType)
+        spec.ref(b, externalSource.oriLabel)
       case _ =>
         if (shape.examples.nonEmpty) {
           val fs     = shape.fields
