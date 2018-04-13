@@ -50,6 +50,7 @@ object Namespace {
     "rdf"         -> Rdf,
     "sh"          -> Shacl,
     "shacl"       -> Shacl,
+    "security"    -> Security,
     "schema-org"  -> Schema,
     "schema"      -> Schema,
     "raml-http"   -> Http,
@@ -101,6 +102,18 @@ object Namespace {
         uri.indexOf(namespace.base) == 0
     } match {
       case Some((prefix, namespace)) =>
+        prefix ++ uri.replace(namespace.base, ":")
+      case None => uri
+    }
+  }
+
+  def compactAndCollect(uri: String, prefixes: mutable.Map[String,String]) = {
+    ns.find {
+      case (_, namespace) =>
+        uri.indexOf(namespace.base) == 0
+    } match {
+      case Some((prefix, namespace)) =>
+        prefixes.put(prefix, namespace.base)
         prefix ++ uri.replace(namespace.base, ":")
       case None => uri
     }

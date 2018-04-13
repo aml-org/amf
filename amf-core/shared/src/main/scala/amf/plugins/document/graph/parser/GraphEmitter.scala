@@ -1,7 +1,7 @@
 package amf.plugins.document.graph.parser
 
-import amf.core.emitter.RenderOptions
 import amf.core.annotations.{DomainExtensionAnnotation, ScalarType}
+import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Type.{Any, Array, Bool, Iri, SortedArray, Str}
 import amf.core.metamodel.document.SourceMapModel
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
@@ -12,12 +12,12 @@ import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.{FieldEntry, Value}
-import amf.core.vocabulary.Namespace.SourceMaps
 import amf.core.vocabulary.{Namespace, ValueType}
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model._
 
+import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -70,6 +70,45 @@ trait ScalarEmitter {
 
 object DefaultScalarEmitter extends ScalarEmitter
 
+class EmissionContext(val prefixes: mutable.Map[String, String], var base: String, val options: RenderOptions) {
+  var counter: Int = 1
+
+  def shouldCompact = options.isCompactUris
+  protected  def compactAndCollect(uri: String): String = Namespace.compactAndCollect(uri, prefixes)
+  def emitIri(uri: String): String = if (shouldCompact) compactAndCollect(uri) else uri
+  def emitId(uri: String): String = if (shouldCompact && uri.contains(base)) uri.replace(base, "") else uri
+  def setupContextBase(location: String) = {
+    if (Option(location).isDefined) {
+      base = if (location.replace("://", "").contains("/")) {
+        var basePre = if (location.contains("#")) {
+          location.split("#").head
+        } else {
+          location
+        }
+        val parts = basePre.split("/").dropRight(1)
+        parts.mkString("/")
+      } else {
+        location.split("#").head
+      }
+    } else {
+      base = ""
+    }
+  }
+
+  def emitContext(b: EntryBuilder) = {
+    b.entry("@context", _.obj { b =>
+      b.entry("@base", base)
+      prefixes.foreach { case (p, v) =>
+          b.entry(p,v)
+      }
+    })
+  }
+}
+
+object EmissionContext {
+  def apply(unit: BaseUnit, options: RenderOptions) = new EmissionContext(mutable.Map(), Option(unit.location).getOrElse(unit.id), options)
+}
+
 object GraphEmitter extends MetaModelTypeMapping {
 
   def emit(unit: BaseUnit, options: RenderOptions): YDocument = Emitter(options).root(unit)
@@ -77,54 +116,66 @@ object GraphEmitter extends MetaModelTypeMapping {
   case class Emitter(options: RenderOptions) {
 
     def root(unit: BaseUnit): YDocument = {
-      YDocument {
-        _.list {
-          _.obj {
-            traverse(unit, _)
+      val ctx = EmissionContext(unit, options)
+      if (ctx.shouldCompact) {
+        YDocument {
+          _.list { l =>
+            l.obj { o =>
+              traverse(unit, o, ctx)
+              ctx.emitContext(o)
+            }
+          }
+        }
+      } else {
+        YDocument {
+          _.list {
+            _.obj {
+              traverse(unit, _, ctx)
+            }
           }
         }
       }
     }
 
-    def traverse(element: AmfObject, b: EntryBuilder): Unit = {
+    def traverse(element: AmfObject, b: EntryBuilder, ctx: EmissionContext): Unit = {
       val id = element.id
 
-      createIdNode(b, id)
+      createIdNode(b, id, ctx)
 
       val sources = SourceMap(id, element)
 
       val obj = metaModel(element)
 
-      if (obj.dynamic) traverseDynamicMetaModel(id, element, sources, obj, b)
-      else traverseStaticMetamodel(id, element, sources, obj, b)
+      if (obj.dynamic) traverseDynamicMetaModel(id, element, sources, obj, b, ctx)
+      else traverseStaticMetamodel(id, element, sources, obj, b, ctx)
 
-      createCustomExtensions(element, b)
+      createCustomExtensions(element, b, ctx)
 
       val sourceMapId = if (id.endsWith("/")) {
         id + "source-map"
       } else {
         id + "/source-map"
       }
-      createSourcesNode(sourceMapId, sources, b)
+      createSourcesNode(sourceMapId, sources, b, ctx)
     }
 
-    def traverseDynamicMetaModel(id: String, element: AmfObject, sources: SourceMap, obj: Obj, b: EntryBuilder): Unit = {
+    def traverseDynamicMetaModel(id: String, element: AmfObject, sources: SourceMap, obj: Obj, b: EntryBuilder, ctx: EmissionContext): Unit = {
       val schema: DynamicDomainElement = element.asInstanceOf[DynamicDomainElement]
 
-      createDynamicTypeNode(schema, b)
+      createDynamicTypeNode(schema, b, ctx)
 
       schema.dynamicFields.foreach { f: Field =>
         schema.valueForField(f).foreach { amfElement =>
           b.entry(
-            f.value.iri(),
-            value(f.`type`, Value(amfElement, amfElement.annotations), id, _ => {}, _)
+            ctx.emitIri(f.value.iri()),
+            value(f.`type`, Value(amfElement, amfElement.annotations), id, _ => {}, _, ctx)
           )
         }
       }
     }
 
-    def traverseStaticMetamodel(id: String, element: AmfObject, sources: SourceMap, obj: Obj, b: EntryBuilder): Unit = {
-      createTypeNode(b, obj, Some(element))
+    def traverseStaticMetamodel(id: String, element: AmfObject, sources: SourceMap, obj: Obj, b: EntryBuilder, ctx: EmissionContext): Unit = {
+      createTypeNode(b, obj, Some(element), ctx)
 
       // workaround for lazy values in shape
       val modelFields = obj match {
@@ -137,16 +188,16 @@ object GraphEmitter extends MetaModelTypeMapping {
       }
       modelFields.map(element.fields.entryJsonld) foreach {
         case Some(FieldEntry(f, v)) =>
-          val url = f.value.iri()
+          val url = ctx.emitIri(f.value.iri())
           b.entry(
             url,
-            value(f.`type`, v, id, sources.property(url), _)
+            value(f.`type`, v, id, sources.property(url), _, ctx)
           )
         case None => // Missing field
       }
     }
 
-    private def createCustomExtensions(element: AmfObject, b: EntryBuilder): Unit = {
+    private def createCustomExtensions(element: AmfObject, b: EntryBuilder, ctx: EmissionContext): Unit = {
       val customProperties: ListBuffer[String] = ListBuffer()
 
       // Collect element custom annotations
@@ -158,7 +209,7 @@ object GraphEmitter extends MetaModelTypeMapping {
                 case extension: DomainExtension =>
                   val uri = extension.definedBy.id
                   customProperties += uri
-                  createCustomExtension(b, uri, extension)
+                  createCustomExtension(b, uri, extension, None, ctx)
               }
             case _ => // ignore
           }
@@ -175,14 +226,14 @@ object GraphEmitter extends MetaModelTypeMapping {
               val uri       = s"${element.id}/scalar-valued/$count/${extension.name.value()}"
               customProperties += uri
               adoptTree(uri, extension.extension) // Fix ids
-              createCustomExtension(b, uri, extension, Some(f))
+              createCustomExtension(b, uri, extension, Some(f), ctx)
               count += 1
             })
       }
 
       if (customProperties.nonEmpty)
         b.entry(
-          DomainElementModel.CustomDomainProperties.value.iri(),
+          ctx.emitIri(DomainElementModel.CustomDomainProperties.value.iri()),
           _.list { b =>
             customProperties.foreach(iri(b, _, inArray = true))
           }
@@ -192,15 +243,22 @@ object GraphEmitter extends MetaModelTypeMapping {
     private def createCustomExtension(b: EntryBuilder,
                                       uri: String,
                                       extension: DomainExtension,
-                                      field: Option[Field] = None): Unit = {
+                                      field: Option[Field] = None,
+                                      ctx: EmissionContext): Unit = {
       val encoded = URLEncoder.encode(uri)
       b.entry(
         encoded,
         _.obj { b =>
-          b.entry(DomainExtensionModel.Name.value.iri(), DefaultScalarEmitter.scalar(_, extension.name.value()))
+          b.entry(
+            ctx.emitIri(DomainExtensionModel.Name.value.iri()),
+            DefaultScalarEmitter.scalar(_, extension.name.value())
+          )
           field.foreach(f =>
-            b.entry(DomainExtensionModel.Element.value.iri(), DefaultScalarEmitter.scalar(_, f.value.iri())))
-          traverse(extension.extension, b)
+            b.entry(
+              ctx.emitIri(DomainExtensionModel.Element.value.iri()),
+              DefaultScalarEmitter.scalar(_, f.value.iri())
+            ))
+          traverse(extension.extension, b, ctx)
         }
       )
     }
@@ -210,23 +268,24 @@ object GraphEmitter extends MetaModelTypeMapping {
                           parent: String,
                           element: Type,
                           sources: (Value) => Unit,
-                          v: Option[Value] = None): Unit = {
+                          v: Option[Value] = None,
+                          ctx: EmissionContext): Unit = {
       b.list {
         _.obj { b =>
           if (seq.nonEmpty) {
             val id = s"$parent/list"
-            createIdNode(b, id)
+            createIdNode(b, id, ctx)
 
             b.entry(
-              (Namespace.Rdf + "first").iri(),
+              ctx.emitIri((Namespace.Rdf + "first").iri()),
               _.list { b =>
                 element match {
                   case _: Obj =>
                     seq.asInstanceOf[Seq[AmfObject]].headOption.foreach {
                       case elementInArray: DomainElement with Linkable if elementInArray.isLink =>
-                        link(b, elementInArray, inArray = true)
+                        link(b, elementInArray, inArray = true, ctx)
                       case elementInArray =>
-                        obj(b, elementInArray, inArray = true)
+                        obj(b, elementInArray, inArray = true, ctx)
                     }
                   case Str =>
                     seq
@@ -242,13 +301,13 @@ object GraphEmitter extends MetaModelTypeMapping {
                       scalarElement =>
                         scalarElement.value match {
                           case bool: Boolean =>
-                            typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true)
+                            typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true, ctx)
                           case str: String =>
-                            typedScalar(b, str.toString, (Namespace.Xsd + "string").iri(), inArray = true)
-                          case i: Int   => typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true)
-                          case f: Float => typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true)
+                            typedScalar(b, str.toString, (Namespace.Xsd + "string").iri(), inArray = true, ctx)
+                          case i: Int   => typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true, ctx)
+                          case f: Float => typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true, ctx)
                           case d: Double =>
-                            typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true)
+                            typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true, ctx)
                           case other => DefaultScalarEmitter.scalar(b, other.toString, inArray = true)
                         }
                     }
@@ -256,25 +315,27 @@ object GraphEmitter extends MetaModelTypeMapping {
               }
             )
 
-            b.entry((Namespace.Rdf + "rest").iri(), createSortedArray(_, seq.tail, id, element, sources))
+            b.entry(
+              ctx.emitIri((Namespace.Rdf + "rest").iri()),
+              createSortedArray(_, seq.tail, id, element, sources, v, ctx))
 
             v.foreach(sources)
 
           } else {
-            createIdNode(b, (Namespace.Rdf + "nil").iri())
+            createIdNode(b, ctx.emitIri((Namespace.Rdf + "nil").iri()), ctx)
           }
         }
       }
     }
 
-    private def value(t: Type, v: Value, parent: String, sources: (Value) => Unit, b: PartBuilder): Unit = {
+    private def value(t: Type, v: Value, parent: String, sources: (Value) => Unit, b: PartBuilder, ctx: EmissionContext): Unit = {
       val scalarEmitter = options.getCustomEmitter.getOrElse(DefaultScalarEmitter)
       t match {
         case t: DomainElement with Linkable if t.isLink =>
-          link(b, t)
+          link(b, t, false, ctx)
           sources(v)
         case _: Obj =>
-          obj(b, v.value.asInstanceOf[AmfObject])
+          obj(b, v.value.asInstanceOf[AmfObject], false, ctx)
           sources(v)
         case Iri =>
           iri(b, v.value.asInstanceOf[AmfScalar].toString)
@@ -282,7 +343,7 @@ object GraphEmitter extends MetaModelTypeMapping {
         case Str =>
           v.annotations.find(classOf[ScalarType]) match {
             case Some(annotation) =>
-              typedScalar(b, v.value.asInstanceOf[AmfScalar].toString, annotation.datatype)
+              typedScalar(b, v.value.asInstanceOf[AmfScalar].toString, annotation.datatype, false, ctx)
             case None =>
               scalarEmitter.scalar(b, v.value.asInstanceOf[AmfScalar].toString)
           }
@@ -308,12 +369,14 @@ object GraphEmitter extends MetaModelTypeMapping {
             throw new Exception("Serialisation of timestamps not supported yet")
           } else {
             typedScalar(b,
-                        f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d",
-                        (Namespace.Xsd + "date").iri())
+              f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d",
+              (Namespace.Xsd + "date").iri(),
+              false,
+                       ctx)
             sources(v)
           }
         case a: SortedArray =>
-          createSortedArray(b, v.value.asInstanceOf[AmfArray].values, parent, a.element, sources, Some(v))
+          createSortedArray(b, v.value.asInstanceOf[AmfArray].values, parent, a.element, sources, Some(v), ctx)
         case a: Array =>
           b.list { b =>
             val seq = v.value.asInstanceOf[AmfArray]
@@ -322,15 +385,15 @@ object GraphEmitter extends MetaModelTypeMapping {
               case _: Obj =>
                 seq.values.asInstanceOf[Seq[AmfObject]].foreach {
                   case elementInArray: DomainElement with Linkable if elementInArray.isLink =>
-                    link(b, elementInArray, inArray = true)
+                    link(b, elementInArray, inArray = true, ctx)
                   case elementInArray =>
-                    obj(b, elementInArray, inArray = true)
+                    obj(b, elementInArray, inArray = true, ctx)
                 }
               case Str =>
                 seq.values.asInstanceOf[Seq[AmfScalar]].foreach { e =>
                   e.annotations.find(classOf[ScalarType]) match {
                     case Some(annotation) =>
-                      typedScalar(b, e.value.asInstanceOf[AmfScalar].toString, annotation.datatype, inArray = true)
+                      typedScalar(b, e.value.asInstanceOf[AmfScalar].toString, annotation.datatype, inArray = true, ctx)
                     case None => scalarEmitter.scalar(b, e.toString, inArray = true)
                   }
                 }
@@ -351,11 +414,11 @@ object GraphEmitter extends MetaModelTypeMapping {
                 seq.values.asInstanceOf[Seq[AmfScalar]].foreach { scalarElement =>
                   scalarElement.value match {
                     case bool: Boolean =>
-                      typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true)
-                    case str: String => typedScalar(b, str.toString, (Namespace.Xsd + "string").iri(), inArray = true)
-                    case i: Int      => typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true)
-                    case f: Float    => typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true)
-                    case d: Double   => typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true)
+                      typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true, ctx)
+                    case str: String => typedScalar(b, str.toString, (Namespace.Xsd + "string").iri(), inArray = true, ctx)
+                    case i: Int      => typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true, ctx)
+                    case f: Float    => typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true, ctx)
+                    case d: Double   => typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true, ctx)
                     case other       => scalarEmitter.scalar(b, other.toString, inArray = true)
                   }
                 }
@@ -365,16 +428,16 @@ object GraphEmitter extends MetaModelTypeMapping {
       }
     }
 
-    private def obj(b: PartBuilder, element: AmfObject, inArray: Boolean = false): Unit = {
-      def emit(b: PartBuilder): Unit = b.obj(traverse(element, _))
+    private def obj(b: PartBuilder, element: AmfObject, inArray: Boolean = false, ctx: EmissionContext): Unit = {
+      def emit(b: PartBuilder): Unit = b.obj(traverse(element, _, ctx))
 
       if (inArray) emit(b) else b.list(emit)
     }
 
-    private def link(b: PartBuilder, elementWithLink: DomainElement with Linkable, inArray: Boolean = false): Unit = {
+    private def link(b: PartBuilder, elementWithLink: DomainElement with Linkable, inArray: Boolean = false, ctx: EmissionContext): Unit = {
       def emit(b: PartBuilder): Unit = {
         b.obj { o =>
-          traverse(elementWithLink, o)
+          traverse(elementWithLink, o, ctx)
         }
       }
 
@@ -413,21 +476,21 @@ object GraphEmitter extends MetaModelTypeMapping {
       if (inArray) emit(b) else b.list(emit)
     }
 
-    private def typedScalar(b: PartBuilder, content: String, dataType: String, inArray: Boolean = false): Unit = {
+    private def typedScalar(b: PartBuilder, content: String, dataType: String, inArray: Boolean = false, ctx: EmissionContext): Unit = {
       def emit(b: PartBuilder): Unit = b.obj { m =>
         m.entry("@value", raw(_, content, YType.Str))
-        m.entry("@type", raw(_, dataType, YType.Str))
+        m.entry("@type", raw(_, ctx.emitIri(dataType), YType.Str))
       }
 
       if (inArray) emit(b) else b.list(emit)
     }
 
-    private def createIdNode(b: EntryBuilder, id: String): Unit = b.entry(
+    private def createIdNode(b: EntryBuilder, id: String, ctx: EmissionContext): Unit = b.entry(
       "@id",
-      raw(_, id)
+      raw(_, ctx.emitId(id))
     )
 
-    private def createTypeNode(b: EntryBuilder, obj: Obj, maybeElement: Option[AmfObject] = None): Unit = {
+    private def createTypeNode(b: EntryBuilder, obj: Obj, maybeElement: Option[AmfObject] = None, ctx: EmissionContext): Unit = {
       b.entry(
         "@type",
         _.list { b =>
@@ -435,16 +498,16 @@ object GraphEmitter extends MetaModelTypeMapping {
             case Some(element) => element.dynamicTypes()
             case _             => List()
           })
-          allTypes.distinct.foreach(t => raw(b, t))
+          allTypes.distinct.foreach(t => raw(b, ctx.emitIri(t)))
         }
       )
     }
 
-    private def createDynamicTypeNode(obj: DynamicDomainElement, b: EntryBuilder): Unit = {
+    private def createDynamicTypeNode(obj: DynamicDomainElement, b: EntryBuilder, ctx: EmissionContext): Unit = {
       b.entry(
         "@type",
         _.list { b =>
-          obj.dynamicType.foreach(t => raw(b, t.iri()))
+          obj.dynamicType.foreach(t => raw(b, ctx.emitIri(t.iri())))
         }
       )
     }
@@ -452,36 +515,63 @@ object GraphEmitter extends MetaModelTypeMapping {
     private def raw(b: PartBuilder, content: String, tag: YType = YType.Str): Unit =
       b.+=(YNode(YScalar(content), tag))
 
-    private def createSourcesNode(id: String, sources: SourceMap, b: EntryBuilder): Unit = {
+    private def createSourcesNode(id: String, sources: SourceMap, b: EntryBuilder, ctx: EmissionContext): Unit = {
       if (options.isWithSourceMaps && sources.nonEmpty) {
-        b.entry(
-          DomainElementModel.Sources.value.iri(),
-          _.list {
+        if (options.isWithRawSoureMaps) {
+          b.entry(
+            "smaps",
             _.obj { b =>
-              createIdNode(b, id)
-              createTypeNode(b, SourceMapModel)
-              createAnnotationNodes(b, sources)
+              createAnnotationNodes(b, sources, ctx)
             }
-          }
-        )
+          )
+        } else {
+          b.entry(
+            ctx.emitIri(DomainElementModel.Sources.value.iri()),
+            _.list {
+              _.obj { b =>
+                createIdNode(b, id, ctx)
+                createTypeNode(b, SourceMapModel, None, ctx)
+                createAnnotationNodes(b, sources, ctx)
+              }
+            }
+          )
+        }
       }
     }
 
-    private def createAnnotationNodes(b: EntryBuilder, sources: SourceMap): Unit = {
+    private def createAnnotationNodes(b: EntryBuilder, sources: SourceMap, ctx: EmissionContext): Unit = {
       sources.annotations.foreach({
         case (a, values) =>
-          b.entry(
-            ValueType(SourceMaps, a).iri(),
-            _.list(b => values.foreach(createAnnotationValueNode(b, _)))
-          )
+          if (ctx.options.isWithRawSoureMaps) {
+            b.entry(
+              a,
+              _.obj { o =>
+                values.foreach { case (iri, v) =>
+                  o.entry(
+                    ctx.emitId(ctx.emitIri(iri)),
+                    raw(_, v)
+                  )
+                }
+              }
+            )
+          } else {
+            b.entry(
+              ctx.emitIri(ValueType(Namespace.SourceMaps, a).iri()),
+              _.list(b => values.foreach(createAnnotationValueNode(b, _, ctx)))
+            )
+          }
       })
     }
 
-    private def createAnnotationValueNode(b: PartBuilder, tuple: (String, String)): Unit = tuple match {
+    private def createAnnotationValueNode(b: PartBuilder, tuple: (String, String), ctx: EmissionContext): Unit = tuple match {
       case (iri, v) =>
         b.obj { b =>
-          b.entry(SourceMapModel.Element.value.iri(), DefaultScalarEmitter.scalar(_, iri))
-          b.entry(SourceMapModel.Value.value.iri(), DefaultScalarEmitter.scalar(_, v))
+          b.entry(
+            ctx.emitIri(SourceMapModel.Element.value.iri()),
+            DefaultScalarEmitter.scalar(_, iri))
+          b.entry(
+            ctx.emitIri(SourceMapModel.Value.value.iri()),
+            DefaultScalarEmitter.scalar(_, v))
         }
     }
   }
