@@ -47,7 +47,7 @@ sealed case class DataNodeEntry(d: DataNode, sonsKeys: Seq[String]) {
             else SeverityLevels.WARNING,
             d.id,
             sonsResults.head.targetProperty,
-            "",
+            sonsResults.head.validationId, // ??
             d.annotations.find(classOf[LexicalInformation]),
             null
           ))
@@ -74,13 +74,15 @@ sealed case class DataNodeEntry(d: DataNode, sonsKeys: Seq[String]) {
         val finalMessage = additionalMessage.fold(messages)({ a =>
           messages + a
         })
-        AMFValidationResult(finalMessage,
-                            severity,
-                            sortedResults.head.targetNode,
-                            Option(d.id),
-                            "",
-                            d.annotations.find(classOf[LexicalInformation]),
-                            null)
+        AMFValidationResult(
+          finalMessage,
+          severity,
+          sortedResults.head.targetNode,
+          Option(d.id),
+          sortedResults.head.validationId, //?
+          d.annotations.find(classOf[LexicalInformation]),
+          null
+        )
     }
   }
 
