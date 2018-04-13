@@ -36,12 +36,19 @@ class EditingResolutionTest extends BuildCycleTests {
     cycle("simple_example_type.raml", "simple_example_type.resolved.jsonld", RamlYamlHint, Amf, cyclePath)
   }
 
-  // TODO: FIXME
   /*
-  test("Types resolution to Raml") {
+  ignore("Github API resolution to Raml") {
+    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, productionPath + "github-api-1.0.0-raml/")
+  }
+
+  test("Google API resolution to Raml") {
     cycle("googleapis.compredictionv1.2swagger.raml", "googleapis.compredictionv1.2swagger.raml", RamlYamlHint, Amf, productionPath)
   }
-   */
+
+  test("Financial API resolution to Raml") {
+    cycle("infor-financial-api.raml", "infor-financial-api.jsonld", RamlYamlHint, Amf, productionPath + "financial-api/")
+  }
+  */
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = config.target match {
     case Raml08                => RAML08Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
@@ -54,7 +61,7 @@ class EditingResolutionTest extends BuildCycleTests {
   }
 
   override def render(unit: BaseUnit, config: CycleConfig): Future[String] = {
-    new AMFRenderer(unit, config.target, config.target.defaultSyntax, RenderOptions().withSourceMaps).renderToString
+    new AMFRenderer(unit, config.target, config.target.defaultSyntax, RenderOptions().withSourceMaps.withRawSourceMaps.withCompactUris).renderToString
   }
 
   override val basePath: String = ""

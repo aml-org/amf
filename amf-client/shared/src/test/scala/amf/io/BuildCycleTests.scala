@@ -72,7 +72,8 @@ trait BuildCycleTests extends AsyncFunSuite with PlatformSecrets {
   }
 
   protected def writeTemporaryFile(golden: String)(content: String): Future[AsyncFile] = {
-    val actual = fs.asyncFile(tmp(s"$golden.tmp"))
+    val file = tmp(s"$golden.tmp")
+    val actual = fs.asyncFile(file)
     actual.write(content).map(_ => actual)
   }
 

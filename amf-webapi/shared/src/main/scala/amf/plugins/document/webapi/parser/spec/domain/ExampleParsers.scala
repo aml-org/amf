@@ -183,7 +183,6 @@ case class RamlExampleValueAsString(node: YNode, example: Example, options: Exam
 
 case class NodeDataNodeParser(node: YNode, parentId: String, quiet: Boolean)(implicit ctx: WebApiContext) {
   def parse(): DataNodeParserResult = {
-
     val errorHandler = if (quiet) WarningOnlyHandler(ctx.rootContextDocument) else ctx
 
     val targetNode = node match {
