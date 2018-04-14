@@ -140,7 +140,7 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
 
   def withName(resolved: DomainElement, source: DomainElement): DomainElement = {
     resolved match {
-      case r: NamedDomainElement if r.name.value().notNull.isEmpty =>
+      case r: NamedDomainElement if r.name.value().notNull.isEmpty || r.name.value() == "schema" || r.name.value() == "type" => // these are default names
         source match {
           case s: NamedDomainElement if s.name.value().notNull.nonEmpty => r.withName(s.name.value())
           case _                                                        =>
