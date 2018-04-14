@@ -7,7 +7,8 @@ Level: Violation
 
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml#/declarations/Item_validation
   Message: Object at / must be valid
-Data at //testProperty must be one of the valid union types
+Array items at //testProperty must be valid
+Data at //testProperty/items must be one of the valid union types
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml#/declarations/Item/example/default-example/object_1
