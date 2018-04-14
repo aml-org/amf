@@ -1,0 +1,9 @@
+#%RAML 1.0
+title: test
+
+types:
+  XmlSchema:
+      description: |
+        XML type that has only xsd schema and example
+      type: !include person.xsd
+      example: !include person.xml
