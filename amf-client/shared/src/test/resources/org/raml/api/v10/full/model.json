@@ -281,14 +281,12 @@ annotationTypes:
         displayName: The One
         type: number
       two:
-        anyOf:
-          -
-            type: array
-            items:
+        type: array
+        items:
+          anyOf:
+            -
               type: string
-          -
-            type: array
-            items:
+            -
               type: number
       three?:
         type: integer

@@ -247,19 +247,6 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean)
         array.annotations += ExplicitField()
         array.fields.remove(ArrayShapeModel.Items)
         newItems match {
-          case unionItems: UnionShape =>
-            // The canonical items is a union, we need to push it to the top
-            // array[items: Union(a,b,c)] ==> Union(array[items:a], array[items:b], array[items:c])
-            val newUnionItems = unionItems.anyOf.map { item =>
-              val newArray = array.cloneShape().withItems(item)
-              newArray.annotations += ExplicitField()
-              newArray
-            }
-            unionItems.setArrayWithoutId(UnionShapeModel.AnyOf, newUnionItems)
-            Option(array.fields.getValue(ShapeModel.Name)) match {
-              case Some(name) => unionItems.withName(name.toString)
-              case _          => unionItems
-            }
           case arrayItems: ArrayShape =>
             // Array items -> array must become a Matrix
             array.fields.setWithoutId(ArrayShapeModel.Items, newItems)
