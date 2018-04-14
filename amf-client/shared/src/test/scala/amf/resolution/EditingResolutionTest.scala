@@ -19,6 +19,7 @@ class EditingResolutionTest extends BuildCycleTests {
   val productionPath = "amf-client/shared/src/test/resources/production/"
   val resolutionPath = "amf-client/shared/src/test/resources/resolution/"
   val cyclePath      = "amf-client/shared/src/test/resources/upanddown/"
+  val referencesPath    = "amf-client/shared/src/test/resources/references/"
 
   test("Simple extends resolution to Raml") {
     cycle("simple-merge.raml", "simple-merge.editing.jsonld", RamlYamlHint, Amf, extendsPath)
@@ -35,6 +36,11 @@ class EditingResolutionTest extends BuildCycleTests {
   test("Include type resolution to Raml") {
     cycle("simple_example_type.raml", "simple_example_type.resolved.jsonld", RamlYamlHint, Amf, cyclePath)
   }
+
+  test("HERE_HERE Test data type fragment resolution to Amf") {
+    cycle("data-type-fragment.reference.raml", "data-type-fragment.reference.resolved.jsonld", RamlYamlHint, Amf, referencesPath)
+  }
+
 
   /*
   ignore("Github API resolution to Raml") {
