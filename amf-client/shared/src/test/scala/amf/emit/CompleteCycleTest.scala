@@ -1111,6 +1111,10 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("simple_example_type.raml", "simple_example_type.jsonld", RamlYamlHint, Amf)
   }
 
+  test("Description in XML Schema shape") {
+    cycle("simple_xml_schema.raml", "simple_xml_schema.jsonld", RamlYamlHint, Amf)
+  }
+
   test("Declared documentation raml to amf") {
     cycle("declared-documentation.raml",
           "declared-documentation.jsonld",
