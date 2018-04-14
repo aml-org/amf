@@ -9,12 +9,7 @@ import amf.core.parser.{Annotations, Value, _}
 import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
-import amf.plugins.document.webapi.contexts.{
-  Raml08WebApiContext,
-  Raml10WebApiContext,
-  RamlWebApiContext,
-  WebApiContext
-}
+import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec._
@@ -363,7 +358,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
   }
 }
 
-trait RamlExternalTypes extends ExampleParser {
+trait RamlExternalTypes extends RamlSpecParser with ExampleParser with RamlTypeSyntax {
   implicit val ctx: RamlWebApiContext
 
   protected def parseXMLSchemaExpression(name: String,
@@ -386,6 +381,21 @@ trait RamlExternalTypes extends ExampleParser {
             ctx.violation(shape.id, "Cannot parse XML Schema expression out of a non string value", value)
             shape
         }
+        map.key("displayName", (ShapeModel.DisplayName in parsedSchema).allowingAnnotations)
+        map.key("description", (ShapeModel.Description in parsedSchema).allowingAnnotations)
+        map.key(
+          "default",
+          entry => {
+            val dataNodeResult = NodeDataNodeParser(entry.value, parsedSchema.id, quiet = false).parse()
+            val str            = YamlRender.render(entry.value)
+            parsedSchema.set(ShapeModel.DefaultValueString, AmfScalar(str), Annotations(entry))
+            dataNodeResult.dataNode.foreach { dataNode =>
+              parsedSchema.set(ShapeModel.Default, dataNode, Annotations(entry))
+            }
+          }
+        )
+        parseExamples(parsedSchema, value.as[YMap])
+
         parsedSchema
       case YType.Seq =>
         val shape = SchemaShape()
@@ -399,9 +409,6 @@ trait RamlExternalTypes extends ExampleParser {
         adopt(shape)
         shape
     }
-
-    // parsing the potential example
-    if (parseExample && value.tagType == YType.Map) parseExamples(parsed, value.as[YMap])
 
     parsed
   }
@@ -455,7 +462,24 @@ trait RamlExternalTypes extends ExampleParser {
     ctx.localJSONSchemaContext = None // we reset the JSON schema context after parsing
 
     // parsing the potential example
-    if (parseExample && value.tagType == YType.Map) parseExamples(parsed, value.as[YMap])
+    if (parseExample && value.tagType == YType.Map) {
+      val map = value.as[YMap]
+
+      map.key("displayName", (ShapeModel.DisplayName in parsed).allowingAnnotations)
+      map.key("description", (ShapeModel.Description in parsed).allowingAnnotations)
+      map.key(
+        "default",
+        entry => {
+          val dataNodeResult = NodeDataNodeParser(entry.value, parsed.id, quiet = false).parse()
+          val str            = YamlRender.render(entry.value)
+          parsed.set(ShapeModel.DefaultValueString, AmfScalar(str), Annotations(entry))
+          dataNodeResult.dataNode.foreach { dataNode =>
+            parsed.set(ShapeModel.Default, dataNode, Annotations(entry))
+          }
+        }
+      )
+      parseExamples(parsed, value.as[YMap])
+    }
 
     parsed
   }
@@ -1007,7 +1031,8 @@ sealed abstract class RamlTypeParser(ast: YPart,
   }
 
   case class InheritanceParser(entry: YMapEntry, shape: Shape)(implicit val ctx: RamlWebApiContext)
-      extends RamlTypeSyntax
+    extends RamlSpecParser
+      with RamlTypeSyntax
       with RamlExternalTypes {
 
     def parse(): Unit = {
