@@ -423,7 +423,7 @@ trait RamlExternalTypes extends RamlSpecParser with ExampleParser with RamlTypeS
       val text = mut.origValue.asInstanceOf[YScalar].text
       ctx.declarations.fragments
         .get(text)
-        .foreach(e => shape.annotations += ExternalSource(e.id, text)) // todo
+        .foreach(e => shape.annotations += ExternalSourceAnnotation(e.id, text)) // todo
     case _ =>
   }
 

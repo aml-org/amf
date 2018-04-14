@@ -1,0 +1,45 @@
+#%RAML 1.0
+baseUri: https://mocksvc.mulesoft.com/mocks/2bb29838-1f7f-4820-9c5e-a3df7d784b39/mocks/58775eab-8836-4d48-bdcf-84c83fab064e
+title: Infor Financial API
+version: 1.0
+/APInvoice:
+  displayName: AP Invoice processing
+  post:
+    description: Post AP Invoice to Infor CSF
+    body:
+      application/xml: !include Schemas/SupplierInvoice.xsd
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+              TransactionReference: 192f0dc0-8d00-11e7-9598-0800200c9a66
+              Status: 201
+              Reason: Your invoice has been sent to Infor -- Not Really
+            type: any
+/ARInvoice:
+  displayName: AR Invoice processing
+  post:
+    description: Post AR Invoice to Infor CSF
+    body:
+      application/xml: !include Schemas/Invoice.xsd
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+              message: AR Invoice Added (but not really)
+            type: any
+/GLEntries:
+  displayName: GL Journal Entry processing
+  post:
+    description: Post GL Journal Entries to Infor CSF
+    body:
+      application/xml: !include Schemas/SourceSystemJournalEntry.xsd
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+              message: GL Entry Added (but not really)
+            type: any
