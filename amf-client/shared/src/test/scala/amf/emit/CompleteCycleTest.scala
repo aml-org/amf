@@ -1134,6 +1134,9 @@ class CompleteCycleTest extends BuildCycleTests {
       Amf)
   }
 
+  // todo : rename and do this test ok
+
+  // ----begin temp test ---------------------------------------------------------------------
   test("Test render api financial") {
     cycle("infor-financial-api.raml",
           "infor-financial-api.raml.jsonld",
@@ -1141,4 +1144,18 @@ class CompleteCycleTest extends BuildCycleTests {
           Amf,
           "amf-client/shared/src/test/resources/production/financial-api/")
   }
+
+  // its ok render the original link? if the file is not there? if the file is generated under another name?
+  test("Test parse jsonld to raml api financial") {
+    cycle(
+      "infor-financial-api.raml.jsonld",
+      "infor-financial-api.raml.jsonld.raml",
+      AmfJsonHint,
+      Raml,
+      "amf-client/shared/src/test/resources/production/financial-api/"
+    )
+  }
+
+  // ---- end temp test ---------------------------------------------------------------------
+
 }
