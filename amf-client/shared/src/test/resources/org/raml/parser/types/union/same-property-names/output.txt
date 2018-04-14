@@ -33,10 +33,9 @@ types:
     properties:
       unionArray:
         required: true
-        anyOf:
-          -
-            required: true
-            items:
+        items:
+          anyOf:
+            -
               type: object
               additionalProperties: true
               properties:
@@ -46,9 +45,7 @@ types:
                 property2:
                   required: true
                   type: string
-          -
-            required: true
-            items:
+            -
               type: object
               additionalProperties: true
               properties:
