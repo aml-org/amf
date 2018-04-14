@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: test
+types:
+  Product: any
+  PropertyArray:
+    properties:
+      complex:
+        type: array
+        items: string | number | Product
+  PropertyNoArray:
+    properties:
+      complex:
+        type: string | number | Product
