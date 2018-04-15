@@ -41,7 +41,7 @@ class EditingResolutionTest extends BuildCycleTests {
     cycle("data-type-fragment.reference.raml", "data-type-fragment.reference.resolved.jsonld", RamlYamlHint, Amf, referencesPath)
   }
 
-  test("HERE_HERE Test union arrays") {
+  test("Test union arrays") {
     cycle("union_arrays.raml", "union_arrays.resolved.jsonld", RamlYamlHint, Amf, cyclePath)
   }
 

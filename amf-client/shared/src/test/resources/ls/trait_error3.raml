@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: Api
+traits:
+  tr1:
+    queryParameters:
+      qp1:
+
+resourceTypes:
+  rt:
+    delete:
+
+/resource:
+  type: rt
+  post:
+    is: [ tr1 ]
