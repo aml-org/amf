@@ -2,8 +2,10 @@ package amf.ls
 
 import amf.compiler.CompilerTestBuilder
 import amf.core.model.document.Document
+import amf.core.model.domain.templates.ParametrizedDeclaration
 import amf.core.remote.RamlYamlHint
 import amf.plugins.domain.shapes.models.NodeShape
+import amf.plugins.domain.webapi.models.WebApi
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers._
@@ -75,6 +77,17 @@ class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
             succeed
           }
           .getOrElse(succeed)
+      }
+  }
+
+  test("HERE_HERE Error in trait 3") {
+    val file = "file://amf-client/shared/src/test/resources/ls/trait_error3.raml"
+    build(file, RamlYamlHint)
+      .map(_.asInstanceOf[Document])
+      .map { model =>
+        val res = model.encodes.asInstanceOf[WebApi].endPoints.head.operations.head.extend.head.asInstanceOf[ParametrizedDeclaration].target.asInstanceOf[amf.plugins.domain.webapi.models.templates.Trait].asOperation(model)
+        assert(Option(res).isDefined)
+        succeed
       }
   }
 }
