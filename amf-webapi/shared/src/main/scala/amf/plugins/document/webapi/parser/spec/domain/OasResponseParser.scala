@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, ScalarNode, SearchScope, _}
-import amf.plugins.document.webapi.annotations.DefaultPayload
+import amf.plugins.document.webapi.annotations.{DeclaredElement, DefaultPayload}
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
@@ -67,11 +67,14 @@ case class OasResponseParser(entry: YMapEntry, producer: String => Response)(imp
         res
     }
 
-    if (response.name.is("default")) {
-      response.set(ResponseModel.StatusCode, "200")
-    } else {
-      response.set(ResponseModel.StatusCode, node.string())
+    if (!response.annotations.contains(classOf[DeclaredElement])) {
+      if (response.name.is("default")) {
+        response.set(ResponseModel.StatusCode, "200")
+      } else {
+        response.set(ResponseModel.StatusCode, node.string())
+      }
     }
+
     response
   }
 
