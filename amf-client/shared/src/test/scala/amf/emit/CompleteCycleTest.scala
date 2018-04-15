@@ -1156,6 +1156,15 @@ class CompleteCycleTest extends BuildCycleTests {
     )
   }
 
+  test("Test ext ref json schema raml to jsonld") {
+    cycle(
+      "api.raml",
+      "api.raml.jsonld",
+      RamlYamlHint,
+      Amf,
+      "amf-client/shared/src/test/resources/production/financial-api/othercases/jsonschema/"
+    )
+  }
   // ---- end temp test ---------------------------------------------------------------------
 
 }
