@@ -1122,4 +1122,11 @@ class CompleteCycleTest extends BuildCycleTests {
           Amf,
           basePath + "/api-console/")
   }
+
+  test("Response declaration oas to amf") {
+    cycle("oas_response_declaration.yaml",
+      "oas_response_declaration.jsonld",
+      OasYamlHint,
+      Amf)
+  }
 }

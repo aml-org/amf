@@ -2,8 +2,9 @@ package amf.resolution
 
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
-import amf.core.remote.{Amf, Raml, Raml08, RamlYamlHint}
+import amf.core.remote._
 import amf.facades.AMFRenderer
+import amf.plugins.document.webapi.{OAS20Plugin, OAS30Plugin, RAML08Plugin, RAML10Plugin}
 
 import scala.concurrent.Future
 
@@ -12,8 +13,24 @@ abstract class RamlResolutionTest extends ResolutionTest {
     new AMFRenderer(unit, config.target, Raml.defaultSyntax, RenderOptions().withSourceMaps).renderToString
 }
 
+abstract class OasResolutionTest extends ResolutionTest {
+  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
+    val res = config.target match {
+      case Raml08        => RAML08Plugin.resolve(unit)
+      case Raml | Raml10 => RAML10Plugin.resolve(unit)
+      case Oas3          => OAS30Plugin.resolve(unit)
+      case Oas | Oas2    => OAS20Plugin.resolve(unit)
+      case Amf           => OAS20Plugin.resolve(unit)
+      case target        => throw new Exception(s"Cannot resolve $target")
+      //    case _ => unit
+    }
+    res
+  }
+}
+
 class ProductionResolutionTest extends RamlResolutionTest {
   override val basePath = "amf-client/shared/src/test/resources/production/"
+  val completeCyclePath = "amf-client/shared/src/test/resources/upanddown/"
 
   test("Resolves googleapis.compredictionv1.2swagger.raml") {
     cycle("googleapis.compredictionv1.2swagger.raml",
@@ -86,6 +103,21 @@ class ProductionResolutionTest extends RamlResolutionTest {
           RamlYamlHint,
           Raml,
           basePath + "Healthcare-FHIR-System-API/")
+  }
+
+}
+
+class OASProductionResolutionTest extends OasResolutionTest {
+  override val basePath = "amf-client/shared/src/test/resources/production/"
+  val completeCyclePath = "amf-client/shared/src/test/resources/upanddown/"
+
+  test("OAS Response parameters resolution") {
+    cycle("oas_response_declaration.yaml",
+      "oas_response_declaration.resolved.jsonld",
+      OasYamlHint,
+      Amf,
+      completeCyclePath
+    )
   }
 }
 

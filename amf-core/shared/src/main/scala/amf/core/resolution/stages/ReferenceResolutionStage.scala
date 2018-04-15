@@ -6,6 +6,7 @@ import amf.core.model.document.{BaseUnit, Document, EncodesModel}
 import amf.core.model.domain._
 import org.mulesoft.common.core.Strings
 
+
 import scala.collection.mutable
 
 /**
@@ -116,6 +117,9 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
     }
   }
 
+  // Customisation of the resolution transformation for different domains
+  protected def customDomainElementTransformation(d: DomainElement, source: Linkable): DomainElement = d
+
   def transform(element: DomainElement, isCycle: Boolean): Option[DomainElement] = {
     element match {
 
@@ -123,7 +127,7 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
       case l: Linkable if l.linkTarget.isDefined && !isCycle => {
         val resolved = resolveLinked(l.linkTarget.get)
         if (keepEditingInfo) resolved.annotations += ResolvedLinkAnnotation(l.id)
-        Some(withName(resolved, l))
+        Some(customDomainElementTransformation(withName(resolved, l), l))
       }
 
       // link traversed, return the link
