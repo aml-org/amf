@@ -633,10 +633,8 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
           .entries
           .foreach(e => {
             ctx.declarations +=
-              OasResponseParser(e, (name: String) => Response().withName(name).adopted(parentPath))
+              OasResponseParser(e, (name: String) => Response().withName(name).adopted(parentPath).add(DeclaredElement()))
                 .parse()
-                .add(DeclaredElement())
-
           })
       }
     )

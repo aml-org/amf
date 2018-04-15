@@ -80,7 +80,7 @@ class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
       }
   }
 
-  test("HERE_HERE Error in trait 3") {
+  test("Error in trait 3") {
     val file = "file://amf-client/shared/src/test/resources/ls/trait_error3.raml"
     build(file, RamlYamlHint)
       .map(_.asInstanceOf[Document])
