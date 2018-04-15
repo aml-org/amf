@@ -18,8 +18,14 @@ case class Trait(fields: Fields, annotations: Annotations) extends AbstractDecla
   override def meta: AbstractDeclarationModel = TraitModel
 
   /** Get this trait as an operation. No variables will be replaced. Pass the BaseUnit that contains this trait to use its declarations and the profile ProfileNames.RAML08 if this is from a raml08 unit. */
-  def asOperation[T <: BaseUnit](unit: T, profile: String = ProfileNames.RAML): Operation =
-    ExtendsHelper.asOperation(profile, dataNode, unit, name.option().getOrElse(""), id, keepEditingInfo = false)
+  def asOperation[T <: BaseUnit](unit: T, profile: String = ProfileNames.RAML): Operation = {
+    linkTarget match {
+      case Some(_) =>
+        effectiveLinkTarget.asInstanceOf[Trait].asOperation(unit, profile)
+      case _       =>
+        ExtendsHelper.asOperation(profile, dataNode, unit, name.option().getOrElse(""), id, keepEditingInfo = false)
+    }
+  }
 }
 
 object Trait {
