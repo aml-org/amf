@@ -232,7 +232,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
             val key                    = propertyMapping.name().value()
             val propertyClassification = propertyMapping.classification()
 
-            val nextEmitter: Seq[EntryEmitter] = node.valueForField(field) match {
+            val nextEmitter: Seq[EntryEmitter] = node.valueForField(field).map(_.value) match {
               case Some(scalar: AmfScalar) =>
                 emitScalar(key, field, scalar)
 
@@ -483,8 +483,8 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                   val keyField   = element.dynamicFields.find(_.value.iri() == keyProperty)
                   val valueField = element.dynamicFields.find(_.value.iri() == valueProperty)
                   if (keyField.isDefined && valueField.isDefined) {
-                    val keyLiteral   = element.valueForField(keyField.get)
-                    val valueLiteral = element.valueForField(valueField.get)
+                    val keyLiteral   = element.valueForField(keyField.get).map(_.value)
+                    val valueLiteral = element.valueForField(valueField.get).map(_.value)
                     (keyLiteral, valueLiteral) match {
                       case (Some(keyScalar: AmfScalar), Some(valueScalar: AmfScalar)) =>
                         MapEntryEmitter(keyScalar.value.toString, valueScalar.value.toString).emit(b)

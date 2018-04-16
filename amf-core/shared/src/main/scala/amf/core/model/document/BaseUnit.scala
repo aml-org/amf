@@ -1,8 +1,8 @@
 package amf.core.model.document
 
+import amf.core.metamodel.document.BaseUnitModel.{Location, Usage}
+import amf.core.metamodel.document.DocumentModel
 import amf.core.metamodel.document.DocumentModel.References
-import amf.core.metamodel.document.BaseUnitModel.{Usage, Location}
-import amf.core.metamodel.document.{BaseUnitModel, DocumentModel}
 import amf.core.metamodel.{MetaModelTypeMapping, Obj}
 import amf.core.model.StrField
 import amf.core.model.domain._
@@ -156,7 +156,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
         val elements = element match {
           case dynamicElement: DynamicDomainElement =>
             val values =
-              dynamicElement.dynamicFields.map(f => dynamicElement.valueForField(f)).filter(_.isDefined).map(_.get)
+              dynamicElement.dynamicFields.flatMap(f => dynamicElement.valueForField(f)).map(_.value)
             val effectiveValues = values.map {
               case d: DomainElement => Seq(d) // set(
               case a: AmfArray =>

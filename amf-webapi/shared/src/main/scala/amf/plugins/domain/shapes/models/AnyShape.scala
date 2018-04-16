@@ -2,7 +2,7 @@ package amf.plugins.domain.shapes.models
 
 import amf.core.metamodel.Obj
 import amf.core.model.document.PayloadFragment
-import amf.core.model.domain.Shape
+import amf.core.model.domain.{ExternalSourceElement, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.services.PayloadValidator
 import amf.core.validation.{AMFValidationReport, SeverityLevels}
@@ -16,7 +16,8 @@ import scala.concurrent.Future
 class AnyShape(val fields: Fields, val annotations: Annotations)
     extends Shape
     with ShapeHelpers
-    with JsonSchemaSerializer {
+    with JsonSchemaSerializer
+    with ExternalSourceElement {
 
   def documentation: CreativeWork     = fields.field(Documentation)
   def xmlSerialization: XMLSerializer = fields.field(XMLSerialization)

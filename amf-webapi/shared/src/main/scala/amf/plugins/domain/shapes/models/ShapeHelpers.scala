@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.annotations.{ExplicitField, ExternalSourceAnnotation}
+import amf.core.annotations.ExplicitField
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{Linkable, RecursiveShape, Shape}
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
@@ -9,14 +9,20 @@ trait ShapeHelpers { this: Shape =>
 
   def fromTypeExpression: Boolean = this.annotations.contains(classOf[ParsedFromTypeExpression])
 
-  def fromExternalSource: Boolean = this.annotations.contains(classOf[ExternalSourceAnnotation])
+  def fromExternalSource: Boolean = this match {
+    case any: AnyShape => any.referenceId.option().isDefined
+    case _             => false
+  }
 
   def typeExpression: String = this.annotations.find(classOf[ParsedFromTypeExpression]) match {
     case Some(expr: ParsedFromTypeExpression) => expr.value
     case _                                    => throw new Exception("Trying to extract non existent type expression")
   }
 
-  def externalSourceID: Option[String] = this.annotations.find(classOf[ExternalSourceAnnotation]).map(_.oriId)
+  def externalSourceID: Option[String] = this match {
+    case any: AnyShape => any.referenceId.option()
+    case _             => None
+  }
 
   def cloneShape(withRecursionBase: Option[String] = None, traversed: Set[String] = Set()): this.type = {
     if (traversed.contains(this.id)) {

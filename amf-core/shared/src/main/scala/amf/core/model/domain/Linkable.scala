@@ -9,10 +9,13 @@ trait Linkable extends AmfObject { this: DomainElement with Linkable =>
   var linkTarget: Option[DomainElement]    = None
   var linkAnnotations: Option[Annotations] = None
 
-  def effectiveLinkTarget: DomainElement = linkTarget.map {
-    case linkable: Linkable if linkTarget.isDefined => linkable.effectiveLinkTarget
-    case other => other
-  }.getOrElse(this)
+  def effectiveLinkTarget: DomainElement =
+    linkTarget
+      .map {
+        case linkable: Linkable if linkTarget.isDefined => linkable.effectiveLinkTarget
+        case other                                      => other
+      }
+      .getOrElse(this)
 
   def isLink: Boolean           = linkTarget.isDefined
   def linkLabel: Option[String] = Option(fields(LinkableElementModel.Label))
@@ -38,7 +41,8 @@ trait Linkable extends AmfObject { this: DomainElement with Linkable =>
     * This can be overriden by subclasses to customise how the links to unresolved classes are generated.
     * By default it just generates a link.
     */
-  def resolveUnreferencedLink[T](label: String, annotations: Annotations = Annotations(), unresolved: T): T = link(label, annotations)
+  def resolveUnreferencedLink[T](label: String, annotations: Annotations = Annotations(), unresolved: T): T =
+    link(label, annotations)
 
   // Unresolved references to things that can be linked
   // TODO: another trait?
@@ -67,7 +71,8 @@ trait Linkable extends AmfObject { this: DomainElement with Linkable =>
               ctx.violation(id,
                             s"Unresolved reference '$refName' from root context ${ctx.rootContextDocument}",
                             refAst.get)
-          ))
+          )
+        )
       case none => throw new Exception("Cannot create unresolved reference with missing parsing context")
     }
   }

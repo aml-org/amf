@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.{ExplicitField, ExternalSourceAnnotation, SynthesizedField}
+import amf.core.annotations.{ExplicitField, SynthesizedField}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
 import amf.core.metamodel.Field
@@ -310,21 +310,16 @@ case class RamlSchemaShapeEmitter(shape: SchemaShape, ordering: SpecOrdering, re
     implicit spec: SpecEmitterContext)
     extends PartEmitter {
   override def emit(b: PartBuilder): Unit = {
-    shape.annotations.find(classOf[ExternalSourceAnnotation]) match {
-      case Some(externalSource) =>
-        spec.ref(b, externalSource.oriLabel)
-      case _ =>
-        if (shape.examples.nonEmpty) {
-          val fs     = shape.fields
-          val result = mutable.ListBuffer[EntryEmitter]()
-          result ++= RamlAnyShapeEmitter(shape, ordering, references).emitters()
-          fs.entry(SchemaShapeModel.Raw).foreach { f =>
-            result += ValueEmitter("type", f)
-          }
-          b.obj(traverse(ordering.sorted(result), _))
-        } else {
-          raw(b, shape.raw.value())
-        }
+    if (shape.examples.nonEmpty) {
+      val fs     = shape.fields
+      val result = mutable.ListBuffer[EntryEmitter]()
+      result ++= RamlAnyShapeEmitter(shape, ordering, references).emitters()
+      fs.entry(SchemaShapeModel.Raw).foreach { f =>
+        result += ValueEmitter("type", f)
+      }
+      b.obj(traverse(ordering.sorted(result), _))
+    } else {
+      raw(b, shape.raw.value())
     }
   }
 
