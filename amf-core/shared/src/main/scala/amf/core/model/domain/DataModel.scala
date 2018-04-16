@@ -7,7 +7,7 @@ import amf.core.metamodel.domain.DataNodeModel._
 import amf.core.metamodel.{Field, Obj}
 import amf.core.model.StrField
 import amf.core.model.domain.templates.Variable
-import amf.core.parser.{Annotations, Fields}
+import amf.core.parser.{Annotations, Fields, Value}
 import amf.core.resolution.VariableReplacer
 import amf.core.utils._
 import amf.core.vocabulary.{Namespace, ValueType}
@@ -109,9 +109,12 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
 
   override def dynamicType = List(ObjectNode.builderType)
 
-  override def valueForField(f: Field): Option[AmfElement] = f.value.ns match {
-    case Namespace.Data => properties.get(f.value.name)
-    case _              => None // this or fields.get(f)
+  override def valueForField(f: Field): Option[Value] = {
+    val maybeNode = f.value.ns match {
+      case Namespace.Data => properties.get(f.value.name)
+      case _              => None // this or fields.get(f)
+    }
+    maybeNode map { Value(_, Annotations()) }
   }
 
   override def replaceVariables(values: Set[Variable]): DataNode = {
@@ -178,13 +181,13 @@ class ScalarNode(var value: String,
 
   override def dynamicType = List(ScalarNode.builderType)
 
-  override def valueForField(f: Field): Option[AmfElement] = f match {
+  override def valueForField(f: Field): Option[Value] = f match {
     case Value =>
       val annotations = dataType match {
         case Some(dt) => Annotations() += ScalarType(dt)
         case None     => Annotations()
       }
-      Some(AmfScalar(value, annotations))
+      Some(amf.core.parser.Value(AmfScalar(value, annotations), Annotations()))
     case _ => None
   }
 
@@ -234,8 +237,8 @@ class ArrayNode(override val fields: Fields, val annotations: Annotations) exten
 
   override def dynamicType = List(ArrayNode.builderType, Namespace.Rdf + "Seq")
 
-  override def valueForField(f: Field): Option[AmfElement] = f match {
-    case Member => Some(AmfArray(members))
+  override def valueForField(f: Field): Option[Value] = f match {
+    case Member => Some(Value(AmfArray(members), Annotations()))
     case _      => None
   }
 
@@ -282,12 +285,15 @@ class LinkNode(var alias: String, var value: String, override val fields: Fields
 
   override def dynamicType = List(LinkNode.builderType)
 
-  override def valueForField(f: Field): Option[AmfElement] = f match {
-    case Value =>
-      Some(AmfScalar(value, annotations))
-    case Alias =>
-      Some(AmfScalar(alias, annotations))
-    case _ => None
+  override def valueForField(f: Field): Option[Value] = {
+    val maybeScalar = f match {
+      case Value =>
+        Some(AmfScalar(value, annotations))
+      case Alias =>
+        Some(AmfScalar(alias, annotations))
+      case _ => None
+    }
+    maybeScalar map { amf.core.parser.Value(_, Annotations()) }
   }
 
   override def replaceVariables(values: Set[Variable]): DataNode = this

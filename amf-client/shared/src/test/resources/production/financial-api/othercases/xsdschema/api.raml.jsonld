@@ -84,14 +84,14 @@
             "@value": "application/xml"
           }
         ],
-        "http://raml.org/vocabularies/document#link-target": [
-          {
-            "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdschema/schema.xsd#/external"
-          }
-        ],
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "xsdSchema"
+          }
+        ],
+        "http://raml.org/vocabularies/document#reference-id": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdschema/schema.xsd#/external"
           }
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
@@ -99,6 +99,20 @@
             "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdschema/api.raml#/declarations/schema/xsdSchema/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#name"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(5,2)-(5,11)]"
+                  }
+                ]
+              }
             ],
             "http://raml.org/vocabularies/document-source-maps#declared-element": [
               {
@@ -110,20 +124,6 @@
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
                     "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://raml.org/vocabularies/document-source-maps#external-source": [
-              {
-                "http://raml.org/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdschema/api.raml#/declarations/schema/xsdSchema"
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "schema.xsd->file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdschema/schema.xsd#/external"
                   }
                 ]
               }

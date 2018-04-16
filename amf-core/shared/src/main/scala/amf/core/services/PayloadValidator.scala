@@ -55,9 +55,9 @@ object PayloadValidator {
     else "text/vnd.yaml" // by default, we will try to parse it as YAML
   }
 
-  private def isXml(value: String) = value.trim.startsWith("<")
+  def isXml(value: String): Boolean = value.trim.startsWith("<")
 
-  private def isJson(value: String) = value.trim.startsWith("{") || value.startsWith("[")
+  def isJson(value: String) = value.trim.startsWith("{") || value.startsWith("[")
 
   private object AnyMatchPayloadPlugin extends AMFPayloadValidationPlugin {
 

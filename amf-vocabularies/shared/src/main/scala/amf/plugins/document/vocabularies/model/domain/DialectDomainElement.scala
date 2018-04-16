@@ -2,7 +2,7 @@ package amf.plugins.document.vocabularies.model.domain
 
 import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.model.domain._
-import amf.core.parser.{Annotations, Fields}
+import amf.core.parser.{Annotations, Fields, Value}
 import amf.core.vocabulary.ValueType
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
 import org.mulesoft.common.time.SimpleDateTime
@@ -79,7 +79,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   def findPropertyMappingByTermPropertyId(termPropertyId: String): Option[PropertyMapping] =
     definedBy.propertiesMapping().find(_.nodePropertyMapping().value() == termPropertyId)
 
-  override def valueForField(f: Field): Option[AmfElement] = {
+  override def valueForField(f: Field): Option[Value] = {
     val termPropertyId = f.value.iri()
     val propertyId     = findPropertyByTermPropertyId(termPropertyId)
     val annotations    = propertyAnnotations.getOrElse(propertyId, Annotations())
@@ -104,8 +104,8 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
         case other =>
           AmfScalar(other, annotations)
       }
-    } orElse {
-      fields.fields().find(_.field == f).map(_.element)
+    } map { Value(_, Annotations()) } orElse {
+      fields.fields().find(_.field == f).map(_.value)
     }
   }
 

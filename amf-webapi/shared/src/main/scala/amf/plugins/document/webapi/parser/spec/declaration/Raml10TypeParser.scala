@@ -9,7 +9,12 @@ import amf.core.parser.{Annotations, Value, _}
 import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
-import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext, WebApiContext}
+import amf.plugins.document.webapi.contexts.{
+  Raml08WebApiContext,
+  Raml10WebApiContext,
+  RamlWebApiContext,
+  WebApiContext
+}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec._
@@ -360,7 +365,20 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
   }
 }
 
-trait RamlExternalTypes extends RamlSpecParser with ExampleParser with RamlTypeSyntax {
+trait ExternalSourceRef {
+
+  def sourceRefAnnotation(node: YNode, element: ExternalSourceElement, ctx: WebApiContext): Boolean = node match {
+    case mut: MutRef if mut.origValue.isInstanceOf[YScalar] =>
+      val text = mut.origValue.asInstanceOf[YScalar].text
+      ctx.declarations.fragments
+        .get(text)
+        .foreach(e => element.withReference(e.id))
+      true
+    case _ => false
+  }
+}
+
+trait RamlExternalTypes extends RamlSpecParser with ExampleParser with RamlTypeSyntax with ExternalSourceRef {
   implicit val ctx: RamlWebApiContext
 
   protected def parseXMLSchemaExpression(name: String,
@@ -375,7 +393,7 @@ trait RamlExternalTypes extends RamlSpecParser with ExampleParser with RamlTypeS
             val shape =
               SchemaShape().withRaw(typeEntry.value.as[YScalar].text).withMediaType("application/xml")
 
-            sourceRefAnnotation(typeEntry.value, shape)
+            sourceRefAnnotation(typeEntry.value, shape, ctx)
             shape.withName(name)
             adopt(shape)
             shape
@@ -407,25 +425,15 @@ trait RamlExternalTypes extends RamlSpecParser with ExampleParser with RamlTypeS
         ctx.violation(shape.id, "Cannot parse XML Schema expression out of a non string value", value)
         shape
       case _ =>
-        val raw = value.as[YScalar].text
+        val raw   = value.as[YScalar].text
         val shape = SchemaShape().withRaw(raw).withMediaType("application/xml")
-        sourceRefAnnotation(value, shape)
+        sourceRefAnnotation(value, shape, ctx)
         shape.withName(name)
         adopt(shape)
         shape
     }
 
     parsed
-  }
-
-  private def sourceRefAnnotation(node: YNode, shape: AnyShape): Boolean = node match {
-    case mut: MutRef if mut.origValue.isInstanceOf[YScalar] =>
-      val text = mut.origValue.asInstanceOf[YScalar].text
-      ctx.declarations.fragments
-        .get(text)
-        .foreach(e => shape.annotations += ExternalSourceAnnotation(e.id, text)) // todo
-      true
-    case _ => false
   }
 
   protected def parseJSONSchemaExpression(name: String,
@@ -466,7 +474,7 @@ trait RamlExternalTypes extends RamlSpecParser with ExampleParser with RamlTypeS
     val parsed =
       OasTypeParser(schemaEntry, (shape) => adopt(shape), oasNode = "externalSchema")(toOas(ctx)).parse() match {
         case Some(shape) =>
-          if (!sourceRefAnnotation(value, shape)) shape.annotations += ParsedJSONSchema(text)
+          if (!sourceRefAnnotation(value, shape, ctx)) shape.annotations += ParsedJSONSchema(text)
           shape
         case None =>
           val shape = SchemaShape()
@@ -1046,7 +1054,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
   }
 
   case class InheritanceParser(entry: YMapEntry, shape: Shape)(implicit val ctx: RamlWebApiContext)
-    extends RamlSpecParser
+      extends RamlSpecParser
       with RamlTypeSyntax
       with RamlExternalTypes {
 
@@ -1093,9 +1101,18 @@ sealed abstract class RamlTypeParser(ast: YPart,
           ctx.declarations.findType(text, SearchScope.All) match {
             case Some(ancestor) =>
               // set without ID!, we keep the ID of the referred element
-              shape.fields.setWithoutId(ShapeModel.Inherits,
-                                        AmfArray(Seq(ancestor.link(text, Annotations(entry.value)).asInstanceOf[AnyShape].withName(ancestor.name.option().getOrElse("schema"))), Annotations(entry.value)),
-                                        Annotations(entry))
+              shape.fields.setWithoutId(
+                ShapeModel.Inherits,
+                AmfArray(
+                  Seq(
+                    ancestor
+                      .link(text, Annotations(entry.value))
+                      .asInstanceOf[AnyShape]
+                      .withName(ancestor.name.option().getOrElse("schema"))),
+                  Annotations(entry.value)
+                ),
+                Annotations(entry)
+              )
             case _ =>
               val baseClass = text match {
                 case JSONSchema(_) =>

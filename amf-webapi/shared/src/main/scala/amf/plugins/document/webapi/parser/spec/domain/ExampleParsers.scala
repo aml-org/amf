@@ -4,8 +4,9 @@ import amf.core.annotations.{LexicalInformation, SynthesizedField}
 import amf.core.model.domain.{AmfScalar, DataNode}
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.JSONSchema
+import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.declaration.ExternalSourceRef
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.features.validation.ParserSideValidations
@@ -155,26 +156,34 @@ case class RamlSingleExampleValueParser(node: YNode, producer: () => Example, op
 }
 
 case class RamlExampleValueAsString(node: YNode, example: Example, options: ExampleOptions)(
-    implicit ctx: WebApiContext) {
+    implicit ctx: WebApiContext)
+    extends ExternalSourceRef {
   def populate(): Example = {
     if (example.fields.entry(ExampleModel.Strict).isEmpty) {
       example.set(ExampleModel.Strict, AmfScalar(options.strictDefault), Annotations() += SynthesizedField())
     }
 
-    val result = NodeDataNodeParser(node, example.id, options.quiet).parse()
+    val targetNode = node match {
+      case mut: MutRef =>
+        sourceRefAnnotation(node, example, ctx)
+        mut.target.getOrElse(node)
+      case _ =>
+        node.toOption[YScalar] match {
+          case Some(scalar) =>
+            example.set(ExampleModel.Value, AmfScalar(scalar.text, Annotations(node.value)), Annotations(node.value))
+          case _ =>
+            example.set(ExampleModel.Value,
+                        AmfScalar(YamlRender.render(node), Annotations(node.value)),
+                        Annotations(node.value))
 
-    result.dataNode.foreach { dataNode =>
-      example.set(ExampleModel.StructuredValue, dataNode, Annotations(result.exampleNode))
+        }
+        node
     }
 
-    result.exampleNode.toOption[YScalar] match {
-      case Some(scalar) =>
-        example.set(ExampleModel.Value, AmfScalar(scalar.text, Annotations(node.value)), Annotations(node.value))
-      case _ =>
-        example.set(ExampleModel.Value,
-                    AmfScalar(YamlRender.render(result.exampleNode), Annotations(node.value)),
-                    Annotations(node.value))
+    val result = NodeDataNodeParser(targetNode, example.id, options.quiet).parse()
 
+    result.dataNode.foreach { dataNode =>
+      example.set(ExampleModel.StructuredValue, dataNode, Annotations(node))
     }
 
     example
@@ -185,33 +194,32 @@ case class NodeDataNodeParser(node: YNode, parentId: String, quiet: Boolean)(imp
   def parse(): DataNodeParserResult = {
     val errorHandler = if (quiet) WarningOnlyHandler(ctx.rootContextDocument) else ctx
 
-    val targetNode = node match {
-      case mut: MutRef => mut.target.getOrElse(node)
-      case _           => node
-    }
-    val exampleNode: YNode = targetNode.toOption[YScalar] match {
+    val exampleNode: Option[YNode] = node.toOption[YScalar] match {
       case Some(scalar) if JSONSchema.unapply(scalar.text).isDefined =>
-        targetNode
+        node
           .toOption[YScalar]
           .flatMap { scalar =>
             YamlParser(scalar.text)(errorHandler).parse(true).collectFirst({ case doc: YDocument => doc.node })
           }
-          .getOrElse(targetNode)
-      case _ => targetNode // return default node for xml too.
+      case Some(scalar) if XMLSchema.unapply(scalar.text).isDefined => None
+      case _                                                        => Some(node) // return default node for xml too.
     }
 
     errorHandler match {
       case wh: WarningOnlyHandler if wh.hasRegister => DataNodeParserResult(exampleNode, None)
       case _ =>
-        val dataNode = DataNodeParser(exampleNode, parent = Some(parentId)).parse()
-        dataNode.annotations.reject(_.isInstanceOf[LexicalInformation])
-        dataNode.annotations += LexicalInformation(Range(targetNode.value.range))
-        DataNodeParserResult(exampleNode, Some(dataNode))
+        val dataNode = exampleNode.map { ex =>
+          val dataNode = DataNodeParser(ex, parent = Some(parentId)).parse()
+          dataNode.annotations.reject(_.isInstanceOf[LexicalInformation])
+          dataNode.annotations += LexicalInformation(Range(node.value.range))
+          dataNode
+        }
+        DataNodeParserResult(exampleNode, dataNode)
     }
   }
 }
 
-case class DataNodeParserResult(exampleNode: YNode, dataNode: Option[DataNode]) {}
+case class DataNodeParserResult(exampleNode: Option[YNode], dataNode: Option[DataNode]) {}
 
 case class ExampleOptions(strictDefault: Boolean, quiet: Boolean)
 

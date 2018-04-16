@@ -126,8 +126,8 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
       }
     }
     val isExpanded = fs.fieldsMeta().exists(explicitFielMeta.contains(_)) || example.value
-      .value()
-      .contains("value")
+      .option()
+      .exists(_.contains("value"))
 
     if (isExpanded) {
       fs.entry(ExampleModel.DisplayName).foreach(f => results += RamlScalarEmitter("displayName", f))

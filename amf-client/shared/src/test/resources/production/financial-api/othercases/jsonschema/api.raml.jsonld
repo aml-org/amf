@@ -217,6 +217,11 @@
             "@value": "jsonSchema"
           }
         ],
+        "http://raml.org/vocabularies/document#reference-id": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/jsonschema/schema.json#/external"
+          }
+        ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
             "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/jsonschema/api.raml#/declarations/jsonSchema/source-map",
@@ -233,20 +238,6 @@
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
                     "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
-              {
-                "http://raml.org/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/jsonschema/api.raml#/declarations/jsonSchema"
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(6,6)-(6,12)]"
                   }
                 ]
               }
@@ -301,7 +292,7 @@
                 ]
               }
             ],
-            "http://raml.org/vocabularies/document-source-maps#external-source": [
+            "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
@@ -310,7 +301,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "schema.json->file://amf-client/shared/src/test/resources/production/financial-api/othercases/jsonschema/schema.json#/external"
+                    "@value": "[(6,6)-(6,12)]"
                   }
                 ]
               }

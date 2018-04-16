@@ -5,7 +5,7 @@ import amf.core.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.core.metamodel.document.BaseUnitModel.Location
 import amf.core.metamodel.document._
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
-import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableElementModel, ShapeModel}
+import amf.core.metamodel.domain._
 import amf.core.metamodel.{Field, ModelDefaultBuilder, Obj, Type}
 import amf.core.model.document._
 import amf.core.model.domain._
@@ -33,8 +33,10 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
   }
 
   case class Parser(var nodes: Map[String, AmfElement]) {
-    private val unresolvedReferences = mutable.Map[String, Seq[DomainElement]]()
-    private val referencesMap        = mutable.Map[String, DomainElement]()
+    private val unresolvedReferences       = mutable.Map[String, Seq[DomainElement]]()
+    private val unresolvedExtReferencesMap = mutable.Map[String, ExternalSourceElement]()
+
+    private val referencesMap = mutable.Map[String, DomainElement]()
 
     val dynamicGraphParser = new DynamicGraphParser(nodes, referencesMap, unresolvedReferences)
 
@@ -126,7 +128,12 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
             // parsing custom extensions
             instance match {
               case l: DomainElement with Linkable => parseLinkableProperties(map, l)
-              case _                              => // ignore
+              case ex: ExternalDomainElement if unresolvedExtReferencesMap.get(ex.id).isDefined =>
+                unresolvedExtReferencesMap.get(ex.id).foreach { element =>
+                  ex.raw.option().foreach(element.set(ExternalSourceElementModel.Raw, _))
+                }
+                unresolvedExtReferencesMap.remove(ex.id)
+              case _ => // ignore
             }
             instance match {
               case elm: DomainElement => parseCustomProperties(map, elm)
@@ -150,6 +157,8 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
             case _ => throw new Exception("Only linkable elements can be linked")
           }
           unresolvedReferences.update(link.id, Nil)
+        case ref: ExternalSourceElement =>
+          unresolvedExtReferencesMap += (ref.referenceId.value -> ref) // process when parse the references node
         case _ => // ignore
       }
     }
