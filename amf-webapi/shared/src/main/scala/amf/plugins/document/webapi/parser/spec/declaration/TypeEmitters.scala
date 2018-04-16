@@ -6,7 +6,7 @@ import amf.core.emitter._
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.model.document.BaseUnit
+import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfScalar, Linkable, RecursiveShape, Shape}
 import amf.core.parser.Position.ZERO
@@ -142,12 +142,27 @@ case class RamlTypeExpressionEmitter(shape: Shape with ShapeHelpers) extends Par
   override def position(): Position = pos(shape.annotations)
 }
 
+case class RamlExternalSourceEmitter(shape: Shape with ShapeHelpers, references: Seq[BaseUnit]) extends PartEmitter {
+  override def emit(b: PartBuilder): Unit = {
+    val maybeFragment = references
+      .collectFirst({
+        case ex: ExternalFragment if ex.encodes.id.equals(shape.externalSourceID.getOrElse("")) => ex.encodes
+      })
+      .flatMap(ex => ex.raw.option())
+      .foreach { raw(b, _) }
+  }
+
+  override def position(): Position = pos(shape.annotations)
+}
+
 case class Raml10TypeEmitter(shape: AnyShape,
                              ordering: SpecOrdering,
                              ignored: Seq[Field] = Nil,
                              references: Seq[BaseUnit])(implicit spec: SpecEmitterContext) {
   def emitters(): Seq[Emitter] = {
     shape match {
+      case _ if Option(shape).isDefined && shape.fromExternalSource =>
+        Seq(RamlExternalSourceEmitter(shape, references))
       case _ if Option(shape).isDefined && shape.fromTypeExpression => Seq(RamlTypeExpressionEmitter(shape))
       case l: Linkable if l.isLink                                  => Seq(spec.localReference(shape))
       case schema: SchemaShape                                      => Seq(RamlSchemaShapeEmitter(schema, ordering, references))

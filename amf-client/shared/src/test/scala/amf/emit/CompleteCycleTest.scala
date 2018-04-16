@@ -1165,6 +1165,56 @@ class CompleteCycleTest extends BuildCycleTests {
       "amf-client/shared/src/test/resources/production/financial-api/othercases/jsonschema/"
     )
   }
+
+  test("Test ext ref json schema jsonld to raml") {
+    cycle(
+      "api.raml.jsonld",
+      "api.raml.jsonld.raml",
+      AmfJsonHint,
+      Raml,
+      "amf-client/shared/src/test/resources/production/financial-api/othercases/jsonschema/"
+    )
+  }
+
+  test("Test ext ref json raml to raml") {
+    cycle(
+      "api.raml",
+      "api.raml.jsonld.raml",
+      RamlYamlHint,
+      Raml,
+      "amf-client/shared/src/test/resources/production/financial-api/othercases/jsonschema/"
+    )
+  }
+
+  test("Test ext ref xsd schema raml to jsonld") {
+    cycle(
+      "api.raml",
+      "api.raml.jsonld",
+      RamlYamlHint,
+      Amf,
+      "amf-client/shared/src/test/resources/production/financial-api/othercases/xsdschema/"
+    )
+  }
+
+  test("Test ext ref xsd schema jsonld to raml") {
+    cycle(
+      "api.raml.jsonld",
+      "api.raml.jsonld.raml",
+      AmfJsonHint,
+      Raml,
+      "amf-client/shared/src/test/resources/production/financial-api/othercases/xsdschema/"
+    )
+  }
+
+  test("Test ext ref xsd raml to raml") {
+    cycle(
+      "api.raml",
+      "api.raml.jsonld.raml",
+      RamlYamlHint,
+      Raml,
+      "amf-client/shared/src/test/resources/production/financial-api/othercases/xsdschema/"
+    )
+  }
   // ---- end temp test ---------------------------------------------------------------------
 
 }
