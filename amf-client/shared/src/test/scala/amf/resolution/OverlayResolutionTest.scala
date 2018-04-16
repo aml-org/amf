@@ -57,6 +57,15 @@ class OverlayResolutionTest extends ResolutionTest {
     cycle("input.raml", "output.raml", RamlYamlHint, Raml, basePath + "with-uses-both/")
   }
 
+  test("Nil overlay Raml") {
+    try {
+      cycle("input.raml", "output.raml", RamlYamlHint, Raml, basePath + "nil-overlay/")
+      assert(false) // should fail
+    } catch {
+      case e: Exception => assert(true)
+    }
+  }
+
   override def render(unit: BaseUnit, config: CycleConfig): Future[String] = {
     val target = config.target
     new AMFRenderer(unit, target, target.defaultSyntax, RenderOptions().withSourceMaps).renderToString
