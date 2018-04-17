@@ -41,6 +41,11 @@ trait CoreBaseClientConverter extends CoreBaseConverter {
 
   override protected def asClientFuture[T](from: Future[T]): Promise[T] = from.toJSPromise
 
+  override protected def asInternalFuture[Client, Internal](
+      from: js.Promise[Client],
+      matcher: ClientInternalMatcher[Client, Internal]): Future[Internal] =
+    from.toFuture.map(matcher.asInternal)
+
   override protected def toScalaOption[E](from: UndefOr[E]): Option[E] = from.toOption
 
   override protected def toClientOption[E](from: Option[E]): ClientOption[E] = from.orUndefined

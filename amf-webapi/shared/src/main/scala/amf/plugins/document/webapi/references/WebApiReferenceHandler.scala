@@ -5,6 +5,7 @@ import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser._
 import amf.core.remote.{Cache, Context}
+import amf.internal.environment.Environment
 import amf.plugins.document.webapi.BaseWebApiPlugin
 import amf.plugins.document.webapi.parser.RamlHeader
 import amf.plugins.document.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
@@ -28,10 +29,13 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
   }
 
   /** Update parsed reference if needed. */
-  override def update(reference: ParsedReference, ctx: ParserContext, context: Context): Future[ParsedReference] =
+  override def update(reference: ParsedReference,
+                      ctx: ParserContext,
+                      context: Context,
+                      environment: Environment): Future[ParsedReference] =
     vendor match {
       case "RAML 1.0" | "RAML 0.8" if reference.isExternalFragment =>
-        handleRamlExternalFragment(reference, ctx, context)
+        handleRamlExternalFragment(reference, ctx, context, environment)
       case _ => Future.successful(reference)
     }
 
@@ -151,7 +155,8 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
 
   private def handleRamlExternalFragment(reference: ParsedReference,
                                          ctx: ParserContext,
-                                         context: Context): Future[ParsedReference] = {
+                                         context: Context,
+                                         environment: Environment): Future[ParsedReference] = {
     resolveUnitDocument(reference) match {
       case Right(document) =>
         val parsed = ParsedDocument(None, document)
@@ -160,9 +165,9 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
         val updated = context.update(reference.unit.id) // ??
 
         val externals = refs.toReferences.map((r: Reference) => {
-          r.resolve(updated, None, vendor, Cache(), ctx)
+          r.resolve(updated, None, vendor, Cache(), ctx, environment)
             .flatMap(u => {
-              val resolved = handleRamlExternalFragment(ParsedReference(u, r), ctx, updated)
+              val resolved = handleRamlExternalFragment(ParsedReference(u, r), ctx, updated, environment)
 
               resolved.map(res => {
                 r.refs.foreach { refContainer =>

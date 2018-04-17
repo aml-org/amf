@@ -1,22 +1,18 @@
 package amf.core.remote.server
 
-import java.io.IOException
-
-import amf.core.lexer.CharSequenceStream
+import amf.internal.resource.{ResourceLoader, ResourceLoaderAdapter}
 import amf.core.remote.File.FILE_PROTOCOL
 import amf.core.remote._
 import amf.core.remote.server.JsServerPlatform.OS
 import org.mulesoft.common.io.{FileSystem, Fs}
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{Future, Promise}
 import scala.scalajs.js
 import scala.scalajs.js.annotation.{JSExportAll, JSImport}
 
 /**
   *
   */
-class JsServerPlatform extends Platform {
+class JsServerPlatform extends JsPlatform {
 
   /** Underlying file system for platform. */
   override val fs: FileSystem = Fs
@@ -25,88 +21,11 @@ class JsServerPlatform extends Platform {
     js.Dynamic.global.process.exit(code)
   }
 
-  /** Resolve specified file. */
-  override protected def fetchFile(path: String): Future[Content] = {
-    fs.asyncFile(path)
-      .read()
-      .map(
-        content =>
-          Content(new CharSequenceStream(path, content),
-            ensureFileAuthority(path),
-            extension(path).flatMap(mimeFromExtension)))
-      .recoverWith {
-        case io: IOException => { // exception for local file system where we accept paths including spaces
-          fs.asyncFile(path.replace("%20", " "))
-            .read()
-            .map(
-              content =>
-                Content(new CharSequenceStream(path, content),
-                  ensureFileAuthority(path),
-                  extension(path).flatMap(mimeFromExtension)))
-            .recover {
-              case io: IOException => throw FileNotFound(io)
-            }
-        }
-      }
-  }
-
-  /** Resolve specified url. */
-  override protected def fetchHttp(url: String): Future[Content] = {
-    val promise: Promise[Content] = Promise()
-
-    if (url.startsWith("https:")) {
-      Https.get(
-        url,
-        (response: js.Dynamic) => {
-          var str = ""
-
-          // CAREFUL!
-          // this is required to avoid undefined behaviours
-          val dataCb: js.Function1[Any, Any] = { (res: Any) =>
-            str += res.toString
-          }
-          // Another chunk of data has been received, append it to `str`
-          response.on("data", dataCb)
-
-          val completedCb: js.Function = () => {
-            val mediaType = try {
-              Some(response.headers.asInstanceOf[js.Dictionary[String]]("content-type"))
-            } catch {
-              case e: Throwable => None
-            }
-            promise.success(Content(new CharSequenceStream(url, str), url, mediaType))
-          }
-          response.on("end", completedCb)
-        }
-      )
-
-    } else {
-      Http.get(
-        url,
-        (response: js.Dynamic) => {
-          var str = ""
-
-          val dataCb: js.Function1[Any, Any] = { (res: Any) =>
-            str += res.toString
-          }
-          // Another chunk of data has been received, append it to `str`
-          response.on("data", dataCb)
-
-          val completedCb: js.Function = () => {
-            val mediaType = try {
-              Some(response.headers.asInstanceOf[js.Dictionary[String]]("content-type"))
-            } catch {
-              case e: Throwable => None
-            }
-            promise.success(Content(new CharSequenceStream(url, str), url, mediaType))
-          }
-          response.on("end", completedCb)
-        }
-      )
-    }
-
-    promise.future
-  }
+  /** Platform out of the box [ResourceLoader]s */
+  override def loaders(): Seq[ResourceLoader] = Seq(
+    ResourceLoaderAdapter(JsServerFileResourceLoader()),
+    ResourceLoaderAdapter(JsServerHttpResourceLoader())
+  )
 
   /** Return temporary directory. */
   override def tmpdir(): String = OS.tmpdir() + "/"
