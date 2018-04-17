@@ -3,7 +3,6 @@ package amf.core.parser
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{Cache, Context}
 import amf.core.services.RuntimeCompiler
-import amf.internal.environment.Environment
 import org.yaml.model.YNode
 
 import scala.collection.mutable
@@ -20,11 +19,10 @@ case class Reference(url: String, refs: Seq[RefContainer]) {
               mediaType: Option[String],
               vendor: String,
               cache: Cache,
-              ctx: ParserContext,
-              env: Environment): Future[BaseUnit] = {
+              ctx: ParserContext): Future[BaseUnit] = {
     val kinds = refs.map(_.linkType)
     val kind  = if (kinds.distinct.size > 1) UnspecifiedReference else kinds.distinct.head
-    RuntimeCompiler(url, mediaType, vendor, base, kind, cache, Some(ctx), env)
+    RuntimeCompiler(url, mediaType, vendor, base, kind, cache, Some(ctx))
   }
 }
 

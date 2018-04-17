@@ -4,7 +4,6 @@ import amf.core.model.document.BaseUnit
 import amf.core.parser.{ParserContext, ReferenceKind, UnspecifiedReference}
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.{Cache, Context}
-import amf.internal.environment.Environment
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -16,8 +15,7 @@ trait RuntimeCompiler {
             vendor: String,
             referenceKind: ReferenceKind,
             cache: Cache,
-            ctx: Option[ParserContext],
-            env: Environment = Environment()): Future[BaseUnit]
+            ctx: Option[ParserContext]): Future[BaseUnit]
 }
 
 object RuntimeCompiler {
@@ -32,12 +30,11 @@ object RuntimeCompiler {
             base: Context,
             referenceKind: ReferenceKind = UnspecifiedReference,
             cache: Cache = Cache(),
-            ctx: Option[ParserContext] = None,
-            env: Environment = Environment()): Future[BaseUnit] = {
+            ctx: Option[ParserContext] = None): Future[BaseUnit] = {
     compiler match {
       case Some(runtimeCompiler) =>
         AMFPluginsRegistry.featurePlugins().foreach(_.onBeginParsingInvocation(url, mediaType, vendor))
-        runtimeCompiler.build(url, base, mediaType, vendor, referenceKind, cache, ctx, env) map { parsedUnit =>
+        runtimeCompiler.build(url, base, mediaType, vendor, referenceKind, cache, ctx) map { parsedUnit =>
           AMFPluginsRegistry.featurePlugins().foldLeft(parsedUnit) {
             case (parsed, plugin) =>
               plugin.onFinishedParsingInvocation(url, parsed)

@@ -48,8 +48,8 @@ object Context {
 
 private object Absolute {
   def unapply(url: String): Option[String] = url match {
-    case s if s.contains(":") => Some(s)
-    case _                    => None
+    case s if s.startsWith("http://") || s.startsWith("https://") || s.startsWith("file://") => Some(s)
+    case _                                                                                   => None
   }
 }
 

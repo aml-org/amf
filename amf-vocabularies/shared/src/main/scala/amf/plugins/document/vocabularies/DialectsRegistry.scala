@@ -9,8 +9,6 @@ import amf.core.remote.Context
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.vocabulary.ValueType
-import amf.internal.environment.Environment
-import amf.internal.resource.StringResourceLoader
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance}
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, NodeMapping, ObjectMapProperty}
@@ -29,8 +27,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
   }
 
   def knowsHeader(header: String): Boolean = {
-    header == "%RAML 1.0 Vocabulary" || header == "%RAML 1.0 Dialect" || header == "%RAML Library / RAML 1.0 Dialect" || map
-      .contains(headerKey(header))
+    header == "%RAML 1.0 Vocabulary" || header == "%RAML 1.0 Dialect" || header == "%RAML Library / RAML 1.0 Dialect" || map.contains(headerKey(header))
   }
 
   def knowsDialectInstance(instance: DialectInstance): Boolean = dialectFor(instance).isDefined
@@ -109,19 +106,15 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     new DialectDomainElementModel(nodeType.value(), fields ++ mapPropertiesFields, Some(nodeMapping))
   }
 
-  def registerDialect(uri: String, environment: Environment = Environment()): Future[Dialect] = {
+  def registerDialect(uri: String): Future[Dialect] = {
     map.get(uri) match {
       case Some(dialect) => Future { dialect }
       case _ =>
-        RuntimeValidator.disableValidationsAsync() { reenable =>
-          RuntimeCompiler(uri,
-                          Some("application/yaml"),
-                          RAMLVocabulariesPlugin.ID,
-                          Context(platform),
-                          env = environment)
+        RuntimeValidator.disableValidationsAsync() { reenableValidations =>
+          RuntimeCompiler(uri, Some("application/yaml"), RAMLVocabulariesPlugin.ID, Context(platform))
             .map {
               case dialect: Dialect =>
-                reenable()
+                reenableValidations()
                 register(dialect)
                 dialect
             }
@@ -129,8 +122,10 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     }
   }
 
-  def registerDialect(url: String, code: String): Future[Dialect] = {
-    val environment = Environment(StringResourceLoader(url, code))
-    registerDialect(url, environment)
+  def registerDialect(url: String, dialectCode: String): Future[Dialect] = {
+    platform.cacheResourceText(url, dialectCode)
+    val res = registerDialect(url)
+    platform.removeCacheResourceText(url)
+    res
   }
 }

@@ -2,7 +2,6 @@ package amf
 
 import amf.client.convert.CoreClientConverters._
 import amf.client.convert.CoreRegister
-import amf.client.environment.Environment
 import amf.client.model.document._
 import amf.client.parse.Parser
 import amf.client.render.Renderer
@@ -25,7 +24,7 @@ object Core extends PlatformSecrets {
     AMF.init().asClient
   }
 
-  def parser(vendor: String, mediaType: String): Parser = new Parser(vendor, mediaType, None)
+  def parser(vendor: String, mediaType: String): Parser = new Parser(vendor, mediaType)
 
   def generator(vendor: String, mediaType: String): Renderer = new Renderer(vendor, mediaType)
 

@@ -2,14 +2,11 @@ package amf.wrapper
 
 import amf.client.AMF
 import amf.client.convert.NativeOps
-import amf.client.environment.Environment
 import amf.client.model.document._
 import amf.client.model.domain._
 import amf.client.parse._
-import amf.client.remote.Content
 import amf.client.render._
 import amf.client.resolve.Raml10Resolver
-import amf.client.resource.ResourceLoader
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -375,92 +372,6 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   test("Parsing text document with base url (domain only)") {
     val baseUrl = "http://test.com"
     testParseStringWithBaseUrl(baseUrl)
-  }
-
-  test("Environment test") {
-    val include = "amf://types/Person.raml"
-
-    val input = s"""
-      |#%RAML 1.0
-      |title: Environment test
-      |types:
-      |  Person: !include $include
-    """.stripMargin
-
-    val person = """
-      |#%RAML 1.0 DataType
-      |type: object
-      |properties:
-      |  name: string
-    """.stripMargin
-
-    case class TestResourceLoader() extends ResourceLoader {
-
-      import amf.client.convert.WebApiClientConverters._
-
-      override def fetch(resource: String): ClientFuture[Content] =
-        Future.successful(new Content(person, resource)).asClient
-
-      override def accepts(resource: String): Boolean = resource == include
-    }
-
-    val environment = Environment(TestResourceLoader())
-
-    for {
-      _    <- AMF.init().asFuture
-      unit <- new RamlParser(environment).parseStringAsync(input).asFuture
-    } yield {
-      unit shouldBe a[Document]
-      val declarations = unit.asInstanceOf[Document].declares.asSeq
-      declarations should have size 1
-    }
-  }
-
-  test("Environment fallback test") {
-    val include = "amf://types/Person.raml"
-
-    val input = s"""
-       |#%RAML 1.0
-       |title: Environment test
-       |types:
-       |  Person: !include $include
-    """.stripMargin
-
-    val person = """
-       |#%RAML 1.0 DataType
-       |type: object
-       |properties:
-       |  name: string
-     """.stripMargin
-
-    import amf.client.convert.WebApiClientConverters._
-
-    case class TestResourceLoader() extends ResourceLoader {
-      override def fetch(resource: String): ClientFuture[Content] =
-        Future.successful(new Content(person, resource)).asClient
-
-      override def accepts(resource: String): Boolean = resource == include
-    }
-
-    case class FailingResourceLoader(msg: String) extends ResourceLoader {
-      override def fetch(resource: String): ClientFuture[Content] =
-        Future.failed[Content](new Exception(msg)).asClient
-    }
-
-    val environment = Environment
-      .empty()
-      .add(TestResourceLoader())
-      .add(FailingResourceLoader("Unreachable network"))
-      .add(FailingResourceLoader("Invalid protocol"))
-
-    for {
-      _    <- AMF.init().asFuture
-      unit <- new RamlParser(environment).parseStringAsync(input).asFuture
-    } yield {
-      unit shouldBe a[Document]
-      val declarations = unit.asInstanceOf[Document].declares.asSeq
-      declarations should have size 1
-    }
   }
 
   test("Generate unit with source maps") {

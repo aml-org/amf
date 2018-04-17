@@ -1,22 +1,63 @@
 package amf.core.remote
 
-import java.net.URI
+import java.io.FileNotFoundException
+import java.net.{HttpURLConnection, URI}
 
-import amf.client.resource.{FileResourceLoader, HttpResourceLoader}
+import amf.core.lexer.{CharArraySequence, CharSequenceStream, FileStream}
 import amf.core.unsafe.PlatformBuilder
-import amf.internal.resource.{ResourceLoader, ResourceLoaderAdapter}
 import org.mulesoft.common.io.{FileSystem, Fs}
+
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class JvmPlatform extends Platform {
 
   /** Underlying file system for platform. */
   override val fs: FileSystem = Fs
 
-  /** Platform out of the box [ResourceLoader]s */
-  override def loaders(): Seq[ResourceLoader] = Seq(
-    ResourceLoaderAdapter(FileResourceLoader()),
-    ResourceLoaderAdapter(HttpResourceLoader())
-  )
+  /** Resolve specified url. */
+  override protected def fetchHttp(url: String): Future[Content] = {
+    val u          = new java.net.URL(url)
+    val connection = u.openConnection.asInstanceOf[HttpURLConnection]
+    connection.setRequestMethod("GET")
+
+    Future {
+      connection.connect()
+      connection.getResponseCode match {
+        case 200 =>
+          createContent(connection, url)
+        case s => throw new Exception(s"Unhandled status code $s => $url")
+      }
+    }
+  }
+
+  private def createContent(connection: HttpURLConnection, url: String): Content = {
+    Content(
+      new CharSequenceStream(CharArraySequence(connection.getInputStream, connection.getContentLength, None)),
+      url,
+      Option(connection.getHeaderField("Content-Type"))
+    )
+
+  }
+
+  /** Resolve specified file. */
+  override protected def fetchFile(path: String): Future[Content] = Future {
+    try {
+      Content(new FileStream(path), ensureFileAuthority(path), extension(path).flatMap(mimeFromExtension))
+    } catch {
+      case e: FileNotFoundException =>
+        if (path.contains("%20")) { // exception for local file system where we accept paths including spaces
+          val escapedPath = path.replace("%20", " ")
+          try {
+            Content(new FileStream(escapedPath), ensureFileAuthority(path), extension(path).flatMap(mimeFromExtension))
+          } catch {
+            case e: FileNotFoundException => throw FileNotFound(e)
+          }
+        } else {
+          throw FileNotFound(e)
+        }
+    }
+  }
 
   /** Return temporary directory. */
   override def tmpdir(): String = System.getProperty("java.io.tmpdir")

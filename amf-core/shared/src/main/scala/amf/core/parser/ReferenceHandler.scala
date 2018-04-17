@@ -1,7 +1,6 @@
 package amf.core.parser
 
 import amf.core.remote.Context
-import amf.internal.environment.Environment
 
 import scala.concurrent.Future
 
@@ -11,10 +10,7 @@ trait ReferenceHandler {
   def collect(document: ParsedDocument, ctx: ParserContext): ReferenceCollector
 
   /** Update parsed reference if needed. */
-  def update(reference: ParsedReference,
-             ctx: ParserContext,
-             context: Context,
-             environment: Environment): Future[ParsedReference] =
+  def update(reference: ParsedReference, ctx: ParserContext, context: Context): Future[ParsedReference] =
     Future.successful(reference)
 }
 

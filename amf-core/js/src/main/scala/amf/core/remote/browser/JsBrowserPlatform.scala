@@ -1,20 +1,36 @@
 package amf.core.remote.browser
 
-import amf.internal.resource.{ResourceLoader, ResourceLoaderAdapter}
-import amf.core.remote._
+import amf.core.lexer.CharSequenceStream
+import amf.core.remote.{Content, FileNotFound, Platform, UnsupportedFileSystem}
 import org.mulesoft.common.io.FileSystem
+import org.scalajs.dom.ext.Ajax
 
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 import scala.scalajs.js.annotation.JSExportAll
 
 /**
   *
   */
-class JsBrowserPlatform extends JsPlatform {
+class JsBrowserPlatform extends Platform {
 
   /** Underlying file system for platform. */
   override val fs: FileSystem = UnsupportedFileSystem
 
-  override def loaders(): Seq[ResourceLoader] = Seq(ResourceLoaderAdapter(JsBrowserHttpResourceLoader()))
+  override protected def fetchHttp(url: String): Future[Content] = {
+    Ajax
+      .get(url)
+      .flatMap(xhr =>
+        xhr.status match {
+          case 200 => Future { Content(new CharSequenceStream(xhr.responseText), url) }
+          case s   => Future.failed(FileNotFound(new Exception(s"Unhandled status code $s with ${xhr.statusText}")))
+      })
+  }
+
+  override protected def fetchFile(url: String): Future[Content] = {
+    // Accept in Node only
+    Future.failed(new Exception(s"File protocol unsupported for: $url"))
+  }
 
   /** Return temporary directory. */
   override def tmpdir(): String = {
