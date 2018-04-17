@@ -1,12 +1,12 @@
 package amf.core.unsafe
 
-import amf.client.remote.Content
-import amf.core.remote.{Platform, UnsupportedFileSystem}
+
+import amf.core.lexer.CharSequenceStream
+import amf.core.remote.{Content, Context, Platform, UnsupportedFileSystem}
 import amf.core.validation.core.SHACLValidator
-import amf.internal.environment.Environment
-import amf.internal.resource.ResourceLoader
 import org.mulesoft.common.io.FileSystem
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 trait PlatformSecrets {
@@ -23,7 +23,7 @@ class TrunkDialectsRegistry(platform: Platform) extends PlatformDialectRegistry(
 
   override def registerDialect(uri: String, dialect: String) = throw new Exception("Not supported in trunk platform")
 }
- */
+*/
 
 class TrunkValidator extends SHACLValidator {
   override def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String) =
@@ -51,11 +51,22 @@ case class TrunkPlatform(content: String, wrappedPlatform: Option[Platform] = No
   /** Test path resolution. */
   override def resolvePath(path: String): String = path
 
+  /** Resolve file on specified path. */
+  override protected def fetchFile(path: String): Future[Content] = {
+    Future {
+      Content(new CharSequenceStream(content), path)
+    }
+  }
+
+  /** Resolve specified url. */
+  override protected def fetchHttp(url: String): Future[Content] = {
+    fetchFile(url)
+  }
+
   override def tmpdir(): String = throw new Exception("Unsupported tmpdir operation")
 
-  override def resolve(url: String, env: Environment = Environment()): Future[Content] =
-    Future.successful(new Content(content, url))
+  override def resolve(url: String, context: Option[Context]): Future[Content] = {
+    fetchFile(url)
+  }
 
-  /** Platform out of the box [ResourceLoader]s */
-  override def loaders(): Seq[ResourceLoader] = wrappedPlatform.map(_.loaders()).getOrElse(Seq())
 }

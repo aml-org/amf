@@ -50,14 +50,14 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Loading and serializing validations") {
     val expectedFile             = "validation_profile_example_gold.raml"
     val exampleFile              = "validation_profile_example.raml"
-    val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
+    val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
     cycle(exampleFile, RamlYamlHint, Yaml, Raml).zip(expected).map(checkDiff)
   }
 
   test("prefixes can be loaded") {
     val expectedFile             = "validation_profile_prefixes.raml.jsonld"
     val exampleFile              = "validation_profile_prefixes.raml"
-    val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
+    val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
     val validation               = Validation(platform)
     cycle(exampleFile, RamlYamlHint, Json, Amf).zip(expected).map(checkDiff)
   }
@@ -65,7 +65,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Prefixes can be parsed") {
     val expectedFile             = "validation_profile_prefixes.raml"
     val exampleFile              = "validation_profile_prefixes.raml.jsonld"
-    val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
+    val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
     val validation               = Validation(platform)
     cycle(exampleFile, AmfJsonHint, Yaml, Raml).zip(expected).map(checkDiff)
   }
@@ -73,7 +73,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Loading and serializing validations with inplace definition of encodes") {
     val expectedFile             = "validation_profile_example_gold.raml"
     val exampleFile              = "validation_profile_example.raml"
-    val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
+    val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
     val validation               = Validation(platform)
     cycle(exampleFile, RamlYamlHint, Yaml, Raml).zip(expected).map(checkDiff)
   }
@@ -82,7 +82,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     val expectedFile             = "validation_profile_example_gold.raml"
     val exampleFile              = "validation_profile_example.raml"
     val validation               = Validation(platform)
-    val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
+    val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
     cycle(exampleFile, RamlYamlHint, Yaml, Raml).zip(expected).map(checkDiff)
   }
 
@@ -90,7 +90,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     val expectedFile             = "validation_profile_example_gold.raml"
     val exampleFile              = "validation_profile_example.raml"
     val validation               = Validation(platform)
-    val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
+    val expected: Future[String] = platform.resolve(basePath + expectedFile, None).map(_.stream.toString)
     cycle(exampleFile, RamlYamlHint, Yaml, Raml).zip(expected).map(checkDiff)
   }
 
@@ -280,7 +280,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   test("payload parsing test") {
     for {
-      content    <- platform.resolve(payloadsPath + "b_valid.yaml")
+      content    <- platform.resolve(payloadsPath + "b_valid.yaml", None)
       validation <- Validation(platform).map(_.withEnabledValidation(false))
       filePayload <- AMFCompiler(payloadsPath + "b_valid.yaml", platform, PayloadYamlHint, validation)
         .build()
@@ -333,7 +333,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   private def validate(file: String, expectedReport: ExpectedReport) = {
-    platform.resolve(examplesPath + file).flatMap { data =>
+    platform.resolve(examplesPath + file, None).flatMap { data =>
       val model = data.stream.toString
       Validation(platform).flatMap { validation =>
         val effectiveValidations = validation.computeValidations(expectedReport.profile)

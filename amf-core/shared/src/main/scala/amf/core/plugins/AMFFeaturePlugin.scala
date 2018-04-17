@@ -1,8 +1,8 @@
 package amf.core.plugins
 
-import amf.client.remote.Content
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{ParsedDocument, ReferenceKind}
+import amf.core.remote.Content
 
 trait AMFFeaturePlugin extends AMFPlugin {
 
@@ -22,8 +22,7 @@ trait AMFFeaturePlugin extends AMFPlugin {
     * @param referenceKind Type of reference for the content
     * @param vendor Vendor being parsed
     */
-  def onBeginDocumentParsing(url: String, content: Content, referenceKind: ReferenceKind, vendor: String): Content =
-    content
+  def onBeginDocumentParsing(url: String, content: Content, referenceKind: ReferenceKind, vendor: String): Content = content
 
   /**
     * Callback invoked for every successful syntax AST being parsed for any linked document
@@ -38,6 +37,7 @@ trait AMFFeaturePlugin extends AMFPlugin {
     * @param unit Parsed domain unit
     */
   def onModelParsed(url: String, unit: BaseUnit): BaseUnit = unit
+
 
   /**
     * Callback being invoked after every successful parser invocation containing the top level domain unit being parsed
