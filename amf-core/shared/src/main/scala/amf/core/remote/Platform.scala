@@ -1,11 +1,14 @@
 package amf.core.remote
 
 import amf.client.model.AmfObjectWrapper
+import amf.client.remote.Content
 import amf.core.lexer.CharSequenceStream
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfObject, DomainElement}
 import amf.core.vocabulary.Namespace
+import amf.internal.environment.Environment
+import amf.internal.resource.ResourceLoader
 import org.mulesoft.common.io.{AsyncFile, FileSystem, SyncFile}
 
 import scala.collection.mutable
@@ -87,34 +90,21 @@ trait Platform extends FileMediaType {
     case _ => throw new Exception(s"Cannot build object of type $entity")
   }
 
+  private def loaderConcat(url: String, loaders: Seq[ResourceLoader]): Future[Content] = loaders.toList match {
+    case Nil         => Future.failed(new Exception(s"No loader for $url"))
+    case head :: Nil => head.fetch(url)
+    case head :: tail =>
+      head.fetch(url).recoverWith {
+        case _ => loaderConcat(url, tail)
+      }
+  }
+
   /** Resolve remote url. */
-  def resolve(url: String, context: Option[Context]): Future[Content] = {
-    url match {
-      case HttpParts(_, _, _)                  => checkCache(url, () => fetchHttp(url))
-      case File(path)                          => checkCache(path, () => fetchFile(path))
-      case Relative(path) if context.isDefined => resolve(context.get resolve path, None)
-      case _                                   => Future.failed(new Exception(s"Unsupported url: $url"))
-    }
-  }
+  def resolve(url: String, env: Environment = Environment()): Future[Content] =
+    loaderConcat(url, env.loaders.filter(_.accepts(url)))
 
-  // Dealing with parsing of strings and HTTP caching
-  val resourceCache: mutable.Map[String, Content] = mutable.HashMap()
-  def cacheResourceText(url: String, text: String, mimeType: Option[String] = None): Unit = {
-    val content = Content(new CharSequenceStream(url, text), url, mimeType)
-    resourceCache += (url -> content)
-  }
-  def removeCacheResourceText(url: String): Option[Content] = resourceCache.remove(url)
-  def resetResourceCache(): Unit                            = resourceCache.clear()
-
-  def checkCache(url: String, eventualContent: () => Future[Content]): Future[Content] = {
-    resourceCache.get(url) match {
-      case Some(content) =>
-        val p: Promise[Content] = Promise()
-        p.success(content)
-        p.future
-      case None => eventualContent()
-    }
-  }
+  /** Platform out of the box [ResourceLoader]s */
+  def loaders(): Seq[ResourceLoader]
 
   def ensureFileAuthority(str: String): String = if (str.startsWith("file:")) { str } else { s"file://$str" }
 
@@ -123,12 +113,6 @@ trait Platform extends FileMediaType {
 
   /** Register an alias for a namespace */
   def registerNamespace(alias: String, prefix: String): Option[Namespace] = Namespace.registerNamespace(alias, prefix)
-
-  /** Resolve file on specified path. */
-  protected def fetchFile(path: String): Future[Content]
-
-  /** Resolve specified url. */
-  protected def fetchHttp(url: String): Future[Content]
 
   /** Location where the helper functions for custom validations must be retrieved */
   protected def customValidationLibraryHelperLocation: String = "http://raml.org/amf/validation.js"
@@ -187,46 +171,6 @@ object Relative {
       case _                     => None
     }
   }
-}
-
-/**
-  * Wrapper class for a platform with support to resolve the content of a URL without resolving it.
-  * Used to implement the parseString functions, where the text for the provided URL is known
-  */
-case class StringContentPlatform(contentUrl: String, content: String, wrappedPlatform: Platform) extends Platform {
-
-  /** Underlying file system for platform. */
-  override val fs: FileSystem = wrappedPlatform.fs
-
-  override def resolvePath(path: String): String =
-    if (path == contentUrl) {
-      contentUrl
-    } else {
-      wrappedPlatform.resolvePath(path)
-    }
-
-  override protected def fetchFile(path: String): Future[Content] =
-    if (path == contentUrl) {
-      Future {
-        Content(new CharSequenceStream(content), path)
-      }
-    } else {
-      wrappedPlatform.resolve(File.FILE_PROTOCOL + path, None)
-    }
-
-  override protected def fetchHttp(url: String): Future[Content] =
-    if (url == contentUrl) {
-      Future {
-        Content(new CharSequenceStream(content), url)
-      }
-    } else {
-      wrappedPlatform.resolve(url, None)
-    }
-
-  override def tmpdir(): String = wrappedPlatform.tmpdir()
-
-  override protected def writeFile(path: String, content: String): Future[Unit] =
-    wrappedPlatform.write(File.FILE_PROTOCOL + path, content)
 }
 
 /** Unsupported file system. */
