@@ -1,0 +1,15 @@
+#%RAML 1.0 Trait
+usage: Use this trait for resources that could respond with a 503 status
+responses:
+    503:
+      description: |
+        The server is currently unavailable 
+        (because it is overloaded or down for maintenance). 
+        Generally, this is a temporary state.   
+      body:
+        application/json:
+          example: |
+            {
+              "message": "The server is currently unavailable to process any requests. Please try accessing this resource at a later time.",
+              "code": "2003 <example code. Replace with your own error code>"
+            }

@@ -1,0 +1,17 @@
+#%RAML 1.0 Trait
+usage: Use this trait for resources that could respond with a 415 status
+responses:
+  415:
+    description: |
+      The API is not able to process the client’s supplied media type, 
+      as indicated by the 'Content-Type' request header. 
+      Example: a client request including data formatted as application/xml 
+      will receive a 415 response if the API is only willing to process data 
+      formatted as application/json.
+    body: 
+      application/json:
+        example: |
+            {
+              "message": "Request format not supported. Valid request type is application/json.",
+              "code": "1015 <example code. Replace with your own error code>"
+            }

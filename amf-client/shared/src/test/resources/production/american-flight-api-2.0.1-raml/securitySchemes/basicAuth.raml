@@ -1,0 +1,24 @@
+#%RAML 1.0 SecurityScheme
+type: Basic Authentication
+description: |
+  Each request must contain the headers necessary for basic authentication.
+describedBy: 
+  headers: 
+    Authorization:
+      description: |
+        Used to send the Base64 encoded "username:password" or 
+        "client ID: client secret" credentials
+      type: string
+  responses: 
+    401:
+      description: |
+        Unauthorized. Either the provided username and password
+        combination is invalid, or the user is not allowed to
+        access the content provided by the requested URL.
+      body: 
+        application/json:
+          example: |
+            {
+              "message": "Either the provided credentials are invalid, or the user is not allowed to access the content provided by the requested URL",
+              "code": "1001 <example code. Replace with your own error code>"
+            }

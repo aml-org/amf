@@ -1,0 +1,14 @@
+#%RAML 1.0 Trait
+usage: Use this trait for resources that could respond with a 429 status
+responses:
+  429:
+    description: |
+      The user has sent too many requests in a given amount of time. 
+      Typically used with rate-limiting and throttling policies.
+    body: 
+      application/json:
+        example: |
+            {
+              "message": "Request limit exceeded for this resource for the day. Please contact the API administrator to discuss options for a higher limit.",
+              "code": "1029 <example code. Replace with your own error code>"
+            }

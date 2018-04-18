@@ -1,0 +1,39 @@
+#%RAML 1.0 ResourceType
+usage: Use this resourceType to represent a single item
+description: Use this to describe a resource that lists a single item
+
+uses: 
+  flightTypes: ../libraries/flightTypes.raml
+  
+get:
+  description: "Obtain an American Airlines domestic US flights based on flight Id."
+  displayName: Retrieve a Flight
+  responses: 
+    200:
+      body: 
+        application/json:
+          type: flightTypes.flight
+          example: !include ../examples/flight.json
+
+delete:
+  description: "Delete an American Airlines domestic US flights based on flight Id."
+  displayName: Delete a Flight
+  responses:
+    200:
+      body:
+        application/json:
+          example: !include ../examples/flightDeleted.json
+
+put:
+  description: "Update an American Airlines domestic US flights based on flight Id."
+  displayName: Update a Flight
+  body:
+    application/json:
+      type: flightTypes.flight
+      example: !include ../examples/flight.json
+  responses:
+    201:
+      body:
+        application/json:
+          example: !include ../examples/flightUpdated.json
+            
