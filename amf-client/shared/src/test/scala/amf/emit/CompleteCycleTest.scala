@@ -651,7 +651,11 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("externals.json.jsonld", "externals.json.jsonld.json", AmfJsonHint, Oas)
   }
 
-  test("JSON Schema wrapped in array test") {
+  test("HERE_HERE JSON Schema wrapped in array test") {
+    cycle("missing_payload.raml", "missing_payload.jsonld", RamlYamlHint, Amf, base08Path)
+  }
+
+  test("Parsing missing payload value") {
     cycle("json_schema_array.raml", "json_schema_array.raml.jsonld", RamlYamlHint, Amf, base08Path)
   }
 
