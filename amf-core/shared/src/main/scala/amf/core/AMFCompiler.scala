@@ -1,5 +1,6 @@
 package amf.core
 
+import amf.client.remote.Content
 import amf.core
 import amf.core.benchmark.ExecutionLog
 import amf.core.exception.CyclicReferenceException
@@ -10,6 +11,7 @@ import amf.core.plugins.AMFDocumentPlugin
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.services.RuntimeCompiler
+import amf.internal.environment.Environment
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -30,7 +32,8 @@ class AMFCompiler(val rawUrl: String,
                   val vendor: String,
                   val referenceKind: ReferenceKind = UnspecifiedReference,
                   private val cache: Cache = Cache(),
-                  private val baseContext: Option[ParserContext] = None) {
+                  private val baseContext: Option[ParserContext] = None,
+                  val env: Environment = Environment()) {
 
   val url: String                   = new java.net.URI(escapeFileSystemPath(rawUrl)).normalize().toString
   private lazy val context: Context = base.map(_.update(url)).getOrElse(core.remote.Context(remote, url))
@@ -152,10 +155,10 @@ class AMFCompiler(val rawUrl: String,
       .filter(_.isRemote)
       .map(link => {
         link
-          .resolve(context, None, domainPlugin.ID, cache, ctx)
+          .resolve(context, None, domainPlugin.ID, cache, ctx, env)
           .flatMap(u => {
             val reference = ParsedReference(u, link)
-            handler.update(reference, ctx, context).map(Some(_))
+            handler.update(reference, ctx, context, env).map(Some(_))
           })
           .recover {
             case e: FileNotFound =>
@@ -168,7 +171,7 @@ class AMFCompiler(val rawUrl: String,
     Future.sequence(units).map(rs => root.copy(references = rs.flatten, vendor = domainPlugin.ID))
   }
 
-  private def resolve(): Future[Content] = remote.resolve(location, base)
+  private def resolve(): Future[Content] = remote.resolve(location, env)
 
   def root(): Future[Root] = resolve().map(parseSyntax).flatMap {
     case Right(document: Root) =>
@@ -198,8 +201,9 @@ object AMFCompiler {
          vendor: String,
          referenceKind: ReferenceKind,
          cache: Cache,
-         ctx: Option[ParserContext]) => {
-          new AMFCompiler(url, base.platform, Some(base), mediaType, vendor, referenceKind, cache, ctx).build()
+         ctx: Option[ParserContext],
+         env: Environment) => {
+          new AMFCompiler(url, base.platform, Some(base), mediaType, vendor, referenceKind, cache, ctx, env).build()
         })
     }
   }

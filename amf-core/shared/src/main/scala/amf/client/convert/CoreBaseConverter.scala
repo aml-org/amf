@@ -17,14 +17,16 @@ import amf.client.model.domain.{
   VariableValue => ClientVariableValue
 }
 import amf.client.model.{
+  Annotations => ClientAnnotations,
   AnyField => ClientAnyField,
   BoolField => ClientBoolField,
   DoubleField => ClientDoubleField,
   FloatField => ClientFloatField,
   IntField => ClientIntField,
-  StrField => ClientStrField,
-  Annotations => ClientAnnotations
+  StrField => ClientStrField
 }
+import amf.client.remote.Content
+import amf.client.resource.{ResourceLoader => ClientResourceLoader}
 import amf.client.validate.{ValidationReport => ClientValidatorReport, ValidationResult => ClientValidationResult}
 import amf.core.model._
 import amf.core.model.document.BaseUnit
@@ -34,6 +36,7 @@ import amf.core.model.domain.templates.{AbstractDeclaration, ParametrizedDeclara
 import amf.core.parser.Annotations
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.{AMFValidationReport, AMFValidationResult}
+import amf.internal.resource.{ResourceLoaderAdapter, ResourceLoader}
 
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -54,7 +57,8 @@ trait CoreBaseConverter
     with VariableValueConverter
     with ValidationConverter
     with DomainElementConverter
-    with BaseUnitConverter {
+    with BaseUnitConverter
+    with ResourceLoaderConverter {
 
   implicit def asClient[Internal, Client](from: Internal)(
       implicit m: InternalClientMatcher[Internal, Client]): Client = m.asClient(from)
@@ -69,6 +73,8 @@ trait CoreBaseConverter
   implicit object FloatMatcher   extends IdentityMatcher[Float]
   implicit object AnyMatcher     extends IdentityMatcher[Any]
   implicit object UnitMatcher    extends IdentityMatcher[Unit]
+
+  implicit object ContentMatcher extends IdentityMatcher[Content]
 
   trait IdentityMatcher[T] extends InternalClientMatcher[T, T] with ClientInternalMatcher[T, T] {
     override def asClient(from: T): T   = from
@@ -100,7 +106,15 @@ trait FutureConverter {
     def asClient: ClientFuture[Client] = asClientFuture(from.map(m.asClient))
   }
 
+  implicit class ClientFutureOps[Internal, Client](from: ClientFuture[Client])(
+      implicit m: ClientInternalMatcher[Client, Internal]) {
+    def asInternal: Future[Internal] = asInternalFuture(from, m)
+  }
+
   protected def asClientFuture[T](from: Future[T]): ClientFuture[T]
+
+  protected def asInternalFuture[Client, Internal](from: ClientFuture[Client],
+                                                   matcher: ClientInternalMatcher[Client, Internal]): Future[Internal]
 }
 
 trait CollectionConverter {
@@ -120,7 +134,6 @@ trait CollectionConverter {
   implicit class InternalOptionOps[Internal, Client](from: Option[Internal])(
       implicit m: InternalClientMatcher[Internal, Client]) {
     def asClient: ClientOption[Client] = asClientOption(from, m)
-//    def toClient: ClientOption[Internal] = toClientOption(from)
   }
 
   implicit class ClientListOps[Internal, Client](from: ClientList[Client])(
@@ -324,4 +337,24 @@ trait CustomDomainPropertyConverter {
     override def asClient(from: CustomDomainProperty): ClientCustomDomainProperty = ClientCustomDomainProperty(from)
   }
 
+}
+
+trait ResourceLoaderConverter {
+  type ClientLoader <: ClientResourceLoader
+
+  implicit object ResourceLoaderMatcher extends BidirectionalMatcher[ResourceLoader, ClientResourceLoader] {
+    override def asClient(from: ResourceLoader): ClientResourceLoader = from match {
+      case ResourceLoaderAdapter(adaptee) => adaptee
+    }
+
+    override def asInternal(from: ClientResourceLoader): ResourceLoader = ResourceLoaderAdapter(from)
+  }
+
+//  implicit class ClientLoaderOps[Internal, Client](from: ClientLoader)(
+//    implicit m: ClientInternalMatcher[Client, Internal]) {
+//    def asInternal: ResourceLoader = asInternalLoader(from, m)
+//  }
+//
+//  protected def asInternalLoader[Client, Internal](from: ClientLoader,
+//                                                   matcher: ClientInternalMatcher[Client, Internal]): ResourceLoader
 }

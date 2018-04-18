@@ -2,11 +2,15 @@ package amf.wrapper
 
 import amf.client.AMF
 import amf.client.convert.NativeOps
+import amf.client.convert.WebApiClientConverters.ClientLoader
+import amf.client.environment.Environment
 import amf.client.model.document._
 import amf.client.model.domain._
 import amf.client.parse._
+import amf.client.remote.Content
 import amf.client.render._
 import amf.client.resolve.Raml10Resolver
+import amf.client.resource.ResourceLoader
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -22,10 +26,11 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   private val security      = "file://amf-client/shared/src/test/resources/upanddown/unnamed-security-scheme.raml"
   private val music         = "file://amf-client/shared/src/test/resources/production/world-music-api/api.raml"
   private val banking       = "file://amf-client/shared/src/test/resources/production/banking-api/api.raml"
-  private val amflight      = "file://amf-client/shared/src/test/resources/production/american-flight-api-2.0.1-raml/api.raml"
-  private val defaultValue  = "file://amf-client/shared/src/test/resources/api/shape-default.raml"
-  private val traits        = "file://amf-client/shared/src/test/resources/production/banking-api/traits/traits.raml"
-  private val profile       = "file://amf-client/shared/src/test/resources/api/validation/custom-profile.raml"
+  private val amflight =
+    "file://amf-client/shared/src/test/resources/production/american-flight-api-2.0.1-raml/api.raml"
+  private val defaultValue = "file://amf-client/shared/src/test/resources/api/shape-default.raml"
+  private val traits       = "file://amf-client/shared/src/test/resources/production/banking-api/traits/traits.raml"
+  private val profile      = "file://amf-client/shared/src/test/resources/api/validation/custom-profile.raml"
   //  private val banking       = "file://amf-client/shared/src/test/resources/api/banking.raml"
   private val raml_doc = "file://vocabularies/vocabularies/raml_doc.raml"
   private val scalarAnnotations =
@@ -375,6 +380,92 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     testParseStringWithBaseUrl(baseUrl)
   }
 
+  test("Environment test") {
+    val include = "amf://types/Person.raml"
+
+    val input = s"""
+      |#%RAML 1.0
+      |title: Environment test
+      |types:
+      |  Person: !include $include
+    """.stripMargin
+
+    val person = """
+      |#%RAML 1.0 DataType
+      |type: object
+      |properties:
+      |  name: string
+    """.stripMargin
+
+    case class TestResourceLoader() extends ResourceLoader {
+
+      import amf.client.convert.WebApiClientConverters._
+
+      override def fetch(resource: String): ClientFuture[Content] =
+        Future.successful(new Content(person, resource)).asClient
+
+      override def accepts(resource: String): Boolean = resource == include
+    }
+
+    val environment = Environment(TestResourceLoader().asInstanceOf[ClientLoader])
+
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new RamlParser(environment).parseStringAsync(input).asFuture
+    } yield {
+      unit shouldBe a[Document]
+      val declarations = unit.asInstanceOf[Document].declares.asSeq
+      declarations should have size 1
+    }
+  }
+
+  test("Environment fallback test") {
+    val include = "amf://types/Person.raml"
+
+    val input = s"""
+       |#%RAML 1.0
+       |title: Environment test
+       |types:
+       |  Person: !include $include
+    """.stripMargin
+
+    val person = """
+       |#%RAML 1.0 DataType
+       |type: object
+       |properties:
+       |  name: string
+     """.stripMargin
+
+    import amf.client.convert.WebApiClientConverters._
+
+    case class TestResourceLoader() extends ResourceLoader {
+      override def fetch(resource: String): ClientFuture[Content] =
+        Future.successful(new Content(person, resource)).asClient
+
+      override def accepts(resource: String): Boolean = resource == include
+    }
+
+    case class FailingResourceLoader(msg: String) extends ResourceLoader {
+      override def fetch(resource: String): ClientFuture[Content] =
+        Future.failed[Content](new Exception(msg)).asClient
+    }
+
+    val environment = Environment
+      .empty()
+      .add(TestResourceLoader().asInstanceOf[ClientLoader])
+      .add(FailingResourceLoader("Unreachable network").asInstanceOf[ClientLoader])
+      .add(FailingResourceLoader("Invalid protocol").asInstanceOf[ClientLoader])
+
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new RamlParser(environment).parseStringAsync(input).asFuture
+    } yield {
+      unit shouldBe a[Document]
+      val declarations = unit.asInstanceOf[Document].declares.asSeq
+      declarations should have size 1
+    }
+  }
+
   test("Generate unit with source maps") {
     val options = new RenderOptions().withSourceMaps
 
@@ -403,8 +494,8 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     val options = new RenderOptions().withoutSourceMaps
 
     for {
-      _      <- AMF.init().asFuture
-      unit   <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(amflight).asFuture
+      _        <- AMF.init().asFuture
+      unit     <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(amflight).asFuture
       resolved <- Future.successful(AMF.resolveRaml10(unit))
     } yield {
       val webapi = resolved.asInstanceOf[Document].encodes.asInstanceOf[WebApi]

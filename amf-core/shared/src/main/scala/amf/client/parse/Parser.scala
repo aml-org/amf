@@ -2,12 +2,14 @@ package amf.client.parse
 
 import amf.ProfileNames
 import amf.client.convert.CoreClientConverters._
+import amf.client.environment.{DefaultEnvironment, Environment}
 import amf.client.model.document.BaseUnit
 import amf.client.validate.ValidationReport
 import amf.core.client.ParsingOptions
 import amf.core.model.document.{BaseUnit => InternalBaseUnit}
-import amf.core.remote.{Context, Platform, StringContentPlatform}
+import amf.core.remote.Context
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
+import amf.internal.resource.{ResourceLoader, StringResourceLoader}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -17,7 +19,7 @@ import scala.util.{Failure, Success}
 /**
   * Base class for parsers.
   */
-class Parser(vendor: String, mediaType: String) {
+class Parser(vendor: String, mediaType: String, private val env: Option[Environment]) {
 
   private var parsedModel: Option[InternalBaseUnit] = None
 
@@ -36,7 +38,7 @@ class Parser(vendor: String, mediaType: String) {
     */
   @JSExport
   def parseString(stream: String, handler: ClientResultHandler[BaseUnit]): Unit =
-    parse(DEFAULT_DOCUMENT_URL, handler, fromStream(stream))
+    parse(DEFAULT_DOCUMENT_URL, handler, Some(fromStream(stream)))
 
   /**
     * Generates the BaseUnit from a given string.
@@ -47,7 +49,7 @@ class Parser(vendor: String, mediaType: String) {
     */
   @JSExport
   def parseString(url: String, stream: String, handler: ClientResultHandler[BaseUnit]): Unit =
-    parse(url, handler, fromStream(url, stream))
+    parse(url, handler, Some(fromStream(url, stream)))
 
   /**
     * Asynchronously generate a BaseUnit from the unit located in the given url.
@@ -64,11 +66,11 @@ class Parser(vendor: String, mediaType: String) {
     */
   @JSExport
   def parseStringAsync(stream: String): ClientFuture[BaseUnit] =
-    parseAsync(DEFAULT_DOCUMENT_URL, fromStream(stream)).asClient
+    parseAsync(DEFAULT_DOCUMENT_URL, Some(fromStream(stream))).asClient
 
   @JSExport
   def parseStringAsync(url: String, stream: String): ClientFuture[BaseUnit] =
-    parseAsync(url, fromStream(url, stream)).asClient
+    parseAsync(url, Some(fromStream(url, stream))).asClient
 
   /**
     * Generates the validation report for the last parsed model.
@@ -94,11 +96,16 @@ class Parser(vendor: String, mediaType: String) {
     reportCustomValidationImplementation(profile, customProfilePath)
 
   private def parseAsync(url: String,
-                         overridePlatForm: Option[Platform] = None,
+                         loader: Option[ResourceLoader] = None,
                          parsingOptions: ParsingOptions = ParsingOptions()): Future[InternalBaseUnit] = {
     RuntimeValidator.reset()
 
-    RuntimeCompiler(url, Option(mediaType), vendor, Context(overridePlatForm.getOrElse(platform))) map { model =>
+    val environment = {
+      val e = env.getOrElse(DefaultEnvironment())._internal
+      loader.map(e.add).getOrElse(e)
+    }
+
+    RuntimeCompiler(url, Option(mediaType), vendor, Context(platform), env = environment) map { model =>
       parsedModel = Some(model)
       model
     }
@@ -107,7 +114,7 @@ class Parser(vendor: String, mediaType: String) {
   /**
     * Generates the validation report for the last parsed model.
     * @param profileName name of the profile to be parsed
-    * @param messageStyle if a RAML/OAS profile, this can be set to the preferred error reporting styl
+    * @param messageStyle if a RAML/OAS profile, this can be set to the preferred error reporting style
     * @return the AMF validation report
     */
   private def report(profileName: String, messageStyle: String = ProfileNames.RAML): ClientFuture[ValidationReport] = {
@@ -142,19 +149,17 @@ class Parser(vendor: String, mediaType: String) {
     result.asClient
   }
 
-  private def parse(url: String,
-                    handler: ClientResultHandler[BaseUnit],
-                    overridePlatForm: Option[Platform] = None): Unit =
-    parseAsync(url, overridePlatForm)
+  private def parse(url: String, handler: ClientResultHandler[BaseUnit], loader: Option[ResourceLoader] = None): Unit =
+    parseAsync(url, loader)
       .onComplete {
         case Success(result: InternalBaseUnit) => handler.success(result)
         case Failure(exception)                => handler.error(exception)
       }
 
-  private def fromStream(url: String, stream: String): Option[Platform] =
-    Some(StringContentPlatform(url, stream, platform))
+  private def fromStream(url: String, stream: String): ResourceLoader =
+    StringResourceLoader(platform.resolvePath(url), stream)
 
-  private def fromStream(stream: String): Option[Platform] = fromStream(DEFAULT_DOCUMENT_URL, stream)
+  private def fromStream(stream: String): ResourceLoader = fromStream(DEFAULT_DOCUMENT_URL, stream)
 
   private val DEFAULT_DOCUMENT_URL = "http://raml.org/amf/default_document"
 }
