@@ -1,0 +1,35 @@
+#%RAML 1.0
+baseUri: https://mocksvc.mulesoft.com/mocks/0af00e94-58b6-4b6a-973c-2914cd3ad782 # 
+title: Reference Modular American Flights API
+version: v2
+protocols: HTTPS
+mediaType: application/json
+
+# Inheriting reuseable security schemes
+securitySchemes: 
+  basicAuth: !include securitySchemes/basicAuth.raml
+  oAuth_2_0: !include securitySchemes/Oauth_2_0.raml
+
+# Securing the API with Basic Authorization and OAuth 2.0
+securedBy: [null, basicAuth, oAuth_2_0]
+
+# Inheriting modularized resources.
+# The resources leverage examples from the examples folder 
+resourceTypes: 
+  collection: !include resourceTypes/collection.raml
+  item: !include resourceTypes/item.raml
+
+# Inheriting reuseable http error code traits
+traits: 
+  isUnauthorized: !include traits/errorResponseTraits/isUnauthorized.raml
+  hasMalformedRequest: !include traits/errorResponseTraits/hasMalformedRequest.raml
+  hasNotFound: !include traits/errorResponseTraits/hasNotFound.raml
+  isNotAcceptable: !include traits/errorResponseTraits/isNotAcceptable.raml
+  hasUnsupportedMedia: !include traits/errorResponseTraits/hasUnsupportedMedia.raml
+  hasTooManyRequests: !include traits/errorResponseTraits/hasTooManyRequests.raml
+  isUnavailable: !include traits/errorResponseTraits/isUnavailable.raml
+
+# Leverage modular constructs and traits to define resources and sub-resources.
+/flights:
+  type: collection 
+  is: [hasMalformedRequest,hasNotFound,isNotAcceptable,hasUnsupportedMedia,hasTooManyRequests,isUnavailable]

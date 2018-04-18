@@ -1,0 +1,13 @@
+#%RAML 1.0 Trait
+usage: Use this trait for resources that could respond with a 404 status
+responses:
+    404:
+      description: |
+        Malformed Request. Verify request structure per API specification.    
+      body:
+        application/json:
+          example: |
+            {
+              "message": "The page or resource was not found at the requested URL.",
+              "code": "1004 <example code. Replace with your own error code>"
+            }

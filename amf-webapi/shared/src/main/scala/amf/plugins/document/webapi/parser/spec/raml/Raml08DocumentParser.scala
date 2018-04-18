@@ -3,16 +3,12 @@ package amf.plugins.document.webapi.parser.spec.raml
 import amf.core.Root
 import amf.core.utils._
 import amf.core.annotations.SourceVendor
-import amf.core.model.document.Document
+import amf.core.model.document.{Document, ExternalFragment, Fragment}
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.YMapOps
 import amf.plugins.document.webapi.annotations.DeclaredElement
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  AbstractDeclarationParser,
-  Raml08TypeParser,
-  SecuritySchemeParser
-}
+import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationParser, Raml08TypeParser, ReferencesParser, SecuritySchemeParser}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
@@ -25,6 +21,8 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
     extends RamlDocumentParser(root) {
 
   override protected def parseDeclarations(root: Root, map: YMap): Unit = {
+
+    ReferencesParser("uses", map, root.references).parse(root.location)
 
     val parent = root.location + "#/declarations"
     parseSchemaDeclarations(map, parent)

@@ -1,0 +1,33 @@
+#%RAML 1.0 ResourceType
+usage: Use this resourceType to represent a collection of items
+description: Use this to describe a resource that lists items
+
+uses: 
+  flightTypes: ../libraries/flightTypes.raml
+
+get:
+  description: "Obtain all American Airlines domestic US flights."
+  displayName: Retrieve all Flights
+  queryParameters: 
+      destination:
+        enum: [SFO, LAX, CLE] 
+        required: false
+  responses: 
+    200:
+      body: 
+        application/json:
+          type: flightTypes.flights
+          example: !include ../examples/flights.json
+
+post:
+  description: "Add an American Airlines domestic US flights."
+  displayName: Add Flights
+  body:
+    application/json:
+      type: flightTypes.flights
+      example: !include ../examples/flights.json
+  responses:
+    201:
+      body:
+        application/json:
+          example: !include ../examples/flightAdded.json

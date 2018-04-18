@@ -7,6 +7,7 @@ import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.vocabulary.Namespace.{Document, Http, Hydra, Schema}
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
+import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.models.Operation
 
 /**
@@ -36,7 +37,7 @@ object OperationModel extends DomainElementModel with KeyField with OptionalFiel
 
   val Responses = Field(Array(ResponseModel), Hydra + "returns")
 
-  val Security = Field(Array(DomainElementModel), Namespace.Security + "security")
+  val Security = Field(Array(ParametrizedSecuritySchemeModel), Namespace.Security + "security")
 
   val Tags = Field(Array(Str), Http + "tag")
 

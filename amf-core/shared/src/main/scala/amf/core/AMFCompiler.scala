@@ -111,6 +111,7 @@ class AMFCompiler(val rawUrl: String,
 
     val futureDocument = domainPluginOption match {
       case Some(domainPlugin) =>
+        ExecutionLog.log(s"AMFCompiler#parseSyntax: parsing domain $rawUrl plugin ${domainPlugin.ID}")
         parseReferences(document, domainPlugin) map { documentWithReferences =>
           domainPlugin.parse(documentWithReferences, ctx, remote) match {
             case Some(baseUnit) =>
@@ -125,6 +126,7 @@ class AMFCompiler(val rawUrl: String,
           }
         }
       case None =>
+        ExecutionLog.log(s"AMFCompiler#parseSyntax: parsing domain $rawUrl NO PLUGIN")
         val fragment = ExternalFragment()
           .withId(document.location)
           .withEncodes(ExternalDomainElement().withRaw(document.raw).withMediaType(document.mediatype))
