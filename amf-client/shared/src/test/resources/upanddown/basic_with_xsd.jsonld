@@ -147,14 +147,14 @@
                                 "@value": "application/xml"
                               }
                             ],
-                            "http://www.w3.org/ns/shacl#raw": [
-                              {
-                                "@value": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"\n           targetNamespace=\"https://www.w3schools.com\"\n           xmlns=\"https://www.w3schools.com\"\n           elementFormDefault=\"qualified\">\n\n    <xs:element name=\"person\">\n        <xs:complexType>\n            <xs:sequence>\n                <xs:element name=\"name\" type=\"xs:string\"\n                            maxOccurs=\"unbounded\"/>\n            </xs:sequence>\n        </xs:complexType>\n    </xs:element>\n\n</xs:schema>"
-                              }
-                            ],
                             "http://www.w3.org/ns/shacl#name": [
                               {
                                 "@value": "schema"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document#reference-id": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/person.xsd#/external"
                               }
                             ],
                             "http://raml.org/vocabularies/document#examples": [
@@ -164,50 +164,14 @@
                                   "http://raml.org/vocabularies/document#Example",
                                   "http://raml.org/vocabularies/document#DomainElement"
                                 ],
-                                "http://raml.org/vocabularies/document#value": [
-                                  {
-                                    "@value": "<person>\n    <name>A Person</name>\n</person>"
-                                  }
-                                ],
                                 "http://raml.org/vocabularies/document#strict": [
                                   {
                                     "@value": true
                                   }
                                 ],
-                                "http://raml.org/vocabularies/document#structuredValue": [
+                                "http://raml.org/vocabularies/document#reference-id": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/basic_with_xsd.raml#/web-api/end-points/%2Ftest/get/request/application/xml/schema/schema/example/default-example/scalar_1",
-                                    "@type": [
-                                      "http://raml.org/vocabularies/data#Scalar"
-                                    ],
-                                    "http://raml.org/vocabularies/data#value": [
-                                      {
-                                        "@value": "<person>\n    <name>A Person</name>\n</person>",
-                                        "@type": "http://www.w3.org/2001/XMLSchema#string"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/document-source-maps#sources": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/basic_with_xsd.raml#/web-api/end-points/%2Ftest/get/request/application/xml/schema/schema/example/default-example/scalar_1/source-map",
-                                        "@type": [
-                                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#lexical": [
-                                          {
-                                            "http://raml.org/vocabularies/document-source-maps#element": [
-                                              {
-                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/basic_with_xsd.raml#/web-api/end-points/%2Ftest/get/request/application/xml/schema/schema/example/default-example/scalar_1"
-                                              }
-                                            ],
-                                            "http://raml.org/vocabularies/document-source-maps#value": [
-                                              {
-                                                "@value": "[(1,0)-(1,0)]"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ]
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/person.xml#/external"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
@@ -234,36 +198,12 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://raml.org/vocabularies/document#structuredValue"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(1,0)-(1,0)]"
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "http://raml.org/vocabularies/document-source-maps#element": [
-                                          {
                                             "@value": "file://amf-client/shared/src/test/resources/upanddown/basic_with_xsd.raml#/web-api/end-points/%2Ftest/get/request/application/xml/schema/schema/example/default-example"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
                                             "@value": "[(13,17)-(13,36)]"
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "http://raml.org/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "http://raml.org/vocabularies/document#value"
-                                          }
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(1,0)-(1,0)]"
                                           }
                                         ]
                                       }

@@ -318,11 +318,6 @@
                                   "http://raml.org/vocabularies/document#Example",
                                   "http://raml.org/vocabularies/document#DomainElement"
                                 ],
-                                "http://raml.org/vocabularies/document#value": [
-                                  {
-                                    "@value": "[{\"ID\":1, \"code\": \"ER38sd\",\"price\": 400, \"departureDate\": \"2016/03/20\", \"origin\": \"MUA\", \"destination\": \"SFO\", \"emptySeats\": 0, \"plane\": {\"type\": \"Boeing 737\", \"totalSeats\": 150}}, {\"ID\":2,\"code\": \"ER45if\", \"price\": 345.99, \"departureDate\": \"2016/02/11\", \"origin\": \"MUA\", \"destination\": \"LAX\", \"emptySeats\": 52, \"plane\": {\"type\": \"Boeing 777\", \"totalSeats\": 300}}]"
-                                  }
-                                ],
                                 "http://raml.org/vocabularies/document#strict": [
                                   {
                                     "@value": true
@@ -1181,6 +1176,11 @@
                                     ]
                                   }
                                 ],
+                                "http://www.w3.org/ns/shacl#raw": [
+                                  {
+                                    "@value": "[{\"ID\":1, \"code\": \"ER38sd\",\"price\": 400, \"departureDate\": \"2016/03/20\", \"origin\": \"MUA\", \"destination\": \"SFO\", \"emptySeats\": 0, \"plane\": {\"type\": \"Boeing 737\", \"totalSeats\": 150}}, {\"ID\":2,\"code\": \"ER45if\", \"price\": 345.99, \"departureDate\": \"2016/02/11\", \"origin\": \"MUA\", \"destination\": \"LAX\", \"emptySeats\": 52, \"plane\": {\"type\": \"Boeing 777\", \"totalSeats\": 300}}]\n"
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
                                     "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights/get/200/application/json/any/application/json/example/default-example/source-map",
@@ -1205,12 +1205,12 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://raml.org/vocabularies/document#structuredValue"
+                                            "@value": "http://www.w3.org/ns/shacl#raw"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(1,0)-(1,364)]"
+                                            "@value": "[(64,21)-(66,0)]"
                                           }
                                         ]
                                       },
@@ -1229,12 +1229,12 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://raml.org/vocabularies/document#value"
+                                            "@value": "http://raml.org/vocabularies/document#structuredValue"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(64,21)-(66,0)]"
+                                            "@value": "[(64,20)-(66,0)]"
                                           }
                                         ]
                                       }
@@ -1400,11 +1400,6 @@
                                 "@type": [
                                   "http://raml.org/vocabularies/document#Example",
                                   "http://raml.org/vocabularies/document#DomainElement"
-                                ],
-                                "http://raml.org/vocabularies/document#value": [
-                                  {
-                                    "@value": "{\"code\": \"ER38sd\",\"price\": 400, \"departureDate\": \"2016/03/20\", \"origin\": \"MUA\", \"destination\": \"SFO\", \"emptySeats\": 0, \"plane\": {\"type\": \"Boeing 737\", \"totalSeats\": 150}}"
-                                  }
                                 ],
                                 "http://raml.org/vocabularies/document#strict": [
                                   {
@@ -1787,6 +1782,11 @@
                                     ]
                                   }
                                 ],
+                                "http://www.w3.org/ns/shacl#raw": [
+                                  {
+                                    "@value": "{\"code\": \"ER38sd\",\"price\": 400, \"departureDate\": \"2016/03/20\", \"origin\": \"MUA\", \"destination\": \"SFO\", \"emptySeats\": 0, \"plane\": {\"type\": \"Boeing 737\", \"totalSeats\": 150}}\n"
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
                                     "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/source-map",
@@ -1811,12 +1811,12 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://raml.org/vocabularies/document#structuredValue"
+                                            "@value": "http://www.w3.org/ns/shacl#raw"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(1,0)-(1,170)]"
+                                            "@value": "[(70,17)-(72,0)]"
                                           }
                                         ]
                                       },
@@ -1835,12 +1835,12 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://raml.org/vocabularies/document#value"
+                                            "@value": "http://raml.org/vocabularies/document#structuredValue"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(70,17)-(72,0)]"
+                                            "@value": "[(70,16)-(73,0)]"
                                           }
                                         ]
                                       }
@@ -1970,11 +1970,6 @@
                                   "http://raml.org/vocabularies/document#Example",
                                   "http://raml.org/vocabularies/document#DomainElement"
                                 ],
-                                "http://raml.org/vocabularies/document#value": [
-                                  {
-                                    "@value": "{\"message\": \"Flight added (but not really)\"}"
-                                  }
-                                ],
                                 "http://raml.org/vocabularies/document#strict": [
                                   {
                                     "@value": true
@@ -2060,6 +2055,11 @@
                                     ]
                                   }
                                 ],
+                                "http://www.w3.org/ns/shacl#raw": [
+                                  {
+                                    "@value": "{\"message\": \"Flight added (but not really)\"}\n"
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
                                     "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights/post/201/application/json/any/application/json/example/default-example/source-map",
@@ -2084,12 +2084,12 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://raml.org/vocabularies/document#structuredValue"
+                                            "@value": "http://www.w3.org/ns/shacl#raw"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(1,0)-(1,44)]"
+                                            "@value": "[(77,21)-(79,0)]"
                                           }
                                         ]
                                       },
@@ -2108,12 +2108,12 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://raml.org/vocabularies/document#value"
+                                            "@value": "http://raml.org/vocabularies/document#structuredValue"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(77,21)-(79,0)]"
+                                            "@value": "[(77,20)-(80,0)]"
                                           }
                                         ]
                                       }
@@ -2314,11 +2314,6 @@
                                 "@type": [
                                   "http://raml.org/vocabularies/document#Example",
                                   "http://raml.org/vocabularies/document#DomainElement"
-                                ],
-                                "http://raml.org/vocabularies/document#value": [
-                                  {
-                                    "@value": "{\"ID\":1, \"code\": \"ER38sd\",\"price\": 400, \"departureDate\": \"2016/03/20\", \"origin\": \"MUA\", \"destination\": \"SFO\", \"emptySeats\": 0, \"plane\": {\"type\": \"Boeing 737\", \"totalSeats\": 150}}"
-                                  }
                                 ],
                                 "http://raml.org/vocabularies/document#strict": [
                                   {
@@ -2737,6 +2732,11 @@
                                     ]
                                   }
                                 ],
+                                "http://www.w3.org/ns/shacl#raw": [
+                                  {
+                                    "@value": "{\"ID\":1, \"code\": \"ER38sd\",\"price\": 400, \"departureDate\": \"2016/03/20\", \"origin\": \"MUA\", \"destination\": \"SFO\", \"emptySeats\": 0, \"plane\": {\"type\": \"Boeing 737\", \"totalSeats\": 150}}\n"
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
                                     "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/get/200/application/json/any/application/json/example/default-example/source-map",
@@ -2761,12 +2761,12 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://raml.org/vocabularies/document#structuredValue"
+                                            "@value": "http://www.w3.org/ns/shacl#raw"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(1,0)-(1,178)]"
+                                            "@value": "[(86,23)-(88,0)]"
                                           }
                                         ]
                                       },
@@ -2785,12 +2785,12 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://raml.org/vocabularies/document#value"
+                                            "@value": "http://raml.org/vocabularies/document#structuredValue"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(86,23)-(88,0)]"
+                                            "@value": "[(86,22)-(89,0)]"
                                           }
                                         ]
                                       }
@@ -2956,11 +2956,6 @@
                                   "http://raml.org/vocabularies/document#Example",
                                   "http://raml.org/vocabularies/document#DomainElement"
                                 ],
-                                "http://raml.org/vocabularies/document#value": [
-                                  {
-                                    "@value": "{\"message\": \"Flight deleted (but not really)\"}"
-                                  }
-                                ],
                                 "http://raml.org/vocabularies/document#strict": [
                                   {
                                     "@value": true
@@ -3046,6 +3041,11 @@
                                     ]
                                   }
                                 ],
+                                "http://www.w3.org/ns/shacl#raw": [
+                                  {
+                                    "@value": "{\"message\": \"Flight deleted (but not really)\"}\n"
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
                                     "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/delete/200/application/json/any/application/json/example/default-example/source-map",
@@ -3070,12 +3070,12 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://raml.org/vocabularies/document#structuredValue"
+                                            "@value": "http://www.w3.org/ns/shacl#raw"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(1,0)-(1,46)]"
+                                            "@value": "[(94,23)-(96,0)]"
                                           }
                                         ]
                                       },
@@ -3094,12 +3094,12 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://raml.org/vocabularies/document#value"
+                                            "@value": "http://raml.org/vocabularies/document#structuredValue"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(94,23)-(96,0)]"
+                                            "@value": "[(94,22)-(97,0)]"
                                           }
                                         ]
                                       }
@@ -3265,11 +3265,6 @@
                                 "@type": [
                                   "http://raml.org/vocabularies/document#Example",
                                   "http://raml.org/vocabularies/document#DomainElement"
-                                ],
-                                "http://raml.org/vocabularies/document#value": [
-                                  {
-                                    "@value": "{\"code\": \"ER38sd\",\"price\": 400, \"departureDate\": \"2016/03/20\", \"origin\": \"MUA\", \"destination\": \"SFO\", \"emptySeats\": 0, \"plane\": {\"type\": \"Boeing37\", \"totalSeats\": 150}}"
-                                  }
                                 ],
                                 "http://raml.org/vocabularies/document#strict": [
                                   {
@@ -3652,6 +3647,11 @@
                                     ]
                                   }
                                 ],
+                                "http://www.w3.org/ns/shacl#raw": [
+                                  {
+                                    "@value": "{\"code\": \"ER38sd\",\"price\": 400, \"departureDate\": \"2016/03/20\", \"origin\": \"MUA\", \"destination\": \"SFO\", \"emptySeats\": 0, \"plane\": {\"type\": \"Boeing37\", \"totalSeats\": 150}}\n"
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
                                     "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/source-map",
@@ -3676,12 +3676,12 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://raml.org/vocabularies/document#structuredValue"
+                                            "@value": "http://www.w3.org/ns/shacl#raw"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(1,0)-(1,168)]"
+                                            "@value": "[(101,19)-(103,0)]"
                                           }
                                         ]
                                       },
@@ -3700,12 +3700,12 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://raml.org/vocabularies/document#value"
+                                            "@value": "http://raml.org/vocabularies/document#structuredValue"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(101,19)-(103,0)]"
+                                            "@value": "[(101,18)-(104,0)]"
                                           }
                                         ]
                                       }
@@ -3835,11 +3835,6 @@
                                   "http://raml.org/vocabularies/document#Example",
                                   "http://raml.org/vocabularies/document#DomainElement"
                                 ],
-                                "http://raml.org/vocabularies/document#value": [
-                                  {
-                                    "@value": "{\"message\": \"Flight updated (but not really)\"}"
-                                  }
-                                ],
                                 "http://raml.org/vocabularies/document#strict": [
                                   {
                                     "@value": true
@@ -3925,6 +3920,11 @@
                                     ]
                                   }
                                 ],
+                                "http://www.w3.org/ns/shacl#raw": [
+                                  {
+                                    "@value": "{\"message\": \"Flight updated (but not really)\"}\n"
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
                                     "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/put/200/application/json/any/application/json/example/default-example/source-map",
@@ -3949,12 +3949,12 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://raml.org/vocabularies/document#structuredValue"
+                                            "@value": "http://www.w3.org/ns/shacl#raw"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(1,0)-(1,46)]"
+                                            "@value": "[(108,23)-(110,0)]"
                                           }
                                         ]
                                       },
@@ -3973,12 +3973,12 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://raml.org/vocabularies/document#value"
+                                            "@value": "http://raml.org/vocabularies/document#structuredValue"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(108,23)-(110,0)]"
+                                            "@value": "[(108,22)-(111,0)]"
                                           }
                                         ]
                                       }

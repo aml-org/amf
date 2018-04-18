@@ -314,13 +314,18 @@
                 "@value": "schema"
               }
             ],
+            "http://raml.org/vocabularies/document#reference-id": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/person.json#/external"
+              }
+            ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person/schema/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://raml.org/vocabularies/document-source-maps#parsed-json-schema": [
+                "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
@@ -329,7 +334,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"name\": {\n      \"type\": \"string\"\n    }\n  }\n}"
+                        "@value": "[(2,2)-(2,8)]"
                       }
                     ]
                   }
@@ -356,20 +361,6 @@
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(1,0)-(8,1)]"
-                      }
-                    ]
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
-                  {
-                    "http://raml.org/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person/schema"
-                      }
-                    ],
-                    "http://raml.org/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(2,2)-(2,8)]"
                       }
                     ]
                   }

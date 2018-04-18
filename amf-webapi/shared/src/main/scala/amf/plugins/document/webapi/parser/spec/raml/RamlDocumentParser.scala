@@ -66,8 +66,11 @@ case class Raml10DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
 
     overlay
   }
+}
 
-  override def parseDocument[T <: Document](document: T): T = {
+abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContext) extends RamlBaseDocumentParser {
+
+  def parseDocument[T <: Document](document: T): T = {
     document.adopted(root.location).withLocation(root.location)
 
     val map = root.parsed.document.as[YMap]
@@ -86,11 +89,6 @@ case class Raml10DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
 
     document
   }
-}
-
-abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContext) extends RamlBaseDocumentParser {
-
-  def parseDocument[T <: Document](unit: T): T
 
   def parseDocument(): Document = parseDocument(Document())
 

@@ -144,7 +144,7 @@ case class RamlTypeExpressionEmitter(shape: Shape with ShapeHelpers) extends Par
 
 case class RamlExternalSourceEmitter(shape: Shape with ShapeHelpers, references: Seq[BaseUnit]) extends PartEmitter {
   override def emit(b: PartBuilder): Unit = {
-    val maybeFragment = references
+    references
       .collectFirst({
         case ex: ExternalFragment if ex.encodes.id.equals(shape.externalSourceID.getOrElse("")) => ex.encodes
       })
@@ -161,7 +161,8 @@ case class Raml10TypeEmitter(shape: AnyShape,
                              references: Seq[BaseUnit])(implicit spec: SpecEmitterContext) {
   def emitters(): Seq[Emitter] = {
     shape match {
-      case _ if Option(shape).isDefined && shape.fromExternalSource =>
+      case _
+          if Option(shape).isDefined && shape.fromExternalSource && references.nonEmpty => // need to check ref to ask if resolution has run.
         Seq(RamlExternalSourceEmitter(shape, references))
       case _ if Option(shape).isDefined && shape.fromTypeExpression => Seq(RamlTypeExpressionEmitter(shape))
       case l: Linkable if l.isLink                                  => Seq(spec.localReference(shape))

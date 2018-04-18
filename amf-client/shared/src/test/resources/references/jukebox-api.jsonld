@@ -1139,6 +1139,11 @@
             "@value": "song"
           }
         ],
+        "http://raml.org/vocabularies/document#reference-id": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/references/jukebox-include-song.schema#/external"
+          }
+        ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
             "@id": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/song/source-map",
@@ -1155,20 +1160,6 @@
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
                     "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
-              {
-                "http://raml.org/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/song"
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(2,2)-(2,8)]"
                   }
                 ]
               }
@@ -1211,7 +1202,7 @@
                 ]
               }
             ],
-            "http://raml.org/vocabularies/document-source-maps#parsed-json-schema": [
+            "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
@@ -1220,7 +1211,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "{\n  \"type\": \"object\",\n  \"$schema\": \"http://json-schema.org/draft-03/schema\",\n  \"required\": true,\n  \"properties\": {\n    \"songId\": {\n      \"type\": \"string\",\n      \"required\": true,\n      \"minLength\": 36,\n      \"maxLength\": 36\n    },\n    \"songTitle\": {\n      \"type\": \"string\",\n      \"required\": true\n    },\n    \"albumId\": {\n      \"type\": \"string\",\n      \"required\": true,\n      \"minLength\": 36,\n      \"maxLength\": 36\n    }\n  }\n}\n"
+                    "@value": "[(2,2)-(2,8)]"
                   }
                 ]
               }

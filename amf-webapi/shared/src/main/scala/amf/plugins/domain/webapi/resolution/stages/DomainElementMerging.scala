@@ -77,8 +77,9 @@ object DomainElementMerging {
 
   private def adoptElementByType(element: DomainElement, parent: String) = {
     element match {
-      case simple: Shape => simple.simpleAdoption(parent) // only shapes have recursive simple adoption?
-      case _             => element.adopted(parent)
+      case simple: Shape     => simple.simpleAdoption(parent) // only shapes have recursive simple adoption?
+      case dynamic: DataNode => DataNodeOps.adoptTree(parent, dynamic)
+      case _                 => element.adopted(parent)
     }
   }
 

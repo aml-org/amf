@@ -170,14 +170,30 @@ object GraphEmitter extends MetaModelTypeMapping {
       val schema: DynamicDomainElement = element.asInstanceOf[DynamicDomainElement]
 
       createDynamicTypeNode(schema, b, ctx)
-
-      schema.dynamicFields.foreach { f: Field =>
+      // workaround for lazy values in shape
+      val modelFields = schema.dynamicFields ++ (obj match {
+        case _: ShapeModel =>
+          Seq(
+            ShapeModel.CustomShapePropertyDefinitions,
+            ShapeModel.CustomShapeProperties
+          )
+        case _ => Nil
+      })
+      modelFields.foreach { f: Field =>
         schema.valueForField(f).foreach { amfValue =>
           val url = ctx.emitIri(f.value.iri())
-          b.entry(
-            url,
-            value(f.`type`, amfValue, id, sources.property(url), _, ctx)
-          )
+          schema match {
+            case schema: DynamicDomainElement if !schema.isInstanceOf[ExternalSourceElement] =>
+              b.entry(
+                url,
+                value(f.`type`, Value(amfValue.value, amfValue.value.annotations), id, _ => {}, _, ctx)
+              )
+            case _ =>
+              b.entry(
+                url,
+                value(f.`type`, amfValue, id, sources.property(url), _, ctx)
+              )
+          }
         }
       }
     }

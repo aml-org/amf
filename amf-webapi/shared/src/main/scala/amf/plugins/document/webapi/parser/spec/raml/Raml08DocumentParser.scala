@@ -6,6 +6,7 @@ import amf.core.annotations.SourceVendor
 import amf.core.model.document.{Document, ExternalFragment, Fragment}
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.YMapOps
+import amf.core.utils._
 import amf.plugins.document.webapi.annotations.DeclaredElement
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationParser, Raml08TypeParser, ReferencesParser, SecuritySchemeParser}
@@ -26,8 +27,21 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
 
     val parent = root.location + "#/declarations"
     parseSchemaDeclarations(map, parent)
-    parseAbstractDeclarations("resourceTypes", entry => ResourceType(entry).withName(entry.key.as[String]).withId(parent + s"/resourceTypes/${entry.key.as[String].urlEncoded}"), map, parent)
-    parseAbstractDeclarations("traits", entry => Trait(entry).withName(entry.key.as[String]).withId(parent + s"/traits/${entry.key.as[String].urlEncoded}"), map, parent)
+    parseAbstractDeclarations(
+      "resourceTypes",
+      entry =>
+        ResourceType(entry)
+          .withName(entry.key.as[String])
+          .withId(parent + s"/resourceTypes/${entry.key.as[String].urlEncoded}"),
+      map,
+      parent
+    )
+    parseAbstractDeclarations(
+      "traits",
+      entry =>
+        Trait(entry).withName(entry.key.as[String]).withId(parent + s"/traits/${entry.key.as[String].urlEncoded}"),
+      map,
+      parent)
 
     parseSecuritySchemeDeclarations(map, parent)
 
@@ -92,24 +106,6 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
         case None => ctx.violation(parent, s"Error parsing shape '$entry'", entry)
       }
     }
-  }
-
-  override def parseDocument[T <: Document](document: T): T = {
-    document.adopted(root.location).withLocation(root.location)
-
-    val map = root.parsed.document.as[YMap]
-
-    parseDeclarations(root, map)
-
-    val api = parseWebApi(map).add(SourceVendor(root.vendor))
-    document.withEncodes(api)
-
-    val declarables = ctx.declarations.declarables()
-    if (declarables.nonEmpty) document.withDeclares(declarables)
-
-    ctx.futureDeclarations.resolve()
-
-    document
   }
 
   override def parseParameterDeclarations(key: String, map: YMap, parentPath: String): Unit = {

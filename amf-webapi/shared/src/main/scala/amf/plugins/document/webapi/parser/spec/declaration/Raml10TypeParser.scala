@@ -9,12 +9,7 @@ import amf.core.parser.{Annotations, Value, _}
 import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
-import amf.plugins.document.webapi.contexts.{
-  Raml08WebApiContext,
-  Raml10WebApiContext,
-  RamlWebApiContext,
-  WebApiContext
-}
+import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec._
@@ -367,7 +362,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
 
 trait ExternalSourceRef {
 
-  def sourceRefAnnotation(node: YNode, element: ExternalSourceElement, ctx: WebApiContext): Boolean = node match {
+  def sourceRefReference(node: YNode, element: ExternalSourceElement, ctx: WebApiContext): Boolean = node match {
     case mut: MutRef if mut.origValue.isInstanceOf[YScalar] =>
       val text = mut.origValue.asInstanceOf[YScalar].text
       ctx.declarations.fragments
@@ -393,7 +388,7 @@ trait RamlExternalTypes extends RamlSpecParser with ExampleParser with RamlTypeS
             val shape =
               SchemaShape().withRaw(typeEntry.value.as[YScalar].text).withMediaType("application/xml")
 
-            sourceRefAnnotation(typeEntry.value, shape, ctx)
+            sourceRefReference(typeEntry.value, shape, ctx)
             shape.withName(name)
             adopt(shape)
             shape
@@ -427,7 +422,7 @@ trait RamlExternalTypes extends RamlSpecParser with ExampleParser with RamlTypeS
       case _ =>
         val raw   = value.as[YScalar].text
         val shape = SchemaShape().withRaw(raw).withMediaType("application/xml")
-        sourceRefAnnotation(value, shape, ctx)
+        sourceRefReference(value, shape, ctx)
         shape.withName(name)
         adopt(shape)
         shape
@@ -474,7 +469,7 @@ trait RamlExternalTypes extends RamlSpecParser with ExampleParser with RamlTypeS
     val parsed =
       OasTypeParser(schemaEntry, (shape) => adopt(shape), oasNode = "externalSchema")(toOas(ctx)).parse() match {
         case Some(shape) =>
-          if (!sourceRefAnnotation(value, shape, ctx)) shape.annotations += ParsedJSONSchema(text)
+          if (!sourceRefReference(value, shape, ctx)) shape.annotations += ParsedJSONSchema(text)
           shape
         case None =>
           val shape = SchemaShape()
