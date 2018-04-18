@@ -37,7 +37,7 @@ class ExamplesValidationCollector(model: BaseUnit) {
   private def buildFragment(shape: Shape, example: Example) = {
     val mediaType = example.mediaType
       .option()
-      .getOrElse(example.value.value().guessMediaType(shape.isInstanceOf[ScalarShape]))
+      .getOrElse(example.raw.value().guessMediaType(shape.isInstanceOf[ScalarShape]))
     val fragment =
       if (example.fields.exists(ExampleModel.StructuredValue))
         PayloadFragment(example.structuredValue, mediaType)

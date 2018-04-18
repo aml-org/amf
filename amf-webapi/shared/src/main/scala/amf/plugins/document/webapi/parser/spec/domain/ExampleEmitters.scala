@@ -35,7 +35,7 @@ case class OasResponseExampleEmitter(example: Example, ordering: SpecOrdering) e
     example.fields
       .entry(ExampleModel.StructuredValue)
       .fold({
-        example.value.option().foreach(s => b.entry(example.mediaType.value(), StringToAstEmitter(s).emit(_)))
+        example.raw.option().foreach(s => b.entry(example.mediaType.value(), StringToAstEmitter(s).emit(_)))
       })(_ => {
         b.entry(example.mediaType.value(), DataNodeEmitter(example.structuredValue, ordering).emit(_))
       })
@@ -126,7 +126,7 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
         case None        => false
       }
     }
-    val isExpanded = fs.fieldsMeta().exists(explicitFielMeta.contains(_)) || example.value
+    val isExpanded = fs.fieldsMeta().exists(explicitFielMeta.contains(_)) || example.raw
       .option()
       .exists(_.contains("value"))
 
@@ -142,7 +142,7 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
 
       fs.entry(ExampleModel.StructuredValue)
         .fold({
-          example.value.option().foreach { s =>
+          example.raw.option().foreach { s =>
             results += StringToAstEmitter(s)
           }
         })(f => {
@@ -156,7 +156,7 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
     } else {
       fs.entry(ExampleModel.StructuredValue)
         .fold({
-          example.value.option().foreach { s =>
+          example.raw.option().foreach { s =>
             results += StringToAstEmitter(s)
           }
         })(f => results += DataNodeEmitter(example.structuredValue, ordering))
