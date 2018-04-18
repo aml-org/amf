@@ -16,11 +16,12 @@ trait ExternalSourceElement extends DynamicDomainElement {
 
   override def dynamicType: List[ValueType] = meta.`type`
 
+  // this its dynamic, because when graph emitter is going to serialize the raw field, first we need to check if its a link to an external fragment.
+  // In that case the raw should't be emitted, and it should be only a ref to the external domain element with the raw. This its to avoid duplicated json and xml schemas definitions
+  // todo: antonio add comment.
   override def valueForField(f: Field): Option[Value] = f match {
     case Raw if isLinkToSource => None
-//    case ReferenceId if isLinkToSource => fields(ReferenceId) // not necessary filter?
-//    case ReferenceId => None
-    case _ => fields.entry(f).map(_.value)
+    case _                     => fields.entry(f).map(_.value)
   }
 
   private def isLinkToSource = fields.entry(ReferenceId).isDefined
