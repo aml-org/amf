@@ -99,7 +99,9 @@ object DomainElementMerging {
     element match {
       case _: Type.Scalar => mergeByValue(target, field, m, o)
       case key: KeyField  => mergeByKeyValue(target, field, element, key, m, o)
-      case _              => throw new Exception(s"Cannot merge '$element': not a KeyField nor a Scalar")
+      case _              => {
+        throw new Exception(s"Cannot merge '$element': not a KeyField nor a Scalar")
+      }
     }
   }
 

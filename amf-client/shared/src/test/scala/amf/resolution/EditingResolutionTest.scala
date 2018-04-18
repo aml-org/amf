@@ -1,5 +1,6 @@
 package amf.resolution
 
+import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
@@ -45,8 +46,11 @@ class EditingResolutionTest extends BuildCycleTests {
     cycle("union_arrays.raml", "union_arrays.resolved.jsonld", RamlYamlHint, Amf, cyclePath)
   }
 
-
   /*
+  test("Exchange experience API resolution to Amf") {
+    cycle("api.v1.raml", "api.v1.resolved.jsonld", RamlYamlHint, Amf, productionPath + "exchange-experience-api-1.0.1-raml/")
+  }
+
   ignore("Github API resolution to Raml") {
     cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, productionPath + "github-api-1.0.0-raml/")
   }

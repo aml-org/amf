@@ -262,10 +262,8 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     def parse(): AnyShape = {
       lookAhead() match {
         case None =>
-          val arrayShape = ArrayShape()
-          adopt(arrayShape)
-          ctx.violation(arrayShape.id, "Cannot parse data arrangement shape", ast)
-          arrayShape
+          val array = ArrayShape(ast).withName(name)
+          ArrayShapeParser(array, map, adopt).parse()
         case Some(Left(tuple))  => TupleShapeParser(tuple, map, adopt).parse()
         case Some(Right(array)) => ArrayShapeParser(array, map, adopt).parse()
       }
@@ -329,8 +327,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
       val finalShape = for {
         entry <- map.key("items")
-        item <- OasTypeParser(entry, items => items.adopted(shape.id + "/items"), oasNode)
-          .parse()
+        item  <- OasTypeParser(entry, items => items.adopted(shape.id + "/items"), oasNode).parse()
       } yield {
         item match {
           case array: ArrayShape   => shape.withItems(array).toMatrixShape
@@ -341,11 +338,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
       finalShape match {
         case Some(parsed: AnyShape) => parsed
-        case None =>
-          val arrayShape = ArrayShape()
-          adopt(arrayShape)
-          ctx.violation(arrayShape.id, "Cannot parse data arrangement shape", map)
-          arrayShape
+        case None                   => shape.withItems(AnyShape())
       }
     }
   }
