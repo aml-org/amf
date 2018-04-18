@@ -2,10 +2,10 @@ package amf.core.resolution.stages
 
 import amf.core.annotations.ResolvedLinkAnnotation
 import amf.core.metamodel.document.DocumentModel
+import amf.core.metamodel.domain.ExternalSourceElementModel
 import amf.core.model.document.{BaseUnit, Document, EncodesModel}
 import amf.core.model.domain._
 import org.mulesoft.common.core.Strings
-
 
 import scala.collection.mutable
 
@@ -88,15 +88,22 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
     model.transform(findLinkPredicates, transform)
   }
 
-  def findLinkPredicates(element: DomainElement): Boolean =
-    element match {
+  def findLinkPredicates(element: DomainElement): Boolean = {
+    val validLink = element match {
       case l: Linkable => l.isLink
-
       // link in a data node (trait or resource type) see DataNodeParser for details
       case l: LinkNode => true
 
       case _ => false
     }
+    val externalSource = element match {
+      case ex: ExternalSourceElement if !keepEditingInfo && ex.fields.exists(ExternalSourceElementModel.ReferenceId) =>
+        true
+      case _ => false
+    }
+
+    validLink || externalSource
+  }
 
   def resolveDynamicLink(l: LinkNode): Option[DomainElement] = {
     l match {
@@ -111,7 +118,7 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
             val resolved = new ResolvedLinkNode(l, l.linkedDomainElement.get).withId(l.id)
             if (keepEditingInfo) resolved.annotations += ResolvedLinkAnnotation(l.id)
             Some(resolved)
-          case _          =>
+          case _ =>
             Some(l)
         }
     }
@@ -121,11 +128,11 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
   protected def customDomainElementTransformation(d: DomainElement, source: Linkable): DomainElement = d
 
   def transform(element: DomainElement, isCycle: Boolean): Option[DomainElement] = {
-    element match {
 
+    val resolved = element match {
       // link not traversed, cache it and traverse it
       case l: Linkable if l.linkTarget.isDefined && !isCycle => {
-        val resolved = resolveLinked(l.linkTarget.get)
+        val resolved = resolveReferenced(l.linkTarget.get)
         if (keepEditingInfo) resolved.annotations += ResolvedLinkAnnotation(l.id)
         Some(customDomainElementTransformation(withName(resolved, l), l))
       }
@@ -137,14 +144,37 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
       case l: LinkNode => resolveDynamicLink(l)
 
       // no link
+      case ex: ExternalSourceElement =>
+        ex.fields.remove(ExternalSourceElementModel.ReferenceId)
+        Some(resolveExternalFields(ex))
       case other => Some(other)
 
     }
+
+    resolved
+  }
+
+  private def resolveExternalFields(element: DomainElement): DomainElement = {
+
+    element.fields.foreach {
+      case (f, v) =>
+        val newValue = v.value match {
+          case a: AmfArray if a.values.headOption.exists(_.isInstanceOf[DomainElement]) =>
+            AmfArray(a.values.map(v => resolveReferenced(v.asInstanceOf[DomainElement])))
+          case d: DomainElement => resolveReferenced(d)
+          case other            => other
+        }
+        element.fields.setWithoutId(f, newValue, v.annotations)
+    }
+
+    element
   }
 
   def withName(resolved: DomainElement, source: DomainElement): DomainElement = {
     resolved match {
-      case r: NamedDomainElement if r.name.value().notNull.isEmpty || r.name.value() == "schema" || r.name.value() == "type" => // these are default names
+      case r: NamedDomainElement
+          if r.name.value().notNull.isEmpty || r.name.value() == "schema" || r.name
+            .value() == "type" => // these are default names
         source match {
           case s: NamedDomainElement if s.name.value().notNull.nonEmpty => r.withName(s.name.value())
           case _                                                        =>
@@ -177,7 +207,7 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
     resolved
   }
 
-  def resolveLinked(element: DomainElement): DomainElement = {
+  def resolveReferenced(element: DomainElement): DomainElement = {
     if (mutuallyRecursive.contains(element.id)) {
       element
     } else {

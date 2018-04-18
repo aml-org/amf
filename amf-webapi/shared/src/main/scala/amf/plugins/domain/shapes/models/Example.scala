@@ -21,7 +21,6 @@ case class Example(fields: Fields, annotations: Annotations)
   def name: StrField            = fields.field(Name)
   def displayName: StrField     = fields.field(DisplayName)
   def description: StrField     = fields.field(Description)
-  def value: StrField           = raw // its redundant, to keep backward compatibility
   def structuredValue: DataNode = fields.field(StructuredValue)
   def strict: BoolField         = fields.field(Strict)
   def mediaType: StrField       = fields.field(MediaType)
