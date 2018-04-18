@@ -22,6 +22,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   private val security      = "file://amf-client/shared/src/test/resources/upanddown/unnamed-security-scheme.raml"
   private val music         = "file://amf-client/shared/src/test/resources/production/world-music-api/api.raml"
   private val banking       = "file://amf-client/shared/src/test/resources/production/banking-api/api.raml"
+  private val amflight      = "file://amf-client/shared/src/test/resources/production/american-flight-api-2.0.1-raml/api.raml"
   private val defaultValue  = "file://amf-client/shared/src/test/resources/api/shape-default.raml"
   private val traits        = "file://amf-client/shared/src/test/resources/production/banking-api/traits/traits.raml"
   private val profile       = "file://amf-client/shared/src/test/resources/api/validation/custom-profile.raml"
@@ -395,6 +396,28 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       jsonld <- amf.Core.generator("AMF Graph", "application/ld+json").generateString(unit, options).asFuture
     } yield {
       jsonld should not include "[(3,0)-(252,0)]"
+    }
+  }
+
+  test("Missing converter error") {
+    val options = new RenderOptions().withoutSourceMaps
+
+    for {
+      _      <- AMF.init().asFuture
+      unit   <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(amflight).asFuture
+      resolved <- Future.successful(AMF.resolveRaml10(unit))
+    } yield {
+      val webapi = resolved.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+      webapi.endPoints.asSeq.foreach { ep =>
+        ep.operations.asSeq.foreach { op =>
+          op.responses.asSeq.foreach { resp =>
+            resp.payloads.asSeq.foreach { payload =>
+              payload.schema
+            }
+          }
+        }
+      }
+      assert(true)
     }
   }
 

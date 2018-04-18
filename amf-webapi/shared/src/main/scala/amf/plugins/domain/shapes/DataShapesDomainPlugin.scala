@@ -1,5 +1,6 @@
 package amf.plugins.domain.shapes
 
+import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.{PropertyShapeModel, ShapeExtensionModel}
 import amf.core.plugins.{AMFDomainPlugin, AMFPlugin}
 import amf.plugins.domain.shapes.annotations.{InheritanceProvenance, InheritedShapes, ParsedFromTypeExpression}
@@ -32,6 +33,7 @@ object DataShapesDomainPlugin extends AMFDomainPlugin {
     PropertyDependenciesModel,
     ScalarShapeModel,
     SchemaShapeModel,
+    ShapeModel,
     UnionShapeModel,
     XMLSerializerModel,
     ShapeExtensionModel,
