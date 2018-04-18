@@ -77,7 +77,9 @@ trait Platform extends FileMediaType {
     case e: DomainElement =>
       wrappersRegistryFn.keys.find(p => p(e.meta)) match {
         case Some(k) => wrappersRegistryFn(k)(e).asInstanceOf[T]
-        case None    => throw new Exception(s"Cannot find builder for object meta ${e.meta}")
+        case None    => {
+          throw new Exception(s"Cannot find builder for object meta ${e.meta}")
+        }
       }
     case d: BaseUnit =>
       wrappersRegistryFn.keys.find(p => p(d.meta)) match {
