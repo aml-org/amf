@@ -2,7 +2,21 @@ package amf.core
 
 import scala.annotation.tailrec
 
+//noinspection ScalaFileName
 package object utils {
+
+  implicit class MediaTypeMatcher(val content: String) extends AnyVal {
+
+    def guessMediaType(isScalar: Boolean): String = { // move to objects
+      if (isXml && !isScalar) "application/xml"
+      else if (isJson && !isScalar) "application/json"
+      else "text/vnd.yaml" // by default, we will try to parse it as YAML
+    }
+
+    def isXml: Boolean = content.trim.startsWith("<")
+
+    def isJson = content.trim.startsWith("{") || content.startsWith("[")
+  }
 
   /**
     * Common utility methods to deal with Strings.

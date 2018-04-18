@@ -165,19 +165,20 @@ case class RamlExampleValueAsString(node: YNode, example: Example, options: Exam
 
     val targetNode = node match {
       case mut: MutRef =>
-        sourceRefAnnotation(node, example, ctx)
+        sourceRefReference(node, example, ctx)
         mut.target.getOrElse(node)
-      case _ =>
-        node.toOption[YScalar] match {
-          case Some(scalar) =>
-            example.set(ExampleModel.Value, AmfScalar(scalar.text, Annotations(node.value)), Annotations(node.value))
-          case _ =>
-            example.set(ExampleModel.Value,
-                        AmfScalar(YamlRender.render(node), Annotations(node.value)),
-                        Annotations(node.value))
+      case _ => node // render always (even if xml) for | multiline strings. (If set scalar.text we lose the token)
 
-        }
-        node
+    }
+
+    node.toOption[YScalar] match {
+      case Some(scalar) =>
+        example.set(ExampleModel.Raw, AmfScalar(scalar.text, Annotations(node.value)), Annotations(node.value))
+      case _ =>
+        example.set(ExampleModel.Raw,
+                    AmfScalar(YamlRender.render(targetNode), Annotations(node.value)),
+                    Annotations(node.value))
+
     }
 
     val result = NodeDataNodeParser(targetNode, example.id, options.quiet).parse()

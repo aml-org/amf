@@ -5,13 +5,14 @@ import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{FieldEntry, Position}
+import amf.core.utils._
 import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, DataNodeEmitter}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.ExampleModel._
 import amf.plugins.domain.shapes.models.Example
-import org.yaml.model._
 import org.yaml.model.YDocument._
+import org.yaml.model._
 import org.yaml.parser.YamlParser
 
 import scala.collection.mutable.ListBuffer
@@ -175,11 +176,13 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
 
 case class StringToAstEmitter(value: String) extends PartEmitter {
   override def emit(b: PartBuilder): Unit = {
-    val parts = YamlParser(value).withIncludeTag("!include").parse()
-    parts.collectFirst { case d: YDocument => d }.map(_.node) match {
-      case Some(node) => emitNode(node, b)
-      case _          => throw new IllegalStateException(s"Could not parse string example $value")
-    }
+    val node =
+      if (value.isXml || value.isJson) // check the media type for yaml examples that has been setted in memory as value
+        YNode(value) // i can't parse (yamlparser) the string because i will lose the multiline string like |- token.
+      else
+        YamlParser(value).parse().collectFirst { case d: YDocument => d }.map(_.node).getOrElse(YNode(value))
+
+    emitNode(node, b)
   }
   private def emitNode(node: YNode, b: PartBuilder): Unit = {
 

@@ -27,7 +27,7 @@ object PayloadFragment {
       .withId("http://test.com/payload")
       .withLocation("http://test.com/payload")
 
-  def apply(payload: String, mediaType: String): PayloadFragment = apply(ScalarNode(payload, None))
+  def apply(payload: String, mediaType: String): PayloadFragment = apply(ScalarNode(payload, None), mediaType)
 
   def apply(payload: DataNode, mediaType: String): PayloadFragment =
     apply(payload)

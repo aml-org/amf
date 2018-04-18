@@ -529,11 +529,6 @@
                                   "http://raml.org/vocabularies/document#Example",
                                   "http://raml.org/vocabularies/document#DomainElement"
                                 ],
-                                "http://raml.org/vocabularies/document#value": [
-                                  {
-                                    "@value": "optional=some%20param"
-                                  }
-                                ],
                                 "http://raml.org/vocabularies/document#strict": [
                                   {
                                     "@value": true
@@ -575,6 +570,11 @@
                                     ]
                                   }
                                 ],
+                                "http://www.w3.org/ns/shacl#raw": [
+                                  {
+                                    "@value": "optional=some%20param"
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
                                     "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/optional/scalar/schema/example/default-example/source-map",
@@ -599,7 +599,7 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://raml.org/vocabularies/document#value"
+                                            "@value": "http://www.w3.org/ns/shacl#raw"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1296,11 +1296,6 @@
                                   "http://raml.org/vocabularies/document#Example",
                                   "http://raml.org/vocabularies/document#DomainElement"
                                 ],
-                                "http://raml.org/vocabularies/document#value": [
-                                  {
-                                    "@value": "required header"
-                                  }
-                                ],
                                 "http://raml.org/vocabularies/document#strict": [
                                   {
                                     "@value": true
@@ -1342,6 +1337,11 @@
                                     ]
                                   }
                                 ],
+                                "http://www.w3.org/ns/shacl#raw": [
+                                  {
+                                    "@value": "required header"
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
                                     "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/requiredProperty/scalar/schema/example/default-example/source-map",
@@ -1366,7 +1366,7 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://raml.org/vocabularies/document#value"
+                                            "@value": "http://www.w3.org/ns/shacl#raw"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1823,11 +1823,6 @@
                                   "http://raml.org/vocabularies/document#Example",
                                   "http://raml.org/vocabularies/document#DomainElement"
                                 ],
-                                "http://raml.org/vocabularies/document#value": [
-                                  {
-                                    "@value": "encoded%20example"
-                                  }
-                                ],
                                 "http://raml.org/vocabularies/document#strict": [
                                   {
                                     "@value": true
@@ -1869,6 +1864,11 @@
                                     ]
                                   }
                                 ],
+                                "http://www.w3.org/ns/shacl#raw": [
+                                  {
+                                    "@value": "encoded%20example"
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
                                     "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/basic/scalar/schema/example/default-example/source-map",
@@ -1893,7 +1893,7 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://raml.org/vocabularies/document#value"
+                                            "@value": "http://www.w3.org/ns/shacl#raw"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [

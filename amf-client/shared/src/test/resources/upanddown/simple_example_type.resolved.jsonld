@@ -325,11 +325,6 @@
               "doc:Example",
               "doc:DomainElement"
             ],
-            "doc:value": [
-              {
-                "@value": "  a: wadus"
-              }
-            ],
             "doc:strict": [
               {
                 "@value": true
@@ -370,12 +365,17 @@
                 }
               }
             ],
+            "shacl:raw": [
+              {
+                "@value": "  a: wadus"
+              }
+            ],
             "smaps": {
               "synthesized-field": {
                 "doc:strict": "true"
               },
               "lexical": {
-                "doc:value": "[(6,0)-(6,10)]",
+                "shacl:raw": "[(6,0)-(6,10)]",
                 "file://amf-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example": "[(6,0)-(6,10)]"
               }
             }
@@ -481,11 +481,6 @@
                   "doc:Example",
                   "doc:DomainElement"
                 ],
-                "doc:value": [
-                  {
-                    "@value": "  a: wadus"
-                  }
-                ],
                 "doc:strict": [
                   {
                     "@value": true
@@ -526,12 +521,17 @@
                     }
                   }
                 ],
+                "shacl:raw": [
+                  {
+                    "@value": "  a: wadus"
+                  }
+                ],
                 "smaps": {
                   "synthesized-field": {
                     "doc:strict": "true"
                   },
                   "lexical": {
-                    "doc:value": "[(6,0)-(6,10)]",
+                    "shacl:raw": "[(6,0)-(6,10)]",
                     "file://amf-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example": "[(6,0)-(6,10)]"
                   }
                 }

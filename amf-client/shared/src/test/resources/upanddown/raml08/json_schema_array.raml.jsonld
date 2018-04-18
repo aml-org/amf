@@ -352,6 +352,11 @@
             "@value": "wip"
           }
         ],
+        "http://raml.org/vocabularies/document#reference-id": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/resources/200.json#/external"
+          }
+        ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/wip/source-map",
@@ -368,20 +373,6 @@
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
                     "@value": ""
-                  }
-                ]
-              }
-            ],
-            "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
-              {
-                "http://raml.org/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/wip"
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(4,2)-(4,8)]"
                   }
                 ]
               }
@@ -412,7 +403,7 @@
                 ]
               }
             ],
-            "http://raml.org/vocabularies/document-source-maps#parsed-json-schema": [
+            "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
@@ -421,9 +412,38 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"id\": \"http://jsonschema.net/wip\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"questionnaires\": {\n      \"id\": \"http://jsonschema.net/wip/questionnaires\",\n      \"type\": \"array\",\n      \"items\": [{\n        \"id\": \"http://jsonschema.net/wip/questionnaires/0\",\n        \"type\": \"object\",\n        \"description\": \"Metadata about which questionnaires apply to this WIP, and their current state. There will be one item for each questionnaire.\"\n      }]\n    }\n  }\n}"
+                    "@value": "[(4,2)-(4,8)]"
                   }
                 ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://raml.org/vocabularies/document#references": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/resources/200.json",
+        "@type": [
+          "http://raml.org/vocabularies/document#ExternalFragment",
+          "http://raml.org/vocabularies/document#Fragment",
+          "http://raml.org/vocabularies/document#Unit"
+        ],
+        "http://raml.org/vocabularies/document#encodes": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/resources/200.json#/external",
+            "@type": [
+              "http://raml.org/vocabularies/document#ExternalDomainElement",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/document#raw": [
+              {
+                "@value": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"id\": \"http://jsonschema.net/wip\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"questionnaires\": {\n      \"id\": \"http://jsonschema.net/wip/questionnaires\",\n      \"type\": \"array\",\n      \"items\": [{\n        \"id\": \"http://jsonschema.net/wip/questionnaires/0\",\n        \"type\": \"object\",\n        \"description\": \"Metadata about which questionnaires apply to this WIP, and their current state. There will be one item for each questionnaire.\"\n      }]\n    }\n  }\n}"
+              }
+            ],
+            "http://raml.org/vocabularies/http#mediaType": [
+              {
+                "@value": "application/json"
               }
             ]
           }

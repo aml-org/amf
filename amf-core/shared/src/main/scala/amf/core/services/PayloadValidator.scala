@@ -8,6 +8,7 @@ import amf.core.registries.AMFPluginsRegistry
 import amf.core.validation._
 import amf.core.vocabulary.Namespace
 import amf.plugins.features.validation.ParserSideValidations
+import amf.core.utils._
 
 import scala.collection.immutable
 import scala.concurrent.Future
@@ -37,7 +38,7 @@ object PayloadValidator {
 
   def validate(shape: Shape, payload: String, severity: String): Future[AMFValidationReport] = {
 
-    val mediaType = guessMediaType(isScalar = false, payload)
+    val mediaType = payload.guessMediaType(isScalar = false)
     plugin(mediaType, shape).validatePayload(shape, payload, mediaType)
   }
 
@@ -48,16 +49,6 @@ object PayloadValidator {
         plugin.canValidate(shape)
       }
       .getOrElse(AnyMatchPayloadPlugin)
-
-  def guessMediaType(isScalar: Boolean, value: String): String = {
-    if (isXml(value) && !isScalar) "application/xml"
-    else if (isJson(value) && !isScalar) "application/json"
-    else "text/vnd.yaml" // by default, we will try to parse it as YAML
-  }
-
-  def isXml(value: String): Boolean = value.trim.startsWith("<")
-
-  def isJson(value: String) = value.trim.startsWith("{") || value.startsWith("[")
 
   private object AnyMatchPayloadPlugin extends AMFPayloadValidationPlugin {
 

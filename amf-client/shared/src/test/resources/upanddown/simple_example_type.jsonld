@@ -642,11 +642,6 @@
                   "http://raml.org/vocabularies/document#Example",
                   "http://raml.org/vocabularies/document#DomainElement"
                 ],
-                "http://raml.org/vocabularies/document#value": [
-                  {
-                    "@value": "  a: wadus"
-                  }
-                ],
                 "http://raml.org/vocabularies/document#strict": [
                   {
                     "@value": true
@@ -732,6 +727,11 @@
                     ]
                   }
                 ],
+                "http://www.w3.org/ns/shacl#raw": [
+                  {
+                    "@value": "  a: wadus"
+                  }
+                ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/source-map",
@@ -756,7 +756,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://raml.org/vocabularies/document#structuredValue"
+                            "@value": "http://www.w3.org/ns/shacl#raw"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -780,7 +780,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://raml.org/vocabularies/document#value"
+                            "@value": "http://raml.org/vocabularies/document#structuredValue"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [

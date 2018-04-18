@@ -193,11 +193,6 @@
                                     "@value": "stringExample"
                                   }
                                 ],
-                                "http://raml.org/vocabularies/document#value": [
-                                  {
-                                    "@value": "Hello union"
-                                  }
-                                ],
                                 "http://raml.org/vocabularies/document#strict": [
                                   {
                                     "@value": true
@@ -239,6 +234,11 @@
                                     ]
                                   }
                                 ],
+                                "http://www.w3.org/ns/shacl#raw": [
+                                  {
+                                    "@value": "Hello union"
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
                                     "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/x-union/union/schema/example/stringExample/source-map",
@@ -263,7 +263,7 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://raml.org/vocabularies/document#value"
+                                            "@value": "http://www.w3.org/ns/shacl#raw"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -311,11 +311,6 @@
                                     "@value": "numberExample"
                                   }
                                 ],
-                                "http://raml.org/vocabularies/document#value": [
-                                  {
-                                    "@value": "25"
-                                  }
-                                ],
                                 "http://raml.org/vocabularies/document#strict": [
                                   {
                                     "@value": true
@@ -357,6 +352,11 @@
                                     ]
                                   }
                                 ],
+                                "http://www.w3.org/ns/shacl#raw": [
+                                  {
+                                    "@value": "25"
+                                  }
+                                ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
                                     "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/x-union/union/schema/example/numberExample/source-map",
@@ -381,7 +381,7 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://raml.org/vocabularies/document#value"
+                                            "@value": "http://www.w3.org/ns/shacl#raw"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [

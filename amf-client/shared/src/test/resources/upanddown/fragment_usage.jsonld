@@ -165,11 +165,6 @@
               "http://raml.org/vocabularies/document#Example",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
-            "http://raml.org/vocabularies/document#value": [
-              {
-                "@value": "  name: Never Ending Story\n  chapters:\n    -\n      name: introduction\n      content: introduction\n    -\n      name: main\n      content: main\n    -\n      name: ending\n      content: ending\n    -\n      name: 1\n      content: 2"
-              }
-            ],
             "http://raml.org/vocabularies/document#strict": [
               {
                 "@value": true
@@ -744,6 +739,11 @@
                 ]
               }
             ],
+            "http://www.w3.org/ns/shacl#raw": [
+              {
+                "@value": "  name: Never Ending Story\n  chapters:\n    -\n      name: introduction\n      content: introduction\n    -\n      name: main\n      content: main\n    -\n      name: ending\n      content: ending\n    -\n      name: 1\n      content: 2"
+              }
+            ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/fragment_usage.raml#shape/example/default-example/source-map",
@@ -768,7 +768,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://raml.org/vocabularies/document#structuredValue"
+                        "@value": "http://www.w3.org/ns/shacl#raw"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -792,7 +792,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://raml.org/vocabularies/document#value"
+                        "@value": "http://raml.org/vocabularies/document#structuredValue"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [

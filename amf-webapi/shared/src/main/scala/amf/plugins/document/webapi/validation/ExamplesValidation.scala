@@ -2,13 +2,16 @@ package amf.plugins.document.webapi.validation
 
 import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.model.domain.Shape
-import amf.core.services.PayloadValidator
+import amf.core.utils._
 import amf.core.validation.ValidationCandidate
 import amf.core.vocabulary.Namespace
+import amf.plugins.document.webapi.parser.spec.common.IdCounter
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ScalarShape}
 
 class ExamplesValidationCollector(model: BaseUnit) {
+
+  val idCounter = new IdCounter()
 
   def collect(): Seq[ValidationCandidate] = {
     // we find all examples with strict validation
@@ -22,9 +25,8 @@ class ExamplesValidationCollector(model: BaseUnit) {
       case shape: AnyShape =>
         shape.examples.collect({
           case example: Example
-              if example.fields
-                .entry(ExampleModel.StructuredValue)
-                .isDefined && example.strict.option().getOrElse(true) =>
+              if (example.fields.exists(ExampleModel.StructuredValue) || example.fields.exists(ExampleModel.Raw))
+                && example.strict.option().getOrElse(true) =>
             (shape, example)
         })
       case _ => Nil
@@ -32,9 +34,19 @@ class ExamplesValidationCollector(model: BaseUnit) {
     allExamples
   }
 
-  private def buildFragment(shape: Shape, example: Example) =
-    PayloadFragment(example.structuredValue,
-                    example.mediaType.option().getOrElse(PayloadValidator.guessMediaType(shape.isInstanceOf[ScalarShape], example.value.value())))
+  private def buildFragment(shape: Shape, example: Example) = {
+    val mediaType = example.mediaType
+      .option()
+      .getOrElse(example.value.value().guessMediaType(shape.isInstanceOf[ScalarShape]))
+    val fragment =
+      if (example.fields.exists(ExampleModel.StructuredValue))
+        PayloadFragment(example.structuredValue, mediaType)
+      else
+        PayloadFragment(example.raw.value(), mediaType) // todo: review with antonio
+
+    fragment.encodes.withId(example.id)
+    fragment
+  }
 
 }
 
