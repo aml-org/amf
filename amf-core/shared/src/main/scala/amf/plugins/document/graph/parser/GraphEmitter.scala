@@ -207,15 +207,8 @@ object GraphEmitter extends MetaModelTypeMapping {
       createTypeNode(b, obj, Some(element), ctx)
 
       // workaround for lazy values in shape
-      val modelFields = obj match {
-        case shapeModel: ShapeModel =>
-          shapeModel.fields ++ Seq(
-            ShapeModel.CustomShapePropertyDefinitions,
-            ShapeModel.CustomShapeProperties
-          )
-        case _ => obj.fields
-      }
-      modelFields.map(element.fields.entryJsonld) foreach {
+
+      obj.fields.map(element.fields.entryJsonld) foreach {
         case Some(FieldEntry(f, v)) =>
           val url = ctx.emitIri(f.value.iri())
           b.entry(

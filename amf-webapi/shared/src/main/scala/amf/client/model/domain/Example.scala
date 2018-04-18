@@ -18,7 +18,7 @@ case class Example(override private[amf] val _internal: InternalExample) extends
   def name: StrField            = _internal.name
   def displayName: StrField     = _internal.displayName
   def description: StrField     = _internal.description
-  def value: StrField           = _internal.value
+  def value: StrField           = _internal.raw
   def structuredValue: DataNode = _internal.structuredValue
   def strict: BoolField         = _internal.strict
   def mediaType: StrField       = _internal.mediaType
