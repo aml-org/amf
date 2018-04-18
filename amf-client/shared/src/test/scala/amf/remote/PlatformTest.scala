@@ -2,10 +2,10 @@ package amf.remote
 
 import java.util.Date
 
+import amf.client.remote.Content
 import amf.common.ListAssertions
 import amf.core.remote.Mimes.`APPLICATION/YAML`
 import amf.core.unsafe.PlatformSecrets
-import amf.core.remote.Content
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.scalatest.Matchers._
 
@@ -17,8 +17,8 @@ class PlatformTest extends AsyncFunSuite with ListAssertions with PlatformSecret
 
   test("File") {
     platform
-      .resolve("file://amf-client/shared/src/test/resources/input.yaml", None) map {
-      case Content(content, url, mime) =>
+      .resolve("file://amf-client/shared/src/test/resources/input.yaml") map {
+      case Content(content, _, mime) =>
         mime should contain(`APPLICATION/YAML`)
 
         content.toString should be
@@ -36,7 +36,7 @@ class PlatformTest extends AsyncFunSuite with ListAssertions with PlatformSecret
     val path = "http://amf.us-2.evennode.com/input.yaml"
 
     platform
-      .resolve(path, None)
+      .resolve(path)
       .map(stream => {
         val content = stream.toString
 

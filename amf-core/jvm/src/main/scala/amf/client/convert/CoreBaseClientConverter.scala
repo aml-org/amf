@@ -5,12 +5,14 @@ import java.util.Optional
 import java.util.concurrent.CompletableFuture
 
 import amf.client.handler.{FileHandler, Handler}
+import amf.client.resource.{ResourceLoader => ClientResourceLoader}
 
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 import scala.compat.java8.FutureConverters
 import scala.compat.java8.OptionConverters._
 import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
 trait CoreBaseClientConverter extends CoreBaseConverter {
 
@@ -19,6 +21,8 @@ trait CoreBaseClientConverter extends CoreBaseConverter {
   override type ClientMap[V]    = util.Map[String, V]
 
   override type ClientFuture[T] = CompletableFuture[T]
+
+  override type ClientLoader = ClientResourceLoader
 
   override type ClientResultHandler[T] = Handler[T]
   override type ClientFileHandler      = FileHandler
@@ -44,6 +48,11 @@ trait CoreBaseClientConverter extends CoreBaseConverter {
 
   override protected def asClientFuture[T](from: Future[T]): ClientFuture[T] =
     FutureConverters.toJava(from).toCompletableFuture
+
+  override protected def asInternalFuture[Client, Internal](
+      from: CompletableFuture[Client],
+      matcher: ClientInternalMatcher[Client, Internal]): Future[Internal] =
+    FutureConverters.toScala(from).map(matcher.asInternal)
 
   override protected def toScalaOption[E](from: Optional[E]): Option[E] = from.asScala
 
