@@ -1111,6 +1111,14 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("locations-api.raml", "locations-api.raml", RamlYamlHint, Raml, productionPath + "locations-api/")
   }
 
+  test("Example issue nil raml to amf") {
+    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, productionPath + "testIssueNil/")
+  }
+
+  test("Examples usage in raml 1.0 spec raml to amf") {
+    cycle("spec_examples_example.raml", "spec_examples_example.jsonld", RamlYamlHint, Amf, productionPath)
+  }
+
   test("Example in included type fragment") {
     cycle("simple_example_type.raml", "simple_example_type.jsonld", RamlYamlHint, Amf)
   }
