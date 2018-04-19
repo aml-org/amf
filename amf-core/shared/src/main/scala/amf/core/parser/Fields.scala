@@ -230,10 +230,10 @@ class Value(var value: AmfElement, val annotations: Annotations) {
         array.values.foreach {
           case linkable: Linkable if linkable.isUnresolved =>
             linkable.toFutureRef((resolved) => {
-              val unresolveds = ListBuffer[Linkable]()
+              val unresolved = ListBuffer[Linkable]()
               value.asInstanceOf[AmfArray].values = value.asInstanceOf[AmfArray].values map { element =>
                 if (element == linkable) {
-                  unresolveds += element
+                  unresolved += element
                     .asInstanceOf[Linkable] // we need to collect the linkables unresolved instances,torun the after resolve trigger. This will end the father parser logic when its necessary
                   resolved.resolveUnreferencedLink(linkable.refName, linkable.annotations, element)
                 } else {
@@ -241,7 +241,7 @@ class Value(var value: AmfElement, val annotations: Annotations) {
                 }
               }
               // we need to wait until the field inhertis of father its mutatted, so we can triggers the after resolve parsing with the instance totally parser.If we trigger in the resolve unreference link, the value of the father field it woulnd be changed yet.
-              unresolveds.foreach { ur =>
+              unresolved.foreach { ur =>
                 ur.afterResolve()
               } //triggers the after resolved logic in all unresolve collected linkables instances.
             })
