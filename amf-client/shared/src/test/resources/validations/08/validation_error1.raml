@@ -25,8 +25,8 @@ resourceTypes:
               body:
                 application/json:
                   example: |
-                    [{"pnrnumber": "1234", "pnrcreationDate": "20160426"},
-                    {"pnrnumber": "2345", "pnrcreationDate": "20160427"}]
+                    [{"pnrnumber": "1234", "pnrcreationDate": 20160426},
+                    {"pnrnumber": "2345", "pnrcreationDate": 20160427}]
     /{blah}:
           type: reservation-item
           get:
@@ -36,4 +36,4 @@ resourceTypes:
                   body:
                     application/json:
                       example: |
-                        {"pnrnumber": "2345", "pnrcreationDate": "20160427"}
+                        {"pnrnumber": "2345", "pnrcreationDate": 20160427}
