@@ -546,6 +546,26 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Spec usage examples example validation") {
+    for {
+      validation <- Validation(platform)
+      library    <- AMFCompiler(productionPath + "spec_examples_example.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
+  test("Test Issue Nil validation") {
+    for {
+      validation <- Validation(platform)
+      library    <- AMFCompiler(productionPath + "/testIssueNil/api.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
   test("Nil value validation") {
     for {
       validation <- Validation(platform)
@@ -1567,6 +1587,28 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       assert(report.conforms)
       assert(report.results.count(_.level == SeverityLevels.WARNING) == 3) // all warnings
+    }
+  }
+
+  test("Invalid type example 1 test") {
+    for {
+      validation <- Validation(platform)
+      doc        <- AMFCompiler(validationsPath + "invalidex1.raml", platform, OasYamlHint, validation).build()
+      report     <- validation.validate(doc, ProfileNames.AMF)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 1)
+    }
+  }
+
+  test("Invalid type example 2 test") {
+    for {
+      validation <- Validation(platform)
+      doc        <- AMFCompiler(validationsPath + "invalidex2.raml", platform, OasYamlHint, validation).build()
+      report     <- validation.validate(doc, ProfileNames.AMF)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 1)
     }
   }
 }

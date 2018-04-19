@@ -24,6 +24,7 @@ import amf.plugins.domain.webapi.metamodel.WebApiModel
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -214,7 +215,7 @@ trait Raml10BaseSpecParser extends RamlBaseDocumentParser {
   }
 }
 
-abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends RamlSpecParser {
+abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends RamlSpecParser with RamlTypeSyntax {
   protected def parseSecuritySchemeDeclarations(map: YMap, parent: String): Unit
 
   protected def parseDeclarations(root: Root, map: YMap): Unit = {
@@ -293,6 +294,14 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
       e.value.tagType match {
         case YType.Map =>
           e.value.as[YMap].entries.foreach { entry =>
+            if (wellKnownType(entry.key.as[String])) {
+              ctx.violation(
+                ParserSideValidations.ParsingErrorSpecification.id(),
+                parent,
+                "Default type name cannot be used to name a custom type",
+                entry.key
+              )
+            }
             Raml10TypeParser(entry, shape => {
               shape.set(ShapeModel.Name,
                         AmfScalar(entry.key.as[String], Annotations(entry.key.value)),

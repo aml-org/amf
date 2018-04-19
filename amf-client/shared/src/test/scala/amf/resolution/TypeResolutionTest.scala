@@ -96,7 +96,7 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
         assert(union.anyOf.length == 3)
         assert(union.anyOf.map { e =>
           e.asInstanceOf[ScalarShape].dataType.value()
-        } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri(), (Namespace.Xsd + "float").iri()))
+        } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri(), (Namespace.Shapes + "number").iri()))
         assert(res != null)
 
         res = RamlTypeExpressionParser(adopt).parse("(integer | string)[]")

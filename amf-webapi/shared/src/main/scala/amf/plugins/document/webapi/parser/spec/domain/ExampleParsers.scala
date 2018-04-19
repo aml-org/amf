@@ -115,13 +115,27 @@ case class RamlSingleExampleParser(key: String,
   def parse(): Option[Example] = {
     val newProducer = () => producer(None)
     map.key(key).flatMap { entry =>
-      entry.value.tagType match {
-        case YType.Map =>
-          Option(RamlSingleExampleValueParser(entry.value.as[YMap], newProducer, options).parse())
-        case _ => // example can be any type or scalar value, like string int datetime etc. We will handle all like strings in this stage
-          Option(
-            RamlExampleValueAsString(entry.value, newProducer().add(Annotations(entry.value)), options)
-              .populate())
+      ctx.link(entry.value) match {
+        case Left(s) =>
+          ctx.declarations.findNamedExample(s).map(e => e.link(s).asInstanceOf[Example]).map { example =>
+            ctx.warning(
+              ParserSideValidations.NamedExampleUsedInExample.id(),
+              example.id,
+              "Using an included named example as an inlined example",
+              entry
+            )
+            example
+          }
+
+        case Right(node) =>
+          node.tagType match {
+            case YType.Map =>
+              Option(RamlSingleExampleValueParser(node.as[YMap], newProducer, options).parse())
+            case _ => // example can be any type or scalar value, like string int datetime etc. We will handle all like strings in this stage
+              Option(
+                RamlExampleValueAsString(node, newProducer().add(Annotations(entry.value)), options)
+                  .populate())
+          }
       }
     }
   }
