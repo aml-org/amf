@@ -1236,14 +1236,17 @@ sealed abstract class RamlTypeParser(ast: YPart,
             case _ =>
           }
 
+          property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text).iri())
+
           if (property.fields.?(PropertyShapeModel.MinCount).isEmpty) {
             val required = !prop.endsWith("?")
 
             property.set(PropertyShapeModel.MinCount, if (required) 1 else 0)
             property.set(PropertyShapeModel.Name, if (required) prop else prop.stripSuffix("?")) // TODO property id is using a name that is not final.
+            property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text.stripSuffix("?")).iri())
           }
 
-          property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text).iri())
+
 
           Raml10TypeParser(entry, shape => shape.adopted(property.id), isAnnotation = false, StringDefaultType)
             .parse()
