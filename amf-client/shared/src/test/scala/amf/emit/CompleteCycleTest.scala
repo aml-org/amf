@@ -1138,4 +1138,8 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Response declaration oas to amf") {
     cycle("oas_response_declaration.yaml", "oas_response_declaration.jsonld", OasYamlHint, Amf)
   }
+
+  test("Forward reference in shape with custom properties") {
+    cycle("forward-shape-custom-properties.raml", "forward-shape-custom-properties.raml.raml", RamlYamlHint, Raml)
+  }
 }

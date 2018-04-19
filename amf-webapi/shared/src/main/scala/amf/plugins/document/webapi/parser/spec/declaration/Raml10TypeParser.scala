@@ -9,7 +9,12 @@ import amf.core.parser.{Annotations, Value, _}
 import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
-import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext, WebApiContext}
+import amf.plugins.document.webapi.contexts.{
+  Raml08WebApiContext,
+  Raml10WebApiContext,
+  RamlWebApiContext,
+  WebApiContext
+}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec._
@@ -552,7 +557,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
     // Add 'inline' annotation for shape
     result
-      .map(shape =>
+      .foreach(shape =>
         node.value match {
           case _: YScalar if !info.contains(MultipleMatch) =>
             shape.add(InlineDefinition()) // case of only one field (ej required) and multiple shape matches (use default string)
@@ -676,7 +681,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
           NodeShapeParser(shape, node.as[YMap])
             .parse() // I have to do the adopt before parser children shapes. Other way the children will not have the father id
         case YType.Seq =>
-          InheritanceParser(ast.asInstanceOf[YMapEntry], shape).parse()
+          InheritanceParser(ast.asInstanceOf[YMapEntry], shape, None).parse()
           shape
         case _ if node.toOption[YScalar].isDefined =>
           val refTuple = ctx.link(node) match {
@@ -1048,7 +1053,8 @@ sealed abstract class RamlTypeParser(ast: YPart,
     }
   }
 
-  case class InheritanceParser(entry: YMapEntry, shape: Shape)(implicit val ctx: RamlWebApiContext)
+  case class InheritanceParser(entry: YMapEntry, shape: Shape, fatherMap: Option[YMap])(
+      implicit val ctx: RamlWebApiContext)
       extends RamlSpecParser
       with RamlTypeSyntax
       with RamlExternalTypes {
@@ -1134,20 +1140,21 @@ sealed abstract class RamlTypeParser(ast: YPart,
 
     private def unresolved(node: YNode): UnresolvedShape = {
       val reference = node.as[YScalar].text
-      val shape     = UnresolvedShape(reference, node)
-      shape.withContext(ctx)
+      // we need to pass the extension parser to the unresolved, in order to not only have the father at the moment of resolve the future ref in Value, also we need the parser itself, for modular dependency (We cannot create an instance of this parser in core)
+      val unresolvedShape = UnresolvedShape(reference, node, fatherMap.map(ShapeExtensionParser(shape, _, ctx)))
+      unresolvedShape.withContext(ctx)
       if (!reference.validReferencePath) {
         ctx.violation(
           ParserSideValidations.ChainedReferenceSpecification.id(),
-          shape.id,
+          unresolvedShape.id,
           s"Chained reference '$reference",
           node
         )
       } else {
-        shape.unresolved(reference, node)
+        unresolvedShape.unresolved(reference, node)
       }
-      adopt(shape)
-      shape
+      adopt(unresolvedShape)
+      unresolvedShape
     }
   }
 
@@ -1325,7 +1332,7 @@ sealed abstract class RamlTypeParser(ast: YPart,
     }
 
     protected def parseInheritance(): Unit = {
-      typeOrSchema(map).foreach(entry => InheritanceParser(entry, shape).parse())
+      typeOrSchema(map).foreach(entry => InheritanceParser(entry, shape, Some(map)).parse())
     }
   }
 

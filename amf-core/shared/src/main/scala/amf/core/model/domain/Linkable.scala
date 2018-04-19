@@ -44,6 +44,8 @@ trait Linkable extends AmfObject { this: DomainElement with Linkable =>
   def resolveUnreferencedLink[T](label: String, annotations: Annotations = Annotations(), unresolved: T): T =
     link(label, annotations)
 
+  def afterResolve(): Unit = Unit
+
   // Unresolved references to things that can be linked
   // TODO: another trait?
   var isUnresolved: Boolean         = false

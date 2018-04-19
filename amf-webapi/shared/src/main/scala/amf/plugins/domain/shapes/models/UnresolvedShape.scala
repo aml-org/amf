@@ -4,6 +4,7 @@ import amf.core.metamodel.Obj
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, Fields, UnresolvedReference}
+import amf.plugins.document.webapi.parser.spec.common.ShapeExtensionParser
 import org.yaml.model.{YNode, YPart}
 
 /**
@@ -11,7 +12,8 @@ import org.yaml.model.{YNode, YPart}
   */
 case class UnresolvedShape(override val fields: Fields,
                            override val annotations: Annotations,
-                           override val reference: String)
+                           override val reference: String,
+                           fatherExtensionParser: Option[ShapeExtensionParser] = None)
     extends AnyShape(fields, annotations)
     with UnresolvedReference {
 
@@ -24,16 +26,25 @@ case class UnresolvedShape(override val fields: Fields,
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/unresolved"
+
+  override def afterResolve(): Unit = fatherExtensionParser.foreach { parser =>
+    parser.parse()
+  }
 }
 
 object UnresolvedShape {
-  def apply(reference: String): UnresolvedShape = apply(reference, Annotations())
+  def apply(reference: String): UnresolvedShape = apply(reference, Annotations(), None)
 
-  def apply(reference: String, ast: YPart): UnresolvedShape = apply(reference, Annotations(ast))
+  def apply(reference: String, ast: YPart, extensionParser: Option[ShapeExtensionParser]): UnresolvedShape =
+    apply(reference, Annotations(ast), extensionParser)
+
+  def apply(reference: String, ast: YPart): UnresolvedShape = apply(reference, Annotations(ast), None)
 
   def apply(reference: String, ast: Option[YPart]): UnresolvedShape =
-    apply(reference, Annotations(ast.getOrElse(YNode.Null)))
+    apply(reference, Annotations(ast.getOrElse(YNode.Null)), None)
 
-  def apply(reference: String, annotations: Annotations): UnresolvedShape =
-    UnresolvedShape(Fields(), annotations, reference)
+  def apply(reference: String,
+            annotations: Annotations,
+            extensionParser: Option[ShapeExtensionParser]): UnresolvedShape =
+    UnresolvedShape(Fields(), annotations, reference, extensionParser)
 }
