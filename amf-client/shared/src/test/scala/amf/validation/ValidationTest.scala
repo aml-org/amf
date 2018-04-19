@@ -1579,6 +1579,17 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Date times examples test") {
+    for {
+      validation <- Validation(platform)
+      doc        <- AMFCompiler(validationsPath + "date_time_validations.raml", platform, OasYamlHint, validation).build()
+      report     <- validation.validate(doc, ProfileNames.AMF)
+    } yield {
+      println(report)
+      assert(report.conforms)
+    }
+  }
+
   test("Example xml with sons results test") {
     for {
       validation <- Validation(platform)

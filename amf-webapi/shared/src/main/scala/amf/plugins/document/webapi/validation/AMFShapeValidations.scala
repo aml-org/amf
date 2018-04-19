@@ -177,7 +177,7 @@ class AMFShapeValidations(shape: Shape) {
 
   protected def scalarConstraints(context: String, scalar: ScalarShape): List[ValidationSpecification] = {
     if (scalar.format.option().isDefined && scalar.format
-          .value() == "RFC2616" && scalar.dataType.value().endsWith("dateTime")) {
+          .value().toLowerCase() == "rfc2616" && scalar.dataType.value().endsWith("dateTime")) {
       // RAML 0.8 date type following RFC2616
       val msg = s"Scalar at $context must be valid RFC2616 date"
       var validation = new ValidationSpecification(
