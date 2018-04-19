@@ -1,0 +1,37 @@
+#%RAML 1.0
+
+title: test
+
+
+types: 
+  Organization: !include data-types/organization-data-type.raml
+
+/organizations: 
+  put:
+    body: 
+      application/json:
+        type: Organization []
+        example: !include examples/organization/organization-array-response.raml
+  get:
+    displayName: Get organizations
+    responses: 
+      200:
+        body: 
+          application/json:
+            type: Organization[]
+            example: !include examples/organization/organization-array-response.raml
+            
+  /{organization_id}:
+    uriParameters: 
+      organization_id: 
+        type: number
+        description: The organization's specific ID
+    get:
+      displayName: Get organizations by organization ID
+      responses: 
+        200:
+          body: 
+            application/json:
+              type: Organization
+              example: !include examples/organization/organization-individual-response.raml
+   
