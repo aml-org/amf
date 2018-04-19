@@ -96,7 +96,7 @@
                                     ],
                                     "shacl:path": [
                                       {
-                                        "@id": "http://raml.org/vocabularies/data#alternate_id?"
+                                        "@id": "http://raml.org/vocabularies/data#alternate_id"
                                       }
                                     ],
                                     "raml-shapes:range": [
@@ -785,7 +785,7 @@
                                     ],
                                     "shacl:path": [
                                       {
-                                        "@id": "http://raml.org/vocabularies/data#alternate_id?"
+                                        "@id": "http://raml.org/vocabularies/data#alternate_id"
                                       }
                                     ],
                                     "raml-shapes:range": [
@@ -1564,6 +1564,88 @@
                             ],
                             "shacl:property": [
                               {
+                                "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id",
+                                "@type": [
+                                  "shacl:PropertyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape"
+                                ],
+                                "shacl:path": [
+                                  {
+                                    "@id": "http://raml.org/vocabularies/data#alternate_id"
+                                  }
+                                ],
+                                "raml-shapes:range": [
+                                  {
+                                    "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id/union/default-union",
+                                    "@type": [
+                                      "raml-shapes:UnionShape",
+                                      "shacl:Shape",
+                                      "raml-shapes:Shape"
+                                    ],
+                                    "raml-shapes:anyOf": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/union/default-union/scalar/default-scalar",
+                                        "@type": [
+                                          "raml-shapes:ScalarShape",
+                                          "shacl:Shape",
+                                          "raml-shapes:Shape",
+                                          "doc:DomainElement"
+                                        ],
+                                        "shacl:datatype": [
+                                          {
+                                            "@id": "http://raml.org/vocabularies/shapes#number"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/nil/default-nil",
+                                        "@type": [
+                                          "raml-shapes:NilShape",
+                                          "shacl:Shape",
+                                          "raml-shapes:Shape"
+                                        ]
+                                      }
+                                    ],
+                                    "schema-org:description": [
+                                      {
+                                        "@value": "The alternate ID of the organization"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "inherited-shapes": {
+                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id/union/default-union": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/union/default-union"
+                                      },
+                                      "lexical": {
+                                        "schema-org:description": "[(6,4)-(7,0)]",
+                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id/union/default-union": "[(5,0)-(7,0)]"
+                                      },
+                                      "type-property-lexical-info": {
+                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id/union/default-union": "[(5,4)-(5,8)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "shacl:minCount": [
+                                  {
+                                    "@value": 0
+                                  }
+                                ],
+                                "shacl:name": [
+                                  {
+                                    "@value": "alternate_id"
+                                  }
+                                ],
+                                "smaps": {
+                                  "inheritance-provenance": {
+                                    "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type"
+                                  },
+                                  "lexical": {
+                                    "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id": "[(4,2)-(7,0)]"
+                                  }
+                                }
+                              },
+                              {
                                 "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category",
                                 "@type": [
                                   "shacl:PropertyShape",
@@ -1825,88 +1907,6 @@
                                     "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/created_at": "[(17,2)-(20,0)]"
                                   }
                                 }
-                              },
-                              {
-                                "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id",
-                                "@type": [
-                                  "shacl:PropertyShape",
-                                  "shacl:Shape",
-                                  "raml-shapes:Shape"
-                                ],
-                                "shacl:path": [
-                                  {
-                                    "@id": "http://raml.org/vocabularies/data#alternate_id?"
-                                  }
-                                ],
-                                "raml-shapes:range": [
-                                  {
-                                    "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id/union/default-union",
-                                    "@type": [
-                                      "raml-shapes:UnionShape",
-                                      "shacl:Shape",
-                                      "raml-shapes:Shape"
-                                    ],
-                                    "raml-shapes:anyOf": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/union/default-union/scalar/default-scalar",
-                                        "@type": [
-                                          "raml-shapes:ScalarShape",
-                                          "shacl:Shape",
-                                          "raml-shapes:Shape",
-                                          "doc:DomainElement"
-                                        ],
-                                        "shacl:datatype": [
-                                          {
-                                            "@id": "http://raml.org/vocabularies/shapes#number"
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/nil/default-nil",
-                                        "@type": [
-                                          "raml-shapes:NilShape",
-                                          "shacl:Shape",
-                                          "raml-shapes:Shape"
-                                        ]
-                                      }
-                                    ],
-                                    "schema-org:description": [
-                                      {
-                                        "@value": "The alternate ID of the organization"
-                                      }
-                                    ],
-                                    "smaps": {
-                                      "inherited-shapes": {
-                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id/union/default-union": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/union/default-union"
-                                      },
-                                      "lexical": {
-                                        "schema-org:description": "[(6,4)-(7,0)]",
-                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id/union/default-union": "[(5,0)-(7,0)]"
-                                      },
-                                      "type-property-lexical-info": {
-                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id/union/default-union": "[(5,4)-(5,8)]"
-                                      }
-                                    }
-                                  }
-                                ],
-                                "shacl:minCount": [
-                                  {
-                                    "@value": 0
-                                  }
-                                ],
-                                "shacl:name": [
-                                  {
-                                    "@value": "alternate_id"
-                                  }
-                                ],
-                                "smaps": {
-                                  "inheritance-provenance": {
-                                    "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type"
-                                  },
-                                  "lexical": {
-                                    "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id": "[(4,2)-(7,0)]"
-                                  }
-                                }
                               }
                             ],
                             "shacl:name": [
@@ -2147,7 +2147,7 @@
             ],
             "shacl:path": [
               {
-                "@id": "http://raml.org/vocabularies/data#alternate_id?"
+                "@id": "http://raml.org/vocabularies/data#alternate_id"
               }
             ],
             "raml-shapes:range": [
@@ -2683,7 +2683,7 @@
                 ],
                 "shacl:path": [
                   {
-                    "@id": "http://raml.org/vocabularies/data#alternate_id?"
+                    "@id": "http://raml.org/vocabularies/data#alternate_id"
                   }
                 ],
                 "raml-shapes:range": [

@@ -9,14 +9,12 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.Annotations
-import amf.core.parser.Position.ZERO
 import amf.core.resolution.stages.ResolutionStage
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.shapes.annotations.InheritedShapes
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.resolution.stages.shape_normalization.MinShapeAlgorithm
-import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 
 import scala.collection.mutable.ListBuffer
 

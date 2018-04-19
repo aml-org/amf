@@ -148,7 +148,7 @@ trait MinShapeAlgorithm extends RestrictionComputation {
     val baseItems  = superTuple.items
 
     if (superItems.length != baseItems.length) {
-      throw new Exception("Cannot inherit from a tuple shape with different number of elements")
+      throw new InheritanceIncompatibleShapeError("Cannot inherit from a tuple shape with different number of elements")
     } else {
       val newItems = for {
         (baseItem, i) <- baseItems.view.zipWithIndex
