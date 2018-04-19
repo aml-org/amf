@@ -51,7 +51,11 @@ case class DataNodeParser(node: YNode,
       case YType.Seq   => parseArray(node.as[Seq[YNode]], node)
       case YType.Map   => parseObject(node.as[YMap])
       case YType.Timestamp =>
-        if (node.as[YScalar].text.indexOf(":") > -1) {
+        if (node.as[YScalar].text.matches("(\\d{4})-(\\d{2})-(\\d{2})(T|t)(\\d{2})\\:(\\d{2})\\:(\\d{2})(([+-](\\d{2})\\:(\\d{2}))|(\\.\\d+)?Z|(\\.\\d+)?z)")) {
+          parseScalar(node.as[YScalar], "dateTime")
+        } else if (node.as[YScalar].text.indexOf(":") > -1 && node.as[YScalar].text.indexOf("T") > -1) {
+          parseScalar(node.as[YScalar], "dateTimeOnly")
+        } else if (node.as[YScalar].text.indexOf(":") > -1) {
           parseScalar(node.as[YScalar], "dateTime")
         } else {
           parseScalar(node.as[YScalar], "date")
@@ -140,7 +144,14 @@ case class DataNodeParser(node: YNode,
   }
 
   protected def parseScalar(ast: YScalar, dataType: String): DataNode = {
-    val node = ScalarNode(ast.text, Some((Namespace.Xsd + dataType).iri()), Annotations(ast))
+    val finalDataType = if (dataType == "dateTimeOnly") {
+      Some((Namespace.Shapes + "dateTimeOnly").iri())
+    } else if (dataType == "rfc2616") {
+      Some((Namespace.Shapes + "rfc2616").iri())
+    } else {
+      Some((Namespace.Xsd + dataType).iri())
+    }
+    val node = ScalarNode(ast.text, finalDataType, Annotations(ast))
       .withName(idCounter.genId("scalar"))
     parent.foreach(node.adopted)
     parameters.parseVariables(ast)
