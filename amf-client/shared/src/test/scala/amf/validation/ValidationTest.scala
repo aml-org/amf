@@ -546,6 +546,26 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Spec usage examples example validation") {
+    for {
+      validation <- Validation(platform)
+      library    <- AMFCompiler(productionPath + "spec_examples_example.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
+  test("Test Issue Nil validation") {
+    for {
+      validation <- Validation(platform)
+      library    <- AMFCompiler(productionPath + "/testIssueNil/api.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
   test("Nil value validation") {
     for {
       validation <- Validation(platform)

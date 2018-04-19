@@ -78,7 +78,13 @@ object ParserSideValidations {
     None,
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
-
+  val NamedExampleUsedInExample = ValidationSpecification(
+    (Namespace.AmfParser + "named-example-used-inlined-example").iri(),
+    "Named example should not be used as inline examples",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
   val DialectAmbiguousRangeSpecification = ValidationSpecification(
     (Namespace.AmfParser + "dialect-ambiguous-range").iri(),
     "Ambiguous entity range",
@@ -239,6 +245,13 @@ object ParserSideValidations {
       ProfileNames.OAS3   -> SeverityLevels.VIOLATION,
       ProfileNames.AMF    -> SeverityLevels.VIOLATION
     ),
+    NamedExampleUsedInExample.id() -> Map(
+      ProfileNames.RAML   -> SeverityLevels.WARNING,
+      ProfileNames.RAML08 -> SeverityLevels.WARNING,
+      ProfileNames.OAS    -> SeverityLevels.INFO,
+      ProfileNames.OAS3   -> SeverityLevels.INFO,
+      ProfileNames.AMF    -> SeverityLevels.INFO
+    ),
     DialectAmbiguousRangeSpecification.id() -> Map(
       ProfileNames.RAML   -> SeverityLevels.VIOLATION,
       ProfileNames.RAML08 -> SeverityLevels.VIOLATION,
@@ -319,6 +332,7 @@ object ParserSideValidations {
   )
 
   def validations: List[ValidationSpecification] = List(
+    NamedExampleUsedInExample,
     ChainedReferenceSpecification,
     ExclusivePropertiesSpecification,
     PathTemplateUnbalancedParameters,
