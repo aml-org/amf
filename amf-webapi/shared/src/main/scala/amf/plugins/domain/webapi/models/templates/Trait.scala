@@ -10,7 +10,8 @@ import amf.plugins.domain.webapi.models.Operation
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import org.yaml.model.YPart
 
-case class Trait(fields: Fields, annotations: Annotations) extends AbstractDeclaration(fields, annotations) {
+class Trait(override val fields: Fields, override val annotations: Annotations)
+    extends AbstractDeclaration(fields, annotations) {
   override def linkCopy(): Trait = {
     Trait().withId(id)
   }
@@ -22,7 +23,7 @@ case class Trait(fields: Fields, annotations: Annotations) extends AbstractDecla
     linkTarget match {
       case Some(_) =>
         effectiveLinkTarget.asInstanceOf[Trait].asOperation(unit, profile)
-      case _       =>
+      case _ =>
         ExtendsHelper.asOperation(profile, dataNode, unit, name.option().getOrElse(""), id, keepEditingInfo = false)
     }
   }
@@ -34,4 +35,6 @@ object Trait {
   def apply(ast: YPart): Trait = apply(Annotations(ast))
 
   def apply(annotations: Annotations): Trait = Trait(Fields(), annotations)
+
+  def apply(fields: Fields, annotations: Annotations): Trait = new Trait(fields, annotations)
 }

@@ -10,7 +10,6 @@ import amf.core.remote.Syntax.{Json, Syntax, Yaml}
 import amf.core.remote._
 import amf.core.services.RuntimeCompiler
 import amf.facades.{Root, Validation}
-import amf.internal.environment.Environment
 import amf.plugins.domain.webapi.models.WebApi
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}

@@ -11,7 +11,9 @@ import org.yaml.model.YMap
 /**
   * Creative work internal model
   */
-case class CreativeWork(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
+class CreativeWork(override val fields: Fields, override val annotations: Annotations)
+    extends DomainElement
+    with Linkable {
 
   def url: StrField         = fields.field(Url)
   def description: StrField = fields.field(Description)
@@ -41,4 +43,6 @@ object CreativeWork {
   def apply(ast: YMap): CreativeWork = apply(Annotations(ast))
 
   def apply(annotations: Annotations): CreativeWork = apply(Fields(), annotations)
+
+  def apply(fields: Fields, annotations: Annotations): CreativeWork = new CreativeWork(fields, annotations)
 }
