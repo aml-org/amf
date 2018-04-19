@@ -6,6 +6,7 @@ import amf.core.model._
 import amf.core.model.domain._
 
 import scala.collection.immutable.ListMap
+import scala.collection.mutable.ListBuffer
 
 /**
   * Field values
@@ -214,30 +215,41 @@ class Value(var value: AmfElement, val annotations: Annotations) {
 
   override def toString: String = value.toString
 
-  def checkUnresolved(): Unit = value match {
-    case linkable: Linkable if linkable.isUnresolved =>
-      // this is a callback that will be registered
-      // in the declarations of the parser context
-      // to be executed when a reference is resolved
-      linkable.toFutureRef((resolved) => {
-        value = resolved.resolveUnreferencedLink(linkable.refName, linkable.annotations, linkable) // mutation of the field value
-      })
+  def checkUnresolved(): Unit = {
+    value match {
+      case linkable: Linkable if linkable.isUnresolved =>
+        // this is a callback that will be registered
+        // in the declarations of the parser context
+        // to be executed when a reference is resolved
+        linkable.toFutureRef((resolved) => {
+          value = resolved.resolveUnreferencedLink(linkable.refName, linkable.annotations, linkable) // mutation of the field value
+          linkable.afterResolve() // triggers the after resolve logic
+        })
 
-    case array: AmfArray => // Same for arrays, but iterating through elements and looking for unresolved
-      array.values.foreach {
-        case linkable: Linkable if linkable.isUnresolved =>
-          linkable.toFutureRef((resolved) => {
-            value.asInstanceOf[AmfArray].values = value.asInstanceOf[AmfArray].values map { element =>
-              if (element == linkable) {
-                resolved.resolveUnreferencedLink(linkable.refName, linkable.annotations, element) // mutation of the field value
-              } else {
-                element
+      case array: AmfArray => // Same for arrays, but iterating through elements and looking for unresolved
+        array.values.foreach {
+          case linkable: Linkable if linkable.isUnresolved =>
+            linkable.toFutureRef((resolved) => {
+              val unresolveds = ListBuffer[Linkable]()
+              value.asInstanceOf[AmfArray].values = value.asInstanceOf[AmfArray].values map { element =>
+                if (element == linkable) {
+                  unresolveds += element
+                    .asInstanceOf[Linkable] // we need to collect the linkables unresolved instances,torun the after resolve trigger. This will end the father parser logic when its necessary
+                  resolved.resolveUnreferencedLink(linkable.refName, linkable.annotations, element)
+                } else {
+                  element
+                }
               }
-            }
-          })
-        case _ => // ignore
-      }
-    case _ => // ignore
+              // we need to wait until the field inhertis of father its mutatted, so we can triggers the after resolve parsing with the instance totally parser.If we trigger in the resolve unreference link, the value of the father field it woulnd be changed yet.
+              unresolveds.foreach { ur =>
+                ur.afterResolve()
+              } //triggers the after resolved logic in all unresolve collected linkables instances.
+            })
+
+          case _ => // ignore
+        }
+      case _ => // ignore
+    }
   }
 
   def cloneAnnotated(annotation: Annotation) = Value(value, Annotations(annotations))
