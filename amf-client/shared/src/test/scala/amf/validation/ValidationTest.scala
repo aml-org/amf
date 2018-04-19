@@ -1589,4 +1589,15 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.count(_.level == SeverityLevels.WARNING) == 3) // all warnings
     }
   }
+
+  test("Invalid type example 1 test") {
+    for {
+      validation <- Validation(platform)
+      doc        <- AMFCompiler(validationsPath + "invalidex1.raml", platform, OasYamlHint, validation).build()
+      report     <- validation.validate(doc, ProfileNames.AMF)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 1)
+    }
+  }
 }

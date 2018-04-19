@@ -61,7 +61,7 @@ trait RamlTypeSyntax {
       case "any"               => AnyShape()
       case "string"            => ScalarShape().withDataType((Namespace.Xsd + "string").iri())
       case "integer"           => ScalarShape().withDataType((Namespace.Xsd + "integer").iri())
-      case "number"            => ScalarShape().withDataType((Namespace.Xsd + "float").iri())
+      case "number"            => ScalarShape().withDataType((Namespace.Shapes + "number").iri())
       case "boolean"           => ScalarShape().withDataType((Namespace.Xsd + "boolean").iri())
       case "datetime"          => ScalarShape().withDataType((Namespace.Xsd + "dateTime").iri())
       case "datetime-only"     => ScalarShape().withDataType((Namespace.Shapes + "dateTimeOnly").iri())
