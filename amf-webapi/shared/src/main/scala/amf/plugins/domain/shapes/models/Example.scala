@@ -12,7 +12,7 @@ import org.yaml.model.YPart
 /**
   *
   */
-case class Example(fields: Fields, annotations: Annotations)
+class Example(override val fields: Fields, override val annotations: Annotations)
     extends DomainElement
     with Linkable
     with NamedDomainElement
@@ -49,4 +49,6 @@ object Example {
   def apply(ast: YPart): Example = apply(Annotations(ast))
 
   def apply(annotations: Annotations): Example = Example(Fields(), annotations)
+
+  def apply(fields: Fields, annotations: Annotations): Example = new Example(fields, annotations)
 }

@@ -8,7 +8,7 @@ import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel.{Setting
 import amf.plugins.domain.webapi.models.{Parameter, Response}
 import org.yaml.model.YPart
 
-case class SecurityScheme(fields: Fields, annotations: Annotations)
+class SecurityScheme(override val fields: Fields, override val annotations: Annotations)
     extends DomainElement
     with Linkable
     with NamedDomainElement
@@ -137,4 +137,6 @@ object SecurityScheme {
   def apply(ast: YPart): SecurityScheme = apply(Annotations(ast))
 
   def apply(annotations: Annotations): SecurityScheme = SecurityScheme(Fields(), annotations)
+
+  def apply(fields: Fields, annotations: Annotations): SecurityScheme = new SecurityScheme(fields, annotations)
 }

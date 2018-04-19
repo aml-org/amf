@@ -12,7 +12,7 @@ import org.yaml.model.YPart
 /**
   * Parameter internal model.
   */
-case class Parameter(fields: Fields, annotations: Annotations)
+class Parameter(override val fields: Fields, override val annotations: Annotations)
     extends DomainElement
     with Linkable
     with NamedDomainElement {
@@ -107,4 +107,6 @@ object Parameter {
   def apply(ast: YPart): Parameter = apply(Annotations(ast))
 
   def apply(annotations: Annotations): Parameter = new Parameter(Fields(), annotations)
+
+  def apply(fields: Fields, annotations: Annotations): Parameter = new Parameter(fields, annotations)
 }

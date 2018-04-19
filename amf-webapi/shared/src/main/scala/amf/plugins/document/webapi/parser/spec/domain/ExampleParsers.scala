@@ -75,7 +75,7 @@ case class RamlMultipleExampleParser(key: String,
     map.key(key).foreach { entry =>
       ctx.link(entry.value) match {
         case Left(s) =>
-          examples ++= ctx.declarations.findNamedExample(s).map(e => e.link(s).asInstanceOf[Example])
+          examples += ctx.declarations.findNamedExampleOrError(entry.value)(s).link(s)
 
         case Right(node) =>
           node.tagType match {

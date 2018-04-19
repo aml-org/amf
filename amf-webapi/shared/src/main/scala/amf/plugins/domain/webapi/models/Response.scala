@@ -11,7 +11,9 @@ import amf.plugins.domain.webapi.metamodel.ResponseModel._
 /**
   * Response internal model.
   */
-case class Response(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
+class Response(override val fields: Fields, override val annotations: Annotations)
+    extends DomainElement
+    with Linkable {
 
   def name: StrField            = fields.field(Name)
   def description: StrField     = fields.field(Description)
@@ -81,4 +83,6 @@ object Response {
   def apply(): Response = apply(Annotations())
 
   def apply(annotations: Annotations): Response = new Response(Fields(), annotations)
+
+  def apply(fields: Fields, annotations: Annotations): Response = new Response(fields, annotations)
 }
