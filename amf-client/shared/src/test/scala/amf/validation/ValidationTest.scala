@@ -1622,4 +1622,14 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 1)
     }
   }
+
+  test("Valid type example 1 test") {
+    for {
+      validation <- Validation(platform)
+      doc        <- AMFCompiler(validationsPath + "validex1.raml", platform, OasYamlHint, validation).build()
+      report     <- validation.validate(doc, ProfileNames.AMF)
+    } yield {
+      assert(report.conforms)
+    }
+  }
 }
