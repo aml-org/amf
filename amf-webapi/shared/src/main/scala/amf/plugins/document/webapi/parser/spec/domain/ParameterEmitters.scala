@@ -7,7 +7,12 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{FieldEntry, Fields, Position}
-import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
+import amf.plugins.document.webapi.contexts.{
+  OasSpecEmitterContext,
+  RamlScalarEmitter,
+  RamlSpecEmitterContext,
+  SpecEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
@@ -19,6 +24,7 @@ import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType
 import amf.core.utils.Strings
 import amf.plugins.document.webapi.annotations.FormBodyParameter
+import amf.plugins.domain.webapi.annotations.InvalidBinding
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -265,6 +271,7 @@ case class OasParametersEmitter(key: String,
 case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit val spec: OasSpecEmitterContext)
     extends PartEmitter {
+
   override def emit(b: PartBuilder): Unit = {
     sourceOr(
       parameter.annotations,
@@ -284,11 +291,12 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
           .filter(_.value.annotations.contains(classOf[ExplicitField]) || parameter.required.value())
           .map(f => result += ValueEmitter("required", f))
 
-        fs.entry(ParameterModel.Binding).map(f => result += ValueEmitter("in", f))
+        fs.entry(ParameterModel.Binding)
+          .map(f => result += RawValueEmitter("in", ParameterModel.Binding, binding(f), f.value.annotations))
 
         fs.entry(ParameterModel.Schema)
           .foreach { f =>
-            if (parameter.binding.is("body")) {
+            if (parameter.isBody) {
               result += OasSchemaEmitter(f, ordering, references)
             } else {
               result ++= OasTypeEmitter(f.value.value.asInstanceOf[Shape],
@@ -305,6 +313,13 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
     )
   }
 
+  def binding(f: FieldEntry): String = {
+    f.value.annotations.find(classOf[InvalidBinding]) match {
+      case Some(invalid) => invalid.value
+      case None          => f.value.toString
+    }
+  }
+
   override def position(): Position = pos(parameter.annotations)
 }
 
@@ -316,7 +331,9 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
     b.obj { b =>
       val result = mutable.ListBuffer[EntryEmitter]()
 
-      if (Option(payload.schema).exists(_.isInstanceOf[FileShape]) || payload.annotations.find(classOf[FormBodyParameter]).isDefined) {
+      if (Option(payload.schema).exists(_.isInstanceOf[FileShape]) || payload.annotations
+            .find(classOf[FormBodyParameter])
+            .isDefined) {
 
         val fs = payload.schema.fields
         fs.entry(FileShapeModel.Name).map(f => result += ValueEmitter("name", f))
@@ -327,7 +344,7 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
 
       } else {
         payload.fields.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("mediaType".asOasExtension, f))
-        result += MapEntryEmitter("in", "body")
+        result += MapEntryEmitter("in", binding())
         payload.fields
           .entry(PayloadModel.Schema)
           .map(f => result += OasSchemaEmitter(f, ordering, references))
@@ -336,6 +353,11 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
 
       traverse(ordering.sorted(result), b)
     }
+  }
+
+  def binding(): String = payload.annotations.find(classOf[InvalidBinding]) match {
+    case Some(invalid) => invalid.value
+    case None          => "body"
   }
 
   override def position(): Position = pos(payload.annotations)

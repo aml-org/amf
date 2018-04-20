@@ -1,6 +1,7 @@
 package amf.emit
 
 import amf.core.remote._
+import amf.facades.Validation
 import amf.io.BuildCycleTests
 
 class CompleteCycleTest extends BuildCycleTests {
@@ -1141,5 +1142,27 @@ class CompleteCycleTest extends BuildCycleTests {
 
   test("Forward reference in shape with custom properties") {
     cycle("forward-shape-custom-properties.raml", "forward-shape-custom-properties.raml.raml", RamlYamlHint, Raml)
+  }
+
+  test("Invalid parameter binding oas to oas") {
+    Validation(platform)
+      .flatMap { validation =>
+        cycle("invalid-parameter-binding.json",
+              "invalid-parameter-binding.json.json",
+              OasYamlHint,
+              Oas,
+              validation = Some(validation.withEnabledValidation(true)))
+      }
+  }
+
+  test("Invalid parameter binding oas to amf") {
+    Validation(platform)
+      .flatMap { validation =>
+        cycle("invalid-parameter-binding.json",
+              "invalid-parameter-binding.jsonld",
+              OasYamlHint,
+              Amf,
+              validation = Some(validation.withEnabledValidation(true)))
+      }
   }
 }

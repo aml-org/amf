@@ -10,7 +10,7 @@ case class ParameterBindingInBodyLexicalInfo(range: Range) extends SerializableA
 }
 
 object ParameterBindingInBodyLexicalInfo extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
+  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]): ParameterBindingInBodyLexicalInfo = {
     ParameterBindingInBodyLexicalInfo(Range.apply(annotatedValue))
   }
 }

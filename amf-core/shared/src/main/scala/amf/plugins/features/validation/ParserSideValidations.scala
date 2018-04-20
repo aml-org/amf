@@ -47,6 +47,14 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
+  val OasInvalidParameterBinding = ValidationSpecification(
+    (Namespace.AmfParser + "oas-invalid-parameter-binding").iri(),
+    "Parameter has invalid binding",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val OasFormDataNotFileSpecification = ValidationSpecification(
     (Namespace.AmfParser + "oas-file-not-form-data-parameters").iri(),
     "Parameters with type file must be in formData",
@@ -220,6 +228,13 @@ object ParserSideValidations {
     OasBodyAndFormDataParameterSpecification.id() -> Map(
       ProfileNames.OAS -> SeverityLevels.VIOLATION,
       ProfileNames.OAS -> SeverityLevels.VIOLATION
+    ),
+    OasInvalidParameterBinding.id() -> Map(
+      ProfileNames.RAML   -> SeverityLevels.VIOLATION,
+      ProfileNames.RAML08 -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS    -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS3   -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF    -> SeverityLevels.VIOLATION
     ),
     OasFormDataNotFileSpecification.id() -> Map(
       ProfileNames.OAS -> SeverityLevels.VIOLATION,
