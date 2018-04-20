@@ -137,6 +137,9 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
         Some(customDomainElementTransformation(withName(resolved, l), l))
       }
 
+      case l: Linkable if l.linkTarget.isDefined && isCycle =>
+        Some(RecursiveShape().withId(l.id).withFixPoint(l.linkTarget.get.id))
+
       // link traversed, return the link
       case l: Linkable if l.linkTarget.isDefined => Some(l)
 

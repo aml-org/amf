@@ -1,7 +1,9 @@
 package amf.core.resolution.pipelines
 
+import amf.core.AMFCompilerRunCount
 import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.BaseUnit
+import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 
 abstract class ResolutionPipeline {
@@ -20,6 +22,21 @@ abstract class ResolutionPipeline {
     model = Some(unit)
     block()
     model.get.asInstanceOf[T]
+  }
+
+  protected def errorHandlerForModel(model: BaseUnit): ErrorHandler = {
+    new ErrorHandler {
+      override val parserCount: Int = {
+        // this can get not set if the model has been created manually without parsing
+        model.parserRun match {
+          case Some(run) => run
+          case None      =>
+            model.parserRun = Some(AMFCompilerRunCount.nextRun())
+            model.parserRun.get
+        }
+      }
+      override val currentFile: String = model.location
+    }
   }
 }
 

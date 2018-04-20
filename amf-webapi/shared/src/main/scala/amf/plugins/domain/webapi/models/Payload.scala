@@ -63,7 +63,7 @@ case class Payload(fields: Fields, annotations: Annotations) extends DomainEleme
     this.fields.foreach {
       case (f, v) =>
         val clonedValue = v.value match {
-          case s: Shape => s.cloneShape()
+          case s: Shape => s.cloneShape(None)
           case o        => o
         }
 

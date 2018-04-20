@@ -1,9 +1,11 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.annotations.ExplicitField
+import amf.core.annotations.{ExplicitField, LexicalInformation}
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{Linkable, RecursiveShape, Shape}
+import amf.core.parser.ErrorHandler
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
+import amf.plugins.features.validation.ParserSideValidations
 
 trait ShapeHelpers { this: Shape =>
 
@@ -24,12 +26,12 @@ trait ShapeHelpers { this: Shape =>
     case _             => None
   }
 
-  def cloneShape(withRecursionBase: Option[String] = None, traversed: Set[String] = Set()): this.type = {
+  def cloneShape(recursionErrorHandler: Option[ErrorHandler], withRecursionBase: Option[String] = None, traversed: Set[String] = Set()): this.type = {
     if (traversed.contains(this.id)) {
-      buildFixPoint(withRecursionBase, this).asInstanceOf[this.type]
+      buildFixPoint(withRecursionBase, this, recursionErrorHandler).asInstanceOf[this.type]
     } else {
       val cloned: Shape = this match {
-        case _: Linkable if this.isLink                    => buildFixPoint(withRecursionBase, this)
+        case _: Linkable if this.isLink                    => buildFixPoint(withRecursionBase, this, recursionErrorHandler)
         case _: RecursiveShape                             => RecursiveShape(annotations)
         case _: UnionShape                                 => UnionShape(annotations)
         case _: ScalarShape                                => ScalarShape(annotations)
@@ -45,7 +47,7 @@ trait ShapeHelpers { this: Shape =>
         case _: AnyShape                                   => AnyShape(annotations)
       }
       cloned.id = this.id
-      copyFields(cloned, withRecursionBase, traversed + this.id)
+      copyFields(recursionErrorHandler, cloned, withRecursionBase, traversed + this.id)
       if (cloned.isInstanceOf[NodeShape]) {
         cloned.add(ExplicitField())
       }
@@ -53,7 +55,16 @@ trait ShapeHelpers { this: Shape =>
     }
   }
 
-  protected def buildFixPoint(id: Option[String], link: Shape): RecursiveShape = {
+  protected def buildFixPoint(id: Option[String], link: Shape, recursionErrorHandler: Option[ErrorHandler]): RecursiveShape = {
+    if (recursionErrorHandler.isDefined) {
+      recursionErrorHandler.get.violation(
+        ParserSideValidations.RecursiveShapeSpecification.id(),
+        link.id,
+        None,
+        "Error recursive shape",
+        link.annotations.find(classOf[LexicalInformation])
+      )
+    }
     val fixPointId = id.getOrElse(link.id)
     RecursiveShape().withId(link.id).withFixPoint(fixPointId)
   }

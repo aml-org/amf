@@ -23,12 +23,13 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
     this
   }
 
-  val parserSideValidationsProfile: ValidationProfile = {
+  def parserSideValidationsProfile(profile:String): ValidationProfile = {
     // sorting parser side validation for this profile
     val violationParserSideValidations = ParserSideValidations.validations
       .filter { v =>
         ParserSideValidations
           .levels(v.id())
+          .get(profile)
           .getOrElse(ProfileNames.AMF, SeverityLevels.VIOLATION) == SeverityLevels.VIOLATION
       }
       .map(_.name)
@@ -36,6 +37,7 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
       .filter { v =>
         ParserSideValidations
           .levels(v.id())
+          .get(profile)
           .getOrElse(ProfileNames.AMF, SeverityLevels.VIOLATION) == SeverityLevels.INFO
       }
       .map(_.name)
@@ -43,6 +45,7 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
       .filter { v =>
         ParserSideValidations
           .levels(v.id())
+          .get(profile)
           .getOrElse(ProfileNames.AMF, SeverityLevels.VIOLATION) == SeverityLevels.WARNING
       }
       .map(_.name)
@@ -125,7 +128,7 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
     * for validations in the profile to domain elements in the model
     */
   override def validate(model: BaseUnit, profileName: String, messageStyle: String): Future[AMFValidationReport] = {
-    val validations = EffectiveValidations().someEffective(parserSideValidationsProfile)
+    val validations = EffectiveValidations().someEffective(parserSideValidationsProfile(profileName))
     // aggregating parser-side validations
     val results = model.parserRun match {
       case Some(runId) =>
