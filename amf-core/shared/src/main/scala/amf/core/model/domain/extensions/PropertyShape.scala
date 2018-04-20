@@ -5,7 +5,7 @@ import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel._
 import amf.core.model.{BoolField, IntField, StrField}
 import amf.core.model.domain.Shape
-import amf.core.parser.{Annotations, Fields}
+import amf.core.parser.{Annotations, ErrorHandler, Fields}
 
 /**
   * Property shape
@@ -37,10 +37,10 @@ case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape
 
   override def meta: ShapeModel = PropertyShapeModel
 
-  override def cloneShape(withRecursionBase: Option[String], traversed: Set[String]): PropertyShape = {
+  override def cloneShape(recursionErrorHandler: Option[ErrorHandler], withRecursionBase: Option[String], traversed: Set[String]): PropertyShape = {
     val cloned = PropertyShape(Annotations(annotations))
     cloned.id = this.id
-    copyFields(cloned, withRecursionBase, traversed)
+    copyFields(recursionErrorHandler, cloned, withRecursionBase, traversed)
     cloned.asInstanceOf[this.type]
   }
 

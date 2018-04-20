@@ -15,7 +15,7 @@ import amf.plugins.document.graph.parser.GraphEmitter
 import amf.plugins.document.webapi.RAML10Plugin
 import amf.plugins.document.webapi.validation.{AMFShapeValidations, PayloadValidation, UnitPayloadsValidation}
 import amf.plugins.domain.shapes.models.ArrayShape
-import amf.plugins.features.validation.PlatformValidator
+import amf.plugins.features.validation.{ParserSideValidations, PlatformValidator}
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 import org.scalatest.AsyncFunSuite
 import org.yaml.render.JsonRender
@@ -866,7 +866,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         .build()
       report <- validation.validate(library, ProfileNames.RAML)
     } yield {
-      assert(report.results.isEmpty)
+      assert(!report.results.exists(_.validationId != ParserSideValidations.RecursiveShapeSpecification.id()))
     }
   }
 
@@ -1330,7 +1330,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         .build()
       report <- validation.validate(library, ProfileNames.RAML)
     } yield {
-      assert(report.conforms)
+      assert(!report.results.exists(_.validationId != ParserSideValidations.RecursiveShapeSpecification.id()))
     }
   }
 
@@ -1582,10 +1582,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Date times examples test") {
     for {
       validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "date_time_validations.raml", platform, OasYamlHint, validation).build()
+      doc        <- AMFCompiler(validationsPath + "date_time_validations.raml", platform, RamlYamlHint, validation).build()
       report     <- validation.validate(doc, ProfileNames.AMF)
     } yield {
-      println(report)
       assert(report.conforms)
     }
   }
@@ -1593,7 +1592,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Example xml with sons results test") {
     for {
       validation <- Validation(platform)
-      doc        <- AMFCompiler(examplesPath + "/xmlexample/offices_xml_type.raml", platform, OasYamlHint, validation).build()
+      doc        <- AMFCompiler(examplesPath + "/xmlexample/offices_xml_type.raml", platform, RamlYamlHint, validation).build()
       report     <- validation.validate(doc, ProfileNames.AMF)
     } yield {
       assert(report.conforms)
@@ -1604,7 +1603,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Invalid type example 1 test") {
     for {
       validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "invalidex1.raml", platform, OasYamlHint, validation).build()
+      doc        <- AMFCompiler(validationsPath + "invalidex1.raml", platform, RamlYamlHint, validation).build()
       report     <- validation.validate(doc, ProfileNames.AMF)
     } yield {
       assert(!report.conforms)
@@ -1615,7 +1614,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Invalid type example 2 test") {
     for {
       validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "invalidex2.raml", platform, OasYamlHint, validation).build()
+      doc        <- AMFCompiler(validationsPath + "invalidex2.raml", platform, RamlYamlHint, validation).build()
       report     <- validation.validate(doc, ProfileNames.AMF)
     } yield {
       assert(!report.conforms)
@@ -1626,7 +1625,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Invalid type example 3 test") {
     for {
       validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "invalidex3.raml", platform, OasYamlHint, validation).build()
+      doc        <- AMFCompiler(validationsPath + "invalidex3.raml", platform, RamlYamlHint, validation).build()
       report     <- validation.validate(doc, ProfileNames.AMF)
     } yield {
       assert(!report.conforms)
@@ -1637,7 +1636,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Invalid type example 4 test") {
     for {
       validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "invalidex4.raml", platform, OasYamlHint, validation).build()
+      doc        <- AMFCompiler(validationsPath + "invalidex4.raml", platform, RamlYamlHint, validation).build()
       report     <- validation.validate(doc, ProfileNames.AMF)
     } yield {
       assert(!report.conforms)
@@ -1648,7 +1647,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Invalid type example 5 test") {
     for {
       validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "invalidex5.raml", platform, OasYamlHint, validation).build()
+      doc        <- AMFCompiler(validationsPath + "invalidex5.raml", platform, RamlYamlHint, validation).build()
       report     <- validation.validate(doc, ProfileNames.AMF)
     } yield {
       assert(!report.conforms)
@@ -1659,19 +1658,28 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Invalid type example 6 test") {
     for {
       validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "invalidex6.raml", platform, OasYamlHint, validation).build()
+      doc        <- AMFCompiler(validationsPath + "invalidex6.raml", platform, RamlYamlHint, validation).build()
       report     <- validation.validate(doc, ProfileNames.AMF)
     } yield {
-      println(report)
       assert(!report.conforms)
       assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 1)
+    }
+  }
+
+  test("Invalid type example 7 test") {
+    for {
+      validation <- Validation(platform)
+      doc        <- AMFCompiler(validationsPath + "invalidex7.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
     }
   }
 
   test("Valid type example 1 test") {
     for {
       validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "validex1.raml", platform, OasYamlHint, validation).build()
+      doc        <- AMFCompiler(validationsPath + "validex1.raml", platform, RamlYamlHint, validation).build()
       report     <- validation.validate(doc, ProfileNames.AMF)
     } yield {
       assert(report.conforms)
@@ -1681,7 +1689,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Valid type example 2 test") {
     for {
       validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "validex2.raml", platform, OasYamlHint, validation).build()
+      doc        <- AMFCompiler(validationsPath + "validex2.raml", platform, RamlYamlHint, validation).build()
       report     <- validation.validate(doc, ProfileNames.AMF)
     } yield {
       assert(report.conforms)

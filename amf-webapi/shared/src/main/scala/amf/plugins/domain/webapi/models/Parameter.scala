@@ -85,7 +85,7 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
     this.fields.foreach {
       case (f, v) =>
         val clonedValue = v.value match {
-          case s: Shape => s.cloneShape()
+          case s: Shape => s.cloneShape(None)
           case o        => o
         }
 
