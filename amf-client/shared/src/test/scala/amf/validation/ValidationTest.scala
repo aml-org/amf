@@ -1695,4 +1695,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.conforms)
     }
   }
+
+  test("Invalid parameter binding") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "parameters/invalid-parameter-binding.json",
+                         platform,
+                         OasYamlHint,
+                         validation).build()
+      report <- validation.validate(doc, ProfileNames.AMF)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 2)
+    }
+  }
 }

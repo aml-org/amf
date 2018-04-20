@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.plugins.document.webapi.annotations.{DefaultPayload, EndPointParameter}
+import amf.plugins.document.webapi.annotations.DefaultPayload
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import org.yaml.model.YMap
 
@@ -67,6 +67,8 @@ case class OasParameter(parameter: Parameter, payload: Payload, ast: Option[YMap
   def isQuery: Boolean    = parameter.isQuery
   def isPath: Boolean     = parameter.isPath
   def isHeader: Boolean   = parameter.isHeader
+
+  def hasInvalidBinding: Boolean = !isFormData && !isBody && !isQuery && !isPath && !isHeader
 }
 
 object OasParameter {

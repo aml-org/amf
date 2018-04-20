@@ -7,10 +7,16 @@ import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
-import amf.plugins.document.webapi.parser.spec.declaration.{Raml08TypeParser, Raml10TypeParser, RamlTypeSyntax, StringDefaultType, _}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  Raml08TypeParser,
+  Raml10TypeParser,
+  RamlTypeSyntax,
+  StringDefaultType,
+  _
+}
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
 import amf.plugins.domain.shapes.models.FileShape
-import amf.plugins.domain.webapi.annotations.ParameterBindingInBodyLexicalInfo
+import amf.plugins.domain.webapi.annotations.{InvalidBinding, ParameterBindingInBodyLexicalInfo}
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import amf.plugins.features.validation.ParserSideValidations
@@ -192,6 +198,7 @@ abstract class RamlParameterParser(entry: YMapEntry, producer: String => Paramet
 
 case class OasParameterParser(map: YMap, parentId: String, name: Option[String])(implicit ctx: OasWebApiContext)
     extends SpecParserOps {
+
   def parse(): OasParameter = {
     map.key("$ref") match {
       case Some(ref) => parseParameterRef(ref, parentId)
@@ -208,6 +215,8 @@ case class OasParameterParser(map: YMap, parentId: String, name: Option[String])
         }
         map.key("name", ParameterModel.ParameterName in parameter) // name of the parameter in the HTTP binding (path, request parameter, etc)
         map.key("in", ParameterModel.Binding in parameter)
+
+        validateBinding(p)
 
         // This is for in: body parameters that might not have a name
         if ((p.isBody || p.isFormData) && parameter.name.isNullOrEmpty)
@@ -248,20 +257,21 @@ case class OasParameterParser(map: YMap, parentId: String, name: Option[String])
             shape => shape.withName("schema").adopted(parameter.id),
             "parameter"
           ).parse()
-           .map { schema =>
-             if (p.isFormData) {
-               shapeFromOasParameter(parameter, schema)
-               p.payload.set(PayloadModel.Schema, schema, Annotations(map))
-             } else parameter.set(ParameterModel.Schema, schema, Annotations(map))
-           }.orElse {
-            ctx.violation(
-              ParserSideValidations.ParsingErrorSpecification.id(),
-              p.payload.id,
-              "Cannot find valid schema for parameter",
-              map
-            )
-            None
-          }
+            .map { schema =>
+              if (p.isFormData) {
+                shapeFromOasParameter(parameter, schema)
+                p.payload.set(PayloadModel.Schema, schema, Annotations(map))
+              } else parameter.set(ParameterModel.Schema, schema, Annotations(map))
+            }
+            .orElse {
+              ctx.violation(
+                ParserSideValidations.ParsingErrorSpecification.id(),
+                p.payload.id,
+                "Cannot find valid schema for parameter",
+                map
+              )
+              None
+            }
 
           if (p.isFormData) p.payload.annotations += FormBodyParameter()
         }
@@ -271,6 +281,24 @@ case class OasParameterParser(map: YMap, parentId: String, name: Option[String])
         p
     }
   }
+
+  private def validateBinding(parameter: OasParameter): Unit = if (parameter.hasInvalidBinding) {
+    val old                   = parameter.parameter.binding.value()
+    val entry                 = map.key("in")
+    val entryAnnotations      = entry.map(Annotations(_)).getOrElse(Annotations())
+    val entryValueAnnotations = entry.map(e => Annotations(e.value)).getOrElse(Annotations())
+
+    ctx.violation(ParserSideValidations.OasInvalidParameterBinding.id(),
+                  s"Invalid parameter binding '$old'",
+                  entry.map(_.value).getOrElse(map))
+
+    parameter.parameter.set(ParameterModel.Binding,
+                            AmfScalar(defaultBinding, entryValueAnnotations),
+                            entryAnnotations += InvalidBinding(old))
+    if (parameter.isBody) parameter.payload.add(InvalidBinding(old))
+  }
+
+  def defaultBinding: String = map.key("schema").map(_ => "body").getOrElse("query")
 
   protected def checkNotFileInBody(schema: Shape): Unit = {
     val schemaToCheck =

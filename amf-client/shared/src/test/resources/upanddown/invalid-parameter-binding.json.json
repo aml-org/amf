@@ -1,0 +1,32 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API",
+    "version": "1.0"
+  },
+  "paths": {
+    "/pets/{id}": {
+      "post": {
+        "parameters": [
+          {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "p1": {
+                  "type": "string"
+                }
+              }
+            },
+            "in": "bo"
+          },
+          {
+            "name": "MyQuery",
+            "in": "qu",
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    }
+  }
+}
