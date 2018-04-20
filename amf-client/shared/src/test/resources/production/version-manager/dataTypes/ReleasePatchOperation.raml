@@ -1,0 +1,8 @@
+#%RAML 1.0 DataType
+properties: 
+  op:
+    type: string
+    enum: [release, unrelease, change_release_date]
+  value?:
+    description: only need when using change_release_date or release operations
+    type: date-only

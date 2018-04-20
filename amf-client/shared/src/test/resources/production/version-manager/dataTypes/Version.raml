@@ -1,0 +1,9 @@
+#%RAML 1.0 DataType
+properties: 
+  name: string
+  id?: integer
+  description?: string
+  start_date?: date-only
+  release?:
+    type: !include ./Release.raml
+example: !include ../examples/VersionExample.raml

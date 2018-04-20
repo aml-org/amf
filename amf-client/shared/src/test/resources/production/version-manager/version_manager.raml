@@ -1,0 +1,58 @@
+#%RAML 1.0
+version: v1
+title: Version Manager
+types: 
+  Version: !include /dataTypes/Version.raml
+  Release: !include /dataTypes/Release.raml
+
+resourceTypes: 
+  member: !include /resourceTypes/member.raml
+  collection: !include /resourceTypes/collection.raml
+
+/projects/{project_id}/versions:
+  get:
+    queryParameters: 
+      version_name?:
+        description: name of the version. Looks for the exact name
+        type: string
+    responses: 
+      200:
+        body: 
+          application/json:
+            type: !include dataTypes/Versions.raml
+  post:
+    description: Add a new <<resourcePathName | !singularize>>
+    displayName: Add new <<resourcePathName | !singularize>>
+    body:
+      application/json:
+        type: Version
+    responses: 
+      201:
+        headers: 
+          Location:
+            type: string
+            description: URL of the new version  information
+            example: /version/8f19cb50-3f57-4d38
+        body: 
+      503:
+        body:
+          application/json:
+            type: !include dataTypes/CustomErrorMessage.raml
+  /{version_id}:
+    type: member
+    get:
+    put:
+    /releases:
+      type: member
+      post:
+      get:
+      put:
+        description: modifies an object completly
+      patch:
+        description: modifies a release based on a specific operation
+        body: 
+          application/json: 
+            type: !include /dataTypes/ReleasePatchSpec.raml
+
+
+    

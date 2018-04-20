@@ -1,0 +1,36 @@
+#%RAML 1.0 Library
+usage: This library fragment consists of traits
+types: 
+  Version: !include ../dataTypes/Version.raml
+  Release: !include ../dataTypes/Release.raml
+traits:
+  hasGetResponse:
+    responses:
+      200:
+        body:
+          application/json:
+            type: <<resourcePathName | !singularize | !uppercamelcase>>[]
+      404:
+        body:
+          application/json:
+            type: !include ../dataTypes/CustomErrorMessage.raml
+  hasGetResResponse:
+    responses:
+      200:
+        body:
+          application/json:
+            type: <<resourcePathName | !singularize | !uppercamelcase>>
+      404:
+        body:
+          application/json:
+            type: !include ../dataTypes/CustomErrorMessage.raml
+  hasPostResponse:
+    responses: 
+      200:
+        body:
+          application/json:
+            type: <<resourcePathName | !singularize | !uppercamelcase>>
+      501:
+                
+
+  
