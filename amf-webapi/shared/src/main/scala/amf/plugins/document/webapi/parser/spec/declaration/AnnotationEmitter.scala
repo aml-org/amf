@@ -13,7 +13,7 @@ import amf.plugins.domain.shapes.models.AnyShape
 import amf.core.utils._
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YNode, YType}
+import org.yaml.model.{YNode, YScalar, YType}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -137,6 +137,10 @@ case class DataNodeEmitter(dataNode: DataNode,
           override def emit(b: EntryBuilder): Unit = b.entry(YNode("@value"), t.value)
           override def position(): Position        = t.position()
         }
+      case n: NullEmitter => new EntryEmitter {
+        override def emit(b: EntryBuilder): Unit = b.entry(YNode("@value"), n.emit(_))
+        override def position(): Position = n.position()
+      }
       case other => throw new Exception(s"Unsupported seq of emitter type in data node emitters $other")
     }
   }
@@ -182,7 +186,7 @@ case class DataNodeEmitter(dataNode: DataNode,
       case Some(t) if t == xsdInteger => TextScalarEmitter(scalar.value, scalar.annotations, YType.Int)
       case Some(t) if t == xsdFloat   => TextScalarEmitter(scalar.value, scalar.annotations, YType.Float)
       case Some(t) if t == xsdBoolean => TextScalarEmitter(scalar.value, scalar.annotations, YType.Bool)
-      case Some(t) if t == xsdNil     => TextScalarEmitter("null", Annotations(), YType.Str)
+      case Some(t) if t == xsdNil     => NullEmitter(scalar.annotations)
       case _                          => TextScalarEmitter(scalar.value, Annotations(), YType.Str)
     }
   }

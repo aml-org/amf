@@ -274,6 +274,6 @@ object WebApiDeclarations {
       extends Response(Fields(), Annotations(ast))
       with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorResponse/"
-    withId(idPart)
+    withId(idPart).withStatusCode("200")
   }
 }

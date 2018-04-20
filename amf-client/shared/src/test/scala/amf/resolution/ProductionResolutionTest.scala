@@ -81,6 +81,15 @@ class ProductionResolutionTest extends RamlResolutionTest {
     cycle("sales-order-api.raml", "sales-order-api.resolved.raml", RamlYamlHint, Raml, basePath + "order-api/")
   }
 
+  test("american-flights-api example") {
+    cycle("american-flights-api.raml", "american-flights-api.resolved.raml", RamlYamlHint, Raml, basePath + "american-flights-api/")
+  }
+
+
+  test("version-manager example") {
+    cycle("version_manager.raml", "version_manager.resolved.raml", RamlYamlHint, Raml, basePath + "version-manager/")
+  }
+
   ignore("API Console test api") {
     cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, basePath + "api-console/")
   }

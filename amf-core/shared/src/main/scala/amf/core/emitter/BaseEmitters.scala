@@ -48,6 +48,12 @@ package object BaseEmitters {
     override def position(): Position = pos(v.annotations)
   }
 
+  case class NullEmitter(annotations: Annotations) extends PartEmitter {
+    override def emit(b: PartBuilder): Unit = b += YNode(YScalar.Null, YType.Null)
+
+    override def position(): Position = pos(annotations)
+  }
+
   case class TextScalarEmitter(value: String, annotations: Annotations, tag: YType = YType.Str) extends PartEmitter {
     override def emit(b: PartBuilder): Unit =
       sourceOr(annotations, {
