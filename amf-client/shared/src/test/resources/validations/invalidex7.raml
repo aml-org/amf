@@ -1,0 +1,29 @@
+#%RAML 1.0
+title: API
+
+types:
+  Mariano: Mariano[]
+
+  SomeType:
+    type: SomeUnion
+
+  SomeUnion:
+    type: AnotherType[] | OneMoreType[]
+
+  AnotherType:
+    type: SomeType
+
+  OneMoreType:
+    type: AnotherType
+
+  SomeTypeb:
+    type: SomeTypeb
+
+  SomeType2:
+    type: OneMoreType2
+
+  AnotherType2:
+    type: SomeType2
+
+  OneMoreType2:
+    type: AnotherType2

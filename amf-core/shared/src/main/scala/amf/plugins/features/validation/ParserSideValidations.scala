@@ -9,9 +9,17 @@ object ParserSideValidations {
 
   val ChainedReferenceSpecification = ValidationSpecification(
     (Namespace.AmfParser + "chained-reference-error").iri(),
-    "Refereces cannot be chained",
+    "References cannot be chained",
     None,
     None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
+  val RecursiveShapeSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "recursive-shape").iri(),
+    "Recursive shape",
+    Some("Recursive type"),
+    Some("Recursive schema"),
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
@@ -181,6 +189,13 @@ object ParserSideValidations {
   )
 
   val levels: Map[String, Map[String, String]] = Map(
+    RecursiveShapeSpecification.id() -> Map(
+      ProfileNames.RAML   -> SeverityLevels.VIOLATION,
+      ProfileNames.RAML08 -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS    -> SeverityLevels.WARNING,
+      ProfileNames.OAS3   -> SeverityLevels.WARNING,
+      ProfileNames.AMF    -> SeverityLevels.INFO
+    ),
     ChainedReferenceSpecification.id() -> Map(
       ProfileNames.RAML   -> SeverityLevels.VIOLATION,
       ProfileNames.RAML08 -> SeverityLevels.VIOLATION,
@@ -332,6 +347,7 @@ object ParserSideValidations {
   )
 
   def validations: List[ValidationSpecification] = List(
+    RecursiveShapeSpecification,
     NamedExampleUsedInExample,
     ChainedReferenceSpecification,
     ExclusivePropertiesSpecification,

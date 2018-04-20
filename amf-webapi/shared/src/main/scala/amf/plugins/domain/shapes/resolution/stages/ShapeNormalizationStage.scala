@@ -8,7 +8,7 @@ import amf.core.metamodel.{MetaModelTypeMapping, Obj}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
-import amf.core.parser.Annotations
+import amf.core.parser.{Annotations, ErrorHandler}
 import amf.core.resolution.stages.ResolutionStage
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.shapes.annotations.InheritedShapes
@@ -24,7 +24,7 @@ import scala.collection.mutable.ListBuffer
   *  - All type references have been replaced by their expanded forms
   * @param profile
   */
-class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean)
+class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val errorHandler: ErrorHandler)
     extends ResolutionStage(profile)
     with MetaModelTypeMapping
     with MinShapeAlgorithm {
@@ -58,7 +58,7 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean)
 
   protected def transform(element: DomainElement, isCycle: Boolean): Option[DomainElement] = {
     element match {
-      case shape: Shape => Some(canonical(expand(shape.cloneShape(Some(element.id)))))
+      case shape: Shape => Some(canonical(expand(shape.cloneShape(Some(errorHandler), Some(element.id)))))
       case other        => Some(other)
     }
   }
@@ -264,8 +264,8 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean)
     newItems match {
       case unionItems: UnionShape =>
         val newUnionItems = unionItems.anyOf.map {
-          case a: ArrayShape => matrix.cloneShape().withItems(a)
-          case o             => matrix.cloneShape().toArrayShape.withItems(o)
+          case a: ArrayShape => matrix.cloneShape(Some(errorHandler)).withItems(a)
+          case o             => matrix.cloneShape(Some(errorHandler)).toArrayShape.withItems(o)
         }
         unionItems.setArrayWithoutId(UnionShapeModel.AnyOf, newUnionItems)
         Option(matrix.fields.getValue(ShapeModel.Name)) match {
@@ -345,7 +345,7 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean)
       tuple
     } else {
       val tuples = acc.map { items =>
-        val newTuple = tuple.cloneShape()
+        val newTuple = tuple.cloneShape(Some(errorHandler))
         newTuple.fields.setWithoutId(TupleShapeModel.Items,
                                      AmfArray(items),
                                      tuple.fields.getValue(TupleShapeModel.Items).annotations)

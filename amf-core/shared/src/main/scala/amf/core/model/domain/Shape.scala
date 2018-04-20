@@ -3,6 +3,7 @@ package amf.core.model.domain
 import amf.core.metamodel.domain.ShapeModel._
 import amf.core.model.StrField
 import amf.core.model.domain.extensions.{PropertyShape, ShapeExtension}
+import amf.core.parser.ErrorHandler
 
 /**
   * Shape.
@@ -48,13 +49,13 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
       } else {
         base
       }
-    }
+    } filter(_.id != id)
   }
 
   type FacetsMap = Map[String, PropertyShape]
 
   // @todo should be memoize this?
-  def collectCustomShapePropertyDefinitions(onlyInherited: Boolean = false): Seq[FacetsMap] = {
+  def collectCustomShapePropertyDefinitions(onlyInherited: Boolean = false, traversed: Set[String] = Set.empty): Seq[FacetsMap] = {
     // Facet properties for the current shape
     val accInit: FacetsMap = Map.empty
     val initialSequence = if (onlyInherited) {
@@ -75,10 +76,14 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
       // initial facets maps computed for this shape. This multiplies the number of
       // final facets maps
       effectiveInherits.foldLeft(initialSequence) { (acc: Seq[FacetsMap], baseShape: Shape) =>
-        baseShape.collectCustomShapePropertyDefinitions().flatMap { facetsMap: FacetsMap =>
-          acc.map { accFacetsMap =>
-            accFacetsMap ++ facetsMap
+        if (!traversed.contains(baseShape.id)) {
+          baseShape.collectCustomShapePropertyDefinitions(false, traversed + baseShape.id).flatMap { facetsMap: FacetsMap =>
+            acc.map { accFacetsMap =>
+              accFacetsMap ++ facetsMap
+            }
           }
+        } else {
+          acc
         }
       }
     } else {
@@ -87,18 +92,18 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
     }
   }
 
-  def cloneShape(recursionBase: Option[String] = None, traversed: Set[String] = Set()): Shape
+  def cloneShape(recursionErrorHandler: Option[ErrorHandler], recursionBase: Option[String] = None, traversed: Set[String] = Set()): Shape
 
   // Copy fields into a cloned shape
-  protected def copyFields(cloned: Shape, recursionBase: Option[String], traversed: Set[String]): Unit = {
+  protected def copyFields(recursionErrorHandler: Option[ErrorHandler], cloned: Shape, recursionBase: Option[String], traversed: Set[String]): Unit = {
     this.fields.foreach {
       case (f, v) =>
         val clonedValue = v.value match {
-          case s: Shape if s.id != this.id => s.cloneShape(recursionBase, traversed)
+          case s: Shape if s.id != this.id => s.cloneShape(recursionErrorHandler, recursionBase, traversed)
           case s: Shape if s.id == this.id => s
           case a: AmfArray =>
             AmfArray(a.values.map {
-              case e: Shape if e.id != this.id => e.cloneShape(recursionBase, traversed)
+              case e: Shape if e.id != this.id => e.cloneShape(recursionErrorHandler, recursionBase, traversed)
               case e: Shape if e.id == this.id => e
               case o                           => o
             }, a.annotations)

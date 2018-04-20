@@ -4,6 +4,7 @@ import amf.ProfileNames
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.{AmfScalar, DomainElement}
+import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models.{Payload, WebApi}
@@ -13,7 +14,7 @@ import amf.plugins.domain.webapi.models.{Payload, WebApi}
   * Request payloads will have as default mime type the 'accepts' field.
   * Response payloads will have as default mime type the 'contentType' field.
   */
-class MediaTypeResolutionStage(profile: String) extends ResolutionStage(profile) {
+class MediaTypeResolutionStage(profile: String, errorHandler: ErrorHandler) extends ResolutionStage(profile) {
   override def resolve(model: BaseUnit): BaseUnit = {
     model match {
       case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
@@ -92,7 +93,7 @@ class MediaTypeResolutionStage(profile: String) extends ResolutionStage(profile)
             .withMediaType(mediaType)
             .adopted(parent)
           if (Option(payload.schema).isDefined) {
-            parsedPayload.withSchema(payload.schema.cloneShape())
+            parsedPayload.withSchema(payload.schema.cloneShape(Some(errorHandler)))
           } else {
             parsedPayload
           }
