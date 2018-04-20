@@ -1645,6 +1645,29 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Invalid type example 5 test") {
+    for {
+      validation <- Validation(platform)
+      doc        <- AMFCompiler(validationsPath + "invalidex5.raml", platform, OasYamlHint, validation).build()
+      report     <- validation.validate(doc, ProfileNames.AMF)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 1)
+    }
+  }
+
+  test("Invalid type example 6 test") {
+    for {
+      validation <- Validation(platform)
+      doc        <- AMFCompiler(validationsPath + "invalidex6.raml", platform, OasYamlHint, validation).build()
+      report     <- validation.validate(doc, ProfileNames.AMF)
+    } yield {
+      println(report)
+      assert(!report.conforms)
+      assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 1)
+    }
+  }
+
   test("Valid type example 1 test") {
     for {
       validation <- Validation(platform)
