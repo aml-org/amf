@@ -10,22 +10,21 @@ import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
 import amf.plugins.domain.webapi.resolution.stages.{ExamplesResolutionStage, MediaTypeResolutionStage, ParametersNormalizationStage, SecurityResolutionStage}
 
 class AmfResolutionPipeline extends ResolutionPipeline {
-
-  val references = new ReferenceResolutionStage(ProfileNames.AMF, keepEditingInfo = false)
-  val shapes     = new ShapeNormalizationStage(ProfileNames.AMF, keepEditingInfo = false)
-  val parameters = new ParametersNormalizationStage(ProfileNames.AMF)
-  val `extends`  = new ExtendsResolutionStage(ProfileNames.AMF, keepEditingInfo = false)
-  val security   = new SecurityResolutionStage(ProfileNames.AMF)
-  val mediaTypes = new MediaTypeResolutionStage(ProfileNames.AMF)
-  val examples   = new ExamplesResolutionStage(ProfileNames.AMF)
-  val extensions = new ExtensionsResolutionStage(ProfileNames.AMF, keepEditingInfo = false)
-  val cleanRefs  = new CleanReferencesStage(ProfileNames.AMF)
-  val cleanDecls = new DeclarationsRemovalStage(ProfileNames.AMF)
+  val profileName = ProfileNames.AMF
+  val references = new ReferenceResolutionStage(profileName, keepEditingInfo = false)
+  val parameters = new ParametersNormalizationStage(profileName)
+  val `extends`  = new ExtendsResolutionStage(profileName, keepEditingInfo = false)
+  val security   = new SecurityResolutionStage(profileName)
+  val examples   = new ExamplesResolutionStage(profileName)
+  val extensions = new ExtensionsResolutionStage(profileName, keepEditingInfo = false)
+  val cleanRefs  = new CleanReferencesStage(profileName)
+  val cleanDecls = new DeclarationsRemovalStage(profileName)
 
   override def resolve[T <: BaseUnit](model: T): T = {
     ExecutionLog.log(s"AmfResolutonPipeline#resolve: resolving ${model.location}")
+    val mediaTypes = new MediaTypeResolutionStage(profileName, errorHandlerForModel(model))
     withModel(model) { () =>
-      commonSteps()
+      commonSteps(model)
       step(parameters)
       step(mediaTypes)
       step(examples)
@@ -35,7 +34,8 @@ class AmfResolutionPipeline extends ResolutionPipeline {
     }
   }
 
-  protected def commonSteps(): Unit = {
+  protected def commonSteps(model: BaseUnit): Unit = {
+    val shapes  = new ShapeNormalizationStage(profileName, keepEditingInfo = false, errorHandlerForModel(model))
     step(references)
     step(extensions)
     step(shapes)

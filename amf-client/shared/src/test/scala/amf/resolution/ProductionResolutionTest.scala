@@ -3,7 +3,7 @@ package amf.resolution
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
-import amf.facades.AMFRenderer
+import amf.facades.{AMFCompiler, AMFRenderer, Validation}
 import amf.plugins.document.webapi.{OAS20Plugin, OAS30Plugin, RAML08Plugin, RAML10Plugin}
 
 import scala.concurrent.Future
@@ -28,6 +28,24 @@ abstract class OasResolutionTest extends ResolutionTest {
   }
 }
 
+class ProdcutionValidationTest extends RamlResolutionTest {
+  override val basePath = "amf-client/shared/src/test/resources/production/"
+  override def build(config: CycleConfig, given: Option[Validation]): Future[BaseUnit] = {
+    val validation: Future[Validation] = given match {
+      case Some(validation: Validation) => Future { validation }
+      case None                         => Validation(platform).map(_.withEnabledValidation(true))
+    }
+    validation.flatMap { v =>
+      AMFCompiler(s"file://${config.sourcePath}", platform, config.hint, v).build()
+    }
+  }
+
+  test("Recursive union raml to amf") {
+    cycle("recursive-union.raml", "recursive-union.raml.jsonld", RamlYamlHint, Amf)
+  }
+
+}
+
 class ProductionResolutionTest extends RamlResolutionTest {
   override val basePath = "amf-client/shared/src/test/resources/production/"
   val completeCyclePath = "amf-client/shared/src/test/resources/upanddown/"
@@ -49,10 +67,6 @@ class ProductionResolutionTest extends RamlResolutionTest {
 
   test("Examples in header of type union") {
     cycle("example-in-union.raml", "example-in-union.raml.jsonld", RamlYamlHint, Amf)
-  }
-
-  test("Recursive union raml to amf") {
-    cycle("recursive-union.raml", "recursive-union.raml.jsonld", RamlYamlHint, Amf)
   }
 
   test("Complex types raml to raml") {

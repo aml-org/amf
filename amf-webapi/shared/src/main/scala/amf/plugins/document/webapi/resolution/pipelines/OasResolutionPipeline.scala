@@ -22,9 +22,9 @@ class OasReferenceResolutionStage(keepEditingInfo: Boolean = false) extends Refe
 }
 
 class OasResolutionPipeline extends AmfResolutionPipeline {
+  override val profileName: String = ProfileNames.OAS
   override val references = new OasReferenceResolutionStage()
   override val parameters = new ParametersNormalizationStage(ProfileNames.OAS)
-  override val mediaTypes = new MediaTypeResolutionStage(ProfileNames.OAS)
 
   override def resolve[T <: BaseUnit](model: T): T = {
     super.resolve(model)

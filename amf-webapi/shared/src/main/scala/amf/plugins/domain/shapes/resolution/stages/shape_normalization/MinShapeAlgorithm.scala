@@ -3,7 +3,7 @@ package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, RecursiveShape, Shape}
-import amf.core.parser.Annotations
+import amf.core.parser.{Annotations, ErrorHandler}
 import amf.core.vocabulary.Namespace
 import amf.plugins.domain.shapes.annotations.InheritanceProvenance
 import amf.plugins.domain.shapes.metamodel._
@@ -15,13 +15,15 @@ class InheritanceIncompatibleShapeError(message: String) extends Exception(messa
 
 trait MinShapeAlgorithm extends RestrictionComputation {
 
+  val errorHandler: ErrorHandler
+  
   // this is inverted, it is safe because recursive shape does not have facets
   def computeMinRecursive(baseShape: Shape, recursiveShape: RecursiveShape): Shape = {
     restrictShape(baseShape, recursiveShape)
   }
 
   protected def minShape(baseShapeOrig: Shape, superShape: Shape): Shape = {
-    val baseShape = baseShapeOrig.cloneShape() // this is destructive, we need to clone
+    val baseShape = baseShapeOrig.cloneShape(Some(errorHandler)) // this is destructive, we need to clone
     baseShape match {
 
       // Scalars
@@ -208,9 +210,9 @@ trait MinShapeAlgorithm extends RestrictionComputation {
         val superProp = superProperties.find(_.path.is(path))
         val baseProp  = baseProperties.find(_.path.is(path))
         if (keepEditingInfo) {
-          superProp.map(inheritProp(superNode)).getOrElse { baseProp.get.cloneShape() }
+          superProp.map(inheritProp(superNode)).getOrElse { baseProp.get.cloneShape(Some(errorHandler)) }
         } else {
-          superProp.map(_.cloneShape()).getOrElse { baseProp.get.cloneShape() }
+          superProp.map(_.cloneShape(Some(errorHandler))).getOrElse { baseProp.get.cloneShape(Some(errorHandler)) }
         }
     }
 
@@ -230,7 +232,7 @@ trait MinShapeAlgorithm extends RestrictionComputation {
   }
 
   def inheritProp(from: Shape)(prop: PropertyShape): PropertyShape = {
-    val clonedProp = prop.cloneShape()
+    val clonedProp = prop.cloneShape(Some(errorHandler))
     if (clonedProp.annotations.find(classOf[InheritanceProvenance]).isEmpty)
       clonedProp.annotations += InheritanceProvenance(from.id)
     clonedProp
