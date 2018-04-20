@@ -1,0 +1,327 @@
+#%RAML 1.0
+version: v1
+title: Version Manager
+/projects/{project_id}/versions:
+  get:
+    queryParameters:
+      version_name?:
+        description: name of the version. Looks for the exact name
+        type: string
+    responses:
+      200:
+        body:
+          application/json:
+            type: object
+            additionalProperties: true
+            properties:
+              project_versions:
+                type: array
+                required: true
+                items:
+                  examples:
+                    value:
+                      description: SAP Connector v-3.2.0
+                  additionalProperties: true
+                  properties:
+                    name:
+                      required: true
+                      type: string
+                    id:
+                      required: false
+                      type: integer
+                    description:
+                      required: false
+                      type: string
+                    start_date:
+                      required: false
+                      type: date-only
+                    release:
+                      type: object
+                      required: false
+                      additionalProperties: true
+                      properties:
+                        release_date:
+                          required: false
+                          type: date-only
+                        released:
+                          type: boolean
+                          required: false
+                          default: false
+              customer_reported_project_versions:
+                type: array
+                required: true
+                items:
+                  examples:
+                    value:
+                      description: SAP Connector v-3.2.0
+                  additionalProperties: true
+                  properties:
+                    name:
+                      required: true
+                      type: string
+                    id:
+                      required: false
+                      type: integer
+                    description:
+                      required: false
+                      type: string
+                    start_date:
+                      required: false
+                      type: date-only
+                    release:
+                      type: object
+                      required: false
+                      additionalProperties: true
+                      properties:
+                        release_date:
+                          required: false
+                          type: date-only
+                        released:
+                          type: boolean
+                          required: false
+                          default: false
+  post:
+    description: Add a new <<resourcePathName | !singularize>>
+    displayName: Add new <<resourcePathName | !singularize>>
+    body:
+      application/json:
+        type: object
+        additionalProperties: true
+        properties:
+          name:
+            required: true
+            type: string
+          id:
+            required: false
+            type: integer
+          description:
+            required: false
+            type: string
+          start_date:
+            required: false
+            type: date-only
+          release:
+            type: object
+            required: false
+            additionalProperties: true
+            properties:
+              release_date:
+                required: false
+                type: date-only
+              released:
+                type: boolean
+                required: false
+                default: false
+    responses:
+      201:
+        headers:
+          Location:
+            type: string
+            description: URL of the new version  information
+            example: /version/8f19cb50-3f57-4d38
+        body:
+          type: any
+      503:
+        body:
+          application/json:
+            type: object
+            additionalProperties: true
+            properties:
+              statusCode:
+                required: true
+                type: string
+              message:
+                required: true
+                type: string
+  /{version_id}:
+    get:
+      displayName: Get version by version ID
+      description: Retrieve a specific version
+      responses:
+        404:
+          body:
+            application/json:
+              type: object
+              additionalProperties: true
+              properties:
+                statusCode:
+                  required: true
+                  type: string
+                message:
+                  required: true
+                  type: string
+        200:
+          body:
+            application/json:
+              type: object
+              additionalProperties: true
+              properties:
+                name:
+                  required: true
+                  type: string
+                id:
+                  required: false
+                  type: integer
+                description:
+                  required: false
+                  type: string
+                start_date:
+                  required: false
+                  type: date-only
+                release:
+                  type: object
+                  required: false
+                  additionalProperties: true
+                  properties:
+                    release_date:
+                      required: false
+                      type: date-only
+                    released:
+                      type: boolean
+                      required: false
+                      default: false
+    put:
+      body:
+        application/json:
+          type: object
+          additionalProperties: true
+          properties:
+            name:
+              required: true
+              type: string
+            id:
+              required: false
+              type: integer
+            description:
+              required: false
+              type: string
+            start_date:
+              required: false
+              type: date-only
+            release:
+              type: object
+              required: false
+              additionalProperties: true
+              properties:
+                release_date:
+                  required: false
+                  type: date-only
+                released:
+                  type: boolean
+                  required: false
+                  default: false
+      displayName: Update version by version ID
+      description: Update all data in version
+      responses:
+        204: {}
+        404:
+          body:
+            application/json:
+              type: object
+              additionalProperties: true
+              properties:
+                statusCode:
+                  required: true
+                  type: string
+                message:
+                  required: true
+                  type: string
+    /releases:
+      post: {}
+      get:
+        displayName: Get release by release ID
+        description: Retrieve a specific release
+        responses:
+          404:
+            body:
+              application/json:
+                type: object
+                additionalProperties: true
+                properties:
+                  statusCode:
+                    required: true
+                    type: string
+                  message:
+                    required: true
+                    type: string
+          200:
+            body:
+              application/json:
+                type: object
+                additionalProperties: true
+                properties:
+                  release_date:
+                    required: false
+                    type: date-only
+                  released:
+                    type: boolean
+                    required: false
+                    default: false
+      put:
+        body:
+          application/json:
+            type: object
+            additionalProperties: true
+            properties:
+              release_date:
+                required: false
+                type: date-only
+              released:
+                type: boolean
+                required: false
+                default: false
+        description: modifies an object completly
+        displayName: Update release by release ID
+        responses:
+          204: {}
+          404:
+            body:
+              application/json:
+                type: object
+                additionalProperties: true
+                properties:
+                  statusCode:
+                    required: true
+                    type: string
+                  message:
+                    required: true
+                    type: string
+      patch:
+        description: modifies a release based on a specific operation
+        body:
+          application/json:
+            type: object
+            additionalProperties: true
+            properties:
+              ops:
+                type: array
+                required: true
+                items:
+                  additionalProperties: true
+                  properties:
+                    op:
+                      type: string
+                      enum:
+                        - release
+                        - unrelease
+                        - change_release_date
+                      required: true
+                    value:
+                      description: only need when using change_release_date or release operations
+                      type: date-only
+                      required: false
+        displayName: Update release by release ID
+        responses:
+          204: {}
+          404:
+            body:
+              application/json:
+                type: object
+                additionalProperties: true
+                properties:
+                  statusCode:
+                    required: true
+                    type: string
+                  message:
+                    required: true
+                    type: string

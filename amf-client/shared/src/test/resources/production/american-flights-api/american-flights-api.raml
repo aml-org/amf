@@ -1,0 +1,64 @@
+#%RAML 1.0
+baseUri: http://{environment}-american-ws.cloudhub.io/api/
+version: 1.0
+title: Z My American Flights API
+description: API that returns sample data for MuleSoft training 
+
+types:
+  AmericanFlight: !include AmericanFlight.raml
+
+/flights:
+  get:
+    displayName: Get all flights
+    queryParameters: 
+      code:
+        displayName: Get all flights to a specific destination (by airport code) 
+        required: false
+        enum: [SFO, LAX, CLE]
+    responses: 
+      200:
+        body: 
+          application/json:
+            type: AmericanFlight[]
+            example: !include examples/AmericanFlightsExample.raml
+  post:
+    displayName: Add a flight
+    body: 
+      application/json:
+        type: AmericanFlight
+        example: !include examples/AmericanFlightNoIdExample.raml
+    responses: 
+      201:
+        body: 
+          application/json:
+            example:
+              message: Flight added (but not really)
+  /{ID}:
+    get:
+      displayName: Get a flight by ID
+      responses: 
+        200:
+          body: 
+            application/json:
+              type: AmericanFlight
+              example: !include examples/AmericanFlightExample.raml
+    delete:
+      displayName: Delete a flight
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                message: Flight deleted (but not really)
+    put:
+      displayName: Update a flight
+      body:
+        application/json:
+          type: AmericanFlight
+          example: !include examples/AmericanFlightNoIdExample.raml
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                message: Flight updated (but not really)
