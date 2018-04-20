@@ -85,11 +85,17 @@
                         ],
                         "raml-http:schema": [
                           {
-                            "@id": "#/web-api/end-points/%2Fproducts/get/request/parameter/APIKey/nil/schema",
+                            "@id": "#/web-api/end-points/%2Fproducts/get/request/parameter/APIKey/scalar/schema",
                             "@type": [
-                              "raml-shapes:NilShape",
+                              "raml-shapes:ScalarShape",
                               "shacl:Shape",
-                              "raml-shapes:Shape"
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
                             ],
                             "shacl:name": [
                               {
@@ -98,7 +104,11 @@
                             ],
                             "smaps": {
                               "extension-provenance": {
-                                "shacl:name": "file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection"
+                                "shacl:name": "file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection",
+                                "shacl:datatype": "file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection"
+                              },
+                              "lexical": {
+                                "#/web-api/end-points/%2Fproducts/get/request/parameter/APIKey/scalar/schema": "[(1,0)-(1,0)]"
                               }
                             }
                           }
