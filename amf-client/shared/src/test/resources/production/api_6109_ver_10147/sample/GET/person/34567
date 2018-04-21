@@ -1,0 +1,21 @@
+{
+    "@id": "/person/34567",
+    "firstName": "John",
+    "lastName": "Doe",
+    "emailAddress": "john.doe@omnicorp.com",
+    "postAddress": {
+        "street": "Main street",
+        "houseNumber": "123",
+        "postCode": "12210",
+        "locality": "New York",
+        "region": "NY",
+        "country": {
+            "@id": "/country/US"
+        }
+    },
+    "users": [
+        {
+            "@id": "/users/johndoe"
+        }
+    ]
+}

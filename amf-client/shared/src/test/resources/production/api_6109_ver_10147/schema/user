@@ -1,0 +1,35 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "description": "A user account.",
+    "required": [
+        "userName",
+        "person"
+    ],
+    "allOf": [
+        {
+            "$ref": "identifier"
+        }
+    ],
+    "properties": {
+        "userName": {
+            "description": "The unique user name of this account.",
+            "type": "string"
+        },
+        "password": {
+            "description": "The plain text password for this user account.",
+            "type": "string"
+        },
+        "person": {
+            "description": "The person who is responsible for this user account.",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "$ref": "person"
+                }
+            ]
+        }
+    }
+}

@@ -1,29 +1,5 @@
 #%RAML 0.8
 schemas:
-  account: |
-    {
-      "type": "object",
-      "$schema": "http://json-schema.org/draft-03/schema",
-      "required": true,
-      "properties": {
-        "accountName": {
-          "description": "The account name",
-          "type": "string",
-          "required": true
-        },
-        "federalTaxId": {
-          "description": "The merchant federal tax ID",
-          "type": "string",
-          "required": true
-        },
-        "posApplicationName": {
-          "description": "The name of the POS application",
-          "type": "string",
-          "required": true
-        },
-        "contactInfo": { "$ref": "contact" },
-      }
-    }
   contact: |-
     {
       "type": "object",
@@ -70,6 +46,30 @@ schemas:
           "minLength": 10,
           "maxLength": 10
         }
+      }
+    }
+  account: |
+    {
+      "type": "object",
+      "$schema": "http://json-schema.org/draft-03/schema",
+      "required": true,
+      "properties": {
+        "accountName": {
+          "description": "The account name",
+          "type": "string",
+          "required": true
+        },
+        "federalTaxId": {
+          "description": "The merchant federal tax ID",
+          "type": "string",
+          "required": true
+        },
+        "posApplicationName": {
+          "description": "The name of the POS application",
+          "type": "string",
+          "required": true
+        },
+        "contactInfo": { "$ref": "contact" },
       }
     }
 title: Filesystem API

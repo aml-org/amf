@@ -153,6 +153,7 @@ class OASProductionResolutionTest extends OasResolutionTest {
 
 class Raml08ResolutionTest extends RamlResolutionTest {
   override val basePath: String = "amf-client/shared/src/test/resources/resolution/08/"
+  val productionPath: String = "amf-client/shared/src/test/resources/production/"
 
   test("Resolve WebForm 08 Types test") {
     cycle("mincount-webform-types.raml", "mincount-webform-types.resolved.raml", RamlYamlHint, Raml08)

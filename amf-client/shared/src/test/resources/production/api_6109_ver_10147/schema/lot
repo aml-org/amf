@@ -1,0 +1,385 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "description": "A (nascent) lot in some auction.",
+    "required": [
+        "dossier",
+        "name",
+        "deliveryMethod",
+        "category"
+    ],
+    "allOf": [
+        {
+            "$ref": "identifier"
+        }
+    ],
+    "properties": {
+        "id": {
+            "description": "Unique identifier for this lot in the OKAA scope.",
+            "type": "integer",
+            "minimum": 1
+        },
+        "publishedId": {
+            "description": "Unique identifier for this lot on the website.",
+            "type": "integer",
+            "minimum": 1
+        },
+        "lotNumber": {
+            "description": "Unique identifier for this lot within an auction. Together with the auction id, it also uniquely identifies the lot globally.",
+            "type": "integer",
+            "minimum": 1
+        },
+        "externalId": {
+            "description": "The owner of this lot uses this identifier in his own administration to reference this lot.",
+            "type": "string"
+        },
+        "auction": {
+            "description": "The auction this lot belongs to.",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "$ref": "auction"
+                }
+            ]
+        },
+        "dossier": {
+            "description": "The dossier this lot belongs to.",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "$ref": "dossier"
+                }
+            ]
+        },
+        "nameEdits": {
+            "description": "The (i18n) name of this lot. (Encapsulated in logged edits.)",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "allOf": [
+                        {
+                            "$ref": "collection"
+                        }
+                    ],
+                    "properties": {
+                        "member": {
+                            "type": "array",
+                            "additionalItems": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "identifier"
+                                    },
+                                    {
+                                        "$ref": "propertyEdit",
+                                        "properties": {
+                                            "value": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "languageMap"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "descriptionEdits": {
+            "description": "The (i18n) description of the lot. (Encapsulated in logged edits.)",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "allOf": [
+                        {
+                            "$ref": "collection"
+                        }
+                    ],
+                    "properties": {
+                        "member": {
+                            "type": "array",
+                            "additionalItems": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "identifier"
+                                    },
+                                    {
+                                        "$ref": "propertyEdit",
+                                        "properties": {
+                                            "value": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "null"
+                                                    },
+                                                    {
+                                                        "allOf": [
+                                                            {
+                                                                "$ref": "languageMap"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "picturesEdits": {
+            "description": "Collection of pictures cq images for this lot. (Encapsulated in logged edits.)",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "allOf": [
+                        {
+                            "$ref": "collection"
+                        }
+                    ],
+                    "properties": {
+                        "member": {
+                            "type": "array",
+                            "additionalItems": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "identifier"
+                                    },
+                                    {
+                                        "$ref": "propertyEdit",
+                                        "properties": {
+                                            "value": {
+                                                "anyOf": [
+                                                    {
+                                                        "$ref": "identifier"
+                                                    },
+                                                    {
+                                                        "allOf": [
+                                                            {
+                                                                "$ref": "collection"
+                                                            }
+                                                        ],
+                                                        "properties": {
+                                                            "member": {
+                                                                "type": "array",
+                                                                "additionalItems": {
+                                                                    "$ref": "identifier"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "startAmountEdits": {
+            "description": "The first bid on this lot should be equal to or greater than this money amount. (Encapsulated in logged edits.)",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "allOf": [
+                        {
+                            "$ref": "collection"
+                        }
+                    ],
+                    "properties": {
+                        "member": {
+                            "type": "array",
+                            "additionalItems": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "identifier"
+                                    },
+                                    {
+                                        "$ref": "propertyEdit",
+                                        "properties": {
+                                            "value": {
+                                                "type": "number",
+                                                "default": 1,
+                                                "minimum": 1.0
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "lotTypeEdits": {
+            "description": "The type of Lot. (Encapsulated in logged edits.)",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "allOf": [
+                        {
+                            "$ref": "collection"
+                        }
+                    ],
+                    "properties": {
+                        "member": {
+                            "type": "array",
+                            "additionalItems": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "identifier"
+                                    },
+                                    {
+                                        "$ref": "propertyEdit",
+                                        "properties": {
+                                            "value": {
+                                                "anyOf": [
+                                                    {
+                                                        "$ref": "identifier"
+                                                    },
+                                                    {
+                                                        "$ref": "lotType"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "deliveryMethodEdits": {
+            "description": "The delivery method for this lot. (Encapsulated in logged edits.)",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "allOf": [
+                        {
+                            "$ref": "collection"
+                        }
+                    ],
+                    "properties": {
+                        "member": {
+                            "type": "array",
+                            "additionalItems": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "identifier"
+                                    },
+                                    {
+                                        "$ref": "propertyEdit",
+                                        "properties": {
+                                            "value": {
+                                                "anyOf": [
+                                                    {
+                                                        "$ref": "identifier"
+                                                    },
+                                                    {
+                                                        "$ref": "deliveryMethod"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "categoryEdits": {
+            "description": "The (conceptual) category which this lot is in. (Encapsulated in logged edits.)",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "allOf": [
+                        {
+                            "$ref": "collection"
+                        }
+                    ],
+                    "properties": {
+                        "member": {
+                            "type": "array",
+                            "additionalItems": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "identifier"
+                                    },
+                                    {
+                                        "$ref": "propertyEdit",
+                                        "properties": {
+                                            "value": {
+                                                "anyOf": [
+                                                    {
+                                                        "$ref": "identifier"
+                                                    },
+                                                    {
+                                                        "$ref": "categoryNode"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "publishedDate": {
+            "description": "The (last) time this lot was published.",
+            "type": "string",
+            "format": "date-time"
+        },
+        "status": {
+            "description": "The (derived) revision status of this Lot. It is the lowest revision status of all individual properties.",
+            "allOf": [
+                {
+                    "$ref": "revisionStatus"
+                }
+            ]
+        },
+        "buy": {
+            "description": "The buy (if any) of this lot.",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "$ref": "buy"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "description": "A concept cq a way cq an arrangement cq a contract for letting third parties supply lots to be auctioned off by the auction company.",
+    "required": [
+        "id",
+        "name"
+    ],
+    "allOf": [
+        {
+            "$ref": "identifier"
+        }
+    ],
+    "properties": {
+        "id": {
+            "description": "Unique identifier for this Concept.",
+            "type": "integer",
+            "minimum": 1
+        },
+        "name": {
+            "description": "A (unique) name for this concept.",
+            "type": "string"
+        },
+        "description": {
+            "description": "The description of this concept.",
+            "type": "string"
+        }
+    }
+}

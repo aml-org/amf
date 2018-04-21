@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "description": "A type of Lot.",
+    "required": [
+        "id",
+        "name"
+    ],
+    "allOf": [
+        {
+            "$ref": "identifier"
+        }
+    ],
+    "properties": {
+        "id": {
+            "description": "Unique identifier (number) for this lot type.",
+            "type": "integer",
+            "minimum": 1
+        },
+        "name": {
+            "description": "The name of this lot type.",
+            "type": "string"
+        }
+    }
+}

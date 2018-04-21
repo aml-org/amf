@@ -1,0 +1,68 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "description": "The buy cq purchase of a Lot.",
+    "required": [
+        "id",
+        "lot",
+        "person"
+    ],
+    "allOf": [
+        {
+            "$ref": "identifier"
+        }
+    ],
+    "properties": {
+        "id": {
+            "description": "Unique identifier for this buy.",
+            "type": "integer",
+            "minimum": 0
+        },
+        "lot": {
+            "description": "The lot being bought.",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "$ref": "lot"
+                }
+            ]
+        },
+        "buyer": {
+            "description": "The buyer of the lot. (Usually the highest bidder.)",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "$ref": "person"
+                }
+            ]
+        },
+        "deliveryAddress": {
+            "description": "An alternative delivery address, if the person's own delivery address is not used.",
+            "allOf": [
+                {
+                    "$ref": "address"
+                }
+            ]
+        },
+        "deliveries": {
+            "description": "Set of deliveries for this buy. (Usually just one.)",
+            "type": "array",
+            "additionalItems": {
+                "anyOf": [
+                    {
+                        "$ref": "identifier"
+                    },
+                    {
+                        "$ref": "delivery"
+                    }
+                ]
+            },
+            "uniqueItems": true
+        }
+    }
+
+}

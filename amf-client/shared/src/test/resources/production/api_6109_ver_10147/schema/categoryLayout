@@ -1,0 +1,31 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "title": "Category layout.",
+    "description": "This is a category layout.",
+    "required": [
+        "id",
+        "name"
+    ],
+    "properties": {
+        "id": {
+            "description": "Unique identifier for this Category layout.",
+            "type": "integer",
+            "minimum": 1
+        },
+        "name": {
+            "description": "The name of this category layout.",
+            "type": "string"
+        },
+        "categoryTree": {
+            "description": "The top category or categories in this layout cq tree.",
+            "type": "array",
+            "additionalItems": {
+                "anyOf": [
+                    { "$ref": "identifier" },
+                    { "$ref": "categoryNode" }
+                ]
+            }
+        }
+    }
+}

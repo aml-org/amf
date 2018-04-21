@@ -1,0 +1,41 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "description": "A lot picture('s metadata).",
+    "anyOf": [
+        {
+            "$ref": "identifier"
+        }
+    ],
+    "properties": {
+        "hash": {
+            "description": "MD5 hash of the picture. For file integrity check purposes.",
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 32,
+            "pattern": "^[a-fA-F0-9]{32}$"
+        },
+        "originalFileName": {
+            "description": "The original filename by which this picture was uploaded.",
+            "type": "string"
+        },
+        "position": {
+            "description": "The ordering of this picture amongst the other pictures.",
+            "type": "integer",
+            "minimum": 0
+        },
+        "size": {
+            "description": "Size of the image in bytes.",
+            "type": "integer",
+            "minimum": 0
+        },
+        "lastModified": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "contents": {
+            "description": "A base64 representation of the binary image data.",
+            "type": "string"
+        }
+    }
+}

@@ -1,0 +1,310 @@
+#%RAML 0.8
+title: OKAA
+version: 0.2
+baseUri: "https://okaa.bva-auctions.com/api/{version}"
+mediaType: application/json
+schemas:
+  - error: !include schema/error
+  - lot: !include schema/lot
+  - edit: !include schema/edit
+  - editReview: !include schema/editReview
+  - faultType: !include schema/faultType
+  - auction: !include schema/auction
+  - auctionTemplate: !include schema/auctionTemplate
+  - buy: !include schema/buy
+  - person: !include schema/person
+  - categoryNode: !include schema/categoryNode
+  - categoryLayout: !include schema/categoryLayout
+  - subCategory: !include schema/subCategory
+  - mainCategory: !include schema/mainCategory
+  - topCategory: !include schema/topCategory
+  - client: !include schema/client
+  - country: !include schema/country
+  - delivery: !include schema/delivery
+  - deliveryMethod: !include schema/deliveryMethod
+  - dossier: !include schema/dossier
+  - user: !include schema/user
+
+traits: !include traits.raml
+
+resourceTypes:
+  - collection:
+      description: |
+        Collection of available <<resourcePathName|!pluralize>>.
+        "Available" means only those accessible to the current user.
+      get:
+        description: |
+          Returns (a page from) the collection of all available <<resourcePathName|!pluralize>>.
+          "Paged" means only a subset (one page) is returned at a time.
+        responses:
+          200:
+            body:
+              schema: |
+                {
+                  "$schema": "http://json-schema.org/draft-04/schema",
+                  "allOf": [{"$ref": "/schema/pagedCollection"}],
+                  "properties": {
+                    "member": {
+                      "type": "array","additionalItems": {"$ref": "/schema/<<resourcePathName|!singularize>>"}
+                    }
+                  }
+                }
+              example: <<exampleCollection>>
+          403:
+            description: |
+              The current user or user role is not autorised to view this collection.
+            body:
+              schema: error
+              example: |
+                {"status": 403, "title": "Access restricted"}
+  - mutableCollection:
+      type:
+        collection:
+          exampleCollection: <<exampleCollection>>
+      description: |
+        Collection of available <<resourcePathName|!pluralize>>. This collection can be mutated, iaw: members can be added, deleted and changed. Assuming that the user has sufficient rights to do so.
+      post:
+        description: | 
+          Creates a new <<resourcePathName|!singularize>>.
+        body:
+          schema: <<resourcePathName|!singularize>>
+          example:  <<examplePost>>
+        responses:
+          200:
+            description: |
+              The <<resourcePathName|!singularize>> has been properly created. An entity representing the newly created <<resourcePathName|!singularize>> is returned.
+            body:
+              example: <<examplePostResponse>>
+          403:
+            description: |
+              The current user or user role is not autorised to add to this collection.
+            body:
+              schema: error
+              example: |
+                {"status": 403, "title": "Access restricted"}
+  - item:
+      description: |
+        A single <<resourcePathName|!singularize>>.
+      uriParameters:
+        id:
+          description: The unique identifier of the <<resourcePathName|!singularize>>.
+          type: string
+          required: true
+      get:
+        description: |
+          Returns the <<resourcePathName|!singularize>> with id {id}.
+        responses:
+          200:
+            body:
+              example: <<exampleItem>>
+              schema: <<resourcePathName|!singularize>>
+          404:
+            body:
+              example: |
+                {"status": 404, "title": "<<resourcePathName|!singularize>> not found" }
+  - mutableItem:
+      type:
+        item:
+          exampleItem: <<exampleItem>>
+      patch:
+        description: |
+          Updates cq patches only part of a <<resourcePathName|!singularize>>. 
+        body:
+          schema: <<resourcePathName|!singularize>>
+          example: <<examplePatch>>
+        responses:
+          200:
+            description: |
+              The <<resourcePathName|!singularize>> has been properly updated. An entity representing the newly created <<resourcePathName|!singularize>> is returned.
+            body:
+              example: <<examplePatchResponse>>
+          403:
+            description: |
+              The current user or user role is not autorised to make (the requested) changes to this entity.
+            body:
+              schema: error
+              example: |
+                {"status": 403, "title": "Access restricted"}
+      put:
+        description: |
+          Replaces the entire <<resourcePathName|!singularize>> with the one provided.
+        body:
+          schema: <<resourcePathName|!singularize>>
+          example: <<examplePut>>
+        responses:
+          200:
+            description: |
+              The <<resourcePathName|!singularize>> has been properly replaced.
+            body:
+              example: <<examplePutResponse>>
+          403:
+            description: |
+              The current user or user role is not autorised to delete this entity.
+            body:
+              schema: error
+              example: |
+                {"status": 403, "title": "Access restricted"}
+      delete:
+        description: |
+          Deletes a <<resourcePathName|!singularize>>.
+        responses:
+          200:
+            description: |
+              The <<resourcePathName|!singularize>> has been properly deleted.
+          403:
+            description: |
+              The current user or user role is not autorised to delete this entity.
+            body:
+              schema: error
+              example: |
+                {"status": 403, "title": "Access restricted"}
+
+/lot:
+  type:
+    mutableCollection:
+      exampleCollection: !include sample/GET/lot/_collection
+      examplePost:  !include sample/POST/lot/12345/_item
+      examplePostResponse: !include sample/GET/lot/12345/_item
+  /{id}:
+    type:
+      mutableItem:
+        exampleItem: !include sample/GET/lot/12345/_item
+        examplePatch: |
+          {"name": {"nl": "nieuwe naam, alleszeggend, geen beschrijving meer nodig..."}, "description": null}
+        examplePatchResponse: !include sample/PATCH/lot/12345/_item
+        examplePut: "{...}"
+        examplePutResponse: !include sample/GET/lot/12345/_item
+    /pictures:
+      type:
+        mutableCollection:
+          exampleCollection: !include sample/GET/lot/12345/pictures/_collection
+          examplePost: {"@id": "http://upload.wikimedia.org/wikipedia/commons/f/f6/Boxspring_2.JPG"}
+          examplePostResponse: !include sample/POST/lot/12345/pictures/_collection
+      post:
+        description: |
+          Uploads an image provided as either an actual file, or as JSON.
+          There are several options to provide an image as application/json, using different combinations of properties from the specified schema. As long as it is clear what the picture is you want to provide. E.g.
+            - Just an @id with a readable location.
+            - Or just the hash, if the picture is already known by the API.
+            - Or just the contents, as a base64 encoded string.
+          Images are positioned cq ordered by the order in which they were received, if a position is not specified.
+        body:
+          image/jpeg:
+          application/json:
+            example: |
+              {"@id": "http://upload.wikimedia.org/wikipedia/commons/f/f6/Boxspring_2.JPG"}
+            schema: picture
+      delete:
+        description: |
+          Deletes the entire collection of pictures for this lot.
+      put:
+        description: |
+          Accepts a zip file containing all pictures for this lot. Existing pictures are deleted. Images are positioned cq ordered by their original filenames.
+        body:
+          application/zip:
+      get:
+        description: |
+          Gets the collection of pictures for this lot as a collection of references in json. Or as a zip file.
+        responses:
+          200:
+            body:
+              application/zip:
+              application/json:
+      /{id}:
+        type:
+          item:
+            exampleItem: !include sample/GET/lot/12345/pictures/0
+        description: |
+          {id} means position in this context.
+/auction:
+  type:
+    collection:
+      exampleCollection: !include sample/GET/auction/_collection
+  /{id}:
+    type:
+      item:
+        exampleItem: !include sample/GET/auction/12742
+/auctionTemplate:
+  type:
+    collection:
+      exampleCollection: !include sample/GET/auctionTemplate/_collection
+  /{id}:
+    type:
+      item:
+        exampleItem: !include sample/GET/auctionTemplate/1201
+/dossier:
+  type:
+    collection:
+      exampleCollection: !include sample/GET/dossier/_collection
+  /{id}:
+    type:
+      item:
+        exampleItem: !include sample/GET/dossier/201412345
+/lotType:
+  type:
+    collection:
+      exampleCollection: !include sample/GET/lotType/_collection
+  /{id}:
+    type:
+      item:
+        exampleItem: !include sample/GET/lotType/525
+/deliveryMethod:
+  type:
+    collection:
+      exampleCollection: !include sample/GET/deliveryMethod/_collection
+  /{id}:
+    type:
+      item:
+        exampleItem: !include sample/GET/deliveryMethod/1
+/categoryLayout/{id}:
+    type:
+      item:
+        exampleItem: !include sample/GET/categoryLayout/1
+/categoryNode/{id}:
+    type:
+      item:
+        exampleItem: !include sample/GET/categoryNode/165
+/subCategory/{id}:
+    type:
+      item:
+        exampleItem: !include sample/GET/subCategory/790721
+/mainCategory/{id}:
+    type:
+      item:
+        exampleItem: !include sample/GET/mainCategory/790720
+/topCategory/{id}:
+    type:
+      item:
+        exampleItem: !include sample/GET/topCategory/147
+/person:
+  type:
+    collection:
+      exampleCollection: !include sample/GET/person/34567
+  /{id}:
+    type:
+      item:
+        exampleItem: !include sample/GET/person/34567
+/buy/{id}:
+  type:
+    item:
+      exampleItem: !include sample/GET/buy/7890101
+/delivery/{id}:
+  type:
+    item:
+      exampleItem: !include sample/GET/delivery/6ccc78d9fbdd5e0591c36a2d704f5478
+/client:
+  type:
+    collection:
+      exampleCollection: !include sample/GET/client/_collection
+  /{id}:
+    type:
+      item:
+        exampleItem: !include sample/GET/client/45678
+/user:
+  type:
+    collection:
+      exampleCollection: !include sample/GET/user/_collection
+  /{id}:
+    type:
+      item:
+        exampleItem: !include sample/GET/user/johndoe

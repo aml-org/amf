@@ -122,35 +122,56 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
         e.value.tagType match {
           case YType.Null => None // we dont have to register violation because web api reference handler already do it
           case _ =>
-            val text = OasDefinitions.stripDefinitionsPrefix(e.value)
+            val fullRef: String = e.value
+            val text = OasDefinitions.stripDefinitionsPrefix(fullRef)
+            //println(s"REF $fullRef -> $text")
             ctx.declarations.findType(text, SearchScope.All) match {
               case Some(s) =>
+                //println(s"FOUND IN DECLARATIONS BY NAME ${s.getClass.getName}")
                 val copied = s.link(text, Annotations(ast)).asInstanceOf[AnyShape].withName(name)
                 adopt(copied)
                 Some(copied)
-              case None =>
-                ctx.findLocalJSONPath(map.key("$ref").map(_.value.as[String]).getOrElse("")) match {
-                  case Some((name, shapeNode)) =>
-                    OasTypeParser(YMapEntry(name, shapeNode), adopt, oasNode)
-                      .parse()
-                      .orElse({
-                        val shape = UnresolvedShape(text, map).withName(text)
-                        shape.withContext(ctx)
-                        shape.unresolved(text, map)
-                        adopt(shape)
-                        Some(shape)
-                      })
+              case None if oasNode != "schema" => // Only enabled for JSON Schema, not OAS. In OAS local references can only point to the #/definitons (#/components in OAS 3) node
+                // now we work with canonical JSON schema pointers, not local refs
+                ctx.declarations.findType(fullRef, SearchScope.All) match {
+                  case Some(s) =>
+                    //println(s"FOUND IN DECLARATIONS BY REF ${s.getClass.getName}")
+                    val copied = s.link(text, Annotations(ast)).asInstanceOf[AnyShape].withName(name)
+                    adopt(copied)
+                    Some(copied)
                   case None =>
-                    val shape = UnresolvedShape(text, map).withName(text)
-                    shape.withContext(ctx)
-                    shape.unresolved(text, map)
-                    adopt(shape)
-                    Some(shape)
+                    // This is not the normal mechanism, just a way of having something to prevent the recursion
+                    // Introduces the problem of an invalid link
+                    //println(s"NOT FOUND, REGISTERING ${fullRef}")
+                    val tmpShape = UnresolvedShape(fullRef, map).withName(fullRef)
+                    tmpShape.withContext(ctx)
+                    adopt(tmpShape)
+                    ctx.declarations.shapes += (fullRef -> tmpShape)
+
+                    ctx.findLocalJSONPath(fullRef) match {
+                      case Some((_, shapeNode)) =>
+                        OasTypeParser(YMapEntry(name, shapeNode), adopt, oasNode)
+                          .parse()
+                          .map { shape =>
+                            //println(s"RESOLVING LOCAL SHAPE ${fullRef}")
+                            tmpShape.resolve(shape) // useless?
+                            ctx.declarations.shapes += (fullRef -> shape)
+                            shape
+                          } orElse {
+                            Some(tmpShape)
+                          }
+                      case None =>
+                        Some(tmpShape)
+                    }
                 }
+              case _ =>
+                val shape = UnresolvedShape(text, map).withName(text)
+                shape.withContext(ctx)
+                shape.unresolved(text, map)
+                adopt(shape)
+                Some(shape)
             }
-
         }
-
       }
   }
 
@@ -227,7 +248,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
                 .map {
                   case (node, index) =>
                     val entry = YMapEntry(YNode(s"item$index"), node)
-                    OasTypeParser(entry, item => item.adopted(shape.id + "/items/" + index)).parse()
+                    OasTypeParser(entry, item => item.adopted(shape.id + "/items/" + index), oasNode).parse()
                 }
                 .filter(_.isDefined)
                 .map(_.get)

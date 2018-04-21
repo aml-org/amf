@@ -1,0 +1,39 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "description": "A template for an auction.",
+    "required": [
+        "id",
+        "name"
+    ],
+    "allOf": [
+        {
+            "$ref": "identifier"
+        }
+    ],
+    "properties": {
+        "id": {
+            "description": "Unique identifier (number) for this auction template.",
+            "type": "integer",
+            "minimum": 1
+        },
+        "name": {
+            "description": "The name of this auction type.",
+            "type": "string"
+        },
+        "startTime": {
+            "description": "The usual start time for auctions created from this template.",
+            "type": "string",
+            "pattern": "([01]?[0-9]|2[0-3]):[0-5][0-9]"
+        },
+        "duration": {
+            "description": "The usual duration for auctions created from this template. (In minutes.)",
+            "type": "integer",
+            "minimum": 0
+        },
+        "recurrence": {
+            "description": "A recurrence rule to calculate the next occurence. In iCalendar RRULE format. E.g. RRULE:FREQ=WEEKLY;BYDAY=MO",
+            "type": "string"
+        }
+    }
+}

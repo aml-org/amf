@@ -1,0 +1,12 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+	"title": "Node identifier",
+    "description": "Dereferencing the link in @id results in a full representation of the actual object. This is a very small subset of JSON-LD. See http://www.w3.org/TR/json-ld/#node-identifiers",
+    "required": [
+        "@id"
+    ],
+    "properties": {
+        "@id": {"type": "string", "format": "uri"}
+    }
+}

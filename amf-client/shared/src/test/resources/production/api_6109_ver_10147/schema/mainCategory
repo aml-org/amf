@@ -1,0 +1,56 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "title": "Main category.",
+    "description": "A.k.a. plain 'category'. In the category hierarchy, this is the middle level.",
+    "required": [
+        "topCategory",
+        "auction",
+        "position"
+    ],
+    "allOf": [
+        {
+            "$ref": "abstractCategory"
+        }
+    ],
+    "properties": {
+        "derivedFrom": {
+            "description": "The (conceptual) category this category was derived from.",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "$ref": "category"
+                }
+            ]
+        },
+        "position": {
+            "description": "The ordering of this category amongst the other main categories in the same auction.",
+            "type": "integer",
+            "minimum": 0
+        },
+        "auction": {
+            "description": "The auction which this main category belongs to.",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "$ref": "auction"
+                }
+            ]
+        },
+        "topCategory": {
+            "description": "The top category which contains this main category.",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "$ref": "topCategory"
+                }
+            ]
+        }
+    }
+}
