@@ -1709,4 +1709,14 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 2)
     }
   }
+
+  test("Test validate trait with quoted string example variable") {
+    for {
+      validation <- Validation(platform)
+      doc        <- AMFCompiler(upDownPath + "trait-string-quoted-node.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(doc, ProfileNames.AMF)
+    } yield {
+      assert(report.conforms)
+    }
+  }
 }

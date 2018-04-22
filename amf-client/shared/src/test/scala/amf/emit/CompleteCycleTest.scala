@@ -1165,4 +1165,8 @@ class CompleteCycleTest extends BuildCycleTests {
               validation = Some(validation.withEnabledValidation(true)))
       }
   }
+
+  test("Trait with string quoted data node raml to raml") {
+    cycle("trait-string-quoted-node.raml", "trait-string-quoted-node.raml.raml", RamlYamlHint, Raml)
+  }
 }

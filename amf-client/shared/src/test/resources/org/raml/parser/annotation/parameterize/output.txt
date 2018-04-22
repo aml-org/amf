@@ -15,7 +15,7 @@ annotationTypes:
   simpleAnnotation:
     minLength: 8
     maxLength: 64
-    pattern: [a-zA-Z0-9]{8,32}
+    pattern: "[a-zA-Z0-9]{8,32}"
   objectAnnotation:
     additionalProperties: true
     properties:

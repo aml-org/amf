@@ -128,6 +128,14 @@ class ProductionResolutionTest extends RamlResolutionTest {
           basePath + "Healthcare-FHIR-System-API/")
   }
 
+  test("test trait with quoted string example var") {
+    cycle("trait-string-quoted-node.raml",
+          "trait-string-quoted-node.resolved.raml",
+          RamlYamlHint,
+          Raml,
+          completeCyclePath)
+  }
+
 }
 
 class OASProductionResolutionTest extends OasResolutionTest {
@@ -136,11 +144,10 @@ class OASProductionResolutionTest extends OasResolutionTest {
 
   test("OAS Response parameters resolution") {
     cycle("oas_response_declaration.yaml",
-      "oas_response_declaration.resolved.jsonld",
-      OasYamlHint,
-      Amf,
-      completeCyclePath
-    )
+          "oas_response_declaration.resolved.jsonld",
+          OasYamlHint,
+          Amf,
+          completeCyclePath)
   }
 }
 
