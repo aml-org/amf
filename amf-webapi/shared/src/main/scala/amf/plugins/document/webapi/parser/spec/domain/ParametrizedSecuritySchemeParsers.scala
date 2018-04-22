@@ -22,7 +22,7 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String =>
   def parse(): ParametrizedSecurityScheme = node.tagType match {
     case YType.Null => producer("null").add(Annotations(node))
     case YType.Str =>
-      val name: String = node
+      val name: String = node.as[YScalar].text
       val scheme       = producer(name).add(Annotations(node))
 
       ctx.declarations.findSecurityScheme(name, SearchScope.Named) match {

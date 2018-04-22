@@ -26,7 +26,7 @@ types:
             required: true
           phone:
             type: string
-            pattern: [0-9|-]+
+            pattern: "[0-9|-]+"
             required: true
       Head:
         type: object
@@ -59,7 +59,7 @@ types:
                   type: string
           phone:
             type: string
-            pattern: [0-9|-]+
+            pattern: "[0-9|-]+"
             required: true
   Person:
     type: object
@@ -76,7 +76,7 @@ types:
         type: string
   Phone:
     type: string
-    pattern: [0-9|-]+
+    pattern: "[0-9|-]+"
   Manager:
     type: object
     additionalProperties: true
@@ -107,7 +107,7 @@ types:
               type: string
       phone:
         type: string
-        pattern: [0-9|-]+
+        pattern: "[0-9|-]+"
         required: true
   Admin:
     type: object
@@ -147,7 +147,7 @@ types:
         required: true
       phone:
         type: string
-        pattern: [0-9|-]+
+        pattern: "[0-9|-]+"
         required: true
   Alertable:
     anyOf:
@@ -181,7 +181,7 @@ types:
                   type: string
           phone:
             type: string
-            pattern: [0-9|-]+
+            pattern: "[0-9|-]+"
             required: true
       -
         type: object
@@ -203,7 +203,7 @@ types:
             required: true
           phone:
             type: string
-            pattern: [0-9|-]+
+            pattern: "[0-9|-]+"
             required: true
 /orgs/{orgId}:
   get:
@@ -234,7 +234,7 @@ types:
                     required: true
                   phone:
                     type: string
-                    pattern: [0-9|-]+
+                    pattern: "[0-9|-]+"
                     required: true
               Head:
                 type: object
@@ -267,5 +267,5 @@ types:
                           type: string
                   phone:
                     type: string
-                    pattern: [0-9|-]+
+                    pattern: "[0-9|-]+"
                     required: true

@@ -1,8 +1,10 @@
 package amf.core.resolution
 
-import amf.core.model.domain.{DataNode, ScalarNode}
+import amf.core.annotations.SourceAST
 import amf.core.model.domain.templates.Variable
+import amf.core.model.domain.{DataNode, ScalarNode}
 import amf.core.utils.InflectorBase.Inflector
+import org.yaml.model.YScalar
 
 import scala.util.matching.Regex
 import scala.util.matching.Regex.Match
@@ -19,14 +21,15 @@ object VariableReplacer {
     s.value match {
       case VariableRegex(name, transformations) =>
         values.find(_.name == name) match {
-          case Some(Variable(_, scalar: ScalarNode)) if scalar.dataType.isEmpty || scalar.dataType.get.endsWith("#string") =>
+          case Some(Variable(_, scalar: ScalarNode))
+              if scalar.dataType.isEmpty || scalar.dataType.get.endsWith("#string") =>
             s.value = VariableRegex.replaceAllIn(s.value, replaceMatch(values.map(v => v.name -> v.value).toMap)(_))
             s
           case Some(_) if transformations.nonEmpty =>
             throw new Exception(s"Cannot apply transformations '$transformations' to variable '$name'.")
-          case Some(Variable(_, scalar: ScalarNode))=> scalar
-          case Some(Variable(_, node)) => node
-          case None                    => throw new Exception(s"Cannot find variable '$name'.")
+          case Some(Variable(_, scalar: ScalarNode)) => scalar
+          case Some(Variable(_, node))               => node
+          case None                                  => throw new Exception(s"Cannot find variable '$name'.")
         }
 
       case text =>
@@ -44,7 +47,14 @@ object VariableReplacer {
       .get(name)
       .map {
         case v: ScalarNode =>
-          val text = v.value
+          val text = v.annotations
+            .find(classOf[SourceAST])
+            .map(_.ast)
+            .collectFirst({
+              case s: YScalar => s.toString()
+              /* this calls quotedmark.marktext*/
+            })
+            .getOrElse(v.value)
           Option(m.group(2))
             .map { transformations =>
               TransformationsRegex.findAllIn(transformations).foldLeft(text)(variableTransformation)

@@ -17,7 +17,7 @@ description: This is the place to come for all the technical details you need to
   (oas-x-apiClientRegistration):
     url: http://developer.channel4.com/apps/register
   (oas-x-logo):
-    backgroundColor: #FFFFFF
+    backgroundColor: "#FFFFFF"
     url: https://api.apis.guru/v2/cache/logo/http_www.channel4.com_static_programmes_images_c4-atom-logo.gif
   (oas-x-origin):
     format: swagger
@@ -39,7 +39,7 @@ description: This is the place to come for all the technical details you need to
 /categories:
   displayName: categories
   /{category}:
-    displayName: {category}
+    displayName: "{category}"
     /derived:
       displayName: derived
       /ad:
@@ -1156,7 +1156,7 @@ description: This is the place to come for all the technical details you need to
     /channel:
       displayName: channel
       /{channel}.atom:
-        displayName: {channel}.atom
+        displayName: "{channel}.atom"
         uriParameters:
           channel:
             description: The name of the channel for which you seek associated Channel 4oD programmes
@@ -1218,7 +1218,7 @@ description: This is the place to come for all the technical details you need to
             - discoveryresources
           body: {}
       /{channel}:
-        displayName: {channel}
+        displayName: "{channel}"
         /4od:
           displayName: 4od
           /page-{pageno}.atom:
@@ -1697,7 +1697,7 @@ description: This is the place to come for all the technical details you need to
               - discoveryresources
             body: {}
   /{category}.atom:
-    displayName: {category}.atom
+    displayName: "{category}.atom"
     uriParameters:
       category:
         description: The name of the category for which you seek associated Channel 4 programmes. (For a full list of categories, please see http://api.channel4.com/pmlsd/categories.atom?apikey=xxxxxxxxxxxxxxxxxxxxxxxx)
@@ -1752,11 +1752,11 @@ description: This is the place to come for all the technical details you need to
         - discoveryresources
       body: {}
 /{brand-web-safe-title}:
-  displayName: {brand-web-safe-title}
+  displayName: "{brand-web-safe-title}"
   /videos:
     displayName: videos
     /{clip-asset-id}.atom:
-      displayName: {clip-asset-id}.atom
+      displayName: "{clip-asset-id}.atom"
       uriParameters:
         clip-asset-id:
           description: Asset id for this clip
@@ -2256,11 +2256,11 @@ description: This is the place to come for all the technical details you need to
     /date:
       displayName: date
       /{yyyy}:
-        displayName: {yyyy}
+        displayName: "{yyyy}"
         /{mm}:
-          displayName: {mm}
+          displayName: "{mm}"
           /{dd}.atom:
-            displayName: {dd}.atom
+            displayName: "{dd}.atom"
             uriParameters:
               dd:
                 description: The date for which you wish to see programming information
@@ -2418,7 +2418,7 @@ description: This is the place to come for all the technical details you need to
 /atoz:
   displayName: atoz
   /{start_letter}.atom:
-    displayName: {start_letter}.atom
+    displayName: "{start_letter}.atom"
     uriParameters:
       start_letter:
         description: The letter of the alphabet for which you seek associated Channel 4 programmes
@@ -2471,7 +2471,7 @@ description: This is the place to come for all the technical details you need to
         - discoveryresources
       body: {}
   /{start_letter}:
-    displayName: {start_letter}
+    displayName: "{start_letter}"
     /page-{pageno}.atom:
       displayName: page-{pageno}.atom
       uriParameters:
@@ -2893,7 +2893,7 @@ description: This is the place to come for all the technical details you need to
 /collections:
   displayName: collections
   /{collection_name}.atom:
-    displayName: {collection_name}.atom
+    displayName: "{collection_name}.atom"
     uriParameters:
       collection_name:
         description: Web safe title for the collection.
@@ -2949,7 +2949,7 @@ description: This is the place to come for all the technical details you need to
         - discoveryresources
       body: {}
   /{collection_name}:
-    displayName: {collection_name}
+    displayName: "{collection_name}"
     /4od.atom:
       displayName: 4od.atom
       get:
@@ -3155,7 +3155,7 @@ description: This is the place to come for all the technical details you need to
 /coming-soon:
   displayName: coming-soon
   /{category}.atom:
-    displayName: {category}.atom
+    displayName: "{category}.atom"
     uriParameters:
       category:
         description: The category websafe_title to filter the coming soon programmes on TV.
@@ -3211,7 +3211,7 @@ description: This is the place to come for all the technical details you need to
 /programme:
   displayName: programme
   /{programme-id}.atom:
-    displayName: {programme-id}.atom
+    displayName: "{programme-id}.atom"
     uriParameters:
       programme-id:
         description: The websafe programme identifier for the episode for which you seek on-demand content
@@ -3285,7 +3285,7 @@ description: This is the place to come for all the technical details you need to
           - samsung
         type: string
       q:
-        description: The programme name to look for, minimum length: 2 chars.Looking for programme names with special chars might be URL encoded.
+        description: "The programme name to look for, minimum length: 2 chars.Looking for programme names with special chars might be URL encoded."
         required: true
         type: string
     (oas-x-documentation): http://developer.channel4.com/docs/read/programmesapiguide/discoveryresources/Search_Feed
@@ -3345,7 +3345,7 @@ description: This is the place to come for all the technical details you need to
             - samsung
           type: string
         q:
-          description: The programme name to look for, minimum length: 2 chars.Looking for programme names with special chars might be URL encoded.
+          description: "The programme name to look for, minimum length: 2 chars.Looking for programme names with special chars might be URL encoded."
           required: true
           type: string
       (oas-x-documentation): http://developer.channel4.com/docs/read/programmesapiguide/discoveryresources/Search_Feed
@@ -3379,10 +3379,10 @@ description: This is the place to come for all the technical details you need to
         - discoveryresources
       body: {}
   /{q}.atom:
-    displayName: {q}.atom
+    displayName: "{q}.atom"
     uriParameters:
       q:
-        description: The programme name to look for, minimum length: 2 chars.Looking for programme names with special chars might be URL encoded.
+        description: "The programme name to look for, minimum length: 2 chars.Looking for programme names with special chars might be URL encoded."
         required: true
         type: string
     get:
@@ -3433,7 +3433,7 @@ description: This is the place to come for all the technical details you need to
         - discoveryresources
       body: {}
   /{q}:
-    displayName: {q}
+    displayName: "{q}"
     /page-{pageno}.atom:
       displayName: page-{pageno}.atom
       uriParameters:
@@ -3493,11 +3493,11 @@ description: This is the place to come for all the technical details you need to
   /daily:
     displayName: daily
     /{yyyy}:
-      displayName: {yyyy}
+      displayName: "{yyyy}"
       /{mm}:
-        displayName: {mm}
+        displayName: "{mm}"
         /{dd}.atom:
-          displayName: {dd}.atom
+          displayName: "{dd}.atom"
           uriParameters:
             dd:
               description: The date for which you wish to see programming information. Note the schedule days start from 6am and run until 6am on the next calendar day.
@@ -3551,9 +3551,9 @@ description: This is the place to come for all the technical details you need to
               - discoveryresources
             body: {}
         /{dd}:
-          displayName: {dd}
+          displayName: "{dd}"
           /{channel}.atom:
-            displayName: {channel}.atom
+            displayName: "{channel}.atom"
             uriParameters:
               channel:
                 description: The EPG for a specific channel (c4, e4, m4, 4m, f4, 4s)
@@ -3614,7 +3614,7 @@ description: This is the place to come for all the technical details you need to
                 - discoveryresources
               body: {}
 /{brand-web-safe-title}.atom:
-  displayName: {brand-web-safe-title}.atom
+  displayName: "{brand-web-safe-title}.atom"
   uriParameters:
     brand-web-safe-title:
       description: The title of the programme for which you seek associated data
