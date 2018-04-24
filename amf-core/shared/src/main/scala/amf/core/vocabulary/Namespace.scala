@@ -46,6 +46,8 @@ object Namespace {
 
   val AmfParser = Namespace("http://raml.org/vocabularies/amf/parser#")
 
+  val AmfValidation = Namespace("http://raml.org/vocabularies/amf/validation#")
+
   val ns = mutable.HashMap(
     "rdf"         -> Rdf,
     "sh"          -> Shacl,
@@ -107,7 +109,7 @@ object Namespace {
     }
   }
 
-  def compactAndCollect(uri: String, prefixes: mutable.Map[String,String]) = {
+  def compactAndCollect(uri: String, prefixes: mutable.Map[String, String]) = {
     ns.find {
       case (_, namespace) =>
         uri.indexOf(namespace.base) == 0
@@ -171,16 +173,17 @@ class UriType(id: String) extends ValueType(Namespace.Document, "") {
 
 object ValueType {
   def apply(ns: Namespace, name: String) = new ValueType(ns, name)
-  def apply(iri: String) = if (iri.contains("#")) {
-    val pair = iri.split("#")
-    val name = pair.last
-    val ns = pair.head + "#"
-    new ValueType(Namespace(ns), name)
-  } else if (iri.replace("://","_").contains("/")) {
-    val name = iri.split("/").last
-    val ns = iri.replace(name, "")
-    new ValueType(Namespace(ns), name)
-  } else {
-    new ValueType(Namespace(iri), "")
-  }
+  def apply(iri: String) =
+    if (iri.contains("#")) {
+      val pair = iri.split("#")
+      val name = pair.last
+      val ns   = pair.head + "#"
+      new ValueType(Namespace(ns), name)
+    } else if (iri.replace("://", "_").contains("/")) {
+      val name = iri.split("/").last
+      val ns   = iri.replace(name, "")
+      new ValueType(Namespace(ns), name)
+    } else {
+      new ValueType(Namespace(iri), "")
+    }
 }

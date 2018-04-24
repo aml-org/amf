@@ -11,7 +11,7 @@ import amf.core.model.document.{BaseUnit, SourceMap}
 import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.DomainExtension
-import amf.core.parser.{FieldEntry, Value}
+import amf.core.parser.{Annotations, FieldEntry, Value}
 import amf.core.vocabulary.{Namespace, ValueType}
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -179,6 +179,17 @@ object GraphEmitter extends MetaModelTypeMapping {
           )
         case _ => Nil
       })
+
+      element match {
+        case e: ObjectNode if options.isValidation =>
+          val url = Namespace.AmfValidation.base + "/properties"
+          b.entry(
+            url,
+            value(Type.Int, Value(AmfScalar(e.properties.size), Annotations()), id, _ => {}, _, ctx)
+          )
+        case _ => // Nothing to do
+      }
+
       modelFields.foreach { f: Field =>
         schema.valueForField(f).foreach { amfValue =>
           val url = ctx.emitIri(f.value.iri())

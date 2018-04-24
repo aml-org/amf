@@ -143,8 +143,20 @@ class AMFShapeValidations(shape: Shape) {
       validation = checkMaxCount(context + s"/${property.name.value()}", property, validation, property)
     }
 
+    // Validation to allow to emit the properties number in the model graph
+    validation = validation.copy(
+      propertyConstraints = validation.propertyConstraints ++ Seq(
+        PropertyConstraint(
+          ramlPropertyId = Namespace.AmfValidation.base + "/properties",
+          name = validationId(node) + s"_validation_node_prop_properties",
+          message = Some(s"Property /properties at $context must have a valid value"),
+          node = Some(Namespace.AmfValidation.base + "/properties")
+        )
+      ))
     validation = checkClosed(validation, node)
     validation = checkObjectType(node, context, validation)
+    validation = checkMinProperties(context, validation, node)
+    validation = checkMaxProperties(context, validation, node)
     List(validation) ++ nestedConstraints
   }
 
@@ -177,7 +189,8 @@ class AMFShapeValidations(shape: Shape) {
 
   protected def scalarConstraints(context: String, scalar: ScalarShape): List[ValidationSpecification] = {
     if (scalar.format.option().isDefined && scalar.format
-          .value().toLowerCase() == "rfc2616" && scalar.dataType.value().endsWith("dateTime")) {
+          .value()
+          .toLowerCase() == "rfc2616" && scalar.dataType.value().endsWith("dateTime")) {
       // RAML 0.8 date type following RFC2616
       val msg = s"Scalar at $context must be valid RFC2616 date"
       var validation = new ValidationSpecification(
@@ -203,27 +216,29 @@ class AMFShapeValidations(shape: Shape) {
         val custom = Some((b: EntryBuilder, parentId: String) => {
           b.entry(
             (Namespace.Shacl + "or").iri(),
-            _.obj(_.entry(
-              "@list",
-              _.list { l =>
-                l.obj { v =>
-                  v.entry((Namespace.Shacl + "datatype").iri(),
-                    _.obj(_.entry("@id", (Namespace.Xsd + "string").iri().trim)))
+            _.obj(
+              _.entry(
+                "@list",
+                _.list {
+                  l =>
+                    l.obj { v =>
+                      v.entry((Namespace.Shacl + "datatype").iri(),
+                              _.obj(_.entry("@id", (Namespace.Xsd + "string").iri().trim)))
+                    }
+                    l.obj { v =>
+                      v.entry((Namespace.Shacl + "datatype").iri(),
+                              _.obj(_.entry("@id", (Namespace.Xsd + "time").iri().trim)))
+                    }
+                    l.obj { v =>
+                      v.entry((Namespace.Shacl + "datatype").iri(),
+                              _.obj(_.entry("@id", (Namespace.Xsd + "date").iri().trim)))
+                    }
+                    l.obj { v =>
+                      v.entry((Namespace.Shacl + "datatype").iri(),
+                              _.obj(_.entry("@id", (Namespace.Xsd + "dateTime").iri().trim)))
+                    }
                 }
-                l.obj { v =>
-                  v.entry((Namespace.Shacl + "datatype").iri(),
-                    _.obj(_.entry("@id", (Namespace.Xsd + "time").iri().trim)))
-                }
-                l.obj { v =>
-                  v.entry((Namespace.Shacl + "datatype").iri(),
-                    _.obj(_.entry("@id", (Namespace.Xsd + "date").iri().trim)))
-                }
-                l.obj { v =>
-                  v.entry((Namespace.Shacl + "datatype").iri(),
-                    _.obj(_.entry("@id", (Namespace.Xsd + "dateTime").iri().trim)))
-                }
-              }
-            ))
+              ))
           )
         })
         Seq(
@@ -233,31 +248,33 @@ class AMFShapeValidations(shape: Shape) {
             message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
             custom = custom
           ))
-      } else if(scalar.dataType.value() == (Namespace.Shapes + "number").iri()) {
+      } else if (scalar.dataType.value() == (Namespace.Shapes + "number").iri()) {
         val custom = Some((b: EntryBuilder, parentId: String) => {
           b.entry(
             (Namespace.Shacl + "or").iri(),
-            _.obj(_.entry(
-              "@list",
-              _.list { l =>
-                l.obj { v =>
-                  v.entry((Namespace.Shacl + "datatype").iri(),
-                    _.obj(_.entry("@id", (Namespace.Xsd + "integer").iri().trim)))
+            _.obj(
+              _.entry(
+                "@list",
+                _.list {
+                  l =>
+                    l.obj { v =>
+                      v.entry((Namespace.Shacl + "datatype").iri(),
+                              _.obj(_.entry("@id", (Namespace.Xsd + "integer").iri().trim)))
+                    }
+                    l.obj { v =>
+                      v.entry((Namespace.Shacl + "datatype").iri(),
+                              _.obj(_.entry("@id", (Namespace.Xsd + "long").iri().trim)))
+                    }
+                    l.obj { v =>
+                      v.entry((Namespace.Shacl + "datatype").iri(),
+                              _.obj(_.entry("@id", (Namespace.Xsd + "float").iri().trim)))
+                    }
+                    l.obj { v =>
+                      v.entry((Namespace.Shacl + "datatype").iri(),
+                              _.obj(_.entry("@id", (Namespace.Xsd + "double").iri().trim)))
+                    }
                 }
-                l.obj { v =>
-                  v.entry((Namespace.Shacl + "datatype").iri(),
-                    _.obj(_.entry("@id", (Namespace.Xsd + "long").iri().trim)))
-                }
-                l.obj { v =>
-                  v.entry((Namespace.Shacl + "datatype").iri(),
-                    _.obj(_.entry("@id", (Namespace.Xsd + "float").iri().trim)))
-                }
-                l.obj { v =>
-                  v.entry((Namespace.Shacl + "datatype").iri(),
-                    _.obj(_.entry("@id", (Namespace.Xsd + "double").iri().trim)))
-                }
-              }
-            ))
+              ))
           )
         })
         Seq(
@@ -267,33 +284,35 @@ class AMFShapeValidations(shape: Shape) {
             message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
             custom = custom
           ))
-      }  else if(scalar.dataType.value() == (Namespace.Xsd + "float").iri() || scalar.dataType.value() == (Namespace.Xsd + "double").iri()) {
-      val custom = Some((b: EntryBuilder, parentId: String) => {
-        b.entry(
-          (Namespace.Shacl + "or").iri(),
-          _.obj(_.entry(
-            "@list",
-            _.list { l =>
-              l.obj { v =>
-                v.entry((Namespace.Shacl + "datatype").iri(),
-                  _.obj(_.entry("@id", (Namespace.Xsd + "float").iri().trim)))
-              }
-              l.obj { v =>
-                v.entry((Namespace.Shacl + "datatype").iri(),
-                  _.obj(_.entry("@id", (Namespace.Xsd + "double").iri().trim)))
-              }
-            }
+      } else if (scalar.dataType.value() == (Namespace.Xsd + "float")
+                   .iri() || scalar.dataType.value() == (Namespace.Xsd + "double").iri()) {
+        val custom = Some((b: EntryBuilder, parentId: String) => {
+          b.entry(
+            (Namespace.Shacl + "or").iri(),
+            _.obj(
+              _.entry(
+                "@list",
+                _.list { l =>
+                  l.obj { v =>
+                    v.entry((Namespace.Shacl + "datatype").iri(),
+                            _.obj(_.entry("@id", (Namespace.Xsd + "float").iri().trim)))
+                  }
+                  l.obj { v =>
+                    v.entry((Namespace.Shacl + "datatype").iri(),
+                            _.obj(_.entry("@id", (Namespace.Xsd + "double").iri().trim)))
+                  }
+                }
+              ))
+          )
+        })
+        Seq(
+          PropertyConstraint(
+            ramlPropertyId = (Namespace.Data + "value").iri(),
+            name = scalar.id + "_validation_range/prop",
+            message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
+            custom = custom
           ))
-        )
-      })
-      Seq(
-        PropertyConstraint(
-          ramlPropertyId = (Namespace.Data + "value").iri(),
-          name = scalar.id + "_validation_range/prop",
-          message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
-          custom = custom
-        ))
-    } else {
+      } else {
         Seq(
           PropertyConstraint(
             ramlPropertyId = (Namespace.Data + "value").iri(),
@@ -517,6 +536,42 @@ class AMFShapeValidations(shape: Shape) {
           name = validation.name + "_validation_exclusiveMaximum/prop",
           message = Some(msg),
           maxExclusive = Some(s"$exclusiveMaximum"),
+          datatype = effectiveDataType(shape)
+        )
+        validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(propertyValidation))
+      case None => validation
+    }
+  }
+
+  protected def checkMinProperties(context: String,
+                                   validation: ValidationSpecification,
+                                   shape: Shape): ValidationSpecification = {
+    shape.fields.?[AmfScalar](NodeShapeModel.MinProperties) match {
+      case Some(minProperties) =>
+        val msg = s"Expected min properties $minProperties"
+        val propertyValidation = PropertyConstraint(
+          ramlPropertyId = Namespace.AmfValidation.base + "/properties",
+          name = validation.name + "_validation_minProperties/prop",
+          message = Some(msg),
+          minInclusive = Some(s"$minProperties"),
+          datatype = effectiveDataType(shape)
+        )
+        validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(propertyValidation))
+      case None => validation
+    }
+  }
+
+  protected def checkMaxProperties(context: String,
+                                   validation: ValidationSpecification,
+                                   shape: Shape): ValidationSpecification = {
+    shape.fields.?[AmfScalar](NodeShapeModel.MaxProperties) match {
+      case Some(maxProperties) =>
+        val msg = s"Expected max properties $maxProperties"
+        val propertyValidation = PropertyConstraint(
+          ramlPropertyId = Namespace.AmfValidation.base + "/properties",
+          name = validation.name + "_validation_maxProperties/prop",
+          message = Some(msg),
+          maxInclusive = Some(s"$maxProperties"),
           datatype = effectiveDataType(shape)
         )
         validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(propertyValidation))

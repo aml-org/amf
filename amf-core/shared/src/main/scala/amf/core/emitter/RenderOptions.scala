@@ -50,10 +50,11 @@ class RenderOptions {
     this
   }
 
-  def isCompactUris: Boolean = compactUris
-  def isWithSourceMaps: Boolean = sources
-  def isWithRawSoureMaps: Boolean = rawSourceMaps
+  def isCompactUris: Boolean                  = compactUris
+  def isWithSourceMaps: Boolean               = sources
+  def isWithRawSoureMaps: Boolean             = rawSourceMaps
   def getCustomEmitter: Option[ScalarEmitter] = customEmitter
+  def isValidation: Boolean                   = customEmitter.isDefined // I consider that if CustomEmitter is defined, is a validation
 }
 
 object RenderOptions {
