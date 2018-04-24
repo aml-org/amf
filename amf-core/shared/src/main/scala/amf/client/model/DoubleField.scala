@@ -21,4 +21,6 @@ case class DoubleField(private val _internal: InternalDoubleField) extends BaseA
     case Some(v) => v
     case _       => 0.0
   }
+
+  override def remove(): Unit = _internal.remove()
 }

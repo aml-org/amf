@@ -1,6 +1,7 @@
 package amf.client.model
 
 import amf.client.convert.CoreClientConverters._
+import amf.core.model.{ValueField => InternalValueField}
 
 import scala.scalajs.js.annotation.JSExportAll
 
@@ -28,4 +29,6 @@ trait ValueField[T] {
   def nonNull: Boolean = _option.isDefined
 
   override def toString: String = _option.map(_.toString).orNull
+
+  def remove(): Unit
 }

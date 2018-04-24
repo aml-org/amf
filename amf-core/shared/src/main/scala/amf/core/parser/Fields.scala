@@ -31,12 +31,12 @@ class Fields {
     def typed(t: Type, e: AmfElement): Any = e match {
       case s: AmfScalar =>
         t match {
-          case Str | Iri   => new StrFieldImpl(s)
-          case Bool        => new BoolFieldImpl(s)
-          case Type.Int    => new IntFieldImpl(s)
-          case Type.Float  => new DoubleFieldImpl(s)
-          case Type.Double => new DoubleFieldImpl(s)
-          case Type.Any    => new AnyFieldImpl(s)
+          case Str | Iri   => new StrFieldImpl(s, f)
+          case Bool        => new BoolFieldImpl(s, f)
+          case Type.Int    => new IntFieldImpl(s, f)
+          case Type.Float  => new DoubleFieldImpl(s, f)
+          case Type.Double => new DoubleFieldImpl(s, f)
+          case Type.Any    => new AnyFieldImpl(s, f)
           case _           => throw new Exception(s"Invalid value '$s' of type '$t'")
         }
       case o: AmfObject =>
@@ -53,12 +53,12 @@ class Fields {
 
     def empty(): T =
       (f.`type` match {
-        case Str | Iri    => StrFieldImpl(None, Annotations())
-        case Bool         => BoolFieldImpl(None, Annotations())
-        case Type.Int     => IntFieldImpl(None, Annotations())
-        case Type.Float   => DoubleFieldImpl(None, Annotations())
-        case Type.Double  => DoubleFieldImpl(None, Annotations())
-        case Type.Any     => AnyFieldImpl(None, Annotations())
+        case Str | Iri    => StrFieldImpl(None, Annotations(), f)
+        case Bool         => BoolFieldImpl(None, Annotations(), f)
+        case Type.Int     => IntFieldImpl(None, Annotations(), f)
+        case Type.Float   => DoubleFieldImpl(None, Annotations(), f)
+        case Type.Double  => DoubleFieldImpl(None, Annotations(), f)
+        case Type.Any     => AnyFieldImpl(None, Annotations(), f)
         case ArrayLike(_) => Nil
         case _: Obj       => null
       }).asInstanceOf[T]
@@ -118,8 +118,13 @@ class Fields {
     this
   }
 
-  def remove(field: Field): this.type = {
+  def removeField(field: Field): this.type = {
     fs = fs - field
+    this
+  }
+
+  def remove(uri: String): this.type = {
+    fs.find(t => t._1.value.iri().equals(uri)).foreach(t => removeField(t._1))
     this
   }
 
@@ -183,24 +188,38 @@ class Fields {
 
   def nonEmpty: Boolean = fs.nonEmpty
 
-  private case class StrFieldImpl(option: Option[String], annotations: Annotations) extends StrField {
-    def this(s: AmfScalar) = this(Option(s.value).map(_.asInstanceOf[String]), s.annotations)
+  sealed trait FieldRemover {
+    val field: Field
+    def remove(): Unit = removeField(field)
+  }
+  private case class StrFieldImpl(option: Option[String], annotations: Annotations, field: Field)
+      extends StrField
+      with FieldRemover {
+    def this(s: AmfScalar, f: Field) = this(Option(s.value).map(_.asInstanceOf[String]), s.annotations, f)
   }
 
-  private case class BoolFieldImpl(option: Option[Boolean], annotations: Annotations) extends BoolField {
-    def this(s: AmfScalar) = this(Option(s.value).map(_.asInstanceOf[Boolean]), s.annotations)
+  private case class BoolFieldImpl(option: Option[Boolean], annotations: Annotations, field: Field)
+      extends BoolField
+      with FieldRemover {
+    def this(s: AmfScalar, f: Field) = this(Option(s.value).map(_.asInstanceOf[Boolean]), s.annotations, f)
   }
 
-  private case class IntFieldImpl(option: Option[Int], annotations: Annotations) extends IntField {
-    def this(s: AmfScalar) = this(Option(s.value).map(_.asInstanceOf[Int]), s.annotations)
+  private case class IntFieldImpl(option: Option[Int], annotations: Annotations, field: Field)
+      extends IntField
+      with FieldRemover {
+    def this(s: AmfScalar, f: Field) = this(Option(s.value).map(_.asInstanceOf[Int]), s.annotations, f)
   }
 
-  private case class DoubleFieldImpl(option: Option[Double], annotations: Annotations) extends DoubleField {
-    def this(s: AmfScalar) = this(Option(s.value).map(_.asInstanceOf[Double]), s.annotations)
+  private case class DoubleFieldImpl(option: Option[Double], annotations: Annotations, field: Field)
+      extends DoubleField
+      with FieldRemover {
+    def this(s: AmfScalar, f: Field) = this(Option(s.value).map(_.asInstanceOf[Double]), s.annotations, f)
   }
 
-  private case class AnyFieldImpl(option: Option[Any], annotations: Annotations) extends AnyField {
-    def this(s: AmfScalar) = this(Option(s.value), s.annotations)
+  private case class AnyFieldImpl(option: Option[Any], annotations: Annotations, field: Field)
+      extends AnyField
+      with FieldRemover {
+    def this(s: AmfScalar, f: Field) = this(Option(s.value), s.annotations, f)
   }
 }
 

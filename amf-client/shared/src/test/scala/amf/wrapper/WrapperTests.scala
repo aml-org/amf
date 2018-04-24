@@ -11,6 +11,7 @@ import amf.client.remote.Content
 import amf.client.render._
 import amf.client.resolve.Raml10Resolver
 import amf.client.resource.ResourceLoader
+import amf.common.Diff
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -519,6 +520,48 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     shape.withName("name")
 
     assert(shape.defaultValue == null)
+  }
+
+  test("Remove field and dump") {
+    val api =
+      """
+        |#%RAML 1.0
+        |title: this should remain
+        |description: remove
+        |license:
+        | url: removeUrl
+        | name: test
+        |/endpoint1:
+        | get:
+        |   responses:
+        |     200:
+      """.stripMargin
+
+    val excepted =
+      """
+        |#%RAML 1.0
+        |title: this should remain
+        |/endpoint1:
+        | get: {}""".stripMargin
+    for {
+      _         <- AMF.init().asFuture
+      unit      <- new RamlParser().parseStringAsync(api).asFuture
+      removed   <- removeFields(unit)
+      generated <- AMF.raml10Generator().generateString(removed).asFuture
+    } yield {
+      val deltas = Diff.ignoreAllSpace.diff(excepted, generated)
+      if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
+      else succeed
+    }
+  }
+
+  private def removeFields(unit: BaseUnit): Future[BaseUnit] = Future {
+    val webApi = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+    webApi.description.remove()
+    val operation: Operation = webApi.endPoints.asSeq.head.operations.asSeq.head
+    operation.removeField("http://www.w3.org/ns/hydra/core#returns")
+    webApi.removeField("http://schema.org/license")
+    unit
   }
 
   private def testParseStringWithBaseUrl(baseUrl: String) = {

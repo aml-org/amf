@@ -32,7 +32,7 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
   var fixPointCount = 0
 
   override def resolve(model: BaseUnit): BaseUnit =
-     profile match {
+    profile match {
       case ProfileNames.RAML08 => model
       case _                   => model.transform(findShapesPredicate, transform)
     }
@@ -110,7 +110,7 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
   }
 
   protected def expandTuple(tuple: TupleShape): TupleShape = {
-    val oldItems      = tuple.fields.getValue(TupleShapeModel.TupleItems)
+    val oldItems = tuple.fields.getValue(TupleShapeModel.TupleItems)
     if (Option(oldItems).isDefined) {
       val newItemShapes = tuple.items.map(shape => expand(shape))
       tuple.setArrayWithoutId(TupleShapeModel.TupleItems, newItemShapes, oldItems.annotations)
@@ -225,7 +225,7 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
       case rec: RecursiveShape => rec
       case shape: Shape        => shape.link(shape.name.value()).asInstanceOf[Shape]
     } else Nil
-    shape.fields.remove(ShapeModel.Inherits)
+    shape.fields.removeField(ShapeModel.Inherits)
     var accShape: Shape = canonical(shape)
     superTypes.foreach { superNode =>
       val canonicalSuperNode = canonical(superNode)
@@ -243,7 +243,7 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
       Option(array.items).fold(array.asInstanceOf[Shape])(i => {
         val newItems = canonical(i)
         array.annotations += ExplicitField()
-        array.fields.remove(ArrayShapeModel.Items)
+        array.fields.removeField(ArrayShapeModel.Items)
         newItems match {
           case arrayItems: ArrayShape =>
             // Array items -> array must become a Matrix
@@ -260,7 +260,7 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
 
   protected def canonicalMatrix(matrix: MatrixShape): Shape = {
     val newItems = canonical(matrix.items)
-    matrix.fields.remove(ArrayShapeModel.Items)
+    matrix.fields.removeField(ArrayShapeModel.Items)
     newItems match {
       case unionItems: UnionShape =>
         val newUnionItems = unionItems.anyOf.map {

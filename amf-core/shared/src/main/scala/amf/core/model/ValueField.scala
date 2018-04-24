@@ -20,5 +20,8 @@ trait ValueField[T] {
   /** Returns true if field is non null. */
   def nonNull: Boolean = option().isDefined
 
+  /** removes this value from the parent map of fields */
+  def remove(): Unit
+
   override def toString: String = option().map(_.toString).orNull // null
 }

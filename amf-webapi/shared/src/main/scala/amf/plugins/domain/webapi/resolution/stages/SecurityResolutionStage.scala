@@ -57,7 +57,7 @@ class SecurityResolutionStage(profile: String) extends ResolutionStage(profile) 
   /** Get and remove field from domain element */
   private def field(element: DomainElement, field: Field) = {
     val result = element.fields.entry(field).map(_.array.values.map(v => v.asInstanceOf[ParametrizedSecurityScheme]))
-    element.fields.remove(field)
+    element.fields.removeField(field)
     result
   }
 

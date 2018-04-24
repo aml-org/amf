@@ -5,7 +5,7 @@ import amf.core.model.document.BaseUnit
 
 class CleanReferencesStage(profile: String) extends ResolutionStage(profile) {
   override def resolve(model: BaseUnit): BaseUnit = {
-    model.fields.remove(BaseUnitModel.References)
+    model.fields.removeField(BaseUnitModel.References)
     model
   }
 }

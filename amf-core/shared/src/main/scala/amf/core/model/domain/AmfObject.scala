@@ -99,4 +99,9 @@ trait AmfObject extends AmfElement {
   }
 
   def dynamicTypes(): Seq[String] = List()
+
+  def removeField(uri: String): this.type = {
+    fields.remove(uri)
+    this
+  }
 }

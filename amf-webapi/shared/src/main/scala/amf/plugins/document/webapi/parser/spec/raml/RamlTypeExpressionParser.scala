@@ -146,11 +146,11 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Opti
             shape match {
               case otherUnion: UnionShape =>
                 val newAnyOf = union.anyOf ++ otherUnion.anyOf
-                union.fields.remove(UnionShapeModel.AnyOf)
+                union.fields.removeField(UnionShapeModel.AnyOf)
                 union.fields.setWithoutId(UnionShapeModel.AnyOf, AmfArray(newAnyOf))
               case _ =>
                 val newAnyOf = union.anyOf ++ Seq(shape)
-                union.fields.remove(UnionShapeModel.AnyOf)
+                union.fields.removeField(UnionShapeModel.AnyOf)
                 union.fields.setWithoutId(UnionShapeModel.AnyOf, AmfArray(newAnyOf))
             }
           case _ =>
@@ -201,6 +201,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Opti
 }
 
 object RamlTypeExpressionParser {
-  def apply(adopt: Shape => Shape, part: Option[YPart] = None, checking: Boolean = false)(implicit ctx: WebApiContext) =
+  def apply(adopt: Shape => Shape, part: Option[YPart] = None, checking: Boolean = false)(
+      implicit ctx: WebApiContext) =
     new RamlTypeExpressionParser(adopt, 0, part, checking)
 }

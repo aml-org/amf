@@ -28,7 +28,7 @@ class MediaTypeResolutionStage(profile: String, errorHandler: ErrorHandler) exte
   def resolvePayloads(api: WebApi): Unit = {
     api.endPoints.foreach { endpoint =>
       val payloads = endpoint.payloads
-      endpoint.fields.remove(EndPointModel.Payloads)
+      endpoint.fields.removeField(EndPointModel.Payloads)
       if (payloads.nonEmpty) {
         endpoint.operations.foreach { operation =>
           Option(operation.request) match {
@@ -78,7 +78,7 @@ class MediaTypeResolutionStage(profile: String, errorHandler: ErrorHandler) exte
   /** Get and remove field from domain element */
   private def field(element: DomainElement, field: Field) = {
     val result = element.fields.entry(field).map(_.array.values.map(v => v.asInstanceOf[AmfScalar].toString))
-    element.fields.remove(field)
+    element.fields.removeField(field)
     result
   }
 

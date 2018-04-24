@@ -24,4 +24,6 @@ case class StrField(private val _internal: InternalStrField) extends BaseField w
 
   /** Return true if string value is not null and not empty. */
   def nonEmpty: Boolean = !isNullOrEmpty
+
+  override def remove(): Unit = _internal.remove()
 }

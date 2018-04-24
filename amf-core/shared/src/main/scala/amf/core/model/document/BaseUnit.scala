@@ -262,7 +262,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
                                          cycles + element.id)) match {
                     case Some(transformedValue: AmfObject) => element.fields.setWithoutId(f, transformedValue)
                     case Some(_)                           => // ignore
-                    case None                              => element.fields.remove(f)
+                    case None                              => element.fields.removeField(f)
                   }
                 case (f, v: Value) if v.value.isInstanceOf[AmfArray] =>
                   val newElements = v.value

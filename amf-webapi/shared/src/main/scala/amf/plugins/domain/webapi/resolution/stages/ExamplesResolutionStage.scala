@@ -23,7 +23,7 @@ class ExamplesResolutionStage(profile: String) extends ResolutionStage(profile) 
 
     allResponses.foreach { response =>
       val mappedExamples = response.examples.map(e => e.mediaType.value() -> e).toMap
-      response.fields.remove(ResponseModel.Examples)
+      response.fields.removeField(ResponseModel.Examples)
       response.payloads.foreach(p => {
         p.schema match {
           case shape: AnyShape =>

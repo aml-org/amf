@@ -21,4 +21,6 @@ case class FloatField(private val _internal: InternalFloatField) extends BaseAny
     case Some(v) => v
     case _       => 0.0f
   }
+
+  override def remove(): Unit = _internal.remove()
 }
