@@ -21,6 +21,7 @@ import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.templates.ParametrizedTraitModel
 import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DataNodeMerging
 
 import scala.collection.mutable
@@ -29,7 +30,9 @@ import scala.collection.mutable.ListBuffer
 /**
   *
   */
-class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean) extends ResolutionStage(profile) with PlatformSecrets {
+class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean)
+    extends ResolutionStage(profile)
+    with PlatformSecrets {
 
   /** Default to raml10 context. */
   implicit val ctx: RamlWebApiContext = profile match {
@@ -57,12 +60,15 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean) exten
     document
   }
 
-  def mergeReferences(document: Document, extension: ExtensionLike[WebApi], extensionId: String): Unit = {
+  def mergeReferences(document: Document,
+                      extension: ExtensionLike[WebApi],
+                      extensionId: String,
+                      extensionLocation: Option[String]): Unit = {
     val existing = document.references.map(_.id) ++ Seq(document.id, extension.id)
     val libs     = extension.references.collect { case m: Module => m }
 
     val refs = document.references ++ libs.filter(unit => !existing.contains(unit.id)).map { unit =>
-      unit.annotations += ExtensionProvenance(extensionId)
+      unit.annotations += ExtensionProvenance(extensionId, extensionLocation)
       unit
     }
 
@@ -78,7 +84,7 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean) exten
     // All includes are resolved and applied for both Master Tree and Extension Tree.
     referenceStage.resolve(document)
     // All Trait and Resource Types applications are applied in the Master Tree.
-     extendsStage.resolve(document)
+    extendsStage.resolve(document)
 
     // Current Target Tree Object is set to the Target Tree root (API).
     val masterTree = document.asInstanceOf[EncodesModel].encodes.asInstanceOf[WebApi]
@@ -91,11 +97,21 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean) exten
 
         val iriMerger = IriMerger(document.id + "#", extension.id + "#")
 
-        mergeDeclarations(document, extension.asInstanceOf[ExtensionLike[WebApi]], iriMerger, extension.id)
+        mergeDeclarations(document,
+                          extension.asInstanceOf[ExtensionLike[WebApi]],
+                          iriMerger,
+                          extension.id,
+                          ExtendsHelper.findUnitLocationOfElement(extension.id, model))
 
-        mergeReferences(document, extension.asInstanceOf[ExtensionLike[WebApi]], extension.id)
+        mergeReferences(document,
+                        extension.asInstanceOf[ExtensionLike[WebApi]],
+                        extension.id,
+                        ExtendsHelper.findUnitLocationOfElement(extension.id, model))
 
-        merge(masterTree, extension.encodes, extension.id)
+        merge(masterTree,
+              extension.encodes,
+              extension.id,
+              ExtendsHelper.findUnitLocationOfElement(extension.id, model))
 
         adoptIris(iriMerger, masterTree)
 
@@ -112,31 +128,39 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean) exten
       element.set(field, value.asInstanceOf[AmfScalar].toString.replaceFirst(extension, master))
   }
 
-  def merge(master: DomainElement, overlay: DomainElement, extensionId: String): DomainElement = {
+  def merge(master: DomainElement,
+            overlay: DomainElement,
+            extensionId: String,
+            extensionLocation: Option[String]): DomainElement = {
     cleanSynthesizedFacets(master)
     overlay.fields.fields().filter(ignored).foreach {
       case entry @ FieldEntry(field, value) =>
         master.fields.entry(field) match {
           case None =>
             val newValue = adoptInner(master.id, value.value)
-            if (keepEditingInfo) newValue.annotations += ExtensionProvenance(extensionId)
+            if (keepEditingInfo) newValue.annotations += ExtensionProvenance(extensionId, extensionLocation)
             master.set(field, newValue) // Set field if it doesn't exist.
           case Some(existing) =>
             field.`type` match {
-              case _: Type.Scalar          =>
-                if (keepEditingInfo) value.value.annotations += ExtensionProvenance(extensionId)
+              case _: Type.Scalar =>
+                if (keepEditingInfo) value.value.annotations += ExtensionProvenance(extensionId, extensionLocation)
                 master.set(field, value.value)
-              case Type.ArrayLike(element) => mergeByValue(master, field, element, existing.value, value, extensionId)
+              case Type.ArrayLike(element) =>
+                mergeByValue(master, field, element, existing.value, value, extensionId, extensionLocation)
               case DataNodeModel =>
                 mergeDataNode(master,
                               field,
                               existing.value.value.asInstanceOf[DomainElement],
                               value.value.asInstanceOf[DomainElement],
-                              extensionId)
+                              extensionId,
+                              extensionLocation)
               case _: ShapeModel if incompatibleType(existing.domainElement, entry.domainElement) =>
-                master.set(field, entry.domainElement, Annotations(Seq(ExtensionProvenance(overlay.id))))
-              case _: DomainElementModel => merge(existing.domainElement, entry.domainElement, extensionId)
-              case _                     => throw new Exception(s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)")
+                master.set(field,
+                           entry.domainElement,
+                           Annotations(Seq(ExtensionProvenance(overlay.id, extensionLocation))))
+              case _: DomainElementModel =>
+                merge(existing.domainElement, entry.domainElement, extensionId, extensionLocation)
+              case _ => throw new Exception(s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)")
             }
         }
     }
@@ -159,28 +183,37 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean) exten
     }
   }
 
-  def mergeDataNode(master: DomainElement, field: Field, existing: DomainElement, overlay: DomainElement, extensionId: String): Unit = {
+  def mergeDataNode(master: DomainElement,
+                    field: Field,
+                    existing: DomainElement,
+                    overlay: DomainElement,
+                    extensionId: String,
+                    extensionLocation: Option[String]): Unit = {
     (existing, overlay) match {
       case (e: DataNode, o: DataNode) if existing.getClass == overlay.getClass =>
         DataNodeMerging.merge(e, o)
       case _ =>
         // Different types of nodes means the overlay has redefined this extension, so replace it
-        if (keepEditingInfo) overlay.annotations += ExtensionProvenance(extensionId)
+        if (keepEditingInfo) overlay.annotations += ExtensionProvenance(extensionId, extensionLocation)
         master.set(field, overlay)
     }
   }
 
   /** Merge annotation types, types, security schemes, resource types,  */
-  def mergeDeclarations(master: Document, extension: ExtensionLike[WebApi], iriMerger: IriMerger, extensionId: String): Unit = {
+  def mergeDeclarations(master: Document,
+                        extension: ExtensionLike[WebApi],
+                        iriMerger: IriMerger,
+                        extensionId: String,
+                        extensionLocation: Option[String]): Unit = {
     val declarations = WebApiDeclarations(master.declares, Some(ctx), EmptyFutureDeclarations())
 
     // Extension declarations will be added to master document. The ones with the same name will be merged.
     extension.declares.foreach { declaration =>
       declarations.findEquivalent(declaration) match {
-        case Some(equivalent) => merge(equivalent, declaration, extensionId)
+        case Some(equivalent) => merge(equivalent, declaration, extensionId, extensionLocation)
         case None =>
           val extendedDeclaration = adoptInner(master.id + "#/declarations", declaration).asInstanceOf[DomainElement]
-          if (keepEditingInfo) extendedDeclaration.annotations += ExtensionProvenance(extensionId)
+          if (keepEditingInfo) extendedDeclaration.annotations += ExtensionProvenance(extensionId, extensionLocation)
           declarations += extendedDeclaration
       }
     }
@@ -192,32 +225,47 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean) exten
     master.withDeclares(declarables)
   }
 
-  def addAll(target: DomainElement, field: Field, other: AmfArray, extensionId: String): Unit = {
+  def addAll(target: DomainElement,
+             field: Field,
+             other: AmfArray,
+             extensionId: String,
+             extensionLocation: Option[String]): Unit = {
     other.values.foreach { value =>
-      if (keepEditingInfo) value.annotations += ExtensionProvenance(extensionId)
+      if (keepEditingInfo) value.annotations += ExtensionProvenance(extensionId, extensionLocation)
       target.add(field, value)
     }
   }
 
-  private def mergeByValue(target: DomainElement, field: Field, element: Type, main: Value, other: Value, extensionId: String): Unit = {
+  private def mergeByValue(target: DomainElement,
+                           field: Field,
+                           element: Type,
+                           main: Value,
+                           other: Value,
+                           extensionId: String,
+                           extensionLocation: Option[String]): Unit = {
     val m = main.value.asInstanceOf[AmfArray]
     val o = other.value.asInstanceOf[AmfArray]
 
     element match {
-      case _: Type.Scalar        => mergeByValue(target, field, m, o, extensionId)
-      case key: KeyField         => mergeByKeyValue(target, field, element, key, m, o, extensionId)
-      case _: DomainElementModel => addAll(target, field, o, extensionId)
+      case _: Type.Scalar        => mergeByValue(target, field, m, o, extensionId, extensionLocation)
+      case key: KeyField         => mergeByKeyValue(target, field, element, key, m, o, extensionId, extensionLocation)
+      case _: DomainElementModel => addAll(target, field, o, extensionId, extensionLocation)
       case _                     => throw new Exception(s"Cannot merge '$element': not a KeyField nor a Scalar")
     }
   }
 
-  private def mergeByValue(target: DomainElement, field: Field, main: AmfArray, other: AmfArray, extensionId: String): Unit = {
+  private def mergeByValue(target: DomainElement,
+                           field: Field,
+                           main: AmfArray,
+                           other: AmfArray,
+                           extensionId: String,
+                           extensionLocation: Option[String]): Unit = {
     val existing = main.values.map(_.asInstanceOf[AmfScalar].value).toSet
     other.values.foreach { value =>
       val scalar = value.asInstanceOf[AmfScalar].value
       if (!existing.contains(scalar)) {
         val scalarValue = AmfScalar(scalar)
-        if (keepEditingInfo) scalarValue.annotations += ExtensionProvenance(extensionId)
+        if (keepEditingInfo) scalarValue.annotations += ExtensionProvenance(extensionId, extensionLocation)
         target.add(field, scalarValue)
       }
     }
@@ -229,7 +277,8 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean) exten
                               key: KeyField,
                               master: AmfArray,
                               extension: AmfArray,
-                              extensionId: String): Unit = {
+                              extensionId: String,
+                              extensionLocation: Option[String]): Unit = {
 
     val asSimpleProperty = key == ExampleModel || key == DomainExtensionModel || key == ParametrizedTraitModel || key == ParametrizedSecuritySchemeModel
 
@@ -249,10 +298,15 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean) exten
         obj.fields.entry(key.key) match {
           case Some(value) =>
             val keyValue = value.scalar.value
-            existing += keyValue -> mergeByKeyResult(target, asSimpleProperty, existing.get(keyValue), obj, extensionId)
+            existing += keyValue -> mergeByKeyResult(target,
+                                                     asSimpleProperty,
+                                                     existing.get(keyValue),
+                                                     obj,
+                                                     extensionId,
+                                                     extensionLocation)
 
           case _ => // If key is null and nullKey exists, merge if it is not a simpleProperty. Else just override.
-            nullKey = Some(mergeByKeyResult(target, asSimpleProperty, nullKey, obj, extensionId))
+            nullKey = Some(mergeByKeyResult(target, asSimpleProperty, nullKey, obj, extensionId, extensionLocation))
         }
     }
 
@@ -263,9 +317,10 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean) exten
                                asSimpleProperty: Boolean,
                                existing: Option[DomainElement],
                                obj: DomainElement,
-                               extensionId: String) = {
+                               extensionId: String,
+                               extensionLocation: Option[String]) = {
     existing match {
-      case Some(e) if !asSimpleProperty => merge(e, obj.adopted(target.id), extensionId)
+      case Some(e) if !asSimpleProperty => merge(e, obj.adopted(target.id), extensionId, extensionLocation)
       case _                            => adoptInner(target.id, obj).asInstanceOf[DomainElement]
     }
   }

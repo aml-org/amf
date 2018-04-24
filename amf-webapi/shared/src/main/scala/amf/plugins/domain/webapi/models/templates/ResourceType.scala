@@ -22,7 +22,13 @@ class ResourceType(override val fields: Fields, override val annotations: Annota
       case Some(_) =>
         effectiveLinkTarget.asInstanceOf[ResourceType].asEndpoint(unit, profile)
       case _ =>
-        ExtendsHelper.asEndpoint(unit, profile, dataNode, name.value(), id, keepEditingInfo = false)
+        ExtendsHelper.asEndpoint(unit,
+                                 profile,
+                                 dataNode,
+                                 name.value(),
+                                 id,
+                                 ExtendsHelper.findUnitLocationOfElement(id, unit),
+                                 keepEditingInfo = false)
     }
   }
 }
