@@ -16,7 +16,7 @@ class InheritanceIncompatibleShapeError(message: String) extends Exception(messa
 trait MinShapeAlgorithm extends RestrictionComputation {
 
   val errorHandler: ErrorHandler
-  
+
   // this is inverted, it is safe because recursive shape does not have facets
   def computeMinRecursive(baseShape: Shape, recursiveShape: RecursiveShape): Shape = {
     restrictShape(baseShape, recursiveShape)
@@ -150,7 +150,8 @@ trait MinShapeAlgorithm extends RestrictionComputation {
     val baseItems  = superTuple.items
 
     if (superItems.length != baseItems.length) {
-      throw new InheritanceIncompatibleShapeError("Cannot inherit from a tuple shape with different number of elements")
+      throw new InheritanceIncompatibleShapeError(
+        "Cannot inherit from a tuple shape with different number of elements")
     } else {
       val newItems = for {
         (baseItem, i) <- baseItems.view.zipWithIndex
@@ -297,7 +298,7 @@ trait MinShapeAlgorithm extends RestrictionComputation {
         shape match {
           case any: AnyShape =>
             accExamples ++= any.examples
-            any.fields.remove(AnyShapeModel.Examples)
+            any.fields.removeField(AnyShapeModel.Examples)
           case _ => // ignore
         }
         shape

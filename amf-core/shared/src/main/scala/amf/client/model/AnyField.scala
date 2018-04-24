@@ -18,4 +18,6 @@ case class AnyField(private val _internal: InternalAnyField) extends BaseField w
 
   /** Return value or null if value is null or undefined. */
   override def value(): Any = _option.orNull
+
+  override def remove(): Unit = _internal.remove()
 }

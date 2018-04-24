@@ -37,6 +37,13 @@ package object utils {
     private def isQuoted =
       Option(str).exists(s => (s.startsWith("\"") && s.endsWith("\"")) || (s.startsWith("'") && s.endsWith("'")))
 
+    def normalizeUrl: String = {
+      if (str == null || str.isEmpty) str
+      else if (str.startsWith("http:") || str.startsWith("https:") || str.startsWith("file:")) str
+      else if (str.startsWith("/")) "file:/" + str
+      else "file://" + str
+    }
+
     /** Url encoded string. */
     def urlEncoded: String = {
       str

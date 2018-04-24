@@ -31,7 +31,7 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
     server
       .map { s =>
         val vars = s.variables
-        s.fields.remove(ServerModel.Variables)
+        s.fields.removeField(ServerModel.Variables)
         vars
       }
       .getOrElse(Nil)
@@ -53,7 +53,7 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
         // collect endpoint parameters
         webApi.endPoints.foreach { endpoint =>
           finalParams = finalParams.merge(Parameters.classified(endpoint.path.value(), endpoint.parameters))
-          endpoint.fields.remove(EndPointModel.Parameters)
+          endpoint.fields.removeField(EndPointModel.Parameters)
           // collect operation query parameters
           if (finalParams.nonEmpty)
             endpoint.operations.foreach { op =>
@@ -92,7 +92,7 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
           val finalParams = Parameters.classified(endpoint.path.value(), endpoint.parameters)
           // collect operation query parameters
           if (finalParams.nonEmpty && endpoint.operations.nonEmpty) {
-            endpoint.fields.remove(EndPointModel.Parameters)
+            endpoint.fields.removeField(EndPointModel.Parameters)
             endpoint.operations.foreach { op =>
               setRequestParameters(op, finalParams)
             }
@@ -126,7 +126,7 @@ class ParametersNormalizationStage(profile: String) extends ResolutionStage(prof
           val finalParams = Parameters.classified(endpoint.path.value(), other)
           // collect operation query parameters
           if (finalParams.nonEmpty && endpoint.operations.nonEmpty) {
-            endpoint.fields.remove(EndPointModel.Parameters)
+            endpoint.fields.removeField(EndPointModel.Parameters)
 
             // we re-assign path parameters at the endpoint, we push the rest
             if (path.nonEmpty)

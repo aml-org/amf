@@ -48,7 +48,7 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
   }
 
   def withoutLocation(e: AmfObject): AmfObject = {
-    e.fields.remove(amf.core.metamodel.document.DocumentModel.Location)
+    e.fields.removeField(amf.core.metamodel.document.DocumentModel.Location)
     e
   }
 

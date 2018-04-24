@@ -148,7 +148,7 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
 
       // no link
       case ex: ExternalSourceElement =>
-        ex.fields.remove(ExternalSourceElementModel.ReferenceId)
+        ex.fields.removeField(ExternalSourceElementModel.ReferenceId)
         Some(resolveExternalFields(ex))
       case other => Some(other)
 

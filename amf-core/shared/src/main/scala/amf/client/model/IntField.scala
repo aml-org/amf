@@ -21,4 +21,6 @@ case class IntField(private val _internal: InternalIntField) extends BaseAnyValF
     case Some(v) => v
     case _       => 0
   }
+
+  override def remove(): Unit = _internal.remove()
 }

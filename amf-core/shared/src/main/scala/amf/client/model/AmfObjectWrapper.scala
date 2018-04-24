@@ -7,4 +7,9 @@ import amf.core.model.domain.{AmfObject => InternalAmfObject}
   */
 trait AmfObjectWrapper {
   private[amf] val _internal: InternalAmfObject
+
+  def removeField(uri: String): this.type = {
+    _internal.removeField(uri)
+    this
+  }
 }

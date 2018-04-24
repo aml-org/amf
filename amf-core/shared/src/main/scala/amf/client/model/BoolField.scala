@@ -21,4 +21,6 @@ case class BoolField(private val _internal: InternalBoolField) extends BaseAnyVa
     case Some(v) => v
     case _       => false
   }
+
+  override def remove(): Unit = _internal.remove()
 }

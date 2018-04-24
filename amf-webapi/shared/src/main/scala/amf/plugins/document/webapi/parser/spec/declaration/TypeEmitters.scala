@@ -587,7 +587,7 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
         .flatMap(f =>
           if (!f.value.annotations.contains(classOf[Inferred])) {
             scalar.fields
-              .remove(ShapeModel.Inherits) // for scalar doesn't make any sense to write the inherits, because it will always be another scalar with the same t
+              .removeField(ShapeModel.Inherits) // for scalar doesn't make any sense to write the inherits, because it will always be another scalar with the same t
             Some(MapEntryEmitter("type", typeDef, position = pos(f.value.annotations)))
           } else None) // TODO check this  - annotations of typeDef in parser
     } else {

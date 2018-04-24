@@ -51,10 +51,10 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean)
   def removeExtends(document: Document): BaseUnit = {
     document.encodes.asInstanceOf[WebApi].endPoints.foreach { endpoint =>
       if (!keepEditingInfo)
-        endpoint.fields.remove(DomainElementModel.Extends)
+        endpoint.fields.removeField(DomainElementModel.Extends)
       endpoint.operations.foreach { operation =>
         if (!keepEditingInfo)
-          operation.fields.remove(DomainElementModel.Extends)
+          operation.fields.removeField(DomainElementModel.Extends)
       }
     }
     document

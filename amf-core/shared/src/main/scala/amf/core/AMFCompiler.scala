@@ -12,7 +12,7 @@ import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.services.RuntimeCompiler
 import amf.internal.environment.Environment
-
+import amf.core.utils.Strings
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.Future.failed
@@ -215,4 +215,14 @@ case class Root(parsed: ParsedDocument,
                 references: Seq[ParsedReference],
                 referenceKind: ReferenceKind,
                 vendor: String,
-                raw: String)
+                raw: String) {}
+object Root {
+  def apply(parsed: ParsedDocument,
+            location: String,
+            mediatype: String,
+            references: Seq[ParsedReference],
+            referenceKind: ReferenceKind,
+            vendor: String,
+            raw: String): Root =
+    new Root(parsed, location.normalizeUrl, mediatype, references, referenceKind, vendor, raw)
+}

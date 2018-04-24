@@ -129,11 +129,11 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
       }
 
       // This is required in the case where the extension comes from an overlay/extension
-      if (!keepEditingInfo && !fromOverlay) operation.fields.remove(DomainElementModel.Extends)
+      if (!keepEditingInfo && !fromOverlay) operation.fields.removeField(DomainElementModel.Extends)
     }
 
     // This is required in the case where the extension comes from an overlay/extension
-    if (!keepEditingInfo && !fromOverlay) endpoint.fields.remove(DomainElementModel.Extends)
+    if (!keepEditingInfo && !fromOverlay) endpoint.fields.removeField(DomainElementModel.Extends)
 
     endpoint
   }
