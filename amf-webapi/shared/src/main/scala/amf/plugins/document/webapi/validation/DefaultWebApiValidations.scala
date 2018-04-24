@@ -240,7 +240,7 @@ object JsCustomValidations {
          |  else return (parseFloat(minimum) <= parseFloat(maximum));
          |}
       """.stripMargin,
-    "minItemsMaxItemsValidation" ->
+    "minMaxItemsValidation" ->
       """|function(shape) {
          |  //console.log(JSON.stringify(shape));
          |  var minCount = shape["shacl:minCount"];
@@ -249,13 +249,22 @@ object JsCustomValidations {
          |  else return (parseInt(minCount) <= parseInt(maxCount));
          |}
       """.stripMargin,
-    "minLengthMaxLengthValidation" ->
+    "minMaxLengthValidation" ->
       """|function(shape) {
          |  //console.log(JSON.stringify(shape));
          |  var minLength = shape["shacl:minLength"];
          |  var maxLength = shape["shacl:maxLength"];
          |  if (minLength == undefined || maxLength == undefined) return true;
          |  else return (parseInt(minLength) <= parseInt(maxLength));
+         |}
+      """.stripMargin,
+    "minMaxPropertiesValidation" ->
+      """|function(shape) {
+         |  //console.log(JSON.stringify(shape));
+         |  var minProperties = shape["raml-shapes:minProperties"];
+         |  var maxProperties = shape["raml-shapes:maxProperties"];
+         |  if (minProperties == undefined || maxProperties == undefined) return true;
+         |  else return (parseInt(minProperties) <= parseInt(maxProperties));
          |}
       """.stripMargin
   )

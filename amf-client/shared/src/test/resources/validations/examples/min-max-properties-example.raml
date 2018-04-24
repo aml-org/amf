@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: My API With Types
+
+types:
+  InvalidMax:
+    type: object
+    maxProperties: 2
+    minProperties: 2
+    properties:
+      comment_id?: number
+      initial_comments: string
+      author?: string
+    examples:
+      badMin:
+        initial_comments: blabla
+      badMax:
+        initial_comments: blabla
+        comment_id: 1
+        author: cosme
+      ok:
+        initial_comments: blabla
+        comment_id: 1

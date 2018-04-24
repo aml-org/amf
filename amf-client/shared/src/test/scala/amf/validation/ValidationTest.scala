@@ -1508,7 +1508,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Test minimum maximum constraint between facets examples") {
+  test("Test minimum maximum constraint between facets") {
     for {
       validation <- Validation(platform)
       doc        <- AMFCompiler(validationsPath + "/facets/min-max-between.raml", platform, RamlYamlHint, validation).build()
@@ -1520,7 +1520,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Test minItems maxItems constraint between facets examples") {
+  test("Test minItems maxItems constraint between facets") {
     for {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/facets/min-max-items-between.raml", platform, RamlYamlHint, validation)
@@ -1533,7 +1533,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Test minLength maxLength constraint between facets examples") {
+  test("Test minLength maxLength constraint between facets") {
     for {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/facets/min-max-length-between.raml", platform, RamlYamlHint, validation)
@@ -1592,8 +1592,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Example xml with sons results test") {
     for {
       validation <- Validation(platform)
-      doc        <- AMFCompiler(examplesPath + "/xmlexample/offices_xml_type.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(doc, ProfileNames.AMF)
+      doc <- AMFCompiler(examplesPath + "/xmlexample/offices_xml_type.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.AMF)
     } yield {
       assert(report.conforms)
       assert(report.results.count(_.level == SeverityLevels.WARNING) == 3) // all warnings
@@ -1717,6 +1718,39 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report     <- validation.validate(doc, ProfileNames.AMF)
     } yield {
       assert(report.conforms)
+    }
+  }
+
+  test("Test maxProperties and minProperties constraint between facets") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "/facets/min-max-properties-between.raml",
+                         platform,
+                         RamlYamlHint,
+                         validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 1)
+      assert(report.results.exists(_.message.contains("MaxProperties must be greater than or equal to minProperties")))
+    }
+  }
+
+  test("Test maxProperties and minProperties constraints example") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "/examples/min-max-properties-example.raml",
+                         platform,
+                         RamlYamlHint,
+                         validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 2)
+      assert(report.results.exists(_.message.contains("Expected max properties")))
+      assert(report.results.exists(_.message.contains("Expected min properties")))
     }
   }
 }
