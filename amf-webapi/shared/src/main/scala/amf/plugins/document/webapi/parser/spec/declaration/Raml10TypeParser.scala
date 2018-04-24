@@ -9,12 +9,7 @@ import amf.core.parser.{Annotations, Value, _}
 import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
-import amf.plugins.document.webapi.contexts.{
-  Raml08WebApiContext,
-  Raml10WebApiContext,
-  RamlWebApiContext,
-  WebApiContext
-}
+import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec._
@@ -41,7 +36,7 @@ object Raml10TypeParser {
             isAnnotation: Boolean = false,
             defaultType: DefaultType = StringDefaultType)(implicit ctx: WebApiContext): Raml10TypeParser =
     new Raml10TypeParser(ast, ast.key.as[YScalar].text, ast.value, adopt, isAnnotation, defaultType)(
-      new Raml10WebApiContext(ctx, Some(ctx.declarations)))
+      new Raml10WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations)))
 
   def parse(adopt: Shape => Shape, isAnnotation: Boolean = false, defaultType: DefaultType = StringDefaultType)(
       node: YNode)(implicit ctx: RamlWebApiContext): Option[Shape] = {
@@ -130,7 +125,7 @@ object Raml08TypeParser {
             isAnnotation: Boolean = false,
             defaultType: DefaultType = StringDefaultType)(implicit ctx: WebApiContext): Raml08TypeParser =
     new Raml08TypeParser(ast, ast.key.as[YScalar].text, ast.value, adopt, isAnnotation, defaultType)(
-      new Raml08WebApiContext(ctx, Some(ctx.declarations)))
+      new Raml08WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations)))
 }
 
 case class Raml08TypeParser(ast: YPart,
@@ -472,7 +467,7 @@ trait RamlExternalTypes extends RamlSpecParser with ExampleParser with RamlTypeS
     ctx.localJSONSchemaContext = Some(schemaEntry.value)
 
     val parsed =
-      OasTypeParser(schemaEntry, (shape) => adopt(shape), oasNode = "externalSchema")(toOas(ctx)).parse() match {
+      OasTypeParser(schemaEntry, (shape) => adopt(shape), oasNode = "externalSchema")(toSchemaContext(ctx, valueAST)).parse() match {
         case Some(shape) =>
           if (!sourceRefReference(value, shape, ctx)) shape.annotations += ParsedJSONSchema(text)
           shape
@@ -505,6 +500,25 @@ trait RamlExternalTypes extends RamlSpecParser with ExampleParser with RamlTypeS
     }
 
     parsed
+  }
+
+  protected def toSchemaContext(ctx: WebApiContext, ast: YNode): OasWebApiContext = {
+    ast match {
+      case inlined: MutRef =>
+        if (inlined.origTag.tagType == YType.Include) {
+          // JSON schema file we need to update the context
+          val fileHint = inlined.origValue.asInstanceOf[YScalar].text.split("/").last.split("#").head
+          ctx.refs.filter(r => Option(r.unit.location).isDefined).find(_.unit.location.endsWith(fileHint)) match {
+            case Some(ref) => toOas(ref.unit.location, ref.unit.references.map(r => ParsedReference(r, Reference(ref.unit.location, Nil), None)), ctx)
+            case _ => toOas(ctx)
+          }
+        } else {
+          // Inlined we don't need to update the context for ths JSON schema file
+          toOas(ctx)
+        }
+      case _ =>
+        toOas(ctx)
+    }
   }
 
   protected def typeOrSchema(map: YMap): Option[YMapEntry] = map.key("type").orElse(map.key("schema"))
@@ -881,6 +895,109 @@ sealed abstract class RamlTypeParser(ast: YPart,
       ctx.closedRamlTypeShape(shape, map, "unionShape", isAnnotation)
 
       shape
+    }
+  }
+
+  case class OrConstraintParser(map: YMap, shape: Shape) {
+
+    def parse(): Unit = {
+      map.key(
+        "(amf-or)", { entry =>
+          entry.value.to[Seq[YNode]] match {
+            case Right(seq) =>
+              val nodes = seq.zipWithIndex
+                .map {
+                  case (unionNode, index) =>
+                    typeParser(unionNode,
+                      s"item$index",
+                      unionNode,
+                      item => item.adopted(shape.id + "/or/" + index),
+                      isAnnotation,
+                      AnyDefaultType).parse()
+                }
+                .filter(_.isDefined)
+                .map(_.get)
+              shape.setArray(ShapeModel.Or, nodes, Annotations(entry.value))
+
+            case _ =>
+              ctx.violation(shape.id, "Or constraints are built from multiple shape nodes", entry)
+          }
+        }
+      )
+    }
+  }
+
+  case class AndConstraintParser(map: YMap, shape: Shape) {
+
+    def parse(): Unit = {
+      map.key(
+        "(amf-and)", { entry =>
+          entry.value.to[Seq[YNode]] match {
+            case Right(seq) =>
+              val nodes = seq.zipWithIndex
+                .map {
+                  case (unionNode, index) =>
+                    typeParser(unionNode,
+                      s"item$index",
+                      unionNode,
+                      item => item.adopted(shape.id + "/and/" + index),
+                      isAnnotation,
+                      AnyDefaultType).parse()
+                }
+                .filter(_.isDefined)
+                .map(_.get)
+              shape.setArray(ShapeModel.And, nodes, Annotations(entry.value))
+
+            case _ =>
+              ctx.violation(shape.id, "And constraints are built from multiple shape nodes", entry)
+          }
+        }
+      )
+    }
+  }
+
+  case class XoneConstraintParser(map: YMap, shape: Shape) {
+
+    def parse(): Unit = {
+      adopt(shape)
+
+      map.key(
+        "(amf-xor)", { entry =>
+          entry.value.to[Seq[YNode]] match {
+            case Right(seq) =>
+              val nodes = seq.zipWithIndex
+                .map {
+                  case (unionNode, index) =>
+                    typeParser(unionNode,
+                      s"item$index",
+                      unionNode,
+                      item => item.adopted(shape.id + "/xor/" + index),
+                      isAnnotation,
+                      AnyDefaultType).parse()
+                }
+                .filter(_.isDefined)
+                .map(_.get)
+              shape.setArray(ShapeModel.Xone, nodes, Annotations(entry.value))
+
+            case _ =>
+              ctx.violation(shape.id, "Xone constraints are built from multiple shape nodes", entry)
+          }
+        }
+      )
+    }
+  }
+
+  case class NotConstraintParser(map: YMap, shape: Shape) {
+
+    def parse(): Unit = {
+      map.key(
+        "(amf-not)", { entry =>
+          typeParser(entry, "not", entry.value, (s: Shape) => s.withId(shape.id + "/not"), false, defaultType).parse() match {
+            case Some(negated) => shape.set(ShapeModel.Not, negated, Annotations(entry.value))
+            case _             => // ignore
+          }
+        }
+      )
     }
   }
 
@@ -1318,6 +1435,12 @@ sealed abstract class RamlTypeParser(ast: YPart,
           shape.set(AnyShapeModel.XMLSerialization, xmlSerializer, Annotations(entry))
         }
       )
+
+      // Logical constraints
+      if (map.key("(amf-or)").isDefined) OrConstraintParser(map, shape).parse()
+      if (map.key("(amf-and)").isDefined) AndConstraintParser(map, shape).parse()
+      if (map.key("(amf-xone)").isDefined) XoneConstraintParser(map, shape).parse()
+      if (map.key("(amf-not)").isDefined) NotConstraintParser(map, shape).parse()
 
       // Custom shape property definitions, not instances, those are parsed at the end of the parsing process
       map.key(

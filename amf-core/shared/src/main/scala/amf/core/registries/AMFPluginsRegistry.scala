@@ -100,7 +100,7 @@ object AMFPluginsRegistry {
   }
 
   def documentPluginForMediaType(mediaType: String): Seq[AMFDocumentPlugin] = {
-    documentPluginRegistry.getOrElse(mediaType, Seq())
+    documentPluginRegistry.getOrElse(mediaType, Seq()).sortBy(_.priority)
   }
 
   def dataNodeValidatorPluginForMediaType(mediaType: String): Seq[AMFPayloadValidationPlugin] =
@@ -111,7 +111,7 @@ object AMFPluginsRegistry {
   }
 
   def documentPluginForVendor(vendor: String): Seq[AMFDocumentPlugin] = {
-    documentPluginVendorsRegistry.getOrElse(vendor, Seq())
+    documentPluginVendorsRegistry.getOrElse(vendor, Seq()).sortBy(_.priority)
   }
 
   def registerDomainPlugin(domainPlugin: AMFDomainPlugin) = {

@@ -62,4 +62,9 @@ object AMFGraphPlugin extends AMFDocumentPlugin {
     */
   override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE) =
     new BasicResolutionPipeline().resolve(unit)
+
+  /**
+    * Does references in this type of documents be recursive?
+    */
+  override val allowRecursiveReferences: Boolean = true
 }

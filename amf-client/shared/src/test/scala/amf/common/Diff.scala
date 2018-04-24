@@ -2,7 +2,7 @@ package amf.common
 
 import java.io.{File, PrintWriter, Reader, StringWriter}
 
-import amf.common.Diff.{Delta, Equals, PathNode}
+import amf.common.Diff._
 
 /**
   * Diff class to compare objects.
@@ -207,7 +207,16 @@ object Diff {
     }
 
     def removeSpaces(a: String): String = {
+      val strBuilder = new StringBuilder()
+      for {
+        c <- a
+      } {
+        if (!Character.isWhitespace(c)) {
+          strBuilder.append(c)
+        }
+      }
       a.filter(!Character.isWhitespace(_))
+      strBuilder.result()
     }
   }
 

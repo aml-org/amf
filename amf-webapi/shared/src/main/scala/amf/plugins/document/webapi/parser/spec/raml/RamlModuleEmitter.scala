@@ -53,7 +53,7 @@ class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitter
 
     val usage = fragment.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("usage", f))
     // should ignore for 08?
-    val references = Seq(ReferencesEmitter(fragment.references, ordering))
+    val references = Seq(ReferencesEmitter(fragment, ordering))
 
     YDocument(b => {
       b.comment(typeEmitter.header.text)

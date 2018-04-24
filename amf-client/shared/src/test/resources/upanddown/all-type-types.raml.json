@@ -6,6 +6,16 @@
   },
   "paths": {},
   "definitions": {
+    "AndType": {
+      "allOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "integer"
+        }
+      ]
+    },
     "StringType": {
       "type": "string"
     },
@@ -17,12 +27,22 @@
       "type": "string",
       "format": "date-time-only"
     },
+    "OrType": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "integer"
+        }
+      ]
+    },
     "TimeOnlyType": {
       "type": "string",
       "format": "time-only"
     },
     "UnionType": {
-      "anyOf": [
+      "x-amf-union": [
         {
           "type": "string"
         },
@@ -70,6 +90,11 @@
     "PasswordType": {
       "type": "string",
       "format": "password"
+    },
+    "NotType": {
+      "not": {
+        "type": "string"
+      }
     }
   }
 }

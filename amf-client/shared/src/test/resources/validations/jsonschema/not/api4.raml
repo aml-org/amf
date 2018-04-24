@@ -1,0 +1,34 @@
+#%RAML 1.0
+title: test
+
+types:
+  test1: |
+    {
+                "properties": {
+                    "foo": {
+                        "not": {}
+                    }
+                }
+    }
+
+/ep1:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              foo: 1
+              bar: 2
+
+/ep2:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              bar: 1
+              baz: 2

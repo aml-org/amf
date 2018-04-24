@@ -1,10 +1,13 @@
 package amf.plugins.document.webapi.references
 
+import java.net.URISyntaxException
+
+import amf.core.utils._
 import amf.core.annotations.SourceAST
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser._
-import amf.core.remote.{Cache, Context}
+import amf.core.remote.{Cache, Context, FileNotFound}
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.BaseWebApiPlugin
 import amf.plugins.document.webapi.parser.RamlHeader
@@ -141,10 +144,29 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
 
   def ramlLinks(part: YPart): Unit = {
     part match {
-      case node: YNode if node.tagType == YType.Include => ramlInclude(node)
-      case _                                            => part.children.foreach(ramlLinks)
+      case node: YNode if node.tagType == YType.Include         => ramlInclude(node)
+      case scalar: YScalar if scalar.value.isInstanceOf[String] => checkInlined(scalar)
+      case _                                                    => part.children.foreach(ramlLinks)
     }
   }
+
+  val linkRegex = "(\"\\$ref\":\\s*\".*\")".r
+
+  private def checkInlined(scalar: YScalar): Unit = {
+    val str = scalar.value.asInstanceOf[String]
+    if (str.isJson) {
+      linkRegex.findAllIn(str).foreach { m =>
+        try {
+          val link = m.split("\"").last.split("#").head
+          if (!link.contains("<<") && !link.contains(">>")) // no trait variables inside path
+            references += (link, InferredLinkReference, YNode(scalar, YType.Str))
+        } catch {
+          case _: Exception => // don't stop the parsing
+        }
+      }
+    }
+  }
+
 
   private def ramlInclude(node: YNode): Unit = {
     node.value match {
@@ -180,6 +202,10 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
                 }
               })
             })
+            .recover {
+              case e: URISyntaxException              => None
+              case e: FileNotFound if r.isInferred()  => None
+            }
         })
 
         Future.sequence(externals).map(_ => reference.copy(ast = Some(document.node)))

@@ -67,8 +67,8 @@ class DialectReferencesResolutionStage(profile: String) extends ResolutionStage(
       }
     }.toSeq
 
-    val vocabulariesAliases = allVocabularies.zipWithIndex.foldLeft(Map[String,String]()) { case (acc, (vocab, i)) =>
-        acc.updated(s"vocab$i", vocab.id)
+    val vocabulariesAliases = allVocabularies.zipWithIndex.foldLeft(Map[Aliases.Alias,(Aliases.FullUrl,Aliases.RelativeUrl)]()) { case (acc, (vocab, i)) =>
+        acc.updated(s"vocab$i", (vocab.id, vocab.id))
     }
 
     val finalExternals: Seq[External] = allExternals.toSeq.zipWithIndex.map { case (external: String, i) =>

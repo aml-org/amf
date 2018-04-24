@@ -20,6 +20,10 @@ trait Shape extends DomainElement with Linkable with NamedDomainElement {
 
   def values: ClientList[StrField] = _internal.values.asClient
   def inherits: ClientList[Shape]  = _internal.inherits.asClient
+  def or: ClientList[Shape]        = _internal.or.asClient
+  def and: ClientList[Shape]       = _internal.and.asClient
+  def xone: ClientList[Shape]      = _internal.xone.asClient
+  def not: Shape                   = _internal.not
 
   def withName(name: String): this.type = {
     _internal.withName(name)
@@ -48,6 +52,26 @@ trait Shape extends DomainElement with Linkable with NamedDomainElement {
 
   def withInherits(inherits: ClientList[Shape]): this.type = {
     _internal.withInherits(inherits.asInternal)
+    this
+  }
+
+  def withOr(subShapes: ClientList[Shape]): this.type = {
+    _internal.withOr(subShapes.asInternal)
+    this
+  }
+
+  def withAnd(subShapes: ClientList[Shape]): this.type = {
+    _internal.withAnd(subShapes.asInternal)
+    this
+  }
+
+  def withXone(subShapes: ClientList[Shape]): this.type = {
+    _internal.withXone(subShapes.asInternal)
+    this
+  }
+
+  def withNode(shape: Shape): this.type = {
+    _internal.withNot(shape)
     this
   }
 

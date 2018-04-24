@@ -9,8 +9,9 @@ import amf.plugins.document.webapi.{OAS20Plugin, OAS30Plugin, RAML08Plugin, RAML
 import scala.concurrent.Future
 
 abstract class RamlResolutionTest extends ResolutionTest {
-  override def render(unit: BaseUnit, config: CycleConfig): Future[String] =
+  override def render(unit: BaseUnit, config: CycleConfig): Future[String] = {
     new AMFRenderer(unit, config.target, Raml.defaultSyntax, RenderOptions().withSourceMaps).renderToString
+  }
 }
 
 abstract class OasResolutionTest extends ResolutionTest {
@@ -119,6 +120,16 @@ class ProductionResolutionTest extends RamlResolutionTest {
   test("test overlay documentation") {
     cycle("overlay.raml", "api.resolved.raml", RamlYamlHint, Raml, basePath + "overlay-documentation/")
   }
+
+  test("test api_6109_ver_10147") {
+    cycle("api.raml", "api.resolved.raml", RamlYamlHint, Raml, basePath + "api_6109_ver_10147/")
+  }
+
+  test("test definition_loops input") {
+    cycle("crossfiles2.raml", "crossfiles2.resolved.raml", RamlYamlHint, Raml, basePath + "definitions-loops/")
+  }
+
+
 
   test("test bad tabulation at end flow map of traits definitions") {
     cycle("healthcare-system-api.raml",

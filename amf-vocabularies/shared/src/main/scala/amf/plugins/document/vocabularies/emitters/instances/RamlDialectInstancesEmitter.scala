@@ -99,8 +99,8 @@ case class RamlDialectInstancesEmitter(instance: DialectInstance, dialect: Diale
       .find(classOf[Aliases])
       .map { aliases =>
         aliases.aliases.foldLeft(Map[String, String]()) {
-          case (acc, (alias, id)) =>
-            acc + (id -> alias)
+          case (acc, (alias, (fullUrl, relativeUrl))) =>
+            acc + (fullUrl -> alias)
         }
       }
       .getOrElse(Map())

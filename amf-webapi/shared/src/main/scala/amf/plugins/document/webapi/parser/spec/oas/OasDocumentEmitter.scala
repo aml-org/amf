@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.parser.spec.oas
 import amf.core.annotations._
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
+import amf.core.metamodel.Field
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document._
@@ -10,7 +11,7 @@ import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.core.remote.{Oas, Vendor}
-import amf.plugins.document.webapi.contexts.{BaseSpecEmitter, OasSpecEmitterContext, SpecEmitterContext}
+import amf.plugins.document.webapi.contexts.{BaseSpecEmitter, OasSpecEmitterContext, Raml10SpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Overlay}
 import amf.plugins.document.webapi.parser.spec._
@@ -56,9 +57,9 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
 
     val ordering = SpecOrdering.ordering(Oas, doc.encodes.annotations)
 
-    val references = ReferencesEmitter(document.references, ordering)
-    val declares   = OasDeclarationsEmitter(doc.declares, ordering, references.references).emitters
-    val api        = emitWebApi(ordering, references.references)
+    val references = ReferencesEmitter(document, ordering)
+    val declares   = OasDeclarationsEmitter(doc.declares, ordering, document.references).emitters
+    val api        = emitWebApi(ordering, document.references)
     val extension  = extensionEmitter()
     val usage: Option[ValueEmitter] =
       doc.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("usage".asOasExtension, f))
@@ -297,7 +298,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
         .map { f =>
           Option(f.value.value) match {
             case Some(shape: AnyShape) =>
-              result += RamlNamedTypeEmitter(shape, ordering, Nil, Raml10TypePartEmitter.apply)
+              result += RamlNamedTypeEmitter(shape, ordering, Nil, ramlTypesEmitter)
             case Some(_) => throw new Exception("Cannot emit a non WebApi Shape")
             case None    => // ignore
           }
@@ -313,6 +314,11 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
 
       result
     }
+
+    def ramlTypesEmitter(s:AnyShape, o:SpecOrdering, a:Option[AnnotationsEmitter], fs:Seq[Field], us:Seq[BaseUnit]): RamlTypePartEmitter = {
+      Raml10TypePartEmitter(s,o,a,fs,us)(new Raml10SpecEmitterContext())
+    }
+
   }
 
   case class ResponsesEmitter(key: String,
@@ -424,44 +430,50 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
 
 class OasSpecEmitter(implicit val spec: OasSpecEmitterContext) extends BaseSpecEmitter {
 
-  case class ReferencesEmitter(references: Seq[BaseUnit], ordering: SpecOrdering) extends EntryEmitter {
+  case class ReferencesEmitter(baseUnit: BaseUnit, ordering: SpecOrdering) extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
+      val aliases = baseUnit.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set()))
+      val references = baseUnit.references
       val modules = references.collect({ case m: Module => m })
       if (modules.nonEmpty) {
-        val idCounter: IdCounter = new IdCounter
-        b.entry(
-          "uses".asOasExtension,
-          _.obj { b =>
-            traverse(
-              ordering.sorted(references.map(r => ReferenceEmitter(r, ordering, () => idCounter.genId("uses")))),
-              b)
+        var modulesEmitted = Map[String, Module]()
+        val idCounter = new IdCounter()
+        val aliasesEmitters: Seq[Option[EntryEmitter]] = aliases.aliases.map { case (alias, (fullUrl, localUrl)) =>
+          modules.find(_.id == fullUrl) match {
+            case Some(module) =>
+              modulesEmitted += (module.id -> module)
+              Some(ReferenceEmitter(module, Some(Aliases(Set(alias -> (fullUrl, localUrl)))), ordering, () => idCounter.genId("uses")))
+            case _            => None
           }
-        )
+        }.toSeq
+        val missingModuleEmitters = modules.filter(m => modulesEmitted.get(m.id).isEmpty).map { module =>
+          Some(ReferenceEmitter(module, Some(Aliases(Set())), ordering, () => idCounter.genId("uses")))
+        }
+        val finalEmitters = (aliasesEmitters ++ missingModuleEmitters).collect{ case Some(e) => e }
+        b.entry("uses".asOasExtension, _.obj { b =>
+          traverse(ordering.sorted(finalEmitters), b)
+        })
       }
     }
 
     override def position(): Position = ZERO
   }
 
-  case class ReferenceEmitter(reference: BaseUnit, ordering: SpecOrdering, aliasGenerator: () => String)
+  case class ReferenceEmitter(reference: BaseUnit, aliases: Option[Aliases], ordering: SpecOrdering, aliasGenerator: () => String)
       extends EntryEmitter {
 
     override def emit(b: EntryBuilder): Unit = {
-      val aliases = reference.annotations.find(classOf[Aliases])
-
-      def entry(tuple: (String, String)): Unit = tuple match {
-        case (alias, path) =>
-          val ref = path match {
-            case "" => reference.id
-            case _  => path
-          }
-          MapEntryEmitter(alias, ref).emit(b)
+      val aliasesMap = aliases.getOrElse(Aliases(Set())).aliases
+      val effectiveAlias = aliasesMap.find { case (a, (f,r)) => f == reference.id } map { case (a, (f,r)) => (a, r) } getOrElse {
+        (aliasGenerator(), name)
       }
+      MapEntryEmitter(effectiveAlias._1, effectiveAlias._2).emit(b)
+    }
 
-      aliases.fold {
-        entry(aliasGenerator() -> "")
-      } { _ =>
-        aliases.foreach(_.aliases.foreach(entry))
+    private def name: String = {
+      Option(reference.location) match {
+        case Some(location) => location
+        case None           => reference.id
       }
     }
 

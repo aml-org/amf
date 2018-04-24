@@ -8,7 +8,7 @@ case class Log(stage: String, time: Long)
 
 case class Execution(startTime: Long, endTime: Long, logs: Seq[Log]) {
   def log(stage: String, time: Long) = {
-    // println(stage)
+    //println(stage)
     copy(logs = logs ++ Seq(Log(stage, time)), endTime = time)
   }
   def finish(): Execution = copy(endTime = new Date().getTime)

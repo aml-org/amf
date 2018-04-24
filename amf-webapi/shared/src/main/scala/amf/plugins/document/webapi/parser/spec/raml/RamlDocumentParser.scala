@@ -76,7 +76,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
 
     val map = root.parsed.document.as[YMap]
 
-    val references = ReferencesParser("uses", map, root.references).parse(root.location)
+    val references = ReferencesParser(document, "uses", map, root.references).parse(root.location)
     parseDeclarations(root, map)
 
     val api = parseWebApi(map).add(SourceVendor(root.vendor))

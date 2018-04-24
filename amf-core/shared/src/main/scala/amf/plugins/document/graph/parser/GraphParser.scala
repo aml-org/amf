@@ -151,7 +151,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
           referencesMap += (link.id -> link)
           unresolvedReferences.getOrElse(link.id, Nil).foreach {
             case unresolved: Linkable =>
-              unresolved.linkTarget = Some(link)
+              unresolved.withLinkTarget(link)
             case unresolved: LinkNode =>
               unresolved.withLinkedDomainElement(link)
             case _ => throw new Exception("Only linkable elements can be linked")
@@ -165,7 +165,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
 
     private def setLinkTarget(instance: DomainElement with Linkable, targetId: String) = {
       referencesMap.get(targetId) match {
-        case Some(target) => instance.linkTarget = Some(target)
+        case Some(target) => instance.withLinkTarget(target)
         case None =>
           val unresolved: Seq[DomainElement] = unresolvedReferences.getOrElse(targetId, Nil)
           unresolvedReferences += (targetId -> (unresolved ++ Seq(instance)))

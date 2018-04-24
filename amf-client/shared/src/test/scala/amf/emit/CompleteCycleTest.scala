@@ -1108,14 +1108,16 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("locations-api.raml", "locations-api.jsonld", RamlYamlHint, Amf, productionPath + "locations-api/")
   }
 
-  /*
-  test("Test api_6109_ver_10147 example raml to raml") {
+  ignore("Test api_6109_ver_10147 example raml to amf") {
     cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, productionPath + "api_6109_ver_10147/")
   }
-  */
 
   test("Test definitons-loops example raml to amf") {
     cycle("input.raml", "input.jsonld", RamlYamlHint, Amf, productionPath + "definitions-loops/")
+  }
+
+  test("Test definitons-loops crossfile raml to amf") {
+    cycle("crossfiles.raml", "crossfiles.jsonld", RamlYamlHint, Amf, productionPath + "definitions-loops/")
   }
 
   test("Test financial-api/othercases example raml to amf") {

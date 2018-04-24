@@ -1,0 +1,51 @@
+#%RAML 1.0
+title: test
+
+types:
+  test1: |
+    {
+                "anyOf": [
+                    {
+                        "type": "integer"
+                    },
+                    {
+                        "minimum": 2
+                    }
+                ]
+    }
+
+/ep1:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example: 1
+
+/ep2:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example: 2.5
+
+/ep3:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example: 3
+
+/ep4:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example: 1.5
