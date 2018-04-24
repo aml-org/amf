@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser
 
+import amf.core.parser.ParsedReference
 import amf.plugins.document.webapi.contexts._
 
 /**
@@ -31,11 +32,15 @@ package object spec {
 
   // TODO oas2? raml10?
   def toOas(ctx: WebApiContext): OasWebApiContext = {
-    new Oas2WebApiContext(ctx, Some(ctx.declarations))
+    new Oas2WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations))
+  }
+
+  def toOas(root: String, refs: Seq[ParsedReference], ctx: WebApiContext): OasWebApiContext = {
+    new Oas2WebApiContext(root, refs, ctx, Some(ctx.declarations))
   }
 
   def toRaml(ctx: WebApiContext): RamlWebApiContext = {
-    new Raml10WebApiContext(ctx, Some(ctx.declarations))
+    new Raml10WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations))
   }
 
   def toRaml(spec: SpecEmitterContext): RamlSpecEmitterContext = {

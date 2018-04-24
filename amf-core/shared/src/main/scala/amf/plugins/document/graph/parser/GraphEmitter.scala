@@ -2,10 +2,10 @@ package amf.plugins.document.graph.parser
 
 import amf.core.annotations.{DomainExtensionAnnotation, ScalarType}
 import amf.core.emitter.RenderOptions
-import amf.core.metamodel.Type.{Any, Array, Bool, Iri, SortedArray, Str}
+import amf.core.metamodel.Type.{Any, Array, Bool, EncodedIri, Iri, SortedArray, Str}
 import amf.core.metamodel.document.SourceMapModel
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
-import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
+import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ShapeModel}
 import amf.core.metamodel.{Field, MetaModelTypeMapping, Obj, Type}
 import amf.core.model.document.{BaseUnit, SourceMap}
 import amf.core.model.domain.DataNodeOps.adoptTree
@@ -327,6 +327,9 @@ object GraphEmitter extends MetaModelTypeMapping {
                       .headOption
                       .foreach(e => DefaultScalarEmitter.scalar(b, e.toString, inArray = true))
 
+                  case EncodedIri =>
+                    seq.asInstanceOf[Seq[AmfScalar]].headOption.foreach(e => safeIri(b, e.toString, inArray = true))
+
                   case Iri =>
                     seq.asInstanceOf[Seq[AmfScalar]].headOption.foreach(e => iri(b, e.toString, inArray = true))
 
@@ -379,6 +382,9 @@ object GraphEmitter extends MetaModelTypeMapping {
           sources(v)
         case Iri =>
           iri(b, v.value.asInstanceOf[AmfScalar].toString)
+          sources(v)
+        case EncodedIri =>
+          safeIri(b, v.value.asInstanceOf[AmfScalar].toString)
           sources(v)
         case Str =>
           v.annotations.find(classOf[ScalarType]) match {
@@ -441,6 +447,7 @@ object GraphEmitter extends MetaModelTypeMapping {
                     case None => scalarEmitter.scalar(b, e.toString, inArray = true)
                   }
                 }
+              case EncodedIri => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => safeIri(b, e.toString, inArray = true))
               case Iri => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(b, e.toString, inArray = true))
               case Type.Int =>
                 seq.values
@@ -484,6 +491,14 @@ object GraphEmitter extends MetaModelTypeMapping {
                      inArray: Boolean = false,
                      ctx: EmissionContext): Unit = {
       def emit(b: PartBuilder): Unit = {
+        // before emitting, we remove the link target to avoid loops and set
+        // the fresh value for link-id
+        elementWithLink.linkTarget match {
+          case Some(target) =>
+            elementWithLink.set(LinkableElementModel.TargetId, target.id)
+            elementWithLink.fields.removeField(LinkableElementModel.Target)
+          case _ => // ignore
+        }
         b.obj { o =>
           traverse(elementWithLink, o, ctx)
         }
@@ -519,7 +534,19 @@ object GraphEmitter extends MetaModelTypeMapping {
     private def iri(b: PartBuilder, content: String, inArray: Boolean = false) = {
       //we can not use java.net.URLEncoder and can not use anything more correct because we does not have actual constraints for it yet.
       //TODO please review it and propose something better
-      def emit(b: PartBuilder) = b.obj(_.entry("@id", raw(_, URLEncoder.encode(content))))
+      def emit(b: PartBuilder) = {
+        b.obj(_.entry("@id", raw(_, URLEncoder.encode(content))))
+      }
+
+      if (inArray) emit(b) else b.list(emit)
+    }
+
+    private def safeIri(b: PartBuilder, content: String, inArray: Boolean = false) = {
+      //we can not use java.net.URLEncoder and can not use anything more correct because we does not have actual constraints for it yet.
+      //TODO please review it and propose something better
+      def emit(b: PartBuilder) = {
+        b.obj(_.entry("@id", raw(_, content)))
+      }
 
       if (inArray) emit(b) else b.list(emit)
     }

@@ -19,7 +19,7 @@
       }
     },
     "Person": {
-      "allOf": [
+      "x-amf-merge": [
         {
           "$ref": "#/definitions/Human"
         }

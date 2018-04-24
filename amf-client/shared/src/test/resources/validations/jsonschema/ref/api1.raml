@@ -1,0 +1,60 @@
+#%RAML 1.0
+title: test
+
+types:
+  test1: |
+    {
+                "type": "object",
+                "properties": {
+                    "foo": {
+                      "anyOf": [
+                        {"$ref": "#"},
+                        {"type": "boolean"}
+                      ]
+                    }
+                },
+                "additionalProperties": false
+    }
+
+/ep1:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              foo: false
+
+/ep2:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              foo:
+                foo: false
+
+/ep3:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              foo:
+                bar: false
+
+/ep4:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              foo:
+                foo: "test"

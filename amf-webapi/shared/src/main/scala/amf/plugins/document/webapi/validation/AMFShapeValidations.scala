@@ -32,20 +32,27 @@ class AMFShapeValidations(shape: Shape) {
     shape match {
       case union: UnionShape     => unionConstraints(context, union)
       case scalar: ScalarShape   => scalarConstraints(context, scalar)
+      case tuple: TupleShape     => tupleConstraints(context, tuple)
       case array: ArrayShape     => arrayConstraints(context, array)
       case obj: NodeShape        => nodeConstraints(context, obj)
       case nil: NilShape         => nilConstraints(context, nil)
       case recur: RecursiveShape => recursiveShapeConstraints(context, recur)
-      case _: AnyShape           => List.empty
+      case any: AnyShape         => anyConstraints(context, any)
       case _                     => List.empty
     }
   }
 
   def validationId(shape: Shape) = {
-    val name = shape match {
-      case recursive: RecursiveShape => shape.id + "_recursive_validation"
-      case _                         => shape.id + "_validation"
+    shape match {
+      case rec: RecursiveShape if rec.fixpoint.option().isDefined =>
+        validationLiteralId(rec.fixpoint.value())
+      case _ =>
+        validationLiteralId(shape.id)
     }
+  }
+
+  def validationLiteralId(id: String): String = {
+    val name = id + "_validation"
     if (name.startsWith("http://") || name.startsWith("https://") || name.startsWith("file:")) {
       name
     } else {
@@ -54,6 +61,60 @@ class AMFShapeValidations(shape: Shape) {
   }
 
   protected def canonicalShape(): Shape = CanonicalShapePipeline(shape)
+
+  protected def checkLogicalConstraints(context: String, parent: Shape, validation: ValidationSpecification, acc: List[ValidationSpecification]): List[ValidationSpecification] = {
+    var computedValidation = validation
+    var nestedConstraints  = acc
+    var count             = 0
+
+    if (Option(parent.and).isDefined && parent.and.nonEmpty) {
+      parent.and.foreach { shape =>
+        nestedConstraints ++= emitShapeValidations(context + s"/and_$count", shape)
+        count += 1
+      }
+
+      computedValidation = computedValidation.copy(andConstraints = parent.and.map(s => validationId(s)))
+    }
+
+    count = 0
+    if (Option(parent.or).isDefined && parent.or.nonEmpty) {
+      parent.or.foreach { shape =>
+        nestedConstraints ++= emitShapeValidations(context + s"/or_$count", shape)
+        count += 1
+      }
+
+      computedValidation = computedValidation.copy(unionConstraints = parent.or.map(s => validationId(s)))
+    }
+
+    count = 0
+    if (Option(parent.xone).isDefined && parent.xone.nonEmpty) {
+      parent.xone.foreach { shape =>
+        nestedConstraints ++= emitShapeValidations(context + s"/xone_$count", shape)
+        count += 1
+      }
+
+      computedValidation = computedValidation.copy(xoneConstraints = parent.xone.map(s => validationId(s)))
+    }
+
+    if (Option(parent.not).isDefined) {
+      nestedConstraints ++= emitShapeValidations(context + "/not", parent.not)
+      computedValidation = computedValidation.copy(notConstraint = Some(validationId(parent.not)))
+    }
+    List(computedValidation) ++ nestedConstraints
+  }
+
+  protected def anyConstraints(context: String, any: AnyShape): List[ValidationSpecification] = {
+    val msg                                              = s"Data at $context must be a valid shape"
+
+    val validation = new ValidationSpecification(
+      name = validationId(any),
+      message = msg,
+      ramlMessage = Some(msg),
+      oasMessage = Some(msg)
+    )
+
+    checkLogicalConstraints(context, any, validation, Nil)
+  }
 
   protected def unionConstraints(context: String, union: UnionShape): List[ValidationSpecification] = {
     val msg                                              = s"Data at $context must be one of the valid union types"
@@ -70,7 +131,7 @@ class AMFShapeValidations(shape: Shape) {
       oasMessage = Some(msg),
       unionConstraints = union.anyOf.map(s => validationId(s))
     )
-    List(validation) ++ nestedConstraints
+    checkLogicalConstraints(context, union, validation, nestedConstraints)
   }
 
   protected def arrayConstraints(context: String, array: ArrayShape): List[ValidationSpecification] = {
@@ -98,21 +159,53 @@ class AMFShapeValidations(shape: Shape) {
     validation = checkMinItems(context, validation, array)
     validation = checkMaxItems(context, validation, array)
     validation = checkArrayType(array, context, validation)
-    List(validation) ++ nestedConstraints
+
+    checkLogicalConstraints(context, array, validation, nestedConstraints)
   }
 
-  protected def recursiveShapeConstraints(context: String, shape: RecursiveShape): List[ValidationSpecification] = {
-    val msg                                              = s"Recursive object at $context must be valid"
+
+  protected def tupleConstraints(context: String, tuple: TupleShape): List[ValidationSpecification] = {
+    val msg                                              = s"Tuple at $context must be valid"
     var nestedConstraints: List[ValidationSpecification] = List.empty
     var validation = new ValidationSpecification(
-      name = validationId(shape),
+      name = validationId(tuple),
       message = msg,
       ramlMessage = Some(msg),
       oasMessage = Some(msg),
-      targetClass = Seq(shape.fixpoint.value()),
+      targetClass = Seq.empty,
       propertyConstraints = Seq()
     )
+
+    val itemsConstraints = tuple.items.zipWithIndex.map { case (item, i) =>
+      nestedConstraints ++= emitShapeValidations(context + s"/items/", item)
+      val itemsValidationId = validationId(item) + "/prop"
+      PropertyConstraint(
+        ramlPropertyId = (Namespace.Data + s"pos$i").iri(),
+        name = itemsValidationId,
+        message = Some(s"Tupe items at $context/items pos $i must be valid"),
+        node = Some(validationId(item))
+      )
+    }
+
+    validation = validation.copy(propertyConstraints = validation.propertyConstraints ++ itemsConstraints)
+    validation = checkMinItems(context, validation, tuple)
+    validation = checkMaxItems(context, validation, tuple)
+    validation = checkArrayType(tuple, context, validation)
+
+    checkLogicalConstraints(context, tuple, validation, nestedConstraints)
+  }
+
+  protected def recursiveShapeConstraints(context: String, shape: RecursiveShape): List[ValidationSpecification] = {
+    /*
+    val msg                                              = s"Recursive object at $context must be valid"
+    var nestedConstraints: List[ValidationSpecification] = List.empty
+    var validation = new ValidationSpecification(
+      name = validationLiteralId(shape.fixpoint.value()),
+      message = "Recursive validation failure"
+    )
     List(validation)
+    */
+    Nil
   }
 
   protected def nodeConstraints(context: String, node: NodeShape): List[ValidationSpecification] = {
@@ -157,7 +250,7 @@ class AMFShapeValidations(shape: Shape) {
     validation = checkObjectType(node, context, validation)
     validation = checkMinProperties(context, validation, node)
     validation = checkMaxProperties(context, validation, node)
-    List(validation) ++ nestedConstraints
+    checkLogicalConstraints(context, node, validation, nestedConstraints)
   }
 
   protected def checkClosed(validation: ValidationSpecification, shape: NodeShape): ValidationSpecification = {
@@ -208,7 +301,7 @@ class AMFShapeValidations(shape: Shape) {
               "((Mon|Tue|Wed|Thu|Fri|Sat|Sun), [0-9]{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT)")
           ))
       )
-      List(validation)
+      checkLogicalConstraints(context, scalar, validation, Nil)
     } else {
       val msg = s"Scalar at $context must be valid"
 
@@ -339,7 +432,8 @@ class AMFShapeValidations(shape: Shape) {
       validation = checkMinimumExclusive(context, validation, scalar)
       validation = checkMaximumExclusive(context, validation, scalar)
       validation = checkEnum(context, validation, scalar)
-      List(validation)
+
+      checkLogicalConstraints(context, scalar, validation, Nil)
     }
   }
 
@@ -581,7 +675,7 @@ class AMFShapeValidations(shape: Shape) {
 
   protected def checkMinItems(context: String,
                               validation: ValidationSpecification,
-                              shape: Shape with ArrayShape): ValidationSpecification = {
+                              shape: Shape with DataArrangementShape): ValidationSpecification = {
     shape.fields.?[AmfScalar](ArrayShapeModel.MinItems) match {
       case Some(itemsMinimum) =>
         val msg = s"Number of items at $context must be greater than $itemsMinimum"
@@ -599,7 +693,7 @@ class AMFShapeValidations(shape: Shape) {
 
   protected def checkMaxItems(context: String,
                               validation: ValidationSpecification,
-                              shape: Shape with ArrayShape): ValidationSpecification = {
+                              shape: Shape with DataArrangementShape): ValidationSpecification = {
     shape.fields.?[AmfScalar](ArrayShapeModel.MaxItems) match {
       case Some(itemsMaximum) =>
         val msg = s"Number of items at $context must be smaller than $itemsMaximum"

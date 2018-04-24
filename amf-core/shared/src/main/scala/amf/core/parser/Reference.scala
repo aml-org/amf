@@ -26,6 +26,8 @@ case class Reference(url: String, refs: Seq[RefContainer]) {
     val kind  = if (kinds.distinct.size > 1) UnspecifiedReference else kinds.distinct.head
     RuntimeCompiler(url, mediaType, vendor, base, kind, cache, Some(ctx), env)
   }
+
+  def isInferred(): Boolean = refs.exists(_.linkType == InferredLinkReference)
 }
 
 object Reference {

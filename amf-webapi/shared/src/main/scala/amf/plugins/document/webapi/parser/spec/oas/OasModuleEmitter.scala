@@ -25,7 +25,7 @@ case class OasModuleEmitter(module: Module)(implicit override val spec: OasSpecE
 
     val ordering = SpecOrdering.ordering(Oas, module.annotations)
 
-    val references = Seq(ReferencesEmitter(module.references, ordering))
+    val references = Seq(ReferencesEmitter(module, ordering))
     val declares   = OasDeclarationsEmitter(module.declares, ordering, module.references).emitters
     val usages     = module.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("usage".asOasExtension, f))
 
@@ -56,7 +56,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
       case ne: NamedExampleFragment              => NamedExampleFragmentEmitter(ne, ordering)
       case _                                     => throw new UnsupportedOperationException("Unsupported fragment type")
     }
-    val references = ReferencesEmitter(fragment.references, ordering)
+    val references = ReferencesEmitter(fragment, ordering)
     val usage: Option[ValueEmitter] =
       fragment.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("usage".asOasExtension, f))
 

@@ -12,6 +12,8 @@ object ExtensionReference extends ReferenceKind
 
 object LinkReference extends ReferenceKind
 
+object InferredLinkReference extends ReferenceKind
+
 object UnspecifiedReference extends ReferenceKind
 
 object SchemaReference extends ReferenceKind

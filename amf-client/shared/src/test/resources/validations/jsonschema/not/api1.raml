@@ -1,0 +1,26 @@
+#%RAML 1.0
+title: test
+
+types:
+  test1: |
+    {
+                "not": {"type": "integer"}
+    }
+
+/ep1:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example: foo
+
+/ep2:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example: 1

@@ -11,7 +11,23 @@ import amf.core.remote.Platform
 import amf.core.resolution.pipelines.ResolutionPipeline
 import org.yaml.model.YDocument
 
+object AMFDocumentPluginSettings {
+  object PluginPriorities {
+    val high    = 0
+    val default = 5
+    val low     = 10
+  }
+}
+
 abstract class AMFDocumentPlugin extends AMFPlugin {
+
+  /**
+    * Does references in this type of documents be recursive?
+    */
+  val allowRecursiveReferences: Boolean
+
+  // Parameter modifying which plugins are tried first
+  val priority: Int = AMFDocumentPluginSettings.PluginPriorities.default
 
   val vendors: Seq[String]
 

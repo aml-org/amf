@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Comment describing your JSON Schema",
+  "type": "object",
+  "properties": {
+    "a1": {
+      "$ref": "b.json#/definitions/B"
+    },
+    "a2": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

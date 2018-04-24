@@ -22,7 +22,7 @@ case class RamlModuleParser(root: Root)(implicit override val ctx: RamlWebApiCon
     module.withLocation(root.location)
 
     root.parsed.document.toOption[YMap].foreach { rootMap =>
-      val references = ReferencesParser("uses", rootMap, root.references).parse(root.location)
+      val references = ReferencesParser(module, "uses", rootMap, root.references).parse(root.location)
 
       parseDeclarations(root, rootMap)
 

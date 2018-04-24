@@ -25,7 +25,7 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
       .map(_ => {
         val adopt = (shape: Shape) => { shape.adopted("/test") }
 
-        implicit val ctx: Raml10WebApiContext = new Raml10WebApiContext(ParserContext())
+        implicit val ctx: Raml10WebApiContext = new Raml10WebApiContext("",Nil,ParserContext())
 
         var res = RamlTypeExpressionParser(adopt).parse("integer")
         assert(res.get.isInstanceOf[ScalarShape])
@@ -64,7 +64,7 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
         var error = false
         try {
           RuntimeValidator.disableValidations() { () =>
-            val fail = new Raml10WebApiContext(ctx)
+            val fail = new Raml10WebApiContext("", Nil,ctx)
             RamlTypeExpressionParser(adopt)(fail).parse("[]")
           }
         } catch {

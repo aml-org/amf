@@ -399,7 +399,7 @@
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://raml.org/vocabularies/document-source-maps#aliases-array": [
+            "http://raml.org/vocabularies/document-source-maps#source-vendor": [
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
@@ -408,7 +408,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "lib->lib/lib.raml"
+                    "@value": "raml 1.0"
                   }
                 ]
               }
@@ -438,19 +438,27 @@
                   }
                 ]
               }
-            ],
-            "http://raml.org/vocabularies/document-source-maps#source-vendor": [
+            ]
+          }
+        ]
+      }
+    ],
+    "http://raml.org/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/references/libraries.raml/source-map",
+        "@type": [
+          "http://raml.org/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://raml.org/vocabularies/document-source-maps#aliases-array": [
+          {
+            "http://raml.org/vocabularies/document-source-maps#element": [
               {
-                "http://raml.org/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-client/shared/src/test/resources/references/lib/lib.raml"
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "raml 1.0"
-                  }
-                ]
+                "@value": "file://amf-client/shared/src/test/resources/references/libraries.raml"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#value": [
+              {
+                "@value": "lib->file://amf-client/shared/src/test/resources/references/lib/lib.raml::lib/lib.raml"
               }
             ]
           }

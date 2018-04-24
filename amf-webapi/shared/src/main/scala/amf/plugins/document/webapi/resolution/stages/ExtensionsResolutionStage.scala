@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.resolution.stages
 
 import amf.ProfileNames
-import amf.core.annotations.SynthesizedField
+import amf.core.annotations.{Aliases, SynthesizedField}
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.DomainElementModel._
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
@@ -36,8 +36,8 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean)
 
   /** Default to raml10 context. */
   implicit val ctx: RamlWebApiContext = profile match {
-    case ProfileNames.RAML08 => new Raml08WebApiContext(ParserContext())
-    case _                   => new Raml10WebApiContext(ParserContext())
+    case ProfileNames.RAML08 => new Raml08WebApiContext("", Nil,ParserContext())
+    case _                   => new Raml10WebApiContext("", Nil,ParserContext())
   }
 
   override def resolve(model: BaseUnit): BaseUnit = {
@@ -75,6 +75,23 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean)
     document.withReferences(refs)
   }
 
+  def mergeAliases(document: Document, extension: ExtensionLike[_ <: DomainElement]) = {
+    val extensionsAliases = extension.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases
+    val documentAliases   = document.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases
+
+    extensionsAliases.map(_._1).intersect(documentAliases.map(_._1)).foreach { alias =>
+      val extensionFullUrl =  extensionsAliases.find(_._1 == alias).map(_._2._1).get
+      val docFullUrl =  documentAliases.find(_._1 == alias).map(_._2._1).get
+      if (extensionFullUrl != docFullUrl) throw new Exception(s"Conflicting urls for alias '$alias' and libraries: '$extensionFullUrl' - '$docFullUrl'")
+    }
+
+    val totalAliases = extensionsAliases.union(documentAliases)
+    if (totalAliases.nonEmpty) {
+      document.annotations.reject(_.isInstanceOf[Aliases])
+      document.annotations += Aliases(totalAliases)
+    }
+  }
+
   private def resolveOverlay(model: BaseUnit, entryPoint: ExtensionLike[WebApi]): BaseUnit = {
     val (document: Document) :: extensions = extensionsQueue(ListBuffer[BaseUnit](entryPoint), entryPoint)
     // Don't remove Extends field from the model when traits and resource types are resolved.
@@ -102,6 +119,8 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean)
                           iriMerger,
                           extension.id,
                           ExtendsHelper.findUnitLocationOfElement(extension.id, model))
+
+        mergeAliases(document, extension)
 
         mergeReferences(document,
                         extension.asInstanceOf[ExtensionLike[WebApi]],

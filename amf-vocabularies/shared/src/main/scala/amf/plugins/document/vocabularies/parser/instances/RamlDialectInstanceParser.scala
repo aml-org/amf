@@ -196,7 +196,7 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
             val url: String   = library(e)
             target(url).foreach {
               case module: DeclaresModel =>
-                collectAlias(dialectInstance, alias -> module.id)
+                collectAlias(dialectInstance, alias -> (module.id, url))
                 result += (alias, module)
               case other =>
                 ctx.violation(id, s"Expected vocabulary module but found: '$other'", e) // todo Uses should only reference modules...
@@ -211,7 +211,7 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
     case _             => e.value
   }
 
-  private def collectAlias(aliasCollectorUnit: BaseUnit, alias: (String, String)): BaseUnit = {
+  private def collectAlias(aliasCollectorUnit: BaseUnit, alias: (Aliases.Alias, (Aliases.FullUrl, Aliases.RelativeUrl))): BaseUnit = {
     aliasCollectorUnit.annotations.find(classOf[Aliases]) match {
       case Some(aliases) =>
         aliasCollectorUnit.annotations.reject(_.isInstanceOf[Aliases])

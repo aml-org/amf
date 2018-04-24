@@ -59,7 +59,8 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
   override protected def transformByCondition(element: AmfObject,
                                               predicate: (AmfObject) => Boolean,
                                               transformation: (AmfObject, Boolean) => Option[AmfObject],
-                                              cycles: Set[String] = Set.empty): AmfObject = {
+                                              cycles: Set[String] = Set.empty,
+                                              cycleRecoverer: (AmfObject, AmfObject) => Option[AmfObject] = defaultCycleRecoverer): AmfObject = {
     if (!cycles.contains(element.id)) {
       // not visited yet
       if (predicate(element)) { // matches predicate, we transform

@@ -32,6 +32,16 @@ trait ShapeModel extends DomainElementModel with LinkableElementModel with KeyFi
     */
   val Inherits = Field(Array(ShapeModel), Shapes + "inherits")
 
+  // Logical constraints:
+
+  val Or = Field(Array(ShapeModel), Shacl + "or")
+
+  val And = Field(Array(ShapeModel), Shacl + "and")
+
+  val Xone = Field(Array(ShapeModel), Shacl + "xone")
+
+  val Not = Field(ShapeModel, Shacl + "not")
+
   override val key: Field = Name
 
   // This is just a placeholder for the required shape information that is
@@ -54,7 +64,11 @@ object ShapeModel extends ShapeModel {
                                                                          Default,
                                                                          Values,
                                                                          Inherits,
-                                                                         DefaultValueString)
+                                                                         DefaultValueString,
+                                                                         Not,
+                                                                         And,
+                                                                         Or,
+                                                                         Xone)
 
   override val `type`: List[ValueType] = List(Shacl + "Shape", Shapes + "Shape")
 

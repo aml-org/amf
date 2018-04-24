@@ -1,7 +1,7 @@
 package amf.core.model.domain
 
 import amf.core.annotations.{DataNodePropertiesAnnotations, LexicalInformation, ScalarType}
-import amf.core.metamodel.Type.{Array, Str}
+import amf.core.metamodel.Type.{Array, EncodedIri, Str}
 import amf.core.metamodel.domain.DataNodeModel
 import amf.core.metamodel.domain.DataNodeModel._
 import amf.core.metamodel.{Field, Obj}
@@ -233,12 +233,17 @@ class ArrayNode(override val fields: Fields, val annotations: Annotations) exten
 
   def addMember(member: DataNode): ListBuffer[DataNode] = members += member.adopted(this.id)
 
-  override def dynamicFields: List[Field] = List(Member) ++ DataNodeModel.fields
+  override def dynamicFields: List[Field] = List(Member) ++ positionFields() ++ DataNodeModel.fields
 
   override def dynamicType = List(ArrayNode.builderType, Namespace.Rdf + "Seq")
 
   override def valueForField(f: Field): Option[Value] = f match {
     case Member => Some(Value(AmfArray(members), Annotations()))
+    case _ if f.value.iri().startsWith((Namespace.Data + "pos").iri()) => {
+      val pos = Integer.parseInt(f.value.iri().replace((Namespace.Data + "pos").iri(), ""))
+      val member = members(pos)
+      Some(Value(AmfScalar(member.id), Annotations()))
+    }
     case _      => None
   }
 
@@ -253,6 +258,10 @@ class ArrayNode(override val fields: Fields, val annotations: Annotations) exten
     cloned.members = members.map(_.cloneNode())
 
     cloned.asInstanceOf[this.type]
+  }
+
+  def positionFields(): Seq[Field] = members.zipWithIndex.map { case (_, i) =>
+      Field(EncodedIri, Namespace.Data + s"pos$i")
   }
 }
 

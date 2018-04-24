@@ -467,7 +467,7 @@
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://raml.org/vocabularies/document-source-maps#aliases-array": [
+            "http://raml.org/vocabularies/document-source-maps#source-vendor": [
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
@@ -476,7 +476,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "lib->lib/lib-declaration.raml,lib2->lib/lib-declaration.raml,lib3->lib/lib-declaration.raml"
+                    "@value": "raml 1.0"
                   }
                 ]
               }
@@ -506,19 +506,27 @@
                   }
                 ]
               }
-            ],
-            "http://raml.org/vocabularies/document-source-maps#source-vendor": [
+            ]
+          }
+        ]
+      }
+    ],
+    "http://raml.org/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/references/libraries-3-alias.raml/source-map",
+        "@type": [
+          "http://raml.org/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://raml.org/vocabularies/document-source-maps#aliases-array": [
+          {
+            "http://raml.org/vocabularies/document-source-maps#element": [
               {
-                "http://raml.org/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml"
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "raml 1.0"
-                  }
-                ]
+                "@value": "file://amf-client/shared/src/test/resources/references/libraries-3-alias.raml"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#value": [
+              {
+                "@value": "lib->file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml::lib/lib-declaration.raml,lib2->file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml::lib/lib-declaration.raml,lib3->file://amf-client/shared/src/test/resources/references/lib/lib-declaration.raml::lib/lib-declaration.raml"
               }
             ]
           }

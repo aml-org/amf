@@ -5,13 +5,8 @@ import amf.core.emitter._
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
-import amf.plugins.document.webapi.contexts.SpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  AnnotationsEmitter,
-  Raml08TypePartEmitter,
-  Raml10TypeEmitter,
-  Raml10TypePartEmitter
-}
+import amf.plugins.document.webapi.contexts.{RamlSpecEmitterContext, SpecEmitterContext}
+import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, Raml08TypePartEmitter, Raml10TypeEmitter, Raml10TypePartEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
@@ -23,7 +18,7 @@ import org.yaml.model.{YMap, YNode}
   *
   */
 case class Raml10PayloadEmitter(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: SpecEmitterContext)
+    implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val fs = payload.fields
@@ -60,7 +55,7 @@ case class Raml10PayloadEmitter(payload: Payload, ordering: SpecOrdering, refere
 trait RamlPayloadsEmitter extends EntryEmitter {}
 
 case class Raml08PayloadsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: SpecEmitterContext)
+    implicit spec: RamlSpecEmitterContext)
     extends RamlPayloadsEmitter {
   override def emit(b: EntryBuilder): Unit = {
 
@@ -87,7 +82,7 @@ case class Raml08PayloadsEmitter(key: String, f: FieldEntry, ordering: SpecOrder
   override def position(): Position = pos(f.value.annotations)
 }
 
-case class Raml08PayloadEmitter(payload: Payload, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
+case class Raml08PayloadEmitter(payload: Payload, ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext) {
 
   def emitters: Seq[Emitter] = {
     payload.fields.entry(PayloadModel.MediaType) match {
@@ -130,7 +125,7 @@ case class Raml08PayloadEmitter(payload: Payload, ordering: SpecOrdering)(implic
   }
 }
 
-case class Raml08FormPropertiesEmitter(nodeShape: NodeShape, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+case class Raml08FormPropertiesEmitter(nodeShape: NodeShape, ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
@@ -158,7 +153,7 @@ case class Raml08FormPropertiesEmitter(nodeShape: NodeShape, ordering: SpecOrder
 }
 
 case class Raml10PayloadsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: SpecEmitterContext)
+    implicit spec: RamlSpecEmitterContext)
     extends RamlPayloadsEmitter {
   override def emit(b: EntryBuilder): Unit = {
     sourceOr(
@@ -182,7 +177,7 @@ case class Raml10PayloadsEmitter(key: String, f: FieldEntry, ordering: SpecOrder
 }
 
 case class Raml10Payloads(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: SpecEmitterContext) {
+    implicit spec: RamlSpecEmitterContext) {
   def emitters(): Seq[Emitter] = {
     if (payload.fields.entry(PayloadModel.MediaType).isDefined) {
       Seq(Raml10PayloadEmitter(payload, ordering, references = references))

@@ -3,16 +3,16 @@ dialect: Test
 version: 1.0
 nodeMappings:
   nodeB:
-    classTerm: v2.A
+    classTerm: uses__1.A
     mapping:
       za:
-        propertyTerm: v2.a
+        propertyTerm: uses__1.a
         range: nodeA
   nodeA:
-    classTerm: v2.A
+    classTerm: uses__1.A
     mapping:
       a:
-        propertyTerm: v2.a
+        propertyTerm: uses__1.a
         range: string
 documents:
   fragments:
@@ -20,4 +20,4 @@ documents:
       FB: nodeB
       FA: nodeA
 uses:
-  v2: vocab2.raml
+  uses__1: vocab2.raml

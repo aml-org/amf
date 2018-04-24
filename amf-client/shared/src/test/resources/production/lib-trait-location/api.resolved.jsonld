@@ -369,18 +369,20 @@
           }
         ],
         "smaps": {
-          "aliases-array": {
-            "file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml": "lib->lib.raml"
+          "source-vendor": {
+            "file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml": "raml 1.0"
           },
           "lexical": {
             "file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml": "[(2,0)-(6,12)]"
-          },
-          "source-vendor": {
-            "file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml": "raml 1.0"
           }
         }
       }
     ],
+    "smaps": {
+      "aliases-array": {
+        "": "lib->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml::lib.raml"
+      }
+    },
     "@context": {
       "@base": "file://amf-client/shared/src/test/resources/production/lib-trait-location/api.raml",
       "raml-http": "http://raml.org/vocabularies/http#",

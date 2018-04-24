@@ -31,7 +31,6 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
         YMap.empty
     }
 
-    val references = ReferencesParser("uses".asOasExtension, map, root.references).parse(root.location)
 
     val fragment = (detectType() map {
       case Oas20DocumentationItem         => DocumentationItemFragmentParser(map).parse()
@@ -46,6 +45,8 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       ctx.violation(fragment.id, "Unsupported oas type", map)
       fragment
     }
+
+    val references = ReferencesParser(fragment, "uses".asOasExtension, map, root.references).parse(root.location)
 
     fragment
       .withLocation(root.location)

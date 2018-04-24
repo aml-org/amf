@@ -2875,7 +2875,7 @@
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://raml.org/vocabularies/document-source-maps#aliases-array": [
+                "http://raml.org/vocabularies/document-source-maps#source-vendor": [
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
@@ -2884,7 +2884,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "address->../../commons-datatypes/1.0.0/locationTypes.raml"
+                        "@value": "raml 1.0"
                       }
                     ]
                   }
@@ -2914,20 +2914,6 @@
                       }
                     ]
                   }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#source-vendor": [
-                  {
-                    "http://raml.org/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/commons-datatypes/1.0.0/locationTypes.raml"
-                      }
-                    ],
-                    "http://raml.org/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "raml 1.0"
-                      }
-                    ]
-                  }
                 ]
               }
             ]
@@ -2953,7 +2939,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "location->exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml"
+                    "@value": "address->file://amf-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/commons-datatypes/1.0.0/locationTypes.raml::../../commons-datatypes/1.0.0/locationTypes.raml"
                   }
                 ]
               }
@@ -3916,6 +3902,21 @@
                     ]
                   }
                 ],
+                "http://raml.org/vocabularies/data#pos0": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2"
+                  }
+                ],
+                "http://raml.org/vocabularies/data#pos1": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10"
+                  }
+                ],
+                "http://raml.org/vocabularies/data#pos2": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18"
+                  }
+                ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/source-map",
@@ -4051,6 +4052,28 @@
                     "@value": "[(2,0)-(23,14)]"
                   }
                 ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://raml.org/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/production/locations-api/locations-api.raml/source-map",
+        "@type": [
+          "http://raml.org/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://raml.org/vocabularies/document-source-maps#aliases-array": [
+          {
+            "http://raml.org/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://amf-client/shared/src/test/resources/production/locations-api/locations-api.raml"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#value": [
+              {
+                "@value": "location->file://amf-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml::exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml"
               }
             ]
           }

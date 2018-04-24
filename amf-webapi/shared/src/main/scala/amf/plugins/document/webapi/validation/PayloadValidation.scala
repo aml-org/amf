@@ -126,7 +126,7 @@ object PayloadValidatorPlugin extends AMFPayloadValidationPlugin {
 
   override val payloadMediaType: Seq[String] = Seq("application/json", "application/yaml", "text/vnd.yaml")
 
-  val defaultCtx = new PayloadContext(ParserContext())
+  val defaultCtx = new PayloadContext("", Nil,ParserContext())
 
   override def parsePayload(payload: String, mediaType: String): PayloadFragment = {
     val fragment = PayloadFragment().withMediaType(mediaType)

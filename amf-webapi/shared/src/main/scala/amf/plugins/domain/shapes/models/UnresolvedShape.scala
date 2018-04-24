@@ -19,13 +19,20 @@ case class UnresolvedShape(override val fields: Fields,
 
   override def linkCopy(): AnyShape = this
 
+  /*
+  override def withId(newId: String): this.type = {
+    if (id == null) super.withId(newId)
+    this
+  }
+  */
+
   /** Resolve [[UnresolvedShape]] as link to specified target. */
   def resolve(target: Shape): Shape = target.link(reference, annotations).asInstanceOf[Shape].withName(name.value())
 
   override def meta: Obj = ShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/unresolved"
+  override def componentId: String = "" // unresolved has the same temporal ID as the resolved one
 
   override def afterResolve(): Unit = fatherExtensionParser.foreach { parser =>
     parser.parse()

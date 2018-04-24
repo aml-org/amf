@@ -1,0 +1,74 @@
+#%RAML 1.0
+title: test
+
+types:
+  test1: |
+    {
+                "description": "tree of nodes",
+                "type": "object",
+                "properties": {
+                    "meta": {"type": "string"},
+                    "nodes": {
+                        "type": "array",
+                        "items": {"$ref": "#/definitions/node"}
+                    }
+                },
+                "required": ["meta", "nodes"],
+                "definitions": {
+                    "node": {
+                        "description": "node",
+                        "type": "object",
+                        "properties": {
+                            "value": {"type": "number"},
+                            "subtree": {"$ref": "#/"}
+                        },
+                        "required": ["value"]
+                    }
+                }
+    }
+
+/ep1:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              meta: root
+              nodes:
+                - value: 1
+                  subtree:
+                    meta: child
+                    nodes:
+                    - value: 1.1
+                    - value: 1.2
+                - value: 2
+                  subtree:
+                    meta: child
+                    nodes:
+                      - value: 2.1
+                      - value: 2.2
+
+/ep2:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              meta: root
+              nodes:
+                - value: 1
+                  subtree:
+                    meta: child
+                    nodes:
+                    - value: this is a string
+                    - value: 1.2
+                - value: 2
+                  subtree:
+                    meta: child
+                    nodes:
+                      - value: 2.1
+                      - value: 2.2

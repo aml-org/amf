@@ -68,7 +68,7 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
       c => {
         c.level should be("Violation")
         c.message should be(
-          "Unresolved reference 'C' from root context file://amf-client/shared/src/test/resources/references/contexts/api.raml")
+          "Unresolved reference 'C' from root context file://amf-client/shared/src/test/resources/references/contexts/nested.raml")
         c.position.map(_.range) should be(Some(Range((6, 5), (6, 6))))
       }
     )
@@ -79,7 +79,7 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
       AMFCompiler(file, platform, RamlYamlHint, validation)
         .build()
         .map { _ =>
-          val report = validation.aggregatedReport
+          val report = validation.aggregatedReport.distinct
           if (report.size == fixture.size) {
             fixture.zip(report).foreach {
               case (fn, result) => fn(result)

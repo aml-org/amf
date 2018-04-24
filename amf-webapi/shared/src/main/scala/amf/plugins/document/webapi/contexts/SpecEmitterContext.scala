@@ -295,6 +295,13 @@ class Raml10SpecEmitterContext(refEmitter: RefEmitter = RamlRefEmitter) extends 
   override val vendor: Vendor                     = Raml10
 }
 
+class XRaml10SpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) extends Raml10SpecEmitterContext(refEmitter) {
+  override def localReference(reference: Linkable): PartEmitter =
+    oasFactory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel, Nil)
+
+  val oasFactory: OasSpecEmitterFactory = Oas2SpecEmitterFactory()(new Oas2SpecEmitterContext(refEmitter))
+}
+
 class Raml08SpecEmitterContext extends RamlSpecEmitterContext(RamlRefEmitter) {
   override val factory: RamlEmitterVersionFactory = new Raml08EmitterVersionFactory()(this)
   override val vendor: Vendor                     = Raml08
