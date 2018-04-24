@@ -1,6 +1,5 @@
 package amf.resolution
 
-import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
@@ -20,7 +19,7 @@ class EditingResolutionTest extends BuildCycleTests {
   val productionPath = "amf-client/shared/src/test/resources/production/"
   val resolutionPath = "amf-client/shared/src/test/resources/resolution/"
   val cyclePath      = "amf-client/shared/src/test/resources/upanddown/"
-  val referencesPath    = "amf-client/shared/src/test/resources/references/"
+  val referencesPath = "amf-client/shared/src/test/resources/references/"
 
   test("Simple extends resolution to Raml") {
     cycle("simple-merge.raml", "simple-merge.editing.jsonld", RamlYamlHint, Amf, extendsPath)
@@ -39,7 +38,11 @@ class EditingResolutionTest extends BuildCycleTests {
   }
 
   test("Test data type fragment resolution to Amf") {
-    cycle("data-type-fragment.reference.raml", "data-type-fragment.reference.resolved.jsonld", RamlYamlHint, Amf, referencesPath)
+    cycle("data-type-fragment.reference.raml",
+          "data-type-fragment.reference.resolved.jsonld",
+          RamlYamlHint,
+          Amf,
+          referencesPath)
   }
 
   test("Test union arrays") {
@@ -48,6 +51,10 @@ class EditingResolutionTest extends BuildCycleTests {
 
   test("Exchange issueNil API resolution to Amf") {
     cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, productionPath + "testIssueNil/")
+  }
+
+  test("Location in annotation of Trait declared in lib") {
+    cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, productionPath + "lib-trait-location/")
   }
 
   /*
@@ -66,7 +73,7 @@ class EditingResolutionTest extends BuildCycleTests {
   test("Financial API resolution to Raml") {
     cycle("infor-financial-api.raml", "infor-financial-api.jsonld", RamlYamlHint, Amf, productionPath + "financial-api/")
   }
-  */
+   */
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = config.target match {
     case Raml08                => RAML08Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
@@ -79,7 +86,10 @@ class EditingResolutionTest extends BuildCycleTests {
   }
 
   override def render(unit: BaseUnit, config: CycleConfig): Future[String] = {
-    new AMFRenderer(unit, config.target, config.target.defaultSyntax, RenderOptions().withSourceMaps.withRawSourceMaps.withCompactUris).renderToString
+    new AMFRenderer(unit,
+                    config.target,
+                    config.target.defaultSyntax,
+                    RenderOptions().withSourceMaps.withRawSourceMaps.withCompactUris).renderToString
   }
 
   override val basePath: String = ""

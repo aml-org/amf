@@ -44,7 +44,16 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
         val node = rt.dataNode.cloneNode()
         node.replaceVariables(context.variables)
 
-        ExtendsHelper.asEndpoint(context.model, profile, node, r.name.value(), r.id, keepEditingInfo, Some(ctx(context.model.parserRun.get)))
+        ExtendsHelper.asEndpoint(
+          context.model,
+          profile,
+          node,
+          r.name.value(),
+          r.id,
+          Option(r.target).flatMap(t => ExtendsHelper.findUnitLocationOfElement(t.id, context.model)),
+          keepEditingInfo,
+          Some(ctx(context.model.parserRun.get))
+        )
 
       case _ => throw new Exception(s"Cannot find target for parametrized resource type ${r.id}")
     }
@@ -197,7 +206,16 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
           val node: DataNode = t.dataNode.cloneNode()
           node.replaceVariables(local.variables)
 
-          val op = ExtendsHelper.asOperation(profile, node, context.model, t.name.option().getOrElse(""), t.id, keepEditingInfo, Some(ctx(context.model.parserRun.get)))
+          val op = ExtendsHelper.asOperation(
+            profile,
+            node,
+            context.model,
+            t.name.option().getOrElse(""),
+            t.id,
+            ExtendsHelper.findUnitLocationOfElement(t.id, context.model),
+            keepEditingInfo,
+            Some(ctx(context.model.parserRun.get))
+          )
 
           val children = op.traits.map(resolve(_, context))
 
