@@ -30,11 +30,12 @@ object ExtendsHelper {
                                  unit: T,
                                  name: String,
                                  extensionId: String,
+                                 extensionLocation: Option[String],
                                  keepEditingInfo: Boolean,
                                  context: Option[RamlWebApiContext] = None): Operation = {
     val ctx = context.getOrElse(custom(profile))
 
-    val referencesCollector = mutable.Map[String,DomainElement]()
+    val referencesCollector = mutable.Map[String, DomainElement]()
     val document = YDocument {
       _.obj {
         _.entry(
@@ -46,21 +47,23 @@ object ExtendsHelper {
 
     val entry = document.as[YMap].entries.head
     declarations(ctx, unit)
-    referencesCollector.foreach { case (alias,ref) => ctx.declarations.fragments += (alias -> ref) }
+    referencesCollector.foreach { case (alias, ref) => ctx.declarations.fragments += (alias -> ref) }
 
     val mergeMissingSecuritySchemes = new ValidationsMerger {
       override val parserRun: Int = ctx.parserCount
-      override def merge(result: AMFValidationResult): Boolean = result.validationId == ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id()
+      override def merge(result: AMFValidationResult): Boolean =
+        result.validationId == ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id()
     }
 
-    val operation: Operation = RuntimeValidator.nestedValidation(mergeMissingSecuritySchemes) {  // we don't emit validation here, final result will be validated after merging
-      ctx.adapt(name) { ctxForTrait =>
-        ctx.factory.operationParser(entry, _ => Operation(), true).parse()
+    val operation: Operation =
+      RuntimeValidator.nestedValidation(mergeMissingSecuritySchemes) { // we don't emit validation here, final result will be validated after merging
+        ctx.adapt(name) { ctxForTrait =>
+          ctx.factory.operationParser(entry, _ => Operation(), true).parse()
+        }
       }
-    }
     checkNoNestedEndpoints(entry, ctx, node, extensionId)
 
-    if (keepEditingInfo) annotateExtensionId(operation, extensionId)
+    if (keepEditingInfo) annotateExtensionId(operation, extensionId, findUnitLocationOfElement(extensionId, unit))
     new ReferenceResolutionStage(profile, keepEditingInfo).resolveDomainElement(operation)
   }
 
@@ -88,11 +91,12 @@ object ExtendsHelper {
                                 dataNode: DataNode,
                                 name: String,
                                 extensionId: String,
+                                extensionLocation: Option[String],
                                 keepEditingInfo: Boolean,
                                 context: Option[RamlWebApiContext] = None): EndPoint = {
     val ctx = context.getOrElse(custom(profile))
 
-    val referencesCollector = mutable.Map[String,DomainElement]()
+    val referencesCollector = mutable.Map[String, DomainElement]()
     val document = YDocument {
       _.obj {
         _.entry(
@@ -105,7 +109,7 @@ object ExtendsHelper {
     val collector     = ListBuffer[EndPoint]()
 
     declarations(ctx, unit)
-    referencesCollector.foreach { case (alias,ref) => ctx.declarations.fragments += (alias -> ref) }
+    referencesCollector.foreach { case (alias, ref) => ctx.declarations.fragments += (alias -> ref) }
 
     val mergeMissingSecuritySchemes = new ValidationsMerger {
       override val parserRun: Int = ctx.parserCount
@@ -115,29 +119,40 @@ object ExtendsHelper {
     }
     RuntimeValidator.nestedValidation(mergeMissingSecuritySchemes) { // we don't emit validation here, final result will be validated after mergin
       ctx.adapt(name) { ctxForTrait =>
-        ctxForTrait.factory.endPointParser(endPointEntry, _ => EndPoint().withId(extensionId + "/applied"), None, collector, true).parse()
+        ctxForTrait.factory
+          .endPointParser(endPointEntry, _ => EndPoint().withId(extensionId + "/applied"), None, collector, true)
+          .parse()
       }
     }
+
     collector.toList match {
       case e :: Nil =>
-        if (keepEditingInfo) annotateExtensionId(e, extensionId)
+        if (keepEditingInfo) annotateExtensionId(e, extensionId, extensionLocation)
         new ReferenceResolutionStage(profile, keepEditingInfo).resolveDomainElement(e)
       case Nil => throw new Exception(s"Couldn't parse an endpoint from resourceType '$name'.")
       case _   => throw new Exception(s"Nested endpoints found in resourceType '$name'.")
     }
   }
 
-  private def annotateExtensionId(point: DomainElement, extensionId: String): Unit = {
-    val extendedFieldAnnotation = ExtensionProvenance(extensionId)
+  def findUnitLocationOfElement(elementId: String, unit: BaseUnit): Option[String] = {
+
+    unit.references.collectFirst({
+      case l: Module if l.declares.exists(_.id == elementId) => l.location
+      case f: Fragment if f.encodes.id == elementId          => f.location
+    })
+  }
+
+  private def annotateExtensionId(point: DomainElement, extensionId: String, extensionLocation: Option[String]): Unit = {
+    val extendedFieldAnnotation = ExtensionProvenance(extensionId, extensionLocation)
     point.fields.fields().foreach { field =>
       field.value.annotations += extendedFieldAnnotation
       field.value.value match {
-        case elem: DomainElement => annotateExtensionId(elem, extensionId)
+        case elem: DomainElement => annotateExtensionId(elem, extensionId, extensionLocation)
         case arr: AmfArray =>
           arr.values.foreach {
             case elem: DomainElement =>
               elem.annotations += extendedFieldAnnotation
-              annotateExtensionId(elem, extensionId)
+              annotateExtensionId(elem, extensionId, extensionLocation)
             case other =>
               other.annotations += extendedFieldAnnotation
           }

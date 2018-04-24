@@ -104,8 +104,8 @@
                             ],
                             "smaps": {
                               "extension-provenance": {
-                                "shacl:name": "file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection",
-                                "shacl:datatype": "file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection"
+                                "shacl:name": "id->file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection",
+                                "shacl:datatype": "id->file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection"
                               },
                               "lexical": {
                                 "#/web-api/end-points/%2Fproducts/get/request/parameter/APIKey/scalar/schema": "[(1,0)-(1,0)]"
@@ -115,11 +115,11 @@
                         ],
                         "smaps": {
                           "extension-provenance": {
-                            "raml-http:binding": "file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection",
-                            "raml-http:paramName": "file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection",
-                            "#/web-api/end-points/%2Fproducts/get/request/parameter/APIKey": "file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection",
-                            "schema-org:name": "file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection",
-                            "hydra:required": "file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection"
+                            "raml-http:binding": "id->file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection",
+                            "raml-http:paramName": "id->file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection",
+                            "#/web-api/end-points/%2Fproducts/get/request/parameter/APIKey": "id->file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection",
+                            "schema-org:name": "id->file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection",
+                            "hydra:required": "id->file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection"
                           },
                           "lexical": {
                             "#/web-api/end-points/%2Fproducts/get/request/parameter/APIKey": "[(1,0)-(1,0)]"
@@ -129,7 +129,7 @@
                     ],
                     "smaps": {
                       "extension-provenance": {
-                        "raml-http:header": "file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection"
+                        "raml-http:header": "id->file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection"
                       },
                       "lexical": {
                         "raml-http:header": "[(1,0)-(1,0)]"
