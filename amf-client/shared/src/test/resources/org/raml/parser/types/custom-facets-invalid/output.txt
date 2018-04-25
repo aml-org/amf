@@ -1,0 +1,20 @@
+#%RAML 1.0
+title: test
+types:
+  SuperType:
+    facets:
+      test:
+        type: string
+  SubType:
+    type: string
+    facets:
+      test:
+        type: number
+/q:
+  get:
+    queryParameters:
+      s:
+        type: string
+        facets:
+          test:
+            type: number
