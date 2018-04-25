@@ -1,0 +1,556 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "title" : "Loan Microservice"
+  },
+  "paths" : {
+    "/branchdetail" : {
+      "get" : {
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved branch details",
+            "schema" : {
+              "$ref" : "#/definitions/Branch"
+            }
+          }
+        }
+      }
+    },
+    "/loanapplication" : {
+      "post" : {
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "loanApplication",
+          "description" : "Input the loanapplication object to save the loan details to the service",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/LoanApplication"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/Application"
+            }
+          }
+        }
+      }
+    },
+    "/vehicledetail" : {
+      "get" : {
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved vechicle details",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/VehicleDetail"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Vehicle" : {
+      "type" : "object",
+      "properties" : {
+        "approxMileage" : {
+          "type" : "string"
+        },
+        "city" : {
+          "type" : "string"
+        },
+        "estimatedValue" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "regState" : {
+          "type" : "string"
+        },
+        "sellerAddress" : {
+          "type" : "string"
+        },
+        "sellerName" : {
+          "type" : "string"
+        },
+        "state" : {
+          "type" : "string"
+        },
+        "street" : {
+          "type" : "string"
+        },
+        "transactionType" : {
+          "type" : "string"
+        },
+        "vehIdentNo" : {
+          "type" : "string"
+        },
+        "vehicleId" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "vehicleMake" : {
+          "type" : "string"
+        },
+        "vehicleModel" : {
+          "type" : "string"
+        },
+        "vehicleType" : {
+          "type" : "string"
+        },
+        "vehicleYear" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "zipCode" : {
+          "type" : "string"
+        }
+      },
+      "example" : {
+        "zipCode" : "zipCode",
+        "city" : "city",
+        "sellerName" : "sellerName",
+        "sellerAddress" : "sellerAddress",
+        "vehicleMake" : "vehicleMake",
+        "transactionType" : "transactionType",
+        "estimatedValue" : 7,
+        "vehicleYear" : 1,
+        "street" : "street",
+        "approxMileage" : "approxMileage",
+        "vehicleModel" : "vehicleModel",
+        "vehIdentNo" : "vehIdentNo",
+        "regState" : "regState",
+        "state" : "state",
+        "vehicleId" : 1,
+        "vehicleType" : "vehicleType"
+      }
+    },
+    "VehicleDetail" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "vehIdentNo" : {
+          "type" : "string"
+        },
+        "vehicleDetailsId" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "vehicleMake" : {
+          "type" : "string"
+        },
+        "vehicleModel" : {
+          "type" : "string"
+        },
+        "vehicleType" : {
+          "type" : "string"
+        },
+        "vehicleYear" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      },
+      "example" : {
+        "vehicleYear" : 6,
+        "vehicleDetailsId" : 0,
+        "vehicleModel" : "vehicleModel",
+        "vehIdentNo" : "vehIdentNo",
+        "id" : "id",
+        "vehicleMake" : "vehicleMake",
+        "vehicleType" : "vehicleType"
+      }
+    },
+    "User" : {
+      "type" : "object",
+      "properties" : {
+        "addTypePrevious" : {
+          "type" : "string"
+        },
+        "addTypePrimary" : {
+          "type" : "string"
+        },
+        "annualIncome" : {
+          "type" : "integer"
+        },
+        "anyPoliticalRelationship" : {
+          "type" : "boolean"
+        },
+        "apartmentNo" : {
+          "type" : "string"
+        },
+        "citizenOf" : {
+          "type" : "boolean"
+        },
+        "city" : {
+          "type" : "string"
+        },
+        "dateOfBirth" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "housingStatus" : {
+          "type" : "string"
+        },
+        "initial" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "monthlyPayment" : {
+          "type" : "integer"
+        },
+        "monthsAtCurrAdd" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "otherIncome" : {
+          "type" : "string"
+        },
+        "permanentResidence" : {
+          "type" : "boolean"
+        },
+        "phoneNo" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "ssn" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "state" : {
+          "type" : "string"
+        },
+        "street" : {
+          "type" : "string"
+        },
+        "suffix" : {
+          "type" : "string"
+        },
+        "uid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "userName" : {
+          "type" : "string"
+        },
+        "yearsAtCurrAdd" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "zipCode" : {
+          "type" : "string"
+        }
+      },
+      "example" : {
+        "apartmentNo" : "apartmentNo",
+        "lastName" : "lastName",
+        "zipCode" : "zipCode",
+        "annualIncome" : 5,
+        "housingStatus" : "housingStatus",
+        "city" : "city",
+        "permanentResidence" : true,
+        "suffix" : "suffix",
+        "phoneNo" : "aaa",
+        "ssn" : 3,
+        "uid" : 2,
+        "yearsAtCurrAdd" : 4,
+        "monthlyPayment" : 2,
+        "street" : "street",
+        "state" : "state",
+        "addTypePrimary" : "addTypePrimary",
+        "email" : "email",
+        "initial" : "initial",
+        "citizenOf" : true,
+        "dateOfBirth" : "bla bla",
+        "userName" : "userName",
+        "otherIncome" : "otherIncome",
+        "firstName" : "firstName",
+        "addTypePrevious" : "addTypePrevious",
+        "anyPoliticalRelationship" : true,
+        "monthsAtCurrAdd" : 7
+      }
+    },
+    "Branch" : {
+      "type" : "object",
+      "properties" : {
+        "apartmentNo" : {
+          "type" : "string"
+        },
+        "branchId" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "branchName" : {
+          "type" : "string"
+        },
+        "city" : {
+          "type" : "string"
+        },
+        "contactPerson" : {
+          "type" : "string"
+        },
+        "phoneNo" : {
+          "type" : "string"
+        },
+        "state" : {
+          "type" : "string"
+        },
+        "street" : {
+          "type" : "string"
+        },
+        "zipCode" : {
+          "type" : "string"
+        }
+      },
+      "example" : {
+        "apartmentNo" : "apartmentNo",
+        "branchId" : 0,
+        "zipCode" : "zipCode",
+        "city" : "city",
+        "street" : "street",
+        "branchName" : "branchName",
+        "contactPerson" : "contactPerson",
+        "state" : "state",
+        "phoneNo" : "phoneNo"
+      }
+    },
+    "LoanApplication" : {
+      "type" : "object",
+      "properties" : {
+        "application" : {
+          "$ref" : "#/definitions/Application"
+        },
+        "user" : {
+          "$ref" : "#/definitions/User"
+        }
+      },
+      "example" : {
+        "application" : {
+          "pendingWith" : "pendingWith",
+          "requestedAmt" : 1,
+          "applicationState" : "applicationState",
+          "ownerShip" : "ownerShip",
+          "userName" : "userName",
+          "branch" : {
+            "apartmentNo" : "apartmentNo",
+            "branchId" : 0,
+            "zipCode" : "zipCode",
+            "city" : "city",
+            "street" : "street",
+            "branchName" : "branchName",
+            "contactPerson" : "contactPerson",
+            "state" : "state",
+            "phoneNo" : "phoneNo"
+          },
+          "vehicle" : {
+            "zipCode" : "zipCode",
+            "city" : "city",
+            "sellerName" : "sellerName",
+            "sellerAddress" : "sellerAddress",
+            "vehicleMake" : "vehicleMake",
+            "transactionType" : "transactionType",
+            "estimatedValue" : 7,
+            "vehicleYear" : 1,
+            "street" : "street",
+            "approxMileage" : "approxMileage",
+            "vehicleModel" : "vehicleModel",
+            "vehIdentNo" : "vehIdentNo",
+            "regState" : "regState",
+            "state" : "state",
+            "vehicleId" : 1,
+            "vehicleType" : "vehicleType"
+          },
+          "loanYearPeriod" : 6,
+          "uid" : 5,
+          "loanTerm" : 0,
+          "applicationStatus" : "applicationStatus",
+          "applicationId" : "applicationId",
+          "user" : {
+            "apartmentNo" : "apartmentNo",
+            "lastName" : "lastName",
+            "zipCode" : "zipCode",
+            "annualIncome" : 5,
+            "housingStatus" : "housingStatus",
+            "city" : "city",
+            "permanentResidence" : true,
+            "suffix" : "suffix",
+            "phoneNo" : 9,
+            "ssn" : 3,
+            "uid" : 2,
+            "yearsAtCurrAdd" : 4,
+            "monthlyPayment" : 2,
+            "street" : "street",
+            "state" : "state",
+            "addTypePrimary" : "addTypePrimary",
+            "email" : "email",
+            "initial" : "initial",
+            "citizenOf" : true,
+            "dateOfBirth" : "bla bla",
+            "userName" : "userName",
+            "otherIncome" : "otherIncome",
+            "firstName" : "firstName",
+            "addTypePrevious" : "addTypePrevious",
+            "anyPoliticalRelationship" : true,
+            "monthsAtCurrAdd" : "7"
+          }
+        },
+        "user" : {
+          "apartmentNo" : "apartmentNo",
+          "lastName" : "lastName",
+          "zipCode" : "zipCode",
+          "annualIncome" : 5,
+          "housingStatus" : "housingStatus",
+          "city" : "city",
+          "permanentResidence" : true,
+          "suffix" : "suffix",
+          "phoneNo" : 9,
+          "ssn" : 3,
+          "uid" : 2,
+          "yearsAtCurrAdd" : 4,
+          "monthlyPayment" : 2,
+          "street" : "street",
+          "state" : "state",
+          "addTypePrimary" : "addTypePrimary",
+          "email" : "email",
+          "initial" : "initial",
+          "citizenOf" : true,
+          "dateOfBirth" : "bla bla bla",
+          "userName" : "userName",
+          "otherIncome" : "otherIncome",
+          "firstName" : "firstName",
+          "addTypePrevious" : "addTypePrevious",
+          "anyPoliticalRelationship" : true,
+          "monthsAtCurrAdd" : "7"
+        }
+      }
+    },
+    "Application" : {
+      "type" : "object",
+      "properties" : {
+        "applicationId" : {
+          "type" : "string"
+        },
+        "applicationState" : {
+          "type" : "string"
+        },
+        "applicationStatus" : {
+          "type" : "string"
+        },
+        "branch" : {
+          "$ref" : "#/definitions/Branch"
+        },
+        "loanTerm" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "loanYearPeriod" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "ownerShip" : {
+          "type" : "string"
+        },
+        "pendingWith" : {
+          "type" : "string"
+        },
+        "requestedAmt" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "uid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "user" : {
+          "$ref" : "#/definitions/User"
+        },
+        "userName" : {
+          "type" : "string"
+        },
+        "vehicle" : {
+          "$ref" : "#/definitions/Vehicle"
+        }
+      },
+      "example" : {
+        "pendingWith" : "pendingWith",
+        "requestedAmt" : 1,
+        "applicationState" : "applicationState",
+        "ownerShip" : "ownerShip",
+        "userName" : "userName",
+        "branch" : {
+          "apartmentNo" : "apartmentNo",
+          "branchId" : 0,
+          "zipCode" : "zipCode",
+          "city" : "city",
+          "street" : "street",
+          "branchName" : "branchName",
+          "contactPerson" : "contactPerson",
+          "state" : "state",
+          "phoneNo" : "phoneNo"
+        },
+        "vehicle" : {
+          "zipCode" : "zipCode",
+          "city" : "city",
+          "sellerName" : "sellerName",
+          "sellerAddress" : "sellerAddress",
+          "vehicleMake" : "vehicleMake",
+          "transactionType" : "transactionType",
+          "estimatedValue" : 7,
+          "vehicleYear" : 1,
+          "street" : "street",
+          "approxMileage" : "approxMileage",
+          "vehicleModel" : "vehicleModel",
+          "vehIdentNo" : "vehIdentNo",
+          "regState" : "regState",
+          "state" : "state",
+          "vehicleId" : 1,
+          "vehicleType" : "vehicleType"
+        },
+        "loanYearPeriod" : 6,
+        "uid" : 5,
+        "loanTerm" : 0,
+        "applicationStatus" : "applicationStatus",
+        "applicationId" : "applicationId",
+        "user" : {
+          "apartmentNo" : "apartmentNo",
+          "lastName" : "lastName",
+          "zipCode" : "zipCode",
+          "annualIncome" : 5,
+          "housingStatus" : "housingStatus",
+          "city" : "city",
+          "permanentResidence" : true,
+          "suffix" : "suffix",
+          "phoneNo" : 9,
+          "ssn" : 3,
+          "uid" : 2,
+          "yearsAtCurrAdd" : 4,
+          "monthlyPayment" : 2,
+          "street" : "street",
+          "state" : "state",
+          "addTypePrimary" : "addTypePrimary",
+          "email" : "email",
+          "initial" : "initial",
+          "citizenOf" : true,
+          "dateOfBirth" : "2000-01-23T04:56:07.000+00:00",
+          "userName" : "userName",
+          "otherIncome" : "otherIncome",
+          "firstName" : "firstName",
+          "addTypePrevious" : "addTypePrevious",
+          "anyPoliticalRelationship" : true,
+          "monthsAtCurrAdd" : 7
+        }
+      }
+    }
+  }
+}
