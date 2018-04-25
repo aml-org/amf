@@ -1,7 +1,7 @@
 package amf.core.remote.browser
 
 import amf.client.remote.Content
-import amf.client.resource.JsHttpResourceLoader
+import amf.client.resource.BaseHttpResourceLoader
 import amf.core.remote.FileNotFound
 import org.scalajs.dom.ext.Ajax
 
@@ -9,10 +9,11 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
+@JSExportTopLevel("JsBrowserHttpResourceLoader")
 @JSExportAll
-case class JsBrowserHttpResourceLoader() extends JsHttpResourceLoader {
+case class JsBrowserHttpResourceLoader() extends BaseHttpResourceLoader {
 
   override def fetch(resource: String): js.Promise[Content] = {
     Ajax

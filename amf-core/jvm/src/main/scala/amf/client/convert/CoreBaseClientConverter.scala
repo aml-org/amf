@@ -23,6 +23,7 @@ trait CoreBaseClientConverter extends CoreBaseConverter {
   override type ClientFuture[T] = CompletableFuture[T]
 
   override type ClientLoader = ClientResourceLoader
+  override type Loader       = ClientResourceLoader
 
   override type ClientResultHandler[T] = Handler[T]
   override type ClientFileHandler      = FileHandler

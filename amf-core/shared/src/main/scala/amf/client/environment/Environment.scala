@@ -1,9 +1,9 @@
 package amf.client.environment
 
-import amf.client.convert.CoreClientConverters
 import amf.client.convert.CoreClientConverters._
+import amf.client.remote.Content
 import amf.client.resource.ResourceLoader
-import amf.internal.resource.{ResourceLoader => InternalResourceLoader}
+import amf.client.resource.ClientResourceLoader
 import amf.internal.environment.{Environment => InternalEnvironment}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -15,6 +15,14 @@ case class Environment(private[amf] val _internal: InternalEnvironment) {
   def this() = this(InternalEnvironment.empty())
 
   def loaders: ClientList[ResourceLoader] = _internal.loaders.asClient
+
+  def addClientLoader(loader: ClientResourceLoader): Environment = {
+    val l = new ResourceLoader {
+      override def fetch(resource: String): ClientFuture[Content] = loader.fetch(resource)
+      override def accepts(resource: String): Boolean             = loader.accepts(resource)
+    }
+    Environment(_internal.add(l))
+  }
 
   def add(loader: ClientLoader): Environment = {
     val internal: ResourceLoader = loader

@@ -2,6 +2,7 @@ package amf.client.environment
 
 import amf.core.unsafe.PlatformSecrets
 import amf.client.convert.CoreClientConverters._
+import amf.client.resource
 
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 

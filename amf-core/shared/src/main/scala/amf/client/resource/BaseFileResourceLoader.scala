@@ -8,7 +8,7 @@ import amf.core.remote.File.FILE_PROTOCOL
 import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
-abstract class BaseFileResourceLoader extends ResourceLoader {
+trait BaseFileResourceLoader extends ResourceLoader {
   override def fetch(resource: String): ClientFuture[Content] = fetchFile(resource.stripPrefix(FILE_PROTOCOL))
 
   def fetchFile(resource: String): ClientFuture[Content]

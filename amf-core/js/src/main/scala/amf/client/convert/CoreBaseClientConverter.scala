@@ -1,7 +1,7 @@
 package amf.client.convert
 
 import amf.client.handler.{FileHandler, Handler, JsFileHandler, JsHandler}
-import amf.client.resource.{JsResourceLoader, ResourceLoader}
+import amf.client.resource.{ClientResourceLoader, ResourceLoader}
 
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -18,7 +18,8 @@ trait CoreBaseClientConverter extends CoreBaseConverter {
 
   override type ClientFuture[T] = js.Promise[T]
 
-  override type ClientLoader = JsResourceLoader with ResourceLoader
+  override type ClientLoader = ClientResourceLoader with ResourceLoader
+  override type Loader       = ClientResourceLoader
 
   override type ClientResultHandler[T] = JsHandler[T] with Handler[T]
   override type ClientFileHandler      = JsFileHandler with FileHandler
