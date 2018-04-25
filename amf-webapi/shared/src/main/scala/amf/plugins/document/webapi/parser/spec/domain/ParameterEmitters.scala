@@ -13,6 +13,7 @@ import amf.plugins.document.webapi.contexts.{
   RamlSpecEmitterContext,
   SpecEmitterContext
 }
+import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
@@ -62,7 +63,7 @@ case class RamlParametersEmitter(key: String, f: FieldEntry, ordering: SpecOrder
 }
 
 case class Raml10ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: SpecEmitterContext)
+    implicit spec: RamlSpecEmitterContext)
     extends RamlParameterEmitter(parameter, ordering, references) {
 
   override protected def emitParameter(b: EntryBuilder): Unit = {
@@ -132,7 +133,7 @@ case class Raml10ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
 }
 
 case class Raml08ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: SpecEmitterContext)
+    implicit spec: RamlSpecEmitterContext)
     extends RamlParameterEmitter(parameter, ordering, references) {
 
   override protected def emitParameter(builder: EntryBuilder): Unit = {
@@ -249,7 +250,7 @@ case class OasParametersEmitter(key: String,
       if (ramlParameters.nonEmpty)
         b.entry(
           key,
-          _.obj(traverse(ramlParameters.map(p => Raml10ParameterEmitter(p, ordering, Nil)), _))
+          _.obj(traverse(ramlParameters.map(p => Raml10ParameterEmitter(p, ordering, Nil)(new XRaml10SpecEmitterContext())), _))
         )
     }
 

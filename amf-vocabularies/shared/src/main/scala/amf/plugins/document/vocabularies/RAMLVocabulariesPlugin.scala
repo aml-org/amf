@@ -305,4 +305,8 @@ object RAMLVocabulariesPlugin
     }
   }
 
+  /**
+    * Does references in this type of documents be recursive?
+    */
+  override val allowRecursiveReferences: Boolean = false
 }

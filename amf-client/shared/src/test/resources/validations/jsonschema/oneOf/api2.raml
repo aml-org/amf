@@ -1,0 +1,43 @@
+#%RAML 1.0
+title: test
+
+types:
+  test1: |
+    {
+                "type": "string",
+                "oneOf" : [
+                    {
+                        "minLength": 2
+                    },
+                    {
+                        "maxLength": 4
+                    }
+                ]
+    }
+
+/ep1:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example: 3
+
+/ep2:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example: foobar
+
+/ep3:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example: foo

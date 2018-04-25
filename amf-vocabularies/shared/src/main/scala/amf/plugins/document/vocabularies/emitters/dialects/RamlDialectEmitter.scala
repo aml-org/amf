@@ -503,7 +503,7 @@ trait RamlDialectDocumentsEmitters {
   val dialect: Dialect
   val aliases: Map[String, (String, String)]
 
-  def collectAliases(): Map[String, (String, String)] = {
+  def collectAliases(): Map[String, (Aliases.FullUrl, Aliases.Alias)] = {
     val vocabFile       = dialect.location.split("/").last
     val vocabFilePrefix = dialect.location.replace(vocabFile, "")
 
@@ -511,7 +511,7 @@ trait RamlDialectDocumentsEmitters {
       .find(classOf[Aliases])
       .map { aliases =>
         aliases.aliases.foldLeft(Map[String, String]()) {
-          case (acc, (alias, id)) =>
+          case (acc, (alias, (id, _))) =>
             acc + (id -> alias)
         }
       }

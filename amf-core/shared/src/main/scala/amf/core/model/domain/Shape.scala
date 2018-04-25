@@ -17,6 +17,10 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
   def defaultString: StrField                            = fields.field(DefaultValueString)
   def values: Seq[StrField]                              = fields.field(Values)
   def inherits: Seq[Shape]                               = fields.field(Inherits)
+  def or: Seq[Shape]                                     = fields.field(Or)
+  def and: Seq[Shape]                                    = fields.field(And)
+  def xone: Seq[Shape]                                   = fields.field(Xone)
+  def not: Shape                                         = fields.field(Not)
   def customShapeProperties: Seq[ShapeExtension]         = fields.field(CustomShapeProperties)
   def customShapePropertyDefinitions: Seq[PropertyShape] = fields.field(CustomShapePropertyDefinitions)
 
@@ -26,6 +30,10 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
   def withDefault(default: DataNode): this.type       = set(Default, default)
   def withValues(values: Seq[String]): this.type      = set(Values, values)
   def withInherits(inherits: Seq[Shape]): this.type   = setArray(Inherits, inherits)
+  def withOr(subShapes: Seq[Shape]): this.type        = setArray(Or, inherits)
+  def withAnd(subShapes: Seq[Shape]): this.type       = setArray(And, inherits)
+  def withXone(subShapes: Seq[Shape]): this.type      = setArray(Xone, inherits)
+  def withNot(shape: Shape): this.type                = set(Not, shape)
   def withCustomShapeProperties(properties: Seq[ShapeExtension]): this.type =
     setArray(CustomShapeProperties, properties)
   def withCustomShapePropertyDefinitions(propertyDefinitions: Seq[PropertyShape]): this.type =

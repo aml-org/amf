@@ -57,7 +57,7 @@ class ValidationJSONLDEmitter(targetProfile: String) {
 
       if (validation.targetInstance.nonEmpty)
         p.entry((Namespace.Shacl + "targetNode").iri(), _.list(p => {
-          validation.targetInstance.foreach { ti =>
+          validation.targetInstance.distinct.foreach { ti =>
             link(p, expandRamlId(ti))
           }
         }))
@@ -91,6 +91,32 @@ class ValidationJSONLDEmitter(targetProfile: String) {
                     validation.unionConstraints.foreach { v =>
                       link(l, v)
                   }))
+        })
+      }
+
+      if (validation.andConstraints.nonEmpty) {
+        p.entry((Namespace.Shacl + "and").iri(), _.obj {
+          _.entry("@list",
+            _.list(l =>
+              validation.andConstraints.foreach { v =>
+                link(l, v)
+              }))
+        })
+      }
+
+      if (validation.xoneConstraints.nonEmpty) {
+        p.entry((Namespace.Shacl + "xone").iri(), _.obj {
+          _.entry("@list",
+            _.list(l =>
+              validation.xoneConstraints.foreach { v =>
+                link(l, v)
+              }))
+        })
+      }
+
+      if (validation.notConstraint.isDefined) {
+        p.entry((Namespace.Shacl + "not").iri(), _.list { l =>
+            link(l, validation.notConstraint.get)
         })
       }
 

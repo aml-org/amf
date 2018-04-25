@@ -34,7 +34,9 @@ case class NodeMapping(fields: Fields, annotations: Annotations) extends DomainE
   }
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/" + name.value().urlEncoded
+  override def componentId: String = {
+    "/" + name.value().urlEncoded
+  }
 }
 
 object NodeMapping {

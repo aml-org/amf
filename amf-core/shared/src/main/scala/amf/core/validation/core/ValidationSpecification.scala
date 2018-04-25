@@ -87,6 +87,12 @@ case class ValidationSpecification(name: String,
                                      * to the contraints in the union
                                      */
                                    unionConstraints: Seq[String] = Seq.empty,
+
+                                   // Logical constraints here, or contraints are collected in the union above
+                                   andConstraints: Seq[String] = Seq.empty,
+                                   xoneConstraints: Seq[String] = Seq.empty,
+                                   notConstraint: Option[String] = None,
+
                                    /**
                                      * shacl:property
                                      * Property constraints for the node

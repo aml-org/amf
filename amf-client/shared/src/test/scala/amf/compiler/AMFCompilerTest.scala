@@ -3,7 +3,7 @@ package amf.compiler
 import amf.ProfileNames
 import amf.client.remote.Content
 import amf.core.exception.CyclicReferenceException
-import amf.core.model.document.{BaseUnit, Document}
+import amf.core.model.document.{BaseUnit, Document, ExternalFragment}
 import amf.core.parser.{UnspecifiedReference, _}
 import amf.core.plugins.{AMFFeaturePlugin, AMFPlugin}
 import amf.core.remote.Syntax.{Json, Syntax, Yaml}
@@ -199,7 +199,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
       s should include("libraries")
     })
 
-    libraries.entries.length should be(references.size)
+    libraries.entries.length should be(references.count(!_.isInstanceOf[ExternalFragment]))
   }
 
   private def assertCycles(syntax: Syntax, hint: Hint) = {
@@ -213,6 +213,11 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
 
   private class TestCache extends Cache {
     def assertCacheSize(expectedSize: Int): Assertion = {
+      if (size != expectedSize) {
+        cache.foreach { case (a,b) =>
+            println(s"${a} -> ${b.id}")
+        }
+      }
       size should be(expectedSize)
     }
   }

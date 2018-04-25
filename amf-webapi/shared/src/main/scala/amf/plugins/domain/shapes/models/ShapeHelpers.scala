@@ -55,8 +55,8 @@ trait ShapeHelpers { this: Shape =>
     }
   }
 
-  protected def buildFixPoint(id: Option[String], link: Shape, recursionErrorHandler: Option[ErrorHandler]): RecursiveShape = {
-    if (recursionErrorHandler.isDefined) {
+  protected def buildFixPoint(id: Option[String], link: Linkable, recursionErrorHandler: Option[ErrorHandler]): RecursiveShape = {
+    if (recursionErrorHandler.isDefined && !link.supportsRecursion.option().getOrElse(false)) {
       recursionErrorHandler.get.violation(
         ParserSideValidations.RecursiveShapeSpecification.id(),
         link.id,

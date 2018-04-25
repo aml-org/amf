@@ -215,7 +215,6 @@ class WebApiDeclarations(alias: Option[String],
   }
 
   def findNamedExample(key: String): Option[Example] = fragments.get(key) collect { case e: Example => e }
-
 }
 
 object WebApiDeclarations {

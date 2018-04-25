@@ -1,0 +1,80 @@
+#%RAML 1.0
+title: test
+
+types:
+  test1: |
+    {
+                "properties": {"bar": {"type": "integer"}},
+                "required": ["bar"],
+                "allOf" : [
+                    {
+                        "properties": {
+                            "foo": {"type": "string"}
+                        },
+                        "required": ["foo"]
+                    },
+                    {
+                        "properties": {
+                            "baz": {"type": "null"}
+                        },
+                        "required": ["baz"]
+                    }
+                ]
+    }
+
+/ep1:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              foo: quux
+              bar: 2
+              baz: null
+
+/ep2:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              foo: quux
+              baz: null
+
+
+/ep3:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              bar: 2
+              baz: null
+
+
+/ep4:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              foo: qux
+              bar: 2
+
+/ep5:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              bar: 2

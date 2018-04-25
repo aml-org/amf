@@ -178,13 +178,15 @@ object ExtendsHelper {
       case f: Fragment =>
         ctx.declarations += (f.location, f)
         nestedDeclarations(ctx, f)
-      case m: Module if m.annotations.find(classOf[Aliases]).isDefined =>
-        val nestedCtx = new Raml10WebApiContext(ParserContext())
-        m.declares.foreach { declaration =>
-          processDeclaration(declaration, nestedCtx, m)
-        }
-        m.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases.map(_._1).foreach { alias =>
-          ctx.declarations.libraries += (alias -> nestedCtx.declarations)
+      case m: Module =>
+        model.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases.foreach { case(alias,(fullUrl, relativeUrl)) =>
+          if (m.id == fullUrl) {
+            val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext())
+            m.declares.foreach { declaration =>
+              processDeclaration(declaration, nestedCtx, m)
+            }
+            ctx.declarations.libraries += (alias -> nestedCtx.declarations)
+          }
         }
         nestedDeclarations(ctx, m)
     }
@@ -214,7 +216,7 @@ object ExtendsHelper {
   }
 }
 
-class CustomRaml08WebApiContext extends Raml08WebApiContext(ParserContext()) {
+class CustomRaml08WebApiContext extends Raml08WebApiContext("", Nil,ParserContext()) {
   override def handle[T](error: YError, defaultValue: T): T = defaultValue
   override def violation(id: String,
                          node: String,
@@ -230,7 +232,7 @@ class CustomRaml08WebApiContext extends Raml08WebApiContext(ParserContext()) {
   override def handle(node: YPart, e: SyamlException): Unit       = {}
 }
 
-class CustomRaml10WebApiContext extends Raml10WebApiContext(ParserContext()) {
+class CustomRaml10WebApiContext extends Raml10WebApiContext("", Nil,ParserContext()) {
   override def handle[T](error: YError, defaultValue: T): T = defaultValue
   override def violation(id: String,
                          node: String,

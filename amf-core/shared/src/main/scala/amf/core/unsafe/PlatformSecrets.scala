@@ -58,4 +58,6 @@ case class TrunkPlatform(content: String, wrappedPlatform: Option[Platform] = No
 
   /** Platform out of the box [ResourceLoader]s */
   override def loaders(): Seq[ResourceLoader] = wrappedPlatform.map(_.loaders()).getOrElse(Seq())
+
+  override def findCharInCharSequence(s: CharSequence)(p: Char => Boolean): Option[Char] = wrappedPlatform.flatMap(_.findCharInCharSequence(s)(p))
 }

@@ -34,6 +34,13 @@ class JvmPlatform extends Platform {
       res
     }
   }
+
+  override def findCharInCharSequence(stream: CharSequence)(p: Char => Boolean): Option[Char] = {
+    stream.chars().filter(c => p(c.toChar)).findFirst() match {
+      case optInt if optInt.isPresent => Some(optInt.getAsInt.toChar)
+      case _                          => None
+    }
+  }
 }
 
 object JvmPlatform {

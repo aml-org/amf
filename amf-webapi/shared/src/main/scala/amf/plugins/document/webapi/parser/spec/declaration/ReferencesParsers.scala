@@ -1,9 +1,11 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
+import amf.core.Root
 import amf.core.annotations.Aliases
 import amf.core.model.document.{BaseUnit, DeclaresModel, Document, Fragment}
 import amf.core.parser.{ParsedReference, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.model.DataTypeFragment
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 import scala.collection.mutable
@@ -41,7 +43,7 @@ case class ReferenceDeclarations(references: mutable.Map[String, BaseUnit] = mut
   def solvedReferences(): Seq[BaseUnit] = references.values.toSet.toSeq
 }
 
-case class ReferencesParser(key: String, map: YMap, references: Seq[ParsedReference])(implicit ctx: WebApiContext) {
+case class ReferencesParser(baseUnit: BaseUnit, key: String, map: YMap, references: Seq[ParsedReference])(implicit ctx: WebApiContext) {
   def parse(location: String): ReferenceDeclarations = {
     val result: ReferenceDeclarations = parseLibraries(location)
 
@@ -71,7 +73,9 @@ case class ReferencesParser(key: String, map: YMap, references: Seq[ParsedRefere
             val urlOption     = LibraryLocationParser(e)
             urlOption.foreach { url =>
               target(url).foreach {
-                case module: DeclaresModel => result += (alias, collectAlias(module, alias -> url))
+                case module: DeclaresModel =>
+                  collectAlias(baseUnit, alias -> (module.id, url))
+                  result += (alias, module)
                 case other =>
                   ctx
                     .violation(id, s"Expected module but found: $other", e) // todo Uses should only reference modules...
@@ -88,7 +92,7 @@ case class ReferencesParser(key: String, map: YMap, references: Seq[ParsedRefere
     case _             => e.value
   }
 
-  private def collectAlias(module: BaseUnit, alias: (String, String)): BaseUnit = {
+  private def collectAlias(module: BaseUnit, alias: (Aliases.Alias, (Aliases.FullUrl,Aliases.RelativeUrl))): BaseUnit = {
     module.annotations.find(classOf[Aliases]) match {
       case Some(aliases) =>
         module.annotations.reject(_.isInstanceOf[Aliases])
@@ -97,4 +101,13 @@ case class ReferencesParser(key: String, map: YMap, references: Seq[ParsedRefere
     }
   }
 
+}
+
+// Helper method to parse references and annotations before having an actual base unit
+object ReferencesParserAnnotations {
+  def apply(key: String, map: YMap, root: Root)(implicit ctx: WebApiContext): (ReferenceDeclarations, Option[Aliases]) = {
+    val  tmp = Document()
+    val declarations = ReferencesParser(tmp, key, map, root.references).parse(root.location)
+    (declarations, tmp.annotations.find(classOf[Aliases]))
+  }
 }

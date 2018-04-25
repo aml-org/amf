@@ -38,6 +38,8 @@ object FileMediaType extends FileMediaType
   */
 trait Platform extends FileMediaType {
 
+  def findCharInCharSequence(s: CharSequence)(p: Char => Boolean): Option[Char]
+
   /** Underlying file system for platform. */
   val fs: FileSystem
   var testingCommandLine: Boolean = false
