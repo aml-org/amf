@@ -1,16 +1,17 @@
 package amf.core.remote.server
 
 import amf.client.remote.Content
-import amf.client.resource.JsHttpResourceLoader
+import amf.client.resource.BaseHttpResourceLoader
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Promise
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
+@JSExportTopLevel("JsServerHttpResourceLoader")
 @JSExportAll
-case class JsServerHttpResourceLoader() extends JsHttpResourceLoader {
+case class JsServerHttpResourceLoader() extends BaseHttpResourceLoader {
 
   override def fetch(resource: String): js.Promise[Content] = {
     val promise: Promise[Content] = Promise()

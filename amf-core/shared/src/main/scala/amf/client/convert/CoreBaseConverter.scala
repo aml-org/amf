@@ -341,6 +341,7 @@ trait CustomDomainPropertyConverter {
 
 trait ResourceLoaderConverter {
   type ClientLoader <: ClientResourceLoader
+  type Loader
 
   implicit object ResourceLoaderMatcher extends BidirectionalMatcher[ResourceLoader, ClientResourceLoader] {
     override def asClient(from: ResourceLoader): ClientResourceLoader = from match {

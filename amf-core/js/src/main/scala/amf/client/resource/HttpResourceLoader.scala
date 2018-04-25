@@ -1,5 +1,0 @@
-package amf.client.resource
-
-trait JsHttpResourceLoader extends BaseHttpResourceLoader
-
-trait JsFileResourceLoader extends BaseFileResourceLoader

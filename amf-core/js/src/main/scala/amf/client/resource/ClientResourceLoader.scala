@@ -6,7 +6,7 @@ import amf.client.remote.Content
 import scala.scalajs.js
 
 @js.native
-trait JsResourceLoader extends js.Object {
+trait ClientResourceLoader extends js.Object {
 
   /** Fetch specified resource and return associated content. Resource should have benn previously accepted. */
   def fetch(resource: String): ClientFuture[Content] = js.native

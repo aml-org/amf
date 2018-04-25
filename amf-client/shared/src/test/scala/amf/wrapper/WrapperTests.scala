@@ -408,7 +408,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       override def accepts(resource: String): Boolean = resource == include
     }
 
-    val environment = Environment(TestResourceLoader().asInstanceOf[ClientLoader])
+    val environment = Environment.empty().add(TestResourceLoader().asInstanceOf[ClientLoader])
 
     for {
       _    <- AMF.init().asFuture
