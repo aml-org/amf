@@ -152,7 +152,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       }
 
       namedExample.withEncodes(
-        RamlNamedExampleParser(entries.head, producer, ExampleOptions(strictDefault = false, quiet = true)).parse())
+        RamlNamedExampleParser(entries.head, producer, ExampleOptions(strictDefault = true, quiet = true)).parse())
     }
   }
 }

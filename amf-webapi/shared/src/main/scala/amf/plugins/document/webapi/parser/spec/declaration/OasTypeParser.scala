@@ -344,13 +344,13 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
   }
 
   case class AnyTypeShapeParser(shape: AnyShape, map: YMap) extends AnyShapeParser {
-    override val options: ExampleOptions = ExampleOptions(strictDefault = false, quiet = true)
+    override val options: ExampleOptions = ExampleOptions(strictDefault = true, quiet = true)
   }
 
   abstract class AnyShapeParser() extends ShapeParser() {
 
     override val shape: AnyShape
-    val options: ExampleOptions = ExampleOptions(strictDefault = false, quiet = false)
+    val options: ExampleOptions = ExampleOptions(strictDefault = true, quiet = false)
     override def parse(): AnyShape = {
       super.parse()
       parseExample()
