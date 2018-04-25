@@ -404,9 +404,9 @@
                                 "@value": "schema"
                               }
                             ],
-                            "http://raml.org/vocabularies/shapes#inherits": [
+                            "http://www.w3.org/ns/shacl#and": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/examples.json#/web-api/end-points/%2Forganization/post/request/parameter/default/default/schema/Org",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/examples.json#/web-api/end-points/%2Forganization/post/request/parameter/default/default/schema/item0",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -420,17 +420,17 @@
                                 ],
                                 "http://raml.org/vocabularies/document#link-label": [
                                   {
-                                    "@value": "#/definitions/Org"
+                                    "@value": "Org"
                                   }
                                 ],
                                 "http://www.w3.org/ns/shacl#name": [
                                   {
-                                    "@value": "Org"
+                                    "@value": "item0"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/examples.json#/web-api/end-points/%2Forganization/post/request/parameter/default/default/schema/Org/source-map",
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/examples.json#/web-api/end-points/%2Forganization/post/request/parameter/default/default/schema/item0/source-map",
                                     "@type": [
                                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -438,12 +438,12 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/examples.json#/web-api/end-points/%2Forganization/post/request/parameter/default/default/schema/Org"
+                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/examples.json#/web-api/end-points/%2Forganization/post/request/parameter/default/default/schema/item0"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(58,26)-(58,45)]"
+                                            "@value": "[(1,0)-(58,17)]"
                                           }
                                         ]
                                       }
@@ -671,12 +671,12 @@
                                   {
                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://raml.org/vocabularies/shapes#inherits"
+                                        "@value": "http://www.w3.org/ns/shacl#and"
                                       }
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(56,14)-(60,15)]"
+                                        "@value": "[(55,23)-(59,15)]"
                                       }
                                     ]
                                   },
@@ -702,7 +702,7 @@
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(55,14)-(55,20)]"
+                                        "@value": "[(60,14)-(60,20)]"
                                       }
                                     ]
                                   }
@@ -875,9 +875,9 @@
                                 "@value": "default"
                               }
                             ],
-                            "http://raml.org/vocabularies/shapes#inherits": [
+                            "http://www.w3.org/ns/shacl#and": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/examples.json#/web-api/end-points/%2Forganization/get/201/application/json/default/Org",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/examples.json#/web-api/end-points/%2Forganization/get/201/application/json/default/item0",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -891,17 +891,17 @@
                                 ],
                                 "http://raml.org/vocabularies/document#link-label": [
                                   {
-                                    "@value": "#/definitions/Org"
+                                    "@value": "Org"
                                   }
                                 ],
                                 "http://www.w3.org/ns/shacl#name": [
                                   {
-                                    "@value": "Org"
+                                    "@value": "item0"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/examples.json#/web-api/end-points/%2Forganization/get/201/application/json/default/Org/source-map",
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/examples.json#/web-api/end-points/%2Forganization/get/201/application/json/default/item0/source-map",
                                     "@type": [
                                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -909,12 +909,12 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/examples.json#/web-api/end-points/%2Forganization/get/201/application/json/default/Org"
+                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/examples.json#/web-api/end-points/%2Forganization/get/201/application/json/default/item0"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(83,26)-(83,45)]"
+                                            "@value": "[(1,0)-(83,17)]"
                                           }
                                         ]
                                       }
@@ -1343,7 +1343,7 @@
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(80,14)-(80,20)]"
+                                        "@value": "[(85,14)-(85,20)]"
                                       }
                                     ]
                                   }
@@ -1352,12 +1352,12 @@
                                   {
                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://raml.org/vocabularies/shapes#inherits"
+                                        "@value": "http://www.w3.org/ns/shacl#and"
                                       }
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(81,14)-(85,15)]"
+                                        "@value": "[(80,23)-(84,15)]"
                                       }
                                     ]
                                   },

@@ -1,0 +1,36 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "title": "Abstract category.",
+    "description": "The base schema for all kinds of categories. (At the time of writing: top, main and sub categories.)",
+    "required": [
+        "id"
+    ],
+    "allOf": [
+        {
+            "$ref": "identifier"
+        }
+    ],
+    "properties": {
+        "id": {
+            "type": "integer",
+            "minimum": 1
+        },
+        "name": {
+            "description": "The (i18n) name of the category.",
+            "allOf": [
+                {
+                    "$ref": "languageMap"
+                }
+            ]
+        },
+        "description": {
+            "description": "The (i18n) description of the category.",
+            "allOf": [
+                {
+                    "$ref": "languageMap"
+                }
+            ]
+        }
+    }
+}

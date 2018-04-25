@@ -1,0 +1,11 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "title": "Top category.",
+    "description": "In the category hierarchy, this is the top level. A top category exists globally and so is not specific to an auction, like a main category.",
+    "allOf": [
+        {
+            "$ref": "abstractCategory"
+        }
+    ]
+}

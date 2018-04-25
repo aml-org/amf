@@ -1,6 +1,6 @@
 package amf.core.metamodel.domain
 
-import amf.core.metamodel.Type.{Iri, Str}
+import amf.core.metamodel.Type.{Iri, Str, Bool}
 import amf.core.metamodel.{Field, Obj}
 import amf.core.vocabulary.{Namespace, ValueType}
 
@@ -15,10 +15,15 @@ trait LinkableElementModel extends Obj {
     */
   val TargetId = Field(Iri, Namespace.Document + "link-target")
 
+  // Never serialise this
+  val Target = Field(DomainElementModel, Namespace.Document + "target")
+
   /**
     * Label for the type of link
     */
   val Label    = Field(Str, Namespace.Document + "link-label")
+
+  val SupportsRecursion = Field(Bool, Namespace.Document + "recursive")
 
 }
 
@@ -30,6 +35,6 @@ object LinkableElementModel extends LinkableElementModel {
 
   override val `type`: List[ValueType] = List(Namespace.Document + "Linkable")
 
-  override val fields: List[Field] = List(TargetId, Label)
+  override val fields: List[Field] = List(TargetId, Label, SupportsRecursion)
 
 }

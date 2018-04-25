@@ -1,0 +1,62 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "description": "A paged collection is a subclass of collection with the only difference that its members are sorted and only a subset of all members are returned in a single paged collection. To get the other members, the nextPage/previousPage properties can be used. Based on Hydra's collections: http://www.hydra-cg.com/spec/latest/core/#collections.",
+    "allOf": [
+        {
+            "$ref": "collection"
+        }
+    ],
+    "properties": {
+        "totalItems": {
+            "description": "The total number of items referenced by a collection or a set of interlinked PagedCollections.",
+            "type": "integer",
+            "minimum": 0
+        },
+        "itemsPerPage": {
+            "description": "The maximum number of items referenced by each single PagedCollection in a set of interlinked PagedCollections.",
+            "type": "integer",
+            "minimum": 0
+        },
+        "itemOffset": {
+            "description": "The (zero-based) offset of the first item on this page. Usefull to determine what page this is.",
+            "type": "integer",
+            "minimum": 0
+        },
+        "firstPage": {
+            "description": "The first page of an interlinked set of PagedCollections.",
+            "type": "string",
+            "format": "uri"
+        },
+        "nextPage": {
+            "description": "The page following the current instance in an interlinked set of PagedCollections.",
+            "oneOf": [
+                {
+                    "type": "null",
+                    "type": "string"
+                }
+            ],
+            "format": "uri"
+        },
+        "previousPage": {
+            "description": "The page preceding the current instance in an interlinked set of PagedCollections.",
+            "oneOf": [
+                {
+                    "type": "null",
+                    "type": "string"
+                }
+            ],
+            "format": "uri"
+        },
+        "lastPage": {
+            "description": "The last page of an interlinked set of PagedCollections.",
+            "oneOf": [
+                {
+                    "type": "null",
+                    "type": "string"
+                }
+            ],
+            "format": "uri"
+        }
+    }
+}

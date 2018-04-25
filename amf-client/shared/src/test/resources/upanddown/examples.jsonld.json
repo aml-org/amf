@@ -52,12 +52,12 @@
           },
           {
             "schema": {
-              "type": "object",
               "allOf": [
                 {
                   "$ref": "#/definitions/Org"
                 }
               ],
+              "type": "object",
               "example": {
                 "value": {
                   "name": "Doe Enterprise",
@@ -77,12 +77,12 @@
           "201": {
             "x-amf-mediaType": "application/json",
             "schema": {
-              "type": "object",
               "allOf": [
                 {
                   "$ref": "#/definitions/Org"
                 }
               ],
+              "type": "object",
               "example": {
                 "name": "Acme"
               },

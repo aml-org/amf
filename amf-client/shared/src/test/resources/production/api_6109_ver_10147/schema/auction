@@ -1,0 +1,54 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "description": "An auction.",
+    "required": [
+        "id",
+        "auctionTemplate",
+        "name",
+        "startDate",
+        "endDate"
+    ],
+    "allOf": [
+        {
+            "$ref": "identifier"
+        }
+    ],
+    "properties": {
+        "id": {
+            "description": "Unique identifier of this auction on the website.",
+            "type": "integer",
+            "minimum": 1
+        },
+        "auctionTemplate": {
+            "description": "The type of this auction.",
+            "$ref": "auctionTemplate"
+        },
+        "name": {
+            "description": "The (i18n) name of the auction.",
+            "allOf": [
+                {
+                    "$ref": "languageMap"
+                }
+            ]
+        },
+        "description": {
+            "description": "The (i18n) description of the auction.",
+            "allOf": [
+                {
+                    "$ref": "languageMap"
+                }
+            ]
+        },
+        "startDate": {
+            "description": "Opening date and time of this auction. This means the earliest date+time that bidding may start on any of the lots.",
+            "type": "string",
+            "format": "date-time"
+        },
+        "endDate": {
+            "description": "Closing date and time of this auction. This means the earliest date+time that bidding will stop on any of the lots.",
+            "type": "string",
+            "format": "date-time"
+        }
+    }
+}

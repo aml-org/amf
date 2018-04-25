@@ -4,15 +4,16 @@ import amf.client.remote.Content
 import amf.core
 import amf.core.benchmark.ExecutionLog
 import amf.core.exception.CyclicReferenceException
-import amf.core.model.document.{BaseUnit, ExternalFragment}
+import amf.core.model.document.{BaseUnit, ExternalFragment, RecursiveUnit}
 import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser.{ParsedDocument, ParsedReference, ParserContext, ReferenceKind, UnspecifiedReference}
 import amf.core.plugins.AMFDocumentPlugin
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.services.RuntimeCompiler
-import amf.internal.environment.Environment
 import amf.core.utils.Strings
+import amf.internal.environment.Environment
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.Future.failed
@@ -28,18 +29,17 @@ object AMFCompilerRunCount {
 class AMFCompiler(val rawUrl: String,
                   val remote: Platform,
                   val base: Option[Context],
-                  val mediaType: Option[String],
+                  var mediaType: Option[String],
                   val vendor: String,
                   val referenceKind: ReferenceKind = UnspecifiedReference,
                   private val cache: Cache = Cache(),
                   private val baseContext: Option[ParserContext] = None,
                   val env: Environment = Environment()) {
 
-  val url: String                   = new java.net.URI(escapeFileSystemPath(rawUrl)).normalize().toString
-  private lazy val context: Context = base.map(_.update(url)).getOrElse(core.remote.Context(remote, url))
-  private lazy val location         = context.current
-  private val ctx: ParserContext =
-    baseContext.getOrElse(ParserContext(url))
+  val url: String                = new java.net.URI(escapeFileSystemPath(rawUrl)).normalize().toString
+  private val context: Context   = base.map(_.update(url)).getOrElse(core.remote.Context(remote, url))
+  private val location           = context.current
+  private val ctx: ParserContext = baseContext.getOrElse(ParserContext(url))
 
   def build(): Future[BaseUnit] = {
     ExecutionLog.log(s"AMFCompiler#build: Building $rawUrl")
@@ -52,6 +52,19 @@ class AMFCompiler(val rawUrl: String,
   }
 
   private def compile() = resolve().map(parseSyntax).flatMap(parseDomain)
+
+  def autodetectSyntax(stream: CharSequence): Option[String] = {
+    base.flatMap { b =>
+      b.platform.findCharInCharSequence(stream) { c =>
+        c != '\n' && c != '\t' && c != '\r' && c != ' '
+      } match {
+        case Some(c) if c == '{' || c == '[' =>
+          ExecutionLog.log (s"AMFCompiler#autodetectSyntax: auto detected application/json media type")
+          Some ("application/json")
+        case _ => None
+      }
+    }
+  }
 
   private def parseSyntax(inputContent: Content): Either[Content, Root] = {
     ExecutionLog.log(s"AMFCompiler#parseSyntax: parsing syntax $rawUrl")
@@ -70,6 +83,16 @@ class AMFCompiler(val rawUrl: String,
           .flatMap(FileMediaType.mimeFromExtension)
           .flatMap(mime =>
             AMFPluginsRegistry.syntaxPluginForMediaType(mime).flatMap(_.parse(mime, content.stream, ctx)))
+      }
+      .orElse {
+        autodetectSyntax(content.stream).flatMap(mime =>
+          try {
+            mediaType = Some(mime)
+            AMFPluginsRegistry.syntaxPluginForMediaType(mime).flatMap(_.parse(mime, content.stream, ctx))
+          } catch {
+            case _: Exception => None // This is just a parsing attempt, it can go wrong
+          }
+        )
       }
 
     parsed match {
@@ -105,7 +128,7 @@ class AMFCompiler(val rawUrl: String,
   }
 
   private def parseDomain(document: Root): Future[BaseUnit] = {
-    ExecutionLog.log(s"AMFCompiler#parseDomain: parsing syntax $rawUrl")
+    ExecutionLog.log(s"AMFCompiler#parseDomain: parsing domain $rawUrl")
     val currentRun = ctx.parserCount
     val domainPluginOption = AMFPluginsRegistry.documentPluginForVendor(vendor).find(_.canParse(document)) match {
       case Some(domainPlugin) => Some(domainPlugin)
@@ -147,23 +170,45 @@ class AMFCompiler(val rawUrl: String,
     }
   }
 
+  def resolveRecursiveUnit(fulllUrl: String): Future[RecursiveUnit] = {
+    ExecutionLog.log(s"AMFCompiler#parserReferences: Recursive reference $fulllUrl for $rawUrl")
+    remote.resolve(fulllUrl, env) map { content =>
+      val recUnit = RecursiveUnit().withId(fulllUrl).withLocation(fulllUrl)
+      recUnit.withRaw(content.stream.toString)
+      recUnit
+    }
+  }
+
   private def parseReferences(root: Root, domainPlugin: AMFDocumentPlugin): Future[Root] = {
     val handler = domainPlugin.referenceHandler()
     val refs    = handler.collect(root.parsed, ctx)
-
+    ExecutionLog.log(s"AMFCompiler#parseReferences: ${refs.toReferences.size} references found in $rawUrl")
     val units = refs.toReferences
       .filter(_.isRemote)
       .map(link => {
         link
           .resolve(context, None, domainPlugin.ID, cache, ctx, env)
+          .recover {
+            case e: CyclicReferenceException if domainPlugin.allowRecursiveReferences =>
+              val fulllUrl = e.history.last
+              resolveRecursiveUnit(fulllUrl)
+          }
           .flatMap(u => {
-            val reference = ParsedReference(u, link)
-            handler.update(reference, ctx, context, env).map(Some(_))
+            val f = u match {
+              case fu: Future[BaseUnit] => fu
+              case bu: BaseUnit         => Future { bu }
+            }
+            f.flatMap { u =>
+              val reference = ParsedReference(u, link)
+              handler.update(reference, ctx, context, env).map(Some(_))
+            }
           })
           .recover {
             case e: FileNotFound =>
-              link.refs.map(_.node).foreach { ref =>
-                ctx.violation(link.url, e.getMessage, ref)
+              if (!link.isInferred()) {
+                link.refs.map(_.node).foreach { ref =>
+                  ctx.violation(link.url, e.getMessage, ref)
+                }
               }
               None
           }

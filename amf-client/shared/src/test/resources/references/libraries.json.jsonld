@@ -430,7 +430,7 @@
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://raml.org/vocabularies/document-source-maps#aliases-array": [
+            "http://raml.org/vocabularies/document-source-maps#source-vendor": [
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
@@ -439,7 +439,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "lib->lib/lib.json"
+                    "@value": "oas"
                   }
                 ]
               }
@@ -469,19 +469,27 @@
                   }
                 ]
               }
-            ],
-            "http://raml.org/vocabularies/document-source-maps#source-vendor": [
+            ]
+          }
+        ]
+      }
+    ],
+    "http://raml.org/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/references/libraries.json/source-map",
+        "@type": [
+          "http://raml.org/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://raml.org/vocabularies/document-source-maps#aliases-array": [
+          {
+            "http://raml.org/vocabularies/document-source-maps#element": [
               {
-                "http://raml.org/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-client/shared/src/test/resources/references/lib/lib.json"
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "oas"
-                  }
-                ]
+                "@value": "file://amf-client/shared/src/test/resources/references/libraries.json"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#value": [
+              {
+                "@value": "lib->file://amf-client/shared/src/test/resources/references/lib/lib.json::lib/lib.json"
               }
             ]
           }

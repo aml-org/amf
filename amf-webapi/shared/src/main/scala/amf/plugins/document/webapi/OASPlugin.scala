@@ -6,7 +6,7 @@ import amf.core.emitter.RenderOptions
 import amf.core.Root
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
-import amf.core.parser.{LibraryReference, LinkReference, ParserContext}
+import amf.core.parser.{LibraryReference, LinkReference, ParsedReference, ParserContext}
 import amf.core.remote.Platform
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.plugins.document.webapi.contexts._
@@ -26,10 +26,10 @@ sealed trait OASPlugin extends BaseWebApiPlugin {
 
   override def specContext: OasSpecEmitterContext
 
-  def context(wrapped: ParserContext, ds: Option[WebApiDeclarations] = None): OasWebApiContext
+  def context(loc: String, refs: Seq[ParsedReference], wrapped: ParserContext, ds: Option[WebApiDeclarations] = None): OasWebApiContext
 
   override def parse(document: Root, parentContext: ParserContext, platform: Platform): Option[BaseUnit] = {
-    implicit val ctx: OasWebApiContext = context(parentContext)
+    implicit val ctx: OasWebApiContext = context(document.location, document.references, parentContext)
     document.referenceKind match {
       case LibraryReference => Some(OasModuleParser(document).parseModule())
       case LinkReference    => Some(OasFragmentParser(document).parseFragment())
@@ -115,7 +115,7 @@ object OAS20Plugin extends OASPlugin {
 
   }
 
-  override def context(wrapped: ParserContext, ds: Option[WebApiDeclarations]) = new Oas2WebApiContext(wrapped, ds)
+  override def context(loc: String, refs: Seq[ParsedReference], wrapped: ParserContext, ds: Option[WebApiDeclarations]) = new Oas2WebApiContext(loc, refs, wrapped, ds)
 }
 
 object OAS30Plugin extends OASPlugin {
@@ -180,5 +180,5 @@ object OAS30Plugin extends OASPlugin {
   override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
     new OasResolutionPipeline().resolve(unit)
 
-  override def context(wrapped: ParserContext, ds: Option[WebApiDeclarations]) = new Oas3WebApiContext(wrapped, ds)
+  override def context(loc: String, refs: Seq[ParsedReference], wrapped: ParserContext, ds: Option[WebApiDeclarations]) = new Oas3WebApiContext(loc, refs, wrapped, ds)
 }

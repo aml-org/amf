@@ -1,11 +1,10 @@
 #%RAML 0.8
 title: RBStamm Service API
 schemas:
-  - bank: !include bank-schema.json
   - banks: |
       {  "$schema": "http://json-schema.org/draft-03/schema",
          "type": "array",
-         "items": { "$ref": "bank" }
+         "items": { "$ref": "bank-schema.json#/" }
       }
   
 

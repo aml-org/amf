@@ -1,0 +1,67 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "title": "Category.",
+    "description": "This is a conceptual category. It does not exist on the auction website. But it is used in this API to create predefined, reusable category layouts.",
+    "required": [
+        "parent",
+        "children",
+        "position",
+        "layout"
+    ],
+    "allOf": [
+        {
+            "$ref": "abstractCategory"
+        }
+    ],
+    "properties": {
+        "position": {
+            "description": "The ordering of this category amongst the other categories with the same parent.",
+            "type": "integer",
+            "minimum": 0
+        },
+        "parent": {
+            "description": "The parent category node.",
+            "anyOf": [
+                {
+                    "type": "null"
+                },
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "$ref": "#"
+                }
+            ]
+        },
+        "children": {
+            "description": "The children category nodes.",
+            "anyOf": [
+                {
+                    "type": "null"
+                },
+                {
+                    "type": "array",
+                    "additionalItems": {
+                        "anyOf": [
+                            {
+                                "$ref": "identifier"
+                            },
+                            {
+                                "$ref": "#"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "layout": {
+            "description": "The layout which this category belongs to.",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                }
+            ]
+        }
+    }
+}

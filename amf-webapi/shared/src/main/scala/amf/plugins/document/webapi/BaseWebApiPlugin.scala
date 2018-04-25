@@ -23,9 +23,14 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
 
   override def referenceHandler() = new WebApiReferenceHandler(ID, this)
 
-  override def dependencies() = Seq(WebAPIDomainPlugin, DataShapesDomainPlugin)
+  override def dependencies() = Seq(WebAPIDomainPlugin, DataShapesDomainPlugin, ExternalJsonRefsPlugin)
 
   def specContext: SpecEmitterContext
+
+  /**
+    * Does references in this type of documents be recursive?
+    */
+  override val allowRecursiveReferences: Boolean = false
 
   override def modelEntities = Seq(
     ExtensionModel,

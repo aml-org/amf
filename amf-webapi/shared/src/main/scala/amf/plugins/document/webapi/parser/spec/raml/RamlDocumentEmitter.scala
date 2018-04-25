@@ -78,7 +78,7 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
 
   override def emitters: Seq[EntryEmitter] = {
     val declares   = declarationsEmitter()
-    val references = ReferencesEmitter(document.references, ordering)
+    val references = ReferencesEmitter(document, ordering)
     val extension  = extensionEmitter()
     val usage: Option[ValueEmitter] =
       document.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("usage", f))
@@ -222,26 +222,15 @@ abstract class RamlRootLevelEmitters(doc: BaseUnit with DeclaresModel, ordering:
   }
 }
 
-case class ReferenceEmitter(reference: BaseUnit, ordering: SpecOrdering, aliasGenerator: () => String)
+case class ReferenceEmitter(reference: BaseUnit, aliases: Option[Aliases], ordering: SpecOrdering, aliasGenerator: () => String)
     extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
-    val aliases = reference.annotations.find(classOf[Aliases])
-
-    def entry(tuple: (String, String)): Unit = tuple match {
-      case (alias, path) =>
-        val ref = path match {
-          case "" => name
-          case _  => path
-        }
-        MapEntryEmitter(alias, ref).emit(b)
+    val aliasesMap = aliases.getOrElse(Aliases(Set())).aliases
+    val effectiveAlias = aliasesMap.find { case (a, (f,r)) => f == reference.id } map { case (a, (f,r)) => (a, r) } getOrElse {
+      (aliasGenerator(), name)
     }
-
-    aliases.fold {
-      entry(aliasGenerator() -> "")
-    } { _ =>
-      aliases.foreach(_.aliases.foreach(entry))
-    }
+    MapEntryEmitter(effectiveAlias._1, effectiveAlias._2).emit(b)
   }
 
   private def name: String = {
@@ -254,13 +243,28 @@ case class ReferenceEmitter(reference: BaseUnit, ordering: SpecOrdering, aliasGe
   override def position(): Position = ZERO
 }
 
-case class ReferencesEmitter(references: Seq[BaseUnit], ordering: SpecOrdering) extends EntryEmitter {
+case class ReferencesEmitter(baseUnit: BaseUnit, ordering: SpecOrdering) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
+    val aliases = baseUnit.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set()))
+    val references = baseUnit.references
     val modules = references.collect({ case m: Module => m })
     if (modules.nonEmpty) {
+      var modulesEmitted = Map[String, Module]()
       val idCounter = new IdCounter()
+      val aliasesEmitters: Seq[Option[EntryEmitter]] = aliases.aliases.map { case (alias, (fullUrl, localUrl)) =>
+        modules.find(_.id == fullUrl) match {
+          case Some(module) =>
+            modulesEmitted += (module.id -> module)
+            Some(ReferenceEmitter(module, Some(Aliases(Set(alias -> (fullUrl, localUrl)))), ordering, () => idCounter.genId("uses")))
+          case _            => None
+        }
+      }.toSeq
+      val missingModuleEmitters = modules.filter(m => modulesEmitted.get(m.id).isEmpty).map { module =>
+        Some(ReferenceEmitter(module, Some(Aliases(Set())), ordering, () => idCounter.genId("uses")))
+      }
+      val finalEmitters = (aliasesEmitters ++ missingModuleEmitters).collect{ case Some(e) => e }
       b.entry("uses", _.obj { b =>
-        traverse(ordering.sorted(modules.map(r => ReferenceEmitter(r, ordering, () => idCounter.genId("uses")))), b)
+        traverse(ordering.sorted(finalEmitters), b)
       })
     }
   }

@@ -24,7 +24,7 @@ case class OasModuleParser(root: Root)(implicit val ctx: OasWebApiContext) exten
     module.set(BaseUnitModel.Location, root.location)
 
     root.parsed.document.toOption[YMap].foreach { rootMap =>
-      val references = ReferencesParser("uses".asOasExtension, rootMap, root.references).parse(root.location)
+      val references = ReferencesParser(module, "uses".asOasExtension, rootMap, root.references).parse(root.location)
 
       parseDeclarations(root, rootMap)
 

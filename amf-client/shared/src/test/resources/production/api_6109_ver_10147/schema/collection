@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "description": "A collection holding (references to) a number of related resources. E.g. results of a search query or entries of an address book. Difference of a collection over an array cq list is that it is referenceable and manipulatable on its own, and that metadata is available. Based on Hydra's collections: http://www.hydra-cg.com/spec/latest/core/#collections.",
+    "required": [
+        "member"
+    ],
+    "allOf": [
+        {
+            "$ref": "identifier"
+        }
+    ],
+    "properties": {
+        "member": {
+            "description": "The members of this collection.",
+            "type": "array"
+        }
+    }
+}

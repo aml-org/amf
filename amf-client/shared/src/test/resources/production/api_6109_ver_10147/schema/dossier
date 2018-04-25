@@ -1,0 +1,55 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "description": "A client's dossier.",
+    "required": [
+        "id",
+        "concept",
+        "client"
+    ],
+    "allOf": [
+        {
+            "$ref": "identifier"
+        }
+    ],
+    "properties": {
+        "id": {
+            "description": "Unique identifier for this dossier. Usually formatted as a year followed by some number. E.g. 2014047216",
+            "type": "integer",
+            "minimum": 0
+        },
+        "client": {
+            "description": "The client which this dossier is for.",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "$ref": "client"
+                }
+            ]
+        },
+        "parentDossier": {
+            "description": "The (optional) parent dossier.",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "$ref": "#"
+                }
+            ]
+        },
+        "concept": {
+            "description": "The concept followed by this dossier.",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "$ref": "concept"
+                }
+            ]
+        }
+    }
+}

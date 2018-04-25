@@ -1,0 +1,47 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "description": "An API Problem, as prescribed in: https://tools.ietf.org/html/draft-ietf-appsawg-http-problem-00. And supplemented by Apigility: https://apigility.org/documentation/api-primer/error-reporting.",
+    "required": [
+        "title"
+    ],
+    "properties": {
+        "type": {
+            "type": "string",
+            "format": "uri",
+            "description": "A URL to a document describing the error condition. (Optional, and \"about:blank\" is assumed if none is provided; should resolve to a human-readable document.)"
+        },
+        "title": {
+            "type": "string",
+            "description": "A brief title for the error condition. (Required; and should be the same for every problem of the same type.)"
+        },
+        "status": {
+            "type": "integer",
+            "description": "The HTTP status code for the current request. (Optional.)"
+        },
+        "detail": {
+            "type": "string",
+            "description": "Error details specific to this request. (Optional.)"
+        },
+        "instance": {
+            "type": "string",
+            "format": "uri",
+            "description": "URI identifying the specific instance of this problem. (Optional.)"
+        },
+        "validation_messages": {
+            "type": "array",
+            "additionalItems": {"type": "string"},
+            "description": "Validation error messages. (Optional.)"
+        },
+        "trace": {
+            "type": "array",
+            "additionalItems": {"type": "string"},
+            "description": "In a development environment, stack traces are included. (Optional.)"
+        },
+        "exception_stack": {
+            "type": "array",
+            "additionalItems": {"type": "string"},
+            "description": "In a development environment, stack traces are included. (Optional.)"
+        }
+    }
+}

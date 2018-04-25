@@ -67,17 +67,17 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
     ensureCorrect(shape)
     cleanUnnecessarySyntax(shape)
     shape match {
-      case union: UnionShape         => expandUnion(union)
-      case scalar: ScalarShape       => expandScalar(scalar)
-      case array: ArrayShape         => expandArray(array)
-      case matrix: MatrixShape       => expandMatrix(matrix)
-      case tuple: TupleShape         => expandTuple(tuple)
-      case property: PropertyShape   => expandProperty(property)
-      case fileShape: FileShape      => fileShape
-      case nil: NilShape             => nil
-      case node: NodeShape           => expandNode(node)
-      case recursive: RecursiveShape => recursive
-      case any: AnyShape             => any
+      case union: UnionShape                   => expandUnion(union)
+      case scalar: ScalarShape                 => expandScalar(scalar)
+      case array: ArrayShape                   => expandArray(array)
+      case matrix: MatrixShape                 => expandMatrix(matrix)
+      case tuple: TupleShape                   => expandTuple(tuple)
+      case property: PropertyShape             => expandProperty(property)
+      case fileShape: FileShape                => fileShape
+      case nil: NilShape                       => nil
+      case node: NodeShape                     => expandNode(node)
+      case recursive: RecursiveShape           => recursive
+      case any: AnyShape                       => any
     }
   }
 
@@ -89,13 +89,41 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
     }
   }
 
+  protected def expandLogicalConstraints(shape: Shape): Unit = {
+    var oldLogicalConstraints = shape.fields.getValue(ShapeModel.And)
+    if (Option(oldLogicalConstraints).isDefined) {
+      val newLogicalConstraints = shape.and.map(expand)
+      shape.setArrayWithoutId(ShapeModel.And, newLogicalConstraints, oldLogicalConstraints.annotations)
+    }
+
+    oldLogicalConstraints = shape.fields.getValue(ShapeModel.Or)
+    if (Option(oldLogicalConstraints).isDefined) {
+      val newLogicalConstraints = shape.or.map(expand)
+      shape.setArrayWithoutId(ShapeModel.Or, newLogicalConstraints, oldLogicalConstraints.annotations)
+    }
+
+    oldLogicalConstraints = shape.fields.getValue(ShapeModel.Xone)
+    if (Option(oldLogicalConstraints).isDefined) {
+      val newLogicalConstraints = shape.xone.map(expand)
+      shape.setArrayWithoutId(ShapeModel.Xone, newLogicalConstraints, oldLogicalConstraints.annotations)
+    }
+
+    val notConstraint = shape.fields.getValue(ShapeModel.Not)
+    if (Option(notConstraint).isDefined) {
+      val newLogicalConstraint = expand(shape.not)
+      shape.set(ShapeModel.Not, newLogicalConstraint, notConstraint.annotations)
+    }
+  }
+
   protected def expandScalar(scalar: ScalarShape): ScalarShape = {
     expandInherits(scalar)
+    expandLogicalConstraints(scalar)
     scalar
   }
 
   protected def expandArray(array: ArrayShape): ArrayShape = {
     expandInherits(array)
+    expandLogicalConstraints(array)
     val oldItems = array.fields.getValue(ArrayShapeModel.Items)
     if (Option(oldItems).isDefined)
       array.fields.setWithoutId(ArrayShapeModel.Items, expand(array.items), oldItems.annotations)
@@ -103,6 +131,7 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
   }
 
   protected def expandMatrix(matrix: MatrixShape): MatrixShape = {
+    expandLogicalConstraints(matrix)
     val oldItems = matrix.fields.getValue(MatrixShapeModel.Items)
     if (Option(oldItems).isDefined)
       matrix.fields.setWithoutId(MatrixShapeModel.Items, expand(matrix.items), oldItems.annotations)
@@ -110,7 +139,8 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
   }
 
   protected def expandTuple(tuple: TupleShape): TupleShape = {
-    val oldItems = tuple.fields.getValue(TupleShapeModel.TupleItems)
+    expandLogicalConstraints(tuple)
+    val oldItems      = tuple.fields.getValue(TupleShapeModel.TupleItems)
     if (Option(oldItems).isDefined) {
       val newItemShapes = tuple.items.map(shape => expand(shape))
       tuple.setArrayWithoutId(TupleShapeModel.TupleItems, newItemShapes, oldItems.annotations)
@@ -126,6 +156,7 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
     }
 
     expandInherits(node)
+    expandLogicalConstraints(node)
 
     // We make explicit the implicit fields
     node.fields.entry(NodeShapeModel.Closed) match {
@@ -189,21 +220,48 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
 
   protected def canonical(shape: Shape): Shape = {
     shape match {
-      case union: UnionShape         => canonicalUnion(union)
-      case scalar: ScalarShape       => canonicalScalar(scalar)
-      case array: ArrayShape         => canonicalArray(array)
-      case matrix: MatrixShape       => canonicalMatrix(matrix)
-      case tuple: TupleShape         => canonicalTuple(tuple)
-      case property: PropertyShape   => canonicalProperty(property)
-      case fileShape: FileShape      => canonicalShape(fileShape)
-      case nil: NilShape             => canonicalShape(nil)
-      case node: NodeShape           => canonicalNode(node)
-      case recursive: RecursiveShape => recursive
-      case any: AnyShape             => canonicalShape(any)
+      case union: UnionShape                   => canonicalUnion(union)
+      case scalar: ScalarShape                 => canonicalScalar(scalar)
+      case array: ArrayShape                   => canonicalArray(array)
+      case matrix: MatrixShape                 => canonicalMatrix(matrix)
+      case tuple: TupleShape                   => canonicalTuple(tuple)
+      case property: PropertyShape             => canonicalProperty(property)
+      case fileShape: FileShape                => canonicalShape(fileShape)
+      case nil: NilShape                       => canonicalShape(nil)
+      case node: NodeShape                     => canonicalNode(node)
+      case recursive: RecursiveShape           => recursive
+      case any: AnyShape                       => canonicalShape(any)
+    }
+  }
+
+  protected def canonicalLogicalConstraints(shape: Shape): Unit = {
+    var oldLogicalConstraints = shape.fields.getValue(ShapeModel.And)
+    if (Option(oldLogicalConstraints).isDefined) {
+      val newLogicalConstraints = shape.and.map(canonical)
+      shape.setArrayWithoutId(ShapeModel.And, newLogicalConstraints, oldLogicalConstraints.annotations)
+    }
+
+    oldLogicalConstraints = shape.fields.getValue(ShapeModel.Or)
+    if (Option(oldLogicalConstraints).isDefined) {
+      val newLogicalConstraints = shape.or.map(canonical)
+      shape.setArrayWithoutId(ShapeModel.Or, newLogicalConstraints, oldLogicalConstraints.annotations)
+    }
+
+    oldLogicalConstraints = shape.fields.getValue(ShapeModel.Xone)
+    if (Option(oldLogicalConstraints).isDefined) {
+      val newLogicalConstraints = shape.xone.map(canonical)
+      shape.setArrayWithoutId(ShapeModel.Xone, newLogicalConstraints, oldLogicalConstraints.annotations)
+    }
+
+    val notConstraint = shape.fields.getValue(ShapeModel.Not)
+    if (Option(notConstraint).isDefined) {
+      val newLogicalConstraint = canonical(shape.not)
+      shape.set(ShapeModel.Not, newLogicalConstraint, notConstraint.annotations)
     }
   }
 
   private def canonicalShape(any: Shape) = {
+    canonicalLogicalConstraints(any)
     if (any.inherits.nonEmpty) {
       canonicalInheritance(any)
     } else {
@@ -212,6 +270,7 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
   }
 
   protected def canonicalScalar(scalar: ScalarShape): Shape = {
+    canonicalLogicalConstraints(scalar)
     if (Option(scalar.inherits).isDefined && scalar.inherits.nonEmpty) {
       canonicalInheritance(scalar)
     } else {
@@ -237,6 +296,7 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
   }
 
   protected def canonicalArray(array: ArrayShape): Shape = {
+    canonicalLogicalConstraints(array)
     if (array.inherits.nonEmpty) {
       canonicalInheritance(array)
     } else {
@@ -259,6 +319,7 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
   }
 
   protected def canonicalMatrix(matrix: MatrixShape): Shape = {
+    canonicalLogicalConstraints(matrix)
     val newItems = canonical(matrix.items)
     matrix.fields.removeField(ArrayShapeModel.Items)
     newItems match {
@@ -277,7 +338,44 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
     }
   }
 
+  protected def canonicalTuple(tuple: TupleShape): Shape = {
+    canonicalLogicalConstraints(tuple)
+    var acc: Seq[Seq[Shape]] = Seq(Seq())
+
+    val sources: Seq[Seq[Shape]] = tuple.items.map { shape =>
+      canonical(shape) match {
+        case union: UnionShape => union.anyOf
+        case other: Shape      => Seq(other)
+      }
+    }
+
+    sources.foreach { source =>
+      source.foreach { shape =>
+        acc = acc.map(_ ++ Seq(shape))
+      }
+    }
+
+    if (acc.length == 1) {
+      tuple.fields.setWithoutId(TupleShapeModel.TupleItems,
+        AmfArray(acc.head),
+        tuple.fields.getValue(TupleShapeModel.TupleItems).annotations)
+      tuple
+    } else {
+      val tuples = acc.map { items =>
+        val newTuple = tuple.cloneShape(Some(errorHandler))
+        newTuple.fields.setWithoutId(TupleShapeModel.Items,
+          AmfArray(items),
+          tuple.fields.getValue(TupleShapeModel.Items).annotations)
+      }
+      val union = UnionShape()
+      union.id = tuple.id + "resolved"
+      union.withName(tuple.name.value())
+      union
+    }
+  }
+
   protected def canonicalNode(node: NodeShape): Shape = {
+    canonicalLogicalConstraints(node)
     node.add(ExplicitField())
     if (node.inherits.nonEmpty) {
       canonicalInheritance(node)
@@ -321,40 +419,4 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
       union
     }
   }
-
-  protected def canonicalTuple(tuple: TupleShape): Shape = {
-    var acc: Seq[Seq[Shape]] = Seq(Seq())
-
-    val sources: Seq[Seq[Shape]] = tuple.items.map { shape =>
-      canonical(shape) match {
-        case union: UnionShape => union.anyOf
-        case other: Shape      => Seq(other)
-      }
-    }
-
-    sources.foreach { source =>
-      source.foreach { shape =>
-        acc = acc.map(_ ++ Seq(shape))
-      }
-    }
-
-    if (acc.length == 1) {
-      tuple.fields.setWithoutId(TupleShapeModel.TupleItems,
-                                AmfArray(acc.head),
-                                tuple.fields.getValue(TupleShapeModel.TupleItems).annotations)
-      tuple
-    } else {
-      val tuples = acc.map { items =>
-        val newTuple = tuple.cloneShape(Some(errorHandler))
-        newTuple.fields.setWithoutId(TupleShapeModel.Items,
-                                     AmfArray(items),
-                                     tuple.fields.getValue(TupleShapeModel.Items).annotations)
-      }
-      val union = UnionShape()
-      union.id = tuple.id + "resolved"
-      union.withName(tuple.name.value())
-      union
-    }
-  }
-
 }

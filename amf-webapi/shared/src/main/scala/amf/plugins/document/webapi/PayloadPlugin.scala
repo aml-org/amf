@@ -40,7 +40,7 @@ object PayloadPlugin extends AMFDocumentPlugin {
   )
 
   override def parse(root: Root, parentContext: ParserContext, platform: Platform) = {
-    implicit val ctx = new PayloadContext(parentContext)
+    implicit val ctx = new PayloadContext(root.location, parentContext.refs, parentContext)
     Some(PayloadParser(root.parsed.document, root.location, root.mediatype).parseUnit())
   }
 
@@ -70,4 +70,9 @@ object PayloadPlugin extends AMFDocumentPlugin {
     new CanonicalShapePipeline().resolve(unit)
 
   override def init(): Future[AMFPlugin] = Future { this }
+
+  /**
+    * Does references in this type of documents be recursive?
+    */
+  override val allowRecursiveReferences: Boolean = false
 }

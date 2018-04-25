@@ -1,0 +1,64 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "description": "The edit and resulting value of a property of an object.",
+    "required": [
+        "edit",
+        "reviews"
+    ],
+    "allOf": [
+        {
+            "$ref": "identifier"
+        }
+    ],
+    "properties": {
+        "edit": {
+            "description": "The edit during which this property was set.",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "$ref": "edit"
+                }
+            ]
+        },
+        "reviews": {
+            "description": "The review(status)s of this edit.",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "allOf": [
+                        {
+                            "$ref": "collection"
+                        }
+                    ],
+                    "properties": {
+                        "member": {
+                            "type": "array",
+                            "additionalItems": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "identifier"
+                                    },
+                                    {
+                                        "$ref": "editReview"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "status": {
+            "description": "The revision status from the most recent review.",
+            "$ref": "revisionStatus"
+        },
+        "value": {
+            "description": "The resulting value of the edit."
+        }
+    }
+}

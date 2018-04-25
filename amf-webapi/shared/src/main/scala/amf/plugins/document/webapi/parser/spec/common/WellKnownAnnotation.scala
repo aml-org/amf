@@ -32,7 +32,11 @@ object WellKnownAnnotation {
     "tags",
     "url",
     "serverDescription",
-    "servers"
+    "servers",
+    "xor",
+    "and",
+    "or",
+    "not"
   )
 
   private val oasKnownAnnotations = Set(
@@ -69,7 +73,9 @@ object WellKnownAnnotation {
     "produces",
     "schemes",
     "parameters",
-    "facets"
+    "facets",
+    "merge",
+    "union"
   )
 
   def resolveAnnotation(field: String): Option[String] = field match {

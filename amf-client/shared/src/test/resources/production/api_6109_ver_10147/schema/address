@@ -1,0 +1,40 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "description": "A real life postal address. Uniquely identified by a combination of postCode, houseNumber and country.",
+    "required": [
+        "houseNumber",
+        "postCode",
+        "country"
+    ],
+    "additionalProperties": false,
+    "properties": {
+        "street": {
+            "type": "string"
+        },
+        "houseNumber": {
+            "type": "string"
+        },
+        "locality": {
+            "description": "The locality. E.g. 'Mountain View', 'Istanbul', 'Berlin', 'New York'.",
+            "type": "string"
+        },
+        "region": {
+            "description": "The region. E.g. 'NY', 'Gelderland', 'Nordrhein Westfalen'.",
+            "type": "string"
+        },
+        "postCode": {
+            "type": "string"
+        },
+        "country": {
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "$ref": "country"
+                }
+            ]
+        }
+    }
+}

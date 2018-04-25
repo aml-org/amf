@@ -1,0 +1,48 @@
+#%RAML 1.0
+title: test
+
+types:
+  test1: |
+    {
+                "definitions": {
+                    "reffed": {
+                        "type": "array"
+                    }
+                },
+                "properties": {
+                    "foo": {
+                        "$ref": "#/definitions/reffed",
+                        "maxItems": 2
+                    }
+                }
+    }
+
+/ep1:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              foo: []
+
+/ep2:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              foo: [1,2,3]
+
+/ep3:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              foo: "string"

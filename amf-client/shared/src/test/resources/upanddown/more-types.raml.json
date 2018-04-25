@@ -8,7 +8,7 @@
   "definitions": {
     "E": {
       "type": "object",
-      "allOf": [
+      "x-amf-merge": [
         {
           "$ref": "#/definitions/C"
         },
@@ -18,7 +18,7 @@
       ]
     },
     "F": {
-      "anyOf": [
+      "x-amf-union": [
         {
           "$ref": "#/definitions/C"
         },

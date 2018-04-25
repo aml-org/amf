@@ -36,6 +36,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   val validationsPath  = "file://amf-client/shared/src/test/resources/validations/"
   val upDownPath       = "file://amf-client/shared/src/test/resources/upanddown/"
   val parserPath       = "file://amf-client/shared/src/test/resources/org/raml/parser/"
+  val jsonSchemaPath   = "file://amf-client/shared/src/test/resources/validations/jsonschema"
 
   private def cycle(exampleFile: String, hint: Hint, syntax: Syntax, target: Vendor): Future[String] = {
     Validation(platform).flatMap(v => {
@@ -215,6 +216,234 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       assert(!report.conforms)
       assert(report.results.length == 6)
+    }
+  }
+
+  test("JSON Schema allOf test1") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(jsonSchemaPath + "/allOf/api1.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 3)
+    }
+  }
+
+  test("JSON Schema allOf test2") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(jsonSchemaPath + "/allOf/api2.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 4)
+    }
+  }
+
+  test("JSON Schema allOf test3") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(jsonSchemaPath + "/allOf/api3.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 1)
+    }
+  }
+
+  test("JSON Schema anyOf test1") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(jsonSchemaPath + "/anyOf/api1.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 1)
+    }
+  }
+
+  test("JSON Schema anyOf test2") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(jsonSchemaPath + "/anyOf/api2.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 2)
+    }
+  }
+
+  test("JSON Schema anyOf test3") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(jsonSchemaPath + "/anyOf/api3.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 1)
+    }
+  }
+
+  test("JSON Schema oneOf test1") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(jsonSchemaPath + "/oneOf/api1.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 2)
+    }
+  }
+
+  test("JSON Schema oneOf test2") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(jsonSchemaPath + "/oneOf/api2.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 2)
+    }
+  }
+
+  test("JSON Schema oneOf test3") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(jsonSchemaPath + "/oneOf/api3.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 2)
+    }
+  }
+
+  test("JSON Schema not test1") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(jsonSchemaPath + "/not/api1.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 1)
+    }
+  }
+
+  test("JSON Schema not test2") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(jsonSchemaPath + "/not/api2.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 2)
+    }
+  }
+
+  test("JSON Schema not test3") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(jsonSchemaPath + "/not/api3.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 1)
+    }
+  }
+
+  test("JSON Schema not test4") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(jsonSchemaPath + "/not/api4.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 1)
+    }
+  }
+
+  test("JSON Schema ref test1") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(jsonSchemaPath + "/ref/api1.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 2)
+    }
+  }
+
+  test("JSON Schema ref test2") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(jsonSchemaPath + "/ref/api2.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 1)
+    }
+  }
+
+  test("JSON Schema ref test3") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(jsonSchemaPath + "/ref/api3.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 1)
+    }
+  }
+
+  test("JSON Schema ref test4") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(jsonSchemaPath + "/ref/api4.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 1)
+    }
+  }
+
+  test("JSON Schema ref test5") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(jsonSchemaPath + "/ref/api5.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 1)
+    }
+  }
+
+  ignore("JSON Schema ref test6") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(jsonSchemaPath + "/ref/api6.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 1)
     }
   }
 
@@ -803,11 +1032,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       val A: ArrayShape = doc.asInstanceOf[Module].declares.head.asInstanceOf[ArrayShape]
       val profile       = new AMFShapeValidations(A).profile()
-      assert(profile.violationLevel.size == 2)
+      assert(profile.violationLevel.size == 1)
       assert(
         profile.violationLevel.head == "file://amf-client/shared/src/test/resources/production/recursive2.raml#/declarations/array/A_validation")
-      assert(
-        profile.violationLevel.last == "file://amf-client/shared/src/test/resources/production/recursive2.raml#/declarations/array/A_recursive_validation")
     }
   }
 

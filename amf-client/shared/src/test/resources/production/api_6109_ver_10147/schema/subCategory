@@ -1,0 +1,35 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "title": "Sub category.",
+    "description": "A category at the lowest level. Only this kind of category can contain Lots.",
+    "required": [
+        "mainCategory"
+    ],
+    "allOf": [
+        {
+            "$ref": "abstractCategory"
+        }
+    ],
+    "properties": {
+        "derivedFrom": {
+            "description": "The (conceptual) category this category was derived from.",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                }
+            ]
+        },
+        "mainCategory": {
+            "description": "The (main) category which contains this sub category.",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "$ref": "mainCategory"
+                }
+            ]
+        }
+    }
+}

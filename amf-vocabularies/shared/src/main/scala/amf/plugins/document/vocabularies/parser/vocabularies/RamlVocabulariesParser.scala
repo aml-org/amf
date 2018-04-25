@@ -227,7 +227,7 @@ case class VocabulariesReferencesParser(map: YMap, references: Seq[ParsedReferen
             val alias: String = e.key.as[YScalar].text
             val url: String   = e.value.as[YScalar].text
             target(url).foreach {
-              case module: DeclaresModel => result += (alias, collectAlias(module, alias -> url))
+              case module: DeclaresModel => result += (alias, collectAlias(module, alias -> (module.id, url)))
               case other =>
                 ctx.violation(id, s"Expected vocabulary module but found: $other", e) // todo Uses should only reference modules...
             }
@@ -251,7 +251,7 @@ case class VocabulariesReferencesParser(map: YMap, references: Seq[ParsedReferen
     )
   }
 
-  private def collectAlias(module: BaseUnit, alias: (String, String)): BaseUnit = {
+  private def collectAlias(module: BaseUnit, alias: (Aliases.Alias, (Aliases.FullUrl, Aliases.RelativeUrl))): BaseUnit = {
     module.annotations.find(classOf[Aliases]) match {
       case Some(aliases) =>
         module.annotations.reject(_.isInstanceOf[Aliases])

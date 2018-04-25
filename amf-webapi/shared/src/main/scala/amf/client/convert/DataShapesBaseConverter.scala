@@ -11,6 +11,7 @@ import amf.client.model.domain.{
   ScalarShape => ClientScalarShape,
   SchemaShape => ClientSchemaShape,
   TupleShape => ClientTupleShape,
+  UnionShape => ClientUnionShape,
   XMLSerializer => ClientXMLSerializer
 }
 import amf.core.unsafe.PlatformSecrets
@@ -28,6 +29,7 @@ trait DataShapesBaseConverter
     with TupleShapeConverter
     with XMLSerializerConverter
     with ExampleConverter
+    with UnionShapeConverter
     with PropertyDependenciesConverter
 
 trait NilShapeConverter extends PlatformSecrets {
@@ -107,6 +109,13 @@ trait ExampleConverter extends PlatformSecrets {
   implicit object ExampleMatcher extends BidirectionalMatcher[Example, ClientExample] {
     override def asClient(from: Example): ClientExample   = platform.wrap[ClientExample](from)
     override def asInternal(from: ClientExample): Example = from._internal
+  }
+}
+
+trait UnionShapeConverter extends PlatformSecrets {
+  implicit object UnionShapeMatcher extends BidirectionalMatcher[UnionShape, ClientUnionShape] {
+    override def asClient(from: UnionShape): ClientUnionShape   = platform.wrap[ClientUnionShape](from)
+    override def asInternal(from: ClientUnionShape): UnionShape = from._internal
   }
 }
 

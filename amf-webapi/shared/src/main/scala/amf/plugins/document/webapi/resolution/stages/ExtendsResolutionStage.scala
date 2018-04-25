@@ -31,8 +31,8 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
 
   /** Default to raml10 context. */
   def ctx(parserRun: Int): RamlWebApiContext = profile match {
-    case ProfileNames.RAML08 => new Raml08WebApiContext(ParserContext(parserCount = parserRun))
-    case _                   => new Raml10WebApiContext(ParserContext(parserCount = parserRun))
+    case ProfileNames.RAML08 => new Raml08WebApiContext("", Nil,ParserContext(parserCount = parserRun))
+    case _                   => new Raml10WebApiContext("", Nil,ParserContext(parserCount = parserRun))
   }
 
   override def resolve(model: BaseUnit): BaseUnit =

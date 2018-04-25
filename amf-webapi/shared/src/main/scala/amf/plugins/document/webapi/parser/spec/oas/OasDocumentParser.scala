@@ -78,7 +78,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
     val map = root.parsed.document.as[YMap]
 
-    val references = ReferencesParser("uses".asOasExtension, map, root.references).parse(root.location)
+    val references = ReferencesParser(document, "uses".asOasExtension, map, root.references).parse(root.location)
     parseDeclarations(root: Root, map)
 
     val api = parseWebApi(map).add(SourceVendor(root.vendor))

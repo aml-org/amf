@@ -1,0 +1,35 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "description": "Metadata about the user action of editing something.",
+    "required": [
+        "timestamp",
+        "user"
+    ],
+    "allOf": [
+        {
+            "$ref": "identifier"
+        }
+    ],
+    "properties": {
+        "timestamp": {
+            "type": "integer",
+            "description": "Unique identifier for this Timestamp (microseconds since epoch) on which the edit occured. Also the unique identifier."
+        },
+        "user": {
+            "description": "The user who performed this edit.",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "$ref": "user"
+                }
+            ]
+        },
+        "note": {
+            "description": "A note attached to the edit. E.g. containing the reason for editing.",
+            "type": "string"
+        }
+    }
+}

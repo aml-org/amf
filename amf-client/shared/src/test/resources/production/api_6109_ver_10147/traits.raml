@@ -1,0 +1,49 @@
+- paged:
+    queryParameters:
+      page:
+        description: |
+          The members of a collection are divided over pages. This param specifies the page of the collection that should be returned. Page 1 is the first page. In case of 10 items per page, it will include item 0 up to and including item 9.
+        type: number
+        default: 1
+        minimum: 1
+        required: false
+      pageSize:
+        description: |
+          The members of a collection are divided over pages. This param specifies the maximum number of members from the complete collection that are included on a page.
+        type: number
+        default: 10
+        minimum: 1
+        maximum: 100
+        required: false
+- queryable:
+    queryParameters:
+      query:
+        description: | 
+          A collection can be queried upon, before being served. Filtering out unwanted members cq keeping only wanted members. The query syntax is TBD, but will probably be equivalent to or inspired by https://github.com/zfcampus/zf-doctrine-querybuilder-filter.
+        type: string
+        required: false
+- sortable:
+    queryParameters:
+      orderBy:
+        description: | 
+          The members of a collection can be sorted (cq ordered). A sort ordering must include a field name followed by whitespace (escaped as + or %20 in URL strings), followed by a sort direction (asc or desc).
+          Multiple sort orderings can be separated by a comma, e.g.: sort=<field name>+<direction>[,<field name>+<direction>]...
+          When more than one sort criteria is provided, the second entry will only be used if the first entry results in a tie. If there is a third entry, it will only be used if the first AND second entries are tied. This pattern continues with further entries.
+        type: string
+        required: false
+        pattern: |
+          /\b(\w+)(?:(?:\s)(asc|desc))?(?:,|$)/g
+- expandable:
+    queryParameters:
+      expand:
+        description: |
+          Links to other entities can be expanded into the entities themselves. As to  prevent having to make multiple requests for getting a deeper view of an entity.
+          This query parameter allows a comma-separated list of identifiers to expand. E.g. the value 'auction,buyer' for a request which returns a Lot, will make sure that the auction and lot properties of the resulting Lot entity are entire Auction and Person entities, instead of just links to them.
+          Some properties may be expanded already by default.
+          Multiple levels of expansion are possible by providing path-like expressions. E.g. 'dossier/client' will expand the 'dossier' property on the root entity, as well as the 'client' property on that resulting entity in the 'dossier' property. A maximum depth of 6 levels is allowed. A leading slash is optional.
+          Specifying expansion on a property which is a list results in every entity in that list being expanded.
+          Specifying expansion on a property which is a collection will result in all members being expanded. However the result may become a pagedCollection. If the root of the response is a collection, its members can be expanded by specifying '/' as the parameter value.
+        type: string
+        required: false
+        pattern: |
+          /\b((?:\w|\/)+)(?:,|$)/g

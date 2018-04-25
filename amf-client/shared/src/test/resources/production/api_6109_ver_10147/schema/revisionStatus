@@ -1,0 +1,11 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "string",
+    "description": "The status of the edit of a property. E.g. Some lot has received the name 'boxspring matras'. The status of that lot's name is 'ACCEPTED'.",
+    "enum": [
+        "NEEDS_REVISION",
+        "NEEDS_ACCEPTANCE",
+        "ACCEPTED",
+        "PUBLISHED"
+    ]
+}

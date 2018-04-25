@@ -1,0 +1,54 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "description": "A review, cq appreciation, of an edit.",
+    "required": [
+        "timestamp",
+        "user",
+        "revisionStatus"
+    ],
+    "allOf": [
+        {
+            "$ref": "identifier"
+        }
+    ],
+    "properties": {
+        "timestamp": {
+            "type": "integer",
+            "description": "Unique identifier for this Timestamp (microseconds since epoch) on which the edit occured. Also the unique identifier."
+        },
+        "revisionStatus": {
+            "description": "The revision status awarded to the edit.",
+            "allOf": [
+                {
+                    "$ref": "revisionStatus"
+                }
+            ]
+        },
+        "user": {
+            "description": "The user who performed this edit.",
+            "anyOf": [
+                {
+                    "$ref": "identifier"
+                },
+                {
+                    "$ref": "user"
+                }
+            ]
+        },
+        "faults": {
+            "description": "The faults found in the edit, if any.",
+            "type": "array",
+            "additionalItems": {
+                "anyOf": [
+                    {
+                        "$ref": "identifier"
+                    },
+                    {
+                        "$ref": "faultType"
+                    }
+                ]
+            }
+        }
+    }
+}

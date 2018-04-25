@@ -1,0 +1,9 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "description": "A collection of translations of the same semantic string cq message. Compatible with a language map in JSON-LD: http://www.w3.org/TR/json-ld/#dfn-language-map",
+    "additionalProperties": {
+        "type": "string",
+        "description": "The message cq string in one specific language. The name of the property is a language tag."
+    }
+}
