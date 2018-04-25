@@ -2,8 +2,8 @@ package amf.wrapper
 
 import amf.client.AMF
 import amf.client.convert.NativeOps
-import amf.client.convert.WebApiClientConverters.ClientLoader
-import amf.client.environment.Environment
+import amf.client.convert.WebApiClientConverters._
+import amf.client.environment.{DefaultEnvironment, Environment}
 import amf.client.model.document._
 import amf.client.model.domain._
 import amf.client.parse._
@@ -12,6 +12,7 @@ import amf.client.render._
 import amf.client.resolve.Raml10Resolver
 import amf.client.resource.ResourceLoader
 import amf.common.Diff
+import amf.plugins.document.Vocabularies
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -23,6 +24,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   private val zencoder      = "file://amf-client/shared/src/test/resources/api/zencoder.raml"
   private val zencoder08    = "file://amf-client/shared/src/test/resources/api/zencoder08.raml"
   private val demosDialect  = "file://amf-client/shared/src/test/resources/api/dialects/eng-demos.raml"
+  private val demos2Dialect = "file://amf-client/shared/src/test/resources/api/dialects/eng-demos-2.raml"
   private val demosInstance = "file://amf-client/shared/src/test/resources/api/examples/libraries/demo.raml"
   private val security      = "file://amf-client/shared/src/test/resources/upanddown/unnamed-security-scheme.raml"
   private val music         = "file://amf-client/shared/src/test/resources/production/world-music-api/api.raml"
@@ -183,6 +185,122 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       // TODO: fix this getter
 //       val res = elem.getDialectObjectsByPropertyId("eng-demos:speakers").asInternal
 //      assert(elem.getObjectByPropertyId("eng-demos:speakers").size > 0) // todo ???
+      assert(elem.getObjectPropertyUri("eng-demos:speakers").asSeq.size == 2)
+    }
+  }
+
+  test("Custom Vocabularies test") {
+    case class CustomLoader() extends ResourceLoader {
+      private val url = "vocab:eng-demos-2.raml"
+      private val stream =
+        """
+          |#%RAML 1.0 Vocabulary
+          |
+          |# Name of the vocabulary
+          |vocabulary: Eng Demos
+          |
+          |usage: Engineering Demonstrations @ MuleSoft
+          |
+          |# Namespace for the vocabulary (must be a URI prefix)
+          |# All terms in the vocabulary will be URIs in this namespace
+          |base: http://mulesoft.com/vocabularies/eng-demos#
+          |
+          |external:
+          |  schema-org: http://schema.org/
+          |
+          |classTerms:
+          |
+          |  # URI for this term: http://mulesoft.com/vocabularies/eng-demos#Presentation
+          |  Presentation:
+          |    displayName: Presentation
+          |    description: Product demonstrations
+          |    properties:
+          |      - showcases
+          |      - speakers
+          |      - demoDate
+          |
+          |  Speaker:
+          |    displayName: Speaker
+          |    description: Product demonstration presenter
+          |    extends: schema-org.Person
+          |    properties:
+          |      - nickName
+          |
+          |  schema-org.Product:
+          |    displayName: Product
+          |    description: The product being showcased
+          |    properties:
+          |      - resources
+          |
+          |
+          |propertyTerms:
+          |
+          |  # scalar range, datatype property
+          |  # URI for this term: http://mulesoft.com/vocabularies/eng-demos#nickName
+          |  nickName:
+          |    displayName: nick
+          |    description: nick name of the speaker
+          |    range: string
+          |    extends: schema-org.alternateName
+          |
+          |  showcases:
+          |    displayName: showcases
+          |    description: Product being showcased in a presentation
+          |    range: schema-org.Product
+          |
+          |  speakers:
+          |    displayName: speakers
+          |    description: list of speakers
+          |    range: Speaker
+          |
+          |  resources:
+          |    displayName: resources
+          |    description: list of materials about the showcased product
+          |    range: string
+          |
+          |  semantic-version:
+          |    displayName: semantic version
+          |    description: 'semantic version standard: M.m.r'
+          |    extends: schema-org.version
+          |    range: string
+          |
+          |  demoDate:
+          |    displayName: demo date
+          |    description: day the demo took place
+          |    extends: schema-org.dateCreated
+          |    range: date
+          |
+          |  isRecorded:
+          |    displayName: is recorded
+          |    description: notifies if this demo was recorded
+          |    range: boolean
+          |
+          |  code:
+          |    displayName: code
+          |    description: product code
+          |    range: string
+          |    extends: schema-org.name
+        """.stripMargin
+
+      /** Fetch specified resource and return associated content. Resource should have benn previously accepted. */
+      override def fetch(resource: String): ClientFuture[Content] = Future { new Content(stream, url) }.asClient
+
+      /** Accepts specified resource. */
+      override def accepts(resource: String): Boolean = resource == url
+    }
+
+    val env = DefaultEnvironment().add(CustomLoader().asInstanceOf[ClientLoader])
+
+    for {
+      _           <- AMF.init().asFuture
+      dialectName <- Vocabularies.registerDialect(demos2Dialect, env).asFuture
+      unit        <- new RamlParser().parseFileAsync(demosInstance).asFuture
+      report      <- AMF.validate(unit, "Eng Demos 0.1").asFuture
+    } yield {
+      AMF.registerNamespace("eng-demos", "http://mulesoft.com/vocabularies/eng-demos#")
+      val elem = unit.asInstanceOf[DialectInstance].encodes
+      assert(elem.definedBy().nodetypeMapping.is("http://mulesoft.com/vocabularies/eng-demos#Presentation"))
+      assert(elem.getTypeUris().asSeq.contains("http://mulesoft.com/vocabularies/eng-demos#Presentation"))
       assert(elem.getObjectPropertyUri("eng-demos:speakers").asSeq.size == 2)
     }
   }

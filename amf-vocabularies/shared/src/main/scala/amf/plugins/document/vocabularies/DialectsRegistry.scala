@@ -129,8 +129,8 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     }
   }
 
-  def registerDialect(url: String, code: String): Future[Dialect] = {
-    val environment = Environment(StringResourceLoader(url, code))
-    registerDialect(url, environment)
-  }
+  def registerDialect(url: String, code: String): Future[Dialect] = registerDialect(url, code, Environment())
+
+  def registerDialect(url: String, code: String, env: Environment): Future[Dialect] =
+    registerDialect(url, env.add(StringResourceLoader(url, code)))
 }
