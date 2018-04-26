@@ -413,7 +413,7 @@ class ValidationJSONLDEmitter(targetProfile: String) {
         (Namespace.Shacl + "property").iri(),
         _.list {
           _.obj { b =>
-            b.entry((Namespace.Shacl + "path").iri(), link(_, (Namespace.Rdf + "first").iri()))
+            b.entry((Namespace.Shacl + "path").iri(), link(_, (Namespace.Rdfs + "_1").iri()))
             b.entry(
               (Namespace.Shacl + "minCount").iri(),
               _.obj {

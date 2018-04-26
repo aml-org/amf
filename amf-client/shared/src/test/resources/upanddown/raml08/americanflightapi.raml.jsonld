@@ -155,44 +155,25 @@
                             "http://www.w3.org/ns/shacl#in": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights/get/request/parameter/code/scalar/code/list",
-                                "http://www.w3.org/1999/02/22-rdf-syntax-ns#first": [
+                                "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+                                "http://www.w3.org/2000/01/rdf-schema#_1": [
                                   {
                                     "@value": "SFO"
                                   }
                                 ],
-                                "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest": [
+                                "http://www.w3.org/2000/01/rdf-schema#_2": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights/get/request/parameter/code/scalar/code/list/list",
-                                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#first": [
-                                      {
-                                        "@value": "LAX"
-                                      }
-                                    ],
-                                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights/get/request/parameter/code/scalar/code/list/list/list",
-                                        "http://www.w3.org/1999/02/22-rdf-syntax-ns#first": [
-                                          {
-                                            "@value": "PDX"
-                                          }
-                                        ],
-                                        "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest": [
-                                          {
-                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights/get/request/parameter/code/scalar/code/list/list/list/list",
-                                            "http://www.w3.org/1999/02/22-rdf-syntax-ns#first": [
-                                              {
-                                                "@value": "CLE"
-                                              }
-                                            ],
-                                            "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest": [
-                                              {
-                                                "@id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ]
+                                    "@value": "LAX"
+                                  }
+                                ],
+                                "http://www.w3.org/2000/01/rdf-schema#_3": [
+                                  {
+                                    "@value": "PDX"
+                                  }
+                                ],
+                                "http://www.w3.org/2000/01/rdf-schema#_4": [
+                                  {
+                                    "@value": "CLE"
                                   }
                                 ]
                               }

@@ -143,24 +143,15 @@
         "http://www.w3.org/ns/shacl#in": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/scalar/ScalarTest/list",
-            "http://www.w3.org/1999/02/22-rdf-syntax-ns#first": [
+            "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+            "http://www.w3.org/2000/01/rdf-schema#_1": [
               {
                 "@value": "a1"
               }
             ],
-            "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest": [
+            "http://www.w3.org/2000/01/rdf-schema#_2": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.raml#/declarations/scalar/ScalarTest/list/list",
-                "http://www.w3.org/1999/02/22-rdf-syntax-ns#first": [
-                  {
-                    "@value": "a2"
-                  }
-                ],
-                "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest": [
-                  {
-                    "@id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"
-                  }
-                ]
+                "@value": "a2"
               }
             ]
           }

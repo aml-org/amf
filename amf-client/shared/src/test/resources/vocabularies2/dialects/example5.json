@@ -168,14 +168,10 @@
             "http://www.w3.org/ns/shacl#node": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example5.raml#/declarations/nodeB/property/za/list",
-                "http://www.w3.org/1999/02/22-rdf-syntax-ns#first": [
+                "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+                "http://www.w3.org/2000/01/rdf-schema#_1": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example5.raml#/declarations/nodeA"
-                  }
-                ],
-                "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest": [
-                  {
-                    "@id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"
                   }
                 ]
               }
