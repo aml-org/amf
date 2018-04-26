@@ -14,7 +14,8 @@ import amf.client.model.domain.{
   PropertyShape => ClientPropertyShape,
   ScalarNode => ClientScalarNode,
   Shape => ClientShape,
-  VariableValue => ClientVariableValue
+  VariableValue => ClientVariableValue,
+  Graph => ClientGraph
 }
 import amf.client.model.{
   Annotations => ClientAnnotations,
@@ -58,7 +59,8 @@ trait CoreBaseConverter
     with ValidationConverter
     with DomainElementConverter
     with BaseUnitConverter
-    with ResourceLoaderConverter {
+    with ResourceLoaderConverter
+    with GraphDomainConverter {
 
   implicit def asClient[Internal, Client](from: Internal)(
       implicit m: InternalClientMatcher[Internal, Client]): Client = m.asClient(from)
@@ -335,6 +337,16 @@ trait CustomDomainPropertyConverter {
     override def asInternal(from: ClientCustomDomainProperty): CustomDomainProperty = from._internal
 
     override def asClient(from: CustomDomainProperty): ClientCustomDomainProperty = ClientCustomDomainProperty(from)
+  }
+
+}
+
+trait GraphDomainConverter {
+
+  implicit object GraphDomainConverter extends BidirectionalMatcher[Graph, ClientGraph] {
+    override def asInternal(from: ClientGraph): Graph = from._internal
+
+    override def asClient(from: Graph): ClientGraph = ClientGraph(from)
   }
 
 }

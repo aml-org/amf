@@ -12,6 +12,7 @@ import amf.client.render._
 import amf.client.resolve.Raml10Resolver
 import amf.client.resource.ResourceLoader
 import amf.common.Diff
+import amf.core.vocabulary.Namespace
 import amf.plugins.document.Vocabularies
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
@@ -184,7 +185,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       assert(elem.getTypeUris().asSeq.contains("http://mulesoft.com/vocabularies/eng-demos#Presentation"))
       // TODO: fix this getter
 //       val res = elem.getDialectObjectsByPropertyId("eng-demos:speakers").asInternal
-//      assert(elem.getObjectByPropertyId("eng-demos:speakers").size > 0) // todo ???
+//      assert(elem.graph().getObjectByPropertyId("eng-demos:speakers").size > 0) // todo ???
       assert(elem.getObjectPropertyUri("eng-demos:speakers").asSeq.size == 2)
     }
   }
@@ -673,12 +674,53 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Test dynamic types") {
+    val api =
+      """
+        |#%RAML 1.0
+        |title: this should remain
+        |description: remove
+        |license:
+        | url: removeUrl
+        | name: test
+        |/endpoint1:
+        | get:
+        |   responses:
+        |     200:
+        |       body:
+        |        application/json:
+        |           properties:
+        |             name: string
+        |             lastname: string
+        |           example:
+        |             name: roman
+        |             lastname: riquelme
+        |
+      """.stripMargin
+
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new RamlParser().parseStringAsync(api).asFuture
+    } yield {
+      val webApi = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+      val dataNode = webApi.endPoints.asSeq.head.operations.asSeq.head.responses.asSeq.head.payloads.asSeq.head.schema
+        .asInstanceOf[AnyShape]
+        .examples
+        .asSeq
+        .head
+        .structuredValue
+      assert(dataNode._internal.dynamicTypes().nonEmpty)
+      assert(dataNode._internal.dynamicTypes().head.contains((Namespace.Data + "Object").iri()))
+    }
+  }
+
   private def removeFields(unit: BaseUnit): Future[BaseUnit] = Future {
     val webApi = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
     webApi.description.remove()
     val operation: Operation = webApi.endPoints.asSeq.head.operations.asSeq.head
-    operation.removeField("http://www.w3.org/ns/hydra/core#returns")
-    webApi.removeField("http://schema.org/license")
+    operation.graph().remove("http://www.w3.org/ns/hydra/core#returns")
+
+    webApi.graph().remove("http://schema.org/license")
     unit
   }
 
@@ -707,6 +749,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       assert(encodes.id.startsWith(baseUrl))
       assert(encodes.asInstanceOf[WebApi].name.is("Some title"))
     }
+
   }
 
   private def assertBaseUnit(baseUnit: BaseUnit, expectedLocation: String): Assertion = {
@@ -727,7 +770,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     val first = payloads.head
     assert(first.mediaType.is("application/json"))
 
-    val typeIds = first.schema.getTypeIds.asSeq
+    val typeIds = first.schema.graph().types().asSeq
     assert(typeIds.contains("http://raml.org/vocabularies/shapes#ScalarShape"))
     assert(typeIds.contains("http://www.w3.org/ns/shacl#Shape"))
     assert(typeIds.contains("http://raml.org/vocabularies/shapes#Shape"))

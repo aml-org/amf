@@ -38,8 +38,8 @@ class ShapeFacetsCandidatesCollector(model: BaseUnit, platform: Platform) {
       SecuritySchemeModel.`type`.head.iri(),
       (Namespace.Document + "DomainProperty").iri()
     )
-    val encodedShapes = model.findBy { domainElement =>
-      domainElement.getTypeIds().exists(typesWithShapes.contains(_))
+    val encodedShapes = model.findBy { element =>
+      element.graph.types().exists(typesWithShapes.contains(_))
     }
 
     val declaredShapes: Seq[Shape] = model match {
