@@ -1,0 +1,86 @@
+#%RAML 1.0
+title: Customer API
+
+types:
+  objectName:
+        properties:
+          id?:
+            type: string
+          name:
+            type: string
+          phone:
+            type: string
+          email:
+            type: string
+
+/customer:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: objectName[]
+            example:
+              -
+                id: 1
+                name: Michelle Ruiz
+                email: mruiz0@qq.com
+                phone: 1-(951)768-8479
+                billingAddress:
+                  line:
+                    - Eastlawn 42
+                  city: Riverside
+                  state: California
+                  postalCode: alberto gomez
+                  country: USA
+                shippingAddress:
+                  line:
+                    - South
+                    - 07
+                  city: Houston
+                  state: Texas
+                  postalCode: 77045
+                  country: USA
+              -
+                id: 2
+                name: Jeremy Adams
+                email: jadams1@instagram.com
+                phone: 1-(216)797-9178
+                billingAddress:
+                  line:
+                    - Eastwood 442
+                  city: Cleveland
+                  state: Ohio
+                  postalCode: 44191
+                  country: USA
+                shippingAddress:
+                  line:
+                    - Menomonie 5
+                  city: South Bend
+                  state: Indiana
+                  postalCode: 46614
+                  country: USA
+
+  post:
+    body:
+      application/json:
+        example:
+          name: Michelle Ruiz
+          email: mruiz0@qq.com
+          phone: 1-(951)768-8479
+          billingAddress:
+            line:
+              - Eastlawn 42
+            city: Riverside
+            state: California
+            postalCode: 92513
+            country: USA
+          shippingAddress:
+            line:
+              - South
+              - 07
+            city: Houston
+            state: Texas
+            postalCode: 77045
+            country: USA
+        type: objectName
