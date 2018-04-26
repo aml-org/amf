@@ -4,10 +4,11 @@ import amf.ProfileNames
 import amf.common.Tests.checkDiff
 import amf.core.AMFSerializer
 import amf.core.emitter.RenderOptions
-import amf.core.model.document.{Module, PayloadFragment}
+import amf.core.model.document.{Document, Module, PayloadFragment}
 import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.core.remote.Syntax.{Json, Syntax, Yaml}
 import amf.core.remote._
+import amf.core.services.PayloadValidator
 import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.core.validation.{SeverityLevels, ValidationCandidate}
 import amf.facades.{AMFCompiler, AMFRenderer, Validation}
@@ -15,6 +16,7 @@ import amf.plugins.document.graph.parser.GraphEmitter
 import amf.plugins.document.webapi.RAML10Plugin
 import amf.plugins.document.webapi.validation.{AMFShapeValidations, PayloadValidation, UnitPayloadsValidation}
 import amf.plugins.domain.shapes.models.ArrayShape
+import amf.plugins.domain.webapi.models.WebApi
 import amf.plugins.features.validation.{ParserSideValidations, PlatformValidator}
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 import org.scalatest.AsyncFunSuite
@@ -522,6 +524,21 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       val fileJson = JsonRender.render(GraphEmitter.emit(filePayload, RenderOptions()))
       val textJson = JsonRender.render(GraphEmitter.emit(textPayload, RenderOptions()))
       assert(fileJson == textJson)
+    }
+
+  }
+
+  test("param validation") {
+    for {
+      validation  <- Validation(platform)
+      model <- AMFCompiler(validationsPath + "/production/oas_data.json", platform, OasJsonHint, validation)
+        .build()
+      result <- {
+        val stringShape = model.asInstanceOf[Document].encodes.asInstanceOf[WebApi].endPoints(0).operations(0).request.headers(0).schema
+        PayloadValidator.validate(stringShape, "2015-07-20T21:00:00", SeverityLevels.VIOLATION)
+      }
+    } yield {
+      assert(result.conforms)
     }
 
   }
