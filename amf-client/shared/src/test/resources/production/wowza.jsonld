@@ -1,0 +1,3660 @@
+[
+  {
+    "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml",
+    "@type": [
+      "http://raml.org/vocabularies/document#Document",
+      "http://raml.org/vocabularies/document#Fragment",
+      "http://raml.org/vocabularies/document#Module",
+      "http://raml.org/vocabularies/document#Unit"
+    ],
+    "http://raml.org/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api",
+        "@type": [
+          "http://schema.org/WebAPI",
+          "http://raml.org/vocabularies/document#RootDomainElement",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "Wowza Streaming Cloud REST API Reference Documentation"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@value": "\n# About the REST API\n\nThe Wowza Streaming Cloud<sup>TM</sup> REST API (application programming interface) offers complete programmatic control over live streams, transcoders, stream sources, and stream targets. Anything you can do in the Wowza Streaming Cloud UI can also be achieved by making HTTP-based requests to cloud-based servers through the REST API.\n\nThe Wowza Streaming Cloud REST API features *cross-origin resource sharing*, or CORS.\nCORS is a [W3C specification](https://www.w3.org/TR/cors/) that provides headers in HTTP requests to enable a web server to safely make a network request to another domain.\n\nIn order to protect shared resources, the Wowza Streaming Cloud REST API is subject to limits. For details, see [Wowza Streaming Cloud REST API limits](https://www.wowza.com/docs/wowza-streaming-cloud-rest-api-limits).\n# About this documentation\nThis reference documentation is based on the open-source [Swagger framework](http://swagger.io/specification/).\nIt allows you to view the operations, parameters, and request and reponse schemas for every resource. Request samples are presented in cURL (Shell) and JavaScript; some samples also include just the JSON object. Response samples are all JSON.\n\nFor more information and examples on using the Wowza Streaming Cloud REST API, see our [library of Wowza Streaming Cloud REST API technical articles](https://www.wowza.com/docs/wowza-streaming-cloud-rest-api).\n\n# Query requirements\nThe Wowza Streaming Cloud REST API uses HTTP requests to retrieve data from cloud-based servers. Requests must contain proper JSON, two authentication keys, and the correct version number in the base path.\n\n## JSON\nThe Wowza Streaming Cloud REST API uses the [JSON API specification](http://jsonapi.org/format/) to request and return data. This means requests must include the header `Content-Type: application/json` and must include a single resource object in JSON format as primary data.\n\nResponses include HTTP status codes that indicate whether the query was successful. If there was an error, a description explains the problem so that you can fix it and try again.\n\n## Authentication\nRequests to the Wowza Streaming Cloud REST API must be authenticated with two keys: an API key and an access key. Each key is a 64-character alphanumeric string that you can find on the **API Access** page in Wowza Streaming Cloud.\n\nUse the `wsc-api-key` and `wsc-access-key` headers to authenticate requests, like this (in cURL):\n\n```bash\ncurl -H 'wsc-api-key: [64-character-api-key-goes-here]' -H 'wsc-access-key: [64-character-access-key-goes-here]'\n```\n\n<!-- ReDoc-Inject: <security-definitions> -->\n\n## Version\nThe Wowza Streaming Cloud API is currently at version 1.0.0. Use `v1` in your base path in every request, like this path to the live_streams endpoint:\n```\nhttps://api.cloud.wowza.com/api/v1/live_streams\n```\n## Example query\nHere is a complete example POST request, in cURL, with proper JSON syntax, headers, authentication, and version information:\n```bash\ncurl -H 'wsc-api-key: [64-character-api-key-goes-here]' -H 'wsc-access-key: [64-character-access-key-goes-here]'\n  -H 'Content-Type: application/json' -X POST -d '{\n    \"live_stream\": {\n      \"name\": \"My live Stream\",\n      \"...\": \"...\"\n    }\n  }' https://api.cloud.wowza.com/api/v1/live_streams\n```\n"
+          }
+        ],
+        "http://raml.org/vocabularies/http#server": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/api-sandbox.cloud.wowza.com%2Fapi%2Fv1",
+            "@type": [
+              "http://raml.org/vocabularies/http#Server",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/http#url": [
+              {
+                "@value": "api-sandbox.cloud.wowza.com/api/v1"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/api-sandbox.cloud.wowza.com%2Fapi%2Fv1/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#host-lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://raml.org/vocabularies/http#url"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(4,0)-(5,0)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/api-sandbox.cloud.wowza.com%2Fapi%2Fv1"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#base-path-lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://raml.org/vocabularies/http#url"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(5,0)-(6,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/http#accepts": [
+          {
+            "@value": "application/json"
+          }
+        ],
+        "http://raml.org/vocabularies/http#contentType": [
+          {
+            "@value": "application/json"
+          }
+        ],
+        "http://raml.org/vocabularies/http#scheme": [
+          {
+            "@value": "https"
+          }
+        ],
+        "http://schema.org/version": [
+          {
+            "@value": "1"
+          }
+        ],
+        "http://schema.org/termsOfService": [
+          {
+            "@value": "http://www.wowza.com/legal/terms-of-use"
+          }
+        ],
+        "http://schema.org/provider": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/organization",
+            "@type": [
+              "http://schema.org/Organization",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/url": [
+              {
+                "@id": "https://www.wowza.com/contact"
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "Contact Us"
+              }
+            ],
+            "null/extension#twitter": {
+              "http://raml.org/vocabularies/document#name": [
+                {
+                  "@value": "twitter"
+                }
+              ],
+              "@id": "null/twitter/scalar_1",
+              "@type": [
+                "http://raml.org/vocabularies/data#Scalar"
+              ],
+              "http://raml.org/vocabularies/data#value": [
+                {
+                  "@value": "wowzamedia",
+                  "@type": "http://www.w3.org/2001/XMLSchema#string"
+                }
+              ],
+              "http://raml.org/vocabularies/document-source-maps#sources": [
+                {
+                  "@id": "null/twitter/scalar_1/source-map",
+                  "@type": [
+                    "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                  ],
+                  "http://raml.org/vocabularies/document-source-maps#lexical": [
+                    {
+                      "http://raml.org/vocabularies/document-source-maps#element": [
+                        {
+                          "@value": "null/twitter/scalar_1"
+                        }
+                      ],
+                      "http://raml.org/vocabularies/document-source-maps#value": [
+                        {
+                          "@value": "[(10,15)-(10,25)]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://raml.org/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "null/extension#twitter"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/organization/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/name"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(8,4)-(9,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/organization"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(8,0)-(11,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/url"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(9,4)-(10,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://schema.org/license": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/license",
+            "@type": [
+              "http://raml.org/vocabularies/http#License",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/url": [
+              {
+                "@id": "https://www.wowza.com/legal/terms-of-use"
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "Terms of Use"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/license/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/name"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(63,4)-(64,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/license"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(63,0)-(65,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/url"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(64,4)-(65,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://schema.org/documentation": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/creative-work/https%3A%2F%2Fwww.wowza.com%2Fdocs%2Fhow-to-broadcast-a-live-stream-by-using-the-wowza-streaming-cloud-rest-api",
+            "@type": [
+              "http://schema.org/CreativeWork",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/url": [
+              {
+                "@id": "https://www.wowza.com/docs/how-to-broadcast-a-live-stream-by-using-the-wowza-streaming-cloud-rest-api"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Quick Start: How to broadcast a live stream by using the Wowza Streaming Cloud REST API"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/creative-work/https%3A%2F%2Fwww.wowza.com%2Fdocs%2Fhow-to-broadcast-a-live-stream-by-using-the-wowza-streaming-cloud-rest-api/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(78,2)-(79,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/creative-work/https%3A%2F%2Fwww.wowza.com%2Fdocs%2Fhow-to-broadcast-a-live-stream-by-using-the-wowza-streaming-cloud-rest-api"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(78,0)-(80,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/url"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(79,2)-(80,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/http#endpoint": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs",
+            "@type": [
+              "http://raml.org/vocabularies/http#EndPoint",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/http#path": [
+              {
+                "@value": "/api/v1/specs"
+              }
+            ],
+            "http://www.w3.org/ns/hydra/core#supportedOperation": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get",
+                "@type": [
+                  "http://www.w3.org/ns/hydra/core#Operation",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/hydra/core#method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "specs"
+                  }
+                ],
+                "http://schema.org/description": [
+                  {
+                    "@value": "This operation shows the details of the Swagger specification.\n"
+                  }
+                ],
+                "http://raml.org/vocabularies/http#guiSummary": [
+                  {
+                    "@value": "Fetch Swagger information"
+                  }
+                ],
+                "http://www.w3.org/ns/hydra/core#returns": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/200",
+                    "@type": [
+                      "http://raml.org/vocabularies/http#Response",
+                      "http://raml.org/vocabularies/document#DomainElement"
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://schema.org/description": [
+                      {
+                        "@value": "OK"
+                      }
+                    ],
+                    "http://www.w3.org/ns/hydra/core#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/http#payload": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/200/default",
+                        "@type": [
+                          "http://raml.org/vocabularies/http#Payload",
+                          "http://raml.org/vocabularies/document#DomainElement"
+                        ],
+                        "http://raml.org/vocabularies/http#schema": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/200/default/scalar/default",
+                            "@type": [
+                              "http://raml.org/vocabularies/shapes#ScalarShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://raml.org/vocabularies/shapes#Shape",
+                              "http://raml.org/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "default"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#sources": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/200/default/scalar/default/source-map",
+                                "@type": [
+                                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                                  {
+                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/200/default/scalar/default"
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(171,12)-(171,16)]"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                  {
+                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://www.w3.org/ns/shacl#datatype"
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(171,12)-(172,0)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/200/default/scalar/default"
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(170,10)-(172,0)]"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/200/default/source-map",
+                            "@type": [
+                              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#lexical": [
+                              {
+                                "http://raml.org/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://raml.org/vocabularies/http#schema"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(170,10)-(172,0)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/200/source-map",
+                        "@type": [
+                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#lexical": [
+                          {
+                            "http://raml.org/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://schema.org/description"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(169,10)-(170,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://raml.org/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/200"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(168,8)-(172,0)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://raml.org/vocabularies/http#tag": [
+                  {
+                    "@value": "specs"
+                  }
+                ],
+                "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%252Fapi%252Fv1%252Fspecs/get/extension/code-samples": {
+                  "http://raml.org/vocabularies/document#name": [
+                    {
+                      "@value": "code-samples"
+                    }
+                  ],
+                  "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1",
+                  "@type": [
+                    "http://raml.org/vocabularies/data#Array",
+                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"
+                  ],
+                  "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
+                    {
+                      "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/object_2",
+                      "@type": [
+                        "http://raml.org/vocabularies/data#Object"
+                      ],
+                      "http://raml.org/vocabularies/data#lang": [
+                        {
+                          "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/object_2/scalar_3",
+                          "@type": [
+                            "http://raml.org/vocabularies/data#Scalar"
+                          ],
+                          "http://raml.org/vocabularies/data#value": [
+                            {
+                              "@value": "Shell",
+                              "@type": "http://www.w3.org/2001/XMLSchema#string"
+                            }
+                          ],
+                          "http://raml.org/vocabularies/document-source-maps#sources": [
+                            {
+                              "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/object_2/scalar_3/source-map",
+                              "@type": [
+                                "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                              ],
+                              "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                {
+                                  "http://raml.org/vocabularies/document-source-maps#element": [
+                                    {
+                                      "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/object_2/scalar_3"
+                                    }
+                                  ],
+                                  "http://raml.org/vocabularies/document-source-maps#value": [
+                                    {
+                                      "@value": "[(178,16)-(178,21)]"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ],
+                      "http://raml.org/vocabularies/data#source": [
+                        {
+                          "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/object_2/scalar_4",
+                          "@type": [
+                            "http://raml.org/vocabularies/data#Scalar"
+                          ],
+                          "http://raml.org/vocabularies/data#value": [
+                            {
+                              "@value": "// Using cURL\ncurl -X \"GET\" \"https://api-sandbox.cloud.wowza.com/api/v1/specs\"\n",
+                              "@type": "http://www.w3.org/2001/XMLSchema#string"
+                            }
+                          ],
+                          "http://raml.org/vocabularies/document-source-maps#sources": [
+                            {
+                              "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/object_2/scalar_4/source-map",
+                              "@type": [
+                                "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                              ],
+                              "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                {
+                                  "http://raml.org/vocabularies/document-source-maps#element": [
+                                    {
+                                      "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/object_2/scalar_4"
+                                    }
+                                  ],
+                                  "http://raml.org/vocabularies/document-source-maps#value": [
+                                    {
+                                      "@value": "[(179,18)-(182,0)]"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ],
+                      "http://raml.org/vocabularies/document-source-maps#sources": [
+                        {
+                          "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/object_2/source-map",
+                          "@type": [
+                            "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                          ],
+                          "http://raml.org/vocabularies/document-source-maps#data-node-properties": [
+                            {
+                              "http://raml.org/vocabularies/document-source-maps#element": [
+                                {
+                                  "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/object_2"
+                                }
+                              ],
+                              "http://raml.org/vocabularies/document-source-maps#value": [
+                                {
+                                  "@value": "source->[(179,10)-(182,0)]#lang->[(178,10)-(179,0)]"
+                                }
+                              ]
+                            }
+                          ],
+                          "http://raml.org/vocabularies/document-source-maps#lexical": [
+                            {
+                              "http://raml.org/vocabularies/document-source-maps#element": [
+                                {
+                                  "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/object_2"
+                                }
+                              ],
+                              "http://raml.org/vocabularies/document-source-maps#value": [
+                                {
+                                  "@value": "[(178,10)-(182,0)]"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/object_5",
+                      "@type": [
+                        "http://raml.org/vocabularies/data#Object"
+                      ],
+                      "http://raml.org/vocabularies/data#lang": [
+                        {
+                          "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/object_5/scalar_6",
+                          "@type": [
+                            "http://raml.org/vocabularies/data#Scalar"
+                          ],
+                          "http://raml.org/vocabularies/data#value": [
+                            {
+                              "@value": "JavaScript",
+                              "@type": "http://www.w3.org/2001/XMLSchema#string"
+                            }
+                          ],
+                          "http://raml.org/vocabularies/document-source-maps#sources": [
+                            {
+                              "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/object_5/scalar_6/source-map",
+                              "@type": [
+                                "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                              ],
+                              "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                {
+                                  "http://raml.org/vocabularies/document-source-maps#element": [
+                                    {
+                                      "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/object_5/scalar_6"
+                                    }
+                                  ],
+                                  "http://raml.org/vocabularies/document-source-maps#value": [
+                                    {
+                                      "@value": "[(182,16)-(182,26)]"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ],
+                      "http://raml.org/vocabularies/data#source": [
+                        {
+                          "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/object_5/scalar_7",
+                          "@type": [
+                            "http://raml.org/vocabularies/data#Scalar"
+                          ],
+                          "http://raml.org/vocabularies/data#value": [
+                            {
+                              "@value": "// Using Node.js\nvar https = require('https');\nhttps.get('https://api-sandbox.cloud.wowza.com/api/v1/specs', function(res) {\n  var body = '';\n  res.on('data', function(data){\n    body += data;\n  });\n  res.on('end', function() {\n    console.log(JSON.parse(body));\n  });\n}).on('error', function(e) {\n  console.log(e.message);\n});\n",
+                              "@type": "http://www.w3.org/2001/XMLSchema#string"
+                            }
+                          ],
+                          "http://raml.org/vocabularies/document-source-maps#sources": [
+                            {
+                              "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/object_5/scalar_7/source-map",
+                              "@type": [
+                                "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                              ],
+                              "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                {
+                                  "http://raml.org/vocabularies/document-source-maps#element": [
+                                    {
+                                      "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/object_5/scalar_7"
+                                    }
+                                  ],
+                                  "http://raml.org/vocabularies/document-source-maps#value": [
+                                    {
+                                      "@value": "[(183,18)-(197,0)]"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ],
+                      "http://raml.org/vocabularies/document-source-maps#sources": [
+                        {
+                          "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/object_5/source-map",
+                          "@type": [
+                            "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                          ],
+                          "http://raml.org/vocabularies/document-source-maps#data-node-properties": [
+                            {
+                              "http://raml.org/vocabularies/document-source-maps#element": [
+                                {
+                                  "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/object_5"
+                                }
+                              ],
+                              "http://raml.org/vocabularies/document-source-maps#value": [
+                                {
+                                  "@value": "source->[(183,10)-(197,0)]#lang->[(182,10)-(183,0)]"
+                                }
+                              ]
+                            }
+                          ],
+                          "http://raml.org/vocabularies/document-source-maps#lexical": [
+                            {
+                              "http://raml.org/vocabularies/document-source-maps#element": [
+                                {
+                                  "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/object_5"
+                                }
+                              ],
+                              "http://raml.org/vocabularies/document-source-maps#value": [
+                                {
+                                  "@value": "[(182,10)-(197,0)]"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "http://raml.org/vocabularies/data#pos0": [
+                    {
+                      "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/object_2"
+                    }
+                  ],
+                  "http://raml.org/vocabularies/data#pos1": [
+                    {
+                      "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/object_5"
+                    }
+                  ],
+                  "http://raml.org/vocabularies/document-source-maps#sources": [
+                    {
+                      "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1/source-map",
+                      "@type": [
+                        "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                      ],
+                      "http://raml.org/vocabularies/document-source-maps#lexical": [
+                        {
+                          "http://raml.org/vocabularies/document-source-maps#element": [
+                            {
+                              "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/code-samples/array_1"
+                            }
+                          ],
+                          "http://raml.org/vocabularies/document-source-maps#value": [
+                            {
+                              "@value": "[(177,21)-(197,0)]"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "http://raml.org/vocabularies/document#customDomainProperties": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%252Fapi%252Fv1%252Fspecs/get/extension/code-samples"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://raml.org/vocabularies/http#tag"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(175,6)-(177,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://raml.org/vocabularies/http#guiSummary"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(174,6)-(175,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://schema.org/name"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(166,6)-(167,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/get"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(163,4)-(197,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://schema.org/description"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(164,6)-(166,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://www.w3.org/ns/hydra/core#returns"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(167,6)-(172,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/end-points/%2Fapi%2Fv1%2Fspecs"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(162,2)-(197,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/security#security": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/wsc-api-key",
+            "@type": [
+              "http://raml.org/vocabularies/security#ParametrizedSecurityScheme",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/security#name": [
+              {
+                "@value": "wsc-api-key"
+              }
+            ],
+            "http://raml.org/vocabularies/security#scheme": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/wsc-api-key/wsc-api-key",
+                "@type": [
+                  "http://raml.org/vocabularies/security#SecurityScheme",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://raml.org/vocabularies/security#name": [
+                  {
+                    "@value": "wsc-api-key"
+                  }
+                ],
+                "http://raml.org/vocabularies/security#type": [
+                  {
+                    "@value": "x-amf-apiKey"
+                  }
+                ],
+                "http://schema.org/description": [
+                  {
+                    "@value": "Your account's 64-digit, alphanumeric API key. "
+                  }
+                ],
+                "http://raml.org/vocabularies/security#settings": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/wsc-api-key/settings/api-key",
+                    "@type": [
+                      "http://raml.org/vocabularies/security#ApiKeySettings",
+                      "http://raml.org/vocabularies/security#Settings",
+                      "http://raml.org/vocabularies/document#DomainElement"
+                    ],
+                    "http://raml.org/vocabularies/security#name": [
+                      {
+                        "@value": "wsc-api-key"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/security#in": [
+                      {
+                        "@value": "header"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/wsc-api-key/settings/api-key/source-map",
+                        "@type": [
+                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#lexical": [
+                          {
+                            "http://raml.org/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://raml.org/vocabularies/security#in"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(92,4)-(93,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://raml.org/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/wsc-api-key/settings/api-key"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(91,0)-(95,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://raml.org/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://raml.org/vocabularies/security#name"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(93,4)-(94,0)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/wsc-api-key/wsc-api-key/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#declared-element": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/wsc-api-key/wsc-api-key"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": ""
+                          }
+                        ]
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://raml.org/vocabularies/security#settings"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(90,2)-(95,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://raml.org/vocabularies/security#type"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(94,4)-(95,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/wsc-api-key/wsc-api-key"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(90,2)-(95,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://raml.org/vocabularies/security#name"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(90,2)-(90,13)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://schema.org/description"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(91,4)-(92,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/wsc-api-key/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/wsc-api-key"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(96,4)-(97,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/wsc-access-key",
+            "@type": [
+              "http://raml.org/vocabularies/security#ParametrizedSecurityScheme",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/security#name": [
+              {
+                "@value": "wsc-access-key"
+              }
+            ],
+            "http://raml.org/vocabularies/security#scheme": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/wsc-access-key/wsc-access-key",
+                "@type": [
+                  "http://raml.org/vocabularies/security#SecurityScheme",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://raml.org/vocabularies/security#name": [
+                  {
+                    "@value": "wsc-access-key"
+                  }
+                ],
+                "http://raml.org/vocabularies/security#type": [
+                  {
+                    "@value": "x-amf-apiKey"
+                  }
+                ],
+                "http://schema.org/description": [
+                  {
+                    "@value": "A valid 64-digit, alphanumeric API access key."
+                  }
+                ],
+                "http://raml.org/vocabularies/security#settings": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/wsc-access-key/settings/api-key",
+                    "@type": [
+                      "http://raml.org/vocabularies/security#ApiKeySettings",
+                      "http://raml.org/vocabularies/security#Settings",
+                      "http://raml.org/vocabularies/document#DomainElement"
+                    ],
+                    "http://raml.org/vocabularies/security#name": [
+                      {
+                        "@value": "wsc-access-key"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/security#in": [
+                      {
+                        "@value": "header"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/wsc-access-key/settings/api-key/source-map",
+                        "@type": [
+                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#lexical": [
+                          {
+                            "http://raml.org/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://raml.org/vocabularies/security#in"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(87,4)-(88,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://raml.org/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/wsc-access-key/settings/api-key"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(86,0)-(90,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://raml.org/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://raml.org/vocabularies/security#name"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(88,4)-(89,0)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/wsc-access-key/wsc-access-key/source-map",
+                    "@type": [
+                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#declared-element": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/wsc-access-key/wsc-access-key"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": ""
+                          }
+                        ]
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://raml.org/vocabularies/security#settings"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(85,2)-(90,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://raml.org/vocabularies/security#type"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(89,4)-(90,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/wsc-access-key/wsc-access-key"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(85,2)-(90,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://raml.org/vocabularies/security#name"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(85,2)-(85,16)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://schema.org/description"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(86,4)-(87,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/wsc-access-key/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/wsc-access-key"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(97,4)-(98,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/http#tag": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag",
+            "@type": [
+              "http://raml.org/vocabularies/http#Tag",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "live_streams"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Operations related to live streams."
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(125,4)-(126,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(125,4)-(128,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/name"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(126,4)-(127,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag",
+            "@type": [
+              "http://raml.org/vocabularies/http#Tag",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "players"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Operations related to players, which are created through the /live_streams resource."
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(128,4)-(129,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(128,4)-(131,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/name"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(129,4)-(130,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag",
+            "@type": [
+              "http://raml.org/vocabularies/http#Tag",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "recordings"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Operations related to recordings."
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(131,4)-(132,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(131,4)-(134,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/name"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(132,4)-(133,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag",
+            "@type": [
+              "http://raml.org/vocabularies/http#Tag",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "schedules"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Operations related to schedules."
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(134,4)-(135,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(134,4)-(137,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/name"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(135,4)-(136,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag",
+            "@type": [
+              "http://raml.org/vocabularies/http#Tag",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "stream_sources"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Operations related to stream sources."
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(137,4)-(138,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(137,4)-(140,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/name"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(138,4)-(139,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag",
+            "@type": [
+              "http://raml.org/vocabularies/http#Tag",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "stream_targets"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Operations related to stream targets."
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(140,4)-(141,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(140,4)-(143,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/name"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(141,4)-(142,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag",
+            "@type": [
+              "http://raml.org/vocabularies/http#Tag",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "transcoders"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Operations related to transcoders, output renditions, and output stream targets."
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(143,4)-(144,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(143,4)-(146,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/name"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(144,4)-(145,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag",
+            "@type": [
+              "http://raml.org/vocabularies/http#Tag",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "network"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Operations related to network usage for an account."
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(146,4)-(147,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(146,4)-(149,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/name"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(147,4)-(148,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag",
+            "@type": [
+              "http://raml.org/vocabularies/http#Tag",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "processing time"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Operations related to stream processing time for an account."
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(149,4)-(150,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(149,4)-(152,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/name"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(150,4)-(151,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag",
+            "@type": [
+              "http://raml.org/vocabularies/http#Tag",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "specs"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Operations related to the Swagger specification."
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(152,4)-(153,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(152,4)-(155,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/name"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(153,4)-(154,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag",
+            "@type": [
+              "http://raml.org/vocabularies/http#Tag",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "storage"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Operations related to peak recording storage for an account."
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(155,4)-(156,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(155,4)-(158,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/name"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(156,4)-(157,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag",
+            "@type": [
+              "http://raml.org/vocabularies/http#Tag",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "viewer data"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Operations related to stream target viewer data."
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(158,4)-(159,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/tag"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(158,4)-(161,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/name"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(159,4)-(160,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/source-map",
+            "@type": [
+              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#source-vendor": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "oas"
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#tag"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(124,0)-(161,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#endpoint"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(161,6)-(197,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/provider"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(7,2)-(11,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/version"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(67,2)-(68,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#contentType"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(82,0)-(84,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/description"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(11,2)-(62,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(1,0)-(197,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/name"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(66,2)-(67,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#accepts"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(80,0)-(82,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#scheme"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(4,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/termsOfService"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(65,2)-(66,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/license"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(62,2)-(65,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/security#security"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(95,0)-(98,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://raml.org/vocabularies/document#declares": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/page",
+        "@type": [
+          "http://raml.org/vocabularies/http#Parameter",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "page"
+          }
+        ],
+        "http://raml.org/vocabularies/http#paramName": [
+          {
+            "@value": "page"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@value": "Returns a paginated view of results from the HTTP request. Specify a positive integer to indicate which page of the results should be displayed first. <strong>Next</strong> and <strong>Previous</strong> links allow you to navigate multiple pages of results. Omit the <em>page</em> parameter or specify an integer that's less than or equal to <strong>0</strong> to view all (unpaginated) results."
+          }
+        ],
+        "http://www.w3.org/ns/hydra/core#required": [
+          {
+            "@value": false
+          }
+        ],
+        "http://raml.org/vocabularies/http#binding": [
+          {
+            "@value": "query"
+          }
+        ],
+        "http://raml.org/vocabularies/http#schema": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/page/scalar/schema",
+            "@type": [
+              "http://raml.org/vocabularies/shapes#ScalarShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://raml.org/vocabularies/shapes#Shape",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#integer"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "schema"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Returns a paginated view of results from the HTTP request. Specify a positive integer to indicate which page of the results should be displayed first. <strong>Next</strong> and <strong>Previous</strong> links allow you to navigate multiple pages of results. Omit the <em>page</em> parameter or specify an integer that's less than or equal to <strong>0</strong> to view all (unpaginated) results."
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/page/scalar/schema/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/page/scalar/schema"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(118,4)-(118,8)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(115,4)-(116,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/page/scalar/schema"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(115,0)-(119,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#datatype"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(118,4)-(119,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/page/source-map",
+            "@type": [
+              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#declared-element": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/page"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#schema"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(115,0)-(119,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/description"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(115,4)-(116,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/page"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(115,0)-(119,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#paramName"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(117,4)-(118,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#binding"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(116,4)-(117,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/per_page",
+        "@type": [
+          "http://raml.org/vocabularies/http#Parameter",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "per_page"
+          }
+        ],
+        "http://raml.org/vocabularies/http#paramName": [
+          {
+            "@value": "per_page"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@value": "For use with the <em>page</em> parameter. Indicates how many records should be included on each page of results. A valid value is any positive integer. The default is <strong>10</strong>."
+          }
+        ],
+        "http://www.w3.org/ns/hydra/core#required": [
+          {
+            "@value": false
+          }
+        ],
+        "http://raml.org/vocabularies/http#binding": [
+          {
+            "@value": "query"
+          }
+        ],
+        "http://raml.org/vocabularies/http#schema": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/per_page/scalar/schema",
+            "@type": [
+              "http://raml.org/vocabularies/shapes#ScalarShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://raml.org/vocabularies/shapes#Shape",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#integer"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "schema"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "For use with the <em>page</em> parameter. Indicates how many records should be included on each page of results. A valid value is any positive integer. The default is <strong>10</strong>."
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/per_page/scalar/schema/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/per_page/scalar/schema"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(123,4)-(123,8)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(120,4)-(121,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/per_page/scalar/schema"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(120,0)-(124,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#datatype"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(123,4)-(124,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/per_page/source-map",
+            "@type": [
+              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#declared-element": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/per_page"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#schema"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(120,0)-(124,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/description"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(120,4)-(121,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/per_page"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(120,0)-(124,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#paramName"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(122,4)-(123,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#binding"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(121,4)-(122,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[interval]",
+        "@type": [
+          "http://raml.org/vocabularies/http#Parameter",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "filter[interval]"
+          }
+        ],
+        "http://raml.org/vocabularies/http#paramName": [
+          {
+            "@value": "filter[interval]"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@value": "The length of time for a block of usage data. Valid values are **year**, **quarter**, **month**, **week**, **day** or **1d** - **364d**, **hour** or **1h** to **23h**, **minute** or **1m** - **59m**, and **second** or **1s** - **59s**. The default is **10m** (10 minutes)."
+          }
+        ],
+        "http://www.w3.org/ns/hydra/core#required": [
+          {
+            "@value": false
+          }
+        ],
+        "http://raml.org/vocabularies/http#binding": [
+          {
+            "@value": "query"
+          }
+        ],
+        "http://raml.org/vocabularies/http#schema": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[interval]/scalar/schema",
+            "@type": [
+              "http://raml.org/vocabularies/shapes#ScalarShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://raml.org/vocabularies/shapes#Shape",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "schema"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "The length of time for a block of usage data. Valid values are **year**, **quarter**, **month**, **week**, **day** or **1d** - **364d**, **hour** or **1h** to **23h**, **minute** or **1m** - **59m**, and **second** or **1s** - **59s**. The default is **10m** (10 minutes)."
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[interval]/scalar/schema/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[interval]/scalar/schema"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(108,4)-(108,8)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(105,4)-(106,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[interval]/scalar/schema"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(105,0)-(109,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#datatype"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(108,4)-(109,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[interval]/source-map",
+            "@type": [
+              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#declared-element": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[interval]"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#schema"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(105,0)-(109,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/description"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(105,4)-(106,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[interval]"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(105,0)-(109,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#paramName"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(107,4)-(108,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#binding"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(106,4)-(107,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[to]",
+        "@type": [
+          "http://raml.org/vocabularies/http#Parameter",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "filter[to]"
+          }
+        ],
+        "http://raml.org/vocabularies/http#paramName": [
+          {
+            "@value": "filter[to]"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@value": "The end of the date and time range for calculating usage. Express the value by using the ISO 8601 standard of **YYYY-MM-DDTHH:MM:SSZ** where **HH** is a 24-hour clock in UTC. The default is the current date and time."
+          }
+        ],
+        "http://www.w3.org/ns/hydra/core#required": [
+          {
+            "@value": false
+          }
+        ],
+        "http://raml.org/vocabularies/http#binding": [
+          {
+            "@value": "query"
+          }
+        ],
+        "http://raml.org/vocabularies/http#schema": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[to]/scalar/schema",
+            "@type": [
+              "http://raml.org/vocabularies/shapes#ScalarShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://raml.org/vocabularies/shapes#Shape",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "schema"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "The end of the date and time range for calculating usage. Express the value by using the ISO 8601 standard of **YYYY-MM-DDTHH:MM:SSZ** where **HH** is a 24-hour clock in UTC. The default is the current date and time."
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[to]/scalar/schema/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[to]/scalar/schema"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(113,4)-(113,8)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(110,4)-(111,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[to]/scalar/schema"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(110,0)-(114,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#datatype"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(113,4)-(114,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[to]/source-map",
+            "@type": [
+              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#declared-element": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[to]"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#schema"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(110,0)-(114,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/description"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(110,4)-(111,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[to]"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(110,0)-(114,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#paramName"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(112,4)-(113,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#binding"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(111,4)-(112,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[from]",
+        "@type": [
+          "http://raml.org/vocabularies/http#Parameter",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "filter[from]"
+          }
+        ],
+        "http://raml.org/vocabularies/http#paramName": [
+          {
+            "@value": "filter[from]"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@value": "The start of the date and time range for calculating usage. Express the value by using the ISO 8601 standard of **YYYY-MM-DDTHH:MM:SSZ** where **HH** is a 24-hour clock in UTC. The default is the beginning of the current month."
+          }
+        ],
+        "http://www.w3.org/ns/hydra/core#required": [
+          {
+            "@value": false
+          }
+        ],
+        "http://raml.org/vocabularies/http#binding": [
+          {
+            "@value": "query"
+          }
+        ],
+        "http://raml.org/vocabularies/http#schema": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[from]/scalar/schema",
+            "@type": [
+              "http://raml.org/vocabularies/shapes#ScalarShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://raml.org/vocabularies/shapes#Shape",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "schema"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "The start of the date and time range for calculating usage. Express the value by using the ISO 8601 standard of **YYYY-MM-DDTHH:MM:SSZ** where **HH** is a 24-hour clock in UTC. The default is the beginning of the current month."
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[from]/scalar/schema/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[from]/scalar/schema"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(103,4)-(103,8)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(100,4)-(101,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[from]/scalar/schema"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(100,0)-(104,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#datatype"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(103,4)-(104,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[from]/source-map",
+            "@type": [
+              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#declared-element": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[from]"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#schema"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(100,0)-(104,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/description"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(100,4)-(101,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/parameter/filter[from]"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(100,0)-(104,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#paramName"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(102,4)-(103,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/http#binding"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(101,4)-(102,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/wsc-access-key/wsc-access-key",
+        "@type": [
+          "http://raml.org/vocabularies/security#SecurityScheme",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://raml.org/vocabularies/security#name": [
+          {
+            "@value": "wsc-access-key"
+          }
+        ],
+        "http://raml.org/vocabularies/security#type": [
+          {
+            "@value": "x-amf-apiKey"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@value": "A valid 64-digit, alphanumeric API access key."
+          }
+        ],
+        "http://raml.org/vocabularies/security#settings": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/wsc-access-key/settings/api-key",
+            "@type": [
+              "http://raml.org/vocabularies/security#ApiKeySettings",
+              "http://raml.org/vocabularies/security#Settings",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/security#name": [
+              {
+                "@value": "wsc-access-key"
+              }
+            ],
+            "http://raml.org/vocabularies/security#in": [
+              {
+                "@value": "header"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/wsc-access-key/settings/api-key/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://raml.org/vocabularies/security#in"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(87,4)-(88,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/wsc-access-key/settings/api-key"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(86,0)-(90,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://raml.org/vocabularies/security#name"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(88,4)-(89,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/wsc-access-key/wsc-access-key/source-map",
+            "@type": [
+              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#declared-element": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/wsc-access-key/wsc-access-key"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/security#settings"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(85,2)-(90,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/security#type"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(89,4)-(90,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/wsc-access-key/wsc-access-key"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(85,2)-(90,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/security#name"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(85,2)-(85,16)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/description"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(86,4)-(87,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/wsc-api-key/wsc-api-key",
+        "@type": [
+          "http://raml.org/vocabularies/security#SecurityScheme",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://raml.org/vocabularies/security#name": [
+          {
+            "@value": "wsc-api-key"
+          }
+        ],
+        "http://raml.org/vocabularies/security#type": [
+          {
+            "@value": "x-amf-apiKey"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@value": "Your account's 64-digit, alphanumeric API key. "
+          }
+        ],
+        "http://raml.org/vocabularies/security#settings": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/wsc-api-key/settings/api-key",
+            "@type": [
+              "http://raml.org/vocabularies/security#ApiKeySettings",
+              "http://raml.org/vocabularies/security#Settings",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/security#name": [
+              {
+                "@value": "wsc-api-key"
+              }
+            ],
+            "http://raml.org/vocabularies/security#in": [
+              {
+                "@value": "header"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/wsc-api-key/settings/api-key/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://raml.org/vocabularies/security#in"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(92,4)-(93,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/declarations/wsc-api-key/settings/api-key"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(91,0)-(95,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://raml.org/vocabularies/security#name"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(93,4)-(94,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/wsc-api-key/wsc-api-key/source-map",
+            "@type": [
+              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#declared-element": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/wsc-api-key/wsc-api-key"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/security#settings"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(90,2)-(95,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/security#type"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(94,4)-(95,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/production/wowza.yaml#/web-api/wsc-api-key/wsc-api-key"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(90,2)-(95,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/security#name"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(90,2)-(90,13)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/description"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(91,4)-(92,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
