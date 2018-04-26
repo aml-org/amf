@@ -1193,4 +1193,8 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Trait with string quoted data node raml to raml") {
     cycle("trait-string-quoted-node.raml", "trait-string-quoted-node.raml.raml", RamlYamlHint, Raml)
   }
+
+  test("Bad fragment named examples") {
+    cycle("api.raml", "api.raml.raml", RamlYamlHint, Raml, basePath + "sapi-customer-db-1.0.0-fat-raml/")
+  }
 }

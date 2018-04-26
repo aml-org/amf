@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: Customer API
+
+types:
+  objectName:
+        properties:
+          id?:
+            type: string
+          name:
+            type: string
+          phone:
+            type: string
+          email:
+            type: string
+
+/customer:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: objectName[]
+            example: !include examples/customer_collection_example.raml
+  post:
+    body:
+      application/json:
+        type: objectName
+        example: !include examples/customer_post_request_example.raml
