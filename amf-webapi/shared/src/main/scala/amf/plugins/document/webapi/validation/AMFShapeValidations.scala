@@ -330,6 +330,10 @@ class AMFShapeValidations(shape: Shape) {
                       v.entry((Namespace.Shacl + "datatype").iri(),
                               _.obj(_.entry("@id", (Namespace.Xsd + "dateTime").iri().trim)))
                     }
+                    l.obj { v =>
+                      v.entry((Namespace.Shacl + "datatype").iri(),
+                        _.obj(_.entry("@id", (Namespace.Shapes + "dateTimeOnly").iri().trim)))
+                    }
                 }
               ))
           )
