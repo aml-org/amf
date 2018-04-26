@@ -1,0 +1,58 @@
+#%RAML 1.0
+title: Notification API
+version: 1.0.0
+baseUri: http://localhost:8081/api
+mediaType: [ application/xml, application/json ]
+
+traits:
+  headers: !include /exchange_modules/18ab37a2-e5db-4bba-966f-c75f56762025/rest-headers-trait/1.0.0/rest-headers-trait.raml
+  collection: !include /exchange_modules/18ab37a2-e5db-4bba-966f-c75f56762025/pageable-trait/1.0.0/pageable-trait.raml
+  client-id-secured: !include /exchange_modules/18ab37a2-e5db-4bba-966f-c75f56762025/client-id-secured-trait/1.0.0/client-id-secured.raml
+
+uses:
+  Notification: /exchange_modules/18ab37a2-e5db-4bba-966f-c75f56762025/notification-datatype/1.0.0/notification-datatype.raml
+  SlackNotification: /exchange_modules/18ab37a2-e5db-4bba-966f-c75f56762025/notification-datatype/1.0.0/slack-notification-datatype.raml
+  Error: /exchange_modules/18ab37a2-e5db-4bba-966f-c75f56762025/error-datatype/1.0.0/error-datatype.raml
+
+types:
+  objectName: Notification.notification
+
+/notification:
+  description: send a notification via email, push or SMS
+  /id/{id}:
+    is: [headers, client-id-secured]
+    uriParameters:
+      id:
+        type: string
+        example: 80a0b583-1e4b-4813-b02f-0704a3398775
+    post:
+      body:
+        application/json:
+          type: objectName
+          example: !include examples/single.raml
+      responses:
+        200:
+          body:
+            application/json:
+              type: Error.error
+              example: |
+                {
+                  "message": "message sent"
+                }
+/slack:
+  description: send a notification to Slack
+  is: [headers, client-id-secured]
+  post:
+    body:
+      application/json:
+        type: SlackNotification.slackNotification
+        example: !include examples/slack-notification.raml
+    responses:
+      200:
+        body:
+          application/json:
+            type: Error.error
+            example: |
+              {
+                "message": "message sent"
+              }

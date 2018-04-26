@@ -24,7 +24,7 @@ case class UnresolvedShape(override val fields: Fields,
     if (id == null) super.withId(newId)
     this
   }
-  */
+   */
 
   /** Resolve [[UnresolvedShape]] as link to specified target. */
   def resolve(target: Shape): Shape = target.link(reference, annotations).asInstanceOf[Shape].withName(name.value())
@@ -37,6 +37,9 @@ case class UnresolvedShape(override val fields: Fields,
   override def afterResolve(): Unit = fatherExtensionParser.foreach { parser =>
     parser.parse()
   }
+
+  // if is unresolved the effective target its himselft, because any real type has been found.
+  override def effectiveLinkTarget = this
 }
 
 object UnresolvedShape {
