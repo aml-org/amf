@@ -2,7 +2,7 @@ package amf.client.model.domain
 
 import amf.client.convert.CoreClientConverters._
 import amf.client.model.AmfObjectWrapper
-import amf.core.model.domain.{DomainElement => InternalDomainElement}
+import amf.core.model.domain.{DomainElement => InternalDomainElement, Graph => InternalGraph}
 import amf.core.parser.Range
 import amf.core.unsafe.PlatformSecrets
 
@@ -36,11 +36,5 @@ trait DomainElement extends AmfObjectWrapper with PlatformSecrets {
     this
   }
 
-  def getTypeIds: ClientList[String] = _internal.getTypeIds().asClient
-
-  def getPropertyIds: ClientList[String] = _internal.getPropertyIds().asClient
-
-  def getScalarByPropertyId(id: String): ClientList[Any] = _internal.getScalarByPropertyId(id).asClient
-
-  def getObjectByPropertyId(id: String): ClientList[DomainElement] = _internal.getObjectByPropertyId(id).asClient
+  def graph(): Graph = _internal.graph
 }
