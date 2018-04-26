@@ -189,7 +189,8 @@
                 "http://raml.org/vocabularies/shapes#items": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/wip/property/questionnaires/array/questionnaires/list",
-                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#first": [
+                    "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+                    "http://www.w3.org/2000/01/rdf-schema#_1": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/wip/property/questionnaires/array/questionnaires/member0",
                         "@type": [
@@ -261,11 +262,6 @@
                             ]
                           }
                         ]
-                      }
-                    ],
-                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest": [
-                      {
-                        "@id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"
                       }
                     ]
                   }

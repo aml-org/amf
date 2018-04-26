@@ -1038,34 +1038,20 @@
                             "http://www.w3.org/ns/shacl#in": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/list",
-                                "http://www.w3.org/1999/02/22-rdf-syntax-ns#first": [
+                                "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+                                "http://www.w3.org/2000/01/rdf-schema#_1": [
                                   {
                                     "@value": "file1"
                                   }
                                 ],
-                                "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest": [
+                                "http://www.w3.org/2000/01/rdf-schema#_2": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/list/list",
-                                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#first": [
-                                      {
-                                        "@value": "file2"
-                                      }
-                                    ],
-                                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/list/list/list",
-                                        "http://www.w3.org/1999/02/22-rdf-syntax-ns#first": [
-                                          {
-                                            "@value": "file3"
-                                          }
-                                        ],
-                                        "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest": [
-                                          {
-                                            "@id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"
-                                          }
-                                        ]
-                                      }
-                                    ]
+                                    "@value": "file2"
+                                  }
+                                ],
+                                "http://www.w3.org/2000/01/rdf-schema#_3": [
+                                  {
+                                    "@value": "file3"
                                   }
                                 ]
                               }
@@ -2448,34 +2434,20 @@
                             "http://www.w3.org/ns/shacl#in": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/list",
-                                "http://www.w3.org/1999/02/22-rdf-syntax-ns#first": [
+                                "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+                                "http://www.w3.org/2000/01/rdf-schema#_1": [
                                   {
                                     "@value": "one"
                                   }
                                 ],
-                                "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest": [
+                                "http://www.w3.org/2000/01/rdf-schema#_2": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/list/list",
-                                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#first": [
-                                      {
-                                        "@value": "two"
-                                      }
-                                    ],
-                                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/list/list/list",
-                                        "http://www.w3.org/1999/02/22-rdf-syntax-ns#first": [
-                                          {
-                                            "@value": "three"
-                                          }
-                                        ],
-                                        "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest": [
-                                          {
-                                            "@id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"
-                                          }
-                                        ]
-                                      }
-                                    ]
+                                    "@value": "two"
+                                  }
+                                ],
+                                "http://www.w3.org/2000/01/rdf-schema#_3": [
+                                  {
+                                    "@value": "three"
                                   }
                                 ]
                               }
