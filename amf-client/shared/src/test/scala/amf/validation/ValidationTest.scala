@@ -1992,4 +1992,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.length == 4)
     }
   }
+
+  test("Test not stackoverflow when exists target to unresolved shapes") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(upDownPath + "/sapi-notification-saas-1.0.0-raml/api.raml",
+                         platform,
+                         RamlYamlHint,
+                         validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+    }
+  }
 }
