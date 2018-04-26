@@ -1,7 +1,7 @@
 package amf.plugins.document.graph.parser
 
 import amf.core.annotations.{DomainExtensionAnnotation, ScalarType}
-import amf.core.emitter.RenderOptions
+import amf.core.emitter.{EntryEmitter, RenderOptions}
 import amf.core.metamodel.Type.{Any, Array, Bool, EncodedIri, Iri, SortedArray, Str}
 import amf.core.metamodel.document.SourceMapModel
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
@@ -11,7 +11,7 @@ import amf.core.model.document.{BaseUnit, SourceMap}
 import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.DomainExtension
-import amf.core.parser.{Annotations, FieldEntry, Value}
+import amf.core.parser.{Annotations, FieldEntry, Position, Value}
 import amf.core.vocabulary.{Namespace, ValueType}
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -306,62 +306,49 @@ object GraphEmitter extends MetaModelTypeMapping {
                           ctx: EmissionContext): Unit = {
       b.list {
         _.obj { b =>
-          if (seq.nonEmpty) {
-            val id = s"$parent/list"
-            createIdNode(b, id, ctx)
-
-            b.entry(
-              ctx.emitIri((Namespace.Rdf + "first").iri()),
-              _.list { b =>
+          val id = s"$parent/list"
+          createIdNode(b, id, ctx)
+          b.entry("@type", ctx.emitIri((Namespace.Rdfs + "Seq").iri()))
+          seq.zipWithIndex.foreach { case (e, i) =>
+            b.entry(ctx.emitIri((Namespace.Rdfs + s"_${i + 1}").iri()), { b =>
+              b.list { b =>
                 element match {
                   case _: Obj =>
-                    seq.asInstanceOf[Seq[AmfObject]].headOption.foreach {
+                    e match {
                       case elementInArray: DomainElement with Linkable if elementInArray.isLink =>
                         link(b, elementInArray, inArray = true, ctx)
-                      case elementInArray =>
+                      case elementInArray: AmfObject =>
                         obj(b, elementInArray, inArray = true, ctx)
                     }
                   case Str =>
-                    seq
-                      .asInstanceOf[Seq[AmfScalar]]
-                      .headOption
-                      .foreach(e => DefaultScalarEmitter.scalar(b, e.toString, inArray = true))
+                    DefaultScalarEmitter.scalar(b, e.asInstanceOf[AmfScalar].value.toString, inArray = true)
 
                   case EncodedIri =>
-                    seq.asInstanceOf[Seq[AmfScalar]].headOption.foreach(e => safeIri(b, e.toString, inArray = true))
+                    safeIri(b, e.asInstanceOf[AmfScalar].toString, inArray = true)
 
                   case Iri =>
-                    seq.asInstanceOf[Seq[AmfScalar]].headOption.foreach(e => iri(b, e.toString, inArray = true))
+                    iri(b, e.asInstanceOf[AmfScalar].toString, inArray = true)
 
                   case Any =>
-                    seq.asInstanceOf[Seq[AmfScalar]].headOption.foreach {
-                      scalarElement =>
-                        scalarElement.value match {
-                          case bool: Boolean =>
-                            typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true, ctx)
-                          case str: String =>
-                            typedScalar(b, str.toString, (Namespace.Xsd + "string").iri(), inArray = true, ctx)
-                          case i: Int =>
-                            typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true, ctx)
-                          case f: Float =>
-                            typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true, ctx)
-                          case d: Double =>
-                            typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true, ctx)
-                          case other => DefaultScalarEmitter.scalar(b, other.toString, inArray = true)
-                        }
+                    val scalarElement = e.asInstanceOf[AmfScalar]
+                    scalarElement.value match {
+                      case bool: Boolean =>
+                        typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true, ctx)
+                      case str: String =>
+                        typedScalar(b, str.toString, (Namespace.Xsd + "string").iri(), inArray = true, ctx)
+                      case i: Int =>
+                        typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true, ctx)
+                      case f: Float =>
+                        typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true, ctx)
+                      case d: Double =>
+                        typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true, ctx)
+                      case other => DefaultScalarEmitter.scalar(b, other.toString, inArray = true)
                     }
                 }
               }
-            )
-
-            b.entry(ctx.emitIri((Namespace.Rdf + "rest").iri()),
-                    createSortedArray(_, seq.tail, id, element, sources, v, ctx))
-
-            v.foreach(sources)
-
-          } else {
-            createIdNode(b, ctx.emitIri((Namespace.Rdf + "nil").iri()), ctx)
+            })
           }
+          v.foreach(sources)
         }
       }
     }
