@@ -1,0 +1,196 @@
+swagger: '2.0'
+schemes:
+  - https
+host: api-sandbox.cloud.wowza.com
+basePath: /api/v1
+info:
+  contact:
+    name: Contact Us
+    url: 'https://www.wowza.com/contact'
+    x-twitter: wowzamedia
+  description: |
+
+    # About the REST API
+
+    The Wowza Streaming Cloud<sup>TM</sup> REST API (application programming interface) offers complete programmatic control over live streams, transcoders, stream sources, and stream targets. Anything you can do in the Wowza Streaming Cloud UI can also be achieved by making HTTP-based requests to cloud-based servers through the REST API.
+
+    The Wowza Streaming Cloud REST API features *cross-origin resource sharing*, or CORS.
+    CORS is a [W3C specification](https://www.w3.org/TR/cors/) that provides headers in HTTP requests to enable a web server to safely make a network request to another domain.
+
+    In order to protect shared resources, the Wowza Streaming Cloud REST API is subject to limits. For details, see [Wowza Streaming Cloud REST API limits](https://www.wowza.com/docs/wowza-streaming-cloud-rest-api-limits).
+    # About this documentation
+    This reference documentation is based on the open-source [Swagger framework](http://swagger.io/specification/).
+    It allows you to view the operations, parameters, and request and reponse schemas for every resource. Request samples are presented in cURL (Shell) and JavaScript; some samples also include just the JSON object. Response samples are all JSON.
+
+    For more information and examples on using the Wowza Streaming Cloud REST API, see our [library of Wowza Streaming Cloud REST API technical articles](https://www.wowza.com/docs/wowza-streaming-cloud-rest-api).
+
+    # Query requirements
+    The Wowza Streaming Cloud REST API uses HTTP requests to retrieve data from cloud-based servers. Requests must contain proper JSON, two authentication keys, and the correct version number in the base path.
+
+    ## JSON
+    The Wowza Streaming Cloud REST API uses the [JSON API specification](http://jsonapi.org/format/) to request and return data. This means requests must include the header `Content-Type: application/json` and must include a single resource object in JSON format as primary data.
+
+    Responses include HTTP status codes that indicate whether the query was successful. If there was an error, a description explains the problem so that you can fix it and try again.
+
+    ## Authentication
+    Requests to the Wowza Streaming Cloud REST API must be authenticated with two keys: an API key and an access key. Each key is a 64-character alphanumeric string that you can find on the **API Access** page in Wowza Streaming Cloud.
+
+    Use the `wsc-api-key` and `wsc-access-key` headers to authenticate requests, like this (in cURL):
+
+    ```bash
+    curl -H 'wsc-api-key: [64-character-api-key-goes-here]' -H 'wsc-access-key: [64-character-access-key-goes-here]'
+    ```
+
+    <!-- ReDoc-Inject: <security-definitions> -->
+
+    ## Version
+    The Wowza Streaming Cloud API is currently at version 1.0.0. Use `v1` in your base path in every request, like this path to the live_streams endpoint:
+    ```
+    https://api.cloud.wowza.com/api/v1/live_streams
+    ```
+    ## Example query
+    Here is a complete example POST request, in cURL, with proper JSON syntax, headers, authentication, and version information:
+    ```bash
+    curl -H 'wsc-api-key: [64-character-api-key-goes-here]' -H 'wsc-access-key: [64-character-access-key-goes-here]'
+      -H 'Content-Type: application/json' -X POST -d '{
+        "live_stream": {
+          "name": "My live Stream",
+          "...": "..."
+        }
+      }' https://api.cloud.wowza.com/api/v1/live_streams
+    ```
+  license:
+    name: Terms of Use
+    url: 'https://www.wowza.com/legal/terms-of-use'
+  termsOfService: 'http://www.wowza.com/legal/terms-of-use'
+  title: Wowza Streaming Cloud REST API Reference Documentation
+  version: '1'
+  x-apisguru-categories:
+    - media
+  x-logo:
+    url: 'https://twitter.com/wowzamedia/profile_image?size=original'
+  x-origin:
+    - format: swagger
+      url: 'https://sandbox.cloud.wowza.com/en/docs/api/v1'
+      version: '2.0'
+  x-providerName: wowza.com
+externalDocs:
+  description: 'Quick Start: How to broadcast a live stream by using the Wowza Streaming Cloud REST API'
+  url: 'https://www.wowza.com/docs/how-to-broadcast-a-live-stream-by-using-the-wowza-streaming-cloud-rest-api'
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  wsc-access-key:
+    description: 'A valid 64-digit, alphanumeric API access key.'
+    in: header
+    name: wsc-access-key
+    type: apiKey
+  wsc-api-key:
+    description: 'Your account''s 64-digit, alphanumeric API key. '
+    in: header
+    name: wsc-api-key
+    type: apiKey
+security:
+  - wsc-api-key: []
+  - wsc-access-key: []
+parameters:
+  'filter[from]':
+    description: 'The start of the date and time range for calculating usage. Express the value by using the ISO 8601 standard of **YYYY-MM-DDTHH:MM:SSZ** where **HH** is a 24-hour clock in UTC. The default is the beginning of the current month.'
+    in: query
+    name: 'filter[from]'
+    type: string
+  'filter[interval]':
+    description: 'The length of time for a block of usage data. Valid values are **year**, **quarter**, **month**, **week**, **day** or **1d** - **364d**, **hour** or **1h** to **23h**, **minute** or **1m** - **59m**, and **second** or **1s** - **59s**. The default is **10m** (10 minutes).'
+    in: query
+    name: 'filter[interval]'
+    type: string
+  'filter[to]':
+    description: 'The end of the date and time range for calculating usage. Express the value by using the ISO 8601 standard of **YYYY-MM-DDTHH:MM:SSZ** where **HH** is a 24-hour clock in UTC. The default is the current date and time.'
+    in: query
+    name: 'filter[to]'
+    type: string
+  page:
+    description: Returns a paginated view of results from the HTTP request. Specify a positive integer to indicate which page of the results should be displayed first. <strong>Next</strong> and <strong>Previous</strong> links allow you to navigate multiple pages of results. Omit the <em>page</em> parameter or specify an integer that's less than or equal to <strong>0</strong> to view all (unpaginated) results.
+    in: query
+    name: page
+    type: integer
+  per_page:
+    description: For use with the <em>page</em> parameter. Indicates how many records should be included on each page of results. A valid value is any positive integer. The default is <strong>10</strong>.
+    in: query
+    name: per_page
+    type: integer
+tags:
+  - description: Operations related to live streams.
+    name: live_streams
+    x-displayName: Live Streams
+  - description: 'Operations related to players, which are created through the /live_streams resource.'
+    name: players
+    x-displayName: Players
+  - description: Operations related to recordings.
+    name: recordings
+    x-displayName: Recordings
+  - description: Operations related to schedules.
+    name: schedules
+    x-displayName: Schedules
+  - description: Operations related to stream sources.
+    name: stream_sources
+    x-displayName: Stream Sources
+  - description: Operations related to stream targets.
+    name: stream_targets
+    x-displayName: Stream Targets
+  - description: 'Operations related to transcoders, output renditions, and output stream targets.'
+    name: transcoders
+    x-displayName: Transcoders
+  - description: Operations related to network usage for an account.
+    name: network
+    x-displayName: Network
+  - description: Operations related to stream processing time for an account.
+    name: processing time
+    x-displayName: Processing Time
+  - description: Operations related to the Swagger specification.
+    name: specs
+    x-displayName: Specs
+  - description: Operations related to peak recording storage for an account.
+    name: storage
+    x-displayName: Storage
+  - description: Operations related to stream target viewer data.
+    name: viewer data
+    x-displayName: Viewer Data
+paths:
+  /api/v1/specs:
+    get:
+      description: |
+        This operation shows the details of the Swagger specification.
+      operationId: specs
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+      security:
+        - {}
+      summary: Fetch Swagger information
+      tags:
+        - specs
+      x-code-samples:
+        - lang: Shell
+          source: |
+            // Using cURL
+            curl -X "GET" "https://api-sandbox.cloud.wowza.com/api/v1/specs"
+        - lang: JavaScript
+          source: |
+            // Using Node.js
+            var https = require('https');
+            https.get('https://api-sandbox.cloud.wowza.com/api/v1/specs', function(res) {
+              var body = '';
+              res.on('data', function(data){
+                body += data;
+              });
+              res.on('end', function() {
+                console.log(JSON.parse(body));
+              });
+            }).on('error', function(e) {
+              console.log(e.message);
+            });

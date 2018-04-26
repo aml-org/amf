@@ -1136,8 +1136,12 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("spec_examples_example.raml", "spec_examples_example.jsonld", RamlYamlHint, Amf, productionPath)
   }
 
-  test("Examples usage in open banking 1.3 spec oas to amf") {
+  test("Examples usage in open banking 1.3 spec oas to raml") {
     cycle("openbanking_1_3.yaml", "openbanking_1_3.raml", OasYamlHint, Raml, productionPath)
+  }
+
+  test("Examples usage in open wowza spec oas to amf") {
+    cycle("wowza.yaml", "wowza.jsonld", OasYamlHint, Amf, productionPath)
   }
 
   test("Example in included type fragment") {
