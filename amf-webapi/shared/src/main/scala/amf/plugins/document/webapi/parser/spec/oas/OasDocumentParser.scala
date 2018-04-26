@@ -130,8 +130,9 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
           entry.value
             .as[Seq[YNode]]
             .map(s => ParametrizedSecuritySchemeParser(s, api.withSecurity).parse())
-
-        api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+            .collect { case Some(s) => s }
+        if (securedBy.nonEmpty)
+          api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
       }
     )
 
@@ -178,8 +179,8 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
   }
 
   case class ParametrizedSecuritySchemeParser(node: YNode, producer: String => ParametrizedSecurityScheme) {
-    def parse(): ParametrizedSecurityScheme = node.to[YMap] match {
-      case Right(map) =>
+    def parse(): Option[ParametrizedSecurityScheme] = node.to[YMap] match {
+      case Right(map) if map.entries.nonEmpty =>
         val schemeEntry = map.entries.head
         val name        = schemeEntry.key.as[YScalar].text
         val scheme      = producer(name).add(Annotations(map))
@@ -200,11 +201,13 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
                      settings.setArray(OAuth2SettingsModel.Scopes, scopes, Annotations(schemeEntry.value)))
         }
 
-        scheme
+        Some(scheme)
+      case Right(map) if map.entries.isEmpty =>
+        None
       case _ =>
         val scheme = producer(node.toString)
         ctx.violation(scheme.id, s"Invalid type $node", node)
-        scheme
+        None
     }
 
     private def parseTarget(name: String, scheme: ParametrizedSecurityScheme, part: YPart): SecurityScheme = {
@@ -303,8 +306,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
               val securedBy = entry.value
                 .as[Seq[YNode]]
                 .map(s => ParametrizedSecuritySchemeParser(s, endpoint.withSecurity).parse())
+                .collect { case Some(s) => s }
 
-              endpoint.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+              if (securedBy.nonEmpty)
+                endpoint.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
             }
           )
 
@@ -458,8 +463,9 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
           val securedBy = entry.value
             .as[Seq[YNode]]
             .map(s => ParametrizedSecuritySchemeParser(s, operation.withSecurity).parse())
-
-          operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+            .collect { case Some(s) => s }
+          if (securedBy.nonEmpty)
+            operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
         }
       )
 
