@@ -175,15 +175,15 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: data graph generated")
 
     /*
-      println("\n\nGRAPH")
-      println(modelJSON)
-      println("===========================")
-      println("\n\nVALIDATION")
-      println(shapesJSON)
-      println("===========================")
-      println(jsLibrary)
-      println("===========================")
-     */
+          println("\n\nGRAPH")
+          println(modelJSON)
+          println("===========================")
+          println("\n\nVALIDATION")
+          println(shapesJSON)
+          println("===========================")
+          println(jsLibrary)
+          println("===========================")
+    */
 
     ValidationMutex.synchronized {
       PlatformValidator.instance
