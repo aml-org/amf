@@ -3,10 +3,14 @@ package amf.plugins.document.webapi.parser
 import amf.core.Root
 import amf.plugins.document.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
 
+import scala.util.matching.Regex
+
 /**
   * Raml header comment
   */
-case class RamlHeader(text: String)
+case class RamlHeader(text: String) {
+  def asRegExp(): Regex = ("\\s*" + text.replaceAll(" ", "\\\\s*") + "\\s*").r
+}
 
 trait RamlFragment
 
@@ -26,14 +30,14 @@ object RamlHeader {
   }
 
   def fromText(text: String): Option[RamlHeader] = text match {
-    case t if t == Raml08.text          => Some(Raml08)
-    case t if t == Raml10.text          => Some(Raml10)
-    case t if t == Raml10Library.text   => Some(Raml10Library)
-    case t if t == Raml10Overlay.text   => Some(Raml10Overlay)
-    case t if t == Raml10Extension.text => Some(Raml10Extension)
-    case RamlFragmentHeader(fragment)   => Some(fragment)
-    case t if t startsWith "%"          => Some(RamlHeader(t))
-    case _                              => None
+    case t if Raml08.asRegExp().pattern.matcher(t).matches()          => Some(Raml08)
+    case t if Raml10.asRegExp().pattern.matcher(t).matches()          => Some(Raml10)
+    case t if Raml10Library.asRegExp().pattern.matcher(t).matches()   => Some(Raml10Library)
+    case t if Raml10Overlay.asRegExp().pattern.matcher(t).matches()   => Some(Raml10Overlay)
+    case t if Raml10Extension.asRegExp().pattern.matcher(t).matches() => Some(Raml10Extension)
+    case RamlFragmentHeader(fragment)                                 => Some(fragment)
+    case t if t startsWith "%"                                        => Some(RamlHeader(t))
+    case _                                                            => None
   }
 }
 
@@ -58,16 +62,17 @@ object RamlFragmentHeader {
   def unapply(text: String): Option[RamlHeader] = fromText(text)
 
   private def fromText(text: String): Option[RamlHeader] = text match {
-    case t if t == Raml10DocumentationItem.text         => Some(Raml10DocumentationItem)
-    case t if t == Raml10DataType.text                  => Some(Raml10DataType)
-    case t if t == Raml10NamedExample.text              => Some(Raml10NamedExample)
-    case t if t == Raml10ResourceType.text              => Some(Raml10ResourceType)
-    case t if t == Raml10Trait.text                     => Some(Raml10Trait)
-    case t if t == Raml10AnnotationTypeDeclaration.text => Some(Raml10AnnotationTypeDeclaration)
-    case t if t == Raml10Overlay.text                   => Some(Raml10Overlay)
-    case t if t == Raml10Extension.text                 => Some(Raml10Extension)
-    case t if t == Raml10SecurityScheme.text            => Some(Raml10SecurityScheme)
-    case t if t == Raml10NamedExample.text              => Some(Raml10NamedExample)
-    case _                                              => None
+    case t if Raml10DocumentationItem.asRegExp().pattern.matcher(t).matches() => Some(Raml10DocumentationItem)
+    case t if Raml10DataType.asRegExp().pattern.matcher(t).matches()          => Some(Raml10DataType)
+    case t if Raml10NamedExample.asRegExp().pattern.matcher(t).matches()      => Some(Raml10NamedExample)
+    case t if Raml10ResourceType.asRegExp().pattern.matcher(t).matches()      => Some(Raml10ResourceType)
+    case t if Raml10Trait.asRegExp().pattern.matcher(t).matches()             => Some(Raml10Trait)
+    case t if Raml10AnnotationTypeDeclaration.asRegExp().pattern.matcher(t).matches() =>
+      Some(Raml10AnnotationTypeDeclaration)
+    case t if Raml10Overlay.asRegExp().pattern.matcher(t).matches()        => Some(Raml10Overlay)
+    case t if Raml10Extension.asRegExp().pattern.matcher(t).matches()      => Some(Raml10Extension)
+    case t if Raml10SecurityScheme.asRegExp().pattern.matcher(t).matches() => Some(Raml10SecurityScheme)
+    case t if Raml10NamedExample.asRegExp().pattern.matcher(t).matches()   => Some(Raml10NamedExample)
+    case _                                                                 => None
   }
 }
