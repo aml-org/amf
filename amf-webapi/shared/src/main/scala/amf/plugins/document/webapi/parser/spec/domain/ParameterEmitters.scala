@@ -184,7 +184,7 @@ abstract class RamlParameterEmitter(parameter: Parameter, ordering: SpecOrdering
 case class OasParametersEmitter(key: String,
                                 parameters: Seq[Parameter],
                                 ordering: SpecOrdering,
-                                payloadOption: Option[Payload] = None,
+                                payloads: Seq[Payload] = Nil,
                                 references: Seq[BaseUnit])(implicit val spec: OasSpecEmitterContext) {
 
   def ramlEndpointEmitters(): Seq[EntryEmitter] = Seq(OasParameterEmitter(parameters, references))
@@ -197,7 +197,7 @@ case class OasParametersEmitter(key: String,
           Option(p.schema).isEmpty || p.schema.isInstanceOf[ScalarShape] || p.schema
             .isInstanceOf[ArrayShape] || p.schema.isInstanceOf[FileShape])
 
-    if (oasParameters.nonEmpty || payloadOption.isDefined)
+    if (oasParameters.nonEmpty || payloads.nonEmpty)
       results += OasParameterEmitter(oasParameters, references)
 
     if (ramlParameters.nonEmpty) {
@@ -216,7 +216,7 @@ case class OasParametersEmitter(key: String,
           Option(p.schema).isEmpty || p.schema.isInstanceOf[ScalarShape] || p.schema
             .isInstanceOf[ArrayShape] || p.schema.isInstanceOf[FileShape])
 
-    if (oasParameters.nonEmpty || payloadOption.isDefined)
+    if (oasParameters.nonEmpty || payloads.nonEmpty)
       results += OasParameterEmitter(oasParameters, references)
 
     if (ramlParameters.nonEmpty) {
@@ -232,7 +232,7 @@ case class OasParametersEmitter(key: String,
 
   case class OasParameterEmitter(oasParameters: Seq[Parameter], references: Seq[BaseUnit]) extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
-      if (oasParameters.nonEmpty || payloadOption.isDefined)
+      if (oasParameters.nonEmpty || payloads.nonEmpty)
         b.entry(
           key,
           _.list(traverse(parameters(oasParameters, ordering, references), _))
@@ -242,7 +242,7 @@ case class OasParametersEmitter(key: String,
     override def position(): Position =
       oasParameters.headOption
         .map(p => pos(p.annotations))
-        .getOrElse(payloadOption.map(p => pos(p.annotations)).getOrElse(Position.ZERO))
+        .getOrElse(payloads.headOption.map(p => pos(p.annotations)).getOrElse(Position.ZERO))
   }
 
   case class XRamlParameterEmitter(key: String, ramlParameters: Seq[Parameter]) extends EntryEmitter {
@@ -250,7 +250,10 @@ case class OasParametersEmitter(key: String,
       if (ramlParameters.nonEmpty)
         b.entry(
           key,
-          _.obj(traverse(ramlParameters.map(p => Raml10ParameterEmitter(p, ordering, Nil)(new XRaml10SpecEmitterContext())), _))
+          _.obj(
+            traverse(ramlParameters.map(p =>
+                       Raml10ParameterEmitter(p, ordering, Nil)(new XRaml10SpecEmitterContext())),
+                     _))
         )
     }
 
@@ -263,7 +266,7 @@ case class OasParametersEmitter(key: String,
                          references: Seq[BaseUnit]): Seq[PartEmitter] = {
     val result = ListBuffer[PartEmitter]()
     parameters.foreach(e => result += ParameterEmitter(e, ordering, references))
-    payloadOption.foreach(payload => result += PayloadAsParameterEmitter(payload, ordering, references))
+    payloads.foreach(payload => result += PayloadAsParameterEmitter(payload, ordering, references))
     ordering.sorted(result)
   }
 

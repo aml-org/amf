@@ -530,11 +530,19 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   test("param validation") {
     for {
-      validation  <- Validation(platform)
+      validation <- Validation(platform)
       model <- AMFCompiler(validationsPath + "/production/oas_data.json", platform, OasJsonHint, validation)
         .build()
       result <- {
-        val stringShape = model.asInstanceOf[Document].encodes.asInstanceOf[WebApi].endPoints(0).operations(0).request.headers(0).schema
+        val stringShape = model
+          .asInstanceOf[Document]
+          .encodes
+          .asInstanceOf[WebApi]
+          .endPoints(0)
+          .operations(0)
+          .request
+          .headers(0)
+          .schema
         PayloadValidator.validate(stringShape, "2015-07-20T21:00:00", SeverityLevels.VIOLATION)
       }
     } yield {
@@ -1951,6 +1959,19 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report <- validation.validate(doc, ProfileNames.AMF)
     } yield {
       assert(!report.conforms)
+      assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 2)
+    }
+  }
+
+  test("Invalid body parameter count") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "parameters/invalid-body-parameter.json", platform, OasYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.AMF)
+    } yield {
+      assert(!report.conforms)
+      // This is because the default payload has the same id.
       assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 2)
     }
   }

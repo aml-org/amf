@@ -11,7 +11,12 @@ import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.core.remote.{Oas, Vendor}
-import amf.plugins.document.webapi.contexts.{BaseSpecEmitter, OasSpecEmitterContext, Raml10SpecEmitterContext, SpecEmitterContext}
+import amf.plugins.document.webapi.contexts.{
+  BaseSpecEmitter,
+  OasSpecEmitterContext,
+  Raml10SpecEmitterContext,
+  SpecEmitterContext
+}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Overlay}
 import amf.plugins.document.webapi.parser.spec._
@@ -189,7 +194,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
               .map(f => result ++= ExtendsEmitter(f, ordering, oasExtension = true).emitters())
 
             val parameters =
-              Parameters.classified(endpoint.path.value(), endpoint.parameters, endpoint.payloads.headOption)
+              Parameters.classified(endpoint.path.value(), endpoint.parameters, endpoint.payloads)
 
             if (parameters.nonEmpty)
               result ++= OasParametersEmitter("parameters",
@@ -200,7 +205,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
                 .oasEndpointEmitters()
 
             fs.entry(EndPointModel.Operations)
-              .map(f => result ++= operations(f, ordering, parameters.body.isDefined, references))
+              .map(f => result ++= operations(f, ordering, parameters.body.nonEmpty, references))
 
             fs.entry(EndPointModel.Security)
               .map(f => result += ParametrizedSecuritiesSchemeEmitter("security".asOasExtension, f, ordering))
@@ -287,7 +292,8 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
       val payloads   = OasPayloads(request.payloads, endpointPayloadEmitted)
 
       if (parameters.nonEmpty || payloads.default.isDefined)
-        result ++= OasParametersEmitter("parameters", parameters, ordering, payloads.default, references).emitters()
+        result ++= OasParametersEmitter("parameters", parameters, ordering, payloads.default.toSeq, references)
+          .emitters()
 
       if (payloads.other.nonEmpty)
         result += OasPayloadsEmitter("requestPayloads".asOasExtension, payloads.other, ordering, references)
@@ -315,8 +321,12 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
       result
     }
 
-    def ramlTypesEmitter(s:AnyShape, o:SpecOrdering, a:Option[AnnotationsEmitter], fs:Seq[Field], us:Seq[BaseUnit]): RamlTypePartEmitter = {
-      Raml10TypePartEmitter(s,o,a,fs,us)(new Raml10SpecEmitterContext())
+    def ramlTypesEmitter(s: AnyShape,
+                         o: SpecOrdering,
+                         a: Option[AnnotationsEmitter],
+                         fs: Seq[Field],
+                         us: Seq[BaseUnit]): RamlTypePartEmitter = {
+      Raml10TypePartEmitter(s, o, a, fs, us)(new Raml10SpecEmitterContext())
     }
 
   }
@@ -432,24 +442,29 @@ class OasSpecEmitter(implicit val spec: OasSpecEmitterContext) extends BaseSpecE
 
   case class ReferencesEmitter(baseUnit: BaseUnit, ordering: SpecOrdering) extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
-      val aliases = baseUnit.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set()))
+      val aliases    = baseUnit.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set()))
       val references = baseUnit.references
-      val modules = references.collect({ case m: Module => m })
+      val modules    = references.collect({ case m: Module => m })
       if (modules.nonEmpty) {
         var modulesEmitted = Map[String, Module]()
-        val idCounter = new IdCounter()
-        val aliasesEmitters: Seq[Option[EntryEmitter]] = aliases.aliases.map { case (alias, (fullUrl, localUrl)) =>
-          modules.find(_.id == fullUrl) match {
-            case Some(module) =>
-              modulesEmitted += (module.id -> module)
-              Some(ReferenceEmitter(module, Some(Aliases(Set(alias -> (fullUrl, localUrl)))), ordering, () => idCounter.genId("uses")))
-            case _            => None
-          }
+        val idCounter      = new IdCounter()
+        val aliasesEmitters: Seq[Option[EntryEmitter]] = aliases.aliases.map {
+          case (alias, (fullUrl, localUrl)) =>
+            modules.find(_.id == fullUrl) match {
+              case Some(module) =>
+                modulesEmitted += (module.id -> module)
+                Some(
+                  ReferenceEmitter(module,
+                                   Some(Aliases(Set(alias -> (fullUrl, localUrl)))),
+                                   ordering,
+                                   () => idCounter.genId("uses")))
+              case _ => None
+            }
         }.toSeq
         val missingModuleEmitters = modules.filter(m => modulesEmitted.get(m.id).isEmpty).map { module =>
           Some(ReferenceEmitter(module, Some(Aliases(Set())), ordering, () => idCounter.genId("uses")))
         }
-        val finalEmitters = (aliasesEmitters ++ missingModuleEmitters).collect{ case Some(e) => e }
+        val finalEmitters = (aliasesEmitters ++ missingModuleEmitters).collect { case Some(e) => e }
         b.entry("uses".asOasExtension, _.obj { b =>
           traverse(ordering.sorted(finalEmitters), b)
         })
@@ -459,12 +474,15 @@ class OasSpecEmitter(implicit val spec: OasSpecEmitterContext) extends BaseSpecE
     override def position(): Position = ZERO
   }
 
-  case class ReferenceEmitter(reference: BaseUnit, aliases: Option[Aliases], ordering: SpecOrdering, aliasGenerator: () => String)
+  case class ReferenceEmitter(reference: BaseUnit,
+                              aliases: Option[Aliases],
+                              ordering: SpecOrdering,
+                              aliasGenerator: () => String)
       extends EntryEmitter {
 
     override def emit(b: EntryBuilder): Unit = {
       val aliasesMap = aliases.getOrElse(Aliases(Set())).aliases
-      val effectiveAlias = aliasesMap.find { case (a, (f,r)) => f == reference.id } map { case (a, (f,r)) => (a, r) } getOrElse {
+      val effectiveAlias = aliasesMap.find { case (a, (f, r)) => f == reference.id } map { case (a, (f, r)) => (a, r) } getOrElse {
         (aliasGenerator(), name)
       }
       MapEntryEmitter(effectiveAlias._1, effectiveAlias._2).emit(b)

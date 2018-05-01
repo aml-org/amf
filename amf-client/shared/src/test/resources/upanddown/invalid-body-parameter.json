@@ -1,0 +1,44 @@
+{
+  "swagger" : "2.0",
+  "info": {
+    "title": "API",
+    "version": "1.0"
+  },
+  "paths": {
+    "/pets/{id}": {
+      "post": {
+        "parameters": [
+          {
+            "name": "MyBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "p1": {
+                  "type": "string"
+                }
+              }
+            }
+          }, {
+            "name": "AnotherBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "p2": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "MyQuery",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    }
+  }
+}

@@ -1,6 +1,5 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.plugins.document.webapi.annotations.DefaultPayload
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import org.yaml.model.YMap
 
@@ -8,48 +7,50 @@ case class Parameters(query: Seq[Parameter] = Nil,
                       path: Seq[Parameter] = Nil,
                       header: Seq[Parameter] = Nil,
                       baseUri08: Seq[Parameter] = Nil,
-                      body: Option[Payload] = None) {
+                      body: Seq[Payload] = Nil) {
   def merge(inner: Parameters): Parameters = {
-    Parameters(merge(query, inner.query),
-               merge(path, inner.path),
-               merge(header, inner.header),
-               merge(baseUri08, inner.baseUri08),
-               merge(body, inner.body))
+    Parameters(
+      mergeParams(query, inner.query),
+      mergeParams(path, inner.path),
+      mergeParams(header, inner.header),
+      mergeParams(baseUri08, inner.baseUri08),
+      mergePayloads(body, inner.body)
+    )
   }
 
   def add(inner: Parameters): Parameters = {
-    Parameters(add(query, inner.query),
-               add(path, inner.path),
-               add(header, inner.header),
-               add(baseUri08, inner.baseUri08),
-               add(body, inner.body))
+    Parameters(
+      addParams(query, inner.query),
+      addParams(path, inner.path),
+      addParams(header, inner.header),
+      addParams(baseUri08, inner.baseUri08),
+      addPayloads(body, inner.body)
+    )
   }
 
-  private def merge(global: Option[Payload], inner: Option[Payload]): Option[Payload] =
-    inner.map(_.add(DefaultPayload())).orElse(global.map(_.copy()))
-
-  private def add(global: Option[Payload], inner: Option[Payload]): Option[Payload] =
-    inner.map(_.add(DefaultPayload())).orElse(global.map(_.copy()))
-
-  private def merge(global: Seq[Parameter], inner: Seq[Parameter]): Seq[Parameter] = {
+  private def mergeParams(global: Seq[Parameter], inner: Seq[Parameter]): Seq[Parameter] = {
     val globalMap = global.map(p => p.name.value() -> p).toMap
     val innerMap  = inner.map(p => p.name.value()  -> p).toMap
 
     (globalMap ++ innerMap).values.toSeq
   }
 
-  private def add(global: Seq[Parameter], inner: Seq[Parameter]): Seq[Parameter] = {
+  private def mergePayloads(global: Seq[Payload], inner: Seq[Payload]): Seq[Payload] = inner
+
+  private def addParams(global: Seq[Parameter], inner: Seq[Parameter]): Seq[Parameter] = {
     val globalMap = global.map(p => p.name.value() -> p).toMap
     val innerMap  = inner.map(p => p.name.value()  -> p).toMap
 
     (globalMap ++ innerMap).values.toSeq
   }
 
-  def nonEmpty: Boolean = query.nonEmpty || path.nonEmpty || header.nonEmpty || body.isDefined
+  private def addPayloads(global: Seq[Payload], inner: Seq[Payload]): Seq[Payload] = global ++ inner
+
+  def nonEmpty: Boolean = query.nonEmpty || path.nonEmpty || header.nonEmpty || body.nonEmpty
 }
 
 object Parameters {
-  def classified(path: String, params: Seq[Parameter], payload: Option[Payload] = None): Parameters = {
+  def classified(path: String, params: Seq[Parameter], payloads: Seq[Payload] = Nil): Parameters = {
     var uriParams: Seq[Parameter]  = Nil
     var pathParams: Seq[Parameter] = Nil
     params.filter(_.isPath).foreach { param =>
@@ -57,7 +58,7 @@ object Parameters {
         pathParams ++= Seq(param)
       else uriParams ++= Seq(param)
     }
-    Parameters(params.filter(_.isQuery) ++ pathParams, Nil, params.filter(_.isHeader), uriParams, payload)
+    Parameters(params.filter(_.isQuery) ++ pathParams, Nil, params.filter(_.isHeader), uriParams, payloads)
   }
 }
 

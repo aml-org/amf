@@ -1197,4 +1197,15 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Bad fragment named examples") {
     cycle("api.raml", "api.raml.raml", RamlYamlHint, Raml, basePath + "sapi-customer-db-1.0.0-fat-raml/")
   }
+
+  test("Invalid body parameter oas to oas") {
+    Validation(platform)
+      .flatMap { validation =>
+        cycle("invalid-body-parameter.json",
+              "invalid-body-parameter.json.json",
+              OasYamlHint,
+              Oas,
+              validation = Some(validation.withEnabledValidation(true)))
+      }
+  }
 }
