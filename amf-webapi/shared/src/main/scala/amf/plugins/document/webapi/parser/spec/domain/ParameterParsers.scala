@@ -351,8 +351,11 @@ case class OasParametersParser(values: Seq[YMap], parentId: String)(implicit ctx
       .map(value => OasParameterParser(value, parentId, None).parse())
 
     if (inRequest) {
-      if (parameters.exists(_.isBody) && parameters.exists(_.isFormData)) {
-        val bodyParam = parameters.find(_.isBody).head
+      val body     = parameters.filter(_.isBody)
+      val formData = parameters.filter(_.isFormData)
+
+      if (body.nonEmpty && formData.nonEmpty) {
+        val bodyParam = body.head
         ctx.violation(
           ParserSideValidations.OasBodyAndFormDataParameterSpecification.id(),
           bodyParam.payload.id,
@@ -361,6 +364,8 @@ case class OasParametersParser(values: Seq[YMap], parentId: String)(implicit ctx
         )
       }
 
+      validateOasPayloads(body, ParserSideValidations.OasInvalidBodyParameter.id())
+      validateOasPayloads(formData, ParserSideValidations.OasInvalidFormDataParameter.id())
     }
 
     Parameters(
@@ -368,9 +373,18 @@ case class OasParametersParser(values: Seq[YMap], parentId: String)(implicit ctx
       parameters.filter(_.isPath).map(_.parameter),
       parameters.filter(_.isHeader).map(_.parameter),
       Nil,
-      parameters.filter(_.isBody).map(_.payload).headOption.orElse {
-        parameters.filter(_.isFormData).map(_.payload).headOption
-      }
+      (parameters.filter(_.isBody) ++ parameters.filter(_.isFormData)).map(_.payload)
     )
+  }
+
+  private def validateOasPayloads(params: Seq[OasParameter], id: String): Unit = if (params.length > 1) {
+    params.tail.foreach { param =>
+      ctx.violation(
+        id,
+        param.payload.id,
+        "Cannot declare more than one payload parameter for a request",
+        param.ast.get
+      )
+    }
   }
 }

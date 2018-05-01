@@ -47,6 +47,22 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
+  val OasInvalidBodyParameter = ValidationSpecification(
+    (Namespace.AmfParser + "oas-invalid-body-parameter").iri(),
+    "Only one body parameter is allowed",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
+  val OasInvalidFormDataParameter = ValidationSpecification(
+    (Namespace.AmfParser + "oas-invalid-form-data-parameter").iri(),
+    "Only one formData parameter is allowed",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val OasInvalidParameterBinding = ValidationSpecification(
     (Namespace.AmfParser + "oas-invalid-parameter-binding").iri(),
     "Parameter has invalid binding",
@@ -229,6 +245,20 @@ object ParserSideValidations {
       ProfileNames.OAS -> SeverityLevels.VIOLATION,
       ProfileNames.OAS -> SeverityLevels.VIOLATION
     ),
+    OasInvalidBodyParameter.id() -> Map(
+      ProfileNames.RAML   -> SeverityLevels.VIOLATION,
+      ProfileNames.RAML08 -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS    -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS3   -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF    -> SeverityLevels.VIOLATION
+    ),
+    OasInvalidFormDataParameter.id() -> Map(
+      ProfileNames.RAML   -> SeverityLevels.VIOLATION,
+      ProfileNames.RAML08 -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS    -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS3   -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF    -> SeverityLevels.VIOLATION
+    ),
     OasInvalidParameterBinding.id() -> Map(
       ProfileNames.RAML   -> SeverityLevels.VIOLATION,
       ProfileNames.RAML08 -> SeverityLevels.VIOLATION,
@@ -382,6 +412,8 @@ object ParserSideValidations {
     MissingPropertyRangeSpecification,
     MissingTermSpecification,
     MissingFragmentSpecification,
-    MissingPropertySpecification
+    MissingPropertySpecification,
+    OasInvalidBodyParameter,
+    OasInvalidFormDataParameter
   )
 }
