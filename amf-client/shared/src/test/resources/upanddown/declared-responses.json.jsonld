@@ -314,6 +314,11 @@
                 "@value": true
               }
             ],
+            "http://raml.org/vocabularies/http#binding": [
+              {
+                "@value": "header"
+              }
+            ],
             "http://raml.org/vocabularies/http#schema": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-responses.json#/declarations/Default/parameter/Time-Ago/scalar/schema",

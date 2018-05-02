@@ -1796,6 +1796,11 @@
                             "@value": true
                           }
                         ],
+                        "http://raml.org/vocabularies/http#binding": [
+                          {
+                            "@value": "header"
+                          }
+                        ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/full-example.json#/web-api/end-points/%2Flevelzero%2F%7Btwo%7D%2Flevel-one%2F%7Bthree%7D/get/200/parameter/Time-Ago/scalar/schema",
