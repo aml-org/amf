@@ -48,13 +48,13 @@ object ArrayNode {
 /** Default scalar node. */
 case class DefaultScalarNode(node: YNode)(implicit iv: IllegalTypeHandler) extends ScalarNode {
 
-  override def string(): AmfScalar  = scalar(_.as[String])
-  override def text(): AmfScalar    = scalar(_.as[YScalar].text)
-  override def integer(): AmfScalar = scalar(_.as[Int])
-  override def double(): AmfScalar = scalar(_.as[Double])
-  override def boolean(): AmfScalar = scalar(_.as[Boolean])
-  override def negated(): AmfScalar = scalar(!_.as[Boolean])
-  private def scalar(fn: YNode => Any) = AmfScalar(fn(node), Annotations(node.value))
+  override def string(): AmfScalar     = scalar(_.as[String])
+  override def text(): AmfScalar       = scalar(_.as[YScalar].text)
+  override def integer(): AmfScalar    = scalar(_.as[Int])
+  override def double(): AmfScalar     = scalar(_.as[Double])
+  override def boolean(): AmfScalar    = scalar(_.as[Boolean])
+  override def negated(): AmfScalar    = scalar(!_.as[Boolean])
+  private def scalar(fn: YNode => Any) = AmfScalar(fn(node), Annotations.valueNode(node))
 }
 
 trait BaseArrayNode extends ArrayNode {
@@ -71,14 +71,14 @@ trait BaseArrayNode extends ArrayNode {
 
   private def array(fn: YNode => AmfElement) = {
     nodes match {
-      case (all, value) =>
+      case (all, node) =>
         val elements = all.map(fn(_))
-        AmfArray(elements, Annotations(value))
+        AmfArray(elements, Annotations.valueNode(node))
     }
   }
 
   /** Return all affected nodes, and node for annotation. */
-  def nodes: (Seq[YNode], YPart)
+  def nodes: (Seq[YNode], YNode)
 
   private def scalar(fn: YNode => Any)(e: YNode): AmfScalar = AmfScalar(fn(e), Annotations(e.value))
 }
@@ -86,5 +86,5 @@ trait BaseArrayNode extends ArrayNode {
 /** Default array node. */
 case class DefaultArrayNode(node: YNode)(override implicit val iv: IllegalTypeHandler) extends BaseArrayNode {
 
-  override def nodes: (Seq[YNode], YPart) = (node.as[Seq[YNode]], node.value)
+  override def nodes: (Seq[YNode], YNode) = (node.as[Seq[YNode]], node)
 }

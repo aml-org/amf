@@ -5,7 +5,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.metamodel.TagModel
 import amf.plugins.domain.webapi.metamodel.TagModel._
-import org.yaml.model.YMap
+import org.yaml.model.YNode
 
 /**
   * Tag internal model
@@ -30,7 +30,7 @@ object Tag {
 
   def apply(): Tag = apply(Annotations())
 
-  def apply(ast: YMap): Tag = apply(Annotations(ast))
+  def apply(node: YNode): Tag = apply(Annotations.valueNode(node))
 
   def apply(annotations: Annotations): Tag = new Tag(Fields(), annotations)
 }

@@ -3,9 +3,9 @@ package amf.plugins.domain.webapi.models
 import amf.core.model.StrField
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.domain.webapi.metamodel.LicenseModel._
 import amf.plugins.domain.webapi.metamodel.LicenseModel
-import org.yaml.model.YMap
+import amf.plugins.domain.webapi.metamodel.LicenseModel._
+import org.yaml.model.YNode
 
 /**
   * License internal model
@@ -28,7 +28,7 @@ object License {
 
   def apply(): License = apply(Annotations())
 
-  def apply(ast: YMap): License = apply(Annotations(ast))
+  def apply(node: YNode): License = apply(Annotations.valueNode(node))
 
   def apply(annotations: Annotations): License = new License(Fields(), annotations)
 }

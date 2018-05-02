@@ -1,8 +1,8 @@
 package amf.core.parser
 
-import amf.core.annotations.{LexicalInformation, SourceAST}
+import amf.core.annotations.{LexicalInformation, SourceAST, SourceNode}
 import amf.core.model.domain.{Annotation, SerializableAnnotation}
-import org.yaml.model.YPart
+import org.yaml.model.{YMapEntry, YNode, YPart}
 
 /**
   * Element annotations
@@ -51,7 +51,19 @@ object Annotations {
     result
   }
 
-  def apply(ast: YPart): Annotations = apply() += LexicalInformation(Range(ast.range)) += SourceAST(ast)
+  def apply(ast: YPart): Annotations = {
+    val annotations = apply() += LexicalInformation(Range(ast.range)) += SourceAST(ast)
+    ast match {
+      case node: YNode      => annotations += SourceNode(node)
+      case entry: YMapEntry => annotations += SourceNode(entry.value)
+      case _                => annotations
+    }
+
+  }
+
+  // todo: temp method to keep compatibility against previous range serializacion logic.
+  // We should discuss if always use the range of the YNode, or always use the range of the ynode member.
+  def valueNode(node: YNode): Annotations = apply(node.value) += SourceNode(node)
 
   def apply(annotations: Seq[Annotation]): Annotations = {
     val result = apply()

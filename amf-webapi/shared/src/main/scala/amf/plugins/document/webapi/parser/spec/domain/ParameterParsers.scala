@@ -163,8 +163,6 @@ case class Raml08ParameterParser(entry: YMapEntry, producer: String => Parameter
       case _ =>
         // Named Parameter Parse
         Raml08TypeParser(entry,
-                         name,
-                         entry.value,
                          (s: Shape) => s.withName(name).adopted(parameter.id),
                          isAnnotation = false,
                          StringDefaultType)
@@ -196,14 +194,15 @@ abstract class RamlParameterParser(entry: YMapEntry, producer: String => Paramet
   def parse(): Parameter
 }
 
-case class OasParameterParser(map: YMap, parentId: String, name: Option[String])(implicit ctx: OasWebApiContext)
+case class OasParameterParser(node: YNode, parentId: String, name: Option[String])(implicit ctx: OasWebApiContext)
     extends SpecParserOps {
 
+  private val map = node.as[YMap]
   def parse(): OasParameter = {
     map.key("$ref") match {
       case Some(ref) => parseParameterRef(ref, parentId)
       case None =>
-        val p         = OasParameter(map)
+        val p         = OasParameter(node)
         val parameter = p.parameter
 
         parameter.set(ParameterModel.Required, value = false)
@@ -251,9 +250,8 @@ case class OasParameterParser(map: YMap, parentId: String, name: Option[String])
 
           ctx.closedShape(parameter.id, map, "parameter")
           OasTypeParser(
-            map,
+            node,
             "",
-            map,
             shape => shape.withName("schema").adopted(parameter.id),
             OAS20SchemaVersion(position = "parameter")
           ).parse()
@@ -345,7 +343,7 @@ case class OasParameterParser(map: YMap, parentId: String, name: Option[String])
   }
 }
 
-case class OasParametersParser(values: Seq[YMap], parentId: String)(implicit ctx: OasWebApiContext) {
+case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ctx: OasWebApiContext) {
   def parse(inRequest: Boolean = false): Parameters = {
     val parameters = values
       .map(value => OasParameterParser(value, parentId, None).parse())

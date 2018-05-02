@@ -187,11 +187,11 @@ case class RamlExampleValueAsString(node: YNode, example: Example, options: Exam
 
     node.toOption[YScalar] match {
       case Some(scalar) =>
-        example.set(ExampleModel.Raw, AmfScalar(scalar.text, Annotations(node.value)), Annotations(node.value))
+        example.set(ExampleModel.Raw, AmfScalar(scalar.text, Annotations.valueNode(node)), Annotations.valueNode(node))
       case _ =>
         example.set(ExampleModel.Raw,
-                    AmfScalar(YamlRender.render(targetNode), Annotations(node.value)),
-                    Annotations(node.value))
+                    AmfScalar(YamlRender.render(targetNode), Annotations.valueNode(node)),
+                    Annotations.valueNode(node))
 
     }
 

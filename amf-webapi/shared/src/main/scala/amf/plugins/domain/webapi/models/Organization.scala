@@ -5,7 +5,7 @@ import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.OrganizationModel
 import amf.plugins.domain.webapi.metamodel.OrganizationModel._
-import org.yaml.model.YMap
+import org.yaml.model.YNode
 
 /**
   * Organization internal model
@@ -30,7 +30,7 @@ object Organization {
 
   def apply(): Organization = apply(Annotations())
 
-  def apply(ast: YMap): Organization = apply(Annotations(ast))
+  def apply(node: YNode): Organization = apply(Annotations.valueNode(node))
 
   def apply(annotations: Annotations): Organization = apply(Fields(), annotations)
 }

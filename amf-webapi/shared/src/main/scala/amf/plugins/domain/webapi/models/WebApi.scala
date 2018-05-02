@@ -10,7 +10,7 @@ import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.metamodel.WebApiModel
 import amf.plugins.domain.webapi.metamodel.WebApiModel.{License => WebApiLicense, _}
 import amf.plugins.domain.webapi.models.security.ParametrizedSecurityScheme
-import org.yaml.model.YMap
+import org.yaml.model.{YMap, YNode}
 
 /**
   * Web Api internal model
@@ -95,6 +95,8 @@ object WebApi {
   def apply(): WebApi = apply(Annotations())
 
   def apply(ast: YMap): WebApi = apply(Annotations(ast))
+
+  def apply(node: YNode): WebApi = apply(Annotations.valueNode(node))
 
   def apply(annotations: Annotations): WebApi = WebApi(Fields(), annotations)
 }

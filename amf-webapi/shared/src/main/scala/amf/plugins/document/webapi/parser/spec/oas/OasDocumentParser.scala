@@ -95,7 +95,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
   def parseWebApi(map: YMap): WebApi = {
 
-    val api = WebApi(map).adopted(root.location)
+    val api = WebApi(root.parsed.document.node).adopted(root.location)
 
     map.key(
       "info",
@@ -141,7 +141,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     map.key(
       "externalDocs",
       entry => {
-        documentations += OasCreativeWorkParser(entry.value.as[YMap]).parse()
+        documentations += OasCreativeWorkParser(entry.value).parse()
       }
     )
 
@@ -258,7 +258,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             .key("parameters")
             .foreach { entry =>
               entries += entry
-              parameters = parameters.add(OasParametersParser(entry.value.as[Seq[YMap]], endpoint.id).parse())
+              parameters = parameters.add(OasParametersParser(entry.value.as[Seq[YNode]], endpoint.id).parse())
             }
 
           // This is because there may be complex path parameters coming from RAML1
@@ -309,7 +309,9 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
                 .collect { case Some(s) => s }
 
               if (securedBy.nonEmpty)
-                endpoint.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+                endpoint.set(OperationModel.Security,
+                             AmfArray(securedBy, Annotations(entry.value)),
+                             Annotations(entry))
             }
           )
 
@@ -337,7 +339,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         .foreach { entry =>
           entries += entry
           parameters = parameters.add(
-            OasParametersParser(entry.value.as[Seq[YMap]], request.getOrCreate.id).parse(inRequest = true))
+            OasParametersParser(entry.value.as[Seq[YNode]], request.getOrCreate.id).parse(inRequest = true))
         }
 
       map
@@ -408,7 +410,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         "requestPayloads".asOasExtension,
         entry =>
           entry.value
-            .as[Seq[YMap]]
+            .as[Seq[YNode]]
             .map(value => payloads += OasPayloadParser(value, request.getOrCreate.withPayload).parse())
       )
 
@@ -639,7 +641,8 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
           .entries
           .foreach(e => {
             ctx.declarations +=
-              OasResponseParser(e, (name: String) => Response().withName(name).adopted(parentPath).add(DeclaredElement()))
+              OasResponseParser(e,
+                                (name: String) => Response().withName(name).adopted(parentPath).add(DeclaredElement()))
                 .parse()
           })
       }
@@ -768,13 +771,13 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
     def parse(): Seq[CreativeWork] =
       seq.map(n =>
         n.tagType match {
-          case YType.Map => RamlCreativeWorkParser(n.as[YMap]).parse()
+          case YType.Map => RamlCreativeWorkParser(n).parse()
           case YType.Str =>
             val text = n.as[YScalar].text
             ctx.declarations.findDocumentations(text, SearchScope.All) match {
               case Some(doc) => doc.link(text, Annotations(n)).asInstanceOf[CreativeWork]
               case _ =>
-                val documentation = RamlCreativeWorkParser(YMap.empty).parse()
+                val documentation = RamlCreativeWorkParser(YNode(YMap.empty)).parse()
                 ctx.violation(documentation.id, s"not supported scalar $n.text for documentation item", n)
                 documentation
             }

@@ -95,7 +95,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
 
   protected def parseWebApi(map: YMap): WebApi = {
 
-    val api = WebApi(map).adopted(root.location)
+    val api = WebApi(root.parsed.document.node).adopted(root.location)
 
     ctx.closedShape(api.id, map, "webApi")
 
@@ -302,12 +302,13 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
                 entry.key
               )
             }
-            Raml10TypeParser(entry, shape => {
+            val parser = Raml10TypeParser(entry, shape => {
               shape.set(ShapeModel.Name,
                         AmfScalar(entry.key.as[String], Annotations(entry.key.value)),
                         Annotations(entry.key))
               shape.adopted(parent)
-            }).parse() match {
+            })
+            parser.parse() match {
               case Some(shape) =>
                 if (entry.value.tagType == YType.Null) shape.annotations += SynthesizedField()
                 ctx.declarations += shape.add(DeclaredElement())
@@ -360,7 +361,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
 
       seq.foreach(n =>
         n.tagType match {
-          case YType.Map => results += RamlCreativeWorkParser(n.as[YMap]).parse()
+          case YType.Map => results += RamlCreativeWorkParser(n).parse()
           case YType.Seq => ctx.violation(parent, s"Unexpected sequence. Options are object or scalar ", n)
           case _ =>
             val scalar = n.as[YScalar]

@@ -12,7 +12,7 @@ import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
-import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
+import org.yaml.model._
 import amf.core.utils.Strings
 
 import scala.collection.mutable
@@ -137,7 +137,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
       "parameters".asRamlAnnotation,
       entry => {
         parameters =
-          parameters.add(OasParametersParser(entry.value.as[Seq[YMap]], endpoint.id)(spec.toOas(ctx)).parse())
+          parameters.add(OasParametersParser(entry.value.as[Seq[YNode]], endpoint.id)(spec.toOas(ctx)).parse())
         annotations = Annotations(entry.value)
       }
     )
@@ -170,12 +170,16 @@ abstract class RamlEndpointParser(entry: YMapEntry,
   }
 
   private def implicitPathParams(endpoint: EndPoint, filter: String => Boolean = _ => true): Seq[Parameter] = {
-    val parentParams: Map[String, Parameter] = parent.map(
-      _.parameters.filter(_.binding.value() == "path")
-        .foldLeft(Map[String, Parameter]()) { case (acc, p) =>
-          acc.updated(p.name.value(), p)
-        }
-    ).getOrElse(Map())
+    val parentParams: Map[String, Parameter] = parent
+      .map(
+        _.parameters
+          .filter(_.binding.value() == "path")
+          .foldLeft(Map[String, Parameter]()) {
+            case (acc, p) =>
+              acc.updated(p.name.value(), p)
+          }
+      )
+      .getOrElse(Map())
 
     TemplateUri
       .variables(parsePath())
