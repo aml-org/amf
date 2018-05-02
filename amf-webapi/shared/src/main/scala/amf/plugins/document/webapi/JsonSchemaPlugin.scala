@@ -14,7 +14,7 @@ import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.{SpecSyntax, WebApiDeclarations}
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
+import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaVersion, OasTypeParser}
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
@@ -113,7 +113,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
 
     jsonSchemaContext.localJSONSchemaContext = Some(documentRoot)
     val parsed =
-      OasTypeParser(YMapEntry("schema", rootAst), (shape) => shape.withId(shapeId), oasNode = "externalSchema")(jsonSchemaContext).parse() match {
+      OasTypeParser(YMapEntry("schema", rootAst), (shape) => shape.withId(shapeId), version = JSONSchemaVersion)(jsonSchemaContext).parse() match {
         case Some(shape) =>
           shape
         case None =>

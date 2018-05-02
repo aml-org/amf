@@ -1,31 +1,33 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.{ExplicitField, SynthesizedField}
+import amf.core.annotations.{ExplicitField, LexicalInformation, SynthesizedField}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
 import amf.core.metamodel.Field
+import amf.core.metamodel.Type.Bool
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfScalar, Linkable, RecursiveShape, Shape}
 import amf.core.parser.Position.ZERO
-import amf.core.parser.{Annotations, FieldEntry, Fields, Position}
+import amf.core.parser.{Annotations, FieldEntry, Fields, Position, Value}
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, OasTypeDefStringValueMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
-import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
+import amf.plugins.domain.shapes.annotations.{NilUnion, ParsedFromTypeExpression}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef.UndefinedType
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YNode, YType}
+import org.yaml.model.{YNode, YScalar, YType}
 import amf.core.utils.Strings
+import amf.core.vocabulary.Namespace
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -1091,6 +1093,8 @@ case class OasTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Fie
       case node: NodeShape =>
         val copiedNode = node.copy(fields = node.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
         OasNodeShapeEmitter(copiedNode, ordering, references).emitters()
+      case union: UnionShape if nilUnion(union) =>
+        OasTypeEmitter(union.anyOf.head, ordering, ignored, references).emitters()
       case union: UnionShape =>
         val copiedNode = union.copy(fields = union.fields.filter(f => !ignored.contains(f._1)))
         Seq(OasUnionShapeEmitter(copiedNode, ordering, references))
@@ -1114,6 +1118,8 @@ case class OasTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Fie
   }
 
   def entries(): Seq[EntryEmitter] = emitters() map { case e: EntryEmitter => e }
+
+  def nilUnion(union: UnionShape): Boolean = union.anyOf.size == 1 && union.anyOf.head.annotations.contains(classOf[NilUnion])
 }
 
 abstract class OasShapeEmitter(shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(
@@ -1142,6 +1148,9 @@ abstract class OasShapeEmitter(shape: Shape, ordering: SpecOrdering, references:
 
     fs.entry(AnyShapeModel.XMLSerialization).map(f => result += XMLSerializerEmitter("xml", f, ordering))
 
+
+    emitNullable(result)
+
     result ++= AnnotationsEmitter(shape, ordering).emitters
 
     result ++= FacetsEmitter(shape, ordering).emitters
@@ -1157,6 +1166,18 @@ abstract class OasShapeEmitter(shape: Shape, ordering: SpecOrdering, references:
     if (Option(shape.not).isDefined)                         result += OasNotConstraintEmitter(shape, ordering, references)
 
     result
+  }
+
+  def emitNullable(result: ListBuffer[EntryEmitter]): Unit = {
+    shape.annotations.find(classOf[NilUnion]) match {
+      case Some(NilUnion(rangeString)) =>
+        result += ValueEmitter(
+          "nullable",
+          FieldEntry(Field(Bool,Namespace.Shapes + "nullable"),
+            Value(AmfScalar(true), Annotations(Seq(LexicalInformation(rangeString))))))
+
+      case _                           => // ignore
+    }
   }
 }
 
