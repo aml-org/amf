@@ -103,9 +103,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
       Raml10TypeParser(
         map,
         "type",
-        map,
         (shape: Shape) => shape.withId(root.location + "#shape"), // TODO: this is being ignored
-        isAnnotation = false,
         StringDefaultType
       ).parse()
         .foreach(dataType.withEncodes)

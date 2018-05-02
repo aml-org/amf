@@ -1,27 +1,28 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.parser.{Annotations, _}
+import amf.core.parser._
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.domain.webapi.metamodel.OrganizationModel
-import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.domain.webapi.models.Organization
-import org.yaml.model.{YMap, YMapEntry, YNode}
+import org.yaml.model.{YMap, YNode}
 
 /**
   *
   */
 object OrganizationParser {
-  def apply(map: YMap)(implicit ctx: WebApiContext): OrganizationParser = new OrganizationParser(map)(toOas(ctx))
+  def apply(node: YNode)(implicit ctx: WebApiContext): OrganizationParser = new OrganizationParser(node)(toOas(ctx))
 
   def parse(node: YNode)(implicit ctx: WebApiContext): Organization =
-    OrganizationParser(node.as[YMap]).parse()
+    OrganizationParser(node).parse()
 }
 
-class OrganizationParser(map: YMap)(implicit ctx: WebApiContext) extends SpecParserOps {
+class OrganizationParser(node: YNode)(implicit ctx: WebApiContext) extends SpecParserOps {
   def parse(): Organization = {
 
-    val organization = Organization(map)
+    val organization = Organization(node)
+    val map          = node.as[YMap]
 
     map.key("url", OrganizationModel.Url in organization)
     map.key("name", OrganizationModel.Name in organization)

@@ -6,7 +6,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.core.utils._
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel._
-import org.yaml.model.YMap
+import org.yaml.model.YNode
 
 /**
   * Creative work internal model
@@ -40,7 +40,7 @@ object CreativeWork {
 
   def apply(): CreativeWork = apply(Annotations())
 
-  def apply(ast: YMap): CreativeWork = apply(Annotations(ast))
+  def apply(node: YNode): CreativeWork = apply(Annotations.valueNode(node))
 
   def apply(annotations: Annotations): CreativeWork = apply(Fields(), annotations)
 

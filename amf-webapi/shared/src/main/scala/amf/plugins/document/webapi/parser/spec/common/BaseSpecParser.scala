@@ -193,13 +193,13 @@ private case class RamlSingleArrayNode(node: YNode)(implicit iv: WebApiContext) 
   override def obj(fn: YNode => AmfElement): AmfArray = as(fn(node))
 
   private def as(element: AmfElement) =
-    AmfArray(Seq(element), Annotations(node.value) += SingleValueArray())
+    AmfArray(Seq(element), Annotations.valueNode(node) += SingleValueArray())
 }
 
 object SingleArrayNode {
   def apply(node: YNode)(implicit iv: WebApiContext): ArrayNode = {
     node.value match {
-      case seq: YSequence => ArrayNode(seq)
+      case seq: YSequence => ArrayNode(node)
       case _              => RamlSingleArrayNode(node)
     }
   }
@@ -208,7 +208,7 @@ object SingleArrayNode {
 /** Map array node. */
 case class MapEntriesArrayNode(obj: YMap)(override implicit val iv: IllegalTypeHandler) extends BaseArrayNode {
 
-  override def nodes: (Seq[YNode], YPart) = {
+  override def nodes: (Seq[YNode], YNode) = {
     val maps = obj.entries.map(e => YNode(YMap(IndexedSeq(e))))
     (maps, obj)
   }

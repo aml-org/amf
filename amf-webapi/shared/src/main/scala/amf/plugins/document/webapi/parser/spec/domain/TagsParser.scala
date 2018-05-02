@@ -14,12 +14,13 @@ import org.yaml.model.{YMap, YNode}
   */
 object TagsParser {
   def apply(map: YNode, adopt: Tag => Tag)(implicit ctx: WebApiContext): TagsParser =
-    new TagsParser(map.as[YMap], adopt)(toOas(ctx))
+    new TagsParser(map, adopt)(toOas(ctx))
 }
 
-class TagsParser(map: YMap, adopt: Tag => Tag)(implicit ctx: WebApiContext) extends SpecParserOps {
+class TagsParser(node: YNode, adopt: Tag => Tag)(implicit ctx: WebApiContext) extends SpecParserOps {
   def parse(): Tag = {
-    val tag = Tag(map)
+    val map = node.as[YMap]
+    val tag = Tag(node)
 
     map.key("name", TagModel.Name in tag)
     adopt(tag)

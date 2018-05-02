@@ -45,9 +45,10 @@ object XMLSerializerParser {
     XMLSerializerParser(defaultName, node.as[YMap]).parse()
 }
 
-case class XMLSerializerParser(defaultName: String, map: YMap)(implicit ctx: WebApiContext) {
+case class XMLSerializerParser(defaultName: String, node: YNode)(implicit ctx: WebApiContext) {
+  val map = node.as[YMap]
   def parse(): XMLSerializer = {
-    val serializer = XMLSerializer(map)
+    val serializer = XMLSerializer(node)
       .set(XMLSerializerModel.Attribute, value = false)
       .set(XMLSerializerModel.Wrapped, value = false)
       .set(XMLSerializerModel.Name, defaultName)

@@ -5,7 +5,7 @@ import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.XMLSerializerModel
 import amf.plugins.domain.shapes.metamodel.XMLSerializerModel._
-import org.yaml.model.YMap
+import org.yaml.model.{YMap, YNode}
 
 case class XMLSerializer(fields: Fields, annotations: Annotations) extends DomainElement {
 
@@ -32,6 +32,8 @@ object XMLSerializer {
   def apply(): XMLSerializer = apply(Annotations())
 
   def apply(ast: YMap): XMLSerializer = apply(Annotations(ast))
+
+  def apply(node: YNode): XMLSerializer = apply(Annotations.valueNode(node))
 
   def apply(annotations: Annotations): XMLSerializer = XMLSerializer(Fields(), annotations)
 }

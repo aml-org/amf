@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
-import org.yaml.model.YMap
+import org.yaml.model.YNode
 
 case class Parameters(query: Seq[Parameter] = Nil,
                       path: Seq[Parameter] = Nil,
@@ -62,7 +62,7 @@ object Parameters {
   }
 }
 
-case class OasParameter(parameter: Parameter, payload: Payload, ast: Option[YMap] = None) {
+case class OasParameter(parameter: Parameter, payload: Payload, ast: Option[YNode] = None) {
   def isFormData: Boolean = parameter.isForm
   def isBody: Boolean     = parameter.isBody
   def isQuery: Boolean    = parameter.isQuery
@@ -73,5 +73,5 @@ case class OasParameter(parameter: Parameter, payload: Payload, ast: Option[YMap
 }
 
 object OasParameter {
-  def apply(ast: YMap): OasParameter = OasParameter(Parameter(ast), Payload(ast), Some(ast))
+  def apply(node: YNode): OasParameter = OasParameter(Parameter(node), Payload(node), Some(node))
 }

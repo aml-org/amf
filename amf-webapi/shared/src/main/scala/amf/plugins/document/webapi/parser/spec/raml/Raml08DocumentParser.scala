@@ -6,7 +6,12 @@ import amf.core.parser.YMapOps
 import amf.core.utils._
 import amf.plugins.document.webapi.annotations.DeclaredElement
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
-import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationParser, Raml08TypeParser, SecuritySchemeParser}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  AbstractDeclarationParser,
+  Raml08TypeParser,
+  SecuritySchemeParser
+}
+import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
@@ -94,7 +99,10 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
 
   private def parseSchemaEntries(entries: Seq[YMapEntry], parent: String): Unit = {
     entries.foreach { entry =>
-      Raml08TypeParser(entry, shape => shape.withName(entry.key).adopted(parent))
+      Raml08TypeParser(entry,
+                       shape => shape.withName(entry.key).adopted(parent),
+                       isAnnotation = false,
+                       StringDefaultType)
         .parse() match {
         case Some(shape) =>
           ctx.declarations += shape.add(DeclaredElement())

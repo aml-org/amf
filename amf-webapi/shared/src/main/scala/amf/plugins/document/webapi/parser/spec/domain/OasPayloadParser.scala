@@ -6,15 +6,15 @@ import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecPar
 import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload
-import org.yaml.model.YMap
+import org.yaml.model.{YMap, YNode}
 
-case class OasPayloadParser(map: YMap, producer: (Option[String]) => Payload)(implicit ctx: OasWebApiContext)
+case class OasPayloadParser(node: YNode, producer: (Option[String]) => Payload)(implicit ctx: OasWebApiContext)
     extends SpecParserOps {
   def parse(): Payload = {
-
+    val map = node.as[YMap]
     val payload = producer(
       map.key("mediaType").map(entry => ScalarNode(entry.value).text().value.toString)
-    ).add(Annotations(map))
+    ).add(Annotations.valueNode(map))
 
     // todo set again for not lose annotations?
 

@@ -76,7 +76,7 @@ case class Raml08PayloadParser(entry: YMapEntry, producer: Option[String] => Pay
         if (List("application/x-www-form-urlencoded", "multipart/form-data").contains(mediaType)) {
           Raml08WebFormParser(entry.value.as[YMap], payload.id).parse().foreach(payload.withSchema)
         } else {
-          Raml08TypeParser(entry, (shape: Shape) => shape.adopted(payload.id), defaultType = AnyDefaultType)
+          Raml08TypeParser(entry, (shape: Shape) => shape.adopted(payload.id), isAnnotation = false, AnyDefaultType)
             .parse()
             .foreach(payload.withSchema)
         }
@@ -99,7 +99,7 @@ case class Raml08WebFormParser(map: YMap, parentId: String)(implicit ctx: RamlWe
 
             entries.foreach(e => {
 
-              Raml08TypeParser(e, (shape: Shape) => shape)
+              Raml08TypeParser(e, (shape: Shape) => shape, isAnnotation = false, StringDefaultType)
                 .parse()
                 .foreach(s => {
                   val property = webFormShape.withProperty(s.name.value())

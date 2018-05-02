@@ -16,10 +16,11 @@ object OasCreativeWorkParser {
 /**
   *
   */
-case class OasCreativeWorkParser(map: YMap)(implicit val ctx: WebApiContext) extends SpecParserOps {
+case class OasCreativeWorkParser(node: YNode)(implicit val ctx: WebApiContext) extends SpecParserOps {
   def parse(): CreativeWork = {
 
-    val creativeWork = CreativeWork(map)
+    val map          = node.as[YMap]
+    val creativeWork = CreativeWork(node)
 
     map.key("url", CreativeWorkModel.Url in creativeWork)
     map.key("description", CreativeWorkModel.Description in creativeWork)
@@ -31,10 +32,11 @@ case class OasCreativeWorkParser(map: YMap)(implicit val ctx: WebApiContext) ext
   }
 }
 
-case class RamlCreativeWorkParser(map: YMap)(implicit val ctx: WebApiContext) extends SpecParserOps {
+case class RamlCreativeWorkParser(node: YNode)(implicit val ctx: WebApiContext) extends SpecParserOps {
   def parse(): CreativeWork = {
 
-    val documentation = CreativeWork(Annotations(map))
+    val map           = node.as[YMap]
+    val documentation = CreativeWork(Annotations.valueNode(node))
 
     map.key("title", (CreativeWorkModel.Title in documentation).allowingAnnotations)
     map.key("content", (CreativeWorkModel.Description in documentation).allowingAnnotations)
