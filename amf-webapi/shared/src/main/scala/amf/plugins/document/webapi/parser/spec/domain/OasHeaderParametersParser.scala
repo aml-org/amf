@@ -41,6 +41,7 @@ case class OasHeaderParameterParser(entry: YMapEntry, producer: String => Parame
       }
     )
 
+    parameter.withBinding("header") // we need to add the binding in order to conform all parameters validations
     AnnotationParser(parameter, map).parse()
 
     parameter

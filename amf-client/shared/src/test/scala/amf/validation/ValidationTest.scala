@@ -2044,4 +2044,15 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(!report.conforms)
     }
   }
+
+  test("Test validate headers in request") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "/parameters/request-header.json", platform, OasJsonHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.OAS, ProfileNames.OAS)
+    } yield {
+      assert(report.conforms)
+    }
+  }
 }

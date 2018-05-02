@@ -252,7 +252,10 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
                       .withDescription("Some descr")
                       .withRequired(true)
                       .withBinding("query")
-                      .withSchema(ScalarShape().withName("schema").withDescription("Some descr").withDataType("http://www.w3.org/2001/XMLSchema#string"))
+                      .withSchema(ScalarShape()
+                        .withName("schema")
+                        .withDescription("Some descr")
+                        .withDataType("http://www.w3.org/2001/XMLSchema#string"))
                   ))
                 .withHeaders(List(Parameter()
                   .withName("param2?")
@@ -278,7 +281,8 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
                       .withParameterName("Header-One")
                       .withRequired(false)
                       .withBinding("header")
-                      .withSchema(ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
+                      .withSchema(
+                        ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#string"))
                   ))
             )
         ))
@@ -380,6 +384,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
                     List(
                       Parameter()
                         .withName("Time-Ago")
+                        .withBinding("header")
                         .withSchema(
                           ScalarShape().withName("schema").withDataType("http://www.w3.org/2001/XMLSchema#integer"))
                         .withRequired(true)
