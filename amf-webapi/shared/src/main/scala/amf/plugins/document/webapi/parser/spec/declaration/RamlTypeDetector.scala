@@ -54,7 +54,7 @@ case class RamlTypeDetector(parent: String,
           ctx.violation(parent, "Trait/Resource Type parameter in type", node)
           None
 
-        case t: String if t.endsWith("?") && wellKnownType(t.replace("?","")) =>
+        case t: String if t.endsWith("?") && wellKnownType(t.replace("?", "")) =>
           Some(NilUnionType)
 
         case XMLSchema(_) => Some(XMLSchemaType)
@@ -107,7 +107,7 @@ case class RamlTypeDetector(parent: String,
       // let's try to detect based on the explicit value of 'type'
       val fromExplicitType = typeOrSchema(map).flatMap(
         e => {
-          // let's call ourselves recrusively with the value of type
+          // let's call ourselves recursively with the value of type
           val result =
             RamlTypeDetector(parent,
                              map.key("format").orElse(map.key("format".asRamlAnnotation)).map(_.value.toString()),
@@ -174,7 +174,8 @@ case class RamlTypeDetector(parent: String,
       shape match {
         case _ if shape.isLink =>
           shape.linkTarget match {
-            case Some(linkedShape: Shape) => apply(linkedShape, part, plainUnion)
+            case Some(linkedShape: Shape) if linkedShape == shape => Some(AnyType)
+            case Some(linkedShape: Shape)                         => apply(linkedShape, part, plainUnion)
             case _ =>
               ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
                             shape.id,

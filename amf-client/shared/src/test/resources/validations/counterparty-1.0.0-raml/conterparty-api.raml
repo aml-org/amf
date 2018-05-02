@@ -1,0 +1,22 @@
+#%RAML 1.0
+baseUri: https://mocksvc.mulesoft.com/mocks/93e5ab11-658f-434b-a58e-6453a68a2b3b # 
+version: v1
+title: conterparty
+
+types:
+  Conterparty: !include conterparty.raml
+
+/conterparty:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: Conterparty
+  /{ID}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: Conterparty
