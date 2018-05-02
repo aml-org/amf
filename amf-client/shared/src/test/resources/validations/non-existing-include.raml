@@ -1,0 +1,7 @@
+#%RAML 1.0
+types:
+  person: !include non-exists.raml
+/endpoint:
+  get:
+    body:
+      application/json: person
