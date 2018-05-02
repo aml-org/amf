@@ -467,7 +467,7 @@ trait RamlExternalTypes extends RamlSpecParser with ExampleParser with RamlTypeS
     ctx.localJSONSchemaContext = Some(schemaEntry.value)
 
     val parsed =
-      OasTypeParser(schemaEntry, (shape) => adopt(shape), oasNode = "externalSchema")(toSchemaContext(ctx, valueAST)).parse() match {
+      OasTypeParser(schemaEntry, (shape) => adopt(shape),  JSONSchemaVersion)(toSchemaContext(ctx, valueAST)).parse() match {
         case Some(shape) =>
           if (!sourceRefReference(value, shape, ctx)) shape.annotations += ParsedJSONSchema(text)
           shape

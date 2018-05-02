@@ -23,3 +23,14 @@ object InheritedShapes extends AnnotationGraphLoader {
     InheritedShapes(annotatedValue.split(","))
   }
 }
+
+case class NilUnion(position: String) extends  SerializableAnnotation {
+  override val name: String  = "nil-union"
+  override val value: String = position
+}
+
+object NilUnion extends AnnotationGraphLoader {
+  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
+    NilUnion(annotatedValue)
+  }
+}

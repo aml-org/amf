@@ -12,18 +12,22 @@ import amf.core.parser.{Annotations, ErrorHandler, Fields}
   */
 case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape {
 
-  def path: StrField      = fields.field(Path)
-  def range: Shape        = fields.field(Range)
-  def minCount: IntField  = fields.field(MinCount)
-  def maxCount: IntField  = fields.field(MaxCount)
-  def readOnly: BoolField = fields.field(ReadOnly)
+  def path: StrField        = fields.field(Path)
+  def range: Shape          = fields.field(Range)
+  def minCount: IntField    = fields.field(MinCount)
+  def maxCount: IntField    = fields.field(MaxCount)
+  def readOnly: BoolField   = fields.field(ReadOnly)
+  def writeOnly: BoolField  = fields.field(WriteOnly)
+  def deprecated: BoolField = fields.field(Deprecated)
 
   def withPath(path: String): this.type  = set(Path, path)
   def withRange(range: Shape): this.type = set(Range, range)
 
-  def withMinCount(min: Int): this.type          = set(MinCount, min)
-  def withMaxCount(max: Int): this.type          = set(MaxCount, max)
-  def withReadOnly(readOnly: Boolean): this.type = set(ReadOnly, readOnly)
+  def withMinCount(min: Int): this.type              = set(MinCount, min)
+  def withMaxCount(max: Int): this.type              = set(MaxCount, max)
+  def withReadOnly(readOnly: Boolean): this.type     = set(ReadOnly, readOnly)
+  def withWriteOnly(writeOnly: Boolean): this.type   = set(WriteOnly, writeOnly)
+  def withDeprecated(deprecated: Boolean): this.type = set(Deprecated, deprecated)
 
   override def adopted(parent: String): this.type = {
     simpleAdoption(parent)

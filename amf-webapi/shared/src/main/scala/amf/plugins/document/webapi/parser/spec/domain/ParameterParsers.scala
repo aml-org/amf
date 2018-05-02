@@ -255,7 +255,7 @@ case class OasParameterParser(map: YMap, parentId: String, name: Option[String])
             "",
             map,
             shape => shape.withName("schema").adopted(parameter.id),
-            "parameter"
+            OAS20SchemaVersion(position = "parameter")
           ).parse()
             .map { schema =>
               if (p.isFormData) {
