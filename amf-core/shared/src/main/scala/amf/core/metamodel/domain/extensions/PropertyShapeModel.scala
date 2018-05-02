@@ -24,6 +24,10 @@ object PropertyShapeModel extends ShapeModel {
 
   val ReadOnly = Field(Bool, Shapes + "readOnly")
 
+  val WriteOnly = Field(Bool, Shapes + "writeOnly")
+
+  val Deprecated = Field(Bool, Shapes + "deprecated")
+
   override val `type`: List[ValueType] = List(Shacl + "PropertyShape") ++ ShapeModel.`type`
 
   override def fields: List[Field] =
