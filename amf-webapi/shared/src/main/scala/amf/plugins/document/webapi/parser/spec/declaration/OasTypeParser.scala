@@ -16,6 +16,7 @@ import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, NodeDataNodeParser, RamlExamplesParser}
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
+import amf.plugins.domain.shapes.annotations.NilUnion
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
@@ -26,16 +27,26 @@ import org.yaml.render.YamlRender
 
 import scala.collection.mutable
 
+class JSONSchemaVersion(val name: String)
+class OASSchemaVersion(override val name: String, val position: String) extends JSONSchemaVersion(name) {
+  if (position != "schema" && position != "parameter") throw new Exception(s"Invalid schema position '$position', only 'schema' and 'parameter' are valid")
+}
+class OAS20SchemaVersion(override val position: String) extends OASSchemaVersion("oas2.0", position)
+object OAS20SchemaVersion { def apply(position: String) = new OAS20SchemaVersion(position) }
+class OAS30SchemaVersion(override val position: String) extends OASSchemaVersion("oas3.0.0", position)
+object OAS30SchemaVersion { def apply(position: String) = new OAS20SchemaVersion(position) }
+object JSONSchemaVersion extends JSONSchemaVersion("json-schema")
+
 /**
   * OpenAPI Type Parser.
   */
 object OasTypeParser {
-  def apply(entry: YMapEntry, adopt: Shape => Unit, oasNode: String = "schema")(
+  def apply(entry: YMapEntry, adopt: Shape => Unit, version: JSONSchemaVersion = OAS20SchemaVersion("schema"))(
       implicit ctx: WebApiContext): OasTypeParser =
-    OasTypeParser(entry, entry.key.as[YScalar].text, entry.value.as[YMap], adopt, oasNode)(spec.toOas(ctx))
+    OasTypeParser(entry, entry.key.as[YScalar].text, entry.value.as[YMap], adopt, version)(spec.toOas(ctx))
 }
 
-case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Unit, oasNode: String)(
+case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Unit, version: JSONSchemaVersion)(
     implicit val ctx: OasWebApiContext)
     extends OasSpecParser {
 
@@ -44,7 +55,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     if (detectDisjointUnion()) {
       Some(parseDisjointUnionType())
     } else {
-      val parsedShape =  detect(oasNode) match {
+      val parsedShape =  detect(version) match {
         case UnionType                   => Some(parseUnionType())
         case LinkType                    => parseLinkType()
         case ObjectType                  => Some(parseObjectType())
@@ -55,11 +66,33 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       }
       parsedShape match {
         case Some(shape: AnyShape) =>
-          if (oasNode != "externalSchema") // external schemas can have any top level key
-            ctx.closedShape(shape.id, map, oasNode)
-          Some(shape)
+          if (isOas) // external schemas can have any top level key
+            ctx.closedShape(shape.id, map, version.asInstanceOf[OASSchemaVersion].position)
+          if (isOas3) Some(checkNilUnion(shape))
+          else        Some(shape)
         case None => None
       }
+    }
+  }
+
+  protected def isOas: Boolean = version.isInstanceOf[OASSchemaVersion]
+  protected def isOas3: Boolean = version.isInstanceOf[OAS30SchemaVersion]
+
+
+  def checkNilUnion(parsed: AnyShape): AnyShape = {
+    map.key("nullable") match {
+      case Some(nullableEntry) if nullableEntry.value.toOption[Boolean].getOrElse(false) =>
+        val union = UnionShape().withName(name).withId(parsed.id + "/nilUnion")
+        parsed.annotations += NilUnion(Range(nullableEntry.key.range).toString())
+        union.withAnyOf(
+          Seq(
+            parsed,
+            NilShape().withId(union.id + "_nil")
+          )
+        )
+        union
+      case _ =>
+        parsed
     }
   }
 
@@ -73,10 +106,11 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
     map.key("type").isDefined && map.key("type").get.value.asOption[YSequence].isDefined
   }
 
-  private def detect(position: String): TypeDef = {
-    val defaultType =
-      if (position == "parameter") UndefinedType
-      else AnyType
+  private def detect(version: JSONSchemaVersion): TypeDef = {
+    val defaultType = version match {
+      case oasSchema: OASSchemaVersion if oasSchema.position == "parameter" => UndefinedType
+      case _                                                                => AnyType
+    }
 
     detectDependency()
       .orElse(detectType())
@@ -207,7 +241,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
                 val copied = s.link(text, Annotations(ast)).asInstanceOf[AnyShape].withName(name)
                 adopt(copied)
                 Some(copied)
-              case None if oasNode != "schema" => // Only enabled for JSON Schema, not OAS. In OAS local references can only point to the #/definitons (#/components in OAS 3) node
+              case None if !isOas => // Only enabled for JSON Schema, not OAS. In OAS local references can only point to the #/definitons (#/components in OAS 3) node
                 // now we work with canonical JSON schema pointers, not local refs
                 val fullRef = ctx.resolvedPath(ctx.rootContextDocument, ref)
                 ctx.findJsonSchema(fullRef) match {
@@ -228,7 +262,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
                     if (ref.startsWith("#")) {
                       ctx.findLocalJSONPath(ref) match {
                         case Some((_, shapeNode)) =>
-                          OasTypeParser(YMapEntry(name, shapeNode), adopt, oasNode)
+                          OasTypeParser(YMapEntry(name, shapeNode), adopt, version)
                             .parse()
                             .map { shape =>
                               ctx.futureDeclarations.resolveRef(fullRef, shape)
@@ -345,7 +379,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
                 .map {
                   case (node, index) =>
                     val entry = YMapEntry(YNode(s"item$index"), node)
-                    OasTypeParser(entry, item => item.adopted(shape.id + "/items/" + index), oasNode).parse()
+                    OasTypeParser(entry, item => item.adopted(shape.id + "/items/" + index), version).parse()
                 }
                 .filter(_.isDefined)
                 .map(_.get)
@@ -372,7 +406,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
                 .map {
                   case (node, index) =>
                     val entry = YMapEntry(YNode(s"item$index"), node)
-                    OasTypeParser(entry, item => item.adopted(shape.id + "/or/" + index), oasNode).parse()
+                    OasTypeParser(entry, item => item.adopted(shape.id + "/or/" + index), version).parse()
                 }
                 .filter(_.isDefined)
                 .map(_.get)
@@ -398,7 +432,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
                 .map {
                   case (node, index) =>
                     val entry = YMapEntry(YNode(s"item$index"), node)
-                    OasTypeParser(entry, item => item.adopted(shape.id + "/and/" + index), oasNode).parse()
+                    OasTypeParser(entry, item => item.adopted(shape.id + "/and/" + index), version).parse()
                 }
                 .filter(_.isDefined)
                 .map(_.get)
@@ -424,7 +458,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
                 .map {
                   case (node, index) =>
                     val entry = YMapEntry(YNode(s"item$index"), node)
-                    OasTypeParser(entry, item => item.adopted(shape.id + "/xone/" + index), oasNode).parse()
+                    OasTypeParser(entry, item => item.adopted(shape.id + "/xone/" + index), version).parse()
                 }
                 .filter(_.isDefined)
                 .map(_.get)
@@ -444,7 +478,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       adopt(shape)
       map.key(
         "not", { entry =>
-          OasTypeParser(entry, item => item.adopted(shape.id + "/not"), oasNode).parse() match {
+          OasTypeParser(entry, item => item.adopted(shape.id + "/not"), version).parse() match {
             case Some(negated) =>
               shape.set(ShapeModel.Not, negated)
             case _ => // ignore
@@ -507,7 +541,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
                               s"member$index",
                               elem.as[YMap],
                               item => item.adopted(shape.id + "/items/" + index),
-                               oasNode).parse()
+                               version).parse()
             }
           shape.withItems(items.filter(_.isDefined).map(_.get))
         }
@@ -538,7 +572,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
 
       val finalShape = for {
         entry <- map.key("items")
-        item  <- OasTypeParser(entry, items => items.adopted(shape.id + "/items"), oasNode).parse()
+        item  <- OasTypeParser(entry, items => items.adopted(shape.id + "/items"), version).parse()
       } yield {
         item match {
           case array: ArrayShape   => shape.withItems(array).toMatrixShape
@@ -662,7 +696,7 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
         .flatMap(n => n.toOption[YMap])
         .flatMap(map =>
           declarationsRef(map)
-            .orElse(OasTypeParser(map, "", map, adopt, oasNode).parse()))
+            .orElse(OasTypeParser(map, "", map, adopt, version).parse()))
 
     private def declarationsRef(entries: YMap): Option[Shape] = {
       entries
@@ -701,7 +735,12 @@ case class OasTypeParser(ast: YPart, name: String, map: YMap, adopt: Shape => Un
       property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text).iri())
       entry.value.toOption[YMap].foreach(_.key("readOnly", PropertyShapeModel.ReadOnly in property))
 
-      OasTypeParser(entry, shape => shape.adopted(property.id), oasNode)
+      if (version.isInstanceOf[OAS30SchemaVersion]) {
+        entry.value.toOption[YMap].foreach(_.key("writeOnly", PropertyShapeModel.WriteOnly in property))
+        entry.value.toOption[YMap].foreach(_.key("deprecated", PropertyShapeModel.Deprecated in property))
+      }
+
+      OasTypeParser(entry, shape => shape.adopted(property.id), version)
         .parse()
         .foreach(property.set(PropertyShapeModel.Range, _))
 
