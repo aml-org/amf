@@ -1,0 +1,103 @@
+#%RAML 1.0 ResourceType
+usage: Use this resourceType to represent an item within a collection
+description: Entity representing a <<resourcePathName|!singularize>>
+
+uses: 
+  dt: ../dataTypes/dt-lib.raml
+
+uriParameters:
+  <<resourcePathName|!singularize>>Id:
+    required: true
+    description: An identifier for the given <<resourcePathName|!singularize>> to retrive information on.
+    type: string
+
+get?:
+  headers:
+    x-organization-id:
+      required: true
+      displayName: Organization ID
+      description: Organization ID of the Anypoint Organization
+      type: string
+  responses:
+    200:
+      description: A JSON object of <<resourcePathName>>.
+      body:
+        application/json:
+          displayName: response
+          description: A JSON object of <<resourcePathName>>
+          type: <<dataType200>>
+          #example: <<exampleCollection>>
+    304:
+      description: |
+        Not Modified.
+        Empty body because the client has already the latest version of the requested resource. Do not retry.
+      body:
+        application/json:
+          description: |
+            Not Modified.
+            Empty body because the client has already the latest version of the requested resource. Do not retry.
+          type: dt.ErrorObjectReturnedWith4xxAnd5xxHttpStatus
+    400:
+      description: |
+        Bad Request.
+        Unspecified error due to the request being invalid. Do not retry.
+        Limit Exceeded.
+        The upper limit of allowed API calls has been reached. Do not retry.
+      body:
+        application/json:
+          description: |
+            Bad Request.
+            Unspecified error due to the request being invalid. Do not retry.
+            Limit Exceeded.
+            The upper limit of allowed API calls has been reached. Do not retry.
+          type: dt.ErrorObjectReturnedWith4xxAnd5xxHttpStatus
+    403:
+      description: |
+        Unauthorized.
+        The client is not authorized to use the given API. Do not retry.
+      body:
+        application/json:
+          description: |
+            Unauthorized.
+            The client is not authorized to use the given API. Do not retry.
+          type: dt.ErrorObjectReturnedWith4xxAnd5xxHttpStatus
+    404:
+      description: |
+        Not Found.
+        There is no such API at the given request URL. Do not retry.
+      body:
+        application/json:
+          description: |
+            Not Found.
+            There is no such API at the given request URL. Do not retry.
+          type: dt.ErrorObjectReturnedWith4xxAnd5xxHttpStatus
+    429:
+      description: |
+        Too Many Requests.
+        Too many requests to the API were received within a period of time. Retry.
+      body:
+        application/json:
+          description: |
+            Too Many Requests.
+            Too many requests to the API were received within a period of time. Retry.
+          type: dt.ErrorObjectReturnedWith4xxAnd5xxHttpStatus
+    500:
+      description: |
+        Internal Failure.
+        Unspecified error occurred on the server. Retry.
+      body:
+        application/json:
+          description: |
+            Internal Failure.
+            Unspecified error occurred on the server. Retry.
+          type: dt.ErrorObjectReturnedWith4xxAnd5xxHttpStatus
+    503:
+      description: |
+        Service Unavailable.
+        The API is currently unavailable. Retry.
+      body:
+        application/json:
+          description: |
+            Service Unavailable.
+            The API is currently unavailable. Retry.
+          type: dt.ErrorObjectReturnedWith4xxAnd5xxHttpStatus

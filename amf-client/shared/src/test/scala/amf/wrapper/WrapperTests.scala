@@ -29,7 +29,9 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   private val demosInstance = "file://amf-client/shared/src/test/resources/api/examples/libraries/demo.raml"
   private val security      = "file://amf-client/shared/src/test/resources/upanddown/unnamed-security-scheme.raml"
   private val music         = "file://amf-client/shared/src/test/resources/production/world-music-api/api.raml"
-  private val banking       = "file://amf-client/shared/src/test/resources/production/banking-api/api.raml"
+  private val procDesignCenter =
+    "file://amf-client/shared/src/test/resources/production/proc-design-center-pub-status-api-1.0.0-fat-raml/proc-design-center-pub-status-api.raml"
+  private val banking = "file://amf-client/shared/src/test/resources/production/banking-api/api.raml"
   private val amflight =
     "file://amf-client/shared/src/test/resources/production/american-flight-api-2.0.1-raml/api.raml"
   private val defaultValue = "file://amf-client/shared/src/test/resources/api/shape-default.raml"
@@ -314,6 +316,19 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       output <- new Oas20Renderer().generateString(unit).asFuture
     } yield {
       assert(!output.isEmpty)
+    }
+  }
+
+  test("proc-design-center") {
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(procDesignCenter).asFuture
+      report   <- AMF.validate(unit, "RAML", "RAML").asFuture
+      resolved <- Future.successful(new Raml10Resolver().resolve(unit))
+    } yield {
+      assert(unit.isInstanceOf[Document])
+      assert(resolved.isInstanceOf[Document])
+      assert(report.conforms)
     }
   }
 

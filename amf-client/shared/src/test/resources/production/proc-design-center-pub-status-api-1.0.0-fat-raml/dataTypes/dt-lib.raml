@@ -1,0 +1,24 @@
+#%RAML 1.0 Library
+
+types:
+  designcenterpublicationstatusresponse:
+    type: object
+    properties:
+      assetId:
+        type: string
+        required: true
+      assetName:
+        type: string
+        required: true
+      assetCreator:
+        type: number
+        required: true
+      inExchange:
+        type: string
+        required: true
+
+  designcenterpublicationstatusresponses:
+    type: array
+    items: designcenterpublicationstatusresponse
+        
+  ErrorObjectReturnedWith4xxAnd5xxHttpStatus: !include ../exchange_modules/7abbfaeb-3816-4907-865e-76d7cb24120f/dt-ha-error-object/1.0.0/dt-ha-error-object.raml

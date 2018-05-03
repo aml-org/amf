@@ -1,0 +1,50 @@
+#%RAML 1.0 DataType
+displayName: ErrorObjectReturnedWith4xxAnd5xxHttpStatus
+description: Error object returned with 4XX and 5XX HTTP status
+type: object
+properties:
+  status:
+    required: true
+    displayName: status
+    description: One of two values that indication if the requestresulted in an error.
+    type: string
+  count:
+    required: true
+    displayName: count
+    description: The number of items in the Errors property array.
+    type: string
+  type:
+    required: false
+    displayName: type
+    description: The type of the resource items in the Errors property array.
+    type: string
+  errors:
+    required: false
+    displayName: errors
+    description: The list of inidividual errors for the error repsonse
+    type: array
+    items: 
+      displayName: DescriptionOfIndividualErrorsThatMayHaveOccurredDuringARequest
+      description: Description of individual errors that may have occurred during a request.
+      type: object
+      properties:
+        code:
+          required: true
+          displayName: code
+          description: A human readable string that indicates the kind of error.
+          type: string
+        canRetry:
+          required: true
+          displayName: canRetry
+          description: Indicates whether the client can retry the request.
+          type: boolean
+        message:
+          required: false
+          displayName: message
+          description: A short description of the error that was encountered. Will only be provided in non-production environments.
+          type: string
+        stackTrace:
+          required: false
+          displayName: stackTrace
+          description: The stack trace, if available in the case an exception was thrown on the server while handling the request. Will only be provided in non-production environments.
+          type: string

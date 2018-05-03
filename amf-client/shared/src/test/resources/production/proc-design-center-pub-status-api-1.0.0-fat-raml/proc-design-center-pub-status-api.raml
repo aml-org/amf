@@ -1,0 +1,29 @@
+#%RAML 1.0
+title: proc-design-center-pub-status-api
+version: v1
+baseUri: http://localhost:8081
+documentation:
+  - !include docs/intro.raml
+securitySchemes:
+  basic: !include /exchange_modules/7abbfaeb-3816-4907-865e-76d7cb24120f/ss-basic/1.0.0/ss-basic.raml
+uses: 
+  dt: dataTypes/dt-lib.raml
+  rt: resourceTypes/rt-lib.raml
+
+/assetdetails:
+    type:
+      rt.collection:
+        dataType200: dt.designcenterpublicationstatusresponses
+    get: 
+      displayName: Get All Asset Details
+      description: Returns an Array for all assets in Design Center and states if it is also present in Exchange
+      securedBy: basic
+  
+    /{projectName}:
+        type:
+          rt.collection:
+            dataType200: dt.designcenterpublicationstatusresponse
+        get: 
+          displayName: Get Asset Details per Asset
+          description: Returns a single object which tells if an asset present in Design Center is there in Exchange or not
+          securedBy: basic

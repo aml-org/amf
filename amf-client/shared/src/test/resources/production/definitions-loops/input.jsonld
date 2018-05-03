@@ -294,6 +294,7 @@
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/production/definitions-loops/input.raml#/declarations/someSchema/property/auditDetails/auditDetails/property/formOfPayment/formOfPayment/property/auditDetails",
                                 "@type": [
+                                  "http://raml.org/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://raml.org/vocabularies/shapes#Shape"
                                 ],
