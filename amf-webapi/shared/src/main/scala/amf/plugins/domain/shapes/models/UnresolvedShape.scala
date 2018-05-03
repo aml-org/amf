@@ -1,10 +1,10 @@
 package amf.plugins.domain.shapes.models
 
 import amf.core.metamodel.Obj
-import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, Fields, UnresolvedReference}
 import amf.plugins.document.webapi.parser.spec.common.ShapeExtensionParser
+import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import org.yaml.model.{YNode, YPart}
 
 /**
@@ -29,7 +29,7 @@ case class UnresolvedShape(override val fields: Fields,
   /** Resolve [[UnresolvedShape]] as link to specified target. */
   def resolve(target: Shape): Shape = target.link(reference, annotations).asInstanceOf[Shape].withName(name.value())
 
-  override def meta: Obj = ShapeModel
+  override def meta: Obj = AnyShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "" // unresolved has the same temporal ID as the resolved one
