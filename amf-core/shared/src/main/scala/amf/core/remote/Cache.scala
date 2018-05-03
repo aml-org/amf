@@ -1,20 +1,22 @@
 package amf.core.remote
 
 import amf.core.model.document.BaseUnit
-import scala.concurrent.ExecutionContext.Implicits.global
 
+import scala.collection.mutable
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class Cache {
 
-  protected var cache: Map[String, BaseUnit] = Map()
+  protected val cache: mutable.Map[String, BaseUnit] = mutable.Map()
 
   def getOrUpdate(url: String)(supplier: () => Future[BaseUnit]): Future[BaseUnit] = {
     cache.get(url) match {
-      case Some(value) => Future(value)
+      case Some(value) =>
+        Future(value)
       case None =>
         supplier() map { value =>
-          cache = cache + (url -> value)
+           cache.update(url, value)
           value
         }
     }
