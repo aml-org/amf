@@ -2072,7 +2072,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Test validate multiple tags") {
-    ExecutionLog.start()
     for {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/multiple-tags.json", platform, OasJsonHint, validation)
@@ -2088,6 +2087,17 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc        <- AMFCompiler(validationsPath + "property-names.raml", platform, RamlYamlHint, validation).build()
       report     <- validation.validate(doc, ProfileNames.AMF)
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
+  test("Test enum number in string format validation") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(productionPath + "/enum-number-string/api.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML, ProfileNames.RAML)
     } yield {
       assert(report.conforms)
     }
