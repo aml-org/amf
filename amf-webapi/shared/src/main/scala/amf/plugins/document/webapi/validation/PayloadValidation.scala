@@ -72,7 +72,9 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
       case obj: ObjectNode =>
         obj.properties.foreach {
           case (propName, nodes) =>
-            validation.propertyConstraints.find(p => p.ramlPropertyId.endsWith(s"#$propName")) match {
+            validation.propertyConstraints
+              .filterNot(p => p.ramlPropertyId.startsWith(Namespace.Rdf.base))
+              .find(p => p.ramlPropertyId.endsWith(s"#$propName")) match {
               case Some(propertyConstraint) if propertyConstraint.node.isDefined =>
                 validations.find(v => v.id == propertyConstraint.node.get) match {
                   case Some(targetValidation) =>
@@ -126,7 +128,7 @@ object PayloadValidatorPlugin extends AMFPayloadValidationPlugin {
 
   override val payloadMediaType: Seq[String] = Seq("application/json", "application/yaml", "text/vnd.yaml")
 
-  val defaultCtx = new PayloadContext("", Nil,ParserContext())
+  val defaultCtx = new PayloadContext("", Nil, ParserContext())
 
   override def parsePayload(payload: String, mediaType: String): PayloadFragment = {
     val fragment = PayloadFragment().withMediaType(mediaType)
