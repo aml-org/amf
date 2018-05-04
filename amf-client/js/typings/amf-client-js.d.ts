@@ -510,7 +510,7 @@ declare module "amf-client-js" {
                 withStrict(strict: boolean): this;
 
                 withMediaType(mediaType: string): this;
-                structuredValue(value: DataNode): this;
+                withStructuredValue(value: DataNode): this;
             }
 
             export class FileShape extends AnyShape {
