@@ -1,0 +1,48 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Zoom Connect",
+    "version": "1"
+  },
+  "tags": [
+    {
+      "description": "Core information related to your account",
+      "name": "account"
+    },
+    {
+      "description": "Manage contacts",
+      "name": "contacts"
+    },
+    {
+      "description": "Number context service",
+      "name": "context"
+    },
+    {
+      "description": "Manage groups",
+      "name": "groups"
+    },
+    {
+      "description": "Manage your messages",
+      "name": "messages"
+    },
+    {
+      "description": "Send and schedule messages",
+      "name": "sms"
+    },
+    {
+      "description": "Manage your templates",
+      "name": "templates"
+    },
+    {
+      "description": "(BETA) Send, schedule and manage voice messages",
+      "name": "voice"
+    }
+  ],
+  "paths": {
+    "endpoint": {
+      "tags": [
+        "account"
+      ]
+    }
+  }
+}

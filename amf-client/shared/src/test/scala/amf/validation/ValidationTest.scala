@@ -3,6 +3,7 @@ package amf.validation
 import amf.ProfileNames
 import amf.common.Tests.checkDiff
 import amf.core.AMFSerializer
+import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{Document, Module, PayloadFragment}
 import amf.core.model.domain.{RecursiveShape, Shape}
@@ -17,8 +18,8 @@ import amf.plugins.document.webapi.RAML10Plugin
 import amf.plugins.document.webapi.validation.{AMFShapeValidations, PayloadValidation, UnitPayloadsValidation}
 import amf.plugins.domain.shapes.models.ArrayShape
 import amf.plugins.domain.webapi.models.WebApi
-import amf.plugins.features.validation.{ParserSideValidations, PlatformValidator}
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
+import amf.plugins.features.validation.{ParserSideValidations, PlatformValidator}
 import org.scalatest.AsyncFunSuite
 import org.yaml.render.JsonRender
 
@@ -2067,6 +2068,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report <- validation.validate(doc, ProfileNames.RAML, ProfileNames.RAML)
     } yield {
       assert(!report.conforms)
+    }
+  }
+
+  test("Test validate multiple tags") {
+    ExecutionLog.start()
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "/multiple-tags.json", platform, OasJsonHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.OAS, ProfileNames.OAS)
+    } yield {
+      assert(report.conforms)
     }
   }
 }
