@@ -100,7 +100,7 @@ Maven example:
 Execute the command
 
 ```bash
-npm install --save amf-client-js@1.0.1
+npm install --save amf-client-js
 ```
 
 Using *Node.js* just import it using:
