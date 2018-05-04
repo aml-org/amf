@@ -7,6 +7,7 @@ import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel.{Settings => SettingsField, _}
 import amf.plugins.domain.webapi.models.{Parameter, Response}
 import org.yaml.model.YPart
+import amf.core.utils.Strings
 
 class SecurityScheme(override val fields: Fields, override val annotations: Annotations)
     extends DomainElement
@@ -36,9 +37,9 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
 
   override def adopted(parent: String): this.type =
     if (parent.contains("#")) {
-      withId(parent + "/" + componentId)
+      withId(parent + "/" + componentId.urlEncodeSimple)
     } else {
-      withId(parent + "#" + componentId)
+      withId(parent + "#" + componentId.urlEncodeSimple)
     }
 
   def withHeader(name: String): Parameter = {

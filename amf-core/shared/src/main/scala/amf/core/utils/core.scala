@@ -57,6 +57,18 @@ package object utils {
         .replaceAll(">", "%3E") // TODO encode
     }
 
+    /** Url encoded string. */
+    def urlEncodeSimple: String = {
+      str
+        .replaceAll("\\|", "%7C")
+        .replaceAll(":", "%3A")
+        .replaceAll(" ", "%20")
+        .replaceAll("\\{", "%7B")
+        .replaceAll("\\}", "%7D")
+        .replaceAll("<", "%3C")
+        .replaceAll(">", "%3E") // TODO encode
+    }
+
     def urlDecoded: String = {
       str
         .replaceAll("%7C", "\\|")

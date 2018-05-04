@@ -28,9 +28,9 @@ case class CustomDomainProperty(fields: Fields, annotations: Annotations)
   override def adopted(parent: String): this.type =
     if (Option(this.id).isEmpty) {
       if (parent.contains("#")) {
-        withId(parent + "/" + componentId)
+        withId(parent + "/" + componentId.urlEncodeSimple)
       } else {
-        withId(parent + "#" + componentId)
+        withId(parent + "#" + componentId.urlEncodeSimple)
       }
     } else { this }
 

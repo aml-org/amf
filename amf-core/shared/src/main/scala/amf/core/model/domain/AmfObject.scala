@@ -2,6 +2,7 @@ package amf.core.model.domain
 
 import amf.core.metamodel.Field
 import amf.core.parser.{Annotations, Fields}
+import amf.core.utils.Strings
 
 /**
   * Created by pedro.colunga on 8/15/17.
@@ -31,7 +32,7 @@ trait AmfObject extends AmfElement {
 
   /** Call after object has been adopted by specified parent. */
   final def simpleAdoption(parent: String): this.type = {
-    withId(parent + componentId)
+    withId(parent + componentId.urlEncodeSimple)
   }
 
   /** Call after object has been adopted by specified parent. */
