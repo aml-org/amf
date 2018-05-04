@@ -11,7 +11,6 @@ import amf.plugins.domain.shapes.models.TypeDef.NumberType
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 import amf.plugins.features.validation.ParserSideValidations
-import com.sun.xml.internal.org.jvnet.fastinfoset.Vocabulary
 import org.yaml.model.YDocument.EntryBuilder
 
 class AMFShapeValidations(shape: Shape) {
@@ -42,7 +41,7 @@ class AMFShapeValidations(shape: Shape) {
     }
   }
 
-  def validationId(shape: Shape) = {
+  def validationId(shape: Shape): String = {
     shape match {
       case rec: RecursiveShape if rec.fixpoint.option().isDefined =>
         validationLiteralId(rec.fixpoint.value())
@@ -62,10 +61,13 @@ class AMFShapeValidations(shape: Shape) {
 
   protected def canonicalShape(): Shape = CanonicalShapePipeline(shape)
 
-  protected def checkLogicalConstraints(context: String, parent: Shape, validation: ValidationSpecification, acc: List[ValidationSpecification]): List[ValidationSpecification] = {
+  protected def checkLogicalConstraints(context: String,
+                                        parent: Shape,
+                                        validation: ValidationSpecification,
+                                        acc: List[ValidationSpecification]): List[ValidationSpecification] = {
     var computedValidation = validation
     var nestedConstraints  = acc
-    var count             = 0
+    var count              = 0
 
     if (Option(parent.and).isDefined && parent.and.nonEmpty) {
       parent.and.foreach { shape =>
@@ -104,7 +106,7 @@ class AMFShapeValidations(shape: Shape) {
   }
 
   protected def anyConstraints(context: String, any: AnyShape): List[ValidationSpecification] = {
-    val msg                                              = s"Data at $context must be a valid shape"
+    val msg = s"Data at $context must be a valid shape"
 
     val validation = new ValidationSpecification(
       name = validationId(any),
@@ -146,23 +148,26 @@ class AMFShapeValidations(shape: Shape) {
       propertyConstraints = Seq()
     )
 
-    nestedConstraints ++= emitShapeValidations(context + s"/items", array.items)
+    if (array.fields.entry(ArrayShapeModel.Items).isDefined) {
+      nestedConstraints ++= emitShapeValidations(context + "/items", array.items)
 
-    val itemsValidationId = validationId(array) + "/prop"
-    val itemsConstraint = PropertyConstraint(
-      ramlPropertyId = (Namespace.Rdf + "member").iri(),
-      name = itemsValidationId,
-      message = Some(s"Array items at $context must be valid"),
-      node = Some(validationId(array.items))
-    )
-    validation = validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(itemsConstraint))
+      val itemsValidationId = validationId(array) + "/prop"
+      val itemsConstraint = PropertyConstraint(
+        ramlPropertyId = (Namespace.Rdf + "member").iri(),
+        name = itemsValidationId,
+        message = Some(s"Array items at $context must be valid"),
+        node = Some(validationId(array.items))
+      )
+
+      validation = validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(itemsConstraint))
+    }
+
     validation = checkMinItems(context, validation, array)
     validation = checkMaxItems(context, validation, array)
     validation = checkArrayType(array, context, validation)
 
     checkLogicalConstraints(context, array, validation, nestedConstraints)
   }
-
 
   protected def tupleConstraints(context: String, tuple: TupleShape): List[ValidationSpecification] = {
     val msg                                              = s"Tuple at $context must be valid"
@@ -176,15 +181,16 @@ class AMFShapeValidations(shape: Shape) {
       propertyConstraints = Seq()
     )
 
-    val itemsConstraints = tuple.items.zipWithIndex.map { case (item, i) =>
-      nestedConstraints ++= emitShapeValidations(context + s"/items/", item)
-      val itemsValidationId = validationId(item) + "/prop"
-      PropertyConstraint(
-        ramlPropertyId = (Namespace.Data + s"pos$i").iri(),
-        name = itemsValidationId,
-        message = Some(s"Tupe items at $context/items pos $i must be valid"),
-        node = Some(validationId(item))
-      )
+    val itemsConstraints = tuple.items.zipWithIndex.map {
+      case (item, i) =>
+        nestedConstraints ++= emitShapeValidations(context + s"/items/", item)
+        val itemsValidationId = validationId(item) + "/prop"
+        PropertyConstraint(
+          ramlPropertyId = (Namespace.Data + s"pos$i").iri(),
+          name = itemsValidationId,
+          message = Some(s"Tupe items at $context/items pos $i must be valid"),
+          node = Some(validationId(item))
+        )
     }
 
     validation = validation.copy(propertyConstraints = validation.propertyConstraints ++ itemsConstraints)
@@ -204,7 +210,7 @@ class AMFShapeValidations(shape: Shape) {
       message = "Recursive validation failure"
     )
     List(validation)
-    */
+     */
     Nil
   }
 
@@ -332,7 +338,7 @@ class AMFShapeValidations(shape: Shape) {
                     }
                     l.obj { v =>
                       v.entry((Namespace.Shacl + "datatype").iri(),
-                        _.obj(_.entry("@id", (Namespace.Shapes + "dateTimeOnly").iri().trim)))
+                              _.obj(_.entry("@id", (Namespace.Shapes + "dateTimeOnly").iri().trim)))
                     }
                 }
               ))

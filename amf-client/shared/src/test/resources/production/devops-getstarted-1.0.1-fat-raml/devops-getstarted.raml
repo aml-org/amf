@@ -1,0 +1,30 @@
+#%RAML 1.0
+title: DevOps-GetStarted
+version: v1
+mediaType: application/json
+description: This service provides functionality that can be used in day-to-day DevOps processes.
+
+/resolveAndBroadcast:
+  post:
+    description: Resolves a PagerDuty incident and broadcasts to StatusPage.io and to Twitter. Consumes the Resolve & Broadcast APIs.
+    queryParameters:
+      token: string
+      response_url: string
+      channel_id: string
+      team_domain: string
+      user_id: string
+      text: string
+      user_name: string
+      command: string
+      team_id: string
+      channel_name: string
+      trigger_id: string
+    responses: 
+      200:
+        body: 
+          application/json:
+            type: object
+            properties: 
+              incidents:
+                type: array
+            example: {"incidents":[{}],"social":[{}]}
