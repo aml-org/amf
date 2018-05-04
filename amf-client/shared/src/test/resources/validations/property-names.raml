@@ -1,0 +1,23 @@
+#%RAML 1.0
+title: Property names
+description: Example with properties that contains special names
+version: '1.0'
+mediaType: application/json
+protocols:
+  - HTTP
+baseUri: 'http://blablabla.asd.io'
+/salesforce:
+  /case:
+    /by-constraint:
+      post:
+        responses:
+          '200':
+            description: When constraint satisfied
+            body:
+              application/json:
+                type: object
+                example:
+                  name: pepe
+                  lastname: perez
+                  type: Person
+                  properties: blabla

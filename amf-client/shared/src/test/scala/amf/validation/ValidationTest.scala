@@ -2082,4 +2082,14 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.conforms)
     }
   }
+
+  test("Test properties with special names") {
+    for {
+      validation <- Validation(platform)
+      doc        <- AMFCompiler(validationsPath + "property-names.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(doc, ProfileNames.AMF)
+    } yield {
+      assert(report.conforms)
+    }
+  }
 }
