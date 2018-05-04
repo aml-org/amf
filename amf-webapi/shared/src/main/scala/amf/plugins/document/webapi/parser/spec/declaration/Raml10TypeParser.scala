@@ -689,7 +689,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
   def parseArrayType(): Shape = {
     val shape = node.to[YMap] match {
       case Right(map) => DataArrangementParser(name, ast, map, (shape: Shape) => adopt(shape)).parse()
-      case Left(_)    => ArrayShape(ast).withName(name)
+      case Left(_)    => adopt(ArrayShape(ast).withName(name))
     }
     shape
   }
