@@ -167,7 +167,6 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     }
   }
 
-
   private def ramlInclude(node: YNode): Unit = {
     node.value match {
       case scalar: YScalar => references += (scalar.text, LinkReference, node)
@@ -179,7 +178,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
                                          ctx: ParserContext,
                                          context: Context,
                                          environment: Environment): Future[ParsedReference] = {
-    resolveUnitDocument(reference) match {
+    resolveUnitDocument(reference, ctx) match {
       case Right(document) =>
         val parsed = ParsedDocument(None, document)
 
@@ -203,8 +202,8 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
               })
             })
             .recover {
-              case e: URISyntaxException              => None
-              case e: FileNotFound if r.isInferred()  => None
+              case e: URISyntaxException             => None
+              case e: FileNotFound if r.isInferred() => None
             }
         })
 
@@ -216,12 +215,12 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
   private def isRamlOrYaml(encodes: ExternalDomainElement) =
     plugin.documentSyntaxes.contains(encodes.mediaType.value())
 
-  private def resolveUnitDocument(reference: ParsedReference): Either[String, YDocument] = {
+  private def resolveUnitDocument(reference: ParsedReference, ctx: ParserContext): Either[String, YDocument] = {
     reference.unit match {
 
       case e: ExternalFragment if isRamlOrYaml(e.encodes) =>
         Right(
-          YamlParser(e.encodes.raw.value())
+          YamlParser(e.encodes.raw.value())(ctx)
             .withIncludeTag("!include")
             .parse()
             .collectFirst({ case d: YDocument => d })

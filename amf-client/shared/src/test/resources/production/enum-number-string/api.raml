@@ -1,0 +1,10 @@
+#%RAML 1.0
+title: Inspections
+
+/inspections:
+  post:
+    body:
+      application/json:
+        type: !include schema.json
+        examples:
+          nocategory: !include example.json

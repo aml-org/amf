@@ -97,26 +97,26 @@ class ValidationJSONLDEmitter(targetProfile: String) {
       if (validation.andConstraints.nonEmpty) {
         p.entry((Namespace.Shacl + "and").iri(), _.obj {
           _.entry("@list",
-            _.list(l =>
-              validation.andConstraints.foreach { v =>
-                link(l, v)
-              }))
+                  _.list(l =>
+                    validation.andConstraints.foreach { v =>
+                      link(l, v)
+                  }))
         })
       }
 
       if (validation.xoneConstraints.nonEmpty) {
         p.entry((Namespace.Shacl + "xone").iri(), _.obj {
           _.entry("@list",
-            _.list(l =>
-              validation.xoneConstraints.foreach { v =>
-                link(l, v)
-              }))
+                  _.list(l =>
+                    validation.xoneConstraints.foreach { v =>
+                      link(l, v)
+                  }))
         })
       }
 
       if (validation.notConstraint.isDefined) {
         p.entry((Namespace.Shacl + "not").iri(), _.list { l =>
-            link(l, validation.notConstraint.get)
+          link(l, validation.notConstraint.get)
         })
       }
 
@@ -434,7 +434,7 @@ class ValidationJSONLDEmitter(targetProfile: String) {
           p.entry("@type", dt)
         })
       case None =>
-        if (s.matches("[\\d]+")) {
+        if (s.matches("[1-9][\\d]*")) { // if the number starts with 0, its a string and should be quoted
           b.obj(_.entry("@value", raw(_, s, YType.Int)))
         } else if (s == "true" || s == "false") {
           b.obj(_.entry("@value", raw(_, s, YType.Bool)))
