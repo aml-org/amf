@@ -58,6 +58,9 @@ object ExtendsHelper {
     val operation: Operation =
       RuntimeValidator.nestedValidation(mergeMissingSecuritySchemes) { // we don't emit validation here, final result will be validated after merging
         ctx.adapt(name) { ctxForTrait =>
+          (ctxForTrait.declarations.resourceTypes ++ ctxForTrait.declarations.traits).foreach { e =>
+            ctx.declarations += e._2
+          }
           ctx.factory.operationParser(entry, _ => Operation(), true).parse()
         }
       }
@@ -119,6 +122,9 @@ object ExtendsHelper {
     }
     RuntimeValidator.nestedValidation(mergeMissingSecuritySchemes) { // we don't emit validation here, final result will be validated after mergin
       ctx.adapt(name) { ctxForTrait =>
+        (ctxForTrait.declarations.resourceTypes ++ ctxForTrait.declarations.traits).foreach { e =>
+          ctx.declarations += e._2
+        }
         ctxForTrait.factory
           .endPointParser(endPointEntry, _ => EndPoint().withId(extensionId + "/applied"), None, collector, true)
           .parse()
@@ -179,14 +185,15 @@ object ExtendsHelper {
         ctx.declarations += (f.location, f)
         nestedDeclarations(ctx, f)
       case m: Module =>
-        model.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases.foreach { case(alias,(fullUrl, relativeUrl)) =>
-          if (m.id == fullUrl) {
-            val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext())
-            m.declares.foreach { declaration =>
-              processDeclaration(declaration, nestedCtx, m)
+        model.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases.foreach {
+          case (alias, (fullUrl, relativeUrl)) =>
+            if (m.id == fullUrl) {
+              val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext())
+              m.declares.foreach { declaration =>
+                processDeclaration(declaration, nestedCtx, m)
+              }
+              ctx.declarations.libraries += (alias -> nestedCtx.declarations)
             }
-            ctx.declarations.libraries += (alias -> nestedCtx.declarations)
-          }
         }
         nestedDeclarations(ctx, m)
     }
@@ -216,7 +223,7 @@ object ExtendsHelper {
   }
 }
 
-class CustomRaml08WebApiContext extends Raml08WebApiContext("", Nil,ParserContext()) {
+class CustomRaml08WebApiContext extends Raml08WebApiContext("", Nil, ParserContext()) {
   override def handle[T](error: YError, defaultValue: T): T = defaultValue
   override def violation(id: String,
                          node: String,
@@ -232,7 +239,7 @@ class CustomRaml08WebApiContext extends Raml08WebApiContext("", Nil,ParserContex
   override def handle(node: YPart, e: SyamlException): Unit       = {}
 }
 
-class CustomRaml10WebApiContext extends Raml10WebApiContext("", Nil,ParserContext()) {
+class CustomRaml10WebApiContext extends Raml10WebApiContext("", Nil, ParserContext()) {
   override def handle[T](error: YError, defaultValue: T): T = defaultValue
   override def violation(id: String,
                          node: String,

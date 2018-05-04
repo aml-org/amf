@@ -1,0 +1,29 @@
+#%RAML 1.0 Library
+
+resourceTypes:
+
+  readOnlyCollectionMember:
+      description: |
+        an individual <<resourcePathName | !singularize>> within the collection
+        of <<resourcePathName | !pluralize>>
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                type: <<collectionMemberResponseType>>
+  updatableCollectionMember:
+    type:
+      readOnlyCollectionMember:
+        collectionMemberResponseType: <<collectionMemberResponseType>>
+    put:
+      responses:
+        200:
+  collectionMember:
+    type:
+      updatableCollectionMember:
+        collectionMemberPrototypeType: <<collectionMemberPrototypeType>>
+        collectionMemberResponseType: <<collectionMemberResponseType>>
+    delete:
+      responses:
+        200:
