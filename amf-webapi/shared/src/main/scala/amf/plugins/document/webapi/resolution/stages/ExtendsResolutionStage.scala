@@ -31,14 +31,14 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
 
   /** Default to raml10 context. */
   def ctx(parserRun: Int): RamlWebApiContext = profile match {
-    case ProfileNames.RAML08 => new Raml08WebApiContext("", Nil,ParserContext(parserCount = parserRun))
-    case _                   => new Raml10WebApiContext("", Nil,ParserContext(parserCount = parserRun))
+    case ProfileNames.RAML08 => new Raml08WebApiContext("", Nil, ParserContext(parserCount = parserRun))
+    case _                   => new Raml10WebApiContext("", Nil, ParserContext(parserCount = parserRun))
   }
 
   override def resolve(model: BaseUnit): BaseUnit =
     model.transform(findExtendsPredicate, transform(model))
 
-  def asEndPoint(r: ParametrizedResourceType, context: Context): EndPoint = {
+  def asEndPoint(r: ParametrizedResourceType, context: Context, apiContext: RamlWebApiContext): EndPoint = {
     Option(r.target) match {
       case Some(rt: ResourceType) =>
         val node = rt.dataNode.cloneNode()
@@ -52,7 +52,7 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
           r.id,
           Option(r.target).flatMap(t => ExtendsHelper.findUnitLocationOfElement(t.id, context.model)),
           keepEditingInfo,
-          Some(ctx(context.model.parserRun.get))
+          Some(apiContext)
         )
 
       case _ => throw new Exception(s"Cannot find target for parametrized resource type ${r.id}")
@@ -65,20 +65,25 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
       case other       => Some(other)
     }
 
-  private def collectResourceTypes(endpoint: EndPoint, context: Context): ListBuffer[EndPoint] = {
+  private def collectResourceTypes(endpoint: EndPoint,
+                                   context: Context,
+                                   apiContext: RamlWebApiContext): ListBuffer[EndPoint] = {
     val result = ListBuffer[EndPoint]()
-    collectResourceTypes(result, endpoint, context)
+    collectResourceTypes(result, endpoint, context, apiContext)
     result
   }
 
-  private def collectResourceTypes(collector: ListBuffer[EndPoint], endpoint: EndPoint, initial: Context): Unit = {
+  private def collectResourceTypes(collector: ListBuffer[EndPoint],
+                                   endpoint: EndPoint,
+                                   initial: Context,
+                                   apiContext: RamlWebApiContext): Unit = {
     endpoint.resourceType.foreach { resourceType =>
       val context = initial.add(resourceType.variables)
 
-      val resolved = asEndPoint(resourceType, context)
+      val resolved = asEndPoint(resourceType, context, apiContext)
       collector += resolved
 
-      collectResourceTypes(collector, resolved, context)
+      collectResourceTypes(collector, resolved, context, apiContext)
     }
   }
 
@@ -95,7 +100,7 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
       .add("resourcePath", resourcePath(endpoint))
       .add("resourcePathName", resourcePathName(endpoint))
 
-    val resourceTypes = collectResourceTypes(endpoint, context)
+    val resourceTypes = collectResourceTypes(endpoint, context, ctx(context.model.parserRun.get))
     apply(endpoint, resourceTypes) // Apply ResourceTypes to EndPoint
 
     val resolver = TraitResolver()
@@ -179,7 +184,7 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
     }
 
     private def resolveTraits(resolver: TraitResolver, parameterized: Seq[ParametrizedTrait], context: Context) = {
-      parameterized.map(resolver.resolve(_, context))
+      parameterized.map(resolver.resolve(_, context, ctx(context.model.parserRun.get)))
     }
   }
 
@@ -191,13 +196,16 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
 
     val resolved: mutable.Map[Key, TraitBranch] = mutable.Map()
 
-    def resolve(t: ParametrizedTrait, context: Context): TraitBranch = {
+    def resolve(t: ParametrizedTrait, context: Context, apiContext: RamlWebApiContext): TraitBranch = {
       val local = context.add(t.variables)
       val key   = Key(t.target.id, local)
-      resolved.getOrElseUpdate(key, resolveOperation(key, t, context))
+      resolved.getOrElseUpdate(key, resolveOperation(key, t, context, apiContext))
     }
 
-    private def resolveOperation(key: Key, parameterized: ParametrizedTrait, context: Context): TraitBranch = {
+    private def resolveOperation(key: Key,
+                                 parameterized: ParametrizedTrait,
+                                 context: Context,
+                                 apiContext: RamlWebApiContext): TraitBranch = {
       val local = context.add(parameterized.variables)
 
       Option(parameterized.target) match {
@@ -214,10 +222,10 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
             t.id,
             ExtendsHelper.findUnitLocationOfElement(t.id, context.model),
             keepEditingInfo,
-            Some(ctx(context.model.parserRun.get))
+            Some(apiContext)
           )
 
-          val children = op.traits.map(resolve(_, context))
+          val children = op.traits.map(resolve(_, context, apiContext))
 
           TraitBranch(key, op, children)
         case m => throw new Exception(s"Looking for trait but $m was found on model ${context.model}")

@@ -1,0 +1,58 @@
+#%RAML 1.0 Library
+
+usage: |
+  provides a set of resusable data types that commonly
+  occur in type definitions
+
+types:
+
+  url:
+    type: string
+
+  resourceId:
+    type: string
+   # pattern: ^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$
+    description: |
+      the unique object identifier exposed to external clients of a service.
+      this is a synthetic key and should NEVER be equal to any internal property
+      or key of the object. it is recommended that these values follow
+      the format specified in RFC 4122 [https://www.ietf.org/rfc/rfc4122.txt].
+
+  
+  Identified:
+    type: object
+    properties:
+      identifier?: resourceId
+  
+  Lifetime:
+    type: object
+    description: |
+      an object that has a finite lifespan. the object is considered
+      to be valid at a point in time if:
+      ```
+      validFrom <= pointInTime < validUntil
+      ```
+    properties:
+      validFrom:
+        type: datetime
+        description: |
+          the instant when the object becomes valid
+        required: false
+        default: 1970-01-01T00:00:00.000Z
+      validUntil:
+        type: datetime
+        description: |
+          the instant at which the object is no longer valid
+        required: false
+        default: 2100-01-01T00:00:00.000Z
+
+  language:
+    type: string
+    enum: [
+      hy, zh, nl, en, eo, fr, ka, de, el, it,
+      ja, ko, fa, pl, pt, ro, es, sv, tr, ur,
+      ar, eu, be, bn, bo, bs, bg, my, ca, cs,
+      da, fi, ka, ga, he, hi, hu, is, id, lv,
+      li, lt, lb, ne, no, pa, ro, ru, sl, sw,
+      tl, th, uk
+    ]

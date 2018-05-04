@@ -50,6 +50,7 @@ class ProdcutionValidationTest extends RamlResolutionTest {
 class ProductionResolutionTest extends RamlResolutionTest {
   override val basePath = "amf-client/shared/src/test/resources/production/"
   val completeCyclePath = "amf-client/shared/src/test/resources/upanddown/"
+  val validationPath    = "amf-client/shared/src/test/resources/validations/"
 
   test("Resolves googleapis.compredictionv1.2swagger.raml") {
     cycle("googleapis.compredictionv1.2swagger.raml",
@@ -83,9 +84,12 @@ class ProductionResolutionTest extends RamlResolutionTest {
   }
 
   test("american-flights-api example") {
-    cycle("american-flights-api.raml", "american-flights-api.resolved.raml", RamlYamlHint, Raml, basePath + "american-flights-api/")
+    cycle("american-flights-api.raml",
+          "american-flights-api.resolved.raml",
+          RamlYamlHint,
+          Raml,
+          basePath + "american-flights-api/")
   }
-
 
   test("version-manager example") {
     cycle("version_manager.raml", "version_manager.resolved.raml", RamlYamlHint, Raml, basePath + "version-manager/")
@@ -129,8 +133,6 @@ class ProductionResolutionTest extends RamlResolutionTest {
     cycle("crossfiles2.raml", "crossfiles2.resolved.raml", RamlYamlHint, Raml, basePath + "definitions-loops/")
   }
 
-
-
   test("test bad tabulation at end flow map of traits definitions") {
     cycle("healthcare-system-api.raml",
           "healthcare-system-api.resolved.raml",
@@ -147,6 +149,9 @@ class ProductionResolutionTest extends RamlResolutionTest {
           completeCyclePath)
   }
 
+  test("test nullpointer in resolution") {
+    cycle("api.raml", "api.resolved.raml", RamlYamlHint, Raml, validationPath + "retail-api-6.0.0-fat-raml/")
+  }
 }
 
 class OASProductionResolutionTest extends OasResolutionTest {
@@ -164,7 +169,7 @@ class OASProductionResolutionTest extends OasResolutionTest {
 
 class Raml08ResolutionTest extends RamlResolutionTest {
   override val basePath: String = "amf-client/shared/src/test/resources/resolution/08/"
-  val productionPath: String = "amf-client/shared/src/test/resources/production/"
+  val productionPath: String    = "amf-client/shared/src/test/resources/production/"
 
   test("Resolve WebForm 08 Types test") {
     cycle("mincount-webform-types.raml", "mincount-webform-types.resolved.raml", RamlYamlHint, Raml08)
