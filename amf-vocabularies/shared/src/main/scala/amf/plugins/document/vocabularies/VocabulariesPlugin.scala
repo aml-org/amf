@@ -14,7 +14,7 @@ import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.RuntimeValidator
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels, ValidationResultProcessor}
-import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId}
+import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, RefInclude}
 import amf.plugins.document.vocabularies.emitters.dialects.{DialectEmitter, RamlDialectLibraryEmitter}
 import amf.plugins.document.vocabularies.emitters.instances.DialectInstancesEmitter
 import amf.plugins.document.vocabularies.emitters.vocabularies.VocabularyEmitter
@@ -22,7 +22,7 @@ import amf.plugins.document.vocabularies.metamodel.document._
 import amf.plugins.document.vocabularies.metamodel.domain._
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectLibrary, Vocabulary}
 import amf.plugins.document.vocabularies.parser.ExtensionHeader
-import amf.plugins.document.vocabularies.parser.common.RAMLExtensionsReferenceHandler
+import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReferenceHandler
 import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, DialectsParser}
 import amf.plugins.document.vocabularies.parser.instances.{DialectInstanceContext, DialectInstanceParser}
 import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
@@ -58,12 +58,12 @@ object DialectHeader extends RamlHeaderExtractor with JsonHeaderExtractor {
   def apply(root: Root): Boolean = comment(root) match {
     case Some(comment: YComment) =>
       comment.metaText match {
-        case t if t.startsWith("%RAML 1.0 Vocabulary") => true
-        case t if t.startsWith("%RAML 1.0 Dialect")    => true
-        case t if t.startsWith("%RAML 1.0")            => false
-        case t if t.startsWith("%RAML 0.8")            => false
-        case t if t.startsWith("%")                    => true
-        case _                                         => false
+        case t if t.startsWith("%Vocabulary 1.0") => true
+        case t if t.startsWith("%Dialect 1.0")    => true
+        case t if t.startsWith("%RAML 1.0")       => false
+        case t if t.startsWith("%RAML 0.8")       => false
+        case t if t.startsWith("%")               => true
+        case _                                    => false
       }
     case _ => dialect(root) match {
       case Some(_) => true
@@ -109,7 +109,8 @@ object VocabulariesPlugin
 
   override def serializableAnnotations(): Map[String, AnnotationGraphLoader] = Map(
     "aliases-location" -> AliasesLocation,
-    "custom-id"        -> CustomId
+    "custom-id"        -> CustomId,
+    "ref-include"      -> RefInclude
   )
 
   /**
@@ -201,7 +202,7 @@ object VocabulariesPlugin
     case _                         => false
   }
 
-  override def referenceHandler(): ReferenceHandler = new RAMLExtensionsReferenceHandler(registry)
+  override def referenceHandler(): ReferenceHandler = new SyntaxExtensionsReferenceHandler(registry)
 
   override def dependencies(): Seq[AMFPlugin] = Seq()
 
