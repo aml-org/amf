@@ -11,7 +11,7 @@ import amf.core.plugins.AMFDocumentPlugin
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.services.RuntimeCompiler
-import amf.core.utils.Strings
+import amf.core.utils.{Strings, UrlNormalizer}
 import amf.internal.environment.Environment
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -36,7 +36,8 @@ class AMFCompiler(val rawUrl: String,
                   private val baseContext: Option[ParserContext] = None,
                   val env: Environment = Environment()) {
 
-  val url: String                = new java.net.URI(escapeFileSystemPath(rawUrl)).normalize().toString
+  val url: String = rawUrl.normalizePath
+
   private val context: Context   = base.map(_.update(url)).getOrElse(core.remote.Context(remote, url))
   private val location           = context.current
   private val ctx: ParserContext = baseContext.getOrElse(ParserContext(url))
@@ -59,8 +60,8 @@ class AMFCompiler(val rawUrl: String,
         c != '\n' && c != '\t' && c != '\r' && c != ' '
       } match {
         case Some(c) if c == '{' || c == '[' =>
-          ExecutionLog.log (s"AMFCompiler#autodetectSyntax: auto detected application/json media type")
-          Some ("application/json")
+          ExecutionLog.log(s"AMFCompiler#autodetectSyntax: auto detected application/json media type")
+          Some("application/json")
         case _ => None
       }
     }
@@ -91,8 +92,7 @@ class AMFCompiler(val rawUrl: String,
             AMFPluginsRegistry.syntaxPluginForMediaType(mime).flatMap(_.parse(mime, content.stream, ctx))
           } catch {
             case _: Exception => None // This is just a parsing attempt, it can go wrong
-          }
-        )
+        })
       }
 
     parsed match {
@@ -232,7 +232,6 @@ class AMFCompiler(val rawUrl: String,
       throw new Exception(s"Cannot parse document with mime type ${content.mime.getOrElse("none")}")
   }
 
-  protected def escapeFileSystemPath(rawUrl: String): String = rawUrl.replace(" ", "%20")
 }
 
 object AMFCompiler {

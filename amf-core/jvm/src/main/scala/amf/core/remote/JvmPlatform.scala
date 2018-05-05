@@ -1,9 +1,8 @@
 package amf.core.remote
 
-import java.net.URI
-
 import amf.client.resource.{FileResourceLoader, HttpResourceLoader}
 import amf.core.unsafe.PlatformBuilder
+import amf.core.utils.UrlNormalizer
 import amf.internal.resource.{ResourceLoader, ResourceLoaderAdapter}
 import org.mulesoft.common.io.{FileSystem, Fs}
 
@@ -25,7 +24,7 @@ class JvmPlatform extends Platform {
   override def customValidationLibraryHelperLocation: String = "classpath:validations/amf_validation.js"
 
   override def resolvePath(path: String): String = {
-    val res = new URI(path).normalize.toString
+    val res = path.normalizePath
     if (res.startsWith("file://") || res.startsWith("file:///")) {
       res
     } else if (res.startsWith("file:/")) {
