@@ -4,7 +4,7 @@ import amf.core.parser.{LibraryReference, LinkReference, ReferenceHandler, _}
 import amf.plugins.document.vocabularies.DialectsRegistry
 import org.yaml.model._
 
-class RAMLExtensionsReferenceHandler(registry: DialectsRegistry) extends ReferenceHandler {
+class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry) extends ReferenceHandler {
   private val collector = ReferenceCollector()
 
   override def collect(parsed: ParsedDocument, ctx: ParserContext): ReferenceCollector = {
@@ -62,13 +62,23 @@ class RAMLExtensionsReferenceHandler(registry: DialectsRegistry) extends Referen
   private def links(part: YPart): Unit = {
     part match {
       case entry: YMapEntry =>
-        if (entry.key.as[YScalar].text == "$dialect") {
-          val dialectRef = entry.value
-          if (!registry.knowsHeader(s"%${dialectRef.as[String]}")) {
-            ramlInclude(dialectRef.split("#").head)
-          }
-        } else {
-          part.children.foreach(links)
+        entry.key.as[YScalar].text match {
+          case "$dialect" => // $dialect link
+            val dialectRef = entry.value
+            if (!registry.knowsHeader(s"%${dialectRef.as[String]}")) {
+              ramlInclude(dialectRef.split("#").head)
+            }
+
+          case "$include" => // !include as $include link
+            val includeRef = entry.value
+            ramlInclude(includeRef)
+
+          case "$ref" => // $ref link
+            val includeRef = entry.value
+            ramlInclude(includeRef)
+
+          case _ => // no link, recur
+            part.children.foreach(links)
         }
       case node: YNode if node.tagType == YType.Include => ramlInclude(node)
       case _                                            => part.children.foreach(links)

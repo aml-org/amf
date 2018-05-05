@@ -11,7 +11,7 @@ import amf.core.parser.Position.ZERO
 import amf.core.parser.{FieldEntry, Position, Value}
 import amf.core.utils._
 import amf.plugins.document.vocabularies.VocabulariesPlugin
-import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId}
+import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, RefInclude}
 import amf.plugins.document.vocabularies.emitters.common.IdCounter
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
@@ -288,8 +288,16 @@ case class DialectNodeEmitter(node: DialectDomainElement,
     node.annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
 
   protected def emitLink(node: DialectDomainElement): PartEmitter = new PartEmitter {
-    override def emit(b: PartBuilder): Unit =
-      b += YNode.include(node.includeName)
+    override def emit(b: PartBuilder): Unit = {
+      if (node.annotations.contains(classOf[RefInclude])) {
+        b.obj { m =>
+          m.entry("$include", node.includeName)
+        }
+      } else {
+        b += YNode.include(node.includeName)
+      }
+    }
+
 
     override def position(): Position =
       node.annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
