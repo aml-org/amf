@@ -480,14 +480,17 @@ object GraphEmitter extends MetaModelTypeMapping {
       def emit(b: PartBuilder): Unit = {
         // before emitting, we remove the link target to avoid loops and set
         // the fresh value for link-id
-        elementWithLink.linkTarget match {
-          case Some(target) =>
-            elementWithLink.set(LinkableElementModel.TargetId, target.id)
-            elementWithLink.fields.removeField(LinkableElementModel.Target)
-          case _ => // ignore
+        val savedLinkTarget = elementWithLink.linkTarget
+        elementWithLink.linkTarget.foreach { target =>
+          elementWithLink.set(LinkableElementModel.TargetId, target.id)
+          elementWithLink.fields.removeField(LinkableElementModel.Target)
         }
         b.obj { o =>
           traverse(elementWithLink, o, ctx)
+        }
+        // we reset the link target after emitting
+        savedLinkTarget.foreach { target =>
+          elementWithLink.fields.setWithoutId(LinkableElementModel.Target, target)
         }
       }
 

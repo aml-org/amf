@@ -14,6 +14,8 @@ case class ResourceType(override private[amf] val _internal: InternalResourceTyp
   @JSExportTopLevel("model.domain.ResourceType")
   def this() = this(InternalResourceType())
 
+  override def linkTarget: ClientOption[DomainElement] = _internal.linkTarget.asClient
+
   override def linkCopy(): ResourceType = _internal.linkCopy()
 
   def asEndpoint[T <: BaseUnit](unit: T, profile: String = ProfileNames.RAML): EndPoint =
