@@ -177,8 +177,14 @@ trait MinShapeAlgorithm extends RestrictionComputation {
     val superItems      = superArray.items
     val baseItemsOption = Option(baseArray.items)
 
-    val newItems = baseItemsOption.fold(superItems)(baseItems => minShape(baseItems, superItems))
-    baseArray.withItems(newItems)
+    val newItems = baseItemsOption
+      .map { baseItems =>
+        minShape(baseItems, superItems)
+      }
+      .orElse(Option(superItems))
+    newItems.foreach { ni =>
+      baseArray.withItems(ni)
+    }
 
     computeNarrowRestrictions(ArrayShapeModel.fields,
                               baseArray,
