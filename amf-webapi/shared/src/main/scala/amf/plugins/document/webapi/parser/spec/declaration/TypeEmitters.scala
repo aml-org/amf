@@ -1117,7 +1117,7 @@ case class OasTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Fie
     }
   }
 
-  def entries(): Seq[EntryEmitter] = emitters() map { case e: EntryEmitter => e }
+  def entries(): Seq[EntryEmitter] = emitters() collect { case e: EntryEmitter => e }
 
   def nilUnion(union: UnionShape): Boolean = union.anyOf.size == 1 && union.anyOf.head.annotations.contains(classOf[NilUnion])
 }
