@@ -10,7 +10,7 @@ import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{FieldEntry, Position, Value}
 import amf.core.utils._
-import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
+import amf.plugins.document.vocabularies.VocabulariesPlugin
 import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId}
 import amf.plugins.document.vocabularies.emitters.common.IdCounter
 import amf.plugins.document.vocabularies.model.document._
@@ -54,7 +54,7 @@ trait DialectEmitterHelper {
   }
 
   def findNodeInRegistry(nodeMappingId: String): Option[(Dialect, NodeMapping)] =
-    RAMLVocabulariesPlugin.registry.findNode(nodeMappingId)
+    VocabulariesPlugin.registry.findNode(nodeMappingId)
 }
 
 case class ReferencesEmitter(baseUnit: BaseUnit, ordering: SpecOrdering, aliases: Map[String, (String, String)])
@@ -87,7 +87,7 @@ case class ReferenceEmitter(reference: BaseUnit, ordering: SpecOrdering, aliases
   override def position(): Position = ZERO
 }
 
-case class RamlDialectInstancesEmitter(instance: DialectInstance, dialect: Dialect) extends DialectEmitterHelper {
+case class DialectInstancesEmitter(instance: DialectInstance, dialect: Dialect) extends DialectEmitterHelper {
   val ordering: SpecOrdering                 = Lexical
   val aliases: Map[String, (String, String)] = collectAliases()
 

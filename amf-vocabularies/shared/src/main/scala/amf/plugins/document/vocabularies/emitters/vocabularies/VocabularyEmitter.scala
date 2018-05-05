@@ -209,7 +209,7 @@ private case class ImportEmitter(vocabularyReference: VocabularyReference,
     vocabularyReference.annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
 }
 
-case class RamlVocabularyEmitter(vocabulary: Vocabulary) extends AliasMapper {
+case class VocabularyEmitter(vocabulary: Vocabulary) extends AliasMapper {
 
   val aliasMapping: Map[String, String] = buildAliasMapping(vocabulary)
 
@@ -219,7 +219,7 @@ case class RamlVocabularyEmitter(vocabulary: Vocabulary) extends AliasMapper {
     val content: Seq[EntryEmitter] = rootLevelEmitters(ordering) ++ vocabularyEmitters(ordering)
 
     YDocument(b => {
-      b.comment("%RAML 1.0 Vocabulary")
+      b.comment("%Vocabulary 1.0")
       b.obj { b =>
         traverse(ordering.sorted(content), b)
       }

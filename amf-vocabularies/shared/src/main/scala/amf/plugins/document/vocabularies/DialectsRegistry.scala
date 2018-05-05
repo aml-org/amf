@@ -29,7 +29,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
   }
 
   def knowsHeader(header: String): Boolean = {
-    header == "%RAML 1.0 Vocabulary" || header == "%RAML 1.0 Dialect" || header == "%RAML Library / RAML 1.0 Dialect" || map
+    header == "%Vocabulary 1.0" || header == "%Dialect 1.0" || header == "%Library / Dialect 1.0" || map
       .contains(headerKey(header))
   }
 
@@ -116,7 +116,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
         RuntimeValidator.disableValidationsAsync() { reenable =>
           RuntimeCompiler(uri,
                           Some("application/yaml"),
-                          RAMLVocabulariesPlugin.ID,
+                          VocabulariesPlugin.ID,
                           Context(platform),
                           env = environment)
             .map {

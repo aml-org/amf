@@ -277,7 +277,7 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
   }
 }
 
-class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) extends BaseSpecParser {
+class DialectsParser(root: Root)(implicit override val ctx: DialectContext) extends BaseSpecParser {
 
   val map: YMap        = root.parsed.document.as[YMap]
   val dialect: Dialect = Dialect(Annotations(map)).withLocation(root.location).withId(root.location + "#")
