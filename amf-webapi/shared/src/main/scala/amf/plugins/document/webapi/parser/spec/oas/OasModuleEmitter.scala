@@ -12,7 +12,7 @@ import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.NamedExampleEmitter
-import org.yaml.model.YDocument
+import org.yaml.model.{YDocument, YNode, YScalar, YType}
 import org.yaml.model.YDocument.EntryBuilder
 import amf.core.utils.Strings
 
@@ -40,7 +40,7 @@ case class OasModuleEmitter(module: Module)(implicit override val spec: OasSpecE
 
 class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpecEmitterContext)
     extends OasDocumentEmitter(fragment) {
-  override protected def versionEntry(b: YDocument.EntryBuilder): Unit = b.swagger = "2.0"
+  override protected def versionEntry(b: YDocument.EntryBuilder): Unit = b.swagger = YNode(YScalar("2.0"), YType.Str)
 
   def emitFragment(): YDocument = {
 
