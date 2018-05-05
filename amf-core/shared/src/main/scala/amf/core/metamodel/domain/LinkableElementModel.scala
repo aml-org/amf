@@ -16,7 +16,7 @@ trait LinkableElementModel extends Obj {
   val TargetId = Field(Iri, Namespace.Document + "link-target")
 
   // Never serialise this
-  val Target = Field(DomainElementModel, Namespace.Document + "target")
+  val Target = Field(DomainElementModel, Namespace.Document + "effective-target")
 
   /**
     * Label for the type of link
