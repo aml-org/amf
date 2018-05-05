@@ -1198,6 +1198,10 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("api.raml", "api.raml.raml", RamlYamlHint, Raml, basePath + "sapi-customer-db-1.0.0-fat-raml/")
   }
 
+  test("Test parse references with [] in path") {
+    cycle("api.raml", "api.raml.raml", RamlYamlHint, Raml, basePath + "chars[]infilespaths/")
+  }
+
   test("Invalid body parameter oas to oas") {
     Validation(platform)
       .flatMap { validation =>

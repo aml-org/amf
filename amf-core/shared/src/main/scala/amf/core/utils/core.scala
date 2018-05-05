@@ -18,6 +18,18 @@ package object utils {
     def isJson = content.trim.startsWith("{") || content.startsWith("[")
   }
 
+  implicit class UrlNormalizer(val rawUrl: String) extends AnyVal {
+
+    def normalizePath: String = {
+      val escaped = escapeFileSystemPath(rawUrl)
+      if (escaped.contains("[") || escaped.contains("]")) // what else is incompatible
+        escaped
+      else new java.net.URI(escaped).normalize().toString
+    }
+
+    protected def escapeFileSystemPath(rawUrl: String): String = rawUrl.replace(" ", "%20") // all encodeds replaced?
+  }
+
   /**
     * Common utility methods to deal with Strings.
     */
