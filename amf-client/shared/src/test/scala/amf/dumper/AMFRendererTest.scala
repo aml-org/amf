@@ -54,7 +54,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |description: test description
         |mediaType:
         |  - application/json
-        |version: 1.1
+        |version: "1.1"
         |(amf-termsOfService): termsOfService
         |protocols:
         |  - http

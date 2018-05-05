@@ -8,7 +8,7 @@ import amf.client.model.document._
 import amf.client.model.domain._
 import amf.client.parse._
 import amf.client.remote.Content
-import amf.client.render._
+import amf.client.render.{Renderer, _}
 import amf.client.resolve.Raml10Resolver
 import amf.client.resource.ResourceLoader
 import amf.common.Diff
@@ -702,6 +702,38 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
       else succeed
     }
+  }
+
+  test("Test swagger 2.0 entry generation in yaml") {
+    val expected =
+      """
+        |swagger: "2.0"
+        |info:
+        | title: test swagger entry
+        | version: "1.0"
+        |paths:
+        | /endpoint:
+        |  get:
+        |    responses:
+        |      200:
+        |       description: a descrip""".stripMargin
+    for {
+      _         <- AMF.init().asFuture
+      doc       <- Future { buildBasicApi() }
+      generated <- new Renderer("OAS 2.0", "application/yaml").generateString(doc).asFuture
+    } yield {
+      val deltas = Diff.ignoreAllSpace.diff(expected, generated)
+      if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
+      else succeed
+    }
+  }
+
+  private def buildBasicApi() = {
+    val api: WebApi = new WebApi().withName("test swagger entry")
+
+    api.withEndPoint("/endpoint").withOperation("get").withResponse("200").withDescription("a descrip")
+    new Document().withEncodes(api)
+
   }
 
   test("Test dynamic types") {

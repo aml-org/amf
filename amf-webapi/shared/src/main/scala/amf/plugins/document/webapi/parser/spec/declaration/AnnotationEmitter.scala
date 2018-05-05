@@ -6,14 +6,14 @@ import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}
 import amf.core.parser.{Annotations, FieldEntry, Position, Value}
+import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.AnyShape
-import amf.core.utils._
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YNode, YScalar, YType}
+import org.yaml.model.{YNode, YType}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -112,6 +112,7 @@ case class DataNodeEmitter(dataNode: DataNode,
   private val xsdString: String  = (Namespace.Xsd + "string").iri()
   private val xsdInteger: String = (Namespace.Xsd + "integer").iri()
   private val xsdFloat: String   = (Namespace.Xsd + "float").iri()
+  private val xsdDouble: String  = (Namespace.Xsd + "double").iri()
   private val xsdBoolean: String = (Namespace.Xsd + "boolean").iri()
   private val xsdNil: String     = (Namespace.Xsd + "nil").iri()
 
@@ -137,10 +138,11 @@ case class DataNodeEmitter(dataNode: DataNode,
           override def emit(b: EntryBuilder): Unit = b.entry(YNode("@value"), t.value)
           override def position(): Position        = t.position()
         }
-      case n: NullEmitter => new EntryEmitter {
-        override def emit(b: EntryBuilder): Unit = b.entry(YNode("@value"), n.emit(_))
-        override def position(): Position = n.position()
-      }
+      case n: NullEmitter =>
+        new EntryEmitter {
+          override def emit(b: EntryBuilder): Unit = b.entry(YNode("@value"), n.emit(_))
+          override def position(): Position        = n.position()
+        }
       case other => throw new Exception(s"Unsupported seq of emitter type in data node emitters $other")
     }
   }
@@ -184,7 +186,7 @@ case class DataNodeEmitter(dataNode: DataNode,
     scalar.dataType match {
       case Some(t) if t == xsdString  => TextScalarEmitter(scalar.value, scalar.annotations, YType.Str)
       case Some(t) if t == xsdInteger => TextScalarEmitter(scalar.value, scalar.annotations, YType.Int)
-      case Some(t) if t == xsdFloat   => TextScalarEmitter(scalar.value, scalar.annotations, YType.Float)
+      case Some(t) if t == xsdDouble  => TextScalarEmitter(scalar.value, scalar.annotations, YType.Float)
       case Some(t) if t == xsdBoolean => TextScalarEmitter(scalar.value, scalar.annotations, YType.Bool)
       case Some(t) if t == xsdNil     => NullEmitter(scalar.annotations)
       case _                          => TextScalarEmitter(scalar.value, Annotations(), YType.Str)
