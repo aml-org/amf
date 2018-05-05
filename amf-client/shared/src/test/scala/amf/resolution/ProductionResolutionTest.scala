@@ -152,6 +152,14 @@ class ProductionResolutionTest extends RamlResolutionTest {
   test("test nullpointer in resolution") {
     cycle("api.raml", "api.resolved.raml", RamlYamlHint, Raml, validationPath + "retail-api-6.0.0-fat-raml/")
   }
+
+  test("Test resolve inherited array without items") {
+    cycle("inherits-array-without-items.raml",
+          "inherits-array-without-items.resolved.raml",
+          RamlYamlHint,
+          Raml,
+          basePath + "types/")
+  }
 }
 
 class OASProductionResolutionTest extends OasResolutionTest {
