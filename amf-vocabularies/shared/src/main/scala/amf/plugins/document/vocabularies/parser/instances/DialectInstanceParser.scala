@@ -19,7 +19,7 @@ import amf.core.parser.{
 }
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
+import amf.plugins.document.vocabularies.VocabulariesPlugin
 import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId}
 import amf.plugins.document.vocabularies.model.document.{
   Dialect,
@@ -221,7 +221,7 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
   }
 }
 
-class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectInstanceContext) extends BaseSpecParser {
+class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstanceContext) extends BaseSpecParser {
   val map: YMap = root.parsed.document.as[YMap]
 
   def parseDocument(): Option[DialectInstance] = {
@@ -375,7 +375,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
         }
         refTuple match {
           case (text: String, Some(s)) =>
-            RAMLVocabulariesPlugin.registry.findNode(s.definedBy.id) match {
+            VocabulariesPlugin.registry.findNode(s.definedBy.id) match {
               case Some((dialect, _)) =>
                 ctx.nestedDialects ++= Seq(dialect)
                 val linkedExternal = s
@@ -403,7 +403,7 @@ class RamlDialectInstanceParser(root: Root)(implicit override val ctx: DialectIn
           case Some(nested) if nested.value.tagType == YType.Str =>
             val dialectNode = nested.value.as[YScalar].text
             // TODO: resolve dialect node URI to absolute normalised URI
-            RAMLVocabulariesPlugin.registry.findNode(dialectNode) match {
+            VocabulariesPlugin.registry.findNode(dialectNode) match {
               case Some((dialect, nodeMapping)) =>
                 ctx.nestedDialects ++= Seq(dialect)
                 ctx.withCurrentDialect(dialect) {

@@ -13,7 +13,7 @@ import amf.core.validation.core.{ValidationProfile, ValidationReport}
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.graph.parser.ScalarEmitter
-import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
+import amf.plugins.document.vocabularies.VocabulariesPlugin
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
 import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
@@ -34,13 +34,13 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     RuntimeValidator.register(AMFValidatorPlugin)
     val url = "http://raml.org/dialects/profile.raml"
     ExecutionLog.log(s"AMFValidatorPlugin#init: registering validation dialect")
-    RAMLVocabulariesPlugin.registry.registerDialect(url, ValidationDialectText.text) map { _ =>
+    VocabulariesPlugin.registry.registerDialect(url, ValidationDialectText.text) map { _ =>
       ExecutionLog.log(s"AMFValidatorPlugin#init: validation dialect registered")
       this
     }
   }
 
-  override def dependencies() = Seq(SYamlSyntaxPlugin, RAMLVocabulariesPlugin, AMFGraphPlugin)
+  override def dependencies() = Seq(SYamlSyntaxPlugin, VocabulariesPlugin, AMFGraphPlugin)
 
   val url = "http://raml.org/dialects/profile.raml"
 
@@ -68,7 +68,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     RuntimeCompiler(
       validationProfilePath,
       Some("application/yaml"),
-      RAMLVocabulariesPlugin.ID,
+      VocabulariesPlugin.ID,
       Context(platform)
     ).map {
         case parsed: DialectInstance if parsed.definedBy().is("http://raml.org/dialects/profile.raml#") =>
@@ -86,7 +86,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
               profilesPlugins.get(profile.baseProfileName.getOrElse("AMF")) match {
                 case Some(plugin) =>
                   plugin
-                case None => RAMLVocabulariesPlugin
+                case None => VocabulariesPlugin
 
               }
           }

@@ -2,11 +2,11 @@ package amf.plugins.document.vocabularies.parser
 
 object ExtensionHeader {
 
-  val VocabularyHeader = "%RAML 1.0 Vocabulary"
+  val VocabularyHeader = "%Vocabulary 1.0"
 
-  val DialectHeader = "%RAML 1.0 Dialect"
+  val DialectHeader = "%Dialect 1.0"
 
-  val DialectLibraryHeader = "%RAML Library / RAML 1.0 Dialect"
+  val DialectLibraryHeader = "%Library / Dialect 1.0"
 
-  val DialectFragmentHeader = "%Node Mapping / RAML 1.0 Dialect"
+  val DialectFragmentHeader = "%Node Mapping / Dialect 1.0"
 }

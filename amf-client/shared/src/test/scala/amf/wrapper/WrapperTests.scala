@@ -446,7 +446,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       render <- amf.Core.generator("RAML Vocabulary", "application/yaml").generateString(vocab).asFuture
     } yield {
       render should be(
-        """#%RAML 1.0 Vocabulary
+        """#%Vocabulary 1.0
           |base: http://test.com/vocab#
           |vocabulary: Vocab
           |usage: Just a small sample vocabulary
@@ -508,7 +508,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   test("Vocabularies parsing raml_doc") {
     for {
       _    <- AMF.init().asFuture
-      unit <- amf.Core.parser("RAML Vocabularies", "application/yaml").parseFileAsync(raml_doc).asFuture
+      unit <- amf.Core.parser("AMF Vocabularies", "application/yaml").parseFileAsync(raml_doc).asFuture
     } yield {
       val declarations = unit.asInstanceOf[Vocabulary].declares.asSeq
 

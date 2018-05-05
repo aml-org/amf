@@ -6,7 +6,7 @@ import amf.core.AMFSerializer
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.plugins.document.graph.AMFGraphPlugin
-import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
+import amf.plugins.document.vocabularies.VocabulariesPlugin
 import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML08Plugin, RAML10Plugin, _}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
@@ -27,7 +27,7 @@ class AMFUnitMaker {
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(OAS30Plugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAMLVocabulariesPlugin)
+  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(VocabulariesPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(WebAPIDomainPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(JsonSchemaPlugin)

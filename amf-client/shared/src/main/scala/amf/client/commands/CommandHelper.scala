@@ -6,7 +6,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.services.{RuntimeCompiler, RuntimeSerializer}
-import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
+import amf.plugins.document.vocabularies.VocabulariesPlugin
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.document.webapi.{OAS20Plugin, OAS30Plugin, RAML08Plugin, RAML10Plugin}
 import amf.plugins.features.validation.AMFValidatorPlugin
@@ -18,7 +18,7 @@ trait CommandHelper {
   val platform: Platform
 
   def AMFInit(): Future[Unit] = {
-    amf.core.AMF.registerPlugin(RAMLVocabulariesPlugin)
+    amf.core.AMF.registerPlugin(VocabulariesPlugin)
     amf.core.AMF.registerPlugin(RAML10Plugin)
     amf.core.AMF.registerPlugin(RAML08Plugin)
     amf.core.AMF.registerPlugin(OAS20Plugin)
@@ -41,7 +41,7 @@ trait CommandHelper {
 
   protected def processDialects(config: ParserConfig): Future[Unit] = {
     val dialectFutures = config.dialects.map { dialect =>
-      RAMLVocabulariesPlugin.registry.registerDialect(dialect)
+      VocabulariesPlugin.registry.registerDialect(dialect)
     }
     Future.sequence(dialectFutures).map[Unit] { _ =>
       }
