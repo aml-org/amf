@@ -192,9 +192,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Opti
       case m: MatrixShape => isEmptyArray(m)
       case _              => false
     }
-    if (empty) {
-      ctx.violation(t.id, "", None, "Syntax error, generating empty array", lexical)
-    }
+    if (empty) ctx.violation(t.id, "Syntax error, generating empty array", lexical)
   }
 
   private val lexical = part.map(p => Range(p.range)).map(range => LexicalInformation(range))
