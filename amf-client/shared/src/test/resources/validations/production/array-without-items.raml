@@ -1,0 +1,44 @@
+#%RAML 1.0
+baseUri: https://mocksvc.mulesoft.com/mocks/04a39593-12e9-41e8-b76e-f1c235b29be1 #
+title: LOS Composite System API
+version: v1.0
+description: A single LOS system API interface that allows users to pick and call different LOS systems, such as Encompass, Empower, etc.
+protocols: HTTPS
+mediaType: application/json
+
+types:
+  auto_task:
+    type: array
+    items:
+      type: object
+      properties:
+        assigned_date?: datetime
+        assigned_team_name?: string
+        assigned_user?: string
+        completed?: boolean
+        description?: string
+        due_date?: datetime
+        id?: string
+        los_loan_application_id?: string
+        percentage_completed?: number
+        subject?: string
+        submitted_by_user_full_name?: string
+        task_state?: string
+
+
+  loan:
+    type: object
+    properties:
+      roostify_loan_application_id?: string
+      auto_task?: auto_task[]
+
+/loans:
+                            
+  /{loan_id}:          
+    get:
+      description: Return loan origination by LOS loan application id / Roostify's loan reference id
+      responses:
+        200: 
+          body:
+            application/json:
+              type: loan

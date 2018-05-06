@@ -60,6 +60,12 @@ trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
     violation(ParsingErrorSpecification.id(), errorLocation, message, ast)
   }
 
+  /** Report constraint failure of severity violation. */
+  def violation(node: String, message: String, lexical: Option[LexicalInformation]): Unit = {
+    val errorLocation = if (node == "") currentFile else node
+    violation(ParsingErrorSpecification.id(), errorLocation, None, message, lexical)
+  }
+
   /** Report constraint failure of severity warning. */
   def warning(id: String,
               node: String,
@@ -106,9 +112,9 @@ trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
   }
   override def handle(node: YPart, e: SyamlException): Unit = {
     e match {
-        // ignoring errors due to trailing white space
-      case lexer: LexerException  if lexer.text.matches("\\s+") => // ignore
-      case _ => violation("", e.getMessage, node)
+      // ignoring errors due to trailing white space
+      case lexer: LexerException if lexer.text.matches("\\s+") => // ignore
+      case _                                                   => violation("", e.getMessage, node)
     }
   }
 }

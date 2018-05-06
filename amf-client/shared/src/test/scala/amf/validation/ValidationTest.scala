@@ -3,7 +3,6 @@ package amf.validation
 import amf.ProfileNames
 import amf.common.Tests.checkDiff
 import amf.core.AMFSerializer
-import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{Document, Module, PayloadFragment}
 import amf.core.model.domain.{RecursiveShape, Shape}
@@ -2100,6 +2099,19 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report <- validation.validate(doc, ProfileNames.RAML, ProfileNames.RAML)
     } yield {
       assert(report.conforms)
+    }
+  }
+
+  test("Test nono exists validation") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "production/array-without-items.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.lengthCompare(1) == 0)
+      assert(report.results.head.message.equals("Syntax error, generating empty array"))
     }
   }
 }
