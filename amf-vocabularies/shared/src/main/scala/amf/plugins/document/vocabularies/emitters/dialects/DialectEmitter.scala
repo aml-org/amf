@@ -453,6 +453,9 @@ case class NodeMappingEmitter(dialect: Dialect,
               traverse(propertiesEmitters, b)
             }
           )
+          nodeMapping.idTemplate.option().foreach { idTemplate =>
+            b.entry("idTemplate", idTemplate)
+          }
         }
       )
     }
