@@ -13,6 +13,7 @@ import amf.client.resolve.Raml10Resolver
 import amf.client.resource.ResourceLoader
 import amf.common.Diff
 import amf.core.vocabulary.Namespace
+import amf.core.vocabulary.Namespace.Xsd
 import amf.plugins.document.Vocabularies
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
@@ -728,12 +729,71 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Test swagger ref generation in yaml") {
+    val expected =
+      """|swagger: "2.0"
+         |info:
+         |  title: test swagger entry
+         |  version: "1.0"
+         |paths:
+         |  /endpoint:
+         |    get:
+         |      parameters:
+         |        -
+         |          x-amf-mediaType: application/json
+         |          in: body
+         |          schema:
+         |            $ref: "#/definitions/person"
+         |      responses:
+         |        200:
+         |          description: a descrip
+         |definitions:
+         |  person:
+         |    type: object
+         |    properties:
+         |      name:
+         |        type: string""".stripMargin
+    for {
+      _         <- AMF.init().asFuture
+      doc       <- Future { buildApiWithTypeTarget() }
+      generated <- new Renderer("OAS 2.0", "application/yaml").generateString(doc).asFuture
+    } yield {
+      val deltas = Diff.ignoreAllSpace.diff(expected, generated)
+      if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
+      else succeed
+    }
+  }
+
   private def buildBasicApi() = {
     val api: WebApi = new WebApi().withName("test swagger entry")
 
     api.withEndPoint("/endpoint").withOperation("get").withResponse("200").withDescription("a descrip")
     new Document().withEncodes(api)
 
+  }
+
+  private def buildApiWithTypeTarget() = {
+    val doc = buildBasicApi()
+
+    val shape     = new ScalarShape().withDataType((Xsd + "string").iri())
+    val nodeShape = new NodeShape().withName("person")
+    nodeShape.withProperty("name").withRange(shape)
+    doc.withDeclaredElement(nodeShape)
+
+    val linked: NodeShape = nodeShape.link(Some("#/definitions/person"))
+    linked.withName("Person")
+    doc.encodes
+      .asInstanceOf[WebApi]
+      .endPoints
+      .asSeq
+      .head
+      .operations
+      .asSeq
+      .head
+      .withRequest()
+      .withPayload("application/json")
+      .withSchema(linked)
+    doc
   }
 
   test("Test dynamic types") {
