@@ -21,10 +21,16 @@ nodeMappings:
 
   PlaylistNode:
     classTerm: curation.Playlist
+    idTemplate: https://api.spotify.com/v1/{author}/playlists/{spotifyId}
     mapping:
+      spotifyId:
+        propertyTerm: curation.spotifyId
+        range: string
+        mandatory: true
       author:
         propertyTerm: curation.author
         range: string
+        mandatory: true
       title:
         propertyTerm: schema-org.name
         range: string
@@ -66,7 +72,12 @@ nodeMappings:
 
   TrackNode:
     classTerm: music.Track
+    idTemplate: https://api.spotify.com/v1/tracks/{spotifyId}
     mapping:
+      spotifyId:
+        propertyTerm: curation.spotifyId
+        range: string
+        mandatory: true
       title:
         propertyTerm: schema-org.name
         range: string
@@ -77,21 +88,36 @@ nodeMappings:
 
   ArtistNode:
     classTerm: music.MusicArtist
+    idTemplate: https://api.spotify.com/v1/artists/{spotifyId}
     mapping:
+      spotifyId:
+        propertyTerm: curation.spotifyId
+        range: string
+        mandatory: true
       name:
         propertyTerm: schema-org.name
         range: string
 
   ComposerNode:
     classTerm: music.MusicArtist
+    idTemplate: https://api.spotify.com/v1/artists/{spotifyId}
     mapping:
+      spotifyId:
+        propertyTerm: curation.spotifyId
+        range: string
+        mandatory: true
       name:
         propertyTerm: schema-org.name
         range: string
 
   RecordNode:
     classTerm: music.Record
+    idTemplate: https://api.spotify.com/v1/albums/{spotifyId}
     mapping:
+      spotifyId:
+        propertyTerm: curation.spotifyId
+        range: string
+        mandatory: true
       title:
         propertyTerm: schema-org.name
         range: string

@@ -24,6 +24,17 @@ classTerms:
 
 propertyTerms:
 
+  catalogId:
+    displayName: catalog ID
+    description: an Identifier for a track in a music catalogue
+    range: string
+
+  spotifyId:
+    displayName: Spotify ID
+    description: identifier of a track in Spotify
+    extends: catalogId
+    range: string
+
   author:
     displayName: author
     description: author of the playlist
