@@ -910,20 +910,8 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
             }
           case _          =>
             val node: DialectDomainElement = DialectDomainElement(nodeMap).withDefinedBy(mapping)
-
-            nodeMap.key("$id") match {
-              case Some(entry) =>
-                val rawId = entry.value.as[YScalar].text
-                val externalId = if (rawId.contains("://")) {
-                  rawId
-                } else {
-                  (ctx.dialect.location.split("#").head + s"#$rawId").replace("##", "#")
-                }
-                node.withId(externalId)
-                node.annotations += CustomId()
-              case None => node.withId(id)
-            }
-
+            val finalId = generateNodeId(node, nodeMap, id, mapping)
+            node.withId(finalId)
             node.withInstanceTypes(Seq(mapping.nodetypeMapping.value(), mapping.id))
             mapping.propertiesMapping().foreach { propertyMapping =>
               val propertyName = propertyMapping.name().value()
@@ -944,7 +932,41 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
   }
 
 
-
+  def generateNodeId(node: DialectDomainElement, nodeMap: YMap, id: String, mapping: NodeMapping) = {
+    if (nodeMap.key("$id").isDefined) {
+      // explicit $id
+      val entry = nodeMap.key("$id").get
+      val rawId = entry.value.as[YScalar].text
+      val externalId = if (rawId.contains("://")) {
+        rawId
+      } else {
+        (ctx.dialect.location.split("#").head + s"#$rawId").replace("##", "#")
+      }
+      node.annotations += CustomId()
+      externalId
+    } else if(mapping.idTemplate.nonEmpty) {
+      // template resolution
+      var template = mapping.idTemplate.value()
+      val regex = "(\\{[^}]+\\})".r
+      regex.findAllIn(template).foreach { varMatch =>
+        var variable = varMatch.replace("{", "").replace("}", "")
+        nodeMap.key(variable) match {
+          case Some(entry) =>
+            val value = entry.value.value.toString
+            template = template.replace(varMatch, value)
+          case None        =>
+            ctx.violation(s"Missing ID template variable '$variable' in node", nodeMap)
+        }
+      }
+      if (template.contains("://"))
+        template
+      else
+        root.location + template
+    } else {
+      // default id
+      id
+    }
+  }
 
 
 }
