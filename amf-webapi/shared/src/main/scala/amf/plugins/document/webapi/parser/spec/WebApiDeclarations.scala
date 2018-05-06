@@ -15,7 +15,7 @@ import amf.plugins.document.webapi.parser.spec.WebApiDeclarations._
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
+import amf.plugins.domain.webapi.models.{EndPoint, Parameter, Payload, Response}
 import org.yaml.model.YPart
 
 /**
@@ -242,6 +242,13 @@ object WebApiDeclarations {
       extends ResourceType(Fields(), Annotations(ast))
       with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorResourceType/"
+    withId(idPart)
+  }
+
+  case class ErrorEndPoint(idPart: String, ast: YPart)
+      extends EndPoint(Fields(), Annotations(ast))
+      with ErrorDeclaration {
+    override val namespace: String = "http://amferror.com/#errorEndPoint/"
     withId(idPart)
   }
 

@@ -2102,7 +2102,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Test nono exists validation") {
+  test("Test array withouth item type validation") {
     for {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "production/array-without-items.raml", platform, RamlYamlHint, validation)
@@ -2112,6 +2112,21 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(!report.conforms)
       assert(report.results.lengthCompare(1) == 0)
       assert(report.results.head.message.equals("Syntax error, generating empty array"))
+    }
+  }
+
+  test("Test invalid map in resource type use") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "production/invalid-map-resource-type.raml",
+                         platform,
+                         RamlYamlHint,
+                         validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.lengthCompare(4) == 0)
     }
   }
 }
