@@ -14,7 +14,7 @@ import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, Par
 /**
   * EndPoint internal model
   */
-case class EndPoint(fields: Fields, annotations: Annotations)
+class EndPoint(override val fields: Fields, override val annotations: Annotations)
     extends DomainElement
     with ExtensibleWebApiDomainElement {
 
@@ -87,5 +87,7 @@ object EndPoint {
 
   def apply(): EndPoint = apply(Annotations())
 
-  def apply(annotations: Annotations): EndPoint = EndPoint(Fields(), annotations)
+  def apply(annotations: Annotations): EndPoint = apply(Fields(), annotations)
+
+  def apply(fields: Fields, annotations: Annotations): EndPoint = new EndPoint(fields, annotations)
 }

@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.resolution.stages
 
 import amf.ProfileNames
+import amf.core.annotations.{LexicalInformation, SourceAST}
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{DataNode, DomainElement}
@@ -8,12 +9,13 @@ import amf.core.parser.ParserContext
 import amf.core.resolution.stages.ResolutionStage
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
-import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorDeclaration
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.{ErrorDeclaration, ErrorEndPoint}
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging._
+import org.yaml.model.YNode
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -55,7 +57,11 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
           Some(apiContext)
         )
 
-      case _ => throw new Exception(s"Cannot find target for parametrized resource type ${r.id}")
+      case _ =>
+        apiContext.violation(r.id,
+                             s"Cannot find target for parametrized resource type ${r.id}",
+                             r.annotations.find(classOf[LexicalInformation]))
+        ErrorEndPoint(r.id, r.annotations.find(classOf[SourceAST]).map(_.ast).getOrElse(YNode.Null))
     }
   }
 

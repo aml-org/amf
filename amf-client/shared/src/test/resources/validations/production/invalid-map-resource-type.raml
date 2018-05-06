@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: Drivetrain customer API
+version: v1
+
+resourceTypes:
+  ItemPost:
+    post:
+      body:
+        application/json:
+          type: <<typeName>>
+
+types:
+  Customer:
+      type: object
+      description: Canonical Representation of a Customer (Member)
+      properties:
+        contactType: string
+        authorizedContacts: string[]
+
+
+/customers:
+
+  type: { ItemPost:
+    {
+      "typeName": "Customer",
+    } 
+  }
+
