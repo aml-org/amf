@@ -2,7 +2,6 @@ package amf.core.remote
 
 import amf.client.model.AmfObjectWrapper
 import amf.client.remote.Content
-import amf.core.lexer.CharSequenceStream
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfObject, DomainElement}
@@ -13,7 +12,7 @@ import org.mulesoft.common.io.{AsyncFile, FileSystem, SyncFile}
 
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{Future, Promise}
+import scala.concurrent.Future
 
 trait FileMediaType {
   def mimeFromExtension(extension: String): Option[String] =
@@ -114,6 +113,20 @@ trait Platform extends FileMediaType {
 
   /** Test path resolution. */
   def resolvePath(path: String): String
+
+  /** encodes a complete uri. Not encodes chars like / */
+  def encodeURI(url: String): String
+
+  /** decode a complete uri. */
+  def decodeURI(url: String): String
+
+  /** encodes a uri component, including chars like / and : */
+  def encodeURIComponent(url: String): String
+
+  /** decodes a uri component */
+  def decodeURIComponent(url: String): String
+
+  def normalizeURL(url: String): String
 
   /** Register an alias for a namespace */
   def registerNamespace(alias: String, prefix: String): Option[Namespace] = Namespace.registerNamespace(alias, prefix)

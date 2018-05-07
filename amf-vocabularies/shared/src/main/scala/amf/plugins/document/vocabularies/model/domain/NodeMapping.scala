@@ -16,7 +16,7 @@ case class NodeMapping(fields: Fields, annotations: Annotations) extends DomainE
   def name: StrField                            = fields.field(Name)
   def nodetypeMapping: StrField                 = fields.field(NodeTypeMapping)
   def propertiesMapping(): Seq[PropertyMapping] = fields.field(PropertiesMapping)
-    def idTemplate: StrField                      = fields.field(IdTemplate)
+  def idTemplate: StrField                      = fields.field(IdTemplate)
 
   def withName(name: String): NodeMapping                             = set(Name, name)
   def withNodeTypeMapping(nodeType: String): NodeMapping              = set(NodeTypeMapping, nodeType)
@@ -37,7 +37,7 @@ case class NodeMapping(fields: Fields, annotations: Annotations) extends DomainE
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = {
-    "/" + name.value().urlEncoded
+    "/" + name.value().urlComponentEncoded
   }
 }
 

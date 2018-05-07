@@ -7,6 +7,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.EncodingModel
 import amf.plugins.domain.webapi.metamodel.EncodingModel._
 import org.yaml.model.YMap
+import amf.core.utils.Strings
 
 /**
   * Encoding internal model
@@ -36,7 +37,7 @@ case class Encoding(fields: Fields, annotations: Annotations) extends DomainElem
   override def meta: Obj = EncodingModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/" + propertyName
+  override def componentId: String = "/" + propertyName.option().getOrElse("default-encoding").urlComponentEncoded
 }
 
 object Encoding {

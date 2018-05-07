@@ -6,6 +6,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.security.ScopeModel
 import amf.plugins.domain.webapi.metamodel.security.ScopeModel._
 import org.yaml.model.YPart
+import amf.core.utils.Strings
 
 case class Scope(fields: Fields, annotations: Annotations) extends DomainElement {
 
@@ -28,7 +29,7 @@ case class Scope(fields: Fields, annotations: Annotations) extends DomainElement
   override def meta = ScopeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/" + name.value()
+  override def componentId: String = "/" + name.option().getOrElse("default-scope").urlComponentEncoded
 }
 
 object Scope {

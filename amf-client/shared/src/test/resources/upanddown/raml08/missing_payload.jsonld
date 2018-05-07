@@ -63,7 +63,7 @@
                     ],
                     "http://raml.org/vocabularies/http#payload": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/missing_payload.raml#/web-api/end-points/%2Fg/get/200/application/json",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/missing_payload.raml#/web-api/end-points/%2Fg/get/200/application%2Fjson",
                         "@type": [
                           "http://raml.org/vocabularies/http#Payload",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -75,7 +75,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/missing_payload.raml#/web-api/end-points/%2Fg/get/200/application/json/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/missing_payload.raml#/web-api/end-points/%2Fg/get/200/application%2Fjson/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -83,7 +83,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/missing_payload.raml#/web-api/end-points/%2Fg/get/200/application/json"
+                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/missing_payload.raml#/web-api/end-points/%2Fg/get/200/application%2Fjson"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [

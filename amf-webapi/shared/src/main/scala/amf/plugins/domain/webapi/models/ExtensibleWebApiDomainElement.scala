@@ -8,13 +8,13 @@ import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, Par
 trait ExtensibleWebApiDomainElement { this: DomainElement =>
 
   def withResourceType(name: String): ParametrizedResourceType = {
-    val result = ParametrizedResourceType().withName(name).withId(id + s"/resourceType/${name.urlEncoded}")
+    val result = ParametrizedResourceType().withName(name).withId(id + s"/resourceType/${name.urlComponentEncoded}")
     add(Extends, result)
     result
   }
 
   def withTrait(name: String): ParametrizedTrait = {
-    val result = ParametrizedTrait().withName(name).withId(id + s"/trait/${name.urlEncoded}")
+    val result = ParametrizedTrait().withName(name).withId(id + s"/trait/${name.urlComponentEncoded}")
     add(Extends, result)
     result
   }

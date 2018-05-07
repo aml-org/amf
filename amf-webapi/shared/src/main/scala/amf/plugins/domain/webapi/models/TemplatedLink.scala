@@ -1,12 +1,12 @@
 package amf.plugins.domain.webapi.models
 
-import amf.core.utils._
 import amf.core.metamodel.Obj
 import amf.core.model.StrField
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.TemplatedLinkModel
 import amf.plugins.domain.webapi.metamodel.TemplatedLinkModel._
+import amf.core.utils.Strings
 
 case class TemplatedLink(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
 
@@ -30,7 +30,8 @@ case class TemplatedLink(fields: Fields, annotations: Annotations) extends Domai
   override def linkCopy(): Linkable = TemplatedLink().withId(id)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = s"/templatedLink/${name.option().getOrElse("UnknownTemplatedLink").urlEncoded}"
+  override def componentId: String =
+    s"/templatedLink/${name.option().getOrElse("UnknownTemplatedLink").urlComponentEncoded}"
 }
 
 object TemplatedLink {

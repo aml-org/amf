@@ -37,7 +37,7 @@ case class DataNodeParser(node: YNode,
       case YType.Str =>
         if (node.as[YScalar].text.matches("^\\d{2}:\\d{2}:\\d{2}$")) {
           parseScalar(node.as[YScalar], "time")
-        }  else if (node.as[YScalar].text.matches("^\\d{2}:\\d{2}$")) {
+        } else if (node.as[YScalar].text.matches("^\\d{2}:\\d{2}$")) {
           parseScalar(YScalar(node.as[YScalar].text + ":00"), "time")
         } else if (node.as[YScalar].text.matches("^\\d{4}-\\d{1,2}-\\d{1,2}?$")) {
           parseScalar(node.as[YScalar], "date")
@@ -51,7 +51,11 @@ case class DataNodeParser(node: YNode,
       case YType.Seq   => parseArray(node.as[Seq[YNode]], node)
       case YType.Map   => parseObject(node.as[YMap])
       case YType.Timestamp =>
-        if (node.as[YScalar].text.matches("(\\d{4})-(\\d{2})-(\\d{2})(T|t)(\\d{2})\\:(\\d{2})\\:(\\d{2})(([+-](\\d{2})\\:(\\d{2}))|(\\.\\d+)?Z|(\\.\\d+)?z)")) {
+        if (node
+              .as[YScalar]
+              .text
+              .matches(
+                "(\\d{4})-(\\d{2})-(\\d{2})(T|t)(\\d{2})\\:(\\d{2})\\:(\\d{2})(([+-](\\d{2})\\:(\\d{2}))|(\\.\\d+)?Z|(\\.\\d+)?z)")) {
           parseScalar(node.as[YScalar], "dateTime")
         } else if (node.as[YScalar].text.indexOf(":") > -1 && node.as[YScalar].text.indexOf("T") > -1) {
           parseScalar(node.as[YScalar], "dateTimeOnly")
@@ -178,7 +182,7 @@ case class DataNodeParser(node: YNode,
       val propertyAnnotations = Annotations(ast)
 
       val propertyNode = DataNodeParser(value, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
-      node.addProperty(key.urlEncoded, propertyNode, propertyAnnotations)
+      node.addProperty(key.urlComponentEncoded, propertyNode, propertyAnnotations)
       node.lexicalPropertiesAnnotation.map(a => node.annotations += a)
     }
     node

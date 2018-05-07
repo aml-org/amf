@@ -1,5 +1,7 @@
 package amf.core
 
+import amf.core.unsafe.PlatformSecrets
+
 import scala.annotation.tailrec
 
 //noinspection ScalaFileName
@@ -18,22 +20,23 @@ package object utils {
     def isJson = content.trim.startsWith("{") || content.startsWith("[")
   }
 
-  implicit class UrlNormalizer(val rawUrl: String) extends AnyVal {
-
-    def normalizePath: String = {
-      val escaped = escapeFileSystemPath(rawUrl)
-      if (escaped.contains("[") || escaped.contains("]")) // what else is incompatible
-        escaped
-      else new java.net.URI(escaped).normalize().toString
-    }
-
-    protected def escapeFileSystemPath(rawUrl: String): String = rawUrl.replace(" ", "%20") // all encodeds replaced?
-  }
+//  implicit class UrlNormalizer(val rawUrl: String) extends AnyVal with PlatformSecrets{
+//
+////    def normalizePath: String = {
+////      val escaped = escapeFileSystemPath(rawUrl)
+////      if (escaped.contains("[") || escaped.contains("]")) // what else is incompatible
+////        escaped
+////      else new java.net.URI(escaped).normalize().toString
+////    }
+//
+////    protected def escapeFileSystemPath(rawUrl: String): String = rawUrl.replace(" ", "%20") // all encodeds replaced?
+//
+//  }
 
   /**
     * Common utility methods to deal with Strings.
     */
-  implicit class Strings(val str: String) extends AnyVal {
+  implicit class Strings(val str: String) extends PlatformSecrets {
 
     /** If the String is not null returns the String, else returns "". */
     def notNull: String = Option(str).getOrElse("")
@@ -49,49 +52,26 @@ package object utils {
     private def isQuoted =
       Option(str).exists(s => (s.startsWith("\"") && s.endsWith("\"")) || (s.startsWith("'") && s.endsWith("'")))
 
+    /** Prepend correct protocol prefix, then normalize and check that the string its a valid URI */
     def normalizeUrl: String = {
-      if (str == null || str.isEmpty) str
-      else if (str.startsWith("http:") || str.startsWith("https:") || str.startsWith("file:")) str
-      else if (str.startsWith("/")) "file:/" + str
-      else "file://" + str
+      val url =
+        if (str == null || str.isEmpty) ""
+        else if (str.startsWith("http:") || str.startsWith("https:") || str.startsWith("file:")) str
+        else if (str.startsWith("/")) "file:/" + str
+        else "file://" + str
+
+      platform.normalizeURL(url)
     }
+
+    /** normalize and check that the string its a valid URI */
+    def normalizePath: String = platform.normalizeURL(str)
 
     /** Url encoded string. */
-    def urlEncoded: String = {
-      str
-        .replaceAll("\\|", "%7C")
-        .replaceAll(":", "%3A")
-        .replaceAll("/", "%2F")
-        .replaceAll(" ", "%20")
-        .replaceAll("\\{", "%7B")
-        .replaceAll("\\}", "%7D")
-        .replaceAll("<", "%3C")
-        .replaceAll(">", "%3E") // TODO encode
-    }
+    def urlComponentEncoded: String = platform.encodeURIComponent(str)
 
-    /** Url encoded string. */
-    def urlEncodeSimple: String = {
-      str
-        .replaceAll("\\|", "%7C")
-        .replaceAll(":", "%3A")
-        .replaceAll(" ", "%20")
-        .replaceAll("\\{", "%7B")
-        .replaceAll("\\}", "%7D")
-        .replaceAll("<", "%3C")
-        .replaceAll(">", "%3E") // TODO encode
-    }
+    def urlEncoded: String = platform.encodeURI(str)
 
-    def urlDecoded: String = {
-      str
-        .replaceAll("%7C", "\\|")
-        .replaceAll("%3A", ":")
-        .replaceAll("%2F", "/")
-        .replaceAll("%20", " ")
-        .replaceAll("%7B", "\\{")
-        .replaceAll("%7D", "\\}")
-        .replaceAll("%3C", "<")
-        .replaceAll("%3E", ">") // TODO decode
-    }
+    def urlDecoded: String = platform.decodeURI(str)
 
     def escape: String = {
       val result = new StringBuilder()

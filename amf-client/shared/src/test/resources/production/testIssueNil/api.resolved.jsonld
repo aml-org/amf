@@ -53,7 +53,7 @@
                     ],
                     "raml-http:payload": [
                       {
-                        "@id": "#/web-api/end-points/%2Forganizations/put/request/application/json",
+                        "@id": "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson",
                         "@type": [
                           "raml-http:Payload",
                           "doc:DomainElement"
@@ -65,7 +65,7 @@
                         ],
                         "raml-http:schema": [
                           {
-                            "@id": "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema",
+                            "@id": "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema",
                             "@type": [
                               "raml-shapes:ArrayShape",
                               "shacl:Shape",
@@ -74,7 +74,7 @@
                             ],
                             "raml-shapes:items": [
                               {
-                                "@id": "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization",
+                                "@id": "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization",
                                 "@type": [
                                   "shacl:NodeShape",
                                   "shacl:Shape",
@@ -88,7 +88,7 @@
                                 ],
                                 "shacl:property": [
                                   {
-                                    "@id": "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/alternate_id",
+                                    "@id": "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/alternate_id",
                                     "@type": [
                                       "shacl:PropertyShape",
                                       "shacl:Shape",
@@ -101,7 +101,7 @@
                                     ],
                                     "raml-shapes:range": [
                                       {
-                                        "@id": "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/alternate_id/union/default-union",
+                                        "@id": "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/alternate_id/union/default-union",
                                         "@type": [
                                           "raml-shapes:UnionShape",
                                           "shacl:Shape",
@@ -138,14 +138,14 @@
                                         ],
                                         "smaps": {
                                           "inherited-shapes": {
-                                            "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/alternate_id/union/default-union": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/union/default-union"
+                                            "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/alternate_id/union/default-union": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/union/default-union"
                                           },
                                           "lexical": {
                                             "schema-org:description": "[(6,4)-(7,0)]",
-                                            "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/alternate_id/union/default-union": "[(5,0)-(7,0)]"
+                                            "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/alternate_id/union/default-union": "[(5,0)-(7,0)]"
                                           },
                                           "type-property-lexical-info": {
-                                            "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/alternate_id/union/default-union": "[(5,4)-(5,8)]"
+                                            "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/alternate_id/union/default-union": "[(5,4)-(5,8)]"
                                           }
                                         }
                                       }
@@ -162,12 +162,12 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/alternate_id": "[(4,2)-(7,0)]"
+                                        "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/alternate_id": "[(4,2)-(7,0)]"
                                       }
                                     }
                                   },
                                   {
-                                    "@id": "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/category",
+                                    "@id": "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/category",
                                     "@type": [
                                       "shacl:PropertyShape",
                                       "shacl:Shape",
@@ -180,7 +180,7 @@
                                     ],
                                     "raml-shapes:range": [
                                       {
-                                        "@id": "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/category/category",
+                                        "@id": "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/category/category",
                                         "@type": [
                                           "shacl:NodeShape",
                                           "shacl:Shape",
@@ -194,7 +194,7 @@
                                         ],
                                         "shacl:property": [
                                           {
-                                            "@id": "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/category/category/property/id",
+                                            "@id": "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/category/category/property/id",
                                             "@type": [
                                               "shacl:PropertyShape",
                                               "shacl:Shape",
@@ -207,7 +207,7 @@
                                             ],
                                             "raml-shapes:range": [
                                               {
-                                                "@id": "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/category/category/property/id/scalar/id",
+                                                "@id": "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/category/category/property/id/scalar/id",
                                                 "@type": [
                                                   "raml-shapes:ScalarShape",
                                                   "shacl:Shape",
@@ -231,11 +231,11 @@
                                                 ],
                                                 "smaps": {
                                                   "type-property-lexical-info": {
-                                                    "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/category/category/property/id/scalar/id": "[(12,8)-(12,12)]"
+                                                    "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/category/category/property/id/scalar/id": "[(12,8)-(12,12)]"
                                                   },
                                                   "lexical": {
                                                     "schema-org:description": "[(13,8)-(14,0)]",
-                                                    "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/category/category/property/id/scalar/id": "[(11,6)-(14,0)]",
+                                                    "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/category/category/property/id/scalar/id": "[(11,6)-(14,0)]",
                                                     "shacl:datatype": "[(12,8)-(13,0)]"
                                                   }
                                                 }
@@ -253,12 +253,12 @@
                                             ],
                                             "smaps": {
                                               "lexical": {
-                                                "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/category/category/property/id": "[(11,6)-(14,0)]"
+                                                "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/category/category/property/id": "[(11,6)-(14,0)]"
                                               }
                                             }
                                           },
                                           {
-                                            "@id": "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/category/category/property/name",
+                                            "@id": "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/category/category/property/name",
                                             "@type": [
                                               "shacl:PropertyShape",
                                               "shacl:Shape",
@@ -271,7 +271,7 @@
                                             ],
                                             "raml-shapes:range": [
                                               {
-                                                "@id": "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/category/category/property/name/scalar/name",
+                                                "@id": "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/category/category/property/name/scalar/name",
                                                 "@type": [
                                                   "raml-shapes:ScalarShape",
                                                   "shacl:Shape",
@@ -295,11 +295,11 @@
                                                 ],
                                                 "smaps": {
                                                   "type-property-lexical-info": {
-                                                    "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/category/category/property/name/scalar/name": "[(15,8)-(15,12)]"
+                                                    "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/category/category/property/name/scalar/name": "[(15,8)-(15,12)]"
                                                   },
                                                   "lexical": {
                                                     "schema-org:description": "[(16,8)-(17,0)]",
-                                                    "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/category/category/property/name/scalar/name": "[(14,6)-(17,0)]",
+                                                    "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/category/category/property/name/scalar/name": "[(14,6)-(17,0)]",
                                                     "shacl:datatype": "[(15,8)-(16,0)]"
                                                   }
                                                 }
@@ -317,7 +317,7 @@
                                             ],
                                             "smaps": {
                                               "lexical": {
-                                                "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/category/category/property/name": "[(14,6)-(17,0)]"
+                                                "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/category/category/property/name": "[(14,6)-(17,0)]"
                                               }
                                             }
                                           }
@@ -334,11 +334,11 @@
                                         ],
                                         "smaps": {
                                           "type-property-lexical-info": {
-                                            "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/category/category": "[(9,4)-(9,8)]"
+                                            "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/category/category": "[(9,4)-(9,8)]"
                                           },
                                           "lexical": {
                                             "schema-org:description": "[(8,4)-(9,0)]",
-                                            "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/category/category": "[(7,2)-(17,0)]"
+                                            "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/category/category": "[(7,2)-(17,0)]"
                                           }
                                         }
                                       }
@@ -355,12 +355,12 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/category": "[(7,2)-(17,0)]"
+                                        "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/category": "[(7,2)-(17,0)]"
                                       }
                                     }
                                   },
                                   {
-                                    "@id": "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/created_at",
+                                    "@id": "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/created_at",
                                     "@type": [
                                       "shacl:PropertyShape",
                                       "shacl:Shape",
@@ -373,7 +373,7 @@
                                     ],
                                     "raml-shapes:range": [
                                       {
-                                        "@id": "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/created_at/scalar/created_at",
+                                        "@id": "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/created_at/scalar/created_at",
                                         "@type": [
                                           "raml-shapes:ScalarShape",
                                           "shacl:Shape",
@@ -397,11 +397,11 @@
                                         ],
                                         "smaps": {
                                           "type-property-lexical-info": {
-                                            "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/created_at/scalar/created_at": "[(18,4)-(18,8)]"
+                                            "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/created_at/scalar/created_at": "[(18,4)-(18,8)]"
                                           },
                                           "lexical": {
                                             "schema-org:description": "[(19,4)-(20,0)]",
-                                            "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/created_at/scalar/created_at": "[(17,2)-(20,0)]",
+                                            "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/created_at/scalar/created_at": "[(17,2)-(20,0)]",
                                             "shacl:datatype": "[(18,4)-(19,0)]"
                                           }
                                         }
@@ -419,7 +419,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization/property/created_at": "[(17,2)-(20,0)]"
+                                        "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization/property/created_at": "[(17,2)-(20,0)]"
                                       }
                                     }
                                   }
@@ -431,10 +431,10 @@
                                 ],
                                 "smaps": {
                                   "type-property-lexical-info": {
-                                    "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization": "[(2,0)-(2,4)]"
+                                    "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization": "[(2,0)-(2,4)]"
                                   },
                                   "lexical": {
-                                    "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/Organization": "[(2,0)-(20,0)]"
+                                    "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/Organization": "[(2,0)-(20,0)]"
                                   }
                                 }
                               }
@@ -446,7 +446,7 @@
                             ],
                             "doc:examples": [
                               {
-                                "@id": "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/value",
+                                "@id": "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/value",
                                 "@type": [
                                   "doc:Example",
                                   "doc:DomainElement"
@@ -671,35 +671,35 @@
                                     "doc:strict": "true"
                                   },
                                   "source-vendor": {
-                                    "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/value": "raml 1.0"
+                                    "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/value": "raml 1.0"
                                   },
                                   "lexical": {
                                     "shacl:raw": "[(3,0)-(15,3)]",
-                                    "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/value": "[(2,6)-(15,3)]",
+                                    "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/value": "[(2,6)-(15,3)]",
                                     "schema-org:name": "[(2,0)-(15,3)]"
                                   },
                                   "resolved-link": {
-                                    "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/value": "file://amf-client/shared/src/test/resources/production/testIssueNil/api.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/default-example"
+                                    "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/value": "file://amf-client/shared/src/test/resources/production/testIssueNil/api.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/default-example"
                                   }
                                 }
                               }
                             ],
                             "smaps": {
                               "inherited-shapes": {
-                                "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema": "file://amf-client/shared/src/test/resources/production/testIssueNil/api.raml#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema/array/default-array"
+                                "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema": "file://amf-client/shared/src/test/resources/production/testIssueNil/api.raml#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/array/default-array"
                               },
                               "lexical": {
-                                "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema": "[(12,6)-(15,0)]"
+                                "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema": "[(12,6)-(15,0)]"
                               },
                               "type-property-lexical-info": {
-                                "#/web-api/end-points/%2Forganizations/put/request/application/json/array/schema": "[(13,8)-(13,12)]"
+                                "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema": "[(13,8)-(13,12)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "lexical": {
-                            "#/web-api/end-points/%2Forganizations/put/request/application/json": "[(12,6)-(15,0)]"
+                            "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson": "[(12,6)-(15,0)]"
                           }
                         }
                       }
@@ -752,7 +752,7 @@
                     ],
                     "raml-http:payload": [
                       {
-                        "@id": "#/web-api/end-points/%2Forganizations/get/200/application/json",
+                        "@id": "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson",
                         "@type": [
                           "raml-http:Payload",
                           "doc:DomainElement"
@@ -764,7 +764,7 @@
                         ],
                         "raml-http:schema": [
                           {
-                            "@id": "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema",
+                            "@id": "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema",
                             "@type": [
                               "raml-shapes:ArrayShape",
                               "shacl:Shape",
@@ -773,7 +773,7 @@
                             ],
                             "raml-shapes:items": [
                               {
-                                "@id": "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization",
+                                "@id": "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization",
                                 "@type": [
                                   "shacl:NodeShape",
                                   "shacl:Shape",
@@ -787,7 +787,7 @@
                                 ],
                                 "shacl:property": [
                                   {
-                                    "@id": "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/alternate_id",
+                                    "@id": "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/alternate_id",
                                     "@type": [
                                       "shacl:PropertyShape",
                                       "shacl:Shape",
@@ -800,7 +800,7 @@
                                     ],
                                     "raml-shapes:range": [
                                       {
-                                        "@id": "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/alternate_id/union/default-union",
+                                        "@id": "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/alternate_id/union/default-union",
                                         "@type": [
                                           "raml-shapes:UnionShape",
                                           "shacl:Shape",
@@ -837,14 +837,14 @@
                                         ],
                                         "smaps": {
                                           "inherited-shapes": {
-                                            "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/alternate_id/union/default-union": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/union/default-union"
+                                            "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/alternate_id/union/default-union": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/union/default-union"
                                           },
                                           "lexical": {
                                             "schema-org:description": "[(6,4)-(7,0)]",
-                                            "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/alternate_id/union/default-union": "[(5,0)-(7,0)]"
+                                            "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/alternate_id/union/default-union": "[(5,0)-(7,0)]"
                                           },
                                           "type-property-lexical-info": {
-                                            "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/alternate_id/union/default-union": "[(5,4)-(5,8)]"
+                                            "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/alternate_id/union/default-union": "[(5,4)-(5,8)]"
                                           }
                                         }
                                       }
@@ -861,12 +861,12 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/alternate_id": "[(4,2)-(7,0)]"
+                                        "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/alternate_id": "[(4,2)-(7,0)]"
                                       }
                                     }
                                   },
                                   {
-                                    "@id": "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/category",
+                                    "@id": "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/category",
                                     "@type": [
                                       "shacl:PropertyShape",
                                       "shacl:Shape",
@@ -879,7 +879,7 @@
                                     ],
                                     "raml-shapes:range": [
                                       {
-                                        "@id": "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/category/category",
+                                        "@id": "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/category/category",
                                         "@type": [
                                           "shacl:NodeShape",
                                           "shacl:Shape",
@@ -893,7 +893,7 @@
                                         ],
                                         "shacl:property": [
                                           {
-                                            "@id": "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/category/category/property/id",
+                                            "@id": "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/category/category/property/id",
                                             "@type": [
                                               "shacl:PropertyShape",
                                               "shacl:Shape",
@@ -906,7 +906,7 @@
                                             ],
                                             "raml-shapes:range": [
                                               {
-                                                "@id": "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/category/category/property/id/scalar/id",
+                                                "@id": "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/category/category/property/id/scalar/id",
                                                 "@type": [
                                                   "raml-shapes:ScalarShape",
                                                   "shacl:Shape",
@@ -930,11 +930,11 @@
                                                 ],
                                                 "smaps": {
                                                   "type-property-lexical-info": {
-                                                    "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/category/category/property/id/scalar/id": "[(12,8)-(12,12)]"
+                                                    "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/category/category/property/id/scalar/id": "[(12,8)-(12,12)]"
                                                   },
                                                   "lexical": {
                                                     "schema-org:description": "[(13,8)-(14,0)]",
-                                                    "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/category/category/property/id/scalar/id": "[(11,6)-(14,0)]",
+                                                    "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/category/category/property/id/scalar/id": "[(11,6)-(14,0)]",
                                                     "shacl:datatype": "[(12,8)-(13,0)]"
                                                   }
                                                 }
@@ -952,12 +952,12 @@
                                             ],
                                             "smaps": {
                                               "lexical": {
-                                                "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/category/category/property/id": "[(11,6)-(14,0)]"
+                                                "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/category/category/property/id": "[(11,6)-(14,0)]"
                                               }
                                             }
                                           },
                                           {
-                                            "@id": "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/category/category/property/name",
+                                            "@id": "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/category/category/property/name",
                                             "@type": [
                                               "shacl:PropertyShape",
                                               "shacl:Shape",
@@ -970,7 +970,7 @@
                                             ],
                                             "raml-shapes:range": [
                                               {
-                                                "@id": "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/category/category/property/name/scalar/name",
+                                                "@id": "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/category/category/property/name/scalar/name",
                                                 "@type": [
                                                   "raml-shapes:ScalarShape",
                                                   "shacl:Shape",
@@ -994,11 +994,11 @@
                                                 ],
                                                 "smaps": {
                                                   "type-property-lexical-info": {
-                                                    "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/category/category/property/name/scalar/name": "[(15,8)-(15,12)]"
+                                                    "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/category/category/property/name/scalar/name": "[(15,8)-(15,12)]"
                                                   },
                                                   "lexical": {
                                                     "schema-org:description": "[(16,8)-(17,0)]",
-                                                    "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/category/category/property/name/scalar/name": "[(14,6)-(17,0)]",
+                                                    "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/category/category/property/name/scalar/name": "[(14,6)-(17,0)]",
                                                     "shacl:datatype": "[(15,8)-(16,0)]"
                                                   }
                                                 }
@@ -1016,7 +1016,7 @@
                                             ],
                                             "smaps": {
                                               "lexical": {
-                                                "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/category/category/property/name": "[(14,6)-(17,0)]"
+                                                "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/category/category/property/name": "[(14,6)-(17,0)]"
                                               }
                                             }
                                           }
@@ -1033,11 +1033,11 @@
                                         ],
                                         "smaps": {
                                           "type-property-lexical-info": {
-                                            "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/category/category": "[(9,4)-(9,8)]"
+                                            "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/category/category": "[(9,4)-(9,8)]"
                                           },
                                           "lexical": {
                                             "schema-org:description": "[(8,4)-(9,0)]",
-                                            "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/category/category": "[(7,2)-(17,0)]"
+                                            "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/category/category": "[(7,2)-(17,0)]"
                                           }
                                         }
                                       }
@@ -1054,12 +1054,12 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/category": "[(7,2)-(17,0)]"
+                                        "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/category": "[(7,2)-(17,0)]"
                                       }
                                     }
                                   },
                                   {
-                                    "@id": "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/created_at",
+                                    "@id": "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/created_at",
                                     "@type": [
                                       "shacl:PropertyShape",
                                       "shacl:Shape",
@@ -1072,7 +1072,7 @@
                                     ],
                                     "raml-shapes:range": [
                                       {
-                                        "@id": "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/created_at/scalar/created_at",
+                                        "@id": "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/created_at/scalar/created_at",
                                         "@type": [
                                           "raml-shapes:ScalarShape",
                                           "shacl:Shape",
@@ -1096,11 +1096,11 @@
                                         ],
                                         "smaps": {
                                           "type-property-lexical-info": {
-                                            "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/created_at/scalar/created_at": "[(18,4)-(18,8)]"
+                                            "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/created_at/scalar/created_at": "[(18,4)-(18,8)]"
                                           },
                                           "lexical": {
                                             "schema-org:description": "[(19,4)-(20,0)]",
-                                            "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/created_at/scalar/created_at": "[(17,2)-(20,0)]",
+                                            "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/created_at/scalar/created_at": "[(17,2)-(20,0)]",
                                             "shacl:datatype": "[(18,4)-(19,0)]"
                                           }
                                         }
@@ -1118,7 +1118,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization/property/created_at": "[(17,2)-(20,0)]"
+                                        "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization/property/created_at": "[(17,2)-(20,0)]"
                                       }
                                     }
                                   }
@@ -1130,10 +1130,10 @@
                                 ],
                                 "smaps": {
                                   "type-property-lexical-info": {
-                                    "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization": "[(2,0)-(2,4)]"
+                                    "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization": "[(2,0)-(2,4)]"
                                   },
                                   "lexical": {
-                                    "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/Organization": "[(2,0)-(20,0)]"
+                                    "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/Organization": "[(2,0)-(20,0)]"
                                   }
                                 }
                               }
@@ -1145,7 +1145,7 @@
                             ],
                             "doc:examples": [
                               {
-                                "@id": "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/value",
+                                "@id": "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/value",
                                 "@type": [
                                   "doc:Example",
                                   "doc:DomainElement"
@@ -1370,35 +1370,35 @@
                                     "doc:strict": "true"
                                   },
                                   "source-vendor": {
-                                    "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/value": "raml 1.0"
+                                    "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/value": "raml 1.0"
                                   },
                                   "lexical": {
                                     "shacl:raw": "[(3,0)-(15,3)]",
-                                    "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/value": "[(2,6)-(15,3)]",
+                                    "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/value": "[(2,6)-(15,3)]",
                                     "schema-org:name": "[(2,0)-(15,3)]"
                                   },
                                   "resolved-link": {
-                                    "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/value": "file://amf-client/shared/src/test/resources/production/testIssueNil/api.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/default-example"
+                                    "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/value": "file://amf-client/shared/src/test/resources/production/testIssueNil/api.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/default-example"
                                   }
                                 }
                               }
                             ],
                             "smaps": {
                               "inherited-shapes": {
-                                "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema": "file://amf-client/shared/src/test/resources/production/testIssueNil/api.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/array/default-array"
+                                "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema": "file://amf-client/shared/src/test/resources/production/testIssueNil/api.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/array/default-array"
                               },
                               "lexical": {
-                                "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema": "[(20,10)-(24,0)]"
+                                "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema": "[(20,10)-(24,0)]"
                               },
                               "type-property-lexical-info": {
-                                "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema": "[(21,12)-(21,16)]"
+                                "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema": "[(21,12)-(21,16)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "lexical": {
-                            "#/web-api/end-points/%2Forganizations/get/200/application/json": "[(20,10)-(24,0)]"
+                            "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson": "[(20,10)-(24,0)]"
                           }
                         }
                       }
@@ -1558,7 +1558,7 @@
                     ],
                     "raml-http:payload": [
                       {
-                        "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json",
+                        "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson",
                         "@type": [
                           "raml-http:Payload",
                           "doc:DomainElement"
@@ -1570,7 +1570,7 @@
                         ],
                         "raml-http:schema": [
                           {
-                            "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema",
+                            "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema",
                             "@type": [
                               "shacl:NodeShape",
                               "shacl:Shape",
@@ -1584,7 +1584,7 @@
                             ],
                             "shacl:property": [
                               {
-                                "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id",
+                                "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/alternate_id",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -1597,7 +1597,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id/union/default-union",
+                                    "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/alternate_id/union/default-union",
                                     "@type": [
                                       "raml-shapes:UnionShape",
                                       "shacl:Shape",
@@ -1634,14 +1634,14 @@
                                     ],
                                     "smaps": {
                                       "inherited-shapes": {
-                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id/union/default-union": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/union/default-union"
+                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/alternate_id/union/default-union": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml#shape/property/alternate_id?/union/default-union/union/default-union"
                                       },
                                       "lexical": {
                                         "schema-org:description": "[(6,4)-(7,0)]",
-                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id/union/default-union": "[(5,0)-(7,0)]"
+                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/alternate_id/union/default-union": "[(5,0)-(7,0)]"
                                       },
                                       "type-property-lexical-info": {
-                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id/union/default-union": "[(5,4)-(5,8)]"
+                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/alternate_id/union/default-union": "[(5,4)-(5,8)]"
                                       }
                                     }
                                   }
@@ -1658,15 +1658,15 @@
                                 ],
                                 "smaps": {
                                   "inheritance-provenance": {
-                                    "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type"
+                                    "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/alternate_id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type"
                                   },
                                   "lexical": {
-                                    "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/alternate_id": "[(4,2)-(7,0)]"
+                                    "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/alternate_id": "[(4,2)-(7,0)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category",
+                                "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -1679,7 +1679,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category/category",
+                                    "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category",
                                     "@type": [
                                       "shacl:NodeShape",
                                       "shacl:Shape",
@@ -1693,7 +1693,7 @@
                                     ],
                                     "shacl:property": [
                                       {
-                                        "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category/category/property/id",
+                                        "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/id",
                                         "@type": [
                                           "shacl:PropertyShape",
                                           "shacl:Shape",
@@ -1706,7 +1706,7 @@
                                         ],
                                         "raml-shapes:range": [
                                           {
-                                            "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category/category/property/id/scalar/id",
+                                            "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/id/scalar/id",
                                             "@type": [
                                               "raml-shapes:ScalarShape",
                                               "shacl:Shape",
@@ -1730,11 +1730,11 @@
                                             ],
                                             "smaps": {
                                               "type-property-lexical-info": {
-                                                "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category/category/property/id/scalar/id": "[(12,8)-(12,12)]"
+                                                "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/id/scalar/id": "[(12,8)-(12,12)]"
                                               },
                                               "lexical": {
                                                 "schema-org:description": "[(13,8)-(14,0)]",
-                                                "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category/category/property/id/scalar/id": "[(11,6)-(14,0)]",
+                                                "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/id/scalar/id": "[(11,6)-(14,0)]",
                                                 "shacl:datatype": "[(12,8)-(13,0)]"
                                               }
                                             }
@@ -1752,12 +1752,12 @@
                                         ],
                                         "smaps": {
                                           "lexical": {
-                                            "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category/category/property/id": "[(11,6)-(14,0)]"
+                                            "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/id": "[(11,6)-(14,0)]"
                                           }
                                         }
                                       },
                                       {
-                                        "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category/category/property/name",
+                                        "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/name",
                                         "@type": [
                                           "shacl:PropertyShape",
                                           "shacl:Shape",
@@ -1770,7 +1770,7 @@
                                         ],
                                         "raml-shapes:range": [
                                           {
-                                            "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category/category/property/name/scalar/name",
+                                            "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/name/scalar/name",
                                             "@type": [
                                               "raml-shapes:ScalarShape",
                                               "shacl:Shape",
@@ -1794,11 +1794,11 @@
                                             ],
                                             "smaps": {
                                               "type-property-lexical-info": {
-                                                "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category/category/property/name/scalar/name": "[(15,8)-(15,12)]"
+                                                "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/name/scalar/name": "[(15,8)-(15,12)]"
                                               },
                                               "lexical": {
                                                 "schema-org:description": "[(16,8)-(17,0)]",
-                                                "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category/category/property/name/scalar/name": "[(14,6)-(17,0)]",
+                                                "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/name/scalar/name": "[(14,6)-(17,0)]",
                                                 "shacl:datatype": "[(15,8)-(16,0)]"
                                               }
                                             }
@@ -1816,7 +1816,7 @@
                                         ],
                                         "smaps": {
                                           "lexical": {
-                                            "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category/category/property/name": "[(14,6)-(17,0)]"
+                                            "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/name": "[(14,6)-(17,0)]"
                                           }
                                         }
                                       }
@@ -1833,11 +1833,11 @@
                                     ],
                                     "smaps": {
                                       "type-property-lexical-info": {
-                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category/category": "[(9,4)-(9,8)]"
+                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category": "[(9,4)-(9,8)]"
                                       },
                                       "lexical": {
                                         "schema-org:description": "[(8,4)-(9,0)]",
-                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category/category": "[(7,2)-(17,0)]"
+                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category": "[(7,2)-(17,0)]"
                                       }
                                     }
                                   }
@@ -1854,15 +1854,15 @@
                                 ],
                                 "smaps": {
                                   "inheritance-provenance": {
-                                    "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type"
+                                    "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type"
                                   },
                                   "lexical": {
-                                    "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/category": "[(7,2)-(17,0)]"
+                                    "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category": "[(7,2)-(17,0)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/created_at",
+                                "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/created_at",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -1875,7 +1875,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/created_at/scalar/created_at",
+                                    "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/created_at/scalar/created_at",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -1899,11 +1899,11 @@
                                     ],
                                     "smaps": {
                                       "type-property-lexical-info": {
-                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/created_at/scalar/created_at": "[(18,4)-(18,8)]"
+                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/created_at/scalar/created_at": "[(18,4)-(18,8)]"
                                       },
                                       "lexical": {
                                         "schema-org:description": "[(19,4)-(20,0)]",
-                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/created_at/scalar/created_at": "[(17,2)-(20,0)]",
+                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/created_at/scalar/created_at": "[(17,2)-(20,0)]",
                                         "shacl:datatype": "[(18,4)-(19,0)]"
                                       }
                                     }
@@ -1921,10 +1921,10 @@
                                 ],
                                 "smaps": {
                                   "inheritance-provenance": {
-                                    "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/created_at": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type"
+                                    "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/created_at": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type"
                                   },
                                   "lexical": {
-                                    "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/property/created_at": "[(17,2)-(20,0)]"
+                                    "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/created_at": "[(17,2)-(20,0)]"
                                   }
                                 }
                               }
@@ -2077,7 +2077,7 @@
                                     "schema-org:name": "[(2,0)-(9,0)]"
                                   },
                                   "resolved-link": {
-                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value": "file://amf-client/shared/src/test/resources/production/testIssueNil/api.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/example/default-example"
+                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value": "file://amf-client/shared/src/test/resources/production/testIssueNil/api.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/example/default-example"
                                   }
                                 }
                               }
@@ -2087,20 +2087,20 @@
                                 "shacl:name": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type"
                               },
                               "type-property-lexical-info": {
-                                "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema": "[(35,14)-(35,18)]"
+                                "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema": "[(35,14)-(35,18)]"
                               },
                               "lexical": {
-                                "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema": "[(34,12)-(37,3)]"
+                                "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema": "[(34,12)-(37,3)]"
                               },
                               "inherited-shapes": {
-                                "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type"
+                                "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "lexical": {
-                            "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json": "[(34,12)-(37,3)]"
+                            "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson": "[(34,12)-(37,3)]"
                           }
                         }
                       }
@@ -2661,7 +2661,7 @@
                 "schema-org:name": "[(2,0)-(9,0)]"
               },
               "resolved-link": {
-                "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value": "file://amf-client/shared/src/test/resources/production/testIssueNil/api.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application/json/schema/example/default-example"
+                "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value": "file://amf-client/shared/src/test/resources/production/testIssueNil/api.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/example/default-example"
               }
             }
           }
@@ -3061,7 +3061,7 @@
         ],
         "doc:encodes": [
           {
-            "@id": "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/value",
+            "@id": "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/value",
             "@type": [
               "doc:Example",
               "doc:DomainElement"
@@ -3286,15 +3286,15 @@
                 "doc:strict": "true"
               },
               "source-vendor": {
-                "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/value": "raml 1.0"
+                "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/value": "raml 1.0"
               },
               "lexical": {
                 "shacl:raw": "[(3,0)-(15,3)]",
-                "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/value": "[(2,6)-(15,3)]",
+                "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/value": "[(2,6)-(15,3)]",
                 "schema-org:name": "[(2,0)-(15,3)]"
               },
               "resolved-link": {
-                "#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/value": "file://amf-client/shared/src/test/resources/production/testIssueNil/api.raml#/web-api/end-points/%2Forganizations/get/200/application/json/array/schema/example/default-example"
+                "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/value": "file://amf-client/shared/src/test/resources/production/testIssueNil/api.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/default-example"
               }
             }
           }

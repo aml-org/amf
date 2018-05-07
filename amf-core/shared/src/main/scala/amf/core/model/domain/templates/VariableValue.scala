@@ -7,7 +7,7 @@ import amf.core.model.StrField
 import amf.core.model.domain.{DataNode, DomainElement}
 import amf.core.parser.{Annotations, Fields}
 import org.yaml.model.YPart
-
+import amf.core.utils.Strings
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 case class VariableValue(fields: Fields, annotations: Annotations) extends DomainElement {
@@ -21,7 +21,7 @@ case class VariableValue(fields: Fields, annotations: Annotations) extends Domai
   override def meta: Obj = VariableValueModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/" + name.value()
+  override def componentId: String = "/" + name.option().getOrElse("default-variable").urlComponentEncoded
 }
 
 object VariableValue {

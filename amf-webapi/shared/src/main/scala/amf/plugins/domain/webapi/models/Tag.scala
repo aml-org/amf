@@ -25,7 +25,7 @@ case class Tag(fields: Fields, annotations: Annotations) extends DomainElement {
   override def meta: TagModel.type = TagModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/tag/" + name.option().getOrElse("default-type").urlEncoded
+  override def componentId: String = "/tag/" + name.option().getOrElse("default-type").urlComponentEncoded
 }
 
 object Tag {

@@ -95,7 +95,7 @@
                     ],
                     "raml-http:payload": [
                       {
-                        "@id": "#/web-api/end-points/%2Fpeople/post/request/application/json",
+                        "@id": "#/web-api/end-points/%2Fpeople/post/request/application%2Fjson",
                         "@type": [
                           "raml-http:Payload",
                           "doc:DomainElement"
@@ -107,7 +107,7 @@
                         ],
                         "raml-http:schema": [
                           {
-                            "@id": "#/web-api/end-points/%2Fpeople/post/request/application/json/schema",
+                            "@id": "#/web-api/end-points/%2Fpeople/post/request/application%2Fjson/schema",
                             "@type": [
                               "shacl:NodeShape",
                               "shacl:Shape",
@@ -121,7 +121,7 @@
                             ],
                             "shacl:property": [
                               {
-                                "@id": "#/web-api/end-points/%2Fpeople/post/request/application/json/schema/property/a",
+                                "@id": "#/web-api/end-points/%2Fpeople/post/request/application%2Fjson/schema/property/a",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -134,7 +134,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#/web-api/end-points/%2Fpeople/post/request/application/json/schema/property/a/scalar/a",
+                                    "@id": "#/web-api/end-points/%2Fpeople/post/request/application%2Fjson/schema/property/a/scalar/a",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -153,7 +153,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#/web-api/end-points/%2Fpeople/post/request/application/json/schema/property/a/scalar/a": "[(4,2)-(5,0)]"
+                                        "#/web-api/end-points/%2Fpeople/post/request/application%2Fjson/schema/property/a/scalar/a": "[(4,2)-(5,0)]"
                                       }
                                     }
                                   }
@@ -170,10 +170,10 @@
                                 ],
                                 "smaps": {
                                   "inheritance-provenance": {
-                                    "#/web-api/end-points/%2Fpeople/post/request/application/json/schema/property/a": "file://amf-client/shared/src/test/resources/upanddown/app-person.raml/type"
+                                    "#/web-api/end-points/%2Fpeople/post/request/application%2Fjson/schema/property/a": "file://amf-client/shared/src/test/resources/upanddown/app-person.raml/type"
                                   },
                                   "lexical": {
-                                    "#/web-api/end-points/%2Fpeople/post/request/application/json/schema/property/a": "[(4,2)-(5,0)]"
+                                    "#/web-api/end-points/%2Fpeople/post/request/application%2Fjson/schema/property/a": "[(4,2)-(5,0)]"
                                   }
                                 }
                               }
@@ -188,20 +188,20 @@
                                 "shacl:name": "file://amf-client/shared/src/test/resources/upanddown/app-person.raml/type"
                               },
                               "type-property-lexical-info": {
-                                "#/web-api/end-points/%2Fpeople/post/request/application/json/schema": "[(16,8)-(16,12)]"
+                                "#/web-api/end-points/%2Fpeople/post/request/application%2Fjson/schema": "[(16,8)-(16,12)]"
                               },
                               "lexical": {
-                                "#/web-api/end-points/%2Fpeople/post/request/application/json/schema": "[(15,6)-(16,23)]"
+                                "#/web-api/end-points/%2Fpeople/post/request/application%2Fjson/schema": "[(15,6)-(16,23)]"
                               },
                               "inherited-shapes": {
-                                "#/web-api/end-points/%2Fpeople/post/request/application/json/schema": "file://amf-client/shared/src/test/resources/upanddown/app-person.raml/type"
+                                "#/web-api/end-points/%2Fpeople/post/request/application%2Fjson/schema": "file://amf-client/shared/src/test/resources/upanddown/app-person.raml/type"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "lexical": {
-                            "#/web-api/end-points/%2Fpeople/post/request/application/json": "[(15,6)-(16,23)]"
+                            "#/web-api/end-points/%2Fpeople/post/request/application%2Fjson": "[(15,6)-(16,23)]"
                           }
                         }
                       }

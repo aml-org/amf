@@ -8,6 +8,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.ExampleModel._
 import org.yaml.model.YPart
+import amf.core.utils.Strings
 
 /**
   *
@@ -38,7 +39,7 @@ class Example(override val fields: Fields, override val annotations: Annotations
   override def meta: Obj = ExampleModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/example/" + name.option().getOrElse("default-example")
+  override def componentId: String = "/example/" + name.option().getOrElse("default-example").urlComponentEncoded
 
 }
 
