@@ -160,6 +160,14 @@ class ProductionResolutionTest extends RamlResolutionTest {
           Raml,
           basePath + "types/")
   }
+
+  test("Test resolve resource type with '$' char in variable value") {
+    cycle("invalid-regexp-char-in-variable.raml",
+          "invalid-regexp-char-in-variable.resolved.raml",
+          RamlYamlHint,
+          Raml,
+          basePath)
+  }
 }
 
 class OASProductionResolutionTest extends OasResolutionTest {

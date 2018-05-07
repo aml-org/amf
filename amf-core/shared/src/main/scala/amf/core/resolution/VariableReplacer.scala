@@ -63,6 +63,7 @@ object VariableReplacer {
         case node => throw new Exception(s"Variable '$name' cannot be replaced with type $node")
       }
       .getOrElse(name)
+      .replace("$", "\\$")
   }
 
   protected[amf] def variableTransformation(value: String, transformation: String): String = transformation match {
