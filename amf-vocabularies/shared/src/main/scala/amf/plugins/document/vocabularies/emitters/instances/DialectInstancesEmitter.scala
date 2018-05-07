@@ -11,7 +11,7 @@ import amf.core.parser.Position.ZERO
 import amf.core.parser.{FieldEntry, Position, Value}
 import amf.core.utils._
 import amf.plugins.document.vocabularies.VocabulariesPlugin
-import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, RefInclude}
+import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, JsonPointerRef, RefInclude}
 import amf.plugins.document.vocabularies.emitters.common.IdCounter
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
@@ -204,9 +204,9 @@ case class DialectNodeEmitter(node: DialectDomainElement,
     if (node.isLink) {
       if (isFragment(node, instance)) emitLink(node).emit(b)
       else if (isLibrary(node, instance)) {
-        emitLibrarRef(node, instance).emit(b)
+        emitLibrarRef(node, instance, b)
       } else {
-        emitRef(node).emit(b)
+        emitRef(node, b)
       }
     } else {
       var emitters: Seq[EntryEmitter] = Nil
@@ -293,6 +293,10 @@ case class DialectNodeEmitter(node: DialectDomainElement,
         b.obj { m =>
           m.entry("$include", node.includeName)
         }
+      } else if (node.annotations.contains(classOf[JsonPointerRef])) {
+        b.obj { m =>
+          m.entry("$ref", node.linkLabel.getOrElse(node.linkTarget.get.id))
+        }
       } else {
         b += YNode.include(node.includeName)
       }
@@ -303,8 +307,15 @@ case class DialectNodeEmitter(node: DialectDomainElement,
       node.annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
   }
 
-  protected def emitRef(node: DialectDomainElement): PartEmitter =
-    TextScalarEmitter(node.localRefName, node.annotations)
+  protected def emitRef(node: DialectDomainElement, b: PartBuilder): Unit = {
+    if (node.annotations.contains(classOf[JsonPointerRef])) {
+      b.obj { m =>
+        m.entry("$ref", node.linkLabel.getOrElse(node.linkTarget.get.id))
+      }
+    } else {
+      TextScalarEmitter(node.localRefName, node.annotations).emit(b)
+    }
+  }
 
   protected def emitScalar(key: String, field: Field, scalar: AmfScalar): Seq[EntryEmitter] = {
     val formatted = scalar.value match {
@@ -532,14 +543,20 @@ case class DialectNodeEmitter(node: DialectDomainElement,
     }
   }
 
-  def emitLibrarRef(elem: DialectDomainElement, instance: DialectInstance): TextScalarEmitter = {
-    val lib = instance.references.find {
-      case lib: DeclaresModel =>
-        lib.declares.exists(_.id == elem.linkTarget.get.id)
-      case _ => false
+  def emitLibrarRef(elem: DialectDomainElement, instance: DialectInstance, b: PartBuilder): Unit = {
+    if (elem.annotations.contains(classOf[JsonPointerRef])) {
+      b.obj { m =>
+        m.entry("$ref", node.linkLabel.getOrElse(node.linkTarget.get.id))
+      }
+    } else {
+      val lib = instance.references.find {
+        case lib: DeclaresModel =>
+          lib.declares.exists(_.id == elem.linkTarget.get.id)
+        case _ => false
+      }
+      val alias = aliases(lib.get.id)._1
+      TextScalarEmitter(s"$alias.${elem.localRefName}", elem.annotations).emit(b)
     }
-    val alias = aliases(lib.get.id)._1
-    TextScalarEmitter(s"$alias.${elem.localRefName}", elem.annotations)
   }
 
   def declarationsEmitters(b: PartBuilder): Seq[EntryEmitter] = {

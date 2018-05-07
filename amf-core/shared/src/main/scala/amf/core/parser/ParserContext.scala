@@ -8,6 +8,8 @@ import amf.plugins.features.validation.ParserSideValidations.{ParsingErrorSpecif
 import org.mulesoft.lexer.InputRange
 import org.yaml.model._
 
+import scala.collection.mutable
+
 /**
   * Parser context
   */
@@ -129,6 +131,8 @@ case class ParserContext(rootContextDocument: String = "",
     extends ErrorHandler {
 
   override val currentFile: String = rootContextDocument
+
+  var globalSpace: mutable.Map[String, Any] = mutable.Map()
 }
 
 case class WarningOnlyHandler(override val currentFile: String) extends ErrorHandler {

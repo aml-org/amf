@@ -14,7 +14,7 @@ import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.RuntimeValidator
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels, ValidationResultProcessor}
-import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, RefInclude}
+import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, JsonPointerRef, RefInclude}
 import amf.plugins.document.vocabularies.emitters.dialects.{DialectEmitter, RamlDialectLibraryEmitter}
 import amf.plugins.document.vocabularies.emitters.instances.DialectInstancesEmitter
 import amf.plugins.document.vocabularies.emitters.vocabularies.VocabularyEmitter
@@ -110,7 +110,8 @@ object VocabulariesPlugin
   override def serializableAnnotations(): Map[String, AnnotationGraphLoader] = Map(
     "aliases-location" -> AliasesLocation,
     "custom-id"        -> CustomId,
-    "ref-include"      -> RefInclude
+    "ref-include"      -> RefInclude,
+    "json-pointer-ref" -> JsonPointerRef
   )
 
   /**
