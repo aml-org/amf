@@ -1,0 +1,66 @@
+#%Vocabulary 1.0
+
+vocabulary: Music Vocabulary
+
+base: http://mulesoft.com/vocabularies/music_curation#
+
+uses:
+  music: music.yaml
+
+classTerms:
+
+  Playlist:
+    displayName: Playlist
+    description: A particular compilation of music tracks
+
+  PlaylistSelection:
+    displayName: Playlist Selection
+    description: EAch of the tracks selected in the playlist
+    properties:
+      - selectedTrack
+      - score
+      - position
+      - author
+
+propertyTerms:
+
+  catalogId:
+    displayName: catalog ID
+    description: an Identifier for a track in a music catalogue
+    range: string
+
+  spotifyId:
+    displayName: Spotify ID
+    description: identifier of a track in Spotify
+    extends: catalogId
+    range: string
+
+  author:
+    displayName: author
+    description: author of the playlist
+
+  trackFrom:
+    displayName: track from
+    description: relation between a track and the album where it was released
+    range: music.Record
+
+  contents:
+    displayName: contents
+    description: contents of a playlist
+    range: PlaylistSelection
+
+  selectedTrack:
+    displayName: selected track
+    description: selection of a particular music track
+    range: music.Track
+
+  score:
+    displayName: score
+    description: score value for a curated music manifestation
+    range: music.MusicalManifestation
+
+  position:
+    displayName: position
+    description: position in a playlist
+    range: integer
+

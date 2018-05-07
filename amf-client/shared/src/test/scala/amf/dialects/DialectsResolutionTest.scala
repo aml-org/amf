@@ -3,13 +3,13 @@ package amf.dialects
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{RamlVocabulary, VocabularyYamlHint}
 import amf.io.BuildCycleTests
-import amf.plugins.document.vocabularies.RAMLVocabulariesPlugin
+import amf.plugins.document.vocabularies.VocabulariesPlugin
 
 import scala.concurrent.ExecutionContext
 
 abstract class DialectResolutionCycleTests extends BuildCycleTests {
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
-    RAMLVocabulariesPlugin.resolve(unit)
+    VocabulariesPlugin.resolve(unit)
   }
 }
 

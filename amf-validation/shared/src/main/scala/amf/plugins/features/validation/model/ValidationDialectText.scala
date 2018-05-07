@@ -4,7 +4,7 @@ object ValidationDialectText {
 
   def text: String =
     """
-      |#%RAML 1.0 Dialect
+      |#%Dialect 1.0
       |
       |dialect: Validation Profile
       |version: 1.0
