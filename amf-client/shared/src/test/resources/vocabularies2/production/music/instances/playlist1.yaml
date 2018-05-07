@@ -65,7 +65,7 @@ items:
   4:
     track:
       spotifyId: 0OLYyVMzILepGc7FKVaLWf
-      title: Sinfonia Concertante in E flat K364/320d: III Presto
+      title: "Sinfonia Concertante in E flat K364/320d: III Presto"
     artist:
       - spotifyId: 6pzfUmBsQAKxOhy0NSi8zn
         name: Anne-Sophie Mutter
@@ -95,7 +95,8 @@ items:
     artist:
       spotifyId: 0vo2ovp2PVDLDsTExmkFpo
       name: Lautten Compagney
-    composer: Monteverdi
+    composer:
+      $ref: "#/composers/Monteverdi"
     album:
       spotifyId: 02G4mzoARL6iMAfn794ppX
       title: La Dolce Vita

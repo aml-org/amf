@@ -190,14 +190,14 @@ abstract class WebApiContext(loc: String, refs: Seq[ParsedReference], private va
     case _                    => None
   }
 
-  var jsonSchemas: mutable.Map[String, AnyShape] = wrapped match {
-    case wac: WebApiContext => wac.jsonSchemas
-    case _                  => mutable.Map()
-  }
+  globalSpace = wrapped.globalSpace
 
   // JSON Schema has a global namespace
-  def findJsonSchema(url: String): Option[AnyShape] = jsonSchemas.get(url)
-  def registerJsonSchema(url: String, shape: AnyShape) = jsonSchemas += (url -> shape)
+  def findJsonSchema(url: String): Option[AnyShape] = globalSpace.get(url) match {
+    case Some(shape: AnyShape) => Some(shape)
+    case _                     => None
+  }
+  def registerJsonSchema(url: String, shape: AnyShape) = globalSpace.update(url, shape)
 
   def parseRemoteJSONPath(fileUrl: String)(implicit ctx: OasWebApiContext): Option[AnyShape] = {
     val referenceUrl = if (fileUrl.contains("#")) Some(fileUrl.split("#").last) else None

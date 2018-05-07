@@ -75,7 +75,8 @@ class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry) extends Refer
 
           case "$ref" => // $ref link
             val includeRef = entry.value
-            ramlInclude(includeRef)
+            if (!includeRef.startsWith("#"))
+              ramlInclude(includeRef.split("#").head)
 
           case _ => // no link, recur
             part.children.foreach(links)
