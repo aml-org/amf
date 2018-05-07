@@ -6,6 +6,7 @@ import amf.core.metamodel.domain.extensions.PropertyShapeModel._
 import amf.core.model.{BoolField, IntField, StrField}
 import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, ErrorHandler, Fields}
+import amf.core.utils.Strings
 
 /**
   * Property shape
@@ -41,7 +42,9 @@ case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape
 
   override def meta: ShapeModel = PropertyShapeModel
 
-  override def cloneShape(recursionErrorHandler: Option[ErrorHandler], withRecursionBase: Option[String], traversed: Set[String]): PropertyShape = {
+  override def cloneShape(recursionErrorHandler: Option[ErrorHandler],
+                          withRecursionBase: Option[String],
+                          traversed: Set[String]): PropertyShape = {
     val cloned = PropertyShape(Annotations(annotations))
     cloned.id = this.id
     copyFields(recursionErrorHandler, cloned, withRecursionBase, traversed)
@@ -49,7 +52,7 @@ case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape
   }
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/property/" + name.value()
+  override def componentId: String = "/property/" + name.value().urlComponentEncoded
 }
 
 object PropertyShape {

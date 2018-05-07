@@ -9,7 +9,7 @@ import amf.core.remote.FileNotFound
 import amf.core.remote.FutureConverter._
 import amf.core.remote.FileMediaType._
 import scala.concurrent.ExecutionContext.Implicits.global
-
+import amf.core.utils.Strings
 import scala.concurrent.Future
 
 case class FileResourceLoader() extends BaseFileResourceLoader {
@@ -21,17 +21,14 @@ case class FileResourceLoader() extends BaseFileResourceLoader {
                 extension(resource).flatMap(mimeFromExtension))
       } catch {
         case e: FileNotFoundException =>
-          if (resource.contains("%20")) { // exception for local file system where we accept resources including spaces
-            val escapedPath = resource.replace("%20", " ")
-            try {
-              Content(new FileStream(escapedPath),
-                      ensureFileAuthority(resource),
-                      extension(resource).flatMap(mimeFromExtension))
-            } catch {
-              case e: FileNotFoundException => throw FileNotFound(e)
-            }
-          } else {
-            throw FileNotFound(e)
+          // exception for local file system where we accept spaces [] and other chars in files names
+          val decoded = resource.urlDecoded
+          try {
+            Content(new FileStream(decoded),
+                    ensureFileAuthority(resource),
+                    extension(resource).flatMap(mimeFromExtension))
+          } catch {
+            case e: FileNotFoundException => throw FileNotFound(e)
           }
       }
     }.asJava

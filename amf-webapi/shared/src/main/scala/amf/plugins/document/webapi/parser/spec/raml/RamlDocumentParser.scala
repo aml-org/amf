@@ -222,18 +222,19 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
     val parent = root.location + "#/declarations"
     parseTypeDeclarations(map, parent)
     parseAnnotationTypeDeclarations(map, parent)
-    AbstractDeclarationsParser(
-      "traits",
-      entry =>
-        Trait(entry).withName(entry.key.as[String]).withId(parent + s"/traits/${entry.key.as[String].urlEncoded}"),
-      map,
-      parent).parse()
+    AbstractDeclarationsParser("traits",
+                               entry =>
+                                 Trait(entry)
+                                   .withName(entry.key.as[String])
+                                   .withId(parent + s"/traits/${entry.key.as[String].urlComponentEncoded}"),
+                               map,
+                               parent).parse()
     AbstractDeclarationsParser(
       "resourceTypes",
       entry =>
         ResourceType(entry)
           .withName(entry.key.as[String])
-          .withId(parent + s"/resourceTypes/${entry.key.as[String].urlEncoded}"),
+          .withId(parent + s"/resourceTypes/${entry.key.as[String].urlComponentEncoded}"),
       map,
       parent
     ).parse()

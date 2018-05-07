@@ -9,6 +9,7 @@ import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.metamodel.OperationModel.{Request => OperationRequest, _}
 import amf.plugins.domain.webapi.models.security.ParametrizedSecurityScheme
 import amf.plugins.domain.webapi.models.templates.ParametrizedTrait
+import amf.core.utils.Strings
 
 /**
   * Operation internal model.
@@ -84,7 +85,7 @@ case class Operation(fields: Fields, annotations: Annotations)
   override def meta: Obj = OperationModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/" + method.value()
+  override def componentId: String = "/" + method.option().getOrElse("default-operation").urlComponentEncoded
 }
 
 object Operation {

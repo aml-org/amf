@@ -4,6 +4,7 @@ import amf.core.metamodel.domain.templates.ParametrizedDeclarationModel._
 import amf.core.model.StrField
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
+import amf.core.utils.Strings
 
 abstract class ParametrizedDeclaration(fields: Fields, annotations: Annotations) extends DomainElement {
 
@@ -15,5 +16,5 @@ abstract class ParametrizedDeclaration(fields: Fields, annotations: Annotations)
   def withTarget(target: AbstractDeclaration): this.type      = set(Target, target)
   def withVariables(variables: Seq[VariableValue]): this.type = setArray(Variables, variables)
 
-  override def componentId: String = "/" + name.value()
+  override def componentId: String = "/" + name.option().getOrElse("default-parametrized").urlComponentEncoded
 }

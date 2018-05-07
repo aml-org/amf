@@ -13,6 +13,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSExportAll
+import amf.core.utils.Strings
 
 @JSExportAll
 case class JsServerFileResourceLoader() extends BaseFileResourceLoader {
@@ -26,12 +27,13 @@ case class JsServerFileResourceLoader() extends BaseFileResourceLoader {
                   extension(resource).flatMap(mimeFromExtension)))
       .recoverWith {
         case _: IOException => // exception for local file system where we accept resources including spaces
-          Fs.asyncFile(resource.replace("%20", " "))
+          Fs.asyncFile(resource.urlDecoded)
             .read()
-            .map(content =>
-              Content(new CharSequenceStream(resource, content),
-                      ensureFileAuthority(resource),
-                      extension(resource).flatMap(mimeFromExtension)))
+            .map(
+              content =>
+                Content(new CharSequenceStream(resource, content),
+                        ensureFileAuthority(resource),
+                        extension(resource).flatMap(mimeFromExtension)))
             .recover {
               case io: IOException => throw FileNotFound(io)
             }

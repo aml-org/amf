@@ -28,8 +28,8 @@ class CreativeWork(override val fields: Fields, override val annotations: Annota
   override def meta = CreativeWorkModel
 
   private def searchIdPart: Option[String] = linkTarget match {
-    case Some(target: CreativeWork) => target.title.option().orElse(target.url.option()).map(_.urlEncoded)
-    case _                          => title.option().orElse(url.option()).map(_.urlEncoded)
+    case Some(target: CreativeWork) => target.title.option().orElse(target.url.option()).map(_.urlComponentEncoded)
+    case _                          => title.option().orElse(url.option()).map(_.urlComponentEncoded)
   }
 
   /** Value , path + field value that is used to compose the id when the object its adopted */

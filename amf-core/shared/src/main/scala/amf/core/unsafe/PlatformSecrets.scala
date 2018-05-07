@@ -59,5 +59,20 @@ case class TrunkPlatform(content: String, wrappedPlatform: Option[Platform] = No
   /** Platform out of the box [ResourceLoader]s */
   override def loaders(): Seq[ResourceLoader] = wrappedPlatform.map(_.loaders()).getOrElse(Seq())
 
-  override def findCharInCharSequence(s: CharSequence)(p: Char => Boolean): Option[Char] = wrappedPlatform.flatMap(_.findCharInCharSequence(s)(p))
+  override def findCharInCharSequence(s: CharSequence)(p: Char => Boolean): Option[Char] =
+    wrappedPlatform.flatMap(_.findCharInCharSequence(s)(p))
+
+  /** encodes a complete uri. Not encodes chars like / */
+  override def encodeURI(url: String): String = url
+
+  /** decode a complete uri. */
+  override def decodeURI(url: String): String = url
+
+  /** encodes a uri component, including chars like / and : */
+  override def encodeURIComponent(url: String): String = url
+
+  /** decodes a uri component */
+  override def decodeURIComponent(url: String): String = url
+
+  override def normalizeURL(url: String): String = url
 }

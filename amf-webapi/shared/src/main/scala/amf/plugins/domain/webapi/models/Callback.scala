@@ -6,6 +6,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.CallbackModel
 import amf.plugins.domain.webapi.metamodel.CallbackModel._
 import org.yaml.model.YMap
+import amf.core.utils.Strings
 
 /**
   * Callback internal model
@@ -29,7 +30,7 @@ case class Callback(fields: Fields, annotations: Annotations) extends DomainElem
   override def meta = CallbackModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/" + name
+  override def componentId: String = "/" + name.option().getOrElse("default-callback").urlComponentEncoded
 }
 
 object Callback {

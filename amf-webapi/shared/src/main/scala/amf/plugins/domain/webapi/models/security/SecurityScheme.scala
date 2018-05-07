@@ -37,9 +37,9 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
 
   override def adopted(parent: String): this.type =
     if (parent.contains("#")) {
-      withId(parent + "/" + componentId.urlEncodeSimple)
+      withId(parent + "/" + componentId.urlComponentEncoded)
     } else {
-      withId(parent + "#" + componentId.urlEncodeSimple)
+      withId(parent + "#" + componentId.urlComponentEncoded)
     }
 
   def withHeader(name: String): Parameter = {
@@ -129,7 +129,7 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
   override def meta = SecuritySchemeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = name.option().getOrElse("fragment")
+  override def componentId: String = name.option().getOrElse("fragment").urlComponentEncoded
 }
 
 object SecurityScheme {

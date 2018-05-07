@@ -1,13 +1,14 @@
 package amf.plugins.domain.shapes.models
 
 import amf.core.metamodel.Obj
-import amf.core.model.{BoolField, IntField}
 import amf.core.model.domain.Shape
+import amf.core.model.{BoolField, IntField}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.ArrayShapeModel._
 import amf.plugins.domain.shapes.metamodel.TupleShapeModel.TupleItems
 import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, MatrixShapeModel, TupleShapeModel}
 import org.yaml.model.YPart
+import amf.core.utils.Strings
 
 /**
   * Array shape
@@ -41,7 +42,7 @@ abstract class DataArrangementShape(fields: Fields, annotations: Annotations) ex
     array
   }
 
-  override def componentId: String = "/array/" + name.option().getOrElse("default-array")
+  override def componentId: String = "/array/" + name.option().getOrElse("default-array").urlComponentEncoded
 
   override def adopted(parent: String): this.type = {
     simpleAdoption(parent)

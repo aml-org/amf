@@ -269,7 +269,8 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
     )
   }
 
-  private def collectAlias(aliasCollectorUnit: BaseUnit, alias: (Aliases.Alias, (Aliases.FullUrl, Aliases.RelativeUrl))): BaseUnit = {
+  private def collectAlias(aliasCollectorUnit: BaseUnit,
+                           alias: (Aliases.Alias, (Aliases.FullUrl, Aliases.RelativeUrl))): BaseUnit = {
     aliasCollectorUnit.annotations.find(classOf[Aliases]) match {
       case Some(aliases) =>
         aliasCollectorUnit.annotations.reject(_.isInstanceOf[Aliases])
@@ -697,12 +698,12 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
   def validateTemplate(template: String, map: YMap, propMappings: Seq[PropertyMapping]) = {
     val regex = "(\\{[^}]+\\})".r
     regex.findAllIn(template).foreach { varMatch =>
-      val variable = varMatch.replace("{","").replace("}","")
+      val variable = varMatch.replace("{", "").replace("}", "")
       propMappings.find(_.name().value() == variable) match {
         case Some(prop) =>
           if (prop.minCount().option().getOrElse(0) != 1)
             ctx.violation(s"PropertyMapping for idTemplate variable '$variable' must be mandatory", map)
-        case None       =>
+        case None =>
           ctx.violation(s"Missing propertyMapping for idTemplate variable '$variable'", map)
       }
     }
@@ -737,11 +738,12 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
           "mapping",
           entry => {
             val properties = entry.value.as[YMap].entries.map { entry =>
-              parsePropertyMapping(entry,
-                                   propertyMapping =>
-                                     propertyMapping
-                                       .withName(entry.key)
-                                       .adopted(nodeMapping.id + "/property/" + entry.key.as[YScalar].text.urlEncoded))
+              parsePropertyMapping(
+                entry,
+                propertyMapping =>
+                  propertyMapping
+                    .withName(entry.key)
+                    .adopted(nodeMapping.id + "/property/" + entry.key.as[YScalar].text.urlComponentEncoded))
             }
             nodeMapping.withPropertiesMapping(properties)
           }
@@ -850,7 +852,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
                 val declarationName = declarationEntry.key.as[YScalar].text
                 val declarationMapping = PublicNodeMapping(declarationEntry)
                   .withName(declarationName)
-                  .withId(parent + "/declaration/" + declarationName.urlEncoded)
+                  .withId(parent + "/declaration/" + declarationName.urlComponentEncoded)
                 ctx.declarations.findNodeMapping(declarationId, SearchScope.All) match {
                   case Some(nodeMapping) => Some(declarationMapping.withMappedNode(nodeMapping.id))
                   case _                 => None // TODO: violation here
@@ -874,7 +876,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
               val nodeId       = fragmentEntry.value.as[YScalar].text
               val documentsMapping = DocumentMapping(fragmentEntry.value)
                 .withDocumentName(fragmentName)
-                .withId(parent + s"/fragments/${fragmentName.urlEncoded}")
+                .withId(parent + s"/fragments/${fragmentName.urlComponentEncoded}")
               ctx.declarations.findNodeMapping(nodeId, SearchScope.All) match {
                 case Some(nodeMapping) => Some(documentsMapping.withEncoded(nodeMapping.id))
                 case _ =>
@@ -902,7 +904,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
               val declarationName = declarationEntry.key.as[YScalar].text
               val declarationMapping = PublicNodeMapping(declarationEntry)
                 .withName(declarationName)
-                .withId(parent + "/modules/" + declarationName.urlEncoded)
+                .withId(parent + "/modules/" + declarationName.urlComponentEncoded)
               ctx.declarations.findNodeMapping(declarationId, SearchScope.All) match {
                 case Some(nodeMapping) => Some(declarationMapping.withMappedNode(nodeMapping.id))
                 case _ =>

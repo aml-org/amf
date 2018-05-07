@@ -5,7 +5,7 @@ import java.lang.System.getProperty
 import java.net.{InetAddress, UnknownHostException}
 
 import amf.common.Diff.makeString
-import org.mulesoft.common.io.{AsyncFile, SyncFile, Utf8}
+import org.mulesoft.common.io.{AsyncFile, Utf8}
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, Succeeded}
 

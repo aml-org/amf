@@ -5,6 +5,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.UnionShapeModel
 import amf.plugins.domain.shapes.metamodel.UnionShapeModel._
 import org.yaml.model.YPart
+import amf.core.utils.Strings
 
 case class UnionShape(override val fields: Fields, override val annotations: Annotations)
     extends AnyShape(fields, annotations) {
@@ -18,7 +19,7 @@ case class UnionShape(override val fields: Fields, override val annotations: Ann
   override def meta = UnionShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/union/" + name.option().getOrElse("default-union")
+  override def componentId: String = "/union/" + name.option().getOrElse("default-union").urlComponentEncoded
 }
 
 object UnionShape {

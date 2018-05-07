@@ -8,6 +8,7 @@ import amf.plugins.domain.shapes.models.{ArrayShape, Example, NodeShape, ScalarS
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.metamodel.PayloadModel.{Encoding => EncodingModel, _}
 import org.yaml.model.YNode
+import amf.core.utils.Strings
 
 /**
   * Payload internal model.
@@ -76,7 +77,8 @@ case class Payload(fields: Fields, annotations: Annotations) extends DomainEleme
   override def meta: Obj = PayloadModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/" + mediaType.option().getOrElse("default")
+  override def componentId: String =
+    "/" + mediaType.option().getOrElse("default").urlComponentEncoded // todo: / char of media type should be encoded?
 }
 
 object Payload {

@@ -7,6 +7,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.metamodel.ResponseModel
 import amf.plugins.domain.webapi.metamodel.ResponseModel._
+import amf.core.utils.Strings
 
 /**
   * Response internal model.
@@ -76,7 +77,7 @@ class Response(override val fields: Fields, override val annotations: Annotation
   override def linkCopy(): Linkable = Response().withId(id)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/" + name.value()
+  override def componentId: String = "/" + name.option().getOrElse("default-response").urlComponentEncoded
 }
 
 object Response {

@@ -108,7 +108,7 @@
                     ],
                     "raml-http:payload": [
                       {
-                        "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json",
+                        "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson",
                         "@type": [
                           "raml-http:Payload",
                           "doc:DomainElement"
@@ -120,7 +120,7 @@
                         ],
                         "raml-http:schema": [
                           {
-                            "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema",
+                            "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema",
                             "@type": [
                               "shacl:NodeShape",
                               "shacl:Shape",
@@ -134,7 +134,7 @@
                             ],
                             "shacl:property": [
                               {
-                                "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/b",
+                                "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/b",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -147,7 +147,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/b/scalar/b",
+                                    "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/b/scalar/b",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -166,7 +166,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/b/scalar/b": "[(17,6)-(18,0)]"
+                                        "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/b/scalar/b": "[(17,6)-(18,0)]"
                                       }
                                     }
                                   }
@@ -183,15 +183,15 @@
                                 ],
                                 "smaps": {
                                   "inheritance-provenance": {
-                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/b": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/Bank"
+                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/b": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/Bank"
                                   },
                                   "lexical": {
-                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/b": "[(17,6)-(18,0)]"
+                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/b": "[(17,6)-(18,0)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/e",
+                                "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/e",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -204,7 +204,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/e/scalar/e",
+                                    "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/e/scalar/e",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -223,7 +223,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/e/scalar/e": "[(12,6)-(13,0)]"
+                                        "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/e/scalar/e": "[(12,6)-(13,0)]"
                                       }
                                     }
                                   }
@@ -240,15 +240,15 @@
                                 ],
                                 "smaps": {
                                   "inheritance-provenance": {
-                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/e": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/FinancialInstitution"
+                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/e": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/FinancialInstitution"
                                   },
                                   "lexical": {
-                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/e": "[(12,6)-(13,0)]"
+                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/e": "[(12,6)-(13,0)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/d",
+                                "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/d",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -261,7 +261,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/d/scalar/d",
+                                    "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/d/scalar/d",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -280,7 +280,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/d/scalar/d": "[(11,6)-(12,0)]"
+                                        "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/d/scalar/d": "[(11,6)-(12,0)]"
                                       }
                                     }
                                   }
@@ -297,15 +297,15 @@
                                 ],
                                 "smaps": {
                                   "inheritance-provenance": {
-                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/d": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/FinancialInstitution"
+                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/d": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/FinancialInstitution"
                                   },
                                   "lexical": {
-                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/d": "[(11,6)-(12,0)]"
+                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/d": "[(11,6)-(12,0)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/a",
+                                "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/a",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -318,7 +318,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/a/scalar/a",
+                                    "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/a/scalar/a",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -337,7 +337,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/a/scalar/a": "[(16,6)-(17,0)]"
+                                        "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/a/scalar/a": "[(16,6)-(17,0)]"
                                       }
                                     }
                                   }
@@ -354,15 +354,15 @@
                                 ],
                                 "smaps": {
                                   "inheritance-provenance": {
-                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/a": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/Bank"
+                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/a": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/Bank"
                                   },
                                   "lexical": {
-                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/a": "[(16,6)-(17,0)]"
+                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/a": "[(16,6)-(17,0)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/l",
+                                "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/l",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -375,7 +375,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/l/scalar/l",
+                                    "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/l/scalar/l",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -394,7 +394,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/l/scalar/l": "[(27,12)-(27,21)]"
+                                        "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/l/scalar/l": "[(27,12)-(27,21)]"
                                       }
                                     }
                                   }
@@ -411,12 +411,12 @@
                                 ],
                                 "smaps": {
                                   "lexical": {
-                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/l": "[(27,12)-(27,21)]"
+                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/l": "[(27,12)-(27,21)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/c",
+                                "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/c",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -429,7 +429,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/c/scalar/c",
+                                    "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/c/scalar/c",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -448,7 +448,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/c/scalar/c": "[(10,6)-(11,0)]"
+                                        "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/c/scalar/c": "[(10,6)-(11,0)]"
                                       }
                                     }
                                   }
@@ -465,10 +465,10 @@
                                 ],
                                 "smaps": {
                                   "inheritance-provenance": {
-                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/c": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/FinancialInstitution"
+                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/c": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/FinancialInstitution"
                                   },
                                   "lexical": {
-                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema/property/c": "[(10,6)-(11,0)]"
+                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/c": "[(10,6)-(11,0)]"
                                   }
                                 }
                               }
@@ -483,20 +483,20 @@
                                 "shacl:name": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/Bank"
                               },
                               "type-property-lexical-info": {
-                                "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema": "[(25,10)-(25,14)]"
+                                "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema": "[(25,10)-(25,14)]"
                               },
                               "lexical": {
-                                "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema": "[(24,8)-(27,21)]"
+                                "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema": "[(24,8)-(27,21)]"
                               },
                               "inherited-shapes": {
-                                "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json/schema": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/Bank"
+                                "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/Bank"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "lexical": {
-                            "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application/json": "[(24,8)-(27,21)]"
+                            "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson": "[(24,8)-(27,21)]"
                           }
                         }
                       }

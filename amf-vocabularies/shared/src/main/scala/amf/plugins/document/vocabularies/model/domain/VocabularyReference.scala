@@ -21,7 +21,7 @@ case class VocabularyReference(fields: Fields, annotations: Annotations) extends
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = alias.option() match {
-    case Some(alias) => "/vocabularyReference/" + alias.urlEncoded
+    case Some(alias) => "/vocabularyReference/" + alias.urlComponentEncoded
     case None        => throw new Exception("Cannot set ID of VocabularyReference without alias")
   }
 }

@@ -21,7 +21,7 @@ case class External(fields: Fields, annotations: Annotations) extends DomainElem
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = alias.option() match {
-    case Some(alias) => "/externals/" + alias.urlEncoded
+    case Some(alias) => "/externals/" + alias.urlComponentEncoded
     case None        => throw new Exception("Cannot set ID of external without alias")
   }
 }

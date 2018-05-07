@@ -1,5 +1,7 @@
 package amf.core
 
+import java.net.URISyntaxException
+
 import amf.client.remote.Content
 import amf.core
 import amf.core.benchmark.ExecutionLog
@@ -11,8 +13,9 @@ import amf.core.plugins.AMFDocumentPlugin
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.services.RuntimeCompiler
-import amf.core.utils.{Strings, UrlNormalizer}
+import amf.core.utils.Strings
 import amf.internal.environment.Environment
+import org.yaml.model.YNode
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -36,7 +39,15 @@ class AMFCompiler(val rawUrl: String,
                   private val baseContext: Option[ParserContext] = None,
                   val env: Environment = Environment()) {
 
-  val url: String = rawUrl.normalizePath
+  val url: String = {
+    try {
+      rawUrl.normalizePath
+    } catch {
+      case e: URISyntaxException =>
+        baseContext.getOrElse(ParserContext(rawUrl)).violation(url, e.getMessage, YNode(url))
+        rawUrl
+    }
+  }
 
   private val context: Context   = base.map(_.update(url)).getOrElse(core.remote.Context(remote, url))
   private val location           = context.current
@@ -204,7 +215,7 @@ class AMFCompiler(val rawUrl: String,
             }
           })
           .recover {
-            case e: FileNotFound =>
+            case e @ (_: FileNotFound | _: URISyntaxException) =>
               if (!link.isInferred()) {
                 link.refs.map(_.node).foreach { ref =>
                   ctx.violation(link.url, e.getMessage, ref)

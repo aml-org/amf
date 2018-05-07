@@ -4,6 +4,7 @@ import amf.core.metamodel.domain.templates.AbstractDeclarationModel._
 import amf.core.model.StrField
 import amf.core.model.domain.{DataNode, DomainElement, Linkable, NamedDomainElement}
 import amf.core.parser.{Annotations, Fields}
+import amf.core.utils.Strings
 
 abstract class AbstractDeclaration(fields: Fields, annotations: Annotations)
     extends DomainElement
@@ -20,5 +21,5 @@ abstract class AbstractDeclaration(fields: Fields, annotations: Annotations)
   def withVariables(variables: Seq[String]): this.type = set(Variables, variables)
   def withDescription(description: String): this.type  = set(Description, description)
 
-  override def componentId: String = "/" + name.value()
+  override def componentId: String = "/" + name.option().getOrElse("default-abstract").urlComponentEncoded
 }

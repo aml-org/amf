@@ -156,7 +156,7 @@
                     ],
                     "raml-http:payload": [
                       {
-                        "@id": "#/web-api/end-points/%2Fproducts/get/200/application/json",
+                        "@id": "#/web-api/end-points/%2Fproducts/get/200/application%2Fjson",
                         "@type": [
                           "raml-http:Payload",
                           "doc:DomainElement"
@@ -168,7 +168,7 @@
                         ],
                         "raml-http:schema": [
                           {
-                            "@id": "#/web-api/end-points/%2Fproducts/get/200/application/json/any/schema",
+                            "@id": "#/web-api/end-points/%2Fproducts/get/200/application%2Fjson/any/schema",
                             "@type": [
                               "raml-shapes:AnyShape",
                               "shacl:Shape",
@@ -181,14 +181,14 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "#/web-api/end-points/%2Fproducts/get/200/application/json/any/schema": "[(16,10)-(16,27)]"
+                                "#/web-api/end-points/%2Fproducts/get/200/application%2Fjson/any/schema": "[(16,10)-(16,27)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "lexical": {
-                            "#/web-api/end-points/%2Fproducts/get/200/application/json": "[(16,10)-(16,27)]"
+                            "#/web-api/end-points/%2Fproducts/get/200/application%2Fjson": "[(16,10)-(16,27)]"
                           }
                         }
                       }
@@ -324,7 +324,7 @@
                     ],
                     "smaps": {
                       "resolved-link": {
-                        "#/declarations/collection": "file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection/null"
+                        "#/declarations/collection": "file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection/default-abstract"
                       },
                       "lexical": {
                         "#/declarations/collection": "[(4,2)-(9,0)]"
@@ -458,7 +458,7 @@
         ],
         "smaps": {
           "resolved-link": {
-            "#/declarations/collection": "file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection/null"
+            "#/declarations/collection": "file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection/default-abstract"
           },
           "lexical": {
             "#/declarations/collection": "[(4,2)-(9,0)]"

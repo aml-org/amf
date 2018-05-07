@@ -4,12 +4,12 @@ import amf.core.metamodel.Obj
 import amf.core.model.StrField
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.Strings
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
 import amf.plugins.domain.webapi.models.security.ParametrizedSecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait}
+import amf.core.utils.Strings
 
 /**
   * EndPoint internal model
@@ -80,7 +80,7 @@ class EndPoint(override val fields: Fields, override val annotations: Annotation
   override def meta: Obj = EndPointModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/end-points/" + path.value().urlEncoded
+  override def componentId: String = "/end-points/" + path.value().urlComponentEncoded
 }
 
 object EndPoint {

@@ -32,16 +32,17 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
       entry =>
         ResourceType(entry)
           .withName(entry.key.as[String])
-          .withId(parent + s"/resourceTypes/${entry.key.as[String].urlEncoded}"),
+          .withId(parent + s"/resourceTypes/${entry.key.as[String].urlComponentEncoded}"),
       map,
       parent
     )
-    parseAbstractDeclarations(
-      "traits",
-      entry =>
-        Trait(entry).withName(entry.key.as[String]).withId(parent + s"/traits/${entry.key.as[String].urlEncoded}"),
-      map,
-      parent)
+    parseAbstractDeclarations("traits",
+                              entry =>
+                                Trait(entry)
+                                  .withName(entry.key.as[String])
+                                  .withId(parent + s"/traits/${entry.key.as[String].urlComponentEncoded}"),
+                              map,
+                              parent)
 
     parseSecuritySchemeDeclarations(map, parent)
 

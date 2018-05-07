@@ -3,11 +3,11 @@ package amf.plugins.domain.webapi.models
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.StrField
 import amf.core.model.domain.DomainElement
-import amf.plugins.domain.webapi.metamodel.ServerModel._
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.ServerModel
+import amf.plugins.domain.webapi.metamodel.ServerModel._
 import org.yaml.model.YMap
-import amf.core.utils._
+import amf.core.utils.Strings
 
 /**
   * Server internal model
@@ -31,7 +31,7 @@ case class Server(fields: Fields, annotations: Annotations) extends DomainElemen
   override def meta: DomainElementModel = ServerModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/" + url.option().map(_.urlEncoded).orNull
+  override def componentId: String = "/" + url.option().orNull.urlComponentEncoded
 }
 
 object Server {

@@ -10,7 +10,7 @@ import amf.plugins.document.webapi.parser.spec.common.JsonSchemaSerializer
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel._
 import org.yaml.model.YPart
-
+import amf.core.utils.Strings
 import scala.concurrent.Future
 
 class AnyShape(val fields: Fields, val annotations: Annotations)
@@ -50,7 +50,7 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
     PayloadValidator.validate(this, fragment, SeverityLevels.VIOLATION)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/any/" + name.option().getOrElse("default-any")
+  override def componentId: String = "/any/" + name.option().getOrElse("default-any").urlComponentEncoded
 }
 
 object AnyShape {
