@@ -100,10 +100,11 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     val hashFragment = parts.tail.headOption
 
     val cleanNested = ParserContext(url, document.references, EmptyFutureDeclarations(), parserCount = parentContext.parserCount)
+    cleanNested.globalSpace = parentContext.globalSpace
+
     // Apparently, in a RAML 0.8 API spec the JSON Schema has a closure over the schemas declared in the spec...
     val inheritedDeclarations = if (parentContext.isInstanceOf[Raml08WebApiContext]) Some(parentContext.asInstanceOf[WebApiContext].declarations) else None
     val jsonSchemaContext = new JsonSchemaWebApiContext(url, document.references, cleanNested, inheritedDeclarations)
-    if (parentContext.isInstanceOf[WebApiContext]) jsonSchemaContext.jsonSchemas = parentContext.asInstanceOf[WebApiContext].jsonSchemas
 
     val documentRoot = document.parsed.document.node
     val rootAst      = findRootNode(documentRoot, jsonSchemaContext, hashFragment).getOrElse {

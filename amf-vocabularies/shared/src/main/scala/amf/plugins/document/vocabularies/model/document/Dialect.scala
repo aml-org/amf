@@ -55,7 +55,7 @@ case class Dialect(fields: Fields, annotations: Annotations)
   def withDocuments(documentsMapping: DocumentsModel): Dialect = set(Documents, documentsMapping)
 
   def libraryHeaders: Seq[String] = Option(documents().library()) match {
-    case Some(library) => Seq(s"%RAMLLibrary/${header.replaceFirst("%", "")}")
+    case Some(library) => Seq(s"%Library/${header.replaceFirst("%", "")}")
     case None          => Nil
   }
 

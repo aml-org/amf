@@ -97,8 +97,10 @@ trait DialectSyntax { this: DialectContext =>
   )
 
   val nodeMapping: Map[String, Boolean] = Map(
-    "classTerm" -> true,
-    "mapping"   -> false
+    "classTerm"  -> true,
+    "mapping"    -> false,
+    "idProperty" -> false,
+    "idTemplate" -> false
   )
 
   val fragment: Map[String, Boolean] = Map(
@@ -277,7 +279,7 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
   }
 }
 
-class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) extends BaseSpecParser {
+class DialectsParser(root: Root)(implicit override val ctx: DialectContext) extends BaseSpecParser {
 
   val map: YMap        = root.parsed.document.as[YMap]
   val dialect: Dialect = Dialect(Annotations(map)).withLocation(root.location).withId(root.location + "#")
@@ -692,6 +694,20 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
     propertyMapping
   }
 
+  def validateTemplate(template: String, map: YMap, propMappings: Seq[PropertyMapping]) = {
+    val regex = "(\\{[^}]+\\})".r
+    regex.findAllIn(template).foreach { varMatch =>
+      val variable = varMatch.replace("{","").replace("}","")
+      propMappings.find(_.name().value() == variable) match {
+        case Some(prop) =>
+          if (prop.minCount().option().getOrElse(0) != 1)
+            ctx.violation(s"PropertyMapping for idTemplate variable '$variable' must be mandatory", map)
+        case None       =>
+          ctx.violation(s"Missing propertyMapping for idTemplate variable '$variable'", map)
+      }
+    }
+  }
+
   def parseNodeMapping(entry: YMapEntry, adopt: NodeMapping => Any, fragment: Boolean = false): Option[NodeMapping] = {
     entry.value.tagType match {
       case YType.Map =>
@@ -728,6 +744,15 @@ class RamlDialectsParser(root: Root)(implicit override val ctx: DialectContext) 
                                        .adopted(nodeMapping.id + "/property/" + entry.key.as[YScalar].text.urlEncoded))
             }
             nodeMapping.withPropertiesMapping(properties)
+          }
+        )
+
+        map.key(
+          "idTemplate",
+          entry => {
+            val template = entry.value.as[String]
+            validateTemplate(template, map, nodeMapping.propertiesMapping())
+            nodeMapping.withIdTemplate(template)
           }
         )
 

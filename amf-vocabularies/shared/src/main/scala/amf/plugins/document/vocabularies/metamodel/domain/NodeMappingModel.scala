@@ -9,11 +9,12 @@ import amf.plugins.document.vocabularies.model.domain.NodeMapping
 
 object NodeMappingModel extends DomainElementModel with LinkableElementModel {
 
-  val Name            = Field(Str, Namespace.Schema + "name")
-  val NodeTypeMapping = Field(Iri, Namespace.Shacl + "targetClass")
+  val Name              = Field(Str, Namespace.Schema + "name")
+  val NodeTypeMapping   = Field(Iri, Namespace.Shacl + "targetClass")
   val PropertiesMapping = Field(Array(PropertyMappingModel), Namespace.Shacl + "property")
+  val IdTemplate        = Field(Str, Namespace.Hydra + "template")
 
-  override def fields: List[Field] = NodeTypeMapping :: Name :: PropertiesMapping :: LinkableElementModel.fields ++ DomainElementModel.fields
+  override def fields: List[Field] = NodeTypeMapping :: Name :: PropertiesMapping :: IdTemplate :: LinkableElementModel.fields ++ DomainElementModel.fields
 
   override def modelInstance: AmfObject = NodeMapping()
 

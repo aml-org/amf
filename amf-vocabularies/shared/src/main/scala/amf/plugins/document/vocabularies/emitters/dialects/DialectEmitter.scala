@@ -453,6 +453,9 @@ case class NodeMappingEmitter(dialect: Dialect,
               traverse(propertiesEmitters, b)
             }
           )
+          nodeMapping.idTemplate.option().foreach { idTemplate =>
+            b.entry("idTemplate", idTemplate)
+          }
         }
       )
     }
@@ -498,7 +501,7 @@ case class ReferenceEmitter(reference: BaseUnit, ordering: SpecOrdering, aliases
   override def position(): Position = ZERO
 }
 
-trait RamlDialectDocumentsEmitters {
+trait DialectDocumentsEmitters {
 
   val dialect: Dialect
   val aliases: Map[String, (String, String)]
@@ -606,7 +609,7 @@ trait RamlDialectDocumentsEmitters {
   }
 }
 
-case class RamlDialectEmitter(dialect: Dialect) extends RamlDialectDocumentsEmitters {
+case class DialectEmitter(dialect: Dialect) extends DialectDocumentsEmitters {
 
   val ordering: SpecOrdering = Lexical
   val aliases                = collectAliases()
@@ -615,7 +618,7 @@ case class RamlDialectEmitter(dialect: Dialect) extends RamlDialectDocumentsEmit
     val content: Seq[EntryEmitter] = rootLevelEmitters(ordering) ++ dialectEmitters(ordering)
 
     YDocument(b => {
-      b.comment("%RAML 1.0 Dialect")
+      b.comment("%Dialect 1.0")
       b.obj { b =>
         traverse(ordering.sorted(content), b)
       }
@@ -685,7 +688,7 @@ case class RamlDialectEmitter(dialect: Dialect) extends RamlDialectDocumentsEmit
 
 }
 
-case class RamlDialectLibraryEmitter(library: DialectLibrary) extends RamlDialectDocumentsEmitters {
+case class RamlDialectLibraryEmitter(library: DialectLibrary) extends DialectDocumentsEmitters {
 
   val ordering: SpecOrdering    = Lexical
   override val dialect: Dialect = toDialect(library)
@@ -695,7 +698,7 @@ case class RamlDialectLibraryEmitter(library: DialectLibrary) extends RamlDialec
     val content: Seq[EntryEmitter] = rootLevelEmitters(ordering) ++ dialectEmitters(ordering)
 
     YDocument(b => {
-      b.comment("%RAML Library / RAML 1.0 Dialect")
+      b.comment("%Library / Dialect 1.0")
       b.obj { b =>
         traverse(ordering.sorted(content), b)
       }

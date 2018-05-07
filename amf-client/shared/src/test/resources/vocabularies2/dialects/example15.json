@@ -1,0 +1,332 @@
+[
+  {
+    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example15.raml#",
+    "@type": [
+      "http://raml.org/vocabularies/meta#Dialect",
+      "http://raml.org/vocabularies/document#Document",
+      "http://raml.org/vocabularies/document#Fragment",
+      "http://raml.org/vocabularies/document#Module",
+      "http://raml.org/vocabularies/document#Unit"
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "Test"
+      }
+    ],
+    "http://schema.org/version": [
+      {
+        "@value": "1.0"
+      }
+    ],
+    "http://raml.org/vocabularies/meta#externals": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example15.raml#/externals/v3",
+        "@type": [
+          "http://www.w3.org/2002/07/owl#Ontology",
+          "http://raml.org/vocabularies/meta#ExternalVocabulary",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://schema.org/alias": [
+          {
+            "@value": "v3"
+          }
+        ],
+        "http://raml.org/vocabularies/meta#base": [
+          {
+            "@value": "http://test.com/v3#"
+          }
+        ]
+      }
+    ],
+    "http://raml.org/vocabularies/meta#documents": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example15.raml#",
+        "@type": [
+          "http://raml.org/vocabularies/meta#DocumentsModel",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://raml.org/vocabularies/meta#rootDocument": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example15.raml#/documents",
+            "@type": [
+              "http://raml.org/vocabularies/meta#DocumentMapping",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/meta#name": [
+              {
+                "@value": "Test 1.0"
+              }
+            ],
+            "http://raml.org/vocabularies/meta#encodedNode": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example15.raml#/declarations/Local"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example15.raml#/documents/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example15.raml#/documents"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(2,0)-(25,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://raml.org/vocabularies/document#declares": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example15.raml#/declarations/Local",
+        "@type": [
+          "http://raml.org/vocabularies/meta#NodeMapping",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#targetClass": [
+          {
+            "@id": "http://test.com/v3#Local"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "Local"
+          }
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example15.raml#/declarations/Local/property/a",
+            "@type": [
+              "http://raml.org/vocabularies/meta#NodePropertyMapping",
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://test.com/v3#a"
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "a"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example15.raml#/declarations/Local/property/a/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example15.raml#/declarations/Local/property/a"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(9,0)-(12,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example15.raml#/declarations/Local/property/b",
+            "@type": [
+              "http://raml.org/vocabularies/meta#NodePropertyMapping",
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://test.com/v3#b"
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "b"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example15.raml#/declarations/Local/property/b/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example15.raml#/declarations/Local/property/b"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(13,0)-(16,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example15.raml#/declarations/Local/property/c",
+            "@type": [
+              "http://raml.org/vocabularies/meta#NodePropertyMapping",
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://test.com/v3#c"
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "c"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example15.raml#/declarations/Local/property/c/source-map",
+                "@type": [
+                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://raml.org/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example15.raml#/declarations/Local/property/c"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(17,0)-(19,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/hydra/core#template": [
+          {
+            "@value": "#/{a}_{b}"
+          }
+        ],
+        "http://raml.org/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example15.raml#/declarations/Local/source-map",
+            "@type": [
+              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example15.raml#/declarations/Local"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(6,0)-(20,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://raml.org/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example15.raml#/source-map",
+        "@type": [
+          "http://raml.org/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://raml.org/vocabularies/document-source-maps#lexical": [
+          {
+            "http://raml.org/vocabularies/document-source-maps#element": [
+              {
+                "@value": "http://schema.org/version"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(3,0)-(4,0)]"
+              }
+            ]
+          },
+          {
+            "http://raml.org/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example15.raml#"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(2,0)-(25,0)]"
+              }
+            ]
+          },
+          {
+            "http://raml.org/vocabularies/document-source-maps#element": [
+              {
+                "@value": "http://schema.org/name"
+              }
+            ],
+            "http://raml.org/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(2,0)-(3,0)]"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

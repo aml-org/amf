@@ -14,18 +14,18 @@ import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.RuntimeValidator
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels, ValidationResultProcessor}
-import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId}
-import amf.plugins.document.vocabularies.emitters.dialects.{RamlDialectEmitter, RamlDialectLibraryEmitter}
-import amf.plugins.document.vocabularies.emitters.instances.RamlDialectInstancesEmitter
-import amf.plugins.document.vocabularies.emitters.vocabularies.RamlVocabularyEmitter
+import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, JsonPointerRef, RefInclude}
+import amf.plugins.document.vocabularies.emitters.dialects.{DialectEmitter, RamlDialectLibraryEmitter}
+import amf.plugins.document.vocabularies.emitters.instances.DialectInstancesEmitter
+import amf.plugins.document.vocabularies.emitters.vocabularies.VocabularyEmitter
 import amf.plugins.document.vocabularies.metamodel.document._
 import amf.plugins.document.vocabularies.metamodel.domain._
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectLibrary, Vocabulary}
 import amf.plugins.document.vocabularies.parser.ExtensionHeader
-import amf.plugins.document.vocabularies.parser.common.RAMLExtensionsReferenceHandler
-import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, RamlDialectsParser}
-import amf.plugins.document.vocabularies.parser.instances.{DialectInstanceContext, RamlDialectInstanceParser}
-import amf.plugins.document.vocabularies.parser.vocabularies.{RamlVocabulariesParser, VocabularyContext}
+import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReferenceHandler
+import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, DialectsParser}
+import amf.plugins.document.vocabularies.parser.instances.{DialectInstanceContext, DialectInstanceParser}
+import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
 import amf.plugins.document.vocabularies.resolution.pipelines.{DialectInstanceResolutionPipeline, DialectResolutionPipeline}
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import org.yaml.model.{YComment, YDocument, YMap, YNode}
@@ -58,12 +58,12 @@ object DialectHeader extends RamlHeaderExtractor with JsonHeaderExtractor {
   def apply(root: Root): Boolean = comment(root) match {
     case Some(comment: YComment) =>
       comment.metaText match {
-        case t if t.startsWith("%RAML 1.0 Vocabulary") => true
-        case t if t.startsWith("%RAML 1.0 Dialect")    => true
-        case t if t.startsWith("%RAML 1.0")            => false
-        case t if t.startsWith("%RAML 0.8")            => false
-        case t if t.startsWith("%")                    => true
-        case _                                         => false
+        case t if t.startsWith("%Vocabulary 1.0") => true
+        case t if t.startsWith("%Dialect 1.0")    => true
+        case t if t.startsWith("%RAML 1.0")       => false
+        case t if t.startsWith("%RAML 0.8")       => false
+        case t if t.startsWith("%")               => true
+        case _                                    => false
       }
     case _ => dialect(root) match {
       case Some(_) => true
@@ -72,7 +72,7 @@ object DialectHeader extends RamlHeaderExtractor with JsonHeaderExtractor {
   }
 }
 
-object RAMLVocabulariesPlugin
+object VocabulariesPlugin
     extends AMFDocumentPlugin
     with RamlHeaderExtractor
     with JsonHeaderExtractor
@@ -81,9 +81,9 @@ object RAMLVocabulariesPlugin
 
   val registry = new DialectsRegistry
 
-  override val ID: String = "RAML Vocabularies"
+  override val ID: String = "AMF Vocabularies"
 
-  override val vendors: Seq[String] = Seq("RAML Vocabularies")
+  override val vendors: Seq[String] = Seq("AMF Vocabularies")
 
   override def init(): Future[AMFPlugin] = Future { this }
 
@@ -109,7 +109,9 @@ object RAMLVocabulariesPlugin
 
   override def serializableAnnotations(): Map[String, AnnotationGraphLoader] = Map(
     "aliases-location" -> AliasesLocation,
-    "custom-id"        -> CustomId
+    "custom-id"        -> CustomId,
+    "ref-include"      -> RefInclude,
+    "json-pointer-ref" -> JsonPointerRef
   )
 
   /**
@@ -156,11 +158,11 @@ object RAMLVocabulariesPlugin
       case Some(metaText) =>
         metaText match {
           case ExtensionHeader.VocabularyHeader =>
-            Some(new RamlVocabulariesParser(document)(new VocabularyContext(parentContext)).parseDocument())
+            Some(new VocabulariesParser(document)(new VocabularyContext(parentContext)).parseDocument())
           case ExtensionHeader.DialectLibraryHeader =>
-            Some(new RamlDialectsParser(document)(new DialectContext(parentContext)).parseLibrary())
+            Some(new DialectsParser(document)(new DialectContext(parentContext)).parseLibrary())
           case ExtensionHeader.DialectFragmentHeader =>
-            Some(new RamlDialectsParser(document)(new DialectContext(parentContext)).parseFragment())
+            Some(new DialectsParser(document)(new DialectContext(parentContext)).parseFragment())
           case ExtensionHeader.DialectHeader => parseAndRegisterDialect(document, parentContext)
           case header                        => parseDialectInstance(header, document, parentContext)
         }
@@ -171,11 +173,11 @@ object RAMLVocabulariesPlugin
     * Unparses a model base unit and return a document AST
     */
   override def unparse(unit: BaseUnit, options: RenderOptions): Option[YDocument] = unit match {
-    case vocabulary: Vocabulary  => Some(RamlVocabularyEmitter(vocabulary).emitVocabulary())
-    case dialect: Dialect        => Some(RamlDialectEmitter(dialect).emitDialect())
+    case vocabulary: Vocabulary  => Some(VocabularyEmitter(vocabulary).emitVocabulary())
+    case dialect: Dialect        => Some(DialectEmitter(dialect).emitDialect())
     case library: DialectLibrary => Some(RamlDialectLibraryEmitter(library).emitDialectLibrary())
     case instance: DialectInstance =>
-      Some(RamlDialectInstancesEmitter(instance, registry.dialectFor(instance).get).emitInstance())
+      Some(DialectInstancesEmitter(instance, registry.dialectFor(instance).get).emitInstance())
     case _ => None
   }
 
@@ -201,14 +203,14 @@ object RAMLVocabulariesPlugin
     case _                         => false
   }
 
-  override def referenceHandler(): ReferenceHandler = new RAMLExtensionsReferenceHandler(registry)
+  override def referenceHandler(): ReferenceHandler = new SyntaxExtensionsReferenceHandler(registry)
 
   override def dependencies(): Seq[AMFPlugin] = Seq()
 
   override def modelEntitiesResolver: Option[AMFDomainEntityResolver] = Some(registry)
 
   private def parseAndRegisterDialect(document: Root, parentContext: ParserContext) = {
-    new RamlDialectsParser(document)(new DialectContext(parentContext)).parseDocument() match {
+    new DialectsParser(document)(new DialectContext(parentContext)).parseDocument() match {
       case dialect: Dialect =>
         registry.register(dialect)
         Some(dialect)
@@ -220,11 +222,11 @@ object RAMLVocabulariesPlugin
     val headerKey = header.split("\\|").head.replace(" ", "")
     registry.withRegisteredDialect(header) { dialect =>
       if (headerKey == dialect.header)
-        new RamlDialectInstanceParser(document)(new DialectInstanceContext(dialect, parentContext)).parseDocument()
+        new DialectInstanceParser(document)(new DialectInstanceContext(dialect, parentContext)).parseDocument()
       else if (dialect.isFragmentHeader(headerKey))
-        new RamlDialectInstanceParser(document)(new DialectInstanceContext(dialect, parentContext)).parseFragment()
+        new DialectInstanceParser(document)(new DialectInstanceContext(dialect, parentContext)).parseFragment()
       else if (dialect.isLibraryHeader(headerKey))
-        new RamlDialectInstanceParser(document)(new DialectInstanceContext(dialect, parentContext)).parseLibrary()
+        new DialectInstanceParser(document)(new DialectInstanceContext(dialect, parentContext)).parseLibrary()
       else
         throw new Exception(s"Unknown type of dialect header $header")
     }

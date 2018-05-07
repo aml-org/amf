@@ -39,10 +39,7 @@ sealed trait RAMLPlugin extends BaseWebApiPlugin {
     val cleanNested =
       ParserContext(root.location, root.references, EmptyFutureDeclarations(), parserCount = wrapped.parserCount)
     val clean = context(cleanNested, root)
-    wrapped match {
-      case wac: WebApiContext => clean.jsonSchemas = wac.jsonSchemas
-      case _                  => //
-    }
+    clean.globalSpace = wrapped.globalSpace
     clean
   }
 
