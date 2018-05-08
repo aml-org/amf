@@ -75,7 +75,7 @@ class ExternalJsonRefsPlugin extends JsonSchemaPlugin {
     val result = ExternalDomainElement().withId(document.location + "#/").withRaw(document.raw).withMediaType("application/json")
     result.parsed = Some(document.parsed.document.node)
     val references = document.references.map(_.unit)
-    val fragment = ExternalFragment().withId(document.location).withEncodes(result).withLocation(document.location)
+    val fragment = ExternalFragment().withLocation(document.location).withId(document.location).withEncodes(result).withLocation(document.location)
     if (references.nonEmpty) fragment.withReferences(references)
     Some(fragment)
   }

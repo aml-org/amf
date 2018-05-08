@@ -78,6 +78,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
                 s"Invalid fragment body in ${root.location} , external fragment will be created",
                 root.parsed.document)
     ExternalFragment()
+      .withLocation(root.location)
       .withId(root.location)
       .withEncodes(
         ExternalDomainElement()

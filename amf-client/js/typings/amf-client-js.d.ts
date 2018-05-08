@@ -18,6 +18,7 @@ declare module "amf-client-js" {
             }
 
             export class BaseUnit {
+                id : string
                 raw: string | null;
                 withRaw(raw: string): this;
                 references(): BaseUnit[];
@@ -55,6 +56,8 @@ declare module "amf-client-js" {
                 withCustomDomainProperties(customDomainProperties: CustomDomainProperty[]): DomainElement
                 _extends: DomainElement[];
                 position(): core.parser.Range
+
+                id: URI;
 
                 getId(): URI;
 
@@ -241,6 +244,10 @@ declare module "amf-client-js" {
                 withDocumentation(documentation: CreativeWork): this;
 
                 withXMLSerialization(xmlSerialization: XMLSerializer): this;
+
+                toJsonSchema: String
+
+                validate(payload: String): Promise<ValidationReport>
 
                 withExamples(examples: Example[]): this;
             }
@@ -908,6 +915,7 @@ declare module "amf-client-js" {
             }
 
             export class Parser {
+
                 parseFile(url: string, handler: JsHandler<model.document.BaseUnit>): void
                 parseString(stream: string, handler: JsHandler<model.document.BaseUnit>): void
                 parseFileAsync(url: string): Promise<model.document.BaseUnit>
@@ -962,8 +970,6 @@ declare module "amf-client-js" {
         namespace environment {
             export class Environment {
 
-                constructor();
-
                 loaders: resource.ResourceLoader[]
 
                 add(loader: resource.ResourceLoader): Environment;
@@ -997,11 +1003,17 @@ declare module "amf-client-js" {
 
     namespace parse {
         export class Parser {
+            constructor(vendor: string, mediaType: string);
+
+            constructor(vendor: string, mediaType: string, env: any);
+
             parseFile(url: string, handler: handler.JsHandler<model.document.BaseUnit>): void
 
             parseString(stream: string, handler: handler.JsHandler<model.document.BaseUnit>): void
 
             parseFileAsync(url: string): Promise<model.document.BaseUnit>
+
+            parseStringAsync(url: string, stream: string): Promise<model.document.BaseUnit>
 
             parseStringAsync(stream: string): Promise<model.document.BaseUnit>
 
@@ -1040,6 +1052,12 @@ declare module "amf-client-js" {
 
             isWithSourceMaps: boolean
 
+            withCompactUris(): RenderOptions
+
+            withoutCompactUris(): RenderOptions
+
+            isWithCompactUris: Boolean
+
             static apply(): RenderOptions
         }
 
@@ -1073,6 +1091,9 @@ declare module "amf-client-js" {
         export class Oas20Renderer extends Renderer {
         }
 
+        export class AmfGraphRenderer extends Renderer {
+        }
+
     }
 
     export class Raml10Parser extends parse.Parser {
@@ -1095,6 +1116,11 @@ declare module "amf-client-js" {
         constructor(env: client.environment.Environment);
     }
 
+    export class VocabulariesParser extends parse.Parser {
+        constructor();
+        constructor(env: client.environment.Environment);
+     }
+
     export class JsonPayloadParser extends parse.Parser {
         constructor();
         constructor(env: client.environment.Environment);
@@ -1103,6 +1129,10 @@ declare module "amf-client-js" {
     export class YamlPayloadParser extends parse.Parser {
         constructor();
         constructor(env: client.environment.Environment);
+    }
+
+    export class JsonldRenderer extends render.Renderer {
+        constructor();
     }
 
     export class AMF {
@@ -1124,7 +1154,7 @@ declare module "amf-client-js" {
 
         // static amfGraphParser(): AmfGraphParser
 
-        // static amfGraphGenerator(): AmfGraphRenderer
+        static amfGraphGenerator(): render.AmfGraphRenderer
 
         static validate(model: model.document.BaseUnit, profileName: string, messageStyle: string): Promise<validate.ValidationReport>
 

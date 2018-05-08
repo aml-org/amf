@@ -3,7 +3,7 @@ package amf.client.render
 import amf.core.registries.AMFPluginsRegistry
 import amf.plugins.document.webapi.RAML10Plugin
 
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   * Raml generator.

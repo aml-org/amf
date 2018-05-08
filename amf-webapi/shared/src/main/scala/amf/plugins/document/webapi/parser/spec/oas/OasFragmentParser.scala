@@ -40,7 +40,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       case Oas20SecurityScheme            => SecuritySchemeFragmentParser(map).parse()
       case Oas20NamedExample              => NamedExampleFragmentParser(map).parse()
     }).getOrElse {
-      val fragment = ExternalFragment().withId(root.location).withEncodes(ExternalDomainElement().withRaw(root.raw))
+      val fragment = ExternalFragment().withLocation(root.location).withId(root.location).withEncodes(ExternalDomainElement().withRaw(root.raw))
       ctx.violation(fragment.id, "Unsupported oas type", map)
       fragment
     }
