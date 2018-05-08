@@ -43,15 +43,7 @@ class JvmPlatform extends Platform {
   }
 
   /** encodes a complete uri. Not encodes chars like / */
-  override def encodeURI(url: String): String =
-    replaceWhiteSpaces(url)
-      .replaceAll("\\|", "%7C")
-      .replaceAll("\\{", "%7B")
-      .replaceAll("\\}", "%7D")
-      .replaceAll("<", "%3C")
-      .replaceAll(">", "%3E")
-      .replaceAll("\\[", "%5B")
-      .replaceAll("\\]", "%5D") // todo: add
+  override def encodeURI(url: String): String = RhinoEncoder(url)
 
   /** encodes a uri component, including chars like / and : */
   override def encodeURIComponent(url: String): String =
@@ -71,7 +63,7 @@ class JvmPlatform extends Platform {
 
   private def decode(url: String) = URLDecoder.decode(url.replaceAll("%20", "+"), Charset.defaultCharset().toString)
 
-  override def normalizePath(url: String): String = normalizeURL(url)
+  override def normalizePath(url: String): String = new URI(encodeURI(url)).normalize.toString
 }
 
 object JvmPlatform {

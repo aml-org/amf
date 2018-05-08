@@ -1,7 +1,7 @@
 package amf.plugins.document.graph.parser
 
 import amf.core.annotations.{DomainExtensionAnnotation, ScalarType}
-import amf.core.emitter.{EntryEmitter, RenderOptions}
+import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Type.{Any, Array, Bool, EncodedIri, Iri, SortedArray, Str}
 import amf.core.metamodel.document.SourceMapModel
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
@@ -11,7 +11,7 @@ import amf.core.model.document.{BaseUnit, SourceMap}
 import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.DomainExtension
-import amf.core.parser.{Annotations, FieldEntry, Position, Value}
+import amf.core.parser.{Annotations, FieldEntry, Value}
 import amf.core.vocabulary.{Namespace, ValueType}
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -73,11 +73,11 @@ object DefaultScalarEmitter extends ScalarEmitter
 class EmissionContext(val prefixes: mutable.Map[String, String], var base: String, val options: RenderOptions) {
   var counter: Int = 1
 
-  def shouldCompact                                    = options.isCompactUris
+  def shouldCompact: Boolean                           = options.isCompactUris
   protected def compactAndCollect(uri: String): String = Namespace.compactAndCollect(uri, prefixes)
   def emitIri(uri: String): String                     = if (shouldCompact) compactAndCollect(uri) else uri
   def emitId(uri: String): String                      = if (shouldCompact && uri.contains(base)) uri.replace(base, "") else uri
-  def setupContextBase(location: String) = {
+  def setupContextBase(location: String): Unit = {
     if (Option(location).isDefined) {
       base = if (location.replace("://", "").contains("/")) {
         var basePre = if (location.contains("#")) {
@@ -95,7 +95,7 @@ class EmissionContext(val prefixes: mutable.Map[String, String], var base: Strin
     }
   }
 
-  def emitContext(b: EntryBuilder) = {
+  def emitContext(b: EntryBuilder): Unit = {
     b.entry("@context", _.obj { b =>
       b.entry("@base", base)
       prefixes.foreach {
@@ -278,9 +278,8 @@ object GraphEmitter extends MetaModelTypeMapping {
                                       extension: DomainExtension,
                                       field: Option[Field] = None,
                                       ctx: EmissionContext): Unit = {
-      val encoded = URLEncoder.encode(uri)
       b.entry(
-        encoded,
+        uri,
         _.obj { b =>
           b.entry(
             ctx.emitIri(DomainExtensionModel.Name.value.iri()),
@@ -309,44 +308,48 @@ object GraphEmitter extends MetaModelTypeMapping {
           val id = s"$parent/list"
           createIdNode(b, id, ctx)
           b.entry("@type", ctx.emitIri((Namespace.Rdfs + "Seq").iri()))
-          seq.zipWithIndex.foreach { case (e, i) =>
-            b.entry(ctx.emitIri((Namespace.Rdfs + s"_${i + 1}").iri()), { b =>
-              b.list { b =>
-                element match {
-                  case _: Obj =>
-                    e match {
-                      case elementInArray: DomainElement with Linkable if elementInArray.isLink =>
-                        link(b, elementInArray, inArray = true, ctx)
-                      case elementInArray: AmfObject =>
-                        obj(b, elementInArray, inArray = true, ctx)
-                    }
-                  case Str =>
-                    DefaultScalarEmitter.scalar(b, e.asInstanceOf[AmfScalar].value.toString, inArray = true)
+          seq.zipWithIndex.foreach {
+            case (e, i) =>
+              b.entry(
+                ctx.emitIri((Namespace.Rdfs + s"_${i + 1}").iri()), { b =>
+                  b.list {
+                    b =>
+                      element match {
+                        case _: Obj =>
+                          e match {
+                            case elementInArray: DomainElement with Linkable if elementInArray.isLink =>
+                              link(b, elementInArray, inArray = true, ctx)
+                            case elementInArray: AmfObject =>
+                              obj(b, elementInArray, inArray = true, ctx)
+                          }
+                        case Str =>
+                          DefaultScalarEmitter.scalar(b, e.asInstanceOf[AmfScalar].value.toString, inArray = true)
 
-                  case EncodedIri =>
-                    safeIri(b, e.asInstanceOf[AmfScalar].toString, inArray = true)
+                        case EncodedIri =>
+                          safeIri(b, e.asInstanceOf[AmfScalar].toString, inArray = true)
 
-                  case Iri =>
-                    iri(b, e.asInstanceOf[AmfScalar].toString, inArray = true)
+                        case Iri =>
+                          iri(b, e.asInstanceOf[AmfScalar].toString, inArray = true)
 
-                  case Any =>
-                    val scalarElement = e.asInstanceOf[AmfScalar]
-                    scalarElement.value match {
-                      case bool: Boolean =>
-                        typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true, ctx)
-                      case str: String =>
-                        typedScalar(b, str.toString, (Namespace.Xsd + "string").iri(), inArray = true, ctx)
-                      case i: Int =>
-                        typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true, ctx)
-                      case f: Float =>
-                        typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true, ctx)
-                      case d: Double =>
-                        typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true, ctx)
-                      case other => DefaultScalarEmitter.scalar(b, other.toString, inArray = true)
-                    }
+                        case Any =>
+                          val scalarElement = e.asInstanceOf[AmfScalar]
+                          scalarElement.value match {
+                            case bool: Boolean =>
+                              typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true, ctx)
+                            case str: String =>
+                              typedScalar(b, str.toString, (Namespace.Xsd + "string").iri(), inArray = true, ctx)
+                            case i: Int =>
+                              typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true, ctx)
+                            case f: Float =>
+                              typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true, ctx)
+                            case d: Double =>
+                              typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true, ctx)
+                            case other => DefaultScalarEmitter.scalar(b, other.toString, inArray = true)
+                          }
+                      }
+                  }
                 }
-              }
-            })
+              )
           }
           v.foreach(sources)
         }
@@ -362,10 +365,10 @@ object GraphEmitter extends MetaModelTypeMapping {
       val scalarEmitter = options.getCustomEmitter.getOrElse(DefaultScalarEmitter)
       t match {
         case t: DomainElement with Linkable if t.isLink =>
-          link(b, t, false, ctx)
+          link(b, t, inArray = false, ctx)
           sources(v)
         case _: Obj =>
-          obj(b, v.value.asInstanceOf[AmfObject], false, ctx)
+          obj(b, v.value.asInstanceOf[AmfObject], inArray = false, ctx)
           sources(v)
         case Iri =>
           iri(b, v.value.asInstanceOf[AmfScalar].toString)
@@ -376,7 +379,7 @@ object GraphEmitter extends MetaModelTypeMapping {
         case Str =>
           v.annotations.find(classOf[ScalarType]) match {
             case Some(annotation) =>
-              typedScalar(b, v.value.asInstanceOf[AmfScalar].toString, annotation.datatype, false, ctx)
+              typedScalar(b, v.value.asInstanceOf[AmfScalar].toString, annotation.datatype, inArray = false, ctx)
             case None =>
               scalarEmitter.scalar(b, v.value.asInstanceOf[AmfScalar].toString)
           }
@@ -404,7 +407,7 @@ object GraphEmitter extends MetaModelTypeMapping {
             typedScalar(b,
                         f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d",
                         (Namespace.Xsd + "date").iri(),
-                        false,
+                        inArray = false,
                         ctx)
             sources(v)
           }
@@ -434,7 +437,8 @@ object GraphEmitter extends MetaModelTypeMapping {
                     case None => scalarEmitter.scalar(b, e.toString, inArray = true)
                   }
                 }
-              case EncodedIri => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => safeIri(b, e.toString, inArray = true))
+              case EncodedIri =>
+                seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => safeIri(b, e.toString, inArray = true))
               case Iri => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(b, e.toString, inArray = true))
               case Type.Int =>
                 seq.values
@@ -497,44 +501,18 @@ object GraphEmitter extends MetaModelTypeMapping {
       if (inArray) emit(b) else b.list(emit)
     }
 
-    object URLEncoder {
-      def encode(input: String): String = {
-        val resultStr = new StringBuilder
-        input.foreach(ch => {
-
-          if (isUnsafe(ch)) {
-            resultStr.append('%')
-            resultStr.append(toHex(ch / 16))
-            resultStr.append(toHex(ch % 16))
-          } else resultStr.append(ch)
-        })
-        resultStr.toString
-      }
-
-      private def toHex(ch: Int) =
-        (if (ch < 10) '0' + ch
-         else 'A' + ch - 10).toChar
-
-      private def isUnsafe(ch: Char) = {
-        if (ch > 128) true
-        " %$&+,;=@<>".indexOf(ch) >= 0 //should we encode %?
-      }
-    }
-
-    private def iri(b: PartBuilder, content: String, inArray: Boolean = false) = {
-      //we can not use java.net.URLEncoder and can not use anything more correct because we does not have actual constraints for it yet.
-      //TODO please review it and propose something better
-      def emit(b: PartBuilder) = {
-        b.obj(_.entry("@id", raw(_, URLEncoder.encode(content))))
+    private def iri(b: PartBuilder, content: String, inArray: Boolean = false): Unit = {
+      // Last update, we assume that the iris are valid and han been encoded. Other option could be use the previous custom lcoal object URLEncoder but not search for %.
+      // That can be a problem, because some chars could not being encoded
+      def emit(b: PartBuilder): Unit = {
+        b.obj(_.entry("@id", raw(_, content)))
       }
 
       if (inArray) emit(b) else b.list(emit)
     }
 
-    private def safeIri(b: PartBuilder, content: String, inArray: Boolean = false) = {
-      //we can not use java.net.URLEncoder and can not use anything more correct because we does not have actual constraints for it yet.
-      //TODO please review it and propose something better
-      def emit(b: PartBuilder) = {
+    private def safeIri(b: PartBuilder, content: String, inArray: Boolean = false): Unit = {
+      def emit(b: PartBuilder): Unit = {
         b.obj(_.entry("@id", raw(_, content)))
       }
 
