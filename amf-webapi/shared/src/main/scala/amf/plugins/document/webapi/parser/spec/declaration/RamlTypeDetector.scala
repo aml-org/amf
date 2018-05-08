@@ -115,6 +115,7 @@ case class RamlTypeDetector(parent: String,
           result match {
             case Some(t) if t == UndefinedType => None
             case Some(other)                   => Some(other)
+            case None                          => result
           }
         }
       )

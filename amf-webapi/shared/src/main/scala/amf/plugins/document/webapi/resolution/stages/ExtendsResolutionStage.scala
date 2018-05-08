@@ -44,7 +44,8 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
     Option(r.target) match {
       case Some(rt: ResourceType) =>
         val node = rt.dataNode.cloneNode()
-        node.replaceVariables(context.variables)
+        node.replaceVariables(context.variables)((message: String) =>
+          apiContext.violation(r.id, message, r.annotations.find(classOf[LexicalInformation])))
 
         ExtendsHelper.asEndpoint(
           context.model,
@@ -218,7 +219,8 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
         case Some(t: ErrorDeclaration) => TraitBranch(key, Operation(), Seq())
         case Some(t: Trait) =>
           val node: DataNode = t.dataNode.cloneNode()
-          node.replaceVariables(local.variables)
+          node.replaceVariables(local.variables)((message: String) =>
+            apiContext.violation(t.id, message, t.annotations.find(classOf[LexicalInformation])))
 
           val op = ExtendsHelper.asOperation(
             profile,

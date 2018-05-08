@@ -2128,4 +2128,20 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.conforms)
     }
   }
+
+  test("Test variable not implemented in resource type use") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "production/variable-not-implemented-resourcetype.raml",
+                         platform,
+                         RamlYamlHint,
+                         validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.lengthCompare(1) == 0)
+      assert(report.results.head.message.equals("Cannot find variable 'errorItem'."))
+    }
+  }
 }

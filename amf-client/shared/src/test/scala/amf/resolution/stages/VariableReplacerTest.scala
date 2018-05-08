@@ -4,7 +4,8 @@ import amf.core.model.domain.ScalarNode
 import amf.core.model.domain.templates.Variable
 import amf.core.resolution.VariableReplacer
 import org.scalatest.{FunSuite, Inspectors, Matchers}
-import org.scalatest.Matchers._
+
+import scala.collection.mutable.ListBuffer
 
 /**
   *
@@ -51,10 +52,12 @@ class VariableReplacerTest extends FunSuite with Matchers with Inspectors {
                   "preferredCustomer")
     )
 
+    val errors = ListBuffer[String]()
     forAll(replacements) { replacement =>
       val node      = ScalarNode(replacement.expression, None)
       val variables = Set(Variable(replacement.variable._1, ScalarNode(replacement.variable._2, None)))
-      val result    = VariableReplacer.replaceVariables(node, variables)
+      val result    = VariableReplacer.replaceVariables(node, variables, (message: String) => errors ++ message)
+      errors.isEmpty should be(true)
       result.asInstanceOf[ScalarNode].value should be(replacement.expected)
     }
   }

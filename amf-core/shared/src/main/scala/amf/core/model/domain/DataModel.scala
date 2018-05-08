@@ -32,7 +32,7 @@ abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
   override def componentId: String = "/" + name.option().getOrElse("data-node").urlEncoded
 
   /** Replace all raml variables (any name inside double chevrons -> '<<>>') with the provided values. */
-  def replaceVariables(values: Set[Variable]): DataNode
+  def replaceVariables(values: Set[Variable])(reportError: (String) => Unit): DataNode
 
   def forceAdopted(parent: String): this.type = {
     val adoptedId = parent + "/" + name.option().map(_.urlEncoded).orNull
@@ -117,9 +117,9 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
     maybeNode map { Value(_, Annotations()) }
   }
 
-  override def replaceVariables(values: Set[Variable]): DataNode = {
+  override def replaceVariables(values: Set[Variable])(reportError: String => Unit): DataNode = {
     properties.keys.foreach { key =>
-      val value = properties(key).replaceVariables(values)
+      val value = properties(key).replaceVariables(values)(reportError)
       properties.remove(key)
       properties += VariableReplacer.replaceVariables(key.urlDecoded, values) -> value
     }
@@ -191,8 +191,8 @@ class ScalarNode(var value: String,
     case _ => None
   }
 
-  override def replaceVariables(values: Set[Variable]): DataNode = {
-    VariableReplacer.replaceVariables(this, values)
+  override def replaceVariables(values: Set[Variable])(reportError: (String) => Unit): DataNode = {
+    VariableReplacer.replaceVariables(this, values, reportError)
   }
 
   override def cloneNode(): ScalarNode = {
@@ -240,15 +240,15 @@ class ArrayNode(override val fields: Fields, val annotations: Annotations) exten
   override def valueForField(f: Field): Option[Value] = f match {
     case Member => Some(Value(AmfArray(members), Annotations()))
     case _ if f.value.iri().startsWith((Namespace.Data + "pos").iri()) => {
-      val pos = Integer.parseInt(f.value.iri().replace((Namespace.Data + "pos").iri(), ""))
+      val pos    = Integer.parseInt(f.value.iri().replace((Namespace.Data + "pos").iri(), ""))
       val member = members(pos)
       Some(Value(AmfScalar(member.id), Annotations()))
     }
-    case _      => None
+    case _ => None
   }
 
-  override def replaceVariables(values: Set[Variable]): DataNode = {
-    members = members.map(_.replaceVariables(values))
+  override def replaceVariables(values: Set[Variable])(reportError: (String) => Unit): DataNode = {
+    members = members.map(_.replaceVariables(values)(reportError))
     this
   }
 
@@ -260,7 +260,8 @@ class ArrayNode(override val fields: Fields, val annotations: Annotations) exten
     cloned.asInstanceOf[this.type]
   }
 
-  def positionFields(): Seq[Field] = members.zipWithIndex.map { case (_, i) =>
+  def positionFields(): Seq[Field] = members.zipWithIndex.map {
+    case (_, i) =>
       Field(EncodedIri, Namespace.Data + s"pos$i")
   }
 }
@@ -305,7 +306,7 @@ class LinkNode(var alias: String, var value: String, override val fields: Fields
     maybeScalar map { amf.core.parser.Value(_, Annotations()) }
   }
 
-  override def replaceVariables(values: Set[Variable]): DataNode = this
+  override def replaceVariables(values: Set[Variable])(reportError: (String) => Unit): DataNode = this
 
   override def cloneNode(): LinkNode = {
     val cloned = LinkNode(annotations)

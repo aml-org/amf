@@ -17,7 +17,7 @@ object VariableReplacer {
 
   val VariableRegex: Regex = s"<<\\s*([^<<>>|\\s]+)((?:\\s*\\|\\s*!(?:$Transformations)\\s*)*)>>".r
 
-  def replaceVariables(s: ScalarNode, values: Set[Variable]): DataNode = {
+  def replaceVariables(s: ScalarNode, values: Set[Variable], errorFunction: String => Unit): DataNode = {
     s.value match {
       case VariableRegex(name, transformations) =>
         values.find(_.name == name) match {
@@ -29,7 +29,9 @@ object VariableReplacer {
             throw new Exception(s"Cannot apply transformations '$transformations' to variable '$name'.")
           case Some(Variable(_, scalar: ScalarNode)) => scalar
           case Some(Variable(_, node))               => node
-          case None                                  => throw new Exception(s"Cannot find variable '$name'.")
+          case None =>
+            errorFunction(s"Cannot find variable '$name'.")
+            s
         }
 
       case text =>
