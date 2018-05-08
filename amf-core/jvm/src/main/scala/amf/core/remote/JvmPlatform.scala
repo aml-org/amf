@@ -1,5 +1,5 @@
 package amf.core.remote
-import java.net.{URI, URLDecoder}
+import java.net.{URI, URLDecoder, URLEncoder}
 import java.nio.charset.Charset
 
 import amf.client.resource.{FileResourceLoader, HttpResourceLoader}
@@ -43,10 +43,9 @@ class JvmPlatform extends Platform {
   }
 
   /** encodes a complete uri. Not encodes chars like / */
-  override def encodeURI(url: String): String = // URLEncoder.encode(url, Charset.defaultCharset().toString)
-    url
+  override def encodeURI(url: String): String =
+    replaceWhiteSpaces(url)
       .replaceAll("\\|", "%7C")
-      .replaceAll(" ", "%20")
       .replaceAll("\\{", "%7B")
       .replaceAll("\\}", "%7D")
       .replaceAll("<", "%3C")
@@ -56,32 +55,23 @@ class JvmPlatform extends Platform {
 
   /** encodes a uri component, including chars like / and : */
   override def encodeURIComponent(url: String): String =
-    url
-      .replaceAll("\\|", "%7C")
-      .replaceAll(":", "%3A")
-      .replaceAll("/", "%2F")
-      .replaceAll(" ", "%20")
-      .replaceAll("\\{", "%7B")
-      .replaceAll("\\}", "%7D")
-      .replaceAll("<", "%3C")
-      .replaceAll(">", "%3E")
+    URLEncoder
+      .encode(url, Charset.defaultCharset().toString)
+      .replace("+", "%20") // first replace all empty spaces beacuse urlencoder replace for + instead of %20
 
   /** decode a complete uri. */
-  override def decodeURI(url: String): String = URLDecoder.decode(url, Charset.defaultCharset().toString)
+  override def decodeURI(url: String): String = decode(url)
 
   /** decodes a uri component */
-  override def decodeURIComponent(url: String): String =
-    url
-      .replaceAll("%7C", "\\|")
-      .replaceAll("%3A", ":")
-      .replaceAll("%2F", "/")
-      .replaceAll("%20", " ")
-      .replaceAll("%7B", "\\{")
-      .replaceAll("%7D", "\\}")
-      .replaceAll("%3C", "<")
-      .replaceAll("%3E", ">")
+  override def decodeURIComponent(url: String): String = decode(url)
 
   override def normalizeURL(url: String): String = new URI(encodeURI(url)).normalize.toString
+
+  private def replaceWhiteSpaces(url: String) = url.replaceAll(" ", "%20")
+
+  private def decode(url: String) = URLDecoder.decode(url.replaceAll("%20", "+"), Charset.defaultCharset().toString)
+
+  override def normalizePath(url: String): String = normalizeURL(url)
 }
 
 object JvmPlatform {

@@ -64,10 +64,13 @@ package object utils {
     }
 
     /** normalize and check that the string its a valid URI */
-    def normalizePath: String = platform.normalizeURL(str)
+    def normalizePath: String = platform.normalizePath(str)
 
     /** Url encoded string. */
     def urlComponentEncoded: String = platform.encodeURIComponent(str)
+
+    /** Url component dencoded string. */
+    def urlComponentDecoded: String = platform.decodeURIComponent(str)
 
     def urlEncoded: String = platform.encodeURI(str)
 

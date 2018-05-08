@@ -75,4 +75,6 @@ case class TrunkPlatform(content: String, wrappedPlatform: Option[Platform] = No
   override def decodeURIComponent(url: String): String = url
 
   override def normalizeURL(url: String): String = url
+
+  override def normalizePath(url: String): String = url
 }

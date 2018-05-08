@@ -126,7 +126,11 @@ trait Platform extends FileMediaType {
   /** decodes a uri component */
   def decodeURIComponent(url: String): String
 
+  /** validates and normalize complete url*/
   def normalizeURL(url: String): String
+
+  /** normalize path method for file fetching in amf compiler*/
+  def normalizePath(url: String): String
 
   /** Register an alias for a namespace */
   def registerNamespace(alias: String, prefix: String): Option[Namespace] = Namespace.registerNamespace(alias, prefix)

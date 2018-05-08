@@ -279,5 +279,5 @@ object Root {
             referenceKind: ReferenceKind,
             vendor: String,
             raw: String): Root =
-    new Root(parsed, location.normalizeUrl, mediatype, references, referenceKind, vendor, raw)
+    new Root(parsed, location, mediatype, references, referenceKind, vendor, raw)
 }

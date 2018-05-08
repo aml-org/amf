@@ -207,7 +207,7 @@ case class DataPropertyEmitter(property: String,
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-      property.urlDecoded,
+      property.urlComponentDecoded,
       b => {
         // In the current implementation ther can only be one value, we are NOT flattening arrays
         DataNodeEmitter(propertyValue, ordering, resolvedLinks, referencesCollector).emit(b)
