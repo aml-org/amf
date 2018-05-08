@@ -61,9 +61,13 @@ object RenderOptions {
   def apply(): RenderOptions = new RenderOptions()
 
   def apply(client: ClientRenderOptions): RenderOptions = {
-    if (client.isWithSourceMaps)
+    val opts = if (client.isWithSourceMaps)
       new RenderOptions().withSourceMaps
     else
       new RenderOptions().withoutSourceMaps
+    if (client.isWithCompactUris)
+      opts.withCompactUris
+    else
+      opts.withoutCompactUris
   }
 }
