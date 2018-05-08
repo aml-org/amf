@@ -1,5 +1,7 @@
 package amf.core.remote
 
+import java.net.URI
+
 import amf.core.remote.server.Path
 
 import scala.scalajs.js.URIUtils
@@ -11,13 +13,15 @@ trait JsPlatform extends Platform {
   override def encodeURI(url: String): String = URIUtils.encodeURI(url)
 
   /** encodes a uri component, including chars like / and : */
-  override def encodeURIComponent(url: String): String = URIUtils.encodeURIComponent(url)
+  override def encodeURIComponent(url: String): String = URIUtils.encodeURIComponent(url).replace("!", "%21")
 
   /** decode a complete uri. */
   override def decodeURI(url: String): String = URIUtils.decodeURI(url)
 
   /** decodes a uri component */
-  override def decodeURIComponent(url: String): String = URIUtils.decodeURIComponent(url)
+  override def decodeURIComponent(url: String): String = URIUtils.decodeURIComponent(url.replace("!", "%21"))
 
   override def normalizeURL(url: String): String = Path.resolve(url)
+
+  override def normalizePath(url: String): String = new URI(encodeURI(url)).normalize.toString
 }

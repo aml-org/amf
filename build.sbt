@@ -1,6 +1,6 @@
 import org.scalajs.core.tools.linker.ModuleKind
 import sbt.Keys.{libraryDependencies, resolvers}
-val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns)
+//val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns)
 
 name := "amf"
 
@@ -14,7 +14,7 @@ jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
 
 val settings = Common.settings ++ Common.publish ++ Seq(
   organization := "org.mule.amf",
-  resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal,ivyLocal),
+  resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal),
   credentials ++= Common.credentials(),
   aggregate in assembly := false,
   libraryDependencies ++= Seq(
