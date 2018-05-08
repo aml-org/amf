@@ -1,0 +1,31 @@
+#%RAML 1.0
+version: v1
+title: ACME Banking API
+
+
+types:
+  Customer:
+    properties:
+      name: string
+      lastname: string
+
+
+resourceTypes: 
+  collection:
+    get?:
+      responses:
+        200:
+          headers:
+          body:
+            application/json:
+              type: array
+              items: <<items>>
+        503:
+          body:
+            application/json:
+              type: <<errorItem>>
+/customers:
+  type: 
+    collection:
+      items: Customer
+      # errorItem: CustomErrorMessage comment to activate error of non implemented var
