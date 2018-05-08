@@ -836,6 +836,27 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Test name in property shape") {
+    val api =
+      """
+        |#%RAML 1.0
+        |title: this should remain
+        |
+        |types:
+        | person:
+        |   properties:
+        |     name: string
+      """.stripMargin
+
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new RamlParser().parseStringAsync(api).asFuture
+    } yield {
+      val nodeShape = unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[NodeShape]
+      nodeShape.properties.asSeq.head.name.value() should be("name")
+    }
+  }
+
   private def removeFields(unit: BaseUnit): Future[BaseUnit] = Future {
     val webApi = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
     webApi.description.remove()

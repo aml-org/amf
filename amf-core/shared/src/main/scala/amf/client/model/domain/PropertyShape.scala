@@ -8,7 +8,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
 @JSExportTopLevel("model.domain.PropertyShape")
-case class PropertyShape(override private[amf] val _internal: InternalPropertyShape) extends DomainElement {
+case class PropertyShape(override private[amf] val _internal: InternalPropertyShape) extends Shape {
 
   @JSExportTopLevel("model.domain.PropertyShape")
   def this() = this(InternalPropertyShape())
@@ -54,4 +54,6 @@ case class PropertyShape(override private[amf] val _internal: InternalPropertySh
     _internal.withDeprecated(deprecated)
     this
   }
+
+  override def linkCopy(): PropertyShape = _internal.linkCopy()
 }

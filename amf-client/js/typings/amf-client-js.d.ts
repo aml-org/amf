@@ -220,7 +220,7 @@ declare module "amf-client-js" {
                 withDefaultStr(value: String): this;
             }
 
-            export class PropertyShape extends DomainElement {
+            export class PropertyShape extends Shape {
                 pah(): string;
 
                 range(): Shape;
