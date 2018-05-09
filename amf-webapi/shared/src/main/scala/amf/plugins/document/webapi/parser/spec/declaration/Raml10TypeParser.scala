@@ -1378,7 +1378,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             case _ =>
           }
 
-          property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text).iri())
+          property.set(PropertyShapeModel.Path,
+                       (Namespace.Data + entry.key.as[YScalar].text.urlComponentEncoded).iri())
 
           if (property.fields.?(PropertyShapeModel.MinCount).isEmpty) {
             val required = !prop.endsWith("?")

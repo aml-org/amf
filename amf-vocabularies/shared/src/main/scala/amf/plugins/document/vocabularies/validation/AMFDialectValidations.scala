@@ -7,7 +7,7 @@ import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.{NodeMapping, PropertyMapping}
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YDocument.EntryBuilder
-
+import amf.core.utils.Strings
 import scala.collection.mutable.ListBuffer
 
 class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
@@ -246,7 +246,7 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
 
   private def validationId(dialectNode: NodeMapping, propName: String, constraint: String): String =
     Option(dialectNode.id) match {
-      case Some(id) => s"${id}_${propName}_${constraint}_validation"
+      case Some(id) => s"${id}_${propName.urlComponentEncoded}_${constraint}_validation"
       case None     => throw new Exception("Cannot generate validation for dialect node without ID")
     }
 

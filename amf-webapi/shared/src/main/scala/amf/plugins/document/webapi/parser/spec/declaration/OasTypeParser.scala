@@ -766,7 +766,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         .add(Annotations(entry))
         .set(PropertyShapeModel.MinCount, AmfScalar(if (required) 1 else 0), requiredAnnotations += ExplicitField())
 
-      property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text).iri())
+      property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text.urlComponentEncoded).iri())
       entry.value.toOption[YMap].foreach(_.key("readOnly", PropertyShapeModel.ReadOnly in property))
 
       if (version.isInstanceOf[OAS30SchemaVersion]) {
