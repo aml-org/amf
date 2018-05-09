@@ -102,7 +102,7 @@ case class Raml08WebFormParser(map: YMap, parentId: String)(implicit ctx: RamlWe
               Raml08TypeParser(e, (shape: Shape) => shape, isAnnotation = false, StringDefaultType)
                 .parse()
                 .foreach(s => {
-                  val property = webFormShape.withProperty(s.name.value())
+                  val property = webFormShape.withProperty(e.key.toString())
                   s.fields.entry(ShapeModel.RequiredShape) match {
                     case None                        => property.withMinCount(0)
                     case Some(f) if !f.scalar.toBool => property.withMinCount(0)

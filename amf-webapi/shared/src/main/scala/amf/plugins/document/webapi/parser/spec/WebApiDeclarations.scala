@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec
 
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{DomainElement, Shape}
+import amf.core.model.domain.{DataNode, DomainElement, ObjectNode, Shape}
 import amf.core.parser.{
   Annotations,
   Declarations,
@@ -243,6 +243,8 @@ object WebApiDeclarations {
       with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorResourceType/"
     withId(idPart)
+
+    override def dataNode: DataNode = ObjectNode()
   }
 
   case class ErrorEndPoint(idPart: String, ast: YPart)

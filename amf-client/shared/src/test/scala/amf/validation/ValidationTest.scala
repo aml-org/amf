@@ -2056,10 +2056,21 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Test non existing include") {
+  test("Test non existing include in type def") {
     for {
       validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "/counterparty-1.0.0-raml/conterparty-api.raml",
+      doc <- AMFCompiler(validationsPath + "/missing-includes/in-type-def.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+    }
+  }
+
+  test("Test non existing include in resource type def") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "/missing-includes/in-resource-type-def.raml",
                          platform,
                          RamlYamlHint,
                          validation)
@@ -2067,6 +2078,19 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report <- validation.validate(doc, ProfileNames.RAML, ProfileNames.RAML)
     } yield {
       assert(!report.conforms)
+      assert(report.results.length == 2)
+    }
+  }
+
+  test("Test non existing include in trait def") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "/missing-includes/in-trait-def.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 2)
     }
   }
 
