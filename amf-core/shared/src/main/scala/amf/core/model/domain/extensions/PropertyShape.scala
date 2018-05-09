@@ -52,7 +52,7 @@ case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape
   }
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/property/" + name.value().urlComponentEncoded
+  override def componentId: String = "/property/" + name.option().getOrElse("default-property").urlComponentEncoded
 }
 
 object PropertyShape {
