@@ -247,7 +247,7 @@ declare module "amf-client-js" {
 
                 toJsonSchema: String
 
-                validate(payload: String): Promise<ValidationReport>
+                validate(payload: String): Promise<validate.ValidationReport>
 
                 withExamples(examples: Example[]): this;
             }
@@ -492,6 +492,8 @@ declare module "amf-client-js" {
                 withRequired(required: boolean): this
 
                 withBinding(binding: string): this
+
+                withSchema(schema: Shape): this;
 
                 withObjectSchema(name: string): NodeShape
 
@@ -750,6 +752,8 @@ declare module "amf-client-js" {
                 mediaType: string;
                 schema: Shape;
                 withMediaType(mediaType: string): this;
+
+                withSchema(schema: Shape): this;
 
                 withObjectSchema(name: string): NodeShape;
 
