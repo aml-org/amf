@@ -13,13 +13,13 @@ trait JsPlatform extends Platform {
   override def encodeURI(url: String): String = URIUtils.encodeURI(url)
 
   /** encodes a uri component, including chars like / and : */
-  override def encodeURIComponent(url: String): String = URIUtils.encodeURIComponent(url).replace("!", "%21")
+  override def encodeURIComponent(url: String): String = URIUtils.encodeURIComponent(url)
 
   /** decode a complete uri. */
   override def decodeURI(url: String): String = URIUtils.decodeURI(url)
 
   /** decodes a uri component */
-  override def decodeURIComponent(url: String): String = URIUtils.decodeURIComponent(url.replace("!", "%21"))
+  override def decodeURIComponent(url: String): String = URIUtils.decodeURIComponent(url)
 
   override def normalizeURL(url: String): String = Path.resolve(url)
 

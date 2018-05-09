@@ -2168,4 +2168,15 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.head.message.equals("Cannot find variable 'errorItem'."))
     }
   }
+
+  test("Test media type with + char in resource type") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "/media-type-resource-type.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
 }

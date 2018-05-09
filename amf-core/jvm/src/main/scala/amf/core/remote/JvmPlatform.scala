@@ -1,6 +1,5 @@
 package amf.core.remote
-import java.net.{URI, URLDecoder, URLEncoder}
-import java.nio.charset.Charset
+import java.net.URI
 
 import amf.client.resource.{FileResourceLoader, HttpResourceLoader}
 import amf.core.unsafe.PlatformBuilder
@@ -46,22 +45,17 @@ class JvmPlatform extends Platform {
   override def encodeURI(url: String): String = RhinoEncoder(url)
 
   /** encodes a uri component, including chars like / and : */
-  override def encodeURIComponent(url: String): String =
-    URLEncoder
-      .encode(url, Charset.defaultCharset().toString)
-      .replace("+", "%20") // first replace all empty spaces beacuse urlencoder replace for + instead of %20
+  override def encodeURIComponent(url: String): String = RhinoComponentEncoder(url)
 
   /** decode a complete uri. */
-  override def decodeURI(url: String): String = decode(url)
+  override def decodeURI(url: String): String = RhinoDecoder(url)
 
   /** decodes a uri component */
-  override def decodeURIComponent(url: String): String = decode(url)
+  override def decodeURIComponent(url: String): String = RhinoComponentDecoder(url)
 
   override def normalizeURL(url: String): String = new URI(encodeURI(url)).normalize.toString
 
   private def replaceWhiteSpaces(url: String) = url.replaceAll(" ", "%20")
-
-  private def decode(url: String) = URLDecoder.decode(url.replaceAll("%20", "+"), Charset.defaultCharset().toString)
 
   override def normalizePath(url: String): String = new URI(encodeURI(url)).normalize.toString
 }
