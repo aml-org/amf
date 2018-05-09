@@ -12,7 +12,7 @@ import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YDocument.EntryBuilder
-
+import amf.core.utils.Strings
 class AMFShapeValidations(shape: Shape) {
 
   def profile(): ValidationProfile = {
@@ -227,10 +227,11 @@ class AMFShapeValidations(shape: Shape) {
     )
 
     node.properties.foreach { property =>
-      nestedConstraints ++= emitShapeValidations(context + s"/${property.name.value()}", property.range)
+      val encodedName = property.name.value().urlComponentEncoded
+      nestedConstraints ++= emitShapeValidations(context + s"/$encodedName", property.range)
 
       val propertyValidationId = validationId(property.range)
-      val propertyId           = (Namespace.Data + property.name.value()).iri()
+      val propertyId           = (Namespace.Data + encodedName).iri()
       val nodeConstraint = PropertyConstraint(
         ramlPropertyId = propertyId,
         name = validationId(node) + s"_validation_node_prop_${property.name.value()}",
@@ -238,8 +239,8 @@ class AMFShapeValidations(shape: Shape) {
         node = Some(propertyValidationId)
       )
       validation = validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(nodeConstraint))
-      validation = checkMinCount(context + s"/${property.name.value()}", property, validation, property)
-      validation = checkMaxCount(context + s"/${property.name.value()}", property, validation, property)
+      validation = checkMinCount(context + s"/$encodedName", property, validation, property)
+      validation = checkMaxCount(context + s"/$encodedName", property, validation, property)
     }
 
     // Validation to allow to emit the properties number in the model graph
@@ -494,8 +495,8 @@ class AMFShapeValidations(shape: Shape) {
       case Some(minCount) if minCount.toNumber.intValue() > 0 =>
         val msg = s"Data at $context must have min. cardinality $minCount"
         val propertyValidation = PropertyConstraint(
-          ramlPropertyId = (Namespace.Data + shape.name.value()).iri(),
-          name = validation.name + "_" + property.name.value() + "_validation_minCount/prop",
+          ramlPropertyId = (Namespace.Data + shape.name.value().urlComponentEncoded).iri(),
+          name = validation.name + "_" + property.name.value().urlComponentEncoded + "_validation_minCount/prop",
           message = Some(msg),
           minCount = Some(s"$minCount"),
           datatype = effectiveDataType(shape)
@@ -513,8 +514,8 @@ class AMFShapeValidations(shape: Shape) {
       case Some(maxCount) =>
         val msg = s"Data at $context must have max. cardinality $maxCount"
         val propertyValidation = PropertyConstraint(
-          ramlPropertyId = (Namespace.Data + shape.name.value()).iri(),
-          name = validation.name + "_" + property.name.value() + "_validation_minCount/prop",
+          ramlPropertyId = (Namespace.Data + shape.name.value().urlComponentEncoded).iri(),
+          name = validation.name + "_" + property.name.value().urlComponentEncoded + "_validation_minCount/prop",
           message = Some(msg),
           maxCount = Some(s"$maxCount"),
           datatype = effectiveDataType(shape)
