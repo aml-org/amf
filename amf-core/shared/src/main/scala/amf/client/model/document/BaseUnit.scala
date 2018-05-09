@@ -15,6 +15,8 @@ trait BaseUnit extends AmfObjectWrapper with PlatformSecrets {
 
   override private[amf] val _internal: InternalBaseUnit
 
+  def id: String = this._internal.id
+
   /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
   def references(): ClientList[BaseUnit] = _internal.references.asClient
 

@@ -128,7 +128,7 @@ class AMFCompiler(val rawUrl: String,
   def parseExternalFragment(content: Content): Future[BaseUnit] = {
     val result = ExternalDomainElement().withId(content.url + "#/").withRaw(content.stream.toString) //
     content.mime.foreach(mime => result.withMediaType(mime))
-    Future.successful(ExternalFragment().withId(content.url).withEncodes(result).withLocation(content.url))
+    Future.successful(ExternalFragment().withLocation(content.url).withId(content.url).withEncodes(result).withLocation(content.url))
   }
 
   private def parseDomain(parsed: Either[Content, Root]): Future[BaseUnit] = {
@@ -156,6 +156,7 @@ class AMFCompiler(val rawUrl: String,
             case None =>
               ExternalFragment()
                 .withId(document.location)
+                .withLocation(document.location)
                 .withEncodes(
                   ExternalDomainElement()
                     .withRaw(document.raw)
@@ -165,6 +166,7 @@ class AMFCompiler(val rawUrl: String,
       case None =>
         ExecutionLog.log(s"AMFCompiler#parseSyntax: parsing domain $rawUrl NO PLUGIN")
         val fragment = ExternalFragment()
+          .withLocation(document.location)
           .withId(document.location)
           .withEncodes(ExternalDomainElement().withRaw(document.raw).withMediaType(document.mediatype))
         Future.successful(fragment)
