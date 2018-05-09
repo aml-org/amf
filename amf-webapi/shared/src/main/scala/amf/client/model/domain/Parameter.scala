@@ -95,6 +95,12 @@ case class Parameter(override private[amf] val _internal: InternalParameter) ext
   }
 
   /** Set schema property of this Parameter. */
+  def withSchema(schema: Shape): this.type = {
+    _internal.withSchema(schema)
+    this
+  }
+
+  /** Set schema property of this Parameter. */
   def withObjectSchema(name: String): NodeShape = _internal.withObjectSchema(name)
 
   def withScalarSchema(name: String): ScalarShape = _internal.withScalarSchema(name)
