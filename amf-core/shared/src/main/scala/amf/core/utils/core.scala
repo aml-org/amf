@@ -52,7 +52,7 @@ package object utils {
     private def isQuoted =
       Option(str).exists(s => (s.startsWith("\"") && s.endsWith("\"")) || (s.startsWith("'") && s.endsWith("'")))
 
-    /** Prepend correct protocol prefix, then normalize and check that the string its a valid URI */
+    /** Prepend correct protocol prefix, then encode */
     def normalizeUrl: String = {
       val url =
         if (str == null || str.isEmpty) ""

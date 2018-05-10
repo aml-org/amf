@@ -53,7 +53,7 @@ class JvmPlatform extends Platform {
   /** decodes a uri component */
   override def decodeURIComponent(url: String): String = RhinoComponentDecoder(url)
 
-  override def normalizeURL(url: String): String = new URI(encodeURI(url)).normalize.toString
+  override def normalizeURL(url: String): String = encodeURI(url)
 
   private def replaceWhiteSpaces(url: String) = url.replaceAll(" ", "%20")
 
