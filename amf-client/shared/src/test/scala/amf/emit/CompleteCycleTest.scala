@@ -1212,4 +1212,8 @@ class CompleteCycleTest extends BuildCycleTests {
               validation = Some(validation.withEnabledValidation(true)))
       }
   }
+
+  test("Matrix shape id") {
+    cycle("matrix-id.raml", "matrix-id.jsonld", RamlYamlHint, Amf)
+  }
 }
