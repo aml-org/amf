@@ -42,11 +42,11 @@ case class NodeDependencyParser(entry: YMapEntry, properties: mutable.ListMap[St
 
 object XMLSerializerParser {
   def parse(defaultName: String)(node: YNode)(implicit ctx: WebApiContext): XMLSerializer =
-    XMLSerializerParser(defaultName, node.as[YMap]).parse()
+    XMLSerializerParser(defaultName, node).parse()
 }
 
 case class XMLSerializerParser(defaultName: String, node: YNode)(implicit ctx: WebApiContext) {
-  val map = node.as[YMap]
+  val map: YMap = node.as[YMap]
   def parse(): XMLSerializer = {
     val serializer = XMLSerializer(node)
       .set(XMLSerializerModel.Attribute, value = false)

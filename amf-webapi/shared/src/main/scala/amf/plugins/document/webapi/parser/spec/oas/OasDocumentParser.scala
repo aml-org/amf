@@ -614,9 +614,9 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
           .foreach(e => {
             val typeName = e.key.as[YScalar].text
             val oasParameter = e.value.to[YMap] match {
-              case Right(m) => OasParameterParser(m, parentPath, Some(typeName)).parse()
+              case Right(m) => OasParameterParser(Left(e), parentPath, Some(typeName)).parse()
               case _ =>
-                val parameter = OasParameterParser(YMap.empty, parentPath, Some(typeName)).parse()
+                val parameter = OasParameterParser(Right(YMap.empty), parentPath, Some(typeName)).parse()
                 ctx.violation(parameter.parameter.id, "Map needed to parse a parameter declaration", e)
                 parameter
             }

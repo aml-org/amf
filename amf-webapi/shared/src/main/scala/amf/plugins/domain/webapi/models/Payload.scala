@@ -4,11 +4,11 @@ import amf.core.metamodel.Obj
 import amf.core.model.StrField
 import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.parser.{Annotations, Fields}
+import amf.core.utils.Strings
 import amf.plugins.domain.shapes.models.{ArrayShape, Example, NodeShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.metamodel.PayloadModel.{Encoding => EncodingModel, _}
-import org.yaml.model.YNode
-import amf.core.utils.Strings
+import org.yaml.model.YPart
 
 /**
   * Payload internal model.
@@ -84,7 +84,7 @@ case class Payload(fields: Fields, annotations: Annotations) extends DomainEleme
 object Payload {
   def apply(): Payload = apply(Annotations())
 
-  def apply(node: YNode): Payload = apply(Annotations(node))
+  def apply(ast: YPart): Payload = apply(Annotations(ast))
 
   def apply(annotations: Annotations): Payload = new Payload(Fields(), annotations)
 }

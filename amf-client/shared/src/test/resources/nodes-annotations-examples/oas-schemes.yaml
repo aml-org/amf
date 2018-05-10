@@ -1,0 +1,20 @@
+swagger: '2.0'
+
+definitions:
+  person:
+
+
+    properties:
+      name:
+        type: string
+
+paths:
+  /resource:
+
+    get:
+      responses:
+        200:
+          description: default
+          schema:
+
+            type: string

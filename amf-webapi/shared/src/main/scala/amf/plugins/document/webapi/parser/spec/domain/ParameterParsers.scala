@@ -4,6 +4,8 @@ import amf.core.annotations.{LexicalInformation, SynthesizedField}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{Annotations, _}
+import amf.core.utils.Strings
+import amf.plugins.document.webapi.annotations.FormBodyParameter
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
@@ -21,8 +23,6 @@ import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType, _}
-import amf.core.utils.Strings
-import amf.plugins.document.webapi.annotations.FormBodyParameter
 
 /**
   *
@@ -194,15 +194,20 @@ abstract class RamlParameterParser(entry: YMapEntry, producer: String => Paramet
   def parse(): Parameter
 }
 
-case class OasParameterParser(node: YNode, parentId: String, name: Option[String])(implicit ctx: OasWebApiContext)
+case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: String, name: Option[String])(
+    implicit ctx: OasWebApiContext)
     extends SpecParserOps {
 
-  private val map = node.as[YMap]
+  private val map = entryOrNode match {
+    case Left(entry) => entry.value.as[YMap]
+    case Right(node) => node.as[YMap]
+  }
+
   def parse(): OasParameter = {
     map.key("$ref") match {
       case Some(ref) => parseParameterRef(ref, parentId)
       case None =>
-        val p         = OasParameter(node)
+        val p         = OasParameter(entryOrNode.toOption.getOrElse(entryOrNode.left.get))
         val parameter = p.parameter
 
         parameter.set(ParameterModel.Required, value = false)
@@ -250,8 +255,9 @@ case class OasParameterParser(node: YNode, parentId: String, name: Option[String
 
           ctx.closedShape(parameter.id, map, "parameter")
           OasTypeParser(
-            node,
-            "",
+            entryOrNode,
+            "schema",
+            map,
             shape => shape.withName("schema").adopted(parameter.id),
             OAS20SchemaVersion(position = "parameter")
           ).parse()
@@ -346,7 +352,7 @@ case class OasParameterParser(node: YNode, parentId: String, name: Option[String
 case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ctx: OasWebApiContext) {
   def parse(inRequest: Boolean = false): Parameters = {
     val parameters = values
-      .map(value => OasParameterParser(value, parentId, None).parse())
+      .map(value => OasParameterParser(Right(value), parentId, None).parse())
 
     if (inRequest) {
       val body     = parameters.filter(_.isBody)
