@@ -7,7 +7,10 @@ import amf.core.remote.OasYamlHint
 import amf.plugins.domain.webapi.models.{Response, WebApi}
 import org.scalatest.AsyncFunSuite
 
+import scala.concurrent.ExecutionContext
+
 class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("test source and lexical info in response name oas") {
     for {
