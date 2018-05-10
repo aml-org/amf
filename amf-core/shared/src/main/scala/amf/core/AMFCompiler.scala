@@ -39,19 +39,22 @@ class AMFCompiler(val rawUrl: String,
                   private val baseContext: Option[ParserContext] = None,
                   val env: Environment = Environment()) {
 
-  val url: String = {
+  val urlNormalized
+    : String = rawUrl.normalizeUrl // for location and id, we need valids url (and we cant trust in clients implemented resource loaders)
+
+  val path: String = {
     try {
       rawUrl.normalizePath
     } catch {
       case e: URISyntaxException =>
-        baseContext.getOrElse(ParserContext(rawUrl)).violation(url, e.getMessage, YNode(url))
+        baseContext.getOrElse(ParserContext(urlNormalized)).violation(path, e.getMessage, YNode(path))
         rawUrl
     }
   }
 
-  private val context: Context   = base.map(_.update(url)).getOrElse(core.remote.Context(remote, url))
+  private val context: Context   = base.map(_.update(path)).getOrElse(core.remote.Context(remote, path))
   private val location           = context.current
-  private val ctx: ParserContext = baseContext.getOrElse(ParserContext(url))
+  private val ctx: ParserContext = baseContext.getOrElse(ParserContext(path))
 
   def build(): Future[BaseUnit] = {
     ExecutionLog.log(s"AMFCompiler#build: Building $rawUrl")
@@ -82,7 +85,7 @@ class AMFCompiler(val rawUrl: String,
     ExecutionLog.log(s"AMFCompiler#parseSyntax: parsing syntax $rawUrl")
     val content = AMFPluginsRegistry.featurePlugins().foldLeft(inputContent) {
       case (input, plugin) =>
-        plugin.onBeginDocumentParsing(url, input, referenceKind, vendor)
+        plugin.onBeginDocumentParsing(urlNormalized, input, referenceKind, vendor)
     }
 
     val parsed = content.mime
@@ -110,7 +113,7 @@ class AMFCompiler(val rawUrl: String,
       case Some(inputDocument) =>
         val document = AMFPluginsRegistry.featurePlugins().foldLeft(inputDocument) {
           case (doc, plugin) =>
-            plugin.onSyntaxParsed(url, doc)
+            plugin.onSyntaxParsed(urlNormalized, doc)
         }
         Right(
           Root(document,
@@ -128,7 +131,8 @@ class AMFCompiler(val rawUrl: String,
   def parseExternalFragment(content: Content): Future[BaseUnit] = {
     val result = ExternalDomainElement().withId(content.url + "#/").withRaw(content.stream.toString) //
     content.mime.foreach(mime => result.withMediaType(mime))
-    Future.successful(ExternalFragment().withLocation(content.url).withId(content.url).withEncodes(result).withLocation(content.url))
+    Future.successful(
+      ExternalFragment().withLocation(content.url).withId(content.url).withEncodes(result).withLocation(content.url))
   }
 
   private def parseDomain(parsed: Either[Content, Root]): Future[BaseUnit] = {
@@ -178,7 +182,7 @@ class AMFCompiler(val rawUrl: String,
       ExecutionLog.log(s"AMFCompiler#parseDomain: model ready $rawUrl")
       AMFPluginsRegistry.featurePlugins().foldLeft(baseUnit) {
         case (unit, plugin) =>
-          plugin.onModelParsed(url, unit)
+          plugin.onModelParsed(urlNormalized, unit)
       }
     }
   }
