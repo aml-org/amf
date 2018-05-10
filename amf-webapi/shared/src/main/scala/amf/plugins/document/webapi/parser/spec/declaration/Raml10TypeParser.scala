@@ -1124,6 +1124,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       finalShape match {
         case Some(parsed: AnyShape) =>
           ctx.closedRamlTypeShape(parsed, map, "arrayShape", isAnnotation)
+          adopt(parsed)
           parsed
         case _ =>
           ctx.violation(shape.id, "Cannot parse data arrangement shape", map)
