@@ -974,6 +974,8 @@ declare module "amf-client-js" {
         namespace environment {
             export class Environment {
 
+                constructor();
+
                 loaders: resource.ResourceLoader[]
 
                 add(loader: resource.ResourceLoader): Environment;
@@ -993,6 +995,30 @@ declare module "amf-client-js" {
 
                 constructor(stream: string, url: string, mime: string);
             }
+        }
+
+        namespace resolve {
+            class Resolver {
+                constructor(vendor?: string);
+
+                resolve(unit: model.document.BaseUnit): model.document.BaseUnit
+                resolve(unit: model.document.BaseUnit, pipeline: String): model.document.BaseUnit
+            }
+
+            class AmfGraphResolver extends Resolver {}
+
+            class Oas20Resolver extends Resolver {}
+
+            class Raml08Resolver extends Resolver {}
+
+            class Raml10Resolver extends Resolver {}
+        }
+
+        namespace model {
+            namespace document {
+                class BaseUnit {}
+            }
+
         }
     }
 
