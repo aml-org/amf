@@ -1,0 +1,25 @@
+swagger: '2.0'
+
+parameters:
+  p1:
+
+
+    name: QueryParam1
+    in: query
+    type: string
+
+paths:
+  /resource:
+    parameters:
+      -
+
+        name: parameter
+        schema: string
+        in: query
+
+    get:
+      parameters:
+        -
+          name: paramGet
+          schema: string
+          in: query
