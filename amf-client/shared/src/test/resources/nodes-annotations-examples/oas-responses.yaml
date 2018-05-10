@@ -13,6 +13,8 @@ paths:
     get:
       responses:
 
-        200:
+        400:
 
           description: default
+        default:
+          $ref: "#/responses/default"

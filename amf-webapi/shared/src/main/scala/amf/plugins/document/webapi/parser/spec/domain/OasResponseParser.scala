@@ -23,10 +23,12 @@ case class OasResponseParser(entry: YMapEntry, producer: String => Response)(imp
     val response: Response = ctx.link(entry.value) match {
       case Left(url) =>
         val name = OasDefinitions.stripResponsesDefinitionsPrefix(url)
-        val value: Response = ctx.declarations
+        val response: Response = ctx.declarations
           .findResponseOrError(entry.value)(name, SearchScope.Named)
           .link(OasDefinitions.stripResponsesDefinitionsPrefix(url))
-        value.withName(node.string().value.toString)
+        response.withName(node.string().value.toString)
+        response.annotations ++= Annotations(entry)
+        response
       case Right(value) =>
         val map = value.as[YMap]
         val res = producer(node.string().value.toString).add(Annotations(entry))

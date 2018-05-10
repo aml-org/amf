@@ -34,8 +34,8 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
 
   private def checkAnnotation(obj: AmfObject): Assertion = {
     obj.fields.foreach {
-      case (field, value) =>
-        value.value match {
+      case (field, v) =>
+        v.value match {
           case amfObject: AmfObject =>
             if (amfObject.annotations.contains(classOf[SourceAST]))
               assert(amfObject.annotations.contains(classOf[SourceNode]))
@@ -54,16 +54,17 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
                     OasYamlHint)
     } yield {
       val document = unit.asInstanceOf[Document]
-      document.declares.collectFirst({ case p: Parameter => p.annotations }) match {
-        case Some(annotations) =>
-          assertRange(annotations, PositionRange((4, 2), (11, 0)), Some(PositionRange((4, 5), (11, 0))))
+      document.declares.collectFirst({ case p: Parameter => (p.id, p.annotations) }) match {
+        case Some((id, annotations)) =>
+          assertRangeElement(id, annotations, PositionRange((4, 2), (11, 0)), Some(PositionRange((4, 5), (11, 0))))
         case None => fail("Any parameter declared found")
       }
 
-      val api = document.encodes.asInstanceOf[WebApi]
-      assertRange(api.endPoints.head.parameters.head.annotations, PositionRange((14, 7), (20, 0)))
-      assertRange(api.endPoints.head.operations.head.request.queryParameters.head.annotations,
-                  PositionRange((22, 9), (25, 19)))
+      val endpoint = document.encodes.asInstanceOf[WebApi].endPoints.head
+      val param    = endpoint.parameters.head
+      assertRangeElement(param.id, param.annotations, PositionRange((14, 7), (20, 0)))
+      val queryParam = endpoint.operations.head.request.queryParameters.head
+      assertRangeElement(queryParam.id, queryParam.annotations, PositionRange((22, 9), (25, 19)))
       succeed
     }
   }
@@ -73,10 +74,11 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
       unit <- build("file://amf-client/shared/src/test/resources/nodes-annotations-examples/oas-parameters.yaml",
                     OasYamlHint)
     } yield {
-      val api = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
-      assertRange(api.endPoints.head.annotations,
-                  PositionRange((12, 2), (25, 19)),
-                  Some(PositionRange((12, 12), (25, 19))))
+      val endpoint = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].endPoints.head
+      assertRangeElement(endpoint.id,
+                         endpoint.annotations,
+                         PositionRange((12, 2), (25, 19)),
+                         Some(PositionRange((12, 12), (25, 19))))
       succeed
     }
   }
@@ -87,9 +89,11 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
                     OasYamlHint)
     } yield {
       val api = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
-      assertRange(api.endPoints.head.operations.head.annotations,
-                  PositionRange((20, 4), (25, 19)),
-                  Some(PositionRange((20, 8), (25, 19))))
+      val op  = api.endPoints.head.operations.head
+      assertRangeElement(op.id,
+                         op.annotations,
+                         PositionRange((20, 4), (25, 19)),
+                         Some(PositionRange((20, 8), (25, 19))))
       succeed
     }
   }
@@ -100,16 +104,32 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
                     OasYamlHint)
     } yield {
       val document = unit.asInstanceOf[Document]
-      document.declares.collectFirst({ case p: Response => p.annotations }) match {
-        case Some(annotations) =>
-          assertRange(annotations, PositionRange((4, 2), (10, 0)), Some(PositionRange((4, 10), (10, 0))))
+      document.declares.collectFirst({ case p: Response => (p.id, p.annotations) }) match {
+        case Some((id, annotations)) =>
+          assertRangeElement(id, annotations, PositionRange((4, 2), (10, 0)), Some(PositionRange((4, 10), (10, 0))))
         case None => fail("Any response declared found")
       }
 
       val api = document.encodes.asInstanceOf[WebApi]
-      assertRange(api.endPoints.head.operations.head.responses.head.annotations,
-                  PositionRange((16, 8), (18, 30)),
-                  Some(PositionRange((16, 12), (18, 30))))
+
+      api.endPoints.head.operations.head.responses.collectFirst({
+        case r: Response if r.linkTarget.isEmpty => (r.id, r.annotations)
+      }) match {
+        case Some((id, annotations)) =>
+          assertRangeElement(id, annotations, PositionRange((16, 8), (19, 0)), Some(PositionRange((16, 12), (19, 0))))
+        case None => fail("Any response with target found")
+      }
+
+      api.endPoints.head.operations.head.responses.collectFirst({
+        case r: Response if r.linkTarget.isDefined => (r.id, r.annotations)
+      }) match {
+        case Some((id, annotations)) =>
+          assertRangeElement(id,
+                             annotations,
+                             PositionRange((19, 8), (20, 37)),
+                             Some(PositionRange((19, 16), (20, 37))))
+        case None => fail("Any response with target found")
+      }
       succeed
     }
   }
@@ -120,15 +140,17 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
                     OasYamlHint)
     } yield {
       val document = unit.asInstanceOf[Document]
-      document.declares.collectFirst({ case p: Shape => p.annotations }) match {
-        case Some(annotations) =>
-          assertRange(annotations, PositionRange((4, 2), (11, 0)), Some(PositionRange((4, 9), (11, 0))))
+      document.declares.collectFirst({ case p: Shape => (p.id, p.annotations) }) match {
+        case Some((id, annotations)) =>
+          assertRangeElement(id, annotations, PositionRange((4, 2), (11, 0)), Some(PositionRange((4, 9), (11, 0))))
         case None => fail("Any response declared found")
       }
 
-      val api = document.encodes.asInstanceOf[WebApi]
-      assertRange(
-        api.endPoints.head.operations.head.responses.head.payloads.head.schema.annotations,
+      val api    = document.encodes.asInstanceOf[WebApi]
+      val schema = api.endPoints.head.operations.head.responses.head.payloads.head.schema
+      assertRangeElement(
+        schema.id,
+        schema.annotations,
         PositionRange((18, 10), (20, 24)),
         Some(PositionRange((18, 17), (20, 24)))
       )
@@ -144,41 +166,48 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
       val document = unit.asInstanceOf[Document]
       document.declares.collectFirst({
         case s: NodeShape =>
-          s.properties.head.range.asInstanceOf[AnyShape].xmlSerialization.annotations
+          val serialization = s.properties.head.range.asInstanceOf[AnyShape].xmlSerialization
+          (serialization.id, serialization.annotations)
       }) match {
-        case Some(annotations) =>
-          assertRange(annotations, PositionRange((12, 0), (13, 21)), Some(PositionRange((10, 12), (13, 21))))
+        case Some((id, annotations)) =>
+          assertRangeElement(id,
+                             annotations,
+                             PositionRange((12, 0), (13, 21)),
+                             Some(PositionRange((10, 12), (13, 21))))
         case None => fail("Any response declared found")
       }
       succeed
     }
   }
 
-  private def assertRange(annotations: Annotations,
-                          sourceRange: PositionRange,
-                          nodeRange: Option[PositionRange] = None): Assertion = {
+  private def assertRangeElement(id: String,
+                                 annotations: Annotations,
+                                 sourceRange: PositionRange,
+                                 nodeRange: Option[PositionRange] = None): Assertion = {
     var c = 0
     annotations.foreach {
       case ast: SourceAST =>
         c = c + 1
-        assertRange(ast.ast.range, sourceRange)
+        assertRange(id, ast.ast.range, sourceRange)
       case lex: LexicalInformation =>
         c = c + 1
-        assertRange(lex.range, sourceRange)
+        assertRange(id, lex.range, sourceRange)
       case node: SourceNode =>
         c = c + 1
-        assertRange(node.node.range, nodeRange.getOrElse(sourceRange))
+        assertRange(id, node.node.range, nodeRange.getOrElse(sourceRange))
       case _ =>
     }
     if (c != 3) fail("Missing some annotation type")
     succeed
   }
 
-  private def assertRange(actual: InputRange, expected: PositionRange): Assertion = {
-    assertRange(PositionRange((actual.lineFrom, actual.columnFrom), (actual.lineTo, actual.columnTo)), expected)
+  private def assertRange(id: String, actual: InputRange, expected: PositionRange): Assertion = {
+    assertRange(id, PositionRange((actual.lineFrom, actual.columnFrom), (actual.lineTo, actual.columnTo)), expected)
   }
 
-  private def assertRange(actual: PositionRange, expected: PositionRange): Assertion = {
-    actual should be(expected)
+  private def assertRange(id: String, actual: PositionRange, expected: PositionRange): Assertion = {
+
+    if (actual.equals(expected)) succeed
+    else fail(s"Input range: ${actual.toString} for element $id not equals to ${expected.toString}")
   }
 }
