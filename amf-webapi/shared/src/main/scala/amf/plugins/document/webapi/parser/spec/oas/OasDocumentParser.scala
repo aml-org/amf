@@ -485,7 +485,11 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
               entries => {
                 val responses = mutable.ListBuffer[Response]()
                 entries.foreach(entry => {
-                  responses += OasResponseParser(entry, operation.withResponse).parse()
+                  responses += OasResponseParser(
+                    entry,
+                    (r: Response) =>
+                      r.adopted(operation.id)
+                        .withStatusCode(if (r.name.value() == "default") "200" else r.name.value())).parse()
                 })
                 operation.set(OperationModel.Responses,
                               AmfArray(responses, Annotations(entry.value)),
@@ -641,8 +645,7 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
           .entries
           .foreach(e => {
             ctx.declarations +=
-              OasResponseParser(e,
-                                (name: String) => Response().withName(name).adopted(parentPath).add(DeclaredElement()))
+              OasResponseParser(e, (r: Response) => r.adopted(parentPath).add(DeclaredElement()))
                 .parse()
           })
       }

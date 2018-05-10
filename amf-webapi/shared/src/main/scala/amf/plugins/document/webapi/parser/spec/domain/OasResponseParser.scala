@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, ScalarNode, SearchScope, _}
+import amf.core.utils.Strings
 import amf.plugins.document.webapi.annotations.{DeclaredElement, DefaultPayload}
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
@@ -10,11 +11,10 @@ import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.domain.webapi.metamodel.{PayloadModel, RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
 import org.yaml.model.{YMap, YMapEntry}
-import amf.core.utils.Strings
 
 import scala.collection.mutable
 
-case class OasResponseParser(entry: YMapEntry, producer: String => Response)(implicit ctx: OasWebApiContext)
+case class OasResponseParser(entry: YMapEntry, adopted: Response => Unit)(implicit ctx: OasWebApiContext)
     extends SpecParserOps {
   def parse(): Response = {
 
@@ -26,12 +26,13 @@ case class OasResponseParser(entry: YMapEntry, producer: String => Response)(imp
         val response: Response = ctx.declarations
           .findResponseOrError(entry.value)(name, SearchScope.Named)
           .link(OasDefinitions.stripResponsesDefinitionsPrefix(url))
-        response.withName(node.string().value.toString)
+        adopted(response.set(ResponseModel.Name, node.string()))
         response.annotations ++= Annotations(entry)
         response
       case Right(value) =>
         val map = value.as[YMap]
-        val res = producer(node.string().value.toString).add(Annotations(entry))
+        val res = Response(entry).set(ResponseModel.Name, node.string())
+        adopted(res)
 
         map.key("description", ResponseModel.Description in res)
 

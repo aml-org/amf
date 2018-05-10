@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.SynthesizedField
-import amf.core.model.domain.AmfArray
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.core.utils.Strings
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
@@ -17,9 +17,9 @@ import scala.collection.mutable
 /**
   *
   */
-case class Raml10ResponseParser(entry: YMapEntry, producer: (String) => Response, parseOptional: Boolean = false)(
+case class Raml10ResponseParser(entry: YMapEntry, adopt: Response => Unit, parseOptional: Boolean = false)(
     implicit ctx: RamlWebApiContext)
-    extends RamlResponseParser(entry, producer, parseOptional) {
+    extends RamlResponseParser(entry, adopt, parseOptional) {
 
   override def parseMap(response: Response, map: YMap): Unit = {
     AnnotationParser(response, map).parse()
@@ -29,15 +29,15 @@ case class Raml10ResponseParser(entry: YMapEntry, producer: (String) => Response
   override protected val defaultType: DefaultType = AnyDefaultType
 }
 
-case class Raml08ResponseParser(entry: YMapEntry, producer: (String) => Response, parseOptional: Boolean = false)(
+case class Raml08ResponseParser(entry: YMapEntry, adopt: Response => Unit, parseOptional: Boolean = false)(
     implicit ctx: RamlWebApiContext)
-    extends RamlResponseParser(entry, producer, parseOptional) {
+    extends RamlResponseParser(entry, adopt, parseOptional) {
   override protected def parseMap(response: Response, map: YMap): Unit = Unit
 
   override protected val defaultType: DefaultType = AnyDefaultType
 }
 
-abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Response, parseOptional: Boolean = false)(
+abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, parseOptional: Boolean = false)(
     implicit ctx: RamlWebApiContext)
     extends SpecParserOps {
 
@@ -46,19 +46,23 @@ abstract class RamlResponseParser(entry: YMapEntry, producer: (String) => Respon
   protected val defaultType: DefaultType
 
   def parse(): Response = {
-    val node = ScalarNode(entry.key).text()
+    val node: AmfScalar = ScalarNode(entry.key).text()
 
     val response: Response = entry.value.tagType match {
       case YType.Null =>
-        producer(node.toString).add(Annotations(entry)).set(ResponseModel.StatusCode, node)
+        val response = Response(entry).set(ResponseModel.Name, node).set(ResponseModel.StatusCode, node)
+        adopt(response)
+        response
       case YType.Str | YType.Int =>
         val ref           = entry.value.as[YScalar].text
         val res: Response = ctx.declarations.findResponseOrError(entry.value)(ref, SearchScope.All).link(ref)
-        res.withName(node.toString)
+        res.set(ResponseModel.Name, node).annotations ++= Annotations(entry)
+        res
       case _ =>
         val map = entry.value.as[YMap] // if not scalar, must be the response, if not, violation.
-
-        val res = producer(node.toString).add(Annotations(entry)).set(ResponseModel.StatusCode, node)
+        val res = Response(entry).set(ResponseModel.Name, node)
+        adopt(res)
+        res.withStatusCode(if (res.name.value() == "default") "200" else res.name.value())
 
         if (parseOptional && node.toString.endsWith("?")) { // only in raml the method can be optional, check?
           res.set(ResponseModel.Optional, value = true)

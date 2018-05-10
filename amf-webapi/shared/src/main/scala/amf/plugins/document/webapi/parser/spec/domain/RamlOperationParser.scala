@@ -78,7 +78,7 @@ case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation
               val responses = mutable.ListBuffer[Response]()
               entries.foreach(entry => {
                 responses += ctx.factory
-                  .responseParser(entry, operation.withResponse, parseOptional)
+                  .responseParser(entry, (r: Response) => r.adopted(operation.id), parseOptional)
                   .parse()
               })
               operation.set(OperationModel.Responses,

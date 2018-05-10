@@ -132,7 +132,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
                   val responses = mutable.ListBuffer[Response]()
                   entries.foreach(entry => {
                     responses += ctx.factory
-                      .responseParser(entry, scheme.withResponse, false)
+                      .responseParser(entry, (r: Response) => r.adopted(scheme.id), false)
                       .parse() // todo replace in separation
                   })
                   scheme.set(SecuritySchemeModel.Responses,
