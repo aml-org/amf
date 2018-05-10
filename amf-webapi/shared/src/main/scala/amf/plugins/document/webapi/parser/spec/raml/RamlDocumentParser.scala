@@ -252,7 +252,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
           .entries
           .foreach(e => {
             ctx.declarations +=
-              OasResponseParser(e, (name: String) => Response().withName(name).adopted(parentPath))(toOas(ctx))
+              OasResponseParser(e, (r: Response) => r.adopted(parentPath))(toOas(ctx))
                 .parse()
                 .add(DeclaredElement())
 

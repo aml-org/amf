@@ -8,6 +8,7 @@ import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.metamodel.ResponseModel
 import amf.plugins.domain.webapi.metamodel.ResponseModel._
 import amf.core.utils.Strings
+import org.yaml.model.YMapEntry
 
 /**
   * Response internal model.
@@ -82,6 +83,8 @@ class Response(override val fields: Fields, override val annotations: Annotation
 
 object Response {
   def apply(): Response = apply(Annotations())
+
+  def apply(entry: YMapEntry): Response = apply(Annotations(entry))
 
   def apply(annotations: Annotations): Response = new Response(Fields(), annotations)
 
