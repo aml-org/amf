@@ -1,6 +1,6 @@
 package amf.client.resolve
 
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.JSExportTopLevel
 
-@JSExportAll
+@JSExportTopLevel("AmfGraphResolver")
 class AmfGraphResolver extends Resolver("AMF Graph")
