@@ -40,6 +40,7 @@ case class RamlTypeDetector(parent: String,
       val map       = node.as[YMap]
       val filterMap = YMap(map.entries.filter(e => !e.key.as[YScalar].text.matches(".*/.*")))
       detectItems(filterMap)
+        .orElse(detectFileTypes(filterMap))
         .orElse(detectProperties(filterMap))
         .orElse(detectAnyOf(filterMap))
         .orElse(detectTypeOrSchema(filterMap))
@@ -66,8 +67,8 @@ case class RamlTypeDetector(parent: String,
             .parse(text)
             .flatMap(s => ShapeClassTypeDefMatcher(s, node, recursive))
             .map {
-              case (TypeDef.UnionType | TypeDef.ArrayType) if !recursive => TypeExpressionType
-              case other                                                 => other
+              case TypeDef.UnionType | TypeDef.ArrayType if !recursive => TypeExpressionType
+              case other                                               => other
             } // exception case when F: C|D (not type, not recursion, union but only have a typeexpression to parse de union
 
         case t: String if matchType(t, default = UndefinedType) == UndefinedType =>
@@ -91,16 +92,16 @@ case class RamlTypeDetector(parent: String,
     map.key("properties").map(_ => ObjectType)
   }
 
+  private def detectFileTypes(map: YMap): Option[TypeDef] = map.key("fileTypes").map(_ => FileType)
+
   private def detectItems(map: YMap): Option[TypeDef] = {
     map.key("items") match {
-      case (Some(_)) => Some(ArrayType)
-      case None      => None
+      case Some(_) => Some(ArrayType)
+      case None    => None
     }
   }
 
-  private def detectAnyOf(map: YMap): Option[TypeDef] = {
-    map.key("anyOf").map(_ => UnionType)
-  }
+  private def detectAnyOf(map: YMap): Option[TypeDef] = map.key("anyOf").map(_ => UnionType)
 
   private def detectTypeOrSchema(map: YMap): Option[TypeDef] = {
     if (map.entries.nonEmpty) {
