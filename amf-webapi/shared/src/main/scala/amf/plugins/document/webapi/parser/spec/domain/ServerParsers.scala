@@ -3,8 +3,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.{BasePathLexicalInformation, HostLexicalInformation, SynthesizedField}
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.Strings
-import amf.core.utils.TemplateUri
+import amf.core.utils.{Strings, TemplateUri}
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, RamlScalarNode, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.{toOas, toRaml}
@@ -28,21 +27,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
 
         map.key("serverDescription".asRamlAnnotation, ServerModel.Description in server)
 
-        map.key(
-          "baseUriParameters",
-          entry => {
-            entry.value.tagType match {
-              case YType.Map =>
-                val parameters =
-                  RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(server.id))
-                    .parse()
-                    .map(_.withBinding("path"))
-                server.set(ServerModel.Variables, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
-              case YType.Null =>
-              case _          => ctx.violation("Invalid node for baseUriParameters", entry.value)
-            }
-          }
-        )
+        parseBaseUriParameters(server)
 
         api.set(WebApiModel.Servers,
                 AmfArray(Seq(server.add(SynthesizedField())), Annotations(entry.value)),
@@ -50,13 +35,35 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
       case None =>
         map
           .key("baseUriParameters")
-          .foreach(ctx.violation(api.id, "'baseUri' not defined and 'baseUriParameters' defined.", _))
+          .foreach { entry =>
+            ctx.violation(api.id, "'baseUri' not defined and 'baseUriParameters' defined.", entry)
+
+            val server = Server().adopted(api.id)
+            parseBaseUriParameters(server)
+
+            api.set(WebApiModel.Servers,
+                    AmfArray(Seq(server.add(SynthesizedField())), Annotations(entry.value)),
+                    Annotations(entry))
+          }
     }
 
     map.key("servers".asRamlAnnotation).foreach { entry =>
       entry.value.as[Seq[YMap]].map(OasServerParser(api.id, _)(toOas(ctx)).parse()).foreach { server =>
         api.add(WebApiModel.Servers, server)
       }
+    }
+  }
+
+  private def parseBaseUriParameters(server: Server): Unit = map.key("baseUriParameters").foreach { entry =>
+    entry.value.tagType match {
+      case YType.Map =>
+        val parameters =
+          RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(server.id))
+            .parse()
+            .map(_.withBinding("path"))
+        server.set(ServerModel.Variables, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
+      case YType.Null =>
+      case _          => ctx.violation("Invalid node for baseUriParameters", entry.value)
     }
   }
 }
