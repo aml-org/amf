@@ -15,11 +15,13 @@ import org.yaml.model.YPart
   */
 case class Payload(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
 
+  def name: StrField          = fields.field(Name)
   def mediaType: StrField     = fields.field(MediaType)
   def schema: Shape           = fields.field(Schema)
   def examples: Seq[Example]  = fields.field(Examples)
   def encoding: Seq[Encoding] = fields.field(EncodingModel)
 
+  def withName(name: String): this.type                = set(Name, name)
   def withMediaType(mediaType: String): this.type      = set(MediaType, mediaType)
   def withSchema(schema: Shape): this.type             = set(Schema, schema)
   def withExamples(examples: Seq[Example]): this.type  = setArray(Examples, examples)
@@ -78,7 +80,10 @@ case class Payload(fields: Fields, annotations: Annotations) extends DomainEleme
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String =
-    "/" + mediaType.option().getOrElse("default").urlComponentEncoded // todo: / char of media type should be encoded?
+    "/" + mediaType
+      .option()
+      .getOrElse(name.option().getOrElse("default"))
+      .urlComponentEncoded // todo: / char of media type should be encoded?
 }
 
 object Payload {

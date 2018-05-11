@@ -24,6 +24,7 @@ case class OasPayloadEmitter(payload: Payload, ordering: SpecOrdering, reference
         val fs     = payload.fields
         val result = mutable.ListBuffer[EntryEmitter]()
 
+        fs.entry(PayloadModel.Name).map(f => result += ValueEmitter("name", f))
         fs.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("mediaType", f))
         fs.entry(PayloadModel.Schema).map { f =>
           if (!f.value.value.annotations.contains(classOf[SynthesizedField])) {

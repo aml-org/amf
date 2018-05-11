@@ -239,6 +239,10 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("formDataParameters.jsonld", "formDataParameters.json", AmfJsonHint, Oas)
   }
 
+  test("Complete with multiple formData parameters oas to amf test") {
+    cycle("formdata-parameters-multiple.yaml", "formdata-parameters-multiple.jsonld", OasYamlHint, Amf)
+  }
+
   test("Complete with formData parameter references oas to oas test") {
     cycle("formDataParameters.json", OasJsonHint)
   }
