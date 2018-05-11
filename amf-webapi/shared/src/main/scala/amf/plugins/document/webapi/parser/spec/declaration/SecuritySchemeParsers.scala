@@ -21,7 +21,7 @@ import scala.collection.mutable
   *
   */
 object SecuritySchemeParser {
-  def apply(entry: YMapEntry, adopt: (SecurityScheme) => SecurityScheme)(
+  def apply(entry: YMapEntry, adopt: SecurityScheme => SecurityScheme)(
       implicit ctx: WebApiContext): SecuritySchemeParser = // todo factory for oas too?
     ctx.vendor match {
       case _: Raml => RamlSecuritySchemeParser(entry, entry.key, entry.value, adopt)(toRaml(ctx))
@@ -34,7 +34,7 @@ object SecuritySchemeParser {
 trait SecuritySchemeParser extends SpecParserOps {
   def parse(): SecurityScheme
 }
-case class RamlSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: (SecurityScheme) => SecurityScheme)(
+case class RamlSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: SecurityScheme => SecurityScheme)(
     implicit ctx: RamlWebApiContext)
     extends SecuritySchemeParser {
   override def parse(): SecurityScheme = {
@@ -62,7 +62,7 @@ case class RamlSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt:
   def parseReferenced(name: String,
                       parsedUrl: String,
                       annotations: Annotations,
-                      adopt: (SecurityScheme) => SecurityScheme): SecurityScheme = {
+                      adopt: SecurityScheme => SecurityScheme): SecurityScheme = {
     val scheme = ctx.declarations
       .findSecuritySchemeOrError(ast)(parsedUrl, SearchScope.All)
 
@@ -115,7 +115,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
         value.key(
           "queryString",
           queryEntry => {
-            Raml10TypeParser(queryEntry, (shape) => shape.adopted(scheme.id))
+            Raml10TypeParser(queryEntry, shape => shape.adopted(scheme.id))
               .parse()
               .map(scheme.withQueryString)
           }
@@ -147,7 +147,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
   }
 }
 
-case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: (SecurityScheme) => SecurityScheme)(
+case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: SecurityScheme => SecurityScheme)(
     implicit ctx: WebApiContext)
     extends SecuritySchemeParser {
   def parse(): SecurityScheme = {
@@ -316,7 +316,7 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
   def parseReferenced(name: String,
                       parsedUrl: String,
                       annotations: Annotations,
-                      adopt: (SecurityScheme) => SecurityScheme): SecurityScheme = {
+                      adopt: SecurityScheme => SecurityScheme): SecurityScheme = {
     val scheme = ctx.declarations
       .findSecuritySchemeOrError(ast)(parsedUrl, SearchScope.Fragments)
 

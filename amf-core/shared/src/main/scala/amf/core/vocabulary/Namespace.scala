@@ -109,7 +109,7 @@ object Namespace {
     }
   }
 
-  def compactAndCollect(uri: String, prefixes: mutable.Map[String, String]) = {
+  def compactAndCollect(uri: String, prefixes: mutable.Map[String, String]): String = {
     ns.find {
       case (_, namespace) =>
         uri.indexOf(namespace.base) == 0
@@ -173,7 +173,7 @@ class UriType(id: String) extends ValueType(Namespace.Document, "") {
 
 object ValueType {
   def apply(ns: Namespace, name: String) = new ValueType(ns, name)
-  def apply(iri: String) =
+  def apply(iri: String): ValueType =
     if (iri.contains("#")) {
       val pair = iri.split("#")
       val name = pair.last
