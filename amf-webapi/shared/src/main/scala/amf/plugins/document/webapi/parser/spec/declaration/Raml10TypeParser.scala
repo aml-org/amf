@@ -121,8 +121,7 @@ case class Raml10TypeParser(entryOrNode: Either[YMapEntry, YNode],
                            adopt: Shape => Shape,
                            isAnnotation: Boolean,
                            defaultType: DefaultType) {
-  override def typeParser
-    : (Either[YMapEntry, YNode], String, (Shape) => Shape, Boolean, DefaultType) => RamlTypeParser =
+  override def typeParser: (Either[YMapEntry, YNode], String, Shape => Shape, Boolean, DefaultType) => RamlTypeParser =
     Raml10TypeParser.apply
 
 }
@@ -180,8 +179,7 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
     }
   }
 
-  override def typeParser
-    : (Either[YMapEntry, YNode], String, (Shape) => Shape, Boolean, DefaultType) => RamlTypeParser =
+  override def typeParser: (Either[YMapEntry, YNode], String, Shape => Shape, Boolean, DefaultType) => RamlTypeParser =
     Raml08TypeParser.apply
 
   case class Raml08ReferenceParser(text: String, node: YNode, name: String)(implicit ctx: RamlWebApiContext) {
@@ -208,7 +206,7 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
     }
   }
 
-  case class Raml08TextParser(value: YNode, adopt: (Shape) => Shape, name: String, defaultType: DefaultType)(
+  case class Raml08TextParser(value: YNode, adopt: Shape => Shape, name: String, defaultType: DefaultType)(
       implicit ctx: RamlWebApiContext) {
     def parse(): Option[AnyShape] = {
       value.tagType match {
@@ -227,7 +225,7 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
     }
   }
 
-  case class Raml08SchemaParser(map: YMap, adopt: (Shape) => Shape)(implicit ctx: RamlWebApiContext) {
+  case class Raml08SchemaParser(map: YMap, adopt: Shape => Shape)(implicit ctx: RamlWebApiContext) {
     def parse(): Option[AnyShape] = {
       map.key("schema").flatMap { e =>
         e.value.tagType match {
@@ -241,7 +239,7 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
 
 }
 
-case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, ast: YPart, adopt: (Shape) => Shape)(
+case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, ast: YPart, adopt: Shape => Shape)(
     implicit ctx: RamlWebApiContext) {
   def parse(): Option[AnyShape] = {
     val product: Option[AnyShape] = defaultType match {
@@ -482,7 +480,7 @@ trait RamlExternalTypes extends RamlSpecParser with ExampleParser with RamlTypeS
     ctx.localJSONSchemaContext = Some(schemaEntry.value)
 
     val parsed =
-      OasTypeParser(schemaEntry, (shape) => adopt(shape), JSONSchemaVersion)(toSchemaContext(ctx, valueAST))
+      OasTypeParser(schemaEntry, shape => adopt(shape), JSONSchemaVersion)(toSchemaContext(ctx, valueAST))
         .parse() match {
         case Some(shape) =>
           if (!sourceRefReference(value, shape, ctx)) shape.annotations += ParsedJSONSchema(text)
@@ -620,7 +618,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
     val parsed = node.value match {
       case s: YScalar =>
         val toParse = YMapEntry(YNode(""), YNode(s.text.replace("?", "")))
-        ctx.factory.typeParser(toParse, (s) => s.withId(union.id), isAnnotation, defaultType).parse().get
+        ctx.factory.typeParser(toParse, s => s.withId(union.id), isAnnotation, defaultType).parse().get
       case m: YMap =>
         val newEntries = m.entries.map { entry =>
           if (entry.key.as[String] == "type") {
@@ -630,7 +628,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
           }
         }
         val toParse = YMapEntry(YNode(""), YMap(newEntries))
-        ctx.factory.typeParser(toParse, (s) => s.withId(union.id), isAnnotation, defaultType).parse().get
+        ctx.factory.typeParser(toParse, s => s.withId(union.id), isAnnotation, defaultType).parse().get
     }
     union.withAnyOf(
       Seq(
@@ -768,7 +766,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 scalar.text == "file"
               case _ => false
             }
-          }
+          } || map.key("fileTypes").isDefined
       case Left(_) =>
         node.to[YScalar] match {
           case Right(scalar) =>
@@ -870,7 +868,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       shape
     }
 
-    protected def ensurePrecision(dataType: Option[String], value: String, ast: YNode) = {
+    protected def ensurePrecision(dataType: Option[String], value: String, ast: YNode): Unit = {
       if (dataType.isDefined && dataType.get.endsWith("#integer")) {
         if (value.contains(".")) {
           ctx.violation(
@@ -884,7 +882,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
     }
   }
 
-  case class UnionShapeParser(override val map: YMap, adopt: (Shape) => Shape) extends AnyShapeParser {
+  case class UnionShapeParser(override val map: YMap, adopt: Shape => Shape) extends AnyShapeParser {
     override val shape = UnionShape(Annotations(map))
 
     override def parse(): UnionShape = {
@@ -1228,7 +1226,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         case YType.Str if XMLSchema.unapply(entry.value).isDefined =>
           val parsed = parseXMLSchemaExpression("schema",
                                                 entry.value,
-                                                (xmlSchemaShape) => xmlSchemaShape.withId(shape.id + "/xmlSchema"))
+                                                xmlSchemaShape => xmlSchemaShape.withId(shape.id + "/xmlSchema"))
           shape.set(ShapeModel.Inherits, AmfArray(Seq(parsed), Annotations(entry.value)), Annotations(entry))
 
         case _ if !wellKnownType(entry.value.as[YScalar].text) =>
@@ -1262,7 +1260,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
                   )
                   parseJSONSchemaExpression("schema",
                                             entry.value,
-                                            (jsonSchemaShape) => jsonSchemaShape.withId(shape.id + "/jsonSchema"))
+                                            jsonSchemaShape => jsonSchemaShape.withId(shape.id + "/jsonSchema"))
                 case _ =>
                   unresolved(entry.value)
               }

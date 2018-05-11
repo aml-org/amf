@@ -1231,4 +1231,8 @@ class CompleteCycleTest extends BuildCycleTests {
               validation = Some(validation.withEnabledValidation(true)))
       }
   }
+
+  test("File type detection") {
+    cycle("file-detection.raml", "file-detection.raml", RamlYamlHint, Raml)
+  }
 }
