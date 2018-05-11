@@ -54,13 +54,10 @@ package object utils {
 
     /** Prepend correct protocol prefix, then encode */
     def normalizeUrl: String = {
-      val url =
-        if (str == null || str.isEmpty) ""
-        else if (str.startsWith("http:") || str.startsWith("https:") || str.startsWith("file:")) str
-        else if (str.startsWith("/")) "file:/" + str
-        else "file://" + str
-
-      platform.normalizeURL(url)
+      if (str == null || str.isEmpty) ""
+      else if (str.startsWith("http:") || str.startsWith("https:") || str.startsWith("file:")) str
+      else if (str.startsWith("/")) "file:/" + str
+      else "file://" + str
     }
 
     /** normalize and check that the string its a valid URI */

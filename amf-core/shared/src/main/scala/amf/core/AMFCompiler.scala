@@ -39,15 +39,12 @@ class AMFCompiler(val rawUrl: String,
                   private val baseContext: Option[ParserContext] = None,
                   val env: Environment = Environment()) {
 
-  val urlNormalized
-    : String = rawUrl.normalizeUrl // for location and id, we need valids url (and we cant trust in clients implemented resource loaders)
-
   val path: String = {
     try {
       rawUrl.normalizePath
     } catch {
       case e: URISyntaxException =>
-        baseContext.getOrElse(ParserContext(urlNormalized)).violation(path, e.getMessage, YNode(path))
+        baseContext.getOrElse(ParserContext(rawUrl)).violation(path, e.getMessage, YNode(path))
         rawUrl
     }
   }
@@ -85,7 +82,7 @@ class AMFCompiler(val rawUrl: String,
     ExecutionLog.log(s"AMFCompiler#parseSyntax: parsing syntax $rawUrl")
     val content = AMFPluginsRegistry.featurePlugins().foldLeft(inputContent) {
       case (input, plugin) =>
-        plugin.onBeginDocumentParsing(urlNormalized, input, referenceKind, vendor)
+        plugin.onBeginDocumentParsing(path, input, referenceKind, vendor)
     }
 
     val parsed = content.mime
@@ -113,7 +110,7 @@ class AMFCompiler(val rawUrl: String,
       case Some(inputDocument) =>
         val document = AMFPluginsRegistry.featurePlugins().foldLeft(inputDocument) {
           case (doc, plugin) =>
-            plugin.onSyntaxParsed(urlNormalized, doc)
+            plugin.onSyntaxParsed(path, doc)
         }
         Right(
           Root(document,
@@ -182,7 +179,7 @@ class AMFCompiler(val rawUrl: String,
       ExecutionLog.log(s"AMFCompiler#parseDomain: model ready $rawUrl")
       AMFPluginsRegistry.featurePlugins().foldLeft(baseUnit) {
         case (unit, plugin) =>
-          plugin.onModelParsed(urlNormalized, unit)
+          plugin.onModelParsed(path, unit)
       }
     }
   }
@@ -285,5 +282,5 @@ object Root {
             referenceKind: ReferenceKind,
             vendor: String,
             raw: String): Root =
-    new Root(parsed, location, mediatype, references, referenceKind, vendor, raw)
+    new Root(parsed, location.normalizeUrl, mediatype, references, referenceKind, vendor, raw)
 }

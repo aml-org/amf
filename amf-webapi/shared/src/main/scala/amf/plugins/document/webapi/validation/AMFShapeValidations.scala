@@ -1,8 +1,11 @@
 package amf.plugins.document.webapi.validation
 
+import java.net.URISyntaxException
+
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, AmfScalar, RecursiveShape, Shape}
+import amf.core.utils.Strings
 import amf.core.validation.core.{PropertyConstraint, ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.resolution.pipelines.CanonicalShapePipeline
@@ -12,7 +15,6 @@ import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YDocument.EntryBuilder
-import amf.core.utils.Strings
 class AMFShapeValidations(shape: Shape) {
 
   def profile(): ValidationProfile = {
@@ -54,6 +56,12 @@ class AMFShapeValidations(shape: Shape) {
     val name = id + "_validation"
     if (name.startsWith("http://") || name.startsWith("https://") || name.startsWith("file:")) {
       name
+    } else if (name.contains("#")) {
+      try {
+        name.normalizeUrl.normalizePath
+      } catch {
+        case e: URISyntaxException => (Namespace.Data + "default_for_invalid_uri").iri()
+      }
     } else {
       (Namespace.Data + name).iri()
     }
