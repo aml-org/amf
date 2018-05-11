@@ -4,7 +4,7 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ShapeModel}
-import amf.core.vocabulary.Namespace.Http
+import amf.core.vocabulary.Namespace.{Http, Schema => SchemaNamespace}
 import amf.core.vocabulary.ValueType
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.webapi.models.Payload
@@ -13,6 +13,8 @@ import amf.plugins.domain.webapi.models.Payload
   * Payload metamodel.
   */
 object PayloadModel extends DomainElementModel with KeyField with OptionalField with LinkableElementModel {
+
+  val Name = Field(Str, SchemaNamespace + "name")
 
   val MediaType = Field(Str, Http + "mediaType")
 
@@ -27,7 +29,7 @@ object PayloadModel extends DomainElementModel with KeyField with OptionalField 
   override val `type`: List[ValueType] = Http + "Payload" :: DomainElementModel.`type`
 
   override def fields: List[Field] =
-    MediaType :: Schema :: Examples :: Encoding :: (DomainElementModel.fields ++ LinkableElementModel.fields)
+    Name :: MediaType :: Schema :: Examples :: Encoding :: (DomainElementModel.fields ++ LinkableElementModel.fields)
 
   override def modelInstance = Payload()
 }

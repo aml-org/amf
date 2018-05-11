@@ -272,6 +272,7 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
               if (p.isFormData) {
                 shapeFromOasParameter(parameter, schema)
                 p.payload.set(PayloadModel.Schema, schema, Annotations(map))
+                p.payload.set(PayloadModel.Name, AmfScalar(parameter.name.value()), Annotations())
               } else parameter.set(ParameterModel.Schema, schema, Annotations(map))
             }
             .orElse {
@@ -376,7 +377,6 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
       }
 
       validateOasPayloads(body, ParserSideValidations.OasInvalidBodyParameter.id())
-      validateOasPayloads(formData, ParserSideValidations.OasInvalidFormDataParameter.id())
     }
 
     Parameters(

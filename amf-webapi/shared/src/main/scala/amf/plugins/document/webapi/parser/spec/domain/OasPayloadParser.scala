@@ -18,6 +18,7 @@ case class OasPayloadParser(node: YNode, producer: (Option[String]) => Payload)(
 
     // todo set again for not lose annotations?
 
+    map.key("name", PayloadModel.Name in payload)
     map.key("mediaType", PayloadModel.MediaType in payload)
 
     map.key(

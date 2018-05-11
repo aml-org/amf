@@ -2201,4 +2201,15 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.length == 2)
     }
   }
+
+  test("Test multiple formData parameters") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "parameters/multiple-formdata.yaml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.OAS, ProfileNames.OAS)
+    } yield {
+      assert(report.conforms)
+    }
+  }
 }
