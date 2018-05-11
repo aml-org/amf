@@ -15,7 +15,7 @@ import amf.facades.{AMFCompiler, AMFRenderer, Validation}
 import amf.plugins.document.graph.parser.GraphEmitter
 import amf.plugins.document.webapi.RAML10Plugin
 import amf.plugins.document.webapi.validation.{AMFShapeValidations, PayloadValidation, UnitPayloadsValidation}
-import amf.plugins.domain.shapes.models.{AnyShape, ArrayShape}
+import amf.plugins.domain.shapes.models.ArrayShape
 import amf.plugins.domain.webapi.models.WebApi
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 import amf.plugins.features.validation.{ParserSideValidations, PlatformValidator}
@@ -538,10 +538,13 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
           .asInstanceOf[Document]
           .encodes
           .asInstanceOf[WebApi]
-          .endPoints(0)
-          .operations(0)
+          .endPoints
+          .head
+          .operations
+          .head
           .request
-          .headers(0)
+          .headers
+          .head
           .schema
         PayloadValidator.validate(stringShape, "2015-07-20T21:00:00", SeverityLevels.VIOLATION)
       }
@@ -2213,4 +2216,14 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Invalid security scheme") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "invalid-security.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML08)
+    } yield {
+      assert(report.results.length == 1)
+    }
+  }
 }
