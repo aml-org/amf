@@ -26,7 +26,7 @@ trait RamlSpecVersionFactory extends SpecVersionFactory {
 
   def endPointParser
     : (YMapEntry, (String) => EndPoint, Option[EndPoint], ListBuffer[EndPoint], Boolean) => RamlEndpointParser
-  def parameterParser: (YMapEntry, String => Parameter, Boolean) => RamlParameterParser
+  def parameterParser: (YMapEntry, Parameter => Unit, Boolean) => RamlParameterParser
 
   def responseParser: (YMapEntry, Response => Unit, Boolean) => RamlResponseParser
   def requestParser: (YMap, () => Request, Boolean) => RamlRequestParser
@@ -47,7 +47,7 @@ class Raml10VersionFactory(implicit val ctx: RamlWebApiContext) extends RamlSpec
     : (YMapEntry, String => EndPoint, Option[EndPoint], mutable.ListBuffer[EndPoint], Boolean) => RamlEndpointParser =
     Raml10EndpointParser.apply
 
-  override def parameterParser: (YMapEntry, (String) => Parameter, Boolean) => RamlParameterParser =
+  override def parameterParser: (YMapEntry, Parameter => Unit, Boolean) => RamlParameterParser =
     Raml10ParameterParser.apply
 
   override def responseParser: (YMapEntry, Response => Unit, Boolean) => RamlResponseParser =
@@ -72,7 +72,7 @@ class Raml08VersionFactory(implicit val ctx: RamlWebApiContext) extends RamlSpec
     : (YMapEntry, String => EndPoint, Option[EndPoint], mutable.ListBuffer[EndPoint], Boolean) => RamlEndpointParser =
     Raml08EndpointParser.apply
 
-  override def parameterParser: (YMapEntry, (String) => Parameter, Boolean) => RamlParameterParser =
+  override def parameterParser: (YMapEntry, (Parameter) => Unit, Boolean) => RamlParameterParser =
     Raml08ParameterParser.apply
 
   override def responseParser: (YMapEntry, Response => Unit, Boolean) => RamlResponseParser =

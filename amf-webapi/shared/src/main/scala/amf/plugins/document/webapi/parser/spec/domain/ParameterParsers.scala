@@ -27,43 +27,44 @@ import org.yaml.model.{YMap, YMapEntry, YScalar, YType, _}
 /**
   *
   */
-case class RamlParametersParser(map: YMap, producer: String => Parameter, parseOptional: Boolean = false)(
+case class RamlParametersParser(map: YMap, adopted: Parameter => Unit, parseOptional: Boolean = false)(
     implicit ctx: RamlWebApiContext) {
 
   def parse(): Seq[Parameter] =
     map.entries
-      .map(entry => ctx.factory.parameterParser(entry, producer, parseOptional).parse())
+      .map(entry => ctx.factory.parameterParser(entry, adopted, parseOptional).parse())
 }
 
 object RamlHeaderParser {
-  def parse(producer: String => Parameter, parseOptional: Boolean = false)(node: YNode)(
+  def parse(adopted: Parameter => Unit, parseOptional: Boolean = false)(node: YNode)(
       implicit ctx: RamlWebApiContext): Parameter = {
-    RamlParameterParser.parse(producer, parseOptional)(node).withBinding("header")
+    RamlParameterParser.parse(adopted, parseOptional)(node).withBinding("header")
   }
 }
 
 object RamlQueryParameterParser {
-  def parse(producer: String => Parameter, parseOptional: Boolean = false)(node: YNode)(
+  def parse(adopted: Parameter => Unit, parseOptional: Boolean = false)(node: YNode)(
       implicit ctx: RamlWebApiContext): Parameter = {
-    RamlParameterParser.parse(producer, parseOptional)(node).withBinding("query")
+    RamlParameterParser.parse(adopted, parseOptional)(node).withBinding("query")
   }
 }
 
 object RamlParameterParser {
-  def parse(producer: String => Parameter, parseOptional: Boolean = false)(node: YNode)(
+  def parse(adopted: Parameter => Unit, parseOptional: Boolean = false)(node: YNode)(
       implicit ctx: RamlWebApiContext): Parameter = {
     val head = node.as[YMap].entries.head
-    ctx.factory.parameterParser(head, producer, parseOptional).parse()
+    ctx.factory.parameterParser(head, adopted, parseOptional).parse()
   }
 }
 
-case class Raml10ParameterParser(entry: YMapEntry, producer: String => Parameter, parseOptional: Boolean = false)(
+case class Raml10ParameterParser(entry: YMapEntry, adopted: (Parameter) => Unit, parseOptional: Boolean = false)(
     implicit ctx: RamlWebApiContext)
-    extends RamlParameterParser(entry, producer) {
+    extends RamlParameterParser(entry, adopted) {
   override def parse(): Parameter = {
 
-    val name: String = entry.key.as[YScalar].text
-    val parameter    = producer(name).withParameterName(name).add(Annotations(entry)) // TODO parameter id is using a name that is not final.
+    val name      = ScalarNode(entry.key)
+    val parameter = Parameter(entry).set(ParameterModel.Name, name.text()).withParameterName(name.text().toString) // TODO parameter id is using a name that is not final.
+    adopted(parameter)
 
     val p = entry.value.to[YMap] match {
       case Right(map) =>
@@ -101,7 +102,7 @@ case class Raml10ParameterParser(entry: YMapEntry, producer: String => Parameter
                   .get
                   .link(ref.text, Annotations(entry))
                   .asInstanceOf[Parameter]
-                  .withName(name)
+                  .set(ParameterModel.Name, name.text())
               case Right(ref) if ctx.declarations.findType(ref.text, scope).isDefined =>
                 val schema = ctx.declarations
                   .findType(ref.text, scope)
@@ -133,23 +134,26 @@ case class Raml10ParameterParser(entry: YMapEntry, producer: String => Parameter
     }
 
     if (p.fields.entry(ParameterModel.Required).isEmpty) {
-      val required  = !name.endsWith("?")
-      val paramName = if (required) name else name.stripSuffix("?")
+      val stringName = name.text().toString
+      val required   = !stringName.endsWith("?")
+      val paramName  = if (required) stringName else stringName.stripSuffix("?")
       p.set(ParameterModel.Required, required)
-      p.set(ParameterModel.Name, paramName).set(ParameterModel.ParameterName, paramName)
+      p.set(ParameterModel.Name, AmfScalar(paramName, name.text().annotations))
+        .set(ParameterModel.ParameterName, paramName)
     }
 
     p
   }
 }
 
-case class Raml08ParameterParser(entry: YMapEntry, producer: String => Parameter, parseOptional: Boolean = false)(
+case class Raml08ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, parseOptional: Boolean = false)(
     implicit ctx: RamlWebApiContext)
-    extends RamlParameterParser(entry, producer) {
+    extends RamlParameterParser(entry, adopted) {
   def parse(): Parameter = {
 
-    var name: String = entry.key.as[YScalar].text
-    val parameter    = producer(name).withParameterName(name).add(Annotations(entry))
+    var name      = ScalarNode(entry.key)
+    val parameter = Parameter(entry).set(ParameterModel.Name, name.text()).withParameterName(name.text().toString)
+    adopted(parameter)
 
     entry.value.tagType match {
       case YType.Null =>
@@ -163,7 +167,7 @@ case class Raml08ParameterParser(entry: YMapEntry, producer: String => Parameter
       case _ =>
         // Named Parameter Parse
         Raml08TypeParser(entry,
-                         (s: Shape) => s.withName(name).adopted(parameter.id),
+                         (s: Shape) => s.withName(name.text().toString).adopted(parameter.id),
                          isAnnotation = false,
                          StringDefaultType)
           .parse()
@@ -177,24 +181,24 @@ case class Raml08ParameterParser(entry: YMapEntry, producer: String => Parameter
         parameter.set(ParameterModel.Required, value = false)
     }
 
-    if (parseOptional && name.endsWith("?")) {
+    val stringName = name.text().toString
+    if (parseOptional && stringName.endsWith("?")) {
       parameter.set(ParameterModel.Optional, value = true)
-      name = name.stripSuffix("?")
-      parameter.set(ParameterModel.Name, name).set(ParameterModel.ParameterName, name)
+      val n = stringName.stripSuffix("?")
+      parameter.set(ParameterModel.Name, AmfScalar(n, name.text().annotations)).set(ParameterModel.ParameterName, n)
     }
 
     parameter
   }
 }
 
-abstract class RamlParameterParser(entry: YMapEntry, producer: String => Parameter)(
-    implicit val ctx: RamlWebApiContext)
+abstract class RamlParameterParser(entry: YMapEntry, adopted: Parameter => Unit)(implicit val ctx: RamlWebApiContext)
     extends RamlTypeSyntax
     with SpecParserOps {
   def parse(): Parameter
 }
 
-case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: String, name: Option[String])(
+case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: String, nameNode: Option[YNode])(
     implicit ctx: OasWebApiContext)
     extends SpecParserOps {
 
@@ -203,20 +207,23 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
     case Right(node) => node.as[YMap]
   }
 
+  private def setName(p: Parameter): Parameter = {
+    if (nameNode.isDefined) {
+      p.set(ParameterModel.Name, nameNode.map(ScalarNode(_).text()).get)
+    } else {
+      map.key("name", ParameterModel.Name in p) // name of the parameter in the HTTP binding (path, request parameter, etc)
+    }
+    p
+  }
   def parse(): OasParameter = {
     map.key("$ref") match {
       case Some(ref) => parseParameterRef(ref, parentId)
       case None =>
         val p         = OasParameter(entryOrNode.toOption.getOrElse(entryOrNode.left.get))
-        val parameter = p.parameter
+        val parameter = setName(p.parameter)
 
         parameter.set(ParameterModel.Required, value = false)
 
-        if (name.isDefined) {
-          parameter.set(ParameterModel.Name, name.get)
-        } else {
-          map.key("name", ParameterModel.Name in parameter) // name of the parameter in the HTTP binding (path, request parameter, etc)
-        }
         map.key("name", ParameterModel.ParameterName in parameter) // name of the parameter in the HTTP binding (path, request parameter, etc)
         map.key("in", ParameterModel.Binding in parameter)
 

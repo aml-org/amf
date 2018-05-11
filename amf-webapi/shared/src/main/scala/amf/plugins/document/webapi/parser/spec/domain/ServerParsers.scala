@@ -34,7 +34,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
             entry.value.tagType match {
               case YType.Map =>
                 val parameters =
-                  RamlParametersParser(entry.value.as[YMap], server.withVariable)
+                  RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(server.id))
                     .parse()
                     .map(_.withBinding("path"))
                 server.set(ServerModel.Variables, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
@@ -108,9 +108,10 @@ case class Oas2ServersParser(map: YMap, api: WebApi)(implicit override val ctx: 
       map.key(
         "baseUriParameters".asOasExtension,
         entry => {
-          val uriParameters = RamlParametersParser(entry.value.as[YMap], server.withVariable)(toRaml(ctx))
-            .parse()
-            .map(_.withBinding("path"))
+          val uriParameters =
+            RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(server.id))(toRaml(ctx))
+              .parse()
+              .map(_.withBinding("path"))
 
           server.set(ServerModel.Variables, AmfArray(uriParameters, Annotations(entry.value)), Annotations(entry))
         }
@@ -140,7 +141,7 @@ private case class OasServerParser(parent: String, map: YMap)(implicit val ctx: 
       val variables = entry.value
         .as[YMap]
         .entries
-        .map(Raml10ParameterParser(_, server.withVariable)(toRaml(ctx)).parse())
+        .map(Raml10ParameterParser(_, (p: Parameter) => p.adopted(server.id))(toRaml(ctx)).parse())
 
       server.set(ServerModel.Variables, AmfArray(variables, Annotations(entry.value)), Annotations(entry))
     }

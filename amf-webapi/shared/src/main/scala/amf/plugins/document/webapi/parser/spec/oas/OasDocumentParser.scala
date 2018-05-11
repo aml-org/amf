@@ -265,8 +265,9 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
           map.key("uriParameters".asOasExtension).foreach { entry =>
             entries += entry
             val uriParameters =
-              RamlParametersParser(entry.value.as[YMap], name => Parameter().withName(name).adopted(endpoint.id))(
-                spec.toRaml(ctx)).parse().map(_.withBinding("path"))
+              RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(endpoint.id))(spec.toRaml(ctx))
+                .parse()
+                .map(_.withBinding("path"))
             parameters = parameters.add(Parameters(path = uriParameters))
           }
 
@@ -348,9 +349,8 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
           entry => {
             entries += entry
             val queryParameters =
-              RamlParametersParser(
-                entry.value.as[YMap],
-                name => Parameter().withName(name).adopted(request.getOrCreate.id))(spec.toRaml(ctx))
+              RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(request.getOrCreate.id))(
+                spec.toRaml(ctx))
                 .parse()
                 .map(_.withBinding("query"))
             parameters = parameters.add(Parameters(query = queryParameters))
@@ -363,9 +363,8 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
           entry => {
             entries += entry
             val headers =
-              RamlParametersParser(
-                entry.value.as[YMap],
-                name => Parameter().withName(name).adopted(request.getOrCreate.id))(spec.toRaml(ctx))
+              RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(request.getOrCreate.id))(
+                spec.toRaml(ctx))
                 .parse()
                 .map(_.withBinding("header"))
             parameters = parameters.add(Parameters(header = headers))
@@ -377,9 +376,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         "baseUriParameters".asOasExtension,
         entry => {
           entry.value.as[YMap].entries.headOption.foreach { paramEntry =>
-            val parameter = Raml08ParameterParser(paramEntry, request.getOrCreate.withQueryParameter)(spec.toRaml(ctx))
-              .parse()
-              .withBinding("path")
+            val parameter =
+              Raml08ParameterParser(paramEntry, (p: Parameter) => p.adopted(request.getOrCreate.id))(spec.toRaml(ctx))
+                .parse()
+                .withBinding("path")
             parameters = parameters.add(Parameters(baseUri08 = Seq(parameter)))
           }
         }
@@ -616,7 +616,7 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
           .as[YMap]
           .entries
           .foreach(e => {
-            val typeName = e.key.as[YScalar].text
+            val typeName = e.key
             val oasParameter = e.value.to[YMap] match {
               case Right(m) => OasParameterParser(Left(e), parentPath, Some(typeName)).parse()
               case _ =>

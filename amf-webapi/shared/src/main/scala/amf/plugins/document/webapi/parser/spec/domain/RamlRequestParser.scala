@@ -7,7 +7,7 @@ import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.SpecParserOps
 import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, DefaultType, Raml10TypeParser}
 import amf.plugins.domain.webapi.metamodel.RequestModel
-import amf.plugins.domain.webapi.models.{Payload, Request}
+import amf.plugins.domain.webapi.models.{Parameter, Payload, Request}
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.{YMap, YScalar, YType}
 
@@ -77,12 +77,12 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
     map.key(
       "queryParameters",
       (RequestModel.QueryParameters in target using RamlQueryParameterParser
-        .parse((name: String) => request.getOrCreate.withQueryParameter(name), parseOptional)).treatMapAsArray.optional
+        .parse((p: Parameter) => p.adopted(request.getOrCreate.id), parseOptional)).treatMapAsArray.optional
     )
     map.key(
       "headers",
       (RequestModel.Headers in target using RamlHeaderParser
-        .parse((name: String) => request.getOrCreate.withHeader(name), parseOptional)).treatMapAsArray.optional
+        .parse((p: Parameter) => p.adopted(request.getOrCreate.id), parseOptional)).treatMapAsArray.optional
     )
 
     // baseUriParameters from raml08. Only complex parameters will be written here, simple ones will be in the parameters with binding path.
@@ -90,7 +90,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
       baseUriParametersKey,
       entry => {
         val parameters = entry.value.as[YMap].entries.map { paramEntry =>
-          Raml08ParameterParser(paramEntry, request.getOrCreate.withUriParameter, parseOptional)
+          Raml08ParameterParser(paramEntry, (p: Parameter) => p.adopted(request.getOrCreate.id), parseOptional)
             .parse()
             .withBinding("path")
         }

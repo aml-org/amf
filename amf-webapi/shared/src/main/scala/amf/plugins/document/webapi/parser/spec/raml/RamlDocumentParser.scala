@@ -178,7 +178,7 @@ trait Raml10BaseSpecParser extends RamlBaseDocumentParser {
           .entries
           .foreach(e => {
             val parameter =
-              Raml10ParameterParser(e, (name) => Parameter().withId(parentPath + "/" + name).withName(name)).parse()
+              Raml10ParameterParser(e, (p: Parameter) => p.adopted(parentPath)).parse()
             if (parameter.binding.isNullOrEmpty) {
               ctx.violation(parameter.id, "Missing binding information in declared parameter", entry.value)
             }

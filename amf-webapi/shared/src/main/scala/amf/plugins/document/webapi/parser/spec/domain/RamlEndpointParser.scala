@@ -122,7 +122,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
           annotations = Annotations(entries.head.value)
 
           val explicitParameters =
-            RamlParametersParser(entry.value.as[YMap], endpoint.withParameter)
+            RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(endpoint.id))
               .parse()
               .map(_.withBinding("path"))
 
