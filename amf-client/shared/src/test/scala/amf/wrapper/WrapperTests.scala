@@ -570,6 +570,39 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Environment returning bad uri test") {
+    val name = "api.raml"
+
+    val input = s"""
+                   |#%RAML 1.0
+                   |title: Environment test
+    """.stripMargin
+
+    val name2 = "api2"
+
+    case class BadIRIResourceLoader() extends ResourceLoader {
+
+      import amf.client.convert.WebApiClientConverters._
+
+      override def fetch(resource: String): ClientFuture[Content] =
+        Future.successful(new Content(input, resource)).asClient
+
+      override def accepts(resource: String): Boolean = true
+    }
+
+    val environment = Environment.empty().add(BadIRIResourceLoader().asInstanceOf[ClientLoader])
+
+    for {
+      _     <- AMF.init().asFuture
+      unit  <- new RamlParser(environment).parseFileAsync(name).asFuture
+      unit2 <- new RamlParser(environment).parseFileAsync(name2).asFuture
+    } yield {
+      unit shouldBe a[Document]
+      unit.id should be("file://api.raml")
+      unit2.id should be("file://api2")
+    }
+  }
+
   test("Environment fallback test") {
     val include = "amf://types/Person.raml"
 
@@ -933,5 +966,21 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
         .is("http://www.w3.org/2001/XMLSchema#string"))
 
     assert(responses.head.statusCode.is("200"))
+  }
+
+  test("Test validate payload with invalid iri") {
+    val payload = """test payload""".stripMargin
+    for {
+      _ <- AMF.init().asFuture
+      shape <- Future {
+        new ScalarShape()
+          .withDataType("http://www.w3.org/2001/XMLSchema#string")
+          .withName("test")
+          .withId("api.raml/#/webapi/schema1")
+      }
+      report <- shape.asInstanceOf[AnyShape].validate(payload).asFuture
+    } yield {
+      assert(report.conforms)
+    }
   }
 }
