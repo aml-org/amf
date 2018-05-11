@@ -1216,4 +1216,15 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Matrix shape id") {
     cycle("matrix-id.raml", "matrix-id.jsonld", RamlYamlHint, Amf)
   }
+
+  test("Invalid baseUriParameters without baseUri") {
+    Validation(platform)
+      .flatMap { validation =>
+        cycle("no-base-uri.raml",
+              "no-base-uri.raml",
+              RamlYamlHint,
+              Raml,
+              validation = Some(validation.withEnabledValidation(true)))
+      }
+  }
 }

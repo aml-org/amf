@@ -10,59 +10,61 @@ class RhinoEncoder(fullUri: Boolean) {
    *   given in the ECMA specification for the hidden functions
    *   'Encode' and 'Decode'.
    */
-  def encode(str: String): String = {
-    var utf8buf: Array[Byte] = null
-    var sb: StringBuilder    = null
+  def encode(str: String): String =
+    if (str == null) str
+    else {
+      var utf8buf: Array[Byte] = null
+      var sb: StringBuilder    = null
 
-    var k = 0
-    while (k < str.length) {
-      val C = str(k)
-      if (encodeUnescaped(C)) {
-        if (sb != null) {
-          sb.append(C)
-        }
-      } else {
-        if (sb == null) {
-          sb = new StringBuilder(str.length + 3)
-          sb.append(str)
-          sb.setLength(k)
-
-          utf8buf = Array.ofDim[Byte](6)
-        }
-
-        if (0xDC00 <= C && C <= 0xDFFF) {
-          throw uriError
-        }
-        var V: Int = 0
-
-        if (C < 0xD800 || 0xDBFF < C) {
-          V = C
+      var k = 0
+      while (k < str.length) {
+        val C = str(k)
+        if (encodeUnescaped(C)) {
+          if (sb != null) {
+            sb.append(C)
+          }
         } else {
-          k = k + 1
-          if (k == str.length) {
-            throw uriError
-          }
-          val C2: Char = str(k)
+          if (sb == null) {
+            sb = new StringBuilder(str.length + 3)
+            sb.append(str)
+            sb.setLength(k)
 
-          if (!(0xDC00 <= C2 && C2 <= 0xDFFF)) {
+            utf8buf = Array.ofDim[Byte](6)
+          }
+
+          if (0xDC00 <= C && C <= 0xDFFF) {
             throw uriError
           }
-          V = ((C - 0xD800) << 10) + (C2 - 0xDC00) + 0x10000
+          var V: Int = 0
+
+          if (C < 0xD800 || 0xDBFF < C) {
+            V = C
+          } else {
+            k = k + 1
+            if (k == str.length) {
+              throw uriError
+            }
+            val C2: Char = str(k)
+
+            if (!(0xDC00 <= C2 && C2 <= 0xDFFF)) {
+              throw uriError
+            }
+            V = ((C - 0xD800) << 10) + (C2 - 0xDC00) + 0x10000
+          }
+          val L: Int = oneUcs4ToUtf8Char(utf8buf, V)
+          var j: Int = 0
+          while (j < L) {
+            val d: Int = 0xff & utf8buf(j)
+            sb.append('%')
+            sb.append(toHexChar(d >>> 4))
+            sb.append(toHexChar(d & 0xf))
+            j = j + 1
+          }
         }
-        val L: Int = oneUcs4ToUtf8Char(utf8buf, V)
-        var j: Int = 0
-        while (j < L) {
-          val d: Int = 0xff & utf8buf(j)
-          sb.append('%')
-          sb.append(toHexChar(d >>> 4))
-          sb.append(toHexChar(d & 0xf))
-          j = j + 1
-        }
+        k = k + 1
       }
-      k = k + 1
+      if (sb == null) str else sb.toString
     }
-    if (sb == null) str else sb.toString
-  }
 
   private def toHexChar(i: Int) = {
     if ((i >> 4) != 0) throw uriError //Kit.codeBug

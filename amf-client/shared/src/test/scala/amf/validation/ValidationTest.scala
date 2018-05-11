@@ -2190,4 +2190,15 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.conforms)
     }
   }
+
+  test("baseUriParameters without baseUri") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "/no-base-uri.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML, ProfileNames.RAML)
+    } yield {
+      assert(report.results.length == 2)
+    }
+  }
 }
