@@ -10,7 +10,9 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   * Response model class.
   */
 @JSExportAll
-case class Response(override private[amf] val _internal: InternalResponse) extends DomainElement {
+case class Response(override private[amf] val _internal: InternalResponse)
+    extends DomainElement
+    with NamedDomainElement {
 
   @JSExportTopLevel("model.domain.Response")
   def this() = this(InternalResponse())

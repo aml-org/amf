@@ -8,7 +8,7 @@ import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, DefaultType}
 import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
-import amf.plugins.domain.webapi.models.{Payload, Response}
+import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
@@ -75,7 +75,7 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
 
         map.key("headers",
                 (ResponseModel.Headers in res using RamlHeaderParser
-                  .parse(res.withHeader, parseOptional)).treatMapAsArray.optional)
+                  .parse((p: Parameter) => p.adopted(res.id), parseOptional)).treatMapAsArray.optional)
 
         map.key(
           "body",
