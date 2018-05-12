@@ -797,6 +797,63 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Test any shape default empty") {
+    val api =
+      """
+        |#%RAML 1.0
+        |title: test swagger entry
+        |/endpoint:
+        |   get:
+        |     body:
+        |       application/json
+        |   post:
+        |     body:
+        |       application/json:
+        |           example: |
+        |             { "name": "roman", "lastname": "riquelme"}
+        |   put:
+        |     body:
+        |       application/json:
+        |           type: any
+        |           example: |
+        |             { "name": "roman", "lastname": "riquelme"}
+        |   patch:
+        |     body:
+        |       application/json:
+        |           type: object
+        |           example: |
+        |             { "name": "roman", "lastname": "riquelme"}
+        |   delete:
+        |     body:
+        |       application/json:
+        |           type: string""".stripMargin
+    for {
+      _   <- AMF.init().asFuture
+      doc <- AMF.ramlParser().parseStringAsync(api).asFuture
+    } yield {
+
+      val seq = doc.asInstanceOf[Document].encodes.asInstanceOf[WebApi].endPoints.asSeq.head.operations.asSeq
+      def assertDefault(method: String, expected: Boolean) =
+        seq
+          .find(_.method.value().equals(method))
+          .get
+          .request
+          .payloads
+          .asSeq
+          .head
+          .schema
+          .asInstanceOf[AnyShape]
+          .isDefaultEmpty should be(expected)
+
+      assertDefault("get", expected = true)
+      assertDefault("post", expected = true)
+      assertDefault("put", expected = false)
+      assertDefault("patch", expected = false)
+      assertDefault("delete", expected = false)
+
+    }
+  }
+
   private def buildBasicApi() = {
     val api: WebApi = new WebApi().withName("test swagger entry")
 
