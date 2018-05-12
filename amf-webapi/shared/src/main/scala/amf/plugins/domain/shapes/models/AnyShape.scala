@@ -11,6 +11,8 @@ import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel._
 import org.yaml.model.YPart
 import amf.core.utils.Strings
+import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
+
 import scala.concurrent.Future
 
 class AnyShape(val fields: Fields, val annotations: Annotations)
@@ -51,6 +53,14 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/any/" + name.option().getOrElse("default-any").urlComponentEncoded
+
+  /** Aux method to know when the shape is instance only of any shape
+    * and it's because was parsed from
+    * an empty (or only with example) payload, an not an explicit type def */
+  def isDefaultEmpty: Boolean =
+    meta.`type`.equals(AnyShapeModel.`type`) &&
+      fields.filter(fe => fe._1 != AnyShapeModel.Examples).nonEmpty &&
+      annotations.find(classOf[TypePropertyLexicalInfo]).isEmpty
 }
 
 object AnyShape {
