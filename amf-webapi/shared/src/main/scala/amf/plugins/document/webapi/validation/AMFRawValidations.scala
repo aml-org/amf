@@ -156,6 +156,6 @@ object AMFRawValidations {
     "		AMF	Domain	raml-http:Server	raml-http:url	PropertyShape	sh:path	sh:datatype	xsd:string	API baseUri host information must be a string	Swagger object 'host' and 'basePath' must be a string	Violation",
     "		AMF	Domain	raml-http:Server	schema-org:description	PropertyShape	sh:path	sh:datatype	xsd:string	Server 'description' property must be a string	Server 'description' property must be a string	Violation",
     "		AMF	Domain	raml-http:Server	raml-http:url	PropertyShape	sh:path	sh:minCount	1	Server must have an 'url' property	Server must have an 'url' propert	Violation",
-    "		AMF	Domain	security:SecurityScheme	security:type	PropertyShape	sh:path	sh:pattern	^OAuth\\s1.0|OAuth\\s2.0|Basic\\sAuthentication|Digest\\sAuthentication|Pass\\sThrough|\\(apiKey\\)|x-\\w+$	Security scheme has invalid type	Security scheme has invalid type	Violation"
+    "		AMF	Domain	security:SecurityScheme	security:type	PropertyShape	sh:path	sh:pattern	^OAuth\\s1.0|OAuth\\s2.0|Basic\\sAuthentication|Digest\\sAuthentication|Pass\\sThrough|\\(apiKey\\)|x-.+$	Security scheme has invalid type	Security scheme has invalid type	Violation"
   )
 }
