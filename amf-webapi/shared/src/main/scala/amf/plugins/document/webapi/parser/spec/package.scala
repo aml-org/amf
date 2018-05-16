@@ -40,7 +40,14 @@ package object spec {
   }
 
   def toRaml(ctx: WebApiContext): RamlWebApiContext = {
-    new Raml10WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations))
+    new Raml10WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(toRamlDeclarations(ctx.declarations)))
+  }
+
+  private def toRamlDeclarations(ds: WebApiDeclarations) = {
+    ds match {
+      case raml: RamlWebApiDeclarations => raml
+      case other                        => RamlWebApiDeclarations(other)
+    }
   }
 
   def toRaml(spec: SpecEmitterContext): RamlSpecEmitterContext = {

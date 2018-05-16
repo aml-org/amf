@@ -21,7 +21,7 @@ import org.yaml.model.YPart
 /**
   * Declarations object.
   */
-class WebApiDeclarations(alias: Option[String],
+class WebApiDeclarations(val alias: Option[String],
                          var libs: Map[String, WebApiDeclarations] = Map(),
                          var frags: Map[String, DomainElement] = Map(),
                          var shapes: Map[String, Shape] = Map(),
@@ -32,14 +32,11 @@ class WebApiDeclarations(alias: Option[String],
                          var traits: Map[String, Trait] = Map(),
                          var securitySchemes: Map[String, SecurityScheme] = Map(),
                          var responses: Map[String, Response] = Map(),
-                         errorHandler: Option[ErrorHandler],
-                         futureDeclarations: FutureDeclarations)
+                         val errorHandler: Option[ErrorHandler],
+                         val futureDeclarations: FutureDeclarations)
     extends Declarations(libs, frags, anns, errorHandler, futureDeclarations = futureDeclarations) {
 
-  def merge(other: WebApiDeclarations): WebApiDeclarations = {
-    val merged = new WebApiDeclarations(alias = alias,
-                                        errorHandler = errorHandler,
-                                        futureDeclarations = EmptyFutureDeclarations())
+  protected def mergeParts(other: WebApiDeclarations, merged: WebApiDeclarations): Unit = {
     libs.foreach { case (k, s)                  => merged.libs += (k            -> s) }
     other.libs.foreach { case (k, s)            => merged.libs += (k            -> s) }
     frags.foreach { case (k, s)                 => merged.frags += (k           -> s) }
@@ -64,6 +61,13 @@ class WebApiDeclarations(alias: Option[String],
     other.securitySchemes.foreach { case (k, s) => merged.securitySchemes += (k -> s) }
     responses.foreach { case (k, s)             => merged.responses += (k       -> s) }
     other.responses.foreach { case (k, s)       => merged.responses += (k       -> s) }
+  }
+
+  def merge(other: WebApiDeclarations): WebApiDeclarations = {
+    val merged = new WebApiDeclarations(alias = alias,
+                                        errorHandler = errorHandler,
+                                        futureDeclarations = EmptyFutureDeclarations())
+    mergeParts(other, merged)
     merged
   }
 
@@ -283,5 +287,48 @@ object WebApiDeclarations {
       with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorResponse/"
     withId(idPart).withStatusCode("200")
+  }
+}
+
+class RamlWebApiDeclarations(var externalShapes: Map[String, Shape] = Map(),
+                             override val alias: Option[String],
+                             override val errorHandler: Option[ErrorHandler],
+                             override val futureDeclarations: FutureDeclarations)
+    extends WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations) {
+
+  def registerExternalRef(external: (String, Shape)): WebApiDeclarations = { // particular case for jsonschema # fragment
+    externalShapes = externalShapes + (external._1 -> external._2)
+    this
+  }
+
+  def findInExternals(url: String): Option[Shape] = externalShapes.get(url)
+
+  def merge(other: RamlWebApiDeclarations): RamlWebApiDeclarations = {
+    val merged =
+      new RamlWebApiDeclarations(alias = alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations)
+    super.mergeParts(other, merged)
+    externalShapes.foreach { case (k, s)       => merged.externalShapes += (k -> s) }
+    other.externalShapes.foreach { case (k, s) => merged.externalShapes += (k -> s) }
+    merged
+  }
+}
+
+object RamlWebApiDeclarations {
+  def apply(d: WebApiDeclarations): RamlWebApiDeclarations = {
+    val declarations = new RamlWebApiDeclarations(Map(),
+                                                  d.alias,
+                                                  errorHandler = d.errorHandler,
+                                                  futureDeclarations = d.futureDeclarations)
+    declarations.libs = d.libs
+    declarations.frags = d.frags
+    declarations.shapes = d.shapes
+    declarations.anns = d.anns
+    declarations.resourceTypes = d.resourceTypes
+    declarations.parameters = d.parameters
+    declarations.payloads = d.payloads
+    declarations.traits = d.traits
+    declarations.securitySchemes = d.securitySchemes
+    declarations.responses = d.responses
+    declarations // add withs methods?
   }
 }

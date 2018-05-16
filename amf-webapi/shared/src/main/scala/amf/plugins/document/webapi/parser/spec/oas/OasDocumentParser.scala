@@ -27,7 +27,7 @@ import amf.plugins.domain.webapi.models.security._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import org.yaml.model.{YNode, _}
 import amf.core.utils.Strings
-
+import amf.plugins.document.webapi.parser.spec._
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
@@ -419,7 +419,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       map.key(
         "queryString".asOasExtension,
         queryEntry => {
-          Raml10TypeParser(queryEntry, (shape) => shape.adopted(request.getOrCreate.id))
+          Raml10TypeParser(queryEntry, (shape) => shape.adopted(request.getOrCreate.id))(toRaml(ctx))
             .parse()
             .map(request.getOrCreate.withQueryString(_))
         }

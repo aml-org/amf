@@ -22,6 +22,7 @@ case class SchemaShape(override val fields: Fields, override val annotations: An
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/schema/" + name.option().getOrElse("default-schema").urlComponentEncoded
 
+  override def copyShape(): SchemaShape = SchemaShape(fields, annotations).withId(id)
 }
 
 object SchemaShape {
