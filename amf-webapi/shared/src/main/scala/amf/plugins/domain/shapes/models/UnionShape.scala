@@ -20,6 +20,8 @@ case class UnionShape(override val fields: Fields, override val annotations: Ann
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/union/" + name.option().getOrElse("default-union").urlComponentEncoded
+
+  override def copyShape(): UnionShape = UnionShape(fields, annotations).withId(id)
 }
 
 object UnionShape {

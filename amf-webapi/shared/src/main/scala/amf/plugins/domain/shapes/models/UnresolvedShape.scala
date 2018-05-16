@@ -40,6 +40,9 @@ case class UnresolvedShape(override val fields: Fields,
 
   // if is unresolved the effective target its himselft, because any real type has been found.
   override def effectiveLinkTarget = this
+
+  override def copyShape(): UnresolvedShape =
+    UnresolvedShape(fields, annotations, reference, fatherExtensionParser).withId(id)
 }
 
 object UnresolvedShape {

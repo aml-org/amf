@@ -22,6 +22,8 @@ case class FileShape(override val fields: Fields, override val annotations: Anno
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/" + name.option().getOrElse("default-file").urlComponentEncoded
+
+  override def copyShape(): FileShape = FileShape(fields, annotations).withId(id)
 }
 
 object FileShape {

@@ -40,7 +40,7 @@ object Raml10TypeParser {
   def apply(entry: YMapEntry,
             adopt: Shape => Shape,
             isAnnotation: Boolean = false,
-            defaultType: DefaultType = StringDefaultType)(implicit ctx: WebApiContext): Raml10TypeParser =
+            defaultType: DefaultType = StringDefaultType)(implicit ctx: RamlWebApiContext): Raml10TypeParser =
     new Raml10TypeParser(Left(entry), entry.key.as[YScalar].text, adopt, isAnnotation, defaultType)(
       new Raml10WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations)))
 
@@ -128,12 +128,12 @@ case class Raml10TypeParser(entryOrNode: Either[YMapEntry, YNode],
 
 object Raml08TypeParser {
   def apply(node: YNode, name: String, adopt: Shape => Shape, isAnnotation: Boolean, defaultType: DefaultType)(
-      implicit ctx: WebApiContext): Raml08TypeParser =
+      implicit ctx: RamlWebApiContext): Raml08TypeParser =
     new Raml08TypeParser(Right(node), name, adopt, isAnnotation, defaultType)(
       new Raml08WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations)))
 
   def apply(entry: YMapEntry, adopt: Shape => Shape, isAnnotation: Boolean, defaultType: DefaultType)(
-      implicit ctx: WebApiContext): Raml08TypeParser =
+      implicit ctx: RamlWebApiContext): Raml08TypeParser =
     new Raml08TypeParser(Left(entry), entry.key.as[String], adopt, isAnnotation, defaultType)(
       new Raml08WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations)))
 }
@@ -444,55 +444,70 @@ trait RamlExternalTypes extends RamlSpecParser with ExampleParser with RamlTypeS
 
     parsed
   }
-
+  protected def getOrigi(node: YNode): Option[String] = node match {
+    case ref: MutRef => Some(ref.origValue.toString)
+    case _           => None
+  }
   protected def parseJSONSchemaExpression(name: String,
                                           value: YNode,
                                           adopt: Shape => Shape,
                                           parseExample: Boolean = false): AnyShape = {
-    val (text, valueAST) = value.tagType match {
+
+    val (text, valueAST, origiUrl) = value.tagType match {
       case YType.Map =>
         val map = value.as[YMap]
         typeOrSchema(map) match {
           case Some(typeEntry: YMapEntry) if typeEntry.value.toOption[YScalar].isDefined =>
-            (typeEntry.value.as[YScalar].text, typeEntry.value)
+            (typeEntry.value.as[YScalar].text, typeEntry.value, getOrigi(typeEntry.value))
           case _ =>
             val shape = SchemaShape()
             adopt(shape)
-            ctx.violation(shape.id, "Cannot parse XML Schema expression out of a non string value", value)
-            ("", value)
+            ctx.violation(shape.id, "Cannot parse JSON Schema expression out of a non string value", value)
+            ("", value, None)
         }
       case YType.Seq =>
         val shape = SchemaShape()
         adopt(shape)
-        ctx.violation(shape.id, "Cannot parse XML Schema expression out of a non string value", value)
-        ("", value)
-      case _ => (value.as[YScalar].text, value)
+        ctx.violation(shape.id, "Cannot parse JSON Schema expression out of a non string value", value)
+        ("", value, None)
+      case _ => (value.as[YScalar].text, value, getOrigi(value))
     }
 
-    val schemaAst = YamlParser(text)(ctx).withIncludeTag("!include").parse(keepTokens = true)
-    val schemaEntry = schemaAst.head match {
-      case d: YDocument => YMapEntry(name, d.node)
-      case _            =>
-        // TODO get parent id
-        ctx.violation("invalid json schema expression", valueAST)
-        YMapEntry(name, YNode.Null)
-    }
-    // we set the local schema entry to be able to resolve local $refs
-    ctx.localJSONSchemaContext = Some(schemaEntry.value)
+    val parsed = origiUrl.flatMap(o => ctx.declarations.findType(o, SearchScope.Named)) match {
+      case Some(shape) => shape.copyShape()
+      case _ =>
+        val schemaAst = YamlParser(text)(ctx).withIncludeTag("!include").parse(keepTokens = true)
+        val schemaEntry = schemaAst.head match {
+          case d: YDocument => YMapEntry(name, d.node)
+          case _            =>
+            // TODO get parent id
+            ctx.violation("invalid json schema expression", valueAST)
+            YMapEntry(name, YNode.Null)
+        }
 
-    val parsed =
-      OasTypeParser(schemaEntry, shape => adopt(shape), JSONSchemaVersion)(toSchemaContext(ctx, valueAST))
-        .parse() match {
-        case Some(shape) =>
-          if (!sourceRefReference(value, shape, ctx)) shape.annotations += ParsedJSONSchema(text)
-          shape
-        case None =>
-          val shape = SchemaShape()
-          adopt(shape)
-          ctx.violation(shape.id, "Cannot parse JSON Schema", value)
-          shape
-      }
-    ctx.localJSONSchemaContext = None // we reset the JSON schema context after parsing
+        // we set the local schema entry to be able to resolve local $refs
+        ctx.localJSONSchemaContext = Some(schemaEntry.value)
+
+        val s =
+          OasTypeParser(schemaEntry, shape => adopt(shape), JSONSchemaVersion)(toSchemaContext(ctx, valueAST))
+            .parse() match {
+            case Some(sh) =>
+              if (!sourceRefReference(value, sh, ctx)) sh.annotations += ParsedJSONSchema(text)
+              sh
+            case None =>
+              val shape = SchemaShape()
+              adopt(shape)
+              ctx.violation(shape.id, "Cannot parse JSON Schema", value)
+              shape
+          }
+        ctx.localJSONSchemaContext = None // we reset the JSON schema context after parsing
+        origiUrl match {
+          case Some(uri) =>
+            ctx.declarations.registerExternalRef(uri -> s)
+            s.copyShape()
+          case _ => s
+        }
+    }
 
     // parsing the potential example
     if (parseExample && value.tagType == YType.Map) {
@@ -513,8 +528,8 @@ trait RamlExternalTypes extends RamlSpecParser with ExampleParser with RamlTypeS
       )
       parseExamples(parsed, value.as[YMap])
     }
-
     parsed
+
   }
 
   protected def toSchemaContext(ctx: WebApiContext, ast: YNode): OasWebApiContext = {

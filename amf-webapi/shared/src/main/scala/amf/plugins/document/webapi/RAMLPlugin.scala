@@ -13,7 +13,7 @@ import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.RamlFragmentHeader._
 import amf.plugins.document.webapi.parser.RamlHeader.{Raml10, Raml10Extension, Raml10Library, Raml10Overlay, _}
-import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
+import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, WebApiDeclarations}
 import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
 import amf.plugins.document.webapi.resolution.pipelines.{
@@ -146,7 +146,7 @@ object RAML08Plugin extends RAMLPlugin {
   }
 
   override def context(wrapped: ParserContext, root: Root, ds: Option[WebApiDeclarations] = None): RamlWebApiContext =
-    new Raml08WebApiContext(root.location, root.references, wrapped, ds)
+    new Raml08WebApiContext(root.location, root.references, wrapped, ds.map(d => RamlWebApiDeclarations(d)))
 
   def specContext: RamlSpecEmitterContext = new Raml08SpecEmitterContext
 
@@ -205,7 +205,7 @@ object RAML10Plugin extends RAMLPlugin {
   }
 
   override def context(wrapped: ParserContext, root: Root, ds: Option[WebApiDeclarations] = None): RamlWebApiContext =
-    new Raml10WebApiContext(root.location, root.references, wrapped, ds)
+    new Raml10WebApiContext(root.location, root.references, wrapped, ds.map(d => RamlWebApiDeclarations(d)))
 
   def specContext: RamlSpecEmitterContext = new Raml10SpecEmitterContext
 

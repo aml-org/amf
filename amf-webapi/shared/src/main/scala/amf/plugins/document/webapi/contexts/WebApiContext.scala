@@ -8,16 +8,21 @@ import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.JsonSchemaPlugin
 import amf.plugins.document.webapi.parser.spec.oas.{Oas2Syntax, Oas3Syntax}
 import amf.plugins.document.webapi.parser.spec.raml.{Raml08Syntax, Raml10Syntax}
-import amf.plugins.document.webapi.parser.spec.{SpecSyntax, WebApiDeclarations}
+import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, SpecSyntax, WebApiDeclarations}
 import amf.plugins.domain.shapes.models.AnyShape
-import amf.plugins.features.validation.ParserSideValidations.{ClosedShapeSpecification, DuplicatedPropertySpecification}
+import amf.plugins.features.validation.ParserSideValidations.{
+  ClosedShapeSpecification,
+  DuplicatedPropertySpecification
+}
 import org.yaml.model._
 
-import scala.collection.mutable
-
-class PayloadContext(loc: String, refs: Seq[ParsedReference], private val wrapped: ParserContext, private val  ds: Option[WebApiDeclarations] = None) extends RamlWebApiContext(loc, refs,wrapped, ds) {
-  override protected def clone(declarations: WebApiDeclarations): RamlWebApiContext = {
-    new PayloadContext(loc, refs,wrapped, Some(declarations))
+class PayloadContext(loc: String,
+                     refs: Seq[ParsedReference],
+                     private val wrapped: ParserContext,
+                     private val ds: Option[RamlWebApiDeclarations] = None)
+    extends RamlWebApiContext(loc, refs, wrapped, ds) {
+  override protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext = {
+    new PayloadContext(loc, refs, wrapped, Some(declarations))
   }
   override val factory: RamlSpecVersionFactory = new Raml10VersionFactory()(this)
   override val syntax: SpecSyntax = new SpecSyntax {
@@ -26,51 +31,62 @@ class PayloadContext(loc: String, refs: Seq[ParsedReference], private val wrappe
   override val vendor: Vendor = Payload
 }
 
-class Raml10WebApiContext(loc: String, refs: Seq[ParsedReference], private val wrapped: ParserContext, private val ds: Option[WebApiDeclarations] = None)
+class Raml10WebApiContext(loc: String,
+                          refs: Seq[ParsedReference],
+                          private val wrapped: ParserContext,
+                          private val ds: Option[RamlWebApiDeclarations] = None)
     extends RamlWebApiContext(loc, refs, wrapped, ds) {
   override val factory: RamlSpecVersionFactory = new Raml10VersionFactory()(this)
   override val vendor: Vendor                  = Raml10
   override val syntax: SpecSyntax              = Raml10Syntax
 
-  override protected def clone(declarations: WebApiDeclarations): RamlWebApiContext =
+  override protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext =
     new Raml10WebApiContext(loc, refs, wrapped, Some(declarations))
 }
 
-class Raml08WebApiContext(loc: String, refs: Seq[ParsedReference], private val wrapped: ParserContext, private val ds: Option[WebApiDeclarations] = None)
+class Raml08WebApiContext(loc: String,
+                          refs: Seq[ParsedReference],
+                          private val wrapped: ParserContext,
+                          private val ds: Option[RamlWebApiDeclarations] = None)
     extends RamlWebApiContext(loc, refs, wrapped, ds) {
   override val factory: RamlSpecVersionFactory = new Raml08VersionFactory()(this)
   override val vendor: Vendor                  = Raml08
   override val syntax: SpecSyntax              = Raml08Syntax
 
-  override protected def clone(declarations: WebApiDeclarations): RamlWebApiContext =
+  override protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext =
     new Raml08WebApiContext(loc, refs, wrapped, Some(declarations))
 }
 
-abstract class RamlWebApiContext(loc: String, refs: Seq[ParsedReference], private val wrapped: ParserContext, private val ds: Option[WebApiDeclarations] = None)
+abstract class RamlWebApiContext(loc: String,
+                                 refs: Seq[ParsedReference],
+                                 private val wrapped: ParserContext,
+                                 private val ds: Option[RamlWebApiDeclarations] = None)
     extends WebApiContext(loc, refs, wrapped, ds)
     with RamlSpecAwareContext {
 
   var globalMediatype: Boolean = false
 
-  protected def clone(declarations: WebApiDeclarations): RamlWebApiContext
+  override val declarations: RamlWebApiDeclarations = ds.getOrElse(
+    new RamlWebApiDeclarations(alias = None, errorHandler = Some(this), futureDeclarations = futureDeclarations))
+  protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext
 
   /**
     * Adapt this context for a nested library, used when evaluating resource type / traits
     * Using a path to the library whose context is going to be looked up, e.g. lib.TypeA
     */
   def adapt[T](path: String)(k: RamlWebApiContext => T): T = {
-    val pathElements = path.split("\\.").dropRight(1)
+    val pathElements        = path.split("\\.").dropRight(1)
     val adaptedDeclarations = findDeclarations(pathElements, declarations)
     k(clone(declarations.merge(adaptedDeclarations)))
   }
 
-  protected def findDeclarations(path: Seq[String], declarations: WebApiDeclarations): WebApiDeclarations = {
+  protected def findDeclarations(path: Seq[String], declarations: RamlWebApiDeclarations): RamlWebApiDeclarations = {
     if (path.isEmpty) {
       declarations
     } else {
       val nextLibrary = path.head
       declarations.libraries.get(nextLibrary) match {
-        case Some(library: WebApiDeclarations) =>
+        case Some(library: RamlWebApiDeclarations) =>
           findDeclarations(path.tail, library)
         case _ => throw new Exception(s"Cannot find declarations in context '${path.mkString(".")}")
       }
@@ -126,10 +142,12 @@ abstract class RamlWebApiContext(loc: String, refs: Seq[ParsedReference], privat
         allResults.find(_.nonEmpty) match {
           case None => // at least we found a solution, this is a valid shape
           case Some(errors: Seq[YMapEntry]) =>
-            violation(ClosedShapeSpecification.id(),
-                      node,
-                      s"Properties ${errors.map(_.key.as[YScalar].text).mkString(",")} not supported in a $vendor $shapeType node",
-                      errors.head) // pointing only to the first failed error
+            violation(
+              ClosedShapeSpecification.id(),
+              node,
+              s"Properties ${errors.map(_.key.as[YScalar].text).mkString(",")} not supported in a $vendor $shapeType node",
+              errors.head
+            ) // pointing only to the first failed error
         }
 
       case None => throw new Exception(s"Cannot validate unknown node type $shapeType for $vendor")
@@ -137,8 +155,11 @@ abstract class RamlWebApiContext(loc: String, refs: Seq[ParsedReference], privat
   }
 }
 
-abstract class OasWebApiContext(loc: String, refs: Seq[ParsedReference], private val wrapped: ParserContext, private val ds: Option[WebApiDeclarations] = None)
-    extends WebApiContext(loc, refs,wrapped, ds) {
+abstract class OasWebApiContext(loc: String,
+                                refs: Seq[ParsedReference],
+                                private val wrapped: ParserContext,
+                                private val ds: Option[WebApiDeclarations] = None)
+    extends WebApiContext(loc, refs, wrapped, ds) {
 
   val factory: OasSpecVersionFactory
 
@@ -158,26 +179,33 @@ abstract class OasWebApiContext(loc: String, refs: Seq[ParsedReference], private
     property.startsWith("x-") || property == "$ref" || (property.startsWith("/") && shape == "webApi")
 }
 
-class Oas2WebApiContext(loc: String, refs: Seq[ParsedReference], private val wrapped: ParserContext, private val ds: Option[WebApiDeclarations] = None)
-    extends OasWebApiContext(loc, refs,wrapped, ds) {
+class Oas2WebApiContext(loc: String,
+                        refs: Seq[ParsedReference],
+                        private val wrapped: ParserContext,
+                        private val ds: Option[WebApiDeclarations] = None)
+    extends OasWebApiContext(loc, refs, wrapped, ds) {
   override val factory: Oas2VersionFactory = Oas2VersionFactory()(this)
   override val vendor: Vendor              = Oas2
   override val syntax: SpecSyntax          = Oas2Syntax
 }
 
-class Oas3WebApiContext(loc: String, refs: Seq[ParsedReference], private val wrapped: ParserContext, private val ds: Option[WebApiDeclarations] = None)
-    extends OasWebApiContext(loc, refs,wrapped, ds) {
+class Oas3WebApiContext(loc: String,
+                        refs: Seq[ParsedReference],
+                        private val wrapped: ParserContext,
+                        private val ds: Option[WebApiDeclarations] = None)
+    extends OasWebApiContext(loc, refs, wrapped, ds) {
   override val factory: Oas3VersionFactory = Oas3VersionFactory()(this)
   override val vendor: Vendor              = Oas3
   override val syntax: SpecSyntax          = Oas3Syntax
 }
 
-abstract class WebApiContext(loc: String, refs: Seq[ParsedReference], private val wrapped: ParserContext, private val ds: Option[WebApiDeclarations] = None)
-    extends ParserContext(loc,
-                          refs,
-                          wrapped.futureDeclarations,
-                          parserCount = wrapped.parserCount)
-    with SpecAwareContext with PlatformSecrets {
+abstract class WebApiContext(loc: String,
+                             refs: Seq[ParsedReference],
+                             private val wrapped: ParserContext,
+                             private val ds: Option[WebApiDeclarations] = None)
+    extends ParserContext(loc, refs, wrapped.futureDeclarations, parserCount = wrapped.parserCount)
+    with SpecAwareContext
+    with PlatformSecrets {
 
   val syntax: SpecSyntax
   val vendor: Vendor
@@ -201,9 +229,11 @@ abstract class WebApiContext(loc: String, refs: Seq[ParsedReference], private va
 
   def parseRemoteJSONPath(fileUrl: String)(implicit ctx: OasWebApiContext): Option[AnyShape] = {
     val referenceUrl = if (fileUrl.contains("#")) Some(fileUrl.split("#").last) else None
-    val baseFileUrl = fileUrl.split("#").head
-    val res: Option[Option[AnyShape]] = refs.filter(r => Option(r.unit.location).isDefined).filter(_.unit.location == baseFileUrl) collectFirst  {
-      case ref if ref.unit.isInstanceOf[ExternalFragment]  =>
+    val baseFileUrl  = fileUrl.split("#").head
+    val res: Option[Option[AnyShape]] = refs
+      .filter(r => Option(r.unit.location).isDefined)
+      .filter(_.unit.location == baseFileUrl) collectFirst {
+      case ref if ref.unit.isInstanceOf[ExternalFragment] =>
         val jsonFile = ref.unit.asInstanceOf[ExternalFragment]
         JsonSchemaPlugin.parseFragment(jsonFile, referenceUrl)
       case ref if ref.unit.isInstanceOf[RecursiveUnit] =>
@@ -215,7 +245,7 @@ abstract class WebApiContext(loc: String, refs: Seq[ParsedReference], private va
 
   def resolvedPath(base: String, str: String): String = {
     if (str.startsWith("/")) str
-    else if(str.contains("://")) str
+    else if (str.contains("://")) str
     else if (str.startsWith("#")) base.split("#").head + str
     else basePath(base) + str
   }
@@ -274,17 +304,15 @@ abstract class WebApiContext(loc: String, refs: Seq[ParsedReference], private va
   def ignore(shape: String, property: String): Boolean
 
   def checkDuplicates(node: String, ast: YMap, shape: String, annotation: Boolean) = {
-    ast.entries.foldLeft(Set[String]()) { case (acc, entry) =>
-      acc.contains(entry.key.toString()) match {
-        case true =>
-          violation(DuplicatedPropertySpecification.id(),
-            node,
-            s"Property '${entry.key}' is duplicated",
-            entry)
-          acc
-        case false =>
-          acc ++ Set(entry.key.toString())
-      }
+    ast.entries.foldLeft(Set[String]()) {
+      case (acc, entry) =>
+        acc.contains(entry.key.toString()) match {
+          case true =>
+            violation(DuplicatedPropertySpecification.id(), node, s"Property '${entry.key}' is duplicated", entry)
+            acc
+          case false =>
+            acc ++ Set(entry.key.toString())
+        }
     }
   }
 

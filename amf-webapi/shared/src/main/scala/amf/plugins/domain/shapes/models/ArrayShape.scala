@@ -68,6 +68,8 @@ case class ArrayShape(override val fields: Fields, override val annotations: Ann
   override def linkCopy(): ArrayShape = ArrayShape().withId(id)
 
   override def meta: Obj = ArrayShapeModel
+
+  override def copyShape(): ArrayShape = ArrayShape(fields, annotations).withId(id)
 }
 
 object ArrayShape {
@@ -92,6 +94,8 @@ case class MatrixShape(override val fields: Fields, override val annotations: An
   override def linkCopy() = MatrixShape().withId(id)
 
   override def meta: Obj = MatrixShapeModel
+
+  override def copyShape(): MatrixShape = MatrixShape(fields, annotations).withId(id)
 }
 
 object MatrixShape {
@@ -116,6 +120,7 @@ case class TupleShape(override val fields: Fields, override val annotations: Ann
 
   override def meta: Obj = TupleShapeModel
 
+  override def copyShape(): TupleShape = TupleShape(fields, annotations).withId(id)
 }
 
 object TupleShape {

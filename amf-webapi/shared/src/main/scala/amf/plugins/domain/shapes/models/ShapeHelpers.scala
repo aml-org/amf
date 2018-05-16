@@ -26,7 +26,9 @@ trait ShapeHelpers { this: Shape =>
     case _             => None
   }
 
-  def cloneShape(recursionErrorHandler: Option[ErrorHandler], withRecursionBase: Option[String] = None, traversed: Set[String] = Set()): this.type = {
+  def cloneShape(recursionErrorHandler: Option[ErrorHandler],
+                 withRecursionBase: Option[String] = None,
+                 traversed: Set[String] = Set()): this.type = {
     if (traversed.contains(this.id)) {
       buildFixPoint(withRecursionBase, this, recursionErrorHandler).asInstanceOf[this.type]
     } else {
@@ -55,7 +57,11 @@ trait ShapeHelpers { this: Shape =>
     }
   }
 
-  protected def buildFixPoint(id: Option[String], link: Linkable, recursionErrorHandler: Option[ErrorHandler]): RecursiveShape = {
+  def copyShape(): Shape
+
+  protected def buildFixPoint(id: Option[String],
+                              link: Linkable,
+                              recursionErrorHandler: Option[ErrorHandler]): RecursiveShape = {
     if (recursionErrorHandler.isDefined && !link.supportsRecursion.option().getOrElse(false)) {
       recursionErrorHandler.get.violation(
         ParserSideValidations.RecursiveShapeSpecification.id(),
