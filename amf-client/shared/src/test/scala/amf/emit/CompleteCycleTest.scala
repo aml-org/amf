@@ -1235,4 +1235,12 @@ class CompleteCycleTest extends BuildCycleTests {
   test("File type detection") {
     cycle("file-detection.raml", "file-detection.raml", RamlYamlHint, Raml)
   }
+
+  test("FormData multiple parameters oas to oas") {
+    cycle("form-data-params.json", "form-data-params.json", OasJsonHint, Oas)
+  }
+
+  test("FormData multiple parameters oas to amf") {
+    cycle("form-data-params.json", "form-data-params.jsonld", OasJsonHint, Amf)
+  }
 }

@@ -16,6 +16,7 @@
         "parameters": [
           {
             "x-amf-mediaType": "application/json",
+            "in": "body",
             "schema": {
               "type": "object",
               "properties": {
@@ -23,8 +24,7 @@
                   "type": "string"
                 }
               }
-            },
-            "in": "body"
+            }
           }
         ],
         "x-amf-requestPayloads": [
@@ -45,6 +45,7 @@
         "parameters": [
           {
             "x-amf-mediaType": "application/json",
+            "in": "body",
             "schema": {
               "type": "object",
               "properties": {
@@ -52,8 +53,7 @@
                   "type": "string"
                 }
               }
-            },
-            "in": "body"
+            }
           }
         ],
         "x-amf-requestPayloads": [

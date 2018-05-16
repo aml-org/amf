@@ -1,7 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.{LexicalInformation, SynthesizedField}
+import amf.core.annotations.{ExplicitField, LexicalInformation, SynthesizedField}
 import amf.core.metamodel.domain.ShapeModel
+import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.Strings
@@ -17,7 +18,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   _
 }
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
-import amf.plugins.domain.shapes.models.FileShape
+import amf.plugins.domain.shapes.models.{FileShape, NodeShape}
 import amf.plugins.domain.webapi.annotations.{InvalidBinding, ParameterBindingInBodyLexicalInfo}
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
@@ -57,7 +58,7 @@ object RamlParameterParser {
   }
 }
 
-case class Raml10ParameterParser(entry: YMapEntry, adopted: (Parameter) => Unit, parseOptional: Boolean = false)(
+case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, parseOptional: Boolean = false)(
     implicit ctx: RamlWebApiContext)
     extends RamlParameterParser(entry, adopted) {
   override def parse(): Parameter = {
@@ -116,7 +117,7 @@ case class Raml10ParameterParser(entry: YMapEntry, adopted: (Parameter) => Unit,
                 parameter.withSchema(schema)
 
               case Right(ref) if isTypeExpression(ref.text) =>
-                RamlTypeExpressionParser((shape) => shape.withName("schema").adopted(parameter.id))
+                RamlTypeExpressionParser(shape => shape.withName("schema").adopted(parameter.id))
                   .parse(ref.text) match {
                   case Some(schema) => parameter.withSchema(schema)
                   case _ =>
@@ -246,7 +247,7 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
           map.key(
             "schema",
             entry => {
-              OasTypeParser(entry, (shape) => shape.withName("schema").adopted(p.payload.id))
+              OasTypeParser(entry, shape => shape.withName("schema").adopted(p.payload.id))
                 .parse()
                 .map { schema =>
                   shapeFromOasParameter(parameter, schema)
@@ -255,6 +256,8 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
                 }
             }
           )
+
+          p.payload.set(PayloadModel.Name, AmfScalar(parameter.name.value()), Annotations())
 
           map.key("mediaType".asOasExtension, PayloadModel.MediaType in p.payload)
 
@@ -284,8 +287,6 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
               )
               None
             }
-
-          if (p.isFormData) p.payload.annotations += FormBodyParameter()
         }
 
         AnnotationParser(parameter, map).parse()
@@ -358,14 +359,38 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
 }
 
 case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ctx: OasWebApiContext) {
+
+  def formDataPayload(formData: Seq[OasParameter]): Option[Payload] =
+    if (formData.isEmpty) None
+    else {
+      val schema = NodeShape().withName("formData").adopted(parentId)
+
+      formData.foreach { param =>
+        val property = schema.withProperty(param.payload.name.value())
+        val s        = param.payload.schema
+        param.parameter.fields
+          .entry(ParameterModel.Required)
+          .filter(_.value.annotations.contains(classOf[ExplicitField])) match {
+          case None => property.set(PropertyShapeModel.MinCount, 0)
+          case Some(f) if !f.scalar.toBool =>
+            property.set(PropertyShapeModel.MinCount, AmfScalar(0, f.scalar.annotations += ExplicitField()))
+          case Some(f) =>
+            property.set(PropertyShapeModel.MinCount, AmfScalar(1, f.scalar.annotations += ExplicitField()))
+        }
+        property.withRange(s).adopted(property.id)
+      }
+
+      Some(Payload().withName("formData").adopted(parentId).set(PayloadModel.Schema, schema).add(FormBodyParameter()))
+    }
+
   def parse(inRequest: Boolean = false): Parameters = {
     val parameters = values
       .map(value => OasParameterParser(Right(value), parentId, None).parse())
 
-    if (inRequest) {
-      val body     = parameters.filter(_.isBody)
-      val formData = parameters.filter(_.isFormData)
+    val formData = parameters.filter(_.isFormData)
+    val body     = parameters.filter(_.isBody)
 
+    if (inRequest) {
       if (body.nonEmpty && formData.nonEmpty) {
         val bodyParam = body.head
         ctx.violation(
@@ -384,7 +409,7 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
       parameters.filter(_.isPath).map(_.parameter),
       parameters.filter(_.isHeader).map(_.parameter),
       Nil,
-      (parameters.filter(_.isBody) ++ parameters.filter(_.isFormData)).map(_.payload)
+      body.map(_.payload) ++ formDataPayload(formData)
     )
   }
 
@@ -393,7 +418,7 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
       ctx.violation(
         id,
         param.payload.id,
-        "Cannot declare more than one payload parameter for a request",
+        "Cannot declare more than one body parameter for a request",
         param.ast.get
       )
     }

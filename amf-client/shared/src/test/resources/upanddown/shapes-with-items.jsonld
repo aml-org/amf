@@ -264,10 +264,15 @@
             ],
             "http://raml.org/vocabularies/http#payload": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/end-points/%2Fuser%2F%7Bid%7D/default",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/end-points/%2Fuser%2F%7Bid%7D/user",
                 "@type": [
                   "http://raml.org/vocabularies/http#Payload",
                   "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "user"
+                  }
                 ],
                 "http://raml.org/vocabularies/http#schema": [
                   {
@@ -435,7 +440,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/end-points/%2Fuser%2F%7Bid%7D/default/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/end-points/%2Fuser%2F%7Bid%7D/user/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -455,7 +460,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/end-points/%2Fuser%2F%7Bid%7D/default"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/end-points/%2Fuser%2F%7Bid%7D/user"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [

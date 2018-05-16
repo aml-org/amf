@@ -2,14 +2,14 @@ swagger: "2.0"
 paths:
   /resource:
     post:
+      consumes:
+        - application/json
       parameters:
         -
           name: OperationFormParam
+          in: formData
           description: some body parameter
           type: string
-          in: formData
-      consumes:
-        - application/json
       responses: {}
 info:
   title: API

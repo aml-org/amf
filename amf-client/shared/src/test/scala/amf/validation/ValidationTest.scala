@@ -1974,8 +1974,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report <- validation.validate(doc, ProfileNames.AMF)
     } yield {
       assert(!report.conforms)
+      assert(doc != null)
       // This is because the default payload has the same id.
-      assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 2)
+      assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 1)
     }
   }
 
