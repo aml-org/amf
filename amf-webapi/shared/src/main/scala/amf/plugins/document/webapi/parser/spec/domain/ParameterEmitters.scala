@@ -4,9 +4,11 @@ import amf.core.annotations.{ExplicitField, SynthesizedField}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.metamodel.domain.ShapeModel
+import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.document.BaseUnit
+import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfScalar, Shape}
-import amf.core.parser.{FieldEntry, Fields, Position}
+import amf.core.parser.{FieldEntry, Fields, Position, Value}
 import amf.plugins.document.webapi.contexts.{
   OasSpecEmitterContext,
   RamlScalarEmitter,
@@ -18,14 +20,15 @@ import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, FileShapeModel}
-import amf.plugins.domain.shapes.models.{AnyShape, ArrayShape, FileShape, ScalarShape}
+import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType
 import amf.core.utils.Strings
 import amf.plugins.document.webapi.annotations.FormBodyParameter
-import amf.plugins.domain.webapi.annotations.InvalidBinding
+import amf.plugins.domain.webapi.annotations.{InvalidBinding, ParameterBindingInBodyLexicalInfo}
+import org.yaml.model.YType.Bool
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -332,31 +335,76 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
     extends PartEmitter {
 
   override def emit(b: PartBuilder): Unit = {
+    payload.schema match {
+      case file: FileShape => fileShape(file, b)
+      case ns: NodeShape if payload.annotations.find(classOf[FormBodyParameter]).isDefined =>
+        ns.properties.foreach { formDataParameter(_, b) }
+      case _ => defaultPayload(b)
+    }
+  }
+
+  private def defaultPayload(b: PartBuilder): Unit = {
     b.obj { b =>
       val result = mutable.ListBuffer[EntryEmitter]()
 
-      if (Option(payload.schema).exists(_.isInstanceOf[FileShape]) || payload.annotations
-            .find(classOf[FormBodyParameter])
-            .isDefined) {
-
-        val fs = payload.schema.fields
-        fs.entry(FileShapeModel.Name).map(f => result += ValueEmitter("name", f))
-        fs.entry(FileShapeModel.Description).map(f => result += ValueEmitter("description", f))
-        result += MapEntryEmitter("in", "formData")
-        result ++= OasTypeEmitter(payload.schema, ordering, Seq(ShapeModel.Description), references).entries()
-        result ++= AnnotationsEmitter(payload, ordering).emitters
-
-      } else {
-        payload.fields.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("mediaType".asOasExtension, f))
-        result += MapEntryEmitter("in", binding())
-        payload.fields
-          .entry(PayloadModel.Schema)
-          .map(f => result += OasSchemaEmitter(f, ordering, references))
-        result ++= AnnotationsEmitter(payload, ordering).emitters
-      }
+      payload.fields.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("mediaType".asOasExtension, f))
+      result += MapEntryEmitter("in", binding(), position = bindingPos(payload.schema))
+      payload.fields
+        .entry(PayloadModel.Schema)
+        .map(f => result += OasSchemaEmitter(f, ordering, references))
+      result ++= AnnotationsEmitter(payload, ordering).emitters
 
       traverse(ordering.sorted(result), b)
     }
+  }
+
+  private def fileShape(file: FileShape, b: PartBuilder): Unit = {
+    b.obj { b =>
+      val result = mutable.ListBuffer[EntryEmitter]()
+
+      val fs = file.fields
+      fs.entry(FileShapeModel.Name).map(f => result += ValueEmitter("name", f))
+      fs.entry(FileShapeModel.Description).map(f => result += ValueEmitter("description", f))
+      result += MapEntryEmitter("in", "formData", position = bindingPos(file))
+      result ++= OasTypeEmitter(file, ordering, Seq(ShapeModel.Description), references).entries()
+      result ++= AnnotationsEmitter(payload, ordering).emitters
+
+      traverse(ordering.sorted(result), b)
+    }
+  }
+
+  private def formDataParameter(property: PropertyShape, b: PartBuilder): Unit = {
+    b.obj { b =>
+      val result = mutable.ListBuffer[EntryEmitter]()
+
+      property.fields
+        .entry(PropertyShapeModel.MinCount)
+        .filter(_.scalar.annotations.contains(classOf[ExplicitField]))
+        .map(f =>
+          result += ValueEmitter("required",
+                                 FieldEntry(PropertyShapeModel.MinCount,
+                                            Value(AmfScalar(f.scalar.toNumber.intValue() != 0), f.scalar.annotations)),
+                                 Some(Bool)))
+
+      val schema = property.range
+
+      val fs = schema.fields
+
+      fs.entry(ShapeModel.Name).map(f => result += ValueEmitter("name", f))
+
+      result += MapEntryEmitter("in", "formData", position = bindingPos(schema))
+      result ++= OasTypeEmitter(schema, ordering, references = references).entries()
+      result ++= AnnotationsEmitter(payload, ordering).emitters
+
+      traverse(ordering.sorted(result), b)
+    }
+  }
+
+  private def bindingPos(schema: Shape) = {
+    Option(schema)
+      .flatMap(_.annotations.find(classOf[ParameterBindingInBodyLexicalInfo]))
+      .map(_.range.start)
+      .getOrElse(Position.ZERO)
   }
 
   def binding(): String = payload.annotations.find(classOf[InvalidBinding]) match {

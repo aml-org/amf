@@ -16,11 +16,13 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "name": "AnotherBody"
           }
         ],
         "parameters": [
           {
+            "in": "body",
             "schema": {
               "type": "object",
               "properties": {
@@ -28,8 +30,7 @@
                   "type": "string"
                 }
               }
-            },
-            "in": "body"
+            }
           },
           {
             "name": "MyQuery",

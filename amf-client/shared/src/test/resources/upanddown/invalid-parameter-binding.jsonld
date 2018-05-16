@@ -240,10 +240,15 @@
                     ],
                     "http://raml.org/vocabularies/http#payload": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/default",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/MyBody",
                         "@type": [
                           "http://raml.org/vocabularies/http#Payload",
                           "http://raml.org/vocabularies/document#DomainElement"
+                        ],
+                        "http://schema.org/name": [
+                          {
+                            "@value": "MyBody"
+                          }
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
@@ -458,7 +463,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/default/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/MyBody/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -466,7 +471,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/default"
+                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/MyBody"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -492,7 +497,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/default"
+                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/MyBody"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [

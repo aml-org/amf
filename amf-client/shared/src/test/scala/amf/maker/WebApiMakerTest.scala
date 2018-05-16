@@ -13,7 +13,7 @@ import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAssertions with AmfObjectTestMatcher {
+trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAssertions with AmfObjectTestMatcher {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -235,9 +235,11 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
         .withPath("/levelzero/level-one")
         .withName("One display name")
         .withDescription("and this description!")
-        .withPayloads(List(Payload()
-          .withMediaType("application/json")
-          .withSchema(ScalarShape().withName("paramName").withDataType("http://www.w3.org/2001/XMLSchema#integer"))))
+        .withPayloads(
+          List(Payload()
+            .withName("paramName")
+            .withMediaType("application/json")
+            .withSchema(ScalarShape().withName("paramName").withDataType("http://www.w3.org/2001/XMLSchema#integer"))))
         .withOperations(List(
           Operation()
             .withMethod("get")
@@ -264,6 +266,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
                   .withRequired(false)
                   .withBinding("header")))
                 .withPayloads(List(Payload()
+                  .withName("otherParamName")
                   .withSchema(
                     ScalarShape().withName("otherParamName").withDataType("http://www.w3.org/2001/XMLSchema#string"))
                   .withMediaType("application/xml")))
@@ -483,10 +486,11 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     val request = operation
       .withRequest()
 
-    //shape of param1
+    // shape of param1
     val payloadParam1 = request.withPayload()
 
     val objectParam1 = payloadParam1
+      .withName("param1")
       .withObjectSchema("param1")
       .withClosed(false)
 
@@ -615,6 +619,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withName("scalar_array")
       .withRequest()
       .withPayload(None)
+      .withName("scalar_array")
       .withArraySchema("scalar_array")
       .withMinItems(3)
       .withMaxItems(10)
@@ -629,6 +634,7 @@ class WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withName("object_array")
       .withRequest()
       .withPayload(None)
+      .withName("object_array")
       .withArraySchema("object_array")
       .withNodeItems()
       .withClosed(false)

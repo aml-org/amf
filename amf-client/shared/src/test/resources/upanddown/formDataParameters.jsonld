@@ -109,96 +109,132 @@
                     ],
                     "http://raml.org/vocabularies/http#payload": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/request/theBody",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/request/formData",
                         "@type": [
                           "http://raml.org/vocabularies/http#Payload",
                           "http://raml.org/vocabularies/document#DomainElement"
                         ],
                         "http://schema.org/name": [
                           {
-                            "@value": "theBody"
+                            "@value": "formData"
                           }
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/request/parameter/theBody/default/theBody",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/request/formData/formData",
                             "@type": [
-                              "http://raml.org/vocabularies/shapes#FileShape",
+                              "http://www.w3.org/ns/shacl#NodeShape",
                               "http://www.w3.org/ns/shacl#Shape",
-                              "http://raml.org/vocabularies/shapes#Shape"
+                              "http://raml.org/vocabularies/shapes#Shape",
+                              "http://raml.org/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#property": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/request/formData/formData/property/theBody",
+                                "@type": [
+                                  "http://www.w3.org/ns/shacl#PropertyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://raml.org/vocabularies/shapes#Shape"
+                                ],
+                                "http://raml.org/vocabularies/shapes#range": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/request/formData/formData/property/theBody/theBody",
+                                    "@type": [
+                                      "http://raml.org/vocabularies/shapes#FileShape",
+                                      "http://www.w3.org/ns/shacl#Shape",
+                                      "http://raml.org/vocabularies/shapes#Shape"
+                                    ],
+                                    "http://www.w3.org/ns/shacl#name": [
+                                      {
+                                        "@value": "theBody"
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#sources": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/request/formData/formData/property/theBody/theBody/source-map",
+                                        "@type": [
+                                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#parameter-binding-in-body-lexical-info": [
+                                          {
+                                            "http://raml.org/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/request/formData/formData/property/theBody/theBody"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(25,18)-(25,28)]"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                          {
+                                            "http://raml.org/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://www.w3.org/ns/shacl#name"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(24,20)-(24,29)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://raml.org/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/request/formData/formData/property/theBody/theBody"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(22,10)-(26,11)]"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                                          {
+                                            "http://raml.org/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/request/formData/formData/property/theBody/theBody"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(23,12)-(23,18)]"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#minCount": [
+                                  {
+                                    "@value": 0
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "theBody"
+                                  }
+                                ]
+                              }
                             ],
                             "http://www.w3.org/ns/shacl#name": [
                               {
-                                "@value": "theBody"
-                              }
-                            ],
-                            "http://raml.org/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/request/parameter/theBody/default/theBody/source-map",
-                                "@type": [
-                                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://raml.org/vocabularies/document-source-maps#parameter-binding-in-body-lexical-info": [
-                                  {
-                                    "http://raml.org/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/request/parameter/theBody/default/theBody"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(25,18)-(25,28)]"
-                                      }
-                                    ]
-                                  }
-                                ],
-                                "http://raml.org/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "http://raml.org/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://www.w3.org/ns/shacl#name"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(24,20)-(24,29)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "http://raml.org/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/request/parameter/theBody/default/theBody"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(22,10)-(26,11)]"
-                                      }
-                                    ]
-                                  }
-                                ],
-                                "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
-                                  {
-                                    "http://raml.org/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/request/parameter/theBody/default/theBody"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(23,12)-(23,18)]"
-                                      }
-                                    ]
-                                  }
-                                ]
+                                "@value": "formData"
                               }
                             ]
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/request/theBody/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/request/formData/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -206,38 +242,12 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/request/theBody"
+                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/request/formData"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
                                   {
                                     "@value": "true"
-                                  }
-                                ]
-                              }
-                            ],
-                            "http://raml.org/vocabularies/document-source-maps#lexical": [
-                              {
-                                "http://raml.org/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://raml.org/vocabularies/http#schema"
-                                  }
-                                ],
-                                "http://raml.org/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(22,10)-(26,11)]"
-                                  }
-                                ]
-                              },
-                              {
-                                "http://raml.org/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/request/theBody"
-                                  }
-                                ],
-                                "http://raml.org/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(22,10)-(26,11)]"
                                   }
                                 ]
                               }

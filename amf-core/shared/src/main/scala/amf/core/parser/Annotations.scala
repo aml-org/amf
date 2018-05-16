@@ -10,7 +10,7 @@ import org.yaml.model.{YMapEntry, YNode, YPart}
 class Annotations {
   private var annotations: Seq[Annotation] = Seq()
 
-  def foreach(fn: (Annotation) => Unit): Unit = annotations.foreach(fn)
+  def foreach(fn: Annotation => Unit): Unit = annotations.foreach(fn)
 
   def find[T <: Annotation](fn: Annotation => Boolean): Option[T] = annotations.find(fn).map(_.asInstanceOf[T])
 
@@ -30,7 +30,7 @@ class Annotations {
     this
   }
 
-  def reject(p: (Annotation) => Boolean): this.type = {
+  def reject(p: Annotation => Boolean): this.type = {
     annotations = annotations.filter(a => !p(a))
     this
   }
@@ -64,6 +64,8 @@ object Annotations {
   // todo: temp method to keep compatibility against previous range serializacion logic.
   // We should discuss if always use the range of the YNode, or always use the range of the ynode member.
   def valueNode(node: YNode): Annotations = apply(node.value) += SourceNode(node)
+
+  def apply(annotation: Annotation): Annotations = apply(Seq(annotation))
 
   def apply(annotations: Seq[Annotation]): Annotations = {
     val result = apply()

@@ -9,6 +9,7 @@
       "post": {
         "parameters": [
           {
+            "in": "bo",
             "schema": {
               "type": "object",
               "properties": {
@@ -16,8 +17,7 @@
                   "type": "string"
                 }
               }
-            },
-            "in": "bo"
+            }
           },
           {
             "name": "MyQuery",
