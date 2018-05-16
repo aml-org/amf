@@ -10,6 +10,7 @@ class CompleteCycleTest extends BuildCycleTests {
   val base08Path        = "amf-client/shared/src/test/resources/upanddown/raml08/"
   val referencesPath    = "amf-client/shared/src/test/resources/references/"
   val productionPath    = "amf-client/shared/src/test/resources/production/"
+  val apiPath           = "amf-client/shared/src/test/resources/api/"
 
   test("Full raml to raml test") {
     cycle("full-example.raml", "full-example.raml.raml", RamlYamlHint, Raml)
@@ -1204,6 +1205,10 @@ class CompleteCycleTest extends BuildCycleTests {
 
   test("Test parse references with [] in path") {
     cycle("api.raml", "api.raml.raml", RamlYamlHint, Raml, basePath + "chars[]infilespaths/")
+  }
+
+  test("Test parse types") {
+    cycle("shapes.raml", "shapes.json", RamlYamlHint, Oas, apiPath + "types/")
   }
 
   test("Invalid body parameter oas to oas") {
