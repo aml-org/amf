@@ -6,7 +6,6 @@ import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
-import amf.plugins.document.webapi.parser.spec.declaration.ExternalSourceRef
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.features.validation.ParserSideValidations
@@ -170,8 +169,7 @@ case class RamlSingleExampleValueParser(node: YNode, producer: () => Example, op
 }
 
 case class RamlExampleValueAsString(node: YNode, example: Example, options: ExampleOptions)(
-    implicit ctx: WebApiContext)
-    extends ExternalSourceRef {
+    implicit ctx: WebApiContext) {
   def populate(): Example = {
     if (example.fields.entry(ExampleModel.Strict).isEmpty) {
       example.set(ExampleModel.Strict, AmfScalar(options.strictDefault), Annotations() += SynthesizedField())
@@ -179,7 +177,9 @@ case class RamlExampleValueAsString(node: YNode, example: Example, options: Exam
 
     val targetNode = node match {
       case mut: MutRef =>
-        sourceRefReference(node, example, ctx)
+        ctx.declarations.fragments
+          .get(mut.origValue.asInstanceOf[YScalar].text)
+          .foreach(e => example.withReference(e.id))
         mut.target.getOrElse(node)
       case _ => node // render always (even if xml) for | multiline strings. (If set scalar.text we lose the token)
 

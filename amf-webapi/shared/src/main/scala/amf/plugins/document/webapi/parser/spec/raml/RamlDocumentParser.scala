@@ -324,7 +324,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
   }
 
   /** Get types or schemas facet. If both are available, default to types facet and throw a validation error. */
-  private def typeOrSchema(map: YMap) = {
+  override protected def typeOrSchema(map: YMap): Option[YMapEntry] = {
     val types   = map.key("types")
     val schemas = map.key("schemas")
 
@@ -346,6 +346,8 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
 }
 
 abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBaseSpecParser {
+
+  protected def typeOrSchema(map: YMap): Option[YMapEntry] = map.key("type").orElse(map.key("schema"))
 
   case class UsageParser(map: YMap, baseUnit: BaseUnit) {
     def parse(): Unit = {

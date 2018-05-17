@@ -80,6 +80,46 @@ class CycleForExternalSource extends BuildCycleTests {
       "amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/"
     )
   }
+
+  test("Test fragment link shape json raml to jsonld") {
+    cycle(
+      "api-with-fragment-ref.raml",
+      "api-with-fragment-ref.raml.jsonld",
+      RamlYamlHint,
+      Amf,
+      jsonPath
+    )
+  }
+
+  test("Test fragment link shape json raml to raml") {
+    cycle(
+      "api-with-fragment-ref.raml",
+      "api-with-fragment-ref.raml.raml",
+      RamlYamlHint,
+      Raml,
+      jsonPath
+    )
+  }
+
+  test("Test fragment link shape xml raml to jsonld") {
+    cycle(
+      "api-with-fragment-ref-xml.raml",
+      "api-with-fragment-ref-xml.raml.jsonld",
+      RamlYamlHint,
+      Amf,
+      xsdPath
+    )
+  }
+
+  test("Test fragment link shape xml raml to raml") {
+    cycle(
+      "api-with-fragment-ref-xml.raml",
+      "api-with-fragment-ref-xml.raml.raml",
+      RamlYamlHint,
+      Raml,
+      xsdPath
+    )
+  }
   // ---- end temp test ---------------------------------------------------------------------
   override val basePath: String = ""
 }

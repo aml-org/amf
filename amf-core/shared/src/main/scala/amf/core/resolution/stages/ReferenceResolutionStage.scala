@@ -78,6 +78,13 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
     resolve(doc).asInstanceOf[Document].encodes.asInstanceOf[T]
   }
 
+  def resolveDomainElementSet[T <: DomainElement](elements: Seq[T]): Seq[DomainElement] = {
+    val doc = Document().withId("http://resolutionstage.com/test#")
+
+    doc.withDeclares(elements)
+    resolve(doc).asInstanceOf[Document].declares
+  }
+
   // Internal request that checks for mutually recursive types
   protected def recursiveResolveInvocation(model: BaseUnit,
                                            modelResolver: Option[ModelReferenceResolver],
