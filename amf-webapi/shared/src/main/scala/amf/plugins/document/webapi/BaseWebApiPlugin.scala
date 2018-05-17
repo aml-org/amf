@@ -45,11 +45,12 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
   )
 
   override def serializableAnnotations() = Map(
-    "parsed-json-schema"   -> ParsedJSONSchema,
-    "declared-element"     -> DeclaredElement,
-    "local-link-path"      -> LocalLinkPath,
-    "extension-provenance" -> ExtensionProvenance,
-    "form-body-parameter"  -> FormBodyParameter
+    "parsed-json-schema"    -> ParsedJSONSchema,
+    "external-fragment-ref" -> ExternalFragmentRef,
+    "declared-element"      -> DeclaredElement,
+    "local-link-path"       -> LocalLinkPath,
+    "extension-provenance"  -> ExtensionProvenance,
+    "form-body-parameter"   -> FormBodyParameter
   )
 
   val validationProfile: String

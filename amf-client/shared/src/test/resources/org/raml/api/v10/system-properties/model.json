@@ -5,26 +5,18 @@ version: "1.0"
   post:
     body:
       application/json:
+        type: object
         example:
           numberOfPeople: 90
           startDate: 2016-08-23T18:25:43-05:00
-        type: |-
-          {
-          	"$schema": "http://json-schema.org/draft-04/schema#",
-          	"type": "object",
-          	"properties": {
-          		"numberOfPeople": {
-          			"type": "number",
-          			"minimum": 0,
-          			"maximum": 90
-          		},
-          		"startDate": {
-          			"type": "string",
-          			"format": "date"
-          		}
-          	},
-          	"required": [
-          		"numberOfPeople",
-          		"startDate"
-          	]
-          }
+        additionalProperties: true
+        properties:
+          numberOfPeople:
+            type: number
+            minimum: 0
+            maximum: 90
+            required: true
+          startDate:
+            type: string
+            (amf-format): date
+            required: true

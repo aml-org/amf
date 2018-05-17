@@ -290,18 +290,28 @@ object WebApiDeclarations {
   }
 }
 
-class RamlWebApiDeclarations(var externalShapes: Map[String, Shape] = Map(),
+class RamlWebApiDeclarations(var externalShapes: Map[String, AnyShape] = Map(),
+                             var externalLibs: Map[String, Map[String, AnyShape]] = Map(),
                              override val alias: Option[String],
                              override val errorHandler: Option[ErrorHandler],
                              override val futureDeclarations: FutureDeclarations)
     extends WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations) {
 
-  def registerExternalRef(external: (String, Shape)): WebApiDeclarations = { // particular case for jsonschema # fragment
+  def registerExternalRef(external: (String, AnyShape)): WebApiDeclarations = { // particular case for jsonschema # fragment
     externalShapes = externalShapes + (external._1 -> external._2)
     this
   }
 
-  def findInExternals(url: String): Option[Shape] = externalShapes.get(url)
+  def registerExternalLib(url: String, content: Map[String, AnyShape]): WebApiDeclarations = { // particular case for jsonschema # fragment
+    externalLibs = externalLibs + (url -> content)
+    this
+  }
+
+  def findInExternals(url: String): Option[AnyShape] = externalShapes.get(url)
+
+  def findInExternalsLibs(lib: String, name: String): Option[AnyShape] = externalLibs.get(lib).flatMap(_.get(name))
+
+  def existsExternalAlias(lib: String): Boolean = externalLibs.contains(lib)
 
   def merge(other: RamlWebApiDeclarations): RamlWebApiDeclarations = {
     val merged =
@@ -316,6 +326,7 @@ class RamlWebApiDeclarations(var externalShapes: Map[String, Shape] = Map(),
 object RamlWebApiDeclarations {
   def apply(d: WebApiDeclarations): RamlWebApiDeclarations = {
     val declarations = new RamlWebApiDeclarations(Map(),
+                                                  Map(),
                                                   d.alias,
                                                   errorHandler = d.errorHandler,
                                                   futureDeclarations = d.futureDeclarations)

@@ -41,27 +41,30 @@ case class ReferenceCollector() {
   private val refs = mutable.Map[String, Reference]()
 
   def +=(key: String, kind: ReferenceKind, node: YNode): Unit = {
-    val (url, fragment) = checkFragment(key)
+    val (url, fragment) = ReferenceFragmentPartition(key)
     refs.get(url) match {
-      case Some(reference: Reference) => refs.update(key, reference + (kind, node, fragment))
-      case None                       => refs += key -> Reference(key, kind, node, fragment)
+      case Some(reference: Reference) => refs.update(url, reference + (kind, node, fragment))
+      case None                       => refs += url -> Reference(url, kind, node, fragment)
     }
-  }
-
-  private def checkFragment(url: String): (String, Option[String]) = {
-    if (url.normalizeUrl.startsWith("file://")) { // http urls supports # refs
-      url.split("#") match { // how can i know if the # its part of the uri or not? uri not valid???
-        case Array(u)           => (u, None)
-        case Array(u, fragment) => (u, Some(fragment))
-        case other              =>
-          // -2 = -1 of the length diff and -1 for # char
-          val str = url.substring(0, url.length - 2 - other.last.length)
-          (str, Some(other.last))
-      }
-    } else (url, None)
   }
 
   def toReferences: Seq[Reference] = refs.values.toSeq
 }
 
 object EmptyReferenceCollector extends ReferenceCollector {}
+
+object ReferenceFragmentPartition {
+  def apply(url: String): (String, Option[String]) = {
+    if (url.normalizeUrl.startsWith("file://") && !url.startsWith("#")) { // http urls supports # refs
+      url.split("#") match { // how can i know if the # its part of the uri or not? uri not valid???
+        case Array(u) if u.endsWith("#") => (u.substring(0, u.length - 2), None)
+        case Array(u)                    => (u, None)
+        case Array(u, fragment)          => (u, Some(fragment))
+        case other                       =>
+          //  -1 of the length diff and -1 for # char
+          val str = url.substring(0, url.length - 1 - other.last.length)
+          (str, Some(other.last))
+      }
+    } else (url, None)
+  }
+}
