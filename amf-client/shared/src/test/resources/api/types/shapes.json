@@ -1,0 +1,705 @@
+{
+  "swagger": "2.0",
+  "definitions": {
+    "PersonData": {
+      "type": "object",
+      "x-amf-discriminatorValue": "Person",
+      "required": [
+        "id",
+        "given_name",
+        "family_name",
+        "gender",
+        "birth_date"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "enum": [
+            "mr",
+            "mrs",
+            "ms",
+            "dr"
+          ],
+          "type": "string"
+        },
+        "given_name": {
+          "type": "string"
+        },
+        "family_name": {
+          "type": "string"
+        },
+        "gender": {
+          "enum": [
+            "female",
+            "male"
+          ],
+          "type": "string"
+        },
+        "vat_id": {
+          "type": "string"
+        },
+        "birth_date": {
+          "type": "string",
+          "format": "date-only"
+        },
+        "death_date": {
+          "type": "string",
+          "format": "date-only"
+        }
+      },
+      "x-amf-merge": [
+        {
+          "$ref": "#/definitions/CustomerData"
+        }
+      ]
+    },
+    "NewCustomerData": {
+      "type": "object",
+      "required": [
+        "lei",
+        "tax_id",
+        "email",
+        "telephone"
+      ],
+      "properties": {
+        "lei": {
+          "type": "string"
+        },
+        "tax_id": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "telephone": {
+          "type": "string"
+        }
+      },
+      "x-amf-merge": [
+        {
+          "$ref": "#/definitions/AddressData"
+        }
+      ]
+    },
+    "LoanData": {
+      "type": "object",
+      "required": [
+        "id",
+        "account_number",
+        "accountType",
+        "amount",
+        "lei",
+        "fees_and_comissions",
+        "review_state",
+        "interest_rate",
+        "annual_interest_rate",
+        "minimum_inflow",
+        "overdraft_limit",
+        "grace_period"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "account_number": {
+          "type": "string"
+        },
+        "accountType": {
+          "enum": [
+            "standard",
+            "saver"
+          ],
+          "type": "string"
+        },
+        "amount": {
+          "$ref": "#/definitions/MonetaryAmountData"
+        },
+        "lei": {
+          "type": "string"
+        },
+        "fees_and_comissions": {
+          "type": "string"
+        },
+        "review_state": {
+          "enum": [
+            "requested",
+            "cancelled",
+            "underwriting",
+            "accepted",
+            "opened",
+            "failed",
+            "closed"
+          ],
+          "type": "string"
+        },
+        "interest_rate": {
+          "type": "number"
+        },
+        "annual_interest_rate": {
+          "type": "number"
+        },
+        "minimum_inflow": {
+          "$ref": "#/definitions/MonetaryAmountData"
+        },
+        "overdraft_limit": {
+          "$ref": "#/definitions/MonetaryAmountData"
+        },
+        "grace_period": {
+          "$ref": "#/definitions/DurationData"
+        }
+      }
+    },
+    "NewOrganizationData": {
+      "type": "object",
+      "required": [
+        "name",
+        "vat_id"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "vat_id": {
+          "type": "string"
+        }
+      },
+      "x-amf-merge": [
+        {
+          "$ref": "#/definitions/NewCustomerData"
+        }
+      ]
+    },
+    "DurationData": {
+      "type": "object",
+      "required": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "NewBankAccountRequestData": {
+      "type": "object",
+      "required": [
+        "accountType"
+      ],
+      "properties": {
+        "accountType": {
+          "enum": [
+            "standard",
+            "saver"
+          ],
+          "type": "string"
+        }
+      }
+    },
+    "MonetaryAmountData": {
+      "type": "object",
+      "required": [
+        "value",
+        "currency"
+      ],
+      "properties": {
+        "value": {
+          "type": "number"
+        },
+        "currency": {
+          "type": "string"
+        }
+      }
+    },
+    "NewLoanRequestData": {
+      "type": "object",
+      "required": [
+        "category",
+        "amount",
+        "term",
+        "interest_rate",
+        "down_payment",
+        "payment_amount",
+        "payment_frequency",
+        "review_state"
+      ],
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "amount": {
+          "$ref": "#/definitions/MonetaryAmountData"
+        },
+        "term": {
+          "$ref": "#/definitions/DurationData"
+        },
+        "interest_rate": {
+          "type": "number"
+        },
+        "down_payment": {
+          "$ref": "#/definitions/MonetaryAmountData"
+        },
+        "payment_amount": {
+          "$ref": "#/definitions/MonetaryAmountData"
+        },
+        "payment_frequency": {
+          "type": "number"
+        },
+        "review_state": {
+          "enum": [
+            "requested",
+            "underwriting",
+            "rejected",
+            "accepted",
+            "repaying",
+            "failed",
+            "closed"
+          ],
+          "type": "string"
+        }
+      }
+    },
+    "AddressData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "address_country",
+        "address_locality",
+        "address_region",
+        "postal_code",
+        "street_address"
+      ],
+      "properties": {
+        "address_country": {
+          "type": "string"
+        },
+        "address_locality": {
+          "type": "string"
+        },
+        "address_region": {
+          "type": "string"
+        },
+        "postal_code": {
+          "type": "string"
+        },
+        "street_address": {
+          "type": "string"
+        }
+      }
+    },
+    "BankAccountData": {
+      "type": "object",
+      "required": [
+        "id",
+        "account_number",
+        "accountType",
+        "amount",
+        "lei",
+        "fees_and_comissions",
+        "review_state",
+        "interest_rate",
+        "annual_interest_rate",
+        "minimum_inflow",
+        "overdraft_limit"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "account_number": {
+          "type": "string"
+        },
+        "accountType": {
+          "enum": [
+            "standard",
+            "saver"
+          ],
+          "type": "string"
+        },
+        "amount": {
+          "$ref": "#/definitions/MonetaryAmountData"
+        },
+        "lei": {
+          "type": "string"
+        },
+        "fees_and_comissions": {
+          "type": "string"
+        },
+        "review_state": {
+          "enum": [
+            "requested",
+            "cancelled",
+            "opened",
+            "closed"
+          ],
+          "type": "string"
+        },
+        "interest_rate": {
+          "type": "number"
+        },
+        "annual_interest_rate": {
+          "type": "number"
+        },
+        "minimum_inflow": {
+          "$ref": "#/definitions/MonetaryAmountData"
+        },
+        "overdraft_limit": {
+          "$ref": "#/definitions/MonetaryAmountData"
+        }
+      }
+    },
+    "DebitCardData": {
+      "type": "object",
+      "required": [
+        "id",
+        "lei",
+        "fees_and_comissions",
+        "review_state",
+        "cash_back",
+        "contactless",
+        "floor_limit"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "lei": {
+          "type": "string"
+        },
+        "fees_and_comissions": {
+          "type": "string"
+        },
+        "review_state": {
+          "enum": [
+            "requested",
+            "cancelled",
+            "opened",
+            "closed"
+          ],
+          "type": "string"
+        },
+        "cash_back": {
+          "type": "boolean"
+        },
+        "contactless": {
+          "type": "boolean"
+        },
+        "floor_limit": {
+          "$ref": "#/definitions/MonetaryAmountData"
+        }
+      }
+    },
+    "OrganizationData": {
+      "type": "object",
+      "x-amf-discriminatorValue": "Organization",
+      "required": [
+        "id",
+        "name",
+        "vat_id"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "vat_id": {
+          "type": "string"
+        }
+      },
+      "x-amf-merge": [
+        {
+          "$ref": "#/definitions/CustomerData"
+        }
+      ]
+    },
+    "CustomerData": {
+      "type": "object",
+      "discriminator": "type",
+      "required": [
+        "type",
+        "lei",
+        "tax_id",
+        "email",
+        "address"
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "lei": {
+          "type": "string"
+        },
+        "tax_id": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "address": {
+          "$ref": "#/definitions/AddressData"
+        }
+      }
+    },
+    "NewPersonData": {
+      "type": "object",
+      "required": [
+        "given_name",
+        "family_name",
+        "gender",
+        "birth_date"
+      ],
+      "properties": {
+        "title": {
+          "enum": [
+            "mr",
+            "mrs",
+            "ms",
+            "dr"
+          ],
+          "type": "string"
+        },
+        "given_name": {
+          "type": "string"
+        },
+        "family_name": {
+          "type": "string"
+        },
+        "gender": {
+          "enum": [
+            "female",
+            "male"
+          ],
+          "type": "string"
+        },
+        "vat_id": {
+          "type": "string"
+        },
+        "birth_date": {
+          "type": "string",
+          "format": "date-only"
+        }
+      },
+      "x-amf-merge": [
+        {
+          "$ref": "#/definitions/NewCustomerData"
+        }
+      ]
+    },
+    "CreditCardData": {
+      "type": "object",
+      "required": [
+        "id",
+        "amount",
+        "lei",
+        "cash_back",
+        "contactless",
+        "floor_limit",
+        "fees_and_comissions",
+        "review_state",
+        "interest_rate",
+        "annual_interest_rate",
+        "minimum_inflow",
+        "overdraft_limit",
+        "grace_period"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "amount": {
+          "$ref": "#/definitions/MonetaryAmountData"
+        },
+        "lei": {
+          "type": "string"
+        },
+        "cash_back": {
+          "type": "boolean"
+        },
+        "contactless": {
+          "type": "boolean"
+        },
+        "floor_limit": {
+          "$ref": "#/definitions/MonetaryAmountData"
+        },
+        "fees_and_comissions": {
+          "type": "string"
+        },
+        "review_state": {
+          "enum": [
+            "requested",
+            "cancelled",
+            "underwriting",
+            "accepted",
+            "opened",
+            "failed",
+            "closed"
+          ],
+          "type": "string"
+        },
+        "interest_rate": {
+          "type": "number"
+        },
+        "annual_interest_rate": {
+          "type": "number"
+        },
+        "minimum_inflow": {
+          "$ref": "#/definitions/MonetaryAmountData"
+        },
+        "overdraft_limit": {
+          "$ref": "#/definitions/MonetaryAmountData"
+        },
+        "grace_period": {
+          "$ref": "#/definitions/DurationData"
+        }
+      }
+    },
+    "NewDebitCardRequestData": {
+      "type": "object",
+      "required": [
+        "cash_back",
+        "contactless"
+      ],
+      "properties": {
+        "cash_back": {
+          "type": "boolean"
+        },
+        "contactless": {
+          "type": "boolean"
+        }
+      }
+    },
+    "RepaymentSpecificationData": {
+      "type": "object",
+      "required": [
+        "down_payment",
+        "payment_frequency",
+        "number_payments",
+        "payment_amount",
+        "early_payment_penalty"
+      ],
+      "properties": {
+        "down_payment": {
+          "$ref": "#/definitions/MonetaryAmountData"
+        },
+        "payment_frequency": {
+          "type": "number"
+        },
+        "number_payments": {
+          "type": "integer"
+        },
+        "payment_amount": {
+          "$ref": "#/definitions/MonetaryAmountData"
+        },
+        "early_payment_penalty": {
+          "$ref": "#/definitions/MonetaryAmountData"
+        }
+      }
+    },
+    "CustomerPatchData": {
+      "type": "object",
+      "properties": {
+        "lei": {
+          "type": "string"
+        },
+        "tax_id": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "title": {
+          "enum": [
+            "mr",
+            "mrs",
+            "ms",
+            "dr"
+          ],
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "family_name": {
+          "type": "string"
+        },
+        "gender": {
+          "enum": [
+            "female",
+            "male"
+          ],
+          "type": "string"
+        },
+        "vat_id": {
+          "type": "string"
+        },
+        "birth_date": {
+          "type": "string",
+          "format": "date-only"
+        },
+        "death_date": {
+          "type": "string",
+          "format": "date-only"
+        },
+        "address_country": {
+          "type": "string"
+        },
+        "address_locality": {
+          "type": "string"
+        },
+        "address_region": {
+          "type": "string"
+        },
+        "postal_code": {
+          "type": "string"
+        },
+        "street_address": {
+          "type": "string"
+        }
+      }
+    },
+    "NewCreditCardRequestData": {
+      "type": "object",
+      "required": [
+        "cash_back",
+        "contactless",
+        "interest_rate",
+        "payment_amount",
+        "payment_frequency",
+        "review_state"
+      ],
+      "properties": {
+        "cash_back": {
+          "type": "boolean"
+        },
+        "contactless": {
+          "type": "boolean"
+        },
+        "interest_rate": {
+          "type": "number"
+        },
+        "payment_amount": {
+          "$ref": "#/definitions/MonetaryAmountData"
+        },
+        "payment_frequency": {
+          "type": "number"
+        },
+        "review_state": {
+          "enum": [
+            "requested",
+            "cancelled",
+            "underwriting",
+            "accepted",
+            "opened",
+            "failed",
+            "closed"
+          ],
+          "type": "string"
+        }
+      }
+    }
+  },
+  "x-amf-usage": "Data shapes for the HTTP API"
+}
