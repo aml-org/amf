@@ -133,12 +133,14 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
       // link not traversed, cache it and traverse it
       case l: Linkable if l.linkTarget.isDefined && !isCycle => {
         val resolved = resolveReferenced(l.linkTarget.get)
+        if (resolved.isInstanceOf[Linkable] && l.supportsRecursion.option().getOrElse(false))
+          resolved.asInstanceOf[Linkable].withSupportsRecursion(true)
         if (keepEditingInfo) resolved.annotations += ResolvedLinkAnnotation(l.id)
         Some(customDomainElementTransformation(withName(resolved, l), l))
       }
 
       case l: Linkable if l.linkTarget.isDefined && isCycle =>
-        Some(RecursiveShape().withId(l.id).withFixPoint(l.linkTarget.get.id))
+        Some(RecursiveShape().withId(l.id).withFixPoint(l.linkTarget.get.id).withSupportsRecursion(l.supportsRecursion.option().getOrElse(false)))
 
       // link traversed, return the link
       case l: Linkable if l.linkTarget.isDefined => Some(l)

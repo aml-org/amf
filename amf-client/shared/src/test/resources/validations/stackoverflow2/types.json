@@ -1,0 +1,102 @@
+{
+	"definitions": {
+		"adresse": {
+			"$schema": "http://json-schema.org/draft-03/schema",
+			"type": "object",
+			"javaType": "ch.raiffeisen.rbstammservice.service.rest.model.Adresse",
+			"properties": {
+				"adresszeile": {"type": "string"},
+				"bankzeile": {"type": "string"},
+				"kanton": {"type": "string"},
+				"ort": {"type": "string"},
+				"plz": {"type": "integer"}
+			}
+		},
+		"adresseExtended": {
+			"$schema": "http://json-schema.org/draft-03/schema",
+			"type": "object",
+			"javaType": "ch.raiffeisen.rbstammservice.service.rest.model.AdresseExtended",
+			"extends" : { "$ref": "#definitions/adresse" },
+			"properties": {
+				"fax": {"type": "string"},
+				"faxKurz": {"type": "string"},
+				"homepage": {"type": "string"},
+				"mail": {"type": "string"},
+				"telefon": {"type": "string"},
+				"telefonKurz": {"type": "string"}
+			}
+		},
+		"person": {
+			"$schema": "http://json-schema.org/draft-03/schema",
+			"type": "object",
+			"javaType": "ch.raiffeisen.rbstammservice.service.rest.model.Person",
+			"properties": {
+				  "anrede":{"type":"string"}
+				, "briefanrede":{"type":"string"}
+				, "funktion":{"type":"string"}
+				, "name":{"type":"string"}
+				, "vorname":{"type":"string"}
+			}
+		},
+		"rolle": {
+			"$schema": "http://json-schema.org/draft-03/schema",
+			"type": "object",
+			"javaType": "ch.raiffeisen.rbstammservice.service.rest.model.Rolle",
+			"extends": { "$ref": "#definitions/person"},
+			"properties": {
+				"code": { "type": "string"}
+			}
+		},
+		"geschaeftskreis": {
+			"$schema": "http://json-schema.org/draft-03/schema",
+			"type": "object",
+			"javaType": "ch.raiffeisen.rbstammservice.service.rest.model.Geschaeftskreis",
+			"properties": {
+				"ort": { "type": "string" },
+				"plz": { "type": "integer" }
+			}
+		}, 
+		"oeffnungszeit": {
+			"$schema": "http://json-schema.org/draft-03/schema",
+			"type": "object",
+			"javaType": "ch.raiffeisen.rbstammservice.service.rest.model.Oeffnungszeit",
+			"properties": {
+				"info": { "type": "string" },
+				"vormittag": { "type": "string" },
+				"nachmittag": { "type": "string" }
+			}
+		},
+		"oeffnungszeiten": {
+			"$schema": "http://json-schema.org/draft-03/schema",
+			"type": "object",
+			"javaType": "ch.raiffeisen.rbstammservice.service.rest.model.Oeffnungszeiten",
+			"properties": {
+				"mo": { "$ref": "#definitions/oeffnungszeit" }
+				,"di": { "$ref": "#definitions/oeffnungszeit" }
+				,"mi": { "$ref": "#definitions/oeffnungszeit" }
+				,"do": { "$ref": "#definitions/oeffnungszeit" }
+				,"fr": { "$ref": "#definitions/oeffnungszeit" }
+				,"sa": { "$ref": "#definitions/oeffnungszeit" }
+				,"so": { "$ref": "#definitions/oeffnungszeit" }
+			}
+		},
+		"bancomat": {
+			"$schema": "http://json-schema.org/draft-03/schema",
+			"type": "object",
+			"javaType": "ch.raiffeisen.rbstammservice.service.rest.model.Bancomat",
+			"extends" : { "$ref": "#definitions/adresse" },
+			"properties": {
+				"bed": {"type":"boolean"}
+				,"contoService": {"type": "boolean"}
+				,"einzahlfunktion": {"type":"boolean"}
+				,"euro":{"type":"boolean"}
+				,"extern":{"type":"boolean"}			
+				,"hersteller": {"type":"string"}
+				,"identifikation": {"type":"integer"}
+				,"koordinateX":{"type":"number"}
+				,"koordinateY":{"type":"number"}
+				,"standortBeschreibung":{"type":"string"}
+			}
+		}
+	}
+}

@@ -1,0 +1,26 @@
+{  "$schema": "http://json-schema.org/draft-03/schema",
+   "type": "object",
+   "description": "Raiffeisen Bank",
+   "properties": {
+         "id":  { "type": "integer" }
+       , "identifikation" : {"type" : "integer"}
+       , "sitzcode": { "type": "string" }
+       , "bossNr" : { "type" : "string" }
+       , "bankTypCode" : { "type" : "integer" }
+       , "bankName" : { "type" : "string" }
+       , "standort": { "$ref" : "types.json#definitions/adresseExtended", "type": "object" }
+       , "bcNr": { "type": "string" }
+       , "spracheIso": { "type": "string"}
+       , "sprache": {"type": "string"}
+       , "regionalverband": {"type": "string"}
+       , "rollen": { "type": "array", "items": {"$ref": "types.json#definitions/rolle"}}
+       , "geschaeftskreise": { "type": "array", "items": {"$ref": "types.json#definitions/geschaeftskreis"}}
+       , "oeffnungszeiten": { "type": "object", "$ref": "types.json#definitions/oeffnungszeiten"}
+       , "koordinateXBankStandort": { "type": "number" }
+       , "koordinateYBankStandort": { "type": "number" }
+       , "banknameHR": { "type": "string" }
+       , "swiftCode": { "type": "string" }
+       , "bancomaten": { "type": "array", "items": {"$ref": "types.json#definitions/bancomat"}}
+       , "geschaeftstellen": {"type": "array", "items": {"$ref": "bank-schema.json#/"}}
+   }
+}

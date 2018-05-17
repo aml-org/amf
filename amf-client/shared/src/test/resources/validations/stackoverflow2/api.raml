@@ -1,0 +1,85 @@
+#%RAML 0.8
+title: RBStamm Service API
+version: v1
+baseUri: https://api.raiffeisen.ch/rbstamm/{version}
+mediaType: application/json
+
+schemas:
+  - types: !include types.json
+  - bank: !include bank-schema.json
+  - banks: | 
+      {  "$schema": "http://json-schema.org/draft-03/schema",
+         "type": "array",
+         "items": { "$ref": "bank-schema.json#/" }
+      }
+  
+resourceTypes:
+  - readOnlyCollection:
+      description: Collection of available <<resourcePathName>> in Employee.
+      get:
+        description: Get a list of <<resourcePathName>>.
+        responses:
+          200:
+            body:
+              application/json:
+                schema: <<schemaCollection>>
+
+  - collection-item:
+      description: Entity representing a <<resourcePathName>>
+      get:
+        description: Entity representing a <<resourcePathName>>
+        responses:
+          200:
+            body:
+              application/json:
+                schema: <<schemaItem>>
+          404:
+            body:
+              application/json:
+
+traits:
+  - withGeschaeftstellen:
+      queryParameters:
+        withGeschaeftstellen:
+          type: boolean
+          required: false
+          default: false
+
+/rbs: 
+  displayName: Raiffeisen Banken Resource
+  type: 
+    readOnlyCollection:
+      schemaCollection: banks
+  get:
+    is: [ withGeschaeftstellen ]
+        
+  /{sitzcode}:
+    displayName: Raiffeisen Bank
+    type:
+      collection-item:
+        schemaItem: bank
+    get:
+      is: [ withGeschaeftstellen ]
+    
+  /byPosition:          
+    displayName: Raiffeisen Bank
+    type:
+      readOnlyCollection:
+        schemaCollection: banks
+    get:
+      is: [ withGeschaeftstellen ]
+      queryParameters:
+        longitude:
+          type: number
+          required: true
+        latitude:
+          type: number
+          required: true
+        radius:
+          type: integer
+          required: true
+        fromBancomat:
+          type: boolean
+          required: false
+          default: false
+             
