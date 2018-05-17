@@ -9,7 +9,7 @@ import amf.client.model.domain._
 import amf.client.parse._
 import amf.client.remote.Content
 import amf.client.render.{Renderer, _}
-import amf.client.resolve.Raml10Resolver
+import amf.client.resolve.{Raml08Resolver, Raml10Resolver}
 import amf.client.resource.ResourceLoader
 import amf.common.Diff
 import amf.core.vocabulary.Namespace
@@ -944,6 +944,139 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     } yield {
       val nodeShape = unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[NodeShape]
       nodeShape.properties.asSeq.head.name.value() should be("name")
+    }
+  }
+
+  test("Test order of uri parameter ") {
+    val api =
+      """
+        |#%RAML 1.0
+        |---
+        |title: RAML 1.0 Uri param
+        |version: v1
+        |
+        |/part:
+        |  get:
+        |  /{uriParam1}:
+        |    uriParameters:
+        |      uriParam1:
+        |        type: integer
+        |    get:
+        |    /{uriParam2}:
+        |      uriParameters:
+        |        uriParam2:
+        |          type: number
+        |      get:
+        |      /{uriParam3}:
+        |        uriParameters:
+        |          uriParam3:
+        |            type: boolean
+        |        get:
+      """.stripMargin
+
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new RamlParser().parseStringAsync(api).asFuture
+      resolved <- Future { new Raml10Resolver().resolve(unit) }
+    } yield {
+      val pathParamters: List[Parameter] = resolved
+        .asInstanceOf[Document]
+        .encodes
+        .asInstanceOf[WebApi]
+        .endPoints
+        .asSeq
+        .last
+        .parameters
+        .asSeq
+        .filter(_.binding.value().equals("path"))
+        .toList
+
+      assert(pathParamters.head.name.value().equals("uriParam1"))
+      assert(pathParamters(1).name.value().equals("uriParam2"))
+      assert(pathParamters(2).name.value().equals("uriParam3"))
+
+    }
+  }
+
+  test("Test order of base uri parameter ") {
+    val api =
+      """
+        |#%RAML 1.0
+        |---
+        |title: RAML 1.0 Uri param
+        |version: v1
+        |baseUri: https://www.example.com/api/{v1}/{v2}
+        |
+        |baseUriParameters:
+        |  v2:
+        |  v1:
+        |    type: string""".stripMargin
+
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new RamlParser().parseStringAsync(api).asFuture
+      resolved <- Future { new Raml10Resolver().resolve(unit) }
+    } yield {
+      val baseParameters: Seq[Parameter] =
+        resolved.asInstanceOf[Document].encodes.asInstanceOf[WebApi].servers.asSeq.head.variables.asSeq
+
+      assert(baseParameters.head.name.value().equals("v1"))
+      assert(baseParameters(1).name.value().equals("v2"))
+
+    }
+  }
+
+  test("Test order of raml 08 form parameters ") {
+    val api =
+      """
+        |#%RAML 0.8
+        |---
+        |title: RAML 1.0 Uri param
+        |version: v1
+        |
+        |/multipart:
+        |  post:
+        |    body:
+        |      multipart/form-data:
+        |        formParameters:
+        |          first:
+        |            type: string
+        |            required: true
+        |          second:
+        |            type: string
+        |            default: segundo
+        |          third:
+        |            type: boolean
+        |    responses:
+        |      201: ~
+      """.stripMargin
+
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new RamlParser().parseStringAsync(api).asFuture
+      resolved <- Future { new Raml08Resolver().resolve(unit) }
+    } yield {
+      val shape: Shape = unit
+        .asInstanceOf[Document]
+        .encodes
+        .asInstanceOf[WebApi]
+        .endPoints
+        .asSeq
+        .head
+        .operations
+        .asSeq
+        .head
+        .request
+        .payloads
+        .asSeq
+        .head
+        .schema
+
+      assert(shape.isInstanceOf[NodeShape])
+      val properties = shape.asInstanceOf[NodeShape].properties.asSeq
+      assert(properties.head.name.value().equals("first"))
+      assert(properties(1).name.value().equals("second"))
+      assert(properties(2).name.value().equals("third"))
     }
   }
 

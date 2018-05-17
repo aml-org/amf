@@ -115,7 +115,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     val entries = map.regex(uriParametersKey)
     val implicitExplicitPathParams = entries match {
       case Nil =>
-        implicitPathParams(endpoint)
+        implicitPathParamsOrdered(endpoint)
 
       case _ =>
         entries.flatMap { entry =>
@@ -126,8 +126,9 @@ abstract class RamlEndpointParser(entry: YMapEntry,
               .parse()
               .map(_.withBinding("path"))
 
-          explicitParameters ++ implicitPathParams(endpoint,
-                                                   variable => !explicitParameters.exists(_.name.is(variable)))
+          implicitPathParamsOrdered(endpoint,
+                                    variable => !explicitParameters.exists(_.name.is(variable)),
+                                    explicitParameters)
         }.toSeq
     }
 
@@ -169,7 +170,9 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     )
   }
 
-  private def implicitPathParams(endpoint: EndPoint, filter: String => Boolean = _ => true): Seq[Parameter] = {
+  private def implicitPathParamsOrdered(endpoint: EndPoint,
+                                        filter: String => Boolean = _ => true,
+                                        explicitParams: Seq[Parameter] = Nil): Seq[Parameter] = {
     val parentParams: Map[String, Parameter] = parent
       .map(
         _.parameters
@@ -181,21 +184,29 @@ abstract class RamlEndpointParser(entry: YMapEntry,
       )
       .getOrElse(Map())
 
-    TemplateUri
+    val params: Seq[Parameter] = TemplateUri
       .variables(parsePath())
       .filter(filter)
       .map { variable =>
-        val implicitParam = parentParams.get(variable) match {
+        val implicitParam: Parameter = parentParams.get(variable) match {
           case Some(param) =>
-            param.cloneParameter(endpoint.id)
-          case None =>
-            val pathParam = endpoint.withParameter(variable).withBinding("path").withRequired(true)
-            pathParam.withScalarSchema(variable).withDataType((Namespace.Xsd + "string").iri())
+            val pathParam = param.cloneParameter(endpoint.id)
+            pathParam.annotations += SynthesizedField()
             pathParam
+          case None =>
+            explicitParams.find(p => p.name.value().equals(variable) && p.binding.value().equals("path")) match {
+              case Some(p) => p
+              case None =>
+                val pathParam = endpoint.withParameter(variable).withBinding("path").withRequired(true)
+                pathParam.withScalarSchema(variable).withDataType((Namespace.Xsd + "string").iri())
+                pathParam.annotations += SynthesizedField()
+                pathParam
+            }
         }
-        implicitParam.annotations += SynthesizedField()
         implicitParam
       }
+    params ++ explicitParams.filter(!params.contains(_))
+
   }
 
   protected def parsePath(): String = parent.map(_.path.value()).getOrElse("") + entry.key.as[YScalar].text
