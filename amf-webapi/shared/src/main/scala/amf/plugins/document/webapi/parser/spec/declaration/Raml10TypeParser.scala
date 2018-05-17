@@ -327,11 +327,12 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
       }
 
       val syntaxType = str.split("#").last match {
-        case "integer" | "float" => "numberScalarShape"
-        case "string"            => "stringScalarShape"
-        case "dateTime"          => "dateScalarShape"
-        case _                   => "shape"
+        case "integer" | "float" | "double" | "long" | "number" => "numberScalarShape"
+        case "string"                                           => "stringScalarShape"
+        case "dateTime"                                         => "dateScalarShape"
+        case _                                                  => "shape"
       }
+
       ctx.closedShape(shape.id, map, syntaxType)
       shape
     }
