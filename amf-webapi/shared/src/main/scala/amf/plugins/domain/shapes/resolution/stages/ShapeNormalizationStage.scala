@@ -31,11 +31,7 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
 
   var fixPointCount = 0
 
-  override def resolve(model: BaseUnit): BaseUnit =
-    profile match {
-      case ProfileNames.RAML08 => model
-      case _                   => model.transform(findShapesPredicate, transform)
-    }
+  override def resolve(model: BaseUnit): BaseUnit = model.transform(findShapesPredicate, transform)
 
   protected def ensureCorrect(shape: Shape): Unit = {
     if (Option(shape.id).isEmpty) {

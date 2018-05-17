@@ -123,7 +123,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
       value.toFutureRef {
         case resolvedDialectDomainElement: DialectDomainElement =>
           objectProperties.put(property.id,
-                               resolveUnreferencedLink(value.refName, value.annotations, resolvedDialectDomainElement)
+                               resolveUnreferencedLink(value.refName, value.annotations, resolvedDialectDomainElement, value.supportsRecursion.option().getOrElse(false))
                                  .withId(value.id))
         case resolved =>
           throw new Exception(s"Cannot resolve reference with not dialect domain element value ${resolved.id}")
@@ -216,9 +216,12 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   override def linkCopy(): Linkable =
     DialectDomainElement().withId(id).withDefinedBy(definedBy).withInstanceTypes(instanceTypes)
 
-  override def resolveUnreferencedLink[T](label: String, annotations: Annotations, unresolved: T): T = {
+  override def resolveUnreferencedLink[T](label: String, annotations: Annotations, unresolved: T, supportsRecursion: Boolean): T = {
     val unresolvedNodeMapping = unresolved.asInstanceOf[DialectDomainElement]
-    unresolvedNodeMapping.link(label, annotations).asInstanceOf[DialectDomainElement].asInstanceOf[T]
+    val linked: T = unresolvedNodeMapping.link(label, annotations)
+    if (supportsRecursion && linked.isInstanceOf[Linkable])
+      linked.asInstanceOf[Linkable].withSupportsRecursion(supportsRecursion)
+    linked.asInstanceOf[DialectDomainElement].asInstanceOf[T]
   }
 
   /** Value , path + field value that is used to compose the id when the object its adopted */

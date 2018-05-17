@@ -10,9 +10,11 @@ baseUri: https://{destinationBucket}.s3.amazonaws.com
           AWSAccessKeyId:
             description: The AWS Access Key ID of the owner of the bucket who grants an Anonymous user access for a request that satisfies the set of constraints in the Policy.
             type: string
+            required: false
           acl:
             description: Specifies an Amazon S3 access control list. If an invalid access control list is specified, an error is generated.
             type: string
+            required: false
           file:
             -
               type: string

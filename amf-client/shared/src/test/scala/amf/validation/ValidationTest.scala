@@ -1589,6 +1589,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Test stackoverflow case 0.8 from Platform") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "/stackoverflow2/api.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML08)
+    } yield {
+      assert(report.conforms)
+      assert(report.results.isEmpty)
+    }
+  }
+
   test("Test out of range status code") {
     for {
       validation <- Validation(platform)
