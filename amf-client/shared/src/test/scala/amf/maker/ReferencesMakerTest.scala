@@ -54,9 +54,9 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
 
   case class UnitsCreator(spec: Vendor) {
 
-    val (file, fragmentFile, minCount) = spec match {
-      case Raml => ("data-type-fragment.reference.raml", "person.raml", 1)
-      case _    => ("data-type-fragment.json", "person.json", 1)
+    val (file, fragmentFile, minCount, recursive) = spec match {
+      case Raml => ("data-type-fragment.reference.raml", "person.raml", 1, false)
+      case _    => ("data-type-fragment.json", "person.json", 1, true)
     }
 
     private val person: NodeShape = {
@@ -79,6 +79,9 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
 
     val usesDataType: Document = {
 
+      val personLink = person.link("fragments/" + fragmentFile).asInstanceOf[NodeShape].withName("person")
+      if (recursive) personLink.withSupportsRecursion(true)
+
       Document()
         .withId("/Users/hernan.najles/mulesoft/amf/amf-client/shared/src/test/resources/references/" + file)
         .withLocation("/Users/hernan.najles/mulesoft/amf/amf-client/shared/src/test/resources/references/" + file)
@@ -88,7 +91,7 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
             .withName("API")
             .withVersion("1.0"))
         .withReferences(Seq(dataTypeFragment))
-        .withDeclares(Seq(person.link("fragments/" + fragmentFile).asInstanceOf[NodeShape].withName("person")))
+        .withDeclares(Seq(personLink))
     }
   }
 }
