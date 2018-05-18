@@ -15,6 +15,8 @@ case class HttpResourceLoader() extends BaseHttpResourceLoader {
     val u          = new java.net.URL(resource)
     val connection = u.openConnection.asInstanceOf[HttpURLConnection]
     connection.setRequestMethod("GET")
+    connection.setConnectTimeout(System.getProperty("amf.connection.connect.timeout", "5000").toInt)
+    connection.setReadTimeout(System.getProperty("amf.connection.read.timeout", "60000").toInt)
 
     Future {
       connection.connect()
