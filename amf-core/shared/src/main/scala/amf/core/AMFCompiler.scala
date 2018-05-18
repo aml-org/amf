@@ -1,6 +1,6 @@
 package amf.core
 
-import java.net.{SocketTimeoutException, URISyntaxException}
+import java.net.URISyntaxException
 
 import amf.client.remote.Content
 import amf.core
