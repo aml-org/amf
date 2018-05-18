@@ -431,9 +431,9 @@ case class NodeMappingEmitter(dialect: Dialect,
   override def emit(b: EntryBuilder): Unit = {
     if (nodeMapping.isLink) {
       if (isFragment(nodeMapping.linkTarget.get, dialect)) {
-        b.entry(nodeMapping.name.value(), YNode.include(nodeMapping.linkLabel.get))
+        b.entry(nodeMapping.name.value(), YNode.include(nodeMapping.linkLabel.value()))
       } else {
-        b.entry(nodeMapping.name.value(), nodeMapping.linkLabel.get)
+        b.entry(nodeMapping.name.value(), nodeMapping.linkLabel.value())
       }
     } else {
       b.entry(

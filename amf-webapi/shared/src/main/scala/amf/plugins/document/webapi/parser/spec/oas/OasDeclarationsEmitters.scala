@@ -88,7 +88,7 @@ case class OasNamedParameterEmitter(parameter: Parameter, ordering: SpecOrdering
     b.entry(
       parameter.name.option().getOrElse(throw new Exception(s"Cannot declare shape without name $parameter")),
       b => {
-        if (parameter.isLink) OasTagToReferenceEmitter(parameter, parameter.linkLabel, Nil).emit(b)
+        if (parameter.isLink) OasTagToReferenceEmitter(parameter, parameter.linkLabel.option(), Nil).emit(b)
         else ParameterEmitter(parameter, ordering, references).emit(b)
       }
     )
@@ -128,7 +128,8 @@ case class OasNamedPropertyTypeEmitter(annotationType: CustomDomainProperty, ord
         .orElse(throw new Exception(s"Cannot declare annotation type without name $annotationType"))
         .get,
       b => {
-        if (annotationType.isLink) OasTagToReferenceEmitter(annotationType, annotationType.linkLabel, Nil).emit(b)
+        if (annotationType.isLink)
+          OasTagToReferenceEmitter(annotationType, annotationType.linkLabel.option(), Nil).emit(b)
         else
           spec.factory.annotationTypeEmitter(annotationType, ordering).emitters() match {
             case Left(emitters) =>

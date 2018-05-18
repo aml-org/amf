@@ -176,7 +176,7 @@ abstract class RamlParameterEmitter(parameter: Parameter, ordering: SpecOrdering
       emitParameterKey(fs, _),
       b => {
         parameter.linkTarget.foreach(l =>
-          spec.factory.tagToReferenceEmitter(l, parameter.linkLabel, references).emit(b))
+          spec.factory.tagToReferenceEmitter(l, parameter.linkLabel.option(), references).emit(b))
       }
     )
   }
@@ -283,7 +283,7 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
     sourceOr(
       parameter.annotations,
       if (parameter.isLink) {
-        spec.ref(b, OasDefinitions.appendParameterDefinitionsPrefix(parameter.linkLabel.get))
+        spec.ref(b, OasDefinitions.appendParameterDefinitionsPrefix(parameter.linkLabel.value()))
       } else {
         val result = mutable.ListBuffer[EntryEmitter]()
         val fs     = parameter.fields
