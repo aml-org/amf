@@ -19,6 +19,17 @@ object ParsedJSONSchema extends AnnotationGraphLoader {
   }
 }
 
+case class JSONSchemaId(id: String) extends SerializableAnnotation with PerpetualAnnotation {
+  override val name: String  = "json-schema-id"
+  override val value: String = id
+}
+
+object JSONSchemaId extends AnnotationGraphLoader {
+  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
+    JSONSchemaId(annotatedValue)
+  }
+}
+
 case class ExternalFragmentRef(fragment: String) extends SerializableAnnotation with PerpetualAnnotation {
   override val name: String  = "external-fragment-ref"
   override val value: String = fragment

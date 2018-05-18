@@ -220,7 +220,7 @@
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
-                            "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                            "http://raml.org/vocabularies/document-source-maps#json-schema-id": [
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
@@ -229,7 +229,7 @@
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(11,8)-(11,14)]"
+                                    "@value": "http://jsonschema.net/wip/questionnaires/0"
                                   }
                                 ]
                               }
@@ -259,6 +259,20 @@
                                   }
                                 ]
                               }
+                            ],
+                            "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                              {
+                                "http://raml.org/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/wip/property/questionnaires/array/questionnaires/member0"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(11,8)-(11,14)]"
+                                  }
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -277,7 +291,7 @@
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
-                    "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                    "http://raml.org/vocabularies/document-source-maps#json-schema-id": [
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
@@ -286,7 +300,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(8,6)-(8,12)]"
+                            "@value": "http://jsonschema.net/wip/questionnaires"
                           }
                         ]
                       }
@@ -301,6 +315,20 @@
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
                             "@value": "[(6,4)-(14,5)]"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                      {
+                        "http://raml.org/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/wip/property/questionnaires/array/questionnaires"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(8,6)-(8,12)]"
                           }
                         ]
                       }
@@ -373,6 +401,20 @@
                 ]
               }
             ],
+            "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/wip"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(4,2)-(4,8)]"
+                  }
+                ]
+              }
+            ],
             "http://raml.org/vocabularies/document-source-maps#lexical": [
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
@@ -399,7 +441,7 @@
                 ]
               }
             ],
-            "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+            "http://raml.org/vocabularies/document-source-maps#json-schema-id": [
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
@@ -408,7 +450,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(4,2)-(4,8)]"
+                    "@value": "http://jsonschema.net/wip"
                   }
                 ]
               }
