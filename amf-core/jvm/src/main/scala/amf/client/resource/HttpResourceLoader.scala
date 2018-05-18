@@ -1,11 +1,12 @@
 package amf.client.resource
 
-import java.net.HttpURLConnection
+import java.net.{HttpURLConnection, SocketTimeoutException}
 import java.util.concurrent.CompletableFuture
 
 import amf.client.remote.Content
 import amf.core.lexer.CharArraySequence
 import amf.core.remote.FutureConverter._
+import amf.core.remote.SocketTimeout
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -19,11 +20,15 @@ case class HttpResourceLoader() extends BaseHttpResourceLoader {
     connection.setReadTimeout(System.getProperty("amf.connection.read.timeout", "60000").toInt)
 
     Future {
-      connection.connect()
-      connection.getResponseCode match {
-        case 200 =>
-          createContent(connection, resource)
-        case s => throw new Exception(s"Unhandled status code $s => $resource")
+      try {
+        connection.connect()
+        connection.getResponseCode match {
+          case 200 =>
+            createContent(connection, resource)
+          case s => throw new Exception(s"Unhandled status code $s => $resource")
+        }
+      } catch {
+        case e: SocketTimeoutException => throw SocketTimeout(e)
       }
     }.asJava
   }
