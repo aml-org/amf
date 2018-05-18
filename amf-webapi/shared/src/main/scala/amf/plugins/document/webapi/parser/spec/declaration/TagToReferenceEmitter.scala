@@ -64,7 +64,7 @@ case class RamlTagToReferenceEmitter(target: DomainElement, label: Option[String
 }
 
 case class RamlLocalReferenceEmitter(reference: Linkable) extends PartEmitter {
-  override def emit(b: PartBuilder): Unit = reference.linkLabel match {
+  override def emit(b: PartBuilder): Unit = reference.linkLabel.option() match {
     case Some(label) => raw(b, label)
     case None        => throw new Exception("Missing link label")
   }

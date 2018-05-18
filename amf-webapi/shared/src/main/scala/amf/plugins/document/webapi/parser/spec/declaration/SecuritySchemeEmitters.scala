@@ -91,7 +91,7 @@ case class OasNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
 
   private def emitLink(b: PartBuilder): Unit = {
     securityScheme.linkTarget.foreach { l =>
-      OasTagToReferenceEmitter(l, securityScheme.linkLabel, Nil).emit(b)
+      OasTagToReferenceEmitter(l, securityScheme.linkLabel.option(), Nil).emit(b)
     }
   }
 
@@ -135,7 +135,7 @@ abstract class RamlNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
 
   private def emitLink(b: PartBuilder): Unit = {
     securityScheme.linkTarget.foreach { l =>
-      RamlTagToReferenceEmitter(l, securityScheme.linkLabel, references).emit(b)
+      RamlTagToReferenceEmitter(l, securityScheme.linkLabel.option(), references).emit(b)
     }
   }
 

@@ -1,6 +1,7 @@
 package amf.client.model.domain
 
 import amf.client.convert.CoreClientConverters._
+import amf.client.model.StrField
 import amf.core.model.domain.{DomainElement => InternalDomainElement, Linkable => InternalLinkable}
 
 import scala.scalajs.js.annotation.JSExportAll
@@ -12,8 +13,8 @@ trait Linkable { this: DomainElement with Linkable =>
 
   def linkTarget: ClientOption[DomainElement] = _internal.linkTarget.asClient
 
-  def isLink: Boolean           = _internal.linkTarget.isDefined
-  def linkLabel: Option[String] = _internal.linkLabel
+  def isLink: Boolean     = _internal.linkTarget.isDefined
+  def linkLabel: StrField = _internal.linkLabel
 
   def linkCopy(): Linkable
 

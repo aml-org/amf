@@ -297,7 +297,7 @@ class Raml10SpecEmitterContext(refEmitter: RefEmitter = RamlRefEmitter) extends 
 
 class XRaml10SpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) extends Raml10SpecEmitterContext(refEmitter) {
   override def localReference(reference: Linkable): PartEmitter =
-    oasFactory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel, Nil)
+    oasFactory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel.option(), Nil)
 
   val oasFactory: OasSpecEmitterFactory = Oas2SpecEmitterFactory()(new Oas2SpecEmitterContext(refEmitter))
 }
@@ -318,7 +318,7 @@ abstract class RamlSpecEmitterContext(refEmitter: RefEmitter) extends SpecEmitte
 
 abstract class OasSpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) extends SpecEmitterContext(refEmitter) {
   override def localReference(reference: Linkable): PartEmitter =
-    factory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel, Nil)
+    factory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel.option(), Nil)
 
   val factory: OasSpecEmitterFactory
 }

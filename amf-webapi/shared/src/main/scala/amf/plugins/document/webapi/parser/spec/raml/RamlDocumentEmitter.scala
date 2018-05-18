@@ -115,7 +115,7 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
 
     private def emitLink(b: PartBuilder): Unit = {
       annotation.linkTarget.foreach { l =>
-        spec.factory.tagToReferenceEmitter(l, annotation.linkLabel, references).emit(b)
+        spec.factory.tagToReferenceEmitter(l, annotation.linkLabel.option(), references).emit(b)
       }
     }
 
@@ -222,12 +222,15 @@ abstract class RamlRootLevelEmitters(doc: BaseUnit with DeclaresModel, ordering:
   }
 }
 
-case class ReferenceEmitter(reference: BaseUnit, aliases: Option[Aliases], ordering: SpecOrdering, aliasGenerator: () => String)
+case class ReferenceEmitter(reference: BaseUnit,
+                            aliases: Option[Aliases],
+                            ordering: SpecOrdering,
+                            aliasGenerator: () => String)
     extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
     val aliasesMap = aliases.getOrElse(Aliases(Set())).aliases
-    val effectiveAlias = aliasesMap.find { case (a, (f,r)) => f == reference.id } map { case (a, (f,r)) => (a, r) } getOrElse {
+    val effectiveAlias = aliasesMap.find { case (a, (f, r)) => f == reference.id } map { case (a, (f, r)) => (a, r) } getOrElse {
       (aliasGenerator(), name)
     }
     MapEntryEmitter(effectiveAlias._1, effectiveAlias._2).emit(b)
@@ -245,24 +248,29 @@ case class ReferenceEmitter(reference: BaseUnit, aliases: Option[Aliases], order
 
 case class ReferencesEmitter(baseUnit: BaseUnit, ordering: SpecOrdering) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    val aliases = baseUnit.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set()))
+    val aliases    = baseUnit.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set()))
     val references = baseUnit.references
-    val modules = references.collect({ case m: Module => m })
+    val modules    = references.collect({ case m: Module => m })
     if (modules.nonEmpty) {
       var modulesEmitted = Map[String, Module]()
-      val idCounter = new IdCounter()
-      val aliasesEmitters: Seq[Option[EntryEmitter]] = aliases.aliases.map { case (alias, (fullUrl, localUrl)) =>
-        modules.find(_.id == fullUrl) match {
-          case Some(module) =>
-            modulesEmitted += (module.id -> module)
-            Some(ReferenceEmitter(module, Some(Aliases(Set(alias -> (fullUrl, localUrl)))), ordering, () => idCounter.genId("uses")))
-          case _            => None
-        }
+      val idCounter      = new IdCounter()
+      val aliasesEmitters: Seq[Option[EntryEmitter]] = aliases.aliases.map {
+        case (alias, (fullUrl, localUrl)) =>
+          modules.find(_.id == fullUrl) match {
+            case Some(module) =>
+              modulesEmitted += (module.id -> module)
+              Some(
+                ReferenceEmitter(module,
+                                 Some(Aliases(Set(alias -> (fullUrl, localUrl)))),
+                                 ordering,
+                                 () => idCounter.genId("uses")))
+            case _ => None
+          }
       }.toSeq
       val missingModuleEmitters = modules.filter(m => modulesEmitted.get(m.id).isEmpty).map { module =>
         Some(ReferenceEmitter(module, Some(Aliases(Set())), ordering, () => idCounter.genId("uses")))
       }
-      val finalEmitters = (aliasesEmitters ++ missingModuleEmitters).collect{ case Some(e) => e }
+      val finalEmitters = (aliasesEmitters ++ missingModuleEmitters).collect { case Some(e) => e }
       b.entry("uses", _.obj { b =>
         traverse(ordering.sorted(finalEmitters), b)
       })
@@ -439,7 +447,7 @@ case class UserDocumentationsEmitter(f: FieldEntry, ordering: SpecOrdering)(impl
           .foreach(
             c =>
               if (c.isLink)
-                raw(b, c.linkLabel.getOrElse(c.linkTarget.get.id))
+                raw(b, c.linkLabel.option().getOrElse(c.linkTarget.get.id))
               else
                 RamlCreativeWorkEmitter(c, ordering, withExtension = true).emit(b))
       }

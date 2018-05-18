@@ -50,10 +50,12 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
 
   def includeName: String = {
     if (isLink)
-      linkLabel.getOrElse(
-        linkTarget
-          .map(_.id.split("#").head)
-          .getOrElse(throw new Exception(s"Cannot produce include reference without linked element at elem $id")))
+      linkLabel
+        .option()
+        .getOrElse(
+          linkTarget
+            .map(_.id.split("#").head)
+            .getOrElse(throw new Exception(s"Cannot produce include reference without linked element at elem $id")))
     else
       throw new Exception(s"Cannot produce include reference without linked element at elem $id")
   }
@@ -122,9 +124,14 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     if (value.isUnresolved) {
       value.toFutureRef {
         case resolvedDialectDomainElement: DialectDomainElement =>
-          objectProperties.put(property.id,
-                               resolveUnreferencedLink(value.refName, value.annotations, resolvedDialectDomainElement, value.supportsRecursion.option().getOrElse(false))
-                                 .withId(value.id))
+          objectProperties.put(
+            property.id,
+            resolveUnreferencedLink(value.refName,
+                                    value.annotations,
+                                    resolvedDialectDomainElement,
+                                    value.supportsRecursion.option().getOrElse(false))
+              .withId(value.id)
+          )
         case resolved =>
           throw new Exception(s"Cannot resolve reference with not dialect domain element value ${resolved.id}")
       }
@@ -216,9 +223,12 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   override def linkCopy(): Linkable =
     DialectDomainElement().withId(id).withDefinedBy(definedBy).withInstanceTypes(instanceTypes)
 
-  override def resolveUnreferencedLink[T](label: String, annotations: Annotations, unresolved: T, supportsRecursion: Boolean): T = {
+  override def resolveUnreferencedLink[T](label: String,
+                                          annotations: Annotations,
+                                          unresolved: T,
+                                          supportsRecursion: Boolean): T = {
     val unresolvedNodeMapping = unresolved.asInstanceOf[DialectDomainElement]
-    val linked: T = unresolvedNodeMapping.link(label, annotations)
+    val linked: T             = unresolvedNodeMapping.link(label, annotations)
     if (supportsRecursion && linked.isInstanceOf[Linkable])
       linked.asInstanceOf[Linkable].withSupportsRecursion(supportsRecursion)
     linked.asInstanceOf[DialectDomainElement].asInstanceOf[T]

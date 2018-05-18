@@ -68,7 +68,7 @@ case class OasCreativeWorkEmitter(document: CreativeWork, ordering: SpecOrdering
     extends PartEmitter {
   override def emit(b: PartBuilder): Unit = {
     if (document.isLink)
-      raw(b, document.linkLabel.getOrElse(document.linkTarget.get.id))
+      raw(b, document.linkLabel.option().getOrElse(document.linkTarget.get.id))
     else
       b.obj(traverse(OasCreativeWorkItemsEmitter(document, ordering).emitters(), _))
   }

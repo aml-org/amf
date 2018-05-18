@@ -57,7 +57,7 @@ case class MultipleExampleEmitter(key: String,
         b => {
           if (examples.head.isLink)
             examples.head.linkTarget.foreach(l =>
-              spec.factory.tagToReferenceEmitter(l, examples.head.linkLabel, references).emit(b))
+              spec.factory.tagToReferenceEmitter(l, examples.head.linkLabel.option(), references).emit(b))
           else {
             val emitters = examples.map(NamedExampleEmitter(_, ordering))
             b.obj(traverse(ordering.sorted(emitters), _))

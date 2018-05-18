@@ -147,7 +147,11 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
       }
 
       case l: Linkable if l.linkTarget.isDefined && isCycle =>
-        Some(RecursiveShape().withId(l.id).withFixPoint(l.linkTarget.get.id).withSupportsRecursion(l.supportsRecursion.option().getOrElse(false)))
+        Some(
+          RecursiveShape()
+            .withId(l.id)
+            .withFixPoint(l.linkTarget.get.id)
+            .withSupportsRecursion(l.supportsRecursion.option().getOrElse(false)))
 
       // link traversed, return the link
       case l: Linkable if l.linkTarget.isDefined => Some(l)
@@ -205,11 +209,12 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
         if (resolvedNamesPresent.isEmpty)
           resolved.annotations += resolvedNamedEntityAnnotation
 
-      case s: Linkable if s.isInstanceOf[NamedDomainElement] && s.linkLabel.isDefined =>
+      case s: Linkable if s.isInstanceOf[NamedDomainElement] && s.linkLabel.option().isDefined =>
         val resolvedNamesPresent          = resolved.annotations.find(classOf[ResolvedNamedEntity])
         val resolvedNamedEntityAnnotation = resolvedNamesPresent.getOrElse(ResolvedNamedEntity())
-        val referenced                    = resolvedNamedEntityAnnotation.vals.getOrElse(s.linkLabel.get, Nil)
-        resolvedNamedEntityAnnotation.vals.put(s.linkLabel.get, referenced ++ Seq(s.asInstanceOf[NamedDomainElement]))
+        val referenced                    = resolvedNamedEntityAnnotation.vals.getOrElse(s.linkLabel.value(), Nil)
+        resolvedNamedEntityAnnotation.vals
+          .put(s.linkLabel.value(), referenced ++ Seq(s.asInstanceOf[NamedDomainElement]))
         if (resolvedNamesPresent.isEmpty)
           resolved.annotations += resolvedNamedEntityAnnotation
 

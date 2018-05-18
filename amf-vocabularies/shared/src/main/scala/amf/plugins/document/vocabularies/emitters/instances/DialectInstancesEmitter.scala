@@ -295,13 +295,12 @@ case class DialectNodeEmitter(node: DialectDomainElement,
         }
       } else if (node.annotations.contains(classOf[JsonPointerRef])) {
         b.obj { m =>
-          m.entry("$ref", node.linkLabel.getOrElse(node.linkTarget.get.id))
+          m.entry("$ref", node.linkLabel.option().getOrElse(node.linkTarget.get.id))
         }
       } else {
         b += YNode.include(node.includeName)
       }
     }
-
 
     override def position(): Position =
       node.annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
@@ -310,7 +309,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
   protected def emitRef(node: DialectDomainElement, b: PartBuilder): Unit = {
     if (node.annotations.contains(classOf[JsonPointerRef])) {
       b.obj { m =>
-        m.entry("$ref", node.linkLabel.getOrElse(node.linkTarget.get.id))
+        m.entry("$ref", node.linkLabel.option().getOrElse(node.linkTarget.get.id))
       }
     } else {
       TextScalarEmitter(node.localRefName, node.annotations).emit(b)
@@ -546,7 +545,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
   def emitLibrarRef(elem: DialectDomainElement, instance: DialectInstance, b: PartBuilder): Unit = {
     if (elem.annotations.contains(classOf[JsonPointerRef])) {
       b.obj { m =>
-        m.entry("$ref", node.linkLabel.getOrElse(node.linkTarget.get.id))
+        m.entry("$ref", node.linkLabel.option().getOrElse(node.linkTarget.get.id))
       }
     } else {
       val lib = instance.references.find {
