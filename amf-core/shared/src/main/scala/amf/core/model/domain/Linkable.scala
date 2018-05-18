@@ -44,8 +44,12 @@ trait Linkable extends AmfObject { this: DomainElement with Linkable =>
     * This can be overriden by subclasses to customise how the links to unresolved classes are generated.
     * By default it just generates a link.
     */
-  def resolveUnreferencedLink[T](label: String, annotations: Annotations = Annotations(), unresolved: T): T =
-    link(label, annotations)
+  def resolveUnreferencedLink[T](label: String, annotations: Annotations = Annotations(), unresolved: T, supportsRecursion: Boolean): T = {
+    val linked: T = link(label, annotations)
+    if (supportsRecursion && linked.isInstanceOf[Linkable])
+      linked.asInstanceOf[Linkable].withSupportsRecursion(supportsRecursion)
+    linked
+  }
 
   def afterResolve(): Unit = Unit
 

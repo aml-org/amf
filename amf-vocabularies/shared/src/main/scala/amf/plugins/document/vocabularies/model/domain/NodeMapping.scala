@@ -25,10 +25,12 @@ case class NodeMapping(fields: Fields, annotations: Annotations) extends DomainE
 
   override def linkCopy(): Linkable = NodeMapping().withId(id)
 
-  override def resolveUnreferencedLink[T](label: String, annotations: Annotations, unresolved: T): T = {
+  override def resolveUnreferencedLink[T](label: String, annotations: Annotations, unresolved: T, supportsRecursion: Boolean): T = {
     val unresolvedNodeMapping = unresolved.asInstanceOf[NodeMapping]
-    unresolvedNodeMapping
-      .link(label, annotations)
+    val linked: T = unresolvedNodeMapping.link(label, annotations)
+    if (supportsRecursion && linked.isInstanceOf[Linkable])
+      linked.asInstanceOf[Linkable].withSupportsRecursion(supportsRecursion)
+    linked
       .asInstanceOf[NodeMapping]
       .withId(unresolvedNodeMapping.id)
       .withName(unresolvedNodeMapping.name.value())

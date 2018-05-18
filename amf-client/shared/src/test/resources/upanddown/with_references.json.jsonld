@@ -129,6 +129,11 @@
                                         "@value": "A"
                                       }
                                     ],
+                                    "http://raml.org/vocabularies/document#recursive": [
+                                      {
+                                        "@value": true
+                                      }
+                                    ],
                                     "http://www.w3.org/ns/shacl#name": [
                                       {
                                         "@value": "a"
@@ -232,6 +237,11 @@
                                     "http://raml.org/vocabularies/document#link-label": [
                                       {
                                         "@value": "B"
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document#recursive": [
+                                      {
+                                        "@value": true
                                       }
                                     ],
                                     "http://www.w3.org/ns/shacl#name": [
@@ -1278,6 +1288,11 @@
         "http://raml.org/vocabularies/document#link-label": [
           {
             "@value": "referred.raml"
+          }
+        ],
+        "http://raml.org/vocabularies/document#recursive": [
+          {
+            "@value": true
           }
         ],
         "http://www.w3.org/ns/shacl#name": [
