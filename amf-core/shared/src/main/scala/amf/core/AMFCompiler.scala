@@ -209,8 +209,8 @@ class AMFCompiler(val rawUrl: String,
           }
           .flatMap(u => {
             val f = u match {
-              case fu: Future[BaseUnit] => fu
-              case bu: BaseUnit         => Future { bu }
+              case fu: Future[_] => fu.mapTo[BaseUnit]
+              case bu: BaseUnit  => Future.successful(bu)
             }
             f.flatMap { u =>
               val reference = ParsedReference(u, link)
@@ -218,7 +218,7 @@ class AMFCompiler(val rawUrl: String,
             }
           })
           .recover {
-            case e @ (_: FileNotFound | _: URISyntaxException) =>
+            case e: Throwable  =>
               if (!link.isInferred()) {
                 link.refs.map(_.node).foreach { ref =>
                   ctx.violation(link.url, e.getMessage, ref)
