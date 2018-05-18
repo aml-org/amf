@@ -18,7 +18,8 @@ class Cycle08ToVersion extends BuildCycleTests {
                 "operation-base-uri-parameters.raml",
                 "operation-base-uri-parameters-10.raml"),
     FixtureData("named parameters in media type", "named-type.raml", "named-type-10.raml"),
-    FixtureData("operation with a description", "operation-description.raml", "operation-description-10.raml")
+    FixtureData("operation with a description", "operation-description.raml", "operation-description-10.raml"),
+    FixtureData("parameter with file type", "file-type.raml", "file-type-10.raml")
   )
 
   cycle08to10.foreach(f => {
@@ -48,7 +49,8 @@ class Cycle08ToVersion extends BuildCycleTests {
     FixtureData("name in json schema def", "name-json-schema.raml", "name-json-schema-08.raml"),
     FixtureData("empty media type", "empty-media-type.raml", "empty-media-type-08.raml"),
     FixtureData("empty params", "empty-params.raml", "empty-params-08.raml"),
-    FixtureData("nullpointer", "default-type-payloads.raml", "default-type-payloads-08.raml")
+    FixtureData("nullpointer", "default-type-payloads.raml", "default-type-payloads-08.raml"),
+    FixtureData("parameter with file type", "file-type.raml", "file-type-08.raml")
   )
 
   cycles08.foreach(f => {
@@ -57,10 +59,12 @@ class Cycle08ToVersion extends BuildCycleTests {
     }
   })
 
+  // todo add more test, this is important for toJsonSchema logic
   val cycleOas = Seq(
     FixtureData("operation base uri parameters",
                 "operation-base-uri-parameters.raml",
-                "operation-base-uri-parameters.json")
+                "operation-base-uri-parameters.json"),
+    FixtureData("parameter with file type", "file-type.raml", "file-type.json")
   )
 
   cycleOas.foreach { f =>

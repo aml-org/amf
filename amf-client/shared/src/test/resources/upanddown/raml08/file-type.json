@@ -1,0 +1,26 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "RAML 0.8 Query String",
+    "version": "v1"
+  },
+  "host": "www.example.com",
+  "basePath": "/api/",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/querystring": {
+      "get": {
+        "parameters": [
+          {
+            "name": "fileQueryParam",
+            "in": "query",
+            "type": "file"
+          }
+        ],
+        "responses": {}
+      }
+    }
+  }
+}

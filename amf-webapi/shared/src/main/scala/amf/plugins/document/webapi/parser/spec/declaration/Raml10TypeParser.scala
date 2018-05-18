@@ -10,13 +10,14 @@ import amf.core.parser.{Annotations, Value, _}
 import amf.core.remote.Oas
 import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
+import amf.core.vocabulary.Namespace.Shapes
 import amf.plugins.document.webapi.annotations._
-import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.contexts.{
   Raml08WebApiContext,
   Raml10WebApiContext,
   RamlWebApiContext,
-  WebApiContext
+  WebApiContext,
+  _
 }
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
@@ -311,6 +312,11 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
         })
         .fold(Raml08DefaultTypeParser(defaultType, name, map, adopt).parse())(value => {
           XsdTypeDefMapping.xsdFromString(value.text) match {
+            case (iri: String, format: Option[String])
+                if iri.equals((Shapes + "file").iri()) => // handle file type in 08 as FileShape for compatibility
+              // (Applicable only to Form properties) ???
+              val shape = FileShape(value)
+              Some(shape.withName(name))
             case (iri: String, format: Option[String]) =>
               val shape = ScalarShape(value).set(ScalarShapeModel.DataType, AmfScalar(iri), Annotations(value))
               format.foreach(f => shape.set(ScalarShapeModel.Format, AmfScalar(f), Annotations()))

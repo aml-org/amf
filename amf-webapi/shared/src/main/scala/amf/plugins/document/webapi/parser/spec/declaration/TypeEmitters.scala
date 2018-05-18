@@ -34,7 +34,7 @@ import amf.plugins.domain.shapes.annotations.{NilUnion, ParsedFromTypeExpression
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef.UndefinedType
 import amf.plugins.domain.shapes.models._
-import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
+import amf.plugins.domain.shapes.parser.{TypeDefXsdMapping, XsdTypeDefMapping}
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YNode, YType}
@@ -1737,6 +1737,10 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
         Seq(RamlJsonShapeEmitter(shape, ordering, Nil))
       case nil: NilShape =>
         RamlNilShapeEmitter(nil, ordering, Seq()).emitters()
+      case fileShape: FileShape =>
+        val scalar =
+          ScalarShape(fileShape.fields, fileShape.annotations).withDataType(XsdTypeDefMapping.xsdFromString("file")._1)
+        SimpleTypeEmitter(scalar, ordering).emitters()
       case shape: AnyShape =>
         RamlAnyShapeEmitter(shape, ordering, Nil).emitters()
       case other =>
