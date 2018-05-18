@@ -1,6 +1,6 @@
 package amf.core
 
-import java.net.URISyntaxException
+import java.net.{SocketTimeoutException, URISyntaxException}
 
 import amf.client.remote.Content
 import amf.core
@@ -218,7 +218,7 @@ class AMFCompiler(val rawUrl: String,
             }
           })
           .recover {
-            case e: Throwable  =>
+            case e @ (_: FileNotFound | _: URISyntaxException | _: SocketTimeoutException)  =>
               if (!link.isInferred()) {
                 link.refs.map(_.node).foreach { ref =>
                   ctx.violation(link.url, e.getMessage, ref)
