@@ -8,7 +8,7 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, Inferred}
+import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, Inferred, JSONSchemaId}
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
 import amf.plugins.document.webapi.parser.spec._
@@ -269,10 +269,12 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
             val text        = OasDefinitions.stripDefinitionsPrefix(ref)
             ctx.declarations.findType(text, SearchScope.All) match {
               case Some(s) =>
-                val copied = s.link(text, Annotations(ast)).asInstanceOf[AnyShape].withName(name).withSupportsRecursion(true)
+                val copied =
+                  s.link(text, Annotations(ast)).asInstanceOf[AnyShape].withName(name).withSupportsRecursion(true)
                 adopt(copied)
                 Some(copied)
-              case None if !isOas => // Only enabled for JSON Schema, not OAS. In OAS local references can only point to the #/definitions (#/components in OAS 3) node
+              case None
+                  if !isOas => // Only enabled for JSON Schema, not OAS. In OAS local references can only point to the #/definitions (#/components in OAS 3) node
                 // now we work with canonical JSON schema pointers, not local refs
                 val fullRef = ctx.resolvedPath(ctx.rootContextDocument, ref)
                 ctx.findJsonSchema(fullRef) match {
@@ -285,7 +287,8 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                   case None =>
                     // This is not the normal mechanism, just a way of having something to prevent the recursion
                     // Introduces the problem of an invalid link
-                    val tmpShape = UnresolvedShape(fullRef, map).withName(fullRef).withId(fullRef).withSupportsRecursion(true)
+                    val tmpShape =
+                      UnresolvedShape(fullRef, map).withName(fullRef).withId(fullRef).withSupportsRecursion(true)
                     tmpShape.withContext(ctx)
                     adopt(tmpShape)
                     ctx.registerJsonSchema(fullRef, tmpShape)
@@ -831,6 +834,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       // normal annotations
       AnnotationParser(shape, map).parse()
 
+      map.key("id", node => shape.annotations += JSONSchemaId(node.value.as[YScalar].text))
       shape
     }
   }

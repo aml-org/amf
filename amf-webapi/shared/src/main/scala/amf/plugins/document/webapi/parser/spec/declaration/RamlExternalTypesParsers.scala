@@ -15,7 +15,7 @@ import amf.core.parser.{
 }
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.core.utils.Strings
-import amf.plugins.document.webapi.annotations.{ExternalFragmentRef, ParsedJSONSchema}
+import amf.plugins.document.webapi.annotations.{ExternalFragmentRef, JSONSchemaId, ParsedJSONSchema}
 import amf.plugins.document.webapi.contexts.{Oas2WebApiContext, OasWebApiContext, RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.spec.domain.NodeDataNodeParser
 import amf.plugins.document.webapi.parser.spec.oas.Oas2DocumentParser
@@ -26,6 +26,8 @@ import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.YamlParser
 import org.yaml.render.YamlRender
+
+import scala.collection.mutable
 case class RamlJsonSchemaExpression(name: String, value: YNode, adopt: Shape => Shape, parseExample: Boolean = false)(
     override implicit val ctx: RamlWebApiContext)
     extends RamlExternalTypesParser {
@@ -35,8 +37,8 @@ case class RamlJsonSchemaExpression(name: String, value: YNode, adopt: Shape => 
 
     val parsed: AnyShape = origin.oriUrl match {
       case Some(url) =>
-        val (path, fragment) = ReferenceFragmentPartition(url)
-
+        val (path, extFrament) = ReferenceFragmentPartition(url)
+        val fragment           = extFrament.map(_.stripPrefix("/definitions/"))
         fragment
           .flatMap(ctx.declarations.findInExternalsLibs(path, _))
           .orElse(ctx.declarations.findInExternals(path)) match {
@@ -44,7 +46,7 @@ case class RamlJsonSchemaExpression(name: String, value: YNode, adopt: Shape => 
             val shape = s.copyShape().withName(name)
             ctx.declarations.fragments
               .get(path)
-              .foreach(e => shape.withReference(e.id + fragment.getOrElse("")))
+              .foreach(e => shape.withReference(e.id + extFrament.getOrElse("")))
             shape
           case _ if fragment.isDefined => // oas lib
             RamlExternalOasLibParser(ctx, origin.text, origin.valueAST, path).parse()
@@ -52,14 +54,14 @@ case class RamlJsonSchemaExpression(name: String, value: YNode, adopt: Shape => 
               case Some(s) =>
                 s.copyShape().withName(name)
               case _ =>
-                ctx.violation(s"could not find json schema fragment ${fragment.get} in file $path", origin.valueAST)
+                ctx.violation(s"could not find json schema fragment ${extFrament.get} in file $path", origin.valueAST)
                 UnresolvedShape(url)
             }
             ctx.declarations.fragments
               .get(path)
-              .foreach(e => shape.withReference(e.id + fragment.get))
+              .foreach(e => shape.withReference(e.id + extFrament.get))
 
-            shape.annotations += ExternalFragmentRef(fragment.get)
+            shape.annotations += ExternalFragmentRef(extFrament.get)
             shape
           case _ =>
             val shape = parseJsonShape(origin.text, name, origin.valueAST, adopt, value)
@@ -100,7 +102,7 @@ case class RamlJsonSchemaExpression(name: String, value: YNode, adopt: Shape => 
 
   case class RamlExternalOasLibParser(ctx: RamlWebApiContext, text: String, valueAST: YNode, path: String) {
     def parse(): Unit = {
-      val url       = path.normalizeUrl
+      val url       = path.normalizeUrl + (if (!path.endsWith("/")) "/" else "") // alwarys add / to avoid ask if there is any one before add #
       val schemaAst = YamlParser(text)(ctx).withIncludeTag("!include").parse(keepTokens = true)
       val schemaEntry = schemaAst.collectFirst({ case d: YDocument => d }) match {
         case Some(d) => d
@@ -117,12 +119,20 @@ case class RamlJsonSchemaExpression(name: String, value: YNode, adopt: Shape => 
         context)
         .parseTypeDeclarations(schemaEntry.node.as[YMap], url + "#/definitions/")
       val libraryShapes = context.declarations.shapes
-      val resolvedShapes: Map[String, AnyShape] = new ReferenceResolutionStage(ProfileNames.RAML, false)
+      val resolvedShapes = new ReferenceResolutionStage(ProfileNames.RAML, false)
         .resolveDomainElementSet[Shape](libraryShapes.values.toSeq)
-        .collect({ case s: AnyShape => "/definitions/" + s.name -> s })
-        .toMap
 
-      ctx.declarations.registerExternalLib(path, resolvedShapes)
+      val shapesMap = mutable.Map[String, AnyShape]()
+      resolvedShapes.map(s => (s, s.annotations.find(classOf[JSONSchemaId]))).foreach {
+        case (s: AnyShape, Some(a)) if a.id.equals(s.name.value()) =>
+          shapesMap += s.name.value -> s
+        case (s: AnyShape, Some(a)) =>
+          shapesMap += s.name.value() -> s
+          shapesMap += a.id           -> s
+        case (s: AnyShape, None) => shapesMap += s.name.value -> s
+      }
+
+      ctx.declarations.registerExternalLib(path, shapesMap.toMap)
     }
   }
 
