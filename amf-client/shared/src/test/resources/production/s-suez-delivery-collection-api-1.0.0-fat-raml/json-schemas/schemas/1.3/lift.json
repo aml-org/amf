@@ -1,0 +1,135 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Lift schema",
+	"description": "Schema defining the lift object",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "header",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "id",
+			"type": "string"
+		},
+		"liftDate": {
+			"description": "liftDate",
+			"type": "string",
+			"format": "date-time"
+		},
+		"status": {
+			"description": "status",
+			"type": "string"
+		},
+		"service": {
+			"description": "Service",
+			"type": "object",
+			"$ref": "service.json"
+		},
+		"driverTicket": {
+			"description": "driverTicket",
+			"type": "object",
+			"$ref": "driver-ticket.json"
+		},
+		"activity": {
+			"description": "Town",
+			"type": "string"
+		},
+		"costObject": {
+			"description": "Cost Object",
+			"type": "object",
+			"$ref": "cost-object.json"
+		},
+		
+		"pickUp": {
+			"description": "Pick Up",
+			"type": "object",
+			"$ref": "pickup.json"
+		},
+		"weightFlagDescription": {
+			"description": "WeightFlagDescription",
+			"type": "string"
+		},
+		"source": {
+			"description": "source",
+			"type": "string"
+		},
+		"reason": {
+			"description": "reason",
+			"type": "object",
+			"$ref": "reason.json"
+		},
+		"quantity": {
+			"description": "quantity",
+			"type": "number"
+		},
+		"unit": {
+			"description": "unit",
+			"type": "string"
+		},
+		"cubicMetric": {
+			"description": "Cubic Metric",
+			"type": "number"
+		},
+		"binCount": {
+			"description": "Bin Count",
+			"type": "number"
+		},
+		"tonne": {
+			"description": "Tonne",
+			"type": "number"
+		},
+		"revenue": {
+			"description": "Revenue",
+			"type": "number"
+		},
+		"disposalCost": {
+			"description": "Disposal Cost",
+			"type": "number"
+		},
+		"contract": {
+			"description": "contract",
+			"type": "object",
+			"$ref": "contract.json"
+		},
+		"liftdetails": {
+			"description": "lift Details",
+			"type": "array",
+			"items": {
+				"$ref": "lift-detail.json"
+			}
+		},
+		"createdDate": {
+			"description": "createdDate",
+			"type": "string",
+			"format": "date-time"
+		},
+		"modifiedDate": {
+			"description": "modifiedDate",
+			"type": "string",
+			"format": "date-time"
+		},
+		"isManualTicket": {
+			"description": "isManualTicket",
+			"type": "boolean"
+		},
+		"excessWeightTickets": {
+			"description": "excessWeightTickets",
+			"type": "string"
+		},
+		"excessWeightCharge": {
+			"description": "excessWeightCharge",
+			"type": "number"
+		},
+		"weighTickets": {
+			"description": "weighTickets",
+			"type": "array",
+			"items": {
+				"$ref": "weigh-ticket.json"
+			}
+		}
+		
+	},
+	"additionalProperties": false
+}

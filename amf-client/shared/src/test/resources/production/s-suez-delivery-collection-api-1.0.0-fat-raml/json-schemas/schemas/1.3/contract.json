@@ -1,0 +1,172 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Contract schema",
+	"description": "Schema defining the Contract object",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "Header Information",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "Contract Id",
+			"type": "string"
+		},
+		"sequenceCode": {
+			"description": "Contract Sequence Code",
+			"type": "string"
+		},
+		"code": {
+			"description": "Contract Code",
+			"type": "string",
+			"maxLength": 18
+		},
+		"description": {
+			"description": "Contract Description",
+			"type": "string",
+			"maxLength": 76
+		},
+		"description2": {
+			"description": "Contract Description2",
+			"type": "string",
+			"maxLength": 76
+		},
+		"startDate": {
+			"description": "Contract Start Date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"customerAccountNumber": {
+			"description": "customerOrderNumber",
+			"type": "number"
+		},
+		"endDate": {
+			"description": "Contract End Date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"contractTypeDescription": {
+			"description": "Contract Type Description",
+			"type": "string",
+			"maxLength": 40
+		},
+		"version": {
+			"description": "Contract Version",
+			"type": "number"
+		},
+		"reasonId": {
+			"description": "Reason Id",
+			"type": "string"
+		},
+		"invoiceStartDate": {
+			"description": "Invoice Start Date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"invoiceEndDate": {
+			"description": "Invoice End Date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"logisticUserId": {
+			"description": "Logistic User Id",
+			"type": "string"
+		},
+		"status": {
+			"description": "status",
+			"type": "string"
+		},
+		"searchKey": {
+			"description": "searchKey",
+			"type": "string"
+		},
+		"customerOrderNumber": {
+			"description": "customerOrderNumber",
+			"type": "string"
+		},
+		"contractType": {
+			"description": "Contract Type",
+			"type": "string"
+		},
+		"organisation": {
+			"description": "organisation information",
+			"type": "object",
+			"$ref": "organisation.json"
+		},
+		"contractlines": {
+			"description": "Contract Line information",
+			"type": "array",
+			"items": {
+				"$ref": "contractline.json"
+			}
+		},
+		"invoices": {
+			"description": "Invoice information",
+			"type": "array",
+			"items": {
+				"$ref": "invoice.json"
+			}
+		},
+		"priceRegion": {
+			"description": "price region information",
+			"type": "object",
+			"$ref": "price-region.json"
+		},
+		"purchaseOrderFlag": {
+			"description": "Whether the purchase order flag is set to true or false?",
+			"type": "boolean"
+		},
+		"contact": {
+			"description": "contact information",
+			"type": "object",
+			"$ref": "contact.json"
+		},
+		"customerId": {
+			"description": "Customer Id",
+			"type": "string"
+		},
+		"supplierId": {
+			"description": "Supplier Id",
+			"type": "string"
+		},
+		"haulierId": {
+			"description": "Haulier Id",
+			"type": "string"
+		},
+		"disposalSiteId": {
+			"description": "Disposal Site Id",
+			"type": "string"
+		},
+		"serviceAddress": {
+			"description": "service address information",
+			"type": "object",
+			"$ref": "service-address.json"
+		},
+		"schedulingInfo": {
+			"description": "scheduling information of the contract",
+			"type": "string"
+		},
+		"additionalInfo": {
+			"description": "additional information on the contract",
+			"type": "string"
+		},
+		"isActive": {
+			"description": "isActive",
+			"type": "boolean"
+		},
+		"isDeleted": {
+			"description": "isDeleted",
+			"type": "boolean"
+		},
+		"isContracted": {
+			"description": "isContracted",
+			"type": "boolean"
+		},
+		"catalogueDescription": {
+			"description": "catalogueDescription",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}

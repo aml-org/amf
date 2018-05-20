@@ -1,0 +1,21 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Schedule schema",
+	"description": "Schema defining the user for the schedule information",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "id",
+			"type": "string"
+		},
+		"code": {
+			"description": "type",
+			"type": "string"
+		},
+		"description": {
+			"description": "Description",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}

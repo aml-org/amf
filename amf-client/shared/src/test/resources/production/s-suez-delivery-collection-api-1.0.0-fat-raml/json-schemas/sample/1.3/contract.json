@@ -1,0 +1,85 @@
+{
+	"header": {
+		"transactionType": "C",
+		"source": "MOCK"
+	},
+	"id": 5982855,
+	"code": "BAT033307",
+	"description": ";;",
+	"contractType": 0,
+	"invoiceStartDate": "2017-03-01T00:00:00",
+	"invoiceEndDate": "2018-02-28T00:00:00",
+	"startDate": "2016-04-04T00:00:00",
+	"endDate": "2018-02-28T00:00:00",
+	"version": 11,
+	"purchaseOrderFlag": false,
+	"organization": {
+		"code": "UKWH0",
+		"addresses": [
+			{
+				"street": "Victoria Road, Avonmouth",
+				"city": "BRISTOL",
+				"postCode": "BS11 9DB"
+			}
+		]
+	},
+	"priceRegion": {
+		"code": "WRORO"
+	},
+	"serviceAddress": {
+		"id": "452858",
+		"name": "ASDA CWMBRAN SUPERSTORE",
+		"address": {
+			"houseNumber": null,
+			"street": "LLEWELLYN ROAD",
+			"city": "",
+			"postCode": "NP44 1UL"
+		}
+	},
+	"schedulingInfo": "RORO - LLEWELLYN RD 35YRD GTW;",
+	"additionalInfo": "tfrd",
+	"contractlines": [
+		{
+			"id": "19867811",
+			"autoOnCallSchedule": false,
+			"onCall": true,
+			"expectedWaste": 0,
+			"service": {
+				"code": "R35CDC",
+				"lineOfBusiness": {
+					"code": "112",
+					"description": "Rollonoff"
+				},
+				"commodities": [
+					{
+						"code": "W220000",
+						"description": "General Non-Hazardous Waste IC",
+						"europeanWasteCatalogue": {
+							"code": "20.03.01"
+						}
+					}
+				]
+			},
+			"pickUp": {
+				"id": null,
+				"code": "On Call",
+				"description": null,
+				"count": null,
+				"days": null
+			},
+			"container": {
+				"containerType": {
+					"code": "R35C"
+				},
+				"description": "RORO 35CY Compactor",
+				"volume": 26.8,
+				"unit": {
+					"code": "CM"
+				},
+				"quantity": 1
+			},
+			"orderInfo": ";;;",
+			"additionalInfo": ";;;;;;;;;;;"
+		}
+	]
+}

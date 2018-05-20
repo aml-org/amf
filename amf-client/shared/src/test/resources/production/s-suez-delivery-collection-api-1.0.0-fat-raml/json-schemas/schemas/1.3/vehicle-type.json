@@ -1,0 +1,27 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Vehicle type schema",
+	"description": "Schema defining the type of the vehicle",
+	"type": "object",
+	"properties": {
+		"header": {
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "vehicle type id",
+			"type": "string"
+		},
+		"code": {
+			"description": "vehicle type code",
+			"type": "string",
+			"maxLength": 6
+		},
+		"description": {
+			"description": "description of the vehicle",
+			"type": "string",
+			"maxLength": 40
+		}
+	},
+	"additionalProperties": false
+}

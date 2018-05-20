@@ -5,6 +5,7 @@ import java.net.URISyntaxException
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, AmfScalar, RecursiveShape, Shape}
+import amf.core.rdf.RdfModel
 import amf.core.utils.Strings
 import amf.core.validation.core.{PropertyConstraint, ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.Namespace
@@ -353,12 +354,40 @@ class AMFShapeValidations(shape: Shape) {
               ))
           )
         })
+
+        val customRdf = Some((rdfModel: RdfModel, subject: String) => {
+          val propId = rdfModel.nextAnonId()
+          val firstConstraintListId = propId + "_ointdoub1"
+          val nextConstraintListId2 = propId + "_ointdoub2"
+          val nextConstraintListId3 = propId + "_ointdoub3"
+          val nextConstraintListId4 = propId + "_ointdoub4"
+          val nextConstraintListId5 = propId + "_ointdoub5"
+
+          rdfModel.addTriple(subject, (Namespace.Shacl + "or").iri(), firstConstraintListId)
+          rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "first").iri(), firstConstraintListId + "_v")
+          rdfModel.addTriple(firstConstraintListId + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "string").iri().trim)
+          rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "rest").iri(), nextConstraintListId2)
+          rdfModel.addTriple(nextConstraintListId2, (Namespace.Rdf + "first").iri(), nextConstraintListId2 + "_v")
+          rdfModel.addTriple(nextConstraintListId2 + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "time").iri().trim)
+          rdfModel.addTriple(nextConstraintListId2, (Namespace.Rdf + "rest").iri(), nextConstraintListId3)
+          rdfModel.addTriple(nextConstraintListId3, (Namespace.Rdf + "first").iri(), nextConstraintListId3 + "_v")
+          rdfModel.addTriple(nextConstraintListId3 + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "date").iri().trim)
+          rdfModel.addTriple(nextConstraintListId3, (Namespace.Rdf + "rest").iri(), nextConstraintListId4)
+          rdfModel.addTriple(nextConstraintListId4, (Namespace.Rdf + "first").iri(), nextConstraintListId4 + "_v")
+          rdfModel.addTriple(nextConstraintListId4 + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "dateTime").iri().trim)
+          rdfModel.addTriple(nextConstraintListId4, (Namespace.Rdf + "rest").iri(), nextConstraintListId5)
+          rdfModel.addTriple(nextConstraintListId5, (Namespace.Rdf + "first").iri(), nextConstraintListId5 + "_v")
+          rdfModel.addTriple(nextConstraintListId5 + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Shapes + "dateTimeOnly").iri().trim)
+          rdfModel.addTriple(nextConstraintListId5, (Namespace.Rdf + "rest").iri(), (Namespace.Rdf + "nil").iri())
+        })
+
         Seq(
           PropertyConstraint(
             ramlPropertyId = (Namespace.Data + "value").iri(),
             name = scalar.id + "_validation_range/prop",
             message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
-            custom = custom
+            custom = custom,
+            customRdf = customRdf
           ))
       } else if (scalar.dataType.value() == (Namespace.Shapes + "number").iri()) {
         val custom = Some((b: EntryBuilder, parentId: String) => {
@@ -389,12 +418,36 @@ class AMFShapeValidations(shape: Shape) {
               ))
           )
         })
+
+        val customRdf = Some((rdfModel: RdfModel, subject: String) => {
+          val propId = rdfModel.nextAnonId()
+          val firstConstraintListId = propId + "_ointdoub1"
+          val nextConstraintListId2 = propId + "_ointdoub2"
+          val nextConstraintListId3 = propId + "_ointdoub3"
+          val nextConstraintListId4 = propId + "_ointdoub4"
+
+          rdfModel.addTriple(subject, (Namespace.Shacl + "or").iri(), firstConstraintListId)
+          rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "first").iri(), firstConstraintListId + "_v")
+          rdfModel.addTriple(firstConstraintListId + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "integer").iri().trim)
+          rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "rest").iri(), nextConstraintListId2)
+          rdfModel.addTriple(nextConstraintListId2, (Namespace.Rdf + "first").iri(), nextConstraintListId2 + "_v")
+          rdfModel.addTriple(nextConstraintListId2 + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "long").iri().trim)
+          rdfModel.addTriple(nextConstraintListId2, (Namespace.Rdf + "rest").iri(), nextConstraintListId3)
+          rdfModel.addTriple(nextConstraintListId3, (Namespace.Rdf + "first").iri(), nextConstraintListId3 + "_v")
+          rdfModel.addTriple(nextConstraintListId3 + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "float").iri().trim)
+          rdfModel.addTriple(nextConstraintListId3, (Namespace.Rdf + "rest").iri(), nextConstraintListId4)
+          rdfModel.addTriple(nextConstraintListId4, (Namespace.Rdf + "first").iri(), nextConstraintListId4 + "_v")
+          rdfModel.addTriple(nextConstraintListId4 + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "double").iri().trim)
+          rdfModel.addTriple(nextConstraintListId4, (Namespace.Rdf + "rest").iri(), (Namespace.Rdf + "nil").iri())
+        })
+
         Seq(
           PropertyConstraint(
             ramlPropertyId = (Namespace.Data + "value").iri(),
             name = scalar.id + "_validation_range/prop",
             message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
-            custom = custom
+            custom = custom,
+            customRdf = customRdf
           ))
       } else if (scalar.dataType.value() == (Namespace.Xsd + "float")
                    .iri() || scalar.dataType.value() == (Namespace.Xsd + "double").iri()) {
@@ -417,12 +470,28 @@ class AMFShapeValidations(shape: Shape) {
               ))
           )
         })
+
+        val customRdf = Some((rdfModel: RdfModel, subject: String) => {
+          val propId = rdfModel.nextAnonId()
+          val firstConstraintListId = propId + "_ointdoub1"
+          val nextConstraintListId2 = propId + "_ointdoub2"
+
+          rdfModel.addTriple(subject, (Namespace.Shacl + "or").iri(), firstConstraintListId)
+          rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "first").iri(), firstConstraintListId + "_v")
+          rdfModel.addTriple(firstConstraintListId + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "float").iri().trim)
+          rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "rest").iri(), nextConstraintListId2)
+          rdfModel.addTriple(nextConstraintListId2, (Namespace.Rdf + "first").iri(), nextConstraintListId2 + "_v")
+          rdfModel.addTriple(nextConstraintListId2 + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "double").iri().trim)
+          rdfModel.addTriple(nextConstraintListId2, (Namespace.Rdf + "rest").iri(), (Namespace.Rdf + "nil").iri())
+        })
+
         Seq(
           PropertyConstraint(
             ramlPropertyId = (Namespace.Data + "value").iri(),
             name = scalar.id + "_validation_range/prop",
             message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
-            custom = custom
+            custom = custom,
+            customRdf = customRdf
           ))
       } else {
         Seq(

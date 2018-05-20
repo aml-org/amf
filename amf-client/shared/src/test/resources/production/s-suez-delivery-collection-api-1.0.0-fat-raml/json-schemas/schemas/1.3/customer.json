@@ -1,0 +1,212 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Customer schema",
+	"description": "Schema defining the Customer object",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "Header",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "customer id",
+			"type": "string"
+		},
+		"accountNumber": {
+			"description": "Unique identifier for a Customer Account. Also known as Debtor Number",
+			"type": "number"
+		},
+		"name": {
+			"description": "User friendly name of the Customer Account",
+			"type": "string"
+		},
+		"alphashort": {
+			"description": "alphashort",
+			"type": "string"
+		},
+		"officialName1": {
+			"description": "Official Name 1",
+			"type": "string"
+		},
+		"officialName2": {
+			"description": "Official Name 2",
+			"type": "string"
+		},
+		"officialName3": {
+			"description": "Official Name 3",
+			"type": "string"
+		},
+		"coName": {
+			"description": "CO Name",
+			"type": "string"
+		},
+		"vatNumber": {
+			"description": "VAT Number",
+			"type": "string"
+		},
+		"industry": {
+			"description": "Industry",
+			"type": "string"
+		},
+		"companyCode": {
+			"description": "Company Code",
+			"type": "string"
+		},
+		"addresses": {
+			"description": "address information",
+			"type": "array",
+			"items": {
+				"$ref": "address.json"
+			}
+		},
+		"serviceAddress": {
+			"description": "Service Address information",
+			"type": "array",
+			"items": {
+				"$ref": "service-address.json"
+			}
+		},
+		"contact": {
+			"description": "Contact",
+			"type": "object",
+			"$ref": "contact.json"
+		},
+		"payTerms": {
+			"description": "Pay Terms",
+			"type": "string"
+		},
+		"securitised": {
+			"description": "Securitised",
+			"type": "string"
+		},
+		"securitisationDate": {
+			"description": "Securitisation Date",
+			"type": "string"
+		},
+		"isBadDebt": {
+			"description": "Bad Debt",
+			"type": "boolean"
+		},
+		"isInsolvent": {
+			"description": "Insolvent",
+			"type": "boolean"
+		},
+		"isPrivate": {
+			"description": "Private Flag",
+			"type": "boolean"
+		},
+		"sendToClear": {
+			"description": "Send to Clear",
+			"type": "boolean"
+		},
+		"sendToMM": {
+			"description": "Send to MM",
+			"type": "boolean"
+		},
+		"sendToBI": {
+			"description": "Send to BI",
+			"type": "boolean"
+		},
+		"currency": {
+			"description": "Currency",
+			"type": "string"
+		},
+		"sicCode": {
+			"description": "SIC Code",
+			"type": "string"
+		},
+		"invoiceCycle": {
+			"description": "Invoice Cycle",
+			"type": "string"
+		},
+		"purchaseFOC": {
+			"description": "Purchase FOC",
+			"type": "string"
+		},
+		"salesFOC": {
+			"description": "Sales FOC",
+			"type": "string"
+		},
+		"shipOnly": {
+			"description": "Ship Only",
+			"type": "string"
+		},
+		"taxCode": {
+			"description": "Tax Code",
+			"type": "string"
+		},
+		"accountType": {
+			"description": "Account Type",
+			"type": "string"
+		},
+		"relationType": {
+			"description": "Relation Type",
+			"type": "string"
+		},
+		"creditLimit": {
+			"description": "Credit Limit",
+			"type": "boolean"
+		},
+		"dutyOfCare": {
+			"description": "Duty of Care",
+			"type": "boolean"
+		},
+		"dunningLevel": {
+			"description": "Dunning Level",
+			"type": "number"
+		},
+		"centralBlock": {
+			"description": "Central Block",
+			"type": "boolean"
+		},
+		"creationDate": {
+			"description": "Creation Date",
+			"type": "string"
+		},
+		"source": {
+			"description": "Source",
+			"type": "string"
+		},
+		"siteCode": {
+			"description": "Site Code",
+			"type": "string"
+		},
+		"isStop": {
+			"description": "Is Stop",
+			"type": "boolean"
+		},
+		"isAuthorisationRequired": {
+			"description": "Is Authorisation Required",
+			"type": "boolean"
+		},
+		"isCash": {
+			"description": "Is Cash",
+			"type": "boolean"
+		},
+		"purchaseOrderFlag": {
+			"description": "Whether the purchase order flag is set to true or false?",
+			"type": "boolean"
+		},
+		"isNational": {
+			"description": "Is this national Customer?",
+			"type": "boolean"
+		},
+		"sector": {
+			"description": "Sector",
+			"type": "string"
+		},
+		"contracts": {
+			"description": "Contracts",
+			"type": "array",
+			"items": {
+				"$ref": "contract.json"
+			}
+		},
+		"sicDescription": {
+			"description": "sicDescription",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}

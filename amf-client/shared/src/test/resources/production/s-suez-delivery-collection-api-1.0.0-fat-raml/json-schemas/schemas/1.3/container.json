@@ -1,0 +1,64 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Container schema",
+	"description": "Schema defining the Container object",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "Container Id",
+			"type": "string"
+		},
+		"containerType": {
+			"description": "Container Type Reference",
+			"type": "object",
+			"$ref": "container-type.json"
+		},
+		"volume": {
+			"description": "Container Volume",
+			"type": "number"
+		},
+		"unit": {
+			"description": "Container Unit Of Measure",
+			"type": "object",
+			"$ref": "unit.json"
+		},
+		"quantity": {
+			"description": "Container Quantity",
+			"type": "number"
+		},
+		"description": {
+			"description": "Container description",
+			"type": "string"
+		},
+		"averageCost": {
+			"description": "Average cost of the container",
+			"type": "number"
+		},
+		"replacementCost": {
+			"description": "Replacement cost of the container",
+			"type": "number"
+		},
+		"tareWeight": {
+			"description": "Tare weight of the container",
+			"type": "number"
+		},
+		"rfTagId": {
+			"description": "rfTagId",
+			"type": "string"
+		},
+		"geoLocationNS": {
+			"description": "geoLocationNS",
+			"type": "number"
+		},
+		"geoLocationEW": {
+			"description": "geoLocationEW",
+			"type": "number"
+		},
+		"commodity": {
+			"description": "commodity",
+			"type": "object",
+			"$ref": "commodity.json"
+		}
+	},
+	"additionalProperties": false
+}

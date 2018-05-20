@@ -1,0 +1,99 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Contract Line Schema",
+	"description": "Schema defining the Contract Line object",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "header",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "id",
+			"type": "string"
+		},
+		"code": {
+			"description": "code",
+			"type": "string"
+		},
+		"commodityCode": {
+			"description": "commodityCode",
+			"type": "string"
+		},
+		"service": {
+			"description": "Service Details",
+			"type": "object",
+			"$ref": "service.json"
+		},
+		"expectedWaste": {
+			"description": "expectedWaste",
+			"type": "number"
+		},
+		"contractId": {
+			"description": "contract Id",
+			"type": "string"
+		},
+		"sourceCode": {
+			"description": "Source Code",
+			"type": "string"
+		},
+		"destinationCode": {
+			"description": "Destination Code",
+			"type": "string"
+		},
+		"haulierCode": {
+			"description": "Haulier Code",
+			"type": "string"
+		},
+		"isCash": {
+			"description": "Is Cash",
+			"type": "boolean"
+		},
+		"minimumPrice": {
+			"description": "Minimum Price",
+			"type": "string"
+		},
+		"minimumQuantity": {
+			"description": "Minimum Quantity",
+			"type": "string"
+		},
+		"priceBand": {
+			"description": "Price Band",
+			"type": "object",
+			"$ref": "price-band.json"
+		},
+		"container": {
+			"description": "Container Details",
+			"type": "object",
+			"$ref": "container.json"
+		},
+		"onCall": {
+			"description": "onCall",
+			"type": "boolean"
+		},
+		"pickUp": {
+			"description": "Pick Up Details",
+			"type": "object",
+			"$ref": "pickup.json"
+		},
+		"autoOnCallSchedule": {
+			"description": "auto oncall schedule enabled",
+			"type": "boolean"
+		},
+		"orderInfo": {
+			"description": "scheduling information of the contract",
+			"type": "string"
+		},
+		"additionalInfo": {
+			"description": "additional information on the contract",
+			"type": "string"
+		},
+		"commodity": {
+			"description": "commodity",
+			"type": "object",
+			"$ref": "commodity.json"
+		}
+	},
+	"additionalProperties": false
+}

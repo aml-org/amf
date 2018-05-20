@@ -1,0 +1,67 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Disposal site schema",
+	"description": "Schema defining the disposal sites",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "header",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "system generated id",
+			"type": "string",
+			"maxLength": 10
+		},
+		"name": {
+			"description": "Name",
+			"type": "string"
+		},
+		"type": {
+			"description": "Type",
+			"type": "string"
+		},
+		"category": {
+			"description": "Category",
+			"type": "string"
+		},
+		"searchKey": {
+			"description": "searchKey",
+			"type": "string"
+		},
+		"siteAddresses": {
+			"description": "Site Addresses",
+			"type": "array",
+			"items": {
+				"$ref": "address.json"
+			}
+		},
+		"active": {
+			"description": "Is Disposal Site Active",
+			"type": "boolean"
+		},
+		"organisation": {
+			"description": "Organisation",
+			"type": "object",
+			"$ref": "organisation.json"
+		},
+		"companyCode": {
+			"description": "Disposal site company code",
+			"type": "string"
+		},
+		"officialName": {
+			"description": "officialName",
+			"type": "string"
+		},
+		"accountNumber": {
+			"description": "accountNumber",
+			"type": "number"
+		},
+		"searchKey": {
+			"description": "searchKey",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}

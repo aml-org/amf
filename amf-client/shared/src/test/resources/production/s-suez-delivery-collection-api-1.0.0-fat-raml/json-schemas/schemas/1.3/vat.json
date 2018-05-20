@@ -1,0 +1,42 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "VAT schema",
+	"description": "Schema defining the VAT object",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "header information",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "id of vat",
+			"type": "string"
+		},
+		"code": {
+			"description": "code of vat",
+			"type": "string"
+		},
+		"class": {
+			"description": "class of vat",
+			"type": "string"
+		},
+		"percentage": {
+			"description": "percentage of vat",
+			"type": "number"
+		},
+		"effectiveFrom": {
+			"description": "effective From date of vat",
+			"type": "string"
+		},
+		"effectiveTo": {
+			"description": "effective To date of vat",
+			"type": "string"
+		},
+		"description": {
+			"description": "description of vat",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}

@@ -1,0 +1,30 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Service action schema",
+	"description": "Schema defining the Service Action object",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "id of the service action",
+			"type": "string"
+		},
+		"code": {
+			"description": "code of the service action",
+			"type": "string"
+		},
+		"description": {
+			"description": "Description of the service action",
+			"type": "string"
+		},
+		"type": {
+			"description": "Service action type",
+			"type": "string",
+			"enum": [
+				"D",
+				"C",
+				"O"
+			]
+		}
+	},
+	"additionalProperties": false
+}

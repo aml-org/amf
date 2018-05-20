@@ -1,0 +1,55 @@
+{
+	"header": {
+		"transactionType": "c",
+		"type": "Scheduled Service"
+	},
+	"id": "106589259",
+	"status": "NewOrder",
+	"description": "Ticket:ALL EXTRA WASTE TO BETAKEN & A MANUAL TICKETTO BE DONE.",
+	"liftDetail": {
+		"orderQuantity": 5,
+		"commodity": {
+			"description": "Dry Mixed Recycling IC",
+			"code": "W240060",
+			"europeanWasteCatalogue": {
+				"code": "15.01.06",
+				"description": "mixed packaging"
+			}
+		},
+		"containers": [
+			{
+				"unit": {
+					"code": "CM"
+				},
+				"description": "EURO 1100L",
+				"volume": 1.1,
+				"containerType": {
+					"description": "EURO 1100 L",
+					"code": "E1100",
+					"type": "Real Bin"
+				}
+			}
+		]
+	},
+	"customer": {
+		"accountNumber": 70023859,
+		"contact": {
+			"lastName": "GRIFFIN BREWERY (ESTATES)(FST)",
+			"fullName": "Hearne-Ayres, Mr. ",
+			"telephone": "0208 996 2000"
+		},
+		"addresses": [
+			{
+				"building": "GRIFFIN BREWERY",
+				"addressline5": "LONDON",
+				"addressline7": "LONDON",
+				"postCode": "W4 2QB"
+			}
+		]
+	},
+	"error": {
+		"id": "123",
+		"code": "EURO",
+		"description": "EURO"
+	}
+}

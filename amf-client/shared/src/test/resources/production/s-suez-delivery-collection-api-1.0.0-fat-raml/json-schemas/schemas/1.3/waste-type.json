@@ -1,0 +1,22 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Waste Type schema",
+	"description": "Schema defining the Waste Type object",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "id of waste type",
+			"type": "string",
+			"maxLength": 10
+		},
+		"code": {
+			"description": "Waste Type Code",
+			"type": "string"
+		},
+		"description": {
+			"description": "Waste Type Description",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}

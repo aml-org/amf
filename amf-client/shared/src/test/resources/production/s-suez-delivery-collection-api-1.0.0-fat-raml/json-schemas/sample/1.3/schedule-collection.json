@@ -1,0 +1,64 @@
+[
+{
+	"id": "64766290",
+	"driverTicket": {
+		"code": ""
+	},
+	"orderNumber": "",
+	"header": {
+		"transactionType": "C",
+		"source": "MOCK"
+	},
+	"routeScheduleIndex": 5,
+	"scheduleType": {
+		"id": "1",
+		"code": "1",
+		"description": "Scheduling"
+	},
+	"information": "Confibin",
+	"serviceStartTime": "2013-02-26T13:03:59Z",
+	"serviceEndTime": "2013-02-26T13:04:32Z",
+	"isExecuted": false,
+	"commodities": [
+		{
+			"id": "2291",
+			"code": "W240141  ",
+			"description": "Confidential Waste Paper IC",
+			"europeanWasteCatalogue": {
+				"code": "20.01.01",
+				"description": "paper and cardboard"
+			}
+		}
+	],
+	"schedulelines": [
+		{
+			"id": "68992812",
+			"sequence": "1",
+			"service": {
+				"code": "E180SEXA",
+				"masterServiceDescription": "EURO 180 L Confidential Bin Exchange",
+				"container": {
+					"id": "22919620",
+					"description": "EURO 180 L",
+					"containerType": {
+						"code": "E180"
+					}
+				}
+			},
+			"serviceAction": {
+				"code": "EXA",
+				"description": "Exchange (all-in)",
+				"type": "O"
+			},
+			"information": "",
+			"liftDetail": {
+				"orderQuantity": 5
+			}
+		}
+	],
+	"linkedScheduleid": "95916488",
+	"invoice": {
+		"id": "13623291"
+	}
+}
+]

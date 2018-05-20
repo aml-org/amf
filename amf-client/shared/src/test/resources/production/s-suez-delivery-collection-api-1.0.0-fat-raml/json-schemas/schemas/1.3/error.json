@@ -1,0 +1,42 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Error schema",
+    "description": "Schema defining the error object",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "error id",
+            "type": "string"
+        },
+        "code": {
+            "description": "error code",
+            "type": "string",
+            "maxLength": 6
+        },
+        "description": {
+            "description": "error description",
+            "type": "string",
+            "maxLength": 100
+        },
+        "routeScheduleId": {
+            "description": "route schedule id",
+            "type": "string",
+            "maxLength": 10
+        },
+        "scheduleId": {
+            "description": "schedule id",
+            "type": "string",
+            "maxLength": 10
+        },
+        "schedulelineId": {
+            "description": "scheduleline id",
+            "type": "string",
+            "maxLength": 10
+        },
+        "orderlineId": {
+            "description": "orderline id",
+            "type": "string",
+            "maxLength": 10
+        }
+    }
+}

@@ -1,0 +1,9 @@
+type :
+    collection:
+      schema: container
+      example: !include ../json-schemas/sample/1.3/container-collection.json
+/{id}:
+  type :
+    collection-item:
+      schema: container
+      example: !include ../json-schemas/sample/1.3/container.json

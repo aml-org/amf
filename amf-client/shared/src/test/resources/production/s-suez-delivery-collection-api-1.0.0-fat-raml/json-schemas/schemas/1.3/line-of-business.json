@@ -1,0 +1,30 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"description": "Schema defining the Line Of Business(LOB) object",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "LOB id",
+			"type": "string",
+			"maxLength": 10
+		},
+		"code": {
+			"description": "LOB Code",
+			"type": "string",
+			"maxLength": 10
+		},
+		"description": {
+			"description": "LOB Description",
+			"type": "string"
+		},
+		"name": {
+			"description": "LOB Name",
+			"type": "string"
+		},
+		"isActive": {
+			"description": "isActive",
+			"type": "boolean"
+		}
+	},
+	"additionalProperties": false
+}

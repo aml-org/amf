@@ -1,0 +1,50 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "general-account-ledger schema",
+	"description": "Schema defining the general-account-ledger",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "Invoice id",
+			"type": "string",
+			"maxLength": 10
+		},
+		"code": {
+			"description": "Code",
+			"type": "string"
+		},
+		"shortDescription": {
+			"description": "Short Description",
+			"type": "string"
+		},
+		"longDescription": {
+			"description": "Long Description",
+			"type": "string"
+		},
+		"accountType": {
+			"description": "Account Type",
+			"type": "number"
+		},
+		"reconciliationAccount": {
+			"description": "Reconciliation Account",
+			"type": "string"
+		},
+		"costObject": {
+			"description": "Cost Object",
+			"type": "string"
+		},
+		"isActive": {
+			"description": "Is Active",
+			"type": "boolean"
+		},
+		"isDebit": {
+			"description": "Is Debit",
+			"type": "boolean"
+		},
+		"chargeCostCenter": {
+			"description": "Charge Cost Center",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}

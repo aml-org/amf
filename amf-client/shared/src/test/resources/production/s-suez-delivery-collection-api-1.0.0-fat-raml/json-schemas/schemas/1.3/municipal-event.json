@@ -1,0 +1,73 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Events  schema",
+	"description": "Schema defining the municipal events",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "header",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "system generated id",
+			"type": "string"
+		},
+		"guid": {
+			"description": "guid",
+			"type": "string"
+		},
+		"type": {
+			"description": "type of the event",
+			"type": "string"
+		},
+		"municipalService": {
+			"description": "Municipal Service",
+			"type": "object",
+			"$ref": "municipal-service.json"
+		},
+		"eventDate": {
+			"description": "event date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"dueDate": {
+			"description": "due date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"clientReference": {
+			"description": "Client Reference Number of the event",
+			"type": "string"
+		},
+		"address": {
+			"description": "address",
+			"type": "object",
+			"$ref": "address.json"
+		},
+		"state": {
+			"description": "state of the event",
+			"type": "string"
+		},
+		"allocatedTo": {
+			"description": "allocated user to the event",
+			"type": "string"
+		},
+		"municipalResolutionCode": {
+			"description": "Resolution Code of the event",
+			"$ref": "MunicipalResolutionCode.json"
+		},
+		"crewNotes": {
+			"description": "crew Notes",
+			"type": "string"
+		},
+		"municipalTasks": {
+			"description": "tasks allocated to the event",
+			"type": "array",
+			"items": {
+				"$ref": "municipal-task.json"
+			}
+		}
+	},
+	"additionalProperties": false
+}

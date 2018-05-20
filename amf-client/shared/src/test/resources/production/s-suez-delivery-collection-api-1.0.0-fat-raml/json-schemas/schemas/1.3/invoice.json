@@ -1,0 +1,108 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "invoice schema",
+	"description": "Schema defining the invoice",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "Invoice id",
+			"type": "string",
+			"maxLength": 10
+		},
+		"invoiceNumber": {
+			"description": "Invoice Number",
+			"type": "string"
+		},
+		"externalNumber": {
+			"description": "External Number",
+			"type": "string"
+		},
+		"batchRunNumber": {
+			"description": "Batch Run Number",
+			"type": "string"
+		},
+		"postingDate": {
+			"description": "Posting Date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"revenueDate": {
+			"description": "revenue date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"invoiceDate": {
+			"description": "Invoice Date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"invoiceType": {
+			"description": "Invoice Type",
+			"type": "object",
+			"$ref": "invoice-type.json"
+		},
+		"grossAmount": {
+			"description": "Gross Amount",
+			"type": "number"
+		},
+		"netAmount": {
+			"description": "Net Amount",
+			"type": "number"
+		},
+		"vatAmount": {
+			"description": "Vat Amount",
+			"type": "number"
+		},
+		"vat": {
+			"description": "vat",
+			"type": "object",
+			"$ref": "vat.json"
+		},
+		"paymentTerms": {
+			"description": "Payment Terms",
+			"type": "string"
+		},
+		"customerId": {
+			"description": "customer Id",
+			"type": "string"
+		},
+		"supplierId": {
+			"description": "Supplier Id",
+			"type": "string"
+		},
+		"contractId": {
+			"description": "contract Id",
+			"type": "string"
+		},
+		"reasonId": {
+			"description": "reason Id",
+			"type": "string"
+		},
+		"ticketnumber": {
+			"description": "ticketnumber",
+			"type": "string"
+		},
+		"leadRelationship": {
+			"description": "leadRelationship",
+			"type": "string"
+		},
+		"accountCode": {
+			"description": "customer Id",
+			"type": "string"
+		},
+		"accountType": {
+			"description": "Supplier Id",
+			"type": "string"
+		},
+		"accountTypeCode": {
+			"description": "customer Id",
+			"type": "string"
+		},
+		"costObject": {
+			"description": "costObject",
+			"type": "object",
+			"$ref": "cost-object.json"
+		}
+	},
+	"additionalProperties": false
+}

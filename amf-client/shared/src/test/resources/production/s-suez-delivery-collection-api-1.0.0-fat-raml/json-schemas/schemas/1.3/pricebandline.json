@@ -1,0 +1,29 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "price band line schema",
+	"description": "Schema defining the price band line",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "Pick Up Id",
+			"type": "string"
+		},
+		"pricePer": {
+			"description": "Price Per",
+			"type": "number"
+		},
+		"price": {
+			"description": "Price Per",
+			"type": "number"
+		},
+		"costPrice": {
+			"description": "Price Per",
+			"type": "number"
+		},
+		"minPrice": {
+			"description": "Price Per",
+			"type": "number"
+		}
+	},
+	"additionalProperties": false
+}

@@ -1,0 +1,21 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Service Call Log SLA schema",
+	"description": "Schema defining the Service Call Log SLA object",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "Group Id",
+			"type": "string"
+		},
+		"value": {
+			"description": "Group value",
+			"type": "string"
+		},
+		"description": {
+			"description": "Category description",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}

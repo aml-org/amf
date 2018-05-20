@@ -1,0 +1,115 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Contact schema",
+	"description": "Schema defining the Contact object",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "Id",
+			"type": "string",
+			"maxLength": 35
+		},
+		"firstName": {
+			"description": "First Name",
+			"type": "string",
+			"maxLength": 35
+		},
+		"lastName": {
+			"description": "Last Name",
+			"type": "string",
+			"maxLength": 35
+		},
+		"fullName": {
+			"description": "Full Name",
+			"type": "string"
+		},
+		"title": {
+			"description": "Title",
+			"type": "string",
+			"maxLength": 10
+		},
+		"initial": {
+			"description": "initial",
+			"type": "string"
+		},
+		"language": {
+			"description": "Language",
+			"type": "string",
+			"maxLength": 1
+		},
+		"alphaSort": {
+			"description": "Alpha Sort",
+			"type": "string",
+			"maxLength": 10
+		},
+		"gender": {
+			"description": "Gender",
+			"type": "string",
+			"maxLength": 1
+		},
+		"region": {
+			"description": "Region",
+			"type": "string",
+			"maxLength": 10
+		},
+		"telephone": {
+			"description": "Telephone",
+			"type": "string",
+			"maxLength": 32
+		},
+		"telephone2": {
+			"description": "Telephone2",
+			"type": "string",
+			"maxLength": 32
+		},
+		"fax": {
+			"description": "Fax",
+			"type": "string",
+			"maxLength": 16
+		},
+		"url": {
+			"description": "Url",
+			"type": "string",
+			"maxLength": 132
+		},
+		"defaultEmail": {
+			"description": "Default Email",
+			"type": "string",
+			"maxLength": 241
+		},
+		"eBillingEmail": {
+			"description": "e Billing Email",
+			"type": "string",
+			"maxLength": 241
+		},
+		"statementEmail": {
+			"description": "Statement Email",
+			"type": "string",
+			"maxLength": 241
+		},
+		"dunningEmail": {
+			"description": "Dunning Email",
+			"type": "string",
+			"maxLength": 241
+		},
+		"otherEmail": {
+			"description": "Other Email",
+			"type": "string",
+			"maxLength": 241
+		},
+		"jobTitle": {
+			"description": "Job Title",
+			"type": "string"
+		},
+		"mobile": {
+			"description": "Mobile",
+			"type": "string",
+			"maxLength": 32
+		},
+		"nickName": {
+			"description": "Full Name",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}

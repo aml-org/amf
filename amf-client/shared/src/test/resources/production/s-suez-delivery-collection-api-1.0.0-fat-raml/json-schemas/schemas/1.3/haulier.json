@@ -1,0 +1,84 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Haulier schema",
+	"description": "Schema defining the haulier object",
+	"type": "object",
+	"properties": {
+		"header": {
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "haulier id",
+			"type": "string",
+			"maxLength": 10
+		},
+		"accountNumber": {
+			"description": "Haulier account number",
+			"type": "string"
+		},
+		"code": {
+			"description": "Code",
+			"type": "string"
+		},
+		"description": {
+			"description": "Description",
+			"type": "string"
+		},
+		"issuer": {
+			"description": "Issuer",
+			"type": "string"
+		},
+		"companyCode": {
+			"description": "companyCode",
+			"type": "string"
+		},
+		"expiryDate": {
+			"description": "ExpiryDate",
+			"type": "string",
+			"format": "date-time"
+		},
+		"licenseCode": {
+			"description": "LicenseCode",
+			"type": "string"
+		},
+		"organisation": {
+			"description": "organisation information",
+			"type": "object",
+			"$ref": "organisation.json"
+		},
+		"type": {
+			"description": "type",
+			"type": "string"
+		},
+		"relationshipType": {
+			"description": "Relationship Type",
+			"type": "string"
+		},
+		"addresses": {
+			"description": "address information",
+			"type": "array",
+			"items": {
+				"$ref": "address.json"
+			}
+		},
+		"contracts": {
+			"description": "contract information",
+			"type": "array",
+			"$ref": "contract.json"
+		},
+		"name": {
+			"description": "name",
+			"type": "string"
+		},
+		"selfBill": {
+			"description": "selfBill",
+			"type": "boolean"
+		},
+		"carrierNumber": {
+			"description": "carrierNumber",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}

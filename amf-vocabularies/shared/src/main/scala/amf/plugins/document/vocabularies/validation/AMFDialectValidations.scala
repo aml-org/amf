@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies.validation
 
+import amf.core.rdf.RdfModel
 import amf.core.validation.core.{PropertyConstraint, ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.emitters.instances.DialectEmitterHelper
@@ -8,6 +9,7 @@ import amf.plugins.document.vocabularies.model.domain.{NodeMapping, PropertyMapp
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YDocument.EntryBuilder
 import amf.core.utils.Strings
+
 import scala.collection.mutable.ListBuffer
 
 class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
@@ -190,6 +192,18 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
                       }
                     ))
                   )
+                }),
+                customRdf = Some((rdfModel: RdfModel, subject: String) => {
+                  val propId = rdfModel.nextAnonId()
+                  val firstConstraintListId = propId + "_ointdoub1"
+                  val nextConstraintListId = propId + "_ointdoub2"
+                  rdfModel.addTriple(subject, (Namespace.Shacl + "or").iri(), firstConstraintListId)
+                  rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "first").iri(), firstConstraintListId + "_v")
+                  rdfModel.addTriple(firstConstraintListId + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "integer").iri().trim)
+                  rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "rest").iri(), nextConstraintListId)
+                  rdfModel.addTriple(nextConstraintListId, (Namespace.Rdf + "first").iri(), nextConstraintListId + "_v")
+                  rdfModel.addTriple(nextConstraintListId + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "double").iri().trim)
+                  rdfModel.addTriple(nextConstraintListId, (Namespace.Rdf + "rest").iri(), (Namespace.Rdf + "nil").iri())
                 })
               ))
           )

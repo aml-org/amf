@@ -1,0 +1,52 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "MaterialType schema",
+	"description": "Schema defining the material object object",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "Header Information",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "Material type id",
+			"type": "string"
+		},
+		"code": {
+			"description": "Code of the Material type",
+			"type": "string",
+			"maxLength": 6
+		},
+		"description": {
+			"description": "description of the material type",
+			"type": "string",
+			"maxLength": 100
+		},
+		"isActive": {
+			"description": "Status of the material type",
+			"type": "boolean"
+		},
+		"materialTypeInformation": {
+			"description": "materialTypeInformation",
+			"type": "string"
+		},
+		"quoteDisplayOrder": {
+			"description": "quoteDisplayOrder",
+			"type": "number"
+		},
+		"displayOrderForECommerce": {
+			"description": "displayOrderForECommerce",
+			"type": "number"
+		},
+		"isEnabledForECommerce": {
+			"description": "isEnabledForECommerce",
+			"type": "boolean"
+		},
+		"hasImage": {
+			"description": "hasImage",
+			"type": "boolean"
+		}
+	},
+	"additionalProperties": false
+}

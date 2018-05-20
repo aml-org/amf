@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.validation
 
+import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.{Module, PayloadFragment}
 import amf.core.model.domain._
 import amf.core.parser.ParserContext
@@ -38,6 +39,7 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
       finalValidations.someEffective(p)
     }
 
+    ExecutionLog.log(s"PayloadValidation#validate: Validating payload for ${validationCandidates.size} candidates")
     RuntimeValidator.shaclValidation(bu, finalValidations) map { report =>
       val results = report.results
         .map(r => buildPayloadValidationResult(bu, r, finalValidations))

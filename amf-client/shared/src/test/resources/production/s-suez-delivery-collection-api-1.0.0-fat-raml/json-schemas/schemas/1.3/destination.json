@@ -1,0 +1,26 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "destination schema",
+    "description": "Schema defining the destination",
+    "type": "object",
+    "properties": {
+         "id": {
+            "description": "Invoice id",
+            "type": "string",
+            "maxLength": 10
+        },
+        "accountNumber": {
+        	"description": "Account Number",
+            "type": "number"
+        },
+        "name": {
+        	"description": "Name",
+            "type": "string"
+        },
+        "companyCode": {
+        	"description": "Company Code",
+            "type": "string"
+        }
+    },
+    "additionalProperties": false
+}

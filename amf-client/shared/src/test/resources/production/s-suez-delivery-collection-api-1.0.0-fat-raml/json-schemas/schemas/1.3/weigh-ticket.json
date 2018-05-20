@@ -1,0 +1,284 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Weigh Ticket schema",
+	"description": "Schema defining the weightTicket object",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "Header Information",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "driver id",
+			"type": "string"
+		},
+		"code": {
+			"description": "code of the ticket",
+			"type": "string"
+		},
+		"netWeight": {
+			"description": "Total weight",
+			"type": "number"
+		},
+		"grossWeight": {
+			"description": "Gross weight",
+			"type": "number"
+		},
+		"grossWeighDate": {
+			"description": "Date of grossweight",
+			"type": "string",
+			"format": "date-time"
+		},
+		"tareWeight": {
+			"description": "Weight of tare",
+			"type": "number"
+		},
+		"tareWeighDate": {
+			"description": "Date of tareweight",
+			"type": "string",
+			"format": "date-time"
+		},
+		"unit": {
+			"description": "Unit",
+			"type": "object",
+			"$ref": "unit.json"
+		},
+		"quantity": {
+			"description": "Quantity",
+			"type": "number"
+		},
+		"tonnes": {
+			"description": "Tonnes",
+			"type": "number"
+		},
+		"flowType": {
+			"description": "Flow type",
+			"type": "string"
+		},
+		"ticketNumber": {
+			"description": "Ticket number",
+			"type": "string"
+		},
+		"createdDate": {
+			"description": "Created date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"timeIn": {
+			"description": "In time",
+			"type": "string"
+		},
+		"timeOut": {
+			"description": "Out time",
+			"type": "string"
+		},
+		"bridgeIn": {
+			"description": "BridgeIn",
+			"type": "string"
+		},
+		"bridgeInRef": {
+			"description": "bridgeIn Ref",
+			"type": "string"
+		},
+		"bridgeOut": {
+			"description": "bridgeOut",
+			"type": "string"
+		},
+		"bridgeOutRef": {
+			"description": "bridgeOut Ref",
+			"type": "string"
+		},
+		"container": {
+			"description": "Container Information",
+			"type": "object",
+			"$ref": "container.json"
+		},
+		"isCash": {
+			"description": "Is cash",
+			"type": "boolean"
+		},
+		"isBlocked": {
+			"description": "Is Blocked",
+			"type": "boolean"
+		},
+		"status": {
+			"description": "Status",
+			"type": "string"
+		},
+		"initialRevOrDisposalCost": {
+			"description": "Initial revenue or disposal cost",
+			"type": "number"
+		},
+		"actualRevOrDisposalCost": {
+			"description": "Actual revenue or disposal cost",
+			"type": "number"
+		},
+		"service": {
+			"description": "Service code Information",
+			"type": "object",
+			"$ref": "service.json"
+		},
+		"vatAmount": {
+			"description": "VAT Amount",
+			"type": "number"
+		},
+		"netAmount": {
+			"description": "Net Amount",
+			"type": "number"
+		},
+		"quantityWTI": {
+			"description": "WTI Quantity",
+			"type": "number"
+		},
+		"uomWTI": {
+			"description": "WTI Uom",
+			"type": "number"
+		},
+		"rateWTI": {
+			"description": "WTI Rate",
+			"type": "number"
+		},
+		"pricePerTonne": {
+			"description": "Price per tonne",
+			"type": "number"
+		},
+		"pricePerUnit": {
+			"description": "Price per unit",
+			"type": "number"
+		},
+		"cell": {
+			"description": "Cell Information",
+			"type": "object",
+			"$ref": "cell.json"
+		},
+		"userName": {
+			"description": "Username",
+			"type": "string",
+			"maxLength": 50
+		},
+		"isAmmended": {
+			"description": "Is Ammended",
+			"type": "boolean"
+		},
+		"poNumber": {
+			"description": "",
+			"type": "string"
+		},
+		"producerId": {
+			"description": "Supplier Information",
+			"type": "string"
+		},
+		"siteId": {
+			"description": "Disposal Site Information",
+			"type": "string"
+		},
+		"invoice": {
+			"description": "Invoice Information",
+			"type": "object",
+			"$ref": "invoice.json"
+		},
+		"revenueCostCentre": {
+			"description": "Cost centre Information",
+			"type": "object",
+			"$ref": "cost-object.json"
+		},
+		"chargedCostCentre": {
+			"description": "Cost centre Information",
+			"type": "object",
+			"$ref": "cost-object.json"
+		},
+		"glAccount": {
+			"description": "General Account Ledger",
+			"type": "object",
+			"$ref": "general-account-ledger.json"
+		},
+		"destinationId": {
+			"description": "Destination Information",
+			"type": "string"
+		},
+		"origin": {
+			"description": "Origin Information",
+			"type": "string"
+		},
+		"producerCode": {
+			"description": "Producer Code",
+			"type": "string"
+		},
+		"producerName": {
+			"description": "Producer Name",
+			"type": "string"
+		},
+		"siteCode": {
+			"description": "Site Code",
+			"type": "string"
+		},
+		"siteName": {
+			"description": "Site Name",
+			"type": "string"
+		},
+		"destinationCode": {
+			"description": "Destination Code",
+			"type": "string"
+		},
+		"destinationName": {
+			"description": "Destination Name",
+			"type": "string"
+		},
+		"grossWeightId": {
+			"description": "Gross Weight Id",
+			"type": "string"
+		},
+		"tareWeightId": {
+			"description": "Tare Weight Id",
+			"type": "string"
+		},
+		"grossWeightSortCode": {
+			"description": "Gross Weight Sort Code",
+			"type": "string"
+		},
+		"tareWeightSortCode": {
+			"description": "Tare Weight Sort Code",
+			"type": "string"
+		},
+		"ticketType": {
+			"description": "Ticket Type",
+			"type": "string"
+		},
+		"branchNumber": {
+			"description": "Branch",
+			"type": "string"
+		},
+		"notes": {
+			"description": "Notes",
+			"type": "string"
+		},
+		"sequenceCode": {
+			"description": "Sequence Code",
+			"type": "string"
+		},
+		"routeSchedule": {
+			"description": "RouteSchedule information",
+			"type": "object",
+			"$ref": "route-schedule.json"
+		},
+		"isCharged": {
+			"description": "isCharged",
+			"type": "boolean"
+		},
+		"udfs": {
+			"description": "udfs",
+			"type": "array",
+			"items": {
+				"$ref": "udf.json"
+			}
+		},
+		"modifiedDate": {
+			"description": "modifiedDate",
+			"type": "string",
+			"format": "date-time"
+		}
+		
+	},
+	"additionalProperties": false
+}

@@ -1,0 +1,55 @@
+- collection:
+    post:
+      description: This method is used to create a new <<resourcePathName>> into D&C
+      is: [x-correlation-id: {required : true}]
+      body: 
+        application/json:
+          schema: <<schema>>
+          example: <<example>>
+      responses: 
+        201:  
+    get:
+      description: This method is used to get the list of <<resourcePathName>> from D&C
+      is: [x-correlation-id: {required : true},  q-pageable : { required: true }, q-creation-start-date : { required : false} , q-creation-end-date  : { required : false}, q-modified-start-date  : { required : false}, q-modified-end-date  : { required : false}, q-id  : { required : false}]
+      responses: 
+        200:
+          body: 
+            application/json:
+              schema: <<schema>>
+              example: <<example>>
+- collection-item:            
+    delete:
+      description: This method is used to delete the <<resourcePathName>> data from D&C
+      is: [x-correlation-id: {required : true}]
+      responses: 
+        200:
+          body: 
+            application/json:
+              example: |
+                { "response" : 0 } 
+        204:        
+    put:
+      description: This method is used to update the <<resourcePathName>> into D&C
+      is: [x-correlation-id: {required : true}]
+      body: 
+        application/json:
+          schema: <<schema>>
+          example: <<example>>
+      responses: 
+        200:
+          body: 
+            application/json:
+              example: |
+                { "response" : 0 }   
+        204:      
+            
+    get:
+      description: This method is used to get the a <<resourcePathName>> from D&C
+      is: [x-correlation-id: {required : true}]
+      responses: 
+        200:
+          body: 
+            application/json:
+              schema: <<schema>>
+              example: <<example>>
+            

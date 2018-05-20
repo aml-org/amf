@@ -1,0 +1,57 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Route schema",
+	"description": "Schema defining the route object",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "system generated id",
+			"type": "string"
+		},
+		"code": {
+			"description": "Route code",
+			"type": "string",
+			"maxLength": 18
+		},
+		"description": {
+			"description": "Route description",
+			"type": "string",
+			"maxLength": 100
+		},
+		"routeDate": {
+			"description": "Route date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"organisation": {
+			"description": "organisation",
+			"type": "object",
+			"$ref": "organisation.json"
+		},
+		"lineOfBusiness": {
+			"description": "lineOfBusiness",
+			"type": "object",
+			"$ref": "line-of-business.json"
+		},
+		"vehicle": {
+			"description": "Route description",
+			"type": "object",
+			"$ref": "vehicle.json"
+		},
+		"driver": {
+			"description": "last name of the driver",
+			"type": "object",
+			"$ref": "driver.json"
+		},
+		"vehicleSchedule": {
+			"description": "title",
+			"type": "object",
+			"$ref": "vehicle-schedule.json"
+		},
+		"structural": {
+			"description": "structural",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}

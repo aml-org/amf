@@ -1,0 +1,43 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Service Address schema",
+	"description": "Schema defining the Service Address object",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "Header of the service address",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "Unique Site Id.",
+			"type": "string",
+			"maxLength": 10
+		},
+		"code": {
+			"description": "Site Code",
+			"type": "string",
+			"maxLength": 40
+		},
+		"name": {
+			"description": "Site name",
+			"type": "string",
+			"maxLength": 50
+		},
+		"sicCode": {
+			"description": "sicCode",
+			"type": "string",
+			"maxLength": 10
+		},
+		"address": {
+			"description": "Service Address Name",
+			"type": "object",
+			"$ref": "address.json"
+		},
+		"sicDescription": {
+			"description": "sicDescription",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}

@@ -1,0 +1,21 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Legislation schema",
+	"description": "Schema defining the Legislation",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "Id",
+			"type": "string"
+		},
+		"code": {
+			"description": "code",
+			"type": "string"
+		},
+		"description": {
+			"description": "Description",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}

@@ -1,0 +1,71 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "ServiceCallLog Schema",
+	"description": "Schema defining the Call Log object",
+	"type": "object",
+	"properties": {
+		"requestId": {
+			"description": "Incident Id",
+			"type": "string"
+		},
+		"customer": {
+			"description": "Customer",
+			"$ref": "customer.json"
+		},
+		"dateRaised": {
+			"description": "Date the call was raised",
+			"type": "string",
+			"format": "date-time"
+		},
+		"dateClosed": {
+			"description": "Date the call was closed",
+			"type": "string",
+			"format": "date-time"
+		},
+		"plannedCloseDate": {
+			"description": "Date the call was raised",
+			"type": "string",
+			"format": "date-time"
+		},
+		"status": {
+			"description": "Status",
+			"$ref": "service-call-log-status.json"
+		},
+		"group": {
+			"description": "group",
+			"$ref": "service-call-log-group.json"
+		},
+		"summary": {
+			"description": "Summary",
+			"type": "string"
+		},
+		"specialistId": {
+			"description": "specialistId",
+			"type": "string"
+		},
+		"costCentre": {
+			"description": "costCentre",
+			"type": "string"
+		},
+		"UDF": {
+			"description": "UDF",
+			"type": "array",
+			"items": {
+				"$ref": "udf.json"
+			}
+		},
+		"category": {
+			"description": "Category",
+			"$ref": "service-call-log-category.json"
+		},
+		"stockLocation": {
+			"description": "stockLocation",
+			"type": "string"
+		},
+		"priority": {
+			"description": "Priority",
+			"$ref": "service-call-log-priority.json"
+		}
+	},
+	"additionalProperties": false
+}

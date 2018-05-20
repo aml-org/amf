@@ -1,0 +1,26 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Waste Group schema",
+	"description": "Schema defining the waste group object",
+	"type": "object",
+	"properties": {
+		"header": {
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "id of waste group",
+			"type": "string"
+		},
+		"code": {
+			"description": "code of waste group",
+			"type": "string",
+			"maxLength": 10
+		},
+		"description": {
+			"description": "description of waste group",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}

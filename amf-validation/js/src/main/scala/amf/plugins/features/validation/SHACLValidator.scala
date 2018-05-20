@@ -1,6 +1,7 @@
 package amf.plugins.features.validation
 
-import amf.core.validation.core.ValidationReport
+import amf.core.model.document.BaseUnit
+import amf.core.validation.core.{ValidationReport, ValidationSpecification}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Future, Promise}
@@ -91,4 +92,7 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
     }
   }
 
+  override def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: String): Future[String] = ???
+
+  override def report(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: String): Future[ValidationReport] = ???
 }

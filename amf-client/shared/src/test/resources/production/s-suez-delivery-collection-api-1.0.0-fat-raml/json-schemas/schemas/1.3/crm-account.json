@@ -1,0 +1,24 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Commodity schema",
+	"description": "Schema defining the CRM Account object",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "id of the CRM Account",
+			"type": "string"
+		},
+		"name": {
+			"description": "name of the CRM Account",
+			"type": "string"
+		},
+		"addresses": {
+			"description": "account Addresses",
+			"type": "array",
+			"items": {
+				"$ref": "address.json"
+			}
+		}
+	},
+	"additionalProperties": false
+}

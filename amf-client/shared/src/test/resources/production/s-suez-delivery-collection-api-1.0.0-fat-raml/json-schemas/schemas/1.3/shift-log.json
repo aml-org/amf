@@ -1,0 +1,101 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Shift log schema",
+	"description": "Schema defining the Shift log originating from SCADA system ",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "Header Information",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "unique id",
+			"type": "string"
+		},
+		"milliSecond": {
+			"description": "Milli-second part of the shift",
+			"type": "number"
+		},
+		"localDate": {
+			"description": "Local date of the plant",
+			"type": "string",
+			"format": "date-time"
+		},
+		"user": {
+			"description": "User name",
+			"type": "string"
+		},
+		"reason": {
+			"description": "Reason of the failure",
+			"type": "string"
+		},
+		"shiftDate": {
+			"description": "Shift day of the user",
+			"type": "string",
+			"format": "date"
+		},
+		"shiftCode": {
+			"description": "shift code",
+			"type": "string"
+		},
+		"costObject": {
+			"description": "CostObject associated",
+			"type": "object",
+			"$ref": "cost-object.json"
+		},
+		"downtimeStartDate": {
+			"description": "Downtime start date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"downtimeEndDate": {
+			"description": "Downtime end date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"duration": {
+			"description": "Duration of the downtime",
+			"type": "number"
+		},
+		"downtimeCode": {
+			"description": "Downtime code",
+			"type": "string"
+		},
+		"equipmentId": {
+			"description": "Equipment Id",
+			"type": "string"
+		},
+		"equipmentCode": {
+			"description": "Equipment code",
+			"type": "string"
+		},
+		"equipmentDescription": {
+			"description": "Equipment description",
+			"type": "string"
+		},
+		"additionalInformation": {
+			"description": "Additional information",
+			"type": "string"
+		},
+		"createdId": {
+			"description": "createdId",
+			"type": "string"
+		},
+		"updatedId": {
+			"description": "updatedId",
+			"type": "string"
+		},
+		"scadaGeneratedDate": {
+			"description": "scadaGeneratedDate",
+			"type": "string",
+			"format": "date"
+		},
+		"shiftCreatedDate": {
+			"description": "shiftCreatedDate",
+			"type": "string",
+			"format": "date"
+		}
+	},
+	"additionalProperties": false
+}

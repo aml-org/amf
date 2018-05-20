@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Municipal Resolution Code  schema",
+    "description": "Schema defining the Municipal Resolution Code",
+    "type": "object",
+    "properties": {
+         "id": {
+            "description": "system generated id",
+            "type": "string"
+        },
+         "guid": {
+            "description": "guid",
+            "type": "string"
+        },
+        "name": {
+            "description": "name of the task",
+            "type": "string"   
+        }
+    },
+    "additionalProperties": false
+}

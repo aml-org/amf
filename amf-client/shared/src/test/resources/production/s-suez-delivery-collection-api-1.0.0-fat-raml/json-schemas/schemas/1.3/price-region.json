@@ -1,0 +1,31 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "header schema",
+	"description": "Schema defining the price region",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "Header",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "Price Region Id",
+			"type": "string"
+		},
+		"code": {
+			"description": "Price Region code",
+			"type": "string"
+		},
+		"description": {
+			"description": "Description",
+			"type": "string"
+		},
+		"landFillTax": {
+			"description": "Land Fill Tax",
+			"type": "object",
+			"$ref": "land-fill-tax.json"
+		}
+	},
+	"additionalProperties": false
+}

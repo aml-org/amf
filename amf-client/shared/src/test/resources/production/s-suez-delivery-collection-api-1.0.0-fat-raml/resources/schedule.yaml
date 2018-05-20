@@ -1,0 +1,9 @@
+type :
+  collection:
+    schema: schedule
+    example: !include ../json-schemas/sample/1.3/schedule-collection.json
+/{id}:
+  type :
+    collection-item:
+      schema: schedule
+      example: !include ../json-schemas/sample/1.3/schedule.json

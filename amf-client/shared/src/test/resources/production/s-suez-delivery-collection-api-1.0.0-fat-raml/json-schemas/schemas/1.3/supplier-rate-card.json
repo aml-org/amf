@@ -1,0 +1,101 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Supplier schema",
+	"description": "Schema defining the Supplier rate card object",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "id",
+			"type": "string",
+			"maxLength": 10
+		},
+		"rateName": {
+			"description": "Name of the rate",
+			"type": "string"
+		},
+		"rateType": {
+			"description": "rateType",
+			"type": "string"
+		},
+		"supplier": {
+			"description": "Supplier details",
+			"type": "object",
+			"$ref": "supplier.json"
+		},
+		"coverage": {
+			"description": "Coverage type",
+			"type": "string"
+		},
+		"isActive": {
+			"description": "isActive",
+			"type": "boolean"
+		},
+		"isSupplierStation": {
+			"description": "Is supplier station",
+			"type": "boolean"
+		},
+		"lineOfBusiness": {
+			"description": "Line of Business",
+			"type": "object",
+			"$ref": "line-of-business.json"
+		},
+		"materialType": {
+			"description": "material type details",
+			"type": "object",
+			"$ref": "material-type.json"
+		},
+		"serviceAreas": {
+			"description": "Service Areas ",
+			"type": "array",
+			"items": {
+				"$ref": "area.json"
+			}
+		},
+		"validFrom": {
+			"description": "Valid from Date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"validTo": {
+			"description": "Valid to Date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"lastModifiedDate": {
+			"description": "Valid to Date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"serviceDays": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"enum": [
+					"Monday",
+					"Tuesday",
+					"Wednesday",
+					"Thursday",
+					"Friday",
+					"Saturday",
+					"Sunday"
+				]
+			}
+		},
+		"containerRates": {
+			"description": "Container rates ",
+			"type": "array",
+			"items": {
+				"$ref": "container-rate.json"
+			}
+		},
+		"isPreferredForNationalRate": {
+			"description": "isPreferredForNationalRate",
+			"type": "boolean"
+		},
+		"isSelectedForPreferredSectors": {
+			"description": "isSelectedForPreferredSectors",
+			"type": "boolean"
+		}
+	},
+	"additionalProperties": false
+}

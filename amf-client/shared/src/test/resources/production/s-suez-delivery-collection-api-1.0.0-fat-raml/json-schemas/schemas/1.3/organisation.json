@@ -1,0 +1,32 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Organisation schema",
+	"description": "Schema defining the organisation object",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "organisation Id",
+			"type": "string"
+		},
+		"code": {
+			"description": "organisation code",
+			"type": "string"
+		},
+		"name": {
+			"description": "organisation name",
+			"type": "string"
+		},
+		"description": {
+			"description": "organisation description",
+			"type": "string"
+		},
+		"addresses": {
+			"description": "address information",
+			"type": "array",
+			"items": {
+				"$ref": "address.json"
+			}
+		}
+	},
+	"additionalProperties": false
+}

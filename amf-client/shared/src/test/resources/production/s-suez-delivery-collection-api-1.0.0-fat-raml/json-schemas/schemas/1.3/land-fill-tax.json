@@ -1,0 +1,39 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Landfill Tax schema",
+	"description": "Schema defining the Landfill Tax object",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "header",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "Landfill Tax id",
+			"type": "string"
+		},
+		"code": {
+			"description": "Landfill Tax Code",
+			"type": "string"
+		},
+		"description": {
+			"description": "Landfill Tax Description",
+			"type": "string"
+		},
+		"percentage": {
+			"description": "Landfill Tax percentage",
+			"type": "number"
+		},
+		"vat": {
+			"description": "vat information",
+			"type": "object",
+			"$ref": "vat.json"
+		},
+		"amount": {
+			"description": "Landfill Tax amount",
+			"type": "number"
+		}
+	},
+	"additionalProperties": false
+}

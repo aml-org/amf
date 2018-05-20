@@ -1,0 +1,26 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Sector schema",
+	"description": "Schema defining the sector object",
+	"type": "object",
+	"required": [
+		"code"
+	],
+	"properties": {
+		"id": {
+			"description": "Sector type id",
+			"type": "string"
+		},
+		"code": {
+			"description": "Code of the sector type",
+			"type": "string",
+			"maxLength": 6
+		},
+		"description": {
+			"description": "description of the sector type",
+			"type": "string",
+			"maxLength": 100
+		}
+	},
+	"additionalProperties": false
+}
