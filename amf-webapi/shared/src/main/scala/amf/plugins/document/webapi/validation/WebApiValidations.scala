@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.validation
 
+import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
 import amf.core.services.RuntimeValidator
@@ -35,7 +36,10 @@ trait WebApiValidations extends ValidationResultProcessor {
 
     for {
       examplesResults <- UnitPayloadsValidation(baseUnit, platform).validate()
-      shaclReport     <- RuntimeValidator.shaclValidation(baseUnit, validations, messageStyle)
+      shaclReport     <- {
+        ExecutionLog.log("WebApiValidations#validationRequestsForBaseUnit: validating now WebAPI")
+        RuntimeValidator.shaclValidation(baseUnit, validations, messageStyle)
+      }
     } yield {
 
       // aggregating parser-side validations

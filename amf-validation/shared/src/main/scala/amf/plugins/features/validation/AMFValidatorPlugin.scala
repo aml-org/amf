@@ -9,7 +9,7 @@ import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Context
 import amf.core.services.{RuntimeCompiler, RuntimeSerializer, RuntimeValidator}
 import amf.core.unsafe.PlatformSecrets
-import amf.core.validation.core.{ValidationProfile, ValidationReport}
+import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationSpecification}
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.graph.parser.ScalarEmitter
@@ -151,10 +151,6 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     // println(s"VALIDATIONS: ${validations.effective.values.size} / ${validations.all.values.size} => $profileName")
     // validations.effective.keys.foreach(v => println(s" - $v"))
 
-    val shapesJSON = shapesGraph(validations, messageStyle)
-
-    ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: shapes graph JSON generated")
-
     // TODO: Check the validation profile passed to JSLibraryEmitter, it contains the prefixes
     // for the functions
     val jsLibrary = new JSLibraryEmitter(None).emitJS(validations.effective.values.toSeq)
@@ -166,38 +162,17 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
 
     ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: jsLibrary generated")
 
-    val modelJSON =
-      RuntimeSerializer(model,
-                        "application/ld+json",
-                        "AMF Graph",
-                        RenderOptions().withoutSourceMaps.withCustomEmitter(CustomScalarEmitter))
+    val data = model
+    val shapes = customValidations(validations)
 
-    ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: data graph generated")
-
-    /*
-          println("\n\nGRAPH")
-          println(modelJSON)
-          println("===========================")
-          println("\n\nVALIDATION")
-          println(shapesJSON)
-          println("===========================")
-          println(jsLibrary)
-          println("===========================")
-    */
+    ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: Invoking platform validation")
 
     ValidationMutex.synchronized {
-      PlatformValidator.instance
-        .report(
-          modelJSON,
-          "application/ld+json",
-          shapesJSON,
-          "application/ld+json"
-        )
-        .map {
-          case report =>
-            ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: validation finished")
-            report
-        }
+      PlatformValidator.instance.report(data, shapes, messageStyle).map {
+        case report =>
+          ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: validation finished")
+          report
+      }
     }
   }
 
@@ -229,9 +204,11 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     * @return JSON-LD graph
     */
   def shapesGraph(validations: EffectiveValidations, messageStyle: String = ProfileNames.RAML): String = {
-    new ValidationJSONLDEmitter(messageStyle).emitJSON(validations.effective.values.toSeq.filter(s =>
-      !s.isParserSide()))
+    new ValidationJSONLDEmitter(messageStyle).emitJSON(customValidations(validations))
   }
+
+  def customValidations(validations: EffectiveValidations): Seq[ValidationSpecification] =
+    validations.effective.values.toSeq.filter(s => !s.isParserSide())
 
 }
 

@@ -100,7 +100,7 @@ class JSLibraryEmitter(profile: Option[ValidationProfile] = None) {
        |            value.push(amfCompactProperty(pair.o.value));
        |        } else if(pair.o.termType === "BlankNode" || pair.o.value.indexOf("urn:") === 0 ) {
        |            value.push(cache[pair.o.value] || amfFindNode(pair.o, cache));
-       |        } else if (pair.o.value.indexOf("http:/") === 0 || pair.o.value.indexOf("file:/") === 0) {
+       |        } else if (pair.o.value.indexOf("http:/") === 0 || pair.o.value.indexOf("file:/") === 0 || pair.o.value.indexOf("null/") === 0) {
        |            value.push(cache[pair.o.value] || amfFindNode(pair.o, cache));
        |        } else {
        |            value.push(amfExtractLiteral(pair.o));

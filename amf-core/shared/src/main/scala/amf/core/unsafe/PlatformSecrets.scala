@@ -1,8 +1,9 @@
 package amf.core.unsafe
 
 import amf.client.remote.Content
+import amf.core.model.document.BaseUnit
 import amf.core.remote.{Platform, UnsupportedFileSystem}
-import amf.core.validation.core.SHACLValidator
+import amf.core.validation.core.{SHACLValidator, ValidationReport, ValidationSpecification}
 import amf.internal.environment.Environment
 import amf.internal.resource.ResourceLoader
 import org.mulesoft.common.io.FileSystem
@@ -40,6 +41,12 @@ class TrunkValidator extends SHACLValidator {
     * @return
     */
   override def registerLibrary(url: String, code: String): Unit =
+    throw new Exception("Error, validation is not supported")
+
+  override def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: String): Future[String] =
+    throw new Exception("Error, validation is not supported")
+
+  override def report(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: String): Future[ValidationReport] =
     throw new Exception("Error, validation is not supported")
 }
 

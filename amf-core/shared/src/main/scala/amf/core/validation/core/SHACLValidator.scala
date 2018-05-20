@@ -1,5 +1,7 @@
 package amf.core.validation.core
 
+import amf.core.model.document.BaseUnit
+
 import scala.concurrent.Future
 
 /**
@@ -24,6 +26,7 @@ trait SHACLValidator {
     */
   def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): Future[String]
 
+  def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: String): Future[String]
   /**
     * Validates a data graph against a shapes graph. Graphs are expressed as Strings in a particular format, identified
     * Returns ValidationReport object
@@ -34,6 +37,8 @@ trait SHACLValidator {
     * @return ValidationReport
     */
   def report(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): Future[ValidationReport]
+
+  def report(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: String): Future[ValidationReport]
 
   /**
     * Registers a library in the validator

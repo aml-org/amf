@@ -12,6 +12,7 @@ class RenderOptions {
   private var customEmitter: Option[ScalarEmitter] = None
   private var compactUris: Boolean                 = false
   private var rawSourceMaps: Boolean               = false
+  private var validating: Boolean                  = false
 
   /** Include source maps when rendering to graph. */
   def withSourceMaps: RenderOptions = {
@@ -50,11 +51,21 @@ class RenderOptions {
     this
   }
 
+  def withValidation: RenderOptions = {
+    validating = true
+    this
+  }
+
+  def withoutValidation: RenderOptions = {
+    validating = false
+    this
+  }
+
   def isCompactUris: Boolean                  = compactUris
   def isWithSourceMaps: Boolean               = sources
   def isWithRawSoureMaps: Boolean             = rawSourceMaps
   def getCustomEmitter: Option[ScalarEmitter] = customEmitter
-  def isValidation: Boolean                   = customEmitter.isDefined // I consider that if CustomEmitter is defined, is a validation
+  def isValidation: Boolean                   = customEmitter.isDefined || validating// I consider that if CustomEmitter is defined, is a validation
 }
 
 object RenderOptions {
