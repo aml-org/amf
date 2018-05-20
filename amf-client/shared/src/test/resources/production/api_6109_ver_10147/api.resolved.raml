@@ -8726,9 +8726,11 @@ baseUri: https://okaa.bva-auctions.com/api/{version}
                               "@id":
                                 type: string
                                 (amf-format): uri
-                          - "#"
                           -
                             type: nil
+                          -
+                            type: object
+                            x-amf-recursive: file://amf-client/shared/src/test/resources/production/api_6109_ver_10147/api.raml#/web-api/end-points/%2FcategoryNode%2F%7Bid%7D/get/200/default/default/categoryNode/property/parent/any/parent/item2/property/parent/any/parent
                         type: any
                       children:
                         description: The children category nodes.
