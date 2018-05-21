@@ -5,7 +5,6 @@ import amf.core.annotations.Aliases
 import amf.core.model.document.{BaseUnit, DeclaresModel, Document, Fragment}
 import amf.core.parser.{ParsedReference, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.model.DataTypeFragment
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 import scala.collection.mutable
@@ -43,7 +42,8 @@ case class ReferenceDeclarations(references: mutable.Map[String, BaseUnit] = mut
   def solvedReferences(): Seq[BaseUnit] = references.values.toSet.toSeq
 }
 
-case class ReferencesParser(baseUnit: BaseUnit, key: String, map: YMap, references: Seq[ParsedReference])(implicit ctx: WebApiContext) {
+case class ReferencesParser(baseUnit: BaseUnit, key: String, map: YMap, references: Seq[ParsedReference])(
+    implicit ctx: WebApiContext) {
   def parse(location: String): ReferenceDeclarations = {
     val result: ReferenceDeclarations = parseLibraries(location)
 
@@ -70,7 +70,7 @@ case class ReferencesParser(baseUnit: BaseUnit, key: String, map: YMap, referenc
           .entries
           .foreach(e => {
             val alias: String = e.key.as[YScalar].text
-            val urlOption     = LibraryLocationParser(e)
+            val urlOption     = LibraryLocationParser(e, ctx)
             urlOption.foreach { url =>
               target(url).foreach {
                 case module: DeclaresModel =>
@@ -92,7 +92,8 @@ case class ReferencesParser(baseUnit: BaseUnit, key: String, map: YMap, referenc
     case _             => e.value
   }
 
-  private def collectAlias(module: BaseUnit, alias: (Aliases.Alias, (Aliases.FullUrl,Aliases.RelativeUrl))): BaseUnit = {
+  private def collectAlias(module: BaseUnit,
+                           alias: (Aliases.Alias, (Aliases.FullUrl, Aliases.RelativeUrl))): BaseUnit = {
     module.annotations.find(classOf[Aliases]) match {
       case Some(aliases) =>
         module.annotations.reject(_.isInstanceOf[Aliases])
@@ -105,8 +106,9 @@ case class ReferencesParser(baseUnit: BaseUnit, key: String, map: YMap, referenc
 
 // Helper method to parse references and annotations before having an actual base unit
 object ReferencesParserAnnotations {
-  def apply(key: String, map: YMap, root: Root)(implicit ctx: WebApiContext): (ReferenceDeclarations, Option[Aliases]) = {
-    val  tmp = Document()
+  def apply(key: String, map: YMap, root: Root)(
+      implicit ctx: WebApiContext): (ReferenceDeclarations, Option[Aliases]) = {
+    val tmp          = Document()
     val declarations = ReferencesParser(tmp, key, map, root.references).parse(root.location)
     (declarations, tmp.annotations.find(classOf[Aliases]))
   }

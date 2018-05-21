@@ -113,7 +113,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
   }
 
   private def library(entry: YMapEntry, ctx: ParserContext): Unit =
-    LibraryLocationParser(entry) match {
+    LibraryLocationParser(entry, ctx) match {
       case Some(location) => references += (location, LibraryReference, entry.value)
       case _              => ctx.violation("Missing library location", entry)
     }
