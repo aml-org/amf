@@ -26,9 +26,12 @@ import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReference
 import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, DialectsParser}
 import amf.plugins.document.vocabularies.parser.instances.{DialectInstanceContext, DialectInstanceParser}
 import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
-import amf.plugins.document.vocabularies.resolution.pipelines.{DialectInstanceResolutionPipeline, DialectResolutionPipeline}
+import amf.plugins.document.vocabularies.resolution.pipelines.{
+  DialectInstanceResolutionPipeline,
+  DialectResolutionPipeline
+}
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
-import org.yaml.model.{YComment, YDocument, YMap, YNode}
+import org.yaml.model._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -42,11 +45,15 @@ trait RamlHeaderExtractor {
 
 trait JsonHeaderExtractor {
   def dialect(root: Root): Option[String] = {
-    val parsed: Seq[Option[String]] = root.parsed.document.children.collect { case n: YNode =>
-      n.asOption[YMap] match {
-        case Some(m) => m.entries.find(_.key.as[String] == "$dialect") map { entry => entry.value.as[String] }
-        case None    => None
-      }
+    val parsed: Seq[Option[String]] = root.parsed.document.children.collect {
+      case n: YNode =>
+        n.asOption[YMap] match {
+          case Some(m) =>
+            m.entries.find(_.key.as[YScalar].text == "$dialect") map { entry =>
+              entry.value.as[String]
+            }
+          case None => None
+        }
 
     }
     parsed.collectFirst { case Some(metaText) => metaText }
@@ -65,10 +72,11 @@ object DialectHeader extends RamlHeaderExtractor with JsonHeaderExtractor {
         case t if t.startsWith("%")               => true
         case _                                    => false
       }
-    case _ => dialect(root) match {
-      case Some(_) => true
-      case _       => false
-    }
+    case _ =>
+      dialect(root) match {
+        case Some(_) => true
+        case _       => false
+      }
   }
 }
 
@@ -148,13 +156,14 @@ object VocabulariesPlugin
   override def parse(document: Root, parentContext: ParserContext, platform: Platform): Option[BaseUnit] = {
     val maybeMetaText = comment(document) match {
       case Some(comment) => Some(comment.metaText)
-      case _             => dialect(document) match {
-        case Some(metaText) => Some("%" + metaText)
-        case None           => None
-      }
+      case _ =>
+        dialect(document) match {
+          case Some(metaText) => Some("%" + metaText)
+          case None           => None
+        }
     }
     maybeMetaText match {
-      case None           => None
+      case None => None
       case Some(metaText) =>
         metaText match {
           case ExtensionHeader.VocabularyHeader =>
