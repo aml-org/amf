@@ -228,8 +228,12 @@ abstract class WebApiContext(loc: String,
   def registerJsonSchema(url: String, shape: AnyShape) = globalSpace.update(url, shape)
 
   def parseRemoteJSONPath(fileUrl: String)(implicit ctx: OasWebApiContext): Option[AnyShape] = {
-    val referenceUrl = if (fileUrl.contains("#")) Some(fileUrl.split("#").last) else None
-    val baseFileUrl  = fileUrl.split("#").head
+    val referenceUrl =
+      fileUrl.split("#") match {
+        case s: Array[String] if s.size > 1 => Some(s.last)
+        case _                              => None
+      }
+    val baseFileUrl = fileUrl.split("#").head
     val res: Option[Option[AnyShape]] = refs
       .filter(r => Option(r.unit.location).isDefined)
       .filter(_.unit.location == baseFileUrl) collectFirst {

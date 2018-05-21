@@ -1,0 +1,103 @@
+#%RAML 1.0
+title: World Music API
+baseUri: http://example.api.com/{version}
+version: v1
+traits:
+  trait:
+    queryParameters:
+      access_token: string
+/songs:
+  get:
+    (monitoringInterval): 30
+    queryParameters:
+      access_token:
+        type: string
+      genre:
+        description: filter the songs by genre
+    responses:
+      200:
+        body:
+          application/json:
+            type: object
+            additionalProperties: true
+            properties:
+              name:
+                required: true
+                type: string
+              discography:
+                required: true
+                items:
+                  anyOf:
+                    -
+                      additionalProperties: true
+                      properties:
+                        title:
+                          required: true
+                          type: string
+                        length:
+                          type: number
+                          multipleOf: 100
+                          required: true
+                    -
+                      additionalProperties: true
+                      properties:
+                        title:
+                          required: true
+                          type: string
+                        songs:
+                          required: true
+                          items:
+                            additionalProperties: true
+                            properties:
+                              title:
+                                required: true
+                                type: string
+                              length:
+                                type: number
+                                multipleOf: 100
+                                required: true
+  post:
+    queryParameters:
+      access_token:
+        type: string
+  /{songId}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: object
+              additionalProperties: true
+              properties:
+                title:
+                  required: true
+                  type: string
+                length:
+                  type: number
+                  multipleOf: 100
+                  required: true
+            application/xml:
+              example: |
+                <?xml version="1.0" encoding="utf-8"?>
+                <song>
+                  <title>str1234</title>
+                  <artist>str1234</artist>
+                </song>
+              type: |
+                <?xml version="1.0" encoding="UTF-8"?>
+                <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  elementFormDefault="qualified" attributeFormDefault="unqualified">
+                  <xs:element name="song">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="title" type="xs:string" />
+                        <xs:element name="artist" type="xs:string" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:schema>
+annotationTypes:
+  monitoringInterval:
+    type: integer
+uses:
+  Songs: songs-library.raml

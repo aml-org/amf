@@ -1,0 +1,13 @@
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/missing-title-documentation/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://raml.org/vocabularies/amf/parser#CreativeWork-title-minCount
+  Message: API documentation item title is mandatory
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/missing-title-documentation/input.raml#/web-api/creative-work/null
+  Property: http://schema.org/title
+  Position: Some(LexicalInformation([(4,6)-(6,0)]))

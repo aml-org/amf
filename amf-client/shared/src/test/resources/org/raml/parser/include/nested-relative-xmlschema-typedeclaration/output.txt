@@ -1,12 +1,32 @@
 #%RAML 1.0
 title: testXML
-version: 1.0
+version: "1.0"
 /api/request:
   post:
     body:
       application/xml:
         example: |-
-          <?xml version="1.0" encoding="UTF-8"?> <tns1%3ARequest xmlns%3Atns1="http%3A//raml.org/subdir1/request" xmlns%3Atns2="http%3A//raml.org/subdir2/message" xmlns%3Atns3="http%3A//raml.org/subdir2/user" xmlns%3Atns4="http%3A//raml.org/subdir2/person"> <tns1%3AHeader> <tns2%3AUser> <tns3%3AId>ramluserid</tns3%3AId> <tns3%3AGender>MA</tns3%3AGender> <tns3%3AEmailAddresses> <tns4%3AEmailAddress> <tns4%3AEmailAddress>user@raml.org</tns4%3AEmailAddress> </tns4%3AEmailAddress> </tns3%3AEmailAddresses> </tns2%3AUser> </tns1%3AHeader> <tns1%3APayload> <tns2%3AContent>This is the content</tns2%3AContent> <tns2%3AType>Enum3</tns2%3AType> </tns1%3APayload> </tns1%3ARequest>
+          <?xml version="1.0" encoding="UTF-8"?>
+          <tns1:Request xmlns:tns1="http://raml.org/subdir1/request"
+                        xmlns:tns2="http://raml.org/subdir2/message"
+                        xmlns:tns3="http://raml.org/subdir2/user"
+                        xmlns:tns4="http://raml.org/subdir2/person">
+              <tns1:Header>
+                  <tns2:User>
+                      <tns3:Id>ramluserid</tns3:Id>
+                      <tns3:Gender>MA</tns3:Gender>
+                      <tns3:EmailAddresses>
+                          <tns4:EmailAddress>
+                              <tns4:EmailAddress>user@raml.org</tns4:EmailAddress>
+                          </tns4:EmailAddress>
+                      </tns3:EmailAddresses>
+                  </tns2:User>
+              </tns1:Header>
+              <tns1:Payload>
+                  <tns2:Content>This is the content</tns2:Content>
+                  <tns2:Type>Enum3</tns2:Type>
+              </tns1:Payload>
+          </tns1:Request>
         type: |-
           <?xml version="1.0" encoding="UTF-8"?>
           <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"

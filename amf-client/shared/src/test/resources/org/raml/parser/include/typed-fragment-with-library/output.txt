@@ -1,0 +1,17 @@
+#%RAML 1.0
+resourceTypes:
+  resourceType:
+    uses:
+      library1: library.raml
+    type:
+      library1.foo:
+        foo: description
+    get:
+      responses:
+        200: null
+title: hola
+/top:
+  get:
+    responses:
+      200: {}
+  post: {}

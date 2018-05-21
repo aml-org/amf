@@ -1,0 +1,9 @@
+#%RAML 1.0
+title: hola
+/top:
+  get:
+    description: get something
+  (library1.bar): hi
+  description: This is a collection description and else
+uses:
+  library1: library.raml
