@@ -4,7 +4,7 @@ import java.io.PrintWriter
 
 import amf.core.rdf.RdfModel
 import org.apache.jena.rdf.model.Model
-import org.topbraid.spin.util.JenaUtil
+import org.topbraid.jenax.util.JenaUtil
 
 class JenaRdfModel(val model: Model = JenaUtil.createMemoryModel()) extends RdfModel {
 
