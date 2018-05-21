@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "CloudHub New Application from Exchange or Sandbox",
+  "allowAdditionalProperties": false,
+  "properties": {
+    "applicationSource": {
+      "type": "object",
+      "description": "Information about application source",
+      "properties": {
+        "source": {
+          "type": "string",
+          "enum": ["EXCHANGE", "SANDBOX"],
+          "description": "Source type"
+        },
+        "groupId": {
+          "type": "string",
+          "description": "groupId for exchange source"
+        },
+        "artifactId": {
+          "type": "string",
+          "description": "artifactId for exchange source"
+        },
+        "version": {
+          "type": "string",
+          "description": "version for exchange source"
+        },
+        "fileSource": {
+          "type": "string",
+          "description": "fileSource for sandbox source"
+        },
+        "fileChecksum": {
+          "type": "string",
+          "description": "fileChecksum for sandbox source"
+        }
+      }
+    },
+    "applicationInfo": {
+      "type": "object",
+      "description": "Application deployment information"
+    },
+    "autoStart": {
+      "type": "boolean",
+      "description": "Should the application start deploying"
+    }
+  }
+}

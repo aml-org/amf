@@ -2239,4 +2239,19 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.length == 1)
     }
   }
+
+  test("Invalid type def with json schemas includes") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "production/invalid-jsonschema-includes/cloudhub-api.raml",
+                         platform,
+                         RamlYamlHint,
+                         validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(report.results.length == 1)
+      assert(report.results.head.message.equals("Cannot parse JSON Schema expression out of a non string value"))
+    }
+  }
 }
