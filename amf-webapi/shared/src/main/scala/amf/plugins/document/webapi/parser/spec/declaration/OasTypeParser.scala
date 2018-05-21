@@ -617,7 +617,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       }
 
       finalShape match {
-        case Some(parsed: AnyShape) => parsed
+        case Some(parsed: AnyShape) => parsed.withId(shape.id)
         case None                   => shape.withItems(AnyShape())
       }
     }
