@@ -1,0 +1,14 @@
+#%RAML 1.0
+
+title: pagenation.raml
+uses:
+  /Shipment:
+    get:
+      queryparameters:  
+        startTime:
+          description: provide input date
+          required: true
+          example: 2018-04-06 00:56:00
+          type: date
+      responses:
+        200:

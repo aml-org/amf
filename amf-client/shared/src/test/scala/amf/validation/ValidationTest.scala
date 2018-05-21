@@ -2285,4 +2285,19 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.exists(_.message.equals("Invalid type def duTypes.storyCollection for raml 08")))
     }
   }
+
+  test("Invalid library tag type def") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "production/invalid-lib-tagtype/api.raml",
+                         platform,
+                         RamlYamlHint,
+                         validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.exists(_.message.equals("Missing library location")))
+    }
+  }
 }
