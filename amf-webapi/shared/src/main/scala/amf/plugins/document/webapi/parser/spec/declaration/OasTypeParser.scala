@@ -236,15 +236,19 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                               map: YMap = map,
                               adopt: (Shape) => Unit = adopt): AnyShape = {
     val parsed = typeDef match {
-      case NilType => NilShape(ast).withName(name)
+      case NilType =>
+        val shape = NilShape(ast).withName(name)
+        adopt(shape)
+        shape
       case FileType =>
         val shape = FileShape(ast).withName(name)
+        adopt(shape)
         FileShapeParser(typeDef, shape, map).parse()
       case _ =>
         val shape = ScalarShape(ast).withName(name)
+        adopt(shape)
         ScalarShapeParser(typeDef, shape, map).parse()
     }
-    adopt(parsed)
     parsed
   }
 

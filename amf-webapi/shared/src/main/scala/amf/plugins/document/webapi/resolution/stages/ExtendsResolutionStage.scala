@@ -6,7 +6,7 @@ import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{DataNode, DomainElement}
 import amf.core.parser.ParserContext
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.{ErrorDeclaration, ErrorEndPoint}
@@ -147,7 +147,7 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
     // This is required in the case where the extension comes from an overlay/extension
     if (!keepEditingInfo && !fromOverlay) endpoint.fields.removeField(DomainElementModel.Extends)
 
-    endpoint
+    new ReferenceResolutionStage(profile, keepEditingInfo).resolveDomainElement(endpoint)
   }
 
   private def resourcePathName(endPoint: EndPoint): String = {

@@ -67,7 +67,8 @@ object ExtendsHelper {
     checkNoNestedEndpoints(entry, ctx, node, extensionId)
 
     if (keepEditingInfo) annotateExtensionId(operation, extensionId, findUnitLocationOfElement(extensionId, unit))
-    new ReferenceResolutionStage(profile, keepEditingInfo).resolveDomainElement(operation)
+    operation
+    // new ReferenceResolutionStage(profile, keepEditingInfo).resolveDomainElement(operation)
   }
 
   def checkNoNestedEndpoints(entry: YMapEntry, ctx: RamlWebApiContext, node: DataNode, extensionId: String) = {
@@ -132,9 +133,9 @@ object ExtendsHelper {
     }
 
     collector.toList match {
-      case e :: Nil =>
-        if (keepEditingInfo) annotateExtensionId(e, extensionId, extensionLocation)
-        new ReferenceResolutionStage(profile, keepEditingInfo).resolveDomainElement(e)
+      case element :: Nil =>
+        if (keepEditingInfo) annotateExtensionId(element, extensionId, extensionLocation)
+        new ReferenceResolutionStage(profile, keepEditingInfo).resolveDomainElement(element)
       case Nil => throw new Exception(s"Couldn't parse an endpoint from resourceType '$name'.")
       case _   => throw new Exception(s"Nested endpoints found in resourceType '$name'.")
     }

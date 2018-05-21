@@ -99,7 +99,7 @@ case class Raml08WebFormParser(map: YMap, parentId: String)(implicit ctx: RamlWe
 
             entries.foreach(e => {
 
-              Raml08TypeParser(e, (shape: Shape) => shape, isAnnotation = false, StringDefaultType)
+              Raml08TypeParser(e, (shape: Shape) => shape.adopted(webFormShape.id), isAnnotation = false, StringDefaultType)
                 .parse()
                 .foreach(s => {
                   val property = webFormShape.withProperty(e.key.toString())

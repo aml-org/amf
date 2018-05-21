@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.validation
 
 import amf.core.annotations.LexicalInformation
+import amf.core.benchmark.{Execution, ExecutionLog}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{ArrayNode, DataNode, ObjectNode}
 import amf.core.remote.Platform
@@ -19,8 +20,10 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, platform: Platform) {
 
   val index = DataNodeIndex(candidates.map(_.payload.encodes))
 
-  def validate(): Future[Seq[AMFValidationResult]] =
+  def validate(): Future[Seq[AMFValidationResult]] = {
+    ExecutionLog.log(s"UnitPayloadsValidation#validate: Validating all candidates ${candidates.size}")
     PayloadValidator.validateAll(candidates, SeverityLevels.WARNING).map(groupResults)
+  }
 
   private def groupResults(report: AMFValidationReport): Seq[AMFValidationResult] = {
     val indexedResults: Map[String, Seq[AMFValidationResult]] = report.results.groupBy { r =>

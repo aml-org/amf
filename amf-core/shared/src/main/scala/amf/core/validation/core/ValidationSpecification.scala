@@ -1,5 +1,6 @@
 package amf.core.validation.core
 
+import amf.core.rdf.RdfModel
 import amf.core.vocabulary.Namespace
 import org.yaml.model.YDocument.EntryBuilder
 
@@ -56,7 +57,8 @@ case class PropertyConstraint(ramlPropertyId: String,
                                 */
                               `class`: Seq[String] = Seq(),
                               in: Seq[String] = Seq.empty,
-                              custom: Option[(EntryBuilder, String) => Unit] = None) {}
+                              custom: Option[(EntryBuilder, String) => Unit] = None,
+                              customRdf: Option[(RdfModel, String) => Any] = None) {}
 
 case class ValidationSpecification(name: String,
                                    // shacl:message
