@@ -1,0 +1,10 @@
+#%RAML 1.0
+title: Cloudhub Public API
+
+/v2:
+  put:
+    body:
+      application/json:
+        type:
+          - !include schemas/post-application.schema
+          - !include schemas/put-application-deprecated.schema

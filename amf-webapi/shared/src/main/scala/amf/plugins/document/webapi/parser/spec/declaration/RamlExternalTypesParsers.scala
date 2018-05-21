@@ -28,13 +28,13 @@ import org.yaml.parser.YamlParser
 import org.yaml.render.YamlRender
 
 import scala.collection.mutable
-case class RamlJsonSchemaExpression(name: String, value: YNode, adopt: Shape => Shape, parseExample: Boolean = false)(
-    override implicit val ctx: RamlWebApiContext)
+case class RamlJsonSchemaExpression(name: String,
+                                    override val value: YNode,
+                                    override val adopt: Shape => Shape,
+                                    parseExample: Boolean = false)(override implicit val ctx: RamlWebApiContext)
     extends RamlExternalTypesParser {
-  def parse(): AnyShape = {
 
-    val origin = buildTextAndOrigin(value, "JSON", adopt)
-
+  override def parseValue(origin: ValueAndOrigin): AnyShape = {
     val parsed: AnyShape = origin.oriUrl match {
       case Some(url) =>
         val (path, extFrament) = ReferenceFragmentPartition(url)
@@ -97,7 +97,6 @@ case class RamlJsonSchemaExpression(name: String, value: YNode, adopt: Shape => 
       parseExamples(parsed, value.as[YMap])
     }
     parsed
-
   }
 
   case class RamlExternalOasLibParser(ctx: RamlWebApiContext, text: String, valueAST: YNode, path: String) {
@@ -185,14 +184,15 @@ case class RamlJsonSchemaExpression(name: String, value: YNode, adopt: Shape => 
     }
   }
 
+  override val externalType: String = "JSON"
 }
 
-case class RamlXmlSchemaExpression(name: String, value: YNode, adopt: Shape => Shape, parseExample: Boolean = false)(
-    override implicit val ctx: RamlWebApiContext)
+case class RamlXmlSchemaExpression(name: String,
+                                   override val value: YNode,
+                                   override val adopt: Shape => Shape,
+                                   parseExample: Boolean = false)(override implicit val ctx: RamlWebApiContext)
     extends RamlExternalTypesParser {
-  def parse(): AnyShape = {
-    val origin = buildTextAndOrigin(value, "XML", adopt)
-
+  override def parseValue(origin: ValueAndOrigin): AnyShape = {
     val (maybeReferenceId, maybeFragmentLabel): (Option[String], Option[String]) = origin.oriUrl
       .map(ReferenceFragmentPartition.apply) match {
       case Some((path, uri)) =>
@@ -251,18 +251,36 @@ case class RamlXmlSchemaExpression(name: String, value: YNode, adopt: Shape => S
     maybeFragmentLabel.foreach { parsed.annotations += ExternalFragmentRef(_) }
     parsed
   }
+
+  override val externalType: String = "XML"
 }
 
 trait RamlExternalTypesParser extends RamlSpecParser with ExampleParser with RamlTypeSyntax {
+
+  val value: YNode
+  val adopt: Shape => Shape
+  val externalType: String
+  def parseValue(origin: ValueAndOrigin): AnyShape
+
+  def parse(): AnyShape = {
+    val origin = buildTextAndOrigin()
+    origin.errorShape match {
+      case Some(shape) => shape
+      case _           => parseValue(origin)
+    }
+  }
 
   protected def getOrigi(node: YNode): Option[String] = node match {
     case ref: MutRef => Some(ref.origValue.toString)
     case _           => None
   }
 
-  protected case class ValueAndOrigin(text: String, valueAST: YNode, oriUrl: Option[String])
+  protected case class ValueAndOrigin(text: String,
+                                      valueAST: YNode,
+                                      oriUrl: Option[String],
+                                      errorShape: Option[AnyShape] = None)
 
-  protected def buildTextAndOrigin(value: YNode, mode: String, adopt: Shape => Shape): ValueAndOrigin = {
+  protected def buildTextAndOrigin(): ValueAndOrigin = {
     value.tagType match {
       case YType.Map =>
         val map = value.as[YMap]
@@ -272,14 +290,14 @@ trait RamlExternalTypesParser extends RamlSpecParser with ExampleParser with Ram
           case _ =>
             val shape = SchemaShape()
             adopt(shape)
-            ctx.violation(shape.id, s"Cannot parse $mode Schema expression out of a non string value", value)
-            ValueAndOrigin("", value, None)
+            ctx.violation(shape.id, s"Cannot parse $externalType Schema expression out of a non string value", value)
+            ValueAndOrigin("", value, None, Some(shape))
         }
       case YType.Seq =>
         val shape = SchemaShape()
         adopt(shape)
-        ctx.violation(shape.id, s"Cannot parse $mode Schema expression out of a non string value", value)
-        ValueAndOrigin("", value, None)
+        ctx.violation(shape.id, s"Cannot parse $externalType Schema expression out of a non string value", value)
+        ValueAndOrigin("", value, None, Some(shape))
       case _ => ValueAndOrigin(value.as[YScalar].text, value, getOrigi(value))
     }
   }
