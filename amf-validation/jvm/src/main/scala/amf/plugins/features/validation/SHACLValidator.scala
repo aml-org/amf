@@ -14,7 +14,7 @@ import org.apache.jena.rdf.model.{Model, Resource}
 import org.apache.jena.util.FileUtils
 import org.topbraid.shacl.js.{JSScriptEngine, JSScriptEngineFactory, NashornScriptEngine, SHACLScriptEngineManager}
 import org.topbraid.shacl.validation.ValidationUtil
-import org.topbraid.spin.util.JenaUtil
+import org.topbraid.jenax.util.JenaUtil
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Future, Promise}
@@ -107,8 +107,8 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
       var report: Option[Resource] = None
       try {
         SHACLScriptEngineManager.getCurrentEngine.executeScriptFromURL(NashornScriptEngine.RDFQUERY_JS)
-        ExecutionLog.log(s"SHACLValidator#validate: Number of data triples -> ${dataModel.model.listStatements().toList.size()}")
-        ExecutionLog.log(s"SHACLValidator#validate: Number of shapes triples -> ${shapesModel.model.listStatements().toList.size()}")
+        // ExecutionLog.log(s"SHACLValidator#validate: Number of data triples -> ${dataModel.model.listStatements().toList.size()}")
+        // ExecutionLog.log(s"SHACLValidator#validate: Number of shapes triples -> ${shapesModel.model.listStatements().toList.size()}")
 
         /*
         dataModel.dump()
@@ -144,9 +144,9 @@ class CachedScriptEngine(functionUrl: Option[String], functionCode: Option[Strin
     @throws[Exception]
   override protected def createScriptReader(url: String): Reader = {
     if (NashornScriptEngine.DASH_JS.equals(url)) {
-      new InputStreamReader(classOf[NashornScriptEngine].getResourceAsStream("/etc/dash.js"))
+      new InputStreamReader(classOf[NashornScriptEngine].getResourceAsStream("/js/dash.js"))
     } else if (NashornScriptEngine.RDFQUERY_JS.equals(url)) {
-      new InputStreamReader(classOf[NashornScriptEngine].getResourceAsStream("/etc/rdfquery.js"))
+      new InputStreamReader(classOf[NashornScriptEngine].getResourceAsStream("/js/rdfquery.js"))
     } else if (functionUrl.isDefined && functionUrl.get.equals(functionUrl.get)) {
       new StringReader(functionCode.get)
     } else {
