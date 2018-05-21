@@ -9,6 +9,7 @@ import amf.plugins.document.webapi.parser.spec.domain.SingleValueArrayEmitter
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import amf.core.utils.Strings
+import org.yaml.model.YMap
 
 import scala.collection.mutable.ListBuffer
 
@@ -82,7 +83,9 @@ case class VariableEmitter(variable: VariableValue, ordering: SpecOrdering) exte
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       variable.name.value(),
-      DataNodeEmitter(variable.value, ordering).emit(_)
+      p => {
+        Option(variable.value).fold(p += YMap.empty)(v => { DataNodeEmitter(v, ordering).emit(p) })
+      }
     )
   }
 
