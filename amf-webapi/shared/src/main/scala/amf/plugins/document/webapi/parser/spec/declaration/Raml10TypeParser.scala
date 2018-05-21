@@ -312,16 +312,18 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
         })
         .fold(Raml08DefaultTypeParser(defaultType, name, map, adopt).parse())(value => {
           XsdTypeDefMapping.xsdFromString(value.text) match {
-            case (iri: String, format: Option[String])
+            case (Some(iri: String), format: Option[String])
                 if iri.equals((Shapes + "file").iri()) => // handle file type in 08 as FileShape for compatibility
               // (Applicable only to Form properties) ???
               val shape = FileShape(value)
               Some(shape.withName(name))
-            case (iri: String, format: Option[String]) =>
+            case (Some(iri: String), format: Option[String]) =>
               val shape = ScalarShape(value).set(ScalarShapeModel.DataType, AmfScalar(iri), Annotations(value))
               format.foreach(f => shape.set(ScalarShapeModel.Format, AmfScalar(f), Annotations()))
               Some(shape.withName(name))
-            case _ => None
+            case _ =>
+              ctx.violation(s"Invalid type def ${value.text} for raml 08", value)
+              None
           }
         })
         .getOrElse(ScalarShape(map).withDataType((Namespace.Xsd + "string").iri()).withName(name))

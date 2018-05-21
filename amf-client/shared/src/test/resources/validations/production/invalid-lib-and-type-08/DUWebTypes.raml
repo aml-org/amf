@@ -1,0 +1,21 @@
+#%RAML 0.8
+
+usage: |
+  provides commonly used types
+
+types:
+  storyCollection:
+    type: object
+    properties:
+      serverDateAndTime:
+        type: datetime
+        required: true
+      request:
+        type: string
+        required: true
+      queryParameters:
+        type: array
+        items:
+          type: string
+      stories:
+        type: story[]
