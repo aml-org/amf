@@ -1,8 +1,8 @@
 package amf.plugins.domain.shapes.parser
 
+import amf.core.vocabulary.Namespace.{Shapes, Xsd}
 import amf.plugins.domain.shapes.models.TypeDef
 import amf.plugins.domain.shapes.models.TypeDef._
-import amf.core.vocabulary.Namespace.{Shapes, Xsd}
 
 /**
   * XSD [[TypeDef]] mapping
@@ -28,15 +28,17 @@ object XsdTypeDefMapping {
       case _                => throw new RuntimeException("Unknown mapping")
     }).iri()
 
-  /** for 0.8*/
-  def xsdFromString(text: String): (String, Option[String]) =
+  /** for 0.8 */
+  def xsdFromString(text: String): (Option[String], Option[String]) =
     text match {
-      case "string"                      => ((Xsd + "string").iri(), Some(""))
-      case "number" | "float" | "double" => ((Shapes + "number").iri(), Some(""))
-      case "integer"                     => ((Xsd + "integer").iri(), Some(""))
-      case "date"                        => ((Xsd + "dateTime").iri(), Some("RFC2616"))
-      case "boolean"                     => ((Xsd + "boolean").iri(), Some(""))
-      case "file"                        => ((Shapes + "file").iri(), Some(""))
+      case "string"                      => (Some((Xsd + "string").iri()), Some(""))
+      case "number" | "float" | "double" => (Some((Shapes + "number").iri()), Some(""))
+      case "integer"                     => (Some((Xsd + "integer").iri()), Some(""))
+      case "date"                        => (Some((Xsd + "dateTime").iri()), Some("RFC2616"))
+      case "boolean"                     => (Some((Xsd + "boolean").iri()), Some(""))
+      case "file"                        => (Some((Shapes + "file").iri()), Some(""))
+      case _                             => (None, None)
+
     }
 }
 

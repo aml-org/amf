@@ -2268,4 +2268,21 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.conforms)
     }
   }
+
+  test("Invalid library and type def in 08") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "production/invalid-lib-and-type-08/api.raml",
+                         platform,
+                         RamlYamlHint,
+                         validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 2)
+      assert(report.results.exists(_.message.equals("Property uses not supported in a raml 0.8 webApi node")))
+      assert(report.results.exists(_.message.equals("Invalid type def duTypes.storyCollection for raml 08")))
+    }
+  }
 }

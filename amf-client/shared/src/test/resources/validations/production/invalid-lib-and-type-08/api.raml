@@ -1,0 +1,14 @@
+#%RAML 0.8
+title: University of Denver WEB Api
+
+uses:
+  duTypes: DUWebTypes.raml
+
+
+/stories:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: duTypes.storyCollection

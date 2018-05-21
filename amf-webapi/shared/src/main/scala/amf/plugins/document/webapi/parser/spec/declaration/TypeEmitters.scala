@@ -1739,7 +1739,8 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
         RamlNilShapeEmitter(nil, ordering, Seq()).emitters()
       case fileShape: FileShape =>
         val scalar =
-          ScalarShape(fileShape.fields, fileShape.annotations).withDataType(XsdTypeDefMapping.xsdFromString("file")._1)
+          ScalarShape(fileShape.fields, fileShape.annotations)
+            .withDataType(XsdTypeDefMapping.xsdFromString("file")._1.get)
         SimpleTypeEmitter(scalar, ordering).emitters()
       case shape: AnyShape =>
         RamlAnyShapeEmitter(shape, ordering, Nil).emitters()
