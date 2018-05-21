@@ -324,7 +324,7 @@ trait MinShapeAlgorithm extends RestrictionComputation {
     }
 
     if (accExamples.nonEmpty)
-      superUnion.fields.setWithoutId(AnyShapeModel.Examples, AmfArray(accExamples))
+      superUnion.fields.setWithoutId(AnyShapeModel.Examples, AmfArray(accExamples.distinct))
 
     superUnion
   }

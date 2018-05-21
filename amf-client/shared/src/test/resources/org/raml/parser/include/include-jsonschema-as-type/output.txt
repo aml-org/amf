@@ -1,0 +1,63 @@
+#%RAML 1.0
+types:
+  accountKey:
+    displayName: Account
+    description: Account object
+    type: object
+    additionalProperties: false
+    properties:
+      accountId:
+        description: The unique identifier for the account.
+        type: string
+        required: false
+      accountStatus:
+        displayName: Code
+        description: Standard definition for codes.
+        type: object
+        additionalProperties: false
+        required: false
+        properties:
+          code:
+            description: unique identifier for the code
+            type: string
+            required: true
+          description:
+            description: Display description of the code.
+            type: string
+            required: false
+title: Sample API
+/testRefIssue:
+  post:
+    body:
+      application/json:
+        displayName: Account
+        description: Account object
+        example:
+          accountId: zdiigepi4sogg8qwicg3m7ka4c1
+          accountStatus:
+            code: OPEN
+            description: Opened
+        additionalProperties: true
+        properties:
+          accountId:
+            description: The unique identifier for the account.
+            type: string
+            required: false
+          accountStatus:
+            displayName: Code
+            description: Standard definition for codes.
+            type: object
+            additionalProperties: false
+            required: false
+            properties:
+              code:
+                description: unique identifier for the code
+                type: string
+                required: true
+              description:
+                description: Display description of the code.
+                type: string
+                required: false
+    responses:
+      200:
+        description: Successfully updated account

@@ -86,7 +86,7 @@ object AMFRawValidations {
     "		AMF	Domain	raml-http:Payload	raml-http:mediaType	PropertyShape	sh:path	sh:datatype	xsd:string	Method default media types produced must be strings	Operation object 'produces' must be strings	Violation",
     "		AMF	Domain	raml-http:Payload	raml-http:mediaType	PropertyShape	sh:path	sh:maxCount	1	Media type maximum cardinality is 1 per payload	Media type maximum cardinality is 1 per payload	Violation",
     "		AMF	Domain	raml-http:Payload	raml-http:mediaType	PropertyShape	sh:path	sh:maxCount	1	Media type maximum cardinality is 1 per payload	Media type maximum cardinality is 1 per payload	Violation",
-    "		AMF	Domain	raml-http:Payload	raml-http:mediaType	PropertyShape	sh:path	sh:pattern	^\\w+\\/[-+.\\w]+$	Invalid media type for method	Swagger Operation object 'produces' must be a valid media type	Violation",
+    "		AMF	Domain	raml-http:Payload	raml-http:mediaType	PropertyShape	sh:path	sh:pattern	^(([-\\w]+|[*]{1})\\/([-+.\\w]+|[*]{1}))$|^text\\/\\w+; charset=[-\\w]+$	Invalid media type for method	Swagger Operation object 'produces' must be a valid media type	Violation",
     "		AMF	Domain	raml-http:Payload	raml-http:schema	PropertyShape	sh:path	sh:class	sh:Shape	Expected RAML Type not found	Expected Schema object not found	Violation",
     "		AMF	Domain	raml-http:Payload	raml-http:schema	PropertyShape	sh:path	sh:maxCount	1	Only one RAML type can be specified	Only one Schema object can be specified	Violation",
     "		AMF	Domain	raml-shapes:Shape	raml-shapes:xmlSerialization	PropertyShape	sh:path	sh:class	raml-shapes:XMLSerializer	Property 'xml' of a RAML type must have as a value a valid XML Serialization	Property 'xml' of a Schema object must have as a value a valid XML object	Violation",
