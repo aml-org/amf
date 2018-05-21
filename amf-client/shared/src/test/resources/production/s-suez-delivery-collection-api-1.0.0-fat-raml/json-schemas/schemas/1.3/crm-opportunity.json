@@ -1,0 +1,55 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Commodity schema",
+	"description": "Schema defining the CRM Opportunity object",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "id of the CRM Opportunity",
+			"type": "string"
+		},
+		"name": {
+			"description": "name of the CRM Opportunity",
+			"type": "string"
+		},
+		"status": {
+			"description": "status of the CRM Opportunity",
+			"type": "string"
+		},
+		"creationDate": {
+			"description": "Creation date of the CRM Opportunity",
+			"type": "string",
+			"format": "date-time"
+		},
+		"closedDate": {
+			"description": "Closed date of the CRM Opportunity",
+			"type": "string",
+			"format": "date-time"
+		},
+		"modifiedDate": {
+			"description": "Last Modified date of the CRM Opportunity",
+			"type": "string",
+			"format": "date-time"
+		},
+		"isDeleted": {
+			"description": "Is the Opportunity deleted?",
+			"type": "boolean"
+		},
+		"owner": {
+			"description": "Opportunity Owner",
+			"type": "object",
+			"$ref": "crm-user.json"
+		},
+		"account": {
+			"description": "Account to which the opportunity is tied to",
+			"type": "object",
+			"$ref": "crm-account.json"
+		},
+		"contact": {
+			"description": "contactl",
+			"type": "object",
+			"$ref": "contact.json"
+		}
+	},
+	"additionalProperties": false
+}

@@ -1,0 +1,29 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Cell schema",
+	"description": "Schema defining the Cell object",
+	"type": "object",
+	"properties": {
+		"header": {
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "id of the cell",
+			"type": "string"
+		},
+		"code": {
+			"description": "code of the cell",
+			"type": "string"
+		},
+		"description": {
+			"description": "Description of the cell",
+			"type": "string"
+		},
+		"hallCluster": {
+			"description": "hallCluster of the cell",
+			"type": "number"
+		}
+	},
+	"additionalProperties": false
+}

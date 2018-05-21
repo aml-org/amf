@@ -1,0 +1,47 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Municipal Task  schema",
+	"description": "Schema defining the municipal task",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "system generated id",
+			"type": "string"
+		},
+		"guid": {
+			"description": "guid",
+			"type": "string"
+		},
+		"header": {
+			"description": "header",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"name": {
+			"description": "name of the task",
+			"type": "string"
+		},
+		"type": {
+			"description": "type of the task",
+			"type": "string"
+		},
+		"completionDate": {
+			"description": "task completed date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"municipalResolutionCode": {
+			"description": "resolutionCode of the task",
+			"$ref": "MunicipalResolutionCode.json"
+		},
+		"notes": {
+			"description": "notes",
+			"type": "string"
+		},
+		"photo": {
+			"description": "photo",
+			"type": "byte"
+		}
+	},
+	"additionalProperties": false
+}

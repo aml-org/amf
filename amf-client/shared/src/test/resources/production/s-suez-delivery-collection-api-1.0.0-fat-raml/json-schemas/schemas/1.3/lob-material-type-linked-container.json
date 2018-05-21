@@ -1,0 +1,35 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "LoBMaterialTypeLinkedContainer schema",
+    "description": "Schema defining the Line Of Business(LOB)/materialType linked to containers",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "LOB id",
+            "type": "string",
+            "maxLength": 10
+        },     
+        "lineOfBusiness": {
+            "description": "Line of Business",
+            "type": "object",
+            "$ref" : "line-of-business.json"
+        },
+        "materialType": {
+            "description": "material type",
+            "type": "object",
+            "$ref" : "material-type.json"
+        },
+        "containerMappings": {
+            "description": "containerMappings",
+            "type": "array",
+            "items": {
+              "$ref" : "container-mapping.json"
+            }
+        },
+        "isActive": {
+            "description": "isActive",
+            "type": "boolean"
+        }
+    },
+    "additionalProperties": false
+}

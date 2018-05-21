@@ -1,0 +1,39 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Area schema",
+    "description": "Schema defining the area object",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "Area id",
+            "type": "string"
+        },
+        "code": {
+            "description": "Code of the area",
+            "type": "string",
+            "maxLength": 6
+        },
+        "description": {
+            "description": "description of the area",
+            "type": "string",
+            "maxLength": 100
+        },
+        "sectors": {
+          "description": "Sectors under each area",
+          "type": "array",
+          "items": {
+            "$ref" : "sector.json"
+          }
+        },
+        "preferredSectors": {
+          "description": "preferredSectors under each area",
+          "type": "array",
+          "items": {
+            "$ref" : "sector.json"
+          }
+        }
+		
+  },
+   "required": ["code"],
+   "additionalProperties": false
+}

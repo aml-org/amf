@@ -1,0 +1,70 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Route Schedule schema",
+	"description": "Schema defining the schedules for the route",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "Header Information",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "system generated id",
+			"type": "string",
+			"maxLength": 10
+		},
+		"code": {
+			"description": "route code",
+			"type": "string"
+		},
+		"scheduleDate": {
+			"description": "Date of the route schedule",
+			"type": "string",
+			"format": "date-time"
+		},
+		"startTime": {
+			"description": "Time when the route schedule stated(hh:mm)",
+			"type": "string",
+			"format": "date-time"
+		},
+		"endTime": {
+			"description": "Time when the route schedule ended(hh:mm)",
+			"type": "string",
+			"format": "date-time"
+		},
+		"lineOfBusiness": {
+			"description": "Line Of Business",
+			"type": "object",
+			"$ref": "line-of-business.json"
+		},
+		"organisation": {
+			"description": "organisation information",
+			"type": "object",
+			"$ref": "organisation.json"
+		},
+		"route": {
+			"description": "Route details",
+			"type": "object",
+			"$ref": "route.json"
+		},
+		"schedule": {
+			"description": "Schedule Information",
+			"type": "object",
+			"$ref": "schedule.json"
+		},
+		"isExecuted": {
+			"description": "isExecuted",
+			"type": "boolean"
+		},
+		"serviceAddressCount": {
+			"description": "serviceAddressCount",
+			"type": "number"
+		},
+		"isRouteStatusCompleted": {
+			"description": "isRouteStatusCompleted",
+			"type": "boolean"
+		}
+	},
+	"additionalProperties": false
+}

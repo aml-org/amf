@@ -1,0 +1,30 @@
+  type :
+    collection:
+      schema: scheduleline
+      example: !include ../json-schemas/sample/1.3/scheduleline-collection.json
+  get:
+    is: [q-bin-action-type  : { required : false}]
+  /{schedulelineId}:
+    displayName: resourceName
+    type :
+      collection-item:
+        schema: scheduleline
+        example: !include ../json-schemas/sample/1.3/scheduleline.json
+    /orderline/{orderlineId}:
+      displayName: resourceName
+      type :
+        collection-item:
+          schema: orderline
+          example: !include ../json-schemas/sample/1.3/orderline.json
+      /errors:
+        displayName: resourceName
+        type :
+          collection:
+            schema: error
+            example: !include ../json-schemas/sample/1.3/error.json              
+        /{errorId}:
+          displayName: resourceName
+          type :
+            collection-item:
+              schema: scheduleline
+              example: !include ../json-schemas/sample/1.3/scheduleline.json

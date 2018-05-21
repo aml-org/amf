@@ -1,0 +1,83 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Lift Detail schema",
+	"description": "Schema defining the Lift Detail object",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "Id",
+			"type": "string"
+		},
+		"batchId": {
+			"description": "Description of the lift detail",
+			"type": "number"
+		},
+		"liftDate": {
+			"description": "lift date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"binId": {
+			"description": "binId",
+			"type": "string"
+		},
+		"tagId": {
+			"description": "tagId",
+			"type": "string"
+		},
+		"orderQuantity": {
+			"description": "orderQuantity",
+			"type": "number"
+		},
+		"actualQuantity": {
+			"description": "actualQuantity",
+			"type": "number"
+		},
+		"binStockSiteId": {
+			"description": "",
+			"type": "string"
+		},
+		"binStockSiteName": {
+			"description": "",
+			"type": "string"
+		},
+		"totalWeight": {
+			"description": ""
+		},
+		"isBinCollected": {
+			"description": ""
+		},
+		"abnormalityDescription": {
+			"description": ""
+		},
+		"note": {
+			"description": ""
+		},
+		"commodity": {
+			"description": "commodity",
+			"type": "object",
+			"$ref": "commodity.json"
+		},
+		"containers": {
+			"description": "containers",
+			"type": "array",
+			"items": {
+				"$ref": "container.json"
+			}
+		},
+		"weightRegistrationId": {
+			"description": "weightRegistrationId",
+			"type": "string"
+		},
+		"pickup": {
+			"description": "pickup",
+			"type": "object",
+			"$ref": "pickup.json"
+		},
+		"binStockCustomerId": {
+			"description": "binStockCustomerId",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}

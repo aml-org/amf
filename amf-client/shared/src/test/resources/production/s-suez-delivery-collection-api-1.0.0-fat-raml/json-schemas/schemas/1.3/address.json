@@ -1,0 +1,151 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Service Address schema",
+	"description": "Schema defining the Address object",
+	"type": "object",
+	"properties": {
+		"roomNumber": {
+			"description": "roomNumber",
+			"type": "string",
+			"maxLength": 10
+		},
+		"streetWithNumber": {
+			"description": "Street With Number",
+			"type": "string",
+			"maxLength": 100
+		},
+		"department": {
+			"description": "Department",
+			"type": "string",
+			"maxLength": 50
+		},
+		"departmentLocation": {
+			"description": "Department Location",
+			"type": "string",
+			"maxLength": 50
+		},
+		"street2": {
+			"description": "Street2",
+			"type": "string",
+			"maxLength": 50
+		},
+		"town": {
+			"description": "Town",
+			"type": "string",
+			"maxLength": 50
+		},
+		"houseNumber": {
+			"description": "House Number",
+			"type": "string",
+			"maxLength": 10
+		},
+		"floor": {
+			"description": "Floor",
+			"type": "string",
+			"maxLength": 10
+		},
+		"street": {
+			"description": "Street",
+			"type": "string",
+			"maxLength": 50
+		},
+		"building": {
+			"description": "Building",
+			"type": "string",
+			"maxLength": 50
+		},
+		"subBuilding": {
+			"description": "Sub Building",
+			"type": "string",
+			"maxLength": 50
+		},
+		"city": {
+			"description": "City",
+			"type": "string",
+			"maxLength": 50
+		},
+		"postCode": {
+			"description": "Post Code",
+			"type": "string",
+			"maxLength": 12
+		},
+		"county": {
+			"description": "County",
+			"type": "string",
+			"maxLength": 50
+		},
+		"country": {
+			"description": "Country",
+			"type": "string",
+			"maxLength": 50
+		},
+		"district": {
+			"description": "District",
+			"type": "string",
+			"maxLength": 50
+		},
+		"location": {
+			"description": "Location",
+			"type": "string",
+			"maxLength": 50
+		},
+		"region": {
+			"description": "Region",
+			"type": "string",
+			"maxLength": 30
+		},
+		"addressline1": {
+			"description": "addressline1",
+			"type": "string",
+			"maxLength": 50
+		},
+		"addressline2": {
+			"description": "addressline2",
+			"type": "string",
+			"maxLength": 50
+		},
+		"addressline3": {
+			"description": "addressline3",
+			"type": "string",
+			"maxLength": 50
+		},
+		"addressline4": {
+			"description": "addressline4",
+			"type": "string",
+			"maxLength": 50
+		},
+		"addressline5": {
+			"description": "addressline5",
+			"type": "string",
+			"maxLength": 50
+		},
+		"addressline6": {
+			"description": "addressline6",
+			"type": "string",
+			"maxLength": 50
+		},
+		"addressline7": {
+			"description": "addressline7",
+			"type": "string",
+			"maxLength": 50
+		},
+		"addressline8": {
+			"description": "addressline8",
+			"type": "string",
+			"maxLength": 50
+		},
+		"type": {
+			"description": "type of the address - BILLING,SHIPPING",
+			"type": "string"
+		},
+		"coordinateX": {
+			"description": "coordinateX",
+			"type": "string"
+		},
+		"coordinateY": {
+			"description": "coordinateY",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}

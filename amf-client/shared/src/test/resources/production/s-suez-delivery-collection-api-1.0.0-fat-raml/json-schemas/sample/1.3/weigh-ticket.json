@@ -1,0 +1,141 @@
+{
+	"header": {
+		"transactionType": "C",
+		"source": "MOCK"
+	},
+	"id": "123",
+	"code": "EURO",
+	"flowType": "Import",
+	"glAccount": {
+		"id": "123",
+		"code": "EURO",
+		"shortDescription": "EURO",
+		"longDescription": "Import",
+		"accountType": "AVM100318067-P-1",
+		"reconciliationAccount": "2017-06-14T00:00:00Z",
+		"costObject": "2017",
+		"isActive": false,
+		"isDebit": false,
+		"chargeCostCenter": false
+	},
+	"revenueCostCentre": {
+		"organisation": {
+			"code": "AV1"
+		},
+		"type": "- Mock Property",
+		"lineOfBusiness": {
+			"code": "310"
+		}
+	},
+	"chargeCostCentre": {
+		"type": "P",
+		"organisation": {
+			"code": "UKTX8"
+		},
+		"lineOfBusiness": {
+			"code": "112"
+		}
+	},
+	"ticketNumber": "AVM100318067-P-1",
+	"createdDate": "2017-06-14T00:00:00Z",
+	"modifiedDate": "2017-06-14T00:00:00Z",
+	"timeIn": "19:54",
+	"timeOut": "20:13",
+	"bridgeIn": "AV1M",
+	"bridgeInRef": "KB",
+	"bridgeOut": "AV1M",
+	"bridgeOutRef": "KB",
+	"container": {
+		"containerType": {
+			"code": ""
+		}
+	},
+	"status": "U",
+	"isCash": false,
+	"isBlocked": false,
+	"producerCode": "99900036",
+	"grossWeightId": "",
+	"tareWeightId": "",
+	"grossWeightSortCode": "",
+	"tareWeightSortCode": "",
+	"ticketType": "S",
+	"branchNumber": "adf",
+	"notes": "",
+	"sequenceCode": "",
+	"isCharged": false,
+	"routeSchedule": {
+		"schedule": {
+			"driverTicket": {
+				"code": ""
+			},
+			"commodities": [
+				{
+					"code": "W240000",
+					"description": "General Mixed Recyclables IC",
+					"europeanWasteCatalogue": {
+						"code": "20.03.01"
+					},
+					"landfillTax": {
+						"code": "0",
+						"amount": 0,
+						"percentage": 0,
+						"vat": {
+							"percentage": 0
+						}
+					}
+				}
+			]
+		}
+	},
+	"udf": [
+		{
+			"value": "MM",
+			"UDFId": "15"
+		}
+	],
+	"producerName": "SUEZ Bristol (Inter-Company)",
+	"customer": {
+		"id": "137",
+		"name": "SUEZ Bristol (Inter-Company)",
+		"companyCode": "99900036"
+	},
+	"siteCode": "99918890",
+	"siteName": "SUEZ AVONMOUTH MRF",
+	"destinationCode": "",
+	"destinationName": "",
+	"unit": {
+		"code": "KG"
+	},
+	"quantity": 0,
+	"tonnes": 6.7,
+	"initialRevOrDisposalCost": 251.25,
+	"service": {
+		"code": ""
+	},
+	"grossWeight": 21820,
+	"tareWeight": 15120,
+	"netWeight": 6700,
+	"actualRevOrDisposalCost": 0,
+	"vatAmount": 0,
+	"netAmount": 0,
+	"quantityWTI": 0,
+	"uomWTI": 0,
+	"rateWTI": 0,
+	"pricePerTonne": 0,
+	"pricePerUnit": 0,
+	"cell": {
+		"code": ""
+	},
+	"userName": "dallm",
+	"isAmmended": false,
+	"poNumber": "",
+	"producerId": "137",
+	"siteId": "229886",
+	"destinationId": "",
+	"origin": "",
+	"invoice": {
+		"id": ""
+	},
+	"grossWeighDate": "2017-06-14T19:54:12Z",
+	"tareWeighDate": "2017-06-14T20:13:22Z"
+}

@@ -3,14 +3,18 @@ package amf.plugins.features.validation
 import java.io.{InputStreamReader, Reader, StringReader}
 import java.nio.charset.Charset
 
-import amf.core.validation.core.ValidationReport
+import amf.core.benchmark.ExecutionLog
+import amf.core.emitter.RenderOptions
+import amf.core.model.document.BaseUnit
+import amf.core.validation.core.{ValidationReport, ValidationSpecification}
+import amf.plugins.features.validation.emitters.{RdfModelEmitter, ValidationRdfModelEmitter}
 import org.apache.commons.io.IOUtils
 import org.apache.commons.lang3.StringUtils
 import org.apache.jena.rdf.model.{Model, Resource}
 import org.apache.jena.util.FileUtils
 import org.topbraid.shacl.js.{JSScriptEngine, JSScriptEngineFactory, NashornScriptEngine, SHACLScriptEngineManager}
 import org.topbraid.shacl.validation.ValidationUtil
-import org.topbraid.spin.util.JenaUtil
+import org.topbraid.jenax.util.JenaUtil
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Future, Promise}
@@ -34,23 +38,25 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
 
   override def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): Future[String] = {
     val promise = Promise[String]()
-    val dataModel = loadModel(StringUtils.chomp(data), dataMediaType)
-    val shapesModel = loadModel(StringUtils.chomp(shapes), shapesMediaType)
-    loadLibrary()
-    val res = SHACLScriptEngineManager.begin()
-    var report: Option[Resource] = None
     try {
-      SHACLScriptEngineManager.getCurrentEngine.executeScriptFromURL(NashornScriptEngine.RDFQUERY_JS)
-      report = Some(ValidationUtil.validateModel(dataModel, shapesModel, false))
-
-    } finally {
-      SHACLScriptEngineManager.end(res)
+      val dataModel = loadModel(StringUtils.chomp(data), dataMediaType)
+      val shapesModel = loadModel(StringUtils.chomp(shapes), shapesMediaType)
+      loadLibrary()
+      val res = SHACLScriptEngineManager.begin()
+      var report: Option[Resource] = None
+      try {
+        SHACLScriptEngineManager.getCurrentEngine.executeScriptFromURL(NashornScriptEngine.RDFQUERY_JS)
+        report = Some(ValidationUtil.validateModel(dataModel, shapesModel, false))
+      } finally {
+        SHACLScriptEngineManager.end(res)
+      }
+      val output = RDFPrinter(report.get.getModel, "JSON-LD")
+      promise.success(output)
+      promise.future
+    } catch {
+      case e: Exception =>
+        promise.failure(e).future
     }
-
-    val output = RDFPrinter(report.get.getModel, "JSON-LD")
-    promise.success(output)
-    promise.future
-
   }
 
   private def loadModel(data: String, mediaType: String): Model = {
@@ -85,6 +91,52 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
     })
   }
 
+  override def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: String): Future[String] = {
+    val promise = Promise[String]()
+    try {
+      ExecutionLog.log("SHACLValidator#validate: loading Jena data model")
+      val dataModel = new JenaRdfModel()
+      new RdfModelEmitter(dataModel).emit(data, RenderOptions().withValidation)
+      ExecutionLog.log("SHACLValidator#validate: loading Jena shapes model")
+      val shapesModel = new JenaRdfModel()
+      new ValidationRdfModelEmitter(messageStyle, shapesModel).emit(shapes)
+      ExecutionLog.log("SHACLValidator#validate: loading library")
+      loadLibrary()
+      ExecutionLog.log("SHACLValidator#validate: starting script engine")
+      val res = SHACLScriptEngineManager.begin()
+      var report: Option[Resource] = None
+      try {
+        SHACLScriptEngineManager.getCurrentEngine.executeScriptFromURL(NashornScriptEngine.RDFQUERY_JS)
+        // ExecutionLog.log(s"SHACLValidator#validate: Number of data triples -> ${dataModel.model.listStatements().toList.size()}")
+        // ExecutionLog.log(s"SHACLValidator#validate: Number of shapes triples -> ${shapesModel.model.listStatements().toList.size()}")
+
+        /*
+        dataModel.dump()
+        println("\n\n=======> SHAPES")
+        println(shapesModel.toN3())
+        println("\n\n=======> DATA")
+        println(dataModel.toN3())
+        */
+
+        ExecutionLog.log(s"SHACLValidator#validate: validating...")
+        report = Some(ValidationUtil.validateModel(dataModel.model, shapesModel.model, false))
+      } finally {
+        ExecutionLog.log(s"SHACLValidator#validate: releasing script manager resources")
+        SHACLScriptEngineManager.end(res)
+      }
+      ExecutionLog.log(s"SHACLValidator#validate: Generating JSON-LD report")
+      val output = RDFPrinter(report.get.getModel, "JSON-LD")
+      ExecutionLog.log(s"SHACLValidator#validate: finishing")
+      promise.success(output)
+      promise.future
+    } catch {
+      case e: Exception =>
+        promise.failure(e).future
+    }
+  }
+
+  override def report(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: String): Future[ValidationReport] =
+    validate(data, shapes, messageStyle).map(new JVMValidationReport(_))
 }
 
 
@@ -92,9 +144,9 @@ class CachedScriptEngine(functionUrl: Option[String], functionCode: Option[Strin
     @throws[Exception]
   override protected def createScriptReader(url: String): Reader = {
     if (NashornScriptEngine.DASH_JS.equals(url)) {
-      new InputStreamReader(classOf[NashornScriptEngine].getResourceAsStream("/etc/dash.js"))
+      new InputStreamReader(classOf[NashornScriptEngine].getResourceAsStream("/js/dash.js"))
     } else if (NashornScriptEngine.RDFQUERY_JS.equals(url)) {
-      new InputStreamReader(classOf[NashornScriptEngine].getResourceAsStream("/etc/rdfquery.js"))
+      new InputStreamReader(classOf[NashornScriptEngine].getResourceAsStream("/js/rdfquery.js"))
     } else if (functionUrl.isDefined && functionUrl.get.equals(functionUrl.get)) {
       new StringReader(functionCode.get)
     } else {

@@ -1,0 +1,90 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Vehicle Schedule schema",
+	"description": "Schema defining the schedules for the vehicle",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "system generated id",
+			"type": "string"
+		},
+		"sequence": {
+			"description": "Sequence",
+			"type": "number"
+		},
+		"createdDate": {
+			"description": "vehicle",
+			"type": "string",
+			"format": "date-time"
+		},
+		"fueledExternal": {
+			"description": "Fueled External",
+			"type": "number"
+		},
+		"fueledInternal": {
+			"description": "Fueled Internal",
+			"type": "number"
+		},
+		"startMileage": {
+			"description": "Start Mileage",
+			"type": "number"
+		},
+		"endMileage": {
+			"description": "End Mileage",
+			"type": "number"
+		},
+		"startTime": {
+			"description": "Start Time",
+			"type": "number"
+		},
+		"endTime": {
+			"description": "End Time",
+			"type": "number"
+		},
+		"downTime": {
+			"description": "Down Time",
+			"type": "number"
+		},
+		"breakTime": {
+			"description": "Break Time",
+			"type": "number"
+		},
+		"serviceTime": {
+			"description": "Service Time",
+			"type": "number"
+		},
+		"disposalVisitCount": {
+			"description": "Disposal Visit Count",
+			"type": "number"
+		},
+		"disposalTripTime": {
+			"description": "Disposal Trip Time",
+			"type": "number"
+		},
+		"disposalStartTime": {
+			"description": "Disposal Start Time",
+			"type": "number"
+		},
+		"disposalEndTime": {
+			"description": "Disposal End Time",
+			"type": "number"
+		},
+		"breakdownTime": {
+			"description": "Break Down Time",
+			"type": "number"
+		},
+		"extraInformation": {
+			"description": "ExtraInformation",
+			"type": "string"
+		},
+		"isValidated": {
+			"description": "isValidated",
+			"type": "boolean"
+		},
+		"waterUsed": {
+			"description": "Water Used",
+			"type": "number"
+		}
+	},
+	"additionalProperties": false
+}

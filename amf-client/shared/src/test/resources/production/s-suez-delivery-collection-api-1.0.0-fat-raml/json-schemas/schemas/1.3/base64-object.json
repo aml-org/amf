@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Base64Object schema",
+    "description": "Schema defining the Base64Object object",
+    "type": "object",  
+    "properties": {
+        "id": {
+            "description": "id",
+            "type": "string"
+        },
+        "content": {
+            "description": "content",
+            "type": "string"
+        },
+        "name": {
+            "description": "name",
+            "type": "string"
+        },
+        "type": {
+            "description": "type",
+            "type": "string"
+        }
+    },
+    "additionalProperties": false
+}

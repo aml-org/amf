@@ -1,0 +1,40 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Container Type schema",
+	"description": "Schema defining the Container Type object",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "Header of the vehicle",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "Container Id",
+			"type": "string"
+		},
+		"code": {
+			"description": "container type code",
+			"type": "string",
+			"maxLength": 6
+		},
+		"description": {
+			"description": "container type description",
+			"type": "string",
+			"maxLength": 100
+		},
+		"type": {
+			"description": "container type",
+			"type": "number"
+		},
+		"displayName": {
+			"description": "displayName",
+			"type": "string"
+		},
+		"isActive": {
+			"description": "isActive",
+			"type": "boolean"
+		}
+	},
+	"additionalProperties": false
+}

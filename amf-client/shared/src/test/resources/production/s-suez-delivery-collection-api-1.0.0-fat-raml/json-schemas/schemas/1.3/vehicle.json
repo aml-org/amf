@@ -1,0 +1,53 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Vehicle schema",
+	"description": "Schema defining the Vehicle object",
+	"type": "object",
+	"properties": {
+		"header": {
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "vehicle id",
+			"type": "string",
+			"maxLength": 10
+		},
+		"license": {
+			"description": "License of the vehicle",
+			"type": "string",
+			"maxLength": 12
+		},
+		"code": {
+			"description": "code of the vehicle",
+			"type": "string"
+		},
+		"description": {
+			"description": "description of the vehicle",
+			"type": "string"
+		},
+		"isInternal": {
+			"description": "is Internal",
+			"type": "boolean",
+			"default": false
+		},
+		"vehicleTypes": {
+			"description": "vehicleType",
+			"type": "array",
+			"items": {
+				"$ref": "vehicle-type.json"
+			}
+		},
+		"lineOfBusiness": {
+			"description": "Line Of Business",
+			"type": "object",
+			"$ref": "line-of-business.json"
+		},
+		"organisationCode": {
+			"description": "organisation information",
+			"type": "object",
+			"$ref": "organisation.json"
+		}
+	},
+	"additionalProperties": false
+}

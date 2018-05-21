@@ -1,0 +1,27 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Commodity schema",
+	"description": "Schema defining the CRM OpportunityContactRole object",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "id of the CRM Opportunity Contact Role",
+			"type": "string"
+		},
+		"opportunityId": {
+			"description": "Id of the CRM Opportunity",
+			"type": "string"
+		},
+		"contact": {
+			"description": "Contact",
+			"type": "object",
+			"$ref": "contact.json"
+		},
+		"address": {
+			"description": "Address",
+			"type": "object",
+			"$ref": "address.json"
+		}
+	},
+	"additionalProperties": false
+}

@@ -1,0 +1,86 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Container rate schema",
+	"description": "Schema defining the conatainer object",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "id",
+			"type": "string",
+			"maxLength": 10
+		},
+		"container": {
+			"description": "container details",
+			"type": "object",
+			"$ref": "container.json"
+		},
+		"containerRemovalCharge": {
+			"description": "Rate type1",
+			"type": "string"
+		},
+		"contaminatedWasteCharge": {
+			"description": "Rate type2",
+			"type": "string"
+		},
+		"hazardousWasteConsignmentNoteCharge": {
+			"description": "Rate type3",
+			"type": "string"
+		},
+		"nightSundayBankHolidaySurcharge": {
+			"description": "Rate type4",
+			"type": "string"
+		},
+		"containerDeliveryCharge": {
+			"description": "Rate type5",
+			"type": "string"
+		},
+		"visitFeeMinimumCharge": {
+			"description": "Rate type6",
+			"type": "string"
+		},
+		"excessChargePerKg": {
+			"description": "Rate type7",
+			"type": "string"
+		},
+		"disposalChargePerTonne": {
+			"description": "Rate type8",
+			"type": "string"
+		},
+		"liftChargePerContainer": {
+			"description": "Rate type9",
+			"type": "string"
+		},
+		"dutyOfCareChargeMonthlyPerSite": {
+			"description": "Rate type10",
+			"type": "string"
+		},
+		"exchangeOrTipAndReturnOrWaitAndLoadCharge": {
+			"description": "Rate type11",
+			"type": "string"
+		},
+		"rentalChargePerContainerMonth": {
+			"description": "Rate type12",
+			"type": "string"
+		},
+		"minimumWeightToBeCharged": {
+			"description": "Rate type13",
+			"type": "string"
+		},
+		"additionalCollectionCharge": {
+			"description": "Rate type14",
+			"type": "string"
+		},
+		"weightAllowancePerContainer": {
+			"description": "Rate type15",
+			"type": "string"
+		},
+		"variableRates": {
+			"description": "variableRates",
+			"type": "array",
+			"items": {
+				"$ref": "variable-rate.json"
+			}
+		}
+	},
+	"additionalProperties": false
+}

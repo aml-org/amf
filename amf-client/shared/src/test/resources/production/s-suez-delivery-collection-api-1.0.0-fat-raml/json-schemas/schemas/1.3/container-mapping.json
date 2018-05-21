@@ -1,0 +1,59 @@
+{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "title": "ContainerMapping schema",
+   "description": "Schema defining the containerMapping object",
+   "type": "object",
+   "properties": {
+	    "displayOrderForECommerce": {
+        	"description": "displayOrderForECommerce of the containerMapping",
+            "type": "number"
+        },
+        "displayName": {
+           "description": "description of the containerMapping",
+           "type": "string"
+       },
+	      "isActive": {
+            "description": "isActive",
+            "type": "boolean"
+        },
+        "defaultDensity": {
+        	"description": "defaultDensity of the containerMapping",
+            "type": "string"
+        },
+        "isEnabledForECommerce": {
+        	"description": "isEnabledForECommerce flag of the containerMapping",
+            "type": "boolean"
+        },
+        "hasImage": {
+        	"description": "hasImage flag of the containerMapping",
+            "type": "boolean"
+        },
+        "hasContainerInfoSheet": {
+        	"description": "hasContainerInfoSheet flag of the containerMapping",
+            "type": "boolean"
+        },
+        "container": {
+            "description": "container",
+            "type": "object",
+            "items": {
+              "$ref" : "container.json"
+            }
+        },
+        "imageBase64Object": {
+            "description": "containerBase64Image",
+            "type": "object",
+            "items": {
+              "$ref" : "base64-object.json"
+            }
+        },
+        "infoSheetBase64Object": {
+            "description": "containerBase64InfoSheet",
+            "type": "object",
+            "items": {
+              "$ref" : "base64-object.json"
+            }
+        }
+       
+   },
+   "additionalProperties": false
+}

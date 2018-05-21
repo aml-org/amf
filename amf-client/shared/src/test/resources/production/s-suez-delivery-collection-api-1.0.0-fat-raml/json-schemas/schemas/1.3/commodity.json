@@ -1,0 +1,99 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Commodity schema",
+	"description": "Schema defining the Commodity object",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "header",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "Id",
+			"type": "string"
+		},
+		"code": {
+			"description": "code of the commodity",
+			"type": "string"
+		},
+		"description": {
+			"description": "description of the commodity",
+			"type": "string"
+		},
+		"unit": {
+			"description": "Unit",
+			"type": "object",
+			"$ref": "unit.json"
+		},
+		"wasteGroup": {
+			"description": "Waste Group",
+			"type": "object",
+			"$ref": "waste-group.json"
+		},
+		"isHazardous": {
+			"description": "is the commodity Hazardous",
+			"type": "boolean"
+		},
+		"isRecyclable": {
+			"description": "is the commodity Recyclable",
+			"type": "boolean"
+		},
+		"isInert": {
+			"description": "is the commodity Inert",
+			"type": "boolean"
+		},
+		"isEAState": {
+			"description": "is the commodity EAstate",
+			"type": "boolean"
+		},
+		"weighTicketId": {
+			"description": "weight ticket id",
+			"type": "string",
+			"maxLength": 10
+		},
+		"serviceId": {
+			"description": "service id",
+			"type": "string",
+			"maxLength": 10
+		},
+		"weight": {
+			"description": "weight of the commodity",
+			"type": "number"
+		},
+		"quantity": {
+			"description": "quantity of the commodity",
+			"type": "number"
+		},
+		"searchKey": {
+			"description": "search key",
+			"type": "string"
+		},
+		"landfillTax": {
+			"description": "Land Fill Tax",
+			"type": "object",
+			"$ref": "land-fill-tax.json"
+		},
+		"europeanWasteCatalogue": {
+			"description": "European Waste Catalogue",
+			"type": "object",
+			"$ref": "european-waste-catalogue.json"
+		},
+		"commodityMaterialTypeLinks": {
+			"description": "commodityMaterialTypeLinks",
+			"type": "array",
+			"items": {
+				"$ref": "material-type-linked-commodity.json"
+			}
+			
+		},
+		"legislations": {
+			"description": "legislations information",
+			"type": "array",
+			"items": {
+				"$ref": "Legislation.json"
+			}
+		}
+	},
+	"additionalProperties": false
+}

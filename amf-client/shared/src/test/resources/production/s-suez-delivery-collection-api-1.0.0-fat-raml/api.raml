@@ -1,0 +1,35 @@
+#%RAML 0.8
+title: suez-delivery-&-collection-api
+version: V1
+baseUri: http://devvmesb01:8081/api/dc/{version}
+#baseUriParameters: 
+#  http.host: 
+#    required: true
+#    default: 0.0.0.0
+#    example: 0.0.0.0
+#    description: IP address or domain name of the hosted server
+#  http.port: 
+#    required: true
+#    default: 8081
+#    example: 8081
+#    description: port to be used to access the Weighman API's
+documentation: 
+  - title: API
+    content: API to perform CRUD operations on the D&C system
+mediaType: application/json
+securedBy: [ basic ]
+protocols: [ HTTP ]
+
+traits: !include traits.yaml 
+resourceTypes: !include resource-types.yaml
+securitySchemes: !include security.yaml
+schemas: 
+ - route-schedule : !include json-schemas/schemas/1.3/route-schedule.json
+ - schedule : !include json-schemas/schemas/1.3/schedule.json  
+ - scheduleline : !include json-schemas/schemas/1.3/scheduleline.json
+ - orderline : !include json-schemas/schemas/1.3/orderline.json    
+    
+/routeSchedules: !include resources/route-schedule.yaml
+/schedules: !include resources/schedule.yaml
+/schedulelines: !include resources/scheduleline.yaml
+

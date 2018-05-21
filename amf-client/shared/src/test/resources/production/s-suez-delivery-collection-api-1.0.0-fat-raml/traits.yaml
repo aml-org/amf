@@ -1,0 +1,128 @@
+- q-pageable:
+    queryParameters:
+      start:
+        description: Starting index of the elements on the response
+        type: integer
+        required: <<required>>
+        example: 20
+        default: 1
+      limit:
+        description: Limit the number of elements on the response
+        type: integer
+        example: 80
+        default: 100
+- q-business-relation-types:
+    description: Business Relation Types.
+    displayName: Business Relation Types.
+    queryParameters:
+      businessRelationTypes:
+        description: Comma seperated list of Business Relation Types.
+        displayName: Comma seperated list of Business Relation Types.
+        type: string
+        example: Non-SUEZ Subcontractor (151),Non-SUEZ Haulier (110)
+        required: << required >>
+- q-start-date:
+    description: Creation Start Date.
+    displayName: Creation Start Date.
+    queryParameters:
+      startDate:
+        description: Creation Start Date.
+        displayName: Creation Start Date.
+        example: 1900-03-22T00:00:00
+        type: date
+        required: << required >>
+- q-end-date:
+    description: Creation End Date.
+    displayName: Creation End Date.
+    queryParameters:
+      endDate:
+        description: Creation End Date.
+        displayName: Creation End Date.
+        example: 1900-03-22T00:00:00
+        type: date
+        required: << required >> 
+- q-creation-start-date:
+    description: Creation Start Date.
+    displayName: Creation Start Date.
+    queryParameters:
+      creationStartDate:
+        description: Creation Start Date.
+        displayName: Creation Start Date.
+        example: 1900-03-22T00:00:00
+        type: date
+        required: << required >>
+- q-creation-end-date:
+    description: Creation End Date.
+    displayName: Creation End Date.
+    queryParameters:
+      creationEndDate:
+        description: Creation End Date.
+        displayName: Creation End Date.
+        example: 1900-03-22T00:00:00
+        type: date
+        required: << required >>  
+- q-modified-start-date:
+    description: Modified Start Date.
+    displayName: Modified Start Date.
+    queryParameters:
+      modifiedStartDate:
+        description: Modified Start Date.
+        displayName: Modified Start Date.
+        example: 1900-03-22T00:00:00
+        type: date
+        required: << required >>
+- q-modified-end-date:
+    description: Modified End Date.
+    displayName: Modified End Date.
+    queryParameters:
+      modifiedEndDate:
+        description: Modified End Date.
+        displayName: Modified End Date.
+        example: 1900-03-22T00:00:00
+        type: date
+        required: << required >>             
+- q-effective-date:
+    description: Effective Date From.
+    displayName: Effective Date From.
+    queryParameters:
+      effectiveDate:
+        description: Effective Date From.
+        displayName: Effective Date From.
+        example: 1900-03-22T00:00:00
+        type: date
+        required: << required >>                    
+- x-correlation-id:
+    headers:         
+      Correlation-Id:
+        type: string
+        required: << required >>
+- x-transport-type:
+    headers:         
+      Transport-Type:
+        type: string
+        required: << required >>
+        enum: ["JMS", "JDBC", "HTTP"]       
+- q-customer-id:
+    queryParameters:         
+      customerId:
+        type: string
+        required: << required >>        
+- q-registration-id:
+    queryParameters:         
+      registrationId:
+        type: string
+        required: << required >>
+- q-bin-action-type:
+    queryParameters:
+      #description: Action type to decide Collection or Delivered bins to be filtered.
+      #displayName: Action type(C or D)         
+      actionType:
+        type: string
+        required: << required >>
+        enum: ['D','C']
+- q-id:
+    queryParameters:
+      id:
+        description: id
+        type: string
+        required: << required >>

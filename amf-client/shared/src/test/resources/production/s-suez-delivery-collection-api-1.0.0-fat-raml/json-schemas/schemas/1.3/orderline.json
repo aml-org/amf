@@ -1,0 +1,64 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Order line schema",
+	"description": "Schema defining the user for the order line information",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "Commodities Information",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "system generated id",
+			"type": "string"
+		},
+		"description": {
+			"description": "description",
+			"type": "string"
+		},
+		"amount": {
+			"description": "amount",
+			"type": "number"
+		},
+		"liftDetail": {
+			"description": "liftDetail",
+			"type": "object",
+			"$ref": "lift-detail.json"
+		},
+		"status": {
+			"description": "status",
+			"type": "string"
+		},
+		"type": {
+			"description": "type",
+			"type": "string"
+		},
+		"customer": {
+			"description": "customer",
+			"type": "object",
+			"$ref": "customer.json"
+		},
+		"supplier": {
+			"description": "supplier",
+			"type": "object",
+			"$ref": "supplier.json"
+		},
+		"diposalSite": {
+			"description": "diposalSite",
+			"type": "object",
+			"$ref": "disposal-site.json"
+		},
+		"haulier": {
+			"description": "haulier",
+			"type": "object",
+			"$ref": "haulier.json"
+		},
+		"error": {
+			"description": "error",
+			"type": "object",
+			"$ref": "error.json"
+		}
+	},
+	"additionalProperties": false
+}

@@ -1,0 +1,207 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Supplier schema",
+	"description": "Schema defining the Supplier object",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "header",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "id",
+			"type": "string",
+			"maxLength": 10
+		},
+		"searchName": {
+			"description": "searchName",
+			"type": "string"
+		},
+		"name": {
+			"description": "User friendly name of the suppler Account",
+			"type": "string"
+		},
+		"officialName": {
+			"description": "Official Name",
+			"type": "string"
+		},
+		"companyCode": {
+			"description": "Company Code",
+			"type": "string"
+		},
+		"accountNumber": {
+			"description": "Unique identifier for a supplier Account. Also known as Debtor Number",
+			"type": "number"
+		},
+		"status": {
+			"description": "Status of the supplier. Possible values can be Inactive/Approved",
+			"type": "string"
+		},
+		"statusModifiedDate": {
+			"description": "Status Modified Date",
+			"type": "datetime"
+		},
+		"officialName": {
+			"description": "Official Name",
+			"type": "string"
+		},
+		"officialName1": {
+			"description": "Official Name 1",
+			"type": "string"
+		},
+		"officialName2": {
+			"description": "Official Name 2",
+			"type": "string"
+		},
+		"officialName3": {
+			"description": "Official Name 3",
+			"type": "string"
+		},
+		"VATNumber": {
+			"description": "VAT Number",
+			"type": "string"
+		},
+		"cocNumber": {
+			"description": "coc Number",
+			"type": "string"
+		},
+		"payTerms": {
+			"description": "Pay Terms",
+			"type": "string"
+		},
+		"paymentMethod": {
+			"description": "Payment Method",
+			"type": "string"
+		},
+		"previousMasterRecordNumber": {
+			"description": "Previous Master Record Number",
+			"type": "string"
+		},
+		"purchaseFOC": {
+			"description": "Purchase FOC",
+			"type": "string"
+		},
+		"paymentTerms": {
+			"description": "Payment Terms",
+			"type": "string"
+		},
+		"salesFOC": {
+			"description": "Sales FOC",
+			"type": "string"
+		},
+		"taxCode": {
+			"description": "Tax Code",
+			"type": "string"
+		},
+		"shipOnly": {
+			"description": "Ship Only",
+			"type": "string"
+		},
+		"currency": {
+			"description": "Currency",
+			"type": "string"
+		},
+		"selfBill": {
+			"description": "Self Bill",
+			"type": "string"
+		},
+		"autoOrder": {
+			"description": "Auto Order",
+			"type": "string"
+		},
+		"cisFleet": {
+			"description": "cis Fleet",
+			"type": "string"
+		},
+		"SICCode": {
+			"description": "SIC Code",
+			"type": "string"
+		},
+		"invoiceCycle": {
+			"description": "Invoice Cycle",
+			"type": "string"
+		},
+		"siteCode": {
+			"description": "Site Code",
+			"type": "string"
+		},
+		"creationDate": {
+			"description": "Creation Date",
+			"type": "string"
+		},
+		"postingBlock": {
+			"description": "Posting Block",
+			"type": "string"
+		},
+		"purchasingBlock": {
+			"description": "Purchasing Block",
+			"type": "string"
+		},
+		"masterRecord": {
+			"description": "Master Record",
+			"type": "string"
+		},
+		"bankAccountNumber": {
+			"description": "Bank Account Number",
+			"type": "string"
+		},
+		"sitaClass": {
+			"description": "Sita Class",
+			"type": "string"
+		},
+		"parentInvoiceAccount": {
+			"description": "Parent Invoice Account",
+			"type": "string"
+		},
+		"cashPayment": {
+			"description": "Cash Payment",
+			"type": "string"
+		},
+		"isRegional": {
+			"description": "isRegional",
+			"type": "boolean"
+		},
+		"linkedNationalCustomer": {
+			"description": "Linked National Customer",
+			"type": "string"
+		},
+		"relfBillStart": {
+			"description": "relfBillStart",
+			"type": "string"
+		},
+		"relfBillEnd": {
+			"description": "relfBillEnd",
+			"type": "string"
+		},
+		"relationTypeSupplier": {
+			"description": "Relation Type Supplier",
+			"type": "string"
+		},
+		"addresses": {
+			"description": "Addresses",
+			"type": "array",
+			"items": {
+				"$ref": "address.json"
+			}
+		},
+		"isNational": {
+			"description": "Is this national supplier?",
+			"type": "boolean"
+		},
+		"contact": {
+			"description": "Contact details of the supplier",
+			"type": "object",
+			"$ref": "contact.json"
+		},
+		"catalogues": {
+			"description": "catalogues",
+			"type": "array",
+			"items": {
+				"$ref": "catalogue.json"
+			}
+		}
+		
+	},
+	"additionalProperties": false
+}

@@ -1,0 +1,46 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Schedule line schema",
+	"description": "Schema defining the user for the schedule line information",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "system generated id",
+			"type": "string"
+		},
+		"sequence": {
+			"description": "sequence",
+			"type": "string"
+		},
+		"information": {
+			"description": "information",
+			"type": "string"
+		},
+		"service": {
+			"description": "service information",
+			"type": "string",
+			"$ref": "service.json"
+		},
+		"orderline": {
+			"description": "Order line",
+			"type": "object",
+			"$ref": "orderline.json"
+		},
+		"lineOfBusiness": {
+			"description": "Line Of Business",
+			"type": "object",
+			"$ref": "line-of-business.json"
+		},
+		"organisationCode": {
+			"description": "organisation information",
+			"type": "object",
+			"$ref": "organisation.json"
+		},
+		"createdDate": {
+			"description": "createdDate",
+			"type": "string",
+			"format": "date-time"
+		}
+	},
+	"additionalProperties": false
+}

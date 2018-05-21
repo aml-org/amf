@@ -1,0 +1,94 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Schedule schema",
+	"description": "Schema defining the user for the schedule information",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "Commodities Information",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "id",
+			"type": "string",
+			"maxLength": 10
+		},
+		"type": {
+			"description": "type",
+			"type": "string"
+		},
+		"driverTicket": {
+			"description": "driverTicket",
+			"type": "object",
+			"$ref": "driver-ticket.json"
+		},
+		"commodities": {
+			"description": "commodities",
+			"type": "array",
+			"items": {
+				"$ref": "commodity.json"
+			}
+		},
+		"routeScheduleIndex": {
+			"description": "Route Schedule Index",
+			"type": "number"
+		},
+		"information": {
+			"description": "Information",
+			"type": "string"
+		},
+		"serviceStartTime": {
+			"description": "type",
+			"type": "string",
+			"format": "date-time"
+		},
+		"serviceEndTime": {
+			"description": "type",
+			"type": "string",
+			"format": "date-time"
+		},
+		"orderNumber": {
+			"description": "type",
+			"type": "string"
+		},
+		"isExecuted": {
+			"description": "type",
+			"type": "boolean"
+		},
+		"linkedScheduleId": {
+			"description": "linkedScheduleId",
+			"type": "string"
+		},
+		"invoice": {
+			"description": "invoice",
+			"type": "object",
+			"$ref": "invoice.json"
+		},
+		"schedulelines": {
+			"description": "schedulelines",
+			"type": "array",
+			"items": {
+				"$ref": "scheduleline.json"
+			}
+		},
+		"purchaseOrder": {
+			"description": "purchaseOrder",
+			"type": "number"
+		},
+		"excessWeighTickets": {
+			"description": "excessWeighTickets",
+			"type": "string"
+		},
+		"weightCharge": {
+			"description": "weightCharge",
+			"type": "number"
+		},
+		"modifiedDate": {
+			"description": "modifiedDate",
+			"type": "string",
+			"format": "date-time"
+		}
+	},
+	"additionalProperties": false
+}

@@ -1,0 +1,50 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Municipal Property  schema",
+	"description": "Schema defining the municipal property",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "header",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "system generated id",
+			"type": "string"
+		},
+		"uprn": {
+			"description": "unique property reference number",
+			"type": "string"
+		},
+		"guid": {
+			"description": "guid",
+			"type": "string"
+		},
+		"sequence": {
+			"description": "sequence number of the property",
+			"type": "number"
+		},
+		"name": {
+			"description": "name of the property",
+			"type": "string"
+		},
+		"description": {
+			"description": "description of the property",
+			"type": "string"
+		},
+		"address": {
+			"description": "address",
+			"type": "object",
+			"$ref": "address.json"
+		},
+		"municipalServices": {
+			"description": "Municipal Services",
+			"type": "array",
+			"items": {
+				"$ref": "municipal-service.json"
+			}
+		}
+	},
+	"additionalProperties": false
+}

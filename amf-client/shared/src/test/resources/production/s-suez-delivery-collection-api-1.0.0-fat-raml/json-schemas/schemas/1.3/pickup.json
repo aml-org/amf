@@ -1,0 +1,70 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Pick Up schema",
+	"description": "Schema defining the pickup object",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "Pick Up Id",
+			"type": "string"
+		},
+		"code": {
+			"description": "Pick up frequency Code",
+			"type": "string"
+		},
+		"description": {
+			"description": "Pick up frequency description",
+			"type": "string"
+		},
+		"displayName": {
+			"description": "Pick up frequency display name",
+			"type": "string"
+		},
+		"count": {
+			"description": "Number of pickups",
+			"type": [
+				"number",
+				"null"
+			]
+		},
+		"days": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"enum": [
+					"Monday",
+					"Tuesday",
+					"Wednesday",
+					"Thursday",
+					"Friday",
+					"Saturday",
+					"Sunday"
+				]
+			}
+		},
+		"period": {
+			"description": "PickUp",
+			"type": [
+				"number",
+				"null"
+			]
+		},
+		"isDefault": {
+			"description": "isDefault",
+			"type": "boolean"
+		},
+		"isOnCallFrequency": {
+			"description": "isOnCallFrequency",
+			"type": "boolean"
+		},
+		"isActive": {
+			"description": "isActive",
+			"type": "boolean"
+		},
+		"collectionsPerWeek": {
+			"description": "collectionsPerWeek",
+			"type": "number"
+		}
+	},
+	"additionalProperties": false
+}

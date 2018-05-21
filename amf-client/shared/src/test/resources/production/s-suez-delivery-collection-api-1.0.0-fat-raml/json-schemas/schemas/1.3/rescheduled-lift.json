@@ -1,0 +1,68 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Rescheduled Lift schema",
+	"description": "Schema defining the Rescheduled Lift object",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "id",
+			"type": "string"
+		},
+		"lift": {
+			"description": "Lift",
+			"type": "object",
+			"$ref": "lift.json"
+		},
+		"newLiftDate": {
+			"description": "newLiftDate",
+			"type": "string",
+			"format": "date-time"
+		},
+		"currentDate": {
+			"description": "currentDate",
+			"type": "string",
+			"format": "date-time"
+		},
+		"comment1": {
+			"description": "comment1",
+			"type": "string"
+		},
+		"comment2": {
+			"description": "comment2",
+			"type": "string"
+		},
+		"comment3": {
+			"description": "comment3",
+			"type": "string"
+		},
+		"comment4": {
+			"description": "comment4",
+			"type": "string"
+		},
+		"comment5": {
+			"description": "comment5",
+			"type": "string"
+		},
+		"comment6": {
+			"description": "comment6",
+			"type": "string"
+		},
+		"comment7": {
+			"description": "comment7",
+			"type": "string"
+		},
+		"comment8": {
+			"description": "comment8",
+			"type": "string"
+		},
+		"comment9": {
+			"description": "comment9",
+			"type": "string"
+		},
+		"comment10": {
+			"description": "comment10",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}

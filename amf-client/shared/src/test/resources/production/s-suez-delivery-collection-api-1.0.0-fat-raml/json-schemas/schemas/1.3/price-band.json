@@ -1,0 +1,32 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Price Band schema",
+	"description": "Schema defining the price band",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "Price Region Id",
+			"type": "string"
+		},
+		"type": {
+			"description": "Type",
+			"type": "string"
+		},
+		"effectiveFromDate": {
+			"description": "Effective from Date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"effectiveToDate": {
+			"description": "Effective to Date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"priceBandlines": {
+			"description": "Price Band Line",
+			"type": "object",
+			"$ref": "pricebandline.json"
+		}
+	},
+	"additionalProperties": false
+}

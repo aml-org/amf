@@ -1,0 +1,21 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Catalogue schema",
+	"description": "Schema defining the Catalogue object",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "Catalogue Id",
+			"type": "string"
+		},
+		"code": {
+			"description": "Catalogue code",
+			"type": "string"
+		},
+		"description": {
+			"description": "Catalogue description",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}

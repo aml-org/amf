@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi.resolution.stages
 
 import amf.core.annotations.DefaultNode
-import amf.core.metamodel.domain.DomainElementModel
+import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel}
 import amf.core.metamodel.domain.DomainElementModel._
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.metamodel.{Field, Type}
@@ -27,8 +27,12 @@ object DomainElementMerging {
           case None => // Case (2)
             field.`type` match {
               case t: OptionalField if isOptional(t, value.value.asInstanceOf[DomainElement]) => // Do nothing (2)
-              case Type.ArrayLike(element)                                                    => setNonOptional(main, field, element, value)
-              case _                                                                          => main.set(field, adoptInner(main.id, value.value))
+              case Type.ArrayLike(element)                                                    => {
+                setNonOptional(main, field, element, value)
+              }
+              case _                                                                          => {
+                main.set(field, adoptInner(main.id, value.value))
+              }
             }
           case Some(existing)
               if Option(existing.value).isDefined && Option(existing.value.value).isDefined
@@ -61,18 +65,24 @@ object DomainElementMerging {
     def notYet(id: String): Boolean = !adopted.contains(id)
   }
 
-  def adoptInner(id: String, target: AmfElement, adopted: Adopted = Adopted()): AmfElement = target match {
-    case array: AmfArray =>
-      AmfArray(array.values.map(adoptInner(id, _, adopted)), array.annotations)
-    case element: DomainElement if adopted notYet element.id =>
-      adoptElementByType(element, id)
-      adopted += element.id
-      element.fields.foreach {
-        case (_, value) => adoptInner(element.id, value.value, adopted)
-      }
+  def adoptInner(id: String, target: AmfElement, adopted: Adopted = Adopted()): AmfElement = {
+    target match {
+      case array: AmfArray =>
+        AmfArray(array.values.map(adoptInner(id, _, adopted)), array.annotations)
+      case element: DomainElement if adopted notYet element.id =>
+        adoptElementByType(element, id)
+        adopted += element.id
+        element.fields.foreach {
+          case (f, value) => {
+            if (ignored(FieldEntry(f, value))) {
+              adoptInner(element.id, value.value, adopted)
+            }
+          }
+        }
 
-      element
-    case _ => target
+        element
+      case _ => target
+    }
   }
 
   private def adoptElementByType(element: DomainElement, parent: String) = {
@@ -148,8 +158,8 @@ object DomainElementMerging {
       .exists(_.scalar.toBool)
 
   private def ignored(entry: FieldEntry) = entry.field match {
-    case Extends | Sources => false
-    case _                 => true
+    case Extends | Sources | LinkableElementModel.Target  => false
+    case _                                                => true
   }
 }
 

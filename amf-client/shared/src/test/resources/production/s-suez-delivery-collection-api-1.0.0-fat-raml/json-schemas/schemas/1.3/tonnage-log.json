@@ -1,0 +1,495 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Tonnage log schema",
+	"description": "Schema defining the tonnage log originating from SCADA system ",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "Header Information",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "unique id",
+			"type": "string"
+		},
+		"shiftDate": {
+			"description": "Shift date",
+			"type": "string",
+			"format": "date"
+		},
+		"milliSecond": {
+			"description": "Milli-second part of the shift",
+			"type": "number"
+		},
+		"localDate": {
+			"description": "Local date of the plant",
+			"type": "string",
+			"format": "date-time"
+		},
+		"user": {
+			"description": "User name",
+			"type": "string"
+		},
+		"reason": {
+			"description": "Reason of the failure",
+			"type": "string"
+		},
+		"startDate": {
+			"description": "Start Date",
+			"type": "datetime"
+		},
+		"shiftCode": {
+			"description": "shift code",
+			"type": "string"
+		},
+		"costObject": {
+			"description": "CostObject associated",
+			"type": "object",
+			"$ref": "cost-object.json"
+		},
+		"downtimeStartDate": {
+			"description": "Downtime start date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"downtimeEndDate": {
+			"description": "Downtime end date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"duration": {
+			"description": "Duration of the downtime",
+			"type": "number"
+		},
+		"throughput": {
+			"description": "Throughput",
+			"type": "number"
+		},
+		"weighScale1": {
+			"description": "Weigh scale 1",
+			"type": "number"
+		},
+		"weighScale2": {
+			"description": "Weigh scale 2",
+			"type": "number"
+		},
+		"weighScale3": {
+			"description": "Weigh scale 3",
+			"type": "number"
+		},
+		"weighScale4": {
+			"description": "Weigh scale 4",
+			"type": "number"
+		},
+		"weighScale5": {
+			"description": "Weigh scale 5",
+			"type": "number"
+		},
+		"weighScale6": {
+			"description": "Weigh scale 5",
+			"type": "number"
+		},
+		"tpFibresSMP": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpFibresNaP": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpFibresOCC": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpMetalsSteel": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpMetalsAlu": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpMetalsMxCan": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpPlasticsHDPE": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpPlasticsPET": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpPlasticsMPB": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpPlasticsHMP": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpPlasticsFilm": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpGlassGlass": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpResidualOther": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpResidualResidual": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpRDFRDF": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpRDFRDFBaled": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpRDFRDFLoose": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpSRFSRF": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpSRFSRFBaled": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpSRFSRFLoose": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpWoodWoodchip": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpFinesFine30": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpFinesFine60": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpDMRDMR": {
+			"description": "material type",
+			"type": "number"
+		},
+		"tpContainersContainers": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbFibresSMP": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbFibresNaP": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbFibresOCC": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbMetalsSteel": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbMetalsAlu": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbMetalsMxCan": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbPlasticsPET": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbPlasticsMPB": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbPlasticsHMP": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbPlasticsFilm": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbGlassGlass": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbResidualOther": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbResidualResidual": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbRDFRDF": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbRDFRDFBaled": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbRDFRDFLoose": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbSRFSRF": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbSRFSRFBaled": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbSRFSRFLoose": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbWoodWoodchip": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbFinesFine30": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbFinesFine60": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbDMRDMR": {
+			"description": "material type",
+			"type": "number"
+		},
+		"nbContainersContainers": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbFibresSMP": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbFibresNaP": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbFibresOCC": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbMetalsSteel": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbMetalsAlu": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbMetalsMxCan": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbPlasticsHDPE": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbPlasticsPET": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbPlasticsMPB": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbPlasticsHMP": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbPlasticsFilm": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbGlassGlass": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbResidualOther": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbResidualResidual": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbRDFRDF": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbRDFRDFBaled": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbRDFRDFLoose": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbSRFSRF": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbSRFSRFBaled": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbSRFSRFLoose": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbWoodWoodchip": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbFinesFine30": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbFinesFine60": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbDRMDRM": {
+			"description": "material type",
+			"type": "number"
+		},
+		"rbContainersContainers": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqFibresSMP": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqFibresNaP": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqFibresOCC": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqMetalsSteel": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqMetalsAlu": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqMetalsMxCan": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqPlasticsHDPE": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqPlasticsPET": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqPlasticsMPB": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqPlasticsHMP": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqPlasticsFilm": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqGlassGlass": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqResidualOther": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqResidualResidual": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqRDFRDF": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqRDFRDFBaled": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqRDFRDFLoose": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqSRFSRF": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqSRFSRFBaled": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqSRFSRFLoose": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqWoodWoodchip": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqFinesFine30": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqFinesFine60": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqDMRDMR": {
+			"description": "material type",
+			"type": "number"
+		},
+		"mqContainersContainers": {
+			"description": "material type",
+			"type": "number"
+		},
+		"scadaGeneratedDate": {
+			"description": "scadaGeneratedDate",
+			"type": "number"
+		}
+	},
+	"additionalProperties": false
+}

@@ -1,0 +1,64 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Municipal Service  schema",
+	"description": "Schema defining the municipal Service",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "header",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "system generated id",
+			"type": "string"
+		},
+		"guid": {
+			"description": "guid",
+			"type": "string"
+		},
+		"name": {
+			"description": "name of the service",
+			"type": "string"
+		},
+		"address": {
+			"description": "address",
+			"type": "object",
+			"$ref": "address.json"
+		},
+		"startDate": {
+			"description": "start date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"endDate": {
+			"description": "end date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"round": {
+			"description": "round",
+			"type": "string"
+		},
+		"schedulingInfo": {
+			"description": "scheduling information",
+			"type": "string"
+		},
+		"lastCollectionDate": {
+			"description": "last time collection date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"nextCollectionDate": {
+			"description": "next time collection date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"municipalTask": {
+			"description": "tasks allocated to the service",
+			"type": "object",
+			"$ref": "municipal-task.json"
+		}
+	},
+	"additionalProperties": false
+}

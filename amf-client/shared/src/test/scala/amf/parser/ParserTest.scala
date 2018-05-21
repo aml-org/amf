@@ -1,6 +1,7 @@
 package amf.parser
 
-import amf.core.validation.core.{SHACLValidator, ValidationReport}
+import amf.core.model.document.BaseUnit
+import amf.core.validation.core.{SHACLValidator, ValidationReport, ValidationSpecification}
 import amf.core.parser._
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
@@ -142,6 +143,12 @@ class ParserTest extends FunSuite {
         throw new Exception("Validation not supported")
 
       override def registerLibrary(url: String, code: String): Unit = throw new Exception("Validation not supported")
+
+      override def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: String): Future[String] =
+        throw new Exception("Validation not supported")
+
+      override def report(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: String): Future[ValidationReport] =
+        throw new Exception("Validation not supported")
     }
   }
 }

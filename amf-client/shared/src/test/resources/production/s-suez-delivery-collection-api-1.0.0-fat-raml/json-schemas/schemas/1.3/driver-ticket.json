@@ -1,0 +1,54 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Driver Ticket schema",
+	"description": "Schema defining the user for the driver ticket information",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "Header Information",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "id",
+			"type": "string",
+			"maxLength": 10
+		},
+		"code": {
+			"description": "code",
+			"type": "string",
+			"maxLength": 20
+		},
+		"text1": {
+			"description": "Text1",
+			"type": "string",
+			"maxLength": 50
+		},
+		"text2": {
+			"description": "Text2",
+			"type": "string",
+			"maxLength": 50
+		},
+		"text3": {
+			"description": "Text3",
+			"type": "string",
+			"maxLength": 50
+		},
+		"text4": {
+			"description": "Text4",
+			"type": "string",
+			"maxLength": 50
+		},
+		"ticketDate": {
+			"description": "Date of the ticket",
+			"type": "string",
+			"format": "date-time"
+		},
+		
+		"fleetNumber": {
+			"description": "fleetNumber",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}

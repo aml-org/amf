@@ -1,0 +1,34 @@
+{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "title": "VariableRate schema",
+   "description": "Schema defining the VariableRate object",
+   "type": "object",
+   "properties": {
+	    "id": {
+           "description": "id of the VariableRate",
+           "type": "string"
+       },
+        "charge": {
+           "description": "charge of the VariableRate",
+           "type": "string"
+       },
+	    "displayTo": {
+           "description": "displayTo of the VariableRate",
+           "type": "string"
+       },
+        "continerTo": {
+           "description": "continerTo of the VariableRate",
+           "type": "number"
+       },
+	    "containerFrom": {
+           "description": "containerFrom of the VariableRate",
+           "type": "number"
+       },
+        "chargeType": {
+           "description": "chargeType of the VariableRate",
+           "type": "string"
+       }
+       
+   },
+   "additionalProperties": false
+}

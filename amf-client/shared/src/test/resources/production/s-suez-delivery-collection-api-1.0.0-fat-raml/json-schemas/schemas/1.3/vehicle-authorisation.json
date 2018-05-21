@@ -1,0 +1,44 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Vehicle Authorisation schema",
+	"description": "Schema defining the Vehicle Authorisation object",
+	"type": "object",
+	"properties": {
+		"header": {
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "id",
+			"type": "string"
+		},
+		"code": {
+			"description": "code",
+			"type": "string"
+		},
+		"description": {
+			"description": "description",
+			"type": "string"
+		},
+		"startDate": {
+			"description": "startDate",
+			"type": "string",
+			"format": "date-time"
+		},
+		"endDate": {
+			"description": "endDate",
+			"type": "string",
+			"format": "date-time"
+		},
+		"customer": {
+			"description": "customer",
+			"type": "object",
+			"$ref": "customer.json"
+		},
+		"vehicle": {
+			"type": "object",
+			"$ref": "vehicle.json"
+		}
+	},
+	"additionalProperties": false
+}

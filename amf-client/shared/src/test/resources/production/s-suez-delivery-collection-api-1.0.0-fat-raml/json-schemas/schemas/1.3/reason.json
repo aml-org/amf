@@ -1,0 +1,33 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Reason schema",
+	"description": "Schema defining the reason for the operation",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "reason id",
+			"type": "string"
+		},
+		"code": {
+			"description": "reason code",
+			"type": "string",
+			"maxLength": 6
+		},
+		"description": {
+			"description": "user name",
+			"type": "string",
+			"maxLength": 40
+		},
+		"categoryCode": {
+			"description": "category code where the reason belongs to",
+			"type": "string",
+			"maxLength": 6
+		},
+		"categoryDescription": {
+			"description": "category code description",
+			"type": "string",
+			"maxLength": 40
+		}
+	},
+	"additionalProperties": false
+}

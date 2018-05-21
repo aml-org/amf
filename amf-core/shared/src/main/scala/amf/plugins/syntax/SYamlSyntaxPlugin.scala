@@ -62,11 +62,13 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
     }
 
     ExecutionLog.log(s"Serialising to format $format")
-    if (format == "yaml") {
+    val res = if (format == "yaml") {
       Some(YamlRender.render(ast))
     } else {
       Some(JsonRender.render(ast))
     }
+    ExecutionLog.log(s"Got the serialisation $format")
+    res
   }
 
 }

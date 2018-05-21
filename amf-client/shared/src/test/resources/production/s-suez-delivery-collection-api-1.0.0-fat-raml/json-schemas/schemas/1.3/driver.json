@@ -1,0 +1,33 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Driver schema",
+    "description": "Schema defining the driver object",
+    "type": "object",  
+    "properties": {
+        "id": {
+            "description": "driver id",
+            "type": "string"
+        },
+        "loginName": {
+            "description": "username of the driver",
+            "type": "string",
+            "maxLength": 10
+        },
+        "firstName": {
+            "description": "first name of the driver",
+            "type": "string",
+            "maxLength": 26
+        },
+        "lastName": {
+            "description": "last name of the driver",
+            "type": "string",
+            "maxLength": 40
+        },
+        "title": {
+            "description": "title",
+            "type": "string",
+            "maxLength": 26
+        }
+    },
+    "additionalProperties": false
+}

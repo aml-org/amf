@@ -1,0 +1,37 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "header schema",
+	"description": "Schema defining the header",
+	"type": "object",
+	"properties": {
+		"recordType": {
+			"description": "Record Type",
+			"type": "string"
+		},
+		"transactionType": {
+			"description": "Transaction Type",
+			"type": "string"
+		},
+		"description": {
+			"description": "Description",
+			"type": "string"
+		},
+		"inputVersion": {
+			"description": "Input Version",
+			"type": "string"
+		},
+		"source": {
+			"description": "Source",
+			"type": "string",
+			"maxLength": 20
+		},
+		"messageTypes": {
+			"description": "messageTypes",
+			"type": "array",
+			"items": {
+				"type": "string"
+			}
+		}
+	},
+	"additionalProperties": false
+}

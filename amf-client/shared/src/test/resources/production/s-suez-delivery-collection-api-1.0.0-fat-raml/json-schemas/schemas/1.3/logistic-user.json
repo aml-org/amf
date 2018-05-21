@@ -1,0 +1,66 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Logistic User schema",
+	"description": "Schema defining the user for the logistic operations",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "logistic user id",
+			"type": "string"
+		},
+		"title": {
+			"description": "title of the user",
+			"type": "string",
+			"maxLength": 26
+		},
+		"userName": {
+			"description": "user name",
+			"type": "string",
+			"maxLength": 8
+		},
+		"firstName": {
+			"description": "first name of the user",
+			"type": "string",
+			"maxLength": 26
+		},
+		"lastName": {
+			"description": "last name of the user",
+			"type": "string",
+			"maxLength": 26
+		},
+		"department": {
+			"description": "name of the department, user belongs to",
+			"type": "string",
+			"maxLength": 26
+		},
+		"position": {
+			"description": "position of the user",
+			"type": "string",
+			"maxLength": 26
+		},
+		"notes": {
+			"description": "desciptional notes",
+			"type": "string",
+			"maxLength": 76
+		},
+		"isActive": {
+			"description": "is user active",
+			"type": "boolean"
+		},
+		"inActiveDate": {
+			"description": "inactive date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"registedDate": {
+			"description": "registered date",
+			"type": "string",
+			"format": "date-time"
+		},
+		"isPermanent": {
+			"description": "is user permanent",
+			"type": "boolean"
+		}
+	},
+	"additionalProperties": false
+}

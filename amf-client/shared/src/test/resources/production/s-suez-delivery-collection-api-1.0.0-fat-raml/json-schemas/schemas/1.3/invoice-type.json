@@ -1,0 +1,22 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "invoice type schema",
+	"description": "Schema defining the invoice-type",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "Invoice id",
+			"type": "string",
+			"maxLength": 10
+		},
+		"code": {
+			"description": "Invoice type code",
+			"type": "string"
+		},
+		"description": {
+			"description": "Invoice description",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}

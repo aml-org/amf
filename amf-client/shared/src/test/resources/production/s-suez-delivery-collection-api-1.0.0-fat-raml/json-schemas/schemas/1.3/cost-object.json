@@ -1,0 +1,28 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Cost object schema",
+	"description": "Schema defining the Cost object",
+	"type": "object",
+	"properties": {
+		"organisation": {
+			"description": "organisation Reference",
+			"type": "object",
+			"$ref": "organisation.json"
+		},
+		"lineOfBusiness": {
+			"description": "lineOfBusiness",
+			"type": "object",
+			"$ref": "line-of-business.json"
+		},
+		"glAccount": {
+			"description": "glAccount",
+			"type": "object",
+			"$ref": "general-account-ledger.json"
+		},
+		"type": {
+			"description": "",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}

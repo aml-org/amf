@@ -1,0 +1,88 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Service schema",
+	"description": "Schema defining the user for the service operations",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "id",
+			"type": "string",
+			"maxLength": 10
+		},
+		"code": {
+			"description": "code",
+			"type": "string"
+		},
+		"frequency": {
+			"description": "Frequency",
+			"type": "number"
+		},
+		"masterServiceCode": {
+			"description": "masterServiceCode",
+			"type": "string"
+		},
+		"masterServiceDescription": {
+			"description": "masterServiceDescription",
+			"type": "string"
+		},
+		"IsActive": {
+			"description": "IsActive",
+			"type": "boolean"
+		},
+		"priceRegions": {
+			"description": "priceRegions",
+			"type": "array",
+			"items": {
+				"$ref": "price-region.json"
+			}
+		},
+		"frequencyCode": {
+			"description": "Frequency Code",
+			"type": "string"
+		},
+		"days": {
+			"description": "Days",
+			"type": "array",
+			"items": {
+				"type": "string",
+				"enum": [
+					"Su",
+					"Mo",
+					"Tu",
+					"We",
+					"Th",
+					"Fr",
+					"Sa"
+				]
+			}
+		},
+		"commodities": {
+			"description": "Commodities",
+			"type": "array",
+			"items": {
+				"$ref": "commodity.json"
+			}
+		},
+		"container": {
+			"description": "container",
+			"type": "object",
+			"$ref": "container.json"
+		},
+		"catalogue": {
+			"description": "catalogue",
+			"type": "object",
+			"$ref": "catalogue.json"
+		},
+		"costObject": {
+			"description": "costObject",
+			"type": "object",
+			"$ref": "cost-object.json"
+		},
+		"serviceAction": {
+			"description": "serviceAction",
+			"type": "object",
+			"$ref": "service-action.json"
+		}
+	},
+	"additionalProperties": false
+}

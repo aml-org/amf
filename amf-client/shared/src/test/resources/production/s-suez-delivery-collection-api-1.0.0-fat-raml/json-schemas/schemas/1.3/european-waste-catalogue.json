@@ -1,0 +1,34 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "european-waste-catalogue schema",
+	"description": "Schema defining the european-waste-catalogue",
+	"type": "object",
+	"properties": {
+		"header": {
+			"description": "header",
+			"type": "object",
+			"$ref": "header.json"
+		},
+		"id": {
+			"description": "European Waste Catalogue id",
+			"type": "string",
+			"maxLength": 10
+		},
+		"code": {
+			"description": "European Waste Catalogue date",
+			"type": "string",
+			"maxLength": 15
+		},
+		"description": {
+			"description": "European Waste Catalogue description",
+			"type": "string",
+			"maxLength": 100
+		},
+		"wasteType": {
+			"description": "European Waste Catalogue id",
+			"type": "object",
+			"$ref": "waste-type.json"
+		}
+	},
+	"additionalProperties": false
+}

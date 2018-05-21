@@ -1,0 +1,25 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "UDF schema",
+	"description": "Schema defining the UDF object",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "UDF Id",
+			"type": "string"
+		},
+		"value": {
+			"description": "UDF value",
+			"type": "string"
+		},
+		"UDFId": {
+			"description": "UDFId",
+			"type": "string"
+		},
+		"type": {
+			"description": "Type",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}
