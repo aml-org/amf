@@ -2254,4 +2254,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.head.message.equals("Cannot parse JSON Schema expression out of a non string value"))
     }
   }
+
+  test("Numeric key in external fragment root entry") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "production/numeric-key-in-external-fragment/api.raml",
+                         platform,
+                         RamlYamlHint,
+                         validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
 }
