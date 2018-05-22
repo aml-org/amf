@@ -8,6 +8,6 @@ Level: Violation
 - Source: http://raml.org/vocabularies/amf/parser#invalid-type-inheritance
   Message: Resolution error: Invalid scalar inheritance base type http://www.w3.org/2001/XMLSchema#boolean < http://www.w3.org/2001/XMLSchema#string 
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/inheritance/invalid/input.raml#/declarations/Type2/property/testProperty/PropertyType3/property/name/scalar/name
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/inheritance/invalid/input.raml#/declarations/PropertyType3/property/name/scalar/name
   Property: http://raml.org/vocabularies/shapes#inherits
   Position: Some(LexicalInformation([(11,6)-(12,0)]))
