@@ -33,7 +33,11 @@ case class AMFValidationResult(message: String,
         this.position
           .map(_.range.end)
           .getOrElse(Position.ZERO) compareTo that.position.map(_.range.end).getOrElse(Position.ZERO) match {
-          case 0 => this.targetProperty.getOrElse("") compareTo that.targetProperty.getOrElse("")
+          case 0 =>
+            this.targetProperty.getOrElse("") compareTo that.targetProperty.getOrElse("") match {
+              case 0 => this.targetNode compareTo that.targetNode
+              case x => x
+            }
           case x => x
         }
       case x => x

@@ -156,6 +156,8 @@ object AMFRawValidations {
     "		AMF	Domain	raml-http:Server	raml-http:url	PropertyShape	sh:path	sh:datatype	xsd:string	API baseUri host information must be a string	Swagger object 'host' and 'basePath' must be a string	Violation",
     "		AMF	Domain	raml-http:Server	schema-org:description	PropertyShape	sh:path	sh:datatype	xsd:string	Server 'description' property must be a string	Server 'description' property must be a string	Violation",
     "		AMF	Domain	raml-http:Server	raml-http:url	PropertyShape	sh:path	sh:minCount	1	Server must have an 'url' property	Server must have an 'url' propert	Violation",
-    "		AMF	Domain	security:SecurityScheme	security:type	PropertyShape	sh:path	sh:pattern	^OAuth\\s1.0|OAuth\\s2.0|Basic\\sAuthentication|Digest\\sAuthentication|Pass\\sThrough|\\(apiKey\\)|x-.+$	Security scheme has invalid type	Security scheme has invalid type	Violation"
+    "		AMF	Domain	security:SecurityScheme	security:type	PropertyShape	sh:path	sh:pattern	^OAuth\\s1.0|OAuth\\s2.0|Basic\\sAuthentication|Digest\\sAuthentication|Pass\\sThrough|\\(apiKey\\)|x-.+$	Security scheme has invalid type	Security scheme has invalid type	Violation",
+    "		AMF	Domain\tsecurity:SecurityScheme\tsecurity:type\tPropertyShape\tsh:path\tsh:minCount\t1\tType is mandatory in a Security Scheme Object\tType is mandatory in a Security Scheme Object\tViolation",
+    "		AMF	Domain\tsecurity:Settings\tsecurity:authorizationGrant\tPropertyShape\tsh:path\tsh:pattern\t^authorization_code|password|client_credentials|implicit|(\\w+:(\\/?\\/?)[^\\s]+)$\tInvalid authorization grant. The options are: authorization_code, password, client_credentials, implicit or any valid absolut URI\tInvalid authorization grant. The options are: authorization_code, password, client_credentials, implicit or any valid absolut URI\tViolation"
   )
 }

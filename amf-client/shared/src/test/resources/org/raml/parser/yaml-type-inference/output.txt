@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: hola
+version: "00.10"
+/top:
+  get:
+    queryParameters:
+      true:
+        type: string
+      10:
+        type: string
+      0xCAFE:
+        type: string
+      0xJUAN:
+        type: string
+      07:
+        type: string
