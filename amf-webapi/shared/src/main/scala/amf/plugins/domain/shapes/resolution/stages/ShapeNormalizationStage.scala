@@ -1,6 +1,5 @@
 package amf.plugins.domain.shapes.resolution.stages
 
-import amf.ProfileNames
 import amf.core.annotations.ExplicitField
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
@@ -63,17 +62,17 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
     ensureCorrect(shape)
     cleanUnnecessarySyntax(shape)
     shape match {
-      case union: UnionShape                   => expandUnion(union)
-      case scalar: ScalarShape                 => expandScalar(scalar)
-      case array: ArrayShape                   => expandArray(array)
-      case matrix: MatrixShape                 => expandMatrix(matrix)
-      case tuple: TupleShape                   => expandTuple(tuple)
-      case property: PropertyShape             => expandProperty(property)
-      case fileShape: FileShape                => fileShape
-      case nil: NilShape                       => nil
-      case node: NodeShape                     => expandNode(node)
-      case recursive: RecursiveShape           => recursive
-      case any: AnyShape                       => any
+      case union: UnionShape         => expandUnion(union)
+      case scalar: ScalarShape       => expandScalar(scalar)
+      case array: ArrayShape         => expandArray(array)
+      case matrix: MatrixShape       => expandMatrix(matrix)
+      case tuple: TupleShape         => expandTuple(tuple)
+      case property: PropertyShape   => expandProperty(property)
+      case fileShape: FileShape      => fileShape
+      case nil: NilShape             => nil
+      case node: NodeShape           => expandNode(node)
+      case recursive: RecursiveShape => recursive
+      case any: AnyShape             => any
     }
   }
 
@@ -136,7 +135,7 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
 
   protected def expandTuple(tuple: TupleShape): TupleShape = {
     expandLogicalConstraints(tuple)
-    val oldItems      = tuple.fields.getValue(TupleShapeModel.TupleItems)
+    val oldItems = tuple.fields.getValue(TupleShapeModel.TupleItems)
     if (Option(oldItems).isDefined) {
       val newItemShapes = tuple.items.map(shape => expand(shape))
       tuple.setArrayWithoutId(TupleShapeModel.TupleItems, newItemShapes, oldItems.annotations)
@@ -216,17 +215,17 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
 
   protected def canonical(shape: Shape): Shape = {
     shape match {
-      case union: UnionShape                   => canonicalUnion(union)
-      case scalar: ScalarShape                 => canonicalScalar(scalar)
-      case array: ArrayShape                   => canonicalArray(array)
-      case matrix: MatrixShape                 => canonicalMatrix(matrix)
-      case tuple: TupleShape                   => canonicalTuple(tuple)
-      case property: PropertyShape             => canonicalProperty(property)
-      case fileShape: FileShape                => canonicalShape(fileShape)
-      case nil: NilShape                       => canonicalShape(nil)
-      case node: NodeShape                     => canonicalNode(node)
-      case recursive: RecursiveShape           => recursive
-      case any: AnyShape                       => canonicalShape(any)
+      case union: UnionShape         => canonicalUnion(union)
+      case scalar: ScalarShape       => canonicalScalar(scalar)
+      case array: ArrayShape         => canonicalArray(array)
+      case matrix: MatrixShape       => canonicalMatrix(matrix)
+      case tuple: TupleShape         => canonicalTuple(tuple)
+      case property: PropertyShape   => canonicalProperty(property)
+      case fileShape: FileShape      => canonicalShape(fileShape)
+      case nil: NilShape             => canonicalShape(nil)
+      case node: NodeShape           => canonicalNode(node)
+      case recursive: RecursiveShape => recursive
+      case any: AnyShape             => canonicalShape(any)
     }
   }
 
@@ -353,15 +352,15 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
 
     if (acc.length == 1) {
       tuple.fields.setWithoutId(TupleShapeModel.TupleItems,
-        AmfArray(acc.head),
-        tuple.fields.getValue(TupleShapeModel.TupleItems).annotations)
+                                AmfArray(acc.head),
+                                tuple.fields.getValue(TupleShapeModel.TupleItems).annotations)
       tuple
     } else {
       val tuples = acc.map { items =>
         val newTuple = tuple.cloneShape(Some(errorHandler))
         newTuple.fields.setWithoutId(TupleShapeModel.Items,
-          AmfArray(items),
-          tuple.fields.getValue(TupleShapeModel.Items).annotations)
+                                     AmfArray(items),
+                                     tuple.fields.getValue(TupleShapeModel.Items).annotations)
       }
       val union = UnionShape()
       union.id = tuple.id + "resolved"
@@ -383,7 +382,8 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
           case other                            => throw new Exception(s"Resolution error: Expecting property shape, found $other")
         }
       }
-      node.withProperties(canonicalProperties)
+      node.setArrayWithoutId(NodeShapeModel.Properties, canonicalProperties)
+
     }
   }
 
