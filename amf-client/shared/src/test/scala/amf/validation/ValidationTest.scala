@@ -1625,7 +1625,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report    <- validation.validate(doc, ProfileNames.RAML)
     } yield {
       assert(!report.conforms)
-      assert(report.results.size == 2)
+      assert(report.results.size == 4)
       assert(report.results.exists(_.message.contains("Security scheme 'undefined' not found in declarations.")))
 
     }
