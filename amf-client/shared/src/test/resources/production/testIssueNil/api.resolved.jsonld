@@ -1584,7 +1584,7 @@
                             ],
                             "shacl:property": [
                               {
-                                "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/alternate_id",
+                                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -1597,7 +1597,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/alternate_id/union/default-union",
+                                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union",
                                     "@type": [
                                       "raml-shapes:UnionShape",
                                       "shacl:Shape",
@@ -1634,14 +1634,14 @@
                                     ],
                                     "smaps": {
                                       "inherited-shapes": {
-                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/alternate_id/union/default-union": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml#shape/property/alternate_id%3F/union/default-union/union/default-union"
+                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml#shape/property/alternate_id%3F/union/default-union/union/default-union"
                                       },
                                       "lexical": {
                                         "schema-org:description": "[(6,4)-(7,0)]",
-                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/alternate_id/union/default-union": "[(5,0)-(7,0)]"
+                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "[(5,0)-(7,0)]"
                                       },
                                       "type-property-lexical-info": {
-                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/alternate_id/union/default-union": "[(5,4)-(5,8)]"
+                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "[(5,4)-(5,8)]"
                                       }
                                     }
                                   }
@@ -1658,15 +1658,15 @@
                                 ],
                                 "smaps": {
                                   "inheritance-provenance": {
-                                    "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/alternate_id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type"
+                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type"
                                   },
                                   "lexical": {
-                                    "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/alternate_id": "[(4,2)-(7,0)]"
+                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id": "[(4,2)-(7,0)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category",
+                                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -1679,7 +1679,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category",
+                                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category",
                                     "@type": [
                                       "shacl:NodeShape",
                                       "shacl:Shape",
@@ -1693,7 +1693,7 @@
                                     ],
                                     "shacl:property": [
                                       {
-                                        "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/id",
+                                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id",
                                         "@type": [
                                           "shacl:PropertyShape",
                                           "shacl:Shape",
@@ -1706,7 +1706,7 @@
                                         ],
                                         "raml-shapes:range": [
                                           {
-                                            "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/id/scalar/id",
+                                            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id",
                                             "@type": [
                                               "raml-shapes:ScalarShape",
                                               "shacl:Shape",
@@ -1730,11 +1730,11 @@
                                             ],
                                             "smaps": {
                                               "type-property-lexical-info": {
-                                                "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/id/scalar/id": "[(12,8)-(12,12)]"
+                                                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id": "[(12,8)-(12,12)]"
                                               },
                                               "lexical": {
                                                 "schema-org:description": "[(13,8)-(14,0)]",
-                                                "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/id/scalar/id": "[(11,6)-(14,0)]",
+                                                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id": "[(11,6)-(14,0)]",
                                                 "shacl:datatype": "[(12,8)-(13,0)]"
                                               }
                                             }
@@ -1752,12 +1752,12 @@
                                         ],
                                         "smaps": {
                                           "lexical": {
-                                            "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/id": "[(11,6)-(14,0)]"
+                                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id": "[(11,6)-(14,0)]"
                                           }
                                         }
                                       },
                                       {
-                                        "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/name",
+                                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name",
                                         "@type": [
                                           "shacl:PropertyShape",
                                           "shacl:Shape",
@@ -1770,7 +1770,7 @@
                                         ],
                                         "raml-shapes:range": [
                                           {
-                                            "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/name/scalar/name",
+                                            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name",
                                             "@type": [
                                               "raml-shapes:ScalarShape",
                                               "shacl:Shape",
@@ -1794,11 +1794,11 @@
                                             ],
                                             "smaps": {
                                               "type-property-lexical-info": {
-                                                "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/name/scalar/name": "[(15,8)-(15,12)]"
+                                                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name": "[(15,8)-(15,12)]"
                                               },
                                               "lexical": {
                                                 "schema-org:description": "[(16,8)-(17,0)]",
-                                                "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/name/scalar/name": "[(14,6)-(17,0)]",
+                                                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name": "[(14,6)-(17,0)]",
                                                 "shacl:datatype": "[(15,8)-(16,0)]"
                                               }
                                             }
@@ -1816,7 +1816,7 @@
                                         ],
                                         "smaps": {
                                           "lexical": {
-                                            "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category/property/name": "[(14,6)-(17,0)]"
+                                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name": "[(14,6)-(17,0)]"
                                           }
                                         }
                                       }
@@ -1833,11 +1833,11 @@
                                     ],
                                     "smaps": {
                                       "type-property-lexical-info": {
-                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category": "[(9,4)-(9,8)]"
+                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category": "[(9,4)-(9,8)]"
                                       },
                                       "lexical": {
                                         "schema-org:description": "[(8,4)-(9,0)]",
-                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category/category": "[(7,2)-(17,0)]"
+                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category": "[(7,2)-(17,0)]"
                                       }
                                     }
                                   }
@@ -1854,15 +1854,15 @@
                                 ],
                                 "smaps": {
                                   "inheritance-provenance": {
-                                    "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type"
+                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type"
                                   },
                                   "lexical": {
-                                    "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/category": "[(7,2)-(17,0)]"
+                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category": "[(7,2)-(17,0)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/created_at",
+                                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -1875,7 +1875,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/created_at/scalar/created_at",
+                                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -1899,11 +1899,11 @@
                                     ],
                                     "smaps": {
                                       "type-property-lexical-info": {
-                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/created_at/scalar/created_at": "[(18,4)-(18,8)]"
+                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at": "[(18,4)-(18,8)]"
                                       },
                                       "lexical": {
                                         "schema-org:description": "[(19,4)-(20,0)]",
-                                        "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/created_at/scalar/created_at": "[(17,2)-(20,0)]",
+                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at": "[(17,2)-(20,0)]",
                                         "shacl:datatype": "[(18,4)-(19,0)]"
                                       }
                                     }
@@ -1921,10 +1921,10 @@
                                 ],
                                 "smaps": {
                                   "inheritance-provenance": {
-                                    "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/created_at": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type"
+                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type"
                                   },
                                   "lexical": {
-                                    "#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/property/created_at": "[(17,2)-(20,0)]"
+                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at": "[(17,2)-(20,0)]"
                                   }
                                 }
                               }
