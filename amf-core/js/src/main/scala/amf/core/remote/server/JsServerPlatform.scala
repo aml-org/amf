@@ -39,7 +39,7 @@ class JsServerPlatform extends JsPlatform {
           FILE_PROTOCOL + normalizeURL(withTrailingSlash(path)).substring(1)
         }
 
-      case HttpParts(protocol, host, path) => protocol + host + normalizeURL(withTrailingSlash(path))
+      case HttpParts(protocol, host, path) => protocol + host + normalizePath(withTrailingSlash(path))
       case _                               => uri
     }
   }

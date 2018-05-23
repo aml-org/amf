@@ -2,12 +2,11 @@ package amf.plugins.features.validation
 
 import amf.ProfileNames
 import amf.core.benchmark.ExecutionLog
-import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Context
-import amf.core.services.{RuntimeCompiler, RuntimeSerializer, RuntimeValidator}
+import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationSpecification}
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
@@ -32,7 +31,6 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
   override def init(): Future[AMFPlugin] = {
     // Registering ourselves as the runtime validator
     RuntimeValidator.register(AMFValidatorPlugin)
-    val url = "http://raml.org/dialects/profile.raml"
     ExecutionLog.log(s"AMFValidatorPlugin#init: registering validation dialect")
     VocabulariesPlugin.registry.registerDialect(url, ValidationDialectText.text) map { _ =>
       ExecutionLog.log(s"AMFValidatorPlugin#init: validation dialect registered")
@@ -71,7 +69,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
       VocabulariesPlugin.ID,
       Context(platform)
     ).map {
-        case parsed: DialectInstance if parsed.definedBy().is("http://raml.org/dialects/profile.raml#") =>
+        case parsed: DialectInstance if parsed.definedBy().is(url + "#") =>
           parsed.encodes
         case _ =>
           throw new Exception(
@@ -162,7 +160,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
 
     ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: jsLibrary generated")
 
-    val data = model
+    val data   = model
     val shapes = customValidations(validations)
 
     ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: Invoking platform validation")
