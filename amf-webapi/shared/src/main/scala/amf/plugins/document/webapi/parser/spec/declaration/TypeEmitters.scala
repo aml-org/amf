@@ -479,6 +479,16 @@ case class RamlRecursiveShapeEmitter(shape: RecursiveShape, ordering: SpecOrderi
   }
 }
 
+case class RamlRecursiveShapeTypeEmitter(shape: RecursiveShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: RamlSpecEmitterContext)
+    extends EntryEmitter {
+  override def emit(b: EntryBuilder): Unit = {
+    RamlRecursiveShapeEmitter(shape, ordering, references).emitters().foreach(_.emit(b))
+  }
+
+  override def position(): Position = pos(shape.annotations)
+}
+
 case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext)
     extends RamlAnyShapeEmitter(node, ordering, references) {

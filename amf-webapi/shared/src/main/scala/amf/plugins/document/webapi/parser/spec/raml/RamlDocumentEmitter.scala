@@ -209,8 +209,9 @@ abstract class RamlRootLevelEmitters(doc: BaseUnit with DeclaresModel, ordering:
         _.obj { b =>
           traverse(
             ordering.sorted(types.map {
-              case s: AnyShape => RamlNamedTypeEmitter(s, ordering, references, spec.factory.typesEmitter)
-              case _           => throw new Exception("Cannot emit non WebApi shape")
+              case s: AnyShape       => RamlNamedTypeEmitter(s, ordering, references, spec.factory.typesEmitter)
+              case r: RecursiveShape => RamlRecursiveShapeTypeEmitter(r, ordering, references)
+              case _                 => throw new Exception("Cannot emit non WebApi shape")
             }),
             b
           )

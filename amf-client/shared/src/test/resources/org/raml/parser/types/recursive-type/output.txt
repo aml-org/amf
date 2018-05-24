@@ -1,0 +1,5 @@
+#%RAML 1.0
+title: API
+types:
+  type: object
+  x-amf-recursive: file://amf-client/shared/src/test/resources/org/raml/parser/types/recursive-type/input.raml#/declarations/any/SomeType
