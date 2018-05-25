@@ -1,0 +1,18 @@
+#%RAML 1.0
+baseUri: https://mocksvc.mulesoft.com/mocks/1a358e0d-cd5b-40b7-b555-505b75848e2d
+version: v1
+title: e-gp-reference
+mediaType: application/json
+protocols:
+  - HTTP
+  - HTTPS
+
+uses:
+  mint-headers: /libraries/mint-headers.raml
+
+/games:
+  description: Retrieves type of game entities.
+  
+  get:
+    displayName: all games
+    is: [ mint-headers.sample]

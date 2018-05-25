@@ -1,0 +1,60 @@
+#%RAML 1.0
+baseUri: http://www.scml.pt/gp
+title: gamming-plataform-wrapper
+version: v1
+
+uses:
+  gp-types : /types/gp-types.raml
+
+traits: 
+  gp-headers: !include /traits/gp-headers.raml
+  gp-response-success: !include /traits/gp-response-success.raml
+  gp-response-error: !include /traits/gp-response-error.raml
+types:
+  customer:
+    type: object
+    properties:
+      id:
+        description: unique identificator of a customer
+        type: number
+        required: true
+      name:
+        description: describes the retail customer.
+        type: string
+        required: true
+  customer-collection:
+    type: object
+    properties:
+      pagination:
+        description: represents the pagination summary of the query.
+        type: gp-types.gp-pagination
+        required: true
+      customers:
+        description: represents a collection of customers.
+        type: customer[]
+        required: false
+
+/customers:
+  get:
+    description: Sample RAML GET
+    is: [
+      gp-headers,
+      gp-response-success: {
+        business-data : customer-collection,
+        business-data-description: "Represents the retail customer."},
+        gp-response-error: {
+        business-data-description: "Represents the retail customer."}]
+
+  post:
+    description: Sample RAML POST
+    is: [
+      gp-headers,
+      gp-response-success: {
+        business-data : customer,
+        business-data-description: "Represents the retail customer." },
+        gp-response-error: {
+        business-data-description: "Represents the retail customer."}]
+    body:
+      application/json:
+        type: customer
+        example: !include examples/gp-sample-customer.raml

@@ -1,0 +1,21 @@
+#%RAML 1.0 Trait
+
+uses:
+  gp-types : ../types/gp-types.raml
+
+responses:
+  200:
+    body:
+      application/json:
+        type: object
+        description: Defines the default message body.
+        properties:
+          header:
+            description: Represents the Game Plataform's header which includes invocation meta data.
+            type: gp-types.gp-header
+          data:
+            description: <<business-data-description>>
+            type: <<business-data>>
+            required: false
+        example: <<example-data>>
+            

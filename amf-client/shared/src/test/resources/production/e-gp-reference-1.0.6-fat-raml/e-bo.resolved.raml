@@ -1,0 +1,23 @@
+#%RAML 1.0
+baseUri: https://mocksvc.mulesoft.com/mocks/1a358e0d-cd5b-40b7-b555-505b75848e2d
+version: v1
+title: e-gp-reference
+protocols:
+  - HTTP
+  - HTTPS
+/games:
+  description: Retrieves type of game entities.
+  get:
+    headers:
+      X-No-Cache:
+        description: Define if it is cacheable
+        required: false
+        type: boolean
+        default: true
+      X-Reset-Cache:
+        description: Set whether to reset the cache
+        required: false
+        type: boolean
+        default: false
+    displayName: all games
+    body: {}

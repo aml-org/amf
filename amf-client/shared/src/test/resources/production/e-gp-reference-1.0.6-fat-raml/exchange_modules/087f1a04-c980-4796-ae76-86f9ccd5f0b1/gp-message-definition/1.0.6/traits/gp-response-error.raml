@@ -1,0 +1,25 @@
+#%RAML 1.0 Trait
+
+uses:
+  gp-types : ../types/gp-types.raml
+
+responses:
+  500:
+    body:
+      application/json:
+        type: object
+        description:
+        properties:
+          header:
+            description: <<business-data-description>>
+            type: gp-types.gp-header
+
+        examples:
+          system-error:
+            header:
+              timeStamp: 2016-02-28T16:41:41.090Z
+              status: false
+              error:
+                code: "01109"
+                message: System Error Title
+                description: Some system error has just happened!
