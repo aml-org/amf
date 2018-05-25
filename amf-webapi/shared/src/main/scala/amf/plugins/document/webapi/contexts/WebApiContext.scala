@@ -249,7 +249,7 @@ abstract class WebApiContext(loc: String,
 
   def resolvedPath(base: String, str: String): String = {
     if (str.startsWith("/")) str
-    else if (str.contains("://")) str
+    else if (str.contains(":")) str
     else if (str.startsWith("#")) base.split("#").head + str
     else basePath(base) + str
   }

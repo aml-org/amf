@@ -17,3 +17,5 @@ object InferredLinkReference extends ReferenceKind
 object UnspecifiedReference extends ReferenceKind
 
 object SchemaReference extends ReferenceKind
+
+case class SchemaAliasReference(ref: String) extends ReferenceKind

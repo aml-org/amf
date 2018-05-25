@@ -1,0 +1,82 @@
+{
+    "type": "object",
+    "id": "urn:jsonschema:com:menasha:enterprise:SalesDocuments",
+    "properties": {
+        "invoiceDocumentList": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "id": "urn:jsonschema:com:menasha:enterprise:Document",
+                "properties": {
+                    "fileName": {
+                        "type": "string"
+                    },
+                    "fileData": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        },
+        "bolDocumentList": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "$ref": "urn:jsonschema:com:menasha:enterprise:Document"
+            }
+        },
+        "orderMessage": {
+            "type": "object",
+            "id": "urn:jsonschema:com:menasha:enterprise:ReturnMessage",
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "code": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "logNumber": {
+                    "type": "string"
+                },
+                "details": {
+                    "type": "string"
+                },
+                "messageV1": {
+                    "type": "string"
+                },
+                "messageV2": {
+                    "type": "string"
+                },
+                "messageV3": {
+                    "type": "string"
+                },
+                "messageV4": {
+                    "type": "string"
+                }
+            }
+        },
+        "deliveryMessage": {
+            "type": "object",
+            "$ref": "urn:jsonschema:com:menasha:enterprise:ReturnMessage"
+        },
+        "deliveryMessageList": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "$ref": "urn:jsonschema:com:menasha:enterprise:ReturnMessage"
+            }
+        },
+        "invoiceMessage": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "$ref": "urn:jsonschema:com:menasha:enterprise:ReturnMessage"
+            }
+        }
+    }
+}
