@@ -61,10 +61,12 @@ case class ParametrizedDeclarationParser(
                declarations(value, SearchScope.Fragments).link(value).asInstanceOf[AbstractDeclaration])
       case Right(n) =>
         val text = n.as[YScalar].text
-        producer(text)
+        val target = declarations(text, SearchScope.All).link(text).asInstanceOf[AbstractDeclaration]
+        val paremtrized = producer(text)
+        paremtrized
           .add(Annotations.valueNode(node))
           .set(ParametrizedDeclarationModel.Target,
-               declarations(text, SearchScope.All).link(text).asInstanceOf[AbstractDeclaration])
+            target)
     }
   }
 }

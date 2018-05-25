@@ -168,6 +168,14 @@ class ProductionResolutionTest extends RamlResolutionTest {
           Raml,
           basePath)
   }
+
+  test("Test trait resolution null pointer exception test") {
+    cycle("e-bo.raml",
+      "e-bo.resolved.raml",
+      RamlYamlHint,
+      Raml,
+      basePath + "e-gp-reference-1.0.6-fat-raml/")
+  }
 }
 
 class OASProductionResolutionTest extends OasResolutionTest {
