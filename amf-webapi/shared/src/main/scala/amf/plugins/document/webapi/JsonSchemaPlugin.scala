@@ -1,31 +1,21 @@
 package amf.plugins.document.webapi
 
-import amf.core.emitter.RenderOptions
 import amf.core.Root
+import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document._
-import amf.core.model.domain.{AnnotationGraphLoader, Shape}
-import amf.core.parser.{
-  EmptyFutureDeclarations,
-  LinkReference,
-  ParsedDocument,
-  ParsedReference,
-  ParserContext,
-  Reference,
-  ReferenceHandler,
-  SchemaReference,
-  SimpleReferenceHandler
-}
+import amf.core.model.domain.AnnotationGraphLoader
+import amf.core.parser.{EmptyFutureDeclarations, ParsedDocument, ParsedReference, ParserContext, Reference, ReferenceHandler, SchemaReference, SimpleReferenceHandler}
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.remote.{Oas3, Platform, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model.DataTypeFragment
-import amf.plugins.document.webapi.parser.spec.{SpecSyntax, WebApiDeclarations}
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaVersion, OasTypeParser}
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
+import amf.plugins.document.webapi.parser.spec.{SpecSyntax, WebApiDeclarations}
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
 import amf.plugins.features.validation.ParserSideValidations

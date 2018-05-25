@@ -1146,6 +1146,10 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("spec_examples_example.raml", "spec_examples_example.jsonld", RamlYamlHint, Amf, productionPath)
   }
 
+  test("Example with URN") {
+    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, productionPath + "sys-sap-menasha-proxy-1.0.0-fat-raml/")
+  }
+
   test("Examples usage in open banking 1.3 spec oas to raml") {
     cycle("openbanking_1_3.yaml", "openbanking_1_3.raml", OasYamlHint, Raml, productionPath)
   }

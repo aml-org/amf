@@ -14,6 +14,8 @@ import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
+class UnsupportedUrlScheme(url: String) extends Exception
+
 trait FileMediaType {
   def mimeFromExtension(extension: String): Option[String] =
     extension match {
@@ -94,7 +96,7 @@ trait Platform extends FileMediaType {
   }
 
   private def loaderConcat(url: String, loaders: Seq[ResourceLoader]): Future[Content] = loaders.toList match {
-    case Nil         => Future.failed(new Exception(s"No loader for $url"))
+    case Nil         => Future.failed(new UnsupportedUrlScheme(url))
     case head :: Nil => head.fetch(url)
     case head :: tail =>
       head.fetch(url).recoverWith {
