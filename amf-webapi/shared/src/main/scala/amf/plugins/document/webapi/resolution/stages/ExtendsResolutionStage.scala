@@ -9,7 +9,7 @@ import amf.core.parser.ParserContext
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
-import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.{ErrorDeclaration, ErrorEndPoint}
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.{ErrorDeclaration, ErrorEndPoint, ErrorTrait}
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
@@ -217,25 +217,30 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
 
       Option(parameterized.target) match {
         case Some(t: ErrorDeclaration) => TraitBranch(key, Operation(), Seq())
-        case Some(t: Trait) =>
-          val node: DataNode = t.dataNode.cloneNode()
-          node.replaceVariables(local.variables)((message: String) =>
-            apiContext.violation(t.id, message, t.annotations.find(classOf[LexicalInformation])))
+        case Some(potentialTrait: Trait) =>
+          potentialTrait.effectiveLinkTarget match {
+            case err: ErrorTrait =>
+              TraitBranch(key, Operation().withId(err.id + "_op"), Nil)
+            case t: Trait =>
+              val node: DataNode = t.dataNode.cloneNode()
+              node.replaceVariables(local.variables)((message: String) =>
+                apiContext.violation(t.id, message, t.annotations.find(classOf[LexicalInformation])))
 
-          val op = ExtendsHelper.asOperation(
-            profile,
-            node,
-            context.model,
-            t.name.option().getOrElse(""),
-            t.id,
-            ExtendsHelper.findUnitLocationOfElement(t.id, context.model),
-            keepEditingInfo,
-            Some(apiContext)
-          )
+              val op = ExtendsHelper.asOperation(
+                profile,
+                node,
+                context.model,
+                t.name.option().getOrElse(""),
+                t.id,
+                ExtendsHelper.findUnitLocationOfElement(t.id, context.model),
+                keepEditingInfo,
+                Some(apiContext)
+              )
 
-          val children = op.traits.map(resolve(_, context, apiContext))
+              val children = op.traits.map(resolve(_, context, apiContext))
 
-          TraitBranch(key, op, children)
+              TraitBranch(key, op, children)
+          }
         case m => throw new Exception(s"Looking for trait but $m was found on model ${context.model}")
       }
     }
