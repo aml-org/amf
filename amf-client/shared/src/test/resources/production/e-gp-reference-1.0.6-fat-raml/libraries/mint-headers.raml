@@ -1,0 +1,18 @@
+#%RAML 1.0 Library
+
+traits: 
+  gp-headers: !include /exchange_modules/087f1a04-c980-4796-ae76-86f9ccd5f0b1/gp-message-definition/1.0.6/traits/gp-headers.raml
+
+  sample:
+    is: [gp-headers]
+    headers:
+      X-No-Cache:
+        description: Define if it is cacheable
+        type: boolean
+        required: false
+        default: true
+      X-Reset-Cache:
+        description: Set whether to reset the cache
+        type: boolean
+        required: false
+        default: false
