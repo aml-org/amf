@@ -1,0 +1,29 @@
+#%RAML 1.0
+title: Menasha SAP System API
+baseUri: http://{environment}.menasha.com:8091/sap/ux/{version}
+version: 1.0
+
+
+##########
+#APIS
+##########
+
+/sales:
+  /documents:
+    post:
+      queryParameters:
+        user:
+          description:
+          required: true
+          type: string
+          example: "username"
+      body:
+        application/json:
+          schema: !include schemas/SalesDocuments.json
+      responses:
+        200:
+          body:
+            application/json:
+              schema: !include schemas/SalesDocuments.json
+        400:
+        500:

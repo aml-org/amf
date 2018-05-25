@@ -5,7 +5,7 @@ import amf.core.Root
 import amf.core.metamodel.Obj
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.{AnnotationGraphLoader, ExternalDomainElement}
-import amf.core.parser.{LinkReference, ParsedDocument, ParserContext, ReferenceCollector, ReferenceHandler}
+import amf.core.parser.{InferredLinkReference, LinkReference, ParsedDocument, ParserContext, ReferenceCollector, ReferenceHandler, SchemaAliasReference}
 import amf.core.plugins.{AMFDocumentPluginSettings, AMFPlugin}
 import amf.core.remote.Platform
 import org.yaml.model._
@@ -20,7 +20,10 @@ class JsonRefsReferenceHandler extends ReferenceHandler {
   override def collect(parsed: ParsedDocument, ctx: ParserContext): ReferenceCollector = {
     links(parsed.document, ctx)
     refUrls.foreach { ref =>
-      references += (ref, LinkReference, ref) // this is not for all scalar, link must be a string
+      if (ref.startsWith("http:") || ref.startsWith("https:"))
+        references += (ref, LinkReference, ref) // this is not for all scalars, link must be a string
+      else
+        references += (ref, InferredLinkReference, ref) // Is inferred because we don't know how to dereference by default
     }
     references
   }
