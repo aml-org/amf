@@ -146,10 +146,11 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
         Some(customDomainElementTransformation(withName(resolved, l), l))
 
       case l: Linkable if l.linkTarget.isDefined && isCycle =>
+        val target = l.linkTarget.get.asInstanceOf[Linkable with NamedDomainElement]
         Some(
-          RecursiveShape()
-            .withId(l.id)
-            .withFixPoint(l.linkTarget.get.id)
+          RecursiveShape(target.name.value())
+            .withId(target.id)
+            .withFixPoint(target.id)
             .withSupportsRecursion(l.supportsRecursion.option().getOrElse(false)))
 
       // link traversed, return the link

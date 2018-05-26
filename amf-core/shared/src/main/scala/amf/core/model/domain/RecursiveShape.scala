@@ -5,16 +5,22 @@ import amf.core.metamodel.domain.RecursiveShapeModel
 import amf.core.metamodel.domain.RecursiveShapeModel._
 import amf.core.model.StrField
 import amf.core.parser.{Annotations, ErrorHandler, Fields}
-import org.yaml.model.YPart
 
-case class RecursiveShape(override val fields: Fields, override val annotations: Annotations) extends Shape {
+case class RecursiveShape(private val fixName: String,
+                          override val fields: Fields,
+                          override val annotations: Annotations)
+    extends Shape {
+
+  set(Name, fixName)
 
   def fixpoint: StrField = fields.field(FixPoint)
 
   def withFixPoint(shapeId: String): this.type = set(FixPoint, shapeId)
 
-  override def cloneShape(recursionErrorHandler: Option[ErrorHandler], recursionBase: Option[String], traversed: Set[String]): Shape = {
-    val cloned = RecursiveShape()
+  override def cloneShape(recursionErrorHandler: Option[ErrorHandler],
+                          recursionBase: Option[String],
+                          traversed: TraversedIds = TraversedIds()): Shape = {
+    val cloned = RecursiveShape(fixName)
     cloned.id = this.id
     copyFields(recursionErrorHandler, cloned, None, traversed)
     cloned
@@ -29,9 +35,7 @@ case class RecursiveShape(override val fields: Fields, override val annotations:
 }
 
 object RecursiveShape {
-  def apply(): RecursiveShape = apply(Annotations())
+  def apply(fixName: String): RecursiveShape = apply(fixName, Fields(), Annotations())
 
-  def apply(ast: YPart): RecursiveShape = apply(Annotations(ast))
-
-  def apply(annotations: Annotations): RecursiveShape = RecursiveShape(Fields(), annotations)
+  def apply(fixName: String, annotations: Annotations): RecursiveShape = RecursiveShape(fixName, Fields(), annotations)
 }

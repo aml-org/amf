@@ -15,6 +15,7 @@ import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.resolution.stages.shape_normalization.MinShapeAlgorithm
 
+import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -29,6 +30,28 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
     with MinShapeAlgorithm {
 
   var fixPointCount = 0
+
+  private val cache = NormalizationCache()
+
+  private case class NormalizationCache() {
+    def registerMapping(id: String, alias: String): this.type = {
+      mappings.put(id, alias)
+      this
+    }
+
+    private val cache    = mutable.Map[String, Shape]()
+    private val mappings = mutable.Map[String, String]()
+
+    def +(shape: Shape): this.type = {
+      cache.put(shape.id, shape)
+      this
+    }
+
+    def get(id: String): Option[Shape] =
+      cache.get(mappings.getOrElse(id, id)).map(_.cloneShape(Some(errorHandler), Some(id)))
+
+    def exists(id: String): Boolean = cache.contains(id)
+  }
 
   override def resolve(model: BaseUnit): BaseUnit = model.transform(findShapesPredicate, transform)
 
@@ -53,26 +76,31 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
 
   protected def transform(element: DomainElement, isCycle: Boolean): Option[DomainElement] = {
     element match {
-      case shape: Shape => Some(canonical(expand(shape.cloneShape(Some(errorHandler), Some(element.id)))))
-      case other        => Some(other)
+      // need to copy before enter the expand, to avoid copy in cycle, but i should be good idea check if its declared or not, toavoid copy without be necessary
+      case shape: Shape if cache.exists(shape.id) => Some(canonical(expand(shape)))
+      case shape: Shape                           => Some(canonical(expand(shape.cloneShape(Some(errorHandler), Some(element.id)))))
+      case other                                  => Some(other)
     }
   }
 
   protected def expand(shape: Shape): Shape = {
-    ensureCorrect(shape)
-    cleanUnnecessarySyntax(shape)
-    shape match {
-      case union: UnionShape         => expandUnion(union)
-      case scalar: ScalarShape       => expandScalar(scalar)
-      case array: ArrayShape         => expandArray(array)
-      case matrix: MatrixShape       => expandMatrix(matrix)
-      case tuple: TupleShape         => expandTuple(tuple)
-      case property: PropertyShape   => expandProperty(property)
-      case fileShape: FileShape      => fileShape
-      case nil: NilShape             => nil
-      case node: NodeShape           => expandNode(node)
-      case recursive: RecursiveShape => recursive
-      case any: AnyShape             => any
+    cache.get(shape.id) match {
+      case Some(s) => s
+      case _ =>
+        ensureCorrect(shape)
+        shape match {
+          case union: UnionShape         => expandUnion(union)
+          case scalar: ScalarShape       => expandScalar(scalar)
+          case array: ArrayShape         => expandArray(array)
+          case matrix: MatrixShape       => expandMatrix(matrix)
+          case tuple: TupleShape         => expandTuple(tuple)
+          case property: PropertyShape   => expandProperty(property)
+          case fileShape: FileShape      => fileShape
+          case nil: NilShape             => nil
+          case node: NodeShape           => expandNode(node)
+          case recursive: RecursiveShape => recursive
+          case any: AnyShape             => any
+        }
     }
   }
 
@@ -214,18 +242,26 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
   }
 
   protected def canonical(shape: Shape): Shape = {
-    shape match {
-      case union: UnionShape         => canonicalUnion(union)
-      case scalar: ScalarShape       => canonicalScalar(scalar)
-      case array: ArrayShape         => canonicalArray(array)
-      case matrix: MatrixShape       => canonicalMatrix(matrix)
-      case tuple: TupleShape         => canonicalTuple(tuple)
-      case property: PropertyShape   => canonicalProperty(property)
-      case fileShape: FileShape      => canonicalShape(fileShape)
-      case nil: NilShape             => canonicalShape(nil)
-      case node: NodeShape           => canonicalNode(node)
-      case recursive: RecursiveShape => recursive
-      case any: AnyShape             => canonicalShape(any)
+    if (cache.exists(shape.id))
+      shape // i assume that this shape has been copied in expand
+    else {
+      cleanUnnecessarySyntax(shape)
+      val canonical = shape match {
+        case union: UnionShape         => canonicalUnion(union)
+        case scalar: ScalarShape       => canonicalScalar(scalar)
+        case array: ArrayShape         => canonicalArray(array)
+        case matrix: MatrixShape       => canonicalMatrix(matrix)
+        case tuple: TupleShape         => canonicalTuple(tuple)
+        case property: PropertyShape   => canonicalProperty(property)
+        case fileShape: FileShape      => canonicalShape(fileShape)
+        case nil: NilShape             => canonicalShape(nil)
+        case node: NodeShape           => canonicalNode(node)
+        case recursive: RecursiveShape => recursive
+        case any: AnyShape             => canonicalShape(any)
+      }
+      cache + canonical
+      if (!shape.id.equals(canonical.id)) cache.registerMapping(shape.id, canonical.id)
+      canonical
     }
   }
 
@@ -287,7 +323,7 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
       accShape = canonical(newMinShape)
     }
     if (keepEditingInfo) accShape.annotations += InheritedShapes(oldInherits.map(_.id))
-    accShape
+    accShape.withId(shape.id)
   }
 
   protected def canonicalArray(array: ArrayShape): Shape = {

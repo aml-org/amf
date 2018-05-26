@@ -45,6 +45,10 @@ class ProductionValidationTest extends RamlResolutionTest {
     cycle("recursive-union.raml", "recursive-union.raml.jsonld", RamlYamlHint, Amf)
   }
 
+  test("Recursive union raml to raml") {
+    cycle("recursive-union.raml", "recursive-union.raml.raml", RamlYamlHint, Raml)
+  }
+
 }
 
 class ProductionResolutionTest extends RamlResolutionTest {
