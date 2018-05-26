@@ -35,20 +35,73 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
 
   private case class NormalizationCache() {
     def registerMapping(id: String, alias: String): this.type = {
-      mappings.put(id, alias)
+      mappings.get(alias) match {
+        case Some(a) =>
+          mappings.remove(alias)
+          mappings.put(id, a)
+        case _ =>
+          mappings.put(id, alias)
+          fixPointCache.get(id).foreach { seq =>
+            fixPointCache.remove(id)
+            fixPointCache.put(alias, seq.map(_.withFixPoint(alias)))
+          }
+      }
+
       this
     }
 
-    private val cache    = mutable.Map[String, Shape]()
-    private val mappings = mutable.Map[String, String]()
+    private val cache         = mutable.Map[String, Shape]()
+    private val fixPointCache = mutable.Map[String, Seq[RecursiveShape]]()
+    private val mappings      = mutable.Map[String, String]()
+
+    private def registerFixPoint(r: RecursiveShape): RecursiveShape = {
+      r.fixpoint.option().foreach { fp =>
+        val alias = mappings.get(fp)
+        fixPointCache.get(fp) match {
+          case Some(s) =>
+            val shapes = s :+ r
+            val newAlias = alias.fold({ fp })(a => {
+              shapes.foreach(_.withFixPoint(a))
+              fixPointCache.remove(fp)
+              a
+            })
+            fixPointCache.put(newAlias, shapes)
+
+          case _ =>
+            alias.fold({ fixPointCache.put(fp, Seq(r)) })(a => {
+              r.withFixPoint(a)
+              fixPointCache.put(a, Seq(r))
+            })
+        }
+      }
+      r
+    }
 
     def +(shape: Shape): this.type = {
+      shape match {
+        case r: RecursiveShape =>
+          registerFixPoint(r)
+        case _ =>
+      }
       cache.put(shape.id, shape)
       this
     }
 
-    def get(id: String): Option[Shape] =
-      cache.get(mappings.getOrElse(id, id)).map(_.cloneShape(Some(errorHandler), Some(id)))
+    def get(id: String): Option[Shape] = {
+
+      cache.get(id).map(_.cloneShape(Some(errorHandler), Some(id))) match {
+        case Some(r: RecursiveShape) =>
+          if (r.fixpoint
+                .value()
+                .equals(
+                  "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/any/SomeType"))
+            println("here")
+          Some(registerFixPoint(r))
+        case other => other
+      }
+    }
+
+    def getUncloned(id: String): Option[Shape] = cache.get(id)
 
     def exists(id: String): Boolean = cache.contains(id)
   }
@@ -90,16 +143,16 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
         ensureCorrect(shape)
         shape match {
           case union: UnionShape         => expandUnion(union)
-          case scalar: ScalarShape       => expandScalar(scalar)
+          case scalar: ScalarShape       => expandAny(scalar)
           case array: ArrayShape         => expandArray(array)
           case matrix: MatrixShape       => expandMatrix(matrix)
           case tuple: TupleShape         => expandTuple(tuple)
           case property: PropertyShape   => expandProperty(property)
-          case fileShape: FileShape      => fileShape
+          case fileShape: FileShape      => expandAny(fileShape)
           case nil: NilShape             => nil
           case node: NodeShape           => expandNode(node)
           case recursive: RecursiveShape => recursive
-          case any: AnyShape             => any
+          case any: AnyShape             => expandAny(any)
         }
     }
   }
@@ -138,10 +191,10 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
     }
   }
 
-  protected def expandScalar(scalar: ScalarShape): ScalarShape = {
-    expandInherits(scalar)
-    expandLogicalConstraints(scalar)
-    scalar
+  protected def expandAny(any: AnyShape): AnyShape = {
+    expandInherits(any)
+    expandLogicalConstraints(any)
+    any
   }
 
   protected def expandArray(array: ArrayShape): ArrayShape = {
@@ -242,25 +295,32 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
   }
 
   protected def canonical(shape: Shape): Shape = {
-    if (cache.exists(shape.id))
-      shape // i assume that this shape has been copied in expand
-    else {
-      cleanUnnecessarySyntax(shape)
-      val canonical = shape match {
-        case union: UnionShape         => canonicalUnion(union)
-        case scalar: ScalarShape       => canonicalScalar(scalar)
-        case array: ArrayShape         => canonicalArray(array)
-        case matrix: MatrixShape       => canonicalMatrix(matrix)
-        case tuple: TupleShape         => canonicalTuple(tuple)
-        case property: PropertyShape   => canonicalProperty(property)
-        case fileShape: FileShape      => canonicalShape(fileShape)
-        case nil: NilShape             => canonicalShape(nil)
-        case node: NodeShape           => canonicalNode(node)
-        case recursive: RecursiveShape => recursive
-        case any: AnyShape             => canonicalShape(any)
-      }
-      cache + canonical
-      canonical
+    // i need to get the shape from cache. maybe this instance was added resolving some type and not the current instance (the instance may be not resolved yet)
+    cache.getUncloned(shape.id) match {
+      case Some(s) if !s.getClass.equals(shape.getClass) =>
+        s.cloneShape(Some(errorHandler), Some(s.id)) // if are diff clases, i should get the cached one
+      case Some(s) if s.fields.size != s.fields.size =>
+        s.cloneShape(Some(errorHandler), Some(s.id)) // if are of the same class, but has diff fields size(should check fields keys??) i used the cached one
+      case Some(s) =>
+        shape // if are of the same class and have the same fields i assume that shape has been copied from cache and i can return that instance
+      // todo: some way to check the cached shape if it's equals to actual shape to avoid the unnesary re copy?
+      case _ =>
+        cleanUnnecessarySyntax(shape)
+        val canonical = shape match {
+          case union: UnionShape         => canonicalUnion(union)
+          case scalar: ScalarShape       => canonicalScalar(scalar)
+          case array: ArrayShape         => canonicalArray(array)
+          case matrix: MatrixShape       => canonicalMatrix(matrix)
+          case tuple: TupleShape         => canonicalTuple(tuple)
+          case property: PropertyShape   => canonicalProperty(property)
+          case fileShape: FileShape      => canonicalShape(fileShape)
+          case nil: NilShape             => canonicalShape(nil)
+          case node: NodeShape           => canonicalNode(node)
+          case recursive: RecursiveShape => recursive
+          case any: AnyShape             => canonicalShape(any)
+        }
+        cache + canonical //i should never add a shape if is not resolved yet
+        canonical
     }
   }
 
@@ -322,7 +382,11 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
       accShape = canonical(newMinShape)
     }
     if (keepEditingInfo) accShape.annotations += InheritedShapes(oldInherits.map(_.id))
-    accShape.withId(shape.id)
+    if (!shape.id.equals(accShape.id)) {
+      cache.registerMapping(shape.id, accShape.id)
+      accShape.withId(shape.id)
+    }
+    accShape
   }
 
   protected def canonicalArray(array: ArrayShape): Shape = {
