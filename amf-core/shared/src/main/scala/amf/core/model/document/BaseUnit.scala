@@ -209,7 +209,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
   protected def defaultCycleRecoverer(old: AmfObject, transformed: AmfObject): Option[AmfObject] = {
     transformed match {
       case s: Shape =>
-        Some(RecursiveShape(s.name.value()).withId(s.id).withFixPoint(s.id))
+        Some(RecursiveShape(s))
       case _ =>
         throw new Exception(s"Recursive loop generated in reference expansion: ${old.id} => ${transformed.id}")
     }
