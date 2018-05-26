@@ -260,7 +260,6 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
         case any: AnyShape             => canonicalShape(any)
       }
       cache + canonical
-      if (!shape.id.equals(canonical.id)) cache.registerMapping(shape.id, canonical.id)
       canonical
     }
   }

@@ -20,5 +20,5 @@ object RecursiveShapeModel extends ShapeModel {
   override val `type`: List[ValueType] =
     List(Namespace.Shapes + "RecursiveShape", Namespace.Shacl + "Shape", Namespace.Shapes + "Shape")
 
-  override def modelInstance: AmfObject = RecursiveShape("default-recursive")
+  override def modelInstance: AmfObject = RecursiveShape()
 }
