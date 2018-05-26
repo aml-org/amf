@@ -296,8 +296,15 @@ abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references
           }
         }
       )(f => {
-        typeEmitted = true
-        result += RamlShapeInheritsEmitter(f, ordering, references = references)
+        f.array.values.map(_.asInstanceOf[Shape]).collectFirst({ case r: RecursiveShape => r }) match {
+          case Some(r: RecursiveShape) =>
+            typeEmitted = true
+
+            result ++= RamlRecursiveShapeEmitter(r, ordering, references).emitters()
+          case _ =>
+            typeEmitted = true
+            result += RamlShapeInheritsEmitter(f, ordering, references = references)
+        }
       })
 
     if (Option(shape.and).isDefined && shape.and.nonEmpty)
@@ -469,6 +476,19 @@ case class XMLSerializerEmitter(key: String, f: FieldEntry, ordering: SpecOrderi
 
   override def position(): Position = pos(f.value.annotations)
 }
+
+//case class RamlNamedRecursiveShapeEmitter(recursive:RecursiveShape,ordering: SpecOrdering)(
+//  implicit spec: RamlSpecEmitterContext) extends EntryEmitter {
+//  override def emit(b: EntryBuilder): Unit = {
+//    // todo add error handling?
+//    val name = recursive.name.option().orElse(throw new Exception(s"Annotation type without name $recursive")).get
+//    val emitters = RamlRecursiveShapeEmitter(recursive,ordering, Nil).emitters()
+//
+//    b.entry(recursive.name.value(),_.obj(traverse(ordering.sorted(emitters),_)))
+//  }
+//
+//  override def position(): Position = pos(recursive.annotations)
+//}
 
 case class RamlRecursiveShapeEmitter(shape: RecursiveShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext) {

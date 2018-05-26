@@ -25,7 +25,7 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
       .map(_ => {
         val adopt = (shape: Shape) => { shape.adopted("/test") }
 
-        implicit val ctx: Raml10WebApiContext = new Raml10WebApiContext("",Nil,ParserContext())
+        implicit val ctx: Raml10WebApiContext = new Raml10WebApiContext("", Nil, ParserContext())
 
         var res = RamlTypeExpressionParser(adopt).parse("integer")
         assert(res.get.isInstanceOf[ScalarShape])
@@ -64,7 +64,7 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
         var error = false
         try {
           RuntimeValidator.disableValidations() { () =>
-            val fail = new Raml10WebApiContext("", Nil,ctx)
+            val fail = new Raml10WebApiContext("", Nil, ctx)
             RamlTypeExpressionParser(adopt)(fail).parse("[]")
           }
         } catch {
@@ -96,7 +96,9 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
         assert(union.anyOf.length == 3)
         assert(union.anyOf.map { e =>
           e.asInstanceOf[ScalarShape].dataType.value()
-        } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri(), (Namespace.Shapes + "number").iri()))
+        } == Seq((Namespace.Xsd + "integer").iri(),
+                 (Namespace.Xsd + "string").iri(),
+                 (Namespace.Shapes + "number").iri()))
         assert(res != null)
 
         res = RamlTypeExpressionParser(adopt).parse("(integer | string)[]")
@@ -213,7 +215,8 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
     }
   }
 
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = RAML10Plugin.resolve(unit)
+  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
+    RAML10Plugin.resolve(unit)
 
   val errorExamples = Seq(
     "inheritance_error1",

@@ -208,8 +208,8 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
 
   protected def defaultCycleRecoverer(old: AmfObject, transformed: AmfObject): Option[AmfObject] = {
     transformed match {
-      case s:Shape  =>
-        Some(RecursiveShape().withId(s.id).withFixPoint(s.id))
+      case s: Shape =>
+        Some(RecursiveShape(s.name.value()).withId(s.id).withFixPoint(s.id))
       case _ =>
         throw new Exception(s"Recursive loop generated in reference expansion: ${old.id} => ${transformed.id}")
     }
@@ -219,7 +219,8 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
                                      predicate: (AmfObject) => Boolean,
                                      transformation: (AmfObject, Boolean) => Option[AmfObject],
                                      cycles: Set[String] = Set.empty,
-                                     cycleRecoverer: (AmfObject, AmfObject) => Option[AmfObject] = defaultCycleRecoverer): AmfObject = {
+                                     cycleRecoverer: (AmfObject, AmfObject) => Option[AmfObject] =
+                                       defaultCycleRecoverer): AmfObject = {
     if (!cycles.contains(element.id)) {
       // not visited yet
       if (predicate(element)) { // matches predicate, we transform
