@@ -69,17 +69,18 @@ title: Version Manager
                       required: false
                       type: date-only
                     release:
-                      type: object
+                      type:
+                        additionalProperties: true
+                        properties:
+                          release_date:
+                            required: false
+                            type: date-only
+                          released:
+                            type: boolean
+                            required: false
+                            default: false
                       required: false
                       additionalProperties: true
-                      properties:
-                        release_date:
-                          required: false
-                          type: date-only
-                        released:
-                          type: boolean
-                          required: false
-                          default: false
   post:
     description: Add a new <<resourcePathName | !singularize>>
     displayName: Add new <<resourcePathName | !singularize>>

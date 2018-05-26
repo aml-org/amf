@@ -180,8 +180,6 @@ baseUri: acme-banking.com/apis
                       required: true
                       type: string
                     address:
-                      required: true
-                      additionalProperties: true
                       properties:
                         address_country:
                           required: true
@@ -198,6 +196,8 @@ baseUri: acme-banking.com/apis
                         street_address:
                           required: true
                           type: string
+                      required: true
+                      additionalProperties: true
                     id:
                       required: true
                       type: string
@@ -320,7 +320,6 @@ baseUri: acme-banking.com/apis
           200:
             body:
               application/json:
-                type: array
                 items:
                   additionalProperties: true
                   properties:
@@ -367,8 +366,6 @@ baseUri: acme-banking.com/apis
                       required: true
                       type: number
                     minimum_inflow:
-                      required: true
-                      additionalProperties: true
                       properties:
                         value:
                           required: true
@@ -376,9 +373,9 @@ baseUri: acme-banking.com/apis
                         currency:
                           required: true
                           type: string
+                      required: true
+                      additionalProperties: true
                     overdraft_limit:
-                      required: true
-                      additionalProperties: true
                       properties:
                         value:
                           required: true
@@ -386,6 +383,8 @@ baseUri: acme-banking.com/apis
                         currency:
                           required: true
                           type: string
+                      required: true
+                      additionalProperties: true
       post:
         description: Requests the creation of a new BankAccount
         body:
@@ -502,7 +501,6 @@ baseUri: acme-banking.com/apis
           200:
             body:
               application/json:
-                type: array
                 items:
                   additionalProperties: true
                   properties:
