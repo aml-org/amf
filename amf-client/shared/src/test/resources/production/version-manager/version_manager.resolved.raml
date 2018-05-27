@@ -70,6 +70,7 @@ title: Version Manager
                       type: date-only
                     release:
                       type:
+                        additionalProperties: true
                         properties:
                           release_date:
                             required: false
@@ -78,7 +79,6 @@ title: Version Manager
                             type: boolean
                             required: false
                             default: false
-                        additionalProperties: true
                       required: false
                       additionalProperties: true
   post:
