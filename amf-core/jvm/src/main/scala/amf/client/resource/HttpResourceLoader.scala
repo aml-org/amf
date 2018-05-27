@@ -6,7 +6,7 @@ import java.util.concurrent.CompletableFuture
 import amf.client.remote.Content
 import amf.core.lexer.CharArraySequence
 import amf.core.remote.FutureConverter._
-import amf.core.remote.SocketTimeout
+import amf.core.remote.{FileNotFound, SocketTimeout}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -25,7 +25,8 @@ case class HttpResourceLoader() extends BaseHttpResourceLoader {
         connection.getResponseCode match {
           case 200 =>
             createContent(connection, resource)
-          case s => throw new Exception(s"Unhandled status code $s => $resource")
+          case s =>
+            throw FileNotFound(new Exception(s"Unhandled status code $s => $resource"))
         }
       } catch {
         case e: SocketTimeoutException => throw SocketTimeout(e)

@@ -3,7 +3,10 @@ package amf.wrapper
 import java.util
 import java.util.concurrent.CompletableFuture
 
+import amf.ProfileNames
+import amf.client.AMF
 import amf.client.convert.VocabulariesClientConverter._
+import amf.core.parser.Range
 
 import scala.collection.JavaConverters._
 import scala.compat.java8.FutureConverters._
@@ -30,4 +33,29 @@ class JvmWrapperTests extends WrapperTests {
     override val native: CompletableFuture[T] = future.asInstanceOf[CompletableFuture[T]]
     override def asFuture: Future[T]          = native.toScala
   }
+
+  test("Handle 404 status code while fetching included file") {
+    for {
+      _ <- AMF.init().asFuture
+      a <- AMF
+        .raml08Parser()
+        .parseFileAsync("file://amf-client/shared/src/test/resources/error/not-existing-http-include.raml")
+        .asFuture
+      r <- AMF.validate(a, ProfileNames.RAML08, ProfileNames.RAML08).asFuture
+    } yield {
+      r.conforms should be(false)
+      val seq = r.results.asSeq
+      seq.size should be(2)
+      val statusCode = seq.head
+      statusCode.level should be("Violation")
+      statusCode.message should endWith("Unhandled status code 404 => https://raml.org/notexists")
+      statusCode.position should be(Range((6, 10), (6, 45)))
+
+      val unresolvedRef = seq.last
+      unresolvedRef.level should be("Violation")
+      unresolvedRef.message should startWith("Unresolved reference 'https://raml.org/notexists' from root context")
+      unresolvedRef.position should be(Range((6, 10), (6, 45)))
+    }
+  }
+
 }
