@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes.resolution.stages
 
-import amf.core.annotations.ExplicitField
+import amf.core.annotations.{ExplicitField, LexicalInformation}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.metamodel.{MetaModelTypeMapping, Obj}
@@ -14,6 +14,7 @@ import amf.plugins.domain.shapes.annotations.InheritedShapes
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.resolution.stages.shape_normalization.MinShapeAlgorithm
+import amf.plugins.features.validation.ParserSideValidations
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -46,7 +47,6 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
             fixPointCache.put(alias, seq.map(_.withFixPoint(alias)))
           }
       }
-
       this
     }
 
@@ -90,14 +90,8 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
     def get(id: String): Option[Shape] = {
 
       cache.get(id).map(_.cloneShape(Some(errorHandler), Some(id))) match {
-        case Some(r: RecursiveShape) =>
-          if (r.fixpoint
-                .value()
-                .equals(
-                  "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/any/SomeType"))
-            println("here")
-          Some(registerFixPoint(r))
-        case other => other
+        case Some(r: RecursiveShape) => Some(registerFixPoint(r))
+        case other                   => other
       }
     }
 
@@ -119,7 +113,7 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
     shape
   }
 
-  def findShapesPredicate(element: DomainElement) = {
+  def findShapesPredicate(element: DomainElement): Boolean = {
     val metaModelFound: Obj = metaModel(element)
     val targetIri           = (Namespace.Shapes + "Shape").iri()
     metaModelFound.`type`.exists { t: ValueType =>
@@ -136,9 +130,22 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
     }
   }
 
+  private def registerRecursion(s: Shape, original: Shape): Shape = {
+    if (s.isInstanceOf[RecursiveShape] && !s.supportsRecursion
+          .option()
+          .getOrElse(false)) // todo should store in recursion it use to
+      errorHandler.violation(
+        ParserSideValidations.RecursiveShapeSpecification.id(),
+        original.id,
+        None,
+        "Error recursive shape",
+        original.annotations.find(classOf[LexicalInformation])
+      )
+    s
+  }
   protected def expand(shape: Shape): Shape = {
     cache.get(shape.id) match {
-      case Some(s) => s
+      case Some(s) => registerRecursion(s, shape)
       case _ =>
         ensureCorrect(shape)
         shape match {
@@ -298,9 +305,11 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
     // i need to get the shape from cache. maybe this instance was added resolving some type and not the current instance (the instance may be not resolved yet)
     cache.getUncloned(shape.id) match {
       case Some(s) if !s.getClass.equals(shape.getClass) =>
-        s.cloneShape(Some(errorHandler), Some(s.id)) // if are diff clases, i should get the cached one
+        // if are diff clases, i should get the cached one
+        registerRecursion(s.cloneShape(Some(errorHandler), Some(s.id)), shape)
       case Some(s) if s.fields.size != s.fields.size =>
-        s.cloneShape(Some(errorHandler), Some(s.id)) // if are of the same class, but has diff fields size(should check fields keys??) i used the cached one
+        // if are of the same class, but has diff fields size(should check fields keys??) i used the cached one
+        registerRecursion(s.cloneShape(Some(errorHandler), Some(s.id)), shape)
       case Some(s) =>
         shape // if are of the same class and have the same fields i assume that shape has been copied from cache and i can return that instance
       // todo: some way to check the cached shape if it's equals to actual shape to avoid the unnesary re copy?
