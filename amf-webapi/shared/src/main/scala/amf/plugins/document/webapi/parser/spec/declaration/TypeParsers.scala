@@ -5,6 +5,7 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.spec.common.SingleArrayNode
 import amf.plugins.domain.shapes.metamodel.{PropertyDependenciesModel, XMLSerializerModel}
 import amf.plugins.domain.shapes.models.{PropertyDependencies, XMLSerializer}
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
@@ -14,13 +15,15 @@ import scala.collection.mutable
 /**
   *
   */
-case class ShapeDependenciesParser(map: YMap, properties: mutable.ListMap[String, PropertyShape]) {
+case class ShapeDependenciesParser(map: YMap, properties: mutable.ListMap[String, PropertyShape])(
+    implicit ctx: WebApiContext) {
   def parse(): Seq[PropertyDependencies] = {
     map.entries.flatMap(entry => NodeDependencyParser(entry, properties).parse())
   }
 }
 
-case class NodeDependencyParser(entry: YMapEntry, properties: mutable.ListMap[String, PropertyShape]) {
+case class NodeDependencyParser(entry: YMapEntry, properties: mutable.ListMap[String, PropertyShape])(
+    implicit ctx: WebApiContext) {
   def parse(): Option[PropertyDependencies] = {
 
     properties
@@ -33,7 +36,7 @@ case class NodeDependencyParser(entry: YMapEntry, properties: mutable.ListMap[St
   }
 
   private def targets(): Seq[AmfScalar] = {
-    ArrayNode(entry.value)
+    SingleArrayNode(entry.value)
       .text()
       .scalars
       .flatMap(v => properties.get(v.value.toString).map(p => AmfScalar(p.id, v.annotations)))

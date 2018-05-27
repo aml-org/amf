@@ -1,6 +1,5 @@
 package amf.emit
 
-import amf.core.benchmark.ExecutionLog
 import amf.core.remote._
 import amf.facades.Validation
 import amf.io.BuildCycleTests
@@ -1119,7 +1118,11 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   ignore("Test suez-delivery-collection example raml to amf") {
-    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, productionPath + "s-suez-delivery-collection-api-1.0.0-fat-raml/")
+    cycle("api.raml",
+          "api.jsonld",
+          RamlYamlHint,
+          Amf,
+          productionPath + "s-suez-delivery-collection-api-1.0.0-fat-raml/")
   }
 
   test("Test definitons-loops example raml to amf") {

@@ -1,21 +1,14 @@
 package amf.error
 
-import amf.compiler.CompilerTestBuilder
+import amf.core.model.document.BaseUnit
 import amf.core.parser.Range
 import amf.core.remote.RamlYamlHint
-import amf.core.validation.AMFValidationResult
 import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.features.validation.ParserSideValidations
-import org.scalatest.Matchers.{startWith, _}
-import org.scalatest.{AsyncFunSuite, Succeeded}
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.Future
 
-class RamlParserErrorTest extends AsyncFunSuite with CompilerTestBuilder {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-
-  private val basePath = "file://amf-client/shared/src/test/resources/error/"
+class RamlParserErrorTest extends ParserErrorTest {
 
   test("Test unexpected node types") {
     validate(
@@ -110,19 +103,20 @@ class RamlParserErrorTest extends AsyncFunSuite with CompilerTestBuilder {
     )
   }
 
-  private def validate(file: String, fixture: (AMFValidationResult => Unit)*) = {
-    Validation(platform).flatMap { validation =>
-      AMFCompiler(basePath + file, platform, RamlYamlHint, validation)
-        .build()
-        .map { _ =>
-          val report = validation.aggregatedReport
-          if (report.size != fixture.size) report.foreach(println)
-          report.size should be(fixture.size)
-          fixture.zip(report).foreach {
-            case (fn, result) => fn(result)
-          }
-          Succeeded
-        }
-    }
+  // todo: json schema parser test? should expose json schema parser?
+  test("Not seq in dependencies entry at json schema type def") {
+    validate(
+      "/not-seq-dependency-def-jsonchema.raml",
+      invalidSeq => {
+        invalidSeq.level should be("Violation")
+        invalidSeq.message should startWith("Expected scalar but found:")
+        invalidSeq.position.map(_.range) should be(Some(Range((34, 16), (42, 4))))
+      }
+    )
   }
+
+  override protected val basePath: String = "file://amf-client/shared/src/test/resources/error/"
+
+  override protected def build(validation: Validation, file: String): Future[BaseUnit] =
+    AMFCompiler(file, platform, RamlYamlHint, validation).build()
 }
