@@ -997,6 +997,13 @@ case class RamlItemsShapeEmitter(array: ArrayShape, ordering: SpecOrdering, refe
             }
           )
         }
+      case r: RecursiveShape =>
+        b.entry(
+          "items",
+          _.obj { b =>
+            Raml10TypeEmitter(r, ordering, references = references).entries().foreach(_.emit(b))
+          }
+        )
       case _ => // ignore
     }
   }

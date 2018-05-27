@@ -4,15 +4,12 @@ title: API
   get:
     body:
       application/json:
-        type:
-          type:
-            anyOf:
-              -
-                items:
-                  type: object
-                  x-amf-recursive: file://amf-client/shared/src/test/resources/production/recursive-union.raml#/web-api/end-points/%2Ftest/get/request/application%2Fjson/any/schema
-              -
-                items:
-                  type:
-                    type: object
-                    x-amf-recursive: file://amf-client/shared/src/test/resources/production/recursive-union.raml#/web-api/end-points/%2Ftest/get/request/application%2Fjson/any/schema
+        anyOf:
+          -
+            items:
+              type: object
+              x-amf-recursive: file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/array/SomeUnion/union/default-union
+          -
+            items:
+              type: object
+              x-amf-recursive: file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/array/SomeUnion/union/default-union
