@@ -1,7 +1,7 @@
 Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml
 Profile: RAML
 Conforms? false
-Number of results: 10
+Number of results: 7
 
 Level: Violation
 
@@ -32,27 +32,6 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declarations/any/SomeType/union/default-union
   Property: 
   Position: Some(LexicalInformation([(6,10)-(6,28)]))
-
-- Source: http://raml.org/vocabularies/amf/parser#recursive-shape
-  Message: Error recursive shape
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declarations/array/SomeUnion
-  Property: 
-  Position: Some(LexicalInformation([(8,2)-(11,0)]))
-
-- Source: http://raml.org/vocabularies/amf/parser#recursive-shape
-  Message: Error recursive shape
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declarations/array/SomeUnion
-  Property: 
-  Position: Some(LexicalInformation([(8,2)-(11,0)]))
-
-- Source: http://raml.org/vocabularies/amf/parser#recursive-shape
-  Message: Error recursive shape
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declarations/any/AnotherType
-  Property: 
-  Position: Some(LexicalInformation([(11,2)-(14,0)]))
 
 - Source: http://raml.org/vocabularies/amf/parser#recursive-shape
   Message: Error recursive shape

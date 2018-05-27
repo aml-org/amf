@@ -1,7 +1,7 @@
 Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/integer-invalid/input.raml
 Profile: RAML
 Conforms? false
-Number of results: 8
+Number of results: 5
 
 Level: Violation
 
@@ -25,27 +25,6 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/integer-invalid/input.raml#/declarations/scalar/EnumNotInRange
   Property: http://raml.org/vocabularies/shapes#inherits
   Position: Some(LexicalInformation([(15,4)-(19,0)]))
-
-- Source: http://raml.org/vocabularies/amf/parser#invalid-type-inheritance
-  Message: Resolution error: sub type has a weaker constraint for maximum than base type for maximum
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/integer-invalid/input.raml#/declarations/scalar/EnumNotInRange
-  Property: http://raml.org/vocabularies/shapes#inherits
-  Position: Some(LexicalInformation([(15,4)-(19,0)]))
-
-- Source: http://raml.org/vocabularies/amf/parser#invalid-type-inheritance
-  Message: Resolution error: sub type has a weaker constraint for maximum than base type for maximum
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/integer-invalid/input.raml#/declarations/scalar/EnumNotInRange
-  Property: http://raml.org/vocabularies/shapes#inherits
-  Position: Some(LexicalInformation([(15,4)-(19,0)]))
-
-- Source: http://raml.org/vocabularies/amf/parser#invalid-type-inheritance
-  Message: Values in super type not found in the subtype enumeration
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/integer-invalid/input.raml#/declarations/scalar/NotAMultipleInRange
-  Property: http://raml.org/vocabularies/shapes#inherits
-  Position: Some(LexicalInformation([(19,4)-(23,0)]))
 
 - Source: http://raml.org/vocabularies/amf/parser#invalid-type-inheritance
   Message: Values in super type not found in the subtype enumeration

@@ -65,7 +65,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/array/SomeUnion/union/default-union",
+                            "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/web-api/end-points/%2Ftest/get/request/application%2Fjson/any/schema",
                             "@type": [
                               "http://raml.org/vocabularies/shapes#UnionShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -90,7 +90,12 @@
                                     ],
                                     "http://raml.org/vocabularies/shapes#fixPoint": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/web-api/end-points/%2Ftest/get/request/application%2Fjson/any/schema"
+                                        "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/array/SomeUnion/union/default-union"
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document#recursive": [
+                                      {
+                                        "@value": false
                                       }
                                     ],
                                     "http://www.w3.org/ns/shacl#name": [
@@ -182,7 +187,12 @@
                                     ],
                                     "http://raml.org/vocabularies/shapes#fixPoint": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/web-api/end-points/%2Ftest/get/request/application%2Fjson/any/schema"
+                                        "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/array/SomeUnion/union/default-union"
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document#recursive": [
+                                      {
+                                        "@value": false
                                       }
                                     ],
                                     "http://www.w3.org/ns/shacl#name": [
