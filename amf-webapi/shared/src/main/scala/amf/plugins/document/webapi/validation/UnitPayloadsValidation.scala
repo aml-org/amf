@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.validation
 
 import amf.core.annotations.LexicalInformation
-import amf.core.benchmark.{Execution, ExecutionLog}
+import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{ArrayNode, DataNode, ObjectNode}
 import amf.core.remote.Platform
@@ -29,6 +29,7 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, platform: Platform) {
     val indexedResults: Map[String, Seq[AMFValidationResult]] = report.results.groupBy { r =>
       r.targetNode
     }
+
     index.aggregate(indexedResults)
   }
 

@@ -27,7 +27,7 @@ object PayloadValidator {
       .sequence(value)
       .map(s => {
         val seq = s.flatMap { report =>
-          report.results
+          report.results.sortWith({ case (l, r) => l.validationId.compareTo(r.validationId) > 0 })
         }.toSeq
         AMFValidationReport(!seq.exists(_.level == SeverityLevels.VIOLATION), "", "", seq)
       })
