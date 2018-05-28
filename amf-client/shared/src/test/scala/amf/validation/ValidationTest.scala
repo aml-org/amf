@@ -2315,4 +2315,17 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.head.message.equals("Expecting !!str and !!null provided"))
     }
   }
+
+  test("Exclusive Maximum Schema") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "08/max-exclusive-schema.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML08)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 1)
+      assert(report.results.exists(_.message.equals("Data at / must be smaller than to 180")))
+    }
+  }
 }
