@@ -2300,4 +2300,19 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.exists(_.message.equals("Missing library location")))
     }
   }
+
+  // Strange problem where hashcode for YMap entries had to be recalculated inside syaml.
+  // Just check it doesn't throw NPE :)
+  test("Null in type name") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "null-name.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 1)
+      assert(report.results.head.message.equals("Expecting !!str and !!null provided"))
+    }
+  }
 }
