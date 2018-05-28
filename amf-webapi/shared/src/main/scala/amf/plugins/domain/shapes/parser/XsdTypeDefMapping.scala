@@ -3,6 +3,7 @@ package amf.plugins.domain.shapes.parser
 import amf.core.vocabulary.Namespace.{Shapes, Xsd}
 import amf.plugins.domain.shapes.models.TypeDef
 import amf.plugins.domain.shapes.models.TypeDef._
+import org.yaml.model.YType
 
 /**
   * XSD [[TypeDef]] mapping
@@ -42,6 +43,16 @@ object XsdTypeDefMapping {
     }
 }
 
+object TypeDefYTypeMapping {
+
+  def apply(typeDef: TypeDef): YType = typeDef match {
+    case IntType | LongType | ByteType | BinaryType                    => YType.Int
+    case FloatType | DoubleType | NumberType                           => YType.Float
+    case BoolType                                                      => YType.Bool
+    case DateTimeType | DateTimeOnlyType | TimeOnlyType | DateOnlyType => YType.Timestamp
+    case _                                                             => YType.Str
+  }
+}
 object TypeDefXsdMapping {
 
   def typeDef08(iri: String): String =
