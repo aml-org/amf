@@ -16,6 +16,7 @@ import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YDocument.EntryBuilder
+
 class AMFShapeValidations(shape: Shape) {
 
   def profile(): ValidationProfile = {
@@ -356,7 +357,7 @@ class AMFShapeValidations(shape: Shape) {
         })
 
         val customRdf = Some((rdfModel: RdfModel, subject: String) => {
-          val propId = rdfModel.nextAnonId()
+          val propId                = rdfModel.nextAnonId()
           val firstConstraintListId = propId + "_ointdoub1"
           val nextConstraintListId2 = propId + "_ointdoub2"
           val nextConstraintListId3 = propId + "_ointdoub3"
@@ -365,19 +366,29 @@ class AMFShapeValidations(shape: Shape) {
 
           rdfModel.addTriple(subject, (Namespace.Shacl + "or").iri(), firstConstraintListId)
           rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "first").iri(), firstConstraintListId + "_v")
-          rdfModel.addTriple(firstConstraintListId + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "string").iri().trim)
+          rdfModel.addTriple(firstConstraintListId + "_v",
+                             (Namespace.Shacl + "datatype").iri(),
+                             (Namespace.Xsd + "string").iri().trim)
           rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "rest").iri(), nextConstraintListId2)
           rdfModel.addTriple(nextConstraintListId2, (Namespace.Rdf + "first").iri(), nextConstraintListId2 + "_v")
-          rdfModel.addTriple(nextConstraintListId2 + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "time").iri().trim)
+          rdfModel.addTriple(nextConstraintListId2 + "_v",
+                             (Namespace.Shacl + "datatype").iri(),
+                             (Namespace.Xsd + "time").iri().trim)
           rdfModel.addTriple(nextConstraintListId2, (Namespace.Rdf + "rest").iri(), nextConstraintListId3)
           rdfModel.addTriple(nextConstraintListId3, (Namespace.Rdf + "first").iri(), nextConstraintListId3 + "_v")
-          rdfModel.addTriple(nextConstraintListId3 + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "date").iri().trim)
+          rdfModel.addTriple(nextConstraintListId3 + "_v",
+                             (Namespace.Shacl + "datatype").iri(),
+                             (Namespace.Xsd + "date").iri().trim)
           rdfModel.addTriple(nextConstraintListId3, (Namespace.Rdf + "rest").iri(), nextConstraintListId4)
           rdfModel.addTriple(nextConstraintListId4, (Namespace.Rdf + "first").iri(), nextConstraintListId4 + "_v")
-          rdfModel.addTriple(nextConstraintListId4 + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "dateTime").iri().trim)
+          rdfModel.addTriple(nextConstraintListId4 + "_v",
+                             (Namespace.Shacl + "datatype").iri(),
+                             (Namespace.Xsd + "dateTime").iri().trim)
           rdfModel.addTriple(nextConstraintListId4, (Namespace.Rdf + "rest").iri(), nextConstraintListId5)
           rdfModel.addTriple(nextConstraintListId5, (Namespace.Rdf + "first").iri(), nextConstraintListId5 + "_v")
-          rdfModel.addTriple(nextConstraintListId5 + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Shapes + "dateTimeOnly").iri().trim)
+          rdfModel.addTriple(nextConstraintListId5 + "_v",
+                             (Namespace.Shacl + "datatype").iri(),
+                             (Namespace.Shapes + "dateTimeOnly").iri().trim)
           rdfModel.addTriple(nextConstraintListId5, (Namespace.Rdf + "rest").iri(), (Namespace.Rdf + "nil").iri())
         })
 
@@ -420,7 +431,7 @@ class AMFShapeValidations(shape: Shape) {
         })
 
         val customRdf = Some((rdfModel: RdfModel, subject: String) => {
-          val propId = rdfModel.nextAnonId()
+          val propId                = rdfModel.nextAnonId()
           val firstConstraintListId = propId + "_ointdoub1"
           val nextConstraintListId2 = propId + "_ointdoub2"
           val nextConstraintListId3 = propId + "_ointdoub3"
@@ -428,16 +439,24 @@ class AMFShapeValidations(shape: Shape) {
 
           rdfModel.addTriple(subject, (Namespace.Shacl + "or").iri(), firstConstraintListId)
           rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "first").iri(), firstConstraintListId + "_v")
-          rdfModel.addTriple(firstConstraintListId + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "integer").iri().trim)
+          rdfModel.addTriple(firstConstraintListId + "_v",
+                             (Namespace.Shacl + "datatype").iri(),
+                             (Namespace.Xsd + "integer").iri().trim)
           rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "rest").iri(), nextConstraintListId2)
           rdfModel.addTriple(nextConstraintListId2, (Namespace.Rdf + "first").iri(), nextConstraintListId2 + "_v")
-          rdfModel.addTriple(nextConstraintListId2 + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "long").iri().trim)
+          rdfModel.addTriple(nextConstraintListId2 + "_v",
+                             (Namespace.Shacl + "datatype").iri(),
+                             (Namespace.Xsd + "long").iri().trim)
           rdfModel.addTriple(nextConstraintListId2, (Namespace.Rdf + "rest").iri(), nextConstraintListId3)
           rdfModel.addTriple(nextConstraintListId3, (Namespace.Rdf + "first").iri(), nextConstraintListId3 + "_v")
-          rdfModel.addTriple(nextConstraintListId3 + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "float").iri().trim)
+          rdfModel.addTriple(nextConstraintListId3 + "_v",
+                             (Namespace.Shacl + "datatype").iri(),
+                             (Namespace.Xsd + "float").iri().trim)
           rdfModel.addTriple(nextConstraintListId3, (Namespace.Rdf + "rest").iri(), nextConstraintListId4)
           rdfModel.addTriple(nextConstraintListId4, (Namespace.Rdf + "first").iri(), nextConstraintListId4 + "_v")
-          rdfModel.addTriple(nextConstraintListId4 + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "double").iri().trim)
+          rdfModel.addTriple(nextConstraintListId4 + "_v",
+                             (Namespace.Shacl + "datatype").iri(),
+                             (Namespace.Xsd + "double").iri().trim)
           rdfModel.addTriple(nextConstraintListId4, (Namespace.Rdf + "rest").iri(), (Namespace.Rdf + "nil").iri())
         })
 
@@ -472,16 +491,20 @@ class AMFShapeValidations(shape: Shape) {
         })
 
         val customRdf = Some((rdfModel: RdfModel, subject: String) => {
-          val propId = rdfModel.nextAnonId()
+          val propId                = rdfModel.nextAnonId()
           val firstConstraintListId = propId + "_ointdoub1"
           val nextConstraintListId2 = propId + "_ointdoub2"
 
           rdfModel.addTriple(subject, (Namespace.Shacl + "or").iri(), firstConstraintListId)
           rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "first").iri(), firstConstraintListId + "_v")
-          rdfModel.addTriple(firstConstraintListId + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "float").iri().trim)
+          rdfModel.addTriple(firstConstraintListId + "_v",
+                             (Namespace.Shacl + "datatype").iri(),
+                             (Namespace.Xsd + "float").iri().trim)
           rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "rest").iri(), nextConstraintListId2)
           rdfModel.addTriple(nextConstraintListId2, (Namespace.Rdf + "first").iri(), nextConstraintListId2 + "_v")
-          rdfModel.addTriple(nextConstraintListId2 + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "double").iri().trim)
+          rdfModel.addTriple(nextConstraintListId2 + "_v",
+                             (Namespace.Shacl + "datatype").iri(),
+                             (Namespace.Xsd + "double").iri().trim)
           rdfModel.addTriple(nextConstraintListId2, (Namespace.Rdf + "rest").iri(), (Namespace.Rdf + "nil").iri())
         })
 
@@ -517,8 +540,6 @@ class AMFShapeValidations(shape: Shape) {
       validation = checkMaxLength(context, validation, scalar)
       validation = checkMinimum(context, validation, scalar)
       validation = checkMaximum(context, validation, scalar)
-      validation = checkMinimumExclusive(context, validation, scalar)
-      validation = checkMaximumExclusive(context, validation, scalar)
       validation = checkEnum(context, validation, scalar)
 
       checkLogicalConstraints(context, scalar, validation, Nil)
@@ -658,14 +679,26 @@ class AMFShapeValidations(shape: Shape) {
                              shape: Shape with CommonShapeFields): ValidationSpecification = {
     shape.fields.?[AmfScalar](ScalarShapeModel.Minimum) match {
       case Some(minimum) =>
-        val msg = s"Data at $context must be greater than or equal to $minimum"
-        val propertyValidation = PropertyConstraint(
-          ramlPropertyId = (Namespace.Data + "value").iri(),
-          name = validation.name + "_validation_minimum/prop",
-          message = Some(msg),
-          minInclusive = Some(s"$minimum"),
-          datatype = effectiveDataType(shape)
-        )
+        val propertyValidation = shape.fields.?[AmfScalar](ScalarShapeModel.ExclusiveMinimum) match {
+          case Some(exclusiveMinimum) if exclusiveMinimum.toBool =>
+            val msg = s"Data at $context must be greater than to $minimum"
+            PropertyConstraint(
+              ramlPropertyId = (Namespace.Data + "value").iri(),
+              name = validation.name + "_validation_minimum/prop",
+              message = Some(msg),
+              minExclusive = Some(s"$minimum"),
+              datatype = effectiveDataType(shape)
+            )
+          case _ =>
+            val msg = s"Data at $context must be greater than or equal to $minimum"
+            PropertyConstraint(
+              ramlPropertyId = (Namespace.Data + "value").iri(),
+              name = validation.name + "_validation_minimum/prop",
+              message = Some(msg),
+              minInclusive = Some(s"$minimum"),
+              datatype = effectiveDataType(shape)
+            )
+        }
         validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(propertyValidation))
       case None => validation
     }
@@ -676,50 +709,26 @@ class AMFShapeValidations(shape: Shape) {
                              shape: Shape with CommonShapeFields): ValidationSpecification = {
     shape.fields.?[AmfScalar](ScalarShapeModel.Maximum) match {
       case Some(maximum) =>
-        val msg = s"Data at $context must be smaller than or equal to $maximum"
-        val propertyValidation = PropertyConstraint(
-          ramlPropertyId = (Namespace.Data + "value").iri(),
-          name = validation.name + "_validation_maximum/prop",
-          message = Some(msg),
-          maxInclusive = Some(s"$maximum"),
-          datatype = effectiveDataType(shape)
-        )
-        validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(propertyValidation))
-      case None => validation
-    }
-  }
-
-  protected def checkMinimumExclusive(context: String,
-                                      validation: ValidationSpecification,
-                                      shape: Shape with CommonShapeFields): ValidationSpecification = {
-    shape.fields.?[AmfScalar](ScalarShapeModel.ExclusiveMinimum) match {
-      case Some(exclusiveMinimum) =>
-        val msg = s"Data at $context must be greater than $exclusiveMinimum"
-        val propertyValidation = PropertyConstraint(
-          ramlPropertyId = (Namespace.Data + "value").iri(),
-          name = validation.name + "_validation_exclusiveMinimum/prop",
-          message = Some(msg),
-          minExclusive = Some(s"$exclusiveMinimum"),
-          datatype = effectiveDataType(shape)
-        )
-        validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(propertyValidation))
-      case None => validation
-    }
-  }
-
-  protected def checkMaximumExclusive(context: String,
-                                      validation: ValidationSpecification,
-                                      shape: Shape with CommonShapeFields): ValidationSpecification = {
-    shape.fields.?[AmfScalar](ScalarShapeModel.ExclusiveMaximum) match {
-      case Some(exclusiveMaximum) =>
-        val msg = s"Data at $context must be smaller than $exclusiveMaximum"
-        val propertyValidation = PropertyConstraint(
-          ramlPropertyId = (Namespace.Data + "value").iri(),
-          name = validation.name + "_validation_exclusiveMaximum/prop",
-          message = Some(msg),
-          maxExclusive = Some(s"$exclusiveMaximum"),
-          datatype = effectiveDataType(shape)
-        )
+        val propertyValidation = shape.fields.?[AmfScalar](ScalarShapeModel.ExclusiveMaximum) match {
+          case Some(exclusiveMaximum) if exclusiveMaximum.toBool =>
+            val msg = s"Data at $context must be smaller than to $maximum"
+            PropertyConstraint(
+              ramlPropertyId = (Namespace.Data + "value").iri(),
+              name = validation.name + "_validation_maximum/prop",
+              message = Some(msg),
+              maxExclusive = Some(s"$maximum"),
+              datatype = effectiveDataType(shape)
+            )
+          case _ =>
+            val msg = s"Data at $context must be smaller than or equal to $maximum"
+            PropertyConstraint(
+              ramlPropertyId = (Namespace.Data + "value").iri(),
+              name = validation.name + "_validation_maximum/prop",
+              message = Some(msg),
+              maxInclusive = Some(s"$maximum"),
+              datatype = effectiveDataType(shape)
+            )
+        }
         validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(propertyValidation))
       case None => validation
     }

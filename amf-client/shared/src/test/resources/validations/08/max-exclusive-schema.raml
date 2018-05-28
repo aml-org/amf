@@ -1,0 +1,39 @@
+#%RAML 0.8
+title: Experience API
+version: 1.0
+baseUri: "https://0.0.0.0:8082/api/exp"
+protocols: [HTTP, HTTPS]
+mediaType: application/json
+schemas:
+  invalidExample: |
+    {
+      "$schema":"http://json-schema.org/draft-04/schema#",
+      "description":"Bla bla bla",
+      "type":"object",
+      "properties":{
+         "prop1":{
+            "description": "Some description",
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180,
+            "exclusiveMaximum": true,
+            "example": 180
+         }
+      }
+    }
+  validExample: |
+    {
+      "$schema":"http://json-schema.org/draft-04/schema#",
+      "description":"Bla bla bla",
+      "type":"object",
+      "properties":{
+         "prop1":{
+            "description": "Some description",
+            "type": "number",
+            "minimum": -100,
+            "maximum": 100,
+            "exclusiveMaximum": true,
+            "example": 25
+         }
+      }
+    }
