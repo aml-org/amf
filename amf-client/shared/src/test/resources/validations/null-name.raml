@@ -1,0 +1,41 @@
+#%RAML 1.0
+title: Weave Proxy API
+version: v1-int
+baseUri: http://example.com/weave/services
+documentation:
+- title: Weave Proxy API
+  content: Weave HTTP API's
+types:
+  Envelope:
+    displayName: Envelope
+    type: object
+    properties:
+      null:
+        required: false
+        displayName: null
+        type: boolean
+      minY:
+        required: false
+        displayName: minY
+        type: number
+        format: double
+      minX:
+        required: false
+        displayName: minX
+        type: number
+        format: double
+      maxY:
+        required: false
+        displayName: maxY
+        type: number
+        format: double
+      maxX:
+        required: false
+        displayName: maxX
+        type: number
+        format: double
+      area:
+        required: false
+        displayName: area
+        type: number
+        format: double
