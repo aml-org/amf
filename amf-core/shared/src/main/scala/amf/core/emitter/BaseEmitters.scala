@@ -161,7 +161,11 @@ package object BaseEmitters {
 
   protected[amf] def link(b: PartBuilder, id: String): Unit = b.obj(_.entry("@id", id.trim))
 
-  case class ArrayEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, force: Boolean = false)
+  case class ArrayEmitter(key: String,
+                          f: FieldEntry,
+                          ordering: SpecOrdering,
+                          force: Boolean = false,
+                          valuesTag: YType = YType.Str)
       extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
       val single = f.value.annotations.contains(classOf[SingleValueArray]) ||
@@ -175,7 +179,7 @@ package object BaseEmitters {
 
     private def emitSingle(b: EntryBuilder): Unit = {
       val value = f.array.scalars.headOption.map(_.toString).getOrElse("")
-      b.entry(key, value)
+      b.entry(key, p => raw(p, value, valuesTag))
     }
 
     private def emitValues(b: EntryBuilder): Unit = {
@@ -186,7 +190,7 @@ package object BaseEmitters {
 
           f.array.scalars
             .foreach(v => {
-              result += ScalarEmitter(v)
+              result += ScalarEmitter(v, valuesTag)
             })
 
           b.list(b => {

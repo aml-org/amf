@@ -1260,4 +1260,8 @@ class CompleteCycleTest extends BuildCycleTests {
   test("FormData multiple parameters oas to amf") {
     cycle("form-data-params.json", "form-data-params.jsonld", OasJsonHint, Amf)
   }
+
+  test("Boolean value in example") {
+    cycle("boolean-value-in-example.raml", "boolean-value-in-example.raml", RamlYamlHint, Raml)
+  }
 }

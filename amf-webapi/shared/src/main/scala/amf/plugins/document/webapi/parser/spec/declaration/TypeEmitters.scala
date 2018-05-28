@@ -32,9 +32,9 @@ import amf.plugins.document.webapi.parser.{
 }
 import amf.plugins.domain.shapes.annotations.{NilUnion, ParsedFromTypeExpression}
 import amf.plugins.domain.shapes.metamodel._
-import amf.plugins.domain.shapes.models.TypeDef.UndefinedType
+import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
-import amf.plugins.domain.shapes.parser.{TypeDefXsdMapping, XsdTypeDefMapping}
+import amf.plugins.domain.shapes.parser.{TypeDefXsdMapping, TypeDefYTypeMapping, XsdTypeDefMapping}
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YNode, YType}
@@ -237,7 +237,8 @@ abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references
     implicit spec: RamlSpecEmitterContext) {
 
   val typeName: Option[String]
-  var typeEmitted = false
+  var typeEmitted                = false
+  protected val valuesTag: YType = YType.Str
 
   def emitters(): Seq[EntryEmitter] = {
 
@@ -263,7 +264,7 @@ abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references
       case None => fs.entry(ShapeModel.DefaultValueString).map(dv => result += ValueEmitter("default", dv))
     }
 
-    fs.entry(ShapeModel.Values).map(f => result += ArrayEmitter("enum", f, ordering))
+    fs.entry(ShapeModel.Values).map(f => result += ArrayEmitter("enum", f, ordering, valuesTag = valuesTag))
 
     fs.entry(AnyShapeModel.Documentation)
       .map(
@@ -503,7 +504,10 @@ case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referen
       .foreach { f =>
         val closed = node.closed.value()
         if (closed || f.value.annotations.contains(classOf[ExplicitField])) {
-          result += MapEntryEmitter("additionalProperties", (!closed).toString, position = pos(f.value.annotations))
+          result += MapEntryEmitter("additionalProperties",
+                                    (!closed).toString,
+                                    YType.Bool,
+                                    position = pos(f.value.annotations))
         }
       }
 
@@ -690,11 +694,13 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
     extends RamlAnyShapeEmitter(scalar, ordering, references)
     with RamlCommonOASFieldsEmitter {
 
+  private val rawTypeDef: TypeDef = TypeDefXsdMapping.typeDef(scalar.dataType.value())
+  private val (typeDef, format)   = RamlTypeDefStringValueMatcher.matchType(rawTypeDef, scalar.format.option())
+
+  override protected val valuesTag: YType = TypeDefYTypeMapping(rawTypeDef)
+
   override def emitters(): Seq[EntryEmitter] = {
     val fs = scalar.fields
-
-    val rawTypeDef        = TypeDefXsdMapping.typeDef(scalar.dataType.value())
-    val (typeDef, format) = RamlTypeDefStringValueMatcher.matchType(rawTypeDef, scalar.format.option())
 
     val typeEmitterOption = if (scalar.inherits.isEmpty) {
       fs.entry(ScalarShapeModel.DataType)
@@ -927,7 +933,7 @@ case class RamlTupleShapeEmitter(tuple: TupleShape, ordering: SpecOrdering, refe
     val fs = tuple.fields
 
     result += RamlTupleItemsShapeEmitter(tuple, ordering, references)
-    result += MapEntryEmitter("tuple".asRamlAnnotation, "true")
+    result += MapEntryEmitter("tuple".asRamlAnnotation, "true", YType.Bool)
 
     fs.entry(ArrayShapeModel.MaxItems).map(f => result += RamlScalarEmitter("maxItems", f))
 
