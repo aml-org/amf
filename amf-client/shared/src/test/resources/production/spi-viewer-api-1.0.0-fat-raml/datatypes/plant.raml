@@ -1,0 +1,14 @@
+#%RAML 1.0 DataType
+
+type: object
+properties:
+  plantId: integer
+  name: string
+  city: string
+  state: string
+  country: string
+  areas:
+    type: array
+    items:
+      type: !include area.raml
+example: !include ../examples/plantExample.raml
