@@ -34,8 +34,10 @@ trait MinShapeAlgorithm extends RestrictionComputation {
         val s = superScalar.dataType.value()
         if (b == s) {
           computeMinScalar(baseScalar, superScalar)
-        } else if (b == (Namespace.Xsd + "integer")
-                     .iri() && s == (Namespace.Xsd + "float").iri()) {
+        } else if (b == (Namespace.Xsd + "integer").iri() &&
+                   (s == (Namespace.Xsd + "float").iri() ||
+                   s == (Namespace.Xsd + "double").iri() ||
+                   s == (Namespace.Shapes + "number").iri())) {
           computeMinScalar(baseScalar, superScalar.withDataType((Namespace.Xsd + "integer").iri()))
         } else {
           throw new InheritanceIncompatibleShapeError(

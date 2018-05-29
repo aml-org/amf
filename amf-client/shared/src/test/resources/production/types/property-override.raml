@@ -1,0 +1,32 @@
+#%RAML 1.0 Library
+
+usage: |
+  provides a set of resusable data types that describe concepts
+  related to quantities and measurements
+
+types:
+
+  QuantityType:
+    type: string
+    enum: [
+      DISCRETE, CONTINUOUS
+    ]
+
+  Quantity:
+    type: object
+    discriminator: quantityType
+    properties:
+      quantityType: QuantityType
+      amount:
+        type: number
+        minimum: 0
+      unit:
+        type: string
+        default: EA
+
+  DiscreteQuantity:
+    type: Quantity
+    discriminatorValue: DISCRETE
+    properties:
+      amount:
+        type: integer

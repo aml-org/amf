@@ -29,7 +29,7 @@ abstract class OasResolutionTest extends ResolutionTest {
   }
 }
 
-class ProdcutionValidationTest extends RamlResolutionTest {
+class ProductionValidationTest extends RamlResolutionTest {
   override val basePath = "amf-client/shared/src/test/resources/production/"
   override def build(config: CycleConfig, given: Option[Validation]): Future[BaseUnit] = {
     val validation: Future[Validation] = given match {
@@ -170,11 +170,11 @@ class ProductionResolutionTest extends RamlResolutionTest {
   }
 
   test("Test trait resolution null pointer exception test") {
-    cycle("e-bo.raml",
-      "e-bo.resolved.raml",
-      RamlYamlHint,
-      Raml,
-      basePath + "e-gp-reference-1.0.6-fat-raml/")
+    cycle("e-bo.raml", "e-bo.resolved.raml", RamlYamlHint, Raml, basePath + "e-gp-reference-1.0.6-fat-raml/")
+  }
+
+  test("Test type resolution with property override") {
+    cycle("property-override.raml", "property-override.resolved.raml", RamlYamlHint, Raml, basePath + "types/")
   }
 }
 
