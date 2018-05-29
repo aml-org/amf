@@ -1264,4 +1264,8 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Boolean value in example") {
     cycle("boolean-value-in-example.raml", "boolean-value-in-example.raml", RamlYamlHint, Raml)
   }
+
+  test("HERE_HERE arrayTypes raml to oas") {
+    cycle("array_items.raml", "array_items.json", RamlYamlHint, Oas)
+  }
 }
