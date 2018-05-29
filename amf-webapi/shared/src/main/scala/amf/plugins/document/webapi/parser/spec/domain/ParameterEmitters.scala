@@ -37,7 +37,7 @@ import scala.collection.mutable.ListBuffer
   *
   */
 case class RamlParametersEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
+    implicit spec: SpecEmitterContext)
     extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
@@ -54,10 +54,10 @@ case class RamlParametersEmitter(key: String, f: FieldEntry, ordering: SpecOrder
   }
 
   private def parameters(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
-    val result = mutable.ListBuffer[EntryEmitter]()
+  val result = mutable.ListBuffer[EntryEmitter]()
     f.array.values
       .filter(!_.annotations.contains(classOf[SynthesizedField]))
-      .foreach(e => result += spec.factory.parameterEmitter(e.asInstanceOf[Parameter], ordering, references))
+      .foreach(e => result += spec.factory.headerEmitter(e.asInstanceOf[Parameter], ordering, references))
 
     ordering.sorted(result)
   }
@@ -329,6 +329,56 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
 
   override def position(): Position = pos(parameter.annotations)
 }
+
+case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(
+  implicit spec: OasSpecEmitterContext)
+  extends EntryEmitter {
+
+  protected def emitParameter(b: EntryBuilder): Unit = {
+    b.entry(
+      parameter.name.option().get,
+      _.obj { b =>
+        val result = mutable.ListBuffer[EntryEmitter]()
+        val fs = parameter.fields
+        if (Option(parameter.schema).isDefined && Option(parameter.schema.description).isEmpty)
+          fs.entry(ParameterModel.Description).map(f => result += RamlScalarEmitter("description", f))
+
+        fs.entry(ParameterModel.Required)
+          .filter(_.value.annotations.contains(classOf[ExplicitField]))
+          .map(f => result += RamlScalarEmitter("required", f))
+
+        result ++= OasTypeEmitter(parameter.schema, ordering, references = references).entries()
+        traverse(ordering.sorted(result), b)
+      }
+    )
+  }
+
+  override def emit(b: EntryBuilder): Unit = {
+    sourceOr(
+      parameter.annotations,
+      if (parameter.isLink) emitLink(b) else emitParameter(b)
+    )
+  }
+
+  protected def emitParameterKey(fs: Fields, b: PartBuilder): Unit = {
+    ScalarEmitter(fs.entry(ParameterModel.Name).get.scalar).emit(b)
+  }
+
+  private def emitLink(b: EntryBuilder): Unit = {
+    val fs = parameter.linkTarget.get.fields
+
+    b.complexEntry(
+      emitParameterKey(fs, _),
+      b => {
+        parameter.linkTarget.foreach(l =>
+          spec.factory.tagToReferenceEmitter(l, parameter.linkLabel.option(), references).emit(b))
+      }
+    )
+  }
+
+  override def position(): Position = pos(parameter.annotations)
+}
+
 
 case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit val spec: OasSpecEmitterContext)

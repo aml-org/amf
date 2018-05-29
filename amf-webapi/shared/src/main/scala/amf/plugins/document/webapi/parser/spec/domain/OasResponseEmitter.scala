@@ -9,7 +9,7 @@ import amf.core.parser.{Annotations, FieldEntry, Position, Value}
 import amf.plugins.document.webapi.annotations.{DefaultPayload, EndPointBodyParameter}
 import amf.plugins.document.webapi.contexts.OasSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, OasSchemaEmitter}
-import amf.plugins.document.webapi.parser.spec.toRaml
+import amf.plugins.document.webapi.parser.spec.{toOas, toRaml}
 import amf.plugins.domain.webapi.metamodel.{PayloadModel, RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Payload, Response}
 import org.yaml.model.YDocument.EntryBuilder
@@ -39,7 +39,7 @@ case class OasResponseEmitter(response: Response, ordering: SpecOrdering, refere
                   .orElse(Some(FieldEntry(ResponseModel.Description, Value(AmfScalar(""), Annotations())))) // this is mandatory in OAS 2.0
                   .map(f => result += ValueEmitter("description", f))
                 fs.entry(RequestModel.Headers)
-                  .map(f => result += RamlParametersEmitter("headers", f, ordering, references)(toRaml(spec)))
+                  .map(f => result += RamlParametersEmitter("headers", f, ordering, references)(spec))
 
                 val payloads = OasPayloads(response.payloads)
 
