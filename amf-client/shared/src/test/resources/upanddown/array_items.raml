@@ -1,0 +1,27 @@
+#%RAML 1.0
+title: RAML 1.0 Headers
+version: v1
+baseUri: https://www.example.com/api/
+/headers/array:
+    get:
+      responses:
+        200:
+          headers:
+            arrayOfStringHeader:
+              description: test
+              required: true
+              type: string[]
+              example: ["a", "b"]
+            arrayOfNumberHeader:
+              type: number[]
+            arrayOfIntegerHeader:
+              type: integer[]
+            arrayOfDateHeader:
+              type: datetime[]
+            arrayOfBooleanHeader:
+              type: boolean[]
+            arrayOfFileHeader:
+              type: file[]
+          body:
+            application/json:
+              type: number[]

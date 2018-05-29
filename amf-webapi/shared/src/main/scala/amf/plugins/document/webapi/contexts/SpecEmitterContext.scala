@@ -14,11 +14,7 @@ import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.RamlHeader
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.raml.{
-  Raml08RootLevelEmitters,
-  Raml10RootLevelEmitters,
-  RamlRootLevelEmitters
-}
+import amf.plugins.document.webapi.parser.spec.raml.{Raml08RootLevelEmitters, Raml10RootLevelEmitters, RamlRootLevelEmitters}
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
@@ -79,6 +75,8 @@ trait SpecEmitterFactory {
   def parametrizedSecurityEmitter: (ParametrizedSecurityScheme, SpecOrdering) => ParametrizedSecuritySchemeEmitter
 
   def annotationTypeEmitter: (CustomDomainProperty, SpecOrdering) => AnnotationTypeEmitter
+
+  def headerEmitter: (Parameter, SpecOrdering, Seq[BaseUnit]) => EntryEmitter
 }
 
 trait TagToReferenceEmitter extends PartEmitter {
@@ -147,6 +145,8 @@ abstract class OasSpecEmitterFactory(implicit val spec: OasSpecEmitterContext) e
     OasAnnotationTypeEmitter.apply
 
   def serversEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]): OasServersEmitter
+
+  def headerEmitter: (Parameter, SpecOrdering, Seq[BaseUnit]) => EntryEmitter = OasHeaderEmitter.apply
 }
 
 case class Oas2SpecEmitterFactory(implicit override val spec: OasSpecEmitterContext) extends OasSpecEmitterFactory {
@@ -169,6 +169,8 @@ trait RamlEmitterVersionFactory extends SpecEmitterFactory {
     : (EndPoint, SpecOrdering, mutable.ListBuffer[RamlEndPointEmitter], Seq[BaseUnit]) => RamlEndPointEmitter
 
   def parameterEmitter: (Parameter, SpecOrdering, Seq[BaseUnit]) => RamlParameterEmitter
+
+  def headerEmitter: (Parameter, SpecOrdering, Seq[BaseUnit]) => EntryEmitter = parameterEmitter
 
   val typesKey: String
 
