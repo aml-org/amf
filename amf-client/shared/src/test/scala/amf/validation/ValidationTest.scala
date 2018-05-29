@@ -2329,7 +2329,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("What a name") {
+  test("Validate json schema with non url id.") {
     for {
       validation <- Validation(platform)
       doc <- AMFCompiler(productionPath + "master-data---current-api-2.0.1-fat-raml/currencyapi.raml",
