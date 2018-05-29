@@ -1351,9 +1351,10 @@ class OasAnyShapeEmitter(shape: AnyShape, ordering: SpecOrdering, references: Se
 }
 
 case class OasArrayShapeEmitter(shape: ArrayShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasSpecEmitterContext) {
-  def emitters(): Seq[EntryEmitter] = {
-    val result = ListBuffer[EntryEmitter]()
+    implicit spec: OasSpecEmitterContext)
+  extends OasAnyShapeEmitter(shape, ordering, references) {
+  override def emitters(): Seq[EntryEmitter] = {
+    val result = ListBuffer[EntryEmitter](super.emitters(): _*)
     val fs     = shape.fields
 
     result += spec.oasTypePropertyEmitter("array", shape)
@@ -1372,6 +1373,8 @@ case class OasArrayShapeEmitter(shape: ArrayShape, ordering: SpecOrdering, refer
       case None =>
         result += OasItemsShapeEmitter(shape, ordering, references, None)
     }
+
+    fs.entry(NodeShapeModel.Inherits).map(f => result += OasShapeInheritsEmitter(f, ordering, references))
 
     result ++= AnnotationsEmitter(shape, ordering).emitters
 
@@ -1408,7 +1411,9 @@ case class OasItemsShapeEmitter(array: ArrayShape,
     with EntryEmitter {
 
   def emit(b: EntryBuilder): Unit = {
-    b.entry("items", b => emitPart(b))
+    if (Option((array.fields.getValue(ArrayShapeModel.Items))).isDefined) {
+      b.entry("items", b => emitPart(b))
+    }
   }
 
   def emitPart(part: PartBuilder): Unit = {
