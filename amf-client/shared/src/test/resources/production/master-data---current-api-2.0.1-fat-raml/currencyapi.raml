@@ -1,0 +1,13 @@
+#%RAML 0.8
+title: Master data Currency API
+
+schemas:
+  - currencyResponse: !include schemas/currency-schema.json
+
+/currency:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            schema: currencyResponse
