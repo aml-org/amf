@@ -2328,4 +2328,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.exists(_.message.equals("Data at / must be smaller than to 180")))
     }
   }
+
+  test("What a name") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(productionPath + "master-data---current-api-2.0.1-fat-raml/currencyapi.raml",
+                         platform,
+                         RamlYamlHint,
+                         validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
 }

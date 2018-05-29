@@ -18,7 +18,8 @@ trait AmfObject extends AmfElement {
   def withId(value: String): this.type = {
     val cleanId = if (value.contains("://")) {
       val parts = value.split("://")
-      parts(0) + "://" + parts(1).replace("//", "/")
+      val tail  = if (parts.tail.nonEmpty) parts(1) else ""
+      parts(0) + "://" + tail.replace("//", "/")
     } else {
       value.replace("//", "/")
     }

@@ -212,17 +212,17 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     })
 
     val parsedTypes = detectedTypes map {
-      case "object" => Some(parseObjectType(name, exclusiveProps, (s) => s.withId(union.id + "/object")))
-      case "array"  => Some(parseArrayType(name, exclusiveProps, (s) => s.withId(union.id + "/array")))
+      case "object" => Some(parseObjectType(name, exclusiveProps, s => s.withId(union.id + "/object")))
+      case "array"  => Some(parseArrayType(name, exclusiveProps, s => s.withId(union.id + "/array")))
       case "number" =>
-        Some(parseScalarType(TypeDef.NumberType, name, exclusiveProps, (s) => s.withId(union.id + "/number")))
+        Some(parseScalarType(TypeDef.NumberType, name, exclusiveProps, s => s.withId(union.id + "/number")))
       case "integer" =>
-        Some(parseScalarType(TypeDef.IntType, name, exclusiveProps, (s) => s.withId(union.id + "/integer")))
+        Some(parseScalarType(TypeDef.IntType, name, exclusiveProps, s => s.withId(union.id + "/integer")))
       case "string" =>
-        Some(parseScalarType(TypeDef.StrType, name, exclusiveProps, (s) => s.withId(union.id + "/string")))
+        Some(parseScalarType(TypeDef.StrType, name, exclusiveProps, s => s.withId(union.id + "/string")))
       case "boolean" =>
-        Some(parseScalarType(TypeDef.BoolType, name, exclusiveProps, (s) => s.withId(union.id + "/boolean")))
-      case "any"             => Some(parseAnyType(name, exclusiveProps, (s) => s.withId(union.id + "/any")))
+        Some(parseScalarType(TypeDef.BoolType, name, exclusiveProps, s => s.withId(union.id + "/boolean")))
+      case "any"             => Some(parseAnyType(name, exclusiveProps, s => s.withId(union.id + "/any")))
       case _                 => None
     } collect { case Some(t) => t }
 
@@ -234,7 +234,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
   private def parseScalarType(typeDef: TypeDef,
                               name: String = name,
                               map: YMap = map,
-                              adopt: (Shape) => Unit = adopt): AnyShape = {
+                              adopt: Shape => Unit = adopt): AnyShape = {
     val parsed = typeDef match {
       case NilType =>
         val shape = NilShape(ast).withName(name)
@@ -252,13 +252,13 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     parsed
   }
 
-  private def parseAnyType(name: String = name, map: YMap = map, adopt: (Shape) => Unit = adopt): AnyShape = {
+  private def parseAnyType(name: String = name, map: YMap = map, adopt: Shape => Unit = adopt): AnyShape = {
     val shape = AnyShape(ast).withName(name)
     adopt(shape)
     AnyTypeShapeParser(shape, map).parse()
   }
 
-  private def parseArrayType(name: String = name, map: YMap = map, adopt: (Shape) => Unit = adopt): AnyShape = {
+  private def parseArrayType(name: String = name, map: YMap = map, adopt: Shape => Unit = adopt): AnyShape = {
     DataArrangementParser(name, ast, map, (shape: Shape) => adopt(shape)).parse()
   }
 
@@ -341,7 +341,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       }
   }
 
-  private def parseObjectType(name: String = name, map: YMap = map, adopt: (Shape) => Unit = adopt): AnyShape = {
+  private def parseObjectType(name: String = name, map: YMap = map, adopt: Shape => Unit = adopt): AnyShape = {
     if (map.key("schema".asOasExtension).isDefined) {
       val shape = SchemaShape(ast).withName(name)
       adopt(shape)
@@ -353,14 +353,16 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     }
   }
 
-  private def checkJsonIdentity(shape: AnyShape, map: YMap, adopt: (Shape) => Unit) = {
+  private def checkJsonIdentity(shape: AnyShape, map: YMap, adopt: Shape => Unit): Unit = {
     if (isOas || isOas3) {
       adopt(shape)
     } else {
       map.map.get("id") match {
         case Some(identity) if identity.asOption[String].isDefined =>
-          val id = identity.as[String]
-          shape.id = id
+          val id           = identity.as[String]
+          val normalizedId = id.normalizeUrl
+
+          shape.id = normalizedId
           ctx.registerJsonSchema(id, shape)
         case _ =>
           adopt(shape)
