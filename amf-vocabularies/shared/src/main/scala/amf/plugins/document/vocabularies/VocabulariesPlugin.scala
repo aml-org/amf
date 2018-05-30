@@ -49,8 +49,12 @@ trait JsonHeaderExtractor {
       case n: YNode =>
         n.asOption[YMap] match {
           case Some(m) =>
-            m.entries.find(_.key.as[YScalar].text == "$dialect") map { entry =>
-              entry.value.as[String]
+            try {
+              m.entries.find(_.key.as[YScalar].text == "$dialect") map { entry =>
+                entry.value.as[String]
+              }
+            } catch {
+              case _:YException => None
             }
           case None => None
         }
