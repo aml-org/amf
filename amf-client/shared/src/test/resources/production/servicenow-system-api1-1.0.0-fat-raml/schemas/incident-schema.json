@@ -1,0 +1,40 @@
+{
+	"required": true,
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"type": "object",
+	"description": "Incident Schema",
+	"properties": {
+		"id": {
+			"required": false,
+			"type": "string"
+		},
+		"number": {
+			"required": false,
+			"type": "string"
+		},
+		"caller": {
+			"required": false,
+			"type": "string"
+		},
+		"short_description": {
+			"required": false,
+			"type": "string"
+		},
+		"state": {
+			"required": false,
+			"type": "integer"
+		},
+		"priority": {
+			"required": false,
+			"type": "integer"
+		},
+		"category": {
+			"required": false,
+			"type": "string"
+		},
+		"description": {
+			"required": false,
+			"type": "string"
+		}
+	}
+}

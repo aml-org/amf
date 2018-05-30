@@ -1,0 +1,54 @@
+#%RAML 0.8
+title: ServiceNow System API
+version: 1.0
+#baseUri: http://server/api/{version}
+baseUri: https://mocksvc.mulesoft.com/mocks/d606f81a-2060-4e2d-9160-96cac16e6ba5/api/{version}
+/incident:
+  displayName: Incidents
+  post:
+    description: Submit an incident
+    body: 
+      application/json: 
+        schema: !include schemas/incident-schema.json
+        example: !include examples/eg-incident-payload.json
+    responses: 
+      200: 
+        body: 
+          application/json: 
+            schema: !include schemas/incident-response-schema.json
+            example: !include examples/eg-incident-response.json
+      400:
+          body:
+            application/json:
+              example: |
+                {
+                  "message": "Bad message"
+                }
+  /{number}:
+    displayName: Get incident by Id
+    uriParameters: 
+      number: 
+        description: Represents the unique incident number
+        example: "INC0010001"
+    get:
+      description: Gets the incident information by Id
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: !include schemas/incident-schema.json
+              example: !include examples/eg-incident.json
+        400: 
+          body: 
+            application/json: 
+              example: |
+                {
+                  "message": "Bad message"
+                }
+        404: 
+          body: 
+            application/json: 
+              example: |
+                {
+                  "message": "Resource not found"
+                }
