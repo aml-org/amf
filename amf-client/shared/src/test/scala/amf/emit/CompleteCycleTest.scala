@@ -661,6 +661,10 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("missing_payload.raml", "missing_payload.jsonld", RamlYamlHint, Amf, base08Path)
   }
 
+  test("HERE_HERE Default value test") {
+    cycle("default_value.raml", "default_value.jsonld", RamlYamlHint, Amf, base08Path)
+  }
+
   test("Parsing missing payload value") {
     cycle("json_schema_array.raml", "json_schema_array.raml.jsonld", RamlYamlHint, Amf, base08Path)
   }
