@@ -2507,4 +2507,14 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("servicenow production example test") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(productionPath + "servicenow-system-api1-1.0.0-fat-raml/incident-api.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(report.results.nonEmpty)
+    }
+  }
 }
