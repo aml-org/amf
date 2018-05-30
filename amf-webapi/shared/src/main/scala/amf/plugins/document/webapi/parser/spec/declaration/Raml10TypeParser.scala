@@ -380,6 +380,8 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
         NodeDataNodeParser(entry.value, shape.id, quiet = false).parse().dataNode.foreach { dn =>
           shape.set(ShapeModel.Default, dn, Annotations(entry))
         }
+        val str            = YamlRender.render(entry.value)
+        shape.set(ShapeModel.DefaultValueString, AmfScalar(str), Annotations(entry))
       }
     )
   }
