@@ -1,0 +1,387 @@
+#%RAML 0.8
+title: Salesforce-Outbound API-BatchV2
+version: 1.0
+baseUri: http://api.service.nsw.gov.au/{version}
+documentation:
+  - title: Service NSW Salesforce Specific API
+    content: |
+      This API provides access to Service NSW resources that are specific to Salesforce, generally including callback functionality to retrieve file attachments, but also where an endpoint will be private to salesforce (i.e. the functionality is specific enough
+      to a project, or to salesforce, that no other system will ever use it).
+
+resourceTypes: !include resource-types-common.raml
+securitySchemes: !include security-schemes-common.raml
+traits: !include traits-common.raml
+/salesforce:
+  displayName: Salesforce adapter
+  description: Salesforce adapter
+  /licences/lgr:
+    displayName: Liquor, Gaming and Racing licences
+    description: Liquor, Gaming and Racing licence interactions
+    /certificate/{certificateId}:
+      is: [trackable]
+      type: baseResource
+      description: |
+        Allows access to a user's Competency Card interim certificate.
+      put:
+        description: |
+          Allows updates to the certificate details in order to complete the licence application process.
+        headers:
+          X-UserId-SF:
+            description: The user ID of the CSR performing the operation (usually an email address)
+          X-Service-Centre:
+            description: The service centre where the operation is being initiated from.
+        body:
+            application/json:
+              example: !include examples/certificate-update-request-sample.json
+        responses:
+          200:
+            description: The update has been processed successfully.
+          409:
+            description: The update would cause a duplicate, so validation has failed.
+            body:
+              application/json:
+                example: !include examples/validate-certificate-update-failed-response.json
+      /retake:
+        is: [trackable]
+        type: baseResource
+        description: |
+          Allows updates to be made to a user's Competency Card interim certificate, contact details and addresses.
+        put:
+          description: |
+            Allows updating the certificate details as part of the photo retake process.
+          headers:
+            X-UserId-SF:
+              description: The user ID of the CSR performing the operation (usually an email address)
+            X-Service-Centre:
+              description: The service centre where the operation is being initiated from.
+          body:
+              application/json:
+                example: !include examples/certificate-retake-request-sample.json
+          responses:
+            200:
+              description: The update has been processed successfully.
+            409:
+              description: The update would cause a duplicate, so validation has failed.
+              body:
+                application/json:
+                  example: !include examples/validate-certificate-update-failed-response.json
+  /notifications:
+    description: |
+      This API provides the capability to send notifications to users across multiple channels, and optionally to receive replies. The current version supports:
+
+        - Email
+          - Schedule (for immediate dispatch) a single email to one or more recipients, including attachments
+    /emails:
+      is: [trackable]
+      type: baseResource
+      description: |
+        Endpoint for sending emails
+      post:
+        description: |
+          Schedule (for immediate dispatch) a single email to be sent to one or more recipients.
+        body:
+          application/json:
+            #schema: !include schemas/emailMessage.json
+            example: !include examples/post-email-request-sample.json
+        responses:
+          202:
+            description: |
+              Email successfully accepted for dispatch, check its status for progress (see GET /messages/{id}/status).
+            body:
+              application/json:
+                #schema: !include schemas/status.json
+                example: !include examples/post-email-response-sample.json
+  /customers/events:
+    securedBy: [ oauth_2_0 ]
+    displayName: Customers Events
+    description: |
+      Events service for linking customer accounts
+    type: baseResource
+    is: [ trackable ]
+    post:
+      description: |
+          Post a customer link or unlink event
+      body:
+        application/xml:
+          example: !include examples/post-customer-event-request.xml
+      responses:
+        200:
+          description: success or failure event acknowledgement
+          body:
+            application/xml:
+              example: !include ./examples/post-customer-event-response.xml
+  /me/licences/roads:
+    securedBy: [ oauth_2_0 ]
+    displayName: Drivers Licence
+    description: Drivers licence interactions within the context of an authenticated user
+    type: baseResource
+    is: [ trackable ]
+    /interimLicences:
+      securedBy: [ oauth_2_0 ]
+      displayName: Interim Licence
+      description: |
+       DRAFT Interim licence interactions post renewal in the context of a logged in user
+      type: baseResource
+      is: [ trackable ]
+      get:
+        description: Get the interim licence pdf
+        responses:
+          200:
+            description: Returns a pdf document for the interim licence
+            body:
+              application/json:
+                example: !include examples/get-interim-licences-response-sample.json
+    /renewals/eligibility:
+      securedBy: [ oauth_2_0 ]
+      displayName: Eligibility
+      description: DRAFT Check eligibility of an authenticated user to carry on with licence renewal
+      type: baseResource
+      is: [ trackable ]
+      get:
+        description: Determines the eligibility of an authenticated user to carry out licence renewal
+        responses:
+          200:
+            description: Returns check eligibility or initial validation response
+            body:
+              application/json:
+                example: !include examples/get-eligibility-renew-licence-response-sample.json
+    /replacements/eligibility:
+      securedBy: [ oauth_2_0 ]
+      displayName: Renew Licence
+      description: |
+        DRAFT Checking the eligibility of a customer (and their licence) for replacement.
+      type: baseResource
+      is: [ trackable ]
+      get:
+        description: |
+          Query a customer's licence to verify that they are elligible to have a licence request within the context of an
+          authenticated user. A licence ID can be used. The response will include licence details, an eligibility
+          status and what reasons for replacement are considered valid.
+        responses:
+          200:
+            description: The standard response for this request. The response contains licence details, which includes the eligibility status for replacement. 
+            body:
+              application/json:
+                example: !include examples/get-eligibility-replace-licence-response-sample.json
+    /goodBehaviourElections/eligibility:
+      securedBy: [ oauth_2_0 ]
+      displayName: Elect Good behaviour
+      description: |
+        DRAFT Checking the eligibility of a customer for electing good behaviour on their licence suspension
+      type: baseResource
+      is: [ trackable ]
+      get:
+        description: |
+          Checks to see if a customer is eligible to choose to elect to be of good behaviour for 12 months and keep their licence following a notice of suspension.
+        queryParameters:
+          suspensionLetterID:
+            description: ID of the letter received/notice of suspension
+            type: string
+            required: true
+        responses:
+          200:
+            description: The standard response for this request. The response contains customer details, the eligibility status, the suspension start date and the ITOP count. The operation will also return data for declarations reqired to apply for EGB.
+            body:
+              application/json:
+                example: !include examples/get-eligibility-EGB-response.json
+  /me/declarations/roads:
+    description: DRAFT Manage declaration for RMS
+    is: [ trackable ]
+    type: baseResource
+    get:
+      description: Get an authenticated users latest declaration pdf
+      queryParameters:
+        businessTransaction:
+          description: the business transaction name
+          example: RenewLicence / RenewRegistration
+          type: string
+          required: true
+      responses:
+        200:
+          description: The latest declaration pdf is returned back with licenceId as json content
+          body:
+            application/json:
+              example: !include examples/get-declaration-response.json
+  /me/registrations/roads/reports:
+    securedBy: [ oauth_2_0 ]
+    displayName: Free rego check
+    description: (DRAFT) retrieve a free rego check pdf in the context of the logged in user
+    type: baseResource
+    is: [ trackable ]
+    post:
+      body:
+        application/json:
+          example: !include examples/post-registrations-reports-request.json
+      responses:
+        200:
+          description: either a list of eligible vehicles or a free rego check.
+          body:
+            application/json:
+              example: !include ./examples/post-registrations-reports-response.json
+
+  /me/registrations/roads/reports/search:
+    securedBy: [ oauth_2_0 ]
+    displayName: Free rego check
+    description: (DRAFT) orchestrates calls to the the registration API for free rego check eligibility and pdf content in the context of the logged in user
+    type: baseResource
+    is: [ trackable ]
+    post:
+      body:
+        application/json:
+          example: !include examples/post-registrations-search-request.json
+      responses:
+        200:
+          description: either a list of eligible vehicles or a free rego check.
+          body:
+            application/json:
+              example: !include ./examples/post-registrations-search-response.json
+  /registrations/roads:
+    displayName: Registration
+    description: Retrieve registrations for a user by customerID, plateNo or billingNo
+    type: baseResource
+    is: [ trackable ]
+    /renewals:
+      /eligibility:
+        type: baseResource
+        is: [ trackable ]
+        get:
+          description: |
+            Determines the eligibility of a registration to be renewed online by the nominated user.
+            Accepts a "billingNumber" as a parameter. 
+          queryParameters:
+            billingNumber:
+              description: |
+                Customer's billing number on the renewal notice. Same as "registrationId"
+              type: string
+              example: billing12345
+              required: true
+              minLength: 1
+              maxLength: 8
+          responses:
+            200:
+              body:
+                application/json:
+                  schema: !include registrations/roads/renewals/schema/eligibility-response.schema
+                  example: !include registrations/roads/renewals/json/eligibility-response-sample.json
+  /registrations/roads/reports:
+    securedBy: [ oauth_2_0 ]
+    displayName: Free rego check
+    description: (DRAFT) retrieve a free rego check pdf for anonymous users
+    type: baseResource
+    is: [ trackable ]
+    post:
+      body:
+        application/json:
+          example: !include examples/post-registrations-reports-request.json
+      responses:
+          200:
+           description: either a list of eligible vehicles or a free rego check pdf.
+           body:
+              application/json:
+               example: !include ./examples/post-registrations-reports-response.json
+
+  /registrations/roads/reports/search:
+    securedBy: [ oauth_2_0 ]
+    displayName: Free rego check
+    description: (DRAFT) orchestrates calls to the the registration API for free rego check eligibility and pdf content for anonymous users
+    type: baseResource
+    is: [ trackable ]
+    post:
+      body:
+        application/json:
+          example: !include examples/post-registrations-search-request.json
+      responses:
+        200:
+          description: either a list of eligible vehicles or a free rego check pdf.
+          body:
+            application/json:
+              example: !include examples/post-registrations-search-response.json
+  
+  /me/batch:
+    securedBy: [ oauth_2_0 ]
+    displayName: Generic Batch API
+    description: |
+      This operation is in DRAFT status.
+      Batch API allows a consumer to trigger multiple concurrent API requests, and have
+      the results aggregated on the server side and returned to the customer as one response.
+      
+      Results will be returned as an array in the same order that they were requested by the API consumer.
+      This API supports a maximum of five concurrent requests sent in batch.
+      The API supports only GET requests.
+    is: [ trackable ]
+    post:
+        description: |
+          An array of API requests
+        body:
+          application/json:
+            schema: !include schema/post-me-batch-request.schema
+            example: !include examples/post-me-batch-request-sample.json
+        responses:
+          200:
+            description: |
+              An array of results
+            body:
+              application/json:
+                schema: !include schema/post-me-batch-response.schema
+                example: !include examples/post-me-batch-response-sample.json
+          400:
+            description: |
+              Request is invalid.
+              Refer to the accompanying error message for further details.
+            body:
+              application/json:
+                example: !include json/error-details-400-sample.json
+          500:
+            description: |
+              An Internal Server Error has occurred.
+              Refer to the accompanying error message for further details.
+            body:
+              application/json:
+                example: !include json/error-details-500-sample.json
+
+  /me/batchv2:
+
+    securedBy: [ oauth_2_0 ]
+    displayName: Generic Batch API
+    description: |
+      This operation is in DRAFT status. 
+      Batch API allows a consumer to trigger multiple concurrent API requests, and have 
+      the results aggregated on the server side and returned to the customer as one response. 
+      
+      Results will be returned as an array in the same order that they were requested by the API consumer.
+      It is the consumer's responsibility to ensure results are processed correctly out of the response message. 
+      This API supports a maximum of twenty concurrent requests sent in batch. 
+      
+      The API supports only GET requests. 
+      
+    is: [ trackable ]
+    post:
+        description: |
+          Post a request for retrieving customer data for dashboard.
+        body:
+          application/json:
+            schema: !include schema/post-me-batchv2-request.schema
+            example: !include examples/post-me-batchv2-request-sample.json
+        responses:
+          200:
+            description: |
+              List of customer data records. 
+            body:
+              application/json:
+                schema: !include  schema/post-me-batchv2-response.schema
+                example: !include examples/post-me-batchv2-response-sample.json
+                
+          400:
+            description: |
+              Request is invalid.
+              Refer to the accompanying error message for further details.
+            body:
+                application/json:
+                  example: !include json/error-details-400-sample.json
+          500:
+            description: |
+              An Internal Server Error has occurred. 
+              Refer to the accompanying error message for further details.
+            body:
+                application/json:
+                  example: !include json/error-details-500-sample.json
