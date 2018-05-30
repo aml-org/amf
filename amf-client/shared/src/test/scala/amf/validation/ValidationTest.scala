@@ -578,6 +578,110 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   }
 
+  test("param validation number in string") {
+    for {
+      validation <- Validation(platform)
+      model <- AMFCompiler(validationsPath + "/production/oas_data.json", platform, OasJsonHint, validation)
+        .build()
+      result <- {
+        val stringShape = model
+          .asInstanceOf[Document]
+          .encodes
+          .asInstanceOf[WebApi]
+          .endPoints
+          .head
+          .operations
+          .head
+          .request
+          .headers
+          .head
+          .schema
+        PayloadValidator.validate(stringShape, "\"2\"", SeverityLevels.VIOLATION)
+      }
+    } yield {
+      assert(result.conforms)
+    }
+
+  }
+
+  test("param validation boolean in string") {
+    for {
+      validation <- Validation(platform)
+      model <- AMFCompiler(validationsPath + "/production/oas_data.json", platform, OasJsonHint, validation)
+        .build()
+      result <- {
+        val stringShape = model
+          .asInstanceOf[Document]
+          .encodes
+          .asInstanceOf[WebApi]
+          .endPoints
+          .head
+          .operations
+          .head
+          .request
+          .headers
+          .head
+          .schema
+        PayloadValidator.validate(stringShape, "\"true\"", SeverityLevels.VIOLATION)
+      }
+    } yield {
+      assert(result.conforms)
+    }
+
+  }
+
+  test("param validation number error") {
+    for {
+      validation <- Validation(platform)
+      model <- AMFCompiler(validationsPath + "/production/oas_data.json", platform, OasJsonHint, validation)
+        .build()
+      result <- {
+        val stringShape = model
+          .asInstanceOf[Document]
+          .encodes
+          .asInstanceOf[WebApi]
+          .endPoints
+          .head
+          .operations
+          .head
+          .request
+          .headers
+          .head
+          .schema
+        PayloadValidator.validate(stringShape, "2", SeverityLevels.VIOLATION)
+      }
+    } yield {
+      assert(!result.conforms)
+    }
+
+  }
+
+  test("param validation boolean error") {
+    for {
+      validation <- Validation(platform)
+      model <- AMFCompiler(validationsPath + "/production/oas_data.json", platform, OasJsonHint, validation)
+        .build()
+      result <- {
+        val stringShape = model
+          .asInstanceOf[Document]
+          .encodes
+          .asInstanceOf[WebApi]
+          .endPoints
+          .head
+          .operations
+          .head
+          .request
+          .headers
+          .head
+          .schema
+        PayloadValidator.validate(stringShape, "true", SeverityLevels.VIOLATION)
+      }
+    } yield {
+      assert(!result.conforms)
+    }
+
+  }
+
   val testValidations = Map(
     "bad_domain/valid.jsonld"                 -> ExpectedReport(conforms = true, 0, ProfileNames.OAS),
     "endpoint/amf.jsonld"                     -> ExpectedReport(conforms = false, 1, ProfileNames.AMF),
@@ -2367,7 +2471,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("HERE_HERE spi-viewer-api production example test") {
+  test("spi-viewer-api production example test") {
     for {
       validation <- Validation(platform)
       _          <- validation.loadValidationDialect()
