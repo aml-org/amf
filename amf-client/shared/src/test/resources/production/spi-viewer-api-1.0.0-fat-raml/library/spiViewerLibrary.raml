@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: This library contains all the traits for the SPI-Viewer API
+
+traits: 
+  hasAcceptHeader:
+      headers: 
+        Accept?:
+          description: Specify the response media-type
+          example: application/json
+  cacheable-trait:
+    responses: 
+      200:
+        headers: 
+          Cache-Control:
+          Expires:  

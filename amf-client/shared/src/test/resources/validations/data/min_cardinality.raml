@@ -1,0 +1,36 @@
+#%RAML 1.0
+title: DevRel-Quick Start Products API
+version: v1.0
+
+types:
+  product:
+    properties:
+      identifiers: IdentifierMap
+
+  Identifier:
+    type: string
+    pattern: ^[0-9A-Za-z-]+
+    minLength: 3
+    maxLength: 36
+
+  IdentifierMap:
+    type: array
+    items:
+      type: object
+      properties:
+        /[0-9A-Z-]+/:    <---- if we change this with an explicit value and change the example accordingly, it conforms
+          type: Identifier
+
+/products:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: product
+            example: |
+              {
+                "identifiers": [{
+                  "SKU": "UGG-BB-PUR-06"
+                }]
+              }

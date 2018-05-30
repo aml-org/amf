@@ -1,0 +1,10 @@
+#%RAML 1.0 DataType
+
+type: object
+properties:
+  componentId: integer
+  name: string
+  componentService: string
+  specificationSheet?:
+    type: !include specificationSheet.raml
+example: !include ../examples/componentExample.raml

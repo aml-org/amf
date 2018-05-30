@@ -2366,4 +2366,16 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.conforms)
     }
   }
+
+  test("HERE_HERE spi-viewer-api production example test") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(productionPath + "spi-viewer-api-1.0.0-fat-raml/spi-viewer-api.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(report.results.nonEmpty)
+    }
+  }
+
 }

@@ -1,0 +1,28 @@
+#%RAML 1.0 ResourceType
+
+uses:
+    spiViewerLib: ../library/spiViewerLibrary.raml
+
+get:
+  is: [spiViewerLib.hasAcceptHeader,spiViewerLib.cacheable-trait]
+  description: Retrieve <<resourcePathName | !singularize>> with a specific <<resourcePathName | !singularize>> ID
+  displayName: Get <<resourcePathName | !singularize>> by <<resourcePathName | !singularize>> ID
+  responses: 
+    200:
+      body:
+        application/json:
+          type: <<customDataType>>
+        application/xml:
+          type: <<customDataType>>
+    404:
+      body:
+        application/json:
+          type: <<customErrorType>>
+        application/xml:
+          type: <<customErrorType>>
+    500:
+      body:
+        application/json:
+          type: <<customErrorType>>
+        application/xml:
+          type: <<customErrorType>>

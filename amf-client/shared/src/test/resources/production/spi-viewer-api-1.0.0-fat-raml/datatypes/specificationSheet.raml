@@ -1,0 +1,89 @@
+#%RAML 1.0 DataType
+
+type: object
+properties:
+  specificationSheetId: integer
+  name: string
+  componentId: integer 
+#GENERAL
+  type?: string
+  tagNumber?: string
+  service?: string
+  PID?: string
+  location?: string
+  areaClassification?: string
+  hazAreaCert?: string
+  certificationNumber?: string
+  poNumber?: string
+  itemNumber?: integer
+  lineNumber?: string
+# PROCESS CONDITIONS
+  fluidName?: string
+  fluidPhase?: string
+  operPressure?: string
+  operTemperature?: integer
+  pulsation?: integer
+  designPressure?: integer
+  designTemperature?: integer
+  corrosiveCompounds?: string
+#GAUGE
+  manufacturer?: string
+  model?: string
+  gaugeType?: string
+  calibrationRange?: integer
+  figureInterval?: 
+  minorGraduation?: string
+  dialSize?: integer
+  dialColor?: string
+  mounting?: string
+  caseMaterial?: string
+  ringConstruction?: string
+  ringMaterial?: string
+  blowOutProtection?: string
+  lensMaterial?: string
+  elementType?: string
+  elementMaterial?: string
+  socketMaterial?: string
+  movementMaterial?: string
+  processConnectionSize?: string
+  processConnectionLocation?: string
+  nominalAccuracy?: string
+  overrangeProtection?: string
+  liquidFilled?: string
+  enclosureProtection?: string
+  complyNACEMR0175Standard?: string
+  remarks?: string
+#DIAPHRAGM SEAL
+  diaphragmSealType?: string
+  diaphragmSealProcessConnection?: string
+  diaphragmMaterial?: string
+  bottomHousingMaterial?: string
+  fillFluid?: string
+  capillaryLength?: string
+  capillaryMaterial?: string
+  flushingConnection?: string
+  topHousingMaterial?: string
+  connectionToInstrument?: string
+#GAUGE SAVER
+  diaphragmSealModelNumber?: integer
+  gaugeSaverBodyTrimMaterial?: string
+  processXGaugeConnection?: string
+  gaugeValveModelNumber?: integer
+#SIPHON
+  siphonType?: string
+  siphonMaterial?: string
+  valveXGaugeConnection?: string
+  siphonModelNumber?: integer
+#MANIFOLD
+  manifoldType?: string
+  manifoldBodyTrimMaterial?: string
+  manifoldProcessConnection?: string
+  modelNumber?: integer
+#OPTIONS
+  snubber?: string
+  optionsMaterial?: string
+  snubberModelNumber?: integer
+
+  notes?: string
+
+example: !include ../examples/specificationSheetExample.raml  

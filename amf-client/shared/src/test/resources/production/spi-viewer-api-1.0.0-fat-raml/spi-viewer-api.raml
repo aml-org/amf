@@ -1,0 +1,102 @@
+#%RAML 1.0
+version: v1
+baseUri: https://mocksvc.mulesoft.com/mocks/edf12bd2-8b4c-4ba5-9d68-73dd3a636fa1 # 
+title: SPI Viewer API
+
+
+
+documentation:
+  - !include documents/spiViewerHeadLine.raml
+  - !include documents/spiViewerDescription.raml
+
+types:
+  CustomErrorMessage: !include datatypes/customErrorMessage.raml
+  Plant: !include datatypes/plant.raml
+  Area: !include datatypes/area.raml
+  Unit: !include datatypes/unit.raml
+  Component: !include datatypes/component.raml
+  SpecificationSheet: !include datatypes/specificationSheet.raml
+
+
+  
+resourceTypes:
+  Collection: !include resourcetypes/collection.raml    
+  Member: !include resourcetypes/member.raml
+
+/plants:
+  type:
+    Collection:
+      customDataType: Plant
+      customErrorType: CustomErrorMessage
+
+  /{plantid}:
+      type:
+        Member:
+          customDataType: Plant
+          customErrorType: CustomErrorMessage
+    
+  /areas:
+    type:
+      Collection:
+        customDataType: Area
+        customErrorType: CustomErrorMessage
+    
+/areas:
+  type:
+    Collection:
+      customDataType: Area
+      customErrorType: CustomErrorMessage
+
+  /{areaid}:
+    type:
+      Member:
+        customDataType: Area
+        customErrorType: CustomErrorMessage
+
+    /units:
+      type:
+        Collection:
+          customDataType: Unit
+          customErrorType:   CustomErrorMessage
+
+/units:
+  type:
+    Collection:
+      customDataType: Unit
+      customErrorType: CustomErrorMessage
+  
+  /{unitid}:
+    type:
+      Member:
+        customDataType: Unit
+        customErrorType: CustomErrorMessage
+    
+    /components:
+      type:
+        Collection:
+          customDataType: Component
+          customErrorType: CustomErrorMessage
+      
+/components:
+  type:
+    Collection:
+      customDataType: Component
+      customErrorType: CustomErrorMessage
+
+  /{componentid}:
+    type:
+      Member:
+        customDataType: Component
+        customErrorType: CustomErrorMessage
+    
+/specsheets:
+  type:
+    Collection:
+      customDataType: SpecificationSheet
+      customErrorType: CustomErrorMessage
+  
+  /{specsheetid}:
+    type:
+      Member:
+        customDataType: SpecificationSheet
+        customErrorType: CustomErrorMessage

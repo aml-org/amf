@@ -1,0 +1,13 @@
+#%RAML 1.0 DataType
+  
+type: object
+properties:
+  unitId: integer
+  name: string
+  plantId: integer 
+  areaId: integer
+  components?:
+    type: array
+    items:
+      type: !include component.raml
+example:  !include ../examples/unitExample.raml
