@@ -1,0 +1,11 @@
+#%RAML 0.8
+---
+title: Parameters API
+/resources:
+  get:
+    queryParameters:
+        param:
+            type: string
+            required: true
+            pattern: '^[^0-9]*$'
+            example: 1st
