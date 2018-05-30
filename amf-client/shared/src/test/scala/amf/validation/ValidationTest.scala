@@ -2390,4 +2390,17 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("survey-system production example test") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(productionPath + "survey-system-api-1.0.0-fat-raml/api.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 1)
+      assert(report.results.exists(_.message.equals("Cannot parse data node from AST structure '?'")))
+    }
+  }
+
 }

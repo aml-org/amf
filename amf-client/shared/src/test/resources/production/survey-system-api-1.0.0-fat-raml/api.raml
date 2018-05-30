@@ -1,0 +1,89 @@
+#%RAML 0.8
+title: Survey sAPI
+version: 1.0
+#baseUri: http://localhost:8081/summit/quiz/api
+baseUri: https://mocksvc.mulesoft.com/mocks/25082eab-c590-4a9b-8d38-3cfa869a17d1/summit/quiz/api
+
+documentation:
+  - title: Questions
+    content: Question management interface, retrieve, create update and delete
+    
+  - title: Categories
+    content: Categories for questions... so you can use this more than once :-)
+    
+  - title: Answers
+    content: How to post users answers
+    
+  - title: Summary Information
+    content: Accessing data to drive reports and charts to gain insight into quiz results
+    
+
+/questions:
+  description: |
+      All questions stored in the repository
+  get:
+    queryParameters:
+      categoryId:
+        description:  the id of the category to filter the questions by
+  post:
+      description: | 
+        create a new question
+  /question/{questionId}:
+    get:
+      description: |
+        retrieve a specific question by id
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/question.json
+    put:
+      description: update a question (replace question identified by id)
+       
+    delete:
+      description: |
+        remove the question identified by id        
+        
+      
+  /random: 
+    description: |
+      returns a random question across all categories
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/question.json
+              
+/categories:
+  get:
+    description: |
+      retreives the list of categories
+/categories/{categoryId}:  
+    description: |
+      details of a particular category 
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/category.json
+              
+/categories/{categoryId}/questions:
+  description: |
+      All questions in a particular category
+
+          
+  post:
+    description: |
+      submit one or more answers
+    body:
+      application/json:
+        example: !invlude exammples/response.json
+          
+
+  /summary:
+    description: |
+      summmary information for responses
+  /summary/categories/{categoryId}:
+  /summary/users/{userId}:
