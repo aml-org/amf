@@ -1,0 +1,21 @@
+#%RAML 0.8
+---
+title: Sample API
+version: v1
+baseUri: http://localhost/api
+/pet:
+    displayName: Pets
+    get:
+        queryParameters:
+          stock:
+            default: 1
+            required: true
+        responses:
+            200:
+                body:
+                    application/json:
+                        example: |
+                            {
+                                "name": "Bobby",
+                                "food": "Ice Cream"
+                            }
