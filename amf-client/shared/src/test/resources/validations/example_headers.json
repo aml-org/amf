@@ -1,0 +1,36 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Example with headers",
+    "version": ""
+  },
+  "paths": {
+    "/examples": {
+      "get": {
+        "operationId": "GET_examples",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "in": "header",
+            "name": "stringParam",
+            "required": true
+          },
+          {
+            "type": "string",
+            "in": "header",
+            "name": "date",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    }
+  }
+}
