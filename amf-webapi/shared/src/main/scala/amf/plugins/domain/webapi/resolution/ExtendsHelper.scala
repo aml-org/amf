@@ -185,7 +185,7 @@ object ExtendsHelper {
       case f: Fragment =>
         ctx.declarations += (f.location, f)
         nestedDeclarations(ctx, f)
-      case m: Module =>
+      case m: DeclaresModel =>
         model.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases.foreach {
           case (alias, (fullUrl, relativeUrl)) =>
             if (m.id == fullUrl) {
@@ -197,6 +197,9 @@ object ExtendsHelper {
             }
         }
         nestedDeclarations(ctx, m)
+      case other =>
+        ctx.violation(ParserSideValidations.ResolutionErrorSpecification.id(), other.id, None, "Error resolving nested declaration, found something that is not a library or a fragment", other.annotations.find(classOf[LexicalInformation]))
+        other
     }
   }
 
