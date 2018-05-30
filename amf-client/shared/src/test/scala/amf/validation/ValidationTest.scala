@@ -1111,6 +1111,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Param in raml 0.8 api") {
+    for {
+      validation <- Validation(platform)
+      library <- AMFCompiler(validationsPath + "08/pattern.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 1)
+    }
+  }
+
   test("Validation error raml 0.8 example 1") {
     for {
       validation <- Validation(platform)
@@ -2367,7 +2379,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("HERE_HERE spi-viewer-api production example test") {
+  test("spi-viewer-api production example test") {
     for {
       validation <- Validation(platform)
       _          <- validation.loadValidationDialect()
