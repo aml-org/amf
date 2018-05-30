@@ -6,6 +6,7 @@ import amf.core.parser.{Annotations, _}
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model._
 import org.yaml.parser.YamlParser
 
@@ -69,7 +70,9 @@ case class DataNodeParser(node: YNode,
       case _ if node.tagType == YType.Include => parseInclusion(node)
 
       case other =>
-        throw new Exception(s"Cannot parse data node from AST structure $other")
+        val parsed = parseScalar(YScalar(other.toString()), "string")
+        ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(), parsed.id, None, s"Cannot parse data node from AST structure '$other'", node)
+        parsed
     }
   }
 
