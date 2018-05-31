@@ -354,7 +354,14 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
     map.key("displayName", ShapeModel.DisplayName in shape)
     map.key("description", ShapeModel.Description in shape)
     map.key("enum", ShapeModel.Values in shape)
-    map.key("pattern", ScalarShapeModel.Pattern in shape)
+    //map.key("pattern", (ScalarShapeModel.Pattern in shape).allowingAnnotations)
+    map.key("pattern", entry => {
+      var regex = entry.value.as[String]
+      if (!regex.startsWith("^")) regex = "^" + regex
+      if (!regex.endsWith("$")) regex = regex + "$"
+      shape.set(ScalarShapeModel.Pattern, ScalarNode(regex).text(), Annotations(entry))
+    })
+
     map.key("minLength", ScalarShapeModel.MinLength in shape)
     map.key("maxLength", ScalarShapeModel.MaxLength in shape)
 
@@ -622,7 +629,12 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   trait CommonScalarParsingLogic {
     def parseOASFields(map: YMap, shape: Shape): Unit = {
-      map.key("pattern", (ScalarShapeModel.Pattern in shape).allowingAnnotations)
+      map.key("pattern", entry => {
+        var regex = entry.value.as[String]
+        if (!regex.startsWith("^")) regex = "^" + regex
+        if (!regex.endsWith("$")) regex = regex + "$"
+        shape.set(ScalarShapeModel.Pattern, ScalarNode(regex).text(), Annotations(entry))
+      })
       map.key("minLength", (ScalarShapeModel.MinLength in shape).allowingAnnotations)
       map.key("maxLength", (ScalarShapeModel.MaxLength in shape).allowingAnnotations)
       map.key("exclusiveMinimum".asRamlAnnotation, ScalarShapeModel.ExclusiveMinimum in shape)
