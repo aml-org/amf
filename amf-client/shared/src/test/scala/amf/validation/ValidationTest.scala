@@ -13,7 +13,7 @@ import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.core.validation.{SeverityLevels, ValidationCandidate}
 import amf.facades.{AMFCompiler, AMFRenderer, Validation}
 import amf.plugins.document.graph.parser.GraphEmitter
-import amf.plugins.document.webapi.{OAS20Plugin, RAML08Plugin, RAML10Plugin}
+import amf.plugins.document.webapi.RAML10Plugin
 import amf.plugins.document.webapi.validation.{AMFShapeValidations, PayloadValidation, UnitPayloadsValidation}
 import amf.plugins.domain.shapes.models.ArrayShape
 import amf.plugins.domain.webapi.models.WebApi
@@ -2570,8 +2570,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       _          <- validation.loadValidationDialect()
-      model      <- AMFCompiler(productionPath + "myconnect-1.0.0-fat-raml/api.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML)
+      model <- AMFCompiler(productionPath + "myconnect-1.0.0-fat-raml/api.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(model, ProfileNames.RAML)
     } yield {
       println(report)
       assert(report.results.nonEmpty)
