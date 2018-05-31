@@ -7,7 +7,7 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, AmfScalar, RecursiveShape, Shape}
 import amf.core.rdf.RdfModel
 import amf.core.utils.Strings
-import amf.core.validation.core.{PropertyConstraint, ValidationProfile, ValidationSpecification}
+import amf.core.validation.core._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.resolution.pipelines.CanonicalShapePipeline
 import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, NodeShapeModel, ScalarShapeModel}
@@ -19,8 +19,10 @@ import org.yaml.model.YDocument.EntryBuilder
 
 class AMFShapeValidations(shape: Shape) {
 
+  var emitMultipleOf: Boolean = false
+
   def profile(): ValidationProfile = {
-    val parsedValidations = validations()
+    val parsedValidations = validations() ++ customFunctionValidations()
     ValidationProfile(
       name = "Payload",
       baseProfileName = None,
@@ -30,6 +32,42 @@ class AMFShapeValidations(shape: Shape) {
   }
 
   protected def validations(): List[ValidationSpecification] = emitShapeValidations("/", canonicalShape())
+
+  protected def customFunctionValidations(): Seq[ValidationSpecification] = {
+    var acc: Seq[ValidationSpecification] = Nil
+    if (emitMultipleOf) {
+      val msg = "Property must validate the 'multipleOf' constraint"
+      acc = acc ++ Seq(
+        ValidationSpecification(
+          name = (Namespace.Shapes + "multipleOfValidationParamSpecification").iri(),
+          message = msg,
+          ramlMessage = Some(msg),
+          oasMessage = Some(msg),
+          functionConstraint = Some(FunctionConstraint(
+            message = Some(msg),
+            code = Some(
+              """|function(shape, value, multipleOf) {
+                 |  if (value != null && multipleOf != null) {
+                 |    return (amfExtractLiteral(value) % amfExtractLiteral(multipleOf)) === 0;
+                 |  } else {
+                 |    return false;
+                 |  }
+                 |}
+              """.stripMargin
+            ),
+            parameters = Seq(
+              FunctionConstraintParameter(
+                (Namespace.Shapes + "multipleOfValidationParam").iri(),
+                (Namespace.Xsd + "integer").iri()
+              )
+            ))
+          )
+        )
+      )
+    }
+
+    acc
+  }
 
   protected def emitShapeValidations(context: String, shape: Shape): List[ValidationSpecification] = {
     shape match {
@@ -540,6 +578,7 @@ class AMFShapeValidations(shape: Shape) {
       validation = checkMaxLength(context, validation, scalar)
       validation = checkMinimum(context, validation, scalar)
       validation = checkMaximum(context, validation, scalar)
+      validation = checkMultipleOf(context, validation, scalar)
       validation = checkEnum(context, validation, scalar)
 
       checkLogicalConstraints(context, scalar, validation, Nil)
@@ -729,6 +768,24 @@ class AMFShapeValidations(shape: Shape) {
               datatype = effectiveDataType(shape)
             )
         }
+        validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(propertyValidation))
+      case None => validation
+    }
+  }
+
+  protected def checkMultipleOf(context: String,
+                                validation: ValidationSpecification,
+                                shape: Shape with CommonShapeFields): ValidationSpecification = {
+    shape.fields.?[AmfScalar](ScalarShapeModel.MultipleOf) match {
+      case Some(multOf) =>
+        emitMultipleOf = true
+        val msg = s"Data at is not a multipleOf '${multOf.toString}'"
+        val propertyValidation = PropertyConstraint(
+          ramlPropertyId = (Namespace.Data + "value").iri(),
+          name = validation.name + "_validation_multipleOf/prop",
+          message = Some(msg),
+          multipleOf = Some(multOf.toString)
+        )
         validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(propertyValidation))
       case None => validation
     }

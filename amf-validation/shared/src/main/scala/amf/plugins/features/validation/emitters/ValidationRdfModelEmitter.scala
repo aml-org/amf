@@ -133,6 +133,7 @@ class ValidationRdfModelEmitter(targetProfile: String, rdfModel: RdfModel) {
       constraint.minExclusive.foreach(genNumericPropertyConstraintValue(constraintId, "minExclusive", _, Some(constraint)))
       constraint.maxInclusive.foreach(genNumericPropertyConstraintValue(constraintId, "maxInclusive", _, Some(constraint)))
       constraint.minInclusive.foreach(genNumericPropertyConstraintValue(constraintId, "minInclusive", _, Some(constraint)))
+      constraint.multipleOf.foreach(genCustomPropertyConstraintValue(constraintId, (Namespace.Shapes + "multipleOfValidationParam").iri(), _))
       constraint.pattern.foreach(v => genPropertyConstraintValue(constraintId, "pattern", v))
       constraint.node.foreach(genPropertyConstraintValue(constraintId, "node", _))
       constraint.datatype.foreach { v =>
@@ -173,14 +174,21 @@ class ValidationRdfModelEmitter(targetProfile: String, rdfModel: RdfModel) {
     val constraintId  = f.constraintId(validationId)
     val validatorId   = f.validatorId(validationId)
     val validatorPath = f.validatorPath(validationId)
-    val parameterId = constraintId + "_param"
-
 
     rdfModel.addTriple(constraintId, (Namespace.Rdf + "type").iri(), (Namespace.Shacl + "ConstraintComponent").iri())
-    link(constraintId, (Namespace.Shacl + "parameter").iri(), parameterId)
-    link(parameterId, (Namespace.Shacl + "path").iri(), validatorPath)
-    link(parameterId, (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "boolean").iri())
     link(constraintId, (Namespace.Shacl + "validator").iri(), validatorId)
+
+    if (f.parameters.nonEmpty) {
+      val parameterId = constraintId + "_param"
+      link(constraintId, (Namespace.Shacl + "parameter").iri(), parameterId)
+      link(parameterId, (Namespace.Shacl + "path").iri(), f.parameters.head.path)
+      link(parameterId, (Namespace.Shacl + "datatype").iri(), f.parameters.head.datatype)
+    } else {
+      val parameterId = constraintId + "_param"
+      link(constraintId, (Namespace.Shacl + "parameter").iri(), parameterId)
+      link(parameterId, (Namespace.Shacl + "path").iri(), validatorPath)
+      link(parameterId, (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "boolean").iri())
+    }
   }
 
   private def genJSValidator(validationId: String, f: FunctionConstraint) = {
@@ -188,7 +196,8 @@ class ValidationRdfModelEmitter(targetProfile: String, rdfModel: RdfModel) {
 
     rdfModel.addTriple(validatorId, (Namespace.Rdf + "type").iri(), (Namespace.Shacl + "JSValidator").iri())
     f.message.foreach(msg => genValue(validatorId, (Namespace.Shacl + "message").iri(), msg))
-    val libraryUrl = validatorId + "_url"
+     val libraryUrl = validatorId + "_url"
+    //val libraryUrl = ValidationJSONLDEmitter.validationLibraryUrl
     link(validatorId, (Namespace.Shacl + "jsLibrary").iri(), libraryUrl)
 
 
@@ -233,6 +242,12 @@ class ValidationRdfModelEmitter(targetProfile: String, rdfModel: RdfModel) {
         genValue(constraintId, (Namespace.Shacl + constraintName).iri(), value, None)
     }
 
+  }
+
+  private def genCustomPropertyConstraintValue(constraintId: String,
+                                               constraintIri: String,
+                                               value: String): Unit = {
+    genValue(constraintId, constraintIri, value, None)
   }
 
   def emitList(listValues: Seq[String], generator: (String, String, String) => Unit): String = {

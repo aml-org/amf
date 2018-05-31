@@ -4,10 +4,13 @@ import amf.core.rdf.RdfModel
 import amf.core.vocabulary.Namespace
 import org.yaml.model.YDocument.EntryBuilder
 
+case class FunctionConstraintParameter(path: String, datatype: String)
+
 case class FunctionConstraint(message: Option[String],
                               code: Option[String] = None,
                               libraries: Seq[String] = Seq(),
-                              functionName: Option[String] = None) {
+                              functionName: Option[String] = None,
+                              parameters: Seq[FunctionConstraintParameter] = Seq()) {
 
   def constraintId(validationId: String)  = s"${validationId}Constraint"
   def validatorId(validationId: String)   = s"${validationId}Validator"
@@ -43,6 +46,7 @@ case class PropertyConstraint(ramlPropertyId: String,
                               maxExclusive: Option[String] = None,
                               minInclusive: Option[String] = None,
                               maxInclusive: Option[String] = None,
+                              multipleOf: Option[String] = None,
                               /**
                                 * shacl:node
                                 * Objects of this property must conform to the
