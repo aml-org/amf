@@ -17,7 +17,7 @@ import amf.plugins.document.webapi.RAML10Plugin
 import amf.plugins.document.webapi.validation.{AMFShapeValidations, PayloadValidation, UnitPayloadsValidation}
 import amf.plugins.domain.shapes.models.ArrayShape
 import amf.plugins.domain.webapi.models.WebApi
-import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
+import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter, ValidationReportJSONLDEmitter}
 import amf.plugins.features.validation.{ParserSideValidations, PlatformValidator}
 import org.scalatest.AsyncFunSuite
 import org.yaml.render.JsonRender
@@ -474,30 +474,34 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   val payloadValidations = Map(
-    ("A", "a_valid.json")                 -> ExpectedReport(conforms = true, 0, "Payload"),
-    ("A", "a_invalid.json")               -> ExpectedReport(conforms = false, 4, "Payload"),
-    ("B", "b_valid.json")                 -> ExpectedReport(conforms = true, 0, "Payload"),
-    ("B", "b_invalid.json")               -> ExpectedReport(conforms = false, 1, "Payload"),
-    ("B", "b_valid.yaml")                 -> ExpectedReport(conforms = true, 0, "Payload"),
-    ("B", "b_invalid.yaml")               -> ExpectedReport(conforms = false, 1, "Payload"),
-    ("C", "c_valid.json")                 -> ExpectedReport(conforms = true, 0, "Payload"),
-    ("C", "c_invalid.json")               -> ExpectedReport(conforms = false, 8, "Payload"),
-    ("D", "d_valid.json")                 -> ExpectedReport(conforms = true, 0, "Payload"),
-    ("D", "d_invalid.json")               -> ExpectedReport(conforms = false, 7, "Payload"),
-    ("E", "e_valid.json")                 -> ExpectedReport(conforms = true, 0, "Payload"),
-    ("E", "e_invalid.json")               -> ExpectedReport(conforms = false, 1, "Payload"),
-    ("F", "f_valid.json")                 -> ExpectedReport(conforms = true, 0, "Payload"),
-    ("F", "f_invalid.json")               -> ExpectedReport(conforms = false, 1, "Payload"),
-    ("G", "g1_valid.json")                -> ExpectedReport(conforms = true, 0, "Payload"),
-    ("G", "g2_valid.json")                -> ExpectedReport(conforms = true, 0, "Payload"),
-    ("G", "g_invalid.json")               -> ExpectedReport(conforms = false, 1, "Payload"),
-    ("H", "h_invalid.json")               -> ExpectedReport(conforms = false, 1, "Payload"),
-    ("PersonData", "person_valid.yaml")   -> ExpectedReport(conforms = true, 0, "Payload"),
-    ("PersonData", "person_invalid.yaml") -> ExpectedReport(conforms = false, 2, "Payload")
+    ("payloads.raml", "A", "a_valid.json")                 -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("payloads.raml", "A", "a_invalid.json")               -> ExpectedReport(conforms = false, 4, "Payload"),
+    ("payloads.raml", "B", "b_valid.json")                 -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("payloads.raml", "B", "b_invalid.json")               -> ExpectedReport(conforms = false, 1, "Payload"),
+    ("payloads.raml", "B", "b_valid.yaml")                 -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("payloads.raml", "B", "b_invalid.yaml")               -> ExpectedReport(conforms = false, 1, "Payload"),
+    ("payloads.raml", "C", "c_valid.json")                 -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("payloads.raml", "C", "c_invalid.json")               -> ExpectedReport(conforms = false, 8, "Payload"),
+    ("payloads.raml", "D", "d_valid.json")                 -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("payloads.raml", "D", "d_invalid.json")               -> ExpectedReport(conforms = false, 7, "Payload"),
+    ("payloads.raml", "E", "e_valid.json")                 -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("payloads.raml", "E", "e_invalid.json")               -> ExpectedReport(conforms = false, 1, "Payload"),
+    ("payloads.raml", "F", "f_valid.json")                 -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("payloads.raml", "F", "f_invalid.json")               -> ExpectedReport(conforms = false, 1, "Payload"),
+    ("payloads.raml", "G", "g1_valid.json")                -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("payloads.raml", "G", "g2_valid.json")                -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("payloads.raml", "G", "g_invalid.json")               -> ExpectedReport(conforms = false, 1, "Payload"),
+    ("payloads.raml", "H", "h_invalid.json")               -> ExpectedReport(conforms = false, 1, "Payload"),
+    ("payloads.raml", "PersonData", "person_valid.yaml")   -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("payloads.raml", "PersonData", "person_invalid.yaml") -> ExpectedReport(conforms = false, 2, "Payload"),
+    ("test_cases.raml", "A", "test_case_a_valid.json")     -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("test_cases.raml", "A", "test_case_a_invalid.json")   -> ExpectedReport(conforms = false, 2, "Payload"),
+    ("test_cases.raml", "A", "test_case_a2_valid.json")    -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("test_cases.raml", "A", "test_case_a2_invalid.json")  -> ExpectedReport(conforms = false, 2, "Payload")
   )
 
   for {
-    ((shapeName, payloadFile), expectedReport) <- payloadValidations
+    ((libraryFile, shapeName, payloadFile), expectedReport) <- payloadValidations
   } yield {
     test(s"SHACL Payload Validator $payloadFile") {
       val hint = payloadFile.split("\\.").last match {
@@ -506,7 +510,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       }
       val validation: Future[PayloadValidation] = for {
         validation <- Validation(platform).map(_.withEnabledValidation(false))
-        library    <- AMFCompiler(payloadsPath + "payloads.raml", platform, RamlYamlHint, validation).build()
+        library    <- AMFCompiler(payloadsPath + libraryFile, platform, RamlYamlHint, validation).build()
         payload    <- AMFCompiler(payloadsPath + payloadFile, platform, hint, validation).build()
       } yield {
         val targetType = library
@@ -723,6 +727,12 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       Validation(platform).flatMap { validation =>
         val effectiveValidations = validation.computeValidations(expectedReport.profile)
         val shapes               = validation.shapesGraph(effectiveValidations)
+        val jsLibrary = new JSLibraryEmitter(None).emitJS(effectiveValidations.effective.values.toSeq)
+
+        jsLibrary match {
+          case Some(code) => PlatformValidator.instance.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
+          case _          => // ignore
+        }
         PlatformValidator.instance.report(
           model,
           "application/ld+json",

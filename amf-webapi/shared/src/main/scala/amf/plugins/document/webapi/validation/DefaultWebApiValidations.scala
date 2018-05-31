@@ -226,7 +226,6 @@ object DefaultAMFValidations extends ImportUtils {
       code = JsCustomValidations(sh.name)
     )
   }
-
 }
 
 object JsCustomValidations {
@@ -267,6 +266,7 @@ object JsCustomValidations {
          |  else return (parseInt(minProperties) <= parseInt(maxProperties));
          |}
       """.stripMargin
+
   )
 
   def apply(name: String): Option[String] = functions.get(name)
