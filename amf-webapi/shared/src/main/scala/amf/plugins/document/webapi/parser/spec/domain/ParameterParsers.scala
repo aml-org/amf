@@ -349,9 +349,9 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
         val payload: Payload     = ctx.declarations.parameterPayload(p)
         val parameter: Parameter = p.link(refUrl, Annotations(map))
         parameter.withName(refUrl).adopted(parentId)
-        OasParameter(parameter, payload)
+        OasParameter(parameter, payload, Some(ref))
       case None =>
-        val oasParameter = OasParameter(Parameter(YMap.empty), Payload(YMap.empty))
+        val oasParameter = OasParameter(Parameter(YMap.empty), Payload(YMap.empty), Some(ref))
         ctx.violation(oasParameter.parameter.id, s"Cannot find parameter reference $refUrl", ref)
         oasParameter
     }
