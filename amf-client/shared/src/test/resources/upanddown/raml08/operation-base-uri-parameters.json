@@ -13,11 +13,14 @@
   "paths": {
     "/resource": {
       "get": {
-        "x-amf-baseUriParameters": {
-          "Name3?": {
-            "type": "string"
+        "parameters": [
+          {
+            "name": "Name3",
+            "in": "path",
+            "type": "string",
+            "format": ""
           }
-        },
+        ],
         "responses": {}
       }
     }
