@@ -2538,30 +2538,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Uri parameters 08 raml") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "uri08.raml", platform, RamlYamlHint, validation)
-        .build()
-//      report <- validation.validate(doc, ProfileNames.RAML)
-    } yield {
-      val resolved = RAML08Plugin.resolve(doc)
-      assert(doc != null)
-    }
-  }
-
-  test("Uri parameters 08 json") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "uri08.json", platform, OasJsonHint, validation)
-        .build()
-//      report <- validation.validate(doc, ProfileNames.RAML)
-    } yield {
-      val resolved = OAS20Plugin.resolve(doc)
-      assert(doc != null)
-    }
-  }
-
   test("servicenow production example test") {
     for {
       validation <- Validation(platform)
