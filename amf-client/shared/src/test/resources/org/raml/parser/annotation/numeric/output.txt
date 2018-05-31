@@ -1,7 +1,7 @@
 Model: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/numeric/input.raml
 Profile: RAML
 Conforms? false
-Number of results: 3
+Number of results: 4
 
 Level: Violation
 
@@ -25,3 +25,10 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/numeric/input.raml#/web-api/end-points/%2Frange/range/scalar_1
   Property: http://raml.org/vocabularies/data#value
   Position: Some(LexicalInformation([(29,11)-(29,13)]))
+
+- Source: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/numeric/input.raml#/declarations/leapYear/scalar/schema_validation_validation_multipleOf/prop
+  Message: Data at is not a multipleOf '4'
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/numeric/input.raml#/web-api/end-points/%2FyearsBad/leapYear/scalar_1
+  Property: http://raml.org/vocabularies/data#value
+  Position: Some(LexicalInformation([(33,14)-(33,18)]))
