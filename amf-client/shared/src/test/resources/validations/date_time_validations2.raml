@@ -1,0 +1,25 @@
+#%RAML 1.0
+title: My Date API
+types:
+  fireworks:
+    type: datetime-only # no implications about offset
+    examples:
+      good: 2015-07-04T21:00:00
+      bad: 2015-13-33T25:61:61
+  birthday:
+    type: date-only # no implications about time or offset
+    example: 2015-14-53
+  lunchtime:
+    type: time-only # no implications about date or offset
+    example: 34:80:90
+  created:
+    type: datetime
+    example: 2016-66-66T66:66:66.090Z
+    format: rfc3339 # the default, so no need to specify
+  If-Modified-Since:
+    type: datetime
+    example: Sun, 28 Feb 2016 66:66:66 GMT
+    format: rfc2616 # this time it's required, otherwise, the example format is invalid
+  If-Modified-Since2:
+    type: datetime
+    example: 2002-66-66T66:66:66-06:00
