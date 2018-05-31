@@ -2589,4 +2589,16 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.nonEmpty)
     }
   }
+
+  test("myconnect example test") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(productionPath + "myconnect-1.0.0-fat-raml/api.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      println(report)
+      assert(report.results.nonEmpty)
+    }
+  }
 }
