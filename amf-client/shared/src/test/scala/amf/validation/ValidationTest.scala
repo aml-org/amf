@@ -13,11 +13,15 @@ import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.core.validation.{SeverityLevels, ValidationCandidate}
 import amf.facades.{AMFCompiler, AMFRenderer, Validation}
 import amf.plugins.document.graph.parser.GraphEmitter
-import amf.plugins.document.webapi.RAML10Plugin
+import amf.plugins.document.webapi.{OAS20Plugin, RAML08Plugin, RAML10Plugin}
 import amf.plugins.document.webapi.validation.{AMFShapeValidations, PayloadValidation, UnitPayloadsValidation}
 import amf.plugins.domain.shapes.models.ArrayShape
 import amf.plugins.domain.webapi.models.WebApi
-import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter, ValidationReportJSONLDEmitter}
+import amf.plugins.features.validation.emitters.{
+  JSLibraryEmitter,
+  ValidationJSONLDEmitter,
+  ValidationReportJSONLDEmitter
+}
 import amf.plugins.features.validation.{ParserSideValidations, PlatformValidator}
 import org.scalatest.AsyncFunSuite
 import org.yaml.render.JsonRender
@@ -727,11 +731,12 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       Validation(platform).flatMap { validation =>
         val effectiveValidations = validation.computeValidations(expectedReport.profile)
         val shapes               = validation.shapesGraph(effectiveValidations)
-        val jsLibrary = new JSLibraryEmitter(None).emitJS(effectiveValidations.effective.values.toSeq)
+        val jsLibrary            = new JSLibraryEmitter(None).emitJS(effectiveValidations.effective.values.toSeq)
 
         jsLibrary match {
-          case Some(code) => PlatformValidator.instance.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
-          case _          => // ignore
+          case Some(code) =>
+            PlatformValidator.instance.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
+          case _ => // ignore
         }
         PlatformValidator.instance.report(
           model,
@@ -2507,8 +2512,11 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       _          <- validation.loadValidationDialect()
-      model      <- AMFCompiler(productionPath + "spi-viewer-api-1.0.0-fat-raml/spi-viewer-api.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML)
+      model <- AMFCompiler(productionPath + "spi-viewer-api-1.0.0-fat-raml/spi-viewer-api.raml",
+                           platform,
+                           RamlYamlHint,
+                           validation).build()
+      report <- validation.validate(model, ProfileNames.RAML)
     } yield {
       assert(report.results.nonEmpty)
     }
@@ -2518,8 +2526,11 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       _          <- validation.loadValidationDialect()
-      model      <- AMFCompiler(productionPath + "survey-system-api-1.0.0-fat-raml/api.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML)
+      model <- AMFCompiler(productionPath + "survey-system-api-1.0.0-fat-raml/api.raml",
+                           platform,
+                           RamlYamlHint,
+                           validation).build()
+      report <- validation.validate(model, ProfileNames.RAML)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
@@ -2527,12 +2538,39 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Uri parameters 08 raml") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "uri08.raml", platform, RamlYamlHint, validation)
+        .build()
+//      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      val resolved = RAML08Plugin.resolve(doc)
+      assert(doc != null)
+    }
+  }
+
+  test("Uri parameters 08 json") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "uri08.json", platform, OasJsonHint, validation)
+        .build()
+//      report <- validation.validate(doc, ProfileNames.RAML)
+    } yield {
+      val resolved = OAS20Plugin.resolve(doc)
+      assert(doc != null)
+    }
+  }
+
   test("servicenow production example test") {
     for {
       validation <- Validation(platform)
       _          <- validation.loadValidationDialect()
-      model      <- AMFCompiler(productionPath + "servicenow-system-api1-1.0.0-fat-raml/incident-api.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML)
+      model <- AMFCompiler(productionPath + "servicenow-system-api1-1.0.0-fat-raml/incident-api.raml",
+                           platform,
+                           RamlYamlHint,
+                           validation).build()
+      report <- validation.validate(model, ProfileNames.RAML)
     } yield {
       assert(report.results.nonEmpty)
     }
@@ -2542,8 +2580,11 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       _          <- validation.loadValidationDialect()
-      model      <- AMFCompiler(productionPath + "salesforce-outbound-api-batchv2-1.0.0-fat-raml/api.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML)
+      model <- AMFCompiler(productionPath + "salesforce-outbound-api-batchv2-1.0.0-fat-raml/api.raml",
+                           platform,
+                           RamlYamlHint,
+                           validation).build()
+      report <- validation.validate(model, ProfileNames.RAML)
     } yield {
       assert(report.results.nonEmpty)
     }

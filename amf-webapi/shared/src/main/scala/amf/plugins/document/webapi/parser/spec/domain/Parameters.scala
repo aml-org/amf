@@ -56,9 +56,10 @@ object Parameters {
     params.filter(_.isPath).foreach { param =>
       if (path.contains(s"{${param.name.value()}}"))
         pathParams ++= Seq(param)
-      else uriParams ++= Seq(param)
+      else
+        uriParams ++= Seq(param)
     }
-    Parameters(params.filter(_.isQuery) ++ pathParams, Nil, params.filter(_.isHeader), uriParams, payloads)
+    Parameters(params.filter(_.isQuery), pathParams, params.filter(_.isHeader), uriParams, payloads)
   }
 }
 

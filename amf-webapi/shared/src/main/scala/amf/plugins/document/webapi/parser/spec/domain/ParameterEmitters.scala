@@ -16,7 +16,7 @@ import amf.plugins.document.webapi.contexts.{
   SpecEmitterContext
 }
 import amf.plugins.document.webapi.contexts._
-import amf.plugins.document.webapi.parser.spec.OasDefinitions
+import amf.plugins.document.webapi.parser.spec.{OasDefinitions, toRaml}
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, FileShapeModel}
@@ -54,7 +54,7 @@ case class RamlParametersEmitter(key: String, f: FieldEntry, ordering: SpecOrder
   }
 
   private def parameters(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
-  val result = mutable.ListBuffer[EntryEmitter]()
+    val result = mutable.ListBuffer[EntryEmitter]()
     f.array.values
       .filter(!_.annotations.contains(classOf[SynthesizedField]))
       .foreach(e => result += spec.factory.headerEmitter(e.asInstanceOf[Parameter], ordering, references))
@@ -225,10 +225,13 @@ case class OasParametersEmitter(key: String,
     if (ramlParameters.nonEmpty) {
       val query  = ramlParameters.filter(_.isQuery)
       val header = ramlParameters.filter(_.isHeader)
+      val path   = ramlParameters.filter(_.isPath)
       if (query.nonEmpty)
         results += XRamlParameterEmitter("queryParameters".asOasExtension, query)
       if (header.nonEmpty)
         results += XRamlParameterEmitter("headers".asOasExtension, header)
+      if (path.nonEmpty)
+        results += XRamlParameterEmitter("baseUriParameters".asOasExtension, path)
     }
     results
   }
@@ -331,15 +334,15 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
 }
 
 case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(
-  implicit spec: OasSpecEmitterContext)
-  extends EntryEmitter {
+    implicit spec: OasSpecEmitterContext)
+    extends EntryEmitter {
 
   protected def emitParameter(b: EntryBuilder): Unit = {
     b.entry(
       parameter.name.option().get,
       _.obj { b =>
         val result = mutable.ListBuffer[EntryEmitter]()
-        val fs = parameter.fields
+        val fs     = parameter.fields
         if (Option(parameter.schema).isDefined && Option(parameter.schema.description).isEmpty)
           fs.entry(ParameterModel.Description).map(f => result += RamlScalarEmitter("description", f))
 
@@ -378,7 +381,6 @@ case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, refere
 
   override def position(): Position = pos(parameter.annotations)
 }
-
 
 case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit val spec: OasSpecEmitterContext)

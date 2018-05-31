@@ -288,7 +288,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
 
       val result = mutable.ListBuffer[EntryEmitter]()
 
-      val parameters = request.queryParameters ++ request.headers
+      val parameters = request.queryParameters ++ request.uriParameters ++ request.headers
       val payloads   = OasPayloads(request.payloads, endpointPayloadEmitted)
 
       if (parameters.nonEmpty || payloads.default.isDefined)
@@ -308,12 +308,6 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
             case Some(_) => throw new Exception("Cannot emit a non WebApi Shape")
             case None    => // ignore
           }
-        }
-
-      fs.entry(RequestModel.UriParameters)
-        .map { f =>
-          if (f.array.values.nonEmpty)
-            result += RamlParametersEmitter("baseUriParameters".asOasExtension, f, ordering, references)(toRaml(spec))
         }
 
       result ++= AnnotationsEmitter(request, ordering).emitters

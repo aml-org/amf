@@ -387,18 +387,18 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
       parameters match {
         case Parameters(query, path, header, baseUri08, _) =>
-          if (query.nonEmpty || path.nonEmpty)
+          if (query.nonEmpty)
             request.getOrCreate.set(RequestModel.QueryParameters,
-                                    AmfArray(query ++ path, Annotations(entries.head)),
+                                    AmfArray(query, Annotations(entries.head)),
                                     Annotations(entries.head))
           if (header.nonEmpty)
             request.getOrCreate.set(RequestModel.Headers,
                                     AmfArray(header, Annotations(entries.head)),
                                     Annotations(entries.head))
 
-          if (path.nonEmpty)
+          if (path.nonEmpty || baseUri08.nonEmpty)
             request.getOrCreate.set(RequestModel.UriParameters,
-                                    AmfArray(baseUri08, Annotations(entries.head)),
+                                    AmfArray(path ++ baseUri08, Annotations(entries.head)),
                                     Annotations(entries.head))
       }
 
@@ -419,7 +419,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       map.key(
         "queryString".asOasExtension,
         queryEntry => {
-          Raml10TypeParser(queryEntry, (shape) => shape.adopted(request.getOrCreate.id))(toRaml(ctx))
+          Raml10TypeParser(queryEntry, shape => shape.adopted(request.getOrCreate.id))(toRaml(ctx))
             .parse()
             .map(request.getOrCreate.withQueryString(_))
         }

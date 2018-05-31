@@ -8,9 +8,9 @@ title: test
 version: "1.0"
 /a/{a}:
   get:
-    queryParameters:
-      a: a
     body:
       properties:
         theBody?:
           type: file
+    (amf-baseUriParameters):
+      a: a
