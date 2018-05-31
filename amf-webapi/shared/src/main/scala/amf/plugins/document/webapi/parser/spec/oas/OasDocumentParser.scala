@@ -279,9 +279,8 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             case _ =>
           }
 
-          parameters.body.foreach { payload =>
-            endpoint.set(EndPointModel.Payloads, AmfArray(Seq(payload)), Annotations(entries.head))
-          }
+          if (parameters.body.nonEmpty)
+            endpoint.set(EndPointModel.Payloads, AmfArray(parameters.body), Annotations(entries.head))
 
           map.key("is".asOasExtension,
                   (EndPointModel.Extends in endpoint using ParametrizedDeclarationParser
