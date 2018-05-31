@@ -1,0 +1,125 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "http://schemas.asciano.com.au/json/v1/leaveapplication",
+    "definitions": {
+        "leaveReason": {
+            "type": "object",
+            "properties": {
+                "leaveReasonId": { "type": "string" },
+                "leaveReasonName": { "type": "string" }
+            }
+        },
+        "leaveType": {
+            "type": "object",
+            "properties": {
+                "leaveTypeId": {
+                    "type": "string"
+                },
+                "leaveTypeName": {
+                    "type": "string"
+                },
+                "leaveTypeCategoryId": {
+                    "type": "string"
+                },
+                "leaveTypeCategoryName": {
+                    "type": "string"
+                },
+                "displayReason": {
+                    "type": "boolean"
+                },
+                "requireReason": {
+                    "type": "boolean"
+                },
+                "displayPartialDays": {
+                    "type": "boolean"
+                },
+                "partialDaysOption": {
+                    "enum": [ "None", "HalfDays", "PartialHours", "Both" ]
+                },
+                "displayPayInAdvance": {
+                    "type": "boolean"
+                },
+                "displayMedicalCertificate": {
+                    "type": "boolean"
+                },
+                "leaveReasons": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/leaveReason"
+                    },
+                    "additionalItems": false,
+                    "additionalProperties": false
+                }
+            },
+            "required": [ "leaveTypeId", "leaveTypeName" ],
+            "additionalProperties": false
+        }
+    },
+    "title": "Leave application",
+    "description": "Leave application data type",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string",
+            "description": "One of the keys required to get an individual leave application"
+        },
+        "leaveTypeId": {
+            "type": "string"
+        },
+        "leaveTypeDescription": { 
+            "type": "string"
+        },
+        "leaveType": {
+            "$ref": "#/definitions/leaveType"
+        },
+        "startDate": {
+            "type": "string",
+            "format": "date"
+        },
+        "endDate": {
+            "type": "string",
+            "format": "date"
+        },
+        "leaveReason": {
+            "type": "string"
+        },
+        "partialDays": {
+            "enum": [ "None", "StartDayOnly", "EndDayOnly", "StartAndEnd", "All" ]
+        },
+        "startDayHours": {
+            "type": "number"
+        },
+        "startDayHalfDay": {
+            "type": "boolean"
+        },
+        "endDayHours": {
+            "type": "number"
+        },
+        "endDayHalfDay": {
+            "type": "boolean"
+        },
+        "allDayHours": {
+            "type": "number"
+        },
+        "allDayHalfDay": {
+            "type": "boolean"
+        },
+        "payInAdvance": {
+            "type": "boolean"
+        },
+        "medicalCertificateProvided": {
+            "type": "boolean"
+        },
+        "requesterComments": {
+            "type": "string"
+        },
+        "attachment": {
+            "type": "string"
+        },
+        "status": {
+            "type": "string"
+        }
+    },
+    "required": [ "startDate", "endDate" ],
+    "additionalProperties": false
+}

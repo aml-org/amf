@@ -1,5 +1,6 @@
 package amf.emit
 
+import amf.core.benchmark.ExecutionLog
 import amf.core.remote._
 import amf.facades.Validation
 import amf.io.BuildCycleTests
@@ -661,7 +662,7 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("missing_payload.raml", "missing_payload.jsonld", RamlYamlHint, Amf, base08Path)
   }
 
-  test("HERE_HERE Default value test") {
+  test("Default value test") {
     cycle("default_value.raml", "default_value.jsonld", RamlYamlHint, Amf, base08Path)
   }
 

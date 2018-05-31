@@ -1,0 +1,130 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "http://schemas.asciano.com.au/json/v1/calendaritems",
+    "definitions": {
+        "shift": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "The ID of the shift"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "The description of the shift"
+                },
+                "details": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/shiftDetail" }
+                }
+            },
+            "additionalProperties": false
+        },
+        "shiftDetail": {
+            "type": "object",
+            "properties": {
+                "sequence": {
+                    "type": "integer",
+                    "description": "The sequence of the shift details in the list of shift details, use for sorting"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "the type of shift detail, e.g. 'In', 'Out', 'Meal', 'Break'. See PS specification. "
+                },
+                "time": {
+                    "type": "string",
+                    "description": "time in hh:mm:ss.ffffff e.g. 14:59:59.000000"
+                }
+            },
+            "required": [ "type", "time" ],
+            "additionalProperties": false
+        },
+        "leaveApplication": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "One of the keys required to get an individual leave application"
+                },
+                "leaveTypeId": {
+                    "type": "string"
+                }
+            }
+        },
+        "calendarItem": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "The unique identifier for the calendar item",
+                    "type": "string"
+                },
+                "itemTypeId": {
+                    "description": "The type of calendar entry, see enumeration",
+                    "enum": [ "Roster", "WorkedHours", "Leave", "PublicHoliday" ]
+                },
+                "itemTypeDescription": {
+                    "description": "User friendly description of the itemType",
+                    "type": "string"
+                },
+                "itemSubTypeId": {
+                    "type": "string"
+                },
+                "itemDescription": {
+                    "type": "string"
+                },
+                "itemSource": {
+                    "type": "string"
+                },
+                "utcOffSet": {
+                    "description": "The offset of the local time zone to UTC in minutes",
+                    "type": "integer"
+                },
+                "startDate": {
+                    "description": "",
+                    "type": "string",
+                    "format": "date"
+                },
+                "startTime": {
+                    "type": "string",
+                    "description": "time in hh:mm:ss.ffffff e.g. 14:59:59.000000"
+                },
+                "endDate": {
+                    "description": "",
+                    "type": "string",
+                    "format": "date"
+                },
+                "endTime": {
+                    "type": "string",
+                    "description": "time in hh:mm:ss.ffffff e.g. 14:59:59.000000"
+                },
+                "duration": {
+                    "description": "Duration of the rostered or leave item in HOURS, could be less than end minus start time",
+                    "type": "number"
+                },
+                "fatigue": {
+                    "description": "Fatigue percentage score, only applicable to TMS employees",
+                    "type": "number"
+                },
+                "location": {
+                    "description": "The physical location of the calendar item, if applicable",
+                    "type": "string"
+                },
+                "taskGroup": {
+                    "type": "string"
+                },
+                "offShift": {
+                    "type": "boolean"
+                },
+                "leaveData": { "$ref": "#/definitions/leaveApplication" },
+                "shiftData": { "$ref": "#/definitions/shift" }
+            }
+        }
+    },
+    "type": "array",
+    "items": {
+        "$ref": "#/definitions/calendarItem"
+    },
+    "minItems": 1,
+    "additionalItems": false,
+    "additionalProperties": false
+}

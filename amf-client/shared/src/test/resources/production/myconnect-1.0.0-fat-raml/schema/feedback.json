@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "http://schemas.asciano.com.au/json/v1/feedback",
+    "title": "Feedback",
+    "description": "Feedback data type",
+    "type": "object",
+    "properties": {
+        "category": {
+            "type": "string"
+        },
+        "fromName": {
+            "type": "string"
+        },
+        "fromEmail": {
+            "type": "string"
+        },
+        "feedbackMessage": { 
+            "type": "string"
+        }
+    },
+    "required": [ "category", "fromName", "fromEmail", "feedbackMessage" ],
+    "additionalProperties": false
+}

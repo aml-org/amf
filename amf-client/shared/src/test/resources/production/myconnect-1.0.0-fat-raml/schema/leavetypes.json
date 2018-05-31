@@ -1,0 +1,65 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "http://schemas.asciano.com.au/json/v1/leavetypes",
+    "definitions": {
+        "leaveReason": {
+            "type": "object",
+            "properties": {
+                "leaveReasonId": { "type": "string" },
+                "leaveReasonName": { "type": "string" }
+            }
+        },
+        "leaveType": {
+            "type": "object",
+            "properties": {
+                "leaveTypeId": {
+                    "type": "string"
+                },
+                "leaveTypeName": {
+                    "type": "string"
+                },
+                "leaveTypeCategoryId": {
+                    "type": "string"
+                },
+                "leaveTypeCategoryName": {
+                    "type": "string"
+                },
+                "displayReason": {
+                    "type": "boolean"
+                },
+                "requireReason": {
+                    "type": "boolean"
+                },
+                "displayPartialDays": {
+                    "type": "boolean"
+                },
+                "partialDaysOption": {
+                    "enum": [ "None", "HalfDays", "PartialHours", "Both" ]
+                },
+                "displayPayInAdvance": {
+                    "type": "boolean"
+                },
+                "displayMedicalCertificate": {
+                    "type": "boolean"
+                },
+                "leaveReasons": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/leaveReason"
+                    },
+                    "additionalItems": false,
+                    "additionalProperties": false
+                }
+            },
+            "required": [ "leaveTypeId", "leaveTypeName" ],
+            "additionalProperties": false
+        }
+    },
+    "type": "array",
+    "items": {
+        "$ref": "#/definitions/leaveType"
+    },
+    "minItems": 1,
+    "additionalItems": false,
+    "additionalProperties": false
+}

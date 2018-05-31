@@ -14,7 +14,7 @@ trait Http extends js.Object {
     * between this method and http.request() is that it sets the method to GET and calls req.end() automatically.
     * @example http.get('https://encrypted.google.com/', (res) => { ... })
     */
-  def get(url: String, callback: js.Function1[js.Dynamic, Any]): Unit = js.native
+  def get(url: String, callback: js.Function1[js.Dynamic, Any]): js.Dynamic = js.native
 }
 
 @js.native
@@ -34,7 +34,7 @@ trait Https extends js.Object {
     * between this method and http.request() is that it sets the method to GET and calls req.end() automatically.
     * @example http.get('https://encrypted.google.com/', (res) => { ... })
     */
-  def get(url: String, callback: js.Function1[js.Dynamic, Any]): Unit = js.native
+  def get(url: String, callback: js.Function1[js.Dynamic, Any]): js.Dynamic = js.native
 }
 
 @js.native

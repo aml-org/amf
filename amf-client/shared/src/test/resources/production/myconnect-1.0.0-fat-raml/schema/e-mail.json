@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id":  "http://schemas.asciano.com.au/json/v1/e-mail",
+    "title": "E-mail address",
+    "description": "E-mail address data type",
+    "type": "object",
+    "properties": {
+        "e-mail": {
+            "description": "The actual e-mail address",
+            "type": "string"
+        }
+    },
+    "required": [ "e-mail" ],
+    "additionalProperties" :  false
+}

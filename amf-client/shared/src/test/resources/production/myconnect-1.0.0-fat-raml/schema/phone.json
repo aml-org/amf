@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id":  "http://schemas.asciano.com.au/json/v1/phone",
+    "title": "Phone",
+    "description": "Phone data type",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "The unique identifier for the phone",
+            "type": "string"
+        },
+        "phoneType": {
+            "description": "Type of the phone, e.g. landline or mobile",
+            "type": "string"
+        },
+        "number": {
+            "description": "Number of the phone",
+            "type": "string"
+        },
+      "isPreferred": {
+        "description": "Indicates whether this is the employee's preferred phone number",
+        "type": "boolean"
+      }
+    },
+    "required": [ "number" ],
+    "additionalProperties" :  false
+}

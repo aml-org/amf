@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://schemas.asciano.com.au/json/v1/rosterchange",
+  "title": "Roster change",
+  "description": "Roster change request details",  
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "rosterChangeType": {
+      "type": "string"
+    },
+    "rosterChangeTypeDesc": {
+      "type": "string"
+    },
+    "dateAppliedFor": {
+      "type": "string",
+      "format": "date"
+    },
+    "volunteerShift": {
+      "type": "string"
+    },
+    "offDay": {
+      "type": "string",
+      "format": "date"
+    },
+    "includeNextNightShift": {
+      "type": "boolean"
+    },
+    "requesterComments": {
+      "type": "string"
+    },
+    "approverComments": {
+      "type": "string"
+    },
+    "rosterChangeContext": {
+      "type": "object",
+      "properties": {
+        "rosterChangeType": {
+          "type": "string"
+        },
+        "rosterChangeTypeDesc": {
+          "type": "string"
+        },
+        "volunteerShiftVisible": {
+          "type": "boolean"
+        },
+        "volunteerShiftRequired": {
+          "type": "boolean"
+        },
+        "nextNightShiftVisible": {
+          "type": "boolean"
+        },
+        "nextNightShiftRequired": {
+          "type": "boolean"
+        },
+        "offDayVisible": {
+          "type": "boolean"
+        },
+        "offDayRequired": {
+          "type": "boolean"
+        },
+        "workDay": {
+          "type": "string"
+        },
+        "totalRDOTakenVisible": {
+          "type": "boolean"
+        },
+        "totalRDOTaken": {
+          "type": "integer"
+        },
+        "volunteerShiftDetails": {
+          "type": "object",
+          "properties": {
+            "volunteerShift": {
+              "type": "string"
+            },
+            "volunteerShiftDescr": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "id"
+  ]
+}

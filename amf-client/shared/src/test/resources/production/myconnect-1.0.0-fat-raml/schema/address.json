@@ -1,0 +1,43 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id":  "http://schemas.asciano.com.au/json/v1/address",
+    "title": "Address",
+    "description": "Address data type",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "The unique identifier for the address",
+            "type": "string"
+        },
+        "addressType": {
+            "description": "Type of the address, e.g. home or work",
+            "type": "string"
+        },
+        "address1": {
+            "description": "First address line of the address",
+            "type": "string"
+        },
+        "address2": {
+            "description": "Second address line of the address",
+            "type": "string"
+        },
+        "city": {
+            "description": "City of the address",
+            "type": "string"
+        },
+        "state": {
+            "description": "State of the address",
+            "type": "string"
+        },
+        "postcode": {
+            "description": "Postcode of the address",
+            "type": "string"
+        },
+        "country": {
+            "description": "Country of the address",
+            "type": "string"
+        }
+    },
+    "required": [ "addressType", "address1", "city", "state", "postcode", "country" ],
+    "additionalProperties" :  false
+}

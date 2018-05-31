@@ -1,0 +1,490 @@
+#%RAML 0.8
+title: myconnect
+version: 1.0
+protocols: [ HTTP, HTTPS ]
+baseUri: https://myconnect-gw.au.cloudhub.io/
+mediaType: application/json
+/leave:
+  /leavetypes:
+    get:
+      description: returns a list of all available leave types
+      responses:
+        200:
+          body:
+            application/json:
+              schema: !include schema/leavetypes.json
+              example: !include samples/leave/leavetypes-example.json
+  /balance:
+    get:
+      description: returns the current leave balance
+      responses:
+        200:
+          body:
+            application/json:
+              schema: !include schema/leavebalance.json
+              example: !include samples/leave/leavebalance-example.json       
+  /durationtypes:
+    description: operations relating to TMS leave duration types
+    get:
+      description: returns the duration types for the given leave type
+      queryParameters:
+        leaveType:
+          description: leave type to return duration types for
+          type: string
+        leaveId:
+          description: leave id to return duration types for
+          type: string
+      responses:
+        200:
+          description: collection of leave duration types
+          body:
+            application/json:
+              schema: !include schema/leavedurationtypes.json
+              example: !include samples/leave/leavedurationtypes-example.json
+  /applications:
+    description: contains operations relating to an employee's collection of leave applications, e.g. get list and submit application
+    get:
+      description: returns all leave applications that an employee requested
+      queryParameters:        
+        fromDate:
+          type: date
+          required: true
+        toDate:
+          type: date
+          required: true
+      responses:
+        200:
+          body:
+            application/json:
+              schema: !include schema/leaveapplications.json
+              example: !include samples/leave/applications-example.json
+    post:
+      description: submit a leave application
+      body:
+        application/json:        
+          schema: !include schema/submitleaveapplication.json
+          example: !include samples/leave/submitleaveapplication-example.json
+      responses:
+        201:
+          body:
+            application/json:
+              schema: !include schema/leaveapplication_post_response.json
+              example: !include samples/leave/leaveapplication_post_response-example.json
+        500:
+          body:
+            application/json:
+              schema: !include schema/error.json
+              example: !include samples/error-example.json          
+    /application:
+      description: contains operations relating to an employee's specific leave application, e.g. get and update
+      get:
+        description: returns a single leave application      
+        queryParameters:
+          id:
+            type: string
+            required: true
+        responses:
+          200:
+            body:
+              application/json:
+                schema: !include schema/leaveapplication.json
+                example: !include samples/leave/application-example.json
+      put:
+        description: updates an existing leave application        
+        body:
+           application/json:
+            schema: !include schema/updateleaveapplication.json
+            example: !include samples/leave/updateleaveapplication-example.json
+        responses:
+          200:
+          500:
+            body:
+              application/json:
+                schema: !include schema/error.json
+                example: !include samples/error-example.json    
+      delete:
+        description: Cancels an exitsing leave application      
+        queryParameters:
+          id:
+            type: string
+            required: true
+        responses:
+          200:
+            description: deletion of the specified leave application was successfull
+          500:
+            description: deletion of the specified leave application failed   
+            body:
+              application/json:
+                schema: !include schema/error.json
+                example: !include samples/error-example.json                      
+  /rosterchanges:
+    description: operations relating to an employee's roster change requests
+    get:
+      description: collection of an employee's roster change requests
+      queryParameters:        
+        fromDate:
+          description: start date of the date range filter to apply
+          type: date
+          required: true
+        toDate:
+          description: end date of the date range filter to apply
+          type: date
+          required: true
+      responses:
+        200:
+          description: collection of roster change requests
+          body:
+            application/json:
+              schema: !include schema/rosterchanges.json
+              example: !include samples/rosterchanges/rosterchanges.json
+    post:
+      description: submit a roster change request
+      body:
+        application/json:        
+          schema: !include schema/submitrosterchange.json
+          example: !include samples/rosterchanges/submitrosterchange.json
+      responses:
+        201:
+          description: roster change request accepted
+        500:
+          description: roster change request denied 
+          body:
+            application/json:
+              schema: !include schema/error.json
+              example: !include samples/error-example.json      
+    /rosterchange:
+      description: operations relating to an employee's specific roster change request
+      get:
+        description: returns a single roster change request      
+        queryParameters:
+          id:
+            description: composite id of the roster change request to retrieve
+            type: string
+            required: true
+        responses:
+          200:
+            body:
+              application/json:
+                schema: !include schema/rosterchange.json
+                example: !include samples/rosterchanges/rosterchange.json    
+    /rosterchangetypes:
+      description: roster change types that an employee can request
+      get:
+        description: returns a list of roster change types that an eligible employee can apply for
+        responses:
+          200:
+            body:
+              application/json:
+                schema: !include schema/rosterchangetypes.json
+                example: !include samples/rosterchanges/rosterchangetypes.json      
+    /rosterchangecontext:
+      description: roster change types require different context information to be displayed to the employee
+      get:
+        description: returns context information about how to correctly display the form and fields for the Submit Roster Change form
+        queryParameters:
+          rosterChangeType:
+            description: type of roster change request to retrieve context details of
+            type: string
+            required: true
+          dateAppliedFor:
+            description: date of the future roster change request
+            type: date
+            required: true
+        responses:
+          200:
+            description: collection of roster change contexts
+            body:
+              application/json:
+                schema: !include schema/rosterchangecontext.json
+                example: !include samples/rosterchanges/rosterchangecontext.json
+/payslips:
+  get:
+    description: returns a list of all available payslips
+    queryParameters:
+      fromDate: 
+        type: date
+        required: true
+      toDate:
+        type: date
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+            schema: !include schema/payslips.json
+            example: !include samples/payslip/payslips-example.json          
+  /download:
+    description: returns a payslip by its id
+    get:
+      queryParameters:
+        payslipId:
+          type: string
+          required: true
+        calendarGroupId:
+          type: string
+          required: true
+        paymentDate: 
+          type: date
+          required: true
+        gpSourceProduct:
+          type: string
+          required: false     
+      responses:           
+        200:
+          body:
+            application/pdf:
+/employee:
+  get:
+    description: returns employee information of the authenticated user
+    responses:      
+      200:
+        body:
+          application/json:
+            schema: !include schema/employee.json            
+            example: !include samples/employee/employee-example.json           
+  /phone:
+    post:
+      description: adds a new phone number to the employee details
+      responses:
+        201:
+          body:
+            application/json:
+              schema: !include schema/objectcreated.json
+              example: !include samples/objectcreated-example.json
+        500:
+          body:
+            application/json:
+              schema: !include schema/error.json
+              example: !include samples/error-example.json      
+    /{id}:
+      put:
+        description: updates an existing phone number
+        body:
+          application/json:
+            schema: !include schema/phone.json
+            example: !include samples/employee/phone-example.json
+        responses:
+          200:
+          500:          
+            body:
+              application/json:
+                schema: !include schema/error.json
+                example: !include samples/error-example.json                
+      delete:
+        description: deletes an existing phone number   
+        responses:
+          204:
+          500:
+            body:
+              application/json:
+                schema: !include schema/error.json
+                example: !include samples/error-example.json                          
+  /e-mail:
+    post:
+      description: adds a new e-mail address to the employee details
+      responses:
+        201:
+          body:
+            application/json:
+              schema: !include schema/objectcreated.json
+              example: !include samples/objectcreated-example.json
+        500:
+          body:
+            application/json:
+              schema: !include schema/error.json
+              example: !include samples/error-example.json      
+    /{id}:
+      put:
+        description: updates an existing e-mail address
+        body:
+          application/json:
+            schema: !include schema/e-mail.json
+            example: !include samples/employee/e-mail-example.json
+        responses:
+          200:
+          500:          
+            body:
+              application/json:
+                schema: !include schema/error.json
+                example: !include samples/error-example.json                
+      delete:
+        description: deletes an existing e-mail address
+        responses:
+          204:
+          500:
+            body:
+              application/json:
+                schema: !include schema/error.json
+                example: !include samples/error-example.json                          
+  /address:
+    post:
+      description: adds a new address to the employee details
+      body:
+        application/json:
+          schema: !include schema/address.json
+          example: !include samples/employee/address-example.json
+      responses:
+        201:
+          body:
+            schema: !include schema/objectcreated.json
+            example: !include samples/objectcreated-example.json          
+        500:
+          body:
+            application/json:
+              schema: !include schema/error.json
+              example: !include samples/error-example.json       
+    /{id}:
+      put:
+        description: updates an existing address
+        body:
+          application/json:
+            schema: !include schema/address.json
+            example: !include samples/employee/address-example.json
+        responses:
+          200:
+          500:          
+            body:
+              application/json:
+                schema: !include schema/error.json
+                example: !include samples/error-example.json                
+      delete:
+        description: deletes an existing phone number   
+        responses:
+          204:
+          500:
+            body:
+              application/json:
+                schema: !include schema/error.json
+                example: !include samples/error-example.json                          
+  /bankaccount:
+    post:
+      description: adds a new bank account to the employee details
+      body:
+        application/json:
+          schema: !include schema/bankaccount.json
+          example: !include samples/employee/bankaccount-example.json
+      responses:
+        201:
+          body:
+            schema: !include schema/objectcreated.json
+            example: !include samples/objectcreated-example.json          
+        500:
+          body:
+            application/json:
+              schema: !include schema/error.json
+              example: !include samples/error-example.json
+    /{id}:
+      put:
+        description: updates existing bank account details
+        body:
+          application/json:
+            schema: !include schema/bankaccount.json
+            example: !include samples/employee/bankaccount-example.json
+        responses:
+          200:
+          500:          
+            body:
+              application/json:
+                schema: !include schema/error.json
+                example: !include samples/error-example.json                
+      delete:
+        description: deletes an existing bank account
+        responses:
+          204:
+          500:
+            body:
+              application/json:
+                schema: !include schema/error.json
+                example: !include samples/error-example.json                          
+  /emergencycontact:      
+    description: emergency contacts of the employee
+    post:
+      description: adds a new emergency contact to the employee details
+      body:
+        application/json:
+          schema: !include schema/contact.json
+          example: !include samples/employee/contact-example.json
+      responses:
+        201:
+          body:
+            schema: !include schema/objectcreated.json
+            example: !include samples/objectcreated-example.json          
+        500:
+          body:
+            application/json:
+              schema: !include schema/error.json
+              example: !include samples/error-example.json          
+    /{id}:
+      put:
+        description: updates an existing emergency contact in the employee details
+        body:
+          application/json:
+            schema: !include schema/contact.json
+            example: !include samples/employee/contact-example.json
+        responses:
+          200:
+          500:          
+            body:
+              application/json:
+                schema: !include schema/error.json
+                example: !include samples/error-example.json                            
+      delete:
+        description: deletes an existing emergency contact from the employee details
+        responses:
+          204:
+          500:          
+            body:
+              application/json:
+                schema: !include schema/error.json
+                example: !include samples/error-example.json                
+/calendar:
+  description: resource for calendar purposes
+  get:
+    queryParameters:
+      fromDate: 
+        type: date
+        required: true
+      toDate:
+        type: date
+        required: true
+      leaveTypeId:
+        type: string            
+        required: false        
+    responses:
+      200:
+        body:
+          application/json:
+            schema: !include schema/calendaritems.json
+            example: !include samples/calendar/calendaritems-example.json
+/payabletime:
+  description: resource for retrieving payable time records for an employee, returns a max. of 7 days of data
+  get:
+    queryParameters:
+      fromDate: 
+        type: date
+        required: false
+      toDate:
+        type: date
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+            schema: !include schema/payabletime.json  
+            example: !include samples/payabletime-example.json
+/feedback:
+  description: e-mails application feedback to a designated e-mail address
+  post:
+    body:
+      application/json:
+        schema: !include schema/feedback.json
+        example: !include samples/feedback-example.json
+/usercontext:
+  description: retrieves a list of application functions that a use is authorised for
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            schema: !include schema/usercontext.json
+            example: !include samples/usercontext-example.json

@@ -1,0 +1,38 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "http://schemas.asciano.com.au/json/v1/usercontext",
+    "title": "User Context",
+    "description": "User context data type",
+    "type": "object",
+    "properties": {
+        "psuserprofile": {
+            "description": "The unique identifier for the user context object",
+            "type": "string"
+        },
+        "kioskuser": {
+            "description": "whether the user accesses Asciano kiosk terminals",
+            "type": "boolean"
+        },
+        "functions": {
+            "description": "A list of application functions the user could be authorised for",
+            "type": "array",
+            "items": {
+                "id": "http://jsonschema.net/usercontext/function",
+                "type": "object",
+                "properties": {
+                    "function": {
+                        "type": "string"
+                    },
+                    "allowed": {
+                        "type": "boolean"
+                    },
+                    "system": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "required": [ "psuserprofile" ],
+    "additionalProperties": false
+}

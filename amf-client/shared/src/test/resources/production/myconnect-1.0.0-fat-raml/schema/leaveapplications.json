@@ -1,0 +1,77 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "http://schemas.asciano.com.au/json/v1/leaveapplications",
+    "definitions": {
+        "leaveApplication": {
+            "type": "object",
+            "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "One of the keys required to get an individual leave application"
+                },
+                "leaveTypeId": {
+                    "type": "string"
+                },
+                "leaveTypeDescription": {
+                    "type": "string"
+                },                
+                "startDate": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "endDate": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "leaveReason": {
+                    "type": "string"
+                },
+                "partialDays": {
+                    "enum": [ "None", "StartDayOnly", "EndDayOnly", "StartAndEnd", "All" ]
+                },
+                "startDayHours": {
+                    "type": "number"
+                },
+                "startDayHalfDay": {
+                    "type": "boolean"
+                },
+                "endDayHours": {
+                    "type": "number"
+                },
+                "endDayHalfDay": {
+                    "type": "boolean"
+                },
+                "allDayHours": {
+                    "type": "number"
+                },
+                "allDayHalfDay": {
+                    "type": "boolean"
+                },
+                "payInAdvance": {
+                    "type": "boolean"
+                },
+                "medicalCertificateProvided": {
+                    "type": "boolean"
+                },
+                "requesterComments": {
+                    "type": "string"
+                },
+                "attachment": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            },
+            "required": [ "leaveTypeId", "startDate", "endDate" ],
+            "additionalProperties": false
+        }
+    },
+    "type": "array",
+    "items": {
+        "$ref": "#/definitions/leaveApplication"
+    },
+    "minItems": 1,
+    "additionalItems": false,
+    "additionalProperties": false
+}

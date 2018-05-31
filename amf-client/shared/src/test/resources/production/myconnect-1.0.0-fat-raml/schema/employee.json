@@ -1,0 +1,234 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "http://schemas.asciano.com.au/json/v1/employee",
+    "definitions": {
+        "address": {
+            "title": "Address",
+            "description": "Address data type",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "The unique identifier for the address",
+                    "type": "string"
+                },
+                "addressType": {
+                    "description": "Type of the address, e.g. home or work",
+                    "type": "string"
+                },
+                "address1": {
+                    "description": "First address line of the address",
+                    "type": "string"
+                },
+                "address2": {
+                    "description": "Second address line of the address",
+                    "type": "string"
+                },
+                "city": {
+                    "description": "City of the address",
+                    "type": "string"
+                },
+                "state": {
+                    "description": "State of the address",
+                    "type": "string"
+                },
+                "postcode": {
+                    "description": "Postcode of the address",
+                    "type": "string"
+                },
+                "country": {
+                    "description": "Country of the address",
+                    "type": "string"
+                }
+            },
+            "required": [ "addressType", "address1", "city", "state", "postcode", "country" ],
+            "additionalProperties": false
+        },
+        "phone": {
+            "title": "Phone",
+            "description": "Phone data type",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "The unique identifier for the phone",
+                    "type": "string"
+                },
+                "phoneType": {
+                    "description": "Type of the phone, e.g. landline or mobile",
+                    "type": "string"
+                },
+                "countryCode": {
+                    "type": "string"
+                },
+                "number": {
+                    "description": "Number of the phone",
+                    "type": "string"
+                },
+                "extension": {
+                    "type": "string"
+                },
+                "isPreferred": {
+                    "description": "Indicates whether this is the employee's preferred phone number",
+                    "type": "boolean"
+                }
+            },
+            "required": [ "number" ],
+            "additionalProperties": false
+
+        },
+        "contact": {
+            "title": "Emergency contact",
+            "description": "Emergency contact data type",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "The unique identifier for the employee",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "First name of the employee",
+                    "type": "string"
+                },
+                "relationShip": {
+                    "type": "string"
+                },
+                "samePhoneAsEmployee": {
+                    "type": "boolean"
+                },
+                "phoneNumber": {
+                    "$ref": "#/definitions/phone"
+                },
+                "alternativePhoneNumbers": {
+                    "type": "array",
+                    "items": { 
+                        "$ref": "#/definitions/phone"
+                    }
+                },
+                "alternativePhoneNumber": {
+                    "$ref": "#/definitions/phone"
+                },
+                "sameAddressAsEmployee": {
+                    "type": "boolean"
+                },
+                "address": {
+                    "$ref": "#/definitions/address"
+                },
+                "isPrimaryContact": {
+                    "type": "boolean"
+                }
+            },
+            "required": [ "name", "phoneNumber" ],
+            "additionalProperties": false
+
+        },
+        "email": {
+            "title": "Employee e-mail addresses",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "addressType": {
+                    "type": "string"
+                },
+                "emailAddress": {
+                    "type": "string"
+                },
+                "isPreferred": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "bankAccount": {
+            "title": "Bank account",
+            "description": "Bank account type",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "The unique identifier for the bank account",
+                    "type": "string"
+                },
+                "bsb": {
+                    "description": "BSB number of the bank account",
+                    "type": "string"
+                },
+                "accountName": {
+                    "type": "string"
+                },
+                "accountNumber": {
+                    "description": "Account number of the bank account",
+                    "type": "string"
+                },
+                "bankCode": {
+                    "type": "string"
+                },
+                "bankName": {
+                    "type": "string"
+                },
+                "isPrimary": {
+                    "description": "Indicates whether this is the primary account",
+                    "type": "boolean"
+                }
+            },
+            "required": [ "accountNumber" ],
+            "additionalProperties": false
+
+        }
+    },
+    "title": "Employee",
+    "description": "Employee data type",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "The unique identifier for the employee",
+            "type": "string"
+        },
+        "firstName": {
+            "description": "First name of the employee",
+            "type": "string"
+        },
+        "middleName": {
+            "description": "First name of the employee",
+            "type": "string"
+        },
+        "lastName": {
+            "description": "Last name of the employee",
+            "type": "string"
+        },
+        "jobTitle": {
+            "description": "Job title of the employee",
+            "type": "string"
+        },
+        "addresses": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/address"
+            }
+        },
+        "phoneNumbers": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/phone"
+            }
+        },
+        "emailAddresses": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/email"
+            }
+        },
+        "emergencyContacts": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/contact"
+            }
+        },
+        "bankAccounts": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/bankAccount"
+            }
+        }
+    },
+    "required": [ "id", "lastName", "jobTitle" ],
+    "additionalProperties": false
+}

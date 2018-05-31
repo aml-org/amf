@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://schemas.asciano.com.au/json/v1/rosterchangetypes",
+  "title": "Roster change types",
+  "description": "Collection of roster change types",  
+  "type": "array",
+  "additionalItems": false,
+  "items": {
+    "type": "object",
+    "properties": {
+      "rosterChangeType": {
+        "type": "string"
+      },
+      "rosterChangeTypeDesc": {
+        "type": "string"
+      },
+      "dateAppliedForLabel": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": false,
+    "required": [
+      "rosterChangeType",
+      "rosterChangeTypeDesc",
+      "dateAppliedForLabel"
+    ]
+  }
+}

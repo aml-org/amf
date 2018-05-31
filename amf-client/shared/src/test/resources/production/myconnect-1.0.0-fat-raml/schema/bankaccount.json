@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "http://schemas.asciano.com.au/json/v1/phone",
+    "title": "Bank account",
+    "description": "Bank account type",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "The unique identifier for the bank account",
+            "type": "string"
+        },
+        "bsb": {
+            "description": "BSB number of the bank account",
+            "type": "string"
+        },
+        "accountNumber": {
+            "description": "Account number of the bank account",
+            "type": "string"
+        },
+        "isPrimary": {
+            "description": "Indicates whether this is the primary account",
+            "type": "boolean"
+        }
+    },
+    "required": [ "accountNumber", "isPrimary" ],
+    "additionalProperties" :  false
+}
