@@ -688,7 +688,15 @@ trait RamlCommonOASFieldsEmitter {
     fs.entry(ScalarShapeModel.ExclusiveMaximum)
       .map(f => result += ValueEmitter("exclusiveMaximum".asRamlAnnotation, f))
   }
+
+  def processRamlPattern(f: FieldEntry): FieldEntry = {
+    var rawRegex = f.value.value.asInstanceOf[AmfScalar].value.asInstanceOf[String]
+    if (rawRegex.startsWith("^")) rawRegex = rawRegex.drop(1)
+    if (rawRegex.endsWith("$")) rawRegex = rawRegex.dropRight(1)
+    f.copy(value = Value(AmfScalar(rawRegex), f.value.annotations))
+  }
 }
+
 case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext)
     extends RamlAnyShapeEmitter(scalar, ordering, references)
@@ -720,7 +728,9 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
 
     emitOASFields(fs, result)
 
-    fs.entry(ScalarShapeModel.Pattern).map(f => result += RamlScalarEmitter("pattern", f))
+    fs.entry(ScalarShapeModel.Pattern).map { f =>
+      result += RamlScalarEmitter("pattern", processRamlPattern(f))
+    }
 
     fs.entry(ScalarShapeModel.Minimum)
       .map(f => result += ValueEmitter("minimum", f, Some(NumberTypeToYTypeConverter.convert(rawTypeDef))))
@@ -796,7 +806,10 @@ case class RamlFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, refer
 
     fs.entry(FileShapeModel.FileTypes).map(f => result += ArrayEmitter("fileTypes", f, ordering))
 
-    fs.entry(ScalarShapeModel.Pattern).map(f => result += ValueEmitter("pattern".asRamlAnnotation, f))
+    fs.entry(ScalarShapeModel.Pattern).map { f =>
+      result += ValueEmitter("pattern".asRamlAnnotation, processRamlPattern(f))
+    }
+
 
     fs.entry(ScalarShapeModel.Minimum).map(f => result += ValueEmitter("minimum".asRamlAnnotation, f))
 
@@ -1772,7 +1785,7 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
 
 }
 
-case class SimpleTypeEmitter(shape: ScalarShape, ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext) {
+case class SimpleTypeEmitter(shape: ScalarShape, ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext) extends RamlCommonOASFieldsEmitter {
 
   def emitters(): Seq[EntryEmitter] = {
     val fs = shape.fields
@@ -1797,7 +1810,10 @@ case class SimpleTypeEmitter(shape: ScalarShape, ordering: SpecOrdering)(implici
 
     fs.entry(ScalarShapeModel.Values).map(f => result += ArrayEmitter("enum", f, ordering))
 
-    fs.entry(ScalarShapeModel.Pattern).map(f => result += ValueEmitter("pattern", f))
+    fs.entry(ScalarShapeModel.Pattern).map { f =>
+      result += RamlScalarEmitter("pattern", processRamlPattern(f))
+    }
+
 
     fs.entry(ScalarShapeModel.MinLength).map(f => result += ValueEmitter("minLength", f))
 
