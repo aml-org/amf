@@ -447,7 +447,7 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/sys-sap-menasha-proxy-1.0.0-fat-raml/api.raml#/web-api/end-points/%2Fsales%2Fdocuments/post/request/application%2Fjson/application%2Fjson",
+                            "@id": "file://amf-client/shared/src/test/resources/production/sys-sap-menasha-proxy-1.0.0-fat-raml/api.raml#/web-api/end-points/%2Fsales%2Fdocuments/post/request/application%2Fjson/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -954,7 +954,7 @@
                                         ],
                                         "http://raml.org/vocabularies/document#link-target": [
                                           {
-                                            "@id": "file://urn:jsonschema:com:menasha:enterprise:SalesDocuments/property/invoiceDocumentList/array/invoiceDocumentList/items"
+                                            "@id": "file://amf-client/shared/src/test/resources/production/sys-sap-menasha-proxy-1.0.0-fat-raml/api.raml#/web-api/end-points/%2Fsales%2Fdocuments/post/request/application%2Fjson/schema/property/invoiceDocumentList/array/invoiceDocumentList/items"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document#link-label": [
@@ -2251,7 +2251,7 @@
                                     ],
                                     "http://raml.org/vocabularies/document#link-target": [
                                       {
-                                        "@id": "file://urn:jsonschema:com:menasha:enterprise:SalesDocuments/property/orderMessage/orderMessage"
+                                        "@id": "file://amf-client/shared/src/test/resources/production/sys-sap-menasha-proxy-1.0.0-fat-raml/api.raml#/web-api/end-points/%2Fsales%2Fdocuments/post/request/application%2Fjson/schema/property/orderMessage/orderMessage"
                                       }
                                     ],
                                     "http://raml.org/vocabularies/document#link-label": [
@@ -2358,7 +2358,7 @@
                                         ],
                                         "http://raml.org/vocabularies/document#link-target": [
                                           {
-                                            "@id": "file://urn:jsonschema:com:menasha:enterprise:SalesDocuments/property/orderMessage/orderMessage"
+                                            "@id": "file://amf-client/shared/src/test/resources/production/sys-sap-menasha-proxy-1.0.0-fat-raml/api.raml#/web-api/end-points/%2Fsales%2Fdocuments/post/request/application%2Fjson/schema/property/orderMessage/orderMessage"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document#link-label": [
@@ -2508,7 +2508,7 @@
                                         ],
                                         "http://raml.org/vocabularies/document#link-target": [
                                           {
-                                            "@id": "file://urn:jsonschema:com:menasha:enterprise:SalesDocuments/property/orderMessage/orderMessage"
+                                            "@id": "file://amf-client/shared/src/test/resources/production/sys-sap-menasha-proxy-1.0.0-fat-raml/api.raml#/web-api/end-points/%2Fsales%2Fdocuments/post/request/application%2Fjson/schema/property/orderMessage/orderMessage"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document#link-label": [
@@ -2639,7 +2639,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/sys-sap-menasha-proxy-1.0.0-fat-raml/api.raml#/web-api/end-points/%2Fsales%2Fdocuments/post/request/application%2Fjson/application%2Fjson/source-map",
+                                "@id": "file://amf-client/shared/src/test/resources/production/sys-sap-menasha-proxy-1.0.0-fat-raml/api.raml#/web-api/end-points/%2Fsales%2Fdocuments/post/request/application%2Fjson/schema/source-map",
                                 "@type": [
                                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -2647,7 +2647,7 @@
                                   {
                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/production/sys-sap-menasha-proxy-1.0.0-fat-raml/api.raml#/web-api/end-points/%2Fsales%2Fdocuments/post/request/application%2Fjson/application%2Fjson"
+                                        "@value": "file://amf-client/shared/src/test/resources/production/sys-sap-menasha-proxy-1.0.0-fat-raml/api.raml#/web-api/end-points/%2Fsales%2Fdocuments/post/request/application%2Fjson/schema"
                                       }
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2673,7 +2673,7 @@
                                   {
                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/production/sys-sap-menasha-proxy-1.0.0-fat-raml/api.raml#/web-api/end-points/%2Fsales%2Fdocuments/post/request/application%2Fjson/application%2Fjson"
+                                        "@value": "file://amf-client/shared/src/test/resources/production/sys-sap-menasha-proxy-1.0.0-fat-raml/api.raml#/web-api/end-points/%2Fsales%2Fdocuments/post/request/application%2Fjson/schema"
                                       }
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2687,7 +2687,7 @@
                                   {
                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/production/sys-sap-menasha-proxy-1.0.0-fat-raml/api.raml#/web-api/end-points/%2Fsales%2Fdocuments/post/request/application%2Fjson/application%2Fjson"
+                                        "@value": "file://amf-client/shared/src/test/resources/production/sys-sap-menasha-proxy-1.0.0-fat-raml/api.raml#/web-api/end-points/%2Fsales%2Fdocuments/post/request/application%2Fjson/schema"
                                       }
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3299,7 +3299,7 @@
                                         ],
                                         "http://raml.org/vocabularies/document#link-target": [
                                           {
-                                            "@id": "file://urn:jsonschema:com:menasha:enterprise:SalesDocuments/property/invoiceDocumentList/array/invoiceDocumentList/items"
+                                            "@id": "file://amf-client/shared/src/test/resources/production/sys-sap-menasha-proxy-1.0.0-fat-raml/api.raml#/web-api/end-points/%2Fsales%2Fdocuments/post/request/application%2Fjson/schema/property/invoiceDocumentList/array/invoiceDocumentList/items"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document#link-label": [
@@ -4596,7 +4596,7 @@
                                     ],
                                     "http://raml.org/vocabularies/document#link-target": [
                                       {
-                                        "@id": "file://urn:jsonschema:com:menasha:enterprise:SalesDocuments/property/orderMessage/orderMessage"
+                                        "@id": "file://amf-client/shared/src/test/resources/production/sys-sap-menasha-proxy-1.0.0-fat-raml/api.raml#/web-api/end-points/%2Fsales%2Fdocuments/post/request/application%2Fjson/schema/property/orderMessage/orderMessage"
                                       }
                                     ],
                                     "http://raml.org/vocabularies/document#link-label": [
@@ -4703,7 +4703,7 @@
                                         ],
                                         "http://raml.org/vocabularies/document#link-target": [
                                           {
-                                            "@id": "file://urn:jsonschema:com:menasha:enterprise:SalesDocuments/property/orderMessage/orderMessage"
+                                            "@id": "file://amf-client/shared/src/test/resources/production/sys-sap-menasha-proxy-1.0.0-fat-raml/api.raml#/web-api/end-points/%2Fsales%2Fdocuments/post/request/application%2Fjson/schema/property/orderMessage/orderMessage"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document#link-label": [
@@ -4853,7 +4853,7 @@
                                         ],
                                         "http://raml.org/vocabularies/document#link-target": [
                                           {
-                                            "@id": "file://urn:jsonschema:com:menasha:enterprise:SalesDocuments/property/orderMessage/orderMessage"
+                                            "@id": "file://amf-client/shared/src/test/resources/production/sys-sap-menasha-proxy-1.0.0-fat-raml/api.raml#/web-api/end-points/%2Fsales%2Fdocuments/post/request/application%2Fjson/schema/property/orderMessage/orderMessage"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document#link-label": [
