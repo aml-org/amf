@@ -180,6 +180,7 @@ class ValidationJSONLDEmitter(targetProfile: String) {
         constraint.minExclusive.foreach(genNumericPropertyConstraintValue(b, "minExclusive", _, Some(constraint)))
         constraint.maxInclusive.foreach(genNumericPropertyConstraintValue(b, "maxInclusive", _, Some(constraint)))
         constraint.minInclusive.foreach(genNumericPropertyConstraintValue(b, "minInclusive", _, Some(constraint)))
+        constraint.multipleOf.foreach(genCustomPropertyConstraintValue(b, (Namespace.Shapes + "multipleOfValidationParam").iri(), _))
         constraint.pattern.foreach(v => genPropertyConstraintValue(b, "pattern", v))
         constraint.node.foreach(genPropertyConstraintValue(b, "node", _))
         constraint.datatype.foreach { v =>
@@ -241,19 +242,35 @@ class ValidationJSONLDEmitter(targetProfile: String) {
         b.obj { b =>
           b.entry("@id", constraintId)
           b.entry("@type", (Namespace.Shacl + "ConstraintComponent").iri())
-          b.entry(
-            (Namespace.Shacl + "parameter").iri(),
-            _.obj { b =>
-              b.entry(
-                (Namespace.Shacl + "path").iri(),
-                _.obj(_.entry("@id", validatorPath))
-              )
-              b.entry(
-                (Namespace.Shacl + "datatype").iri(),
-                _.obj(_.entry("@id", (Namespace.Xsd + "boolean").iri()))
-              )
-            }
-          )
+          if (f.parameters.nonEmpty) {
+            b.entry(
+              (Namespace.Shacl + "parameter").iri(),
+              _.obj { b =>
+                b.entry(
+                  (Namespace.Shacl + "path").iri(),
+                  _.obj(_.entry("@id", f.parameters.head.path))
+                )
+                b.entry(
+                  (Namespace.Shacl + "datatype").iri(),
+                  _.obj(_.entry("@id", f.parameters.head.datatype))
+                )
+              }
+            )
+          } else {
+            b.entry(
+              (Namespace.Shacl + "parameter").iri(),
+              _.obj { b =>
+                b.entry(
+                  (Namespace.Shacl + "path").iri(),
+                  _.obj(_.entry("@id", validatorPath))
+                )
+                b.entry(
+                  (Namespace.Shacl + "datatype").iri(),
+                  _.obj(_.entry("@id", (Namespace.Xsd + "boolean").iri()))
+                )
+              }
+            )
+          }
           b.entry((Namespace.Shacl + "validator").iri(), _.obj(_.entry("@id", validatorId)))
         }
       }
@@ -354,6 +371,13 @@ class ValidationJSONLDEmitter(targetProfile: String) {
     }
 
   }
+
+  private def genCustomPropertyConstraintValue(b: EntryBuilder,
+                                               constraintIri: String,
+                                               value: String): Unit = {
+    b.entry(constraintIri, value)
+  }
+
 
 //  case class NumValueContainer(value:String, dataType:String)
 //

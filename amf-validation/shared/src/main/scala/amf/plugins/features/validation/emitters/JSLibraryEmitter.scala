@@ -32,16 +32,23 @@ class JSLibraryEmitter(profile: Option[ValidationProfile] = None) {
 
     validations.foreach { (validation) =>
       val constraint = validation.functionConstraint.get
+      val additionalParams = if (constraint.parameters.length > 0) {
+        "," + constraint.parameters.map { param =>
+          "$" + param.path.split("#").last
+        }.mkString(",")
+      } else {
+        ""
+      }
 
       text +=
         s"""
         |
-        |function ${constraint.computeFunctionName(validation.id())}($$this) {
+        |function ${constraint.computeFunctionName(validation.id())}($$this, $$value $additionalParams) {
         |  var innerFn = ${constraint.code.get};
         |  var input = amfFindNode($$this, {});
         |  // print(JSON.stringify(input))
         |  try {
-        |    return innerFn(input);
+        |    return innerFn(input, $$value $additionalParams);
         |  } catch(e) {
         |    console.log("Error in validation function");
         |    console.log(e);
