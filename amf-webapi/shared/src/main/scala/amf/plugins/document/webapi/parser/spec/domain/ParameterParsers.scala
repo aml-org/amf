@@ -367,7 +367,6 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
 
       formData.foreach { param =>
         val property = schema.withProperty(param.payload.name.value())
-        val s        = param.payload.schema
         param.parameter.fields
           .entry(ParameterModel.Required)
           .filter(_.value.annotations.contains(classOf[ExplicitField])) match {
@@ -377,7 +376,8 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
           case Some(f) =>
             property.set(PropertyShapeModel.MinCount, AmfScalar(1, f.scalar.annotations += ExplicitField()))
         }
-        property.withRange(s).adopted(property.id)
+
+        Option(param.payload.schema).foreach(property.withRange(_).adopted(property.id))
       }
 
       Some(Payload().withName("formData").adopted(parentId).set(PayloadModel.Schema, schema).add(FormBodyParameter()))
