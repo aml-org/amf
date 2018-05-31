@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "http://schemas.asciano.com.au/json/v1/contact",
+    "title": "Emergency contact",
+    "description": "Emergency contact data type",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "The unique identifier for the employee",
+            "type": "string"
+        },
+        "name": {
+            "description": "First name of the employee",
+            "type": "string"
+        },
+        "phoneNumber": {
+            "$ref": "http://schemas.asciano.com.au/json/v1/phone"
+        }
+    },
+    "required": [ "name", "phoneNumber" ],
+    "additionalProperties": false
+}

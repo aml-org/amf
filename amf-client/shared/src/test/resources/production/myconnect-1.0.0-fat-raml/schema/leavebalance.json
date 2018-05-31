@@ -1,0 +1,83 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "/",
+    "definitions": {
+        "leaveReason": {
+            "type": "object",
+            "properties": {
+                "leaveReasonId": { "type": "string" },
+                "leaveReasonName": { "type": "string" }
+            }
+        },
+        "leaveType": {
+            "type": "object",
+            "properties": {
+                "leaveTypeId": {
+                    "type": "string"
+                },
+                "leaveTypeName": {
+                    "type": "string"
+                },
+                "leaveTypeCategoryId": {
+                    "type": "string"
+                },
+                "leaveTypeCategoryName": {
+                    "type": "string"
+                },
+                "displayReason": {
+                    "type": "boolean"
+                },
+                "requireReason": {
+                    "type": "boolean"
+                },
+                "displayPartialDays": {
+                    "type": "boolean"
+                },
+                "partialDaysOption": {
+                    "enum": [ "None", "HalfDays", "PartialHours", "Both" ]
+                },
+                "displayPayInAdvance": {
+                    "type": "boolean"
+                },
+                "displayMedicalCertificate": {
+                    "type": "boolean"
+                },
+                "leaveReasons": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/leaveReason"
+                    },
+                    "additionalItems": false,
+                    "additionalProperties": false
+                }
+            },
+            "required": [ "leaveTypeId", "leaveTypeName" ],
+            "additionalProperties": false
+        },
+        "leaveBalance": {
+            "type": "object",
+            "properties": {
+                "leaveType": {
+                    "$ref": "#/definitions/leaveType"
+                },
+                "balance": {
+                    "type": "number"
+                },
+                "unit": {
+                    "type": "string"
+                },
+                "asOf": {
+                    "type": "string"
+                }
+            },
+            "required": [ "leaveType", "balance", "unit" ],
+            "additionalProperties": false
+        }
+    },
+    "type": "array",
+    "items": {
+        "$ref": "#/definitions/leaveBalance"
+    },
+    "additionalItems": false,
+    "additionalProperties": false
+}

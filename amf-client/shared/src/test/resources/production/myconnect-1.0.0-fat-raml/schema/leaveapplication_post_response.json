@@ -1,0 +1,30 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "http://schemas.asciano.com.au/json/v1/leaveapplication_post_response",
+    "title": "Leave application post response",
+    "description": "Describes the response message returned after a leave application submission",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string",
+            "description": "One of the keys required to get an individual leave application"
+        },
+        "leaveTypeId": {
+            "type": "string"
+        },
+        "startDate": {
+            "type": "string",
+            "format": "date"
+        },
+        "endDate": {
+            "type": "string",
+            "format": "date"
+        },
+        "infoMessage": {
+            "type": "string",
+            "description": "Can potentially contain an information message that needs to be returned to the user"
+        }
+    },
+    "required": [ "id" ],
+    "additionalProperties": false
+}

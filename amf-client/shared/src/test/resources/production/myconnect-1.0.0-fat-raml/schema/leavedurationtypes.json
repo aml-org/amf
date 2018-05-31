@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+	"id": "http://schemas.asciano.com.au/json/v1/leavedurationtypes",
+	"title": "Leave duration types",
+	"description": "Collection of leave duration types",
+	"type": "array",
+	"items": {
+		"type": "object",
+		"properties": {
+		  "durationTypeId": {
+			"type": "string"
+		  },
+		  "durationTypeName": {
+			"type": "string"
+		  },
+		  "durationTypeDescription": {
+			"type": "string"
+		  }
+		},
+		"additionalProperties": false,
+		"required": [ "durationTypeId" ]
+	},
+	"additionalItems": false
+}

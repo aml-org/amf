@@ -1,0 +1,38 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "http://schemas.asciano.com.au/json/v1/submitrosterchange",
+    "title": "Roster change",
+    "description": "Roster change request",
+    "type": "object",
+    "properties": {
+      "rosterChangeType": {
+        "type": "string"
+      },
+      "dateAppliedFor": {
+        "type": "string",
+        "format": "date"
+      },
+      "volunteerShift": {
+        "type": "string"
+      },
+      "offDay": {
+        "type": "string",
+        "format": "date"
+      },
+      "includeNextNightShift": {
+        "type": "boolean"
+      },
+      "requesterComments": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": false,
+    "required": [
+      "rosterChangeType",
+      "dateAppliedFor",
+      "volunteerShift",
+      "offDay",
+      "includeNextNightShift",
+      "requesterComments"
+    ]
+}

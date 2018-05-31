@@ -1,0 +1,61 @@
+[
+    {
+        "id": "123",
+        "itemTypeId": "Leave",
+        "itemTypeDescription": "Leave",
+        "itemSubTypeId": "itemSubTypeId",
+        "itemDescription": "itemDescription",
+        "itemSource": "itemSource",
+        "utcOffSet": 600,
+        "startDate": "2015-07-27",
+        "startTime": "07:00:00.000000",
+        "endDate": "2015-08-02",
+        "endTime": "07:00:00.000000",
+        "duration": 0,
+        "fatigue": 60,
+        "location": "Sydney",
+        "taskGroup": "taskgroup",
+        "offShift": true,
+        "leaveData": {
+            "id": "670207",
+            "leaveTypeId": "ALPSH"
+        },
+        "shiftData": {
+            "id": "1234",
+            "description": "abcd",
+            "details": [
+                {
+                    "sequence": 1,
+                    "type": "In",
+                    "time": "07:00:00.000000"
+                },
+                {
+                    "sequence": 2,
+                    "type": "Out",
+                    "time": "14:59:59.000000"
+                }
+            ]
+        }
+    },
+    {
+        "itemTypeId": "Roster",
+        "itemTypeDescription": "Roster",
+        "startDate": "2015-09-01",
+        "endDate": "2015-09-01",
+        "duration": 8,
+        "shiftData": {
+            "id": "1234",
+            "description": "abcd",
+            "details": [
+                {
+                    "type": "In",
+                    "time": "07:00:00.000000"
+                },
+                {
+                    "type": "Out",
+                    "time": "14:59:59.000000"
+                }
+            ]
+        }
+    }
+]

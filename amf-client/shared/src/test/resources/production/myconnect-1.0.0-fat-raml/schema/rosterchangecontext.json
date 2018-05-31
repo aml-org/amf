@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://schemas.asciano.com.au/json/v1/rosterchangecontext",
+  "title": "Roster change context",
+  "description": "Roster change type context details",  
+  "type": "object",
+  "properties": {
+    "rosterChangeType": {
+      "type": "string"
+    },
+    "rosterChangeTypeDesc": {
+      "type": "string"
+    },
+    "dateAppliedForLabel": {
+      "type": "string"
+    },
+    "volunteerShiftVisible": {
+      "type": "boolean"
+    },
+    "volunteerShiftRequired": {
+      "type": "boolean"
+    },
+    "nextNightShiftVisible": {
+      "type": "boolean"
+    },
+    "nextNightShiftRequired": {
+      "type": "boolean"
+    },
+    "offDayVisible": {
+      "type": "boolean"
+    },
+    "offDayRequired": {
+      "type": "boolean"
+    },
+    "workDay": {
+      "type": "string"
+    },
+    "daysTakenVisible": {
+      "type": "boolean"
+    },
+    "daysTaken": {
+      "type": "integer"
+    },
+    "daysLabel": {
+      "type": "string"
+    },
+    "volunteerShiftDetails": {
+      "type": "object",
+      "properties": {
+        "volunteerShift": {
+          "type": "string"
+        },
+        "volunteerShiftDescr": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [ "rosterChangeType" ]
+}

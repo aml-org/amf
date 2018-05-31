@@ -1,0 +1,113 @@
+{
+    "id": "",
+    "firstName": "olaf",
+    "middleName": "",
+    "lastName": "loogman",
+    "jobTitle": "integration consultant",
+    "addresses": [
+        {
+            "id": "1",
+            "addressType": "Home",
+            "address1": "Main Street 534",
+            "city": "Sydney",
+            "state": "NSW",
+            "postcode": "2000",
+            "country": "Australia"
+        },
+        {
+            "id": "2",
+            "addressType": "Work",
+            "address1": "Main Street 539",
+            "city": "Sydney",
+            "state": "NSW",
+            "postcode": "2000",
+            "country": "Australia"
+        }
+    ],
+    "phoneNumbers": [
+        {
+            "phoneType": "Mobile",
+            "countryCode": "+61",
+            "number": "0481737636",
+            "extension": "",
+            "isPreferred": true
+        },
+        {
+            "phoneType": "Home",
+            "countryCode": "+61",
+            "number": "0241737636",
+            "extension": "",
+            "isPreferred": false
+        }
+    ],
+    "emergencyContacts": [
+        {
+            "id": "ct1",
+            "name": "John Doe",
+            "relationShip": "Parent",
+            "samePhoneAsEmployee": false,
+            "phoneNumber": {
+                "phoneType": "Home",
+                "countryCode": "+61",
+                "number": "0241737636",
+                "extension": "",
+                "isPreferred": false
+            },
+            "alternativePhoneNumbers": [
+                {
+                    "phoneType": "Home",
+                    "countryCode": "+61",
+                    "number": "0241737636",
+                    "extension": "",
+                    "isPreferred": false
+                }
+            ],
+            "sameAddressAsEmployee": false,
+            "address": {
+                "id": "1",
+                "addressType": "Home",
+                "address1": "Main Street 534",
+                "city": "Sydney",
+                "state": "NSW",
+                "postcode": "2000",
+                "country": "Australia"
+            },
+            "isPrimaryContact": true
+        },
+        {
+            "id": "ct2",
+            "name": "Jane Doe",
+            "relationShip": "Parent",
+            "samePhoneAsEmployee": false,
+            "phoneNumber": {
+                "phoneType": "Home",
+                "countryCode": "+61",
+                "number": "0241737636",
+                "extension": "",
+                "isPreferred": false
+            },
+            "sameAddressAsEmployee": true,
+            "isPrimaryContact": false
+        }
+    ],
+    "bankAccounts": [
+        {
+            "id": "ba1",
+            "bsb": "542878",
+            "accountName": "John Doe",
+            "accountNumber": "2487376234",
+            "bankCode": "CBA",
+            "bankName": "Commonwealth Bank of Australia",
+            "isPrimary": true
+        },
+        {
+            "id": "ba2",
+            "bsb": "542878",
+            "accountName": "John Doe",
+            "accountNumber": "2487376235",
+            "bankCode": "CBA",
+            "bankName": "Commonwealth Bank of Australia",
+            "isPrimary": false
+        }
+    ]
+}

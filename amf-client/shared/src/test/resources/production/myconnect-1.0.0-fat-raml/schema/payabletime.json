@@ -1,0 +1,29 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "http://schemas.asciano.com.au/json/v1/payabletime",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "dateUnderReport": {
+                "type": "string",
+                "format": "date"
+            },
+            "reportingCode": {
+                "type": "string"
+            },
+            "description": {
+                "type": "string"
+            },
+            "quantity": {
+                "type": "number"
+            },
+            "unitType": {
+                "type": "string"
+            }
+        },
+        "required": [ "dateUnderReport" ],
+        "additionalProperties": false
+    },
+    "additionalItems": false
+}

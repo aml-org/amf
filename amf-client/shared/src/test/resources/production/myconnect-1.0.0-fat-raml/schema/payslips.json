@@ -1,0 +1,50 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "http://schemas.asciano.com.au/json/v1/payslips",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "payslipId": {
+                "type": "string"
+            },
+            "empId": {
+                "description": "Employee ID of the employee the payslip belongs to",
+                "type": "string"
+            },
+            "calendarGroupId": {
+                "type": "string"
+            },
+            "gpSourceProduct": {
+                "type": "string"
+            },
+            "paymentDate": {
+                "type": "string",
+                "format": "date"
+            },
+            "periodBeginDate": {
+                "type": "string",
+                "format": "date"
+            },
+            "periodEndDate": {
+                "type": "string",
+                "format": "date"
+            },
+            "grossPay": {
+                "type": "number"
+            },
+            "netPay": {
+                "type": "number"
+            },
+            "grossTax": {
+                "type": "number"
+            },
+            "description": {
+                "type": "string"
+            }
+        },
+        "required": [ "payslipId" ],
+        "additionalProperties": false
+    },
+    "additionalItems": false
+}

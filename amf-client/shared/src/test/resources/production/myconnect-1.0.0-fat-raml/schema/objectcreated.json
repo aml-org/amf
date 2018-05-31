@@ -1,0 +1,37 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "http://schemas.asciano.com.au/json/v1/objectcreated",
+    "title": "Object created",
+    "description": "Object created data type",
+    "definitions": {
+        "keyValuePair": {
+            "properties": {
+                "name": {
+                    "description": "The name of the (composite) key of the created object",
+                    "type": "string"
+                },
+                "value": {
+                    "description": "The composite ID value of the created object",
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "type": "object",
+    "properties": {
+        "created": {
+            "description": "Whether the object was successfully created",
+            "type": "boolean"
+        },
+        "objectId": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/keyValuePair"
+            },
+            "additionalItems": false
+        }
+    },
+    "required": [ "created" ],
+    "additionalProperties": false
+}

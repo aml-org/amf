@@ -218,7 +218,7 @@ class AMFCompiler(val rawUrl: String,
             }
           })
           .recover {
-            case e @ (_: FileNotFound | _: URISyntaxException | _: SocketTimeout | _:UnsupportedUrlScheme)  =>
+            case e @ (_: FileNotFound | _: URISyntaxException | _: SocketTimeout | _:UnsupportedUrlScheme | _:NetworkError)  =>
               if (!link.isInferred()) {
                 link.refs.map(_.node).foreach { ref =>
                   ctx.violation(link.url, e.getMessage, ref)

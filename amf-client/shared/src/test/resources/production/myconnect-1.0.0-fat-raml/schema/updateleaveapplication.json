@@ -1,0 +1,131 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"id": "http://schemas.asciano.com.au/json/v1/updateleaveapplication",
+	"title": "Update leave application",
+	"description": "Data type used to update a leave application entity",
+	"type": "object",
+	  "properties": {
+		"id": {
+		  "type": "string"
+		},
+		"leaveTypeId": {
+		  "type": "string"
+		},
+		"leaveTypeDescription": {
+		  "type": "string"
+		},
+		"leaveType": {
+		  "type": "object",
+		  "properties": {
+			"leaveTypeId": {
+			  "type": "string"
+			},
+			"leaveTypeName": {
+			  "type": "string"
+			},
+			"leaveTypeCategoryId": {
+			  "type": "string"
+			},
+			"leaveTypeCategoryName": {
+			  "type": "string"
+			},
+			"displayReason": {
+			  "type": "boolean"
+			},
+			"requireReason": {
+			  "type": "boolean"
+			},
+			"displayPartialDays": {
+			  "type": "boolean"
+			},
+			"partialDaysOption": {
+			  "type": "string"
+			},
+			"displayPayInAdvance": {
+			  "type": "boolean"
+			},
+			"displayMedicalCertificate": {
+			  "type": "boolean"
+			},
+			"leaveReasons": {
+			  "type": "array",
+			  "items": {
+				"type": "object",
+				"properties": {
+				  "leaveReasonId": {
+					"type": "string"
+				  },
+				  "leaveReasonName": {
+					"type": "string"
+				  }
+				},
+				"additionalProperties": false
+			  },
+			  "additionalItems": false
+			}
+		  },
+		  "additionalProperties": false
+		},
+		"startDate": {
+            "type": "string",
+            "format": "date"
+		},
+		"endDate": {
+            "type": "string",
+            "format": "date"
+		},
+		"leaveReason": {
+		  "type": "string"
+		},
+		"partialDays": {
+		  "type": "string"
+		},
+		"startDayHours": {
+		  "type": "number"
+		},
+		"startDayHalfDay": {
+		  "type": "boolean"
+		},
+		"endDayHours": {
+		  "type": "number"
+		},
+		"endDayHalfDay": {
+		  "type": "boolean"
+		},
+		"allDayHours": {
+		  "type": "number"
+		},
+		"allDayHalfDay": {
+		  "type": "boolean"
+		},
+		"payInAdvance": {
+		  "type": "boolean"
+		},
+		"medicalCertificateProvided": {
+		  "type": "boolean"
+		},
+		"requesterComments": {
+		  "type": "string"
+		},
+		"attachment": {
+		  "type": "string"
+		},
+		"status": {
+		  "type": "string"
+		},		
+		"leaveDurationType": {
+		  "type": "string",
+          "description": "Leave duration type code (applies to TMS unplanned leave only)"
+		},		
+		"leaveDuration": {
+            "type": "number",
+            "description": "Total duration of leave (applies to TMS leave only)"  
+		},
+		"editable": {
+            "type": "boolean",
+            "description": "Indicates if the leave entity is able to be edited (applies to TMS leave only)"   
+		}
+	  },
+	  "additionalProperties": false,
+	  "required": [ "id" ]
+}

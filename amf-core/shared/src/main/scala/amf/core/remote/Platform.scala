@@ -209,3 +209,5 @@ object UnsupportedFileSystem extends FileSystem {
 case class FileNotFound(cause: Exception) extends Exception(cause)
 
 case class SocketTimeout(cause: Exception) extends Exception(cause)
+
+case class NetworkError(cause: Throwable) extends Exception(cause)
