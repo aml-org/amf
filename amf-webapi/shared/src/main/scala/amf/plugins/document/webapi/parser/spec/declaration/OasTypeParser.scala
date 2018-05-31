@@ -354,20 +354,10 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
   }
 
   private def checkJsonIdentity(shape: AnyShape, map: YMap, adopt: Shape => Unit): Unit = {
-    if (isOas || isOas3) {
-      adopt(shape)
-    } else {
-      map.map.get("id") match {
-        case Some(identity) if identity.asOption[String].isDefined =>
-          val id           = identity.as[String]
-          val normalizedId = id.normalizeUrl
-
-          shape.id = normalizedId
-          ctx.registerJsonSchema(id, shape)
-        case _ =>
-          adopt(shape)
-      }
+    if (!isOas && !isOas3) {
+      map.map.get("id") foreach { _.asOption[String].foreach { ctx.registerJsonSchema(_, shape) } }
     }
+    adopt(shape)
   }
 
   private def parseUnionType(): UnionShape = {
