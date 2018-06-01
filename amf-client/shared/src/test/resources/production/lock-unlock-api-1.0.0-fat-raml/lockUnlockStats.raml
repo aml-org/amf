@@ -1,0 +1,50 @@
+#%RAML 0.8
+title: Lock Unlock Stats API
+version: 1.0.0
+protocols: HTTP
+mediaType: application/json
+baseUri: http://api.localhost.com/lockUnlock
+
+/stores:
+  get:
+    queryParameters: 
+      period:
+        displayName: Period
+        description: The period to show the store lock unlock activity for
+        enum: [30 minutes, 1 hour, 2 hour, 3, hour, 4 hour, 5 hour]
+        default: 30 minutes
+        required: false
+    responses: 
+      200: 
+        body: 
+          application/json:       
+  /{storeNumber}:
+    get:
+      queryParameters: 
+        period:
+          displayName: Period
+          description: The period to show the store lock unlock activity for
+          enum: [30 minutes, 1 hour, 2 hour, 3, hour, 4 hour, 5 hour]
+          default: 30 minutes
+          required: false
+        
+  /count:
+    get:
+     queryParameters: 
+       from:
+        displayName: From
+        example: 2017-09-05 10:00:00
+        description: Starting time from which to get the store count from 
+        default: current time - 10 minutes
+        type: date
+        required: false
+       to:
+        displayName: To
+        example: 2017-09-05 10:10:00
+        description: Ending time from which to get the store count from 
+        default: current time
+        type: date
+        required: false
+    displayName: Store Count
+    description: Count of distinct stores received lock unlock deltas within specified range.
+    
