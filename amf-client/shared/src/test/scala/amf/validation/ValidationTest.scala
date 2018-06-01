@@ -2574,7 +2574,17 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         .build()
       report <- validation.validate(model, ProfileNames.RAML)
     } yield {
-      println(report)
+      assert(report.results.nonEmpty)
+    }
+  }
+
+  test("pattern raml example test") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(validationsPath + "08/ramlpattern.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
       assert(report.results.nonEmpty)
     }
   }

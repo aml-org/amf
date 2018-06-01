@@ -27,8 +27,8 @@ traits:
           Multiple of such headers are allowed.
         items:
           example: 230-OCTO
-          pattern: ^\d+\-\w+$
+          pattern: \d+\-\w+
       X-Tracker:
         example: abcdefghijklmnop
-        pattern: ^\w{16}$
+        pattern: \w{16}
         description: A code to track API calls end to end
