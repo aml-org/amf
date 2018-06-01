@@ -2589,6 +2589,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+
   test("gmc-services-api--training example test") {
     for {
       validation <- Validation(platform)
@@ -2600,4 +2601,14 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("lock-unlock example test") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(productionPath + "lock-unlock-api-1.0.0-fat-raml/lockUnlockStats.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(report.results.nonEmpty)
+    }
+  }
 }
