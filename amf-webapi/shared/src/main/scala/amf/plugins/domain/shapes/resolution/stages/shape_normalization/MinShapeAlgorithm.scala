@@ -22,8 +22,16 @@ trait MinShapeAlgorithm extends RestrictionComputation {
     restrictShape(baseShape, recursiveShape)
   }
 
-  protected def minShape(baseShapeOrig: Shape, superShape: Shape): Shape = {
-    val baseShape = baseShapeOrig.cloneShape(Some(errorHandler)) // this is destructive, we need to clone
+  private def copy(shape: Shape) = {
+    shape match {
+      case a: AnyShape => a.copyShape()
+      case _           => shape
+    }
+  }
+
+  protected def minShape(baseShapeOrig: Shape, superShapeOri: Shape): Shape = {
+    val superShape = copy(superShapeOri)
+    val baseShape  = baseShapeOrig.cloneShape(Some(errorHandler)) // this is destructive, we need to clone
     baseShape match {
 
       // Scalars

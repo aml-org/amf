@@ -6,23 +6,23 @@ types:
     additionalProperties: true
     properties:
       id:
-        required: true
         type: string
+        required: true
   User:
     type: object
     additionalProperties: true
     properties:
       name:
-        required: true
         type: string
+        required: true
       friend:
         type: object
-        required: true
         additionalProperties: true
         properties:
           id:
-            required: true
             type: string
+            required: true
+        required: true
 /foo:
   get:
     body:
@@ -31,8 +31,8 @@ types:
         additionalProperties: true
         properties:
           id:
-            required: true
             type: string
+            required: true
   /tato:
     get:
       body:
@@ -42,9 +42,9 @@ types:
           properties:
             chango:
               type: object
-              required: true
               additionalProperties: true
               properties:
                 id:
-                  required: true
                   type: string
+                  required: true
+              required: true

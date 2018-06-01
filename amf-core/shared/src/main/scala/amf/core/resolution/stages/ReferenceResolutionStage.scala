@@ -148,7 +148,7 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
       case l: Linkable if l.linkTarget.isDefined && isCycle =>
         Some(
           RecursiveShape(l)
-            .withSupportsRecursion(l.supportsRecursion.option().getOrElse(false)))
+            .withSupportsRecursion(l.supportsRecursion.option().getOrElse(false))) // todo add error here?
 
       // link traversed, return the link
       case l: Linkable if l.linkTarget.isDefined => Some(l)

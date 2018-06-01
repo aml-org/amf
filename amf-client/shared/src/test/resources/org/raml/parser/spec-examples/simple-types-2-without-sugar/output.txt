@@ -7,7 +7,6 @@ types:
     properties:
       onCall:
         type: object
-        required: true
         additionalProperties: true
         properties:
           firstname:
@@ -28,9 +27,9 @@ types:
             pattern: "[0-9|-]+"
             type: string
             required: true
+        required: true
       Head:
         type: object
-        required: true
         additionalProperties: true
         properties:
           firstname:
@@ -44,7 +43,6 @@ types:
             required: false
           reports:
             type: array
-            required: true
             items:
               type: object
               additionalProperties: true
@@ -58,10 +56,12 @@ types:
                 title:
                   type: string
                   required: false
+            required: true
           phone:
             pattern: "[0-9|-]+"
             type: string
             required: true
+        required: true
   Person:
     type: object
     additionalProperties: true
@@ -93,7 +93,6 @@ types:
         required: false
       reports:
         type: array
-        required: true
         items:
           type: object
           additionalProperties: true
@@ -107,6 +106,7 @@ types:
             title:
               type: string
               required: false
+        required: true
       phone:
         pattern: "[0-9|-]+"
         type: string
@@ -168,7 +168,6 @@ types:
             required: false
           reports:
             type: array
-            required: true
             items:
               type: object
               additionalProperties: true
@@ -182,6 +181,7 @@ types:
                 title:
                   type: string
                   required: false
+            required: true
           phone:
             pattern: "[0-9|-]+"
             type: string
@@ -218,7 +218,6 @@ types:
             properties:
               onCall:
                 type: object
-                required: true
                 additionalProperties: true
                 properties:
                   firstname:
@@ -239,9 +238,9 @@ types:
                     pattern: "[0-9|-]+"
                     type: string
                     required: true
+                required: true
               Head:
                 type: object
-                required: true
                 additionalProperties: true
                 properties:
                   firstname:
@@ -255,7 +254,6 @@ types:
                     required: false
                   reports:
                     type: array
-                    required: true
                     items:
                       type: object
                       additionalProperties: true
@@ -269,7 +267,9 @@ types:
                         title:
                           type: string
                           required: false
+                    required: true
                   phone:
                     pattern: "[0-9|-]+"
                     type: string
                     required: true
+                required: true

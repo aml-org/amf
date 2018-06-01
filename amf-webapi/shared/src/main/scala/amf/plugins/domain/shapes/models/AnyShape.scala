@@ -62,7 +62,8 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
       fields.filter(fe => fe._1 != AnyShapeModel.Examples).nonEmpty &&
       annotations.find(classOf[TypePropertyLexicalInfo]).isEmpty
 
-  override def copyShape(): AnyShape = AnyShape(fields, annotations).withId(id)
+  override def copyShape(): AnyShape = AnyShape(fields.copy(), annotations.copy()).withId(id)
+
 }
 
 object AnyShape {

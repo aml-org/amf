@@ -26,7 +26,8 @@ case class ScalarShape(override val fields: Fields, override val annotations: An
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/scalar/" + name.option().getOrElse("default-scalar").urlComponentEncoded
 
-  override def copyShape(): ScalarShape = ScalarShape(fields, annotations).withId(id)
+  override def copyShape(): ScalarShape = ScalarShape(fields.copy(), annotations.copy()).withId(id)
+
 }
 
 object ScalarShape {

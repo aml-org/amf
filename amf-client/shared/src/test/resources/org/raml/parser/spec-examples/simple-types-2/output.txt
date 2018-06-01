@@ -7,18 +7,17 @@ types:
     properties:
       onCall:
         type: object
-        required: true
         additionalProperties: true
         properties:
           firstname:
-            required: true
             type: string
+            required: true
           lastname:
+            type: string
             required: true
-            type: string
           title:
-            required: false
             type: string
+            required: false
           clearanceLevel:
             enum:
               - low
@@ -28,84 +27,84 @@ types:
             type: string
             pattern: "[0-9|-]+"
             required: true
+        required: true
       Head:
         type: object
-        required: true
         additionalProperties: true
         properties:
           firstname:
-            required: true
             type: string
+            required: true
           lastname:
-            required: true
             type: string
+            required: true
           title:
-            required: false
             type: string
+            required: false
           reports:
-            required: true
             items:
               type: object
               additionalProperties: true
               properties:
                 firstname:
-                  required: true
                   type: string
+                  required: true
                 lastname:
+                  type: string
                   required: true
-                  type: string
                 title:
-                  required: false
                   type: string
+                  required: false
+            required: true
           phone:
             type: string
             pattern: "[0-9|-]+"
             required: true
+        required: true
   Person:
     type: object
     additionalProperties: true
     properties:
       firstname:
-        required: true
         type: string
+        required: true
       lastname:
+        type: string
         required: true
-        type: string
       title:
-        required: false
         type: string
+        required: false
   Phone:
     type: string
     pattern: "[0-9|-]+"
-    required: true
   Manager:
     type: object
     additionalProperties: true
     properties:
       firstname:
-        required: true
         type: string
+        required: true
       lastname:
-        required: true
         type: string
+        required: true
       title:
-        required: false
         type: string
+        required: false
       reports:
-        required: true
         items:
           type: object
           additionalProperties: true
           properties:
             firstname:
-              required: true
               type: string
+              required: true
             lastname:
+              type: string
               required: true
-              type: string
             title:
-              required: false
               type: string
+              required: false
+        required: true
       phone:
         type: string
         pattern: "[0-9|-]+"
@@ -115,14 +114,14 @@ types:
     additionalProperties: true
     properties:
       firstname:
-        required: true
         type: string
+        required: true
       lastname:
+        type: string
         required: true
-        type: string
       title:
-        required: false
         type: string
+        required: false
       clearanceLevel:
         enum:
           - low
@@ -133,14 +132,14 @@ types:
     additionalProperties: true
     properties:
       firstname:
-        required: true
         type: string
+        required: true
       lastname:
+        type: string
         required: true
-        type: string
       title:
-        required: false
         type: string
+        required: false
       clearanceLevel:
         enum:
           - low
@@ -157,29 +156,29 @@ types:
         additionalProperties: true
         properties:
           firstname:
-            required: true
             type: string
+            required: true
           lastname:
-            required: true
             type: string
+            required: true
           title:
-            required: false
             type: string
+            required: false
           reports:
-            required: true
             items:
               type: object
               additionalProperties: true
               properties:
                 firstname:
-                  required: true
                   type: string
+                  required: true
                 lastname:
+                  type: string
                   required: true
-                  type: string
                 title:
-                  required: false
                   type: string
+                  required: false
+            required: true
           phone:
             type: string
             pattern: "[0-9|-]+"
@@ -189,14 +188,14 @@ types:
         additionalProperties: true
         properties:
           firstname:
-            required: true
             type: string
+            required: true
           lastname:
+            type: string
             required: true
-            type: string
           title:
-            required: false
             type: string
+            required: false
           clearanceLevel:
             enum:
               - low
@@ -216,18 +215,17 @@ types:
             properties:
               onCall:
                 type: object
-                required: true
                 additionalProperties: true
                 properties:
                   firstname:
-                    required: true
                     type: string
+                    required: true
                   lastname:
+                    type: string
                     required: true
-                    type: string
                   title:
-                    required: false
                     type: string
+                    required: false
                   clearanceLevel:
                     enum:
                       - low
@@ -237,36 +235,37 @@ types:
                     type: string
                     pattern: "[0-9|-]+"
                     required: true
+                required: true
               Head:
                 type: object
-                required: true
                 additionalProperties: true
                 properties:
                   firstname:
-                    required: true
                     type: string
+                    required: true
                   lastname:
-                    required: true
                     type: string
+                    required: true
                   title:
-                    required: false
                     type: string
+                    required: false
                   reports:
-                    required: true
                     items:
                       type: object
                       additionalProperties: true
                       properties:
                         firstname:
-                          required: true
                           type: string
+                          required: true
                         lastname:
+                          type: string
                           required: true
-                          type: string
                         title:
-                          required: false
                           type: string
+                          required: false
+                    required: true
                   phone:
                     type: string
                     pattern: "[0-9|-]+"
                     required: true
+                required: true

@@ -5,11 +5,11 @@ types:
     additionalProperties: true
     properties:
       name:
-        required: true
         type: string
-      age:
         required: true
+      age:
         type: integer
+        required: true
 /res:
   get:
     body:
@@ -23,8 +23,8 @@ types:
         additionalProperties: true
         properties:
           name:
-            required: true
             type: string
-          age:
             required: true
+          age:
             type: integer
+            required: true

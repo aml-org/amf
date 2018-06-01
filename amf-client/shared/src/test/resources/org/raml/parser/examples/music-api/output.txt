@@ -22,18 +22,17 @@ traits:
             additionalProperties: true
             properties:
               name:
-                required: true
                 type: string
-              discography:
                 required: true
+              discography:
                 items:
                   anyOf:
                     -
                       additionalProperties: true
                       properties:
                         title:
-                          required: true
                           type: string
+                          required: true
                         length:
                           type: number
                           multipleOf: 100
@@ -42,20 +41,21 @@ traits:
                       additionalProperties: true
                       properties:
                         title:
-                          required: true
                           type: string
-                        songs:
                           required: true
+                        songs:
                           items:
                             additionalProperties: true
                             properties:
                               title:
-                                required: true
                                 type: string
+                                required: true
                               length:
                                 type: number
                                 multipleOf: 100
                                 required: true
+                          required: true
+                required: true
   post:
     queryParameters:
       access_token:
@@ -70,8 +70,8 @@ traits:
               additionalProperties: true
               properties:
                 title:
-                  required: true
                   type: string
+                  required: true
                 length:
                   type: number
                   multipleOf: 100

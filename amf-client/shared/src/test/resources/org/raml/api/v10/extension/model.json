@@ -5,8 +5,8 @@ types:
     additionalProperties: true
     properties:
       name:
-        required: true
         type: string
+        required: true
 /extended:
   post:
     body:
@@ -15,8 +15,8 @@ types:
         additionalProperties: true
         properties:
           name:
-            required: true
             type: string
+            required: true
 traits:
   dynamic:
     body:
@@ -34,6 +34,6 @@ traits:
         additionalProperties: true
         properties:
           name:
-            required: true
             type: string
+            required: true
 title: extension test

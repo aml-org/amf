@@ -3,12 +3,12 @@ type: object
 additionalProperties: true
 properties:
   a:
-    required: true
     type: string
-  b:
     required: true
+  b:
     anyOf:
       -
         type: number
       -
         type: string
+    required: true

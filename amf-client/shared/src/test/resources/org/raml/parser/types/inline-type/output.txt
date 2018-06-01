@@ -13,8 +13,8 @@ baseUri: http://api.samplehost.com/{version}
         additionalProperties: true
         properties:
           prop1:
-            required: true
             type: string
-          prop2:
             required: true
+          prop2:
             type: number
+            required: true

@@ -3,16 +3,16 @@ type: object
 additionalProperties: true
 properties:
   a:
-    required: true
     anyOf:
       -
         type: datetime
       -
         type: integer
-  b:
     required: true
+  b:
     anyOf:
       -
         type: number
       -
         type: string
+    required: true

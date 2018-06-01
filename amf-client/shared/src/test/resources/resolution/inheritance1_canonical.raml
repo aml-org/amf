@@ -1,62 +1,59 @@
 #%RAML 1.0 Library
 types:
   A:
-    required: true
     type: string
   B:
-    required: true
     type: integer
   C:
-    required: true
     type: number
   D:
     additionalProperties: true
     properties:
       a:
-        required: true
         type: string
-      b:
         required: true
+      b:
         type: integer
+        required: true
   E:
     additionalProperties: true
     properties:
       a:
-        required: true
         type: string
-      c:
         required: true
+      c:
         type: number
+        required: true
   F:
     type: object
     additionalProperties: true
     properties:
       a:
-        required: true
         type: string
+        required: true
       b:
-        required: true
         type: integer
-      c:
         required: true
+      c:
         type: number
+        required: true
   G:
     anyOf:
       -
         additionalProperties: true
         properties:
           a:
-            required: true
             type: string
-          b:
             required: true
+          b:
             type: integer
+            required: true
       -
         additionalProperties: true
         properties:
           a:
-            required: true
             type: string
-          c:
             required: true
+          c:
             type: number
+            required: true

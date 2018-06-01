@@ -7,56 +7,70 @@ import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, Shape}
 import amf.core.parser.Annotations
 import amf.plugins.domain.shapes.annotations.InheritanceProvenance
 import amf.plugins.domain.shapes.metamodel._
-import amf.plugins.domain.shapes.models.{AnyShape, UnionShape}
+import amf.plugins.domain.shapes.models.AnyShape
 
 trait RestrictionComputation {
 
   val keepEditingInfo: Boolean
 
   protected def computeNarrowLogical(baseShape: Shape, superShape: Shape) = {
-    var and: Seq[Shape] = Seq()
-    var or: Seq[Shape] = Seq()
-    var xor: Seq[Shape] = Seq()
+    var and: Seq[Shape]    = Seq()
+    var or: Seq[Shape]     = Seq()
+    var xor: Seq[Shape]    = Seq()
     var not: Option[Shape] = None
 
-    val baseOr = Option(baseShape.or).getOrElse(Nil)
+    val baseOr  = Option(baseShape.or).getOrElse(Nil)
     val superOr = Option(baseShape.or).getOrElse(Nil)
-    if (baseOr.nonEmpty && superOr.nonEmpty) and ++= Seq(AnyShape().withId(baseShape.id + s"/andOr").withAnd(Seq(
-      AnyShape().withId(baseShape.id + "/andOrBase").withOr(baseOr),
-      AnyShape().withId(baseShape.id + "/andOrSuper").withOr(superOr)
-    ))) // both constraints must match => AND
+    if (baseOr.nonEmpty && superOr.nonEmpty)
+      and ++= Seq(
+        AnyShape()
+          .withId(baseShape.id + s"/andOr")
+          .withAnd(
+            Seq(
+              AnyShape().withId(baseShape.id + "/andOrBase").withOr(baseOr),
+              AnyShape().withId(baseShape.id + "/andOrSuper").withOr(superOr)
+            ))) // both constraints must match => AND
     if (baseOr.nonEmpty || superOr.nonEmpty) or ++= (baseOr ++ superOr)
 
     // here we just aggregate ands
-    val baseAnd = Option(baseShape.and).getOrElse(Nil)
+    val baseAnd  = Option(baseShape.and).getOrElse(Nil)
     val superAnd = Option(baseShape.and).getOrElse(Nil)
     and ++= (baseAnd ++ superAnd)
 
-    val baseXone = Option(baseShape.xone).getOrElse(Nil)
+    val baseXone  = Option(baseShape.xone).getOrElse(Nil)
     val superXone = Option(baseShape.xone).getOrElse(Nil)
-    if (baseXone.nonEmpty && superXone.nonEmpty) and ++= Seq(AnyShape().withId(baseShape.id + s"/andXone").withAnd(Seq(
-      AnyShape().withId(baseShape.id + "/andXoneBase").withXone(baseXone),
-      AnyShape().withId(baseShape.id + "/andXoneSuper").withXone(superXone)
-    ))) // both constraints must match => AND
+    if (baseXone.nonEmpty && superXone.nonEmpty)
+      and ++= Seq(
+        AnyShape()
+          .withId(baseShape.id + s"/andXone")
+          .withAnd(
+            Seq(
+              AnyShape().withId(baseShape.id + "/andXoneBase").withXone(baseXone),
+              AnyShape().withId(baseShape.id + "/andXoneSuper").withXone(superXone)
+            ))) // both constraints must match => AND
     if (baseXone.nonEmpty || superXone.nonEmpty) or ++= (baseOr ++ superOr)
 
-    val baseNot = Option(baseShape.not)
+    val baseNot  = Option(baseShape.not)
     val superNot = Option(baseShape.not)
-    if (baseNot.isDefined && superNot.isDefined) and ++= Seq(AnyShape().withId(baseShape.id + s"/andNot").withAnd(Seq(
-      AnyShape().withId(baseShape.id + "/andNotBase").withNot(baseNot.get),
-      AnyShape().withId(baseShape.id + "/andNotSuper").withNot(superNot.get)
-    ))) // both constraints must match => AND
+    if (baseNot.isDefined && superNot.isDefined)
+      and ++= Seq(
+        AnyShape()
+          .withId(baseShape.id + s"/andNot")
+          .withAnd(
+            Seq(
+              AnyShape().withId(baseShape.id + "/andNotBase").withNot(baseNot.get),
+              AnyShape().withId(baseShape.id + "/andNotSuper").withNot(superNot.get)
+            ))) // both constraints must match => AND
     if (baseNot.isDefined || superNot.isDefined) not = baseNot.orElse(superNot)
-
 
     baseShape.fields.removeField(ShapeModel.And)
     baseShape.fields.removeField(ShapeModel.Or)
     baseShape.fields.removeField(ShapeModel.Xone)
     baseShape.fields.removeField(ShapeModel.Not)
 
-    if (and.nonEmpty)  baseShape.setArrayWithoutId(ShapeModel.And, and)
-    if (or.nonEmpty)   baseShape.setArrayWithoutId(ShapeModel.Or, or)
-    if (xor.nonEmpty)  baseShape.setArrayWithoutId(ShapeModel.Xone, xor)
+    if (and.nonEmpty) baseShape.setArrayWithoutId(ShapeModel.And, and)
+    if (or.nonEmpty) baseShape.setArrayWithoutId(ShapeModel.Or, or)
+    if (xor.nonEmpty) baseShape.setArrayWithoutId(ShapeModel.Xone, xor)
     if (not.isDefined) baseShape.set(ShapeModel.Not, not.get)
   }
 
@@ -71,13 +85,13 @@ trait RestrictionComputation {
         baseValue match {
           case Some(bvalue) if superValue.isEmpty => baseShape.set(f, bvalue.value, bvalue.annotations)
 
-          case None if superValue.isDefined       =>
+          case None if superValue.isDefined =>
             val finalAnnotations = Annotations(superValue.get.annotations)
             if (keepEditingInfo) inheritAnnotations(finalAnnotations, superShape)
             baseShape.set(f, superValue.get.value, finalAnnotations)
 
           case Some(bvalue) if superValue.isDefined =>
-            val finalValue = computeNarrow(f, bvalue.value, superValue.get.value)
+            val finalValue       = computeNarrow(f, bvalue.value, superValue.get.value)
             val finalAnnotations = Annotations(bvalue.annotations)
             if (finalValue != bvalue.value && keepEditingInfo) inheritAnnotations(finalAnnotations, superShape)
             baseShape.set(f, finalValue, finalAnnotations)
@@ -152,8 +166,8 @@ trait RestrictionComputation {
   protected def stringValue(value: AmfElement): Option[String] = {
     value match {
       case scalar: AmfScalar
-        if Option(scalar.value).isDefined && value.isInstanceOf[AmfScalar] && Option(
-          value.asInstanceOf[AmfScalar].value).isDefined =>
+          if Option(scalar.value).isDefined && value.isInstanceOf[AmfScalar] && Option(
+            value.asInstanceOf[AmfScalar].value).isDefined =>
         Some(scalar.toString)
       case _ => None
     }
@@ -199,7 +213,7 @@ trait RestrictionComputation {
     field match {
 
       case ShapeModel.Name => {
-        val baseStrValue = stringValue(baseValue)
+        val baseStrValue  = stringValue(baseValue)
         val superStrValue = stringValue(superValue)
         if (superStrValue.isDefined && (baseStrValue.isEmpty || baseStrValue.get == "schema")) {
           superValue

@@ -15,11 +15,11 @@ types:
     additionalProperties: true
     properties:
       firstname:
-        required: true
         type: string
+        required: true
       lastname:
-        required: true
         type: string
+        required: true
       age:
         type: integer
         minimum: 0
@@ -32,11 +32,11 @@ types:
         additionalProperties: true
         properties:
           firstname:
-            required: true
             type: string
+            required: true
           lastname:
-            required: true
             type: string
+            required: true
           age:
             type: integer
             minimum: 0
@@ -49,11 +49,11 @@ types:
             additionalProperties: true
             properties:
               firstname:
-                required: true
                 type: string
+                required: true
               lastname:
-                required: true
                 type: string
+                required: true
               age:
                 type: integer
                 minimum: 0

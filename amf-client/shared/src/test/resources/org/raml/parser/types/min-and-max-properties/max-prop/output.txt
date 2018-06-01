@@ -10,11 +10,11 @@ types:
     additionalProperties: true
     properties:
       comment_id:
-        required: false
         type: number
-      initial_comments:
-        required: true
-        type: string
-      author:
         required: false
+      initial_comments:
         type: string
+        required: true
+      author:
+        type: string
+        required: false

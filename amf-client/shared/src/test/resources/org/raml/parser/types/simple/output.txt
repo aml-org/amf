@@ -6,28 +6,28 @@ types:
     additionalProperties: true
     properties:
       family:
-        required: true
         additionalProperties: true
         properties:
           count:
-            required: true
             type: integer
-          members:
             required: true
+          members:
             items:
               type: object
               x-amf-recursive: file://amf-client/shared/src/test/resources/org/raml/parser/types/simple/input.raml#/declarations/Human
-      name:
+            required: true
         required: true
+      name:
         type: string
+        required: true
   Address:
     type: string
   Email:
     additionalProperties: true
     properties:
       base:
-        required: true
         type: string
+        required: true
       domain:
-        required: true
         type: string
+        required: true

@@ -10,7 +10,7 @@ baseUri: http://localhost:8081/api
         additionalProperties: true
         properties:
           hi:
-            required: true
             type: string
+            required: true
 uses:
   assets: assets-lib.raml

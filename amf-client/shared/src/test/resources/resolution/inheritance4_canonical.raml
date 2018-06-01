@@ -4,19 +4,19 @@ types:
     additionalProperties: true
     properties:
       address:
-        required: true
         type: string
+        required: true
   Cat:
     type: object
     additionalProperties: true
     properties:
       address:
-        required: true
         type: string
-      age:
         required: true
+      age:
         anyOf:
           -
             type: integer
           -
             type: number
+        required: true

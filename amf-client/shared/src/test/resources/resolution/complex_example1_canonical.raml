@@ -4,26 +4,26 @@ types:
     additionalProperties: true
     properties:
       manufacturer:
-        required: true
         type: string
+        required: true
       numberOfSIMCards:
-        required: true
         type: number
-      kind:
         required: true
+      kind:
         type: string
+        required: true
   Device:
     additionalProperties: true
     properties:
       manufacturer:
-        required: true
         type: string
+        required: true
       numberOfUSBPorts:
-        required: true
         type: number
-      kind:
         required: true
+      kind:
         type: string
+        required: true
   Main:
     anyOf:
       -
@@ -31,104 +31,104 @@ types:
         additionalProperties: true
         properties:
           manufacturer:
-            required: true
             type: string
+            required: true
           numberOfSIMCards:
-            required: true
             type: number
+            required: true
           kind:
-            required: true
             type: string
-          phone:
             required: true
+          phone:
             additionalProperties: true
             properties:
               manufacturer:
-                required: true
                 type: string
+                required: true
               numberOfSIMCards:
-                required: true
                 type: number
-              kind:
                 required: true
+              kind:
                 type: string
-          device:
+                required: true
             required: true
+          device:
             anyOf:
               -
                 additionalProperties: true
                 properties:
                   manufacturer:
-                    required: true
                     type: string
+                    required: true
                   numberOfSIMCards:
-                    required: true
                     type: number
-                  kind:
                     required: true
+                  kind:
                     type: string
+                    required: true
               -
                 additionalProperties: true
                 properties:
                   manufacturer:
-                    required: true
                     type: string
+                    required: true
                   numberOfUSBPorts:
-                    required: true
                     type: number
-                  kind:
                     required: true
+                  kind:
                     type: string
+                    required: true
+            required: true
       -
         type: object
         additionalProperties: true
         properties:
           manufacturer:
-            required: true
             type: string
+            required: true
           numberOfUSBPorts:
-            required: true
             type: number
+            required: true
           kind:
-            required: true
             type: string
-          phone:
             required: true
+          phone:
             additionalProperties: true
             properties:
               manufacturer:
-                required: true
                 type: string
+                required: true
               numberOfSIMCards:
-                required: true
                 type: number
-              kind:
                 required: true
+              kind:
                 type: string
-          device:
+                required: true
             required: true
+          device:
             anyOf:
               -
                 additionalProperties: true
                 properties:
                   manufacturer:
-                    required: true
                     type: string
+                    required: true
                   numberOfSIMCards:
-                    required: true
                     type: number
-                  kind:
                     required: true
+                  kind:
                     type: string
+                    required: true
               -
                 additionalProperties: true
                 properties:
                   manufacturer:
-                    required: true
                     type: string
+                    required: true
                   numberOfUSBPorts:
-                    required: true
                     type: number
-                  kind:
                     required: true
+                  kind:
                     type: string
+                    required: true
+            required: true

@@ -4,28 +4,28 @@ types:
     additionalProperties: true
     properties:
       city:
-        required: true
         type: string
+        required: true
   CatWithAddress:
     additionalProperties: true
     properties:
       address:
-        required: true
         type: string
+        required: true
   Cat:
     type: object
     additionalProperties: true
     properties:
       city:
-        required: true
         type: string
+        required: true
       address:
-        required: true
         type: string
-      age:
         required: true
+      age:
         anyOf:
           -
             type: string
           -
             type: number
+        required: true

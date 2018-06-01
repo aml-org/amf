@@ -9,7 +9,6 @@ import amf.core.rdf.RdfModel
 import amf.core.utils.Strings
 import amf.core.validation.core._
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.webapi.resolution.pipelines.CanonicalShapePipeline
 import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, NodeShapeModel, ScalarShapeModel}
 import amf.plugins.domain.shapes.models.TypeDef.NumberType
 import amf.plugins.domain.shapes.models._
@@ -17,7 +16,7 @@ import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YDocument.EntryBuilder
 
-class AMFShapeValidations(shape: Shape) {
+class AMFShapeValidations(root: Shape) {
 
   var emitMultipleOf: Boolean = false
 
@@ -31,7 +30,7 @@ class AMFShapeValidations(shape: Shape) {
     )
   }
 
-  protected def validations(): List[ValidationSpecification] = emitShapeValidations("/", canonicalShape())
+  protected def validations(): List[ValidationSpecification] = emitShapeValidations("/", root)
 
   protected def customFunctionValidations(): Seq[ValidationSpecification] = {
     var acc: Seq[ValidationSpecification] = Nil
@@ -86,7 +85,7 @@ class AMFShapeValidations(shape: Shape) {
   def validationId(shape: Shape): String = {
     shape match {
       case rec: RecursiveShape if rec.fixpoint.option().isDefined =>
-        validationLiteralId(rec.fixpoint.value())
+        validationLiteralId(root.id)
       case _ =>
         validationLiteralId(shape.id)
     }
@@ -107,7 +106,7 @@ class AMFShapeValidations(shape: Shape) {
     }
   }
 
-  protected def canonicalShape(): Shape = CanonicalShapePipeline(shape)
+//  protected def canonicalShape(): Shape = CanonicalShapePipeline(shape)
 
   protected def checkLogicalConstraints(context: String,
                                         parent: Shape,
@@ -911,9 +910,9 @@ class AMFShapeValidations(shape: Shape) {
   }
 
   protected def effectiveDataType(scalar: Shape): Option[String] = {
-    shape.fields.?[AmfScalar](ScalarShapeModel.DataType).map(_.toString) match {
+    root.fields.?[AmfScalar](ScalarShapeModel.DataType).map(_.toString) match {
       case Some(datatype) =>
-        val format = shape.fields.?[AmfScalar](ScalarShapeModel.Format).map(_.toString)
+        val format = root.fields.?[AmfScalar](ScalarShapeModel.Format).map(_.toString)
         TypeDefXsdMapping.typeDef(datatype, format.getOrElse("")) match {
           case NumberType =>
             Some((Namespace.Shapes + "number").iri()) // if this is a number, send our custom scalar type

@@ -35,11 +35,11 @@ types:
     additionalProperties: true
     properties:
       name:
-        required: true
         type: string
-      age:
         required: true
+      age:
         type: number
+        required: true
   Mage:
     type: object
     minProperties: 1
@@ -47,11 +47,11 @@ types:
     additionalProperties: true
     properties:
       name:
-        required: true
         type: string
+        required: true
       age:
-        required: true
         type: number
-      power:
         required: true
+      power:
         type: string
+        required: true

@@ -7,36 +7,36 @@ types:
     additionalProperties: true
     properties:
       kind:
-        required: true
         type: string
+        required: true
       name:
-        required: true
         type: string
+        required: true
   Employee:
     discriminator: kind
     type: object
     additionalProperties: true
     properties:
       kind:
-        required: true
         type: string
+        required: true
       name:
-        required: true
         type: string
+        required: true
       employeeId:
-        required: true
         type: string
+        required: true
   User:
     discriminator: kind
     type: object
     additionalProperties: true
     properties:
       kind:
-        required: true
         type: string
+        required: true
       name:
-        required: true
         type: string
+        required: true
       userId:
-        required: true
         type: string
+        required: true

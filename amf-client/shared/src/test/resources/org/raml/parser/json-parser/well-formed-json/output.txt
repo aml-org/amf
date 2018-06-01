@@ -5,8 +5,8 @@ types:
     additionalProperties: true
     properties:
       x:
-        required: true
         type: string
+        required: true
 /hello:
   get: {}
   post:
@@ -43,9 +43,9 @@ types:
                           - 2
                           - three
                           - null
-                required: true
                 additionalProperties: true
                 properties:
                   x:
-                    required: true
                     type: string
+                    required: true
+                required: true
