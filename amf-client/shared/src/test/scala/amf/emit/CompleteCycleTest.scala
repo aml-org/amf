@@ -1273,4 +1273,8 @@ class CompleteCycleTest extends BuildCycleTests {
   test("arrayTypes raml to oas") {
     cycle("array_items.raml", "array_items.json", RamlYamlHint, Oas)
   }
+
+  test("lock-unlock example raml to oas") {
+    cycle("lockUnlockStats.raml", "lockUnlockStats.jsonld", RamlYamlHint, Amf, productionPath + "lock-unlock-api-1.0.0-fat-raml/")
+  }
 }
