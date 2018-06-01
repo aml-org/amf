@@ -3,24 +3,23 @@ title: Test API
 types:
   MyType1:
     maxProperties: 7
-    required: true
     additionalProperties: true
     properties:
       lala:
-        required: true
         type: string
+        required: true
 annotationTypes:
   MyAnnotationType1:
     additionalProperties: true
     properties:
       pp:
         maxProperties: 7
-        required: true
         additionalProperties: true
         properties:
           lala:
-            required: true
             type: string
+            required: true
+        required: true
 (MyAnnotationType1):
   pp:
     lala: lala

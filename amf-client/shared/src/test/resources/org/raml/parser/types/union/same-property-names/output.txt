@@ -5,20 +5,20 @@ types:
     additionalProperties: true
     properties:
       property1:
-        required: true
         type: string
+        required: true
       property2:
-        required: true
         type: string
+        required: true
   SimpleType2:
     additionalProperties: true
     properties:
       property1:
-        required: true
         type: number
+        required: true
       property2:
-        required: true
         type: number
+        required: true
   TypeWithUnionProps:
     type: object
     example:
@@ -32,7 +32,6 @@ types:
     additionalProperties: true
     properties:
       unionArray:
-        required: true
         items:
           anyOf:
             -
@@ -40,21 +39,22 @@ types:
               additionalProperties: true
               properties:
                 property1:
-                  required: true
                   type: string
+                  required: true
                 property2:
-                  required: true
                   type: string
+                  required: true
             -
               type: object
               additionalProperties: true
               properties:
                 property1:
-                  required: true
                   type: number
+                  required: true
                 property2:
-                  required: true
                   type: number
+                  required: true
+        required: true
   SimpleUnion:
     anyOf:
       -
@@ -62,18 +62,18 @@ types:
         additionalProperties: true
         properties:
           property1:
-            required: true
             type: string
+            required: true
           property2:
-            required: true
             type: string
+            required: true
       -
         type: object
         additionalProperties: true
         properties:
           property1:
-            required: true
             type: number
+            required: true
           property2:
-            required: true
             type: number
+            required: true

@@ -860,7 +860,7 @@
                             ],
                             "http://raml.org/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/types_problems.raml#/web-api/end-points/%2Ftrial%2F%7BuriParam%7D/post/request/parameter/unionparam/union/schema/scalar/schema",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/types_problems.raml#/web-api/end-points/%2Ftrial%2F%7BuriParam%7D/post/request/parameter/unionparam/scalar/schema",
                                 "@type": [
                                   "http://raml.org/vocabularies/shapes#ScalarShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -870,11 +870,6 @@
                                 "http://www.w3.org/ns/shacl#datatype": [
                                   {
                                     "@id": "http://raml.org/vocabularies/shapes#number"
-                                  }
-                                ],
-                                "http://www.w3.org/ns/shacl#name": [
-                                  {
-                                    "@value": "schema"
                                   }
                                 ]
                               },
@@ -889,11 +884,6 @@
                                 "http://www.w3.org/ns/shacl#datatype": [
                                   {
                                     "@id": "http://www.w3.org/2001/XMLSchema#boolean"
-                                  }
-                                ],
-                                "http://www.w3.org/ns/shacl#name": [
-                                  {
-                                    "@value": "schema"
                                   }
                                 ]
                               }
@@ -1052,7 +1042,7 @@
                             ],
                             "http://raml.org/vocabularies/shapes#items": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/types_problems.raml#/web-api/end-points/%2Ftrial%2F%7BuriParam%7D/post/request/parameter/numberarrayparam/array/schema/scalar/schema",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/types_problems.raml#/web-api/end-points/%2Ftrial%2F%7BuriParam%7D/post/request/parameter/numberarrayparam/array/schema/scalar/default-scalar",
                                 "@type": [
                                   "http://raml.org/vocabularies/shapes#ScalarShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -1062,11 +1052,6 @@
                                 "http://www.w3.org/ns/shacl#datatype": [
                                   {
                                     "@id": "http://raml.org/vocabularies/shapes#number"
-                                  }
-                                ],
-                                "http://www.w3.org/ns/shacl#name": [
-                                  {
-                                    "@value": "schema"
                                   }
                                 ]
                               }

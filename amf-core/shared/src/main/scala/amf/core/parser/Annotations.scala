@@ -8,6 +8,12 @@ import org.yaml.model.{YMapEntry, YNode, YPart}
   * Element annotations
   */
 class Annotations {
+  def copy(): Annotations = {
+    val copied = Annotations()
+    copied.annotations = annotations
+    copied
+  }
+
   private var annotations: Seq[Annotation] = Seq()
 
   def foreach(fn: Annotation => Unit): Unit = annotations.foreach(fn)

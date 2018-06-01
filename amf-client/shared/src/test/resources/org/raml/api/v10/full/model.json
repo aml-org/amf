@@ -67,49 +67,49 @@ types:
     additionalProperties: true
     properties:
       firstname:
-        required: true
         type: string
+        required: true
       lastname:
-        required: true
         type: string
+        required: true
       age:
         type: integer
         minimum: 0
         maximum: 144
         required: true
       height:
-        required: false
         type: number
-      goggles:
         required: false
+      goggles:
         type: boolean
+        required: false
   SuperUser:
     type: object
     additionalProperties: true
     properties:
       firstname:
-        required: true
         type: string
+        required: true
       lastname:
-        required: true
         type: string
+        required: true
       age:
         type: integer
         minimum: 0
         maximum: 144
         required: true
       height:
-        required: false
         type: number
-      goggles:
         required: false
+      goggles:
         type: boolean
+        required: false
       skills:
         type: array
         maxItems: 3
-        required: true
         items:
           type: string
+        required: true
   Users:
     type: array
     minItems: 2
@@ -134,22 +134,22 @@ types:
       additionalProperties: true
       properties:
         firstname:
-          required: true
           type: string
+          required: true
         lastname:
-          required: true
           type: string
+          required: true
         age:
           type: integer
           minimum: 0
           maximum: 144
           required: true
         height:
-          required: false
           type: number
-        goggles:
           required: false
+        goggles:
           type: boolean
+          required: false
   nString:
     maxLength: 10
   TypeWithCustomFacets:
@@ -243,24 +243,24 @@ annotationTypes:
     properties:
       controls:
         description: where is hypermedia
-        required: true
         additionalProperties: true
         properties:
           url:
-            required: false
             default: href
+            required: false
           property:
-            required: true
             type: string
+            required: true
           names:
             type: array
-            required: true
             items:
               type: string
+            required: true
+        required: true
       permanentUri:
         type: boolean
-        required: false
         default: true
+        required: false
 (basic): sometimes
 (complex):
   controls:
@@ -312,11 +312,11 @@ annotationTypes:
       additionalProperties: true
       properties:
         lat:
-          required: true
           type: number
+          required: true
         long:
-          required: true
           type: number
+          required: true
     responses:
       200:
         headers:
@@ -334,22 +334,22 @@ annotationTypes:
             additionalProperties: true
             properties:
               firstname:
-                required: true
                 type: string
+                required: true
               lastname:
-                required: true
                 type: string
+                required: true
               age:
                 type: integer
                 minimum: 0
                 maximum: 144
                 required: true
               height:
-                required: false
                 type: number
-              goggles:
                 required: false
+              goggles:
                 type: boolean
+                required: false
           application/xml:
             examples:
               first: |
@@ -377,22 +377,22 @@ annotationTypes:
         additionalProperties: true
         properties:
           firstname:
-            required: true
             type: string
+            required: true
           lastname:
-            required: true
             type: string
+            required: true
           age:
             type: integer
             minimum: 0
             maximum: 144
             required: true
           height:
-            required: false
             type: number
-          goggles:
             required: false
+          goggles:
             type: boolean
+            required: false
       application/xml:
         examples:
           first: |

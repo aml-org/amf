@@ -55,6 +55,7 @@ abstract class DataArrangementShape(fields: Fields, annotations: Annotations) ex
     }
     this
   }
+
 }
 
 case class ArrayShape(override val fields: Fields, override val annotations: Annotations)
@@ -69,7 +70,8 @@ case class ArrayShape(override val fields: Fields, override val annotations: Ann
 
   override def meta: Obj = ArrayShapeModel
 
-  override def copyShape(): ArrayShape = ArrayShape(fields, annotations).withId(id)
+  override def copyShape(): ArrayShape = ArrayShape(fields.copy(), annotations.copy()).withId(id)
+
 }
 
 object ArrayShape {
@@ -95,7 +97,8 @@ case class MatrixShape(override val fields: Fields, override val annotations: An
 
   override def meta: Obj = MatrixShapeModel
 
-  override def copyShape(): MatrixShape = MatrixShape(fields, annotations).withId(id)
+  override def copyShape(): MatrixShape = MatrixShape(fields.copy(), annotations.copy()).withId(id)
+
 }
 
 object MatrixShape {
@@ -120,7 +123,8 @@ case class TupleShape(override val fields: Fields, override val annotations: Ann
 
   override def meta: Obj = TupleShapeModel
 
-  override def copyShape(): TupleShape = TupleShape(fields, annotations).withId(id)
+  override def copyShape(): TupleShape = TupleShape(fields.copy(), annotations.copy()).withId(id)
+
 }
 
 object TupleShape {

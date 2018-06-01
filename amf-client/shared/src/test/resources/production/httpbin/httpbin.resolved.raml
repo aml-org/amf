@@ -53,12 +53,11 @@ baseUri: https://httpbin.org/
             properties:
               args:
                 type: object
-                required: false
                 additionalProperties: true
                 properties: {}
+                required: false
               headers:
                 type: object
-                required: false
                 additionalProperties: true
                 properties:
                   Accept:
@@ -85,6 +84,7 @@ baseUri: https://httpbin.org/
                   User-Agent:
                     type: string
                     required: false
+                required: false
               origin:
                 type: string
                 required: false
@@ -109,14 +109,14 @@ baseUri: https://httpbin.org/
         additionalProperties: true
         properties:
           formKeyString:
-            required: true
             type: string
+            required: true
           formKeyBoolean:
-            required: true
             type: boolean
-          formKeyNumber:
             required: true
+          formKeyNumber:
             type: integer
+            required: true
     responses:
       200:
         body:
@@ -126,50 +126,50 @@ baseUri: https://httpbin.org/
             properties:
               args:
                 type: object
-                required: true
                 additionalProperties: true
                 properties:
                   queryParam1:
+                    type: string
                     required: true
-                    type: string
                   queryParam2:
-                    required: false
                     type: string
+                    required: false
                   queryParam3:
-                    required: false
                     type: string
+                    required: false
+                required: true
               data:
-                required: true
                 type: string
-              files:
                 required: true
+              files:
                 additionalProperties: true
                 properties: {}
+                required: true
               form:
                 type: object
-                required: true
                 additionalProperties: true
                 properties:
                   formKeyString:
-                    required: true
                     type: string
+                    required: true
                   formKeyBoolean:
-                    required: true
                     type: boolean
-                  formKeyNumber:
                     required: true
+                  formKeyNumber:
                     type: integer
+                    required: true
+                required: true
               headers:
-                required: true
                 additionalProperties: true
                 properties: {}
+                required: true
               json:
-                required: true
                 additionalProperties: true
                 properties: {}
+                required: true
               origin:
-                required: true
                 type: string
+                required: true
               url:
-                required: true
                 type: string
+                required: true

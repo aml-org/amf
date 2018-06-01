@@ -14,6 +14,7 @@ import amf.core.validation.{SeverityLevels, ValidationCandidate}
 import amf.facades.{AMFCompiler, AMFRenderer, Validation}
 import amf.plugins.document.graph.parser.GraphEmitter
 import amf.plugins.document.webapi.RAML10Plugin
+import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 import amf.plugins.document.webapi.validation.{AMFShapeValidations, PayloadValidation, UnitPayloadsValidation}
 import amf.plugins.domain.shapes.models.ArrayShape
 import amf.plugins.domain.webapi.models.WebApi
@@ -517,6 +518,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         library    <- AMFCompiler(payloadsPath + libraryFile, platform, RamlYamlHint, validation).build()
         payload    <- AMFCompiler(payloadsPath + payloadFile, platform, hint, validation).build()
       } yield {
+        // todo check with antonio, i removed the canonical shape from validation, so i need to resolve here
+        new ValidationResolutionPipeline(ProfileNames.AMF).resolve(library)
         val targetType = library
           .asInstanceOf[Module]
           .declares
@@ -524,6 +527,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
             case s: Shape => s.name.is(shapeName)
           }
           .get
+
         val candidates =
           Seq(ValidationCandidate(targetType.asInstanceOf[Shape], payload.asInstanceOf[PayloadFragment]))
         PayloadValidation(candidates)
@@ -755,6 +759,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       library <- AMFCompiler(examplesPath + "examples_validation.raml", platform, RamlYamlHint, validation)
         .build()
+      _       <- Future { new ValidationResolutionPipeline(ProfileNames.RAML).resolve(library) }
       results <- UnitPayloadsValidation(library, platform).validate()
     } yield {
       assert(results.length == 4)
@@ -1202,7 +1207,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       doc        <- AMFCompiler(productionPath + "recursive2.raml", platform, RamlYamlHint, validation).build()
     } yield {
       val A: ArrayShape = doc.asInstanceOf[Module].declares.head.asInstanceOf[ArrayShape]
-      val profile       = new AMFShapeValidations(A).profile()
+      new ValidationResolutionPipeline(ProfileNames.RAML).resolve(Module().withDeclares(Seq(A)))
+      val profile = new AMFShapeValidations(A).profile()
       assert(profile.violationLevel.size == 1)
       assert(
         profile.violationLevel.head == "file://amf-client/shared/src/test/resources/production/recursive2.raml#/declarations/array/A_validation")
@@ -2739,4 +2745,71 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.nonEmpty)
     }
   }
+//  test("Api that takes to long to validate") {
+//      for {
+//        validation <- Validation(platform)
+//        doc <- AMFCompiler(validationsPath + "production/fhir-raml-api-1.0.0-fat-raml/api.raml",
+//          platform,
+//          RamlYamlHint,
+//          validation)
+//          .build()
+//        report <- validation.validate(doc, ProfileNames.RAML)
+//      } yield {
+//        assert(!report.conforms)
+//        assert(report.results.exists(_.message.equals("Missing library location")))
+//      }
+//    }
+//    test("Api that takes to long to validate") {
+//      ExecutionLog.start()
+//      for {
+//        validation <- Validation(platform)
+//        doc <- AMFCompiler(validationsPath + "production/fhir-api-specification-in-raml-1.0-1.0.0-fat-raml/healthcare-system-api.raml",
+//          platform,
+//          RamlYamlHint,
+//          validation)
+//          .build()
+//        report <- validation.validate(doc, ProfileNames.RAML)
+//      } yield {
+//        ExecutionLog.finish()
+//        ExecutionLog.buildReport()
+//        assert(!report.conforms)
+//        assert(report.results.exists(_.message.equals("Missing library location")))
+//      }
+//    }
+//
+//      test("Api that takes to long to validate") {
+//        ExecutionLog.start()
+//        for {
+//          validation <- Validation(platform)
+//          doc <- AMFCompiler(validationsPath + "production/deaf-1.0.0-fat-raml/deaf.raml",
+//            platform,
+//            RamlYamlHint,
+//            validation)
+//            .build()
+//          report <- validation.validate(doc, ProfileNames.RAML)
+//        } yield {
+//          ExecutionLog.finish()
+//          ExecutionLog.buildReport()
+//          assert(!report.conforms)
+//          assert(report.results.exists(_.message.equals("Missing library location")))
+//        }
+//      }
+//
+//        test("Api that takes to long to validate") {
+//          ExecutionLog.start()
+//          for {
+//            validation <- Validation(platform)
+//            doc <- AMFCompiler(validationsPath + "production/master-raml-1.0.0-fat-raml/Raw8.raml",
+//              platform,
+//              RamlYamlHint,
+//              validation)
+//              .build()
+//            report <- validation.validate(doc, ProfileNames.RAML)
+//          } yield {
+//            ExecutionLog.finish()
+//            ExecutionLog.buildReport()
+//            assert(!report.conforms)
+//            assert(report.results.exists(_.message.equals("Missing library location")))
+//          }
+//        }
 }

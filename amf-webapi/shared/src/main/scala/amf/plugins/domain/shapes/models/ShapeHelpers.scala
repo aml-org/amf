@@ -2,7 +2,7 @@ package amf.plugins.domain.shapes.models
 
 import amf.core.annotations.{ExplicitField, LexicalInformation}
 import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain.{Linkable, RecursiveShape, Shape, TraversedIds}
+import amf.core.model.domain.{Linkable, RecursiveShape, Shape, IdsTraversionCheck}
 import amf.core.parser.ErrorHandler
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.features.validation.ParserSideValidations
@@ -28,8 +28,8 @@ trait ShapeHelpers { this: Shape =>
 
   def cloneShape(recursionErrorHandler: Option[ErrorHandler],
                  withRecursionBase: Option[String] = None,
-                 traversed: TraversedIds = TraversedIds()): this.type = {
-    if (traversed.has(this.id)) {
+                 traversed: IdsTraversionCheck = IdsTraversionCheck()): this.type = {
+    if (traversed.hasId(this.id)) {
       buildFixPoint(withRecursionBase, this.name.value(), this, recursionErrorHandler).asInstanceOf[this.type]
     } else {
       val cloned: Shape = this match {
@@ -50,7 +50,7 @@ trait ShapeHelpers { this: Shape =>
         case _: AnyShape                                   => AnyShape(annotations)
       }
       cloned.id = this.id
-      copyFields(recursionErrorHandler, cloned, withRecursionBase, traversed += this.id)
+      copyFields(recursionErrorHandler, cloned, withRecursionBase, traversed + this.id)
       if (cloned.isInstanceOf[NodeShape]) {
         cloned.add(ExplicitField())
       }

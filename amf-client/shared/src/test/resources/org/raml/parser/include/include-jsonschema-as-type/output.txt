@@ -15,7 +15,6 @@ types:
         description: Standard definition for codes.
         type: object
         additionalProperties: false
-        required: false
         properties:
           code:
             description: unique identifier for the code
@@ -25,6 +24,7 @@ types:
             description: Display description of the code.
             type: string
             required: false
+        required: false
 title: Sample API
 /testRefIssue:
   post:
@@ -48,7 +48,6 @@ title: Sample API
             description: Standard definition for codes.
             type: object
             additionalProperties: false
-            required: false
             properties:
               code:
                 description: unique identifier for the code
@@ -58,6 +57,7 @@ title: Sample API
                 description: Display description of the code.
                 type: string
                 required: false
+            required: false
     responses:
       200:
         description: Successfully updated account

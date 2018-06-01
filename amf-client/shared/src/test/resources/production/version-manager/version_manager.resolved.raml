@@ -16,7 +16,6 @@ title: Version Manager
             properties:
               project_versions:
                 type: array
-                required: true
                 items:
                   examples:
                     value:
@@ -24,32 +23,32 @@ title: Version Manager
                   additionalProperties: true
                   properties:
                     name:
+                      type: string
                       required: true
-                      type: string
                     id:
-                      required: false
                       type: integer
+                      required: false
                     description:
-                      required: false
                       type: string
-                    start_date:
                       required: false
+                    start_date:
                       type: date-only
+                      required: false
                     release:
                       type: object
-                      required: false
                       additionalProperties: true
                       properties:
                         release_date:
-                          required: false
                           type: date-only
+                          required: false
                         released:
                           type: boolean
-                          required: false
                           default: false
+                          required: false
+                      required: false
+                required: true
               customer_reported_project_versions:
                 type: array
-                required: true
                 items:
                   examples:
                     value:
@@ -57,30 +56,30 @@ title: Version Manager
                   additionalProperties: true
                   properties:
                     name:
+                      type: string
                       required: true
-                      type: string
                     id:
-                      required: false
                       type: integer
+                      required: false
                     description:
-                      required: false
                       type: string
+                      required: false
                     start_date:
-                      required: false
                       type: date-only
-                    release:
-                      type:
-                        additionalProperties: true
-                        properties:
-                          release_date:
-                            required: false
-                            type: date-only
-                          released:
-                            type: boolean
-                            required: false
-                            default: false
                       required: false
+                    release:
+                      type: object
                       additionalProperties: true
+                      properties:
+                        release_date:
+                          type: date-only
+                          required: false
+                        released:
+                          type: boolean
+                          default: false
+                          required: false
+                      required: false
+                required: true
   post:
     description: Add a new <<resourcePathName | !singularize>>
     displayName: Add new <<resourcePathName | !singularize>>
@@ -90,29 +89,29 @@ title: Version Manager
         additionalProperties: true
         properties:
           name:
+            type: string
             required: true
-            type: string
           id:
-            required: false
             type: integer
+            required: false
           description:
-            required: false
             type: string
-          start_date:
             required: false
+          start_date:
             type: date-only
+            required: false
           release:
             type: object
-            required: false
             additionalProperties: true
             properties:
               release_date:
-                required: false
                 type: date-only
+                required: false
               released:
                 type: boolean
-                required: false
                 default: false
+                required: false
+            required: false
     responses:
       201:
         headers:
@@ -129,11 +128,11 @@ title: Version Manager
             additionalProperties: true
             properties:
               statusCode:
-                required: true
                 type: string
+                required: true
               message:
-                required: true
                 type: string
+                required: true
   /{version_id}:
     get:
       displayName: Get version by version ID
@@ -146,11 +145,11 @@ title: Version Manager
               additionalProperties: true
               properties:
                 statusCode:
-                  required: true
                   type: string
+                  required: true
                 message:
-                  required: true
                   type: string
+                  required: true
         200:
           body:
             application/json:
@@ -158,29 +157,29 @@ title: Version Manager
               additionalProperties: true
               properties:
                 name:
+                  type: string
                   required: true
-                  type: string
                 id:
-                  required: false
                   type: integer
+                  required: false
                 description:
-                  required: false
                   type: string
-                start_date:
                   required: false
+                start_date:
                   type: date-only
+                  required: false
                 release:
                   type: object
-                  required: false
                   additionalProperties: true
                   properties:
                     release_date:
-                      required: false
                       type: date-only
+                      required: false
                     released:
                       type: boolean
-                      required: false
                       default: false
+                      required: false
+                  required: false
     put:
       body:
         application/json:
@@ -188,29 +187,29 @@ title: Version Manager
           additionalProperties: true
           properties:
             name:
+              type: string
               required: true
-              type: string
             id:
-              required: false
               type: integer
+              required: false
             description:
-              required: false
               type: string
-            start_date:
               required: false
+            start_date:
               type: date-only
+              required: false
             release:
               type: object
-              required: false
               additionalProperties: true
               properties:
                 release_date:
-                  required: false
                   type: date-only
+                  required: false
                 released:
                   type: boolean
-                  required: false
                   default: false
+                  required: false
+              required: false
       displayName: Update version by version ID
       description: Update all data in version
       responses:
@@ -222,11 +221,11 @@ title: Version Manager
               additionalProperties: true
               properties:
                 statusCode:
-                  required: true
                   type: string
+                  required: true
                 message:
-                  required: true
                   type: string
+                  required: true
     /releases:
       post: {}
       get:
@@ -240,11 +239,11 @@ title: Version Manager
                 additionalProperties: true
                 properties:
                   statusCode:
-                    required: true
                     type: string
+                    required: true
                   message:
-                    required: true
                     type: string
+                    required: true
           200:
             body:
               application/json:
@@ -252,12 +251,12 @@ title: Version Manager
                 additionalProperties: true
                 properties:
                   release_date:
-                    required: false
                     type: date-only
+                    required: false
                   released:
                     type: boolean
-                    required: false
                     default: false
+                    required: false
       put:
         body:
           application/json:
@@ -265,12 +264,12 @@ title: Version Manager
             additionalProperties: true
             properties:
               release_date:
-                required: false
                 type: date-only
+                required: false
               released:
                 type: boolean
-                required: false
                 default: false
+                required: false
         description: modifies an object completly
         displayName: Update release by release ID
         responses:
@@ -282,11 +281,11 @@ title: Version Manager
                 additionalProperties: true
                 properties:
                   statusCode:
-                    required: true
                     type: string
+                    required: true
                   message:
-                    required: true
                     type: string
+                    required: true
       patch:
         description: modifies a release based on a specific operation
         body:
@@ -296,7 +295,6 @@ title: Version Manager
             properties:
               ops:
                 type: array
-                required: true
                 items:
                   additionalProperties: true
                   properties:
@@ -311,6 +309,7 @@ title: Version Manager
                       description: only need when using change_release_date or release operations
                       type: date-only
                       required: false
+                required: true
         displayName: Update release by release ID
         responses:
           204: {}
@@ -321,8 +320,8 @@ title: Version Manager
                 additionalProperties: true
                 properties:
                   statusCode:
-                    required: true
                     type: string
+                    required: true
                   message:
-                    required: true
                     type: string
+                    required: true

@@ -16,7 +16,8 @@ case class NilShape(override val fields: Fields, override val annotations: Annot
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/nil/" + name.option().getOrElse("default-nil").urlComponentEncoded
 
-  override def copyShape(): NilShape = NilShape(fields, annotations).withId(id)
+  override def copyShape(): NilShape = NilShape(fields.copy(), annotations.copy()).withId(id)
+
 }
 
 object NilShape {

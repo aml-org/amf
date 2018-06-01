@@ -182,9 +182,6 @@
                                   }
                                 ],
                                 "smaps": {
-                                  "inheritance-provenance": {
-                                    "#/declarations/Bank/property/b": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/Bank"
-                                  },
                                   "lexical": {
                                     "#/declarations/Bank/property/b": "[(17,6)-(18,0)]"
                                   }
@@ -239,9 +236,6 @@
                                   }
                                 ],
                                 "smaps": {
-                                  "inheritance-provenance": {
-                                    "#/declarations/FinancialInstitution/property/e": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/FinancialInstitution"
-                                  },
                                   "lexical": {
                                     "#/declarations/FinancialInstitution/property/e": "[(12,6)-(13,0)]"
                                   }
@@ -296,9 +290,6 @@
                                   }
                                 ],
                                 "smaps": {
-                                  "inheritance-provenance": {
-                                    "#/declarations/FinancialInstitution/property/d": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/FinancialInstitution"
-                                  },
                                   "lexical": {
                                     "#/declarations/FinancialInstitution/property/d": "[(11,6)-(12,0)]"
                                   }
@@ -353,9 +344,6 @@
                                   }
                                 ],
                                 "smaps": {
-                                  "inheritance-provenance": {
-                                    "#/declarations/Bank/property/a": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/Bank"
-                                  },
                                   "lexical": {
                                     "#/declarations/Bank/property/a": "[(16,6)-(17,0)]"
                                   }
@@ -464,9 +452,6 @@
                                   }
                                 ],
                                 "smaps": {
-                                  "inheritance-provenance": {
-                                    "#/declarations/FinancialInstitution/property/c": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/FinancialInstitution"
-                                  },
                                   "lexical": {
                                     "#/declarations/FinancialInstitution/property/c": "[(10,6)-(11,0)]"
                                   }
@@ -849,9 +834,6 @@
               }
             ],
             "smaps": {
-              "inheritance-provenance": {
-                "#/declarations/FinancialInstitution/property/e": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/FinancialInstitution"
-              },
               "lexical": {
                 "#/declarations/FinancialInstitution/property/e": "[(12,6)-(13,0)]"
               }
@@ -906,9 +888,6 @@
               }
             ],
             "smaps": {
-              "inheritance-provenance": {
-                "#/declarations/FinancialInstitution/property/d": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/FinancialInstitution"
-              },
               "lexical": {
                 "#/declarations/FinancialInstitution/property/d": "[(11,6)-(12,0)]"
               }
@@ -1017,9 +996,6 @@
               }
             ],
             "smaps": {
-              "inheritance-provenance": {
-                "#/declarations/FinancialInstitution/property/c": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/FinancialInstitution"
-              },
               "lexical": {
                 "#/declarations/FinancialInstitution/property/c": "[(10,6)-(11,0)]"
               }
@@ -1032,15 +1008,12 @@
           }
         ],
         "smaps": {
-          "inherited-shapes": {
-            "#/declarations/Bank": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/FinancialInstitution"
+          "type-property-lexical-info": {
+            "#/declarations/Bank": "[(14,4)-(14,8)]"
           },
           "lexical": {
             "shacl:name": "[(13,2)-(13,6)]",
             "#/declarations/Bank": "[(13,2)-(18,0)]"
-          },
-          "type-property-lexical-info": {
-            "#/declarations/Bank": "[(14,4)-(14,8)]"
           }
         }
       }

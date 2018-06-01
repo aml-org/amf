@@ -245,14 +245,6 @@ abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references
     val result = ListBuffer[EntryEmitter]()
     val fs     = shape.fields
 
-    Option(fs.getValue(ShapeModel.RequiredShape)) match {
-      case Some(v) =>
-        if (v.annotations.contains(classOf[ExplicitField])) {
-          fs.entry(ShapeModel.RequiredShape).map(f => result += ValueEmitter("required", f))
-        }
-      case None => // ignore
-    }
-
     fs.entry(ShapeModel.DisplayName).map(f => result += RamlScalarEmitter("displayName", f))
     fs.entry(ShapeModel.Description).map(f => result += RamlScalarEmitter("description", f))
 
@@ -1057,6 +1049,18 @@ case class RamlPropertiesShapeEmitter(f: FieldEntry, ordering: SpecOrdering, ref
   override def position(): Position = pos(f.value.annotations)
 }
 
+case class RequiredShapeEmitter(shape: Shape) {
+
+  def emitter(): Option[EntryEmitter] = {
+    Option(shape.fields.getValue(ShapeModel.RequiredShape))
+      .filter(_.annotations.contains(classOf[ExplicitField]))
+      .flatMap { v =>
+        shape.fields.entry(ShapeModel.RequiredShape).map(f => ValueEmitter("required", f))
+      }
+
+  }
+}
+
 case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
@@ -1083,8 +1087,11 @@ case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrder
       )
     } else {
 
-      val readOnlyEmitter: Option[ValueEmitter] =
-        property.fields.entry(PropertyShapeModel.ReadOnly).map(fe => ValueEmitter("readOnly".asRamlAnnotation, fe))
+      val additionalEmitters: Seq[EntryEmitter] =
+        (property.fields
+          .entry(PropertyShapeModel.ReadOnly)
+          .map(fe => ValueEmitter("readOnly".asRamlAnnotation, fe)) ++ RequiredShapeEmitter(shape = property.range)
+          .emitter()).toSeq
 
       property.range match {
         case range: AnyShape =>
@@ -1093,12 +1100,12 @@ case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrder
             pb => {
               Raml10TypePartEmitter(range, ordering, None, references = references).emitter match {
                 case Left(p)        => p.emit(pb)
-                case Right(entries) => pb.obj(traverse(ordering.sorted(entries ++ readOnlyEmitter), _))
+                case Right(entries) => pb.obj(traverse(ordering.sorted(entries ++ additionalEmitters), _))
               }
             }
           )
         case _ => // ignreo
-          b.entry(name, _.obj(e => traverse(readOnlyEmitter.toSeq, e)))
+          b.entry(name, _.obj(e => traverse(additionalEmitters, e)))
       }
     }
   }

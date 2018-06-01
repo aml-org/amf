@@ -5,12 +5,12 @@ types:
       additionalProperties: true
       properties:
         a:
-          required: true
           anyOf:
             -
               type: string
             -
               type: integer
-        b:
           required: true
+        b:
           type: nil
+          required: true

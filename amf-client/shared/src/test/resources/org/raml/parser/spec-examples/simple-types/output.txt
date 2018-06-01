@@ -6,14 +6,14 @@ types:
     additionalProperties: true
     properties:
       firstname:
-        required: true
         type: string
+        required: true
       lastname:
-        required: true
         type: string
-      age:
         required: true
+      age:
         type: number
+        required: true
 /users/{id}:
   get:
     responses:
@@ -24,11 +24,11 @@ types:
             additionalProperties: true
             properties:
               firstname:
-                required: true
                 type: string
+                required: true
               lastname:
-                required: true
                 type: string
-              age:
                 required: true
+              age:
                 type: number
+                required: true

@@ -23,6 +23,7 @@ baseUri: https://localhost:8081/api
       200:
         body:
           application/json:
+            type: array
             items:
               additionalProperties: true
               properties:
@@ -40,54 +41,54 @@ baseUri: https://localhost:8081/api
                   required: true
                 billingAddress:
                   type: object
-                  required: false
                   additionalProperties: true
                   properties:
                     address:
                       type: array
                       minItems: 1
-                      required: false
                       items:
                         type: string
+                      required: false
                     city:
-                      required: false
                       type: string
+                      required: false
                     state:
-                      required: false
                       type: string
+                      required: false
                     postalCode:
-                      required: false
                       type: string
+                      required: false
                     country:
                       type: string
                       displayName: Country Name
                       description: Country Name
                       required: false
+                  required: false
                 shippingAddress:
                   type: object
-                  required: false
                   additionalProperties: true
                   properties:
                     address:
                       type: array
                       minItems: 1
-                      required: false
                       items:
                         type: string
+                      required: false
                     city:
-                      required: false
                       type: string
+                      required: false
                     state:
-                      required: false
                       type: string
+                      required: false
                     postalCode:
-                      required: false
                       type: string
+                      required: false
                     country:
                       type: string
                       displayName: Country Name
                       description: Country Name
                       required: false
+                  required: false
     body: {}
   post:
     description: |
@@ -117,54 +118,54 @@ baseUri: https://localhost:8081/api
             required: true
           billingAddress:
             type: object
-            required: false
             additionalProperties: true
             properties:
               address:
                 type: array
                 minItems: 1
-                required: false
                 items:
                   type: string
+                required: false
               city:
-                required: false
                 type: string
+                required: false
               state:
-                required: false
                 type: string
+                required: false
               postalCode:
-                required: false
                 type: string
+                required: false
               country:
                 type: string
                 displayName: Country Name
                 description: Country Name
                 required: false
+            required: false
           shippingAddress:
             type: object
-            required: false
             additionalProperties: true
             properties:
               address:
                 type: array
                 minItems: 1
-                required: false
                 items:
                   type: string
+                required: false
               city:
-                required: false
                 type: string
+                required: false
               state:
-                required: false
                 type: string
+                required: false
               postalCode:
-                required: false
                 type: string
+                required: false
               country:
                 type: string
                 displayName: Country Name
                 description: Country Name
                 required: false
+            required: false
   /{id}:
     displayName: Customer ID
     uriParameters:
@@ -189,11 +190,11 @@ baseUri: https://localhost:8081/api
               additionalProperties: true
               properties:
                 message:
+                  type: string
                   required: true
-                  type: string
                 code:
-                  required: false
                   type: string
+                  required: false
         200:
           body:
             application/json:
@@ -214,54 +215,54 @@ baseUri: https://localhost:8081/api
                   required: true
                 billingAddress:
                   type: object
-                  required: false
                   additionalProperties: true
                   properties:
                     address:
                       type: array
                       minItems: 1
-                      required: false
                       items:
                         type: string
+                      required: false
                     city:
-                      required: false
                       type: string
+                      required: false
                     state:
-                      required: false
                       type: string
+                      required: false
                     postalCode:
-                      required: false
                       type: string
+                      required: false
                     country:
                       type: string
                       displayName: Country Name
                       description: Country Name
                       required: false
+                  required: false
                 shippingAddress:
                   type: object
-                  required: false
                   additionalProperties: true
                   properties:
                     address:
                       type: array
                       minItems: 1
-                      required: false
                       items:
                         type: string
+                      required: false
                     city:
-                      required: false
                       type: string
+                      required: false
                     state:
-                      required: false
                       type: string
+                      required: false
                     postalCode:
-                      required: false
                       type: string
+                      required: false
                     country:
                       type: string
                       displayName: Country Name
                       description: Country Name
                       required: false
+                  required: false
         404:
           body:
             application/json:
@@ -271,11 +272,11 @@ baseUri: https://localhost:8081/api
               additionalProperties: true
               properties:
                 message:
+                  type: string
                   required: true
-                  type: string
                 code:
-                  required: false
                   type: string
+                  required: false
       body: {}
     put:
       responses:
@@ -300,54 +301,54 @@ baseUri: https://localhost:8081/api
               required: true
             billingAddress:
               type: object
-              required: false
               additionalProperties: true
               properties:
                 address:
                   type: array
                   minItems: 1
-                  required: false
                   items:
                     type: string
+                  required: false
                 city:
-                  required: false
                   type: string
+                  required: false
                 state:
-                  required: false
                   type: string
+                  required: false
                 postalCode:
-                  required: false
                   type: string
+                  required: false
                 country:
                   type: string
                   displayName: Country Name
                   description: Country Name
                   required: false
+              required: false
             shippingAddress:
               type: object
-              required: false
               additionalProperties: true
               properties:
                 address:
                   type: array
                   minItems: 1
-                  required: false
                   items:
                     type: string
+                  required: false
                 city:
-                  required: false
                   type: string
+                  required: false
                 state:
-                  required: false
                   type: string
+                  required: false
                 postalCode:
-                  required: false
                   type: string
+                  required: false
                 country:
                   type: string
                   displayName: Country Name
                   description: Country Name
                   required: false
+              required: false
     delete:
       responses:
         204:
@@ -376,11 +377,11 @@ baseUri: https://localhost:8081/api
               additionalProperties: true
               properties:
                 message:
+                  type: string
                   required: true
-                  type: string
                 code:
-                  required: false
                   type: string
+                  required: false
         200:
           body:
             application/json:
@@ -403,54 +404,54 @@ baseUri: https://localhost:8081/api
                       required: true
                     billingAddress:
                       type: object
-                      required: false
                       additionalProperties: true
                       properties:
                         address:
                           type: array
                           minItems: 1
-                          required: false
                           items:
                             type: string
+                          required: false
                         city:
-                          required: false
                           type: string
+                          required: false
                         state:
-                          required: false
                           type: string
+                          required: false
                         postalCode:
-                          required: false
                           type: string
+                          required: false
                         country:
                           type: string
                           displayName: Country Name
                           description: Country Name
                           required: false
+                      required: false
                     shippingAddress:
                       type: object
-                      required: false
                       additionalProperties: true
                       properties:
                         address:
                           type: array
                           minItems: 1
-                          required: false
                           items:
                             type: string
+                          required: false
                         city:
-                          required: false
                           type: string
+                          required: false
                         state:
-                          required: false
                           type: string
+                          required: false
                         postalCode:
-                          required: false
                           type: string
+                          required: false
                         country:
                           type: string
                           displayName: Country Name
                           description: Country Name
                           required: false
+                      required: false
                 -
                   type: object
                   additionalProperties: true
@@ -476,9 +477,9 @@ baseUri: https://localhost:8081/api
               additionalProperties: true
               properties:
                 message:
+                  type: string
                   required: true
-                  type: string
                 code:
-                  required: false
                   type: string
+                  required: false
       body: {}

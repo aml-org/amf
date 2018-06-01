@@ -9,12 +9,12 @@ types:
     additionalProperties: true
     properties:
       name:
-        required: true
         type: string
-      comment:
         required: true
+      comment:
         anyOf:
           -
             type: nil
           -
             type: string
+        required: true

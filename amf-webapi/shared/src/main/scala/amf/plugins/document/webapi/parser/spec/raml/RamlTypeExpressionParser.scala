@@ -98,7 +98,18 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Opti
           }
       }
       if (Option(shape.id).isEmpty) {
-        adopt(shape)
+        shape.name.option() match {
+          case Some(s) if s.equals("schema") =>
+            shape.withName(s"schema-$i")
+            adopt(shape)
+            shape.withName("schema")
+          case None =>
+            shape.withName(s"scalar-expression-$i")
+            adopt(shape)
+            shape.name.remove()
+          case _ => adopt(shape)
+        }
+        i = i + 1
       }
       acc = ""
       acceptShape(Some(shape))
@@ -116,7 +127,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Opti
       case Some(shape) =>
         val union = UnionShape()
         adopt(union)
-        union.withAnyOf(Seq(shape))
+        union.setArrayWithoutId(UnionShapeModel.AnyOf, Seq(shape))
     }
   }
 

@@ -42,42 +42,43 @@ description: API that returns sample data for MuleSoft training
                   plane:
                     type: Boeing 777
                     totalSeats: 300
+            type: array
             items:
               type: object
               additionalProperties: true
               properties:
                 ID:
+                  type: integer
                   required: false
-                  type: integer
                 code:
-                  required: true
                   type: string
+                  required: true
                 price:
-                  required: true
                   type: number
+                  required: true
                 departureDate:
-                  required: true
                   type: string
+                  required: true
                 origin:
-                  required: true
                   type: string
+                  required: true
                 destination:
-                  required: true
                   type: string
-                emptySeats:
                   required: true
+                emptySeats:
                   type: integer
+                  required: true
                 plane:
                   type: object
                   required: false
                   additionalProperties: true
                   properties:
                     type:
-                      required: true
                       type: string
-                    totalSeats:
                       required: true
+                    totalSeats:
                       type: integer
+                      required: true
   post:
     displayName: Add a flight
     body:
@@ -97,37 +98,37 @@ description: API that returns sample data for MuleSoft training
         additionalProperties: true
         properties:
           ID:
+            type: integer
             required: false
-            type: integer
           code:
-            required: true
             type: string
+            required: true
           price:
-            required: true
             type: number
+            required: true
           departureDate:
-            required: true
             type: string
+            required: true
           origin:
-            required: true
             type: string
+            required: true
           destination:
-            required: true
             type: string
-          emptySeats:
             required: true
+          emptySeats:
             type: integer
+            required: true
           plane:
             type: object
             required: false
             additionalProperties: true
             properties:
               type:
-                required: true
                 type: string
-              totalSeats:
                 required: true
+              totalSeats:
                 type: integer
+                required: true
     responses:
       201:
         body:
@@ -158,37 +159,37 @@ description: API that returns sample data for MuleSoft training
               additionalProperties: true
               properties:
                 ID:
+                  type: integer
                   required: false
-                  type: integer
                 code:
-                  required: true
                   type: string
+                  required: true
                 price:
-                  required: true
                   type: number
+                  required: true
                 departureDate:
-                  required: true
                   type: string
+                  required: true
                 origin:
-                  required: true
                   type: string
+                  required: true
                 destination:
-                  required: true
                   type: string
-                emptySeats:
                   required: true
+                emptySeats:
                   type: integer
+                  required: true
                 plane:
                   type: object
                   required: false
                   additionalProperties: true
                   properties:
                     type:
-                      required: true
                       type: string
-                    totalSeats:
                       required: true
+                    totalSeats:
                       type: integer
+                      required: true
     delete:
       displayName: Delete a flight
       responses:
@@ -217,37 +218,37 @@ description: API that returns sample data for MuleSoft training
           additionalProperties: true
           properties:
             ID:
+              type: integer
               required: false
-              type: integer
             code:
-              required: true
               type: string
+              required: true
             price:
-              required: true
               type: number
+              required: true
             departureDate:
-              required: true
               type: string
+              required: true
             origin:
-              required: true
               type: string
+              required: true
             destination:
-              required: true
               type: string
-            emptySeats:
               required: true
+            emptySeats:
               type: integer
+              required: true
             plane:
               type: object
               required: false
               additionalProperties: true
               properties:
                 type:
-                  required: true
                   type: string
-                totalSeats:
                   required: true
+                totalSeats:
                   type: integer
+                  required: true
       responses:
         200:
           body:

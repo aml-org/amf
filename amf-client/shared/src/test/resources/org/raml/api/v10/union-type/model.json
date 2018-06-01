@@ -5,8 +5,8 @@ types:
     additionalProperties: true
     properties:
       name:
-        required: true
         type: string
+        required: true
       email:
         type: string
         pattern: .+@.+\..+
@@ -19,8 +19,8 @@ types:
     additionalProperties: true
     properties:
       name:
-        required: true
         type: string
+        required: true
       email:
         type: string
         pattern: .+@.+\..+
@@ -30,14 +30,13 @@ types:
     additionalProperties: true
     properties:
       workers:
-        required: true
         anyOf:
           -
             additionalProperties: true
             properties:
               name:
-                required: true
                 type: string
+                required: true
               email:
                 type: string
                 pattern: .+@.+\..+
@@ -50,9 +49,10 @@ types:
             additionalProperties: true
             properties:
               name:
-                required: true
                 type: string
+                required: true
               email:
                 type: string
                 pattern: .+@.+\..+
                 required: true
+        required: true

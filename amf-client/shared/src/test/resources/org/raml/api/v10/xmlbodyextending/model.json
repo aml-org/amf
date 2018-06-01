@@ -15,11 +15,11 @@ types:
     additionalProperties: true
     properties:
       firstname:
-        required: true
         type: string
+        required: true
       lastname:
-        required: true
         type: string
+        required: true
       age:
         type: integer
         minimum: 0
@@ -33,19 +33,19 @@ types:
         additionalProperties: true
         properties:
           firstname:
-            required: true
             type: string
+            required: true
           lastname:
-            required: true
             type: string
+            required: true
           age:
             type: integer
             minimum: 0
             maximum: 144
             required: true
           address:
-            required: true
             type: string
+            required: true
     responses:
       200:
         body:
@@ -54,16 +54,16 @@ types:
             additionalProperties: true
             properties:
               firstname:
-                required: true
                 type: string
+                required: true
               lastname:
-                required: true
                 type: string
+                required: true
               age:
                 type: integer
                 minimum: 0
                 maximum: 144
                 required: true
               address:
-                required: true
                 type: string
+                required: true

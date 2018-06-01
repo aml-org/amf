@@ -5,8 +5,13 @@ import amf.core.emitter._
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
-import amf.plugins.document.webapi.contexts.{RamlSpecEmitterContext, SpecEmitterContext}
-import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, Raml08TypePartEmitter, Raml10TypeEmitter, Raml10TypePartEmitter}
+import amf.plugins.document.webapi.contexts.RamlSpecEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  AnnotationsEmitter,
+  Raml08TypePartEmitter,
+  Raml10TypeEmitter,
+  Raml10TypePartEmitter
+}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
@@ -34,7 +39,8 @@ case class Raml10PayloadEmitter(payload: Payload, ordering: SpecOrdering, refere
                                     references = references).emit(_)
             )
           })
-      case Some(_) => throw new Exception("Cannot emit a non WebAPI Shape")
+      case Some(_) =>
+        throw new Exception("Cannot emit a non WebAPI Shape")
       case None =>
         fs.entry(PayloadModel.MediaType)
           .foreach(mediaType => {
@@ -125,7 +131,8 @@ case class Raml08PayloadEmitter(payload: Payload, ordering: SpecOrdering)(implic
   }
 }
 
-case class Raml08FormPropertiesEmitter(nodeShape: NodeShape, ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
+case class Raml08FormPropertiesEmitter(nodeShape: NodeShape, ordering: SpecOrdering)(
+    implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(

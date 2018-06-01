@@ -7,11 +7,11 @@ types:
     additionalProperties: true
     properties:
       name:
-        required: true
         type: string
+        required: true
       kind:
-        required: true
         type: string
+        required: true
   Employee:
     discriminator: kind
     type: object
@@ -19,14 +19,14 @@ types:
     additionalProperties: true
     properties:
       name:
-        required: true
         type: string
+        required: true
       kind:
-        required: true
         type: string
+        required: true
       employeeId:
-        required: true
         type: string
+        required: true
   User:
     discriminator: kind
     type: object
@@ -34,11 +34,11 @@ types:
     additionalProperties: true
     properties:
       name:
-        required: true
         type: string
+        required: true
       kind:
-        required: true
         type: string
+        required: true
       userId:
-        required: true
         type: string
+        required: true

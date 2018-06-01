@@ -6,8 +6,8 @@ types:
     additionalProperties: true
     properties:
       name:
-        required: true
         type: string
+        required: true
 resourceTypes:
   collection:
     post?:
@@ -22,8 +22,8 @@ resourceTypes:
         additionalProperties: true
         properties:
           name:
-            required: true
             type: string
+            required: true
 /other:
   /login:
     post:
@@ -33,5 +33,5 @@ resourceTypes:
           additionalProperties: true
           properties:
             name:
-              required: true
               type: string
+              required: true

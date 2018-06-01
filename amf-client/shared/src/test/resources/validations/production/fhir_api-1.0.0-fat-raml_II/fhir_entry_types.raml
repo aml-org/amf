@@ -1,0 +1,102 @@
+#%RAML 1.0 Library
+
+uses:
+  FHIR_commons: /exchange_modules/47f07e0a-f578-47d4-9591-d9e7afffb0fc.healthcare/fhir_commons/1.0.0/fhir_commons.raml
+
+types:
+  Entry:
+    type: FHIR_commons.BackboneElement
+    properties:
+      link?:
+        type: array
+        items:
+          type: FHIR_commons.BackboneElement
+          properties:
+            relation: string
+            url: FHIR_commons.uri
+      fullUrl?: FHIR_commons.uri
+      search?:
+        type: FHIR_commons.BackboneElement
+        properties:
+          mode?:
+            type: FHIR_commons.code
+            enum: [match, include, outcome]
+          score?: FHIR_commons.decimal
+      request?:
+        type: FHIR_commons.BackboneElement
+        properties:
+          method:
+            type: FHIR_commons.code
+            enum: [GET, PUT, POST, DELETE]
+          url: FHIR_commons.uri
+          ifNoneMatch?: string
+          ifModifiedSince?: FHIR_commons.instant
+          ifMatch: string
+          ifNoneExist: string
+      response?:
+        type: object
+        properties:
+          status: string
+          location?: FHIR_commons.uri
+          etag?: string
+          lastModified?: FHIR_commons.instant
+  
+  AllergyIntoleranceEntry:
+    type: Entry
+    properties:
+      resource?: !include /exchange_modules/47f07e0a-f578-47d4-9591-d9e7afffb0fc.healthcare/allergyintolerance/1.0.2/allergyintolerance.raml
+
+  AppointmentEntry:
+    type: Entry
+    properties:
+      resource?: !include /exchange_modules/47f07e0a-f578-47d4-9591-d9e7afffb0fc.healthcare/appointment/1.0.2/appointment.raml
+
+  ConditionEntry:
+    type: Entry
+    properties:
+      resource?: !include /exchange_modules/47f07e0a-f578-47d4-9591-d9e7afffb0fc.healthcare/condition/1.0.3/condition.raml
+
+  DeviceEntry:
+    type: Entry
+    properties:
+      resource?: !include /exchange_modules/47f07e0a-f578-47d4-9591-d9e7afffb0fc.healthcare/device/1.0.3/device.raml
+
+  EncounterEntry:
+    type: Entry
+    properties:
+      resource?: !include /exchange_modules/47f07e0a-f578-47d4-9591-d9e7afffb0fc.healthcare/encounter/1.0.2/encounter.raml
+
+  MedicationEntry:
+    type: Entry
+    properties:
+      resource?: !include /exchange_modules/47f07e0a-f578-47d4-9591-d9e7afffb0fc.healthcare/medication/1.0.2/medication.raml
+
+  MedicationRequestEntry:
+    type: Entry
+    properties:
+      resource?: !include /exchange_modules/47f07e0a-f578-47d4-9591-d9e7afffb0fc.healthcare/medicationrequest/1.0.3/medicationrequest.raml
+
+  ObservationEntry:
+    type: Entry
+    properties:
+      resource?: !include /exchange_modules/47f07e0a-f578-47d4-9591-d9e7afffb0fc.healthcare/observation/1.0.2/observation.raml
+
+  PatientEntry:
+    type: Entry
+    properties:
+      resource?: !include /exchange_modules/47f07e0a-f578-47d4-9591-d9e7afffb0fc.healthcare/patient/1.0.2/patient.raml
+
+  PractitionerEntry:
+    type: Entry
+    properties:
+      resource?: !include /exchange_modules/47f07e0a-f578-47d4-9591-d9e7afffb0fc.healthcare/practitioner/1.0.2/practitioner.raml
+
+  ScheduleEntry:
+    type: Entry
+    properties:
+      resource?: !include /exchange_modules/47f07e0a-f578-47d4-9591-d9e7afffb0fc.healthcare/schedule/1.0.2/schedule.raml
+
+  SlotEntry:
+    type: Entry
+    properties:
+      resource?: !include /exchange_modules/47f07e0a-f578-47d4-9591-d9e7afffb0fc.healthcare/slot/1.0.2/slot.raml

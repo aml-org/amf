@@ -108,24 +108,27 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
 
   def cloneShape(recursionErrorHandler: Option[ErrorHandler],
                  recursionBase: Option[String] = None,
-                 traversed: TraversedIds = TraversedIds()): Shape
+                 traversed: IdsTraversionCheck = IdsTraversionCheck()): Shape
 
   // Copy fields into a cloned shape
   protected def copyFields(recursionErrorHandler: Option[ErrorHandler],
                            cloned: Shape,
                            recursionBase: Option[String],
-                           traversed: TraversedIds): Unit = {
+                           traversed: IdsTraversionCheck): Unit = {
     this.fields.foreach {
       case (f, v) =>
+        val value = v.value
         val clonedValue = v.value match {
-          case s: Shape if s.id != this.id =>
-            traversed.runPushed((t: TraversedIds) => { s.cloneShape(recursionErrorHandler, recursionBase, t) })
+          case s: Shape if s.id != this.id && traversed.canTravers(s.id) =>
+            traversed.runPushed((t: IdsTraversionCheck) => { s.cloneShape(recursionErrorHandler, recursionBase, t) })
           case s: Shape if s.id == this.id => s
           case a: AmfArray =>
             AmfArray(
               a.values.map {
-                case e: Shape if e.id != this.id =>
-                  traversed.runPushed((t: TraversedIds) => { e.cloneShape(recursionErrorHandler, recursionBase, t) })
+                case e: Shape if e.id != this.id && traversed.canTravers(e.id) =>
+                  traversed.runPushed((t: IdsTraversionCheck) => {
+                    e.cloneShape(recursionErrorHandler, recursionBase, t)
+                  })
 //                e.cloneShape(recursionErrorHandler, recursionBase, traversed.push(prevBaseId),Some(prevBaseId))
                 case e: Shape if e.id == this.id => e
                 case o                           => o
@@ -140,17 +143,41 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
   }
 }
 
-case class TraversedIds() {
+case class IdsTraversionCheck() {
 
   private val backUps: mutable.Map[UUID, Set[String]] = mutable.Map()
   private val ids: mutable.Set[String]                = mutable.Set()
 
-  def +=(id: String): this.type = {
+  private var allowedCycleClasses
+    : Seq[Class[_]]                              = Seq() // i cant do it inmutable for the modularization (i cant see UnresolvedShape from here)
+  private var stepOverFieldId: String => Boolean = (_: String) => false
+
+  def withStepOverFunc(fn: String => Boolean): this.type = {
+    stepOverFieldId = fn
+    this
+  }
+
+  def withAllowedCyclesInstances(classes: Seq[Class[_]]): this.type = {
+    allowedCycleClasses = classes
+    this
+  }
+
+  def resetStepOverFun(): this.type = {
+    stepOverFieldId = (_: String) => false
+    this
+  }
+
+  def +(id: String): this.type = {
     ids += id
     this
   }
 
-  def has(id: String): Boolean = ids.contains(id)
+  def has(shape: Shape): Boolean =
+    (!allowedCycleClasses.contains(shape.getClass)) && ids.contains(shape.id)
+
+  def hasId(id: String): Boolean = ids.contains(id)
+
+  def canTravers(id: String): Boolean = !stepOverFieldId(id)
 
   private def push(): UUID = {
     val id = generateSha()
@@ -158,9 +185,9 @@ case class TraversedIds() {
     id
   }
 
-  def runPushed(fn: (TraversedIds) => Shape): Shape = {
+  def runPushed(fnc: (IdsTraversionCheck) => Shape): Shape = {
     val uuid  = push()
-    val shape = fn(this)
+    val shape = fnc(this)
     ids.clear()
     ids ++= backUps(uuid)
     backUps.remove(uuid)

@@ -12,38 +12,38 @@ baseUri: acme-banking.com/apis
         additionalProperties: true
         properties:
           address_country:
-            required: true
             type: string
+            required: true
           address_locality:
-            required: true
             type: string
+            required: true
           address_region:
-            required: true
             type: string
+            required: true
           postal_code:
-            required: true
             type: string
+            required: true
           street_address:
-            required: true
             type: string
+            required: true
           lei:
-            required: true
             type: string
+            required: true
           tax_id:
-            required: true
             type: string
+            required: true
           email:
-            required: true
             type: string
+            required: true
           telephone:
-            required: true
             type: string
+            required: true
           name:
-            required: true
             type: string
+            required: true
           vat_id:
-            required: true
             type: string
+            required: true
   /commercial:
     post:
       description: Customer data created correctly for a Person
@@ -52,32 +52,32 @@ baseUri: acme-banking.com/apis
         additionalProperties: true
         properties:
           address_country:
-            required: true
             type: string
+            required: true
           address_locality:
-            required: true
             type: string
+            required: true
           address_region:
-            required: true
             type: string
+            required: true
           postal_code:
-            required: true
             type: string
+            required: true
           street_address:
-            required: true
             type: string
+            required: true
           lei:
-            required: true
             type: string
+            required: true
           tax_id:
-            required: true
             type: string
+            required: true
           email:
-            required: true
             type: string
+            required: true
           telephone:
-            required: true
             type: string
+            required: true
           title:
             type: string
             enum:
@@ -87,11 +87,11 @@ baseUri: acme-banking.com/apis
               - dr
             required: false
           given_name:
-            required: true
             type: string
+            required: true
           family_name:
-            required: true
             type: string
+            required: true
           gender:
             type: string
             enum:
@@ -99,11 +99,11 @@ baseUri: acme-banking.com/apis
               - male
             required: true
           vat_id:
-            required: false
             type: string
+            required: false
           birth_date:
-            required: true
             type: date-only
+            required: true
   /{customer_id}:
     uriParameters:
       customer_id:
@@ -122,45 +122,45 @@ baseUri: acme-banking.com/apis
                   additionalProperties: true
                   properties:
                     type:
-                      required: true
                       type: string
+                      required: true
                     lei:
-                      required: true
                       type: string
+                      required: true
                     tax_id:
-                      required: true
                       type: string
+                      required: true
                     email:
-                      required: true
                       type: string
-                    address:
                       required: true
+                    address:
                       additionalProperties: true
                       properties:
                         address_country:
-                          required: true
                           type: string
+                          required: true
                         address_locality:
-                          required: true
                           type: string
+                          required: true
                         address_region:
-                          required: true
                           type: string
+                          required: true
                         postal_code:
-                          required: true
                           type: string
+                          required: true
                         street_address:
-                          required: true
                           type: string
+                          required: true
+                      required: true
                     id:
-                      required: true
                       type: string
+                      required: true
                     name:
-                      required: true
                       type: string
+                      required: true
                     vat_id:
-                      required: true
                       type: string
+                      required: true
                 -
                   type: object
                   discriminator: type
@@ -168,39 +168,39 @@ baseUri: acme-banking.com/apis
                   additionalProperties: true
                   properties:
                     type:
-                      required: true
                       type: string
+                      required: true
                     lei:
-                      required: true
                       type: string
+                      required: true
                     tax_id:
-                      required: true
                       type: string
+                      required: true
                     email:
-                      required: true
                       type: string
+                      required: true
                     address:
+                      additionalProperties: true
                       properties:
                         address_country:
-                          required: true
                           type: string
+                          required: true
                         address_locality:
-                          required: true
                           type: string
+                          required: true
                         address_region:
-                          required: true
                           type: string
+                          required: true
                         postal_code:
-                          required: true
                           type: string
+                          required: true
                         street_address:
-                          required: true
                           type: string
+                          required: true
                       required: true
-                      additionalProperties: true
                     id:
-                      required: true
                       type: string
+                      required: true
                     title:
                       type: string
                       enum:
@@ -210,11 +210,11 @@ baseUri: acme-banking.com/apis
                         - dr
                       required: false
                     given_name:
-                      required: true
                       type: string
+                      required: true
                     family_name:
-                      required: true
                       type: string
+                      required: true
                     gender:
                       type: string
                       enum:
@@ -222,14 +222,14 @@ baseUri: acme-banking.com/apis
                         - male
                       required: true
                     vat_id:
-                      required: false
                       type: string
-                    birth_date:
-                      required: true
-                      type: date-only
-                    death_date:
                       required: false
+                    birth_date:
                       type: date-only
+                      required: true
+                    death_date:
+                      type: date-only
+                      required: false
     patch:
       description: Updates Customer data
       responses:
@@ -240,14 +240,14 @@ baseUri: acme-banking.com/apis
               additionalProperties: true
               properties:
                 lei:
-                  required: false
                   type: string
+                  required: false
                 tax_id:
-                  required: false
                   type: string
+                  required: false
                 email:
-                  required: false
                   type: string
+                  required: false
                 title:
                   type: string
                   enum:
@@ -257,11 +257,11 @@ baseUri: acme-banking.com/apis
                     - dr
                   required: false
                 name:
-                  required: false
                   type: string
+                  required: false
                 family_name:
-                  required: false
                   type: string
+                  required: false
                 gender:
                   type: string
                   enum:
@@ -269,29 +269,29 @@ baseUri: acme-banking.com/apis
                     - male
                   required: false
                 vat_id:
-                  required: false
                   type: string
+                  required: false
                 birth_date:
-                  required: false
                   type: date-only
+                  required: false
                 death_date:
-                  required: false
                   type: date-only
+                  required: false
                 address_country:
-                  required: false
                   type: string
+                  required: false
                 address_locality:
-                  required: false
                   type: string
+                  required: false
                 address_region:
-                  required: false
                   type: string
+                  required: false
                 postal_code:
-                  required: false
                   type: string
+                  required: false
                 street_address:
-                  required: false
                   type: string
+                  required: false
     delete:
       description: Removes a Customer from the system
     /accounts:
@@ -320,15 +320,16 @@ baseUri: acme-banking.com/apis
           200:
             body:
               application/json:
+                type: array
                 items:
                   additionalProperties: true
                   properties:
                     id:
-                      required: true
                       type: string
+                      required: true
                     account_number:
-                      required: true
                       type: string
+                      required: true
                     accountType:
                       type: string
                       enum:
@@ -336,21 +337,21 @@ baseUri: acme-banking.com/apis
                         - saver
                       required: true
                     amount:
-                      required: true
                       additionalProperties: true
                       properties:
                         value:
-                          required: true
                           type: number
-                        currency:
                           required: true
+                        currency:
                           type: string
+                          required: true
+                      required: true
                     lei:
-                      required: true
                       type: string
+                      required: true
                     fees_and_comissions:
-                      required: true
                       type: string
+                      required: true
                     review_state:
                       type: string
                       enum:
@@ -360,31 +361,31 @@ baseUri: acme-banking.com/apis
                         - closed
                       required: true
                     interest_rate:
-                      required: true
                       type: number
+                      required: true
                     annual_interest_rate:
-                      required: true
                       type: number
+                      required: true
                     minimum_inflow:
+                      additionalProperties: true
                       properties:
                         value:
-                          required: true
                           type: number
-                        currency:
                           required: true
+                        currency:
                           type: string
+                          required: true
                       required: true
-                      additionalProperties: true
                     overdraft_limit:
+                      additionalProperties: true
                       properties:
                         value:
-                          required: true
                           type: number
-                        currency:
                           required: true
+                        currency:
                           type: string
+                          required: true
                       required: true
-                      additionalProperties: true
       post:
         description: Requests the creation of a new BankAccount
         body:
@@ -412,11 +413,11 @@ baseUri: acme-banking.com/apis
                   additionalProperties: true
                   properties:
                     id:
-                      required: true
                       type: string
+                      required: true
                     account_number:
-                      required: true
                       type: string
+                      required: true
                     accountType:
                       type: string
                       enum:
@@ -424,21 +425,21 @@ baseUri: acme-banking.com/apis
                         - saver
                       required: true
                     amount:
-                      required: true
                       additionalProperties: true
                       properties:
                         value:
-                          required: true
                           type: number
-                        currency:
                           required: true
+                        currency:
                           type: string
+                          required: true
+                      required: true
                     lei:
-                      required: true
                       type: string
+                      required: true
                     fees_and_comissions:
-                      required: true
                       type: string
+                      required: true
                     review_state:
                       type: string
                       enum:
@@ -448,31 +449,31 @@ baseUri: acme-banking.com/apis
                         - closed
                       required: true
                     interest_rate:
-                      required: true
                       type: number
+                      required: true
                     annual_interest_rate:
-                      required: true
                       type: number
+                      required: true
                     minimum_inflow:
-                      required: true
                       additionalProperties: true
                       properties:
                         value:
-                          required: true
                           type: number
-                        currency:
                           required: true
+                        currency:
                           type: string
+                          required: true
+                      required: true
                     overdraft_limit:
-                      required: true
                       additionalProperties: true
                       properties:
                         value:
-                          required: true
                           type: number
-                        currency:
                           required: true
+                        currency:
                           type: string
+                          required: true
+                      required: true
         delete:
           description: Removes a BankAccount from the system
     /loans:
@@ -501,15 +502,16 @@ baseUri: acme-banking.com/apis
           200:
             body:
               application/json:
+                type: array
                 items:
                   additionalProperties: true
                   properties:
                     id:
-                      required: true
                       type: string
+                      required: true
                     account_number:
-                      required: true
                       type: string
+                      required: true
                     accountType:
                       type: string
                       enum:
@@ -517,21 +519,21 @@ baseUri: acme-banking.com/apis
                         - saver
                       required: true
                     amount:
-                      required: true
                       additionalProperties: true
                       properties:
                         value:
-                          required: true
                           type: number
-                        currency:
                           required: true
+                        currency:
                           type: string
+                          required: true
+                      required: true
                     lei:
-                      required: true
                       type: string
+                      required: true
                     fees_and_comissions:
-                      required: true
                       type: string
+                      required: true
                     review_state:
                       type: string
                       enum:
@@ -544,38 +546,38 @@ baseUri: acme-banking.com/apis
                         - closed
                       required: true
                     interest_rate:
-                      required: true
                       type: number
+                      required: true
                     annual_interest_rate:
-                      required: true
                       type: number
+                      required: true
                     minimum_inflow:
-                      required: true
                       additionalProperties: true
                       properties:
                         value:
-                          required: true
                           type: number
-                        currency:
                           required: true
+                        currency:
                           type: string
+                          required: true
+                      required: true
                     overdraft_limit:
-                      required: true
                       additionalProperties: true
                       properties:
                         value:
-                          required: true
                           type: number
-                        currency:
                           required: true
+                        currency:
                           type: string
-                    grace_period:
+                          required: true
                       required: true
+                    grace_period:
                       additionalProperties: true
                       properties:
                         value:
-                          required: true
                           type: string
+                          required: true
+                      required: true
       post:
         description: Requests the creation of a new Loan
         body:
@@ -584,51 +586,51 @@ baseUri: acme-banking.com/apis
             additionalProperties: true
             properties:
               category:
-                required: true
                 type: string
+                required: true
               amount:
-                required: true
                 additionalProperties: true
                 properties:
                   value:
-                    required: true
                     type: number
-                  currency:
                     required: true
+                  currency:
                     type: string
+                    required: true
+                required: true
               term:
-                required: true
                 additionalProperties: true
                 properties:
                   value:
-                    required: true
                     type: string
+                    required: true
+                required: true
               interest_rate:
-                required: true
                 type: number
+                required: true
               down_payment:
-                required: true
                 additionalProperties: true
                 properties:
                   value:
-                    required: true
                     type: number
-                  currency:
                     required: true
+                  currency:
                     type: string
+                    required: true
+                required: true
               payment_amount:
-                required: true
                 additionalProperties: true
                 properties:
                   value:
-                    required: true
                     type: number
-                  currency:
                     required: true
+                  currency:
                     type: string
-              payment_frequency:
+                    required: true
                 required: true
+              payment_frequency:
                 type: number
+                required: true
               review_state:
                 type: string
                 enum:

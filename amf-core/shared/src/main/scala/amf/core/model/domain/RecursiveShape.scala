@@ -14,7 +14,7 @@ case class RecursiveShape(override val fields: Fields, override val annotations:
 
   override def cloneShape(recursionErrorHandler: Option[ErrorHandler],
                           recursionBase: Option[String],
-                          traversed: TraversedIds = TraversedIds()): Shape = {
+                          traversed: IdsTraversionCheck = IdsTraversionCheck()): Shape = {
     val cloned = RecursiveShape()
     cloned.id = this.id
     copyFields(recursionErrorHandler, cloned, None, traversed)
@@ -26,13 +26,15 @@ case class RecursiveShape(override val fields: Fields, override val annotations:
   override def meta: Obj = RecursiveShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/recursion"
+  override def componentId: String = ""
 }
 
 object RecursiveShape {
-  def apply(): RecursiveShape = apply(Fields(), Annotations())
+  def apply(): RecursiveShape =
+    apply(Fields(), Annotations())
 
-  def apply(annotations: Annotations): RecursiveShape = RecursiveShape(Fields(), annotations)
+  def apply(annotations: Annotations): RecursiveShape =
+    RecursiveShape(Fields(), annotations)
 
   def apply(l: Linkable): RecursiveShape =
     apply(Fields(), Annotations())

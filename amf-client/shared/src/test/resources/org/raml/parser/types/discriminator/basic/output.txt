@@ -7,25 +7,25 @@ types:
     additionalProperties: true
     properties:
       kind:
-        required: true
         type: string
+        required: true
       name:
-        required: true
         type: string
+        required: true
   Employee:
     discriminator: kind
     type: object
     additionalProperties: true
     properties:
       kind:
-        required: true
         type: string
+        required: true
       name:
-        required: true
         type: string
-      employeeId:
         required: true
+      employeeId:
         type: integer
+        required: true
   User:
     discriminator: kind
     type: object
@@ -33,14 +33,14 @@ types:
     additionalProperties: true
     properties:
       kind:
-        required: true
         type: string
+        required: true
       name:
-        required: true
         type: string
-      userId:
         required: true
+      userId:
         type: integer
+        required: true
 /resource:
   get:
     responses:
@@ -61,8 +61,8 @@ types:
             additionalProperties: true
             properties:
               kind:
-                required: true
                 type: string
+                required: true
               name:
-                required: true
                 type: string
+                required: true

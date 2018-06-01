@@ -63,28 +63,28 @@ baseUri: http://localhost:8081/api
             additionalProperties: true
             properties:
               orders:
-                required: true
                 items:
                   type: object
                   additionalProperties: true
                   properties:
                     order_id:
-                      required: true
                       type: string
+                      required: true
                     creation_date:
-                      required: true
                       type: string
-                    items:
                       required: true
+                    items:
                       items:
                         type: object
                         additionalProperties: true
                         properties:
                           product_id:
-                            required: true
                             type: string
-                          quantity:
                             required: true
+                          quantity:
                             type: integer
+                            required: true
+                      required: true
+                required: true
 uses:
   assets: assets-lib.raml

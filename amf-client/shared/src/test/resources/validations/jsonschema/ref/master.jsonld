@@ -1,0 +1,1407 @@
+[
+  {
+    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml",
+    "@type": [
+      "http://raml.org/vocabularies/document#Document",
+      "http://raml.org/vocabularies/document#Fragment",
+      "http://raml.org/vocabularies/document#Module",
+      "http://raml.org/vocabularies/document#Unit"
+    ],
+    "http://raml.org/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api",
+        "@type": [
+          "http://schema.org/WebAPI",
+          "http://raml.org/vocabularies/document#RootDomainElement",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "test"
+          }
+        ],
+        "http://raml.org/vocabularies/http#endpoint": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep1",
+            "@type": [
+              "http://raml.org/vocabularies/http#EndPoint",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/http#path": [
+              {
+                "@value": "/ep1"
+              }
+            ],
+            "http://www.w3.org/ns/hydra/core#supportedOperation": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep1/get",
+                "@type": [
+                  "http://www.w3.org/ns/hydra/core#Operation",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/hydra/core#method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "http://www.w3.org/ns/hydra/core#returns": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep1/get/200",
+                    "@type": [
+                      "http://raml.org/vocabularies/http#Response",
+                      "http://raml.org/vocabularies/document#DomainElement"
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://www.w3.org/ns/hydra/core#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/http#payload": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson",
+                        "@type": [
+                          "http://raml.org/vocabularies/http#Payload",
+                          "http://raml.org/vocabularies/document#DomainElement"
+                        ],
+                        "http://raml.org/vocabularies/http#mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/http#schema": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/schema",
+                            "@type": [
+                              "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://raml.org/vocabularies/shapes#Shape",
+                              "http://raml.org/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#property": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo",
+                                "@type": [
+                                  "http://www.w3.org/ns/shacl#PropertyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://raml.org/vocabularies/shapes#Shape"
+                                ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://raml.org/vocabularies/data#foo"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/shapes#range": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo",
+                                    "@type": [
+                                      "http://raml.org/vocabularies/shapes#AnyShape",
+                                      "http://www.w3.org/ns/shacl#Shape",
+                                      "http://raml.org/vocabularies/shapes#Shape"
+                                    ],
+                                    "http://www.w3.org/ns/shacl#name": [
+                                      {
+                                        "@value": "foo"
+                                      }
+                                    ],
+                                    "http://www.w3.org/ns/shacl#or": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0",
+                                        "@type": [
+                                          "http://www.w3.org/ns/shacl#NodeShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://raml.org/vocabularies/shapes#Shape",
+                                          "http://raml.org/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://www.w3.org/ns/shacl#closed": [
+                                          {
+                                            "@value": true
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#property": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0/property/foo",
+                                            "@type": [
+                                              "http://www.w3.org/ns/shacl#PropertyShape",
+                                              "http://www.w3.org/ns/shacl#Shape",
+                                              "http://raml.org/vocabularies/shapes#Shape"
+                                            ],
+                                            "http://www.w3.org/ns/shacl#path": [
+                                              {
+                                                "@id": "http://raml.org/vocabularies/data#foo"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/shapes#range": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0/property/foo/any/foo",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/shapes#AnyShape",
+                                                  "http://www.w3.org/ns/shacl#Shape",
+                                                  "http://raml.org/vocabularies/shapes#Shape"
+                                                ],
+                                                "http://www.w3.org/ns/shacl#name": [
+                                                  {
+                                                    "@value": "foo"
+                                                  }
+                                                ],
+                                                "http://www.w3.org/ns/shacl#or": [
+                                                  {
+                                                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo",
+                                                    "@type": [
+                                                      "http://raml.org/vocabularies/shapes#AnyShape",
+                                                      "http://www.w3.org/ns/shacl#Shape",
+                                                      "http://raml.org/vocabularies/shapes#Shape"
+                                                    ],
+                                                    "http://raml.org/vocabularies/document#link-target": [
+                                                      {
+                                                        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document#link-label": [
+                                                      {
+                                                        "@value": "#"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document#recursive": [
+                                                      {
+                                                        "@value": true
+                                                      }
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#name": [
+                                                      {
+                                                        "@value": "item0"
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo/scalar/item1",
+                                                    "@type": [
+                                                      "http://raml.org/vocabularies/shapes#ScalarShape",
+                                                      "http://www.w3.org/ns/shacl#Shape",
+                                                      "http://raml.org/vocabularies/shapes#Shape",
+                                                      "http://raml.org/vocabularies/document#DomainElement"
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#datatype": [
+                                                      {
+                                                        "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                                                      }
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#name": [
+                                                      {
+                                                        "@value": "item1"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            "http://www.w3.org/ns/shacl#minCount": [
+                                              {
+                                                "@value": 0
+                                              }
+                                            ],
+                                            "http://www.w3.org/ns/shacl#name": [
+                                              {
+                                                "@value": "foo"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#name": [
+                                          {
+                                            "@value": "item0"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/scalar/item1",
+                                        "@type": [
+                                          "http://raml.org/vocabularies/shapes#ScalarShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://raml.org/vocabularies/shapes#Shape",
+                                          "http://raml.org/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://www.w3.org/ns/shacl#datatype": [
+                                          {
+                                            "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#name": [
+                                          {
+                                            "@value": "item1"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#minCount": [
+                                  {
+                                    "@value": 0
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "foo"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "test1"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document#examples": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/schema/example/default-example",
+                                "@type": [
+                                  "http://raml.org/vocabularies/document#Example",
+                                  "http://raml.org/vocabularies/document#DomainElement"
+                                ],
+                                "http://raml.org/vocabularies/document#strict": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document#structuredValue": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/schema/example/default-example",
+                                    "@type": [
+                                      "http://raml.org/vocabularies/data#Object"
+                                    ],
+                                    "http://raml.org/vocabularies/data#foo": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/schema/example/default-example/object_1/scalar_2",
+                                        "@type": [
+                                          "http://raml.org/vocabularies/data#Scalar"
+                                        ],
+                                        "http://raml.org/vocabularies/data#value": [
+                                          {
+                                            "@value": "false",
+                                            "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#raw": [
+                                  {
+                                    "@value": "              foo: false\n\n"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep2",
+            "@type": [
+              "http://raml.org/vocabularies/http#EndPoint",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/http#path": [
+              {
+                "@value": "/ep2"
+              }
+            ],
+            "http://www.w3.org/ns/hydra/core#supportedOperation": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep2/get",
+                "@type": [
+                  "http://www.w3.org/ns/hydra/core#Operation",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/hydra/core#method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "http://www.w3.org/ns/hydra/core#returns": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep2/get/200",
+                    "@type": [
+                      "http://raml.org/vocabularies/http#Response",
+                      "http://raml.org/vocabularies/document#DomainElement"
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://www.w3.org/ns/hydra/core#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/http#payload": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson",
+                        "@type": [
+                          "http://raml.org/vocabularies/http#Payload",
+                          "http://raml.org/vocabularies/document#DomainElement"
+                        ],
+                        "http://raml.org/vocabularies/http#mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/http#schema": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/schema",
+                            "@type": [
+                              "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://raml.org/vocabularies/shapes#Shape",
+                              "http://raml.org/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#property": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo",
+                                "@type": [
+                                  "http://www.w3.org/ns/shacl#PropertyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://raml.org/vocabularies/shapes#Shape"
+                                ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://raml.org/vocabularies/data#foo"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/shapes#range": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo",
+                                    "@type": [
+                                      "http://raml.org/vocabularies/shapes#AnyShape",
+                                      "http://www.w3.org/ns/shacl#Shape",
+                                      "http://raml.org/vocabularies/shapes#Shape"
+                                    ],
+                                    "http://www.w3.org/ns/shacl#name": [
+                                      {
+                                        "@value": "foo"
+                                      }
+                                    ],
+                                    "http://www.w3.org/ns/shacl#or": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0",
+                                        "@type": [
+                                          "http://www.w3.org/ns/shacl#NodeShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://raml.org/vocabularies/shapes#Shape",
+                                          "http://raml.org/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://www.w3.org/ns/shacl#closed": [
+                                          {
+                                            "@value": true
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#property": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0/property/foo",
+                                            "@type": [
+                                              "http://www.w3.org/ns/shacl#PropertyShape",
+                                              "http://www.w3.org/ns/shacl#Shape",
+                                              "http://raml.org/vocabularies/shapes#Shape"
+                                            ],
+                                            "http://www.w3.org/ns/shacl#path": [
+                                              {
+                                                "@id": "http://raml.org/vocabularies/data#foo"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/shapes#range": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0/property/foo/any/foo",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/shapes#AnyShape",
+                                                  "http://www.w3.org/ns/shacl#Shape",
+                                                  "http://raml.org/vocabularies/shapes#Shape"
+                                                ],
+                                                "http://www.w3.org/ns/shacl#name": [
+                                                  {
+                                                    "@value": "foo"
+                                                  }
+                                                ],
+                                                "http://www.w3.org/ns/shacl#or": [
+                                                  {
+                                                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo",
+                                                    "@type": [
+                                                      "http://raml.org/vocabularies/shapes#AnyShape",
+                                                      "http://www.w3.org/ns/shacl#Shape",
+                                                      "http://raml.org/vocabularies/shapes#Shape"
+                                                    ],
+                                                    "http://raml.org/vocabularies/document#link-target": [
+                                                      {
+                                                        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document#link-label": [
+                                                      {
+                                                        "@value": "#"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document#recursive": [
+                                                      {
+                                                        "@value": true
+                                                      }
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#name": [
+                                                      {
+                                                        "@value": "item0"
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo/scalar/item1",
+                                                    "@type": [
+                                                      "http://raml.org/vocabularies/shapes#ScalarShape",
+                                                      "http://www.w3.org/ns/shacl#Shape",
+                                                      "http://raml.org/vocabularies/shapes#Shape",
+                                                      "http://raml.org/vocabularies/document#DomainElement"
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#datatype": [
+                                                      {
+                                                        "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                                                      }
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#name": [
+                                                      {
+                                                        "@value": "item1"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            "http://www.w3.org/ns/shacl#minCount": [
+                                              {
+                                                "@value": 0
+                                              }
+                                            ],
+                                            "http://www.w3.org/ns/shacl#name": [
+                                              {
+                                                "@value": "foo"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#name": [
+                                          {
+                                            "@value": "item0"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/scalar/item1",
+                                        "@type": [
+                                          "http://raml.org/vocabularies/shapes#ScalarShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://raml.org/vocabularies/shapes#Shape",
+                                          "http://raml.org/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://www.w3.org/ns/shacl#datatype": [
+                                          {
+                                            "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#name": [
+                                          {
+                                            "@value": "item1"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#minCount": [
+                                  {
+                                    "@value": 0
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "foo"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "test1"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document#examples": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/schema/example/default-example",
+                                "@type": [
+                                  "http://raml.org/vocabularies/document#Example",
+                                  "http://raml.org/vocabularies/document#DomainElement"
+                                ],
+                                "http://raml.org/vocabularies/document#strict": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document#structuredValue": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/schema/example/default-example",
+                                    "@type": [
+                                      "http://raml.org/vocabularies/data#Object"
+                                    ],
+                                    "http://raml.org/vocabularies/data#foo": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/schema/example/default-example/object_1/object_2",
+                                        "@type": [
+                                          "http://raml.org/vocabularies/data#Object"
+                                        ],
+                                        "http://raml.org/vocabularies/data#foo": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/schema/example/default-example/object_1/object_2/scalar_3",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Scalar"
+                                            ],
+                                            "http://raml.org/vocabularies/data#value": [
+                                              {
+                                                "@value": "false",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#raw": [
+                                  {
+                                    "@value": "              foo:\n                foo: false\n\n"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3",
+            "@type": [
+              "http://raml.org/vocabularies/http#EndPoint",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/http#path": [
+              {
+                "@value": "/ep3"
+              }
+            ],
+            "http://www.w3.org/ns/hydra/core#supportedOperation": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get",
+                "@type": [
+                  "http://www.w3.org/ns/hydra/core#Operation",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/hydra/core#method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "http://www.w3.org/ns/hydra/core#returns": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get/200",
+                    "@type": [
+                      "http://raml.org/vocabularies/http#Response",
+                      "http://raml.org/vocabularies/document#DomainElement"
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://www.w3.org/ns/hydra/core#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/http#payload": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson",
+                        "@type": [
+                          "http://raml.org/vocabularies/http#Payload",
+                          "http://raml.org/vocabularies/document#DomainElement"
+                        ],
+                        "http://raml.org/vocabularies/http#mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/http#schema": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/schema",
+                            "@type": [
+                              "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://raml.org/vocabularies/shapes#Shape",
+                              "http://raml.org/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#property": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo",
+                                "@type": [
+                                  "http://www.w3.org/ns/shacl#PropertyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://raml.org/vocabularies/shapes#Shape"
+                                ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://raml.org/vocabularies/data#foo"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/shapes#range": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo",
+                                    "@type": [
+                                      "http://raml.org/vocabularies/shapes#AnyShape",
+                                      "http://www.w3.org/ns/shacl#Shape",
+                                      "http://raml.org/vocabularies/shapes#Shape"
+                                    ],
+                                    "http://www.w3.org/ns/shacl#name": [
+                                      {
+                                        "@value": "foo"
+                                      }
+                                    ],
+                                    "http://www.w3.org/ns/shacl#or": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0",
+                                        "@type": [
+                                          "http://www.w3.org/ns/shacl#NodeShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://raml.org/vocabularies/shapes#Shape",
+                                          "http://raml.org/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://www.w3.org/ns/shacl#closed": [
+                                          {
+                                            "@value": true
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#property": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0/property/foo",
+                                            "@type": [
+                                              "http://www.w3.org/ns/shacl#PropertyShape",
+                                              "http://www.w3.org/ns/shacl#Shape",
+                                              "http://raml.org/vocabularies/shapes#Shape"
+                                            ],
+                                            "http://www.w3.org/ns/shacl#path": [
+                                              {
+                                                "@id": "http://raml.org/vocabularies/data#foo"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/shapes#range": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0/property/foo/any/foo",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/shapes#AnyShape",
+                                                  "http://www.w3.org/ns/shacl#Shape",
+                                                  "http://raml.org/vocabularies/shapes#Shape"
+                                                ],
+                                                "http://www.w3.org/ns/shacl#name": [
+                                                  {
+                                                    "@value": "foo"
+                                                  }
+                                                ],
+                                                "http://www.w3.org/ns/shacl#or": [
+                                                  {
+                                                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo",
+                                                    "@type": [
+                                                      "http://raml.org/vocabularies/shapes#AnyShape",
+                                                      "http://www.w3.org/ns/shacl#Shape",
+                                                      "http://raml.org/vocabularies/shapes#Shape"
+                                                    ],
+                                                    "http://raml.org/vocabularies/document#link-target": [
+                                                      {
+                                                        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document#link-label": [
+                                                      {
+                                                        "@value": "#"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document#recursive": [
+                                                      {
+                                                        "@value": true
+                                                      }
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#name": [
+                                                      {
+                                                        "@value": "item0"
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo/scalar/item1",
+                                                    "@type": [
+                                                      "http://raml.org/vocabularies/shapes#ScalarShape",
+                                                      "http://www.w3.org/ns/shacl#Shape",
+                                                      "http://raml.org/vocabularies/shapes#Shape",
+                                                      "http://raml.org/vocabularies/document#DomainElement"
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#datatype": [
+                                                      {
+                                                        "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                                                      }
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#name": [
+                                                      {
+                                                        "@value": "item1"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            "http://www.w3.org/ns/shacl#minCount": [
+                                              {
+                                                "@value": 0
+                                              }
+                                            ],
+                                            "http://www.w3.org/ns/shacl#name": [
+                                              {
+                                                "@value": "foo"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#name": [
+                                          {
+                                            "@value": "item0"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/scalar/item1",
+                                        "@type": [
+                                          "http://raml.org/vocabularies/shapes#ScalarShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://raml.org/vocabularies/shapes#Shape",
+                                          "http://raml.org/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://www.w3.org/ns/shacl#datatype": [
+                                          {
+                                            "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#name": [
+                                          {
+                                            "@value": "item1"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#minCount": [
+                                  {
+                                    "@value": 0
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "foo"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "test1"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document#examples": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/schema/example/default-example",
+                                "@type": [
+                                  "http://raml.org/vocabularies/document#Example",
+                                  "http://raml.org/vocabularies/document#DomainElement"
+                                ],
+                                "http://raml.org/vocabularies/document#strict": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document#structuredValue": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/schema/example/default-example",
+                                    "@type": [
+                                      "http://raml.org/vocabularies/data#Object"
+                                    ],
+                                    "http://raml.org/vocabularies/data#foo": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/schema/example/default-example/object_1/object_2",
+                                        "@type": [
+                                          "http://raml.org/vocabularies/data#Object"
+                                        ],
+                                        "http://raml.org/vocabularies/data#bar": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/schema/example/default-example/object_1/object_2/scalar_3",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Scalar"
+                                            ],
+                                            "http://raml.org/vocabularies/data#value": [
+                                              {
+                                                "@value": "false",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#raw": [
+                                  {
+                                    "@value": "              foo:\n                bar: false\n\n"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4",
+            "@type": [
+              "http://raml.org/vocabularies/http#EndPoint",
+              "http://raml.org/vocabularies/document#DomainElement"
+            ],
+            "http://raml.org/vocabularies/http#path": [
+              {
+                "@value": "/ep4"
+              }
+            ],
+            "http://www.w3.org/ns/hydra/core#supportedOperation": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get",
+                "@type": [
+                  "http://www.w3.org/ns/hydra/core#Operation",
+                  "http://raml.org/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/hydra/core#method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "http://www.w3.org/ns/hydra/core#returns": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get/200",
+                    "@type": [
+                      "http://raml.org/vocabularies/http#Response",
+                      "http://raml.org/vocabularies/document#DomainElement"
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://www.w3.org/ns/hydra/core#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://raml.org/vocabularies/http#payload": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson",
+                        "@type": [
+                          "http://raml.org/vocabularies/http#Payload",
+                          "http://raml.org/vocabularies/document#DomainElement"
+                        ],
+                        "http://raml.org/vocabularies/http#mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/http#schema": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/schema",
+                            "@type": [
+                              "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://raml.org/vocabularies/shapes#Shape",
+                              "http://raml.org/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#property": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo",
+                                "@type": [
+                                  "http://www.w3.org/ns/shacl#PropertyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://raml.org/vocabularies/shapes#Shape"
+                                ],
+                                "http://www.w3.org/ns/shacl#path": [
+                                  {
+                                    "@id": "http://raml.org/vocabularies/data#foo"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/shapes#range": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo",
+                                    "@type": [
+                                      "http://raml.org/vocabularies/shapes#AnyShape",
+                                      "http://www.w3.org/ns/shacl#Shape",
+                                      "http://raml.org/vocabularies/shapes#Shape"
+                                    ],
+                                    "http://www.w3.org/ns/shacl#name": [
+                                      {
+                                        "@value": "foo"
+                                      }
+                                    ],
+                                    "http://www.w3.org/ns/shacl#or": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0",
+                                        "@type": [
+                                          "http://www.w3.org/ns/shacl#NodeShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://raml.org/vocabularies/shapes#Shape",
+                                          "http://raml.org/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://www.w3.org/ns/shacl#closed": [
+                                          {
+                                            "@value": true
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#property": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0/property/foo",
+                                            "@type": [
+                                              "http://www.w3.org/ns/shacl#PropertyShape",
+                                              "http://www.w3.org/ns/shacl#Shape",
+                                              "http://raml.org/vocabularies/shapes#Shape"
+                                            ],
+                                            "http://www.w3.org/ns/shacl#path": [
+                                              {
+                                                "@id": "http://raml.org/vocabularies/data#foo"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/shapes#range": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0/property/foo/any/foo",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/shapes#AnyShape",
+                                                  "http://www.w3.org/ns/shacl#Shape",
+                                                  "http://raml.org/vocabularies/shapes#Shape"
+                                                ],
+                                                "http://www.w3.org/ns/shacl#name": [
+                                                  {
+                                                    "@value": "foo"
+                                                  }
+                                                ],
+                                                "http://www.w3.org/ns/shacl#or": [
+                                                  {
+                                                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo",
+                                                    "@type": [
+                                                      "http://raml.org/vocabularies/shapes#AnyShape",
+                                                      "http://www.w3.org/ns/shacl#Shape",
+                                                      "http://raml.org/vocabularies/shapes#Shape"
+                                                    ],
+                                                    "http://raml.org/vocabularies/document#link-target": [
+                                                      {
+                                                        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document#link-label": [
+                                                      {
+                                                        "@value": "#"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document#recursive": [
+                                                      {
+                                                        "@value": true
+                                                      }
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#name": [
+                                                      {
+                                                        "@value": "item0"
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo/scalar/item1",
+                                                    "@type": [
+                                                      "http://raml.org/vocabularies/shapes#ScalarShape",
+                                                      "http://www.w3.org/ns/shacl#Shape",
+                                                      "http://raml.org/vocabularies/shapes#Shape",
+                                                      "http://raml.org/vocabularies/document#DomainElement"
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#datatype": [
+                                                      {
+                                                        "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                                                      }
+                                                    ],
+                                                    "http://www.w3.org/ns/shacl#name": [
+                                                      {
+                                                        "@value": "item1"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            "http://www.w3.org/ns/shacl#minCount": [
+                                              {
+                                                "@value": 0
+                                              }
+                                            ],
+                                            "http://www.w3.org/ns/shacl#name": [
+                                              {
+                                                "@value": "foo"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#name": [
+                                          {
+                                            "@value": "item0"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/scalar/item1",
+                                        "@type": [
+                                          "http://raml.org/vocabularies/shapes#ScalarShape",
+                                          "http://www.w3.org/ns/shacl#Shape",
+                                          "http://raml.org/vocabularies/shapes#Shape",
+                                          "http://raml.org/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://www.w3.org/ns/shacl#datatype": [
+                                          {
+                                            "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#name": [
+                                          {
+                                            "@value": "item1"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#minCount": [
+                                  {
+                                    "@value": 0
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "foo"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "test1"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/document#examples": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/schema/example/default-example",
+                                "@type": [
+                                  "http://raml.org/vocabularies/document#Example",
+                                  "http://raml.org/vocabularies/document#DomainElement"
+                                ],
+                                "http://raml.org/vocabularies/document#strict": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document#structuredValue": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/schema/example/default-example",
+                                    "@type": [
+                                      "http://raml.org/vocabularies/data#Object"
+                                    ],
+                                    "http://raml.org/vocabularies/data#foo": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/schema/example/default-example/object_1/object_2",
+                                        "@type": [
+                                          "http://raml.org/vocabularies/data#Object"
+                                        ],
+                                        "http://raml.org/vocabularies/data#foo": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/schema/example/default-example/object_1/object_2/scalar_3",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Scalar"
+                                            ],
+                                            "http://raml.org/vocabularies/data#value": [
+                                              {
+                                                "@value": "test",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#string"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#raw": [
+                                  {
+                                    "@value": "              foo:\n                foo: \"test\""
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://raml.org/vocabularies/document#declares": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://raml.org/vocabularies/shapes#Shape",
+          "http://raml.org/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#closed": [
+          {
+            "@value": true
+          }
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo",
+            "@type": [
+              "http://www.w3.org/ns/shacl#PropertyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://raml.org/vocabularies/shapes#Shape"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://raml.org/vocabularies/data#foo"
+              }
+            ],
+            "http://raml.org/vocabularies/shapes#range": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo",
+                "@type": [
+                  "http://raml.org/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://raml.org/vocabularies/shapes#Shape"
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "foo"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#or": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0",
+                    "@type": [
+                      "http://www.w3.org/ns/shacl#NodeShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://raml.org/vocabularies/shapes#Shape",
+                      "http://raml.org/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#closed": [
+                      {
+                        "@value": true
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#property": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0/property/foo",
+                        "@type": [
+                          "http://www.w3.org/ns/shacl#PropertyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://raml.org/vocabularies/shapes#Shape"
+                        ],
+                        "http://www.w3.org/ns/shacl#path": [
+                          {
+                            "@id": "http://raml.org/vocabularies/data#foo"
+                          }
+                        ],
+                        "http://raml.org/vocabularies/shapes#range": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/item0/property/foo/any/foo",
+                            "@type": [
+                              "http://raml.org/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://raml.org/vocabularies/shapes#Shape"
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "foo"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#or": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo",
+                                "@type": [
+                                  "http://raml.org/vocabularies/shapes#RecursiveShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://raml.org/vocabularies/shapes#Shape"
+                                ],
+                                "http://raml.org/vocabularies/shapes#fixPoint": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document#link-target": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document#link-label": [
+                                  {
+                                    "@value": "#"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document#recursive": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "item0"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/or/0/item0/property/foo/any/foo/scalar/item1",
+                                "@type": [
+                                  "http://raml.org/vocabularies/shapes#ScalarShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://raml.org/vocabularies/shapes#Shape",
+                                  "http://raml.org/vocabularies/document#DomainElement"
+                                ],
+                                "http://www.w3.org/ns/shacl#datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "item1"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#minCount": [
+                          {
+                            "@value": 0
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#name": [
+                          {
+                            "@value": "foo"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "item0"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/declarations/test1/property/foo/any/foo/scalar/item1",
+                    "@type": [
+                      "http://raml.org/vocabularies/shapes#ScalarShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://raml.org/vocabularies/shapes#Shape",
+                      "http://raml.org/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "item1"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "foo"
+              }
+            ]
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "test1"
+          }
+        ]
+      }
+    ]
+  }
+]

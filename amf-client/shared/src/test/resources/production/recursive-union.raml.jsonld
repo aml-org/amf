@@ -82,7 +82,7 @@
                                 ],
                                 "http://raml.org/vocabularies/shapes#items": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/array/SomeUnion/recursion",
+                                    "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/any/OneMoreType",
                                     "@type": [
                                       "http://raml.org/vocabularies/shapes#RecursiveShape",
                                       "http://www.w3.org/ns/shacl#Shape",
@@ -100,29 +100,7 @@
                                     ],
                                     "http://www.w3.org/ns/shacl#name": [
                                       {
-                                        "@value": "AnotherType"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/document-source-maps#sources": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/array/SomeUnion/recursion/source-map",
-                                        "@type": [
-                                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                                        ],
-                                        "http://raml.org/vocabularies/document-source-maps#lexical": [
-                                          {
-                                            "http://raml.org/vocabularies/document-source-maps#element": [
-                                              {
-                                                "@value": "http://www.w3.org/ns/shacl#name"
-                                              }
-                                            ],
-                                            "http://raml.org/vocabularies/document-source-maps#value": [
-                                              {
-                                                "@value": "[(11,2)-(11,13)]"
-                                              }
-                                            ]
-                                          }
-                                        ]
+                                        "@value": "OneMoreType"
                                       }
                                     ]
                                   }
@@ -179,7 +157,7 @@
                                 ],
                                 "http://raml.org/vocabularies/shapes#items": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/array/SomeUnion/recursion",
+                                    "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/any/OneMoreType",
                                     "@type": [
                                       "http://raml.org/vocabularies/shapes#RecursiveShape",
                                       "http://www.w3.org/ns/shacl#Shape",
@@ -267,7 +245,7 @@
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(21,6)-(23,0)]"
+                                    "@value": "[(21,6)-(24,0)]"
                                   }
                                 ]
                               }
@@ -291,7 +269,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(20,4)-(23,0)]"
+                                "@value": "[(20,4)-(24,0)]"
                               }
                             ]
                           }
@@ -315,7 +293,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(19,2)-(23,0)]"
+                            "@value": "[(19,2)-(24,0)]"
                           }
                         ]
                       }
@@ -339,7 +317,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(18,0)-(23,0)]"
+                        "@value": "[(18,0)-(24,0)]"
                       }
                     ]
                   }
@@ -389,7 +367,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(2,0)-(23,0)]"
+                    "@value": "[(2,0)-(32,0)]"
                   }
                 ]
               }

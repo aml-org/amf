@@ -569,6 +569,34 @@
                 },
                 "user": {
                   "type": "object",
+                  "example": {
+                    "apartmentNo": "apartmentNo",
+                    "lastName": "lastName",
+                    "zipCode": "zipCode",
+                    "annualIncome": 5,
+                    "housingStatus": "housingStatus",
+                    "city": "city",
+                    "permanentResidence": true,
+                    "suffix": "suffix",
+                    "phoneNo": 9,
+                    "ssn": 3,
+                    "uid": 2,
+                    "yearsAtCurrAdd": 4,
+                    "monthlyPayment": 2,
+                    "street": "street",
+                    "state": "state",
+                    "addTypePrimary": "addTypePrimary",
+                    "email": "email",
+                    "initial": "initial",
+                    "citizenOf": true,
+                    "userName": "userName",
+                    "otherIncome": "otherIncome",
+                    "firstName": "firstName",
+                    "addTypePrevious": "addTypePrevious",
+                    "anyPoliticalRelationship": true,
+                    "monthsAtCurrAdd": 7
+                  },
+                  "additionalProperties": true,
                   "properties": {
                     "addTypePrevious": {
                       "type": "string"
@@ -650,35 +678,7 @@
                     "zipCode": {
                       "type": "string"
                     }
-                  },
-                  "example": {
-                    "apartmentNo": "apartmentNo",
-                    "lastName": "lastName",
-                    "zipCode": "zipCode",
-                    "annualIncome": 5,
-                    "housingStatus": "housingStatus",
-                    "city": "city",
-                    "permanentResidence": true,
-                    "suffix": "suffix",
-                    "phoneNo": 9,
-                    "ssn": 3,
-                    "uid": 2,
-                    "yearsAtCurrAdd": 4,
-                    "monthlyPayment": 2,
-                    "street": "street",
-                    "state": "state",
-                    "addTypePrimary": "addTypePrimary",
-                    "email": "email",
-                    "initial": "initial",
-                    "citizenOf": true,
-                    "userName": "userName",
-                    "otherIncome": "otherIncome",
-                    "firstName": "firstName",
-                    "addTypePrevious": "addTypePrevious",
-                    "anyPoliticalRelationship": true,
-                    "monthsAtCurrAdd": 7
-                  },
-                  "additionalProperties": true
+                  }
                 }
               }
             }
@@ -1910,6 +1910,34 @@
         },
         "user": {
           "type": "object",
+          "example": {
+            "apartmentNo": "apartmentNo",
+            "lastName": "lastName",
+            "zipCode": "zipCode",
+            "annualIncome": 5,
+            "housingStatus": "housingStatus",
+            "city": "city",
+            "permanentResidence": true,
+            "suffix": "suffix",
+            "phoneNo": 9,
+            "ssn": 3,
+            "uid": 2,
+            "yearsAtCurrAdd": 4,
+            "monthlyPayment": 2,
+            "street": "street",
+            "state": "state",
+            "addTypePrimary": "addTypePrimary",
+            "email": "email",
+            "initial": "initial",
+            "citizenOf": true,
+            "userName": "userName",
+            "otherIncome": "otherIncome",
+            "firstName": "firstName",
+            "addTypePrevious": "addTypePrevious",
+            "anyPoliticalRelationship": true,
+            "monthsAtCurrAdd": 7
+          },
+          "additionalProperties": true,
           "properties": {
             "addTypePrevious": {
               "type": "string"
@@ -1991,35 +2019,7 @@
             "zipCode": {
               "type": "string"
             }
-          },
-          "example": {
-            "apartmentNo": "apartmentNo",
-            "lastName": "lastName",
-            "zipCode": "zipCode",
-            "annualIncome": 5,
-            "housingStatus": "housingStatus",
-            "city": "city",
-            "permanentResidence": true,
-            "suffix": "suffix",
-            "phoneNo": 9,
-            "ssn": 3,
-            "uid": 2,
-            "yearsAtCurrAdd": 4,
-            "monthlyPayment": 2,
-            "street": "street",
-            "state": "state",
-            "addTypePrimary": "addTypePrimary",
-            "email": "email",
-            "initial": "initial",
-            "citizenOf": true,
-            "userName": "userName",
-            "otherIncome": "otherIncome",
-            "firstName": "firstName",
-            "addTypePrevious": "addTypePrevious",
-            "anyPoliticalRelationship": true,
-            "monthsAtCurrAdd": 7
-          },
-          "additionalProperties": true
+          }
         }
       }
     },

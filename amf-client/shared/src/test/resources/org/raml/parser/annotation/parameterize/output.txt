@@ -20,18 +20,18 @@ annotationTypes:
     additionalProperties: true
     properties:
       property1:
-        required: true
         additionalProperties: true
         properties:
           field1:
-            required: false
             type: string
+            required: false
           field2:
             type: number
             required: true
+        required: true
       property2:
-        required: false
         type: string
+        required: false
 /resource:
   get:
     (objectAnnotation):
