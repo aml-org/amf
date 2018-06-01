@@ -11,16 +11,18 @@ import org.yaml.model._
 
 case class AnnotationParser(element: DomainElement, map: YMap)(implicit val ctx: WebApiContext) {
   def parse(): Unit = {
-    val extensions = parseExtensions(element.id, map)
+    val extensions    = parseExtensions(element.id, map)
     val oldExtensions = Option(element.customDomainProperties).getOrElse(Nil)
     if (extensions.nonEmpty) element.withCustomDomainProperties(oldExtensions ++ extensions)
   }
 
-  def parseOrphanNode(orphanNodeName: String) = {
+  def parseOrphanNode(orphanNodeName: String): Unit = {
     map.key(orphanNodeName) match {
       case Some(orphanMapEntry) if orphanMapEntry.value.tagType == YType.Map =>
         val extensions = parseExtensions(element.id, orphanMapEntry.value.as[YMap])
-        extensions.foreach { extension => Option(extension.extension).foreach(_.annotations += OrphanOasExtension(orphanNodeName)) }
+        extensions.foreach { extension =>
+          Option(extension.extension).foreach(_.annotations += OrphanOasExtension(orphanNodeName))
+        }
         val oldExtensions = Option(element.customDomainProperties).getOrElse(Nil)
         if (extensions.nonEmpty) element.withCustomDomainProperties(oldExtensions ++ extensions)
       case _ => // ignore
@@ -31,7 +33,7 @@ case class AnnotationParser(element: DomainElement, map: YMap)(implicit val ctx:
 object AnnotationParser {
   def parseExtensions(parent: String, map: YMap)(implicit ctx: WebApiContext): Seq[DomainExtension] =
     map.entries.flatMap { entry =>
-      val key = entry.key.as[YScalar].text
+      val key = entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
       resolveAnnotation(key).map(ExtensionParser(_, parent, entry).parse().add(Annotations(entry)))
     }
 }
