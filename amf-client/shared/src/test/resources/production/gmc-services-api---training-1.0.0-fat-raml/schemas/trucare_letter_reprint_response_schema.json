@@ -1,0 +1,19 @@
+{
+  "id": "",
+  "$schema": "http://json-schema.org/draft-03/schema#",
+  "type": "object",
+  "properties": {
+    "message": {
+      "id": "/message",
+      "type": "string"
+    },
+    "status": {
+      "id": "/status",
+      "type": "number"
+    },
+    "errors": {
+      "id": "/errors",
+      "type": "array"
+    }
+  }
+}
