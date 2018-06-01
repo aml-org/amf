@@ -2587,13 +2587,15 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-
   test("gmc-services-api--training example test") {
     for {
       validation <- Validation(platform)
       _          <- validation.loadValidationDialect()
-      model      <- AMFCompiler(productionPath + "gmc-services-api---training-1.0.0-fat-raml/api.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML)
+      model <- AMFCompiler(productionPath + "gmc-services-api---training-1.0.0-fat-raml/api.raml",
+                           platform,
+                           RamlYamlHint,
+                           validation).build()
+      report <- validation.validate(model, ProfileNames.RAML)
     } yield {
       assert(report.results.nonEmpty)
     }
@@ -2603,8 +2605,11 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       _          <- validation.loadValidationDialect()
-      model      <- AMFCompiler(productionPath + "lock-unlock-api-1.0.0-fat-raml/lockUnlockStats.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML)
+      model <- AMFCompiler(productionPath + "lock-unlock-api-1.0.0-fat-raml/lockUnlockStats.raml",
+                           platform,
+                           RamlYamlHint,
+                           validation).build()
+      report <- validation.validate(model, ProfileNames.RAML)
     } yield {
       assert(report.results.nonEmpty)
     }
@@ -2614,10 +2619,45 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       _          <- validation.loadValidationDialect()
-      model      <- AMFCompiler(productionPath + "case00182429-1.0.0-fat-raml/DarwinIntegration.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML)
+      model <- AMFCompiler(productionPath + "case00182429-1.0.0-fat-raml/DarwinIntegration.raml",
+                           platform,
+                           RamlYamlHint,
+                           validation).build()
+      report <- validation.validate(model, ProfileNames.RAML)
     } yield {
       assert(report.results.nonEmpty)
+    }
+  }
+
+  test("security scheme authorizationGrant RAML 1.0") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model <- AMFCompiler(validationsPath + "securitySchemes/raml10AuthorizationGrant.raml",
+                           platform,
+                           RamlYamlHint,
+                           validation).build()
+      report <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 1)
+      assert(report.results.exists(_.message.contains("Invalid authorization grant")))
+    }
+  }
+
+  test("security scheme authorizationGrant RAML 0.8") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model <- AMFCompiler(validationsPath + "securitySchemes/raml08AuthorizationGrant.raml",
+                           platform,
+                           RamlYamlHint,
+                           validation).build()
+      report <- validation.validate(model, ProfileNames.RAML08)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 1)
+      assert(report.results.exists(_.message.contains("Invalid authorization grant")))
     }
   }
 }
