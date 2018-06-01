@@ -1,0 +1,30 @@
+#%RAML 1.0 Trait
+queryParameters: 
+  fromDate:
+    description: from Date
+    type: string
+    example: 2016-08-05 19:44:59
+    required: true
+    pattern: ^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01]) (0[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9]):([0-9]|[0-5][0-9])$
+  
+  toDate:
+    description: to Date
+    type: string
+    example: 2016-08-05 19:46:28
+    required: true
+    pattern: ^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01]) (0[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9]):([0-9]|[0-5][0-9])$
+  
+  countryCode:
+    description: Universal ISO Country Code
+    type: string
+    example: THA
+    maxLength: 3
+    required: true
+  
+  barcode:
+    description: Product BarCode
+    type: string
+    maxLength: 50
+    example: "1122334488899"
+    required: false
+  

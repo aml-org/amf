@@ -162,8 +162,16 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Opti
 
   protected def isEmptyArray(shape: DataArrangementShape): Boolean = {
     shape match {
-      case array: ArrayShape   => Option(array.items).isEmpty
-      case matrix: MatrixShape => isEmptyArray(matrix.items.asInstanceOf[DataArrangementShape])
+      case array: ArrayShape if array.isLink && array.effectiveLinkTarget.isInstanceOf[DataArrangementShape] =>
+        isEmptyArray(array.effectiveLinkTarget.asInstanceOf[DataArrangementShape])
+      case array: ArrayShape   =>
+        Option(array.items).isEmpty
+      case matrix: MatrixShape if matrix.isLink && matrix.effectiveLinkTarget.isInstanceOf[DataArrangementShape] =>
+        isEmptyArray(matrix.effectiveLinkTarget.asInstanceOf[DataArrangementShape])
+      case matrix: MatrixShape =>
+        isEmptyArray(matrix.items.asInstanceOf[DataArrangementShape])
+      case _                   =>
+        false
     }
   }
 

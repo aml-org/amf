@@ -1,0 +1,8 @@
+#%RAML 1.0 Trait
+    responses:
+      401:
+        description: !include ../../patterns/faults/documentation/401-description
+        body:
+          application/json:
+            type: !include ../../types/platformfault.raml
+            example: !include ../../patterns/faults/401.json

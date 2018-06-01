@@ -1,0 +1,21 @@
+#%RAML 1.0 DataType
+type: object
+properties: 
+  outlet_unique_code: string
+  customer_name: string
+  customer_phone_no: string
+  total_bill_amount: string
+  tax_val: string
+  disc_val: string
+  country_code: string
+  counter_number: string
+  bill_no: string
+  bill_date: string    
+  total_line: string
+  is_online_order: 
+    enum: [Yes, No]
+  online_order_disc: string
+  customer_type: string
+  details?:
+    type: array
+    items: !include detail.raml

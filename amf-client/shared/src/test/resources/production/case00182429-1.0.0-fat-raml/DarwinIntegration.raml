@@ -1,0 +1,98 @@
+#%RAML 1.0 
+#baseUri: https://mocksvc.mulesoft.com/mocks/0bfdca0a-a0c9-409b-9042-ad971cdd4fdb
+title: Darwin Integration API DEV
+version: v1
+baseUri: https://dev-darwinintegrationapi.eu.cloudhub.io/api
+protocols: [ HTTPS ] 
+
+mediaType: application/json
+
+documentation: 
+  - !include documentation/api-doc.raml
+     
+uses:
+  customtype: types/custom-types.raml
+  
+resourceTypes:
+  collection: !include libraries/patterns/collection.raml
+  post-only-item: !include libraries/patterns/post-only-item.raml
+  file-item: !include libraries/patterns/file-item.raml
+  read-only-collection: !include libraries/patterns/read-only-collection.raml 
+  read-only-item: !include libraries/patterns/read-only-item.raml
+  read-only-paged-collection: !include libraries/patterns/read-only-paged-collection.raml
+  api-status: !include libraries/patterns/api-status.raml
+       
+traits:
+  paginated: !include libraries/traits/pagination.yaml
+  200-paged-collection: !include libraries/traits/responses/200-paged-collection.raml 
+  200-collection: !include libraries/traits/responses/200-collection.raml
+  200-file: !include libraries/traits/responses/200-file.raml
+  200-item: !include libraries/traits/responses/200-item.raml   
+  201-item: !include libraries/traits/responses/201-item.raml 
+  202-item: !include libraries/traits/responses/202-item.raml       
+  204-response: !include libraries/traits/responses/204-response.raml   
+  304-fault: !include libraries/traits/responses/304-fault.raml 
+  400-fault: !include libraries/traits/responses/400-fault.raml 
+  401-fault: !include libraries/traits/responses/401-fault.raml
+  403-fault: !include libraries/traits/responses/403-fault.raml
+  404-fault: !include libraries/traits/responses/404-fault.raml
+  405-fault: !include libraries/traits/responses/405-fault.raml
+  406-fault: !include libraries/traits/responses/406-fault.raml
+  407-fault: !include libraries/traits/responses/407-fault.raml
+  415-fault: !include libraries/traits/responses/415-fault.raml
+  422-fault: !include libraries/traits/responses/422-fault.raml
+  429-fault: !include libraries/traits/responses/429-fault.raml
+  500-fault: !include libraries/traits/responses/500-fault.raml
+  503-fault: !include libraries/traits/responses/503-fault.raml
+  504-fault: !include libraries/traits/responses/504-fault.raml
+  outlets-param: !include libraries/traits/outlets-param.raml
+  products-param: !include libraries/traits/products-param.raml
+  promotions-param: !include libraries/traits/promotions-param.raml
+                
+securitySchemes:  
+  clientIdAuth: !include libraries/security/client-id-auth.raml
+    
+securedBy: [clientIdAuth]
+ 
+/status:
+  type: api-status
+ 
+/outlets:
+  type: 
+    read-only-collection: 
+      collectionSummary: This resource provides the list of outlets deployed in a particular country when called.         
+      collectionDescription: GET the POS store outlets in a particular country
+      collectionType: customtype.outletResponse
+      collectionExample: !include examples/outlet/200.json
+  is: [outlets-param]
+
+/products:
+  type: 
+    read-only-collection: 
+      collectionSummary: This resource provides the list of products in a particular country when called.         
+      collectionDescription: GET the Products in a particular country
+      collectionType: customtype.productResponse
+      collectionExample: !include examples/product/200.json
+  is: [products-param]
+  
+/transactions:
+  type:  
+   post-only-item:
+      itemSummary: Post a transaction
+      itemDescription: Post a transaction from POS to DC
+      inputType: customtype.transactionRequest
+      inputExample: !include examples/transaction/transactionRequest.json
+      outputType: customtype.transactionResponse
+      outputExample: !include examples/transaction/201.json
+  
+/promotions:
+  type: 
+    read-only-collection: 
+      collectionSummary: This resource provides the list of promotions.         
+      collectionDescription: GET the Promotions
+      collectionType: customtype.promotionResponse
+      collectionExample: !include examples/promotion/200.json
+  is: [promotions-param]
+
+
+  

@@ -1,0 +1,14 @@
+#%RAML 1.0 Trait
+queryParameters:
+  offset:
+    description: Offset the list of returned results by this amount.
+    type: integer
+    default: 0
+    example: 0
+    minimum: 0
+  limit:
+    description: Limit number of items to be retrieved in a single request to <<maxItems>>.
+    type: integer
+    default: 100
+    example: 100
+    maximum: <<maxItems>>
