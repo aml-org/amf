@@ -1,0 +1,9 @@
+#%RAML 1.0 SecurityScheme
+type: Basic Authentication
+description: API Supports Client ID policy applied as Basic Authentication of HTTP Headers.
+describedBy:
+  headers: 
+    client_id:
+      type: string
+    client_secret:
+      type: string

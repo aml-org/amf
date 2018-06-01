@@ -1,0 +1,6 @@
+#%RAML 1.0 ResourceType
+    description: <<itemSummary>>
+    get:
+      description: <<itemDescription>>
+      is: [ 200-item: {itemType: <<itemType>>, itemExample: <<itemExample>>}, 
+         304-fault,400-fault,401-fault,403-fault,404-fault,405-fault,406-fault,407-fault,415-fault,422-fault,429-fault,500-fault,503-fault,504-fault  ]

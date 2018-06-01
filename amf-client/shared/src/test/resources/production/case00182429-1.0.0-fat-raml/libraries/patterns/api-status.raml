@@ -1,0 +1,15 @@
+#%RAML 1.0 ResourceType
+    description: This resource provides the metadata of the API as a response when called.
+    get:
+      description:  The idea is to use this as sanity test mechanism to test whether system has been deployed and configured properly & as a heartbeat mechanism to ensure API is still active. 
+      is: [ 400-fault,401-fault,403-fault,404-fault,405-fault,406-fault,407-fault,415-fault,422-fault,429-fault,500-fault,503-fault,504-fault ]
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                   "status": "OK",
+                   "version": "v1",
+                   "time": "2015-08-19T15:10:16Z"
+                }
