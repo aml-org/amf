@@ -2660,4 +2660,16 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.exists(_.message.contains("Invalid authorization grant")))
     }
   }
+  test("Invalid map key") {
+    for {
+      validation <- Validation(platform)
+      model      <- AMFCompiler(validationsPath + "map-key.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 1)
+      assert(
+        report.results.exists(_.message.equals("Property {alpha2code: } not supported in a raml 1.0 webApi node")))
+    }
+  }
 }

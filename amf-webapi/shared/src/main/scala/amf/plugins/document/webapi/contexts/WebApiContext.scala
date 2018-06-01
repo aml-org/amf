@@ -214,8 +214,8 @@ abstract class WebApiContext(loc: String,
     ds.getOrElse(new WebApiDeclarations(None, errorHandler = Some(this), futureDeclarations = futureDeclarations))
 
   var localJSONSchemaContext: Option[YNode] = wrapped match {
-    case (wac: WebApiContext) => wac.localJSONSchemaContext
-    case _                    => None
+    case wac: WebApiContext => wac.localJSONSchemaContext
+    case _                  => None
   }
 
   globalSpace = wrapped.globalSpace
@@ -225,7 +225,7 @@ abstract class WebApiContext(loc: String,
     case Some(shape: AnyShape) => Some(shape)
     case _                     => None
   }
-  def registerJsonSchema(url: String, shape: AnyShape) = globalSpace.update(url, shape)
+  def registerJsonSchema(url: String, shape: AnyShape): Unit = globalSpace.update(url, shape)
 
   def parseRemoteJSONPath(fileUrl: String)(implicit ctx: OasWebApiContext): Option[AnyShape] = {
     val referenceUrl =
@@ -307,15 +307,14 @@ abstract class WebApiContext(loc: String,
   def link(node: YNode): Either[String, YNode]
   def ignore(shape: String, property: String): Boolean
 
-  def checkDuplicates(node: String, ast: YMap, shape: String, annotation: Boolean) = {
+  def checkDuplicates(node: String, ast: YMap, shape: String, annotation: Boolean): Set[String] = {
     ast.entries.foldLeft(Set[String]()) {
       case (acc, entry) =>
-        acc.contains(entry.key.toString()) match {
-          case true =>
-            violation(DuplicatedPropertySpecification.id(), node, s"Property '${entry.key}' is duplicated", entry)
-            acc
-          case false =>
-            acc ++ Set(entry.key.toString())
+        if (acc.contains(entry.key.toString())) {
+          violation(DuplicatedPropertySpecification.id(), node, s"Property '${entry.key}' is duplicated", entry)
+          acc
+        } else {
+          acc ++ Set(entry.key.toString())
         }
     }
   }
@@ -332,7 +331,7 @@ abstract class WebApiContext(loc: String,
         }
 
         ast.entries.foreach { entry =>
-          val key: String = entry.key.as[YScalar].text
+          val key: String = entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
           if (ignore(shape, key)) {
             // annotation or path in endpoint/webapi => ignore
           } else if (!properties(key)) {
