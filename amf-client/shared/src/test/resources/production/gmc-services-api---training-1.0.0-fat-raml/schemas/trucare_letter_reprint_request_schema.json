@@ -1,0 +1,34 @@
+ {
+  "$schema" : "http://json-schema.org/draft-04/schema#",
+  "type" : "object",
+  "required" : [ "customerId", "folderId", "docId", "eventId", "templateId", "fulfillmentChannel", "recipientType", "LOB" ],
+  "properties" : {
+  "customerId" : {
+      "type" : "string"
+    },
+  "folderId" : {
+      "type" : "string"
+  },
+  "docId" : {
+     "type" : "string"
+   },
+  "eventId" : {
+     "type" : "string"
+    },
+  "templateId" : {
+     "type" : "string"
+    },
+  "fulfillmentChannel" : {
+     "type" : "string"
+    },
+     "LOB" : {
+      "type" : "string"
+    },
+     "companyNumber" : {
+      "type" : "string"
+    },
+   "recipientType" : {
+      "type" : "string"
+    }
+    }
+  }

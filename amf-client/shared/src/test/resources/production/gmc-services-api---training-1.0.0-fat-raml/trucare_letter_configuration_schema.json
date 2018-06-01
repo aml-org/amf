@@ -1,0 +1,47 @@
+{
+  "id": "",
+  "$schema": "http://json-schema.org/draft-03/schema#",
+  "type": "object",
+  "properties": {
+    "voidConfig": {
+      "id": "/voidConfig",
+      "type": "object",
+      "properties": {
+        "voidReasonRequired": {
+          "id": "/voidReasonRequired",
+          "type": "boolean"
+        },
+        "voidReasonFieldLabel": {
+          "id": "/voidReasonFieldLabel",
+          "type": "string"
+        },
+        "voidReasonOptionValues": {
+          "id": "/voidReasonOptionValues",
+          "type": "array",
+          "items": {
+            "id": "/0",
+            "type": "object",
+            "properties": {
+              "label": {
+                "id": "/label",
+                "type": "string"
+              },
+              "value": {
+                "id": "/value",
+                "type": "string"
+              },
+              "disabled": {
+                "id": "/disabled",
+                "type": "boolean"
+              },
+              "id": {
+                "id": "/id",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

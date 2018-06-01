@@ -1,0 +1,111 @@
+{
+    "createTicket": {
+        "dataDefinition": {
+            "providers": [
+                {
+                    "zip5": "10007",
+                    "lastName": "Doe",
+                    "providerType": "Provider Type",
+                    "phone": "111-222-3333",
+                    "zip4": "10000",
+                    "state": "NY",
+                    "providerId": "P002",
+                    "middleInitial": "M.",
+                    "address1": "123 Main St.",
+                    "address2": "",
+                    "orgName": "Organization Name",
+                    "firstName": "John",
+                    "suffix": "",
+                    "city": "NY"
+                }
+            ],
+            "printStreamType": "SingleRef",
+            "moduleName": "CommonXMLInputDataMaster",
+            "companyNumber": "123",
+        "sensitive":"false",
+        "printPriority":"1",
+            "lob": "MCD",
+            "fromPhone": "111-222-3333",
+            "fromEmail": "a@a.com",
+            "eventInfo": {
+                "initialAdverseDate": "2017-01-01",
+                "dateOfService": "2017-01-01",
+                "reasonType": "res-001",
+                "eventDate": "2017-01-01",
+                "eventId": "env-001",
+                "finalDetermDate": "2017-01-01",
+                "responseDue": "2017-01-01",
+                "serviceRequested": "Ambulance",
+                "reasonText": "reason text",
+                "serviceInfo": "Emergency Service"
+            },
+            "fromName": "from Name",
+            "lang": "en_us",
+            "recipients": [{
+                "zip5": "11111",
+                "lastName": "Doe",
+                "zip4": "0000",
+                "state": "NY",
+                "middleInitial": "M.",
+                "address1": "123 Main St.",
+                "address2": "",
+                "firstName": "Robert Miles",
+                "suffix": "",
+                "city": "NY",
+                "recipientType": "TO"
+            }],
+            "outputChannels": [
+                    {
+                        "itemType": "EMAIL",
+                        "destination": "username@domain.com",
+                        "documentStorage": {
+                        	"folder":"MACESS"
+                        }
+                    }
+                ],
+            "members": [
+                {
+                    "zip5": "11111",
+                    "lastName": "Doe",
+                    "zip4": "10000",
+                    "state": "NY",
+                    "middleInitial": "M.",
+                    "planName":"",
+                    "address1": "123 Main St.",
+                    "memberId": "M002",
+                    "address2": "",
+                    "firstName": "John",
+                    "suffix": "",
+                    "city": "NY"
+                }
+            ],
+            "fromDepartment": "Clinical",
+            "templateName": "companyRoot:S:Production://Templates/HFTestTemplate.jld"
+        },
+        "multipleRecord": "false",
+        "systemData": "GenerationPriority",
+        "templateProperties": [
+            {
+                "Name": "priority",
+                "value": "3"
+            },
+            {
+                "Name": "icon",
+                "value": "companyRoot://WebResources/TicketIcons/doc_01.png"
+            },
+            {
+                "Name": "title",
+                "value": "Title for the List"
+            },
+            {
+                "Name": "description",
+                "value": "Test document"
+            }
+        ],
+        "company": "HF",
+        "state": "S_HF_ticket_scenario_TestGroup_to_be_processed",
+        "userName": "TestUser",
+        "role": "approver",
+        "templateName": "companyRoot:S:Production://Templates/HFTestTemplate.jld"
+    }
+}

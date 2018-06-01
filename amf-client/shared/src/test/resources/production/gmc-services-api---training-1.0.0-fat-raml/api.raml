@@ -1,0 +1,147 @@
+#%RAML 0.8
+#baseUri: https://mocksvc.mulesoft.com/mocks/de3c8fca-acfb-46ba-8957-9131590a3b64
+title: "GMC Create Ticket"
+version: 1.0
+baseUri: https://hf-eai-gmc-services-impl-dev.cloudhub.io
+#baseUri: https://mocksvc.mulesoft.com/mocks/ed1f545d-9451-41ae-b9c4-703fd61c06ee/api
+
+
+/create-ticket:
+  post:
+    queryParameters: 
+      clientType:
+        description: Client Type 
+        type: string
+        required: true
+        example: "PEGA"
+    body: 
+      application/json:
+        schema: !include schemas/create-ticket-request-schema.json
+        example: !include examples/create-ticket-request-example.json
+    responses: 
+      200:
+        body: 
+          application/json:
+            schema: !include schemas/create-ticket-response-schema.json
+            example: !include examples/create-ticket-response-example.json
+      400:
+        body:
+           application/json:
+      404:
+          description: bad request
+          body:
+            application/json:         
+      500:
+          description: Internal server error 
+          body:
+            application/json:
+            
+/update-status:
+  post:
+    queryParameters: 
+      clientType:
+        description: Client Type 
+        type: string
+        required: true
+        example: "GMC"
+    body: 
+      application/json:
+        schema: !include schemas/update-status-request-schema.json
+        example: !include examples/update-status-request-example.json
+    responses: 
+      200:
+        body: 
+          application/json:
+            schema: !include schemas/update-status-response-schema.json
+            example: !include examples/update-status-response-example.json
+      400:
+        body:
+           application/json:
+      404:
+          description: bad request
+          body:
+            application/json:         
+      500:
+          description: Internal server error 
+          body:
+            application/json: 
+            
+/letters/{letterId}/void-info:
+    description: This API get the letter Id that needs to be cancelled from sending or dispatching the letter to the receipients. It get the corresponding document id from the TruCare to pass it to the GMC cancel service.
+    post:
+      body:
+        application/json:
+          schema: !include schemas/trucare_void_request_schema.json
+          example: !include examples/trucare_void_request_example.json
+      responses:
+        200:
+          body:
+            application/json:
+              schema: !include schemas/trucare_void_response_schema.json
+              example: !include examples/trucare_void_response_example.json
+              
+/letters/{letterId}/status:
+    description: Gets the status of the letter creation of the given letter id and update the status to the GMC.
+    post:
+      body:
+        application/json:
+          schema: !include schemas/trucare_update_status_request_schema.json
+          example: !include examples/trucare_update_status_request_example.json
+      responses:
+        200:
+          body:
+            application/json:
+              schema: !include schemas/trucare_update_status_response_schema.json
+              example: !include examples/trucare_update_status_response_example.json
+              
+/reprint:
+  description: Receives the reprint request from custom webapp and sends the details to GMC
+  post:
+    body: 
+      application/json:
+        schema: !include schemas/trucare_letter_reprint_request_schema.json
+        example: !include examples/trucare_letter_reprint_request_example.json
+    responses: 
+       200:
+          body:
+            application/json:
+              schema: !include schemas/trucare_letter_reprint_response_schema.json
+              example: !include examples/trucare_letter_reprint_response_example.json
+
+/letters/{letterId}/resendings:
+    description: Gets the status of the letter creation of the given letter id and update the status to the GMC.
+    post:
+      body:       
+      responses:
+        200:
+         body:
+            application/json:
+              schema: !include schemas/trucare_resend_response_schema.json
+              example: !include examples/trucare_resend_response_example.json
+/healthcheck:
+  description: Get the status of the system.
+  get:
+    queryParameters: 
+      system:
+        description: sytsem check
+        type: string
+        required: true
+        example: "mule" 
+    responses:
+      200:
+        body:
+          application/json: 
+      400: 
+        body:
+          application/json:
+      404:
+        body:
+          application/json:
+      500:
+        description: Internal server error 
+        body:
+          application/json:
+            example:  |
+              {
+                "error message": "The request couldn't be processed."
+              }      

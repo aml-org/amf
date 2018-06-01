@@ -1,0 +1,27 @@
+ {
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "properties": {
+    "update-status": {
+      "type": "object",
+      "properties": {
+        "eventId": { "type": "string" },
+        "gmcId": { "type": "string" },
+        "status": { "type": "string" },
+        "letterType": { "type": "string" },	
+        "templateId": { "type": "string"},
+        "statusDate": { "type": "string"},
+        "channel": { "type": "string"},
+        "attachments":{
+        	 "type": "array",
+        	 "items":[{
+        	   "fileName": {"type": "string"},
+        	   "documentId": {"type": "string"},
+        	   "documentType": {"type": "string"}
+        	 }
+        	 ]
+        }
+    }
+}
+}
+}

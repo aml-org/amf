@@ -1,0 +1,352 @@
+{
+	"type": "object",
+	"$schema": "http://json-schema.org/draft-04/schema",
+	"properties": {
+		"createTicket": {
+			"type": "object",
+			"required": [
+				"systemData",
+				"templateName",
+				"multipleRecord",
+				"company",
+				"state",
+				"userName",
+				"role",
+				"templateProperties",
+				"dataDefinition"
+			],
+			"properties": {
+				"systemData": {
+					"type": "string"
+				},
+				"templateName": {
+					"type": "string"
+				},
+				"multipleRecord": {
+					"type": "string"
+				},
+				"company": {
+					"type": "string"
+				},
+				"state": {
+					"type": "string"
+				},
+				"userName": {
+					"type": "string"
+				},
+				"role": {
+					"type": "string"
+				},
+				"templateProperties": {
+					"type": "array",
+					"items": [{
+						"required": [
+							"Name",
+							"value"
+						],
+						"Name": {
+							"type": "string"
+						},
+						"value": {
+							"type": "string"
+						}
+					}]
+				},
+				"dataDefinition": {
+					"type": "object",
+					"required": [
+						"moduleName",
+						"templateName",
+						"printStreamType",
+						"printPriority",
+						"lob",
+						"companyNumber",
+						"lang",
+						"sensitive",
+						"fromDepartment",
+						"fromName",
+						"fromEmail",
+						"fromPhone",
+						"recipients",
+						"members",
+						"providers",
+						"eventInfo"
+					],
+					"properties": {
+						"moduleName": {
+							"type": "string"
+						},
+						"lob": {
+							"type": "string"
+						},
+						"companyNumber": {
+							"type": "string"
+						},
+						"templateName": {
+							"type": "string"
+						},
+						"printStreamType": {
+							"type": "string"
+						},
+						"printPriority": {
+							"type": "string"
+						},
+						"location": {
+							"type": "string"
+						},
+						"fromDepartment": {
+							"type": "string"
+						},
+						"fromName": {
+							"type": "string"
+						},
+						"fromEmail": {
+							"type": "string"
+						},
+						"fromPhone": {
+							"type": "string"
+						},
+						"lang": {
+							"type": "string"
+						},
+						"sensitive": {
+							"type": "string"
+						},
+						"recipients": {
+							"type": "array",
+							"items": [{
+								"required": [
+									"firstName", "lastName", "address1", "city", "state", "zip5"
+								],
+								"firstName": {
+									"type": "string"
+								},
+								"middleInitial": {
+									"type": "string"
+								},
+								"lastName": {
+									"type": "string"
+								},
+								"suffix": {
+									"type": "string"
+								},
+								"address1": {
+									"type": "string"
+								},
+								"address2": {
+									"type": "string"
+								},
+								"city": {
+									"type": "string"
+								},
+								"state": {
+									"type": "string"
+								},
+								"zip5": {
+									"type": "string"
+								},
+								"zip4": {
+									"type": "string"
+								},
+								"recipientType": {
+									"type": "string"
+								}
+								
+							}]
+						},
+						"outputChannels": {
+									"type": "array",
+									"items": [{
+										"required": [
+											"itemType"
+										],
+										"itemType": {
+											"type": "string"
+										},
+										"destination": {
+											"type": "string"
+										},
+										"documentStorage": {
+										"type": "array",
+										"items":[{
+												"folder": {
+													"type": "string"
+												}
+											}]
+										}
+
+									}]
+								},
+						"members": {
+							"type": "array",
+							"items": [{
+								"required": [
+									"memberId", "firstName", "lastName", "address1", "city", "state", "zip5"
+								],
+								"memberId": {
+									"type": "string"
+								},
+								"firstName": {
+									"type": "string"
+								},
+								"middleInitial": {
+									"type": "string"
+								},
+								"lastName": {
+									"type": "string"
+								},
+								"suffix": {
+									"type": "string"
+								},
+								"planName": {
+									"type": "string"
+								},
+								"address1": {
+									"type": "string"
+								},
+								"address2": {
+									"type": "string"
+								},
+								"city": {
+									"type": "string"
+								},
+								"state": {
+									"type": "string"
+								},
+								"zip5": {
+									"type": "string"
+								},
+								"zip4": {
+									"type": "string"
+								}
+							}]
+						},
+						"providers": {
+							"type": "array",
+							"items": [{
+								"required": [
+									"providerId",
+									"providerType",
+									"address1",
+									"city",
+									"state",
+									"zip5",
+									"phone"
+								],
+								"providerId": {
+									"type": "string"
+								},
+								"providerType": {
+									"type": "string"
+								},
+								"firstName": {
+									"type": "string"
+								},
+								"middleInitial": {
+									"type": "string"
+								},
+								"lastName": {
+									"type": "string"
+								},
+								"suffix": {
+									"type": "string"
+								},
+								"address1": {
+									"type": "string"
+								},
+								"address2": {
+									"type": "string"
+								},
+								"city": {
+									"type": "string"
+								},
+								"state": {
+									"type": "string"
+								},
+								"zip5": {
+									"type": "string"
+								},
+								"zip4": {
+									"type": "string"
+								},
+								"phone": {
+									"type": "string"
+								},
+								"orgName": {
+									"type": "string"
+								}
+							}]
+						},
+						"eventInfo": {
+							"type": "object",
+							"required": [
+								"eventId",
+								"eventDate",
+								"serviceInfo",
+								"finalDetermDate",
+								"dateOfService",
+								"serviceRequested",
+								"initialAdverseDate",
+								"reasonType",
+								"reasonText",
+								"responseDue"
+							],
+							"properties": {
+								"eventId": {
+									"type": "string"
+								},
+								"eventDate": {
+									"type": "string",
+									"format": "date"
+								},
+								"serviceInfo": {
+									"type": "string"
+								},
+								"finalDetermDate": {
+									"type": "string",
+									"format": "date"
+								},
+								"dateOfService": {
+									"type": "string",
+									"format": "date"
+								},
+								"serviceRequested": {
+									"type": "string"
+								},
+								"initialAdverseDate": {
+									"type": "string",
+									"format": "date"
+								},
+								"orgReceivedDate" :{
+									"type": "string",
+									"format": "date"
+								},
+								"reasonType": {
+									"type": "string"
+								},
+								"reasonText": {
+									"type": "string"
+								},
+								"responseDue": {
+									"type": "string",
+									"format": "date"
+								}
+							},
+							"command": {
+								"type": "object",
+								"properties": {
+									"commandName": {
+										"type": "string"
+									},
+									"commandValue": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

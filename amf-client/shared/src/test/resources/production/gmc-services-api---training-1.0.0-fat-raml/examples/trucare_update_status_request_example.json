@@ -1,0 +1,42 @@
+{
+  "externalLetterMailing" : {
+    "dateSent" : "2016-08-07T00:28:48.585Z",
+    "recipients" : [ {
+      "__class" : "com.casenet.external.portable.correspondence.ExternalLetterRecipient",
+      "firstName" : "Valeriy",
+      "lastName" : "Lyuchin",
+      "address" : {
+        "version" : 0,
+        "addressLine1" : "AddressLine1",
+        "addressLine2" : "AddressLine2",
+        "addressLine3" : "AddressLine3",
+        "city" : "Sunnyvale",
+        "state" : {
+          "label" : "AL",
+          "value" : "AL",
+          "disabled" : false,
+          "id" : "OPTIONVALUE0000001159"
+        },
+        "country" : "United States",
+        "countryEntity" : {
+          "name" : "United States",
+          "phoneCountryCode" : "1",
+          "alpha2" : "US"
+        },
+        "zipCode" : "11111"
+      },
+      "deliveries" : [ {
+        "__class" : "com.casenet.external.portable.correspondence.delivery.FaxLetterDelivery",
+        "status" : "FAILURE",
+        "faxNumber" : {
+          "phoneCountryCode" : "1",
+          "phoneExtension" : "1234567",
+          "alpha2Code" : "US",
+          "phoneNumber" : "7815551212"
+        }
+      } ],
+      "recipientType" : "EXTERNAL_CONTACT"
+    } ]
+  },
+  "externalLetterStatus" : "InProgress"
+}

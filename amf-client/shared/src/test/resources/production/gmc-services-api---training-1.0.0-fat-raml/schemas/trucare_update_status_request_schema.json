@@ -1,0 +1,371 @@
+ {
+  "$schema" : "http://json-schema.org/draft-04/schema#",
+  "type" : "object",
+  "required" : [ "externalLetterStatus"],
+  "properties" : {
+    "externalLetterStatus" : {
+      "type" : "string",
+      "enum" : [ "RequestSent", "InProgress", "Complete", "Failed" ]
+    },
+    "dateGenerated" : {
+      "type" : "string",
+      "format" : "date-time"
+    },
+    "externalLetterStatusMessage" : {
+      "type" : "string",
+      "maxLength" : 100
+    },
+    "externalLetterMailing" : {
+      "type" : "object",
+      "$ref" : "#/definitions/ExternalLetterMailing"
+    }
+  },
+  "definitions" : {
+    "ExternalLetterMailing" : {
+      "type" : "object",
+      "properties" : {
+        "recipients" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "oneOf" : [ {
+              "$ref" : "#/definitions/InternalLetterRecipient"
+            }, {
+              "$ref" : "#/definitions/ExternalLetterRecipient"
+            } ]
+          }
+        },
+        "dateSent" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "externalUrl" : {
+          "type" : "string",
+          "maxLength" : 255
+        }
+      }
+    },
+    "ExternalLetterRecipient" : {
+      "type" : "object",
+      "properties" : {
+        "middleName" : {
+          "type" : "string",
+          "maxLength" : 255
+        },
+        "nameSuffix" : {
+          "type" : "string",
+          "maxLength" : 255
+        },
+        "lastName" : {
+          "type" : "string",
+          "maxLength" : 255
+        },
+        "__class" : {
+          "type" : "string",
+          "enum" : [ "com.casenet.external.portable.correspondence.ExternalLetterRecipient" ]
+        },
+        "address" : {
+          "type" : "object",
+          "$ref" : "#/definitions/Address"
+        },
+        "nameTitle" : {
+          "type" : "string",
+          "maxLength" : 255
+        },
+        "firstName" : {
+          "type" : "string",
+          "maxLength" : 255
+        },
+        "deliveries" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "oneOf" : [ {
+              "$ref" : "#/definitions/EmailLetterDelivery"
+            }, {
+              "$ref" : "#/definitions/FaxLetterDelivery"
+            }, {
+              "$ref" : "#/definitions/QueueLetterDelivery"
+            }, {
+              "$ref" : "#/definitions/UILetterDelivery"
+            } ]
+          }
+        },
+        "recipientType" : {
+          "type" : "string",
+          "enum" : [ "EXTERNAL_CONTACT" ]
+        }
+      }
+    },
+    "InternalLetterRecipient" : {
+      "type" : "object",
+      "required" : [ "internalId", "recipientType" ],
+      "properties" : {
+        "internalId" : {
+          "type" : "string",
+          "maxLength" : 36
+        },
+        "middleName" : {
+          "type" : "string",
+          "maxLength" : 255
+        },
+        "nameSuffix" : {
+          "type" : "string",
+          "maxLength" : 255
+        },
+        "lastName" : {
+          "type" : "string",
+          "maxLength" : 255
+        },
+        "__class" : {
+          "type" : "string",
+          "enum" : [ "com.casenet.external.portable.correspondence.InternalLetterRecipient" ]
+        },
+        "address" : {
+          "type" : "object",
+          "$ref" : "#/definitions/Address"
+        },
+        "nameTitle" : {
+          "type" : "string",
+          "maxLength" : 255
+        },
+        "firstName" : {
+          "type" : "string",
+          "maxLength" : 255
+        },
+        "deliveries" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "oneOf" : [ {
+              "$ref" : "#/definitions/EmailLetterDelivery"
+            }, {
+              "$ref" : "#/definitions/FaxLetterDelivery"
+            }, {
+              "$ref" : "#/definitions/QueueLetterDelivery"
+            }, {
+              "$ref" : "#/definitions/UILetterDelivery"
+            } ]
+          }
+        },
+        "recipientType" : {
+          "type" : "string",
+          "enum" : [ "PROVIDER_CONTACT", "PERSONAL_CONTACT", "ORGANIZATION_CONTACT", "MEMBER", "PCP_CONTACT", "REQUESTING_PROVIDER", "SERVICING_FACILITY", "SERVICING_PROVIDER", "MEMBER_DESIGNEE", "OTHER_PROVIDER" ]
+        }
+      }
+    },
+    "Address" : {
+      "type" : "object",
+      "required" : [ "version" ],
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "undeliverable" : {
+          "type" : "boolean"
+        },
+        "county" : {
+          "type" : "string",
+          "maxLength" : 35
+        },
+        "zipCode" : {
+          "type" : "string",
+          "maxLength" : 10
+        },
+        "state" : {
+          "type" : "object",
+          "$ref" : "#/definitions/OptionValue"
+        },
+        "countryEntity" : {
+          "type" : "object",
+          "$ref" : "#/definitions/Country"
+        },
+        "stateText" : {
+          "type" : "string",
+          "maxLength" : 120
+        },
+        "addressLine3" : {
+          "type" : "string",
+          "maxLength" : 120
+        },
+        "addressLine2" : {
+          "type" : "string",
+          "maxLength" : 120
+        },
+        "addressLine1" : {
+          "type" : "string",
+          "maxLength" : 120
+        },
+        "country" : {
+          "type" : "string",
+          "maxLength" : 35
+        },
+        "city" : {
+          "type" : "string",
+          "maxLength" : 35
+        },
+        "version" : {
+          "type" : "integer"
+        }
+      }
+    },
+    "OptionValue" : {
+      "type" : "object",
+      "required" : [ "id" ],
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "string"
+        },
+        "label" : {
+          "type" : "string"
+        },
+        "disabled" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "Country" : {
+      "type" : "object",
+      "required" : [ "alpha2" ],
+      "properties" : {
+        "alpha2" : {
+          "type" : "string",
+          "maxLength" : 2,
+          "minLength" : 2
+        },
+        "phoneCountryCode" : {
+          "type" : "string",
+          "maxLength" : 6
+        },
+        "name" : {
+          "type" : "string",
+          "maxLength" : 35
+        }
+      }
+    },
+    "EmailLetterDelivery" : {
+      "type" : "object",
+      "required" : [ "status", "email" ],
+      "properties" : {
+        "__class" : {
+          "type" : "string",
+          "enum" : [ "com.casenet.external.portable.correspondence.delivery.EmailLetterDelivery" ]
+        },
+        "email" : {
+          "type" : "object",
+          "$ref" : "#/definitions/Email"
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "SUCCESS", "FAILURE", "PENDING" ]
+        }
+      }
+    },
+    "Email" : {
+      "type" : "object",
+      "required" : [ "version", "emailAddress" ],
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "emailAddress" : {
+          "type" : "string",
+          "maxLength" : 254
+        },
+        "version" : {
+          "type" : "integer"
+        }
+      }
+    },
+    "FaxLetterDelivery" : {
+      "type" : "object",
+      "required" : [ "status", "faxNumber" ],
+      "properties" : {
+        "responseMessage" : {
+          "type" : "string",
+          "maxLength" : 255
+        },
+        "responseCode" : {
+          "type" : "string",
+          "maxLength" : 255
+        },
+        "faxNumber" : {
+          "type" : "object",
+          "$ref" : "#/definitions/PhoneNumber"
+        },
+        "faxId" : {
+          "type" : "string",
+          "maxLength" : 36
+        },
+        "__class" : {
+          "type" : "string",
+          "enum" : [ "com.casenet.external.portable.correspondence.delivery.FaxLetterDelivery" ]
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "SUCCESS", "FAILURE", "PENDING" ]
+        },
+        "faxStatus" : {
+          "type" : "string",
+          "maxLength" : 255
+        }
+      }
+    },
+    "PhoneNumber" : {
+      "type" : "object",
+      "required" : [ "alpha2Code", "phoneNumber" ],
+      "properties" : {
+        "phoneExtension" : {
+          "type" : "string",
+          "maxLength" : 7,
+          "pattern" : "^[0-9]*$"
+        },
+        "phoneNumber" : {
+          "type" : "string",
+          "pattern" : "^[0-9]+$"
+        },
+        "phoneCountryCode" : {
+          "type" : "string",
+          "maxLength" : 3,
+          "pattern" : "^[0-9]*$"
+        },
+        "alpha2Code" : {
+          "type" : "string",
+          "maxLength" : 2,
+          "minLength" : 2
+        }
+      }
+    },
+    "QueueLetterDelivery" : {
+      "type" : "object",
+      "required" : [ "status" ],
+      "properties" : {
+        "__class" : {
+          "type" : "string",
+          "enum" : [ "com.casenet.external.portable.correspondence.delivery.QueueLetterDelivery" ]
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "SUCCESS", "FAILURE", "PENDING" ]
+        }
+      }
+    },
+    "UILetterDelivery" : {
+      "type" : "object",
+      "required" : [ "status" ],
+      "properties" : {
+        "__class" : {
+          "type" : "string",
+          "enum" : [ "com.casenet.external.portable.correspondence.delivery.UILetterDelivery" ]
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "SUCCESS", "FAILURE", "PENDING" ]
+        }
+      }
+    }
+  }
+}

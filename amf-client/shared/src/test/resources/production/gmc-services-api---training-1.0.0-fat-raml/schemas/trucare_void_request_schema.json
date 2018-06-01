@@ -1,0 +1,17 @@
+{
+  "type" : "object",
+  "required" : [ "reasonOptionValueId", "voidDate" ],
+  "properties" : {
+    "voidDate" : {
+      "type" : "string",
+      "format" : "date-time"
+    },
+    "detail" : {
+      "type" : "string",
+      "maxLength" : 255
+    },
+    "reasonOptionValueId" : {
+      "type" : "string"
+    }
+  }
+}
