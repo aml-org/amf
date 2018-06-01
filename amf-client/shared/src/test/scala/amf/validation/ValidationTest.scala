@@ -2307,16 +2307,14 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Test array withouth item type validation") {
+  test("Test array without item type validation") {
     for {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "production/array-without-items.raml", platform, RamlYamlHint, validation)
         .build()
       report <- validation.validate(doc, ProfileNames.RAML, ProfileNames.RAML)
     } yield {
-      assert(!report.conforms)
-      assert(report.results.lengthCompare(1) == 0)
-      assert(report.results.head.message.equals("Syntax error, generating empty array"))
+      assert(report.conforms)
     }
   }
 
@@ -2606,6 +2604,17 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       _          <- validation.loadValidationDialect()
       model      <- AMFCompiler(productionPath + "lock-unlock-api-1.0.0-fat-raml/lockUnlockStats.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(report.results.nonEmpty)
+    }
+  }
+
+  test("case00182429 example test") {
+    for {
+      validation <- Validation(platform)
+      _          <- validation.loadValidationDialect()
+      model      <- AMFCompiler(productionPath + "case00182429-1.0.0-fat-raml/DarwinIntegration.raml", platform, RamlYamlHint, validation).build()
       report     <- validation.validate(model, ProfileNames.RAML)
     } yield {
       assert(report.results.nonEmpty)
