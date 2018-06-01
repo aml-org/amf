@@ -9,7 +9,7 @@ types:
         type: string
       email:
         type: string
-        pattern: ^.+@.+\..+$
+        pattern: .+@.+\..+
         required: true
       age:
         type: integer
@@ -28,7 +28,7 @@ types:
         type: string
       email:
         type: string
-        pattern: ^.+@.+\..+$
+        pattern: .+@.+\..+
         required: true
       age:
         type: integer

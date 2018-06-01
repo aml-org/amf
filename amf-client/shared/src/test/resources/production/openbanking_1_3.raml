@@ -190,11 +190,11 @@ protocols:
                       Latitude:
                         description: The Latitude measured in decimal format according to ISO 213
                         type: string
-                        pattern: ^-?\d{1,3}\.\d{1,8}$
+                        pattern: -?\d{1,3}\.\d{1,8}
                       Longitude:
                         description: The longitude measured in decimal format according to ISO 213
                         type: string
-                        pattern: ^-?\d{1,3}\.\d{1,8}$
+                        pattern: -?\d{1,3}\.\d{1,8}
                   LocationCategory:
                     description: Indicates the environment of the ATM
                     enum:
@@ -274,7 +274,7 @@ protocols:
                           LEI:
                             description: The LEI ID of the organisation
                             type: string
-                            pattern: ^[A-Z0-9]{18,18}[0-9]{2,2}$
+                            pattern: "[A-Z0-9]{18,18}[0-9]{2,2}"
                           OrganisationName:
                             description: Organisation Name
                             type: object
@@ -668,7 +668,7 @@ protocols:
                         AlternateTelephoneNumber:
                           description: Collection of information that identifies a phone number, as defined by telecom services.
                           type: string
-                          pattern: ^[+][0-9]{1,3}-[0-9()+-]{1,30}$
+                          pattern: "[+][0-9]{1,3}-[0-9()+-]{1,30}"
                         AlternateTelephoneNumberDescription:
                           description: Description of the telephone number
                           type: string
@@ -677,7 +677,7 @@ protocols:
                   ArrivalTime:
                     description: Time that the mobile branch is scheduled to arrive
                     type: string
-                    pattern: ^(([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9].\d{3})|(^24:00:00\.000)(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])?$
+                    pattern: (([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9].\d{3})|(^24:00:00\.000)(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])?
                   BranchDescription:
                     description: Description of the branch
                     type: string
@@ -807,14 +807,14 @@ protocols:
                   DepartureTime:
                     description: Time that the mobile branch is scheduled to depart
                     type: string
-                    pattern: ^(([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9].\d{3})|(^24:00:00\.000)(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])?$
+                    pattern: (([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9].\d{3})|(^24:00:00\.000)(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])?
                   FaxNumber:
                     description: Collection of information that identifies a FAX number, as defined by telecom services.
                     type: array
                     items:
                       description: Collection of information that identifies a phone number, as defined by telecom services.
                       type: string
-                      pattern: ^[+][0-9]{1,3}-[0-9()+-]{1,30}$
+                      pattern: "[+][0-9]{1,3}-[0-9()+-]{1,30}"
                   GeographicLocation:
                     description: Geographic Coordinates
                     type: object
@@ -823,11 +823,11 @@ protocols:
                       Latitude:
                         description: The Latitude measured in decimal format according to ISO 213
                         type: string
-                        pattern: ^-?\d{1,3}\.\d{1,8}$
+                        pattern: -?\d{1,3}\.\d{1,8}
                       Longitude:
                         description: The longitude measured in decimal format according to ISO 213
                         type: string
-                        pattern: ^-?\d{1,3}\.\d{1,8}$
+                        pattern: -?\d{1,3}\.\d{1,8}
                   OpeningTimes:
                     description: Branch Opening Times
                     type: array
@@ -837,7 +837,7 @@ protocols:
                         ClosingTime:
                           description: ISOTime, local time hh:mm:ss.sss or time in utc hh:mm:ss.sssZ or time with timezone hh:mm:ss.sss+hh:mm hh:mm:ss.sss-hh:mm
                           type: string
-                          pattern: ^(([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9].\d{3})|(^24:00:00\.000)(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])?$
+                          pattern: (([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9].\d{3})|(^24:00:00\.000)(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])?
                         OpeningDay:
                           description: Day of the week
                           enum:
@@ -855,15 +855,15 @@ protocols:
                         OpeningTime:
                           description: ISOTime, local time hh:mm:ss.sss or time in utc hh:mm:ss.sssZ or time with timezone hh:mm:ss.sss+hh:mm hh:mm:ss.sss-hh:mm
                           type: string
-                          pattern: ^(([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9].\d{3})|(^24:00:00\.000)(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])?$
+                          pattern: (([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9].\d{3})|(^24:00:00\.000)(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])?
                         UnavailableFinishTime:
                           description: ISOTime, local time hh:mm:ss.sss or time in utc hh:mm:ss.sssZ or time with timezone hh:mm:ss.sss+hh:mm hh:mm:ss.sss-hh:mm
                           type: string
-                          pattern: ^(([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9].\d{3})|(^24:00:00\.000)(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])?$
+                          pattern: (([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9].\d{3})|(^24:00:00\.000)(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])?
                         UnavailableStartTime:
                           description: ISOTime, local time hh:mm:ss.sss or time in utc hh:mm:ss.sssZ or time with timezone hh:mm:ss.sss+hh:mm hh:mm:ss.sss-hh:mm
                           type: string
-                          pattern: ^(([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9].\d{3})|(^24:00:00\.000)(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])?$
+                          pattern: (([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9].\d{3})|(^24:00:00\.000)(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])?
                     minItems: 1
                   Organisation:
                     description: Organisation
@@ -898,7 +898,7 @@ protocols:
                           LEI:
                             description: The LEI ID of the organisation
                             type: string
-                            pattern: ^[A-Z0-9]{18,18}[0-9]{2,2}$
+                            pattern: "[A-Z0-9]{18,18}[0-9]{2,2}"
                           OrganisationName:
                             description: Organisation Name
                             type: object
@@ -924,11 +924,11 @@ protocols:
                         EndDate:
                           description: Date when a branch is due to re-open following temporary closure
                           type: string
-                          pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                          pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                         StartDate:
                           description: Date when a branch is due to close temporarily or permanently
                           type: string
-                          pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                          pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                   StopName:
                     description: Name of the stop of the mobile branch
                     type: string
@@ -937,7 +937,7 @@ protocols:
                   TelephoneNumber:
                     description: Collection of information that identifies a phone number, as defined by telecom services.
                     type: string
-                    pattern: ^[+][0-9]{1,3}-[0-9()+-]{1,30}$
+                    pattern: "[+][0-9]{1,3}-[0-9()+-]{1,30}"
             meta:
               displayName: Meta data
               type: object
@@ -1322,34 +1322,34 @@ protocols:
                                       MaximumCriteria:
                                         description: Maximum amount for the criteria
                                         type: string
-                                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                                        pattern: -?\d{1,10}\.\d{1,2}
                                       MinimumCriteria:
                                         description: Minimum amount for the criteria
                                         type: string
-                                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                                        pattern: -?\d{1,10}\.\d{1,2}
                                       PromotionEndDate:
                                         description: If the benefit is temporal the end date is when the benefit is no longer applicable
                                         type: string
-                                        pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                        pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                       PromotionStartDate:
                                         description: If the benefit is temporal the start date is when the benefit comes into effect
                                         type: string
-                                        pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                        pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                 DateOfChange:
                                   description: Date of the change if it refers to future terms
                                   type: string
-                                  pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                  pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                 LengthPromotionalInDays:
                                   description: Describes the length if only a duration is given instead of a date in days
                                   type: integer
                                 StartPromotionOrFutureTerms:
                                   description: Describes the start date
                                   type: string
-                                  pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                  pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                 StopPromotionOrFutureTerms:
                                   description: Describes the end date
                                   type: string
-                                  pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                  pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                             BenefitSubType:
                               description: Benefit Subtype Code
                               enum:
@@ -1372,22 +1372,22 @@ protocols:
                             DateOfChange:
                               description: Date of the change if it refers to future terms
                               type: string
-                              pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                              pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                             ExchangeRateAdjustment:
                               description: The margin added, by certain card issuers, to the scheme rate in order to arrive at the exchange rate qouted as the reference exchange rate to the cardholder
                               type: string
-                              pattern: ^-?\d{1,3}\.\d{1,4}$
+                              pattern: -?\d{1,3}\.\d{1,4}
                             LengthPromotionalInDays:
                               description: Describes the length if only a duration is given instead of a date
                               type: integer
                             StartPromotionOrFutureTerms:
                               description: Describes the start date
                               type: string
-                              pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                              pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                             StopPromotionOrFutureTerms:
                               description: Describes the end date
                               type: string
-                              pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                              pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                         ProductState:
                           description: Describes if the offering is promotional or a description of a future state.
                           enum:
@@ -1421,7 +1421,7 @@ protocols:
                   CardWithdrawalLimit:
                     description: The daily Limit that a customer can get via the ATM. This describes the default limit rather than the maximum
                     type: string
-                    pattern: ^-?\d{1,10}\.\d{1,2}$
+                    pattern: -?\d{1,10}\.\d{1,2}
                   ChequeBookAvailable:
                     description: Can a chequebook be issued
                     type: boolean
@@ -1469,11 +1469,11 @@ protocols:
                                 DateOfChange:
                                   description: Date of the change if it refers to future terms
                                   type: string
-                                  pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                  pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                 EndDate:
                                   description: If interest is charged on a specific date range as end date (often used for promotion)
                                   type: string
-                                  pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                  pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                 FixedInterestLength:
                                   description: Fixed interest length in days
                                   type: integer
@@ -1496,22 +1496,22 @@ protocols:
                                       APRAERRate:
                                         description: AER or APR Rate for comparison
                                         type: string
-                                        pattern: ^-?\d{1,3}\.\d{1,4}$
+                                        pattern: -?\d{1,3}\.\d{1,4}
                                       DailyChargeForMaximum:
                                         description: Special charge on tiered overdraft
                                         type: string
-                                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                                        pattern: -?\d{1,10}\.\d{1,2}
                                       DailyChargeForMinimum:
                                         description: Special charge on tiered overdraft
                                         type: string
-                                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                                        pattern: -?\d{1,10}\.\d{1,2}
                                       InterestTier:
                                         description: Identifier for the tier
                                         type: string
                                       Rate:
                                         description: Rate being paid by the bank (gross)
                                         type: string
-                                        pattern: ^-?\d{1,3}\.\d{1,4}$
+                                        pattern: -?\d{1,3}\.\d{1,4}
                                       RateComparisonType:
                                         description: Rate Comparison Type
                                         enum:
@@ -1529,7 +1529,7 @@ protocols:
                                       TierValueMinimum:
                                         description: Lower value of interest tier
                                         type: string
-                                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                                        pattern: -?\d{1,10}\.\d{1,2}
                                 LengthPromotionalInDays:
                                   description: Describes the length if only a duration is given instead of a date
                                   type: integer
@@ -1544,15 +1544,15 @@ protocols:
                                 StartDate:
                                   description: If interest is charged on a specific date range as start date (often used for promotion)
                                   type: string
-                                  pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                  pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                 StartPromotionOrFutureTerms:
                                   description: Describes the start date
                                   type: string
-                                  pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                  pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                 StopPromotionOrFutureTerms:
                                   description: Describes the end date
                                   type: string
-                                  pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                  pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                             InterestTierSubType:
                               description: Describes if the offering is promotional, regular or a description of a future state
                               enum:
@@ -1610,7 +1610,7 @@ protocols:
                       AnnualBusinessTurnover:
                         description: Annual Business Turnover
                         type: string
-                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                        pattern: -?\d{1,10}\.\d{1,2}
                       AnnualBusinessTurnoverCurrency:
                         description: Annual Business Turnover Currency
                         type: string
@@ -1698,7 +1698,7 @@ protocols:
                       MinimumIncomeTurnoverAmount:
                         description: Minimum income / Turnover required to hold the product
                         type: string
-                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                        pattern: -?\d{1,10}\.\d{1,2}
                       MinimumIncomeTurnoverCurrency:
                         description: Minimum income / Turnover Currency
                         type: string
@@ -1706,7 +1706,7 @@ protocols:
                       MinimumOperatingBalance:
                         description: Minimum Operating Balance
                         type: string
-                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                        pattern: -?\d{1,10}\.\d{1,2}
                       MinimumOperatingBalanceCurrency:
                         description: Minimum Operating Balance currency
                         type: string
@@ -1717,7 +1717,7 @@ protocols:
                       OpeningDepositMaximumAmount:
                         description: Maximum Amount to be depositing at opening
                         type: string
-                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                        pattern: -?\d{1,10}\.\d{1,2}
                       OpeningDepositMaximumCurrency:
                         description: The currency of the Minimum Amount to be depositing at opening
                         type: string
@@ -1725,7 +1725,7 @@ protocols:
                       OpeningDepositMinimum:
                         description: Minimum Amount to be held on account
                         type: string
-                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                        pattern: -?\d{1,10}\.\d{1,2}
                       OpeningDepositMinimumCurrency:
                         description: The currency of the Minimum Amount to be depositing at opening
                         type: string
@@ -1772,7 +1772,7 @@ protocols:
                         DateOfChange:
                           description: Date of the change if it refers to future terms
                           type: string
-                          pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                          pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                         ExistingFeature:
                           description: Indicates whether the account has any feature
                           type: boolean
@@ -1789,7 +1789,7 @@ protocols:
                               DateOfChange:
                                 description: Date of the change if it refers to future terms
                                 type: string
-                                pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                               FeatureDescription:
                                 description: A textual explanation of what the feature
                                 type: string
@@ -1815,11 +1815,11 @@ protocols:
                               StartPromotionOrFutureTerms:
                                 description: Describes the start date
                                 type: string
-                                pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                               StopPromotionOrFutureTerms:
                                 description: Describes the end date
                                 type: string
-                                pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                         LengthPromotionalInDays:
                           description: Describes the length if only a duration is given instead of a date
                           type: integer
@@ -1833,11 +1833,11 @@ protocols:
                         StartPromotionOrFutureTerms:
                           description: Describes the start date
                           type: string
-                          pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                          pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                         StopPromotionOrFutureTerms:
                           description: Describes the end date
                           type: string
-                          pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                          pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                   FeesAndCharges:
                     type: array
                     items:
@@ -1853,7 +1853,7 @@ protocols:
                             DateOfChange:
                               description: Date of the change if it refers to future terms
                               type: string
-                              pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                              pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                             FeeDetails:
                               type: array
                               items:
@@ -1869,7 +1869,7 @@ protocols:
                                       DateOfChange:
                                         description: Date of the change if it refers to future terms
                                         type: string
-                                        pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                        pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                       FeeSubDetails:
                                         description: Fee Sub Details
                                         type: object
@@ -1878,7 +1878,7 @@ protocols:
                                           FeeAmount:
                                             description: Fee in GBP
                                             type: string
-                                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                                            pattern: -?\d{1,10}\.\d{1,2}
                                           FeeFrequency:
                                             description: Triggering frequency of the fee
                                             enum:
@@ -1913,15 +1913,15 @@ protocols:
                                           FeeMax:
                                             description: Fee in GBP
                                             type: string
-                                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                                            pattern: -?\d{1,10}\.\d{1,2}
                                           FeeMin:
                                             description: Fee in GBP
                                             type: string
-                                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                                            pattern: -?\d{1,10}\.\d{1,2}
                                           FeeRate:
                                             description: "% Rate"
                                             type: string
-                                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                                            pattern: -?\d{1,3}\.\d{1,4}
                                           FeesAndChargesNotes:
                                             description: Supplementary information for fees and charges
                                             type: string
@@ -1931,7 +1931,7 @@ protocols:
                                           RepresentativeRate:
                                             description: Representative Rate
                                             type: string
-                                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                                            pattern: -?\d{1,3}\.\d{1,4}
                                       FeeType:
                                         description: A description of the Fee type
                                         enum:
@@ -2315,11 +2315,11 @@ protocols:
                                       StartPromotionOrFutureTerms:
                                         description: Describes the start date
                                         type: string
-                                        pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                        pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                       StopPromotionOrFutureTerms:
                                         description: Describes the end date
                                         type: string
-                                        pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                        pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                   FeeSubType:
                                     description: Fee Sub Type code
                                     enum:
@@ -2340,11 +2340,11 @@ protocols:
                             StartPromotionOrFutureTerms:
                               description: Describes the start date
                               type: string
-                              pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                              pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                             StopPromotionOrFutureTerms:
                               description: Describes the end date
                               type: string
-                              pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                              pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                         ProductState:
                           description: Describes if the offering is promotional or a description of a future state.
                           enum:
@@ -2359,7 +2359,7 @@ protocols:
                   MaximumMonthlyCharge:
                     description: The maximum Relevant Charges that could accrue
                     type: string
-                    pattern: ^-?\d{1,10}\.\d{1,2}$
+                    pattern: -?\d{1,10}\.\d{1,2}
                   MobileWallet:
                     description: Mobile wallet supported by this product. A mobile wallet being any electronic device that allows an individual to make electronic commerce transactions
                     type: array
@@ -2408,7 +2408,7 @@ protocols:
                           LEI:
                             description: The LEI ID of the organisation
                             type: string
-                            pattern: ^[A-Z0-9]{18,18}[0-9]{2,2}$
+                            pattern: "[A-Z0-9]{18,18}[0-9]{2,2}"
                           OrganisationName:
                             description: Organisation Name
                             type: object
@@ -2429,7 +2429,7 @@ protocols:
                         DateOfChange:
                           description: Date of the change if it refers to future terms
                           type: string
-                          pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                          pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                         FeeChargeNegotiableIndicator:
                           description: Fee Charge negotiable Indicator
                           enum:
@@ -2446,7 +2446,7 @@ protocols:
                               FeeChargeAmount:
                                 description: Charge applied to tier
                                 type: string
-                                pattern: ^-?\d{1,10}\.\d{1,2}$
+                                pattern: -?\d{1,10}\.\d{1,2}
                               FeeChargeApplicationFrequency:
                                 description: Frequency with which the rate, or amount is charged
                                 enum:
@@ -2530,7 +2530,7 @@ protocols:
                               FeeChargeRate:
                                 description: Fee charge rate applied to tier
                                 type: string
-                                pattern: ^-?\d{1,3}\.\d{1,4}$
+                                pattern: -?\d{1,3}\.\d{1,4}
                               FeeChargeRateOtherType:
                                 description: Other Code Type
                                 type: object
@@ -2578,7 +2578,7 @@ protocols:
                         MaximumMonthlyOverdraftCharge:
                           description: Maximum Monthly Charge (MMC) for Overdraft fee and charges.
                           type: string
-                          pattern: ^-?\d{1,10}\.\d{1,2}$
+                          pattern: -?\d{1,10}\.\d{1,2}
                         Notes:
                           description: Notes on the overdraft
                           type: string
@@ -2625,14 +2625,14 @@ protocols:
                               BufferAmount:
                                 description: Amount on overdraft that is prearranged
                                 type: string
-                                pattern: ^-?\d{1,10}\.\d{1,2}$
+                                pattern: -?\d{1,10}\.\d{1,2}
                               CMADefinedIndicator:
                                 description: describes that the tiers and bands are set by the CMA order, as opposed to be set by the banks
                                 type: boolean
                               EAR:
                                 description: EAR of the Overdraft Set
                                 type: string
-                                pattern: ^-?\d{1,3}\.\d{1,4}$
+                                pattern: -?\d{1,3}\.\d{1,4}
                               FeesAndCharges:
                                 description: Type of fee or charge
                                 type: array
@@ -2644,7 +2644,7 @@ protocols:
                                     FeeChargeAmount:
                                       description: Charge applied to tier
                                       type: string
-                                      pattern: ^-?\d{1,10}\.\d{1,2}$
+                                      pattern: -?\d{1,10}\.\d{1,2}
                                     FeeChargeApplicationFrequency:
                                       description: Frequency with which the rate, or amount is charged
                                       enum:
@@ -2728,7 +2728,7 @@ protocols:
                                     FeeChargeRate:
                                       description: Fee charge rate applied to tier
                                       type: string
-                                      pattern: ^-?\d{1,3}\.\d{1,4}$
+                                      pattern: -?\d{1,3}\.\d{1,4}
                                     FeeChargeRateOtherType:
                                       description: Other Code Type
                                       type: object
@@ -2783,7 +2783,7 @@ protocols:
                                     EAR:
                                       description: EAR of the Tier
                                       type: string
-                                      pattern: ^-?\d{1,3}\.\d{1,4}$
+                                      pattern: -?\d{1,3}\.\d{1,4}
                                     FeesAndCharges:
                                       type: array
                                       items:
@@ -2794,7 +2794,7 @@ protocols:
                                           FeeChargeAmount:
                                             description: Charge applied to tier
                                             type: string
-                                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                                            pattern: -?\d{1,10}\.\d{1,2}
                                           FeeChargeApplicationFrequency:
                                             description: Frequency with which the rate, or amount is charged
                                             enum:
@@ -2878,7 +2878,7 @@ protocols:
                                           FeeChargeRate:
                                             description: Fee charge rate applied to tier
                                             type: string
-                                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                                            pattern: -?\d{1,3}\.\d{1,4}
                                           FeeChargeRateOtherType:
                                             description: Other Code Type
                                             type: object
@@ -2935,7 +2935,7 @@ protocols:
                                     TierValueMinimum:
                                       description: Minimum value of the tier
                                       type: string
-                                      pattern: ^-?\d{1,10}\.\d{1,2}$
+                                      pattern: -?\d{1,10}\.\d{1,2}
                               TierBandSetIdentification:
                                 description: Identification of the set of tiers or bands
                                 type: string
@@ -2948,11 +2948,11 @@ protocols:
                         StartPromotionOrFutureTerms:
                           description: Describes the start date
                           type: string
-                          pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                          pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                         StopPromotionOrFutureTerms:
                           description: Describes the end date
                           type: string
-                          pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                          pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                         Term:
                           description: The duration of the overdraft, if it is non permanent
                           type: string
@@ -3370,34 +3370,34 @@ protocols:
                                       MaximumCriteria:
                                         description: Maximum amount for the criteria
                                         type: string
-                                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                                        pattern: -?\d{1,10}\.\d{1,2}
                                       MinimumCriteria:
                                         description: Minimum amount for the criteria
                                         type: string
-                                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                                        pattern: -?\d{1,10}\.\d{1,2}
                                       PromotionEndDate:
                                         description: If the benefit is temporal the end date is when the benefit is no longer applicable
                                         type: string
-                                        pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                        pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                       PromotionStartDate:
                                         description: If the benefit is temporal the start date is when the benefit comes into effect
                                         type: string
-                                        pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                        pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                 DateOfChange:
                                   description: Date of the change if it refers to future terms
                                   type: string
-                                  pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                  pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                 LengthPromotionalInDays:
                                   description: Describes the length if only a duration is given instead of a date in days
                                   type: integer
                                 StartPromotionOrFutureTerms:
                                   description: Describes the start date
                                   type: string
-                                  pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                  pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                 StopPromotionOrFutureTerms:
                                   description: Describes the end date
                                   type: string
-                                  pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                  pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                             BenefitSubType:
                               description: Benefit Subtype Code
                               enum:
@@ -3428,7 +3428,7 @@ protocols:
                           APRRate:
                             description: Annual Percentage Rate
                             type: string
-                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                            pattern: -?\d{1,3}\.\d{1,4}
                           AbilityToSetIndividualLimits:
                             description: The ability to set separate limts on different cards in one account
                             type: boolean
@@ -3444,7 +3444,7 @@ protocols:
                           AnnualFeeAmount:
                             description: Standard fee on the card
                             type: string
-                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                            pattern: -?\d{1,10}\.\d{1,2}
                           BalanceTransferInterestRatePeriod:
                             description: The period used to define the specific interest rate for balance transfers
                             enum:
@@ -3454,7 +3454,7 @@ protocols:
                           BalanceTransferRate:
                             description: Balance transfer rate
                             type: string
-                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                            pattern: -?\d{1,3}\.\d{1,4}
                           CardScheme:
                             description: Card Scheme Code
                             enum:
@@ -3465,56 +3465,56 @@ protocols:
                           CashAdvanceRate:
                             description: Cash advance rate
                             type: string
-                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                            pattern: -?\d{1,3}\.\d{1,4}
                           CashWithdrawalsAllowed:
                             description: Describes whether cash withdrawals are allowed
                             type: boolean
                           CashbackPercent:
                             description: Percent of cashback on amount spend
                             type: string
-                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                            pattern: -?\d{1,3}\.\d{1,4}
                           ChequeFeePercent:
                             description: Percentage fee on convenience cheques
                             type: string
-                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                            pattern: -?\d{1,3}\.\d{1,4}
                           ConvenienceCheque:
                             description: Describes whether the card account allow convenience cheques
                             type: boolean
                           DateOfChange:
                             description: Date of the change if it refers to future terms
                             type: string
-                            pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                            pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                           DaysInterestFreeCreditIfPaymentFull:
                             description: Describes how many interest free days are given if the card is fully paid at each term
                             type: integer
                           ExchangeRateAdjustment:
                             description: The margin added, by certain card issuers, to the scheme rate in order to arrive at the exchange rate qouted as the reference exchange rate to the cardholder
                             type: string
-                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                            pattern: -?\d{1,3}\.\d{1,4}
                           FeesOnCheque:
                             description: Percentage fee on a convenince cheques
                             type: string
-                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                            pattern: -?\d{1,10}\.\d{1,2}
                           ForeignCashFee:
                             description: Additional card fee applied to sterling cash withdrawal made abroad
                             type: string
-                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                            pattern: -?\d{1,10}\.\d{1,2}
                           ForeignCashFeeRate:
                             description: Additional card fee rate applied to sterling cash withdrawal made abroad
                             type: string
-                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                            pattern: -?\d{1,3}\.\d{1,4}
                           ForeignPurchaseFee:
                             description: Additional card fee applied to sterling retail transactions made abroad
                             type: string
-                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                            pattern: -?\d{1,10}\.\d{1,2}
                           ForeignPurchaseFeeRate:
                             description: Additional card fee rate applied to sterling retail transactions made abroad
                             type: string
-                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                            pattern: -?\d{1,3}\.\d{1,4}
                           IssuingEmergencyCardsFees:
                             description: Amount payable for issuing an emergency card
                             type: string
-                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                            pattern: -?\d{1,10}\.\d{1,2}
                           LengthPromotionalInDays:
                             description: Describes the length if only a duration is given instead of a date
                             type: integer
@@ -3524,66 +3524,66 @@ protocols:
                           MinimumCreditLimit:
                             description: Minimum £500, maximum subject to status
                             type: string
-                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                            pattern: -?\d{1,10}\.\d{1,2}
                           MinimumLendingAmount:
                             description: The minimum lending available
                             type: string
-                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                            pattern: -?\d{1,10}\.\d{1,2}
                           MinimumRepaymentAmount:
                             description: Minimum repayment amount
                             type: string
-                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                            pattern: -?\d{1,10}\.\d{1,2}
                           MinimumRepaymentPercentage:
                             description: Minimum repayment as percentage
                             type: string
-                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                            pattern: -?\d{1,3}\.\d{1,4}
                           NonSterlingCashFee:
                             description: An additional fee applied to certain card cash withdrawals. This fee also applies to cash near fees such as gambling
                             type: string
-                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                            pattern: -?\d{1,10}\.\d{1,2}
                           NonSterlingCashFeeRate:
                             description: An additional fee rate applied to certain card cash withdrawals. This fee also applies to cash near fees such as gambling
                             type: string
-                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                            pattern: -?\d{1,3}\.\d{1,4}
                           NonSterlingPurchaseFee:
                             description: An additional fee applied to certain card retail transactions
                             type: string
-                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                            pattern: -?\d{1,10}\.\d{1,2}
                           NonSterlingPurchaseFeeRate:
                             description: An additional fee rate applied to certain card retail transactions
                             type: string
-                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                            pattern: -?\d{1,3}\.\d{1,4}
                           NonSterlingTransactionFee:
                             description: A fee applied to all non-Sterling card transactions
                             type: string
-                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                            pattern: -?\d{1,10}\.\d{1,2}
                           NonSterlingTransactionFeeRate:
                             description: A fee rate applied to all non-Sterling card transactions
                             type: string
-                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                            pattern: -?\d{1,3}\.\d{1,4}
                           OverLimitFee:
                             description: Fee applicable if the card was credited over its limit
                             type: string
-                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                            pattern: -?\d{1,10}\.\d{1,2}
                           PaymentDaysAfterStatement:
                             description: How many days after statement is the payment expected
                             type: integer
                           PaymentSchemeExchangeFee:
                             description: Any payment network fee applied to some or all non-sterling transactions that the card issuer recover directly from the cardholder
                             type: string
-                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                            pattern: -?\d{1,10}\.\d{1,2}
                           PaymentSchemeExchangeFeeRate:
                             description: Any payment network fee rate applied to some or all non-sterling transactions that the card issuer recover directly from the cardholder
                             type: string
-                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                            pattern: -?\d{1,3}\.\d{1,4}
                           PaymentSchemeExchangeRate:
                             description: The base exchange rate used in settlement of the transaction between issuer and scheme
                             type: string
-                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                            pattern: -?\d{1,3}\.\d{1,4}
                           PurchaseRate:
                             description: Purchase rate
                             type: string
-                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                            pattern: -?\d{1,3}\.\d{1,4}
                           RepaymentFrequency:
                             description: Repayment frequency
                             enum:
@@ -3602,7 +3602,7 @@ protocols:
                           StartPromotionOrFutureTerms:
                             description: Describes the start date
                             type: string
-                            pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                            pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                           StatementAtAccountLevel:
                             description: Describes whether there is a statement at account level
                             type: boolean
@@ -3612,7 +3612,7 @@ protocols:
                           StopPromotionOrFutureTerms:
                             description: Describes the end date
                             type: string
-                            pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                            pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                   Eligibility:
                     description: Eligibility
                     type: object
@@ -3624,7 +3624,7 @@ protocols:
                       AnnualBusinessTurnover:
                         description: Annual Business Turnover
                         type: string
-                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                        pattern: -?\d{1,10}\.\d{1,2}
                       AnnualBusinessTurnoverCurrency:
                         description: Annual Business Turnover Currency
                         type: string
@@ -3712,7 +3712,7 @@ protocols:
                       MinimumIncomeTurnoverAmount:
                         description: Minimum income / Turnover required to hold the product
                         type: string
-                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                        pattern: -?\d{1,10}\.\d{1,2}
                       MinimumIncomeTurnoverCurrency:
                         description: Minimum income / Turnover Currency
                         type: string
@@ -3720,7 +3720,7 @@ protocols:
                       MinimumOperatingBalance:
                         description: Minimum Operating Balance
                         type: string
-                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                        pattern: -?\d{1,10}\.\d{1,2}
                       MinimumOperatingBalanceCurrency:
                         description: Minimum Operating Balance currency
                         type: string
@@ -3731,7 +3731,7 @@ protocols:
                       OpeningDepositMaximumAmount:
                         description: Maximum Amount to be depositing at opening
                         type: string
-                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                        pattern: -?\d{1,10}\.\d{1,2}
                       OpeningDepositMaximumCurrency:
                         description: The currency of the Minimum Amount to be depositing at opening
                         type: string
@@ -3739,7 +3739,7 @@ protocols:
                       OpeningDepositMinimum:
                         description: Minimum Amount to be held on account
                         type: string
-                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                        pattern: -?\d{1,10}\.\d{1,2}
                       OpeningDepositMinimumCurrency:
                         description: The currency of the Minimum Amount to be depositing at opening
                         type: string
@@ -3813,7 +3813,7 @@ protocols:
                           LEI:
                             description: The LEI ID of the organisation
                             type: string
-                            pattern: ^[A-Z0-9]{18,18}[0-9]{2,2}$
+                            pattern: "[A-Z0-9]{18,18}[0-9]{2,2}"
                           OrganisationName:
                             description: Organisation Name
                             type: object
@@ -4252,34 +4252,34 @@ protocols:
                                       MaximumCriteria:
                                         description: Maximum amount for the criteria
                                         type: string
-                                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                                        pattern: -?\d{1,10}\.\d{1,2}
                                       MinimumCriteria:
                                         description: Minimum amount for the criteria
                                         type: string
-                                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                                        pattern: -?\d{1,10}\.\d{1,2}
                                       PromotionEndDate:
                                         description: If the benefit is temporal the end date is when the benefit is no longer applicable
                                         type: string
-                                        pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                        pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                       PromotionStartDate:
                                         description: If the benefit is temporal the start date is when the benefit comes into effect
                                         type: string
-                                        pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                        pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                 DateOfChange:
                                   description: Date of the change if it refers to future terms
                                   type: string
-                                  pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                  pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                 LengthPromotionalInDays:
                                   description: Describes the length if only a duration is given instead of a date in days
                                   type: integer
                                 StartPromotionOrFutureTerms:
                                   description: Describes the start date
                                   type: string
-                                  pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                  pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                 StopPromotionOrFutureTerms:
                                   description: Describes the end date
                                   type: string
-                                  pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                  pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                             BenefitSubType:
                               description: Benefit Subtype Code
                               enum:
@@ -4302,22 +4302,22 @@ protocols:
                             DateOfChange:
                               description: Date of the change if it refers to future terms
                               type: string
-                              pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                              pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                             ExchangeRateAdjustment:
                               description: The margin added, by certain card issuers, to the scheme rate in order to arrive at the exchange rate qouted as the reference exchange rate to the cardholder
                               type: string
-                              pattern: ^-?\d{1,3}\.\d{1,4}$
+                              pattern: -?\d{1,3}\.\d{1,4}
                             LengthPromotionalInDays:
                               description: Describes the length if only a duration is given instead of a date
                               type: integer
                             StartPromotionOrFutureTerms:
                               description: Describes the start date
                               type: string
-                              pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                              pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                             StopPromotionOrFutureTerms:
                               description: Describes the end date
                               type: string
-                              pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                              pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                         ProductState:
                           description: Describes if the offering is promotional or a description of a future state.
                           enum:
@@ -4351,7 +4351,7 @@ protocols:
                   CardWithdrawalLimit:
                     description: The daily Limit that a customer can get via the ATM. This describes the default limit rather than the maximum
                     type: string
-                    pattern: ^-?\d{1,10}\.\d{1,2}$
+                    pattern: -?\d{1,10}\.\d{1,2}
                   ChequeBookAvailable:
                     description: Can a chequebook be issued
                     type: boolean
@@ -4399,11 +4399,11 @@ protocols:
                                 DateOfChange:
                                   description: Date of the change if it refers to future terms
                                   type: string
-                                  pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                  pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                 EndDate:
                                   description: If interest is charged on a specific date range as end date (often used for promotion)
                                   type: string
-                                  pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                  pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                 FixedInterestLength:
                                   description: Fixed interest length in days
                                   type: integer
@@ -4426,22 +4426,22 @@ protocols:
                                       APRAERRate:
                                         description: AER or APR Rate for comparison
                                         type: string
-                                        pattern: ^-?\d{1,3}\.\d{1,4}$
+                                        pattern: -?\d{1,3}\.\d{1,4}
                                       DailyChargeForMaximum:
                                         description: Special charge on tiered overdraft
                                         type: string
-                                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                                        pattern: -?\d{1,10}\.\d{1,2}
                                       DailyChargeForMinimum:
                                         description: Special charge on tiered overdraft
                                         type: string
-                                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                                        pattern: -?\d{1,10}\.\d{1,2}
                                       InterestTier:
                                         description: Identifier for the tier
                                         type: string
                                       Rate:
                                         description: Rate being paid by the bank (gross)
                                         type: string
-                                        pattern: ^-?\d{1,3}\.\d{1,4}$
+                                        pattern: -?\d{1,3}\.\d{1,4}
                                       RateComparisonType:
                                         description: Rate Comparison Type
                                         enum:
@@ -4459,7 +4459,7 @@ protocols:
                                       TierValueMinimum:
                                         description: Lower value of interest tier
                                         type: string
-                                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                                        pattern: -?\d{1,10}\.\d{1,2}
                                 LengthPromotionalInDays:
                                   description: Describes the length if only a duration is given instead of a date
                                   type: integer
@@ -4474,15 +4474,15 @@ protocols:
                                 StartDate:
                                   description: If interest is charged on a specific date range as start date (often used for promotion)
                                   type: string
-                                  pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                  pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                 StartPromotionOrFutureTerms:
                                   description: Describes the start date
                                   type: string
-                                  pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                  pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                 StopPromotionOrFutureTerms:
                                   description: Describes the end date
                                   type: string
-                                  pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                  pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                             InterestTierSubType:
                               description: Describes if the offering is promotional, regular or a description of a future state
                               enum:
@@ -4540,7 +4540,7 @@ protocols:
                       AnnualBusinessTurnover:
                         description: Annual Business Turnover
                         type: string
-                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                        pattern: -?\d{1,10}\.\d{1,2}
                       AnnualBusinessTurnoverCurrency:
                         description: Annual Business Turnover Currency
                         type: string
@@ -4628,7 +4628,7 @@ protocols:
                       MinimumIncomeTurnoverAmount:
                         description: Minimum income / Turnover required to hold the product
                         type: string
-                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                        pattern: -?\d{1,10}\.\d{1,2}
                       MinimumIncomeTurnoverCurrency:
                         description: Minimum income / Turnover Currency
                         type: string
@@ -4636,7 +4636,7 @@ protocols:
                       MinimumOperatingBalance:
                         description: Minimum Operating Balance
                         type: string
-                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                        pattern: -?\d{1,10}\.\d{1,2}
                       MinimumOperatingBalanceCurrency:
                         description: Minimum Operating Balance currency
                         type: string
@@ -4647,7 +4647,7 @@ protocols:
                       OpeningDepositMaximumAmount:
                         description: Maximum Amount to be depositing at opening
                         type: string
-                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                        pattern: -?\d{1,10}\.\d{1,2}
                       OpeningDepositMaximumCurrency:
                         description: The currency of the Minimum Amount to be depositing at opening
                         type: string
@@ -4655,7 +4655,7 @@ protocols:
                       OpeningDepositMinimum:
                         description: Minimum Amount to be held on account
                         type: string
-                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                        pattern: -?\d{1,10}\.\d{1,2}
                       OpeningDepositMinimumCurrency:
                         description: The currency of the Minimum Amount to be depositing at opening
                         type: string
@@ -4702,7 +4702,7 @@ protocols:
                         DateOfChange:
                           description: Date of the change if it refers to future terms
                           type: string
-                          pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                          pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                         ExistingFeature:
                           description: Indicates whether the account has any feature
                           type: boolean
@@ -4719,7 +4719,7 @@ protocols:
                               DateOfChange:
                                 description: Date of the change if it refers to future terms
                                 type: string
-                                pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                               FeatureDescription:
                                 description: A textual explanation of what the feature
                                 type: string
@@ -4745,11 +4745,11 @@ protocols:
                               StartPromotionOrFutureTerms:
                                 description: Describes the start date
                                 type: string
-                                pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                               StopPromotionOrFutureTerms:
                                 description: Describes the end date
                                 type: string
-                                pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                         LengthPromotionalInDays:
                           description: Describes the length if only a duration is given instead of a date
                           type: integer
@@ -4763,11 +4763,11 @@ protocols:
                         StartPromotionOrFutureTerms:
                           description: Describes the start date
                           type: string
-                          pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                          pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                         StopPromotionOrFutureTerms:
                           description: Describes the end date
                           type: string
-                          pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                          pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                   FeesAndCharges:
                     type: array
                     items:
@@ -4783,7 +4783,7 @@ protocols:
                             DateOfChange:
                               description: Date of the change if it refers to future terms
                               type: string
-                              pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                              pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                             FeeDetails:
                               type: array
                               items:
@@ -4799,7 +4799,7 @@ protocols:
                                       DateOfChange:
                                         description: Date of the change if it refers to future terms
                                         type: string
-                                        pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                        pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                       FeeSubDetails:
                                         description: Fee Sub Details
                                         type: object
@@ -4808,7 +4808,7 @@ protocols:
                                           FeeAmount:
                                             description: Fee in GBP
                                             type: string
-                                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                                            pattern: -?\d{1,10}\.\d{1,2}
                                           FeeFrequency:
                                             description: Triggering frequency of the fee
                                             enum:
@@ -4843,15 +4843,15 @@ protocols:
                                           FeeMax:
                                             description: Fee in GBP
                                             type: string
-                                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                                            pattern: -?\d{1,10}\.\d{1,2}
                                           FeeMin:
                                             description: Fee in GBP
                                             type: string
-                                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                                            pattern: -?\d{1,10}\.\d{1,2}
                                           FeeRate:
                                             description: "% Rate"
                                             type: string
-                                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                                            pattern: -?\d{1,3}\.\d{1,4}
                                           FeesAndChargesNotes:
                                             description: Supplementary information for fees and charges
                                             type: string
@@ -4861,7 +4861,7 @@ protocols:
                                           RepresentativeRate:
                                             description: Representative Rate
                                             type: string
-                                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                                            pattern: -?\d{1,3}\.\d{1,4}
                                       FeeType:
                                         description: A description of the Fee type
                                         enum:
@@ -5245,11 +5245,11 @@ protocols:
                                       StartPromotionOrFutureTerms:
                                         description: Describes the start date
                                         type: string
-                                        pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                        pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                       StopPromotionOrFutureTerms:
                                         description: Describes the end date
                                         type: string
-                                        pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                        pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                   FeeSubType:
                                     description: Fee Sub Type code
                                     enum:
@@ -5270,11 +5270,11 @@ protocols:
                             StartPromotionOrFutureTerms:
                               description: Describes the start date
                               type: string
-                              pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                              pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                             StopPromotionOrFutureTerms:
                               description: Describes the end date
                               type: string
-                              pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                              pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                         ProductState:
                           description: Describes if the offering is promotional or a description of a future state.
                           enum:
@@ -5289,7 +5289,7 @@ protocols:
                   MaximumMonthlyCharge:
                     description: The maximum Relevant Charges that could accrue
                     type: string
-                    pattern: ^-?\d{1,10}\.\d{1,2}$
+                    pattern: -?\d{1,10}\.\d{1,2}
                   MobileWallet:
                     description: Mobile wallet supported by this product. A mobile wallet being any electronic device that allows an individual to make electronic commerce transactions
                     type: array
@@ -5338,7 +5338,7 @@ protocols:
                           LEI:
                             description: The LEI ID of the organisation
                             type: string
-                            pattern: ^[A-Z0-9]{18,18}[0-9]{2,2}$
+                            pattern: "[A-Z0-9]{18,18}[0-9]{2,2}"
                           OrganisationName:
                             description: Organisation Name
                             type: object
@@ -5359,7 +5359,7 @@ protocols:
                         DateOfChange:
                           description: Date of the change if it refers to future terms
                           type: string
-                          pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                          pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                         FeeChargeNegotiableIndicator:
                           description: Fee Charge negotiable Indicator
                           enum:
@@ -5376,7 +5376,7 @@ protocols:
                               FeeChargeAmount:
                                 description: Charge applied to tier
                                 type: string
-                                pattern: ^-?\d{1,10}\.\d{1,2}$
+                                pattern: -?\d{1,10}\.\d{1,2}
                               FeeChargeApplicationFrequency:
                                 description: Frequency with which the rate, or amount is charged
                                 enum:
@@ -5460,7 +5460,7 @@ protocols:
                               FeeChargeRate:
                                 description: Fee charge rate applied to tier
                                 type: string
-                                pattern: ^-?\d{1,3}\.\d{1,4}$
+                                pattern: -?\d{1,3}\.\d{1,4}
                               FeeChargeRateOtherType:
                                 description: Other Code Type
                                 type: object
@@ -5508,7 +5508,7 @@ protocols:
                         MaximumMonthlyOverdraftCharge:
                           description: Maximum Monthly Charge (MMC) for Overdraft fee and charges.
                           type: string
-                          pattern: ^-?\d{1,10}\.\d{1,2}$
+                          pattern: -?\d{1,10}\.\d{1,2}
                         Notes:
                           description: Notes on the overdraft
                           type: string
@@ -5555,14 +5555,14 @@ protocols:
                               BufferAmount:
                                 description: Amount on overdraft that is prearranged
                                 type: string
-                                pattern: ^-?\d{1,10}\.\d{1,2}$
+                                pattern: -?\d{1,10}\.\d{1,2}
                               CMADefinedIndicator:
                                 description: describes that the tiers and bands are set by the CMA order, as opposed to be set by the banks
                                 type: boolean
                               EAR:
                                 description: EAR of the Overdraft Set
                                 type: string
-                                pattern: ^-?\d{1,3}\.\d{1,4}$
+                                pattern: -?\d{1,3}\.\d{1,4}
                               FeesAndCharges:
                                 description: Type of fee or charge
                                 type: array
@@ -5574,7 +5574,7 @@ protocols:
                                     FeeChargeAmount:
                                       description: Charge applied to tier
                                       type: string
-                                      pattern: ^-?\d{1,10}\.\d{1,2}$
+                                      pattern: -?\d{1,10}\.\d{1,2}
                                     FeeChargeApplicationFrequency:
                                       description: Frequency with which the rate, or amount is charged
                                       enum:
@@ -5658,7 +5658,7 @@ protocols:
                                     FeeChargeRate:
                                       description: Fee charge rate applied to tier
                                       type: string
-                                      pattern: ^-?\d{1,3}\.\d{1,4}$
+                                      pattern: -?\d{1,3}\.\d{1,4}
                                     FeeChargeRateOtherType:
                                       description: Other Code Type
                                       type: object
@@ -5713,7 +5713,7 @@ protocols:
                                     EAR:
                                       description: EAR of the Tier
                                       type: string
-                                      pattern: ^-?\d{1,3}\.\d{1,4}$
+                                      pattern: -?\d{1,3}\.\d{1,4}
                                     FeesAndCharges:
                                       type: array
                                       items:
@@ -5724,7 +5724,7 @@ protocols:
                                           FeeChargeAmount:
                                             description: Charge applied to tier
                                             type: string
-                                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                                            pattern: -?\d{1,10}\.\d{1,2}
                                           FeeChargeApplicationFrequency:
                                             description: Frequency with which the rate, or amount is charged
                                             enum:
@@ -5808,7 +5808,7 @@ protocols:
                                           FeeChargeRate:
                                             description: Fee charge rate applied to tier
                                             type: string
-                                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                                            pattern: -?\d{1,3}\.\d{1,4}
                                           FeeChargeRateOtherType:
                                             description: Other Code Type
                                             type: object
@@ -5865,7 +5865,7 @@ protocols:
                                     TierValueMinimum:
                                       description: Minimum value of the tier
                                       type: string
-                                      pattern: ^-?\d{1,10}\.\d{1,2}$
+                                      pattern: -?\d{1,10}\.\d{1,2}
                               TierBandSetIdentification:
                                 description: Identification of the set of tiers or bands
                                 type: string
@@ -5878,11 +5878,11 @@ protocols:
                         StartPromotionOrFutureTerms:
                           description: Describes the start date
                           type: string
-                          pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                          pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                         StopPromotionOrFutureTerms:
                           description: Describes the end date
                           type: string
-                          pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                          pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                         Term:
                           description: The duration of the overdraft, if it is non permanent
                           type: string
@@ -6303,34 +6303,34 @@ protocols:
                                       MaximumCriteria:
                                         description: Maximum amount for the criteria
                                         type: string
-                                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                                        pattern: -?\d{1,10}\.\d{1,2}
                                       MinimumCriteria:
                                         description: Minimum amount for the criteria
                                         type: string
-                                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                                        pattern: -?\d{1,10}\.\d{1,2}
                                       PromotionEndDate:
                                         description: If the benefit is temporal the end date is when the benefit is no longer applicable
                                         type: string
-                                        pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                        pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                       PromotionStartDate:
                                         description: If the benefit is temporal the start date is when the benefit comes into effect
                                         type: string
-                                        pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                        pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                 DateOfChange:
                                   description: Date of the change if it refers to future terms
                                   type: string
-                                  pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                  pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                 LengthPromotionalInDays:
                                   description: Describes the length if only a duration is given instead of a date in days
                                   type: integer
                                 StartPromotionOrFutureTerms:
                                   description: Describes the start date
                                   type: string
-                                  pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                  pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                 StopPromotionOrFutureTerms:
                                   description: Describes the end date
                                   type: string
-                                  pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                  pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                             BenefitSubType:
                               description: Benefit Subtype Code
                               enum:
@@ -6372,7 +6372,7 @@ protocols:
                       AnnualBusinessTurnover:
                         description: Annual Business Turnover
                         type: string
-                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                        pattern: -?\d{1,10}\.\d{1,2}
                       AnnualBusinessTurnoverCurrency:
                         description: Annual Business Turnover Currency
                         type: string
@@ -6460,7 +6460,7 @@ protocols:
                       MinimumIncomeTurnoverAmount:
                         description: Minimum income / Turnover required to hold the product
                         type: string
-                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                        pattern: -?\d{1,10}\.\d{1,2}
                       MinimumIncomeTurnoverCurrency:
                         description: Minimum income / Turnover Currency
                         type: string
@@ -6468,7 +6468,7 @@ protocols:
                       MinimumOperatingBalance:
                         description: Minimum Operating Balance
                         type: string
-                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                        pattern: -?\d{1,10}\.\d{1,2}
                       MinimumOperatingBalanceCurrency:
                         description: Minimum Operating Balance currency
                         type: string
@@ -6479,7 +6479,7 @@ protocols:
                       OpeningDepositMaximumAmount:
                         description: Maximum Amount to be depositing at opening
                         type: string
-                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                        pattern: -?\d{1,10}\.\d{1,2}
                       OpeningDepositMaximumCurrency:
                         description: The currency of the Minimum Amount to be depositing at opening
                         type: string
@@ -6487,7 +6487,7 @@ protocols:
                       OpeningDepositMinimum:
                         description: Minimum Amount to be held on account
                         type: string
-                        pattern: ^-?\d{1,10}\.\d{1,2}$
+                        pattern: -?\d{1,10}\.\d{1,2}
                       OpeningDepositMinimumCurrency:
                         description: The currency of the Minimum Amount to be depositing at opening
                         type: string
@@ -6540,7 +6540,7 @@ protocols:
                             DateOfChange:
                               description: Date of the change if it refers to future terms
                               type: string
-                              pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                              pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                             FeeDetails:
                               type: array
                               items:
@@ -6556,7 +6556,7 @@ protocols:
                                       DateOfChange:
                                         description: Date of the change if it refers to future terms
                                         type: string
-                                        pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                        pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                       FeeSubDetails:
                                         description: Fee Sub Details
                                         type: object
@@ -6565,7 +6565,7 @@ protocols:
                                           FeeAmount:
                                             description: Fee in GBP
                                             type: string
-                                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                                            pattern: -?\d{1,10}\.\d{1,2}
                                           FeeFrequency:
                                             description: Triggering frequency of the fee
                                             enum:
@@ -6600,15 +6600,15 @@ protocols:
                                           FeeMax:
                                             description: Fee in GBP
                                             type: string
-                                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                                            pattern: -?\d{1,10}\.\d{1,2}
                                           FeeMin:
                                             description: Fee in GBP
                                             type: string
-                                            pattern: ^-?\d{1,10}\.\d{1,2}$
+                                            pattern: -?\d{1,10}\.\d{1,2}
                                           FeeRate:
                                             description: "% Rate"
                                             type: string
-                                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                                            pattern: -?\d{1,3}\.\d{1,4}
                                           FeesAndChargesNotes:
                                             description: Supplementary information for fees and charges
                                             type: string
@@ -6618,7 +6618,7 @@ protocols:
                                           RepresentativeRate:
                                             description: Representative Rate
                                             type: string
-                                            pattern: ^-?\d{1,3}\.\d{1,4}$
+                                            pattern: -?\d{1,3}\.\d{1,4}
                                       FeeType:
                                         description: A description of the Fee type
                                         enum:
@@ -7002,11 +7002,11 @@ protocols:
                                       StartPromotionOrFutureTerms:
                                         description: Describes the start date
                                         type: string
-                                        pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                        pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                       StopPromotionOrFutureTerms:
                                         description: Describes the end date
                                         type: string
-                                        pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                                        pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                                   FeeSubType:
                                     description: Fee Sub Type code
                                     enum:
@@ -7027,11 +7027,11 @@ protocols:
                             StartPromotionOrFutureTerms:
                               description: Describes the start date
                               type: string
-                              pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                              pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                             StopPromotionOrFutureTerms:
                               description: Describes the end date
                               type: string
-                              pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                              pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                         ProductState:
                           description: Describes if the offering is promotional or a description of a future state.
                           enum:
@@ -7052,7 +7052,7 @@ protocols:
                         DateOfChange:
                           description: Date of the change if it refers to future terms
                           type: string
-                          pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                          pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                         IsALowInterestRepaymentStartPossible:
                           type: boolean
                         IsThisAnInterestOnlyLoan:
@@ -7085,11 +7085,11 @@ protocols:
                               LoanSizeBandLower:
                                 description: Monetary amount without currency
                                 type: string
-                                pattern: ^-?\d{1,10}\.\d{1,2}$
+                                pattern: -?\d{1,10}\.\d{1,2}
                               LoanSizeBandUpper:
                                 description: Monetary amount without currency
                                 type: string
-                                pattern: ^-?\d{1,10}\.\d{1,2}$
+                                pattern: -?\d{1,10}\.\d{1,2}
                               Negotiable:
                                 type: boolean
                               RateComparisonType:
@@ -7139,24 +7139,24 @@ protocols:
                         StartPromotionOrFutureTerms:
                           description: Describes the start date
                           type: string
-                          pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                          pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                         StopPromotionOrFutureTerms:
                           description: Describes the end date
                           type: string
-                          pattern: ^[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))$
+                          pattern: "[0-9]{4}-(0[1-9]|(1[0|1|2]))-((0[1-9])|((1|2)[0-9])|(30|31))"
                         WillTheLoanBePaidInTrancheDrawdowns:
                           type: boolean
                   MaximumLoanAmount:
                     description: Maximum loan amount
                     type: string
-                    pattern: ^-?\d{1,10}\.\d{1,2}$
+                    pattern: -?\d{1,10}\.\d{1,2}
                   MaximumLoanTerm:
                     description: Maximum loan term (Days)
                     type: integer
                   MinimumLoanAmount:
                     description: Minimum loan amount
                     type: string
-                    pattern: ^-?\d{1,10}\.\d{1,2}$
+                    pattern: -?\d{1,10}\.\d{1,2}
                   MinimumLoanTerm:
                     description: Minimum term (Days)
                     type: integer
@@ -7193,7 +7193,7 @@ protocols:
                           LEI:
                             description: The LEI ID of the organisation
                             type: string
-                            pattern: ^[A-Z0-9]{18,18}[0-9]{2,2}$
+                            pattern: "[A-Z0-9]{18,18}[0-9]{2,2}"
                           OrganisationName:
                             description: Organisation Name
                             type: object
