@@ -2717,4 +2717,15 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.size == 1)
     }
   }
+
+  test("JSON SChema pattern properties") {
+    for {
+      validation <- Validation(platform)
+      model      <- AMFCompiler(validationsPath + "jsonSchemaProperties.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 1)
+    }
+  }
 }

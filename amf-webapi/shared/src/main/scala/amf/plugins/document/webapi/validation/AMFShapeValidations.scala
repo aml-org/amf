@@ -295,6 +295,26 @@ class AMFShapeValidations(shape: Shape) {
       }
     }
 
+    // Additional properties coming from JSON Schema
+    node.fields.entry(NodeShapeModel.AdditionalPropertiesSchema) match {
+      case Some(f) =>
+        val encodedName = "json_schema_additional_property"
+        val range = f.value.value.asInstanceOf[Shape]
+        nestedConstraints ++= emitShapeValidations(context + s"/$encodedName", range)
+
+        val propertyValidationId = validationId(range)
+        val propertyId           = (Namespace.Data + encodedName).iri()
+        val nodeConstraint = PropertyConstraint(
+          ramlPropertyId = propertyId,
+          name = validationId(node) + s"_validation_node_prop_$encodedName",
+          message = Some(s"Property $encodedName at $context must have a valid value"),
+          node = Some(propertyValidationId),
+          patternedProperty = Some("^.*$")
+        )
+        validation = validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(nodeConstraint))
+      case _ => // ignore
+    }
+
     // Validation to allow to emit the properties number in the model graph
     validation = validation.copy(
       propertyConstraints = validation.propertyConstraints ++ Seq(
