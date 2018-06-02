@@ -2829,4 +2829,15 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 //          assert(report.results.exists(_.message.equals("Missing library location")))
 //        }
 //      }
+
+  test("empty example") {
+    for {
+      validation <- Validation(platform)
+      model      <- AMFCompiler(validationsPath + "08/empty_example.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+    }
+  }
+
 }
