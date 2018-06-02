@@ -1014,8 +1014,8 @@ case class RamlTupleItemsShapeEmitter(tuple: TupleShape, ordering: SpecOrdering,
 }
 
 case class RamlPropertiesShapeEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends EntryEmitter {
+  implicit spec: RamlSpecEmitterContext)
+  extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       "properties",
@@ -1042,7 +1042,10 @@ case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrder
       .map(f => {
         if (f.scalar.value.asInstanceOf[Int] == 0 && !f.value.annotations.contains(classOf[ExplicitField]))
           property.name.value() + "?"
-        else property.name.value()
+        else if (property.patternName.option().isDefined && property.name.value() != "//")
+          s"/${property.name.value()}/"
+        else
+          property.name.value()
       })
       .getOrElse(property.name.value())
 
@@ -1473,7 +1476,8 @@ case class OasNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referenc
 
     fs.entry(NodeShapeModel.Properties).map(f => result += OasRequiredPropertiesShapeEmitter(f, references))
 
-    fs.entry(NodeShapeModel.Properties).map(f => result += OasPropertiesShapeEmitter(f, ordering, references))
+    fs.entry(NodeShapeModel.Properties).map(f => result += OasPropertiesShapeEmitter(f, ordering, references, patterned = false))
+    fs.entry(NodeShapeModel.Properties).map(f => result += OasPropertiesShapeEmitter(f, ordering, references, patterned = true))
 
     val properties = ListMap(node.properties.map(p => p.id -> p): _*)
 
@@ -1693,19 +1697,21 @@ case class OasRequiredPropertiesShapeEmitter(f: FieldEntry, references: Seq[Base
   override def position(): Position = pos(f.value.annotations)
 }
 
-case class OasPropertiesShapeEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
+case class OasPropertiesShapeEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit], patterned: Boolean)(
     implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-
-    b.entry(
-      "properties",
-      _.obj { b =>
-        val result =
-          f.array.values.map(v => OasPropertyShapeEmitter(v.asInstanceOf[PropertyShape], ordering, references))
-        traverse(ordering.sorted(result), b)
-      }
-    )
+    val propertiesKey = if (patterned) "patternProperties" else "properties"
+    val properties = f.array.values.filter { _.asInstanceOf[PropertyShape].patternName.option().isDefined == patterned }
+    if (properties.nonEmpty) {
+      b.entry(
+        propertiesKey,
+        _.obj { b =>
+          val result = properties.map(v => OasPropertyShapeEmitter(v.asInstanceOf[PropertyShape], ordering, references))
+          traverse(ordering.sorted(result), b)
+        }
+      )
+    }
   }
 
   override def position(): Position = pos(f.value.annotations)
