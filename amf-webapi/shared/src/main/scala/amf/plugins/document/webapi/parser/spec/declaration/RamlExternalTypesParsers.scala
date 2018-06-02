@@ -38,7 +38,7 @@ case class RamlJsonSchemaExpression(name: String,
     val parsed: AnyShape = origin.oriUrl match {
       case Some(url) =>
         val (path, extFrament) = ReferenceFragmentPartition(url)
-        val fragment           = extFrament.map(_.stripPrefix("/definitions/"))
+        val fragment           = extFrament.map(_.stripPrefix("/definitions/").stripPrefix("definitions/"))
         fragment
           .flatMap(ctx.declarations.findInExternalsLibs(path, _))
           .orElse(ctx.declarations.findInExternals(path)) match {
