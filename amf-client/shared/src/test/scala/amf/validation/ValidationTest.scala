@@ -2718,7 +2718,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("JSON SChema pattern properties") {
+  test("JSON Schema pattern properties") {
     for {
       validation <- Validation(platform)
       model      <- AMFCompiler(validationsPath + "jsonSchemaProperties.raml", platform, RamlYamlHint, validation).build()
@@ -2726,6 +2726,17 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
+    }
+  }
+
+  test("vuconnectionapi example") {
+    for {
+      validation <- Validation(platform)
+      model      <- AMFCompiler(productionPath + "vuconnectapi-1.0.0-fat-raml/api.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.nonEmpty)
     }
   }
 }
