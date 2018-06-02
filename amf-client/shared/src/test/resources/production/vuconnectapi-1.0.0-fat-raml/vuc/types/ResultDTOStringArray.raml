@@ -1,0 +1,13 @@
+#%RAML 1.0 DataType
+displayName: ResultDTOStringArray
+type: object
+properties:
+  error:
+    required: false
+    displayName: error
+    type: !include ErrorDTO.raml
+  result:
+    required: false
+    displayName: result
+    type: array
+    items: string

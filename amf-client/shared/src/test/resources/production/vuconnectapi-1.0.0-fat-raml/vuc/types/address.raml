@@ -1,0 +1,45 @@
+#%RAML 1.0 DataType
+displayName: address
+type: object
+properties:
+  addressType:
+    required: false
+    displayName: addressType
+    enum: ["EMERGENCY","HOME-DOM","POSTAL","SEM-DOM"]    
+  addressLine1:
+    required: false
+    displayName: addressLine1
+    type: nil | string
+  addressLine2:
+    required: false
+    displayName: addressLine1
+    type: nil | string
+  suburb:
+    required: false
+    displayName: suburb
+    type: nil | string
+  state:
+    required: false
+    displayName: state
+    type: nil | string
+  postCode:
+    required: false
+    displayName: postCode
+    type: nil | string
+  emergencyContactName:
+    required: false
+    displayName: emergencyContactName
+    type: nil | string
+  emergencyContactNumber:
+    required: false
+    displayName: emergencyContactNumber
+    type: nil | string
+  relationship:
+    required: false
+    displayName: relationship
+    type: nil | string
+  hasAddressChanged:
+    required: false
+    displayName: hasAddressChanged
+    type: nil | string
+ 
