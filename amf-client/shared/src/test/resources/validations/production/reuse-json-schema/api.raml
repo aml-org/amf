@@ -1,0 +1,19 @@
+#%RAML 0.8
+title: WorkerInfo
+version: 1.0
+baseUri: http://localhost:8081/api
+/worker:
+  displayName: Worker
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include worker-example.json
+            schema: !include worker-schema.json
+  post:
+    description: Post a new worker
+    body:
+      application/json:
+        example: !include worker-post-example.json
+        schema: !include worker-schema.json

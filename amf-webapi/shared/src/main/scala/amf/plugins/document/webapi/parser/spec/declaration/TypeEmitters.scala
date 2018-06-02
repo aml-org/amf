@@ -386,8 +386,10 @@ case class RamlNotConstraintEmitter(shape: Shape, ordering: SpecOrdering, refere
   override def position(): Position = emitter.position()
 }
 
-case class RamlJsonShapeEmitter(shape: AnyShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: SpecEmitterContext)
+case class RamlJsonShapeEmitter(shape: AnyShape,
+                                ordering: SpecOrdering,
+                                references: Seq[BaseUnit],
+                                typeKey: String = "type")(implicit spec: SpecEmitterContext)
     extends PartEmitter
     with ExamplesEmitter {
 
@@ -397,7 +399,7 @@ case class RamlJsonShapeEmitter(shape: AnyShape, ordering: SpecOrdering, referen
         if (shape.examples.nonEmpty) {
           val results = mutable.ListBuffer[EntryEmitter]()
           emitExamples(shape, results, ordering, references)
-          results += MapEntryEmitter("type", json.rawText)
+          results += MapEntryEmitter(typeKey, json.rawText)
           b.obj(traverse(ordering.sorted(results), _))
         } else {
           raw(b, json.rawText)
@@ -821,7 +823,6 @@ case class RamlFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, refer
     fs.entry(ScalarShapeModel.Pattern).map { f =>
       result += ValueEmitter("pattern".asRamlAnnotation, processRamlPattern(f))
     }
-
 
     fs.entry(ScalarShapeModel.Minimum).map(f => result += ValueEmitter("minimum".asRamlAnnotation, f))
 
@@ -1402,7 +1403,7 @@ class OasAnyShapeEmitter(shape: AnyShape, ordering: SpecOrdering, references: Se
 
 case class OasArrayShapeEmitter(shape: ArrayShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: OasSpecEmitterContext)
-  extends OasAnyShapeEmitter(shape, ordering, references) {
+    extends OasAnyShapeEmitter(shape, ordering, references) {
   override def emitters(): Seq[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter](super.emitters(): _*)
     val fs     = shape.fields
@@ -1808,7 +1809,7 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
         })
       case schema: SchemaShape => Seq(RamlSchemaShapeEmitter(schema, ordering, Nil))
       case shape: AnyShape if shape.annotations.find(classOf[ParsedJSONSchema]).isDefined =>
-        Seq(RamlJsonShapeEmitter(shape, ordering, Nil))
+        Seq(RamlJsonShapeEmitter(shape, ordering, Nil, typeKey = "schema"))
       case nil: NilShape =>
         RamlNilShapeEmitter(nil, ordering, Seq()).emitters()
       case fileShape: FileShape =>
@@ -1825,7 +1826,8 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
 
 }
 
-case class SimpleTypeEmitter(shape: ScalarShape, ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext) extends RamlCommonOASFieldsEmitter {
+case class SimpleTypeEmitter(shape: ScalarShape, ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
+    extends RamlCommonOASFieldsEmitter {
 
   def emitters(): Seq[EntryEmitter] = {
     val fs = shape.fields
@@ -1853,7 +1855,6 @@ case class SimpleTypeEmitter(shape: ScalarShape, ordering: SpecOrdering)(implici
     fs.entry(ScalarShapeModel.Pattern).map { f =>
       result += RamlScalarEmitter("pattern", processRamlPattern(f))
     }
-
 
     fs.entry(ScalarShapeModel.MinLength).map(f => result += ValueEmitter("minLength", f))
 

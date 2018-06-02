@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://jsonschema.net",
+  "type": "object",
+  "properties": {
+    "worker": {
+      "id": "http://jsonschema.net/worker",
+      "type": "object",
+      "properties": {
+        "id": {
+          "id": "http://jsonschema.net/worker/id",
+          "type": "integer"
+        },
+        "firstName": {
+          "id": "http://jsonschema.net/worker/firstName",
+          "type": "string"
+        },
+        "lastName": {
+          "id": "http://jsonschema.net/worker/lastName",
+          "type": "string"
+        },
+        "organization": {
+          "id": "http://jsonschema.net/worker/organization",
+          "type": "string"
+        },
+        "lastModifiedDate": {
+          "id": "http://jsonschema.net/worker/lastModifiedDate",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

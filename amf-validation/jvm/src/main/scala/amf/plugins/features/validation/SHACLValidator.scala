@@ -22,27 +22,26 @@ import scala.concurrent.{Future, Promise}
 /**
   * Created by antoniogarrote on 17/07/2017.
   */
-
 class SHACLValidator extends amf.core.validation.core.SHACLValidator {
 
-  var functionUrl: Option[String] = None
+  var functionUrl: Option[String]  = None
   var functionCode: Option[String] = None
 
   val formats = Map(
     "application/ld+json" -> "JSON-LD",
-    "application/json" -> "JSON-LD",
-    "JSON-LD" -> "JSON-LD",
-    "text/n3" -> FileUtils.langN3,
-    "test/turtle" -> FileUtils.langTurtle
+    "application/json"    -> "JSON-LD",
+    "JSON-LD"             -> "JSON-LD",
+    "text/n3"             -> FileUtils.langN3,
+    "test/turtle"         -> FileUtils.langTurtle
   )
 
   override def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): Future[String] = {
     val promise = Promise[String]()
     try {
-      val dataModel = loadModel(StringUtils.chomp(data), dataMediaType)
+      val dataModel   = loadModel(StringUtils.chomp(data), dataMediaType)
       val shapesModel = loadModel(StringUtils.chomp(shapes), shapesMediaType)
       loadLibrary()
-      val res = SHACLScriptEngineManager.begin()
+      val res                      = SHACLScriptEngineManager.begin()
       var report: Option[Resource] = None
       try {
         SHACLScriptEngineManager.getCurrentEngine.executeScriptFromURL(NashornScriptEngine.RDFQUERY_JS)
@@ -69,7 +68,10 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
     }
   }
 
-  override def report(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): Future[ValidationReport] =
+  override def report(data: String,
+                      dataMediaType: String,
+                      shapes: String,
+                      shapesMediaType: String): Future[ValidationReport] =
     validate(data, dataMediaType, shapes, shapesMediaType).map(new JVMValidationReport(_))
 
   /**
@@ -83,7 +85,6 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
     functionUrl = Some(url)
     functionCode = Some(code)
   }
-
 
   protected def loadLibrary(): Unit = {
     JSScriptEngineFactory.set(new JSScriptEngineFactory() {
@@ -103,7 +104,7 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
       ExecutionLog.log("SHACLValidator#validate: loading library")
       loadLibrary()
       ExecutionLog.log("SHACLValidator#validate: starting script engine")
-      val res = SHACLScriptEngineManager.begin()
+      val res                      = SHACLScriptEngineManager.begin()
       var report: Option[Resource] = None
       try {
         SHACLScriptEngineManager.getCurrentEngine.executeScriptFromURL(NashornScriptEngine.RDFQUERY_JS)
@@ -116,7 +117,7 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
         println(shapesModel.toN3())
         println("\n\n=======> DATA")
         println(dataModel.toN3())
-        */
+         */
 
         ExecutionLog.log(s"SHACLValidator#validate: validating...")
         report = Some(ValidationUtil.validateModel(dataModel.model, shapesModel.model, false))
@@ -135,13 +136,15 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
     }
   }
 
-  override def report(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: String): Future[ValidationReport] =
+  override def report(data: BaseUnit,
+                      shapes: Seq[ValidationSpecification],
+                      messageStyle: String): Future[ValidationReport] =
     validate(data, shapes, messageStyle).map(new JVMValidationReport(_))
 }
 
-
-class CachedScriptEngine(functionUrl: Option[String], functionCode: Option[String]) extends org.topbraid.shacl.js.NashornScriptEngine() {
-    @throws[Exception]
+class CachedScriptEngine(functionUrl: Option[String], functionCode: Option[String])
+    extends org.topbraid.shacl.js.NashornScriptEngine() {
+  @throws[Exception]
   override protected def createScriptReader(url: String): Reader = {
     if (NashornScriptEngine.DASH_JS.equals(url)) {
       new InputStreamReader(classOf[NashornScriptEngine].getResourceAsStream("/js/dash.js"))

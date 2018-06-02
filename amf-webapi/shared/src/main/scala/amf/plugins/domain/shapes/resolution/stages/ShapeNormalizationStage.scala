@@ -18,7 +18,7 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
     extends ResolutionStage(profile)
     with MetaModelTypeMapping {
 
-  protected val context = new NormalizationContext(errorHandler, keepEditingInfo)
+  protected val context = new NormalizationContext(errorHandler, keepEditingInfo, profile)
 
   override def resolve(model: BaseUnit): BaseUnit = model.transform(findShapesPredicate, transform)
 

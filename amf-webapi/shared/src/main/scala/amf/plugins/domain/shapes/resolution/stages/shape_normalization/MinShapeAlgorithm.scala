@@ -1,10 +1,12 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
+import amf.core.metamodel.Field
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, RecursiveShape, Shape}
-import amf.core.parser.Annotations
+import amf.core.parser.{Annotations, Value}
 import amf.core.vocabulary.Namespace
+import amf.plugins.document.webapi.annotations.ParsedJSONSchema
 import amf.plugins.domain.shapes.annotations.InheritanceProvenance
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
@@ -110,11 +112,23 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
       case baseGeneric: NodeShape if isGenericNodeShape(baseGeneric) =>
         computeMinGeneric(baseGeneric, superShape)
 
+      case schema: SchemaShape if superShape.meta == SchemaShapeModel =>
+        computeMinSchema(superShape, schema)
       // fallback error
       case _ =>
         throw new InheritanceIncompatibleShapeError(
           s"Resolution error: Incompatible types [${baseShape.getClass}, ${superShape.getClass}]")
     }
+  }
+
+  private def computeMinSchema(superShape: Shape, schema: SchemaShape) = {
+    superShape.fields
+      .foreach({
+        case (f: Field, v: Value) if !schema.fields.exists(f) =>
+          schema.set(f, v.value, v.annotations)
+        case _ =>
+      })
+    schema
   }
 
   protected def isGenericNodeShape(shape: Shape) = {
@@ -245,6 +259,11 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
                               baseNode,
                               superNode,
                               filteredFields = Seq(NodeShapeModel.Properties, NodeShapeModel.Examples))
+
+    // if its raml 08 i need to keep parsed json schema annotation in order to emit a valid nodeshape.
+    // Remember that objects in 08 are only valid in external schemas or as formProperties under only two media types (form undercoder and formData)
+    if (context.isRaml08)
+      superNode.annotations.find(classOf[ParsedJSONSchema]).foreach { baseNode.annotations += _ }
 
     baseNode
   }

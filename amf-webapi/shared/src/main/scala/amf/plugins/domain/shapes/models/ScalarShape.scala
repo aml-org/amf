@@ -1,12 +1,11 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.metamodel.Obj
 import amf.core.model.StrField
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
-import amf.plugins.domain.shapes.metamodel.ScalarShapeModel._
-import org.yaml.model.YPart
 import amf.core.utils.Strings
+import amf.plugins.domain.shapes.metamodel.ScalarShapeModel._
+import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, ScalarShapeModel}
+import org.yaml.model.YPart
 
 /**
   * Scalar shape
@@ -21,7 +20,7 @@ case class ScalarShape(override val fields: Fields, override val annotations: An
 
   override def linkCopy(): ScalarShape = ScalarShape().withId(id)
 
-  override def meta: Obj = ScalarShapeModel
+  override def meta: AnyShapeModel = ScalarShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/scalar/" + name.option().getOrElse("default-scalar").urlComponentEncoded

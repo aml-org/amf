@@ -8342,7 +8342,6 @@ baseUri: https://okaa.bva-auctions.com/api/{version}
         body:
           image/jpeg: {}
           application/json:
-            type: object
             (amf-or):
               -
                 type: object
@@ -8355,6 +8354,8 @@ baseUri: https://okaa.bva-auctions.com/api/{version}
                     (amf-format): uri
                     required: true
             description: A lot picture('s metadata).
+            example:
+              "@id": http://upload.wikimedia.org/wikipedia/commons/f/f6/Boxspring_2.JPG
             additionalProperties: true
             properties:
               hash:

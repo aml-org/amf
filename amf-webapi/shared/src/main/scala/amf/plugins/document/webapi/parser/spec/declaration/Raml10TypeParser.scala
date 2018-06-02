@@ -167,15 +167,19 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
           })(_ => {
             val maybeShape = Raml08SchemaParser(map, adopt).parse()
 
-            maybeShape.foreach(s => {
+            maybeShape.map(s => {
               RamlSingleExampleParser("example",
                                       map,
                                       s.withExample,
                                       ExampleOptions(strictDefault = true, quiet = true))
                 .parse()
-                .foreach(e => s.setArray(ScalarShapeModel.Examples, Seq(e)))
+                .fold(s)(e => {
+                  val inherits = s.meta.modelInstance.withName("inherits")
+                  adopt(inherits)
+                  inherits.set(ShapeModel.Inherits, AmfArray(Seq(s)))
+                  inherits.setArray(ScalarShapeModel.Examples, Seq(e))
+                })
             })
-            maybeShape
           })
       case YType.Seq =>
         Option(Raml08UnionTypeParser(UnionShape(node).withName(name), node.as[Seq[YNode]], node).parse())
@@ -386,7 +390,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
         NodeDataNodeParser(entry.value, shape.id, quiet = false).parse().dataNode.foreach { dn =>
           shape.set(ShapeModel.Default, dn, Annotations(entry))
         }
-        val str            = YamlRender.render(entry.value)
+        val str = YamlRender.render(entry.value)
         shape.set(ShapeModel.DefaultValueString, AmfScalar(str), Annotations(entry))
       }
     )
@@ -628,12 +632,15 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   trait CommonScalarParsingLogic {
     def parseOASFields(map: YMap, shape: Shape): Unit = {
-      map.key("pattern", entry => {
-        var regex = entry.value.as[String]
-        if (!regex.startsWith("^")) regex = "^" + regex
-        if (!regex.endsWith("$")) regex = regex + "$"
-        shape.set(ScalarShapeModel.Pattern, ScalarNode(regex).text(), Annotations(entry))
-      })
+      map.key(
+        "pattern",
+        entry => {
+          var regex = entry.value.as[String]
+          if (!regex.startsWith("^")) regex = "^" + regex
+          if (!regex.endsWith("$")) regex = regex + "$"
+          shape.set(ScalarShapeModel.Pattern, ScalarNode(regex).text(), Annotations(entry))
+        }
+      )
       map.key("minLength", (ScalarShapeModel.MinLength in shape).allowingAnnotations)
       map.key("maxLength", (ScalarShapeModel.MaxLength in shape).allowingAnnotations)
       map.key("exclusiveMinimum".asRamlAnnotation, ScalarShapeModel.ExclusiveMinimum in shape)
