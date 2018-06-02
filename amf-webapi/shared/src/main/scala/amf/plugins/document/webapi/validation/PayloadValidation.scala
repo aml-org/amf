@@ -1,13 +1,14 @@
 package amf.plugins.document.webapi.validation
 
 import amf.core.benchmark.ExecutionLog
+import amf.core.metamodel.Type.RegExp
 import amf.core.model.document.{Module, PayloadFragment}
 import amf.core.model.domain._
 import amf.core.parser.ParserContext
 import amf.core.plugins.{AMFPayloadValidationPlugin, AMFPlugin}
 import amf.core.services.RuntimeValidator
 import amf.core.validation._
-import amf.core.validation.core.{ValidationProfile, ValidationSpecification}
+import amf.core.validation.core.{PropertyConstraint, ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.PayloadContext
 import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
@@ -65,25 +66,39 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
     profiles += localProfile.copy(validations = finalValidations)
   }
 
+  def matchPatternedProperty(p: PropertyConstraint, propName: String): Boolean = {
+    p.patternedProperty match {
+      case Some(pattern) => pattern.r.findFirstIn(propName).isDefined
+      case None          => false
+    }
+  }
+
+  // Recursively traverse the tree of shape nodes and data nodes setting the target of the
+  // shape validation to point to the matching node in the data nodes tree
+  // We will also set pattern matching properties here.
   protected def processTargets(validation: ValidationSpecification,
                                node: DataNode,
                                validations: Seq[ValidationSpecification]): Seq[ValidationSpecification] = {
     var validationsAcc = validations
+    // non pattern properties have precedence over pattern properties => let's sort them
+    val nonPatternPropertyConstraints = validation.propertyConstraints.filter(_.patternedProperty.isEmpty)
+    val patternProperties = validation.propertyConstraints.filter(_.patternedProperty.nonEmpty)
+    val allProperties = nonPatternPropertyConstraints ++ patternProperties
     node match {
 
       case obj: ObjectNode =>
         obj.properties.foreach {
           case (propName, nodes) =>
-            validation.propertyConstraints
+            allProperties
               .filterNot(p => p.ramlPropertyId.startsWith(Namespace.Rdf.base))
-              .find(p => p.ramlPropertyId.endsWith(s"#$propName")) match {
+              .find(p => p.ramlPropertyId.endsWith(s"#$propName") || matchPatternedProperty(p, propName)) match {
               case Some(propertyConstraint) if propertyConstraint.node.isDefined =>
-                validations.find(v => v.id == propertyConstraint.node.get) match {
+                validationsAcc.find(v => v.id == propertyConstraint.node.get) match {
                   case Some(targetValidation) =>
                     validationsAcc = processTargets(targetValidation, nodes, validationsAcc)
                   case _ => // ignore
                 }
-              case None => // ignore
+              case _ => // ignore
             }
         }
 

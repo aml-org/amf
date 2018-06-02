@@ -38,6 +38,7 @@ case class PropertyConstraint(ramlPropertyId: String,
                               // shacl:message
                               message: Option[String] = None,
                               pattern: Option[String] = None,
+                              patternedProperty: Option[String] = None,
                               maxCount: Option[String] = None,
                               minCount: Option[String] = None,
                               minLength: Option[String] = None,
@@ -62,7 +63,7 @@ case class PropertyConstraint(ramlPropertyId: String,
                               `class`: Seq[String] = Seq(),
                               in: Seq[String] = Seq.empty,
                               custom: Option[(EntryBuilder, String) => Unit] = None,
-                              customRdf: Option[(RdfModel, String) => Any] = None) {}
+                              customRdf: Option[(RdfModel, String) => Any] = None)
 
 case class ValidationSpecification(name: String,
                                    // shacl:message

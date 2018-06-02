@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: My API With Types
+types:
+  Person:
+    properties:
+      /^note\d+$/: # restrict any properties whose keys start with "note"
+                   # followed by a string of one or more digits
+        type: string
+
+/test:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: Person
+            example:
+              note2: 123 # not valid as it is not a string
+              note1: "US" # valid as it does not match the pattern
