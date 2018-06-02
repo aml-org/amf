@@ -1,0 +1,27 @@
+swagger: '2.0'
+info:
+  title: test title
+  description: test description
+  version: 1.1
+paths:
+  "/pets/{id}":
+    post:
+      responses:
+        '200':
+          description: ok
+          schema:
+            type: "object"
+            properties:
+              builtin:
+                type: "number"
+            patternProperties:
+              "^S_":
+                type: "string"
+              "^I_":
+                type: "integer"
+            additionalProperties:
+              type: "string"
+          examples:
+            a:
+            S_0: "test"
+            S_0: 1

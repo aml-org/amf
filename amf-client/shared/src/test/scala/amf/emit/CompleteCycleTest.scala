@@ -1277,4 +1277,8 @@ class CompleteCycleTest extends BuildCycleTests {
   test("lock-unlock example raml to oas") {
     cycle("lockUnlockStats.raml", "lockUnlockStats.jsonld", RamlYamlHint, Amf, productionPath + "lock-unlock-api-1.0.0-fat-raml/")
   }
+
+  test("HERE_HERE patternProperties JSON Schema oas to raml") {
+    cycle("oasPatternProperties.yaml", "oasPatternProperties.raml", OasYamlHint, Raml)
+  }
 }

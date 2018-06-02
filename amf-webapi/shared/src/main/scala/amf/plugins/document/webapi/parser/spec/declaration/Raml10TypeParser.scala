@@ -1256,7 +1256,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             val required = !prop.endsWith("?")
 
             property.set(PropertyShapeModel.MinCount, if (required) 1 else 0)
-            property.set(PropertyShapeModel.Name, if (required) prop else prop.stripSuffix("?")) // TODO property id is using a name that is not final.
+            property.set(PropertyShapeModel.Name, if (required) prop else prop.stripSuffix("?").stripPrefix("/").stripSuffix("/")) // TODO property id is using a name that is not final.
             property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text.stripSuffix("?")).iri())
           }
 

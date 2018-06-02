@@ -681,6 +681,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         }
       }
 
+
       map.key("discriminator", NodeShapeModel.Discriminator in shape)
       map.key("discriminatorValue".asOasExtension, NodeShapeModel.DiscriminatorValue in shape)
 
@@ -705,6 +706,19 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
             case Some(m) =>
               val properties: Seq[PropertyShape] =
                 PropertiesParser(m, shape.withProperty, requiredFields).parse()
+              shape.set(NodeShapeModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
+            case _ => // Empty properties node.
+          }
+        }
+      )
+
+      map.key(
+        "patternProperties",
+        entry => {
+          entry.value.toOption[YMap] match {
+            case Some(m) =>
+              val properties: Seq[PropertyShape] =
+                PropertiesParser(m, shape.withProperty, requiredFields, patterned = true).parse()
               shape.set(NodeShapeModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
             case _ => // Empty properties node.
           }
@@ -758,15 +772,16 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     }
   }
 
-  case class PropertiesParser(map: YMap, producer: String => PropertyShape, requiredFields: Map[String, YNode]) {
+  case class PropertiesParser(map: YMap, producer: String => PropertyShape, requiredFields: Map[String, YNode], patterned: Boolean = false) {
     def parse(): Seq[PropertyShape] = {
-      map.entries.map(entry => PropertyShapeParser(entry, producer, requiredFields).parse())
+      map.entries.map(entry => PropertyShapeParser(entry, producer, requiredFields, patterned).parse())
     }
   }
 
   case class PropertyShapeParser(entry: YMapEntry,
                                  producer: String => PropertyShape,
-                                 requiredFields: Map[String, YNode]) {
+                                 requiredFields: Map[String, YNode],
+                                 patterned: Boolean) {
 
     def parse(): PropertyShape = {
 
@@ -789,6 +804,8 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       OasTypeParser(entry, shape => shape.adopted(property.id), version)
         .parse()
         .foreach(property.set(PropertyShapeModel.Range, _))
+
+      if (patterned) property.withPatternName(name)
 
       property
     }

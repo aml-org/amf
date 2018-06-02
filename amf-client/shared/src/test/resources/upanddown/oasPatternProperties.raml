@@ -1,0 +1,18 @@
+#%RAML 1.0
+title: test title
+description: test description
+version: "1.1"
+/pets/{id}:
+  post:
+    responses:
+      200:
+        description: ok
+        body:
+          type: object
+          (amf-additionalProperties):
+            type: string
+          properties:
+            /^S_/:
+              type: string
+            /^I_/:
+              type: integer
