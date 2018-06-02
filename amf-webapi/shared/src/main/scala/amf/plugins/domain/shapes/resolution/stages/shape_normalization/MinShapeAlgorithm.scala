@@ -3,7 +3,7 @@ package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, RecursiveShape, Shape}
-import amf.core.parser.{Annotations, ErrorHandler}
+import amf.core.parser.Annotations
 import amf.core.vocabulary.Namespace
 import amf.plugins.domain.shapes.annotations.InheritanceProvenance
 import amf.plugins.domain.shapes.metamodel._
@@ -13,9 +13,7 @@ import scala.collection.mutable
 
 class InheritanceIncompatibleShapeError(message: String) extends Exception(message)
 
-trait MinShapeAlgorithm extends RestrictionComputation {
-
-  val errorHandler: ErrorHandler
+private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationContext) extends RestrictionComputation {
 
   // this is inverted, it is safe because recursive shape does not have facets
   def computeMinRecursive(baseShape: Shape, recursiveShape: RecursiveShape): Shape = {
@@ -29,9 +27,9 @@ trait MinShapeAlgorithm extends RestrictionComputation {
     }
   }
 
-  protected def minShape(baseShapeOrig: Shape, superShapeOri: Shape): Shape = {
+  def computeMinShape(baseShapeOrig: Shape, superShapeOri: Shape): Shape = {
     val superShape = copy(superShapeOri)
-    val baseShape  = baseShapeOrig.cloneShape(Some(errorHandler)) // this is destructive, we need to clone
+    val baseShape  = baseShapeOrig.cloneShape(Some(context.errorHandler)) // this is destructive, we need to clone
     baseShape match {
 
       // Scalars
@@ -131,7 +129,7 @@ trait MinShapeAlgorithm extends RestrictionComputation {
     baseScalar
   }
 
-  val allShapeFields =
+  private val allShapeFields =
     (ScalarShapeModel.fields ++ ArrayShapeModel.fields ++ NodeShapeModel.fields ++ AnyShapeModel.fields).distinct
 
   protected def computeMinAny(baseShape: Shape, anyShape: AnyShape): Shape = {
@@ -145,7 +143,7 @@ trait MinShapeAlgorithm extends RestrictionComputation {
     val superItems = baseMatrix.items
     val baseItems  = superMatrix.items
 
-    val newItems = minShape(baseItems, superItems)
+    val newItems = context.minShape(baseItems, superItems)
     baseMatrix.fields.setWithoutId(ArrayShapeModel.Items, newItems)
 
     computeNarrowRestrictions(ArrayShapeModel.fields,
@@ -167,7 +165,7 @@ trait MinShapeAlgorithm extends RestrictionComputation {
       val newItems = for {
         (baseItem, i) <- baseItems.view.zipWithIndex
       } yield {
-        minShape(baseItem, superItems(i))
+        context.minShape(baseItem, superItems(i))
       }
 
       baseTuple.fields.setWithoutId(TupleShapeModel.Items,
@@ -189,7 +187,7 @@ trait MinShapeAlgorithm extends RestrictionComputation {
 
     val newItems = baseItemsOption
       .map { baseItems =>
-        minShape(baseItems, superItems)
+        context.minShape(baseItems, superItems)
       }
       .orElse(Option(superItems))
     newItems.foreach { ni =>
@@ -223,14 +221,16 @@ trait MinShapeAlgorithm extends RestrictionComputation {
       case (path, true) =>
         val superProp = superProperties.find(_.path.is(path)).get
         val baseProp  = baseProperties.find(_.path.is(path)).get
-        minShape(baseProp, superProp)
+        context.minShape(baseProp, superProp)
       case (path, false) =>
         val superProp = superProperties.find(_.path.is(path))
         val baseProp  = baseProperties.find(_.path.is(path))
         if (keepEditingInfo) {
-          superProp.map(inheritProp(superNode)).getOrElse { baseProp.get.cloneShape(Some(errorHandler)) }
+          superProp.map(inheritProp(superNode)).getOrElse { baseProp.get.cloneShape(Some(context.errorHandler)) }
         } else {
-          superProp.map(_.cloneShape(Some(errorHandler))).getOrElse { baseProp.get.cloneShape(Some(errorHandler)) }
+          superProp.map(_.cloneShape(Some(context.errorHandler))).getOrElse {
+            baseProp.get.cloneShape(Some(context.errorHandler))
+          }
         }
     }
 
@@ -250,7 +250,7 @@ trait MinShapeAlgorithm extends RestrictionComputation {
   }
 
   def inheritProp(from: Shape)(prop: PropertyShape): PropertyShape = {
-    val clonedProp = prop.cloneShape(Some(errorHandler))
+    val clonedProp = prop.cloneShape(Some(context.errorHandler))
     if (clonedProp.annotations.find(classOf[InheritanceProvenance]).isEmpty)
       clonedProp.annotations += InheritanceProvenance(from.id)
     clonedProp
@@ -265,7 +265,7 @@ trait MinShapeAlgorithm extends RestrictionComputation {
           baseUnionElement  <- baseUnion.anyOf
           superUnionElement <- superUnion.anyOf
         } yield {
-          minShape(baseUnionElement, superUnionElement)
+          context.minShape(baseUnionElement, superUnionElement)
         }
       }
 
@@ -285,7 +285,7 @@ trait MinShapeAlgorithm extends RestrictionComputation {
     val newUnionItems = for {
       baseUnionElement <- baseUnion.anyOf
     } yield {
-      minShape(baseUnionElement, superNode)
+      context.minShape(baseUnionElement, superNode)
     }
 
     baseUnion.fields.setWithoutId(UnionShapeModel.AnyOf,
@@ -304,7 +304,7 @@ trait MinShapeAlgorithm extends RestrictionComputation {
     val newUnionItems = for {
       superUnionElement <- superUnion.anyOf
     } yield {
-      minShape(baseShape, superUnionElement)
+      context.minShape(baseShape, superUnionElement)
     }
 
     var accExamples = List[Example]()
@@ -340,7 +340,7 @@ trait MinShapeAlgorithm extends RestrictionComputation {
   }
 
   def computeMinProperty(baseProperty: PropertyShape, superProperty: PropertyShape): Shape = {
-    val newRange = minShape(baseProperty.range, superProperty.range)
+    val newRange = context.minShape(baseProperty.range, superProperty.range)
 
     baseProperty.fields.setWithoutId(PropertyShapeModel.Range,
                                      newRange,
@@ -359,4 +359,5 @@ trait MinShapeAlgorithm extends RestrictionComputation {
     baseFile
   }
 
+  override val keepEditingInfo: Boolean = context.keepEditingInfo
 }

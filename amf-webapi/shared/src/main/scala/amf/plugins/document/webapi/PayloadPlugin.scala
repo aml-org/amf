@@ -1,15 +1,16 @@
 package amf.plugins.document.webapi
 
-import amf.core.emitter.RenderOptions
+import amf.ProfileNames
 import amf.core.Root
+import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{ParserContext, SimpleReferenceHandler}
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.remote.Platform
 import amf.core.resolution.pipelines.ResolutionPipeline
-import amf.plugins.document.webapi.contexts.{PayloadContext, WebApiContext}
+import amf.plugins.document.webapi.contexts.PayloadContext
 import amf.plugins.document.webapi.parser.PayloadParser
-import amf.plugins.document.webapi.resolution.pipelines.CanonicalShapePipeline
+import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import org.yaml.model.{YMap, YScalar}
@@ -67,7 +68,7 @@ object PayloadPlugin extends AMFDocumentPlugin {
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
   override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE) =
-    new CanonicalShapePipeline().resolve(unit)
+    new ValidationResolutionPipeline(ProfileNames.AMF).resolve(unit)
 
   override def init(): Future[AMFPlugin] = Future { this }
 

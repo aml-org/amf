@@ -9,7 +9,7 @@ import amf.plugins.domain.shapes.annotations.InheritanceProvenance
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.AnyShape
 
-trait RestrictionComputation {
+private[shape_normalization] trait RestrictionComputation {
 
   val keepEditingInfo: Boolean
 
