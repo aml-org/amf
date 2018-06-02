@@ -1,0 +1,106 @@
+#%RAML 1.0 DataType
+displayName: governmentStatistics
+type: object
+properties:
+  studentId:
+    required: true
+    displayName: studentId
+    type: nil | number
+  countryOfBirth:
+    required: false
+    displayName: countryOfBirth
+    type: nil | string
+  permResidentCd:
+    required: false
+    displayName: permResidentCd
+    type: nil | string
+  citizenshipCd:
+    required: true
+    displayName: citizenshipCd
+    type: nil | string
+  countryOfResidence:
+    required: true
+    displayName: countryOfResidence
+    type: nil | string
+  residentialPostcode:
+    required: true
+    displayName: residentialPostcode
+    type: nil | number
+  semesterResidencyPostcode:
+    required: true
+    displayName: semesterResidencyPostcode
+    type: nil | number
+  semesterResidencyCountry:
+    required: false
+    displayName: semesterResidencyCountry
+    type: nil | string
+  residencyPostcodeYear12:
+    required: false
+    displayName: residencyPostcodeYear12
+    type: nil | string
+  residencySuburbYear12:
+    required: false
+    displayName: residencySuburbYear12
+    type: nil | string
+  countryOfResidenceYear12:
+    required: false
+    displayName: residencySuburbYear12
+    type: nil | string
+  yearLeftSchool:
+    required: false
+    displayName: yearLeftSchool
+    type: nil | string
+  currentEmploymentStatus:
+    required: false
+    displayName: currentEmploymentStatus
+    type: nil | string
+  currentOrRecentOccupation:
+    required: false
+    displayName: currentOrRecentOccupation
+    type: nil | number
+  disabilityIndicator:
+    required: false
+    displayName: disabilityIndicator
+    type: !include enum.raml
+  disability:
+    required: false
+    displayName: disability
+    type: array
+    items:
+      type: !include disability.raml
+  highestEducation:
+    required: false
+    displayName: highestEducation
+    type: nil | string
+  highestEducationYear:
+    required: false
+    displayName: highestEducationYear
+    type: nil | string
+  indigenousOrigin:
+    required: true
+    displayName: indigenousOrigin
+    type: nil | string
+  language :
+    required: true
+    displayName: language 
+    type: nil | string
+  natureOfEmployment:
+    required: false
+    displayName: natureOfEmployment
+    type: nil | string
+  parentGuardian1EduLvl:
+    required: false
+    displayName: parentGuardian1EduLvl
+    type: nil | string
+  parentGuardian2EduLvl:
+    required: false
+    displayName: parentGuardian2EduLvl
+    type: nil | string
+  isSecondaryEducationCompleted:
+    required: false
+    displayName: isSecondaryEducationCompleted
+    type: nil | string
+  yearOfArrival:
+    required: true
+    displayName: yearOfArrival
+    type: nil | string

@@ -1,0 +1,21 @@
+#%RAML 1.0 DataType
+displayName: enrollment
+type: object
+properties:
+  personId:
+    required: true
+    displayName: personId
+    type: number
+  courseId:
+    required: true
+    displayName: courseId
+    type: string    
+  unitSet:
+    type: array
+    required: false
+    items:
+      properties: 
+         unit:
+           required: false
+           displayName: unit
+           type: !include unit.raml

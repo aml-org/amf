@@ -1,0 +1,165 @@
+#%RAML 1.0 DataType
+displayName: unit
+type: object
+properties:
+  unitCd:
+    required: true
+    displayName: unitCd
+    type: nil | string
+  versionNumber:
+    required: false
+    displayName: versionNumber
+    type: nil | number
+  unitUniqueIdentifier:
+    required: true
+    displayName: unitUniqueIdentifier
+    type: nil | number
+  calendarType:
+    required: true
+    displayName: calendarType
+    type: nil | string
+  calendarSequenceNumber:
+    required: true
+    displayName: calendarSequenceNumber
+    type: nil | number
+  locationCd:
+    required: true
+    displayName: locationCd
+    type: nil | string
+  unitClass:
+    required: false
+    displayName: unitClass
+    type: nil | string
+  ciStartDate:
+    required: false
+    displayName: ciStartDate
+    type: nil | date-only 
+  ciEndDate:
+    required: false
+    displayName: ciEndDate
+    type: nil | date-only
+  enrolledDt:
+    required: false
+    displayName: enrolledDt
+    type: nil | date-only
+  attemptStatus:
+    required: true
+    displayName: attemptStatus
+    type: nil | string
+  discontinuedDt:
+    required: false
+    displayName: discontinuedDt
+    type: nil | date-only
+  ruleWaivedDt:
+    required: false
+    displayName: ruleWaivedDt
+    type: nil | date-only
+  ruleWaivedWersonId:
+    required: false
+    displayName: ruleWaivedWersonId
+    type: nil | string  
+  noAssessmentInd:
+    required: false
+    displayName: noAssessmentInd
+    type: nil | string
+  supUnitCd:
+    required: false
+    displayName: supUnitCd
+    type: nil | string
+  supVersionNumber:
+    required: false
+    displayName: supVersionNumber
+    type: nil | number
+  examLocationCd:
+    required: false
+    displayName: examLocationCd
+    type: nil | string
+  alternativeTitle:
+    required: false
+    displayName: alternativeTitle
+    type: nil | string
+  overrideEnrolledCp:
+    required: false
+    displayName: overrideEnrolledCp
+    type: nil | string
+  overrideEftsu:
+    required: false
+    displayName: overrideEftsu
+    type: nil | string
+  overrideAchievableCp:
+    required: false
+    displayName: overrideAchievableCp
+    type: nil | string    
+  overrideOutcomeDueDt:
+    required: false
+    displayName: overrideOutcomeDueDt
+    type: nil | string
+  upDateWho:
+    required: false
+    displayName: upDateWho
+    type: nil | string
+  upDateOn:
+    required: false
+    displayName: upDateOn
+    type: nil | date-only
+  overrideCreditReason:
+    required: false
+    displayName: overrideCreditReason
+    type: nil | string
+  overrideContactReason:
+    required: false
+    displayName: overrideContactReason
+    type: nil | string
+  overrideFundingReason:
+    required: false
+    displayName: overrideFundingReason
+    type: nil | string
+  enrActivityStartDt:
+    required: false
+    displayName: enrActivityStartDt
+    type: nil | date-only
+  enrActivityEndDt:
+    required: false
+    displayName: enrActivityEndDt
+    type: nil | date-only
+  overrideFundingSource:
+    required: false
+    displayName: overrideFundingSource
+    type: nil | string  
+  overrideTotalHours:
+    required: false
+    displayName: overrideTotalHours
+    type: nil | number
+  overrideSupervisedHours:
+    required: false
+    displayName: overrideSupervisedHours
+    type: nil | number
+  title:
+    required: false
+    displayName: title
+    type: nil | string
+  shortTitle:
+    required: false
+    displayName: shortTitle
+    type: nil | string
+  action:
+    required: true
+    displayName: action
+    type: nil | string
+  achievableCreditPoints:
+    required: false
+    displayName: achievableCreditPoints
+    type: nil | number
+  supAlternateCd:
+    required: false
+    displayName: supAlternateCd
+    type: nil | number
+  quotaRemaining:
+    required: false
+    displayName: quotaRemaining
+    type: nil | number
+  quota:
+    required: false
+    displayName: quota
+    type: nil | number
+  

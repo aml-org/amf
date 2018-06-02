@@ -1,0 +1,17 @@
+#%RAML 1.0 DataType
+displayName: fullload
+type: object
+properties:
+  personalDetails:
+    type: !include personalDetails.raml
+    required: false
+  govermetStatistics:
+    type: !include governmentStatistics.raml
+    required: false
+  ecafDetails:
+    type: !include ecafDetails.raml
+    required: false
+  sahelpDetails:
+    type: !include sahelpDetails.raml
+    required: false
+    

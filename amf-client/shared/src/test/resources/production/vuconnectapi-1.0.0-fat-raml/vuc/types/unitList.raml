@@ -1,0 +1,248 @@
+#%RAML 1.0 DataType
+displayName: unit
+type: object
+properties:
+  unitCode:
+    required: true
+    displayName: unitCode
+    type: nil | string
+  locationCd:
+    required: false
+    displayName: locationCd
+    type: nil | string
+  ciSequenceNo:
+    required: true
+    displayName: ciSequenceNo
+    type: nil | number
+  calType:
+    required: true
+    displayName: calendarType
+    type: nil | string
+  versionNumber:
+    required: false
+    displayName: versionNumber
+    type: nil | number
+  unitUniqueIdentifier:
+    required: true
+    displayName: unitUniqueIdentifier
+    type: nil | number
+  startDt:
+    required: false
+    displayName: Start Date
+    type: nil | date-only 
+  reviewDt:
+    required: false
+    displayName: Review Date
+    type: nil | date-only
+  expiryDt:
+    required: false
+    displayName: Expiry Date
+    type: nil | date-only 
+  endDt:
+    required: false
+    displayName: End Date
+    type: nil | date-only
+  unitStatus:
+    required: false
+    displayName: unitStatus
+    type: nil | string
+  title:
+    required: false
+    displayName: title
+    type: nil | string
+  shortTitle:
+    required: false
+    displayName: shortTitle
+    type: nil | string
+  titleOverrideInd:
+    required: false
+    displayName: titleOverrideInd
+    type: nil | string
+  abbreviation:
+    required: false
+    displayName: abbreviation
+    type: nil | string  
+  unitLevel:
+    required: false
+    displayName: unitLevel
+    type: nil | string
+  creditPointDescriptor:
+    required: false
+    displayName: creditPointDescriptor
+    type: nil | string
+  enrolledCreditPoints:
+    required: false
+    displayName: enrolledCreditPoints
+    type: nil | number
+  pointsOverrideInd:
+    required: false
+    displayName: pointsOverrideInd
+    type: nil | string
+  suppExamPermittedInd:
+    required: false
+    displayName: suppExamPermittedInd
+    type: nil | string
+  coordPersonId:
+    required: false
+    displayName: coordPersonId
+    type: nil | string
+  ownerOrgUnitCd:
+    required: false
+    displayName: ownerOrgUnitCd
+    type: nil | string
+  ownerOuStartDt:
+    required: false
+    displayName: ownerOuStartDt
+    type: nil | date-only    
+  awardCourseOnlyInd:
+    required: false
+    displayName: awardCourseOnlyInd
+    type: nil | string
+  researchUnitInd:
+    required: false
+    displayName: researchUnitInd
+    type: nil | string
+  subUnitAllowedInd:
+    required: false
+    displayName: subUnitAllowedInd
+    type: nil | string
+  supUnitAllowedInd:
+    required: false
+    displayName: supUnitAllowedInd
+    type: nil | string
+  industrialInd:
+    required: false
+    displayName: industrialInd
+    type: nil | string
+  practicalInd:
+    required: false
+    displayName: practicalInd
+    type: nil | string
+  repeatableInd:
+    required: false
+    displayName: repeatableInd
+    type: nil | string
+  assessableInd:
+    required: false
+    displayName: assessableInd
+    type: nil | string
+  achievableCreditPoints:
+    required: false
+    displayName: achievableCreditPoints
+    type: nil | number  
+  pointsIncrement:
+    required: false
+    displayName: pointsIncrement
+    type: nil | number
+  pointsMin:
+    required: false
+    displayName: pointsMin
+    type: nil | number
+  pointsMax:
+    required: false
+    displayName: pointsMax
+    type: nil | number 
+  unitIntCourseLevelCd:
+    required: false
+    displayName:  unitIntCourseLevelCd
+    type: nil | string
+  supLoadIncurredInd:
+    required: false
+    displayName: supLoadIncurredInd
+    type: nil | string  
+  vetInd:
+    required: false
+    displayName: vetInd
+    type: nil | string
+  unitCompetencyInd:
+    required: false
+    displayName: vetInd
+    type: nil | string
+  totalContactHours:
+    required: false
+    displayName: totalContactHours
+    type: nil | number 
+  supervisedContactHours:
+    required: false
+    displayName: supervisedContactHours
+    type: nil | number
+  durationLimit:
+    required: false
+    displayName: durationLimit
+    type: nil | number
+  hoursOverrideInd:
+    required: false
+    displayName: hoursOverrideInd
+    type: nil | string
+  hoursIncrement:
+    required: false
+    displayName: hoursIncrement
+    type: nil | number 
+  hoursMin:
+    required: false
+    displayName: hoursMin
+    type: nil | number
+  hoursMax:
+    required: false
+    displayName: hoursMax
+    type: nil | number   
+  unitCourseType:
+    required: false
+    displayName: unitCourseType
+    type: nil | string
+  supCountInCrsCompInd:
+    required: false
+    displayName: supCountInCrsCompInd
+    type: nil | string 
+  supInclVetGovtEnrFileInd:
+    required: false
+    displayName: supInclVetGovtEnrFileInd
+    type: nil | string
+  totalWorkExpHours:
+    required: false
+    displayName: totalWorkExpHours
+    type: nil | number
+  avgWorkExpHours:
+    required: false
+    displayName: avgWorkExpHours
+    type: nil | number
+  languageCd:
+    required: false
+    displayName: languageCd
+    type: nil | string 
+  coReq:
+    required: false
+    displayName: coReq
+    type: array
+    items:
+      type: !include unitPreReq.raml
+  preReq:
+    required: false
+    displayName: preReq
+    type: array
+    items:
+      type: !include unitPreReq.raml
+  supAlternateCd:
+    required: false
+    displayName: supAlternateCd
+    type: nil | number
+  quotaRemaining:
+    required: false
+    displayName: quotaRemaining
+    type: nil | number
+  quota:
+    required: false
+    displayName: quota
+    type: nil | number
+  collegeOrgUnitCode:
+    required: false
+    displayName: collegeOrgUnitCode
+    type: nil | string
+  collegeOrgUnitStartDate:
+    required: false
+    displayName: collegeOrgUnitStartDate
+    type: nil | date-only
+  collegeOrgUnitName:
+    required: false
+    displayName: collegeOrgUnitName
+    type: nil | string

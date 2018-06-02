@@ -1,0 +1,89 @@
+#%RAML 1.0 DataType
+displayName: personalDetails
+type: object
+properties:
+  studentId:
+    required: false
+    displayName: studentId
+    type: nil | number
+  title:
+    required: false
+    displayName: title
+    type: nil | string
+  firstName:
+    required: false
+    displayName: firstName
+    type: nil | string
+  lastName:
+    required: false
+    displayName: lastName
+    type: nil | string
+  nameOrder:
+    required: false
+    displayName: nameOrder
+    type: nil | string
+  preferredName:
+    required: false
+    displayName: preferredName
+    type: nil | string
+  gender:
+    required: false
+    displayName: gender
+    type: nil | string
+  dateOfBirth:
+    required: false
+    displayName: dateOfBirth
+    type: nil | date-only
+  countryOfBirth:
+    required: false
+    displayName: countryOfBirth
+    type: nil | string
+  channel:
+    required: false
+    displayName: channel
+    type: nil | string
+  enrolmentStatus:
+    required: false
+    displayName: enrolmentStatus
+    type: nil | string
+  residenceStatus:
+    required: false
+    displayName: residenceStatus
+    type: nil | string
+  encumbrancesExist:
+    required: false
+    displayName: encumbrancesExist
+    type: nil | boolean
+  USI:
+    required: false
+    displayName: USI
+    type: nil | string
+  emailAddress:
+    required: false
+    displayName: emailAddress
+    type: nil | string
+  homePhoneNumber:
+    required: false
+    displayName: homePhoneNumber
+    type: nil | string
+  mobileNumber:
+    required: false
+    displayName: mobileNumber
+    type: nil | string
+  personalNotes:
+    type: array
+    required: false
+    items:
+      type: !include personalNotes.raml
+  address:
+    type: array
+    required: false
+    items:
+      type: !include address.raml
+  studentEncumbrances:
+    type: array
+    required: false 
+    items:
+      type: !include sE.raml
+    
+    

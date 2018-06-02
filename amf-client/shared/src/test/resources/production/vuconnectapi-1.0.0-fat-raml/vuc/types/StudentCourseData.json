@@ -1,0 +1,66 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"definitions": {
+		"CoursePatterns": {
+        "description": "Data Structure used to get the student course unit offering data information from VU Connect system",
+				"type": "array",
+				"items": {
+					"$ref": "#/definitions/UnitCoursePatternType"
+				}
+			},
+
+		"UnitCoursePatternType": {
+			"type": "object",
+			"properties": {
+				"academicYear": {
+					"type": "string",
+					"description": " acedemic year "
+				},
+				"semester": {
+					"type": "string",
+					"description": " semister "
+				},
+				"unitOfferingIdentifier": {
+					"type": "string",
+					"description": "  uoo identifier"
+				},
+				"unitCode": {
+					"type": "string",
+					"description": " unit code "
+				},
+				"teachingCalenderType": {
+					"type": "string",
+					"description": " teaching calender type"
+				},
+				"teachingCalenderSeq": {
+					"type": "integer",
+					"description": " teaching calender sequence number"
+				},
+				"locationCode": {
+					"type": "string",
+					"description": "location code"
+				},
+				"fullQuota": {
+					"type": "integer",
+					"description": "full quota "
+				},
+				"currentEnrolled": {
+					"type": "integer",
+					"description": " current enrolled number"
+				},
+				"quotaRemaining": {
+					"type": "integer",
+					"description": "quot remaining "
+				},
+				"shortTitle": {
+					"type": "string",
+					"description": "short title "
+				},
+				"preReqRule": {
+					"description": "prerequsite unit rule ",
+					"type": "string"
+				 }
+			}
+		 }
+	 }
+}

@@ -1,0 +1,933 @@
+#%RAML 1.0
+title: VUConnect Service
+version: 1.0
+baseUri:  /${cloudHubAppName}/api/vuconnectwsService/v1
+mediaType: application/json
+protocols: HTTP
+uses:
+  message-types:  vuc/types/dataTypes.raml
+  
+securitySchemes:
+  basicAuth:
+    description: Each request must contain the headers necessary for basic authentication
+    type: Basic Authentication
+    describedBy:
+      headers:
+        Authorization:
+          description: Used to send the Base64-encoded "username:password" credentials
+          type: string
+      responses:
+        401:
+          description: |
+            Unauthorized. Either the provided username and password
+            combination is invalid, or the user is not allowed to access
+            the content provided by the requested URL.
+          body:
+            application/json:
+securedBy: basicAuth
+
+types:
+  ResultDTOAcademicCalendarArray: !include  vuc/types/ResultDTOAcademicCalendarArray.raml
+  ResultDTOTeachingCalendarArray:  !include  vuc/types/ResultDTOTeachingCalendarArray.raml
+  ResultDTOSubjectOrgUnitDtlArray:  !include  vuc/types/ResultDTOSubjectOrgUnitDtlArray.raml
+  ResultDTOSubjectAbbrArray: !include vuc/types/ResultDTOSubjectAbbrArray.raml
+  ResultDTOAvailableSubjectArray: !include vuc/types/ResultDTOAvailableSubjectArray.raml
+  ResultDTOOfferedUnitsArray: !include vuc/types/ResultDTOOfferedUnitsArray.raml
+  ResultDTODescriptorArray: !include vuc/types/ResultDTODescriptorArray.raml
+  ResultDTOEnrolledSubjectArray: !include vuc/types/ResultDTOEnrolledSubjectArray.raml
+  ResultDTOCourseArray: !include vuc/types/ResultDTOCourseArray.raml
+  ResultDTOCourseEnrolDtlArray: !include vuc/types/ResultDTOCourseEnrolDtlArray.raml
+  ResultDTOAvailableCourseArray: !include vuc/types/ResultDTOAvailableCourseArray.raml
+  ResultDTOConditionalDescriptorArray: !include vuc/types/ResultDTOConditionalDescriptorArray.raml
+  ResultDTOConditionalDescriptor: !include vuc/types/ResultDTOConditionalDescriptor.raml
+  ResultDTOString: !include vuc/types/ResultDTOString.raml
+  ResultDTOStringArray: !include vuc/types/ResultDTOStringArray.raml
+  ResultDTOPersonSecurity: !include vuc/types/ResultDTOPersonSecurity.raml
+  ResultDTODescriptor: !include vuc/types/ResultDTODescriptor.raml
+  ResultDTOStudentDtl: !include vuc/types/ResultDTOStudentDtl.raml
+  ResultDTOBoolean: !include vuc/types/ResultDTOBoolean.raml
+  ResultDTOEnrolledStudentInSubjectArray: !include vuc/types/ResultDTOEnrolledStudentInSubjectArray.raml
+  ResultDTOFeePublicationArray: !include vuc/types/ResultDTOFeePublicationArray.raml
+  ResultDTOAvailableSubjectDetailArray: !include vuc/types/ResultDTOAvailableSubjectDetailArray.raml
+  ResultDTOResearchStudentArray: !include vuc/types/ResultDTOResearchStudentArray.raml
+  ResultDTOOrgUnitDtl: !include vuc/types/ResultDTOOrgUnitDtl.raml
+  ResultDTOSubjectHoursDtlDTOArray: !include vuc/types/ResultDTOSubjectHoursDtlDTOArray.raml
+  ResultDTOStudentEntitledToSoftwareLicense: !include vuc/types/ResultDTOStudentEntitledToSoftwareLicense.raml
+  StudentResultDTO: !include vuc/types/StudentGradeDTO.raml
+  StudentUnitAttemptOutComeDTO: !include vuc/types/StudentUnitAttemptOutComeDTO.raml
+
+/calendars:
+  /academicCalendars:
+    displayName: AcademicCalendars
+    get:
+      description: Gets all academic calendars configured in VUConnect. Legacy call-getAllAcadCalendarsV1
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOAcademicCalendarArray
+    /{acadSeqNumber}/teachingCalendars:
+      uriParameters:
+        acadSeqNumber:
+          displayName: acadSeqNumber
+          type: integer
+      get:
+        description: Gets all teaching calendars for the given acaemic calendar. Legacy call-getTeachCalendarsPerAcadV1
+        responses:
+          200:
+            body:
+              application/json:
+                type: ResultDTOTeachingCalendarArray
+/subjects:
+  /subjectOrgUnitDetailsV1:
+    get:
+      description: VUConnect WS operation-getSubjectOrgUnitDtls
+      queryParameters:
+        subjectId: string
+        subjectVersion:
+          type:  number
+          description: If there is no value to pass into this field, pass �-1�. It will raise error, if it is blank.
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOSubjectOrgUnitDtlArray
+  /subjectHoursDetailsV1:
+    get:
+      description: VUConnect WS operation-getSubjectHoursDtls
+      queryParameters:
+        subjectId: string
+        subjectVersion:
+          type:  number
+          description: If there is no value to pass into this field, pass �-1�. It will raise error, if it is blank.
+        acadSeqNo: number
+        teachSeqNo:
+          type: number
+          description: If there is no value to pass into this field, pass �-1�. It will raise error, if it is blank.
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOSubjectHoursDtlDTOArray
+  /subjectsByOrgUnitV1:
+    get:
+      description: VUConnect WS operation-getUos
+      queryParameters:
+        acadSeqNo: number
+        teachSeqNo: number
+        organisationUnitId: string
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOSubjectAbbrArray
+  /availableSubjectsV1:
+    get:
+      description: Legacy Call - getAvailableSubjectsV1 (VUConnect WS operation-getAvailableSubjects)
+      queryParameters:
+       subjectId: string
+       subjectVersion:
+        type: number
+        description: If there is no value to pass into this field, pass �-1�. It will raise error, if it is blank.
+       acadSeqNo: number
+       teachSeqNo:
+        type: number
+        description: If there is no value to pass into this field, pass �-1�. It will raise error, if it is blank.
+       siteId: string
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOAvailableSubjectArray
+  /availableSubjectV1:
+    get:
+      description: Legacy Call- getAvailableSubjectV1 (VUConnect WS operation-getAvailableUnits)
+      queryParameters:
+        subjectId: string
+        acadSeqNo: number
+        teachSeqNo:
+          type: number
+          description: If there is no value to pass into this field, pass �-1�. It will raise error, if it is blank.
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOAvailableSubjectDetailArray
+  /availableSubjectV2:
+    get:
+      description:  Legacy Call- getAvailableSubjectV2 (VUConnect WS operation-getAvailUnitIncludeDg)
+      queryParameters:
+        subjectId: string
+        acadSeqNo: number
+        teachSeqNo:
+          type: number
+          description: If there is no value to pass into this field, pass �-1�. It will raise error, if it is blank.
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOOfferedUnitsArray
+  /subjectByDeliveryV2:
+    get:
+      description: VUConnect WS operation-getAvailUnitsByDg
+      queryParameters:
+        deliveryGroupCd: string
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOOfferedUnitsArray
+  /findSubjectsV1:
+    get:
+      description: VUConnect WS operation-findSubjects.  At least,  one of the following five parameters must be passed - subjectId, subjectName, sector, orgUnit, faculty
+      queryParameters:
+        subjectId:
+          type: string
+          required: false
+        subjectVersion:
+          type: number
+          description: If there is no value to pass into this field, pass �-1�. It will raise error, if it is blank.
+        subjectName: 
+          type: string
+          required: false
+        sector:
+          type: string
+          required: false
+        orgUnit:
+          type:  string
+          required: false
+        faculty:
+          type: string
+          required: false
+        limit:
+          type: number
+          description: If there is no value to pass into this field, pass �-1�. It will raise error, if it is blank.
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOSubjectOrgUnitDtlArray
+  /subjectNameV1:
+    get:
+      description: VUConnect WS operation-getSubjectName
+      queryParameters:
+        subjectId: string
+        subjectVersion:
+          type: number
+          description: If there is no value to pass into this field, pass �-1�. It will raise error, if it is blank.
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTODescriptorArray
+  /enrolledSubjectsV1:
+    get:
+      description: VUConnect WS operation-getEnrolledSubjects
+      queryParameters:
+        acadSeqNo: number
+        teachSeqNo:
+          type: number
+          description: If there is no value to pass into this field, pass �-1�. It will raise error, if it is blank.
+        studentId: number
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOEnrolledSubjectArray
+  /enrolledSubjectsV2:
+      get:
+        description: VUConnect WS operation-getEnrolledSubjects
+        queryParameters:
+          acadSeqNo: number
+          teachSeqNo:
+            type: number
+            description: If there is no value to pass into this field, pass �-1�. It will raise error, if it is blank.
+          studentId: number
+        responses:
+          200:
+            body:
+              application/json:
+                type: ResultDTOEnrolledSubjectArray
+
+/courses:
+  /courseV1:
+    get:
+      description: Gets VUConnect courses, VUConnect WS operation-getCourse
+      queryParameters:
+        courseId: string
+        courseVersion:
+         type: number
+         description: If there is no value to pass into this field, pass �-1�. It will raise error, if it is blank.
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOCourseArray
+  /courseEnrolDetailsV1:
+    get:
+      description: VUConnect WS operration-getCourseEnrolDtls
+      queryParameters:
+        acadSeqNo: number
+        teachSeqNo: number
+        organisationUnitId:
+          type:  string
+          required: false
+        enrolStatus:
+          type: string
+          required: false
+        courseId: string
+        courseVersion:
+          type: number
+          description: If there is no value to pass into this field, pass �-1�. It will raise error, if it is blank.
+        level:
+          type: string
+          required: false
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOCourseEnrolDtlArray
+  /availableCoursesV1:
+    get:
+      description: VUConnect WS operration-getAvailableCourses
+      queryParameters:
+        acadSeqNo: number
+        courseId: string
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOAvailableCourseArray
+
+  /coursePatterns:
+    get:
+      queryParameters:
+        personId:
+         displayName: studentId
+         type: string
+         description: student identifier
+        courseId:
+          displayName: courseId
+          type: string
+          description: course identifier
+      responses:
+        200:
+           body:
+            application/json:
+               schema: message-types.coursePatternsResult
+               example: !include vuc/example/unitOfferingOptionsResult.json
+        500:
+          body:
+            application/json:
+/orgUnits:
+  /orgUnitsV1:
+    get:
+      description: Legacy Call - getOrgUnitsV1 (VUConnect WS operation-getOrgUnits)
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOConditionalDescriptorArray
+  /orgUnitDetailsV1:
+    get:
+      description: Legacy Call- getOrgUnitDetailsV1 (VUConnect WS operation-getOrgUnitDtls)
+      queryParameters:
+        organisationUnitId: string
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOOrgUnitDtl
+
+  /orgUnitBySubjectV1:
+    get:
+      description: Legacy Call - getOrgUnitBySubjectV1 (VUConnect WS operation-getOrgUnitBySubject)
+      queryParameters:
+        subjectId: string
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOConditionalDescriptor
+
+/sites:
+  /allSitesV1:
+   get:
+     description: VUConnect WS operation-getAllSites
+     responses:
+       200:
+         body:
+           application/json:
+             type: ResultDTOConditionalDescriptorArray
+  /siteNameV1:
+    get:
+      description: VUConnect WS operation-getSiteName
+      queryParameters:
+        siteId: string
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOString
+  /sitesV1:
+    get:
+      description: VUConnect WS operation-getSites
+      queryParameters:
+       subjectId: string
+       subjectVersion:
+         type: number
+         description: If there is no value to pass into this field, pass �-1�. It will raise error, if it is blank.
+       acadSeqNo: number
+       teachSeqNo: number
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOStringArray
+  /staffSecurityV1:
+    get:
+      description: VUConnect WS operration-getStaffSecurity
+      queryParameters:
+       staffId: string
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOPersonSecurity
+
+/studentGrades:
+  put:
+    description: update the grades for the students.
+    body:
+      application/json:
+        description: Update the grades for the students. Updates only one per student.
+        type: !include vuc/types/StudentGradeDTO.raml
+    responses:
+      200:
+
+
+/students:
+  /{studentId}:
+    /isEntitledToSoftwareLicense:
+      get:
+        description: VUConnect VUMisc (Migrated from SVN Repo)
+        responses:
+          200:
+            body:
+              application/json:
+                type: ResultDTOStudentEntitledToSoftwareLicense
+                example: !include vuc/example/response.json
+  /student:
+      displayName: student
+      /{id}:
+        displayName: id
+        get:
+            description: get  all the details of the mentioned student Id.
+            responses: 
+              200:
+                body: 
+                  application/json:
+                    description: Collection student personal detail and address.
+                    type: !include vuc/types/fullload.raml
+        put:
+            description: update all the details of the mentioned student Id.
+            body: 
+              application/json:
+                description: Collection student personal detail and address.
+                type: !include vuc/types/fullload.raml
+            responses: 
+              200:
+        post:
+            description: update all the details of the mentioned student Id.
+            body: 
+              application/json:
+                description: Collection student personal detail and address.
+                type: !include vuc/types/fullload.raml
+            responses: 
+              200:
+          
+        /personalDetails:
+          displayName: personalDetails
+          get:
+            description: get the personal details of the mentioned student Id.
+            responses: 
+              200:
+                body: 
+                  application/json:
+                    description: Collection student personal detail and address.
+                    type: !include vuc/types/personalDetails.raml
+          put:
+            description: update the personal details of the mentioned student Id.
+            body: 
+              application/json:
+                description: Collection student personal detail and address.
+                type: !include vuc/types/personalDetails.raml
+            responses: 
+              200:
+          post:
+            description: create the personal details of the mentioned student Id.
+            body: 
+              application/json:
+                description: Collection student personal detail and address.
+                type: !include vuc/types/personalDetails.raml
+            responses: 
+              200:
+              
+        /courseDetails:
+          displayName: courseDetails
+          get:
+            description: get the course details of the mentioned student Id.
+            responses: 
+              200:
+                body: 
+                  application/json:
+                    description: Collection student personal detail and address.
+                    type: array
+                    items:
+                      type: !include vuc/types/courseDetails.raml
+                              
+        /governmentStatistics:
+          displayName: governmentStatistics
+          get:
+            description: get the governmentStatistics of the mentioned student Id.
+            responses: 
+              200:
+                body: 
+                  application/json:
+                    description: Collection student governmentStatistics.
+                    type: !include vuc/types/governmentStatistics.raml
+          put:
+            description: update the governmentStatistics of the mentioned student Id.
+            body: 
+              application/json:
+                description: Collection student governmentStatistics .
+                type: !include vuc/types/governmentStatistics.raml
+            responses: 
+              200:
+              
+          post:
+            description: create the governmentStatistics of the mentioned student Id.
+            body: 
+              application/json:
+                description: Collection student governmentStatistics .
+                type: !include vuc/types/governmentStatistics.raml
+            responses: 
+              200: 
+                
+        /ecafDetails:
+          displayName: ecafDetails
+          get:
+            description: get the ecafDetails of the mentioned student Id.
+            queryParameters:
+              courseId:
+                displayName: courseId
+                type: string
+                description: courseId
+                example: ABC123
+                required: true
+            responses: 
+              200:
+                body: 
+                  application/json:
+                    description: Collection student hecsDetails .
+                    type: !include vuc/types/ecafDetails.raml
+          put:
+            description: update the ecafDetails of the mentioned student Id.
+            body: 
+              application/json:
+                description: Collection student ecafDetails .
+                type: !include vuc/types/ecafDetails.raml
+            responses: 
+              200:
+          post:
+            description: update the ecafDetails of the mentioned student Id.
+            body: 
+              application/json:
+                description: Collection student ecafDetails .
+                type: !include vuc/types/ecafDetails.raml
+            responses: 
+              200:
+                       
+        /sahelpDetails:
+          displayName: sahelpDetails
+          get:
+            description: get the sahelpDetails of the mentioned student Id.
+            queryParameters:
+              courseId:
+                displayName: courseId
+                type: string
+                description: courseId
+                example: ABC123
+                required: true
+            responses: 
+              200:
+                body: 
+                  application/json:
+                    description: Collection student sahelpDetails .
+                    type: !include vuc/types/sahelpDetails.raml
+          put:
+            description: update the sahelpDetails of the mentioned student Id.
+            body: 
+              application/json:
+                description: Collection student sahelpDetails.
+                type: !include vuc/types/sahelpDetails.raml
+            responses: 
+              200:
+         
+          post:
+            description: create the sahelpDetails of the mentioned student Id.
+            body: 
+              application/json:
+                description: Collection student sahelpDetails.
+                type: !include vuc/types/sahelpDetails.raml
+            responses: 
+              200:
+  /hasEverEnrolledV1:
+    get:
+      description: VUConnect WS operation-hasEverEnrolled
+      queryParameters:
+        studentId: number
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOBoolean
+  /studentDetailsV1:
+    get:
+      description: VUConnect WS operation-getStudentDtls
+      queryParameters:
+        studentId: number
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOStudentDtl
+  /enrolledStudentsInSubjectV1:
+    get:
+      description: VUConnect WS operration-getEnrolledStdntsInSubject
+      queryParameters:
+        acadSeqNo: number
+        teachSeqNo:
+          type:  number
+          description: If there is no value to pass into this field, pass �-1�. It will raise error, if it is blank.
+        subjectId: string
+        subjectVersion:
+          type:  number
+          description: If there is no value to pass into this field, pass �-1�. It will raise error, if it is blank.
+        siteId:
+          type:  string
+          required: false
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOEnrolledStudentInSubjectArray
+  /researchStudentsV1:
+    get:
+      description: VUConnect WS operation-getResearchStudents
+      queryParameters:
+        acadSeqNo: number
+        teachSeqNo:
+          type:  number
+          description: If there is no value to pass into this field, pass �-1�. It will raise error, if it is blank.
+        organisationUnitId: string
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOResearchStudentArray
+/fee:
+  /feeYearsV1:
+    get:
+      description: VUConnect WS operation-getFeeYears
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTODescriptorArray
+
+  /feeCommencementTypeV1:
+    get:
+      description: VUConnect WS operation-getFeeCommencementtype
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTODescriptorArray
+  /feePublicationV1:
+    get:
+      description: VUConnect WS operation-getFeePublication
+      queryParameters:
+        academicseqnumber: number
+        unitcd:
+          type: string
+          required: false
+        unittitle:
+          type: string
+          required: false
+      responses:
+        200:
+          body:
+            application/json:
+              type: ResultDTOFeePublicationArray
+/offer:
+        put:
+          description: update the confirmation of course, course commencement date and acceptance.
+          body: 
+           application/json:
+            type: !include vuc/types/offer.raml
+          responses: 
+              200:
+                body: 
+                  application/json:
+                    description: update Response for confirmation of course, course commencement date and acceptance
+                    type: !include vuc/types/offerUpdResponse.raml
+        post:
+          description: update the confirmation of course, course commencement date and acceptance.
+          body: 
+           application/json:
+            type: !include vuc/types/offer.raml
+          responses: 
+              200:
+                body: 
+                  application/json:
+                    description: update Response for  confirmation of course, course commencement date and acceptance
+                    type: !include vuc/types/offerUpdResponse.raml
+/teachingCalendar:
+   /{acadSeqNo}:
+        displayName: acadSeqNo
+        get:
+            description: get the teahcing calendar details per the given acadSeqNo.
+            responses: 
+              200:
+                body: 
+                  application/json:
+                    description: Collection student personal detail and address.
+                    type: array
+                    items:
+                      type: !include vuc/types/teachingCalendar.raml
+                    example: !include vuc/example/teachingCalendar.json
+                   
+/enrolmentCalendar:
+    get:
+              description: get list of enrollment calendar
+              responses:
+                200:
+                  body:
+                    application/json:
+                      type: array
+                      items:
+                          properties:
+                            cohortDtls:
+                              required: false
+                              displayName: calCohortDtls
+                              type: !include vuc/types/calCohortDtls.raml
+                      example: !include vuc/example/refEnrolCal.json
+/studentEnrolmentCalendar:
+      get:
+              description: get list of enrollment calendar of the student
+              queryParameters:
+                personId:
+                  type: number
+                  description: Student Id
+                  required: true
+                courseCd:
+                  type: string
+                  description: courseCd
+                  required: false
+                calType:
+                  type: string
+                  description: calType
+                  required: false
+              responses:
+                200:
+                  body:
+                    application/json:
+                      type: array
+                      items:
+                          properties:
+                            scohortDtls:
+                              required: false
+                              displayName: scohortDtls
+                              type: !include vuc/types/scohortDtl.raml
+                              
+                      example: !include vuc/example/studEnrCal.json
+/enrolments:
+    displayName: enrollments
+    get:
+      description: get  all the enrolment details of the mentioned student Id and course id.
+      queryParameters:
+        personId:
+          type: number
+          description: Student Id
+          required: true
+        courseId:    
+          type: string
+          description: Course Id
+          required: true
+      responses: 
+        200:
+          body: 
+            application/json:
+              description: Enrolment details which includes Collection of units
+              type: !include vuc/types/enrollment.raml
+              example: !include vuc/example/enrolment.json
+    put:
+            description: update the Enrolment details which includes Collection of units.
+            body: 
+              application/json:
+                description: Enrolment details which includes Collection of units.
+                type: !include vuc/types/enrollment.raml
+                example: !include vuc/example/enrolment.json
+                
+            responses: 
+              200:
+                body: 
+                  application/json:
+                    type: array
+                    items:
+                      properties:
+                        unitResponse:
+                          required: true
+                          displayName: unitResponse
+                          type: !include vuc/types/updResponse.raml
+                    example: !include vuc/example/enrolmentUpdRes.json
+                                 
+    post:
+            description: create the Enrolment details which includes Collection of units.
+            body: 
+              application/json:
+                description: Enrolment details which includes Collection of units.
+                type: !include vuc/types/enrollment.raml
+                example: !include vuc/example/enrolment.json
+            
+            responses: 
+              200:
+                body: 
+                  application/json:
+                    description: Enrolment details POST response
+                    type: array
+                    items:
+                      properties:
+                        unitResponse:
+                          required: true
+                          displayName: unitResponse
+                          type: !include vuc/types/updResponse.raml
+                    example:  !include vuc/example/enrolmentUpdRes.json
+                    
+                                        
+    /studentDeclaration:
+      put:
+            description: update the student Declaration.
+            body: 
+              application/json:
+                description: Enrolment details which includes Collection of units.
+                type: !include vuc/types/studentDeclaration.raml
+                example:  !include vuc/example/studentDeclarationReq.json
+                
+            responses: 
+              200:
+                body: 
+                  application/json:
+                    description: Enrolment details POST response
+                    type: !include vuc/types/commonVUConnectRes.raml
+                    example:  !include vuc/example/commonVUConnectRes.json
+      post:
+            description: update the student Declaration.
+            body: 
+              application/json:
+                description: Enrolment details which includes Collection of units.
+                type: !include vuc/types/studentDeclaration.raml
+                example:  !include vuc/example/studentDeclarationReq.json
+                
+            responses: 
+              200:
+                body: 
+                  application/json:
+                    description: Enrolment details POST response
+                    type: !include vuc/types/commonVUConnectRes.raml
+                    example:  !include vuc/example/commonVUConnectRes.json
+/units:
+    displayName: units
+    get:
+      description: get  all the unit details.
+      queryParameters:
+        unitTitle:
+          type: string
+          description: Unit Title
+          required: false
+        locationCd:    
+          type: string
+          description: Location
+          required: false
+        unitCd:    
+          type: string
+          description: Unit Id
+          required: false
+        year:    
+          type: number
+          description: year
+          required: false
+        teachingPeriod:    
+          type: string
+          description: teachingPeriod
+          required: false
+      responses: 
+        200:
+          body: 
+            application/json:
+              description: Collection of units
+              type: array
+              items:
+                type: !include vuc/types/unitList.raml
+              example: !include vuc/example/getUnitResponse.json
+    /initiatePrefilledUnits:
+      put:
+            description: update the prefilled units.
+            body: 
+              application/json:
+                description: pdate the prefilled units.
+                type: !include vuc/types/commonReq.raml
+                example:  !include vuc/example/commonReq.json       
+            responses: 
+              200:
+                body: 
+                  application/json:
+                    description: Enrolment details POST response
+                    type: !include vuc/types/commonVUConnectRes.raml
+                    example:  !include vuc/example/commonVUConnectRes.json
+      post:
+            description: update the student Declaration.
+            body: 
+              application/json:
+                description: Enrolment details which includes Collection of units.
+                type: !include vuc/types/commonReq.raml
+                example:  !include vuc/example/commonReq.json
+                
+            responses: 
+              200:
+                body: 
+                  application/json:
+                    description: Enrolment details POST response
+                    type: !include vuc/types/commonVUConnectRes.raml
+                    example:  !include vuc/example/commonVUConnectRes.json
+/reference-data-api:
+  /referenceData:
+    /{codeType}:
+        displayName: codeType
+        uriParameters: 
+          codeType:
+            enum: [VU_COUNTRY,VU_CT,VU_CVLOV,VU_INST,VU_STATES]  
+        get:
+            description: Get the LOV's from Callista for the given code type
+            responses: 
+              200:
+                body:
+                  application/json:
+                    description: Collection of LOV's for given codeType.
+                    type: !include vuc/types/referenceDataResult.raml
+                    example: !include vuc/example/referenceDataResult.json
+                      
+                      
+                    
+                  
