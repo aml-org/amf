@@ -662,6 +662,10 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("missing_payload.raml", "missing_payload.jsonld", RamlYamlHint, Amf, base08Path)
   }
 
+  test("Closed node for 0.8 web form") {
+    cycle("closed_web_form.raml", "closed_web_form.json", RamlYamlHint, Oas2, base08Path)
+  }
+
   test("Default value test") {
     cycle("default_value.raml", "default_value.jsonld", RamlYamlHint, Amf, base08Path)
   }

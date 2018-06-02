@@ -1,0 +1,51 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "RAML Example API",
+    "version": "v1"
+  },
+  "host": "www.example.com",
+  "basePath": "/api/",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/multipart": {
+      "post": {
+        "parameters": [
+          {
+            "x-amf-mediaType": "multipart/form-data",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "first"
+              ],
+              "properties": {
+                "first": {
+                  "type": "string",
+                  "format": ""
+                },
+                "second": {
+                  "default": "segundo",
+                  "type": "string",
+                  "format": ""
+                },
+                "third": {
+                  "type": "boolean",
+                  "format": ""
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        }
+      }
+    }
+  }
+}

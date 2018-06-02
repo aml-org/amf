@@ -15,21 +15,11 @@ import amf.core.parser.{Annotations, FieldEntry, Fields, Position, Value}
 import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
-import amf.plugins.document.webapi.contexts.{
-  OasSpecEmitterContext,
-  RamlScalarEmitter,
-  RamlSpecEmitterContext,
-  SpecEmitterContext
-}
+import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
-import amf.plugins.document.webapi.parser.{
-  OasTypeDefMatcher,
-  OasTypeDefStringValueMatcher,
-  RamlTypeDefMatcher,
-  RamlTypeDefStringValueMatcher
-}
+import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, OasTypeDefStringValueMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
 import amf.plugins.domain.shapes.annotations.{NilUnion, ParsedFromTypeExpression}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
@@ -37,7 +27,7 @@ import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.{TypeDefXsdMapping, TypeDefYTypeMapping, XsdTypeDefMapping}
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YNode, YType}
+import org.yaml.model.{YNode, YScalar, YType}
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -1497,7 +1487,7 @@ case class OasNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referenc
     fs.entry(NodeShapeModel.MaxProperties).map(f => result += ValueEmitter("maxProperties", f))
 
     fs.entry(NodeShapeModel.Closed)
-      .filter(_.value.annotations.contains(classOf[ExplicitField])) match {
+      .filter(f => f.value.annotations.contains(classOf[ExplicitField]) || f.scalar.toBool) match {
       case Some(f) => result += ValueEmitter("additionalProperties", f.negated)
       case _ =>
         fs.entry(NodeShapeModel.AdditionalPropertiesSchema)

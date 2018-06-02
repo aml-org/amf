@@ -7,6 +7,7 @@ import amf.core.parser.{Annotations, YMapOps}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 import amf.plugins.domain.shapes.models.NodeShape
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload
@@ -111,6 +112,7 @@ case class Raml08WebFormParser(map: YMap, parentId: String)(implicit ctx: RamlWe
                   property.withRange(s).adopted(property.id)
                 })
             })
+            webFormShape.set(NodeShapeModel.Closed, true) // RAML 0.8 does not support open node shapes (see APIMF-732)
             webFormShape
         }
       })
