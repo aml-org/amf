@@ -68,7 +68,7 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
 
   def matchPatternedProperty(p: PropertyConstraint, propName: String): Boolean = {
     p.patternedProperty match {
-      case Some(pattern) => propName.matches(pattern)
+      case Some(pattern) => pattern.r.findFirstIn(propName).isDefined
       case None          => false
     }
   }
