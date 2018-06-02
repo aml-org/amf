@@ -1,17 +1,16 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.metamodel.Obj
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{ExternalSourceElement, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.services.PayloadValidator
+import amf.core.utils.Strings
 import amf.core.validation.{AMFValidationReport, SeverityLevels}
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaSerializer
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel._
-import org.yaml.model.YPart
-import amf.core.utils.Strings
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
+import org.yaml.model.YPart
 
 import scala.concurrent.Future
 
@@ -38,7 +37,7 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
 
   override def linkCopy(): AnyShape = AnyShape().withId(id)
 
-  override def meta: Obj = AnyShapeModel
+  override def meta: AnyShapeModel = AnyShapeModel
 
   def toJsonSchema: String = toJsonSchema(this)
 

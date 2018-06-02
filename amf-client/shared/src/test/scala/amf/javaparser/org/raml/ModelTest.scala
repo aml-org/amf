@@ -3,7 +3,7 @@ package amf.javaparser.org.raml
 import amf.ProfileNames
 import amf.core.annotations.SourceVendor
 import amf.core.emitter.RenderOptions
-import amf.core.model.document.{BaseUnit, EncodesModel, Module}
+import amf.core.model.document.{BaseUnit, Document, EncodesModel, Module}
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline.EDITING_PIPELINE
 import amf.core.validation.AMFValidationReport
@@ -48,9 +48,12 @@ trait ModelValidationTest extends DirectoryTest {
     unit
 
   private def profileFromModel(unit: BaseUnit): String = {
-    unit.annotations.find(classOf[SourceVendor]).map(_.value) match {
-      case Some(Raml08.name) => ProfileNames.RAML08
-      case _                 => ProfileNames.RAML
+    val maybeVendor = Option(unit)
+      .collect({ case d: Document => d })
+      .flatMap(_.encodes.annotations.find(classOf[SourceVendor]).map(_.vendor))
+    maybeVendor match {
+      case Some(Raml08) => ProfileNames.RAML08
+      case _            => ProfileNames.RAML
     }
   }
 
@@ -75,6 +78,16 @@ trait ModelResolutionTest extends ModelValidationTest {
 
   override def transform(unit: BaseUnit, d: String, vendor: Vendor): BaseUnit =
     transform(unit, CycleConfig("", "", hintFromTarget(vendor), vendor, d))
+
+  private def profileFromVendor(vendor: Vendor): String = {
+    vendor match {
+      case Raml08        => ProfileNames.RAML08
+      case Raml | Raml10 => ProfileNames.RAML
+      case Oas | Oas2    => ProfileNames.OAS
+      case Oas3          => ProfileNames.OAS3
+      case _             => ProfileNames.AMF
+    }
+  }
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
     val res = config.target match {

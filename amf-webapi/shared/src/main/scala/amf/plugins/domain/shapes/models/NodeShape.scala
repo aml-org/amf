@@ -3,7 +3,7 @@ package amf.plugins.domain.shapes.models
 import amf.core.model.{BoolField, IntField, StrField}
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.domain.shapes.metamodel.NodeShapeModel
+import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, NodeShapeModel}
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel._
 import org.yaml.model.YPart
 import amf.core.utils.Strings
@@ -62,7 +62,7 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
 
   override def linkCopy(): NodeShape = NodeShape().withId(id)
 
-  override def meta = NodeShapeModel
+  override def meta: AnyShapeModel = NodeShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/" + name.option().getOrElse("default-node").urlComponentEncoded

@@ -1363,31 +1363,524 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights/post/request/application%2Fjson/schema",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights/post/request/application%2Fjson/inherits",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://raml.org/vocabularies/shapes#Shape",
                               "http://raml.org/vocabularies/document#DomainElement"
                             ],
-                            "http://raml.org/vocabularies/document#link-target": [
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight"
-                              }
-                            ],
-                            "http://raml.org/vocabularies/document#link-label": [
-                              {
-                                "@value": "flight"
-                              }
-                            ],
                             "http://www.w3.org/ns/shacl#name": [
                               {
-                                "@value": "schema"
+                                "@value": "inherits"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/shapes#inherits": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights/post/request/application%2Fjson/inherits/schema",
+                                "@type": [
+                                  "http://www.w3.org/ns/shacl#NodeShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://raml.org/vocabularies/shapes#Shape",
+                                  "http://raml.org/vocabularies/document#DomainElement"
+                                ],
+                                "http://raml.org/vocabularies/document#link-target": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document#link-label": [
+                                  {
+                                    "@value": "flight"
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "schema"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document#examples": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights/post/request/application%2Fjson/inherits/example/default-example",
+                                    "@type": [
+                                      "http://raml.org/vocabularies/document#Example",
+                                      "http://raml.org/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://raml.org/vocabularies/document#strict": [
+                                      {
+                                        "@value": true
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document#structuredValue": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1",
+                                        "@type": [
+                                          "http://raml.org/vocabularies/data#Object"
+                                        ],
+                                        "http://raml.org/vocabularies/data#code": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_2",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Scalar"
+                                            ],
+                                            "http://raml.org/vocabularies/data#value": [
+                                              {
+                                                "@value": "ER38sd",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#string"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#sources": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_2/source-map",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                                  {
+                                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                                      {
+                                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_2"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                                      {
+                                                        "@value": "[(1,9)-(1,17)]"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/data#departureDate": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_4",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Scalar"
+                                            ],
+                                            "http://raml.org/vocabularies/data#value": [
+                                              {
+                                                "@value": "2016/03/20",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#string"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#sources": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_4/source-map",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                                  {
+                                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                                      {
+                                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_4"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                                      {
+                                                        "@value": "[(1,49)-(1,61)]"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/data#destination": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_6",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Scalar"
+                                            ],
+                                            "http://raml.org/vocabularies/data#value": [
+                                              {
+                                                "@value": "SFO",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#string"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#sources": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_6/source-map",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                                  {
+                                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                                      {
+                                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_6"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                                      {
+                                                        "@value": "[(1,95)-(1,100)]"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/data#emptySeats": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_7",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Scalar"
+                                            ],
+                                            "http://raml.org/vocabularies/data#value": [
+                                              {
+                                                "@value": "0",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#sources": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_7/source-map",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                                  {
+                                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                                      {
+                                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_7"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                                      {
+                                                        "@value": "[(1,116)-(1,117)]"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/data#origin": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_5",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Scalar"
+                                            ],
+                                            "http://raml.org/vocabularies/data#value": [
+                                              {
+                                                "@value": "MUA",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#string"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#sources": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_5/source-map",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                                  {
+                                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                                      {
+                                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_5"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                                      {
+                                                        "@value": "[(1,73)-(1,78)]"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/data#plane": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/object_8",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Object"
+                                            ],
+                                            "http://raml.org/vocabularies/data#totalSeats": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/object_8/scalar_10",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/data#Scalar"
+                                                ],
+                                                "http://raml.org/vocabularies/data#value": [
+                                                  {
+                                                    "@value": "150",
+                                                    "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                                                  }
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#sources": [
+                                                  {
+                                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/object_8/scalar_10/source-map",
+                                                    "@type": [
+                                                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                                    ],
+                                                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                                      {
+                                                        "http://raml.org/vocabularies/document-source-maps#element": [
+                                                          {
+                                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/object_8/scalar_10"
+                                                          }
+                                                        ],
+                                                        "http://raml.org/vocabularies/document-source-maps#value": [
+                                                          {
+                                                            "@value": "[(1,165)-(1,168)]"
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/data#type": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/object_8/scalar_9",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/data#Scalar"
+                                                ],
+                                                "http://raml.org/vocabularies/data#value": [
+                                                  {
+                                                    "@value": "Boeing 737",
+                                                    "@type": "http://www.w3.org/2001/XMLSchema#string"
+                                                  }
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#sources": [
+                                                  {
+                                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/object_8/scalar_9/source-map",
+                                                    "@type": [
+                                                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                                    ],
+                                                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                                      {
+                                                        "http://raml.org/vocabularies/document-source-maps#element": [
+                                                          {
+                                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/object_8/scalar_9"
+                                                          }
+                                                        ],
+                                                        "http://raml.org/vocabularies/document-source-maps#value": [
+                                                          {
+                                                            "@value": "[(1,137)-(1,149)]"
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#sources": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/object_8/source-map",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#data-node-properties": [
+                                                  {
+                                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                                      {
+                                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/object_8"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                                      {
+                                                        "@value": "totalSeats->[(1,151)-(1,168)]#type->[(1,129)-(1,149)]"
+                                                      }
+                                                    ]
+                                                  }
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                                  {
+                                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                                      {
+                                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/object_8"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                                      {
+                                                        "@value": "[(1,128)-(1,169)]"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/data#price": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_3",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Scalar"
+                                            ],
+                                            "http://raml.org/vocabularies/data#value": [
+                                              {
+                                                "@value": "400",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#sources": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_3/source-map",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                                  {
+                                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                                      {
+                                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_3"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                                      {
+                                                        "@value": "[(1,27)-(1,30)]"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#sources": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/source-map",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                              {
+                                                "http://raml.org/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1"
+                                                  }
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(70,17)-(72,0)]"
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#data-node-properties": [
+                                              {
+                                                "http://raml.org/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1"
+                                                  }
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "plane->[(1,119)-(1,169)]#price->[(1,18)-(1,30)]#emptySeats->[(1,102)-(1,117)]#code->[(1,1)-(1,17)]#origin->[(1,63)-(1,78)]#destination->[(1,80)-(1,100)]#departureDate->[(1,32)-(1,61)]"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://www.w3.org/ns/shacl#raw": [
+                                      {
+                                        "@value": "{\"code\": \"ER38sd\",\"price\": 400, \"departureDate\": \"2016/03/20\", \"origin\": \"MUA\", \"destination\": \"SFO\", \"emptySeats\": 0, \"plane\": {\"type\": \"Boeing 737\", \"totalSeats\": 150}}\n"
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#sources": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights/post/request/application%2Fjson/inherits/example/default-example/source-map",
+                                        "@type": [
+                                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#synthesized-field": [
+                                          {
+                                            "http://raml.org/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://raml.org/vocabularies/document#strict"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "true"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                          {
+                                            "http://raml.org/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://www.w3.org/ns/shacl#raw"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(70,17)-(72,0)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://raml.org/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights/post/request/application%2Fjson/inherits/example/default-example"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(70,16)-(73,0)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://raml.org/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://raml.org/vocabularies/document#structuredValue"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(70,16)-(73,0)]"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#sources": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights/post/request/application%2Fjson/inherits/schema/source-map",
+                                    "@type": [
+                                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "http://raml.org/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights/post/request/application%2Fjson/inherits/schema"
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(69,0)-(73,0)]"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
                               }
                             ],
                             "http://raml.org/vocabularies/document#examples": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights/post/request/application%2Fjson/inherits/example/default-example",
                                 "@type": [
                                   "http://raml.org/vocabularies/document#Example",
                                   "http://raml.org/vocabularies/document#DomainElement"
@@ -1780,7 +2273,7 @@
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/source-map",
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights/post/request/application%2Fjson/inherits/example/default-example/source-map",
                                     "@type": [
                                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -1814,7 +2307,7 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example"
+                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights/post/request/application%2Fjson/inherits/example/default-example"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1834,28 +2327,6 @@
                                             "@value": "[(70,16)-(73,0)]"
                                           }
                                         ]
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ],
-                            "http://raml.org/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights/post/request/application%2Fjson/schema/source-map",
-                                "@type": [
-                                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://raml.org/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "http://raml.org/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights/post/request/application%2Fjson/schema"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(69,0)-(73,0)]"
                                       }
                                     ]
                                   }
@@ -3228,31 +3699,524 @@
                         ],
                         "http://raml.org/vocabularies/http#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/put/request/application%2Fjson/schema",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/put/request/application%2Fjson/inherits",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://raml.org/vocabularies/shapes#Shape",
                               "http://raml.org/vocabularies/document#DomainElement"
                             ],
-                            "http://raml.org/vocabularies/document#link-target": [
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight"
-                              }
-                            ],
-                            "http://raml.org/vocabularies/document#link-label": [
-                              {
-                                "@value": "flight"
-                              }
-                            ],
                             "http://www.w3.org/ns/shacl#name": [
                               {
-                                "@value": "schema"
+                                "@value": "inherits"
+                              }
+                            ],
+                            "http://raml.org/vocabularies/shapes#inherits": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/put/request/application%2Fjson/inherits/schema",
+                                "@type": [
+                                  "http://www.w3.org/ns/shacl#NodeShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://raml.org/vocabularies/shapes#Shape",
+                                  "http://raml.org/vocabularies/document#DomainElement"
+                                ],
+                                "http://raml.org/vocabularies/document#link-target": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document#link-label": [
+                                  {
+                                    "@value": "flight"
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "schema"
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document#examples": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/put/request/application%2Fjson/inherits/example/default-example",
+                                    "@type": [
+                                      "http://raml.org/vocabularies/document#Example",
+                                      "http://raml.org/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://raml.org/vocabularies/document#strict": [
+                                      {
+                                        "@value": true
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document#structuredValue": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1",
+                                        "@type": [
+                                          "http://raml.org/vocabularies/data#Object"
+                                        ],
+                                        "http://raml.org/vocabularies/data#code": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_2",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Scalar"
+                                            ],
+                                            "http://raml.org/vocabularies/data#value": [
+                                              {
+                                                "@value": "ER38sd",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#string"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#sources": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_2/source-map",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                                  {
+                                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                                      {
+                                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_2"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                                      {
+                                                        "@value": "[(1,9)-(1,17)]"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/data#departureDate": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_4",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Scalar"
+                                            ],
+                                            "http://raml.org/vocabularies/data#value": [
+                                              {
+                                                "@value": "2016/03/20",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#string"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#sources": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_4/source-map",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                                  {
+                                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                                      {
+                                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_4"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                                      {
+                                                        "@value": "[(1,49)-(1,61)]"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/data#destination": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_6",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Scalar"
+                                            ],
+                                            "http://raml.org/vocabularies/data#value": [
+                                              {
+                                                "@value": "SFO",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#string"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#sources": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_6/source-map",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                                  {
+                                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                                      {
+                                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_6"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                                      {
+                                                        "@value": "[(1,95)-(1,100)]"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/data#emptySeats": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_7",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Scalar"
+                                            ],
+                                            "http://raml.org/vocabularies/data#value": [
+                                              {
+                                                "@value": "0",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#sources": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_7/source-map",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                                  {
+                                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                                      {
+                                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_7"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                                      {
+                                                        "@value": "[(1,116)-(1,117)]"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/data#origin": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_5",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Scalar"
+                                            ],
+                                            "http://raml.org/vocabularies/data#value": [
+                                              {
+                                                "@value": "MUA",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#string"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#sources": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_5/source-map",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                                  {
+                                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                                      {
+                                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_5"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                                      {
+                                                        "@value": "[(1,73)-(1,78)]"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/data#plane": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/object_8",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Object"
+                                            ],
+                                            "http://raml.org/vocabularies/data#totalSeats": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/object_8/scalar_10",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/data#Scalar"
+                                                ],
+                                                "http://raml.org/vocabularies/data#value": [
+                                                  {
+                                                    "@value": "150",
+                                                    "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                                                  }
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#sources": [
+                                                  {
+                                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/object_8/scalar_10/source-map",
+                                                    "@type": [
+                                                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                                    ],
+                                                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                                      {
+                                                        "http://raml.org/vocabularies/document-source-maps#element": [
+                                                          {
+                                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/object_8/scalar_10"
+                                                          }
+                                                        ],
+                                                        "http://raml.org/vocabularies/document-source-maps#value": [
+                                                          {
+                                                            "@value": "[(1,163)-(1,166)]"
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/data#type": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/object_8/scalar_9",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/data#Scalar"
+                                                ],
+                                                "http://raml.org/vocabularies/data#value": [
+                                                  {
+                                                    "@value": "Boeing37",
+                                                    "@type": "http://www.w3.org/2001/XMLSchema#string"
+                                                  }
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#sources": [
+                                                  {
+                                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/object_8/scalar_9/source-map",
+                                                    "@type": [
+                                                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                                    ],
+                                                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                                      {
+                                                        "http://raml.org/vocabularies/document-source-maps#element": [
+                                                          {
+                                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/object_8/scalar_9"
+                                                          }
+                                                        ],
+                                                        "http://raml.org/vocabularies/document-source-maps#value": [
+                                                          {
+                                                            "@value": "[(1,137)-(1,147)]"
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#sources": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/object_8/source-map",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#data-node-properties": [
+                                                  {
+                                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                                      {
+                                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/object_8"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                                      {
+                                                        "@value": "totalSeats->[(1,149)-(1,166)]#type->[(1,129)-(1,147)]"
+                                                      }
+                                                    ]
+                                                  }
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                                  {
+                                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                                      {
+                                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/object_8"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                                      {
+                                                        "@value": "[(1,128)-(1,167)]"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/data#price": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_3",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/data#Scalar"
+                                            ],
+                                            "http://raml.org/vocabularies/data#value": [
+                                              {
+                                                "@value": "400",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#sources": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_3/source-map",
+                                                "@type": [
+                                                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                                  {
+                                                    "http://raml.org/vocabularies/document-source-maps#element": [
+                                                      {
+                                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/scalar_3"
+                                                      }
+                                                    ],
+                                                    "http://raml.org/vocabularies/document-source-maps#value": [
+                                                      {
+                                                        "@value": "[(1,27)-(1,30)]"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#sources": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1/source-map",
+                                            "@type": [
+                                              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                              {
+                                                "http://raml.org/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1"
+                                                  }
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(101,19)-(103,0)]"
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#data-node-properties": [
+                                              {
+                                                "http://raml.org/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/object_1"
+                                                  }
+                                                ],
+                                                "http://raml.org/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "plane->[(1,119)-(1,167)]#price->[(1,18)-(1,30)]#emptySeats->[(1,102)-(1,117)]#code->[(1,1)-(1,17)]#origin->[(1,63)-(1,78)]#destination->[(1,80)-(1,100)]#departureDate->[(1,32)-(1,61)]"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://www.w3.org/ns/shacl#raw": [
+                                      {
+                                        "@value": "{\"code\": \"ER38sd\",\"price\": 400, \"departureDate\": \"2016/03/20\", \"origin\": \"MUA\", \"destination\": \"SFO\", \"emptySeats\": 0, \"plane\": {\"type\": \"Boeing37\", \"totalSeats\": 150}}\n"
+                                      }
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#sources": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/put/request/application%2Fjson/inherits/example/default-example/source-map",
+                                        "@type": [
+                                          "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#synthesized-field": [
+                                          {
+                                            "http://raml.org/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://raml.org/vocabularies/document#strict"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "true"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                          {
+                                            "http://raml.org/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://www.w3.org/ns/shacl#raw"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(101,19)-(103,0)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://raml.org/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/put/request/application%2Fjson/inherits/example/default-example"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(101,18)-(104,0)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://raml.org/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://raml.org/vocabularies/document#structuredValue"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(101,18)-(104,0)]"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://raml.org/vocabularies/document-source-maps#sources": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/put/request/application%2Fjson/inherits/schema/source-map",
+                                    "@type": [
+                                      "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://raml.org/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "http://raml.org/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/put/request/application%2Fjson/inherits/schema"
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(100,0)-(104,0)]"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
                               }
                             ],
                             "http://raml.org/vocabularies/document#examples": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/put/request/application%2Fjson/inherits/example/default-example",
                                 "@type": [
                                   "http://raml.org/vocabularies/document#Example",
                                   "http://raml.org/vocabularies/document#DomainElement"
@@ -3645,7 +4609,7 @@
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example/source-map",
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/put/request/application%2Fjson/inherits/example/default-example/source-map",
                                     "@type": [
                                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -3679,7 +4643,7 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/declarations/flight/example/default-example"
+                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/put/request/application%2Fjson/inherits/example/default-example"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -3699,28 +4663,6 @@
                                             "@value": "[(101,18)-(104,0)]"
                                           }
                                         ]
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ],
-                            "http://raml.org/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/put/request/application%2Fjson/schema/source-map",
-                                "@type": [
-                                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://raml.org/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "http://raml.org/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/americanflightapi.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/put/request/application%2Fjson/schema"
-                                      }
-                                    ],
-                                    "http://raml.org/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(100,0)-(104,0)]"
                                       }
                                     ]
                                   }

@@ -1,14 +1,13 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.metamodel.Obj
 import amf.core.model.domain.Shape
 import amf.core.model.{BoolField, IntField}
 import amf.core.parser.{Annotations, Fields}
+import amf.core.utils.Strings
 import amf.plugins.domain.shapes.metamodel.ArrayShapeModel._
 import amf.plugins.domain.shapes.metamodel.TupleShapeModel.TupleItems
-import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, MatrixShapeModel, TupleShapeModel}
+import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, ArrayShapeModel, MatrixShapeModel, TupleShapeModel}
 import org.yaml.model.YPart
-import amf.core.utils.Strings
 
 /**
   * Array shape
@@ -68,7 +67,7 @@ case class ArrayShape(override val fields: Fields, override val annotations: Ann
 
   override def linkCopy(): ArrayShape = ArrayShape().withId(id)
 
-  override def meta: Obj = ArrayShapeModel
+  override def meta: AnyShapeModel = ArrayShapeModel
 
   override def copyShape(): ArrayShape = ArrayShape(fields.copy(), annotations.copy()).withId(id)
 
@@ -95,7 +94,7 @@ case class MatrixShape(override val fields: Fields, override val annotations: An
 
   override def linkCopy() = MatrixShape().withId(id)
 
-  override def meta: Obj = MatrixShapeModel
+  override def meta: AnyShapeModel = MatrixShapeModel
 
   override def copyShape(): MatrixShape = MatrixShape(fields.copy(), annotations.copy()).withId(id)
 
@@ -121,7 +120,7 @@ case class TupleShape(override val fields: Fields, override val annotations: Ann
 
   override def linkCopy() = TupleShape().withId(id)
 
-  override def meta: Obj = TupleShapeModel
+  override def meta: AnyShapeModel = TupleShapeModel
 
   override def copyShape(): TupleShape = TupleShape(fields.copy(), annotations.copy()).withId(id)
 

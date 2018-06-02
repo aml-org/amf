@@ -2723,6 +2723,17 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.size == 1)
     }
   }
+  test("Include twice same json schema and add example in raml 08") {
+
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "production/reuse-json-schema/api.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, ProfileNames.RAML08)
+    } yield {
+      assert(report.conforms)
+    }
+  }
 
   test("JSON Schema pattern properties") {
     for {
@@ -2745,7 +2756,11 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.nonEmpty)
     }
   }
-//  test("Api that takes to long to validate") {
+
+  // this test takes like 2 minuts to run. Uncomment to test performance in validation and normalization shapes cases.
+  // Use to take more than 2 hours and in some cases, throwed GC overhead limit exception
+
+  //  test("Api that takes to long to validate") {
 //      for {
 //        validation <- Validation(platform)
 //        doc <- AMFCompiler(validationsPath + "production/fhir-raml-api-1.0.0-fat-raml/api.raml",

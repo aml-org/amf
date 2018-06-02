@@ -23,7 +23,7 @@ class ValidationShapeNormalisationStage(profile: String,
 
   override protected val context: NormalizationContext = HandledNormalizationContext()
 
-  case class HandledNormalizationContext() extends NormalizationContext(errorHandler, keepEditingInfo) {
+  case class HandledNormalizationContext() extends NormalizationContext(errorHandler, keepEditingInfo, profile) {
 
     override def minShape(base: Shape, superShape: Shape): Shape = {
       try {

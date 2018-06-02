@@ -2,7 +2,7 @@ package amf.plugins.domain.shapes.models
 
 import amf.core.model.StrField
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.domain.shapes.metamodel.SchemaShapeModel
+import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, SchemaShapeModel}
 import amf.plugins.domain.shapes.metamodel.SchemaShapeModel._
 import org.yaml.model.YPart
 import amf.core.utils.Strings
@@ -17,7 +17,7 @@ case class SchemaShape(override val fields: Fields, override val annotations: An
 
   override def linkCopy(): SchemaShape = SchemaShape().withId(id)
 
-  override def meta = SchemaShapeModel
+  override def meta: AnyShapeModel = SchemaShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/schema/" + name.option().getOrElse("default-schema").urlComponentEncoded
