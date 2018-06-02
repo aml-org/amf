@@ -20,6 +20,7 @@ case class PropertyShape(override private[amf] val _internal: InternalPropertySh
   def readOnly: BoolField   = _internal.readOnly
   def writeOnly: BoolField  = _internal.writeOnly
   def deprecated: BoolField = _internal.deprecated
+  def patternName: StrField = _internal.patternName
 
   def withPath(path: String): this.type = {
     _internal.withPath(path)
@@ -52,6 +53,11 @@ case class PropertyShape(override private[amf] val _internal: InternalPropertySh
 
   def withDeprecated(deprecated: Boolean): this.type = {
     _internal.withDeprecated(deprecated)
+    this
+  }
+
+  def withPatternName(pattern: String): this.type = {
+    _internal.withPatternName(pattern)
     this
   }
 
