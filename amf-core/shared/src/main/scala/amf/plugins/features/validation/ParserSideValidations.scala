@@ -212,6 +212,14 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
+  val PatternPropertiesOnClosedNode = ValidationSpecification(
+    (Namespace.AmfParser + "pattern-properties-on-closed-node").iri(),
+    "Closed node cannot define pattern properties",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val levels: Map[String, Map[String, String]] = Map(
     RecursiveShapeSpecification.id() -> Map(
       ProfileNames.RAML   -> SeverityLevels.VIOLATION,
@@ -388,6 +396,13 @@ object ParserSideValidations {
       ProfileNames.OAS    -> SeverityLevels.VIOLATION,
       ProfileNames.OAS3   -> SeverityLevels.VIOLATION,
       ProfileNames.AMF    -> SeverityLevels.VIOLATION
+    ),
+    PatternPropertiesOnClosedNode.id() -> Map(
+      ProfileNames.RAML   -> SeverityLevels.VIOLATION,
+      ProfileNames.RAML08 -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS    -> SeverityLevels.WARNING,
+      ProfileNames.OAS3   -> SeverityLevels.WARNING,
+      ProfileNames.AMF    -> SeverityLevels.WARNING
     )
   )
 
@@ -414,6 +429,7 @@ object ParserSideValidations {
     MissingFragmentSpecification,
     MissingPropertySpecification,
     OasInvalidBodyParameter,
-    ResolutionErrorSpecification
+    ResolutionErrorSpecification,
+    PatternPropertiesOnClosedNode
   )
 }
