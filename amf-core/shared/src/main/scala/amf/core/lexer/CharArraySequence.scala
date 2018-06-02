@@ -31,11 +31,20 @@ object CharArraySequence {
   def apply(stream: InputStream, length: Int, encoding: Option[String]): CharArraySequence = {
     val map: Option[InputStreamReader] = encoding.map(e => new InputStreamReader(stream, e))
     val isr: InputStreamReader         = map.getOrElse(new InputStreamReader(stream))
+    // todo Create an optimized CharSequence
     try {
-      val buf = Stream.continually(isr.read).takeWhile(_ != -1).map(_.toChar).toArray
-      new CharArraySequence(buf, 0, buf.length)
+      val out  = new CharArrayWriter(SZ)
+      val buff = Array.ofDim[Char](SZ)
+      var n    = 0
+      while (n != -1) {
+        n = isr.read(buff)
+        if (n != -1) out.write(buff, 0, n)
+      }
+      new CharArraySequence(out.toCharArray)
     } finally {
       Option(isr).foreach(_.close())
     }
   }
+
+  private final val SZ = 1024 * 16
 }

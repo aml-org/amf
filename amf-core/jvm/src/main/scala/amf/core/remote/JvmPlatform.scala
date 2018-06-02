@@ -2,6 +2,7 @@ package amf.core.remote
 import java.net.URI
 
 import amf.client.resource.{FileResourceLoader, HttpResourceLoader}
+import amf.core.remote.EcmaEncoder.encode
 import amf.core.unsafe.PlatformBuilder
 import amf.internal.resource.{ResourceLoader, ResourceLoaderAdapter}
 import org.mulesoft.common.io.{FileSystem, Fs}
@@ -42,16 +43,16 @@ class JvmPlatform extends Platform {
   }
 
   /** encodes a complete uri. Not encodes chars like / */
-  override def encodeURI(url: String): String = RhinoEncoder(url)
+  override def encodeURI(url: String): String = EcmaEncoder.encode(url)
 
   /** encodes a uri component, including chars like / and : */
-  override def encodeURIComponent(url: String): String = RhinoComponentEncoder(url)
+  override def encodeURIComponent(url: String): String = EcmaEncoder.encode(url, fullUri = false)
 
   /** decode a complete uri. */
-  override def decodeURI(url: String): String = RhinoDecoder(url)
+  override def decodeURI(url: String): String = EcmaEncoder.decode(url)
 
   /** decodes a uri component */
-  override def decodeURIComponent(url: String): String = RhinoComponentDecoder(url)
+  override def decodeURIComponent(url: String): String = EcmaEncoder.decode(url, fullUri = false)
 
   override def normalizeURL(url: String): String = encodeURI(url)
 

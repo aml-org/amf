@@ -38,7 +38,8 @@ object AMFDomainRegistry {
       .map(_.get)
       .headOption
 
-  val annotationsRegistry: mutable.HashMap[String, AnnotationGraphLoader] = mutable.HashMap(
+  val annotationsRegistry: mutable.HashMap[String, AnnotationGraphLoader] = map(
+    size = 1024,
     "lexical"              -> LexicalInformation,
     "host-lexical"         -> HostLexicalInformation,
     "base-path-lexical"    -> BasePathLexicalInformation,
@@ -50,7 +51,8 @@ object AMFDomainRegistry {
     "data-node-properties" -> DataNodePropertiesAnnotations,
     "resolved-link"        -> ResolvedLinkAnnotation
   )
-  val metadataRegistry: mutable.HashMap[String, Obj] = mutable.HashMap(
+  val metadataRegistry: mutable.HashMap[String, Obj] = map(
+    size = 1024,
     defaultIri(DocumentModel)              -> DocumentModel,
     defaultIri(ModuleModel)                -> ModuleModel,
     defaultIri(VariableValueModel)         -> VariableValueModel,
@@ -65,19 +67,21 @@ object AMFDomainRegistry {
     defaultIri(DomainExtensionModel)       -> DomainExtensionModel
   )
 
+  def map[A, B](size: Int, elems: (A, B)*): mutable.HashMap[A, B] = {
+    val r = new mutable.HashMap[A, B] {
+      override def initialSize: Int = size
+    }
+    r ++= elems
+  }
+
   val metadataResolverRegistry: mutable.ListBuffer[AMFDomainEntityResolver] = mutable.ListBuffer.empty
 
-  def registerAnnotation(annotation: String, annotationGraphLoader: AnnotationGraphLoader) = {
-    annotationsRegistry.put(annotation, annotationGraphLoader)
-  }
+  def registerAnnotation(a: String, agl: AnnotationGraphLoader): Option[AnnotationGraphLoader] =
+    annotationsRegistry.put(a, agl)
 
-  def registerModelEntity(entity: Obj) = {
-    metadataRegistry.put(defaultIri(entity), entity)
-  }
+  def registerModelEntity(entity: Obj): Option[Obj] = metadataRegistry.put(defaultIri(entity), entity)
 
-  def registerModelEntityResolver(resolver: AMFDomainEntityResolver) = {
-    metadataResolverRegistry.append(resolver)
-  }
+  def registerModelEntityResolver(resolver: AMFDomainEntityResolver): Unit = metadataResolverRegistry.append(resolver)
 
-  protected def defaultIri(metadata: Obj) = metadata.`type`.head.iri()
+  protected def defaultIri(metadata: Obj): String = metadata.`type`.head.iri()
 }
