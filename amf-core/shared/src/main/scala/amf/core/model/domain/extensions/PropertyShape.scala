@@ -20,6 +20,7 @@ case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape
   def readOnly: BoolField   = fields.field(ReadOnly)
   def writeOnly: BoolField  = fields.field(WriteOnly)
   def deprecated: BoolField = fields.field(Deprecated)
+  def patternName: StrField     = fields.field(PatternName)
 
   def withPath(path: String): this.type  = set(Path, path)
   def withRange(range: Shape): this.type = set(Range, range)
@@ -29,6 +30,7 @@ case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape
   def withReadOnly(readOnly: Boolean): this.type     = set(ReadOnly, readOnly)
   def withWriteOnly(writeOnly: Boolean): this.type   = set(WriteOnly, writeOnly)
   def withDeprecated(deprecated: Boolean): this.type = set(Deprecated, deprecated)
+  def withPatternName(pattern: String): this.type    = set(PatternName, pattern)
 
   override def adopted(parent: String): this.type = {
     simpleAdoption(parent)

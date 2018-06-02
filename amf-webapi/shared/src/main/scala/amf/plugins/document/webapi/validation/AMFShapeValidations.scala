@@ -275,6 +275,7 @@ class AMFShapeValidations(shape: Shape) {
     )
 
     node.properties.foreach { property =>
+      val patternedProperty = property.patternName.option()
       val encodedName = property.name.value().urlComponentEncoded
       nestedConstraints ++= emitShapeValidations(context + s"/$encodedName", property.range)
 
@@ -284,11 +285,14 @@ class AMFShapeValidations(shape: Shape) {
         ramlPropertyId = propertyId,
         name = validationId(node) + s"_validation_node_prop_${property.name.value()}",
         message = Some(s"Property ${property.name.value()} at $context must have a valid value"),
-        node = Some(propertyValidationId)
+        node = Some(propertyValidationId),
+        patternedProperty = patternedProperty
       )
       validation = validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(nodeConstraint))
-      validation = checkMinCount(context + s"/$encodedName", property, validation, property)
-      validation = checkMaxCount(context + s"/$encodedName", property, validation, property)
+      if (patternedProperty.isEmpty) { // TODO: Should we emit this for pattern properties?
+        validation = checkMinCount(context + s"/$encodedName", property, validation, property, patternedProperty)
+        validation = checkMaxCount(context + s"/$encodedName", property, validation, property, patternedProperty)
+      }
     }
 
     // Validation to allow to emit the properties number in the model graph
@@ -301,6 +305,7 @@ class AMFShapeValidations(shape: Shape) {
           node = Some(Namespace.AmfValidation.base + "/properties")
         )
       ))
+
     validation = checkClosed(validation, node)
     validation = checkObjectType(node, context, validation)
     validation = checkMinProperties(context, validation, node)
@@ -627,7 +632,8 @@ class AMFShapeValidations(shape: Shape) {
   protected def checkMinCount(context: String,
                               property: PropertyShape,
                               validation: ValidationSpecification,
-                              shape: PropertyShape): ValidationSpecification = {
+                              shape: PropertyShape,
+                              patterned: Option[String]): ValidationSpecification = {
     shape.fields.?[AmfScalar](PropertyShapeModel.MinCount) match {
       case Some(minCount) if minCount.toNumber.intValue() > 0 =>
         val msg = s"Data at $context must have min. cardinality $minCount"
@@ -636,7 +642,8 @@ class AMFShapeValidations(shape: Shape) {
           name = validation.name + "_" + property.name.value().urlComponentEncoded + "_validation_minCount/prop",
           message = Some(msg),
           minCount = Some(s"$minCount"),
-          datatype = effectiveDataType(shape)
+          datatype = effectiveDataType(shape),
+          patternedProperty = patterned
         )
         validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(propertyValidation))
       case _ => validation
@@ -646,7 +653,8 @@ class AMFShapeValidations(shape: Shape) {
   protected def checkMaxCount(context: String,
                               property: PropertyShape,
                               validation: ValidationSpecification,
-                              shape: PropertyShape): ValidationSpecification = {
+                              shape: PropertyShape,
+                              patterned: Option[String]): ValidationSpecification = {
     shape.fields.?[AmfScalar](PropertyShapeModel.MaxCount) match {
       case Some(maxCount) =>
         val msg = s"Data at $context must have max. cardinality $maxCount"
@@ -655,7 +663,8 @@ class AMFShapeValidations(shape: Shape) {
           name = validation.name + "_" + property.name.value().urlComponentEncoded + "_validation_minCount/prop",
           message = Some(msg),
           maxCount = Some(s"$maxCount"),
-          datatype = effectiveDataType(shape)
+          datatype = effectiveDataType(shape),
+          patternedProperty = patterned
         )
         validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(propertyValidation))
       case None => validation

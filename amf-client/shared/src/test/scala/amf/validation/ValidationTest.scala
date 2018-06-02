@@ -2660,6 +2660,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.exists(_.message.contains("Invalid authorization grant")))
     }
   }
+
   test("Invalid map key") {
     for {
       validation <- Validation(platform)
@@ -2670,6 +2671,50 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.size == 1)
       assert(
         report.results.exists(_.message.equals("Property {alpha2code: } not supported in a raml 1.0 webApi node")))
+    }
+  }
+
+  test("Pattern properties key") {
+    for {
+      validation <- Validation(platform)
+      model      <- AMFCompiler(validationsPath + "data/pattern_properties.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 1)
+    }
+  }
+
+  test("Pattern properties key 2 (all additional properties)") {
+    for {
+      validation <- Validation(platform)
+      model      <- AMFCompiler(validationsPath + "data/pattern_properties2.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 1)
+    }
+  }
+
+  test("Pattern properties key 3 (precedence)") {
+    for {
+      validation <- Validation(platform)
+      model      <- AMFCompiler(validationsPath + "data/pattern_properties3.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 1)
+    }
+  }
+
+  test("Pattern properties key 4 (additionalProperties: false clash)") {
+    for {
+      validation <- Validation(platform)
+      model      <- AMFCompiler(validationsPath + "data/pattern_properties4.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 1)
     }
   }
 }

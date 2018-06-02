@@ -354,7 +354,6 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
     map.key("displayName", ShapeModel.DisplayName in shape)
     map.key("description", ShapeModel.Description in shape)
     map.key("enum", ShapeModel.Values in shape)
-    //map.key("pattern", (ScalarShapeModel.Pattern in shape).allowingAnnotations)
     map.key("pattern", entry => {
       var regex = entry.value.as[String]
       if (!regex.startsWith("^")) regex = "^" + regex
@@ -1175,6 +1174,14 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             case Some(m) =>
               val properties: Seq[PropertyShape] =
                 PropertiesParser(m, shape.withProperty).parse()
+              if (properties.exists(_.patternName.nonEmpty) && shape.closed.option().getOrElse(false)) {
+                ctx.violation(
+                  ParserSideValidations.PatternPropertiesOnClosedNode.id(),
+                  shape.id,
+                  s"Node without additional properties support cannot have pattern properties",
+                  node
+                )
+              }
               shape.set(NodeShapeModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
             case _ => // Empty properties node.
           }
@@ -1214,6 +1221,15 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       entry.key.to[String] match {
         case Right(prop) =>
           val property = producer(prop).add(Annotations(entry))
+
+          // we detect pattern properties here
+          if (prop.startsWith("/") && prop.endsWith("/")) {
+            if (prop == "//") {
+              property.withPatternName("^.*$")
+            } else {
+              property.withPatternName(prop.drop(1).dropRight(1))
+            }
+          }
 
           var explicitRequired: Option[Value] = None
           entry.value.toOption[YMap] match {
