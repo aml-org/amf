@@ -64,7 +64,7 @@ case class ArrayShape(override val fields: Fields, override val annotations: Ann
   def items: Shape                       = fields.field(Items)
   def withItems(items: Shape): this.type = set(Items, items)
 
-  def toMatrixShape: MatrixShape = MatrixShape(fields, annotations)
+  def toMatrixShape: MatrixShape = MatrixShape(fields, annotations).withId(id)
 
   override def linkCopy(): ArrayShape = ArrayShape().withId(id)
 
