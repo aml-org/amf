@@ -48,7 +48,12 @@ class JvmWrapperTests extends WrapperTests {
       seq.size should be(2)
       val statusCode = seq.head
       statusCode.level should be("Violation")
-      statusCode.message should endWith("Unhandled status code 404 => https://raml.org/notexists")
+
+      // hack to avoid that this test fail when you don't have internet connection.If you have internet, the raml.org domain will return an 404 error,
+      // but if you dont have internet connection, you will not reach the raml.org host, so it will be an unknown host exception violation.
+
+      statusCode.message should (endWith("Unhandled status code 404 => https://raml.org/notexists") or
+        endWith("java.net.UnknownHostException: raml.org"))
       statusCode.position should be(Range((6, 10), (6, 45)))
 
       val unresolvedRef = seq.last

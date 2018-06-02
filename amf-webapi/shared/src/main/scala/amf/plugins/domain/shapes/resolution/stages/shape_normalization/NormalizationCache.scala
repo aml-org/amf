@@ -1,0 +1,85 @@
+package amf.plugins.domain.shapes.resolution.stages.shape_normalization
+
+import amf.core.model.domain.{RecursiveShape, Shape}
+import amf.core.parser.ErrorHandler
+
+import scala.collection.mutable
+
+private[plugins] class NormalizationContext(final val errorHandler: ErrorHandler,
+                                            final val keepEditingInfo: Boolean,
+                                            val cache: NormalizationCache = NormalizationCache()) {
+
+  private val minShapeClass: MinShapeAlgorithm = new MinShapeAlgorithm()(this)
+
+  def minShape(base: Shape, superShape: Shape): Shape = minShapeClass.computeMinShape(base, superShape)
+}
+
+private[shape_normalization] case class NormalizationCache() {
+  def removeIfPresent(shape: Shape): this.type = {
+    get(shape.id) match {
+      case Some(s) if s.equals(shape) => cache.remove(shape.id)
+      case _                          =>
+    }
+    this
+  }
+
+  def registerMapping(id: String, alias: String): this.type = {
+    mappings.get(alias) match {
+      case Some(a) =>
+        mappings.remove(alias)
+        mappings.put(id, a)
+      case _ =>
+        mappings.put(id, alias)
+        fixPointCache.get(id).foreach { seq =>
+          fixPointCache.remove(id)
+          fixPointCache.put(alias, seq.map(_.withFixPoint(alias)))
+        }
+    }
+    this
+  }
+
+  private val cache         = mutable.Map[String, Shape]()
+  private val fixPointCache = mutable.Map[String, Seq[RecursiveShape]]()
+  private val mappings      = mutable.Map[String, String]()
+
+  private def registerFixPoint(r: RecursiveShape): RecursiveShape = {
+    r.fixpoint.option().foreach { fp =>
+      val alias = mappings.get(fp)
+      fixPointCache.get(fp) match {
+        case Some(s) =>
+          val shapes = s :+ r
+          val newAlias = alias.fold({
+            fp
+          })(a => {
+            shapes.foreach(_.withFixPoint(a))
+            fixPointCache.remove(fp)
+            a
+          })
+          fixPointCache.put(newAlias, shapes)
+
+        case _ =>
+          alias.fold({
+            fixPointCache.put(fp, Seq(r))
+          })(a => {
+            r.withFixPoint(a)
+            fixPointCache.put(a, Seq(r))
+          })
+      }
+    }
+    r
+  }
+
+  def +(shape: Shape): this.type = {
+    shape match {
+      case r: RecursiveShape =>
+        registerFixPoint(r)
+      case _ =>
+    }
+    cache.put(shape.id, shape)
+    this
+  }
+
+  def get(id: String): Option[Shape] = cache.get(id)
+
+  def exists(id: String): Boolean = cache.contains(id)
+}

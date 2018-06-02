@@ -2794,22 +2794,4 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 //          assert(report.results.exists(_.message.equals("Missing library location")))
 //        }
 //      }
-//
-//        test("Api that takes to long to validate") {
-//          ExecutionLog.start()
-//          for {
-//            validation <- Validation(platform)
-//            doc <- AMFCompiler(validationsPath + "production/master-raml-1.0.0-fat-raml/Raw8.raml",
-//              platform,
-//              RamlYamlHint,
-//              validation)
-//              .build()
-//            report <- validation.validate(doc, ProfileNames.RAML)
-//          } yield {
-//            ExecutionLog.finish()
-//            ExecutionLog.buildReport()
-//            assert(!report.conforms)
-//            assert(report.results.exists(_.message.equals("Missing library location")))
-//          }
-//        }
 }
