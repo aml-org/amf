@@ -1,28 +1,26 @@
 package amf.core.remote
 
-/** Migrated code from Rhino */
-class RhinoEncoder(fullUri: Boolean) {
-
-  /*
-   *   ECMA 3, 15.1.3 URI Handling Function Properties
-   *
-   *   The following are implementations of the algorithms
-   *   given in the ECMA specification for the hidden functions
-   *   'Encode' and 'Decode'.
-   */
-  def encode(str: String): String =
+/**
+  *   ECMA 3, 15.1.3 URI Handling Function Properties
+  *
+  *   The following are implementations of the algorithms
+  *   given in the ECMA specification for the hidden functions
+  *   'Encode' and 'Decode'.
+  */
+object EcmaEncoder {
+  def encode(str: String, fullUri: Boolean = true): String =
     if (str == null) str
     else {
       var utf8buf: Array[Byte] = null
       var sb: StringBuilder    = null
 
+      val unEscaped = if (fullUri) unEscapedFull else unEscapedPartial
+
       var k = 0
       while (k < str.length) {
         val C = str(k)
-        if (encodeUnescaped(C)) {
-          if (sb != null) {
-            sb.append(C)
-          }
+        if (C < 128 && unEscaped(C)) {
+          if (sb != null) sb.append(C)
         } else {
           if (sb == null) {
             sb = new StringBuilder(str.length + 3)
@@ -32,9 +30,7 @@ class RhinoEncoder(fullUri: Boolean) {
             utf8buf = Array.ofDim[Byte](6)
           }
 
-          if (0xDC00 <= C && C <= 0xDFFF) {
-            throw uriError
-          }
+          if (0xDC00 <= C && C <= 0xDFFF) throw uriError
           var V: Int = 0
 
           if (C < 0xD800 || 0xDBFF < C) {
@@ -67,7 +63,7 @@ class RhinoEncoder(fullUri: Boolean) {
     }
 
   private def toHexChar(i: Int) = {
-    if ((i >> 4) != 0) throw uriError //Kit.codeBug
+    if ((i >> 4) != 0) throw uriError // Kit.codeBug
     (if (i < 10) i + '0'
      else i - 10 + 'A').toChar
   }
@@ -77,7 +73,7 @@ class RhinoEncoder(fullUri: Boolean) {
    */
   private def oneUcs4ToUtf8Char(utf8Buffer: Array[Byte], ucs: Int) = {
     var utf8Length = 1
-    // JS_ASSERT(ucs4Char <= 0x7FFFFFFF);
+
     var ucs4Char = ucs
     if ((ucs4Char & ~0x7F) == 0) utf8Buffer(0) = ucs4Char.toByte
     else {
@@ -106,16 +102,7 @@ class RhinoEncoder(fullUri: Boolean) {
 
   private def uriError = UriError("Bad iri")
 
-  private def encodeUnescaped(c: Char) = {
-    if (('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z') || ('0' <= c && c <= '9')) true
-    else if ("-_.!~*'()".contains(c)) true
-    else if (fullUri) UriDecodeReserved.contains(c)
-    else false
-  }
-
-  private val UriDecodeReserved = ";/?:@&=+$,#"
-
-  private val InvalidUtf8: Int = Integer.MAX_VALUE
+  private final val InvalidUtf8: Int = Integer.MAX_VALUE
 
   private def unHex(c: Char): Int = {
     if ('A' <= c && c <= 'F') c - 'A' + 10
@@ -131,7 +118,7 @@ class RhinoEncoder(fullUri: Boolean) {
     else -1
   }
 
-  def decode(str: String): String = {
+  def decode(str: String, fullUri: Boolean = true): String = {
     var buf: Array[Char] = null
     var bufTop           = 0
     var k                = 0
@@ -238,21 +225,17 @@ class RhinoEncoder(fullUri: Boolean) {
     if (buf == null) str
     else new String(buf, 0, bufTop)
   }
+
+  private final val UriDecodeReserved = ";/?:@&=+$,#"
+
+  private def encodeUnescaped(c: Int, fullUri: Boolean) = {
+    if ('A' <= c && c <= 'Z' || 'a' <= c && c <= 'z' || '0' <= c && c <= '9') true
+    else "-_.!~*'()".contains(c) || fullUri && UriDecodeReserved.contains(c)
+  }
+
+  private final val unEscapedFull    = ((0 to 128) map (encodeUnescaped(_, fullUri = true))).toArray[Boolean]
+  private final val unEscapedPartial = ((0 to 128) map (encodeUnescaped(_, fullUri = false))).toArray[Boolean]
+
   case class UriError(message: String) extends Exception(message)
-}
 
-object RhinoEncoder {
-  def apply(url: String): String = new RhinoEncoder(true).encode(url)
-}
-
-object RhinoComponentEncoder {
-  def apply(url: String): String = new RhinoEncoder(false).encode(url)
-}
-
-object RhinoDecoder {
-  def apply(url: String): String = new RhinoEncoder(true).decode(url)
-}
-
-object RhinoComponentDecoder {
-  def apply(url: String): String = new RhinoEncoder(false).decode(url)
 }
