@@ -1,0 +1,12 @@
+#%RAML 0.8
+title: ACUTaskServices
+version: 1.0
+schemas: 
+  - Createtask: !include ./acutaskservices-schema.json
+/endpoint:
+  description: "Creates a task for an user in BPM"
+  post:
+    body:
+        application/json:
+          schema: Createtask
+          example: !include ./acutaskservices-example.json

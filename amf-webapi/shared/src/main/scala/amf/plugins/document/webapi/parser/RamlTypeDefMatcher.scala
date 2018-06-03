@@ -60,15 +60,19 @@ object RamlTypeDefMatcher {
     }
 
   object XMLSchema {
-    def unapply(str: String): Option[String] =
-      if (str.startsWith("<") && !(str.startsWith("<<") && str.endsWith(">>"))) Some(str)
+    def unapply(str: String): Option[String] = {
+      val trimed = str
+      if (trimed.startsWith("<") && !(trimed.startsWith("<<") && trimed.endsWith(">>"))) Some(str)
       else None
+    }
   }
 
   object JSONSchema {
-    def unapply(str: String): Option[String] =
-      if (str.startsWith("[") || str.startsWith("{")) Some(str)
+    def unapply(str: String): Option[String] = {
+      val trimed = str.trim
+      if (trimed.startsWith("[") || trimed.startsWith("{")) Some(str)
       else None
+    }
   }
 
   object TypeExpression {

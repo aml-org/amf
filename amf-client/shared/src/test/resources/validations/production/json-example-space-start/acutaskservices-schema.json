@@ -1,0 +1,33 @@
+{
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Product",
+        "description": "Creates a Task",
+        "type": "object",
+        "properties":{
+          "ApplicationName":{
+            "type": "string"
+          },
+          "FlowId":{
+            "type": "string"
+          },
+          "Outcomes":{
+           "type": "array"
+           
+          },
+          "Title":{
+            "type": "string"
+          },
+          "Priority":{
+           "type": "array"
+          },
+          "Payload":{
+            "type": "string"
+          },
+          "AssignedTo":{
+            "type": "string"
+          },
+          "AssignedType":{
+           "type": "array"
+          }
+        }
+      }

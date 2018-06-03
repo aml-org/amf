@@ -13,7 +13,7 @@ import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.core.validation.{SeverityLevels, ValidationCandidate}
 import amf.facades.{AMFCompiler, AMFRenderer, Validation}
 import amf.plugins.document.graph.parser.GraphEmitter
-import amf.plugins.document.webapi.RAML10Plugin
+import amf.plugins.document.webapi.{RAML08Plugin, RAML10Plugin}
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 import amf.plugins.document.webapi.validation.{AMFShapeValidations, PayloadValidation, UnitPayloadsValidation}
 import amf.plugins.domain.shapes.models.ArrayShape
@@ -2683,8 +2683,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Pattern properties key") {
     for {
       validation <- Validation(platform)
-      model      <- AMFCompiler(validationsPath + "data/pattern_properties.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML)
+      model <- AMFCompiler(validationsPath + "data/pattern_properties.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(model, ProfileNames.RAML)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
@@ -2694,8 +2695,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Pattern properties key 2 (all additional properties)") {
     for {
       validation <- Validation(platform)
-      model      <- AMFCompiler(validationsPath + "data/pattern_properties2.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML)
+      model <- AMFCompiler(validationsPath + "data/pattern_properties2.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(model, ProfileNames.RAML)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
@@ -2705,8 +2707,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Pattern properties key 3 (precedence)") {
     for {
       validation <- Validation(platform)
-      model      <- AMFCompiler(validationsPath + "data/pattern_properties3.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML)
+      model <- AMFCompiler(validationsPath + "data/pattern_properties3.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(model, ProfileNames.RAML)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
@@ -2716,8 +2719,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Pattern properties key 4 (additionalProperties: false clash)") {
     for {
       validation <- Validation(platform)
-      model      <- AMFCompiler(validationsPath + "data/pattern_properties4.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML)
+      model <- AMFCompiler(validationsPath + "data/pattern_properties4.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(model, ProfileNames.RAML)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
@@ -2749,11 +2753,27 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("vuconnectionapi example") {
     for {
       validation <- Validation(platform)
-      model      <- AMFCompiler(productionPath + "vuconnectapi-1.0.0-fat-raml/api.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML)
+      model <- AMFCompiler(productionPath + "vuconnectapi-1.0.0-fat-raml/api.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(model, ProfileNames.RAML)
     } yield {
       assert(!report.conforms)
       assert(report.results.nonEmpty)
+    }
+  }
+
+  test("Json example external that starts with space") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "production/json-example-space-start/api.raml",
+                         platform,
+                         RamlYamlHint,
+                         validation)
+        .build()
+      report   <- validation.validate(doc, ProfileNames.RAML08)
+      resolved <- Future { RAML08Plugin.resolve(doc) }
+    } yield {
+      assert(report.conforms)
     }
   }
 
