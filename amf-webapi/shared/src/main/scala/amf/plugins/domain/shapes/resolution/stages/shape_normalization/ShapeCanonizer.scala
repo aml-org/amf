@@ -181,16 +181,18 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
     }
 
     if (acc.length == 1) {
-      tuple.fields.setWithoutId(TupleShapeModel.TupleItems,
-                                AmfArray(acc.head),
-                                tuple.fields.getValue(TupleShapeModel.TupleItems).annotations)
+      tuple.fields.setWithoutId(
+        TupleShapeModel.TupleItems,
+        AmfArray(acc.head),
+        Option(tuple.fields.getValue(TupleShapeModel.TupleItems)).map(_.annotations).getOrElse(Annotations()))
       tuple
     } else {
       val tuples = acc.map { items =>
         val newTuple = tuple.cloneShape(Some(context.errorHandler))
-        newTuple.fields.setWithoutId(TupleShapeModel.Items,
-                                     AmfArray(items),
-                                     tuple.fields.getValue(TupleShapeModel.Items).annotations)
+        newTuple.fields.setWithoutId(
+          TupleShapeModel.Items,
+          AmfArray(items),
+          Option(tuple.fields.getValue(TupleShapeModel.Items)).map(_.annotations).getOrElse(Annotations()))
       }
       val union = UnionShape()
       union.id = tuple.id + "resolved"

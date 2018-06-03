@@ -173,8 +173,15 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     val baseItems  = superTuple.items
 
     if (superItems.length != baseItems.length) {
-      throw new InheritanceIncompatibleShapeError(
-        "Cannot inherit from a tuple shape with different number of elements")
+      if (context.isRaml08 && baseItems.isEmpty) {
+        baseTuple.fields.setWithoutId(TupleShapeModel.Items,
+                                      AmfArray(superItems),
+                                      baseTuple.fields.get(TupleShapeModel.Items).annotations)
+        baseTuple
+      } else {
+        throw new InheritanceIncompatibleShapeError(
+          "Cannot inherit from a tuple shape with different number of elements")
+      }
     } else {
       val newItems = for {
         (baseItem, i) <- baseItems.view.zipWithIndex
