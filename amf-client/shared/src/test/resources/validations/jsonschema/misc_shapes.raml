@@ -1,0 +1,44 @@
+#%RAML 1.0
+title: test
+
+types:
+  test1: |
+    {
+      "type": "object",
+      "id": "urn:jsonschema:org:mule:module:apikit:schema:User",
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "required": true
+        },
+        "lastName": {
+          "type": "string",
+          "required": true
+        },
+        "emailAddresses": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "username": {
+          "type": "string",
+          "required": true
+        }
+      }
+    }
+
+/ep1:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example: |
+              {
+                "username": "gbs",
+                "firstName": "george",
+                "lastName": "bernard shaw"
+              }

@@ -2849,4 +2849,14 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.conforms)
     }
   }
+
+  test("JSON Schema Draft-3 required property support") {
+    for {
+      validation <- Validation(platform)
+      model      <- AMFCompiler(validationsPath + "jsonschema/misc_shapes.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+    }
+  }
 }
