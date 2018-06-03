@@ -8340,7 +8340,8 @@ baseUri: https://okaa.bva-auctions.com/api/{version}
             - Or just the contents, as a base64 encoded string.
           Images are positioned cq ordered by the order in which they were received, if a position is not specified.
         body:
-          image/jpeg: {}
+          image/jpeg:
+            type: any
           application/json:
             (amf-or):
               -
@@ -8473,7 +8474,8 @@ baseUri: https://okaa.bva-auctions.com/api/{version}
         description: |
           Accepts a zip file containing all pictures for this lot. Existing pictures are deleted. Images are positioned cq ordered by their original filenames.
         body:
-          application/zip: {}
+          application/zip:
+            type: any
       get:
         description: |
           Gets the collection of pictures for this lot as a collection of references in json. Or as a zip file.
@@ -8531,8 +8533,10 @@ baseUri: https://okaa.bva-auctions.com/api/{version}
                     required: false
           200:
             body:
-              application/zip: {}
-              application/json: {}
+              application/zip:
+                type: any
+              application/json:
+                type: any
       /{id}:
         get:
           description: |

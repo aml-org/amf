@@ -8,7 +8,7 @@ import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
-import amf.plugins.domain.shapes.models.NodeShape
+import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload
 import org.yaml.model._
@@ -72,7 +72,11 @@ case class Raml08PayloadParser(entry: YMapEntry, producer: Option[String] => Pay
     }
 
     entry.value.tagType match {
-      case YType.Null => // Nothing
+      case YType.Null =>
+        val anyShape = AnyShape().withName("schema").adopted(payload.id)
+        anyShape.annotations += SynthesizedField()
+        payload.withSchema(anyShape)
+
       case _ =>
         if (List("application/x-www-form-urlencoded", "multipart/form-data").contains(mediaType)) {
           Raml08WebFormParser(entry.value.as[YMap], payload.id).parse().foreach(payload.withSchema)
