@@ -1155,9 +1155,11 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
   }
 
   case class NodeShapeParser(shape: NodeShape, map: YMap) extends AnyShapeParser {
-    override def parse(): NodeShape = {
+    override def parse(): AnyShape = {
 
       super.parse()
+
+      checkExtendedUnionDiscriminator()
 
       map.key("minProperties", (NodeShapeModel.MinProperties in shape).allowingAnnotations)
       map.key("maxProperties", (NodeShapeModel.MaxProperties in shape).allowingAnnotations)
@@ -1183,7 +1185,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 PropertiesParser(m, shape.withProperty).parse()
               if (properties.exists(_.patternName.nonEmpty) && shape.closed.option().getOrElse(false)) {
                 ctx.violation(
-                  ParserSideValidations.PatternPropertiesOnClosedNode.id(),
+                  ParserSideValidations.PatternPropertiesOnClosedNodeSpecification.id(),
                   shape.id,
                   s"Node without additional properties support cannot have pattern properties",
                   node
@@ -1210,6 +1212,28 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       ctx.closedRamlTypeShape(shape, map, "nodeShape", isAnnotation)
 
       shape
+    }
+
+    def checkExtendedUnionDiscriminator(): Unit = {
+      if (shape.inherits.length == 1 && shape.inherits.head.isInstanceOf[UnionShape]) {
+        if (map.key("discriminator").isDefined) {
+          ctx.violation(
+            ParserSideValidations.DiscriminatorOnExtendedUnionSpecification.id(),
+            "Property discriminator forbidden in a node extending a unionShape",
+            shape.id,
+            map.key("discriminator").get
+          )
+        }
+
+        if (map.key("discriminatorValue").isDefined) {
+          ctx.violation(
+            ParserSideValidations.DiscriminatorOnExtendedUnionSpecification.id(),
+            "Property discriminatorValue forbidden in a node extending a unionShape",
+            shape.id,
+            map.key("discriminatorValue").get
+          )
+        }
+      }
     }
   }
 
