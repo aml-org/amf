@@ -2777,6 +2777,21 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Discriminator in union definition") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "discriminator_union.raml",
+        platform,
+        RamlYamlHint,
+        validation)
+        .build()
+      report   <- validation.validate(doc, ProfileNames.RAML08)
+      resolved <- Future { RAML08Plugin.resolve(doc) }
+    } yield {
+      assert(!report.conforms)
+    }
+  }
+
   // this test takes like 2 minuts to run. Uncomment to test performance in validation and normalization shapes cases.
   // Use to take more than 2 hours and in some cases, throwed GC overhead limit exception
 
