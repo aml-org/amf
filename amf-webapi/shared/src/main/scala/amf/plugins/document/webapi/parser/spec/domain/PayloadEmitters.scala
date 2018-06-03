@@ -1,9 +1,11 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.core.annotations.SynthesizedField
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
 import amf.core.model.document.BaseUnit
-import amf.core.parser.{FieldEntry, Position}
+import amf.core.model.domain.Shape
+import amf.core.parser.{Annotations, FieldEntry, Position}
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
 import amf.plugins.document.webapi.contexts.RamlSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.{
@@ -17,7 +19,7 @@ import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YMap, YNode}
+import org.yaml.model.{YMap, YNode, YType}
 
 /**
   *
@@ -94,18 +96,27 @@ case class Raml08PayloadEmitter(payload: Payload, ordering: SpecOrdering)(implic
     payload.fields.entry(PayloadModel.MediaType) match {
       case Some(fieldEntry) =>
         Seq(new EntryEmitter() {
-          override def emit(b: EntryBuilder): Unit =
-            b.entry(
-              payload.mediaType.value(),
-              p => {
-                typeEmitters match {
-                  case Seq(pe: PartEmitter) => pe.emit(p)
-                  case es if es.forall(_.isInstanceOf[EntryEmitter]) =>
-                    p.obj(traverse(ordering.sorted(es.collect({ case e: EntryEmitter => e })), _))
-                  case other => throw new Exception(s"IllegalTypeDeclarations found: $other")
+          override def emit(b: EntryBuilder): Unit = {
+            val emitters = typeEmitters
+            if (emitters.nonEmpty) {
+              b.entry(
+                payload.mediaType.value(),
+                p => {
+                  emitters match {
+                    case Seq(pe: PartEmitter) => pe.emit(p)
+                    case es if es.forall(_.isInstanceOf[EntryEmitter]) =>
+                      p.obj(traverse(ordering.sorted(es.collect({ case e: EntryEmitter => e })), _))
+                    case other => throw new Exception(s"IllegalTypeDeclarations found: $other")
+                  }
                 }
-              }
-            )
+              )
+            } else {
+              b.entry(
+                payload.mediaType.value(),
+                p => raw(p, "", YType.Null)
+              )
+            }
+          }
 
           override def position(): Position = pos(payload.annotations)
         })
@@ -115,6 +126,7 @@ case class Raml08PayloadEmitter(payload: Payload, ordering: SpecOrdering)(implic
 
   val typeEmitters: Seq[Emitter] = {
     Option(payload.schema) match {
+      case Some(s: Shape) if s.annotations.contains(classOf[SynthesizedField]) => Nil
       case Some(node: NodeShape) if !node.isLink && node.annotations.find(classOf[ParsedJSONSchema]).isEmpty =>
         Seq(Raml08FormPropertiesEmitter(node, ordering))
       case Some(anyShape: AnyShape) =>
