@@ -1,0 +1,20 @@
+#%RAML 1.0
+title: Api With Warnings
+
+types:
+  Person:
+    type: object
+    properties:
+      name: string
+      kind: string
+  Employee:
+    type: Person
+    properties:
+      employeeId: string
+  User:
+    type: Person
+    properties:
+      userId: string
+  PersonOrDog:
+   type: Person | Employee | User
+   discriminator: hasTail

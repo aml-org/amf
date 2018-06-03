@@ -212,9 +212,17 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
-  val PatternPropertiesOnClosedNode = ValidationSpecification(
+  val PatternPropertiesOnClosedNodeSpecification = ValidationSpecification(
     (Namespace.AmfParser + "pattern-properties-on-closed-node").iri(),
     "Closed node cannot define pattern properties",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
+  val DiscriminatorOnExtendedUnionSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "discriminator-on-extended-union").iri(),
+    "Property discriminator not supported in a node extending a unionShape",
     None,
     None,
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
@@ -397,7 +405,14 @@ object ParserSideValidations {
       ProfileNames.OAS3   -> SeverityLevels.VIOLATION,
       ProfileNames.AMF    -> SeverityLevels.VIOLATION
     ),
-    PatternPropertiesOnClosedNode.id() -> Map(
+    PatternPropertiesOnClosedNodeSpecification.id() -> Map(
+      ProfileNames.RAML   -> SeverityLevels.VIOLATION,
+      ProfileNames.RAML08 -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS    -> SeverityLevels.WARNING,
+      ProfileNames.OAS3   -> SeverityLevels.WARNING,
+      ProfileNames.AMF    -> SeverityLevels.WARNING
+    ),
+    DiscriminatorOnExtendedUnionSpecification.id() -> Map(
       ProfileNames.RAML   -> SeverityLevels.VIOLATION,
       ProfileNames.RAML08 -> SeverityLevels.VIOLATION,
       ProfileNames.OAS    -> SeverityLevels.WARNING,
@@ -430,6 +445,7 @@ object ParserSideValidations {
     MissingPropertySpecification,
     OasInvalidBodyParameter,
     ResolutionErrorSpecification,
-    PatternPropertiesOnClosedNode
+    PatternPropertiesOnClosedNodeSpecification,
+    DiscriminatorOnExtendedUnionSpecification
   )
 }
