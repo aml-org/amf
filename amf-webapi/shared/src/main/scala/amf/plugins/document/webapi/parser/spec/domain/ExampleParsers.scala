@@ -186,6 +186,8 @@ case class RamlExampleValueAsString(node: YNode, example: Example, options: Exam
     }
 
     node.toOption[YScalar] match {
+      case Some(scalar) if node.tagType == YType.Null =>
+        example.set(ExampleModel.Raw, AmfScalar("null", Annotations.valueNode(node)), Annotations.valueNode(node))
       case Some(scalar) =>
         example.set(ExampleModel.Raw, AmfScalar(scalar.text, Annotations.valueNode(node)), Annotations.valueNode(node))
       case _ =>

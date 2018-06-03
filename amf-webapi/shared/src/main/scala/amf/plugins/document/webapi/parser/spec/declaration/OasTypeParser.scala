@@ -801,6 +801,22 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         entry.value.toOption[YMap].foreach(_.key("deprecated", PropertyShapeModel.Deprecated in property))
       }
 
+
+      // This comes from JSON Schema draft-3, we will parse it for backward compatibility but we will not generate it
+      entry.value.toOption[YMap].foreach(
+        _.key(
+          "required",
+          entry => {
+            if (entry.value.tagType == YType.Bool) {
+              val required = ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
+              property.set(PropertyShapeModel.MinCount,
+                AmfScalar(if (required) 1 else 0),
+                Annotations(entry) += ExplicitField())
+            }
+          }
+        )
+      )
+
       OasTypeParser(entry, shape => shape.adopted(property.id), version)
         .parse()
         .foreach(property.set(PropertyShapeModel.Range, _))

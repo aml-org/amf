@@ -1,6 +1,5 @@
 package amf.emit
 
-import amf.core.benchmark.ExecutionLog
 import amf.core.remote._
 import amf.facades.Validation
 import amf.io.BuildCycleTests
@@ -662,6 +661,14 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("missing_payload.raml", "missing_payload.jsonld", RamlYamlHint, Amf, base08Path)
   }
 
+  test("Closed node for 0.8 web form test") {
+    cycle("closed_web_form.raml", "closed_web_form.json", RamlYamlHint, Oas2, base08Path)
+  }
+
+  test("Closed node for 0.8 empty payload schema test") {
+    cycle("empty_payload.raml", "empty_payload.jsonld", RamlYamlHint, Amf, base08Path)
+  }
+
   test("Default value test") {
     cycle("default_value.raml", "default_value.jsonld", RamlYamlHint, Amf, base08Path)
   }
@@ -1278,7 +1285,7 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("lockUnlockStats.raml", "lockUnlockStats.jsonld", RamlYamlHint, Amf, productionPath + "lock-unlock-api-1.0.0-fat-raml/")
   }
 
-  test("HERE_HERE patternProperties JSON Schema oas to raml") {
+  test("PatternProperties JSON Schema oas to raml") {
     cycle("oasPatternProperties.yaml", "oasPatternProperties.raml", OasYamlHint, Raml)
   }
 }
