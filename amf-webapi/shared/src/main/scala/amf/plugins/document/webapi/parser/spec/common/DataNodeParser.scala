@@ -33,10 +33,42 @@ case class DataNodeParser(node: YNode,
                           parameters: AbstractVariables = AbstractVariables(),
                           parent: Option[String] = None,
                           idCounter: IdCounter = new IdCounter)(implicit ctx: WebApiContext) {
+
+  def parseTimestamp(node: YNode): (Seq[String], Seq[String]) = {
+    val text = node.as[YScalar].text.toLowerCase()
+    val date = text.split("t").headOption.getOrElse("")
+    val rest = text.split("t").last
+    val time = if (rest.contains("+")) {
+      rest.split("+").head
+    } else if (rest.contains("-")) {
+      rest.split("-").head
+    } else if (rest.contains("z")) {
+      rest.split("z").head
+    } else if (rest.contains(".")) {
+      rest.split(".").head
+    } else {
+      rest
+    }
+    val dateParts = date.split("-")
+    val timeParts = time.split(":")
+    (dateParts, timeParts)
+  }
+
   def parse(): DataNode = {
     node.tag.tagType match {
       case YType.Str =>
-        if (node.as[YScalar].text.matches("^\\d{2}:\\d{2}:\\d{2}$")) {
+        if (node
+          .as[YScalar]
+          .text
+          .matches(
+            "(\\d{4})-(\\d{2})-(\\d{2})(T|t)(\\d{2})\\:(\\d{2})\\:(\\d{2})(([+-](\\d{2})\\:(\\d{2}))|(\\.\\d+)?Z|(\\.\\d+)?z)")) {
+          val (dateParts, timeParts) = parseTimestamp(node)
+          if (dateParts(1).toInt < 13 && dateParts(2).toInt < 32 && timeParts(0).toInt < 24 && timeParts(1).toInt < 60 && timeParts(1).toInt < 60)
+            parseScalar(node.as[YScalar], "dateTime")
+          else
+            parseScalar(node.as[YScalar], "string")
+
+        } else if (node.as[YScalar].text.matches("^\\d{2}:\\d{2}:\\d{2}$")) {
           val nodeScalar = node.as[YScalar]
           val parts = nodeScalar.text.split(":")
           if (parts(0).toInt < 24 && parts(1).toInt < 60 && parts(1).toInt < 60)
@@ -68,22 +100,7 @@ case class DataNodeParser(node: YNode,
       case YType.Map   => parseObject(node.as[YMap])
       case YType.Timestamp =>
         try {
-          val text = node.as[YScalar].text.toLowerCase()
-          val date = text.split("t").headOption.getOrElse("")
-          val rest = text.split("t").last
-          val time = if (rest.contains("+")) {
-            rest.split("+").head
-          } else if (rest.contains("-")) {
-            rest.split("-").head
-          } else if (rest.contains("z")) {
-            rest.split("z").head
-          } else if (rest.contains(".")) {
-            rest.split(".").head
-          } else {
-            rest
-          }
-          val dateParts = date.split("-")
-          val timeParts = time.split(":")
+          val (dateParts, timeParts) = parseTimestamp(node)
 
           if (node
             .as[YScalar]

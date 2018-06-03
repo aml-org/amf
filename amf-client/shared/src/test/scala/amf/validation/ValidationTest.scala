@@ -2840,4 +2840,13 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Date format not SYaml timestamp") {
+    for {
+      validation <- Validation(platform)
+      model      <- AMFCompiler(validationsPath + "types/mhra-e-payment-v1.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
 }

@@ -1,0 +1,28 @@
+#%RAML 1.0
+baseUri: http://localhost:8081/api/mhra-e-payment/v1
+title: Payment Experience API
+version: v1
+protocols: [HTTP, HTTPS]
+mediaType: application/json
+
+/payments:
+    /{paymentId}:
+      /approval:
+        post:
+          description: Create an approval records for an existing payment
+          responses:
+            201:
+              body:
+                application/json:
+                  type: object
+                  description: Payment Approval dataType
+                  displayName: PaymentApproval
+                  properties:
+                    approvalDateTime:
+                      type: datetime
+                      format: rfc3339
+                      required: false
+                  example: |
+                    {
+                        "approvalDateTime": "2016-02-28T16:41:41.090Z",
+                    }
