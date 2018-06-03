@@ -2829,4 +2829,34 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 //          assert(report.results.exists(_.message.equals("Missing library location")))
 //        }
 //      }
+
+  test("empty example") {
+    for {
+      validation <- Validation(platform)
+      model      <- AMFCompiler(validationsPath + "08/empty_example.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+    }
+  }
+
+  test("Date format not SYaml timestamp") {
+    for {
+      validation <- Validation(platform)
+      model      <- AMFCompiler(validationsPath + "types/mhra-e-payment-v1.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
+  test("JSON Schema Draft-3 required property support") {
+    for {
+      validation <- Validation(platform)
+      model      <- AMFCompiler(validationsPath + "jsonschema/misc_shapes.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+    }
+  }
 }

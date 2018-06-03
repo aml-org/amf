@@ -1,0 +1,20 @@
+#%RAML 0.8
+---
+title: RAML Example API
+version: v1
+baseUri: https://www.example.com/api/
+/multipart:
+  post:
+    body:
+      multipart/form-data:
+        formParameters:
+          first:
+            type: string
+            required: true
+          second:
+            type: string
+            default: segundo
+          third:
+            type: boolean
+    responses:
+      201:
