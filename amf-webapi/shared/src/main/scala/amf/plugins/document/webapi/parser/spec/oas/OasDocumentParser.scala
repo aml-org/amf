@@ -316,7 +316,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
           )
 
           map.regex(
-            "get|patch|put|post|delete|options|head",
+            "get|patch|put|post|delete|options|head|connect|trace",
             entries => {
               val operations = mutable.ListBuffer[Operation]()
               entries.foreach { entry =>

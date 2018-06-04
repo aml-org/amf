@@ -46,6 +46,8 @@ object Oas3Syntax extends SpecSyntax {
       "options",
       "head",
       "patch",
+      "connect",
+      "trace",
       "parameters",
       "$ref"
     ),
@@ -229,6 +231,8 @@ object Oas2Syntax extends SpecSyntax {
       "options",
       "head",
       "patch",
+      "connect",
+      "trace",
       "parameters",
       "$ref"
     ),

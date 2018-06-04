@@ -93,7 +93,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     val optionalMethod = if (parseOptionalOperations) "\\??" else ""
 
     map.regex(
-      s"(get|patch|put|post|delete|options|head)$optionalMethod",
+      s"(get|patch|put|post|delete|options|head|connect|trace)$optionalMethod",
       entries => {
         val operations = mutable.ListBuffer[Operation]()
         entries.foreach(entry => {

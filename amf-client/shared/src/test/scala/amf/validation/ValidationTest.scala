@@ -2819,4 +2819,14 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(!report.conforms)
     }
   }
+
+  test("Connect and trace methods") {
+    for {
+      validation <- Validation(platform)
+      model      <- AMFCompiler(validationsPath + "connect-trace.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML08)
+    } yield {
+      assert(report.conforms)
+    }
+  }
 }
