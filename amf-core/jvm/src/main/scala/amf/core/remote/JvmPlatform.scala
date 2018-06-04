@@ -2,7 +2,7 @@ package amf.core.remote
 import java.net.URI
 
 import amf.client.resource.{FileResourceLoader, HttpResourceLoader}
-import amf.core.remote.EcmaEncoder.encode
+import amf.core.rdf.RdfModel
 import amf.core.unsafe.PlatformBuilder
 import amf.internal.resource.{ResourceLoader, ResourceLoaderAdapter}
 import org.mulesoft.common.io.{FileSystem, Fs}

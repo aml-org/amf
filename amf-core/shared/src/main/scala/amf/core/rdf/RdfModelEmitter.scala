@@ -1,4 +1,4 @@
-package amf.plugins.features.validation.emitters
+package amf.core.rdf
 
 import amf.core.annotations.{DomainExtensionAnnotation, ScalarType}
 import amf.core.emitter.RenderOptions
@@ -11,7 +11,6 @@ import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.{Annotations, FieldEntry, Value}
-import amf.core.rdf.RdfModel
 import amf.core.vocabulary.Namespace
 import org.mulesoft.common.time.SimpleDateTime
 

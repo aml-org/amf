@@ -5,7 +5,7 @@ import amf.core.rdf.RdfModel
 import amf.core.validation.core.{FunctionConstraint, PropertyConstraint, ValidationSpecification}
 import amf.core.vocabulary.Namespace
 
-class ValidationRdfModelEmitter(targetProfile: String, rdfModel: RdfModel) {
+class ValidationRdfModelEmitter(targetProfile: String, rdfModel: RdfModel, defaultJSLibraryUrl: String = ValidationJSONLDEmitter.validationLibraryUrl) {
 
   /**
     * Emit the triples for the validations
@@ -211,7 +211,7 @@ class ValidationRdfModelEmitter(targetProfile: String, rdfModel: RdfModel) {
       case None =>
         f.code match {
           case Some(_) =>
-            for { library <- Seq(ValidationJSONLDEmitter.validationLibraryUrl) ++ f.libraries } {
+            for { library <- Seq(defaultJSLibraryUrl) ++ f.libraries } {
               rdfModel.addTriple(libraryUrl, (Namespace.Shacl + "jsLibraryURL").iri(), library, Some("http://www.w3.org/2001/XMLSchema#anyUri"))
             }
             genValue(validatorId, (Namespace.Shacl + "jsFunctionName").iri(), f.computeFunctionName(validationId))

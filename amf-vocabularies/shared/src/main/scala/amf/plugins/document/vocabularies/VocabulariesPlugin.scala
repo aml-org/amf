@@ -1,17 +1,19 @@
 package amf.plugins.document.vocabularies
 
 import amf.ProfileNames
-import amf.core.emitter.RenderOptions
 import amf.core.Root
+import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
 import amf.core.parser.{ParserContext, ReferenceHandler}
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
+import amf.core.rdf.RdfModel
 import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.Platform
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.RuntimeValidator
+import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels, ValidationResultProcessor}
 import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, JsonPointerRef, RefInclude}
@@ -26,10 +28,7 @@ import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReference
 import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, DialectsParser}
 import amf.plugins.document.vocabularies.parser.instances.{DialectInstanceContext, DialectInstanceParser}
 import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
-import amf.plugins.document.vocabularies.resolution.pipelines.{
-  DialectInstanceResolutionPipeline,
-  DialectResolutionPipeline
-}
+import amf.plugins.document.vocabularies.resolution.pipelines.{DialectInstanceResolutionPipeline, DialectResolutionPipeline}
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import org.yaml.model._
 
@@ -89,7 +88,8 @@ object VocabulariesPlugin
     with RamlHeaderExtractor
     with JsonHeaderExtractor
     with AMFValidationPlugin
-    with ValidationResultProcessor {
+    with ValidationResultProcessor
+    with PlatformSecrets {
 
   val registry = new DialectsRegistry
 
@@ -271,8 +271,8 @@ object VocabulariesPlugin
     }
   }
 
-  def aggregatValidations(validations: EffectiveValidations,
-                          dependenciesValidations: Seq[ValidationProfile]): EffectiveValidations = {
+  def aggregateValidations(validations: EffectiveValidations,
+                           dependenciesValidations: Seq[ValidationProfile]): EffectiveValidations = {
     dependenciesValidations.foldLeft(validations) {
       case (effective, profile) => effective.someEffective(profile)
     }
@@ -299,7 +299,7 @@ object VocabulariesPlugin
         for {
           validationsFromDeps <- dependenciesValidations
           shaclReport <- RuntimeValidator.shaclValidation(resolvedModel,
-                                                          aggregatValidations(validations, validationsFromDeps))
+                                                          aggregateValidations(validations, validationsFromDeps))
         } yield {
 
           // adding model-side validations
@@ -324,4 +324,11 @@ object VocabulariesPlugin
     * Does references in this type of documents be recursive?
     */
   override val allowRecursiveReferences: Boolean = false
+
+  def shapesForDialect(dialect: Dialect, validationFunctionsUrl: String): RdfModel = {
+    val validationProfile = computeValidationProfile(dialect)
+    val validations = validationProfile.validations
+
+    RuntimeValidator.shaclModel(validations, validationFunctionsUrl)
+  }
 }
