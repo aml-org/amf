@@ -6,8 +6,9 @@ import java.nio.charset.Charset
 import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
+import amf.core.rdf.{RdfModel, RdfModelEmitter}
 import amf.core.validation.core.{ValidationReport, ValidationSpecification}
-import amf.plugins.features.validation.emitters.{RdfModelEmitter, ValidationRdfModelEmitter}
+import amf.plugins.features.validation.emitters.ValidationRdfModelEmitter
 import org.apache.commons.io.IOUtils
 import org.apache.commons.lang3.StringUtils
 import org.apache.jena.rdf.model.{Model, Resource}
@@ -140,6 +141,15 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
                       shapes: Seq[ValidationSpecification],
                       messageStyle: String): Future[ValidationReport] =
     validate(data, shapes, messageStyle).map(new JVMValidationReport(_))
+
+
+  override def shapes(shapes: Seq[ValidationSpecification], functionsUrl: String): RdfModel = {
+    val shapesModel = new JenaRdfModel()
+    new ValidationRdfModelEmitter("AMF", shapesModel).emit(shapes)
+    shapesModel
+  }
+
+  override def emptyRdfModel(): RdfModel = new JenaRdfModel()
 }
 
 class CachedScriptEngine(functionUrl: Option[String], functionCode: Option[String])

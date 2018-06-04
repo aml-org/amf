@@ -5,6 +5,8 @@ import amf.client.remote.Content
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfObject, DomainElement}
+import amf.core.rdf.{RdfFramework, RdfModel}
+import amf.core.validation.core.SHACLValidator
 import amf.core.vocabulary.Namespace
 import amf.internal.environment.Environment
 import amf.internal.resource.ResourceLoader
@@ -137,6 +139,9 @@ trait Platform extends FileMediaType {
   /** Register an alias for a namespace */
   def registerNamespace(alias: String, prefix: String): Option[Namespace] = Namespace.registerNamespace(alias, prefix)
 
+  // Optional RdfFramework
+  var rdfFramework: Option[RdfFramework] = None
+
   /** Location where the helper functions for custom validations must be retrieved */
   protected def customValidationLibraryHelperLocation: String = "http://raml.org/amf/validation.js"
 
@@ -153,7 +158,6 @@ trait Platform extends FileMediaType {
 
   /** Write specified content on specified file path. */
   protected def writeFile(path: String, content: String): Future[Unit] = fs.asyncFile(path).write(content)
-
 }
 
 object Platform {

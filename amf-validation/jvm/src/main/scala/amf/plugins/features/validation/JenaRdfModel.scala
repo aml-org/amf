@@ -47,4 +47,6 @@ class JenaRdfModel(val model: Model = JenaUtil.createMemoryModel()) extends RdfM
     //out.println(RDFPrinter(model, "JSON-LD"))
     out.close()
   }
+
+  override def native(): Any = model
 }

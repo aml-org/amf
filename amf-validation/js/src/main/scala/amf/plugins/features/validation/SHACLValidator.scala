@@ -3,8 +3,9 @@ package amf.plugins.features.validation
 import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
+import amf.core.rdf.{RdfModel, RdfModelEmitter}
 import amf.core.validation.core.{ValidationReport, ValidationSpecification}
-import amf.plugins.features.validation.emitters.{RdfModelEmitter, ValidationRdfModelEmitter}
+import amf.plugins.features.validation.emitters.ValidationRdfModelEmitter
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Future, Promise}
@@ -155,4 +156,12 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
         promise.failure(e).future
     }
   }
+
+  override def shapes(shapes: Seq[ValidationSpecification], functionsUrl: String): RdfModel = {
+    val shapesModel = new RdflibRdfModel()
+    new ValidationRdfModelEmitter("AMF", shapesModel, functionsUrl).emit(shapes)
+    shapesModel
+  }
+
+  override def emptyRdfModel(): RdfModel = new RdflibRdfModel()
 }

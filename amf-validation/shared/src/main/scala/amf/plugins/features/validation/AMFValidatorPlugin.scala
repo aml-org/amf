@@ -4,6 +4,7 @@ import amf.ProfileNames
 import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.BaseUnit
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
+import amf.core.rdf.RdfModel
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Context
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
@@ -31,6 +32,8 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
   override def init(): Future[AMFPlugin] = {
     // Registering ourselves as the runtime validator
     RuntimeValidator.register(AMFValidatorPlugin)
+    ExecutionLog.log("Register RDF framework")
+    platform.rdfFramework = Some(PlatformValidator.instance)
     ExecutionLog.log(s"AMFValidatorPlugin#init: registering validation dialect")
     VocabulariesPlugin.registry.registerDialect(url, ValidationDialectText.text) map { _ =>
       ExecutionLog.log(s"AMFValidatorPlugin#init: validation dialect registered")
@@ -207,6 +210,12 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
 
   def customValidations(validations: EffectiveValidations): Seq[ValidationSpecification] =
     validations.effective.values.toSeq.filter(s => !s.isParserSide())
+
+  /**
+    * Returns a native RDF model with the SHACL shapes graph
+    */
+  override def shaclModel(validations: Seq[ValidationSpecification], functionUrls: String, messageStyle: String): RdfModel =
+    PlatformValidator.instance.shapes(validations, functionUrls)
 
 }
 

@@ -37,5 +37,7 @@ class RdflibRdfModel() extends RdfModel {
     this
   }
 
-  override def toN3(): String = model.toNT() + ""
+  override def toN3(): String = (model.toNT() + "").drop(1).dropRight(1)
+
+  override def native(): Any = model
 }
