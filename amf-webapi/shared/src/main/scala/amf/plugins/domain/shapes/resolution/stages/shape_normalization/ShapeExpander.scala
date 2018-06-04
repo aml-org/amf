@@ -32,7 +32,7 @@ sealed case class ShapeExpander(root: Shape)(implicit val context: Normalization
   private def recursionError(original: Shape, r: RecursiveShape): RecursiveShape = {
     if (!r.supportsRecursion
           .option()
-          .getOrElse(false)) // todo should store in recursion it use to
+          .getOrElse(false) && !traversed.avoidError(original.id)) // todo should store in recursion it use to
       context.errorHandler.violation(
         ParserSideValidations.RecursiveShapeSpecification.id(),
         original.id,
@@ -180,7 +180,9 @@ sealed case class ShapeExpander(root: Shape)(implicit val context: Normalization
 
     val oldRange = property.fields.getValue(PropertyShapeModel.Range)
     if (Option(oldRange).isDefined) {
-      val expandedRange = recursiveNormalization(property.range)
+//      val expandedRange = recursiveNormalization(property.range)
+      val expandedRange =
+        if (!required) traverseOptionalPropertyRange(property.range) else recursiveNormalization(property.range)
       // Making the required property explicit
       checkRequiredShape(expandedRange, required)
       expandedRange.fields
@@ -194,6 +196,15 @@ sealed case class ShapeExpander(root: Shape)(implicit val context: Normalization
       throw new Exception(s"Resolution error: Property shape with missing range: $property")
     }
     property
+  }
+
+  private def traverseOptionalPropertyRange(range: Shape) = {
+    range.linkTarget match {
+      case Some(t) => traversed.runWithIgnoredId(() => normalize(range), t.id)
+      case None if range.inherits.nonEmpty =>
+        traversed.runWithIgnoredIds(() => normalize(range), range.inherits.map(_.id))
+      case _ => traversed.runWithIgnoredId(() => normalize(range), range.id)
+    }
   }
 
   protected def checkRequiredShape(shape: Shape, required: Boolean): Unit = {

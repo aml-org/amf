@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: Magento Enterprise Edition 2.0 API
+types:
+  A:
+    type: object
+    properties:
+      b: B
+  B:
+    type: object
+    properties:
+      c:
+        type: C
+        required: false
+  C:
+    type: object
+    properties:
+      a:
+        type: A
+        required: false

@@ -2839,4 +2839,15 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.conforms)
     }
   }
+
+  test("Test recursive optional shape") {
+    for {
+      validation <- Validation(platform)
+      model <- AMFCompiler(validationsPath + "recursive-optional-property.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
 }
