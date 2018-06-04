@@ -39,7 +39,7 @@ case class DataNodeParser(node: YNode,
     val date = text.split("t").headOption.getOrElse("")
     val rest = text.split("t").last
     val time = if (rest.contains("+")) {
-      rest.split("+").head
+      rest.split("\\+").head
     } else if (rest.contains("-")) {
       rest.split("-").head
     } else if (rest.contains("z")) {
@@ -58,25 +58,26 @@ case class DataNodeParser(node: YNode,
     node.tag.tagType match {
       case YType.Str =>
         if (node
-          .as[YScalar]
-          .text
-          .matches(
-            "(\\d{4})-(\\d{2})-(\\d{2})(T|t)(\\d{2})\\:(\\d{2})\\:(\\d{2})(([+-](\\d{2})\\:(\\d{2}))|(\\.\\d+)?Z|(\\.\\d+)?z)")) {
+              .as[YScalar]
+              .text
+              .matches(
+                "(\\d{4})-(\\d{2})-(\\d{2})(T|t)(\\d{2})\\:(\\d{2})\\:(\\d{2})(([+-](\\d{2})\\:(\\d{2}))|(\\.\\d+)?Z|(\\.\\d+)?z)")) {
           val (dateParts, timeParts) = parseTimestamp(node)
-          if (dateParts(1).toInt < 13 && dateParts(2).toInt < 32 && timeParts(0).toInt < 24 && timeParts(1).toInt < 60 && timeParts(1).toInt < 60)
+          if (dateParts(1).toInt < 13 && dateParts(2).toInt < 32 && timeParts(0).toInt < 24 && timeParts(1).toInt < 60 && timeParts(
+                1).toInt < 60)
             parseScalar(node.as[YScalar], "dateTime")
           else
             parseScalar(node.as[YScalar], "string")
 
         } else if (node.as[YScalar].text.matches("^\\d{2}:\\d{2}:\\d{2}$")) {
           val nodeScalar = node.as[YScalar]
-          val parts = nodeScalar.text.split(":")
+          val parts      = nodeScalar.text.split(":")
           if (parts(0).toInt < 24 && parts(1).toInt < 60 && parts(1).toInt < 60)
             parseScalar(nodeScalar, "time")
           else
             parseScalar(node.as[YScalar], "string")
         } else if (node.as[YScalar].text.matches("^\\d{2}:\\d{2}$")) {
-          val text = node.as[YScalar].text
+          val text  = node.as[YScalar].text
           val parts = text.split(":")
           if (parts(0).toInt < 24 && parts(1).toInt < 60)
             parseScalar(YScalar(text + ":00"), "time")
@@ -84,7 +85,7 @@ case class DataNodeParser(node: YNode,
             parseScalar(node.as[YScalar], "string")
         } else if (node.as[YScalar].text.matches("^\\d{4}-\\d{1,2}-\\d{1,2}?$")) {
           val nodeScalar = node.as[YScalar]
-          val parts = nodeScalar.text.split("-")
+          val parts      = nodeScalar.text.split("-")
           if (parts(1).toInt < 13 && parts(2).toInt < 32)
             parseScalar(nodeScalar, "date")
           else
@@ -103,23 +104,28 @@ case class DataNodeParser(node: YNode,
           val (dateParts, timeParts) = parseTimestamp(node)
 
           if (node
-            .as[YScalar]
-            .text
-            .matches(
-              "(\\d{4})-(\\d{2})-(\\d{2})(T|t)(\\d{2})\\:(\\d{2})\\:(\\d{2})(([+-](\\d{2})\\:(\\d{2}))|(\\.\\d+)?Z|(\\.\\d+)?z)")) {
+                .as[YScalar]
+                .text
+                .matches(
+                  "(\\d{4})-(\\d{2})-(\\d{2})(T|t)(\\d{2})\\:(\\d{2})\\:(\\d{2})(([+-](\\d{2})\\:(\\d{2}))|(\\.\\d+)?Z|(\\.\\d+)?z)")) {
 
-
-            if (dateParts(1).toInt < 13 && dateParts(2).toInt < 32 && timeParts(0).toInt < 24 && timeParts(1).toInt < 60 && timeParts(1).toInt < 60)
+            if (dateParts(1).toInt < 13 && dateParts(2).toInt < 32 && timeParts(0).toInt < 24 && timeParts(1).toInt < 60 && timeParts(
+                  1).toInt < 60)
               parseScalar(node.as[YScalar], "dateTime")
             else
               parseScalar(node.as[YScalar], "string")
-          } else if (node.as[YScalar].text.indexOf(":") > -1 && node.as[YScalar].text.toLowerCase().indexOf("t") > -1) {
-            if (dateParts(1).toInt < 13 && dateParts(2).toInt < 32 && timeParts(0).toInt < 24 && timeParts(1).toInt < 60 && timeParts(1).toInt < 60)
+          } else if (node
+                       .as[YScalar]
+                       .text
+                       .indexOf(":") > -1 && node.as[YScalar].text.toLowerCase().indexOf("t") > -1) {
+            if (dateParts(1).toInt < 13 && dateParts(2).toInt < 32 && timeParts(0).toInt < 24 && timeParts(1).toInt < 60 && timeParts(
+                  1).toInt < 60)
               parseScalar(node.as[YScalar], "dateTimeOnly")
             else
               parseScalar(node.as[YScalar], "string")
           } else if (node.as[YScalar].text.indexOf(":") > -1) {
-            if (dateParts(1).toInt < 13 && dateParts(2).toInt < 32 && timeParts(0).toInt < 24 && timeParts(1).toInt < 60 && timeParts(1).toInt < 60)
+            if (dateParts(1).toInt < 13 && dateParts(2).toInt < 32 && timeParts(0).toInt < 24 && timeParts(1).toInt < 60 && timeParts(
+                  1).toInt < 60)
               parseScalar(node.as[YScalar], "dateTime")
             else
               parseScalar(node.as[YScalar], "string")
@@ -139,7 +145,11 @@ case class DataNodeParser(node: YNode,
 
       case other =>
         val parsed = parseScalar(YScalar(other.toString()), "string")
-        ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(), parsed.id, None, s"Cannot parse data node from AST structure '$other'", node)
+        ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+                      parsed.id,
+                      None,
+                      s"Cannot parse data node from AST structure '$other'",
+                      node)
         parsed
     }
   }
