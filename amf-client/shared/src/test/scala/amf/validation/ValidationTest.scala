@@ -1017,10 +1017,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Example validation of a resource type") {
     for {
       validation <- Validation(platform)
-      library <- AMFCompiler(validationsPath + "resource_types/resource_type1.raml",
-                             platform,
-                             RamlYamlHint,
-                             validation)
+      library <- AMFCompiler(validationsPath + "resource_types/resource_type1.raml", platform, RamlYamlHint, validation)
         .build()
       report <- validation.validate(library, ProfileNames.RAML)
     } yield {
@@ -1189,10 +1186,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Can parse the production financial api") {
     for {
       validation <- Validation(platform)
-      doc <- AMFCompiler(productionPath + "/financial-api/infor-financial-api.raml",
-                         platform,
-                         RamlYamlHint,
-                         validation).build()
+      doc <- AMFCompiler(productionPath + "/financial-api/infor-financial-api.raml", platform, RamlYamlHint, validation)
+        .build()
       // TODO: FIXME! problem serialising to JSON
       // generated <- new AMFSerializer(doc, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
     } yield {
@@ -1488,10 +1483,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
     for {
       validation <- Validation(platform)
-      library <- AMFCompiler(validationsPath + "/tck-examples/query-parameter.raml",
-                             platform,
-                             RamlYamlHint,
-                             validation)
+      library <- AMFCompiler(validationsPath + "/tck-examples/query-parameter.raml", platform, RamlYamlHint, validation)
         .build()
       report <- validation.validate(library, ProfileNames.RAML08)
     } yield {
@@ -2221,10 +2213,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Test not stackoverflow when exists target to unresolved shapes") {
     for {
       validation <- Validation(platform)
-      doc <- AMFCompiler(upDownPath + "/sapi-notification-saas-1.0.0-raml/api.raml",
-                         platform,
-                         RamlYamlHint,
-                         validation)
+      doc <- AMFCompiler(upDownPath + "/sapi-notification-saas-1.0.0-raml/api.raml", platform, RamlYamlHint, validation)
         .build()
       report <- validation.validate(doc, ProfileNames.RAML, ProfileNames.RAML)
     } yield {
@@ -2675,8 +2664,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
-      assert(
-        report.results.exists(_.message.equals("Property {alpha2code: } not supported in a raml 1.0 webApi node")))
+      assert(report.results.exists(_.message.equals("Property {alpha2code: } not supported in a raml 1.0 webApi node")))
     }
   }
 
@@ -2740,14 +2728,14 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("JSON Schema pattern properties") {
-      for {
-          validation <- Validation(platform)
-          model <- AMFCompiler(validationsPath + "jsonSchemaProperties.raml", platform, RamlYamlHint, validation).build()
-          report <- validation.validate(model, ProfileNames.RAML)
-      } yield {
-          assert(!report.conforms)
-          assert(report.results.size == 1)
-      }
+    for {
+      validation <- Validation(platform)
+      model      <- AMFCompiler(validationsPath + "jsonSchemaProperties.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 1)
+    }
   }
 
   test("vuconnectionapi example") {
@@ -2849,5 +2837,24 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       assert(report.conforms)
     }
+  }
+
+  test("emilio performance") {
+//    for (i <- 1 to 10) {
+//      for {
+//        validation <- Validation(platform)
+//        // Path should point to the main api file.
+//        model <- AMFCompiler(productionPath + "sys-sabre-air-api-1.0.3-fat-raml/ha-sys-sabre-air-api.raml",
+//                             platform,
+//                             RamlYamlHint,
+//                             validation) // Change hint here for a different syntax parsing.
+//          .build()
+//        //  report <- validation.validate(model, ProfileNames.RAML)   // Change profile name here to validate for a different spec.
+//      } yield {
+//        RAML10Plugin.resolve(model) // Change plugin here to resolve for a different spec.
+//        //assert(report.results.isEmpty)
+//      }
+//    }
+    assert(true)
   }
 }
