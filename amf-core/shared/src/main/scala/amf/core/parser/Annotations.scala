@@ -4,17 +4,14 @@ import amf.core.annotations.{LexicalInformation, SourceAST, SourceNode}
 import amf.core.model.domain.{Annotation, SerializableAnnotation}
 import org.yaml.model.{YMapEntry, YNode, YPart}
 
+import scala.collection.mutable.ArrayBuffer
+
 /**
   * Element annotations
   */
-class Annotations {
-  def copy(): Annotations = {
-    val copied = Annotations()
-    copied.annotations = annotations
-    copied
-  }
+    class Annotations(hintSize: Int = 4) {
 
-  private var annotations: Seq[Annotation] = Seq()
+  private var annotations: ArrayBuffer[Annotation] = new ArrayBuffer(hintSize)
 
   def foreach(fn: Annotation => Unit): Unit = annotations.foreach(fn)
 
@@ -26,13 +23,17 @@ class Annotations {
 
   def contains[T <: Annotation](clazz: Class[T]): Boolean = find(clazz).isDefined
 
+  def size: Int = annotations.size
+
   def +=(annotation: Annotation): this.type = {
-    annotations = annotations :+ annotation
+    annotations += annotation
     this
   }
 
-  def ++=(other: Annotations): this.type = {
-    annotations = annotations ++ other.annotations
+  def ++=(other: Annotations): this.type = this ++= other.annotations
+
+  def ++=(other: TraversableOnce[Annotation]): this.type = {
+    annotations ++= other
     this
   }
 
@@ -45,6 +46,8 @@ class Annotations {
   def serializables(): Seq[SerializableAnnotation] = collect { case s: SerializableAnnotation => s }
 
   def unapply[T <: Annotation](clazz: Class[T]): Option[T] = find(clazz)
+
+  def copy(): Annotations = Annotations(this)
 }
 
 object Annotations {
@@ -52,13 +55,13 @@ object Annotations {
   def apply(): Annotations = new Annotations()
 
   def apply(annotations: Annotations): Annotations = {
-    val result = apply()
-    result.annotations = annotations.annotations.map(identity)
+    val result = new Annotations(annotations.size)
+    result.annotations ++= annotations.annotations
     result
   }
 
   def apply(ast: YPart): Annotations = {
-    val annotations = apply() += LexicalInformation(Range(ast.range)) += SourceAST(ast)
+    val annotations = new Annotations() += LexicalInformation(Range(ast.range)) += SourceAST(ast)
     ast match {
       case node: YNode      => annotations += SourceNode(node)
       case entry: YMapEntry => annotations += SourceNode(entry.value)
@@ -71,11 +74,5 @@ object Annotations {
   // We should discuss if always use the range of the YNode, or always use the range of the ynode member.
   def valueNode(node: YNode): Annotations = apply(node.value) += SourceNode(node)
 
-  def apply(annotation: Annotation): Annotations = apply(Seq(annotation))
-
-  def apply(annotations: Seq[Annotation]): Annotations = {
-    val result = apply()
-    result.annotations = annotations
-    result
-  }
+  def apply(annotation: Annotation): Annotations = new Annotations() += annotation
 }

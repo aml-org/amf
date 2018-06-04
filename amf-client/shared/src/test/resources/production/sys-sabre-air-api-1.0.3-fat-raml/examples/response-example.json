@@ -1,0 +1,883 @@
+{
+  "availableItinCount": 0,
+  "brandedOneWayItinCount": 0,
+  "departedItinCount": 0,
+  "oneWayItineraries": {
+      "simpleOneWayItineraries": [
+          {
+              "pricedItinerary": [
+                  {
+                      "airItinerary": {
+                          "directionInd": "OneWay",
+                          "originDestinationOptions": {
+                              "originDestinationOption": [
+                                  {
+                                      "elapsedTime": 51,
+                                      "flightSegment": [
+                                          {
+                                              "arrivalAirport": {
+                                                  "locationCode": "HNL",
+                                                  "terminalId": "Z"
+                                              },
+                                              "arrivalDateTime": "2018-10-16T10:29:00",
+                                              "arrivalTimeZone": {
+                                                  "gmtOffset": -10
+                                              },
+                                              "departureAirport": {
+                                                  "locationCode": "ITO"
+                                              },
+                                              "departureDateTime": "2018-10-16T09:38:00",
+                                              "departureTimeZone": {
+                                                  "gmtOffset": -10
+                                              },
+                                              "elapsedTime": 51,
+                                              "equipment": [
+                                                  {
+                                                      "airEquipType": "717"
+                                                  }
+                                              ],
+                                              "flightNumber": "341",
+                                              "marketingAirline": {
+                                                  "code": "HA"
+                                              },
+                                              "marriageGrp": "O",
+                                              "onTimePerformance": {
+                                                  "level": "9"
+                                              },
+                                              "operatingAirline": {
+                                                  "code": "HA",
+                                                  "flightNumber": "341"
+                                              },
+                                              "resBookDesigCode": "L",
+                                              "stopQuantity": 0,
+                                              "tpaExtensions": {
+                                                  "eTicket": {
+                                                      "ind": true
+                                                  },
+                                                  "mileage": {
+                                                      "amount": 216
+                                                  }
+                                              }
+                                          }
+                                      ]
+                                  }
+                              ]
+                          }
+                      },
+                      "airItineraryPricingInfo": [
+                          {
+                              "fareInfos": {
+                                  "fareInfo": [
+                                      {
+                                          "fareReference": "L",
+                                          "tpaExtensions": {
+                                              "cabin": {
+                                                  "cabin": "Y"
+                                              },
+                                              "seatsRemaining": {
+                                                  "belowMin": false,
+                                                  "number": 2
+                                              }
+                                          }
+                                      }
+                                  ]
+                              },
+                              "fareReturned": true,
+                              "itinTotalFare": {
+                                  "baseFare": {
+                                      "amount": 149.36,
+                                      "currencyCode": "USD",
+                                      "decimalPlaces": 2
+                                  },
+                                  "equivFare": {
+                                      "amount": 149.36,
+                                      "currencyCode": "USD",
+                                      "decimalPlaces": 2
+                                  },
+                                  "fareConstruction": {
+                                      "amount": 149.36,
+                                      "currencyCode": "USD",
+                                      "decimalPlaces": 2
+                                  },
+                                  "taxes": {
+                                      "tax": [
+                                          {
+                                              "amount": 30.60,
+                                              "currencyCode": "USD",
+                                              "decimalPlaces": 2,
+                                              "taxCode": "TOTALTAX"
+                                          }
+                                      ]
+                                  },
+                                  "totalFare": {
+                                      "amount": 179.96,
+                                      "currencyCode": "USD",
+                                      "decimalPlaces": 2
+                                  }
+                              },
+                              "lastTicketDate": "2018-04-28",
+                              "pricingSource": "ADVCSH1",
+                              "pricingSubSource": "MIP",
+                              "ptcFareBreakdowns": {
+                                  "ptcFareBreakdown": [
+                                      {
+                                          "endorsements": {
+                                              "nonRefundableIndicator": true
+                                          },
+                                          "fareBasisCodes": {
+                                              "fareBasisCode": [
+                                                  {
+                                                      "arrivalAirportCode": "HNL",
+                                                      "availabilityBreak": true,
+                                                      "bookingCode": "L",
+                                                      "departureAirportCode": "ITO",
+                                                      "fareComponentBeginAirport": "ITO",
+                                                      "fareComponentDirectionality": "FROM",
+                                                      "fareComponentEndAirport": "HNL",
+                                                      "fareComponentVendorCode": "ATP",
+                                                      "govCarrier": "HA"
+                                                  }
+                                              ]
+                                          },
+                                          "fareInfos": {
+                                              "fareInfo": [
+                                                  {
+                                                      "fareReference": "L",
+                                                      "tpaExtensions": {
+                                                          "cabin": {
+                                                              "cabin": "Y"
+                                                          },
+                                                          "seatsRemaining": {
+                                                              "belowMin": false,
+                                                              "number": 2
+                                                          }
+                                                      }
+                                                  }
+                                              ]
+                                          },
+                                          "passengerFare": {
+                                              "baseFare": {
+                                                  "amount": 74.68,
+                                                  "currencyCode": "USD"
+                                              },
+                                              "equivFare": {
+                                                  "amount": 74.68,
+                                                  "currencyCode": "USD",
+                                                  "decimalPlaces": 2
+                                              },
+                                              "fareConstruction": {
+                                                  "amount": 74.68,
+                                                  "currencyCode": "USD",
+                                                  "decimalPlaces": 2
+                                              },
+                                              "taxes": {
+                                                  "tax": [
+                                                      {
+                                                          "amount": 5.60,
+                                                          "countryCode": "US",
+                                                          "currencyCode": "USD",
+                                                          "decimalPlaces": 2,
+                                                          "taxCode": "AY"
+                                                      },
+                                                      {
+                                                          "amount": 5.60,
+                                                          "countryCode": "US",
+                                                          "currencyCode": "USD",
+                                                          "decimalPlaces": 2,
+                                                          "taxCode": "US1"
+                                                      },
+                                                      {
+                                                          "amount": 4.10,
+                                                          "countryCode": "US",
+                                                          "currencyCode": "USD",
+                                                          "decimalPlaces": 2,
+                                                          "taxCode": "ZP"
+                                                      }
+                                                  ],
+                                                  "taxSummary": [
+                                                      {
+                                                          "amount": 4.10,
+                                                          "countryCode": "US",
+                                                          "currencyCode": "USD",
+                                                          "decimalPlaces": 2,
+                                                          "taxCode": "ZP"
+                                                      },
+                                                      {
+                                                          "amount": 5.60,
+                                                          "countryCode": "US",
+                                                          "currencyCode": "USD",
+                                                          "decimalPlaces": 2,
+                                                          "taxCode": "AY"
+                                                      },
+                                                      {
+                                                          "amount": 5.60,
+                                                          "countryCode": "US",
+                                                          "currencyCode": "USD",
+                                                          "decimalPlaces": 2,
+                                                          "taxCode": "US1"
+                                                      }
+                                                  ],
+                                                  "totalTax": {
+                                                      "amount": 15.30,
+                                                      "currencyCode": "USD",
+                                                      "decimalPlaces": 2
+                                                  }
+                                              },
+                                              "totalFare": {
+                                                  "amount": 89.98,
+                                                  "currencyCode": "USD"
+                                              },
+                                              "tpaExtensions": {
+                                                  "messages": {
+                                                      "message": [
+                                                          {
+                                                              "airlineCode": "HA",
+                                                              "failCode": 0,
+                                                              "info": "HA ONLY/NONREF/FEE TO CHG",
+                                                              "type": "N"
+                                                          },
+                                                          {
+                                                              "failCode": 0,
+                                                              "info": "PRIVATE FARE APPLIED - CHECK RULES FOR CORRECT TICKETING",
+                                                              "type": "W"
+                                                          },
+                                                          {
+                                                              "failCode": 0,
+                                                              "info": "VALIDATING CARRIER SPECIFIED - HA",
+                                                              "type": "W"
+                                                          }
+                                                      ]
+                                                  }
+                                              }
+                                          },
+                                          "passengerTypeQuantity": {
+                                              "code": "WEB",
+                                              "quantity": 1
+                                          }
+                                      },
+                                      {
+                                          "endorsements": {
+                                              "nonRefundableIndicator": true
+                                          },
+                                          "fareBasisCodes": {
+                                              "fareBasisCode": [
+                                                  {
+                                                      "arrivalAirportCode": "HNL",
+                                                      "availabilityBreak": true,
+                                                      "bookingCode": "L",
+                                                      "departureAirportCode": "ITO",
+                                                      "fareComponentBeginAirport": "ITO",
+                                                      "fareComponentDirectionality": "FROM",
+                                                      "fareComponentEndAirport": "HNL",
+                                                      "fareComponentVendorCode": "ATP",
+                                                      "govCarrier": "HA"
+                                                  }
+                                              ]
+                                          },
+                                          "fareInfos": {
+                                              "fareInfo": [
+                                                  {
+                                                      "fareReference": "L",
+                                                      "tpaExtensions": {
+                                                          "cabin": {
+                                                              "cabin": "Y"
+                                                          },
+                                                          "seatsRemaining": {
+                                                              "belowMin": false,
+                                                              "number": 2
+                                                          }
+                                                      }
+                                                  }
+                                              ]
+                                          },
+                                          "passengerFare": {
+                                              "baseFare": {
+                                                  "amount": 74.68,
+                                                  "currencyCode": "USD"
+                                              },
+                                              "equivFare": {
+                                                  "amount": 74.68,
+                                                  "currencyCode": "USD",
+                                                  "decimalPlaces": 2
+                                              },
+                                              "fareConstruction": {
+                                                  "amount": 74.68,
+                                                  "currencyCode": "USD",
+                                                  "decimalPlaces": 2
+                                              },
+                                              "taxes": {
+                                                  "tax": [
+                                                      {
+                                                          "amount": 5.60,
+                                                          "countryCode": "US",
+                                                          "currencyCode": "USD",
+                                                          "decimalPlaces": 2,
+                                                          "taxCode": "AY"
+                                                      },
+                                                      {
+                                                          "amount": 5.60,
+                                                          "countryCode": "US",
+                                                          "currencyCode": "USD",
+                                                          "decimalPlaces": 2,
+                                                          "taxCode": "US1"
+                                                      },
+                                                      {
+                                                          "amount": 4.10,
+                                                          "countryCode": "US",
+                                                          "currencyCode": "USD",
+                                                          "decimalPlaces": 2,
+                                                          "taxCode": "ZP"
+                                                      }
+                                                  ],
+                                                  "taxSummary": [
+                                                      {
+                                                          "amount": 4.10,
+                                                          "countryCode": "US",
+                                                          "currencyCode": "USD",
+                                                          "decimalPlaces": 2,
+                                                          "taxCode": "ZP"
+                                                      },
+                                                      {
+                                                          "amount": 5.60,
+                                                          "countryCode": "US",
+                                                          "currencyCode": "USD",
+                                                          "decimalPlaces": 2,
+                                                          "taxCode": "AY"
+                                                      },
+                                                      {
+                                                          "amount": 5.60,
+                                                          "countryCode": "US",
+                                                          "currencyCode": "USD",
+                                                          "decimalPlaces": 2,
+                                                          "taxCode": "US1"
+                                                      }
+                                                  ],
+                                                  "totalTax": {
+                                                      "amount": 15.30,
+                                                      "currencyCode": "USD",
+                                                      "decimalPlaces": 2
+                                                  }
+                                              },
+                                              "totalFare": {
+                                                  "amount": 89.98,
+                                                  "currencyCode": "USD"
+                                              },
+                                              "tpaExtensions": {
+                                                  "messages": {
+                                                      "message": [
+                                                          {
+                                                              "airlineCode": "HA",
+                                                              "failCode": 0,
+                                                              "info": "HA ONLY/NONREF/FEE TO CHG",
+                                                              "type": "N"
+                                                          },
+                                                          {
+                                                              "failCode": 0,
+                                                              "info": "EACH WBC REQUIRES ACCOMPANYING SAME CABIN WEB",
+                                                              "type": "W"
+                                                          },
+                                                          {
+                                                              "failCode": 0,
+                                                              "info": "PRIVATE FARE APPLIED - CHECK RULES FOR CORRECT TICKETING",
+                                                              "type": "W"
+                                                          },
+                                                          {
+                                                              "failCode": 0,
+                                                              "info": "VALIDATING CARRIER SPECIFIED - HA",
+                                                              "type": "W"
+                                                          }
+                                                      ]
+                                                  }
+                                              }
+                                          },
+                                          "passengerTypeQuantity": {
+                                              "code": "WBC",
+                                              "quantity": 1
+                                          }
+                                      }
+                                  ]
+                              },
+                              "tpaExtensions": {
+                                  "divideInParty": {
+                                      "indicator": false
+                                  }
+                              }
+                          }
+                      ],
+                      "sequenceNumber": 1,
+                      "ticketingInfo": {
+                          "ticketType": "eTicket",
+                          "validInterline": "Yes"
+                      },
+                      "tpaExtensions": {
+                          "itinSource": {
+                              "source": "IB"
+                          },
+                          "validatingCarrier": {
+                              "code": "HA"
+                          }
+                      }
+                  }                        
+              ],
+              "rph": "1"
+          },
+          {
+              "pricedItinerary": [
+                  {
+                      "airItinerary": {
+                          "directionInd": "OneWay",
+                          "originDestinationOptions": {
+                              "originDestinationOption": [
+                                  {
+                                      "elapsedTime": 54,
+                                      "flightSegment": [
+                                          {
+                                              "arrivalAirport": {
+                                                  "locationCode": "ITO"
+                                              },
+                                              "arrivalDateTime": "2018-10-01T08:36:00",
+                                              "arrivalTimeZone": {
+                                                  "gmtOffset": -10
+                                              },
+                                              "departureAirport": {
+                                                  "locationCode": "HNL",
+                                                  "terminalId": "Z"
+                                              },
+                                              "departureDateTime": "2018-10-01T07:42:00",
+                                              "departureTimeZone": {
+                                                  "gmtOffset": -10
+                                              },
+                                              "elapsedTime": 54,
+                                              "equipment": [
+                                                  {
+                                                      "airEquipType": "717"
+                                                  }
+                                              ],
+                                              "flightNumber": "122",
+                                              "marketingAirline": {
+                                                  "code": "HA"
+                                              },
+                                              "marriageGrp": "O",
+                                              "onTimePerformance": {
+                                                  "level": "9"
+                                              },
+                                              "operatingAirline": {
+                                                  "code": "HA",
+                                                  "flightNumber": "122"
+                                              },
+                                              "resBookDesigCode": "L",
+                                              "stopQuantity": 0,
+                                              "tpaExtensions": {
+                                                  "eTicket": {
+                                                      "ind": true
+                                                  },
+                                                  "mileage": {
+                                                      "amount": 216
+                                                  }
+                                              }
+                                          }
+                                      ]
+                                  }
+                              ]
+                          }
+                      },
+                      "airItineraryPricingInfo": [
+                          {
+                              "fareInfos": {
+                                  "fareInfo": [
+                                      {
+                                          "fareReference": "L",
+                                          "tpaExtensions": {
+                                              "cabin": {
+                                                  "cabin": "Y"
+                                              },
+                                              "seatsRemaining": {
+                                                  "belowMin": false,
+                                                  "number": 9
+                                              }
+                                          }
+                                      }
+                                  ]
+                              },
+                              "fareReturned": true,
+                              "itinTotalFare": {
+                                  "baseFare": {
+                                      "amount": 158.68,
+                                      "currencyCode": "USD",
+                                      "decimalPlaces": 2
+                                  },
+                                  "equivFare": {
+                                      "amount": 158.68,
+                                      "currencyCode": "USD",
+                                      "decimalPlaces": 2
+                                  },
+                                  "fareConstruction": {
+                                      "amount": 158.68,
+                                      "currencyCode": "USD",
+                                      "decimalPlaces": 2
+                                  },
+                                  "taxes": {
+                                      "tax": [
+                                          {
+                                              "amount": 20.10,
+                                              "currencyCode": "USD",
+                                              "decimalPlaces": 2,
+                                              "taxCode": "TOTALTAX"
+                                          }
+                                      ]
+                                  },
+                                  "totalFare": {
+                                      "amount": 178.78,
+                                      "currencyCode": "USD",
+                                      "decimalPlaces": 2
+                                  }
+                              },
+                              "lastTicketDate": "2018-04-28",
+                              "pricingSource": "ADVCSH1",
+                              "pricingSubSource": "MIP",
+                              "ptcFareBreakdowns": {
+                                  "ptcFareBreakdown": [
+                                      {
+                                          "endorsements": {
+                                              "nonRefundableIndicator": true
+                                          },
+                                          "fareBasisCodes": {
+                                              "fareBasisCode": [
+                                                  {
+                                                      "arrivalAirportCode": "ITO",
+                                                      "availabilityBreak": true,
+                                                      "bookingCode": "L",
+                                                      "departureAirportCode": "HNL",
+                                                      "fareComponentBeginAirport": "HNL",
+                                                      "fareComponentDirectionality": "TO",
+                                                      "fareComponentEndAirport": "ITO",
+                                                      "fareComponentVendorCode": "ATP",
+                                                      "govCarrier": "HA"
+                                                  }
+                                              ]
+                                          },
+                                          "fareInfos": {
+                                              "fareInfo": [
+                                                  {
+                                                      "fareReference": "L",
+                                                      "tpaExtensions": {
+                                                          "cabin": {
+                                                              "cabin": "Y"
+                                                          },
+                                                          "seatsRemaining": {
+                                                              "belowMin": false,
+                                                              "number": 9
+                                                          }
+                                                      }
+                                                  }
+                                              ]
+                                          },
+                                          "passengerFare": {
+                                              "baseFare": {
+                                                  "amount": 79.34,
+                                                  "currencyCode": "USD"
+                                              },
+                                              "equivFare": {
+                                                  "amount": 79.34,
+                                                  "currencyCode": "USD",
+                                                  "decimalPlaces": 2
+                                              },
+                                              "fareConstruction": {
+                                                  "amount": 79.34,
+                                                  "currencyCode": "USD",
+                                                  "decimalPlaces": 2
+                                              },
+                                              "taxes": {
+                                                  "tax": [
+                                                      {
+                                                          "amount": 5.95,
+                                                          "countryCode": "US",
+                                                          "currencyCode": "USD",
+                                                          "decimalPlaces": 2,
+                                                          "taxCode": "US1"
+                                                      },
+                                                      {
+                                                          "amount": 4.10,
+                                                          "countryCode": "US",
+                                                          "currencyCode": "USD",
+                                                          "decimalPlaces": 2,
+                                                          "taxCode": "ZP"
+                                                      }
+                                                  ],
+                                                  "taxSummary": [
+                                                      {
+                                                          "amount": 4.10,
+                                                          "countryCode": "US",
+                                                          "currencyCode": "USD",
+                                                          "decimalPlaces": 2,
+                                                          "taxCode": "ZP"
+                                                      },
+                                                      {
+                                                          "amount": 5.95,
+                                                          "countryCode": "US",
+                                                          "currencyCode": "USD",
+                                                          "decimalPlaces": 2,
+                                                          "taxCode": "US1"
+                                                      }
+                                                  ],
+                                                  "totalTax": {
+                                                      "amount": 10.05,
+                                                      "currencyCode": "USD",
+                                                      "decimalPlaces": 2
+                                                  }
+                                              },
+                                              "totalFare": {
+                                                  "amount": 89.39,
+                                                  "currencyCode": "USD"
+                                              },
+                                              "tpaExtensions": {
+                                                  "messages": {
+                                                      "message": [
+                                                          {
+                                                              "airlineCode": "HA",
+                                                              "failCode": 0,
+                                                              "info": "HA ONLY/NONREF/FEE TO CHG",
+                                                              "type": "N"
+                                                          },
+                                                          {
+                                                              "failCode": 0,
+                                                              "info": "PRIVATE FARE APPLIED - CHECK RULES FOR CORRECT TICKETING",
+                                                              "type": "W"
+                                                          },
+                                                          {
+                                                              "failCode": 0,
+                                                              "info": "VALIDATING CARRIER SPECIFIED - HA",
+                                                              "type": "W"
+                                                          }
+                                                      ]
+                                                  }
+                                              }
+                                          },
+                                          "passengerTypeQuantity": {
+                                              "code": "WEB",
+                                              "quantity": 1
+                                          }
+                                      },
+                                      {
+                                          "endorsements": {
+                                              "nonRefundableIndicator": true
+                                          },
+                                          "fareBasisCodes": {
+                                              "fareBasisCode": [
+                                                  {
+                                                      "arrivalAirportCode": "ITO",
+                                                      "availabilityBreak": true,
+                                                      "bookingCode": "L",
+                                                      "departureAirportCode": "HNL",
+                                                      "fareComponentBeginAirport": "HNL",
+                                                      "fareComponentDirectionality": "TO",
+                                                      "fareComponentEndAirport": "ITO",
+                                                      "fareComponentVendorCode": "ATP",
+                                                      "govCarrier": "HA"
+                                                  }
+                                              ]
+                                          },
+                                          "fareInfos": {
+                                              "fareInfo": [
+                                                  {
+                                                      "fareReference": "L",
+                                                      "tpaExtensions": {
+                                                          "cabin": {
+                                                              "cabin": "Y"
+                                                          },
+                                                          "seatsRemaining": {
+                                                              "belowMin": false,
+                                                              "number": 9
+                                                          }
+                                                      }
+                                                  }
+                                              ]
+                                          },
+                                          "passengerFare": {
+                                              "baseFare": {
+                                                  "amount": 79.34,
+                                                  "currencyCode": "USD"
+                                              },
+                                              "equivFare": {
+                                                  "amount": 79.34,
+                                                  "currencyCode": "USD",
+                                                  "decimalPlaces": 2
+                                              },
+                                              "fareConstruction": {
+                                                  "amount": 79.34,
+                                                  "currencyCode": "USD",
+                                                  "decimalPlaces": 2
+                                              },
+                                              "taxes": {
+                                                  "tax": [
+                                                      {
+                                                          "amount": 5.95,
+                                                          "countryCode": "US",
+                                                          "currencyCode": "USD",
+                                                          "decimalPlaces": 2,
+                                                          "taxCode": "US1"
+                                                      },
+                                                      {
+                                                          "amount": 4.10,
+                                                          "countryCode": "US",
+                                                          "currencyCode": "USD",
+                                                          "decimalPlaces": 2,
+                                                          "taxCode": "ZP"
+                                                      }
+                                                  ],
+                                                  "taxSummary": [
+                                                      {
+                                                          "amount": 4.10,
+                                                          "countryCode": "US",
+                                                          "currencyCode": "USD",
+                                                          "decimalPlaces": 2,
+                                                          "taxCode": "ZP"
+                                                      },
+                                                      {
+                                                          "amount": 5.95,
+                                                          "countryCode": "US",
+                                                          "currencyCode": "USD",
+                                                          "decimalPlaces": 2,
+                                                          "taxCode": "US1"
+                                                      }
+                                                  ],
+                                                  "totalTax": {
+                                                      "amount": 10.05,
+                                                      "currencyCode": "USD",
+                                                      "decimalPlaces": 2
+                                                  }
+                                              },
+                                              "totalFare": {
+                                                  "amount": 89.39,
+                                                  "currencyCode": "USD"
+                                              },
+                                              "tpaExtensions": {
+                                                  "messages": {
+                                                      "message": [
+                                                          {
+                                                              "airlineCode": "HA",
+                                                              "failCode": 0,
+                                                              "info": "HA ONLY/NONREF/FEE TO CHG",
+                                                              "type": "N"
+                                                          },
+                                                          {
+                                                              "failCode": 0,
+                                                              "info": "EACH WBC REQUIRES ACCOMPANYING SAME CABIN WEB",
+                                                              "type": "W"
+                                                          },
+                                                          {
+                                                              "failCode": 0,
+                                                              "info": "PRIVATE FARE APPLIED - CHECK RULES FOR CORRECT TICKETING",
+                                                              "type": "W"
+                                                          },
+                                                          {
+                                                              "failCode": 0,
+                                                              "info": "VALIDATING CARRIER SPECIFIED - HA",
+                                                              "type": "W"
+                                                          }
+                                                      ]
+                                                  }
+                                              }
+                                          },
+                                          "passengerTypeQuantity": {
+                                              "code": "WBC",
+                                              "quantity": 1
+                                          }
+                                      }
+                                  ]
+                              },
+                              "tpaExtensions": {
+                                  "divideInParty": {
+                                      "indicator": false
+                                  }
+                              }
+                          }
+                      ],
+                      "sequenceNumber": 1,
+                      "ticketingInfo": {
+                          "ticketType": "eTicket",
+                          "validInterline": "Yes"
+                      },
+                      "tpaExtensions": {
+                          "itinSource": {
+                              "source": "IB"
+                          },
+                          "validatingCarrier": {
+                              "code": "HA"
+                          }
+                      }
+                  }                        
+              ],
+              "rph": "2"
+          }
+      ]
+  },
+  "pricedItinCount": 0,
+  "simpleOneWayItinCount": 2,
+  "soldOutItinCount": 0,
+  "version": "4.1.0",
+  "warnings": {
+      "warning": [
+          {
+              "code": "PROCESS",
+              "shortText": "MAX NBR COMBINATIONS EXCEEDED",
+              "type": "MIP"
+          },
+          {
+              "code": "PROCESS",
+              "shortText": "MAX NBR COMBINATIONS EXCEEDED",
+              "type": "MIP"
+          },
+          {
+              "code": "PROCESS",
+              "shortText": "MAX NBR COMBINATIONS EXCEEDED",
+              "type": "MIP"
+          },
+          {
+              "code": "PROCESS",
+              "shortText": "MAX NBR COMBINATIONS EXCEEDED",
+              "type": "MIP"
+          },
+          {
+              "code": "PROCESS",
+              "shortText": "MAX NBR COMBINATIONS EXCEEDED",
+              "type": "MIP"
+          },
+          {
+              "code": "PROCESS",
+              "shortText": "MAX NBR COMBINATIONS EXCEEDED",
+              "type": "MIP"
+          },
+          {
+              "code": "TRANSACTIONID",
+              "messageClass": "I",
+              "shortText": "710281560971606674",
+              "type": "WORKERTHREAD"
+          },
+          {
+              "code": "TTFHLC951",
+              "messageClass": "I",
+              "shortText": "27039",
+              "type": "SERVER"
+          },
+          {
+              "code": "RULEID",
+              "messageClass": "I",
+              "shortText": "16760",
+              "type": "DRE"
+          },
+          {
+              "code": "RULEID",
+              "messageClass": "I",
+              "shortText": "25024",
+              "type": "DEFAULT"
+          },
+          {
+              "code": "MIP",
+              "messageClass": "I",
+              "shortText": "MAX NBR COMBINATIONS EXCEEDED",
+              "type": "MIP"
+          }
+      ]
+  }
+}

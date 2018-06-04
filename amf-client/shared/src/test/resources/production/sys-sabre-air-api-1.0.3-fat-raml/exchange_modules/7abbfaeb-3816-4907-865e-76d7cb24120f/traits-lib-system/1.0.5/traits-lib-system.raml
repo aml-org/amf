@@ -1,0 +1,31 @@
+#%RAML 1.0 Library
+usage: common traits for system level apis
+
+traits: 
+  connection-headers:  
+    description: use this trait to allow API's to receive current token information in the coversation id and security token headers 
+    headers:    
+      x-conversation-id:
+        type: string
+        required: false
+      x-security-token:
+        type: string
+        required: false
+      x-sabre-end-session:
+        type: boolean
+        required: false
+        default: true
+  correlation:
+    headers:
+      x-root-correlation-id:
+        type: string
+        required: true
+  channel:
+    headers: 
+      x-ha-channel:
+        type: string
+        required: true
+        enum:
+          - MOBILE
+          - WEB
+          - KIOSK

@@ -1,0 +1,5773 @@
+{
+  "$schema" : "http://json-schema.org/draft-04/schema#",  
+  "type" : "object",
+  "properties" : {
+    "pos" : {          
+      "$ref" : "#/definitions/POSType"
+    },
+    "originDestinationInformation" : {           
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/definitions/OTAAirLowFareSearchRQ.OriginDestinationInformation"
+      }
+    },
+    "leg" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/definitions/OTAAirLowFareSearchRQ.Leg"
+      }
+    },
+    "travelPreferences" : {
+      "$ref" : "#/definitions/AirSearchPrefsType"
+    },
+    "travelerInfoSummary" : {
+      "$ref" : "#/definitions/TravelerInfoSummaryType"
+    },
+    "tpaExtensions" : {
+      "$ref" : "#/definitions/OTAAirLowFareSearchRQ.TPAExtensions"
+    },
+    "directFlightsOnly" : {
+      "type" : "boolean"
+    },
+    "availableFlightsOnly" : {
+      "type" : "boolean"
+    },
+    "responseType" : {
+      "type" : "string"
+    },
+    "responseVersion" : {
+      "type" : "string"
+    },
+    "separateMessages" : {
+      "type" : "boolean"
+    },
+    "truncateMessages" : {
+      "type" : "boolean"
+    },
+    "echoToken" : {
+      "type" : "string"
+    },
+    "timeStamp" : {
+      "type" : "string"
+    },
+    "target" : {
+      "type" : "string"
+    },
+    "version" : {
+      "type" : "string"
+    },
+    "transactionIdentifier" : {
+      "type" : "string"
+    },
+    "sequenceNmbr" : {
+      "type" : "string"
+    },
+    "transactionStatusCode" : {
+      "type" : "string"
+    },
+    "primaryLangId" : {
+      "type" : "string"
+    },
+    "altLangId" : {
+      "type" : "string"
+    },
+    "maxResponses" : {
+      "type" : "string"
+    }
+  },
+  "required": ["originDestinationInformation"],              
+  "definitions" : {
+    "POSType" : {
+      "type" : "object",
+      "properties" : {
+        "source" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/SourceType"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "SourceType" : {
+      "type" : "object",
+      "properties" : {
+        "requestorId" : {
+          "$ref" : "#/definitions/UniqueIDType"
+        },
+        "position" : {
+          "$ref" : "#/definitions/PositionType"
+        },
+        "bookingChannel" : {
+          "$ref" : "#/definitions/SourceBookingChannelType"
+        },
+        "agentCity" : {
+          "type" : "string"
+        },
+        "carrier" : {
+          "type" : "string"
+        },
+        "mainTravelAgencyPcc" : {
+          "type" : "string"
+        },
+        "homePcc" : {
+          "type" : "string"
+        },
+        "agentSine" : {
+          "type" : "string"
+        },
+        "pseudoCityCode" : {
+          "type" : "string"
+        },
+        "isoCountry" : {
+          "type" : "string"
+        },
+        "isoCurrency" : {
+          "type" : "string"
+        },
+        "agentDutyCode" : {
+          "type" : "string"
+        },
+        "airlineVendorId" : {
+          "type" : "string"
+        },
+        "airportCode" : {
+          "type" : "string"
+        },
+        "firstDepartPoint" : {
+          "type" : "string"
+        },
+        "erspUserId" : {
+          "type" : "string"
+        },
+        "personalCityCode" : {
+          "type" : "string"
+        },
+        "accountingCode" : {
+          "type" : "string"
+        },
+        "officeCode" : {
+          "type" : "string"
+        },
+        "defaultTicketingCarrier" : {
+          "type" : "string"
+        },
+        "airlineChannelCode" : {
+          "type" : "string"
+        },
+        "agentDepartmentCode" : {
+          "type" : "string"
+        },
+        "agentFunction" : {
+          "type" : "string"
+        },
+        "travelAgencyIata" : {
+          "type" : "string"
+        },
+        "homeAgencyIata" : {
+          "type" : "string"
+        },
+        "agentIata" : {
+          "type" : "string"
+        },
+        "vendorCrsCode" : {
+          "type" : "string"
+        },
+        "agentDuty" : {
+          "type" : "string"
+        },
+        "abacusUser" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "UniqueIDType" : {
+      "type" : "object",
+      "properties" : {
+        "companyName" : {
+          "$ref" : "#/definitions/CompanyNameType"
+        },
+        "url" : {
+          "type" : "string"
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "instance" : {
+          "type" : "string"
+        },
+        "idContext" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "CompanyNameType" : {
+      "type" : "object",
+      "properties" : {
+        "content" : {
+          "type" : "string"
+        },
+        "companyShortName" : {
+          "type" : "string"
+        },
+        "travelSector" : {
+          "type" : "string"
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "codeContext" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PositionType" : {
+      "type" : "object",
+      "properties" : {
+        "latitude" : {
+          "type" : "string"
+        },
+        "longitude" : {
+          "type" : "string"
+        },
+        "altitude" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "SourceBookingChannelType" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string"
+        },
+        "primary" : {
+          "type" : "boolean"
+        },
+        "companyName" : {
+          "$ref" : "#/definitions/CompanyNameType"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.OriginDestinationInformation" : {
+      "type" : "object",
+      "properties" : {
+        "departureDateTime" : {
+          "type" : "string"
+        },
+        "arrivalDateTime" : {
+          "type" : "string"
+        },
+        "departureDates" : {
+          "$ref" : "#/definitions/TravelDateTimeType.DepartureDates"
+        },
+        "arrivalDates" : {
+          "$ref" : "#/definitions/TravelDateTimeType.ArrivalDates"
+        },
+        "departureWindow" : {
+          "type" : "string"
+        },
+        "arrivalWindow" : {
+          "type" : "string"
+        },
+        "originLocation" : {
+          "$ref" : "#/definitions/OriginDestinationInformationType.OriginLocation"
+        },
+        "destinationLocation" : {
+          "$ref" : "#/definitions/OriginDestinationInformationType.DestinationLocation"
+        },
+        "connectionLocations" : {
+          "$ref" : "#/definitions/ConnectionType"
+        },
+        "tpaExtensions" : {
+          "$ref" : "#/definitions/OTAAirLowFareSearchRQ.OriginDestinationInformation.TPAExtensions"
+        },
+        "rph" : {
+          "type" : "string"
+        },
+        "fixed" : {
+          "type" : "boolean"
+        },
+        "fullDiversity" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TravelDateTimeType.DepartureDates" : {
+      "type" : "object",
+      "properties" : {
+        "day" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TravelDateTimeType.ArrivalDates.Day"
+          }
+        },
+        "daysRange" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TravelDateTimeType.ArrivalDates.DaysRange"
+          }
+        },
+        "lengthOfStay" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TravelDateTimeType.DepartureDates.LengthOfStay"
+          }
+        },
+        "lengthOfStayRange" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TravelDateTimeType.DepartureDates.LengthOfStayRange"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TravelDateTimeType.ArrivalDates.Day" : {
+      "type" : "object",
+      "properties" : {
+        "date" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TravelDateTimeType.ArrivalDates.DaysRange" : {
+      "type" : "object",
+      "properties" : {
+        "fromDate" : {
+          "type" : "string"
+        },
+        "toDate" : {
+          "type" : "string"
+        },
+        "weekDays" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TravelDateTimeType.DepartureDates.LengthOfStay" : {
+      "type" : "object",
+      "properties" : {
+        "days" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TravelDateTimeType.DepartureDates.LengthOfStayRange" : {
+      "type" : "object",
+      "properties" : {
+        "minDays" : {
+          "type" : "integer"
+        },
+        "maxDays" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TravelDateTimeType.ArrivalDates" : {
+      "type" : "object",
+      "properties" : {
+        "day" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TravelDateTimeType.ArrivalDates.Day"
+          }
+        },
+        "daysRange" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TravelDateTimeType.ArrivalDates.DaysRange"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OriginDestinationInformationType.OriginLocation" : {
+      "type" : "object",
+      "properties" : {
+        "content" : {
+          "type" : "string"
+        },
+        "locationCode" : {
+          "type" : "string"
+        },
+        "airportsGroup" : {
+          "type" : "string"
+        },
+        "codeContext" : {
+          "type" : "string"
+        },
+        "locationType" : {
+          "type" : "string"
+        },
+        "allAirports" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OriginDestinationInformationType.DestinationLocation" : {
+      "type" : "object",
+      "properties" : {
+        "content" : {
+          "type" : "string"
+        },
+        "locationCode" : {
+          "type" : "string"
+        },
+        "airportsGroup" : {
+          "type" : "string"
+        },
+        "codeContext" : {
+          "type" : "string"
+        },
+        "locationType" : {
+          "type" : "string"
+        },
+        "allAirports" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ConnectionType" : {
+      "type" : "object",
+      "properties" : {
+        "connectionLocation" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ConnectionType.ConnectionLocation"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ConnectionType.ConnectionLocation" : {
+      "type" : "object",
+      "properties" : {
+        "content" : {
+          "type" : "string"
+        },
+        "locationCode" : {
+          "type" : "string"
+        },
+        "preferLevel" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.OriginDestinationInformation.TPAExtensions" : {
+      "type" : "object",
+      "properties" : {
+        "flight" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/OriginDestinationFlightType"
+          }
+        },
+        "routing" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/RoutingDefinitionType"
+          }
+        },
+        "dateFlexibility" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ExchangeOriginDestinationInformationType.DateFlexibility"
+          }
+        },
+        "sisterDestinationLocation" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/RequestSpecifiedLocationType"
+          }
+        },
+        "sisterDestinationMileage" : {
+          "$ref" : "#/definitions/ExchangeOriginDestinationInformationType.SisterDestinationMileage"
+        },
+        "sisterOriginLocation" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/RequestSpecifiedLocationType"
+          }
+        },
+        "sisterOriginMileage" : {
+          "$ref" : "#/definitions/ExchangeOriginDestinationInformationType.SisterOriginMileage"
+        },
+        "segmentType" : {
+          "$ref" : "#/definitions/ExchangeOriginDestinationInformationType.SegmentType"
+        },
+        "alternateTime" : {
+          "$ref" : "#/definitions/ExchangeOriginDestinationInformationType.AlternateTime"
+        },
+        "maxOneWayOptions" : {
+          "$ref" : "#/definitions/ExchangeOriginDestinationInformationType.MaxOneWayOptions"
+        },
+        "numOneWayOptions" : {
+          "$ref" : "#/definitions/ExchangeOriginDestinationInformationType.NumOneWayOptions"
+        },
+        "cabinPref" : {
+          "$ref" : "#/definitions/CabinPrefType"
+        },
+        "connectionTime" : {
+          "$ref" : "#/definitions/ExchangeOriginDestinationInformationType.ConnectionTime"
+        },
+        "totalTravelTime" : {
+          "$ref" : "#/definitions/ExchangeOriginDestinationInformationType.TotalTravelTime"
+        },
+        "includeVendorPref" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/IncludeVendorPrefType"
+          }
+        },
+        "includeAlliancePref" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AllianceType"
+          }
+        },
+        "departureDays" : {
+          "$ref" : "#/definitions/DepartureDaysType"
+        },
+        "baggage" : {
+          "$ref" : "#/definitions/BaggageType"
+        },
+        "classOfService" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ClassOfServiceElemType"
+          }
+        },
+        "fareBasis" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/FareBasisType"
+          }
+        },
+        "stopover" : {
+          "$ref" : "#/definitions/StopoverType"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OriginDestinationFlightType" : {
+      "type" : "object",
+      "properties" : {
+        "originLocation" : {
+          "$ref" : "#/definitions/RequestLocationType"
+        },
+        "destinationLocation" : {
+          "$ref" : "#/definitions/RequestLocationType"
+        },
+        "airline" : {
+          "$ref" : "#/definitions/AirlineType"
+        },
+        "sideTrip" : {
+          "$ref" : "#/definitions/SideTripType"
+        },
+        "reservation" : {
+          "$ref" : "#/definitions/ReservationType"
+        },
+        "mileageDisplay" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/MileageDisplayType"
+          }
+        },
+        "bookingDateTime" : {
+          "type" : "string"
+        },
+        "fare" : {
+          "$ref" : "#/definitions/FareOptionalDetailsType"
+        },
+        "plusUp" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/PlusUpType"
+          }
+        },
+        "number" : {
+          "type" : "number"
+        },
+        "departureDateTime" : {
+          "type" : "string"
+        },
+        "arrivalDateTime" : {
+          "type" : "string"
+        },
+        "marriageStatus" : {
+          "type" : "string"
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "flown" : {
+          "type" : "boolean"
+        },
+        "classOfService" : {
+          "type" : "string"
+        },
+        "shopped" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "RequestLocationType" : {
+      "type" : "object",
+      "properties" : {
+        "content" : {
+          "type" : "string"
+        },
+        "locationCode" : {
+          "type" : "string"
+        },
+        "airportsGroup" : {
+          "type" : "string"
+        },
+        "codeContext" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirlineType" : {
+      "type" : "object",
+      "properties" : {
+        "operating" : {
+          "type" : "string"
+        },
+        "marketing" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "SideTripType" : {
+      "type" : "object",
+      "properties" : {
+        "number" : {
+          "type" : "number"
+        },
+        "start" : {
+          "type" : "boolean"
+        },
+        "end" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ReservationType" : {
+      "type" : "object",
+      "properties" : {
+        "status" : {
+          "type" : "string"
+        },
+        "realStatus" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "MileageDisplayType" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string"
+        },
+        "city" : {
+          "type" : "string"
+        },
+        "surcharge" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "FareOptionalDetailsType" : {
+      "type" : "object",
+      "properties" : {
+        "componentNo" : {
+          "type" : "number"
+        },
+        "basisCode" : {
+          "type" : "string"
+        },
+        "amount" : {
+          "type" : "number"
+        },
+        "brandId" : {
+          "type" : "string"
+        },
+        "programId" : {
+          "type" : "integer"
+        },
+        "vendor" : {
+          "type" : "string"
+        },
+        "sourceVendor" : {
+          "type" : "string"
+        },
+        "tariff" : {
+          "type" : "string"
+        },
+        "ruleNumber" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PlusUpType" : {
+      "type" : "object",
+      "properties" : {
+        "amount" : {
+          "type" : "number"
+        },
+        "originCity" : {
+          "type" : "string"
+        },
+        "destinationCity" : {
+          "type" : "string"
+        },
+        "fareOriginCity" : {
+          "type" : "string"
+        },
+        "fareDestinationCity" : {
+          "type" : "string"
+        },
+        "viaCity" : {
+          "type" : "string"
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "countryOfPayment" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "RoutingDefinitionType" : {
+      "type" : "object",
+      "properties" : {
+        "routingLeg" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/RoutingLegType"
+          }
+        },
+        "addWildcards" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "RoutingLegType" : {
+      "type" : "object",
+      "properties" : {
+        "inboundOutboundCarrier" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "inboundCarrier" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "outboundCarrier" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "connectPoint" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeOriginDestinationInformationType.DateFlexibility" : {
+      "type" : "object",
+      "properties" : {
+        "nbrOfDays" : {
+          "type" : "integer"
+        },
+        "plus" : {
+          "type" : "integer"
+        },
+        "minus" : {
+          "type" : "integer"
+        },
+        "validate" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "RequestSpecifiedLocationType" : {
+      "type" : "object",
+      "properties" : {
+        "content" : {
+          "type" : "string"
+        },
+        "locationCode" : {
+          "type" : "string"
+        },
+        "airportsGroup" : {
+          "type" : "string"
+        },
+        "codeContext" : {
+          "type" : "string"
+        },
+        "locationType" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeOriginDestinationInformationType.SisterDestinationMileage" : {
+      "type" : "object",
+      "properties" : {
+        "number" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeOriginDestinationInformationType.SisterOriginMileage" : {
+      "type" : "object",
+      "properties" : {
+        "number" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeOriginDestinationInformationType.SegmentType" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeOriginDestinationInformationType.AlternateTime" : {
+      "type" : "object",
+      "properties" : {
+        "plusMinus" : {
+          "type" : "integer"
+        },
+        "plus" : {
+          "type" : "integer"
+        },
+        "minus" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeOriginDestinationInformationType.MaxOneWayOptions" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeOriginDestinationInformationType.NumOneWayOptions" : {
+      "type" : "object",
+      "properties" : {
+        "number" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "CabinPrefType" : {
+      "type" : "object",
+      "properties" : {
+        "cabin" : {
+          "type" : "string"
+        },
+        "preferLevel" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeOriginDestinationInformationType.ConnectionTime" : {
+      "type" : "object",
+      "properties" : {
+        "min" : {
+          "type" : "integer"
+        },
+        "max" : {
+          "type" : "integer"
+        },
+        "excludedConnectionBegin" : {
+          "type" : "string"
+        },
+        "excludedConnectionEnd" : {
+          "type" : "string"
+        },
+        "enableExcludedConnection" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeOriginDestinationInformationType.TotalTravelTime" : {
+      "type" : "object",
+      "properties" : {
+        "min" : {
+          "type" : "number"
+        },
+        "max" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "IncludeVendorPrefType" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AllianceType" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "DepartureDaysType" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "BaggageType" : {
+      "type" : "object",
+      "properties" : {
+        "freePieceRequired" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ClassOfServiceElemType" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "FareBasisType" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "StopoverType" : {
+      "type" : "object",
+      "properties" : {
+        "departureDateTime" : {
+          "type" : "string"
+        },
+        "departureWindow" : {
+          "type" : "string"
+        },
+        "stopoverPoint" : {
+          "$ref" : "#/definitions/StopoverType.StopoverPoint"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "StopoverType.StopoverPoint" : {
+      "type" : "object",
+      "properties" : {
+        "locationCode" : {
+          "type" : "string"
+        },
+        "locationType" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.Leg" : {
+      "type" : "object",
+      "properties" : {
+        "departureDateTime" : {
+          "$ref" : "#/definitions/OTAAirLowFareSearchRQ.Leg.DepartureDateTime"
+        },
+        "arrivalDateTime" : {
+          "$ref" : "#/definitions/GlobalDateTimeType"
+        },
+        "origins" : {
+          "$ref" : "#/definitions/OTAAirLowFareSearchRQ.Leg.Origins"
+        },
+        "destinations" : {
+          "$ref" : "#/definitions/OTAAirLowFareSearchRQ.Leg.Destinations"
+        },
+        "connectionLocations" : {
+          "$ref" : "#/definitions/ConnectionType"
+        },
+        "carriers" : {
+          "$ref" : "#/definitions/OTAAirLowFareSearchRQ.Leg.Carriers"
+        },
+        "cabin" : {
+          "$ref" : "#/definitions/OTAAirLowFareSearchRQ.Leg.Cabin"
+        },
+        "rph" : {
+          "type" : "string"
+        },
+        "maxOptions" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.Leg.DepartureDateTime" : {
+      "type" : "object",
+      "properties" : {
+        "timeWindowStart" : {
+          "type" : "string"
+        },
+        "timeWindowEnd" : {
+          "type" : "string"
+        },
+        "timeTolerance" : {
+          "type" : "integer"
+        },
+        "dateFlexibility" : {
+          "type" : "integer"
+        },
+        "maxOptionsPerDate" : {
+          "type" : "integer"
+        },
+        "connectionTimeMin" : {
+          "type" : "integer"
+        },
+        "connectionTimeMax" : {
+          "type" : "integer"
+        },
+        "dateTime" : {
+          "type" : "string"
+        },
+        "weekDays" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "GlobalDateTimeType" : {
+      "type" : "object",
+      "properties" : {
+        "timeWindowStart" : {
+          "type" : "string"
+        },
+        "timeWindowEnd" : {
+          "type" : "string"
+        },
+        "timeTolerance" : {
+          "type" : "integer"
+        },
+        "dateFlexibility" : {
+          "type" : "integer"
+        },
+        "maxOptionsPerDate" : {
+          "type" : "integer"
+        },
+        "connectionTimeMin" : {
+          "type" : "integer"
+        },
+        "connectionTimeMax" : {
+          "type" : "integer"
+        },
+        "dateTime" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.Leg.Origins" : {
+      "type" : "object",
+      "properties" : {
+        "origin" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/OTAAirLowFareSearchRQ.Leg.Origins.Origin"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.Leg.Origins.Origin" : {
+      "type" : "object",
+      "properties" : {
+        "airportCode" : {
+          "type" : "string"
+        },
+        "airportsGroup" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.Leg.Destinations" : {
+      "type" : "object",
+      "properties" : {
+        "destination" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/OTAAirLowFareSearchRQ.Leg.Destinations.Destination"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.Leg.Destinations.Destination" : {
+      "type" : "object",
+      "properties" : {
+        "airportCode" : {
+          "type" : "string"
+        },
+        "airportsGroup" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.Leg.Carriers" : {
+      "type" : "object",
+      "properties" : {
+        "includeVendorPref" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/IncludeVendorPrefType"
+          }
+        },
+        "excludeVendorPref" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/OTAAirLowFareSearchRQ.Leg.Carriers.ExcludeVendorPref"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.Leg.Carriers.ExcludeVendorPref" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.Leg.Cabin" : {
+      "type" : "object",
+      "properties" : {
+        "preferenceLevel" : {
+          "type" : "string"
+        },
+        "type" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType" : {
+      "type" : "object",
+      "properties" : {
+        "vendorPref" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/CompanyNamePrefType"
+          }
+        },
+        "vendorPrefApplicability" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/VendorPrefApplicabilityType"
+          }
+        },
+        "vendorPrefPairing" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/VendorPrefPairingType"
+          }
+        },
+        "flightTypePref" : {
+          "$ref" : "#/definitions/FlightTypePrefType"
+        },
+        "fareRestrictPref" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AirSearchPrefsType.FareRestrictPref"
+          }
+        },
+        "equipPref" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/EquipmentTypePref"
+          }
+        },
+        "cabinPref" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/CabinPrefType"
+          }
+        },
+        "ticketDistribPref" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TicketDistribPrefType"
+          }
+        },
+        "tpaExtensions" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions"
+        },
+        "ancillaryFees" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.AncillaryFees"
+        },
+        "frequentFlyer" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AirSearchPrefsType.FrequentFlyer"
+          }
+        },
+        "spanishFamilyDiscount" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.SpanishFamilyDiscount"
+        },
+        "baggage" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.Baggage"
+        },
+        "interlineBrands" : {
+          "$ref" : "#/definitions/InterlineBrandsType"
+        },
+        "commissionCodeQualifiers" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.CommissionCodeQualifiers"
+        },
+        "onTimeRate" : {
+          "type" : "number"
+        },
+        "eTicketDesired" : {
+          "type" : "boolean"
+        },
+        "validInterlineTicket" : {
+          "type" : "boolean"
+        },
+        "maxStopsQuantity" : {
+          "type" : "integer"
+        },
+        "useAllFlights" : {
+          "type" : "boolean"
+        },
+        "allFlightsData" : {
+          "type" : "boolean"
+        },
+        "hybrid" : {
+          "type" : "boolean"
+        },
+        "lookForAlternatives" : {
+          "type" : "boolean"
+        },
+        "smokingAllowed" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "CompanyNamePrefType" : {
+      "type" : "object",
+      "properties" : {
+        "content" : {
+          "type" : "string"
+        },
+        "companyShortName" : {
+          "type" : "string"
+        },
+        "travelSector" : {
+          "type" : "string"
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "codeContext" : {
+          "type" : "string"
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "preferLevel" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "VendorPrefApplicabilityType" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "string"
+        },
+        "type" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "VendorPrefPairingType" : {
+      "type" : "object",
+      "properties" : {
+        "vendorPref" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/VendorPrefPairingType.VendorPref"
+          }
+        },
+        "preferLevel" : {
+          "type" : "string"
+        },
+        "applicability" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "VendorPrefPairingType.VendorPref" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        },
+        "type" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "FlightTypePrefType" : {
+      "type" : "object",
+      "properties" : {
+        "flightType" : {
+          "type" : "string"
+        },
+        "maxConnections" : {
+          "type" : "string"
+        },
+        "preferLevel" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.FareRestrictPref" : {
+      "type" : "object",
+      "properties" : {
+        "fareRestriction" : {
+          "type" : "string"
+        },
+        "preferLevel" : {
+          "type" : "string"
+        },
+        "advResTicketing" : {
+          "$ref" : "#/definitions/AdvResTicketingType"
+        },
+        "stayRestrictions" : {
+          "$ref" : "#/definitions/StayRestrictionsType"
+        },
+        "voluntaryChanges" : {
+          "$ref" : "#/definitions/VoluntaryChangesType"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AdvResTicketingType" : {
+      "type" : "object",
+      "properties" : {
+        "advReservation" : {
+          "$ref" : "#/definitions/AdvResTicketingType.AdvReservation"
+        },
+        "advTicketing" : {
+          "$ref" : "#/definitions/AdvResTicketingType.AdvTicketing"
+        },
+        "advResInd" : {
+          "type" : "boolean"
+        },
+        "advTicketingInd" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AdvResTicketingType.AdvReservation" : {
+      "type" : "object",
+      "properties" : {
+        "latestTimeOfDay" : {
+          "type" : "string"
+        },
+        "latestPeriod" : {
+          "type" : "string"
+        },
+        "latestUnit" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AdvResTicketingType.AdvTicketing" : {
+      "type" : "object",
+      "properties" : {
+        "fromResTimeOfDay" : {
+          "type" : "string"
+        },
+        "fromResPeriod" : {
+          "type" : "string"
+        },
+        "fromResUnit" : {
+          "type" : "string"
+        },
+        "fromDepartTimeOfDay" : {
+          "type" : "string"
+        },
+        "fromDepartPeriod" : {
+          "type" : "string"
+        },
+        "fromDepartUnit" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "StayRestrictionsType" : {
+      "type" : "object",
+      "properties" : {
+        "minimumStay" : {
+          "$ref" : "#/definitions/StayRestrictionsType.MinimumStay"
+        },
+        "maximumStay" : {
+          "$ref" : "#/definitions/StayRestrictionsType.MaximumStay"
+        },
+        "stayRestrictionsInd" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "StayRestrictionsType.MinimumStay" : {
+      "type" : "object",
+      "properties" : {
+        "returnTimeOfDay" : {
+          "type" : "string"
+        },
+        "minStay" : {
+          "type" : "integer"
+        },
+        "stayUnit" : {
+          "type" : "string"
+        },
+        "minStayDate" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "StayRestrictionsType.MaximumStay" : {
+      "type" : "object",
+      "properties" : {
+        "returnType" : {
+          "type" : "string"
+        },
+        "returnTimeOfDay" : {
+          "type" : "string"
+        },
+        "maxStay" : {
+          "type" : "integer"
+        },
+        "stayUnit" : {
+          "type" : "string"
+        },
+        "maxStayDate" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "VoluntaryChangesType" : {
+      "type" : "object",
+      "properties" : {
+        "penalty" : {
+          "$ref" : "#/definitions/VoluntaryChangesType.Penalty"
+        },
+        "volChangeInd" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "VoluntaryChangesType.Penalty" : {
+      "type" : "object",
+      "properties" : {
+        "penaltyType" : {
+          "type" : "string"
+        },
+        "departureStatus" : {
+          "type" : "string"
+        },
+        "percent" : {
+          "type" : "number"
+        },
+        "amount" : {
+          "type" : "number"
+        },
+        "currencyCode" : {
+          "type" : "string"
+        },
+        "decimalPlaces" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "EquipmentTypePref" : {
+      "type" : "object",
+      "properties" : {
+        "content" : {
+          "type" : "string"
+        },
+        "airEquipType" : {
+          "type" : "string"
+        },
+        "changeofGauge" : {
+          "type" : "boolean"
+        },
+        "wideBody" : {
+          "type" : "boolean"
+        },
+        "preferLevel" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TicketDistribPrefType" : {
+      "type" : "object",
+      "properties" : {
+        "content" : {
+          "type" : "string"
+        },
+        "distribType" : {
+          "type" : "string"
+        },
+        "ticketTime" : {
+          "type" : "string"
+        },
+        "preferLevel" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions" : {
+      "type" : "object",
+      "properties" : {
+        "departureWindow" : {
+          "type" : "string"
+        },
+        "arrivalWindow" : {
+          "type" : "string"
+        },
+        "codeShareIndicator" : {
+          "$ref" : "#/definitions/CodeShareIndicator"
+        },
+        "excludeVendorPref" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.ExcludeVendorPref"
+          }
+        },
+        "includeAlliancePref" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AllianceType"
+          }
+        },
+        "excludeAlliancePref" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AllianceType"
+          }
+        },
+        "numTrips" : {
+          "$ref" : "#/definitions/NumTripsType"
+        },
+        "altCitiesCombinations" : {
+          "$ref" : "#/definitions/AltCitiesCombinationsType"
+        },
+        "numTripsWithRouting" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.NumTripsWithRouting"
+        },
+        "onlineIndicator" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.OnlineIndicator"
+        },
+        "interlineIndicator" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.InterlineIndicator"
+        },
+        "tripType" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.TripType"
+        },
+        "maxPrice" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.MaxPrice"
+        },
+        "contentType" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.ContentType"
+        },
+        "domesticLayoverTime" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.DomesticLayoverTime"
+        },
+        "longConnectTime" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.LongConnectTime"
+        },
+        "longConnectPoints" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.LongConnectPoints"
+        },
+        "airServiceOnly" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.AirServiceOnly"
+        },
+        "jetServiceOnly" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.JetServiceOnly"
+        },
+        "sameConnectionAirportOnly" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.SameConnectionAirportOnly"
+        },
+        "sameOriginAirportOnly" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.SameOriginAirportOnly"
+        },
+        "sameTurnaroundAirportOnly" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.SameTurnaroundAirportOnly"
+        },
+        "aircraftTypePenalty" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.AircraftTypePenalty"
+        },
+        "alternateAirportPenalty" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.AlternateAirportPenalty"
+        },
+        "fareAmountThreshold" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.FareAmountThreshold"
+        },
+        "numOfLowFareSol" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.NumOfLowFareSol"
+        },
+        "numOfMustPriceOnlSol" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.NumOfMustPriceOnlSol"
+        },
+        "numOfMustPriceInrlSol" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.NumOfMustPriceInrlSol"
+        },
+        "numOfMustPriceNStpOnlSol" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.NumOfMustPriceNStpOnlSol"
+        },
+        "numOfMustPriceNStpInrlSol" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.NumOfMustPriceNStpInrlSol"
+        },
+        "numOfMustPriceSStopOnlSol" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.NumOfMustPriceSStopOnlSol"
+        },
+        "stpPenaltyInUsd" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.StpPenaltyInUSD"
+        },
+        "durPenaltyInUsd" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.DurPenaltyInUSD"
+        },
+        "depPenaltyInUsd" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.DepPenaltyInUSD"
+        },
+        "maxAllowedMustPriceOveragePerCrr" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.MaxAllowedMustPriceOveragePerCrr"
+        },
+        "fltOptMustPriceReuseLimit" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.FltOptMustPriceReuseLimit"
+        },
+        "upperBoundMustPriceFactorForNotNonStp" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.UpperBoundMustPriceFactorForNotNonStp"
+        },
+        "upperBoundLfsFactor" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.UpperBoundLFSFactor"
+        },
+        "numOfMustPriceNStp1StpOnlSol" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.NumOfMustPriceNStp1StpOnlSol"
+        },
+        "numOfMustPriceNStp1StpInrlSol" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.NumOfMustPriceNStp1StpInrlSol"
+        },
+        "upperBoundMustPriceFactorForNonStp" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.UpperBoundMustPriceFactorForNonStp"
+        },
+        "maxAllowedLfsOveragePerCrrPercent" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.MaxAllowedLFSOveragePerCrrPercent"
+        },
+        "targetMinNumOfLfsOnlSolPerCrr" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.TargetMinNumOfLFSOnlSolPerCrr"
+        },
+        "targetMinNumOfLfsTotOnlSolPercent" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.TargetMinNumOfLFSTotOnlSolPercent"
+        },
+        "fltOptLfsReuseLimitForNonAvs" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.FltOptLFSReuseLimitForNonAVS"
+        },
+        "fltOptLfsReuseLimitForAvs" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.FltOptLFSReuseLimitForAVS"
+        },
+        "avsPenaltyCrrs" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.AvsPenaltyCrrs"
+        },
+        "maxNumOfNonStpOnlSol" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.MaxNumOfNonStpOnlSol"
+        },
+        "maxNumOfNonStpInrlSol" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.MaxNumOfNonStpInrlSol"
+        },
+        "maxNumOfSingleStpOnlSol" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.MaxNumOfSingleStpOnlSol"
+        },
+        "maxNumOf2PlusStpSol" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.MaxNumOf2PlusStpSol"
+        },
+        "minAllowedOveragePerCrrPercent" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.MinAllowedOveragePerCrrPercent"
+        },
+        "minAllowedOveragePerCrr" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.MinAllowedOveragePerCrr"
+        },
+        "maxRelFareLvlOfxForNonStp" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.MaxRelFareLvlOfxForNonStp"
+        },
+        "maxRelFareLvlOfxForCnx" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.MaxRelFareLvlOfxForCnx"
+        },
+        "numOfMustPrice2PlusStpSol" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.NumOfMustPrice2PlusStpSol"
+        },
+        "itineraryNumberThreshold" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.ItineraryNumberThreshold"
+        },
+        "xoFares" : {
+          "$ref" : "#/definitions/XOFaresType"
+        },
+        "exemptAllTaxes" : {
+          "$ref" : "#/definitions/ExchangeTravelPreferencesTPAExtensionsType.ExemptAllTaxes"
+        },
+        "exemptAllTaxesAndFees" : {
+          "$ref" : "#/definitions/ExchangeTravelPreferencesTPAExtensionsType.ExemptAllTaxesAndFees"
+        },
+        "taxes" : {
+          "$ref" : "#/definitions/ExchangeTravelPreferencesTPAExtensionsType.Taxes"
+        },
+        "exemptTax" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TaxCodeType"
+          }
+        },
+        "flightStopsAsConnections" : {
+          "$ref" : "#/definitions/FlightStopsAsConnectionsType"
+        },
+        "ticketingSumOfLocals" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.TicketingSumOfLocals"
+        },
+        "multiAirportCodes" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.MultiAirportCodes"
+        },
+        "jumpCabinLogic" : {
+          "$ref" : "#/definitions/JumpCabinLogicType"
+        },
+        "keepSameCabin" : {
+          "$ref" : "#/definitions/KeepSameCabinType"
+        },
+        "governingCarrierOverride" : {
+          "$ref" : "#/definitions/GoverningCarrierOverrideType"
+        },
+        "excludeCallDirectCarriers" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.ExcludeCallDirectCarriers"
+        },
+        "validatingCarrier" : {
+          "$ref" : "#/definitions/ValidatingCarrierType"
+        },
+        "validatingCarrierCheck" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.ValidatingCarrierCheck"
+        },
+        "settlementMethod" : {
+          "type" : "string"
+        },
+        "flightRepeatLimit" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.FlightRepeatLimit"
+        },
+        "flexibleFares" : {
+          "$ref" : "#/definitions/FlexibleFaresType"
+        },
+        "diversityParameters" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.DiversityParameters"
+        },
+        "additionalFareLimit" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.AdditionalFareLimit"
+        },
+        "fareFocusRules" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.FareFocusRules"
+        },
+        "sellingLevels" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.SellingLevels"
+        },
+        "budget" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.Budget"
+        },
+        "optionsPerDatePairList" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.OptionsPerDatePairList"
+        },
+        "countryPref" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.CountryPref"
+          }
+        },
+        "retailerRules" : {
+          "$ref" : "#/definitions/RetailerRulesType"
+        },
+        "forceKeywordRestrictedContent" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.ForceKeywordRestrictedContent"
+        },
+        "flightRestrictions" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.FlightRestrictions"
+        },
+        "lowCostCarriersProcessing" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.LowCostCarriersProcessing"
+        },
+        "verificationItinCallLogic" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.VerificationItinCallLogic"
+        },
+        "classOfService" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ClassOfServiceElemType"
+          }
+        },
+        "fareBasis" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/FareBasisType"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "CodeShareIndicator" : {
+      "type" : "object",
+      "properties" : {
+        "excludeCodeshare" : {
+          "type" : "boolean"
+        },
+        "keepOnlines" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.ExcludeVendorPref" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "NumTripsType" : {
+      "type" : "object",
+      "properties" : {
+        "number" : {
+          "type" : "number"
+        },
+        "perDateMin" : {
+          "type" : "integer"
+        },
+        "perDateMax" : {
+          "type" : "integer"
+        },
+        "perMarket" : {
+          "type" : "integer"
+        },
+        "perMonth" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AltCitiesCombinationsType" : {
+      "type" : "object",
+      "properties" : {
+        "origins" : {
+          "type" : "string"
+        },
+        "destinations" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.NumTripsWithRouting" : {
+      "type" : "object",
+      "properties" : {
+        "number" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.OnlineIndicator" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.InterlineIndicator" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.TripType" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.MaxPrice" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.ContentType" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.DomesticLayoverTime" : {
+      "type" : "object",
+      "properties" : {
+        "hours" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.LongConnectTime" : {
+      "type" : "object",
+      "properties" : {
+        "min" : {
+          "type" : "number"
+        },
+        "max" : {
+          "type" : "number"
+        },
+        "enable" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.LongConnectPoints" : {
+      "type" : "object",
+      "properties" : {
+        "min" : {
+          "type" : "number"
+        },
+        "max" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.AirServiceOnly" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.JetServiceOnly" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.SameConnectionAirportOnly" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.SameOriginAirportOnly" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.SameTurnaroundAirportOnly" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.AircraftTypePenalty" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.AlternateAirportPenalty" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.FareAmountThreshold" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.NumOfLowFareSol" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.NumOfMustPriceOnlSol" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.NumOfMustPriceInrlSol" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.NumOfMustPriceNStpOnlSol" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.NumOfMustPriceNStpInrlSol" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.NumOfMustPriceSStopOnlSol" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.StpPenaltyInUSD" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.DurPenaltyInUSD" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.DepPenaltyInUSD" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.MaxAllowedMustPriceOveragePerCrr" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.FltOptMustPriceReuseLimit" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.UpperBoundMustPriceFactorForNotNonStp" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.UpperBoundLFSFactor" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.NumOfMustPriceNStp1StpOnlSol" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.NumOfMustPriceNStp1StpInrlSol" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.UpperBoundMustPriceFactorForNonStp" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.MaxAllowedLFSOveragePerCrrPercent" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.TargetMinNumOfLFSOnlSolPerCrr" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.TargetMinNumOfLFSTotOnlSolPercent" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.FltOptLFSReuseLimitForNonAVS" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.FltOptLFSReuseLimitForAVS" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.AvsPenaltyCrrs" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.MaxNumOfNonStpOnlSol" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.MaxNumOfNonStpInrlSol" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.MaxNumOfSingleStpOnlSol" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.MaxNumOf2PlusStpSol" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.MinAllowedOveragePerCrrPercent" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.MinAllowedOveragePerCrr" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.MaxRelFareLvlOfxForNonStp" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.MaxRelFareLvlOfxForCnx" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.NumOfMustPrice2PlusStpSol" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.ItineraryNumberThreshold" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "XOFaresType" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeTravelPreferencesTPAExtensionsType.ExemptAllTaxes" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeTravelPreferencesTPAExtensionsType.ExemptAllTaxesAndFees" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeTravelPreferencesTPAExtensionsType.Taxes" : {
+      "type" : "object",
+      "properties" : {
+        "tax" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TaxCodeAmountType"
+          }
+        },
+        "isRefundable" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TaxCodeType"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TaxCodeAmountType" : {
+      "type" : "object",
+      "properties" : {
+        "taxCode" : {
+          "type" : "string"
+        },
+        "amount" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TaxCodeType" : {
+      "type" : "object",
+      "properties" : {
+        "taxCode" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "FlightStopsAsConnectionsType" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.TicketingSumOfLocals" : {
+      "type" : "object",
+      "properties" : {
+        "enable" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.MultiAirportCodes" : {
+      "type" : "object",
+      "properties" : {
+        "enableOpenJaw" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "JumpCabinLogicType" : {
+      "type" : "object",
+      "properties" : {
+        "disabled" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "KeepSameCabinType" : {
+      "type" : "object",
+      "properties" : {
+        "enabled" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "GoverningCarrierOverrideType" : {
+      "type" : "object",
+      "properties" : {
+        "airlineCode" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.ExcludeCallDirectCarriers" : {
+      "type" : "object",
+      "properties" : {
+        "enabled" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ValidatingCarrierType" : {
+      "type" : "object",
+      "properties" : {
+        "preference" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ValidatingCarrierType.Preference"
+          }
+        },
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ValidatingCarrierType.Preference" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        },
+        "level" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.ValidatingCarrierCheck" : {
+      "type" : "object",
+      "properties" : {
+        "settlementValidation" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.ValidatingCarrierCheck.SettlementValidation"
+        },
+        "ietValidation" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.ValidatingCarrierCheck.IETValidation"
+        },
+        "carrier" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.ValidatingCarrierCheck.Carrier"
+          }
+        },
+        "country" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.ValidatingCarrierCheck.Country"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.ValidatingCarrierCheck.SettlementValidation" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.ValidatingCarrierCheck.IETValidation" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.ValidatingCarrierCheck.Carrier" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.ValidatingCarrierCheck.Country" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.FlightRepeatLimit" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "FlexibleFaresType" : {
+      "type" : "object",
+      "properties" : {
+        "fareParameters" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/FlexibleFaresType.FareParameters"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "FlexibleFaresType.FareParameters" : {
+      "type" : "object",
+      "properties" : {
+        "excludeRestricted" : {
+          "$ref" : "#/definitions/FlexibleFaresType.FareParameters.ExcludeRestricted"
+        },
+        "resTicketing" : {
+          "$ref" : "#/definitions/FlexibleFaresType.FareParameters.ResTicketing"
+        },
+        "minMaxStay" : {
+          "$ref" : "#/definitions/FlexibleFaresType.FareParameters.MinMaxStay"
+        },
+        "refundPenalty" : {
+          "$ref" : "#/definitions/FlexibleFaresType.FareParameters.RefundPenalty"
+        },
+        "publicFare" : {
+          "$ref" : "#/definitions/FlexibleFaresType.FareParameters.PublicFare"
+        },
+        "privateFare" : {
+          "$ref" : "#/definitions/FlexibleFaresType.FareParameters.PrivateFare"
+        },
+        "cabin" : {
+          "$ref" : "#/definitions/FlexibleFaresType.FareParameters.Cabin"
+        },
+        "passengerType" : {
+          "$ref" : "#/definitions/FlexibleFaresType.FareParameters.PassengerType"
+        },
+        "negotiatedFaresOnly" : {
+          "$ref" : "#/definitions/FlexibleFaresType.FareParameters.NegotiatedFaresOnly"
+        },
+        "xoFares" : {
+          "$ref" : "#/definitions/FlexibleFaresType.FareParameters.XOFares"
+        },
+        "usePassengerFares" : {
+          "$ref" : "#/definitions/FlexibleFaresType.FareParameters.UsePassengerFares"
+        },
+        "useNegotiatedFares" : {
+          "$ref" : "#/definitions/FlexibleFaresType.FareParameters.UseNegotiatedFares"
+        },
+        "passengerTypeQuantity" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/PassengerTypeQuantityType"
+          }
+        },
+        "jumpCabinLogic" : {
+          "$ref" : "#/definitions/JumpCabinLogicType"
+        },
+        "keepSameCabin" : {
+          "$ref" : "#/definitions/KeepSameCabinType"
+        },
+        "voluntaryChanges" : {
+          "$ref" : "#/definitions/VoluntaryChangesSMPType"
+        },
+        "corporateId" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/FlexibleFaresType.FareParameters.CorporateID"
+          }
+        },
+        "accountCode" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/FlexibleFaresType.FareParameters.AccountCode"
+          }
+        },
+        "classOfService" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ClassOfServiceElemType"
+          }
+        },
+        "fareBasis" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/FareBasisType"
+          }
+        },
+        "baggage" : {
+          "$ref" : "#/definitions/BaggageType"
+        },
+        "leg" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/FlexibleFaresType.FareParameters.Leg"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "FlexibleFaresType.FareParameters.ExcludeRestricted" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "FlexibleFaresType.FareParameters.ResTicketing" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "FlexibleFaresType.FareParameters.MinMaxStay" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "FlexibleFaresType.FareParameters.RefundPenalty" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "FlexibleFaresType.FareParameters.PublicFare" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "FlexibleFaresType.FareParameters.PrivateFare" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "FlexibleFaresType.FareParameters.Cabin" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "FlexibleFaresType.FareParameters.PassengerType" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "FlexibleFaresType.FareParameters.NegotiatedFaresOnly" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "FlexibleFaresType.FareParameters.XOFares" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "FlexibleFaresType.FareParameters.UsePassengerFares" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "FlexibleFaresType.FareParameters.UseNegotiatedFares" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PassengerTypeQuantityType" : {
+      "type" : "object",
+      "properties" : {
+        "age" : {
+          "type" : "integer"
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "codeContext" : {
+          "type" : "string"
+        },
+        "uri" : {
+          "type" : "string"
+        },
+        "quantity" : {
+          "type" : "integer"
+        },
+        "tpaExtensions" : {
+          "$ref" : "#/definitions/PassengerTypeQuantityType.TPAExtensions"
+        },
+        "changeable" : {
+          "type" : "boolean"
+        },
+        "index" : {
+          "type" : "integer"
+        },
+        "requestedPassengerIndex" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PassengerTypeQuantityType.TPAExtensions" : {
+      "type" : "object",
+      "properties" : {
+        "birthDate" : {
+          "$ref" : "#/definitions/PassengerTypeQuantityType.TPAExtensions.BirthDate"
+        },
+        "age" : {
+          "$ref" : "#/definitions/PassengerTypeQuantityType.TPAExtensions.Age"
+        },
+        "state" : {
+          "$ref" : "#/definitions/PassengerTypeQuantityType.TPAExtensions.State"
+        },
+        "totalNumber" : {
+          "$ref" : "#/definitions/PassengerTypeQuantityType.TPAExtensions.TotalNumber"
+        },
+        "voluntaryChanges" : {
+          "$ref" : "#/definitions/VoluntaryChangesSMPType"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PassengerTypeQuantityType.TPAExtensions.BirthDate" : {
+      "type" : "object",
+      "properties" : {
+        "date" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PassengerTypeQuantityType.TPAExtensions.Age" : {
+      "type" : "object",
+      "properties" : {
+        "years" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PassengerTypeQuantityType.TPAExtensions.State" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PassengerTypeQuantityType.TPAExtensions.TotalNumber" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "VoluntaryChangesSMPType" : {
+      "type" : "object",
+      "properties" : {
+        "penalty" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/VoluntaryChangesSMPType.Penalty"
+          }
+        },
+        "match" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "VoluntaryChangesSMPType.Penalty" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string"
+        },
+        "exclude" : {
+          "type" : "boolean"
+        },
+        "application" : {
+          "type" : "string"
+        },
+        "amount" : {
+          "type" : "number"
+        },
+        "currencyCode" : {
+          "type" : "string"
+        },
+        "decimalPlaces" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "FlexibleFaresType.FareParameters.CorporateID" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "FlexibleFaresType.FareParameters.AccountCode" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "FlexibleFaresType.FareParameters.Leg" : {
+      "type" : "object",
+      "properties" : {
+        "classOfService" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ClassOfServiceElemType"
+          }
+        },
+        "fareBasis" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/FareBasisType"
+          }
+        },
+        "cabin" : {
+          "$ref" : "#/definitions/FlexibleFaresType.FareParameters.Leg.Cabin"
+        },
+        "baggage" : {
+          "$ref" : "#/definitions/BaggageType"
+        },
+        "num" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "FlexibleFaresType.FareParameters.Leg.Cabin" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.DiversityParameters" : {
+      "type" : "object",
+      "properties" : {
+        "weightings" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.DiversityParameters.Weightings"
+        },
+        "timeOfDayDistribution" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.DiversityParameters.TimeOfDayDistribution"
+        },
+        "inboundOutboundPairing" : {
+          "type" : "integer"
+        },
+        "additionalNonStopsNumber" : {
+          "type" : "integer"
+        },
+        "additionalNonStopsPercentage" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.DiversityParameters.Weightings" : {
+      "type" : "object",
+      "properties" : {
+        "priceWeight" : {
+          "type" : "integer"
+        },
+        "travelTimeWeight" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.DiversityParameters.TimeOfDayDistribution" : {
+      "type" : "object",
+      "properties" : {
+        "timeOfDayRange" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.DiversityParameters.TimeOfDayDistribution.TimeOfDayRange"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.DiversityParameters.TimeOfDayDistribution.TimeOfDayRange" : {
+      "type" : "object",
+      "properties" : {
+        "begin" : {
+          "type" : "string"
+        },
+        "end" : {
+          "type" : "string"
+        },
+        "percentage" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.AdditionalFareLimit" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.FareFocusRules" : {
+      "type" : "object",
+      "properties" : {
+        "exclude" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.SellingLevels" : {
+      "type" : "object",
+      "properties" : {
+        "sellingLevelRules" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.SellingLevels.SellingLevelRules"
+        },
+        "showFareAmounts" : {
+          "$ref" : "#/definitions/AirSearchPrefsType.TPAExtensions.SellingLevels.ShowFareAmounts"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.SellingLevels.SellingLevelRules" : {
+      "type" : "object",
+      "properties" : {
+        "ignore" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.SellingLevels.ShowFareAmounts" : {
+      "type" : "object",
+      "properties" : {
+        "original" : {
+          "type" : "boolean"
+        },
+        "adjusted" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.Budget" : {
+      "type" : "object",
+      "properties" : {
+        "minimumPrice" : {
+          "type" : "string"
+        },
+        "maximumPrice" : {
+          "type" : "string"
+        },
+        "relativePriceThreshold" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.OptionsPerDatePairList" : {
+      "type" : "object",
+      "properties" : {
+        "optionsPerDatePair" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/OptionsPerDatePairType"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OptionsPerDatePairType" : {
+      "type" : "object",
+      "properties" : {
+        "departure" : {
+          "type" : "string"
+        },
+        "return" : {
+          "type" : "string"
+        },
+        "min" : {
+          "type" : "integer"
+        },
+        "max" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.CountryPref" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        },
+        "preferLevel" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "RetailerRulesType" : {
+      "type" : "object",
+      "properties" : {
+        "retailerRule" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/RetailerRulesType.RetailerRule"
+          }
+        },
+        "force" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "RetailerRulesType.RetailerRule" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.ForceKeywordRestrictedContent" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.FlightRestrictions" : {
+      "type" : "object",
+      "properties" : {
+        "avoidLastFlight" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.LowCostCarriersProcessing" : {
+      "type" : "object",
+      "properties" : {
+        "disable" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.TPAExtensions.VerificationItinCallLogic" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "string",
+          "enum" : [ "m", "l", "b" ]
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.AncillaryFees" : {
+      "type" : "object",
+      "properties" : {
+        "ancillaryFeeGroup" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AirSearchPrefsType.AncillaryFees.AncillaryFeeGroup"
+          }
+        },
+        "enable" : {
+          "type" : "boolean"
+        },
+        "summary" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.AncillaryFees.AncillaryFeeGroup" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        },
+        "count" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.FrequentFlyer" : {
+      "type" : "object",
+      "properties" : {
+        "status" : {
+          "type" : "number"
+        },
+        "airlineCode" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.SpanishFamilyDiscount" : {
+      "type" : "object",
+      "properties" : {
+        "level" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.Baggage" : {
+      "type" : "object",
+      "properties" : {
+        "requestType" : {
+          "type" : "string",
+          "enum" : [ "c", "n", "a" ]
+        },
+        "description" : {
+          "type" : "boolean"
+        },
+        "requestedPieces" : {
+          "type" : "integer"
+        },
+        "freePieceRequired" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "InterlineBrandsType" : {
+      "type" : "object",
+      "properties" : {
+        "brand" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/BrandType"
+          }
+        },
+        "changeBrandForSoldout" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "BrandType" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.CommissionCodeQualifiers" : {
+      "type" : "object",
+      "properties" : {
+        "commissionCodeQualifier" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AirSearchPrefsType.CommissionCodeQualifiers.CommissionCodeQualifier"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirSearchPrefsType.CommissionCodeQualifiers.CommissionCodeQualifier" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TravelerInfoSummaryType" : {
+      "type" : "object",
+      "properties" : {
+        "seatsRequested" : {
+          "type" : "array",
+          "items" : {
+            "type" : "integer"
+          }
+        },
+        "airTravelerAvail" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TravelerInformationType"
+          }
+        },
+        "priceRequestInformation" : {
+          "$ref" : "#/definitions/PriceRequestInformationType"
+        },
+        "tpaExtensions" : {
+          "$ref" : "#/definitions/TravelerInfoSummaryTPAExtensionsType"
+        },
+        "specificPtcIndicator" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TravelerInformationType" : {
+      "type" : "object",
+      "properties" : {
+        "passengerTypeQuantity" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/PassengerTypeQuantityType"
+          }
+        },
+        "airTraveler" : {
+          "$ref" : "#/definitions/AirTravelerType"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirTravelerType" : {
+      "type" : "object",
+      "properties" : {
+        "profileRef" : {
+          "$ref" : "#/definitions/AirTravelerType.ProfileRef"
+        },
+        "personName" : {
+          "$ref" : "#/definitions/PersonNameType"
+        },
+        "telephone" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TelephoneType"
+          }
+        },
+        "email" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/EmailType"
+          }
+        },
+        "address" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AddressType"
+          }
+        },
+        "custLoyalty" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/CustLoyaltyType"
+          }
+        },
+        "document" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/DocumentType"
+          }
+        },
+        "passengerTypeQuantity" : {
+          "$ref" : "#/definitions/PassengerTypeQuantityType"
+        },
+        "travelerRefNumber" : {
+          "$ref" : "#/definitions/TravelerRefNumberType"
+        },
+        "flightSegmentRpHs" : {
+          "$ref" : "#/definitions/AirTravelerType.FlightSegmentRPHs"
+        },
+        "birthDate" : {
+          "type" : "string"
+        },
+        "currencyCode" : {
+          "type" : "string"
+        },
+        "passengerTypeCode" : {
+          "type" : "string"
+        },
+        "accompaniedByInfant" : {
+          "type" : "boolean"
+        },
+        "shareSynchInd" : {
+          "type" : "string"
+        },
+        "shareMarketInd" : {
+          "type" : "string"
+        },
+        "gender" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirTravelerType.ProfileRef" : {
+      "type" : "object",
+      "properties" : {
+        "uniqueId" : {
+          "$ref" : "#/definitions/UniqueIDType"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PersonNameType" : {
+      "type" : "object",
+      "properties" : {
+        "namePrefix" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "givenName" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "middleName" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "surnamePrefix" : {
+          "type" : "string"
+        },
+        "surname" : {
+          "type" : "string"
+        },
+        "nameSuffix" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "nameTitle" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "nameType" : {
+          "type" : "string"
+        },
+        "shareSynchInd" : {
+          "type" : "string"
+        },
+        "shareMarketInd" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TelephoneType" : {
+      "type" : "object",
+      "properties" : {
+        "shareSynchInd" : {
+          "type" : "string"
+        },
+        "shareMarketInd" : {
+          "type" : "string"
+        },
+        "phoneLocationType" : {
+          "type" : "string"
+        },
+        "phoneTechType" : {
+          "type" : "string"
+        },
+        "countryAccessCode" : {
+          "type" : "string"
+        },
+        "areaCityCode" : {
+          "type" : "string"
+        },
+        "phoneNumber" : {
+          "type" : "string"
+        },
+        "extension" : {
+          "type" : "string"
+        },
+        "pin" : {
+          "type" : "string"
+        },
+        "formattedInd" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "EmailType" : {
+      "type" : "object",
+      "properties" : {
+        "content" : {
+          "type" : "string"
+        },
+        "emailType" : {
+          "type" : "string"
+        },
+        "shareSynchInd" : {
+          "type" : "string"
+        },
+        "shareMarketInd" : {
+          "type" : "string"
+        },
+        "defaultInd" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AddressType" : {
+      "type" : "object",
+      "properties" : {
+        "streetNmbr" : {
+          "$ref" : "#/definitions/StreetNmbrType"
+        },
+        "bldgRoom" : {
+          "type" : "string"
+        },
+        "addressLine" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "cityName" : {
+          "type" : "string"
+        },
+        "postalCode" : {
+          "type" : "string"
+        },
+        "county" : {
+          "type" : "string"
+        },
+        "stateProv" : {
+          "$ref" : "#/definitions/StateProvType"
+        },
+        "countryName" : {
+          "$ref" : "#/definitions/CountryNameType"
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "formattedInd" : {
+          "type" : "boolean"
+        },
+        "shareSynchInd" : {
+          "type" : "string"
+        },
+        "shareMarketInd" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "StreetNmbrType" : {
+      "type" : "object",
+      "properties" : {
+        "content" : {
+          "type" : "string"
+        },
+        "poBox" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "StateProvType" : {
+      "type" : "object",
+      "properties" : {
+        "content" : {
+          "type" : "string"
+        },
+        "stateCode" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "CountryNameType" : {
+      "type" : "object",
+      "properties" : {
+        "content" : {
+          "type" : "string"
+        },
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "CustLoyaltyType" : {
+      "type" : "object",
+      "properties" : {
+        "programId" : {
+          "type" : "string"
+        },
+        "membershipId" : {
+          "type" : "string"
+        },
+        "travelSector" : {
+          "type" : "string"
+        },
+        "rph" : {
+          "type" : "string"
+        },
+        "shareSynchInd" : {
+          "type" : "string"
+        },
+        "shareMarketInd" : {
+          "type" : "string"
+        },
+        "effectiveDate" : {
+          "type" : "string"
+        },
+        "expireDate" : {
+          "type" : "string"
+        },
+        "singleVendorInd" : {
+          "type" : "string"
+        },
+        "loyalLevel" : {
+          "type" : "string"
+        },
+        "signupDate" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "DocumentType" : {
+      "type" : "object",
+      "properties" : {
+        "docHolderName" : {
+          "type" : "string"
+        },
+        "docLimitations" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "docIssueAuthority" : {
+          "type" : "string"
+        },
+        "docIssueLocation" : {
+          "type" : "string"
+        },
+        "docId" : {
+          "type" : "string"
+        },
+        "docType" : {
+          "type" : "string"
+        },
+        "gender" : {
+          "type" : "string"
+        },
+        "effectiveDate" : {
+          "type" : "string"
+        },
+        "expireDate" : {
+          "type" : "string"
+        },
+        "birthDate" : {
+          "type" : "string"
+        },
+        "shareSynchInd" : {
+          "type" : "string"
+        },
+        "shareMarketInd" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TravelerRefNumberType" : {
+      "type" : "object",
+      "properties" : {
+        "rph" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AirTravelerType.FlightSegmentRPHs" : {
+      "type" : "object",
+      "properties" : {
+        "flightSegmentRph" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType" : {
+      "type" : "object",
+      "properties" : {
+        "negotiatedFareCode" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/PriceRequestInformationType.NegotiatedFareCode"
+          }
+        },
+        "accountCode" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/PriceRequestInformationType.AccountCode"
+          }
+        },
+        "tpaExtensions" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions"
+        },
+        "fareQualifier" : {
+          "type" : "string"
+        },
+        "negotiatedFaresOnly" : {
+          "type" : "boolean"
+        },
+        "currencyCode" : {
+          "type" : "string"
+        },
+        "pricingSource" : {
+          "type" : "string"
+        },
+        "reprice" : {
+          "type" : "boolean"
+        },
+        "processThruFaresOnly" : {
+          "type" : "boolean"
+        },
+        "purchaseDate" : {
+          "type" : "string"
+        },
+        "purchaseTime" : {
+          "type" : "string"
+        },
+        "netFaresUsed" : {
+          "type" : "boolean"
+        },
+        "bypassAdvancePurchase" : {
+          "type" : "string",
+          "enum" : [ "t", "f", "n" ]
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.NegotiatedFareCode" : {
+      "type" : "object",
+      "properties" : {
+        "supplier" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/CompanyNameType"
+          }
+        },
+        "tpaExtensions" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "secondaryCode" : {
+          "type" : "string"
+        },
+        "supplierCode" : {
+          "type" : "string"
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "codeContext" : {
+          "type" : "string"
+        },
+        "uri" : {
+          "type" : "string"
+        },
+        "quantity" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.AccountCode" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions" : {
+      "type" : "object",
+      "properties" : {
+        "publicFare" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.PublicFare"
+        },
+        "privateFare" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.PrivateFare"
+        },
+        "iataFare" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.IATAFare"
+        },
+        "webFare" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.WebFare"
+        },
+        "priority" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.Priority"
+        },
+        "indicators" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.Indicators"
+        },
+        "promoId" : {
+          "type" : "string"
+        },
+        "customerType" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.CustomerType"
+        },
+        "multipleTravelerGroups" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.MultipleTravelerGroups"
+        },
+        "brandedFareIndicators" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.BrandedFareIndicators"
+        },
+        "passengerStatus" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.PassengerStatus"
+        },
+        "pointOfSaleOverride" : {
+          "$ref" : "#/definitions/PointOfSaleOverrideType"
+        },
+        "pointOfTicketingOverride" : {
+          "$ref" : "#/definitions/PointOfTicketingOverrideType"
+        },
+        "applyResidentDiscount" : {
+          "$ref" : "#/definitions/ApplyResidentDiscountType"
+        },
+        "eTicketableOverride" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.ETicketableOverride"
+        },
+        "currency" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.Currency"
+        },
+        "useReducedConstructions" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.UseReducedConstructions"
+        },
+        "obFees" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.OBFees"
+        },
+        "fareBreaksAtLegs" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.FareBreaksAtLegs"
+        },
+        "fareAdjustment" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.FareAdjustment"
+          }
+        },
+        "forceCompanion" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.ForceCompanion"
+        },
+        "usePassengerFares" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.UsePassengerFares"
+        },
+        "useNegotiatedFares" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.UseNegotiatedFares"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.PublicFare" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.PrivateFare" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.IATAFare" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.WebFare" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.Priority" : {
+      "type" : "object",
+      "properties" : {
+        "price" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.Priority.Price"
+        },
+        "directFlights" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.Priority.DirectFlights"
+        },
+        "time" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.Priority.Time"
+        },
+        "legTime" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.Priority.LegTime"
+        },
+        "vendor" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.Priority.Vendor"
+        },
+        "marketingCarrier" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.Priority.MarketingCarrier"
+        },
+        "operatingCarrier" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.Priority.OperatingCarrier"
+        },
+        "elapsedTime" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.Priority.ElapsedTime"
+        },
+        "departureTime" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.Priority.DepartureTime"
+        },
+        "connectionTime" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.Priority.ConnectionTime"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.Priority.Price" : {
+      "type" : "object",
+      "properties" : {
+        "priority" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.Priority.DirectFlights" : {
+      "type" : "object",
+      "properties" : {
+        "priority" : {
+          "type" : "integer"
+        },
+        "leg" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.Priority.Time" : {
+      "type" : "object",
+      "properties" : {
+        "priority" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.Priority.LegTime" : {
+      "type" : "object",
+      "properties" : {
+        "priority" : {
+          "type" : "integer"
+        },
+        "leg" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.Priority.Vendor" : {
+      "type" : "object",
+      "properties" : {
+        "priority" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.Priority.MarketingCarrier" : {
+      "type" : "object",
+      "properties" : {
+        "carrier" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.Priority.MarketingCarrier.Carrier"
+          }
+        },
+        "priority" : {
+          "type" : "integer"
+        },
+        "leg" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.Priority.MarketingCarrier.Carrier" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.Priority.OperatingCarrier" : {
+      "type" : "object",
+      "properties" : {
+        "carrier" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.Priority.OperatingCarrier.Carrier"
+          }
+        },
+        "priority" : {
+          "type" : "integer"
+        },
+        "leg" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.Priority.OperatingCarrier.Carrier" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.Priority.ElapsedTime" : {
+      "type" : "object",
+      "properties" : {
+        "priority" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.Priority.DepartureTime" : {
+      "type" : "object",
+      "properties" : {
+        "priority" : {
+          "type" : "integer"
+        },
+        "leg" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.Priority.ConnectionTime" : {
+      "type" : "object",
+      "properties" : {
+        "priority" : {
+          "type" : "integer"
+        },
+        "leg" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.Indicators" : {
+      "type" : "object",
+      "properties" : {
+        "retainFare" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.Indicators.RetainFare"
+        },
+        "minMaxStay" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.Indicators.MinMaxStay"
+        },
+        "refundPenalty" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.Indicators.RefundPenalty"
+        },
+        "resTicketing" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.Indicators.ResTicketing"
+        },
+        "travelPolicy" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.Indicators.TravelPolicy"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.Indicators.RetainFare" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.Indicators.MinMaxStay" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.Indicators.RefundPenalty" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.Indicators.ResTicketing" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.Indicators.TravelPolicy" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.CustomerType" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.MultipleTravelerGroups" : {
+      "type" : "object",
+      "properties" : {
+        "itinerariesPerGroup" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.BrandedFareIndicators" : {
+      "type" : "object",
+      "properties" : {
+        "returnCheapestUnbrandedFare" : {
+          "$ref" : "#/definitions/PriceRequestInformationType.TPAExtensions.BrandedFareIndicators.ReturnCheapestUnbrandedFare"
+        },
+        "singleBrandedFare" : {
+          "type" : "boolean"
+        },
+        "multipleBrandedFares" : {
+          "type" : "boolean"
+        },
+        "returnBrandAncillaries" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.BrandedFareIndicators.ReturnCheapestUnbrandedFare" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.PassengerStatus" : {
+      "type" : "object",
+      "properties" : {
+        "stateCode" : {
+          "type" : "string"
+        },
+        "countryCode" : {
+          "type" : "string"
+        },
+        "cityCode" : {
+          "type" : "string"
+        },
+        "type" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PointOfSaleOverrideType" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PointOfTicketingOverrideType" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ApplyResidentDiscountType" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.ETicketableOverride" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.Currency" : {
+      "type" : "object",
+      "properties" : {
+        "dual" : {
+          "type" : "string"
+        },
+        "mOverride" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.UseReducedConstructions" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.OBFees" : {
+      "type" : "object",
+      "properties" : {
+        "rType" : {
+          "type" : "boolean"
+        },
+        "tType" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.FareBreaksAtLegs" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.FareAdjustment" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "string"
+        },
+        "currency" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.ForceCompanion" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.UsePassengerFares" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PriceRequestInformationType.TPAExtensions.UseNegotiatedFares" : {
+      "type" : "object",
+      "properties" : {
+        "ind" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TravelerInfoSummaryTPAExtensionsType" : {
+      "type" : "object",
+      "properties" : {
+        "travelerRating" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TravelerInfoSummaryTPAExtensionsType.TravelerRating"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TravelerInfoSummaryTPAExtensionsType.TravelerRating" : {
+      "type" : "object",
+      "properties" : {
+        "score" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TravelerInfoSummaryTPAExtensionsType.TravelerRating.Score"
+          }
+        },
+        "frequentFlyer" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TravelerInfoSummaryTPAExtensionsType.TravelerRating.FrequentFlyer"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TravelerInfoSummaryTPAExtensionsType.TravelerRating.Score" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "integer"
+        },
+        "carrier" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TravelerInfoSummaryTPAExtensionsType.TravelerRating.FrequentFlyer" : {
+      "type" : "object",
+      "properties" : {
+        "tier" : {
+          "type" : "integer"
+        },
+        "carrier" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.TPAExtensions" : {
+      "type" : "object",
+      "properties" : {
+        "intelliSellTransaction" : {
+          "$ref" : "#/definitions/TransactionType"
+        },
+        "diversityControl" : {
+          "$ref" : "#/definitions/DiversityControlType"
+        },
+        "messagingDetails" : {
+          "$ref" : "#/definitions/OTAAirLowFareSearchRQ.TPAExtensions.MessagingDetails"
+        },
+        "alternateAirportCities" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/OTAAirLowFareSearchRQ.TPAExtensions.AlternateAirportCities"
+          }
+        },
+        "alternateAirportMileage" : {
+          "$ref" : "#/definitions/OTAAirLowFareSearchRQ.TPAExtensions.AlternateAirportMileage"
+        },
+        "awardShopping" : {
+          "$ref" : "#/definitions/AwardShoppingType"
+        },
+        "billing" : {
+          "$ref" : "#/definitions/BillingInformationType"
+        },
+        "exchangeSettings" : {
+          "$ref" : "#/definitions/ExchangeSettingsType"
+        },
+        "exchange" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ExchangeType"
+          }
+        },
+        "pointsRedemption" : {
+          "$ref" : "#/definitions/OTAAirLowFareSearchRQ.TPAExtensions.PointsRedemption"
+        },
+        "splitTaxes" : {
+          "$ref" : "#/definitions/OTAAirLowFareSearchRQ.TPAExtensions.SplitTaxes"
+        },
+        "alternateDatesProcessing" : {
+          "$ref" : "#/definitions/OTAAirLowFareSearchRQ.TPAExtensions.AlternateDatesProcessing"
+        },
+        "itineraryCache" : {
+          "$ref" : "#/definitions/OTAAirLowFareSearchRQ.TPAExtensions.ItineraryCache"
+        },
+        "multiTicket" : {
+          "$ref" : "#/definitions/OTAAirLowFareSearchRQ.TPAExtensions.MultiTicket"
+        },
+        "partitions" : {
+          "$ref" : "#/definitions/OTAAirLowFareSearchRQ.TPAExtensions.Partitions"
+        },
+        "reservationData" : {
+          "$ref" : "#/definitions/OTAAirLowFareSearchRQ.TPAExtensions.ReservationData"
+        },
+        "alternatePcc" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AlternatePCCType"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TransactionType" : {
+      "type" : "object",
+      "properties" : {
+        "requestType" : {
+          "$ref" : "#/definitions/TransactionType.RequestType"
+        },
+        "serviceTag" : {
+          "$ref" : "#/definitions/TransactionType.ServiceTag"
+        },
+        "customerProfile" : {
+          "$ref" : "#/definitions/TransactionType.CustomerProfile"
+        },
+        "purchaseType" : {
+          "$ref" : "#/definitions/TransactionType.PurchaseType"
+        },
+        "sabreAth" : {
+          "$ref" : "#/definitions/TransactionType.SabreAth"
+        },
+        "tranId" : {
+          "$ref" : "#/definitions/TransactionType.TranID"
+        },
+        "clientSessionId" : {
+          "$ref" : "#/definitions/TransactionType.ClientSessionID"
+        },
+        "branch" : {
+          "$ref" : "#/definitions/TransactionType.Branch"
+        },
+        "compressResponse" : {
+          "$ref" : "#/definitions/TransactionType.CompressResponse"
+        },
+        "fareOverrides" : {
+          "$ref" : "#/definitions/TransactionType.FareOverrides"
+        },
+        "diagnostics" : {
+          "$ref" : "#/definitions/TransactionType.Diagnostics"
+        },
+        "subagentData" : {
+          "$ref" : "#/definitions/TransactionType.SubagentData"
+        },
+        "responseSorting" : {
+          "$ref" : "#/definitions/TransactionType.ResponseSorting"
+        },
+        "seatStatusSim" : {
+          "$ref" : "#/definitions/SeatStatusSimType"
+        },
+        "availableLevel" : {
+          "$ref" : "#/definitions/TransactionType.AvailableLevel"
+        },
+        "atseTest" : {
+          "$ref" : "#/definitions/TransactionType.ATSETest"
+        },
+        "debug" : {
+          "type" : "boolean"
+        },
+        "debugKey" : {
+          "type" : "string"
+        },
+        "configSet" : {
+          "type" : "string"
+        },
+        "disableCache" : {
+          "type" : "boolean"
+        },
+        "chunkNumber" : {
+          "type" : "string"
+        },
+        "showItinSource" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TransactionType.RequestType" : {
+      "type" : "object",
+      "properties" : {
+        "content" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TransactionType.ServiceTag" : {
+      "type" : "object",
+      "properties" : {
+        "content" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TransactionType.CustomerProfile" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TransactionType.PurchaseType" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TransactionType.SabreAth" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "string"
+        },
+        "binarySecToken" : {
+          "type" : "string"
+        },
+        "conversationId" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TransactionType.TranID" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TransactionType.ClientSessionID" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TransactionType.Branch" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TransactionType.CompressResponse" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TransactionType.FareOverrides" : {
+      "type" : "object",
+      "properties" : {
+        "fareOverride" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TransactionType.FareOverrides.FareOverride"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TransactionType.FareOverrides.FareOverride" : {
+      "type" : "object",
+      "properties" : {
+        "vendorPref" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/CompanyNamePrefType"
+          }
+        },
+        "tpaExtensions" : {
+          "type" : "string"
+        },
+        "fareType" : {
+          "type" : "string"
+        },
+        "pseudoCityCode" : {
+          "type" : "string"
+        },
+        "corporateId" : {
+          "type" : "string"
+        },
+        "callable" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TransactionType.Diagnostics" : {
+      "type" : "object",
+      "properties" : {
+        "diagnostic" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TransactionType.Diagnostics.Diagnostic"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TransactionType.Diagnostics.Diagnostic" : {
+      "type" : "object",
+      "properties" : {
+        "diagnosticArgument" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TransactionType.Diagnostics.Diagnostic.DiagnosticArgument"
+          }
+        },
+        "tpaExtensions" : {
+          "type" : "string"
+        },
+        "target" : {
+          "type" : "string"
+        },
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TransactionType.Diagnostics.Diagnostic.DiagnosticArgument" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TransactionType.SubagentData" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TransactionType.ResponseSorting" : {
+      "type" : "object",
+      "properties" : {
+        "enableChronologicalSorting" : {
+          "type" : "boolean"
+        },
+        "sortFaresInsideItin" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "SeatStatusSimType" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string"
+        },
+        "command" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TransactionType.AvailableLevel" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TransactionType.ATSETest" : {
+      "type" : "object",
+      "properties" : {
+        "feature" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "DiversityControlType" : {
+      "type" : "object",
+      "properties" : {
+        "lowFareBucket" : {
+          "$ref" : "#/definitions/DiversityControlType.LowFareBucket"
+        },
+        "dimensions" : {
+          "$ref" : "#/definitions/DiversityControlType.Dimensions"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "DiversityControlType.LowFareBucket" : {
+      "type" : "object",
+      "properties" : {
+        "options" : {
+          "type" : "string"
+        },
+        "fareCutOff" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "DiversityControlType.Dimensions" : {
+      "type" : "object",
+      "properties" : {
+        "travelTime" : {
+          "$ref" : "#/definitions/DiversityControlType.Dimensions.TravelTime"
+        },
+        "carrier" : {
+          "$ref" : "#/definitions/DiversityControlType.Dimensions.Carrier"
+        },
+        "operatingDuplicate" : {
+          "$ref" : "#/definitions/DiversityControlType.Dimensions.OperatingDuplicate"
+        },
+        "inboundOutboundPairing" : {
+          "$ref" : "#/definitions/DiversityControlType.Dimensions.InboundOutboundPairing"
+        },
+        "timeOfDay" : {
+          "$ref" : "#/definitions/DiversityControlType.Dimensions.TimeOfDay"
+        },
+        "stopsNumber" : {
+          "$ref" : "#/definitions/DiversityControlType.Dimensions.StopsNumber"
+        },
+        "priceWeight" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "DiversityControlType.Dimensions.TravelTime" : {
+      "type" : "object",
+      "properties" : {
+        "weight" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "DiversityControlType.Dimensions.Carrier" : {
+      "type" : "object",
+      "properties" : {
+        "default" : {
+          "$ref" : "#/definitions/DiversityControlType.Dimensions.Carrier.Default"
+        },
+        "override" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/DiversityControlType.Dimensions.Carrier.Override"
+          }
+        },
+        "weight" : {
+          "type" : "number"
+        },
+        "onlineIndicator" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "DiversityControlType.Dimensions.Carrier.Default" : {
+      "type" : "object",
+      "properties" : {
+        "options" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "DiversityControlType.Dimensions.Carrier.Override" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        },
+        "options" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "DiversityControlType.Dimensions.OperatingDuplicate" : {
+      "type" : "object",
+      "properties" : {
+        "preferredCarrier" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/DiversityControlType.Dimensions.OperatingDuplicate.PreferredCarrier"
+          }
+        },
+        "weight" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "DiversityControlType.Dimensions.OperatingDuplicate.PreferredCarrier" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "DiversityControlType.Dimensions.InboundOutboundPairing" : {
+      "type" : "object",
+      "properties" : {
+        "weight" : {
+          "type" : "number"
+        },
+        "duplicates" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "DiversityControlType.Dimensions.TimeOfDay" : {
+      "type" : "object",
+      "properties" : {
+        "distribution" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/DiversityControlType.Dimensions.TimeOfDay.Distribution"
+          }
+        },
+        "weight" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "DiversityControlType.Dimensions.TimeOfDay.Distribution" : {
+      "type" : "object",
+      "properties" : {
+        "range" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/DiversityControlType.Dimensions.TimeOfDay.Distribution.Range"
+          }
+        },
+        "direction" : {
+          "type" : "string"
+        },
+        "leg" : {
+          "type" : "integer"
+        },
+        "endpoint" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "DiversityControlType.Dimensions.TimeOfDay.Distribution.Range" : {
+      "type" : "object",
+      "properties" : {
+        "begin" : {
+          "type" : "string"
+        },
+        "end" : {
+          "type" : "string"
+        },
+        "options" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "DiversityControlType.Dimensions.StopsNumber" : {
+      "type" : "object",
+      "properties" : {
+        "weight" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.TPAExtensions.MessagingDetails" : {
+      "type" : "object",
+      "properties" : {
+        "mdrSubset" : {
+          "$ref" : "#/definitions/OTAAirLowFareSearchRQ.TPAExtensions.MessagingDetails.MDRSubset"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.TPAExtensions.MessagingDetails.MDRSubset" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.TPAExtensions.AlternateAirportCities" : {
+      "type" : "object",
+      "properties" : {
+        "specifiedLocation" : {
+          "$ref" : "#/definitions/OTAAirLowFareSearchRQ.TPAExtensions.AlternateAirportCities.SpecifiedLocation"
+        },
+        "alternateLocation" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/OTAAirLowFareSearchRQ.TPAExtensions.AlternateAirportCities.AlternateLocation"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.TPAExtensions.AlternateAirportCities.SpecifiedLocation" : {
+      "type" : "object",
+      "properties" : {
+        "locationCode" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.TPAExtensions.AlternateAirportCities.AlternateLocation" : {
+      "type" : "object",
+      "properties" : {
+        "locationCode" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.TPAExtensions.AlternateAirportMileage" : {
+      "type" : "object",
+      "properties" : {
+        "number" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AwardShoppingType" : {
+      "type" : "object",
+      "properties" : {
+        "enable" : {
+          "type" : "boolean"
+        },
+        "useRas" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "BillingInformationType" : {
+      "type" : "object",
+      "properties" : {
+        "userStation" : {
+          "type" : "number"
+        },
+        "userBranch" : {
+          "type" : "number"
+        },
+        "partitionId" : {
+          "type" : "string"
+        },
+        "userSetAddress" : {
+          "type" : "string"
+        },
+        "aaaCity" : {
+          "type" : "string"
+        },
+        "agentSineIn" : {
+          "type" : "string"
+        },
+        "serviceName" : {
+          "type" : "string"
+        },
+        "actionCode" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeSettingsType" : {
+      "type" : "object",
+      "properties" : {
+        "repriceCurrentItin" : {
+          "type" : "boolean"
+        },
+        "attachExchangeInfo" : {
+          "type" : "boolean"
+        },
+        "reissueExchange" : {
+          "type" : "string"
+        },
+        "brandedResults" : {
+          "type" : "boolean"
+        },
+        "mipTimeoutThreshold" : {
+          "type" : "number"
+        },
+        "requestType" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeType" : {
+      "type" : "object",
+      "properties" : {
+        "fare" : {
+          "$ref" : "#/definitions/ExchangeFareType"
+        },
+        "pos" : {
+          "$ref" : "#/definitions/ExchangePOSType"
+        },
+        "originDestinationInformation" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ExchangeOriginDestinationInformationType"
+          },
+          "$ref" : "#/definitions/ExchangeOriginDestinationInformationType"
+        },
+        "arunk" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ArunkType"
+          }
+        },
+        "travelPreferences" : {
+          "$ref" : "#/definitions/ExchangeAirSearchPrefsType"
+        },
+        "travelerInfoSummary" : {
+          "$ref" : "#/definitions/TravelerInfoSummaryType"
+        },
+        "tpaExtensions" : {
+          "$ref" : "#/definitions/ExchangeTPAExtensionsType"
+        },
+        "originalTktIssueDateTime" : {
+          "type" : "string"
+        },
+        "exchangedTktIssueDateTime" : {
+          "type" : "string"
+        },
+        "previousExchangeDateTime" : {
+          "type" : "string"
+        },
+        "numberOfTaxBoxes" : {
+          "type" : "number"
+        },
+        "bypassAdvancePurchaseOption" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeFareType" : {
+      "type" : "object",
+      "properties" : {
+        "baseFareAmount" : {
+          "type" : "number"
+        },
+        "nonRefundableAmount" : {
+          "type" : "number"
+        },
+        "baseFareCurrency" : {
+          "type" : "string"
+        },
+        "fareCalcCurrency" : {
+          "type" : "string"
+        },
+        "validatingCarrier" : {
+          "type" : "string"
+        },
+        "roe" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangePOSType" : {
+      "type" : "object",
+      "properties" : {
+        "source" : {
+          "$ref" : "#/definitions/ExchangeSourceType"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeSourceType" : {
+      "type" : "object",
+      "properties" : {
+        "bookingChannel" : {
+          "$ref" : "#/definitions/SourceBookingChannelType"
+        },
+        "agentSine" : {
+          "type" : "string"
+        },
+        "pseudoCityCode" : {
+          "type" : "string"
+        },
+        "isoCountry" : {
+          "type" : "string"
+        },
+        "isoCurrency" : {
+          "type" : "string"
+        },
+        "agentDutyCode" : {
+          "type" : "string"
+        },
+        "airlineVendorId" : {
+          "type" : "string"
+        },
+        "airportCode" : {
+          "type" : "string"
+        },
+        "firstDepartPoint" : {
+          "type" : "string"
+        },
+        "erspUserId" : {
+          "type" : "string"
+        },
+        "personalCityCode" : {
+          "type" : "string"
+        },
+        "accountingCode" : {
+          "type" : "string"
+        },
+        "officeCode" : {
+          "type" : "string"
+        },
+        "defaultTicketingCarrier" : {
+          "type" : "string"
+        },
+        "airlineChannelCode" : {
+          "type" : "string"
+        },
+        "agentDepartmentCode" : {
+          "type" : "string"
+        },
+        "agentFunction" : {
+          "type" : "string"
+        },
+        "travelAgencyIata" : {
+          "type" : "string"
+        },
+        "homeAgencyIata" : {
+          "type" : "string"
+        },
+        "agentIata" : {
+          "type" : "string"
+        },
+        "vendorCrsCode" : {
+          "type" : "string"
+        },
+        "agentDuty" : {
+          "type" : "string"
+        },
+        "abacusUser" : {
+          "type" : "boolean"
+        },
+        "agentCity" : {
+          "type" : "string"
+        },
+        "mainTravelAgencyPcc" : {
+          "type" : "string"
+        },
+        "carrier" : {
+          "type" : "string"
+        },
+        "hostCarrier" : {
+          "type" : "string"
+        },
+        "eTicketCapable" : {
+          "type" : "boolean"
+        },
+        "coHostId" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeOriginDestinationInformationType" : {
+      "type" : "object",
+      "properties" : {
+        "departureDateTime" : {
+          "type" : "string"
+        },
+        "arrivalDateTime" : {
+          "type" : "string"
+        },
+        "departureDates" : {
+          "$ref" : "#/definitions/TravelDateTimeType.DepartureDates"
+        },
+        "arrivalDates" : {
+          "$ref" : "#/definitions/TravelDateTimeType.ArrivalDates"
+        },
+        "departureWindow" : {
+          "type" : "string"
+        },
+        "arrivalWindow" : {
+          "type" : "string"
+        },
+        "originLocation" : {
+          "$ref" : "#/definitions/OriginDestinationInformationType.OriginLocation"
+        },
+        "destinationLocation" : {
+          "$ref" : "#/definitions/OriginDestinationInformationType.DestinationLocation"
+        },
+        "connectionLocations" : {
+          "$ref" : "#/definitions/ConnectionType"
+        },
+        "flight" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ExchangeOriginDestinationFlightType"
+          }
+        },
+        "dateFlexibility" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ExchangeOriginDestinationInformationType.DateFlexibility"
+          }
+        },
+        "sisterDestinationLocation" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/RequestSpecifiedLocationType"
+          }
+        },
+        "sisterDestinationMileage" : {
+          "$ref" : "#/definitions/ExchangeOriginDestinationInformationType.SisterDestinationMileage"
+        },
+        "sisterOriginLocation" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/RequestSpecifiedLocationType"
+          }
+        },
+        "sisterOriginMileage" : {
+          "$ref" : "#/definitions/ExchangeOriginDestinationInformationType.SisterOriginMileage"
+        },
+        "segmentType" : {
+          "$ref" : "#/definitions/ExchangeOriginDestinationInformationType.SegmentType"
+        },
+        "alternateTime" : {
+          "$ref" : "#/definitions/ExchangeOriginDestinationInformationType.AlternateTime"
+        },
+        "maxOneWayOptions" : {
+          "$ref" : "#/definitions/ExchangeOriginDestinationInformationType.MaxOneWayOptions"
+        },
+        "numOneWayOptions" : {
+          "$ref" : "#/definitions/ExchangeOriginDestinationInformationType.NumOneWayOptions"
+        },
+        "cabinPref" : {
+          "$ref" : "#/definitions/CabinPrefType"
+        },
+        "connectionTime" : {
+          "$ref" : "#/definitions/ExchangeOriginDestinationInformationType.ConnectionTime"
+        },
+        "totalTravelTime" : {
+          "$ref" : "#/definitions/ExchangeOriginDestinationInformationType.TotalTravelTime"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeOriginDestinationFlightType" : {
+      "type" : "object",
+      "properties" : {
+        "originLocation" : {
+          "$ref" : "#/definitions/RequestLocationType"
+        },
+        "destinationLocation" : {
+          "$ref" : "#/definitions/RequestLocationType"
+        },
+        "airline" : {
+          "$ref" : "#/definitions/AirlineType"
+        },
+        "sideTrip" : {
+          "$ref" : "#/definitions/SideTripType"
+        },
+        "reservation" : {
+          "$ref" : "#/definitions/ReservationType"
+        },
+        "mileageDisplay" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/MileageDisplayType"
+          }
+        },
+        "bookingDateTime" : {
+          "type" : "string"
+        },
+        "fare" : {
+          "$ref" : "#/definitions/ExchangeOriginDestinationFlightType.Fare"
+        },
+        "plusUp" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/PlusUpType"
+          }
+        },
+        "surcharge" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/SurchargeType"
+          }
+        },
+        "classOfService" : {
+          "type" : "string"
+        },
+        "number" : {
+          "type" : "number"
+        },
+        "departureDateTime" : {
+          "type" : "string"
+        },
+        "arrivalDateTime" : {
+          "type" : "string"
+        },
+        "marriageStatus" : {
+          "type" : "string"
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "flown" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeOriginDestinationFlightType.Fare" : {
+      "type" : "object",
+      "properties" : {
+        "componentNo" : {
+          "type" : "number"
+        },
+        "basisCode" : {
+          "type" : "string"
+        },
+        "amount" : {
+          "type" : "number"
+        },
+        "vendor" : {
+          "type" : "string"
+        },
+        "sourceVendor" : {
+          "type" : "string"
+        },
+        "tariff" : {
+          "type" : "string"
+        },
+        "ruleNumber" : {
+          "type" : "string"
+        },
+        "brandId" : {
+          "type" : "string"
+        },
+        "programId" : {
+          "type" : "integer"
+        },
+        "adjustment" : {
+          "$ref" : "#/definitions/ExchangeOriginDestinationFlightType.Fare.Adjustment"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeOriginDestinationFlightType.Fare.Adjustment" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "string"
+        },
+        "currency" : {
+          "type" : "string"
+        },
+        "group" : {
+          "type" : "number"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "SurchargeType" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string"
+        },
+        "amount" : {
+          "type" : "number"
+        },
+        "currency" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ArunkType" : {
+      "type" : "object",
+      "properties" : {
+        "originLocation" : {
+          "$ref" : "#/definitions/RequestLocationType"
+        },
+        "destinationLocation" : {
+          "$ref" : "#/definitions/RequestLocationType"
+        },
+        "sideTrip" : {
+          "$ref" : "#/definitions/SideTripType"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeAirSearchPrefsType" : {
+      "type" : "object",
+      "properties" : {
+        "tpaExtensions" : {
+          "$ref" : "#/definitions/ExchangeTravelPreferencesTPAExtensionsType"
+        },
+        "validInterlineTicket" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeTravelPreferencesTPAExtensionsType" : {
+      "type" : "object",
+      "properties" : {
+        "exemptAllTaxes" : {
+          "$ref" : "#/definitions/ExchangeTravelPreferencesTPAExtensionsType.ExemptAllTaxes"
+        },
+        "exemptAllTaxesAndFees" : {
+          "$ref" : "#/definitions/ExchangeTravelPreferencesTPAExtensionsType.ExemptAllTaxesAndFees"
+        },
+        "taxes" : {
+          "$ref" : "#/definitions/ExchangeTravelPreferencesTPAExtensionsType.Taxes"
+        },
+        "exemptTax" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TaxCodeType"
+          }
+        },
+        "settlementMethod" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ExchangeTPAExtensionsType" : {
+      "type" : "object",
+      "properties" : {
+        "awardShopping" : {
+          "$ref" : "#/definitions/AwardShoppingType"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.TPAExtensions.PointsRedemption" : {
+      "type" : "object",
+      "properties" : {
+        "enable" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.TPAExtensions.SplitTaxes" : {
+      "type" : "object",
+      "properties" : {
+        "byLeg" : {
+          "type" : "boolean"
+        },
+        "byFareComponent" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.TPAExtensions.AlternateDatesProcessing" : {
+      "type" : "object",
+      "properties" : {
+        "calendarMode" : {
+          "type" : "boolean"
+        },
+        "numOptionsPerAlternateDate" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.TPAExtensions.ItineraryCache" : {
+      "type" : "object",
+      "properties" : {
+        "publicTimeToLive" : {
+          "type" : "number"
+        },
+        "removePreviousOnUpdate" : {
+          "type" : "boolean"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.TPAExtensions.MultiTicket" : {
+      "type" : "object",
+      "properties" : {
+        "displayPolicy" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.TPAExtensions.Partitions" : {
+      "type" : "object",
+      "properties" : {
+        "partition" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/CachePartitionType"
+          }
+        },
+        "group" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/CachePartitionGroupType"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "CachePartitionType" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "CachePartitionGroupType" : {
+      "type" : "object",
+      "properties" : {
+        "partition" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/CachePartitionType"
+          }
+        }
+      },
+      "additionalProperties" : false
+    },
+    "OTAAirLowFareSearchRQ.TPAExtensions.ReservationData" : {
+      "type" : "object",
+      "properties" : {
+        "dkNumber" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AlternatePCCType" : {
+      "type" : "object",
+      "properties" : {
+        "travelPreferences" : {
+          "$ref" : "#/definitions/AlternatePCCType.TravelPreferences"
+        },
+        "pseudoCityCode" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AlternatePCCType.TravelPreferences" : {
+      "type" : "object",
+      "properties" : {
+        "vendorPref" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AlternatePCCType.TravelPreferences.VendorPref"
+          }
+        },
+        "tpaExtensions" : {
+          "$ref" : "#/definitions/AlternatePCCType.TravelPreferences.TPAExtensions"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AlternatePCCType.TravelPreferences.VendorPref" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        },
+        "preferLevel" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AlternatePCCType.TravelPreferences.TPAExtensions" : {
+      "type" : "object",
+      "properties" : {
+        "includeAlliancePref" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AllianceType"
+          }
+        },
+        "excludeAlliancePref" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AllianceType"
+          }
+        }
+      },
+      "additionalProperties" : false
+    }
+  }
+}

@@ -1,0 +1,27 @@
+#%RAML 1.0
+baseUri: https://mocksvc.mulesoft.com/mocks/e2bc1d29-dcb2-4489-bfe1-069e20d0e454 # baseUri: https://mocksvc.mulesoft.com/mocks/dea53789-7395-4a62-8c7c-242162e64595  
+# baseUri: http://localhost:8081
+version: v1
+title: ha-sys-sabre-air-api
+
+
+uses: 
+  local-traits: /traits/traits-lib.raml
+  system-traits: exchange_modules/7abbfaeb-3816-4907-865e-76d7cb24120f/traits-lib-system/1.0.5/traits-lib-system.raml 
+  
+
+schemas: 
+  request-schema:  !include /schemas/OTA_AirLowFareSearchRQ_4.1.0_schema.json
+  response-schema: !include /schemas/OTA_AirLowFareSearchRS_4.1.0_schema.json
+
+/air:   
+  /search:
+    /calendar:
+      is: [system-traits.connection-headers,local-traits.post-request-body: {requestSchema: request-schema},local-traits.success-response-root-correlation-header,local-traits.bad-gateway-response-root-correlation-header, local-traits.root-correlation-header,local-traits.responses-body: {responseSchema: response-schema}]
+      post:                       
+      ####All the post behavior reside inside re-usable local traits####                      
+    
+    /faresearch:
+      is: [system-traits.connection-headers,local-traits.post-request-body: {requestSchema: request-schema},local-traits.success-response-root-correlation-header,local-traits.bad-gateway-response-root-correlation-header, local-traits.root-correlation-header,local-traits.responses-body: {responseSchema: response-schema}]  
+      post:
+      ####All the post behavior reside inside re-usable local traits####

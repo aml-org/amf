@@ -176,7 +176,7 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean)
               case _: ShapeModel if incompatibleType(existing.domainElement, entry.domainElement) =>
                 master.set(field,
                            entry.domainElement,
-                           Annotations(Seq(ExtensionProvenance(overlay.id, extensionLocation))))
+                           Annotations(ExtensionProvenance(overlay.id, extensionLocation)))
               case _: DomainElementModel =>
                 merge(existing.domainElement, entry.domainElement, extensionId, extensionLocation)
               case _ => throw new Exception(s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)")

@@ -1,0 +1,64 @@
+{
+  "type": "object",
+  "properties": {
+    "status": {
+      "description": "One of two values that indication if the requestresulted in an error.",
+      "type": "string",
+      "title": "status"
+    },
+    "count": {
+      "description": "The number of items in the Errors property array.",
+      "type": "string",
+      "title": "count"
+    },
+    "type": {
+      "description": "The type of the resource items in the Errors property array.",
+      "type": "string",
+      "title": "type"
+    },
+    "errors": {
+      "description": "The list of inidividual errors for the error repsonse",
+      "type": "array",
+      "items": {
+        "description": "Description of individual errors that may have occurred during a request.",
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "A human readable string that indicates the kind of error.",
+            "type": "string",
+            "title": "code"
+          },
+          "canRetry": {
+            "description": "Indicates whether the client can retry the request.",
+            "type": "boolean",
+            "title": "canRetry"
+          },
+          "message": {
+            "description": "A short description of the error that was encountered. Will only be provided in non-production environments.",
+            "type": "string",
+            "title": "message"
+          },
+          "stackTrace": {
+            "description": "The stack trace, if available in the case an exception was thrown on the server while handling the request. Will only be provided in non-production environments.",
+            "type": "string",
+            "title": "stackTrace"
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "code",
+          "canRetry"
+        ],
+        "title": "DescriptionOfIndividualErrorsThatMayHaveOccurredDuringARequest"
+      },
+      "title": "errors"
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "status",
+    "count"
+  ],
+  "title": "ErrorObjectReturnedWith4xxAnd5xxHttpStatus",
+  "$schema": "http://json-schema.org/draft-04/schema#"
+}

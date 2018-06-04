@@ -1,0 +1,120 @@
+{    
+    "originDestinationInformation": [
+        {
+            "rph": "1",
+            "departureDateTime": "2018-10-20T00:00:00",
+            "originLocation": {
+                "locationCode": "ITO"
+            },
+            "destinationLocation": {
+                "locationCode": "HNL"
+            },
+            "tpaExtensions": {
+                "dateFlexibility": [{
+                    "nbrOfDays": 3
+                }],
+                "segmentType": {
+                    "code": "O"
+                }
+            }
+        },
+        {
+            "rph": "2",
+            "departureDateTime": "2018-10-20T00:00:00",
+            "originLocation": {
+                "locationCode": "ITO"
+            },
+            "destinationLocation": {
+                "locationCode": "HNL"
+            },
+            "tpaExtensions": {
+                "dateFlexibility": [{
+                    "nbrOfDays": 3
+                }],
+                "segmentType": {
+                    "code": "O"
+                }
+            }
+        }
+    ],
+    "version": "4.1.0",
+    "maxResponses": "50",
+        "pos": {
+        "source": [
+            {
+                "pseudoCityCode": "WWW",
+                "requestorId": {
+                    "id": "String",
+                    "type": "0.AAA.X",
+                    "companyName": {
+                        "code": "SSW",
+                        "codeContext": "Context"
+                    }
+                }
+            }
+        ]
+    },    
+    "travelPreferences": {
+        "maxStopsQuantity": 1,
+        "vendorPref": [{
+            "code": "HA"
+        }]
+    },
+    "travelerInfoSummary": {
+        "seatsRequested": [1,2],
+        "airTravelerAvail": [
+            {
+                "passengerTypeQuantity": [
+                    {
+                        "age": 18,
+                        "changeable": false,
+                        "code": "WEB",
+                        "quantity": 1
+                    },
+                    {
+                        "age": 8,
+                        "changeable": false,
+                        "code": "WBC",
+                        "quantity": 1
+                    }
+                ]
+            }
+        ],
+        "priceRequestInformation": {
+            "tpaExtensions": {
+                "indicators": {
+                    "retainFare": {
+                        "ind": true
+                    },
+                    "minMaxStay": {
+                        "ind": true
+                    },
+                    "refundPenalty": {
+                        "ind": true
+                    },
+                    "resTicketing": {
+                        "ind": true
+                    },
+                    "travelPolicy": {
+                        "ind": false
+                    }
+                }
+            }
+        }
+    },
+    "tpaExtensions": {
+        "intelliSellTransaction": {
+            "showItinSource": true,
+            "requestType": {
+                "name": "CALDATES"
+            },
+            "serviceTag": {
+                "name": "HA"
+            }
+        },
+        "splitTaxes": {
+            "byLeg": true,
+            "byFareComponent": true
+        }
+    }
+}

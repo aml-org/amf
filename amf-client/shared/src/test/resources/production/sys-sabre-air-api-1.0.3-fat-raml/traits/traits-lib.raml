@@ -1,0 +1,103 @@
+#%RAML 1.0 Library
+usage:
+
+schemas: 
+  errors-schema: !include ../schemas/ha-errors-schema.json
+
+traits:
+  root-correlation-header:
+      headers:      
+        x-root-correlation-id: 
+          type: string
+          required: true
+
+  success-response-root-correlation-header:
+    responses: 
+      200:     
+        headers:      
+          x-root-correlation-id: 
+            type: string
+            required: true
+
+  post-request-body:
+    body:
+      application/json:
+        schema: <<requestSchema>>         
+        example: !include ../examples/request-example.json              
+
+  bad-gateway-response-root-correlation-header:
+    responses: 
+      502:     
+        headers:      
+          x-root-correlation-id: 
+            type: string
+            required: true
+
+  responses-body:
+    responses:      
+      200:      
+        body:
+          application/json:
+            schema: <<responseSchema>>
+            example: !include ../examples/response-example.json                 
+      304:        
+        body:
+          application/json:
+            description: |
+              Not Modified.
+              Empty body because the client has already the latest version of the requested resource. Do not retry.
+            #schema: errors-schema
+            example: 
+            
+      400:        
+        body:
+          application/json:
+            description: |
+              Bad Request.
+              Unspecified error due to the request being invalid. Do not retry.
+              Limit Exceeded.
+              The upper limit of allowed API calls has been reached. Do not retry.
+            #schema: errors-schema
+            example: !include ../examples/errorsExample.json
+            
+      403:        
+        body:
+          application/json:
+            description: |
+              Unauthorized.
+              The client is not authorized to use the given API. Do not retry.
+            
+      404:        
+        body:
+          application/json:
+            description: |
+              Not Found.
+              There is no such API at the given request URL. Do not retry.
+            
+      429:        
+        body:
+          application/json:
+            description: |
+              Too Many Requests.
+              Too many requests to the API were received within a period of time. Retry.
+            
+      500:
+        description: |
+          Internal Failure.
+          Unspecified error occurred on the server. Retry.
+        body:
+          application/json:
+            description: |
+              Internal Failure.
+              Unspecified error occurred on the server. Retry.
+            
+      503:
+        description: |
+          Service Unavailable.
+          The API is currently unavailable. Retry.
+        body:
+          application/json:
+            description: |
+              Service Unavailable.
+              The API is currently unavailable. Retry.
+            
