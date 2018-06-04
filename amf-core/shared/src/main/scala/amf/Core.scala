@@ -2,7 +2,6 @@ package amf
 
 import amf.client.convert.CoreClientConverters._
 import amf.client.convert.CoreRegister
-import amf.client.environment.Environment
 import amf.client.model.document._
 import amf.client.parse.Parser
 import amf.client.render.Renderer
