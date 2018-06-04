@@ -154,16 +154,21 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
   protected def computeMinGeneric(baseShape: NodeShape, superShape: Shape) = restrictShape(baseShape, superShape)
 
   protected def computeMinMatrix(baseMatrix: MatrixShape, superMatrix: MatrixShape): Shape = {
+
     val superItems = baseMatrix.items
     val baseItems  = superMatrix.items
+    if (Option(superItems).isDefined && Option(baseItems).isDefined) {
 
-    val newItems = context.minShape(baseItems, superItems)
-    baseMatrix.fields.setWithoutId(ArrayShapeModel.Items, newItems)
+      val newItems = context.minShape(baseItems, superItems)
+      baseMatrix.fields.setWithoutId(ArrayShapeModel.Items, newItems)
 
-    computeNarrowRestrictions(ArrayShapeModel.fields,
-                              baseMatrix,
-                              superMatrix,
-                              filteredFields = Seq(ArrayShapeModel.Items))
+      computeNarrowRestrictions(ArrayShapeModel.fields,
+                                baseMatrix,
+                                superMatrix,
+                                filteredFields = Seq(ArrayShapeModel.Items))
+    } else {
+      if (Option(superItems).isDefined) baseItems.fields.setWithoutId(ArrayShapeModel.Items, superItems)
+    }
 
     baseMatrix
   }
