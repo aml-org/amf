@@ -2780,10 +2780,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Discriminator in union definition") {
     for {
       validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "discriminator_union.raml",
-        platform,
-        RamlYamlHint,
-        validation)
+      doc <- AMFCompiler(validationsPath + "discriminator_union.raml", platform, RamlYamlHint, validation)
         .build()
       report   <- validation.validate(doc, ProfileNames.RAML08)
       resolved <- Future { RAML08Plugin.resolve(doc) }
@@ -2791,59 +2788,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(!report.conforms)
     }
   }
-
-  // this test takes like 2 minuts to run. Uncomment to test performance in validation and normalization shapes cases.
-  // Use to take more than 2 hours and in some cases, throwed GC overhead limit exception
-
-  //  test("Api that takes to long to validate") {
-//      for {
-//        validation <- Validation(platform)
-//        doc <- AMFCompiler(validationsPath + "production/fhir-raml-api-1.0.0-fat-raml/api.raml",
-//          platform,
-//          RamlYamlHint,
-//          validation)
-//          .build()
-//        report <- validation.validate(doc, ProfileNames.RAML)
-//      } yield {
-//        assert(!report.conforms)
-//        assert(report.results.exists(_.message.equals("Missing library location")))
-//      }
-//    }
-//    test("Api that takes to long to validate") {
-//      ExecutionLog.start()
-//      for {
-//        validation <- Validation(platform)
-//        doc <- AMFCompiler(validationsPath + "production/fhir-api-specification-in-raml-1.0-1.0.0-fat-raml/healthcare-system-api.raml",
-//          platform,
-//          RamlYamlHint,
-//          validation)
-//          .build()
-//        report <- validation.validate(doc, ProfileNames.RAML)
-//      } yield {
-//        ExecutionLog.finish()
-//        ExecutionLog.buildReport()
-//        assert(!report.conforms)
-//        assert(report.results.exists(_.message.equals("Missing library location")))
-//      }
-//    }
-//
-//      test("Api that takes to long to validate") {
-//        ExecutionLog.start()
-//        for {
-//          validation <- Validation(platform)
-//          doc <- AMFCompiler(validationsPath + "production/deaf-1.0.0-fat-raml/deaf.raml",
-//            platform,
-//            RamlYamlHint,
-//            validation)
-//            .build()
-//          report <- validation.validate(doc, ProfileNames.RAML)
-//        } yield {
-//          ExecutionLog.finish()
-//          ExecutionLog.buildReport()
-//          assert(!report.conforms)
-//          assert(report.results.exists(_.message.equals("Missing library location")))
-//        }
-//      }
 
   test("empty example") {
     for {
@@ -2858,8 +2802,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Date format not SYaml timestamp") {
     for {
       validation <- Validation(platform)
-      model      <- AMFCompiler(validationsPath + "types/mhra-e-payment-v1.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML)
+      model <- AMFCompiler(validationsPath + "types/mhra-e-payment-v1.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(model, ProfileNames.RAML)
     } yield {
       assert(report.conforms)
     }
