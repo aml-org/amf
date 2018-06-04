@@ -31,7 +31,7 @@ case class UnresolvedShape(override val fields: Fields,
   override def meta: AnyShapeModel = AnyShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "" // unresolved has the same temporal ID as the resolved one
+  override def componentId: String = "/unresolved"
 
   override def afterResolve(): Unit = fatherExtensionParser.foreach { parser =>
     parser.parse()
