@@ -1260,7 +1260,7 @@ abstract class OasShapeEmitter(shape: Shape, ordering: SpecOrdering, references:
       case Some(NilUnion(rangeString)) =>
         result += ValueEmitter("nullable",
                                FieldEntry(Field(Bool, Namespace.Shapes + "nullable"),
-                                          Value(AmfScalar(true), Annotations(Seq(LexicalInformation(rangeString))))))
+                                          Value(AmfScalar(true), Annotations(LexicalInformation(rangeString)))))
 
       case _ => // ignore
     }

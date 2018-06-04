@@ -76,7 +76,7 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
   val properties: mutable.Map[String, DataNode] = mutable.HashMap()
   val propertyAnnotations: mutable.Map[String, Annotations] =
     annotations.find(classOf[DataNodePropertiesAnnotations]) match {
-      case Some(ann) => mutable.HashMap() ++ ann.properties.map(t => t._1 -> Annotations(Seq(t._2)))
+      case Some(ann) => mutable.HashMap() ++ ann.properties.map(t => t._1 -> Annotations(t._2))
       case _         => mutable.HashMap()
     }
 

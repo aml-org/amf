@@ -136,7 +136,7 @@ trait SpecParserOps {
 
     private def parseScalarValued(node: YNode) = {
       val result = RamlScalarNode(node)
-      custom ++= Annotations(collectDomainExtensions(null, result).map(DomainExtensionAnnotation))
+      custom ++= collectDomainExtensions(null, result).map(DomainExtensionAnnotation)
       result
     }
 
