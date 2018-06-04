@@ -55,7 +55,7 @@ object AMFRawValidations {
     "		AMF	Domain	raml-http:EndPoint	raml-http:path	PropertyShape	sh:path	sh:pattern	^/	Resource path must start with a '/'	PathItem path must start with a '/'	Violation",
     "		AMF	Domain	raml-http:Endpoint	hydra:supportedOperation	PropertyShape	sh:path	sh:class	hydra:Operation	Resources must hold Methods operation	PathItems must hold Operations information	Violation",
     "		AMF	Domain	raml-http:Endpoint	raml-http:parameter	PropertyShape	sh:path	sh:class	raml-http:Parameter	Resources uriParameters must be valid parameters	PathItems 'parameters' property must be valid parameters	Violation",
-    "		AMF	Domain	hydra:Operation	hydra:method	PropertyShape	sh:path	sh:in	get,put,post,delete,options,head,patch	Uknown method	Uknown Operation method	Violation",
+    "		AMF	Domain	hydra:Operation	hydra:method	PropertyShape	sh:path	sh:in	get,put,post,delete,options,head,patch,connect,trace	Unknown method	Unknown Operation method	Violation",
     "		AMF	Domain	hydra:Operation	hydra:method	PropertyShape	sh:path	sh:maxCount	1	Methods can only have a single HTTP verbe	Operations can only have a single HTTP verb	Violation",
     "		AMF	Domain	hydra:Operation	hydra:returns	PropertyShape	sh:path	sh:class	raml-http:Response	Methods must hold Responses information	Operations must hold Responses information	Violation",
     "		AMF	Domain	hydra:Operation	raml-http:guiSummary	PropertyShape	sh:path	sh:datatype	xsd:string	Methods' summary information must be a string	Methods' summary information must be a string	Violation",
