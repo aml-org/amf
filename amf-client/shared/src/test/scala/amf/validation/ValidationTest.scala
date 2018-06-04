@@ -2829,4 +2829,14 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.conforms)
     }
   }
+
+  test("Empty responses") {
+    for {
+      validation <- Validation(platform)
+      model      <- AMFCompiler(validationsPath + "empty-responses.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
 }

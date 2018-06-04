@@ -17,7 +17,7 @@ import scala.collection.mutable
 /**
   *
   */
-case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation, parseOptional: Boolean = false)(
+case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, parseOptional: Boolean = false)(
     implicit ctx: RamlWebApiContext)
     extends SpecParserOps {
 
@@ -70,22 +70,26 @@ case class RamlOperationParser(entry: YMapEntry, producer: (String) => Operation
     map.key(
       "responses",
       entry => {
-        entry.value
-          .as[YMap]
-          .regex(
-            s"(\\d{3})$optionalMethod",
-            entries => {
-              val responses = mutable.ListBuffer[Response]()
-              entries.foreach(entry => {
-                responses += ctx.factory
-                  .responseParser(entry, (r: Response) => r.adopted(operation.id), parseOptional)
-                  .parse()
-              })
-              operation.set(OperationModel.Responses,
-                            AmfArray(responses, Annotations(entry.value)),
-                            Annotations(entry))
-            }
-          )
+        entry.value.tagType match {
+          case YType.Null => // ignore
+          case _ =>
+            entry.value
+              .as[YMap]
+              .regex(
+                s"(\\d{3})$optionalMethod",
+                entries => {
+                  val responses = mutable.ListBuffer[Response]()
+                  entries.foreach(entry => {
+                    responses += ctx.factory
+                      .responseParser(entry, (r: Response) => r.adopted(operation.id), parseOptional)
+                      .parse()
+                  })
+                  operation.set(OperationModel.Responses,
+                                AmfArray(responses, Annotations(entry.value)),
+                                Annotations(entry))
+                }
+              )
+        }
       }
     )
 
