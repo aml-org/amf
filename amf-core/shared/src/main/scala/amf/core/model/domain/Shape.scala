@@ -147,6 +147,7 @@ case class IdsTraversionCheck() {
 
   private val backUps: mutable.Map[UUID, Set[String]] = mutable.Map()
   private val ids: mutable.Set[String]                = mutable.Set()
+  private var ignoredIds: Seq[String]                 = Seq()
 
   private var allowedCycleClasses
     : Seq[Class[_]]                              = Seq() // i cant do it inmutable for the modularization (i cant see UnresolvedShape from here)
@@ -175,6 +176,8 @@ case class IdsTraversionCheck() {
   def has(shape: Shape): Boolean =
     (!allowedCycleClasses.contains(shape.getClass)) && ids.contains(shape.id)
 
+  def avoidError(id: String): Boolean = ignoredIds.contains(id)
+
   def hasId(id: String): Boolean = ids.contains(id)
 
   def canTravers(id: String): Boolean = !stepOverFieldId(id)
@@ -183,6 +186,15 @@ case class IdsTraversionCheck() {
     val id = generateSha()
     backUps.put(id, ids.clone().toSet)
     id
+  }
+
+  def runWithIgnoredId(fnc: () => Shape, shapeId: String): Shape = runWithIgnoredIds(fnc, Seq(shapeId))
+
+  def runWithIgnoredIds(fnc: () => Shape, shapeIds: Seq[String]): Shape = {
+    ignoredIds = ignoredIds ++ shapeIds
+    val expanded = runPushed(_ => fnc())
+    ignoredIds = ignoredIds.filter(shapeIds.contains(_))
+    expanded
   }
 
   def runPushed(fnc: (IdsTraversionCheck) => Shape): Shape = {
