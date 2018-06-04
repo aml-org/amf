@@ -2758,8 +2758,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                          RamlYamlHint,
                          validation)
         .build()
-      report   <- validation.validate(doc, ProfileNames.RAML08)
-      resolved <- Future { RAML08Plugin.resolve(doc) }
+      report <- validation.validate(doc, ProfileNames.RAML08)
     } yield {
       assert(report.conforms)
     }
