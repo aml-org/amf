@@ -4,9 +4,10 @@ import amf.ProfileNames
 import amf.core.annotations.LexicalInformation
 import amf.core.model.document.BaseUnit
 import amf.core.plugins.{AMFFeaturePlugin, AMFPlugin}
+import amf.core.rdf.RdfModel
 import amf.core.services.{IgnoreValidationsMerger, RuntimeValidator, ValidationsMerger}
 import amf.core.validation._
-import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationResult}
+import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationResult, ValidationSpecification}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -189,4 +190,10 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
 
     res
   }
+
+  /**
+    * Returns a native RDF model with the SHACL shapes graph
+    */
+  override def shaclModel(validations: Seq[ValidationSpecification], functionUrls: String, messgeStyle: String): RdfModel =
+    throw new Exception("SHACL Support not available")
 }
