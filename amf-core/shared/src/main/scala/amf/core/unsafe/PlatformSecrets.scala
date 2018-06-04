@@ -2,6 +2,7 @@ package amf.core.unsafe
 
 import amf.client.remote.Content
 import amf.core.model.document.BaseUnit
+import amf.core.rdf.RdfModel
 import amf.core.remote.{Platform, UnsupportedFileSystem}
 import amf.core.validation.core.{SHACLValidator, ValidationReport, ValidationSpecification}
 import amf.internal.environment.Environment
@@ -48,6 +49,10 @@ class TrunkValidator extends SHACLValidator {
 
   override def report(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: String): Future[ValidationReport] =
     throw new Exception("Error, validation is not supported")
+
+  override def emptyRdfModel(): RdfModel = throw new Exception("Error, validation is not supported")
+
+  override def shapes(shapes: Seq[ValidationSpecification], functionsUrl: String): RdfModel = throw new Exception("Error, validation is not supported")
 }
 
 case class TrunkPlatform(content: String, wrappedPlatform: Option[Platform] = None) extends Platform {

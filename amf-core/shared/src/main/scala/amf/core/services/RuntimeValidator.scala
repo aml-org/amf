@@ -2,7 +2,8 @@ package amf.core.services
 
 import amf.core.annotations.LexicalInformation
 import amf.core.model.document.BaseUnit
-import amf.core.validation.core.ValidationReport
+import amf.core.rdf.RdfModel
+import amf.core.validation.core.{ValidationReport, ValidationSpecification}
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations}
 
 import scala.concurrent.Future
@@ -33,6 +34,13 @@ trait RuntimeValidator {
   def shaclValidation(model: BaseUnit,
                       validations: EffectiveValidations,
                       messageStyle: String): Future[ValidationReport]
+
+  /**
+    * Returns a native RDF model with the SHACL shapes graph
+    */
+  def shaclModel(validations: Seq[ValidationSpecification],
+                 validationFunctionUrl: String,
+                 messgeStyle: String = "AMF"): RdfModel
 
   /**
     * Main validation function returning an AMF validation report linking validation errors
@@ -83,8 +91,13 @@ object RuntimeValidator {
 
   def shaclValidation(model: BaseUnit,
                       validations: EffectiveValidations,
-                      messgeStyle: String = "AMF"): Future[ValidationReport] =
-    validator.shaclValidation(model, validations, messgeStyle)
+                      messageStyle: String = "AMF"): Future[ValidationReport] =
+    validator.shaclValidation(model, validations, messageStyle)
+
+  def shaclModel(validations: Seq[ValidationSpecification],
+                 validationFunctionUrl: String,
+                 messageStyle: String = "AMF"): RdfModel =
+    validator.shaclModel(validations, validationFunctionUrl, messageStyle)
 
   def apply(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): Future[AMFValidationReport] =
     validator.validate(model, profileName, messageStyle)
