@@ -145,59 +145,71 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
 
   protected def canonicalMatrix(matrix: MatrixShape): Shape = {
     canonicalLogicalConstraints(matrix)
-    val newItems = normalize(matrix.items)
-    matrix.fields.removeField(ArrayShapeModel.Items)
-    newItems match {
-      case unionItems: UnionShape =>
-        val newUnionItems = unionItems.anyOf.map {
-          case a: ArrayShape => matrix.cloneShape(Some(context.errorHandler)).withItems(a)
-          case o             => matrix.cloneShape(Some(context.errorHandler)).toArrayShape.withItems(o)
-        }
-        unionItems.setArrayWithoutId(UnionShapeModel.AnyOf, newUnionItems)
-        Option(matrix.fields.getValue(ShapeModel.Name)) match {
-          case Some(name) => unionItems.withName(name.toString)
-          case _          => unionItems
-        }
-      case a: ArrayShape => matrix.withItems(a)
-      case _             => matrix.toArrayShape.withItems(newItems)
+    if (matrix.inherits.nonEmpty) {
+      canonicalInheritance(matrix)
+    } else {
+      Option(matrix.items) match {
+        case Some(items) =>
+          val newItems = normalize(items)
+          matrix.fields.removeField(ArrayShapeModel.Items)
+          newItems match {
+            case unionItems: UnionShape =>
+              val newUnionItems = unionItems.anyOf.map {
+                case a: ArrayShape => matrix.cloneShape(Some(context.errorHandler)).withItems(a)
+                case o             => matrix.cloneShape(Some(context.errorHandler)).toArrayShape.withItems(o)
+              }
+              unionItems.setArrayWithoutId(UnionShapeModel.AnyOf, newUnionItems)
+              Option(matrix.fields.getValue(ShapeModel.Name)) match {
+                case Some(name) => unionItems.withName(name.toString)
+                case _          => unionItems
+              }
+            case a: ArrayShape => matrix.withItems(a)
+            case _             => matrix.toArrayShape.withItems(newItems)
+          }
+        case _ => matrix
+      }
     }
   }
 
   protected def canonicalTuple(tuple: TupleShape): Shape = {
     canonicalLogicalConstraints(tuple)
-    var acc: Seq[Seq[Shape]] = Seq(Seq())
-
-    val sources: Seq[Seq[Shape]] = tuple.items.map { shape =>
-      normalize(shape) match {
-        case union: UnionShape => union.anyOf
-        case other: Shape      => Seq(other)
-      }
-    }
-
-    sources.foreach { source =>
-      source.foreach { shape =>
-        acc = acc.map(_ ++ Seq(shape))
-      }
-    }
-
-    if (acc.length == 1) {
-      tuple.fields.setWithoutId(
-        TupleShapeModel.TupleItems,
-        AmfArray(acc.head),
-        Option(tuple.fields.getValue(TupleShapeModel.TupleItems)).map(_.annotations).getOrElse(Annotations()))
-      tuple
+    if (tuple.inherits.nonEmpty) {
+      canonicalInheritance(tuple)
     } else {
-      val tuples = acc.map { items =>
-        val newTuple = tuple.cloneShape(Some(context.errorHandler))
-        newTuple.fields.setWithoutId(
-          TupleShapeModel.Items,
-          AmfArray(items),
-          Option(tuple.fields.getValue(TupleShapeModel.Items)).map(_.annotations).getOrElse(Annotations()))
+      var acc: Seq[Seq[Shape]] = Seq(Seq())
+
+      val sources: Seq[Seq[Shape]] = tuple.items.map { shape =>
+        normalize(shape) match {
+          case union: UnionShape => union.anyOf
+          case other: Shape      => Seq(other)
+        }
       }
-      val union = UnionShape()
-      union.id = tuple.id + "resolved"
-      union.withName(tuple.name.value())
-      union
+
+      sources.foreach { source =>
+        source.foreach { shape =>
+          acc = acc.map(_ ++ Seq(shape))
+        }
+      }
+
+      if (acc.length == 1) {
+        tuple.fields.setWithoutId(
+          TupleShapeModel.TupleItems,
+          AmfArray(acc.head),
+          Option(tuple.fields.getValue(TupleShapeModel.TupleItems)).map(_.annotations).getOrElse(Annotations()))
+        tuple
+      } else {
+        val tuples = acc.map { items =>
+          val newTuple = tuple.cloneShape(Some(context.errorHandler))
+          newTuple.fields.setWithoutId(
+            TupleShapeModel.Items,
+            AmfArray(items),
+            Option(tuple.fields.getValue(TupleShapeModel.Items)).map(_.annotations).getOrElse(Annotations()))
+        }
+        val union = UnionShape()
+        union.id = tuple.id + "resolved"
+        union.withName(tuple.name.value())
+        union
+      }
     }
   }
 
