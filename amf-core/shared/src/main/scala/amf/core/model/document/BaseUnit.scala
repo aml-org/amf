@@ -1,5 +1,6 @@
 package amf.core.model.document
 
+import amf.core.emitter.RenderOptions
 import amf.core.metamodel.document.BaseUnitModel.{Location, Usage}
 import amf.core.metamodel.document.DocumentModel
 import amf.core.metamodel.document.DocumentModel.References
@@ -7,11 +8,13 @@ import amf.core.metamodel.{MetaModelTypeMapping, Obj}
 import amf.core.model.StrField
 import amf.core.model.domain._
 import amf.core.parser.{FieldEntry, Value}
+import amf.core.rdf.RdfModel
+import amf.core.unsafe.PlatformSecrets
 
 import scala.collection.mutable.ListBuffer
 
 /** Any parseable unit, backed by a source URI. */
-trait BaseUnit extends AmfObject with MetaModelTypeMapping {
+trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets {
 
   // We store the parser run here to be able to find runtime validations for this model
   var parserRun: Option[Int] = None
@@ -316,6 +319,13 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping {
         // traversed and not visited
         case _ => element
       }
+  }
+
+  def toNativeRdfModel(renderOptions: RenderOptions = new RenderOptions()): RdfModel = {
+    platform.rdfFramework match {
+      case Some(rdf) => rdf.unitToRdfModel(this, renderOptions)
+      case None => throw new Exception("RDF Framework not registered cannot export to native RDF model")
+    }
   }
 
 }
