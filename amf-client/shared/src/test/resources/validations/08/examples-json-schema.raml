@@ -1,0 +1,128 @@
+#%RAML 0.8
+title: Remote Vending API
+version: 1.0
+baseUri: "http://vending-machine-api.au.cloudhub.io/api"
+mediaType: application/json
+schemas:
+    -
+        getmachines: |
+                {
+                   "$schema": "http://json-schema.org/draft-04/schema#",
+                   "type" : "object",
+                   "properties" : {
+                     "count" : {
+                       "type" : "integer"
+                     },
+                     "machines" : {
+                       "type" : "array",
+                       "items" : {
+                         "type" : "object",
+                           "properties" : {
+                             "id" : {
+                               "type" : "string"
+                             },
+                             "location" : {
+                               "type" : "string"
+                             }
+                           }
+                         }
+                     }
+                   }
+                 }
+    -
+        getmachine: |
+                {
+                  "$schema": "http://json-schema.org/draft-04/schema#",
+                  "type" : "object",
+                  "properties" : {
+                    "id" : {
+                      "type" : "string"
+                    },
+                    "location" : {
+                      "type" : "string"
+                    },
+                    "sales" : {
+                      "type" : "array",
+                      "items" : {
+                          "type" : "object",
+                          "properties" : {
+                            "dateTime" : {
+                              "type" : "string"
+                            },
+                            "productId" : {
+                              "type" : "string"
+                            }
+                          }
+                        }
+                    },
+                    "floatsToBeReplenished" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "integer"
+                      }
+                    },
+                    "stockToBeReplenished" : {
+                      "type" : "integer"
+                    }
+                  }
+                }
+
+/machines:
+    get:
+        responses:
+            "200":
+                body:
+                    application/json:
+                        schema: getmachines
+                        example: |
+                            {
+                                "count" : 3,
+                                "machines" : [
+                                  {
+                                    "id" : "ZX4102",
+                                    "location" : "Starbuck's, 442 Geary Street, San Francisco, CA 94102"
+                                  },
+                                  {
+                                    "id" : "ZX5322",
+                                    "location" : "Starbuck's, 462 Powell Street, San Francisco, CA 94102"
+                                  },
+                                  {
+                                    "id" : "ZX6792",
+                                    "location" : "Cafe La Taza, 470 Post Street, San Francisco, CA 94102"
+                                  }
+                                ]
+                            }
+    /{machine}:
+        uriParameters:
+            machine:
+                displayName: machine
+                type: string
+                required: true
+                repeat: false
+        get:
+            responses:
+                "200":
+                    body:
+                        application/json:
+                            schema: getmachines
+                            example: |
+                                {
+                                    "id" : "ZX4102",
+                                    "location" : "Starbuck's, 442 Geary Street, San Francisco, CA 94102",
+                                    "sales" : [
+                                      {
+                                        "dateAndTime" : "2013-10-22 16:17:00",
+                                        "value" : 450,
+                                        "machineId" : "ZX4102",
+                                        "productId" : "Cad-CB1012"
+                                      },
+                                      {
+                                        "dateAndTime" : "2013-10-22 16:17:00",
+                                        "value" : 150,
+                                        "machineId" : "ZX5322",
+                                        "productId" : "CC-LB1"
+                                      }
+                                    ],
+                                    "floatsToBeReplenished" : [20, 40, 20, 80, 20, 40, 40],
+                                    "stockToBeReplenished" : 54
+                                }
