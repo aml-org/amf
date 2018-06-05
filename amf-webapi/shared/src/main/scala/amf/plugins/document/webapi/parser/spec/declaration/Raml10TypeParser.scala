@@ -168,14 +168,16 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
             val maybeShape = Raml08SchemaParser(map, adopt).parse()
 
             maybeShape.map(s => {
+
+              val inherits = s.meta.modelInstance.withName("inherits")
+              adopt(inherits)
+
               RamlSingleExampleParser("example",
                                       map,
-                                      s.withExample,
+                                      inherits.withExample,
                                       ExampleOptions(strictDefault = true, quiet = true))
                 .parse()
                 .fold(s)(e => {
-                  val inherits = s.meta.modelInstance.withName("inherits")
-                  adopt(inherits)
                   inherits.set(ShapeModel.Inherits, AmfArray(Seq(s)))
                   inherits.setArray(ScalarShapeModel.Examples, Seq(e))
                 })
@@ -358,12 +360,15 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
     map.key("displayName", ShapeModel.DisplayName in shape)
     map.key("description", ShapeModel.Description in shape)
     map.key("enum", ShapeModel.Values in shape)
-    map.key("pattern", entry => {
-      var regex = entry.value.as[String]
-      if (!regex.startsWith("^")) regex = "^" + regex
-      if (!regex.endsWith("$")) regex = regex + "$"
-      shape.set(ScalarShapeModel.Pattern, ScalarNode(regex).text(), Annotations(entry))
-    })
+    map.key(
+      "pattern",
+      entry => {
+        var regex = entry.value.as[String]
+        if (!regex.startsWith("^")) regex = "^" + regex
+        if (!regex.endsWith("$")) regex = regex + "$"
+        shape.set(ScalarShapeModel.Pattern, ScalarNode(regex).text(), Annotations(entry))
+      }
+    )
 
     map.key("minLength", ScalarShapeModel.MinLength in shape)
     map.key("maxLength", ScalarShapeModel.MaxLength in shape)
@@ -1287,7 +1292,9 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             val required = !prop.endsWith("?")
 
             property.set(PropertyShapeModel.MinCount, if (required) 1 else 0)
-            property.set(PropertyShapeModel.Name, if (required) prop else prop.stripSuffix("?").stripPrefix("/").stripSuffix("/")) // TODO property id is using a name that is not final.
+            property.set(
+              PropertyShapeModel.Name,
+              if (required) prop else prop.stripSuffix("?").stripPrefix("/").stripSuffix("/")) // TODO property id is using a name that is not final.
             property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text.stripSuffix("?")).iri())
           }
 
