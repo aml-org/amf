@@ -43,25 +43,25 @@ class RamlParserErrorTest extends ParserErrorTest {
         erroneousTypeShape.level should be("Violation")
         erroneousTypeShape.targetNode should be(
           "file://amf-client/shared/src/test/resources/error/custom-facets.raml#/declarations/scalar/ErroneousType")
-        erroneousTypeShape.validationId should be(ParserSideValidations.ClosedShapeSpecification.id())
+        erroneousTypeShape.validationId should be(ParserSideValidations.ClosedShapeSpecification.id)
       },
       incorrect1 => {
         incorrect1.level should be("Violation")
         incorrect1.targetNode should be(
           "file://amf-client/shared/src/test/resources/error/custom-facets.raml#/declarations/union/Incorrect1")
-        incorrect1.validationId should be(ParserSideValidations.ClosedShapeSpecification.id())
+        incorrect1.validationId should be(ParserSideValidations.ClosedShapeSpecification.id)
       },
       incorrect2 => {
         incorrect2.level should be("Violation")
         incorrect2.targetNode should be(
           "file://amf-client/shared/src/test/resources/error/custom-facets.raml#/declarations/union/Incorrect2")
-        incorrect2.validationId should be(ParserSideValidations.ClosedShapeSpecification.id())
+        incorrect2.validationId should be(ParserSideValidations.ClosedShapeSpecification.id)
       },
       incorrect3 => {
         incorrect3.level should be("Violation")
         incorrect3.targetNode should be(
           "file://amf-client/shared/src/test/resources/error/custom-facets.raml#/declarations/union/Incorrect3")
-        incorrect3.validationId should be(ParserSideValidations.ClosedShapeSpecification.id())
+        incorrect3.validationId should be(ParserSideValidations.ClosedShapeSpecification.id)
       }
     )
   }

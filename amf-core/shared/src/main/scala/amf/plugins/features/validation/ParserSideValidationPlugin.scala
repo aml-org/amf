@@ -29,7 +29,7 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
     val violationParserSideValidations = ParserSideValidations.validations
       .filter { v =>
         ParserSideValidations
-          .levels(v.id())
+          .levels(v.id)
           .get(profile)
           .getOrElse(ProfileNames.AMF, SeverityLevels.VIOLATION) == SeverityLevels.VIOLATION
       }
@@ -37,7 +37,7 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
     val infoParserSideValidations = ParserSideValidations.validations
       .filter { v =>
         ParserSideValidations
-          .levels(v.id())
+          .levels(v.id)
           .get(profile)
           .getOrElse(ProfileNames.AMF, SeverityLevels.VIOLATION) == SeverityLevels.INFO
       }
@@ -45,7 +45,7 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
     val warningParserSideValidations = ParserSideValidations.validations
       .filter { v =>
         ParserSideValidations
-          .levels(v.id())
+          .levels(v.id)
           .get(profile)
           .getOrElse(ProfileNames.AMF, SeverityLevels.VIOLATION) == SeverityLevels.WARNING
       }

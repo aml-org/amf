@@ -40,7 +40,7 @@ class ValidationJSONLDEmitter(targetProfile: String) {
   }
 
   private def emitValidation(b: PartBuilder, validation: ValidationSpecification): Unit = {
-    val validationId = validation.id()
+    val validationId = validation.id
 
     b.obj { p =>
       p.entry("@id", validationId)

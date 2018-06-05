@@ -92,7 +92,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
 
         if (map.key("queryParameters").isDefined && map.key("queryString").isDefined) {
           ctx.violation(
-            ParserSideValidations.ExclusivePropertiesSpecification.id(),
+            ParserSideValidations.ExclusivePropertiesSpecification.id,
             scheme.id,
             s"Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together",
             map

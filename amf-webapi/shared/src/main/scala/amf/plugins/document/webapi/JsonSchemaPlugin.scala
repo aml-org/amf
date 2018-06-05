@@ -64,7 +64,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
             .head match {
             case doc: YDocument => doc.node
             case _ =>
-              ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+              ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
                             inputFragment.id,
                             None,
                             "Cannot parse JSON Schema from unit with missing syntax information",
@@ -80,7 +80,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
           .asInstanceOf[YDocument]
           .node
       case _ =>
-        ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+        ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
                       inputFragment.id,
                       None,
                       "Cannot parse JSON Schema from unit with missing syntax information",

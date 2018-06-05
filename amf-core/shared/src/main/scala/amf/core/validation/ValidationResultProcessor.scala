@@ -30,12 +30,12 @@ trait ValidationResultProcessor {
       message = result.message
     }
 
-    val severity = findLevel(spec.id(), validations)
+    val severity = findLevel(spec.id, validations)
     new AMFValidationResult(message,
                             severity,
                             result.targetNode,
                             result.targetProperty,
-                            spec.id(),
+                            spec.id,
                             result.position,
                             result.source)
   }

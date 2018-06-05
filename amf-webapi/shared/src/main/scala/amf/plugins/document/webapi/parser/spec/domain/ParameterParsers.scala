@@ -280,7 +280,7 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
             }
             .orElse {
               ctx.violation(
-                ParserSideValidations.ParsingErrorSpecification.id(),
+                ParserSideValidations.ParsingErrorSpecification.id,
                 p.payload.id,
                 "Cannot find valid schema for parameter",
                 map
@@ -301,7 +301,7 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
     val entryAnnotations      = entry.map(Annotations(_)).getOrElse(Annotations())
     val entryValueAnnotations = entry.map(e => Annotations(e.value)).getOrElse(Annotations())
 
-    ctx.violation(ParserSideValidations.OasInvalidParameterBinding.id(),
+    ctx.violation(ParserSideValidations.OasInvalidParameterBinding.id,
                   s"Invalid parameter binding '$old'",
                   entry.map(_.value).getOrElse(map))
 
@@ -319,7 +319,7 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
       else schema
     if (schemaToCheck.isInstanceOf[FileShape])
       ctx.violation(
-        ParserSideValidations.OasFormDataNotFileSpecification.id(),
+        ParserSideValidations.OasFormDataNotFileSpecification.id,
         schema.id,
         "File types in parameters must be declared in formData params",
         map
@@ -394,14 +394,14 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
       if (body.nonEmpty && formData.nonEmpty) {
         val bodyParam = body.head
         ctx.violation(
-          ParserSideValidations.OasBodyAndFormDataParameterSpecification.id(),
+          ParserSideValidations.OasBodyAndFormDataParameterSpecification.id,
           bodyParam.payload.id,
           "Cannot declare body and formData params at the same time for a request",
           bodyParam.ast.get
         )
       }
 
-      validateOasPayloads(body, ParserSideValidations.OasInvalidBodyParameter.id())
+      validateOasPayloads(body, ParserSideValidations.OasInvalidBodyParameter.id)
     }
 
     Parameters(

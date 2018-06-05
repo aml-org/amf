@@ -343,7 +343,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
                 // lookup by JSON pointer, absolute URI
                 ctx.registerJsonPointerDeclaration(id, node)
               case other =>
-                ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+                ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
                               id,
                               s"Cannot parse declaration for node with key '$name'",
                               entry.value)
@@ -430,7 +430,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
       case ObjectMapProperty         => parseObjectMapProperty(id, propertyEntry, property, node)
       case ObjectPairProperty        => parseObjectPairProperty(id, propertyEntry, property, node)
       case _ =>
-        ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+        ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
                       id,
                       s"Unknown type of node property ${property.id}",
                       propertyEntry)
@@ -462,7 +462,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
                   }
                 }
               case None =>
-                ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+                ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
                               id,
                               s"Cannot find dialect for nested anyNode mapping $dialectNode",
                               nested.value)
@@ -475,7 +475,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
               case "$ref" =>
                 resolveJSONPointerProperty(map, property, id, node)
               case _ =>
-                ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+                ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
                               id,
                               "$dialect key without string value or link",
                               map)
@@ -509,7 +509,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
         explicitMapping match {
           case Some(nodeMapping) => Seq(nodeMapping)
           case None =>
-            ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+            ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
                           id,
                           s"Cannot find discriminator value for discriminator '$propertyName'",
                           nodeMap)
@@ -545,7 +545,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
       ctx.dialect.declares.find(_.id == nodeMappingId.value()) match {
         case Some(nodeMapping) => Some(nodeMapping)
         case None =>
-          ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+          ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
                         id,
                         s"Cannot find mapping for property ${property.id} in union",
                         ast)
@@ -559,7 +559,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
           ctx.dialect.declares.find(_.id == mappingId) match {
             case Some(nodeMapping: NodeMapping) => acc + (alias -> nodeMapping)
             case _ =>
-              ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+              ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
                             id,
                             s"Cannot find mapping for property $mappingId in discriminator value '$alias' in union",
                             ast)
@@ -592,7 +592,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
                                                  mapProperties)
             if (mappings.isEmpty) {
               ctx.violation(
-                ParserSideValidations.DialectAmbiguousRangeSpecification.id(),
+                ParserSideValidations.DialectAmbiguousRangeSpecification.id,
                 id,
                 s"Ambiguous node in union range, found 0 compatible mappings from ${allPossibleMappings.size} mappings: [${allPossibleMappings.map(_.id).mkString(",")}]",
                 ast
@@ -622,7 +622,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
               Some(node)
             } else {
               ctx.violation(
-                ParserSideValidations.DialectAmbiguousRangeSpecification.id(),
+                ParserSideValidations.DialectAmbiguousRangeSpecification.id,
                 id,
                 Some(property.nodePropertyMapping().value()),
                 s"Ambiguous node, please provide a type disambiguator. Nodes ${mappings.map(_.id).mkString(",")} have been found compatible, only one is allowed",
@@ -749,7 +749,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
           } collect { case Some(elem: DialectDomainElement) => elem }
         case _ =>
           ctx.violation(
-            ParserSideValidations.ParsingErrorSpecification.id(),
+            ParserSideValidations.ParsingErrorSpecification.id,
             id,
             s"Cannot find mapping for property range of mapValue property: ${property.objectRange().head.value()}",
             propertyEntry
@@ -759,7 +759,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
 
       node.setObjectField(property, nested, propertyEntry.key)
     } else {
-      ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+      ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
                     id,
                     s"Both 'mapKey' and 'mapValue' are mandatory in a map pair property mapping",
                     propertyEntry)
@@ -1067,14 +1067,14 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
             if (isRef) linkedExternal.annotations += RefInclude()
             node.setObjectField(mapping, linkedExternal, propertyEntry.value)
           case None =>
-            ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+            ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
                           id,
                           s"Cannot find dialect for anyNode node mapping ${s.definedBy.id}",
                           propertyEntry.value)
         }
       case _ =>
         ctx.violation(
-          ParserSideValidations.ParsingErrorSpecification.id(),
+          ParserSideValidations.ParsingErrorSpecification.id,
           id,
           s"anyNode reference must be to a known node or an external fragment, unknown value: '${propertyEntry.value}'",
           propertyEntry.value
@@ -1107,14 +1107,14 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
               .withId(id) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
             node.setObjectField(mapping, linkedExternal, map)
           case None =>
-            ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+            ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
                           id,
                           s"Cannot find dialect for anyNode node mapping ${s.definedBy.id}",
                           map)
         }
       case None =>
         ctx.violation(
-          ParserSideValidations.ParsingErrorSpecification.id(),
+          ParserSideValidations.ParsingErrorSpecification.id,
           id,
           s"anyNode reference must be to a known node or an external fragment, unknown JSON Pointer: '$pointer'",
           map

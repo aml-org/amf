@@ -49,7 +49,7 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
   def parse(): AbstractDeclaration = {
 
     if (entryValue.tagType == YType.Null)
-      ctx.warning(ParserSideValidations.ParsingWarningSpecification.id(), parent, "Generating abstract declaration (resource type / trait)  with null value", entryValue)
+      ctx.warning(ParserSideValidations.ParsingWarningSpecification.id, parent, "Generating abstract declaration (resource type / trait)  with null value", entryValue)
 
     ctx.link(entryValue) match {
       case Left(link) => parseReferenced(declaration, link, entryValue).adopted(parent)

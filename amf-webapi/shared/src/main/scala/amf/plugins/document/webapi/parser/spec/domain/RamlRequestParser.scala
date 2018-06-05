@@ -30,7 +30,7 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
             val finalRequest = request.getOrCreate
             if (map.key("queryParameters").isDefined) {
               ctx.violation(
-                ParserSideValidations.ExclusivePropertiesSpecification.id(),
+                ParserSideValidations.ExclusivePropertiesSpecification.id,
                 finalRequest.id,
                 s"Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together",
                 map
@@ -142,7 +142,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
                 if (others.entries.nonEmpty) {
                   if (payloads.isEmpty) {
                     if (others.entries.map(_.key.as[YScalar].text) == List("example") && !ctx.globalMediatype) {
-                      ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+                      ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
                                     request.getOrCreate.id,
                                     "Invalid media type",
                                     m)

@@ -125,18 +125,18 @@ object DefaultAMFValidations extends ImportUtils {
         val violationParserSideValidations = ParserSideValidations.validations
           .filter { v =>
             ParserSideValidations
-              .levels(v.id())
+              .levels(v.id)
               .getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.VIOLATION
           }
           .map(_.name)
         val infoParserSideValidations = ParserSideValidations.validations
           .filter { v =>
-            ParserSideValidations.levels(v.id()).getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.INFO
+            ParserSideValidations.levels(v.id).getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.INFO
           }
           .map(_.name)
         val warningParserSideValidations = ParserSideValidations.validations
           .filter { v =>
-            ParserSideValidations.levels(v.id()).getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.WARNING
+            ParserSideValidations.levels(v.id).getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.WARNING
           }
           .map(_.name)
 

@@ -143,7 +143,7 @@ abstract class RamlWebApiContext(loc: String,
           case None => // at least we found a solution, this is a valid shape
           case Some(errors: Seq[YMapEntry]) =>
             violation(
-              ClosedShapeSpecification.id(),
+              ClosedShapeSpecification.id,
               node,
               s"Properties ${errors.map(_.key.as[YScalar].text).mkString(",")} not supported in a $vendor $shapeType node",
               errors.head
@@ -311,7 +311,7 @@ abstract class WebApiContext(loc: String,
     ast.entries.foldLeft(Set[String]()) {
       case (acc, entry) =>
         if (acc.contains(entry.key.toString())) {
-          violation(DuplicatedPropertySpecification.id(), node, s"Property '${entry.key}' is duplicated", entry)
+          violation(DuplicatedPropertySpecification.id, node, s"Property '${entry.key}' is duplicated", entry)
           acc
         } else {
           acc ++ Set(entry.key.toString())
@@ -335,7 +335,7 @@ abstract class WebApiContext(loc: String,
           if (ignore(shape, key)) {
             // annotation or path in endpoint/webapi => ignore
           } else if (!properties(key)) {
-            violation(ClosedShapeSpecification.id(),
+            violation(ClosedShapeSpecification.id,
                       node,
                       s"Property $key not supported in a $vendor $shape node",
                       entry)

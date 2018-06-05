@@ -119,7 +119,7 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
                     if (others.entries.nonEmpty) {
                       if (payloads.isEmpty) {
                         if (others.entries.map(_.key.as[YScalar].text) == List("example") && !ctx.globalMediatype) {
-                          ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+                          ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
                                         res.id,
                                         "Invalid media type",
                                         m)

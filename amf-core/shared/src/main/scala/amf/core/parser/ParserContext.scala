@@ -43,7 +43,7 @@ trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
 
   /** Report constraint failure of severity violation. WITHOUT NODE ID. */
   def violation(message: String, ast: YPart): Unit = {
-    violation(ParsingErrorSpecification.id(), "", None, message, lexical(ast))
+    violation(ParsingErrorSpecification.id, "", None, message, lexical(ast))
   }
 
   /** Report constraint failure of severity violation. */
@@ -59,13 +59,13 @@ trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
   /** Report constraint failure of severity violation. */
   def violation(node: String, message: String, ast: YPart): Unit = {
     val errorLocation = if (node == "") currentFile else node
-    violation(ParsingErrorSpecification.id(), errorLocation, message, ast)
+    violation(ParsingErrorSpecification.id, errorLocation, message, ast)
   }
 
   /** Report constraint failure of severity violation. */
   def violation(node: String, message: String, lexical: Option[LexicalInformation]): Unit = {
     val errorLocation = if (node == "") currentFile else node
-    violation(ParsingErrorSpecification.id(), errorLocation, None, message, lexical)
+    violation(ParsingErrorSpecification.id, errorLocation, None, message, lexical)
   }
 
   /** Report constraint failure of severity warning. */
@@ -79,7 +79,7 @@ trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
 
   /** Report constraint failure of severity warning. WITHOUT NODE ID. */
   def warning(message: String, ast: YPart): Unit = {
-    warning(ParsingWarningSpecification.id(), "", None, message, lexical(ast))
+    warning(ParsingWarningSpecification.id, "", None, message, lexical(ast))
   }
 
   /** Report constraint failure of severity warning. */
@@ -94,7 +94,7 @@ trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
 
   /** Report constraint failure of severity warning. */
   def warning(node: String, message: String, ast: YPart): Unit = {
-    warning(ParsingWarningSpecification.id(), node, message, ast)
+    warning(ParsingWarningSpecification.id, node, message, ast)
   }
 
   protected def part(error: YError): YPart = {

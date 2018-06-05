@@ -22,7 +22,7 @@ trait SpecParserOps {
     val pattern2 = "\\}[^\\{]*\\}".r
     if (pattern1.findFirstMatchIn(path).nonEmpty || pattern2.findFirstMatchIn(path).nonEmpty) {
       ctx.violation(
-        ParserSideValidations.PathTemplateUnbalancedParameters.id(),
+        ParserSideValidations.PathTemplateUnbalancedParameters.id,
         node,
         Some(property),
         "Invalid path template syntax",

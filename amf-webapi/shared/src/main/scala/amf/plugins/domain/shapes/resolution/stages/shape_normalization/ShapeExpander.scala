@@ -34,7 +34,7 @@ sealed case class ShapeExpander(root: Shape)(implicit val context: Normalization
           .option()
           .getOrElse(false) && !traversed.avoidError(original.id)) // todo should store in recursion it use to
       context.errorHandler.violation(
-        ParserSideValidations.RecursiveShapeSpecification.id(),
+        ParserSideValidations.RecursiveShapeSpecification.id,
         original.id,
         None,
         "Error recursive shape",

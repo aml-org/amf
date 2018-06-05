@@ -52,7 +52,7 @@ case class RamlExamplesParser(map: YMap,
   def parse(): Seq[Example] = {
     if (map.key(singleExampleKey).isDefined && map.key(multipleExamplesKey).isDefined && parentId.isDefined) {
       ctx.violation(
-        ParserSideValidations.ExclusivePropertiesSpecification.id(),
+        ParserSideValidations.ExclusivePropertiesSpecification.id,
         parentId.get,
         s"Properties '$singleExampleKey' and '$multipleExamplesKey' are exclusive and cannot be declared together",
         map
@@ -118,7 +118,7 @@ case class RamlSingleExampleParser(key: String,
         case Left(s) =>
           ctx.declarations.findNamedExample(s).map(e => e.link(s).asInstanceOf[Example]).map { example =>
             ctx.warning(
-              ParserSideValidations.NamedExampleUsedInExample.id(),
+              ParserSideValidations.NamedExampleUsedInExample.id,
               example.id,
               "Using an included named example as an inlined example",
               entry

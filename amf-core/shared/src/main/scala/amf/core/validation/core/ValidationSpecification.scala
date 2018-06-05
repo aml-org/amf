@@ -1,5 +1,6 @@
 package amf.core.validation.core
 
+import amf.core.model.domain.DataNode
 import amf.core.rdf.RdfModel
 import amf.core.vocabulary.Namespace
 import org.yaml.model.YDocument.EntryBuilder
@@ -94,12 +95,10 @@ case class ValidationSpecification(name: String,
                                      * to the contraints in the union
                                      */
                                    unionConstraints: Seq[String] = Seq.empty,
-
                                    // Logical constraints here, or contraints are collected in the union above
                                    andConstraints: Seq[String] = Seq.empty,
                                    xoneConstraints: Seq[String] = Seq.empty,
                                    notConstraint: Option[String] = None,
-
                                    /**
                                      * shacl:property
                                      * Property constraints for the node
@@ -110,7 +109,7 @@ case class ValidationSpecification(name: String,
                                    functionConstraint: Option[FunctionConstraint] = None,
                                    custom: Option[(EntryBuilder, String) => Unit] = None) {
 
-  def id(): String = {
+  val id: String = {
     if (name.startsWith("http://") || name.startsWith("https://") || name.startsWith("file:")) {
       name
     } else {
@@ -129,6 +128,10 @@ case class ValidationSpecification(name: String,
       targetClass = (this.targetClass ++ other.targetClass).distinct,
       targetObject = (this.targetObject ++ other.targetObject).distinct
     )
+
+  /** Add a Target instance */
+  def withTarget(targetId: String): ValidationSpecification =
+    if (targetInstance contains targetId) this else copy(targetInstance = targetInstance :+ targetId)
 }
 
 object ValidationSpecification {

@@ -1,7 +1,6 @@
 package amf.plugins.document.webapi.validation
 
 import amf.core.benchmark.ExecutionLog
-import amf.core.metamodel.Type.RegExp
 import amf.core.model.document.{Module, PayloadFragment}
 import amf.core.model.domain._
 import amf.core.parser.ParserContext
@@ -16,6 +15,7 @@ import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
 import org.yaml.model.{YDocument, YNode}
 import org.yaml.parser.YamlParser
 
+import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -59,11 +59,17 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
     val localProfile              = new AMFShapeValidations(shape).profile()
     val entryValidation           = localProfile.validations.head
     val entryValidationWithTarget = entryValidation.copy(targetInstance = Seq(dataNode.id))
-    val restValidations           = localProfile.validations.tail
-    var finalValidations          = Seq(entryValidationWithTarget) ++ restValidations
-    finalValidations = processTargets(entryValidation, dataNode, finalValidations)
+    //val restValidations           = localProfile.validations.tail
 
-    profiles += localProfile.copy(validations = finalValidations)
+//      var finalValidations          = Seq(entryValidationWithTarget) ++ restValidations
+
+    val targetValidations =   new mutable.LinkedHashMap[String, ValidationSpecification]()
+    targetValidations.put(entryValidationWithTarget.id, entryValidationWithTarget)
+    for (v <- localProfile.validations.tail) targetValidations.put(v.id, v)
+
+    val finalValidations = processTargets(entryValidation, dataNode, targetValidations)
+
+    profiles += localProfile.copy(validations = finalValidations.values.toSeq)
   }
 
   def matchPatternedProperty(p: PropertyConstraint, propName: String): Boolean = {
@@ -78,52 +84,60 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
   // We will also set pattern matching properties here.
   protected def processTargets(validation: ValidationSpecification,
                                node: DataNode,
-                               validations: Seq[ValidationSpecification]): Seq[ValidationSpecification] = {
-    var validationsAcc = validations
+                               validations: mutable.Map[String, ValidationSpecification]): mutable.Map[String, ValidationSpecification] = node match {
+    case obj: ObjectNode  => processObjectNode(obj, validation, node, validations)
+    case array: ArrayNode => processArrayNode(array, validation, node, validations)
+    case _: ScalarNode    => filterValidations(validation, node, validations)
+  }
+
+  private def processObjectNode(obj: ObjectNode,
+                                validation: ValidationSpecification,
+                                node: DataNode,
+                                validations: mutable.Map[String, ValidationSpecification]) = {
     // non pattern properties have precedence over pattern properties => let's sort them
-    val nonPatternPropertyConstraints = validation.propertyConstraints.filter(_.patternedProperty.isEmpty)
-    val patternProperties = validation.propertyConstraints.filter(_.patternedProperty.nonEmpty)
-    val allProperties = nonPatternPropertyConstraints ++ patternProperties
-    node match {
+    val (np, p) = validation.propertyConstraints
+      .filterNot(p => p.ramlPropertyId startsWith Namespace.Rdf.base)
+      .partition(_.patternedProperty.isEmpty)
+    val allProperties = np ++ p
 
-      case obj: ObjectNode =>
-        obj.properties.foreach {
-          case (propName, nodes) =>
-            allProperties
-              .filterNot(p => p.ramlPropertyId.startsWith(Namespace.Rdf.base))
-              .find(p => p.ramlPropertyId.endsWith(s"#$propName") || matchPatternedProperty(p, propName)) match {
-              case Some(propertyConstraint) if propertyConstraint.node.isDefined =>
-                validationsAcc.find(v => v.id == propertyConstraint.node.get) match {
-                  case Some(targetValidation) =>
-                    validationsAcc = processTargets(targetValidation, nodes, validationsAcc)
-                  case _ => // ignore
-                }
-              case _ => // ignore
-            }
-        }
+    var validationsAcc = validations
 
-      case array: ArrayNode =>
-        validation.propertyConstraints.find(p => p.ramlPropertyId == (Namespace.Rdf + "member").iri()) match {
-          case Some(memberPropertyValidation) if memberPropertyValidation.node.isDefined =>
-            val itemsValidationId = memberPropertyValidation.node.get
-            validationsAcc.find(v => v.id == itemsValidationId) match {
-              case Some(itemsValidation) =>
-                array.members.foreach { memberShape =>
-                  validationsAcc = processTargets(itemsValidation, memberShape, validationsAcc)
-                }
-              case _ => // ignore
-            }
-          case _ => // ignore
-        }
-
-      case _: ScalarNode => // ignore
-
+    for {
+      (propName, nodes) <- obj.properties
+      pc                <- allProperties
+      if pc.ramlPropertyId.endsWith(s"#$propName") || matchPatternedProperty(pc, propName)
+      itemsValidationId <- pc.node
+      (id, v)  <- validationsAcc
+      if id == itemsValidationId
+    } {
+      validationsAcc = processTargets(v, nodes, validationsAcc)
     }
+    filterValidations(validation, node, validationsAcc)
+  }
 
-    val newValidation = validation.copy(targetInstance = (validation.targetInstance ++ Seq(node.id)).distinct)
-    validationsAcc = validationsAcc.filter(v => v.id != newValidation.id) ++ Seq(newValidation)
+  private def processArrayNode(array: ArrayNode,
+                               validation: ValidationSpecification,
+                               node: DataNode,
+                               validations: mutable.Map[String, ValidationSpecification]) = {
+    var validationsAcc = validations
+    for {
+      pc <- validation.propertyConstraints
+      if pc.ramlPropertyId == (Namespace.Rdf + "member").iri()
+      itemsValidationId <- pc.node
+      (id, v)  <- validationsAcc
+      if id == itemsValidationId
+      memberShape <- array.members
+    } {
+      validationsAcc = processTargets(v, memberShape, validationsAcc)
+    }
+    filterValidations(validation, node, validationsAcc)
+  }
 
-    validationsAcc
+  private def filterValidations(validation: ValidationSpecification,
+                                node: DataNode,
+                                validations: mutable.Map[String, ValidationSpecification]) = {
+    val newValidation = validation.withTarget(node.id)
+    validations -= newValidation.id += ((newValidation.id, newValidation))
   }
 }
 

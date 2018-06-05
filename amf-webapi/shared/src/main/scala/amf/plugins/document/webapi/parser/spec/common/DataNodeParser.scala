@@ -145,7 +145,7 @@ case class DataNodeParser(node: YNode,
 
       case other =>
         val parsed = parseScalar(YScalar(other.toString()), "string")
-        ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+        ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
                       parsed.id,
                       None,
                       s"Cannot parse data node from AST structure '$other'",

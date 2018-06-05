@@ -158,7 +158,7 @@ case class RamlTypeDetector(parent: String,
     def apply(inheritsTypes: Seq[TypeDef], ast: YPart): Option[TypeDef] = {
       val head = inheritsTypes.headOption
       if (inheritsTypes.count(_.equals(head.get)) != inheritsTypes.size) {
-        ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+        ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
                       parent,
                       "Can't inherit from more than one class type",
                       ast)
@@ -179,7 +179,7 @@ case class RamlTypeDetector(parent: String,
             case Some(linkedShape: Shape) if linkedShape == shape => Some(AnyType)
             case Some(linkedShape: Shape)                         => apply(linkedShape, part, plainUnion)
             case _ =>
-              ctx.violation(ParserSideValidations.ParsingErrorSpecification.id(),
+              ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
                             shape.id,
                             "Found reference to domain element different of Shape when shape was expected",
                             part)
