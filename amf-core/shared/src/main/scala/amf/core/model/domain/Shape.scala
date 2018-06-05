@@ -197,13 +197,13 @@ case class IdsTraversionCheck() {
     expanded
   }
 
-  def runPushed(fnc: (IdsTraversionCheck) => Shape): Shape = {
-    val uuid  = push()
-    val shape = fnc(this)
+  def runPushed[T](fnc: (IdsTraversionCheck) => T): T = {
+    val uuid    = push()
+    val element = fnc(this)
     ids.clear()
     ids ++= backUps(uuid)
     backUps.remove(uuid)
-    shape
+    element
   }
 
   def generateSha(): UUID = UUID.randomUUID()

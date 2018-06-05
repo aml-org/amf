@@ -3,6 +3,7 @@ package amf.validation
 import amf.ProfileNames
 import amf.common.Tests.checkDiff
 import amf.core.AMFSerializer
+import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{Document, Module, PayloadFragment}
 import amf.core.model.domain.{RecursiveShape, Shape}
@@ -13,9 +14,9 @@ import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.core.validation.{SeverityLevels, ValidationCandidate}
 import amf.facades.{AMFCompiler, AMFRenderer, Validation}
 import amf.plugins.document.graph.parser.GraphEmitter
-import amf.plugins.document.webapi.{RAML08Plugin, RAML10Plugin}
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 import amf.plugins.document.webapi.validation.{AMFShapeValidations, PayloadValidation, UnitPayloadsValidation}
+import amf.plugins.document.webapi.{RAML08Plugin, RAML10Plugin}
 import amf.plugins.domain.shapes.models.ArrayShape
 import amf.plugins.domain.webapi.models.WebApi
 import amf.plugins.features.validation.emitters.{
@@ -2852,19 +2853,19 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   ignore("emilio performance") {
-      for {
-        validation <- Validation(platform)
-        // Path should point to the main api file.
-        model <- AMFCompiler(productionPath + "sys-sabre-air-api-1.0.3-fat-raml/ha-sys-sabre-air-api.raml",
-                             platform,
-                             RamlYamlHint,
-                             validation) // Change hint here for a different syntax parsing.
-          .build()
-          report <- validation.validate(model, ProfileNames.RAML)   // Change profile name here to validate for a different spec.
-      } yield {
-        //RAML10Plugin.resolve(model) // Change plugin here to resolve for a different spec.
-        assert(report.results.isEmpty)
-      }
+    for {
+      validation <- Validation(platform)
+      // Path should point to the main api file.
+      model <- AMFCompiler(productionPath + "sys-sabre-air-api-1.0.3-fat-raml/ha-sys-sabre-air-api.raml",
+                           platform,
+                           RamlYamlHint,
+                           validation) // Change hint here for a different syntax parsing.
+        .build()
+      report <- validation.validate(model, ProfileNames.RAML) // Change profile name here to validate for a different spec.
+    } yield {
+      //RAML10Plugin.resolve(model) // Change plugin here to resolve for a different spec.
+      assert(report.results.isEmpty)
+    }
     //assert(true)
   }
 
