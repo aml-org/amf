@@ -31,7 +31,7 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String =>
           scheme
         case None =>
           ctx.violation(
-            ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id(),
+            ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id,
             scheme.id,
             s"Security scheme '$name' not found in declarations.",
             node
@@ -54,7 +54,7 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String =>
           scheme.set(ParametrizedSecuritySchemeModel.Settings, settings)
         case None =>
           ctx.violation(
-            ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id(),
+            ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id,
             scheme.id,
             s"Security scheme '$name' not found in declarations (and name cannot be 'null').",
             node

@@ -52,7 +52,7 @@ object ExtendsHelper {
     val mergeMissingSecuritySchemes = new ValidationsMerger {
       override val parserRun: Int = ctx.parserCount
       override def merge(result: AMFValidationResult): Boolean =
-        result.validationId == ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id()
+        result.validationId == ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id
     }
 
     val operation: Operation =
@@ -78,7 +78,7 @@ object ExtendsHelper {
           val property = propertyNode.as[YScalar].text
           if (property.startsWith("/")) {
             ctx.violation(
-              ParserSideValidations.ParsingErrorSpecification.id(),
+              ParserSideValidations.ParsingErrorSpecification.id,
               extensionId,
               None,
               s"Nested endpoint in trait: '$property'",
@@ -118,7 +118,7 @@ object ExtendsHelper {
     val mergeMissingSecuritySchemes = new ValidationsMerger {
       override val parserRun: Int = ctx.parserCount
       override def merge(result: AMFValidationResult): Boolean = {
-        result.validationId == ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id()
+        result.validationId == ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id
       }
     }
     RuntimeValidator.nestedValidation(mergeMissingSecuritySchemes) { // we don't emit validation here, final result will be validated after mergin
@@ -198,7 +198,7 @@ object ExtendsHelper {
         }
         nestedDeclarations(ctx, m)
       case other =>
-        ctx.violation(ParserSideValidations.ResolutionErrorSpecification.id(), other.id, None, "Error resolving nested declaration, found something that is not a library or a fragment", other.annotations.find(classOf[LexicalInformation]))
+        ctx.violation(ParserSideValidations.ResolutionErrorSpecification.id, other.id, None, "Error resolving nested declaration, found something that is not a library or a fragment", other.annotations.find(classOf[LexicalInformation]))
         other
     }
   }

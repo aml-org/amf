@@ -202,7 +202,7 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
           adopt(shape)
           if (!text.validReferencePath) {
             ctx.violation(
-              ParserSideValidations.ChainedReferenceSpecification.id(),
+              ParserSideValidations.ChainedReferenceSpecification.id,
               shape.id,
               s"Chained reference '$text",
               node
@@ -601,7 +601,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               adopt(shape)
               if (!text.validReferencePath) {
                 ctx.violation(
-                  ParserSideValidations.ChainedReferenceSpecification.id(),
+                  ParserSideValidations.ChainedReferenceSpecification.id,
                   shape.id,
                   s"Chained reference '$text",
                   node
@@ -739,7 +739,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       if (dataType.isDefined && dataType.get.endsWith("#integer")) {
         if (value.contains(".")) {
           ctx.violation(
-            ParserSideValidations.ParsingErrorSpecification.id(),
+            ParserSideValidations.ParsingErrorSpecification.id,
             shape.id,
             "Wrong precision for integer numeric facet value",
             ast
@@ -904,7 +904,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
                          Annotations(entry.value))
         case Some(entry) =>
           ctx.violation(
-            ParserSideValidations.ParsingErrorSpecification.id(),
+            ParserSideValidations.ParsingErrorSpecification.id,
             shape.id,
             Some(FileShapeModel.FileTypes.value.iri()),
             s"Unexpected syntax for the fileTypes property: ${entry.value.tagType}",
@@ -1119,7 +1119,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               val baseClass = text match {
                 case JSONSchema(_) =>
                   ctx.warning(
-                    ParserSideValidations.JsonSchemaInheratinaceWarningSpecification.id(),
+                    ParserSideValidations.JsonSchemaInheratinaceWarningSpecification.id,
                     shape.id,
                     Some(ShapeModel.Inherits.value.iri()),
                     "Inheritance from JSON Schema",
@@ -1146,7 +1146,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       unresolvedShape.withContext(ctx)
       if (!reference.validReferencePath) {
         ctx.violation(
-          ParserSideValidations.ChainedReferenceSpecification.id(),
+          ParserSideValidations.ChainedReferenceSpecification.id,
           unresolvedShape.id,
           s"Chained reference '$reference",
           node
@@ -1190,7 +1190,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 PropertiesParser(m, shape.withProperty).parse()
               if (properties.exists(_.patternName.nonEmpty) && shape.closed.option().getOrElse(false)) {
                 ctx.violation(
-                  ParserSideValidations.PatternPropertiesOnClosedNodeSpecification.id(),
+                  ParserSideValidations.PatternPropertiesOnClosedNodeSpecification.id,
                   shape.id,
                   s"Node without additional properties support cannot have pattern properties",
                   node
@@ -1223,7 +1223,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       if (shape.inherits.length == 1 && shape.inherits.head.isInstanceOf[UnionShape]) {
         if (map.key("discriminator").isDefined) {
           ctx.violation(
-            ParserSideValidations.DiscriminatorOnExtendedUnionSpecification.id(),
+            ParserSideValidations.DiscriminatorOnExtendedUnionSpecification.id,
             "Property discriminator forbidden in a node extending a unionShape",
             shape.id,
             map.key("discriminator").get
@@ -1232,7 +1232,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
         if (map.key("discriminatorValue").isDefined) {
           ctx.violation(
-            ParserSideValidations.DiscriminatorOnExtendedUnionSpecification.id(),
+            ParserSideValidations.DiscriminatorOnExtendedUnionSpecification.id,
             "Property discriminatorValue forbidden in a node extending a unionShape",
             shape.id,
             map.key("discriminatorValue").get

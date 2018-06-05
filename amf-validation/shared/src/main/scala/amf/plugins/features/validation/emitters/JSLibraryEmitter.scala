@@ -43,7 +43,7 @@ class JSLibraryEmitter(profile: Option[ValidationProfile] = None) {
       text +=
         s"""
         |
-        |function ${constraint.computeFunctionName(validation.id())}($$this, $$value $additionalParams) {
+        |function ${constraint.computeFunctionName(validation.id)}($$this, $$value $additionalParams) {
         |  var innerFn = ${constraint.code.get};
         |  var input = amfFindNode($$this, {});
         |  // print(JSON.stringify(input))

@@ -1283,7 +1283,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         .build()
       report <- validation.validate(library, ProfileNames.RAML)
     } yield {
-      assert(!report.results.exists(_.validationId != ParserSideValidations.RecursiveShapeSpecification.id()))
+      assert(!report.results.exists(_.validationId != ParserSideValidations.RecursiveShapeSpecification.id))
     }
   }
 
@@ -1747,7 +1747,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         .build()
       report <- validation.validate(library, ProfileNames.RAML)
     } yield {
-      assert(!report.results.exists(_.validationId != ParserSideValidations.RecursiveShapeSpecification.id()))
+      assert(!report.results.exists(_.validationId != ParserSideValidations.RecursiveShapeSpecification.id))
     }
   }
 
@@ -2717,7 +2717,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Pattern properties key 4 (additionalProperties: false clash)") {
+  ignore("Pattern properties key 4 (additionalProperties: false clash)") {
     for {
       validation <- Validation(platform)
       model <- AMFCompiler(validationsPath + "data/pattern_properties4.raml", platform, RamlYamlHint, validation)
@@ -2851,23 +2851,21 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("emilio performance") {
-//    for (i <- 1 to 10) {
-//      for {
-//        validation <- Validation(platform)
-//        // Path should point to the main api file.
-//        model <- AMFCompiler(productionPath + "sys-sabre-air-api-1.0.3-fat-raml/ha-sys-sabre-air-api.raml",
-//                             platform,
-//                             RamlYamlHint,
-//                             validation) // Change hint here for a different syntax parsing.
-//          .build()
-//        //  report <- validation.validate(model, ProfileNames.RAML)   // Change profile name here to validate for a different spec.
-//      } yield {
-//        RAML10Plugin.resolve(model) // Change plugin here to resolve for a different spec.
-//        //assert(report.results.isEmpty)
-//      }
-//    }
-    assert(true)
+  ignore("emilio performance") {
+      for {
+        validation <- Validation(platform)
+        // Path should point to the main api file.
+        model <- AMFCompiler(productionPath + "sys-sabre-air-api-1.0.3-fat-raml/ha-sys-sabre-air-api.raml",
+                             platform,
+                             RamlYamlHint,
+                             validation) // Change hint here for a different syntax parsing.
+          .build()
+          report <- validation.validate(model, ProfileNames.RAML)   // Change profile name here to validate for a different spec.
+      } yield {
+        //RAML10Plugin.resolve(model) // Change plugin here to resolve for a different spec.
+        assert(report.results.isEmpty)
+      }
+    //assert(true)
   }
 
   test("Examples JSON-Schema") {

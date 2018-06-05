@@ -66,7 +66,7 @@ trait ShapeHelpers { this: Shape =>
                               recursionErrorHandler: Option[ErrorHandler]): RecursiveShape = {
     if (recursionErrorHandler.isDefined && !link.supportsRecursion.option().getOrElse(false)) {
       recursionErrorHandler.get.violation(
-        ParserSideValidations.RecursiveShapeSpecification.id(),
+        ParserSideValidations.RecursiveShapeSpecification.id,
         link.id,
         None,
         "Error recursive shape",

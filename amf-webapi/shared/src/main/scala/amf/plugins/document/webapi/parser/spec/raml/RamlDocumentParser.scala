@@ -297,7 +297,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
           e.value.as[YMap].entries.foreach { entry =>
             if (wellKnownType(entry.key.as[String])) {
               ctx.violation(
-                ParserSideValidations.ParsingErrorSpecification.id(),
+                ParserSideValidations.ParsingErrorSpecification.id,
                 parent,
                 "Default type name cannot be used to name a custom type",
                 entry.key

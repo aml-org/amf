@@ -31,7 +31,7 @@ class ValidationShapeNormalisationStage(profile: String,
       } catch {
         case e: InheritanceIncompatibleShapeError =>
           errorHandler.violation(
-            ParserSideValidations.InvalidTypeInheritanceErrorSpecification.id(),
+            ParserSideValidations.InvalidTypeInheritanceErrorSpecification.id,
             base.id,
             Some(ShapeModel.Inherits.value.iri()),
             e.getMessage,

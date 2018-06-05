@@ -16,7 +16,7 @@ class ValidationRdfModelEmitter(targetProfile: String, rdfModel: RdfModel, defau
   }
 
   private def emitValidation(validation: ValidationSpecification): Unit = {
-    val validationId = validation.id()
+    val validationId = validation.id
 
     rdfModel.addTriple(validationId, (Namespace.Rdf + "type").iri(), (Namespace.Shacl + "NodeShape").iri())
     val message = targetProfile match {

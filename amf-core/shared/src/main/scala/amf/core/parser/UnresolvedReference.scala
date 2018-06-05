@@ -24,7 +24,7 @@ trait UnresolvedReference { this: DomainElement =>
           resolve,
           () =>
             c.violation(
-              ParserSideValidations.ParsingErrorSpecification.id(),
+              ParserSideValidations.ParsingErrorSpecification.id,
               id,
               None,
               s"Unresolved reference $reference from root context ${c.rootContextDocument}",
