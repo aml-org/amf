@@ -56,7 +56,11 @@ class ModelReferenceResolver(model: BaseUnit) {
 /**
   * Resolves the local and remote references found in the model.
   */
-class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extends ResolutionStage(profile) {
+class ReferenceResolutionStage(profile: String,
+                               keepEditingInfo: Boolean,
+                               idsTraversionCheck: IdsTraversionCheck = IdsTraversionCheck(),
+                               cache: mutable.Map[String, DomainElement] = mutable.Map())
+    extends ResolutionStage(profile) {
 
   var mutuallyRecursive: Seq[String]                = Nil
   var model: Option[BaseUnit]                       = None
@@ -86,10 +90,7 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
   }
 
   // Internal request that checks for mutually recursive types
-  protected def recursiveResolveInvocation(model: BaseUnit,
-                                           modelResolver: Option[ModelReferenceResolver],
-                                           mutuallyRecursive: Seq[String]): BaseUnit = {
-    this.mutuallyRecursive = mutuallyRecursive
+  protected def recursiveResolveInvocation(model: BaseUnit, modelResolver: Option[ModelReferenceResolver]): BaseUnit = {
     this.model = Some(model)
     this.modelResolver = Some(modelResolver.getOrElse(new ModelReferenceResolver(model)))
     model.transform(findLinkPredicates, transform)
@@ -134,7 +135,10 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
   // Customisation of the resolution transformation for different domains
   protected def customDomainElementTransformation(d: DomainElement, source: Linkable): DomainElement = d
 
-  def transform(element: DomainElement, isCycle: Boolean): Option[DomainElement] = {
+  def transform(element: DomainElement, isCycle: Boolean): Option[DomainElement] =
+    cache.get(element.id).orElse(resolveAndCach(element, isCycle))
+
+  private def resolveAndCach(element: DomainElement, isCycle: Boolean): Option[DomainElement] = {
 
     val resolved = element match {
       // link not traversed, cache it and traverse it
@@ -163,10 +167,12 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
       case other => Some(other)
 
     }
+    resolved.foreach { r =>
+      cache.put(element.id, r)
+    }
 
     resolved
   }
-
   private def resolveExternalFields(element: DomainElement): DomainElement = {
 
     element.fields.foreach {
@@ -222,14 +228,23 @@ class ReferenceResolutionStage(profile: String, keepEditingInfo: Boolean) extend
   }
 
   def resolveReferenced(element: DomainElement): DomainElement = {
-    if (mutuallyRecursive.contains(element.id)) {
+    if (idsTraversionCheck.hasId(element.id)) {
       element
     } else {
-      val nested = Document()
-      nested.fields.setWithoutId(DocumentModel.Encodes, element)
-      val result = new ReferenceResolutionStage(profile, keepEditingInfo)
-        .recursiveResolveInvocation(nested, modelResolver, mutuallyRecursive ++ Seq(element.id))
-      result.asInstanceOf[Document].encodes
+      cache.get(element.id) match {
+        case Some(e) => e
+        case _ =>
+          val nested = Document()
+          nested.fields.setWithoutId(DocumentModel.Encodes, element)
+          idsTraversionCheck + element.id
+          val resolved = idsTraversionCheck.runPushed[DomainElement]((itc: IdsTraversionCheck) => {
+            val result = new ReferenceResolutionStage(profile, keepEditingInfo, idsTraversionCheck, cache)
+              .recursiveResolveInvocation(nested, modelResolver)
+            result.asInstanceOf[Document].encodes
+          })
+          cache.put(element.id, resolved)
+          resolved
+      }
     }
   }
 
