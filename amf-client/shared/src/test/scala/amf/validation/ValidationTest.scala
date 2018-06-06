@@ -3,7 +3,6 @@ package amf.validation
 import amf.ProfileNames
 import amf.common.Tests.checkDiff
 import amf.core.AMFSerializer
-import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{Document, Module, PayloadFragment}
 import amf.core.model.domain.{RecursiveShape, Shape}
@@ -2888,6 +2887,17 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(!report.conforms)
       assert(report.results.size == 1)
       assert(report.results.head.message == "Error recursive shape")
+    }
+  }
+
+  test("Test valid recursive union recursive") {
+    for {
+      validation <- Validation(platform)
+      model <- AMFCompiler(validationsPath + "shapes/union-recursive.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(model, ProfileNames.RAML08)
+    } yield {
+      assert(report.conforms)
     }
   }
 }

@@ -145,9 +145,10 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
 
 case class IdsTraversionCheck() {
 
-  private val backUps: mutable.Map[UUID, Set[String]] = mutable.Map()
-  private val ids: mutable.Set[String]                = mutable.Set()
-  private var ignoredIds: Seq[String]                 = Seq()
+  private val backUps: mutable.Map[UUID, Set[String]]          = mutable.Map()
+  private val ids: mutable.Set[String]                         = mutable.Set()
+  private var whiteList: Set[String]                           = Set()
+  private val whiteListBackUps: mutable.Map[UUID, Set[String]] = mutable.Map()
 
   private var allowedCycleClasses
     : Seq[Class[_]]                              = Seq() // i cant do it inmutable for the modularization (i cant see UnresolvedShape from here)
@@ -176,7 +177,7 @@ case class IdsTraversionCheck() {
   def has(shape: Shape): Boolean =
     (!allowedCycleClasses.contains(shape.getClass)) && ids.contains(shape.id)
 
-  def avoidError(id: String): Boolean = ignoredIds.contains(id)
+  def avoidError(id: String): Boolean = whiteList.contains(id)
 
   def hasId(id: String): Boolean = ids.contains(id)
 
@@ -188,13 +189,21 @@ case class IdsTraversionCheck() {
     id
   }
 
-  def runWithIgnoredId(fnc: () => Shape, shapeId: String): Shape = runWithIgnoredIds(fnc, Seq(shapeId))
+  def runWithIgnoredId(fnc: () => Shape, shapeId: String): Shape = runWithIgnoredIds(fnc, Set(shapeId))
 
-  def runWithIgnoredIds(fnc: () => Shape, shapeIds: Seq[String]): Shape = {
-    ignoredIds = ignoredIds ++ shapeIds
+  def runWithIgnoredIds(fnc: () => Shape, shapeIds: Set[String]): Shape = {
+    val id = generateSha()
+    whiteListBackUps.put(id, whiteList.toSet) // copy the whiteList set
+    whiteList = whiteList ++ shapeIds
     val expanded = runPushed(_ => fnc())
-    ignoredIds = ignoredIds.filter(shapeIds.contains(_))
+    whiteList = whiteListBackUps(id)
+    whiteListBackUps.remove(id)
     expanded
+  }
+
+  def recursionAllowed(fnc: () => Shape, shapeId: String): Shape = {
+    val actual = ids.toSet + shapeId
+    runWithIgnoredIds(fnc, actual)
   }
 
   def runPushed[T](fnc: (IdsTraversionCheck) => T): T = {

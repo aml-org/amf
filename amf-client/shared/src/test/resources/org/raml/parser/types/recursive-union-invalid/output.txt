@@ -1,16 +1,9 @@
 Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml
 Profile: RAML
 Conforms? false
-Number of results: 4
+Number of results: 3
 
 Level: Violation
-
-- Source: http://raml.org/vocabularies/amf/parser#recursive-shape
-  Message: Error recursive shape
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml#/declarations/any/SomeType
-  Property: 
-  Position: Some(LexicalInformation([(5,2)-(8,0)]))
 
 - Source: http://raml.org/vocabularies/amf/parser#parsing-error
   Message: Unresolved reference 'object' from root context file://amf-client/shared/src/test/resources/org/raml/parser/types/recursive-union-invalid/input.raml

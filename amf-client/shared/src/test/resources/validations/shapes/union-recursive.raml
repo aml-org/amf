@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: test
+types:
+  Extension:
+    properties:
+      rec: Coding | Quantity
+
+  Coding:
+    properties:
+      version?: string
+
+  Element:
+    properties:
+      extension?: Extension[]
+
+  Quantity:
+      type: Element
+      properties:
+        unit?: string
