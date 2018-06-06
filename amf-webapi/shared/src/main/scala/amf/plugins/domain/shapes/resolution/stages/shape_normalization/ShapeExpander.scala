@@ -202,7 +202,7 @@ sealed case class ShapeExpander(root: Shape)(implicit val context: Normalization
     range.linkTarget match {
       case Some(t) => traversed.runWithIgnoredId(() => normalize(range), t.id)
       case None if range.inherits.nonEmpty =>
-        traversed.runWithIgnoredIds(() => normalize(range), range.inherits.map(_.id))
+        traversed.runWithIgnoredIds(() => normalize(range), range.inherits.map(_.id).toSet)
       case _ => traversed.runWithIgnoredId(() => normalize(range), range.id)
     }
   }
@@ -219,7 +219,9 @@ sealed case class ShapeExpander(root: Shape)(implicit val context: Normalization
     expandInherits(union)
     val oldAnyOf = union.fields.getValue(UnionShapeModel.AnyOf)
     if (Option(oldAnyOf).isDefined) {
-      val newAnyOf = union.anyOf.map { recursiveNormalization }
+      val newAnyOf = union.anyOf.map { u =>
+        traversed.recursionAllowed(() => recursiveNormalization(u), u.id)
+      }
       union.setArrayWithoutId(UnionShapeModel.AnyOf, newAnyOf, oldAnyOf.annotations)
     } else if (Option(union.inherits).isEmpty || union.inherits.isEmpty) {
       throw new Exception(s"Resolution error: Union shape with missing anyof: $union")
