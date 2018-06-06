@@ -24,7 +24,7 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
     map.key(
       "queryString",
       queryEntry => {
-        Raml10TypeParser(queryEntry, (shape) => shape.adopted(request.getOrCreate.id))
+        Raml10TypeParser(queryEntry, shape => shape.adopted(request.getOrCreate.id))
           .parse()
           .map(q => {
             val finalRequest = request.getOrCreate
@@ -115,7 +115,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
                           false,
                           defaultType)
               .parse()
-              .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
+              .foreach(payloads += request.getOrCreate.withPayload(None).add(Annotations(entry)).withSchema(_))
 
           case YType.Str =>
             ctx.factory
@@ -124,7 +124,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
                           false,
                           defaultType)
               .parse()
-              .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
+              .foreach(payloads += request.getOrCreate.withPayload(None).add(Annotations(entry)).withSchema(_))
 
           case _ =>
             // Now we parsed potentially nested shapes for different data types
@@ -153,7 +153,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
                                   false,
                                   defaultType)
                       .parse()
-                      .foreach(payloads += request.getOrCreate.withPayload(None).withSchema(_)) // todo
+                      .foreach(payloads += request.getOrCreate.withPayload(None).add(Annotations(entry)).withSchema(_)) // todo
                   } else {
                     others.entries.foreach(e =>
                       ctx.violation(s"Unexpected key '${e.key.as[YScalar].text}'. Expecting valid media types.", e))
