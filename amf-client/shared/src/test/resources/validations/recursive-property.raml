@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: Reference Data
+
+types:
+  MotorClaim:
+    properties:
+      driver?: PersonModel
+  PersonSummaryModel:
+    properties:
+      links?: string
+  PersonModel:
+    type: PersonSummaryModel
+    properties:
+      motorClaims?: MotorClaim[]
+  Person:
+    type: PersonModel
