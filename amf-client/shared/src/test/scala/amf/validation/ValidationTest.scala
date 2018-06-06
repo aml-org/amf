@@ -1640,7 +1640,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report <- validation.validate(library, ProfileNames.RAML)
     } yield {
       assert(!report.conforms)
-      assert(report.results.size == 4)
+      assert(report.results.size == 3)
     }
   }
 
@@ -1787,7 +1787,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report    <- validation.validate(doc, ProfileNames.RAML)
     } yield {
       assert(!report.conforms)
-      assert(report.results.size == 4)
+      assert(report.results.size == 2)
       assert(report.results.exists(_.message.contains("Security scheme 'undefined' not found in declarations.")))
 
     }
@@ -2384,7 +2384,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         .build()
       report <- validation.validate(doc, ProfileNames.RAML, ProfileNames.RAML)
     } yield {
-      assert(report.results.length == 2)
+      assert(!report.conforms)
+      assert(report.results.size == 1)
+      assert(report.results.head.message.startsWith("'baseUri' not defined and 'baseUriParameters' defined."))
     }
   }
 
@@ -2523,7 +2525,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                            validation).build()
       report <- validation.validate(model, ProfileNames.RAML)
     } yield {
-      assert(report.results.nonEmpty)
+      assert(report.conforms)
+      assert(!report.results.exists(_.level != SeverityLevels.WARNING))
     }
   }
 

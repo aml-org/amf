@@ -14,7 +14,7 @@ trait ValidationsMerger {
 }
 
 object IgnoreValidationsMerger extends ValidationsMerger {
-  override val parserRun: Int = -1
+  override val parserRun: Int                              = -1
   override def merge(result: AMFValidationResult): Boolean = false
 }
 
@@ -72,6 +72,8 @@ trait RuntimeValidator {
     * Async version of disable valdiations
     */
   def disableValidationsAsync[T]()(f: (() => Unit) => T): T
+
+  def aggregateReport(model: BaseUnit, profileName: String, messageStyle: String): Future[AMFValidationReport]
 }
 
 object RuntimeValidator {
@@ -102,10 +104,14 @@ object RuntimeValidator {
   def apply(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): Future[AMFValidationReport] =
     validator.validate(model, profileName, messageStyle)
 
+  def aggregateReport(model: BaseUnit,
+                      profileName: String,
+                      messageStyle: String = "AMF"): Future[AMFValidationReport] =
+    validator.aggregateReport(model, profileName, messageStyle)
+
   def reset() = validator.reset()
 
   def nestedValidation[T](merger: ValidationsMerger)(k: => T): T = validator.nestedValidation(merger)(k)
-
 
   def disableValidations[T]()(f: () => T): T = validator.disableValidations()(f)
 

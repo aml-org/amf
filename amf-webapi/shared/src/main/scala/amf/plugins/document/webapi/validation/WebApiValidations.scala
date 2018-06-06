@@ -31,17 +31,25 @@ trait WebApiValidations extends ValidationResultProcessor {
 
     // Before validating we need to resolve to get all the model information
     val baseUnit = new ValidationResolutionPipeline(profile).resolve(unresolvedUnit)
-
     aggregatedReport = List()
+    RuntimeValidator.aggregateReport(baseUnit, profile, messageStyle) flatMap {
+      case resolutionResults if !resolutionResults.conforms => Future.successful(resolutionResults)
+      case _                                                => validateModel(baseUnit, profile, platform, messageStyle, validations)
+    }
+  }
 
+  private def validateModel(baseUnit: BaseUnit,
+                            profile: String,
+                            platform: Platform,
+                            messageStyle: String,
+                            validations: EffectiveValidations) = {
     for {
       examplesResults <- UnitPayloadsValidation(baseUnit, platform).validate()
-      shaclReport     <- {
+      shaclReport <- {
         ExecutionLog.log("WebApiValidations#validationRequestsForBaseUnit: validating now WebAPI")
         RuntimeValidator.shaclValidation(baseUnit, validations, messageStyle)
       }
     } yield {
-
       // aggregating parser-side validations
       var results = aggregatedReport.map(r => processAggregatedResult(r, messageStyle, validations))
 

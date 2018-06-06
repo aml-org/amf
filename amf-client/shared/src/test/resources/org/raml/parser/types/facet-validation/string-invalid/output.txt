@@ -1,16 +1,9 @@
 Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/string-invalid/input.raml
 Profile: RAML
 Conforms? false
-Number of results: 3
+Number of results: 1
 
 Level: Violation
-
-- Source: http://raml.org/vocabularies/amf/parser#min-max-length
-  Message: MaxLength must be greater than or equal to minLength
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/string-invalid/input.raml#/declarations/scalar/MySecondType
-  Property: 
-  Position: Some(LexicalInformation([(9,4)-(14,0)]))
 
 - Source: http://raml.org/vocabularies/amf/parser#invalid-type-inheritance
   Message: Resolution error: sub type has a weaker constraint for max-length than base type for maxProperties
@@ -18,10 +11,3 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/string-invalid/input.raml#/declarations/scalar/MyThirdType
   Property: http://raml.org/vocabularies/shapes#inherits
   Position: Some(LexicalInformation([(14,4)-(18,0)]))
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/string-invalid/input.raml#/declarations/scalar/MyFourthType_validation_validation_enum/prop
-  Message: Data at / must be within the values (Just a valid enum,Not valid :(,I am valid again)
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/string-invalid/input.raml#/declarations/scalar/MyFourthType/example/default-example
-  Property: http://raml.org/vocabularies/data#value
-  Position: Some(LexicalInformation([(17,15)-(17,38)]))

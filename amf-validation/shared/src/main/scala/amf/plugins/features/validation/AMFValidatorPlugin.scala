@@ -10,7 +10,7 @@ import amf.core.remote.Context
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationSpecification}
-import amf.core.validation.{AMFValidationReport, EffectiveValidations}
+import amf.core.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations}
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.graph.parser.ScalarEmitter
 import amf.plugins.document.vocabularies.VocabulariesPlugin
@@ -178,17 +178,24 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
   }
 
   override def validate(model: BaseUnit, profileName: String, messageStyle: String): Future[AMFValidationReport] = {
+
+    super.validate(model, profileName, messageStyle) flatMap {
+      case parseSideValidation if !parseSideValidation.conforms => Future.successful(parseSideValidation)
+      case parseSideValidation                                  => modelValidation(model, profileName, messageStyle, parseSideValidation.results)
+    }
+
+  }
+
+  private def modelValidation(model: BaseUnit,
+                              profileName: String,
+                              messageStyle: String,
+                              warningResults: Seq[AMFValidationResult]): Future[AMFValidationReport] = {
     profilesPlugins.get(profileName) match {
       case Some(domainPlugin: AMFValidationPlugin) =>
         val validations = computeValidations(profileName)
-        domainPlugin.validationRequest(model, profileName, validations, platform) flatMap { modelValidations =>
-          super.validate(model, profileName, messageStyle) map { parserSideValidation =>
-            modelValidations.copy(
-              conforms = modelValidations.conforms && parserSideValidation.conforms,
-              results = modelValidations.results ++ parserSideValidation.results
-            )
-          }
-        }
+        domainPlugin
+          .validationRequest(model, profileName, validations, platform)
+          .map(a => a.copy(results = a.results ++ warningResults))
       case _ =>
         Future {
           profileNotFoundWarningReport(model, profileName)
@@ -214,7 +221,9 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
   /**
     * Returns a native RDF model with the SHACL shapes graph
     */
-  override def shaclModel(validations: Seq[ValidationSpecification], functionUrls: String, messageStyle: String): RdfModel =
+  override def shaclModel(validations: Seq[ValidationSpecification],
+                          functionUrls: String,
+                          messageStyle: String): RdfModel =
     PlatformValidator.instance.shapes(validations, functionUrls)
 
 }
