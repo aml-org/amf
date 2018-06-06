@@ -1,16 +1,9 @@
 Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/inheritance/incompatibletypes/input.raml
 Profile: RAML
 Conforms? false
-Number of results: 2
+Number of results: 1
 
 Level: Violation
-
-- Source: http://raml.org/vocabularies/amf/parser#invalid-type-inheritance
-  Message: Resolution error: Incompatible types [class amf.plugins.domain.shapes.models.ScalarShape, class amf.plugins.domain.shapes.models.NodeShape]
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/inheritance/incompatibletypes/input.raml#/declarations/HomeAnimal/scalar/Dog
-  Property: http://raml.org/vocabularies/shapes#inherits
-  Position: Some(LexicalInformation([(9,4)-(11,0)]))
 
 - Source: http://raml.org/vocabularies/amf/parser#parsing-error
   Message: Can't inherit from more than one class type

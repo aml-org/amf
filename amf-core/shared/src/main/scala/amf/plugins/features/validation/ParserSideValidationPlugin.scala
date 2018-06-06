@@ -24,7 +24,7 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
     this
   }
 
-  def parserSideValidationsProfile(profile:String): ValidationProfile = {
+  def parserSideValidationsProfile(profile: String): ValidationProfile = {
     // sorting parser side validation for this profile
     val violationParserSideValidations = ParserSideValidations.validations
       .filter { v =>
@@ -72,7 +72,6 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
     enabled = true
     aggregatedReport = Map()
   }
-
 
   def withEnabledValidation(enabled: Boolean): RuntimeValidator = {
     this.enabled = enabled
@@ -128,7 +127,10 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
     * Main validation function returning an AMF validation report linking validation errors
     * for validations in the profile to domain elements in the model
     */
-  override def validate(model: BaseUnit, profileName: String, messageStyle: String): Future[AMFValidationReport] = {
+  override def validate(model: BaseUnit, profileName: String, messageStyle: String): Future[AMFValidationReport] =
+    aggregateReport(model, profileName, messageStyle)
+
+  final def aggregateReport(model: BaseUnit, profileName: String, messageStyle: String): Future[AMFValidationReport] = {
     val validations = EffectiveValidations().someEffective(parserSideValidationsProfile(profileName))
     // aggregating parser-side validations
     val results = model.parserRun match {
@@ -170,7 +172,7 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
 
   override def nestedValidation[T](merger: ValidationsMerger)(k: => T): T = {
     var oldAggregatedReport = aggregatedReport.getOrElse(merger.parserRun, Nil)
-    val oldEnabled = enabled
+    val oldEnabled          = enabled
 
     // reset
     enabled = true
@@ -187,13 +189,14 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
       enabled = oldEnabled
     }
 
-
     res
   }
 
   /**
     * Returns a native RDF model with the SHACL shapes graph
     */
-  override def shaclModel(validations: Seq[ValidationSpecification], functionUrls: String, messgeStyle: String): RdfModel =
+  override def shaclModel(validations: Seq[ValidationSpecification],
+                          functionUrls: String,
+                          messgeStyle: String): RdfModel =
     throw new Exception("SHACL Support not available")
 }
