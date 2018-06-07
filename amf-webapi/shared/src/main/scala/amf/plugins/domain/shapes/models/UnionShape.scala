@@ -23,6 +23,11 @@ case class UnionShape(override val fields: Fields, override val annotations: Ann
 
   override def copyShape(): UnionShape = UnionShape(fields.copy(), annotations.copy()).withId(id)
 
+  def isPolymorphicUnion: Boolean = {
+    anyOf.foldLeft(true) { case (acc, shape) =>
+      acc && shape.isInstanceOf[AnyShape] && shape.asInstanceOf[AnyShape].supportsInheritance
+    }
+  }
 }
 
 object UnionShape {
@@ -32,4 +37,5 @@ object UnionShape {
   def apply(ast: YPart): UnionShape = apply(Annotations(ast))
 
   def apply(annotations: Annotations): UnionShape = UnionShape(Fields(), annotations)
+
 }
