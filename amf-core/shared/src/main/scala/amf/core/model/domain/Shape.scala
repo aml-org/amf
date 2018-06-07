@@ -3,7 +3,7 @@ package amf.core.model.domain
 import java.util.UUID
 
 import amf.core.metamodel.domain.ShapeModel._
-import amf.core.model.StrField
+import amf.core.model.{BoolField, StrField}
 import amf.core.model.domain.extensions.{PropertyShape, ShapeExtension}
 import amf.core.parser.ErrorHandler
 
