@@ -118,7 +118,7 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
         println(shapesModel.toN3())
         println("\n\n=======> DATA")
         println(dataModel.toN3())
-         */
+        */
 
         ExecutionLog.log(s"SHACLValidator#validate: validating...")
         report = Some(ValidationUtil.validateModel(dataModel.model, shapesModel.model, false))

@@ -130,7 +130,7 @@
                                         "@type": [
                                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                         ],
-                                        "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                                        "http://raml.org/vocabularies/document-source-maps#declared-element": [
                                           {
                                             "http://raml.org/vocabularies/document-source-maps#element": [
                                               {
@@ -139,7 +139,7 @@
                                             ],
                                             "http://raml.org/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(8,4)-(8,8)]"
+                                                "@value": ""
                                               }
                                             ]
                                           }
@@ -166,6 +166,20 @@
                                             "http://raml.org/vocabularies/document-source-maps#value": [
                                               {
                                                 "@value": "[(7,2)-(9,0)]"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://raml.org/vocabularies/document-source-maps#type-property-lexical-info": [
+                                          {
+                                            "http://raml.org/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/scalar/A"
+                                              }
+                                            ],
+                                            "http://raml.org/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(8,4)-(8,8)]"
                                               }
                                             ]
                                           }

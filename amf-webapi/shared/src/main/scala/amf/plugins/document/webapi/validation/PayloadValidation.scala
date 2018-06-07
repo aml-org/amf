@@ -25,6 +25,7 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
     extends WebApiValidations {
 
   val profiles: ListBuffer[ValidationProfile] = ListBuffer[ValidationProfile]()
+  val validationsCache: mutable.Map[String, ValidationProfile] = mutable.Map()
 
   def validate(): Future[AMFValidationReport] = {
 
@@ -56,7 +57,7 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
   }
 
   protected def addProfileTargets(dataNode: DataNode, shape: Shape): Unit = {
-    val localProfile              = new AMFShapeValidations(shape).profile()
+    val localProfile              = profileForShape(shape, dataNode)
     val entryValidation           = localProfile.validations.head
     val entryValidationWithTarget = entryValidation.copy(targetInstance = Seq(dataNode.id))
     //val restValidations           = localProfile.validations.tail
@@ -70,6 +71,22 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
     val finalValidations = processTargets(entryValidation, dataNode, targetValidations)
 
     profiles += localProfile.copy(validations = finalValidations.values.toSeq)
+  }
+
+
+  protected def profileForShape(shape: Shape, dataNode: DataNode): ValidationProfile = {
+    if (shape.isInstanceOf[AnyShape] && shape.asInstanceOf[AnyShape].supportsInheritance) {
+      new AMFShapeValidations(shape).profile(dataNode)
+    } else {
+      validationsCache.get(shape.id) match {
+        case Some(profile) => profile
+        case None => {
+          val profile = new AMFShapeValidations(shape).profile(dataNode)
+          validationsCache.put(shape.id, profile)
+          profile
+        }
+      }
+    }
   }
 
   def matchPatternedProperty(p: PropertyConstraint, propName: String): Boolean = {
