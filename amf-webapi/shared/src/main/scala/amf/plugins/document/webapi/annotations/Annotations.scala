@@ -52,7 +52,7 @@ object FormBodyParameter extends AnnotationGraphLoader {
   }
 }
 
-case class DeclaredElement() extends SerializableAnnotation {
+case class DeclaredElement() extends SerializableAnnotation with PerpetualAnnotation {
   override val name: String = "declared-element"
 
   override val value: String = ""

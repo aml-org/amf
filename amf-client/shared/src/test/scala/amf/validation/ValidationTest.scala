@@ -5,7 +5,7 @@ import amf.common.Tests.checkDiff
 import amf.core.AMFSerializer
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{Document, Module, PayloadFragment}
-import amf.core.model.domain.{RecursiveShape, Shape}
+import amf.core.model.domain.{ObjectNode, RecursiveShape, Shape}
 import amf.core.remote.Syntax.{Json, Syntax, Yaml}
 import amf.core.remote._
 import amf.core.services.PayloadValidator
@@ -18,11 +18,7 @@ import amf.plugins.document.webapi.validation.{AMFShapeValidations, PayloadValid
 import amf.plugins.document.webapi.{RAML08Plugin, RAML10Plugin}
 import amf.plugins.domain.shapes.models.ArrayShape
 import amf.plugins.domain.webapi.models.WebApi
-import amf.plugins.features.validation.emitters.{
-  JSLibraryEmitter,
-  ValidationJSONLDEmitter,
-  ValidationReportJSONLDEmitter
-}
+import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter, ValidationReportJSONLDEmitter}
 import amf.plugins.features.validation.{ParserSideValidations, PlatformValidator}
 import org.scalatest.AsyncFunSuite
 import org.yaml.render.JsonRender
@@ -499,6 +495,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     ("payloads.raml", "H", "h_invalid.json")               -> ExpectedReport(conforms = false, 1, "Payload"),
     ("payloads.raml", "PersonData", "person_valid.yaml")   -> ExpectedReport(conforms = true, 0, "Payload"),
     ("payloads.raml", "PersonData", "person_invalid.yaml") -> ExpectedReport(conforms = false, 2, "Payload"),
+    ("payloads.raml", "CustomerData", "customer_data_valid.yaml") -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("payloads.raml", "CustomerData", "person_valid.yaml")        -> ExpectedReport(conforms = true, 0, "Payload"),
+    ("payloads.raml", "CustomerData", "person_invalid.yaml")      -> ExpectedReport(conforms = false, 2, "Payload"),
     ("test_cases.raml", "A", "test_case_a_valid.json")     -> ExpectedReport(conforms = true, 0, "Payload"),
     ("test_cases.raml", "A", "test_case_a_invalid.json")   -> ExpectedReport(conforms = false, 2, "Payload"),
     ("test_cases.raml", "A", "test_case_a2_valid.json")    -> ExpectedReport(conforms = true, 0, "Payload"),
@@ -508,7 +507,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   for {
     ((libraryFile, shapeName, payloadFile), expectedReport) <- payloadValidations
   } yield {
-    test(s"SHACL Payload Validator $payloadFile") {
+    test(s"SHACL Payload Validator $shapeName -> $payloadFile") {
       val hint = payloadFile.split("\\.").last match {
         case "json" => PayloadJsonHint
         case "yaml" => PayloadYamlHint
@@ -797,6 +796,28 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report     <- validation.validate(document, ProfileNames.RAML)
     } yield {
       assert(report.conforms)
+    }
+  }
+
+  test("Discriminator test 1") {
+    for {
+      validation <- Validation(platform)
+      library    <- AMFCompiler(validationsPath + "data/discriminator1.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 3)
+    }
+  }
+
+  test("Discriminator test 2") {
+    for {
+      validation <- Validation(platform)
+      library    <- AMFCompiler(validationsPath + "data/discriminator2.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 1)
     }
   }
 
@@ -1181,7 +1202,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(A.items.isInstanceOf[RecursiveShape])
       assert(A.items.name.is("items"))
       val AOrig   = doc.asInstanceOf[Module].declares.head.asInstanceOf[ArrayShape]
-      val profile = new AMFShapeValidations(AOrig).profile()
+      val profile = new AMFShapeValidations(AOrig).profile(ObjectNode())
       assert(profile != null)
     }
   }
@@ -1209,7 +1230,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       val A: ArrayShape = doc.asInstanceOf[Module].declares.head.asInstanceOf[ArrayShape]
       new ValidationResolutionPipeline(ProfileNames.RAML).resolve(Module().withDeclares(Seq(A)))
-      val profile = new AMFShapeValidations(A).profile()
+      val profile = new AMFShapeValidations(A).profile(ObjectNode())
       assert(profile.violationLevel.size == 1)
       assert(
         profile.violationLevel.head == "file://amf-client/shared/src/test/resources/production/recursive2.raml#/declarations/array/A_validation")
