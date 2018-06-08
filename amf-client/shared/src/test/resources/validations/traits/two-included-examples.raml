@@ -1,0 +1,69 @@
+#%RAML 1.0
+ 
+title: Audit
+types:
+  genericResponse:
+    type: object
+    properties:
+      status:
+        type: string
+        required: true
+      message:
+        type: string
+        required: true
+  errorType:
+    type: object
+    properties:
+      errorCode: string
+      errorDateTime: string
+      errorMessage: string
+      errorDescription: string
+    
+traits:
+  responseTrait:
+      responses:
+        200:
+          body:
+            application/json:
+              type: <<responseType>>
+              example: <<exampleValue>>
+        400:
+          body:
+            application/json:
+              type: <<errorType>>
+              example: <<errorExample>>
+        404:
+          body:
+            application/json:
+              type: <<errorType>>
+              example: <<errorExample>>
+        405:
+          body:
+            application/json:
+              type: <<errorType>>
+              example: <<errorExample>>
+        415:
+          body:
+            application/json:
+              type: <<errorType>>
+              example: <<errorExample>>
+        500:
+          body:
+            application/json:
+              type: <<errorType>>
+              example: <<errorExample>>
+        502:
+          body:
+            application/json:
+              type: <<errorType>>
+              example: <<errorExample>>
+
+
+/apps:
+    put:
+      is:
+        - responseTrait:
+           responseType: genericResponse
+           exampleValue: !include examples/updateApp-response-example.raml
+           errorType: errorType
+           errorExample: !include examples/error-example.raml
