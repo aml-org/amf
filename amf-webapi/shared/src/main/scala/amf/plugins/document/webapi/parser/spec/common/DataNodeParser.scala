@@ -190,13 +190,13 @@ case class DataNodeParser(node: YNode,
     */
   protected def parseLink(linkText: String): LinkNode = {
     if (linkText.contains(":")) {
-      LinkNode(linkText, linkText).withId(parent.getOrElse("") + "/included")
+      LinkNode(linkText, linkText).withId(linkText.normalizeUrl)
     } else {
       val localUrl  = parent.getOrElse("#").split("#").head
       val leftLink  = if (localUrl.endsWith("/")) localUrl else s"${baseUrl(localUrl)}/"
       val rightLink = if (linkText.startsWith("/")) linkText.drop(1) else linkText
       val finalLink = normalizeUrl(leftLink + rightLink)
-      LinkNode(linkText, finalLink).withId(parent.getOrElse("") + "/included")
+      LinkNode(linkText, finalLink).withId(finalLink)
     }
   }
 
