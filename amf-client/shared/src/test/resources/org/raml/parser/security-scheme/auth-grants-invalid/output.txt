@@ -8,6 +8,6 @@ Level: Violation
 - Source: http://raml.org/vocabularies/amf/parser#Settings-authorizationGrant-pattern
   Message: Invalid authorization grant. The options are: authorization_code, password, client_credentials, implicit or any valid absolut URI
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/security-scheme/auth-grants-invalid/input.raml#/declarations/oauth_2_0/settings/oauth2
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/security-scheme/auth-grants-invalid/input.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2
   Property: http://raml.org/vocabularies/security#authorizationGrant
   Position: Some(LexicalInformation([(36,10)-(37,0)]))

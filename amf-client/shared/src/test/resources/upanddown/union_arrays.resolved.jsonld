@@ -33,7 +33,7 @@
     ],
     "doc:declares": [
       {
-        "@id": "#/declarations/any/Product",
+        "@id": "#/declarations/types/any/Product",
         "@type": [
           "raml-shapes:AnyShape",
           "shacl:Shape",
@@ -46,16 +46,16 @@
         ],
         "smaps": {
           "declared-element": {
-            "#/declarations/any/Product": ""
+            "#/declarations/types/any/Product": ""
           },
           "lexical": {
             "shacl:name": "[(4,2)-(4,9)]",
-            "#/declarations/any/Product": "[(4,2)-(5,0)]"
+            "#/declarations/types/any/Product": "[(4,2)-(5,0)]"
           }
         }
       },
       {
-        "@id": "#/declarations/PropertyArray",
+        "@id": "#/declarations/types/PropertyArray",
         "@type": [
           "shacl:NodeShape",
           "shacl:Shape",
@@ -69,7 +69,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#/declarations/PropertyArray/property/complex",
+            "@id": "#/declarations/types/PropertyArray/property/complex",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -82,7 +82,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#/declarations/PropertyArray/property/complex/array/complex",
+                "@id": "#/declarations/types/PropertyArray/property/complex/array/complex",
                 "@type": [
                   "raml-shapes:ArrayShape",
                   "shacl:Shape",
@@ -91,7 +91,7 @@
                 ],
                 "raml-shapes:items": [
                   {
-                    "@id": "#/declarations/PropertyArray/property/complex/array/complex/union/default-union",
+                    "@id": "#/declarations/types/PropertyArray/property/complex/array/complex/union/default-union",
                     "@type": [
                       "raml-shapes:UnionShape",
                       "shacl:Shape",
@@ -99,7 +99,7 @@
                     ],
                     "raml-shapes:anyOf": [
                       {
-                        "@id": "#/declarations/PropertyArray/property/complex/array/complex/items/scalar/scalar-expression-0",
+                        "@id": "#/declarations/types/PropertyArray/property/complex/array/complex/items/scalar/scalar-expression-0",
                         "@type": [
                           "raml-shapes:ScalarShape",
                           "shacl:Shape",
@@ -113,7 +113,7 @@
                         ]
                       },
                       {
-                        "@id": "#/declarations/PropertyArray/property/complex/array/complex/items/scalar/scalar-expression-2",
+                        "@id": "#/declarations/types/PropertyArray/property/complex/array/complex/items/scalar/scalar-expression-2",
                         "@type": [
                           "raml-shapes:ScalarShape",
                           "shacl:Shape",
@@ -127,7 +127,7 @@
                         ]
                       },
                       {
-                        "@id": "#/declarations/any/Product",
+                        "@id": "#/declarations/types/any/Product",
                         "@type": [
                           "raml-shapes:AnyShape",
                           "shacl:Shape",
@@ -140,11 +140,11 @@
                         ],
                         "smaps": {
                           "declared-element": {
-                            "#/declarations/any/Product": ""
+                            "#/declarations/types/any/Product": ""
                           },
                           "lexical": {
                             "shacl:name": "[(4,2)-(4,9)]",
-                            "#/declarations/any/Product": "[(4,2)-(5,0)]"
+                            "#/declarations/types/any/Product": "[(4,2)-(5,0)]"
                           }
                         }
                       }
@@ -158,10 +158,10 @@
                 ],
                 "smaps": {
                   "type-property-lexical-info": {
-                    "#/declarations/PropertyArray/property/complex/array/complex": "[(8,8)-(8,12)]"
+                    "#/declarations/types/PropertyArray/property/complex/array/complex": "[(8,8)-(8,12)]"
                   },
                   "lexical": {
-                    "#/declarations/PropertyArray/property/complex/array/complex": "[(7,6)-(10,0)]"
+                    "#/declarations/types/PropertyArray/property/complex/array/complex": "[(7,6)-(10,0)]"
                   }
                 }
               }
@@ -178,7 +178,7 @@
             ],
             "smaps": {
               "lexical": {
-                "#/declarations/PropertyArray/property/complex": "[(7,6)-(10,0)]"
+                "#/declarations/types/PropertyArray/property/complex": "[(7,6)-(10,0)]"
               }
             }
           }
@@ -190,16 +190,16 @@
         ],
         "smaps": {
           "declared-element": {
-            "#/declarations/PropertyArray": ""
+            "#/declarations/types/PropertyArray": ""
           },
           "lexical": {
             "shacl:name": "[(5,2)-(5,15)]",
-            "#/declarations/PropertyArray": "[(5,2)-(10,0)]"
+            "#/declarations/types/PropertyArray": "[(5,2)-(10,0)]"
           }
         }
       },
       {
-        "@id": "#/declarations/PropertyNoArray",
+        "@id": "#/declarations/types/PropertyNoArray",
         "@type": [
           "shacl:NodeShape",
           "shacl:Shape",
@@ -213,7 +213,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#/declarations/PropertyNoArray/property/complex",
+            "@id": "#/declarations/types/PropertyNoArray/property/complex",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -226,7 +226,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#/declarations/PropertyNoArray/property/complex/union/default-union",
+                "@id": "#/declarations/types/PropertyNoArray/property/complex/union/default-union",
                 "@type": [
                   "raml-shapes:UnionShape",
                   "shacl:Shape",
@@ -234,7 +234,7 @@
                 ],
                 "raml-shapes:anyOf": [
                   {
-                    "@id": "#/declarations/PropertyNoArray/property/complex/union/default-union/scalar/scalar-expression-0",
+                    "@id": "#/declarations/types/PropertyNoArray/property/complex/union/default-union/scalar/scalar-expression-0",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "shacl:Shape",
@@ -248,7 +248,7 @@
                     ]
                   },
                   {
-                    "@id": "#/declarations/PropertyNoArray/property/complex/union/default-union/scalar/scalar-expression-2",
+                    "@id": "#/declarations/types/PropertyNoArray/property/complex/union/default-union/scalar/scalar-expression-2",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "shacl:Shape",
@@ -262,7 +262,7 @@
                     ]
                   },
                   {
-                    "@id": "#/declarations/any/Product",
+                    "@id": "#/declarations/types/any/Product",
                     "@type": [
                       "raml-shapes:AnyShape",
                       "shacl:Shape",
@@ -275,24 +275,24 @@
                     ],
                     "smaps": {
                       "declared-element": {
-                        "#/declarations/any/Product": ""
+                        "#/declarations/types/any/Product": ""
                       },
                       "lexical": {
                         "shacl:name": "[(4,2)-(4,9)]",
-                        "#/declarations/any/Product": "[(4,2)-(5,0)]"
+                        "#/declarations/types/any/Product": "[(4,2)-(5,0)]"
                       }
                     }
                   }
                 ],
                 "smaps": {
                   "inherited-shapes": {
-                    "#/declarations/PropertyNoArray/property/complex/union/default-union": "file://amf-client/shared/src/test/resources/upanddown/union_arrays.raml#/declarations/PropertyNoArray/property/complex/union/default-union/union/default-union"
+                    "#/declarations/types/PropertyNoArray/property/complex/union/default-union": "file://amf-client/shared/src/test/resources/upanddown/union_arrays.raml#/declarations/types/PropertyNoArray/property/complex/union/default-union/union/default-union"
                   },
                   "lexical": {
-                    "#/declarations/PropertyNoArray/property/complex/union/default-union": "[(13,0)-(13,39)]"
+                    "#/declarations/types/PropertyNoArray/property/complex/union/default-union": "[(13,0)-(13,39)]"
                   },
                   "type-property-lexical-info": {
-                    "#/declarations/PropertyNoArray/property/complex/union/default-union": "[(13,8)-(13,12)]"
+                    "#/declarations/types/PropertyNoArray/property/complex/union/default-union": "[(13,8)-(13,12)]"
                   }
                 }
               }
@@ -309,7 +309,7 @@
             ],
             "smaps": {
               "lexical": {
-                "#/declarations/PropertyNoArray/property/complex": "[(12,6)-(13,39)]"
+                "#/declarations/types/PropertyNoArray/property/complex": "[(12,6)-(13,39)]"
               }
             }
           }
@@ -321,11 +321,11 @@
         ],
         "smaps": {
           "declared-element": {
-            "#/declarations/PropertyNoArray": ""
+            "#/declarations/types/PropertyNoArray": ""
           },
           "lexical": {
             "shacl:name": "[(10,2)-(10,17)]",
-            "#/declarations/PropertyNoArray": "[(10,2)-(13,39)]"
+            "#/declarations/types/PropertyNoArray": "[(10,2)-(13,39)]"
           }
         }
       }

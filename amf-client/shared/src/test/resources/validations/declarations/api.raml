@@ -1,0 +1,48 @@
+#%RAML 0.8
+title: blabla
+version: v1
+baseUri: https://api.asdasd.com
+schemas:
+  - metrics: !include schemas/metricNames.json
+#  - metrics: |
+#      {
+#        "required" : true ,
+#        "$schema" : "http://json-schema.org/draft-03/schema" ,
+#        "type" : "object" ,
+#        "properties" : {
+#          "metric" : {
+#            "type" : "object" ,
+#            "required" : false ,
+#            "properties" : {
+#              "name" : {
+#                "type" : "string" ,
+#                "required" : false
+#              } ,
+#              "values" : {
+#                "type" : "array" ,
+#                "required" : false ,
+#                "items" :
+#                  {
+#                    "type" : "string"
+#                  }
+#              }
+#            }
+#          }
+#        }
+#      }
+traits:
+  - metrics:
+      description: Return a list of known metrics and their value names for the given resource.
+      queryParameters:
+        name:
+          description: Filter metrics by name
+        page:
+          description: Pagination index
+          type: integer
+      responses:
+        200:
+          body:
+
+/applications:
+    get:
+      is: [ metrics ]

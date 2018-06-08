@@ -72,7 +72,7 @@
     ],
     "http://raml.org/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin",
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/types/Admin",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -86,7 +86,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin/property/clearanceLevel",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/types/Admin/property/clearanceLevel",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -99,7 +99,7 @@
             ],
             "http://raml.org/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin/property/clearanceLevel/scalar/clearanceLevel",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/types/Admin/property/clearanceLevel/scalar/clearanceLevel",
                 "@type": [
                   "http://raml.org/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -118,7 +118,7 @@
                 ],
                 "http://www.w3.org/ns/shacl#in": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin/property/clearanceLevel/scalar/clearanceLevel/list",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/types/Admin/property/clearanceLevel/scalar/clearanceLevel/list",
                     "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                     "http://www.w3.org/2000/01/rdf-schema#_1": [
                       {
@@ -139,7 +139,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin/property/clearanceLevel/scalar/clearanceLevel/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/types/Admin/property/clearanceLevel/scalar/clearanceLevel/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -147,7 +147,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin/property/clearanceLevel/scalar/clearanceLevel"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/types/Admin/property/clearanceLevel/scalar/clearanceLevel"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -173,7 +173,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin/property/clearanceLevel/scalar/clearanceLevel"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/types/Admin/property/clearanceLevel/scalar/clearanceLevel"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -199,7 +199,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin/property/clearanceLevel/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/types/Admin/property/clearanceLevel/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -207,7 +207,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin/property/clearanceLevel"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/types/Admin/property/clearanceLevel"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -228,7 +228,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/types/Admin/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -236,7 +236,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/types/Admin"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -262,7 +262,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/types/Admin"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -288,7 +288,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/types/Admin"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -302,7 +302,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/AlertableAdmin",
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/types/AlertableAdmin",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -321,7 +321,7 @@
         ],
         "http://raml.org/vocabularies/shapes#inherits": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/types/Admin",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -330,7 +330,7 @@
             ],
             "http://raml.org/vocabularies/document#link-target": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin"
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/types/Admin"
               }
             ],
             "http://raml.org/vocabularies/document#link-label": [
@@ -345,7 +345,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/types/Admin/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -353,7 +353,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/Admin"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/types/Admin"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -369,7 +369,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/AlertableAdmin/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/types/AlertableAdmin/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -377,7 +377,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/AlertableAdmin"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/types/AlertableAdmin"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -403,7 +403,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/AlertableAdmin"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/types/AlertableAdmin"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -429,7 +429,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/AlertableAdmin"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/enum-inheritance.raml#/declarations/types/AlertableAdmin"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [

@@ -8,6 +8,6 @@ Level: Violation
 - Source: http://raml.org/vocabularies/amf/parser#SecurityScheme-type-minCount
   Message: Type is mandatory in a Security Scheme Object
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/security-scheme/required-type-missing-and-settings/input.raml#/declarations/oauth_2_0
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/security-scheme/required-type-missing-and-settings/input.raml#/declarations/securitySchemes/oauth_2_0
   Property: http://raml.org/vocabularies/security#type
   Position: Some(LexicalInformation([(5,2)-(12,0)]))

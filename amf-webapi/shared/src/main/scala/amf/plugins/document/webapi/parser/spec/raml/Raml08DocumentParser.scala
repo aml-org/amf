@@ -26,7 +26,7 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
   override protected def parseDeclarations(root: Root, map: YMap): Unit = {
 
     val parent = root.location + "#/declarations"
-    parseSchemaDeclarations(map, parent)
+    parseSchemaDeclarations(map, parent + "/schemas")
     parseAbstractDeclarations(
       "resourceTypes",
       entry =>
@@ -34,17 +34,19 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
           .withName(entry.key.as[String])
           .withId(parent + s"/resourceTypes/${entry.key.as[String].urlComponentEncoded}"),
       map,
-      parent
+      parent + "/resourceTypes"
     )
-    parseAbstractDeclarations("traits",
-                              entry =>
-                                Trait(entry)
-                                  .withName(entry.key.as[String])
-                                  .withId(parent + s"/traits/${entry.key.as[String].urlComponentEncoded}"),
-                              map,
-                              parent)
+    parseAbstractDeclarations(
+      "traits",
+      entry =>
+        Trait(entry)
+          .withName(entry.key.as[String])
+          .withId(parent + s"/traits/${entry.key.as[String].urlComponentEncoded}"),
+      map,
+      parent + "/traits"
+    )
 
-    parseSecuritySchemeDeclarations(map, parent)
+    parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
 
   }
 
@@ -57,7 +59,7 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
       val entries = entry.value.tagType match {
         case YType.Seq => entry.value.as[Seq[YMap]].flatMap(m => m.entries)
         case YType.Map => entry.value.as[YMap].entries
-        case t         =>
+        case t =>
           ctx.violation(parent, s"Invalid node $t in abstract declaration", entry.value)
           Nil
       }
