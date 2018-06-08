@@ -72,7 +72,7 @@
     ],
     "http://raml.org/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer",
+        "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -86,7 +86,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/name",
+            "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -99,7 +99,7 @@
             ],
             "http://raml.org/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/name/scalar/name",
+                "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/name/scalar/name",
                 "@type": [
                   "http://raml.org/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -118,7 +118,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/name/scalar/name/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/name/scalar/name/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -126,7 +126,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/name/scalar/name"
+                            "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/name/scalar/name"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -152,7 +152,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/name/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/name/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -160,7 +160,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/name"
+                        "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/name"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -174,7 +174,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/lastName",
+            "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/lastName",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -187,7 +187,7 @@
             ],
             "http://raml.org/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/lastName/scalar/lastName",
+                "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/lastName/scalar/lastName",
                 "@type": [
                   "http://raml.org/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -206,7 +206,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/lastName/scalar/lastName/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/lastName/scalar/lastName/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -214,7 +214,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/lastName/scalar/lastName"
+                            "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/lastName/scalar/lastName"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -240,7 +240,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/lastName/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/lastName/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -248,7 +248,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/lastName"
+                        "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/lastName"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -262,7 +262,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/address",
+            "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/address",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -275,7 +275,7 @@
             ],
             "http://raml.org/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/address/address",
+                "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/address/address",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -289,7 +289,7 @@
                 ],
                 "http://www.w3.org/ns/shacl#property": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/address/address/property/street",
+                    "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/address/address/property/street",
                     "@type": [
                       "http://www.w3.org/ns/shacl#PropertyShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -302,7 +302,7 @@
                     ],
                     "http://raml.org/vocabularies/shapes#range": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/address/address/property/street/scalar/street",
+                        "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/address/address/property/street/scalar/street",
                         "@type": [
                           "http://raml.org/vocabularies/shapes#ScalarShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -321,7 +321,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/address/address/property/street/scalar/street/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/address/address/property/street/scalar/street/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -329,7 +329,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/address/address/property/street/scalar/street"
+                                    "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/address/address/property/street/scalar/street"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -355,7 +355,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/address/address/property/street/source-map",
+                        "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/address/address/property/street/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -363,7 +363,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/address/address/property/street"
+                                "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/address/address/property/street"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -377,7 +377,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/address/address/property/number",
+                    "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/address/address/property/number",
                     "@type": [
                       "http://www.w3.org/ns/shacl#PropertyShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -390,7 +390,7 @@
                     ],
                     "http://raml.org/vocabularies/shapes#range": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/address/address/property/number/scalar/number",
+                        "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/address/address/property/number/scalar/number",
                         "@type": [
                           "http://raml.org/vocabularies/shapes#ScalarShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -409,7 +409,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/address/address/property/number/scalar/number/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/address/address/property/number/scalar/number/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -417,7 +417,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/address/address/property/number/scalar/number"
+                                    "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/address/address/property/number/scalar/number"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -443,7 +443,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/address/address/property/number/source-map",
+                        "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/address/address/property/number/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -451,7 +451,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/address/address/property/number"
+                                "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/address/address/property/number"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -472,7 +472,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/address/address/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/address/address/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -492,7 +492,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/address/address"
+                            "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/address/address"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -518,7 +518,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/address/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/address/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -526,7 +526,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/property/address"
+                        "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/property/address"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -547,7 +547,7 @@
         ],
         "http://raml.org/vocabularies/document#examples": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/example/default-example",
+            "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/example/default-example",
             "@type": [
               "http://raml.org/vocabularies/document#Example",
               "http://raml.org/vocabularies/document#DomainElement"
@@ -564,7 +564,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/example/default-example/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/example/default-example/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -586,7 +586,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/example/default-example"
+                        "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/example/default-example"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -602,7 +602,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -610,7 +610,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer"
+                    "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -636,7 +636,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/Customer"
+                    "@value": "file://amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/api.raml#/declarations/types/Customer"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [

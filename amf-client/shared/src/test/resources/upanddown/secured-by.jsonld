@@ -152,7 +152,7 @@
                     ],
                     "http://raml.org/vocabularies/security#scheme": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0",
                         "@type": [
                           "http://raml.org/vocabularies/security#SecurityScheme",
                           "http://raml.org/vocabularies/document#DomainElement"
@@ -174,7 +174,7 @@
                         ],
                         "http://raml.org/vocabularies/http#header": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/Authorization",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/Authorization",
                             "@type": [
                               "http://raml.org/vocabularies/http#Parameter",
                               "http://raml.org/vocabularies/document#DomainElement"
@@ -206,7 +206,7 @@
                             ],
                             "http://raml.org/vocabularies/http#schema": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/Authorization/scalar/schema",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/Authorization/scalar/schema",
                                 "@type": [
                                   "http://raml.org/vocabularies/shapes#ScalarShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -230,7 +230,7 @@
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/Authorization/scalar/schema/source-map",
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/Authorization/scalar/schema/source-map",
                                     "@type": [
                                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -238,7 +238,7 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/Authorization/scalar/schema"
+                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/Authorization/scalar/schema"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -264,7 +264,7 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/Authorization/scalar/schema"
+                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/Authorization/scalar/schema"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -292,7 +292,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/Authorization/source-map",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/Authorization/source-map",
                                 "@type": [
                                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -312,7 +312,7 @@
                                   {
                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/Authorization"
+                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/Authorization"
                                       }
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -340,7 +340,7 @@
                         ],
                         "http://raml.org/vocabularies/http#parameter": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/access_token",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/access_token",
                             "@type": [
                               "http://raml.org/vocabularies/http#Parameter",
                               "http://raml.org/vocabularies/document#DomainElement"
@@ -372,7 +372,7 @@
                             ],
                             "http://raml.org/vocabularies/http#schema": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/access_token/scalar/schema",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/access_token/scalar/schema",
                                 "@type": [
                                   "http://raml.org/vocabularies/shapes#ScalarShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -396,7 +396,7 @@
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/access_token/scalar/schema/source-map",
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/access_token/scalar/schema/source-map",
                                     "@type": [
                                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -404,7 +404,7 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/access_token/scalar/schema"
+                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/access_token/scalar/schema"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -430,7 +430,7 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/access_token/scalar/schema"
+                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/access_token/scalar/schema"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -446,7 +446,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/access_token/source-map",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/access_token/source-map",
                                 "@type": [
                                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -466,7 +466,7 @@
                                   {
                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/access_token"
+                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/access_token"
                                       }
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -494,7 +494,7 @@
                         ],
                         "http://www.w3.org/ns/hydra/core#response": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401",
                             "@type": [
                               "http://raml.org/vocabularies/http#Response",
                               "http://raml.org/vocabularies/document#DomainElement"
@@ -516,7 +516,7 @@
                             ],
                             "http://raml.org/vocabularies/http#payload": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson",
                                 "@type": [
                                   "http://raml.org/vocabularies/http#Payload",
                                   "http://raml.org/vocabularies/document#DomainElement"
@@ -528,7 +528,7 @@
                                 ],
                                 "http://raml.org/vocabularies/http#schema": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/schema",
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/schema",
                                     "@type": [
                                       "http://www.w3.org/ns/shacl#NodeShape",
                                       "http://www.w3.org/ns/shacl#Shape",
@@ -542,7 +542,7 @@
                                     ],
                                     "http://www.w3.org/ns/shacl#property": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/schema/property/merge",
+                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/schema/property/merge",
                                         "@type": [
                                           "http://www.w3.org/ns/shacl#PropertyShape",
                                           "http://www.w3.org/ns/shacl#Shape",
@@ -555,7 +555,7 @@
                                         ],
                                         "http://raml.org/vocabularies/shapes#range": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/schema/property/merge/scalar/merge",
+                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/schema/property/merge/scalar/merge",
                                             "@type": [
                                               "http://raml.org/vocabularies/shapes#ScalarShape",
                                               "http://www.w3.org/ns/shacl#Shape",
@@ -574,7 +574,7 @@
                                             ],
                                             "http://raml.org/vocabularies/document-source-maps#sources": [
                                               {
-                                                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/schema/property/merge/scalar/merge/source-map",
+                                                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/schema/property/merge/scalar/merge/source-map",
                                                 "@type": [
                                                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                                 ],
@@ -582,7 +582,7 @@
                                                   {
                                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                                       {
-                                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/schema/property/merge/scalar/merge"
+                                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/schema/property/merge/scalar/merge"
                                                       }
                                                     ],
                                                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -608,7 +608,7 @@
                                                   {
                                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                                       {
-                                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/schema/property/merge/scalar/merge"
+                                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/schema/property/merge/scalar/merge"
                                                       }
                                                     ],
                                                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -634,7 +634,7 @@
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#sources": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/schema/property/merge/source-map",
+                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/schema/property/merge/source-map",
                                             "@type": [
                                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                             ],
@@ -642,7 +642,7 @@
                                               {
                                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                                   {
-                                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/schema/property/merge"
+                                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/schema/property/merge"
                                                   }
                                                 ],
                                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -663,7 +663,7 @@
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/schema/source-map",
+                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/schema/source-map",
                                         "@type": [
                                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                         ],
@@ -671,7 +671,7 @@
                                           {
                                             "http://raml.org/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/schema"
+                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/schema"
                                               }
                                             ],
                                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -697,7 +697,7 @@
                                           {
                                             "http://raml.org/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/schema"
+                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/schema"
                                               }
                                             ],
                                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -713,7 +713,7 @@
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/source-map",
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/source-map",
                                     "@type": [
                                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -721,7 +721,7 @@
                                       {
                                         "http://raml.org/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson"
+                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson"
                                           }
                                         ],
                                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -737,7 +737,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/source-map",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/source-map",
                                 "@type": [
                                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -757,7 +757,7 @@
                                   {
                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401"
+                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401"
                                       }
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -785,7 +785,7 @@
                         ],
                         "http://raml.org/vocabularies/security#settings": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/settings/oauth1",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/settings/oauth1",
                             "@type": [
                               "http://raml.org/vocabularies/security#OAuth1Settings",
                               "http://raml.org/vocabularies/security#Settings",
@@ -816,7 +816,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/settings/oauth1/source-map",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/settings/oauth1/source-map",
                                 "@type": [
                                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -848,7 +848,7 @@
                                   {
                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/settings/oauth1"
+                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/settings/oauth1"
                                       }
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -888,7 +888,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -896,7 +896,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0"
+                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -958,7 +958,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0"
+                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1741,7 +1741,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0",
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0",
         "@type": [
           "http://raml.org/vocabularies/security#SecurityScheme",
           "http://raml.org/vocabularies/document#DomainElement"
@@ -1763,7 +1763,7 @@
         ],
         "http://raml.org/vocabularies/http#header": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/Authorization",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/Authorization",
             "@type": [
               "http://raml.org/vocabularies/http#Parameter",
               "http://raml.org/vocabularies/document#DomainElement"
@@ -1795,7 +1795,7 @@
             ],
             "http://raml.org/vocabularies/http#schema": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/Authorization/scalar/schema",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/Authorization/scalar/schema",
                 "@type": [
                   "http://raml.org/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -1819,7 +1819,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/Authorization/scalar/schema/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/Authorization/scalar/schema/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -1827,7 +1827,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/Authorization/scalar/schema"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/Authorization/scalar/schema"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1853,7 +1853,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/Authorization/scalar/schema"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/Authorization/scalar/schema"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1881,7 +1881,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/Authorization/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/Authorization/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1901,7 +1901,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/Authorization"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/Authorization"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -1929,7 +1929,7 @@
         ],
         "http://raml.org/vocabularies/http#parameter": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/access_token",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/access_token",
             "@type": [
               "http://raml.org/vocabularies/http#Parameter",
               "http://raml.org/vocabularies/document#DomainElement"
@@ -1961,7 +1961,7 @@
             ],
             "http://raml.org/vocabularies/http#schema": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/access_token/scalar/schema",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/access_token/scalar/schema",
                 "@type": [
                   "http://raml.org/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -1985,7 +1985,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/access_token/scalar/schema/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/access_token/scalar/schema/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -1993,7 +1993,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/access_token/scalar/schema"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/access_token/scalar/schema"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2019,7 +2019,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/access_token/scalar/schema"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/access_token/scalar/schema"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2035,7 +2035,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/access_token/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/access_token/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -2055,7 +2055,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/parameter/access_token"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/parameter/access_token"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2083,7 +2083,7 @@
         ],
         "http://www.w3.org/ns/hydra/core#response": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401",
             "@type": [
               "http://raml.org/vocabularies/http#Response",
               "http://raml.org/vocabularies/document#DomainElement"
@@ -2105,7 +2105,7 @@
             ],
             "http://raml.org/vocabularies/http#payload": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson",
                 "@type": [
                   "http://raml.org/vocabularies/http#Payload",
                   "http://raml.org/vocabularies/document#DomainElement"
@@ -2117,7 +2117,7 @@
                 ],
                 "http://raml.org/vocabularies/http#schema": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/schema",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/schema",
                     "@type": [
                       "http://www.w3.org/ns/shacl#NodeShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -2131,7 +2131,7 @@
                     ],
                     "http://www.w3.org/ns/shacl#property": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/schema/property/merge",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/schema/property/merge",
                         "@type": [
                           "http://www.w3.org/ns/shacl#PropertyShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -2144,7 +2144,7 @@
                         ],
                         "http://raml.org/vocabularies/shapes#range": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/schema/property/merge/scalar/merge",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/schema/property/merge/scalar/merge",
                             "@type": [
                               "http://raml.org/vocabularies/shapes#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -2163,7 +2163,7 @@
                             ],
                             "http://raml.org/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/schema/property/merge/scalar/merge/source-map",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/schema/property/merge/scalar/merge/source-map",
                                 "@type": [
                                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -2171,7 +2171,7 @@
                                   {
                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/schema/property/merge/scalar/merge"
+                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/schema/property/merge/scalar/merge"
                                       }
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2197,7 +2197,7 @@
                                   {
                                     "http://raml.org/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/schema/property/merge/scalar/merge"
+                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/schema/property/merge/scalar/merge"
                                       }
                                     ],
                                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2223,7 +2223,7 @@
                         ],
                         "http://raml.org/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/schema/property/merge/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/schema/property/merge/source-map",
                             "@type": [
                               "http://raml.org/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -2231,7 +2231,7 @@
                               {
                                 "http://raml.org/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/schema/property/merge"
+                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/schema/property/merge"
                                   }
                                 ],
                                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2252,7 +2252,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/schema/source-map",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/schema/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -2260,7 +2260,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/schema"
+                                "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/schema"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2286,7 +2286,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/schema"
+                                "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/schema"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2302,7 +2302,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -2310,7 +2310,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/application%2Fjson"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/application%2Fjson"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2326,7 +2326,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -2346,7 +2346,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/401"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/401"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2374,7 +2374,7 @@
         ],
         "http://raml.org/vocabularies/security#settings": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/settings/oauth1",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/settings/oauth1",
             "@type": [
               "http://raml.org/vocabularies/security#OAuth1Settings",
               "http://raml.org/vocabularies/security#Settings",
@@ -2405,7 +2405,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/settings/oauth1/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/settings/oauth1/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -2437,7 +2437,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/settings/oauth1"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/settings/oauth1"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2477,7 +2477,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -2485,7 +2485,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -2547,7 +2547,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/oauth_1_0"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/secured-by.raml#/declarations/securitySchemes/oauth_1_0"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [

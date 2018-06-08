@@ -1237,7 +1237,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       val profile = new AMFShapeValidations(A).profile(ObjectNode())
       assert(profile.violationLevel.size == 1)
       assert(
-        profile.violationLevel.head == "file://amf-client/shared/src/test/resources/production/recursive2.raml#/declarations/array/A_validation")
+        profile.violationLevel.head == "file://amf-client/shared/src/test/resources/production/recursive2.raml#/declarations/types/array/A_validation")
     }
   }
 
@@ -2935,6 +2935,16 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       model <- AMFCompiler(validationsPath + "traits/two-included-examples.raml", platform, RamlYamlHint, validation)
         .build()
       report <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
+  test("Test different declarations with same name") {
+    for {
+      validation <- Validation(platform)
+      model      <- AMFCompiler(validationsPath + "declarations/api.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML08)
     } yield {
       assert(report.conforms)
     }

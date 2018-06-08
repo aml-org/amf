@@ -134,7 +134,7 @@
     ],
     "http://raml.org/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/base",
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/base",
         "@type": [
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
           "http://raml.org/vocabularies/document#DomainProperty",
@@ -142,7 +142,7 @@
         ],
         "http://raml.org/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/base/union/base",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/base/union/base",
             "@type": [
               "http://raml.org/vocabularies/shapes#UnionShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -150,7 +150,7 @@
             ],
             "http://raml.org/vocabularies/shapes#anyOf": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/base/union/base/scalar/",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/base/union/base/scalar/",
                 "@type": [
                   "http://raml.org/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -169,7 +169,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/base/union/base/scalar/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/base/union/base/scalar/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -177,7 +177,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/base/union/base/scalar/"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/base/union/base/scalar/"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -191,7 +191,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/base/union/base/nil/default-nil",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/base/union/base/nil/default-nil",
                 "@type": [
                   "http://raml.org/vocabularies/shapes#NilShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -213,7 +213,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/base/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/base/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -235,7 +235,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/base"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/base"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -249,7 +249,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/ignored",
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/ignored",
         "@type": [
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
           "http://raml.org/vocabularies/document#DomainProperty",
@@ -262,7 +262,7 @@
         ],
         "http://raml.org/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/ignored/union/schema",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/ignored/union/schema",
             "@type": [
               "http://raml.org/vocabularies/shapes#UnionShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -270,7 +270,7 @@
             ],
             "http://raml.org/vocabularies/shapes#anyOf": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/ignored/union/schema/scalar/",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/ignored/union/schema/scalar/",
                 "@type": [
                   "http://raml.org/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -294,7 +294,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/ignored/union/schema/scalar/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/ignored/union/schema/scalar/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -302,7 +302,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/ignored/union/schema/scalar/"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/ignored/union/schema/scalar/"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -328,7 +328,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/ignored/union/schema/scalar/"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/ignored/union/schema/scalar/"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -354,7 +354,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/ignored/union/schema/nil/default-nil",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/ignored/union/schema/nil/default-nil",
                 "@type": [
                   "http://raml.org/vocabularies/shapes#NilShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -376,7 +376,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/ignored/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/ignored/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -384,7 +384,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/ignored"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/ignored"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -422,7 +422,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/ignored"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/ignored"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -448,7 +448,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/operationName",
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/operationName",
         "@type": [
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
           "http://raml.org/vocabularies/document#DomainProperty",
@@ -461,7 +461,7 @@
         ],
         "http://raml.org/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/operationName/scalar/schema",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/operationName/scalar/schema",
             "@type": [
               "http://raml.org/vocabularies/shapes#ScalarShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -485,7 +485,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/operationName/scalar/schema/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/operationName/scalar/schema/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -493,7 +493,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/operationName/scalar/schema"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/operationName/scalar/schema"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -519,7 +519,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/operationName/scalar/schema"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/operationName/scalar/schema"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -552,7 +552,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/operationName/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/operationName/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -560,7 +560,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/operationName"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/operationName"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -598,7 +598,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/operationName"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/operationName"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -624,7 +624,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/parameterName",
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/parameterName",
         "@type": [
           "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
           "http://raml.org/vocabularies/document#DomainProperty",
@@ -637,7 +637,7 @@
         ],
         "http://raml.org/vocabularies/shapes#schema": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/parameterName/scalar/schema",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/parameterName/scalar/schema",
             "@type": [
               "http://raml.org/vocabularies/shapes#ScalarShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -661,7 +661,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/parameterName/scalar/schema/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/parameterName/scalar/schema/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -669,7 +669,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/parameterName/scalar/schema"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/parameterName/scalar/schema"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -695,7 +695,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/parameterName/scalar/schema"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/parameterName/scalar/schema"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -728,7 +728,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/parameterName/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/parameterName/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -736,7 +736,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/parameterName"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/parameterName"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -774,7 +774,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/parameterName"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type_nil_shortcut.raml#/declarations/annotations/parameterName"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [

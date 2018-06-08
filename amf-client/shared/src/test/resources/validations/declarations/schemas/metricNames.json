@@ -1,0 +1,25 @@
+{
+  "required" : true ,
+  "$schema" : "http://json-schema.org/draft-03/schema" ,
+  "type" : "object" ,
+  "properties" : {
+    "metric" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "name" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "values" : {
+          "type" : "array" ,
+          "required" : false ,
+          "items" : 
+            {
+              "type" : "string"
+            }
+        }
+      }
+    }
+  }
+}

@@ -89,7 +89,7 @@
     ],
     "http://raml.org/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/CustomDate",
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate",
         "@type": [
           "http://raml.org/vocabularies/shapes#ScalarShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -113,7 +113,7 @@
         ],
         "http://raml.org/vocabularies/shapes#customShapePropertyDefinitions": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/CustomDate/property/onlyFutureDates",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/onlyFutureDates",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -126,7 +126,7 @@
             ],
             "http://raml.org/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/CustomDate/property/onlyFutureDates/scalar/onlyFutureDates",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/onlyFutureDates/scalar/onlyFutureDates",
                 "@type": [
                   "http://raml.org/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -145,7 +145,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/CustomDate/property/onlyFutureDates/scalar/onlyFutureDates/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/onlyFutureDates/scalar/onlyFutureDates/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -153,7 +153,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/CustomDate/property/onlyFutureDates/scalar/onlyFutureDates"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/onlyFutureDates/scalar/onlyFutureDates"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -179,7 +179,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/CustomDate/property/onlyFutureDates/scalar/onlyFutureDates"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/onlyFutureDates/scalar/onlyFutureDates"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -205,7 +205,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/CustomDate/property/onlyFutureDates/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/onlyFutureDates/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -213,7 +213,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/CustomDate/property/onlyFutureDates"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/onlyFutureDates"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -227,7 +227,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/CustomDate/property/noHolidays",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/noHolidays",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -240,7 +240,7 @@
             ],
             "http://raml.org/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/CustomDate/property/noHolidays/scalar/noHolidays",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/noHolidays/scalar/noHolidays",
                 "@type": [
                   "http://raml.org/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -259,7 +259,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/CustomDate/property/noHolidays/scalar/noHolidays/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/noHolidays/scalar/noHolidays/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -267,7 +267,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/CustomDate/property/noHolidays/scalar/noHolidays"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/noHolidays/scalar/noHolidays"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -293,7 +293,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/CustomDate/property/noHolidays/scalar/noHolidays"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/noHolidays/scalar/noHolidays"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -319,7 +319,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/CustomDate/property/noHolidays/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/noHolidays/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -327,7 +327,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/CustomDate/property/noHolidays"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/noHolidays"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -343,7 +343,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/CustomDate/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -351,7 +351,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/CustomDate"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -389,7 +389,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/CustomDate"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -415,7 +415,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/CustomDate"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -429,7 +429,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/PossibleMeetingDate",
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate",
         "@type": [
           "http://raml.org/vocabularies/shapes#ScalarShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -451,13 +451,13 @@
             "@value": "PossibleMeetingDate"
           }
         ],
-        "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/PossibleMeetingDate/extension/amf-facet-noHolidays": {
+        "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate/extension/amf-facet-noHolidays": {
           "http://raml.org/vocabularies/document#name": [
             {
               "@value": "amf-facet-noHolidays"
             }
           ],
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/PossibleMeetingDate/amf-facet-noHolidays/scalar_1",
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate/amf-facet-noHolidays/scalar_1",
           "@type": [
             "http://raml.org/vocabularies/data#Scalar"
           ],
@@ -469,7 +469,7 @@
           ],
           "http://raml.org/vocabularies/document-source-maps#sources": [
             {
-              "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/PossibleMeetingDate/amf-facet-noHolidays/scalar_1/source-map",
+              "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate/amf-facet-noHolidays/scalar_1/source-map",
               "@type": [
                 "http://raml.org/vocabularies/document-source-maps#SourceMap"
               ],
@@ -477,7 +477,7 @@
                 {
                   "http://raml.org/vocabularies/document-source-maps#element": [
                     {
-                      "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/PossibleMeetingDate/amf-facet-noHolidays/scalar_1"
+                      "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate/amf-facet-noHolidays/scalar_1"
                     }
                   ],
                   "http://raml.org/vocabularies/document-source-maps#value": [
@@ -492,12 +492,12 @@
         },
         "http://raml.org/vocabularies/document#customDomainProperties": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/PossibleMeetingDate/extension/amf-facet-noHolidays"
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate/extension/amf-facet-noHolidays"
           }
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/PossibleMeetingDate/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -505,7 +505,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/PossibleMeetingDate"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -543,7 +543,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/PossibleMeetingDate"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -569,7 +569,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/scalar/PossibleMeetingDate"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [

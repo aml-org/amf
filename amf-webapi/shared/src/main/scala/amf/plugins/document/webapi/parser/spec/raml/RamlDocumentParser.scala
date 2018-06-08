@@ -220,15 +220,17 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
 
   protected def parseDeclarations(root: Root, map: YMap): Unit = {
     val parent = root.location + "#/declarations"
-    parseTypeDeclarations(map, parent)
-    parseAnnotationTypeDeclarations(map, parent)
-    AbstractDeclarationsParser("traits",
-                               entry =>
-                                 Trait(entry)
-                                   .withName(entry.key.as[String])
-                                   .withId(parent + s"/traits/${entry.key.as[String].urlComponentEncoded}"),
-                               map,
-                               parent).parse()
+    parseTypeDeclarations(map, parent + "/types")
+    parseAnnotationTypeDeclarations(map, parent + "/annotations")
+    AbstractDeclarationsParser(
+      "traits",
+      entry =>
+        Trait(entry)
+          .withName(entry.key.as[String])
+          .withId(parent + s"/traits/${entry.key.as[String].urlComponentEncoded}"),
+      map,
+      parent + "/traits"
+    ).parse()
     AbstractDeclarationsParser(
       "resourceTypes",
       entry =>
@@ -236,9 +238,9 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
           .withName(entry.key.as[String])
           .withId(parent + s"/resourceTypes/${entry.key.as[String].urlComponentEncoded}"),
       map,
-      parent
+      parent + "/resourceTypes"
     ).parse()
-    parseSecuritySchemeDeclarations(map, parent)
+    parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
     parseParameterDeclarations("parameters".asRamlAnnotation, map, root.location + "#/parameters")
     parseResponsesDeclarations("responses".asRamlAnnotation, map, root.location + "#/responses")
   }

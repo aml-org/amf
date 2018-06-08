@@ -257,6 +257,8 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
             case Str | Iri => items.map(n => str(value(a.element, n)))
           }
           a.element match {
+            case _: DomainElementModel if f == DocumentModel.Declares =>
+              instance.setArrayWithoutId(f, values, annotations(nodes, sources, key))
             case _: BaseUnitModel => instance.setArrayWithoutId(f, values, annotations(nodes, sources, key))
             case _                => instance.setArray(f, values, annotations(nodes, sources, key))
           }

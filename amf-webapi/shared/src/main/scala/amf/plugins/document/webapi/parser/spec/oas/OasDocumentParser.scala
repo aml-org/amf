@@ -512,14 +512,17 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
 
   protected def parseDeclarations(root: Root, map: YMap): Unit = {
     val parent = root.location + "#/declarations"
-    parseTypeDeclarations(map, parent)
+    parseTypeDeclarations(map, parent + "/types")
     parseAnnotationTypeDeclarations(map, parent)
-    AbstractDeclarationsParser("resourceTypes".asOasExtension, (entry: YMapEntry) => ResourceType(entry), map, parent)
+    AbstractDeclarationsParser("resourceTypes".asOasExtension,
+                               (entry: YMapEntry) => ResourceType(entry),
+                               map,
+                               parent + "/resourceTypes").parse()
+    AbstractDeclarationsParser("traits".asOasExtension, (entry: YMapEntry) => Trait(entry), map, parent + "/traits")
       .parse()
-    AbstractDeclarationsParser("traits".asOasExtension, (entry: YMapEntry) => Trait(entry), map, parent).parse()
-    parseSecuritySchemeDeclarations(map, parent)
-    parseParameterDeclarations(map, parent)
-    parseResponsesDeclarations("responses", map, parent)
+    parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
+    parseParameterDeclarations(map, parent + "/parameters")
+    parseResponsesDeclarations("responses", map, parent + "/responses")
     ctx.futureDeclarations.resolve()
 
   }

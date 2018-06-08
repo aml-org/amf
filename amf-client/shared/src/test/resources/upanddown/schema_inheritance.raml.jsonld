@@ -72,7 +72,7 @@
     ],
     "http://raml.org/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person",
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/types/Person",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -86,7 +86,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person/property/single",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/types/Person/property/single",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -99,7 +99,7 @@
             ],
             "http://raml.org/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person/property/single/scalar/single",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/types/Person/property/single/scalar/single",
                 "@type": [
                   "http://raml.org/vocabularies/shapes#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -118,7 +118,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person/property/single/scalar/single/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/types/Person/property/single/scalar/single/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -126,7 +126,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person/property/single/scalar/single"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/types/Person/property/single/scalar/single"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -152,7 +152,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person/property/single/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/types/Person/property/single/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -160,7 +160,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person/property/single"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/types/Person/property/single"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -181,7 +181,7 @@
         ],
         "http://raml.org/vocabularies/shapes#inherits": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person/schema",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/types/Person/schema",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -195,7 +195,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person/schema/property/name",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/types/Person/schema/property/name",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -208,7 +208,7 @@
                 ],
                 "http://raml.org/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person/schema/property/name/scalar/name",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/types/Person/schema/property/name/scalar/name",
                     "@type": [
                       "http://raml.org/vocabularies/shapes#ScalarShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -227,7 +227,7 @@
                     ],
                     "http://raml.org/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person/schema/property/name/scalar/name/source-map",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/types/Person/schema/property/name/scalar/name/source-map",
                         "@type": [
                           "http://raml.org/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -235,7 +235,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person/schema/property/name/scalar/name"
+                                "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/types/Person/schema/property/name/scalar/name"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -261,7 +261,7 @@
                           {
                             "http://raml.org/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person/schema/property/name/scalar/name"
+                                "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/types/Person/schema/property/name/scalar/name"
                               }
                             ],
                             "http://raml.org/vocabularies/document-source-maps#value": [
@@ -287,7 +287,7 @@
                 ],
                 "http://raml.org/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person/schema/property/name/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/types/Person/schema/property/name/source-map",
                     "@type": [
                       "http://raml.org/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -295,7 +295,7 @@
                       {
                         "http://raml.org/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person/schema/property/name"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/types/Person/schema/property/name"
                           }
                         ],
                         "http://raml.org/vocabularies/document-source-maps#value": [
@@ -321,7 +321,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person/schema/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/types/Person/schema/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -329,7 +329,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person/schema"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/types/Person/schema"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -355,7 +355,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person/schema"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/types/Person/schema"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -371,7 +371,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/types/Person/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -379,7 +379,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/types/Person"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -417,7 +417,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/types/Person"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -443,7 +443,7 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/Person"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/schema_inheritance.raml#/declarations/types/Person"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
