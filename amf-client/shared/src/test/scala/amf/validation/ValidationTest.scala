@@ -2949,4 +2949,14 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.conforms)
     }
   }
+
+  test("Test empty usage/uses entries") {
+    for {
+      validation <- Validation(platform)
+      model      <- AMFCompiler(validationsPath + "empty-usage-uses.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(report.conforms)
+    }
+  }
 }

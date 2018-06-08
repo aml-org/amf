@@ -65,23 +65,28 @@ case class ReferencesParser(baseUnit: BaseUnit, key: String, map: YMap, referenc
     map.key(
       key,
       entry =>
-        entry.value
-          .as[YMap]
-          .entries
-          .foreach(e => {
-            val alias: String = e.key.as[YScalar].text
-            val urlOption     = LibraryLocationParser(e, ctx)
-            urlOption.foreach { url =>
-              target(url).foreach {
-                case module: DeclaresModel =>
-                  collectAlias(baseUnit, alias -> (module.id, url))
-                  result += (alias, module)
-                case other =>
-                  ctx
-                    .violation(id, s"Expected module but found: $other", e) // todo Uses should only reference modules...
-              }
-            }
-          })
+        entry.value.tagType match {
+          case YType.Map =>
+            entry.value
+              .as[YMap]
+              .entries
+              .foreach(e => {
+                val alias: String = e.key.as[YScalar].text
+                val urlOption     = LibraryLocationParser(e, ctx)
+                urlOption.foreach { url =>
+                  target(url).foreach {
+                    case module: DeclaresModel =>
+                      collectAlias(baseUnit, alias -> (module.id, url))
+                      result += (alias, module)
+                    case other =>
+                      ctx
+                        .violation(id, s"Expected module but found: $other", e) // todo Uses should only reference modules...
+                  }
+                }
+              })
+          case YType.Null =>
+          case _          => ctx.violation(id, s"Invalid ast type for uses: ${entry.value.tagType}", entry.value)
+      }
     )
 
     result

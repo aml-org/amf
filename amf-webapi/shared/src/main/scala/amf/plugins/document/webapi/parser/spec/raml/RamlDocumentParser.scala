@@ -353,10 +353,17 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
 
   case class UsageParser(map: YMap, baseUnit: BaseUnit) {
     def parse(): Unit = {
-      map.key("usage", entry => {
-        val value = ScalarNode(entry.value)
-        baseUnit.set(BaseUnitModel.Usage, value.string(), Annotations(entry))
-      })
+      map.key(
+        "usage",
+        entry => {
+          entry.value.tagType match {
+            case YType.Str =>
+              val value = ScalarNode(entry.value)
+              baseUnit.set(BaseUnitModel.Usage, value.string(), Annotations(entry))
+            case _ =>
+          }
+        }
+      )
     }
   }
 

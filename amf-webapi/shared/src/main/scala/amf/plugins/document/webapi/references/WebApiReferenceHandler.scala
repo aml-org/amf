@@ -102,9 +102,10 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
           map
             .key(u)
             .foreach(entry => {
-              entry.value.to[YMap] match {
-                case Right(m) => m.entries.foreach(library(_, ctx))
-                case _        => ctx.violation("", s"Expected map but found: ${entry.value}", entry.value)
+              entry.value.tagType match {
+                case YType.Map  => entry.value.as[YMap].entries.foreach(library(_, ctx))
+                case YType.Null =>
+                case _          => ctx.violation("", s"Expected map but found: ${entry.value}", entry.value)
               }
             })
         })
