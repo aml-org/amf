@@ -147,7 +147,7 @@ case class RamlSingleExampleValueParser(node: YNode, producer: () => Example, op
     val example = producer().add(Annotations(node))
 
     node.to[YMap] match {
-      case Right(map) if map.regex("""displayName|description|strict|value|\(.+\)""").nonEmpty =>
+      case Right(map) if map.key("value").nonEmpty =>
         map.key("displayName", (ExampleModel.DisplayName in example).allowingAnnotations)
         map.key("description", (ExampleModel.Description in example).allowingAnnotations)
         map.key("strict", (ExampleModel.Strict in example).allowingAnnotations)
