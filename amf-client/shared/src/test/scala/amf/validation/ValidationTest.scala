@@ -2955,6 +2955,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.conforms)
     }
   }
+
+  test("Test web artifact process api") {
+    for {
+      validation <- Validation(platform)
+      model      <- AMFCompiler(productionPath + "web-artifact-process-api-1.0.0-fat-raml/WebArtifactAPI.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      println(report)
+      assert(report.conforms)
+    }
+  }
 /*
   test("HERE_HERE test field_nation") {
     for {

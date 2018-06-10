@@ -149,7 +149,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       val refShape = referencedShape.asInstanceOf[AnyShape]
       accShape.examples.foreach { example =>
         val oldExamples = refShape.examples
-        oldExamples.find(old => old.id == example.id || old.raw.value().trim == example.raw.value().trim) match {
+        oldExamples.find(old => old.id == example.id || old.raw.option().getOrElse("").trim == example.raw.option().getOrElse("").trim) match {
           case Some(_) => // duplicated
           case None => {
             refShape.setArrayWithoutId(AnyShapeModel.Examples, oldExamples ++ Seq(example))
