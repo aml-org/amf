@@ -25,24 +25,26 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
 
   case class Emitter(options: RenderOptions) {
 
+    private val idsTraversionCheck = IdsTraversionCheck()
+
     def root(unit: BaseUnit): Unit = {
       traverse(unit)
     }
 
     def traverse(element: AmfObject): Unit = {
-      val id = element.id
+      if (!idsTraversionCheck.hasId(element.id)) {
+        val id = element.id
+        idsTraversionCheck + id
+        val obj = metaModel(element)
 
-      val obj = metaModel(element)
+        if (obj.dynamic) traverseDynamicMetaModel(id, element, obj)
+        else traverseStaticMetamodel(id, element, obj)
 
-      if (obj.dynamic) traverseDynamicMetaModel(id, element, obj)
-      else traverseStaticMetamodel(id, element, obj)
-
-      createCustomExtensions(element)
+        createCustomExtensions(element)
+      }
     }
 
-    def traverseDynamicMetaModel(id: String,
-                                 element: AmfObject,
-                                 obj: Obj): Unit = {
+    def traverseDynamicMetaModel(id: String, element: AmfObject, obj: Obj): Unit = {
       val schema: DynamicDomainElement = element.asInstanceOf[DynamicDomainElement]
 
       createDynamicTypeNode(id, schema)
@@ -76,9 +78,7 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
       }
     }
 
-    def traverseStaticMetamodel(id: String,
-                                element: AmfObject,
-                                obj: Obj): Unit = {
+    def traverseStaticMetamodel(id: String, element: AmfObject, obj: Obj): Unit = {
       createTypeNode(id, obj, Some(element))
 
       // workaround for lazy values in shape
@@ -92,7 +92,7 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
     }
 
     private def createCustomExtensions(element: AmfObject): Unit = {
-      val id = element.id
+      val id                                   = element.id
       val customProperties: ListBuffer[String] = ListBuffer()
 
       // Collect element custom annotations
@@ -145,24 +145,19 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
       traverse(extension.extension)
     }
 
-    def createSortedArray(subject: String,
-                          property: String,
-                          seq: Seq[AmfElement],
-                          element: Type): Unit = {
+    def createSortedArray(subject: String, property: String, seq: Seq[AmfElement], element: Type): Unit = {
       val id = s"$subject/list"
       rdfmodel
         .addTriple(subject, property, id)
         .addTriple(id, (Namespace.Rdf + "type").iri(), (Namespace.Rdfs + "Seq").iri())
-      seq.zipWithIndex.foreach { case (e, i) =>
-        val memberTriple = (Namespace.Rdfs + s"_${i + 1}").iri()
-        objectValue(id, memberTriple, element, Value(e, Annotations()))
+      seq.zipWithIndex.foreach {
+        case (e, i) =>
+          val memberTriple = (Namespace.Rdfs + s"_${i + 1}").iri()
+          objectValue(id, memberTriple, element, Value(e, Annotations()))
       }
     }
 
-    private def objectValue(subject: String,
-                            property: String,
-                            t: Type,
-                            v: Value): Unit = {
+    private def objectValue(subject: String, property: String, t: Type, v: Value): Unit = {
       t match {
         case t: DomainElement with Linkable if t.isLink =>
           link(subject, property, t)
@@ -180,12 +175,18 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
               rdfmodel.addTriple(subject, property, v.value.asInstanceOf[AmfScalar].toString, None)
           }
         case Bool =>
-          rdfmodel.addTriple(subject, property, v.value.asInstanceOf[AmfScalar].toString, Some((Namespace.Xsd + "boolean").iri()))
+          rdfmodel.addTriple(subject,
+                             property,
+                             v.value.asInstanceOf[AmfScalar].toString,
+                             Some((Namespace.Xsd + "boolean").iri()))
         case Type.Int =>
           emitIntLiteral(subject, property, v.value.asInstanceOf[AmfScalar].toString)
         case Type.Double =>
           // this will transform the value to double and will not emit @type TODO: ADD YType.Double
-          rdfmodel.addTriple(subject, property, v.value.asInstanceOf[AmfScalar].toString, Some((Namespace.Xsd + "double").iri()))
+          rdfmodel.addTriple(subject,
+                             property,
+                             v.value.asInstanceOf[AmfScalar].toString,
+                             Some((Namespace.Xsd + "double").iri()))
         case Type.Float =>
           emitFloatLiteral(subject, property, v.value.asInstanceOf[AmfScalar].toString)
         case Type.Date =>
@@ -195,10 +196,10 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
             //typedScalar(b, dateTime.toRFC3339, (Namespace.Xsd + "dateTime").iri())
             throw new Exception("Serialisation of timestamps not supported yet")
           } else {
-            typedScalar(subject, property,
-              f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d",
-              (Namespace.Xsd + "date").iri()
-            )
+            typedScalar(subject,
+                        property,
+                        f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d",
+                        (Namespace.Xsd + "date").iri())
           }
         case a: SortedArray =>
           createSortedArray(subject, property, v.value.asInstanceOf[AmfArray].values, a.element)
@@ -227,15 +228,12 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
       }
     }
 
-
     private def obj(subject: String, property: String, element: AmfObject): Unit = {
       rdfmodel.addTriple(subject, property, element.id)
       traverse(element)
     }
 
-    private def link(subject: String,
-                     property: String,
-                     elementWithLink: DomainElement with Linkable): Unit = {
+    private def link(subject: String, property: String, elementWithLink: DomainElement with Linkable): Unit = {
       // before emitting, we remove the link target to avoid loops and set
       // the fresh value for link-id
       val savedLinkTarget = elementWithLink.linkTarget
@@ -265,13 +263,9 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
       rdfmodel.addTriple(subject, property, content)
     }
 
-    private def typedScalar(subject: String,
-                            property: String,
-                            content: String,
-                            dataType: String): Unit = {
+    private def typedScalar(subject: String, property: String, content: String, dataType: String): Unit = {
       rdfmodel.addTriple(subject, property, content, Some(dataType))
     }
-
 
     private def createDynamicTypeNode(id: String, obj: DynamicDomainElement): Unit = {
       obj.dynamicType.foreach { t =>
@@ -286,9 +280,8 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
       })
       allTypes.foreach { t =>
         if (t != "http://raml.org/vocabularies/document#DomainElement" && t != "http://www.w3.org/ns/shacl#Shape" && t != "http://raml.org/vocabularies/shapes#Shape")
-        rdfmodel.addTriple(id, (Namespace.Rdf + "type").iri(), t)
+          rdfmodel.addTriple(id, (Namespace.Rdf + "type").iri(), t)
       }
     }
   }
 }
-
