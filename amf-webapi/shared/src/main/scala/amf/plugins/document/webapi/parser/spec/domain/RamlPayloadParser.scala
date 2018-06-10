@@ -1,9 +1,9 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.SynthesizedField
-import amf.core.metamodel.domain.ShapeModel
-import amf.core.model.domain.Shape
-import amf.core.parser.{Annotations, YMapOps}
+import amf.core.annotations.{ExplicitField, SynthesizedField}
+import amf.core.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.model.domain.{AmfScalar, Shape}
+import amf.core.parser.{Annotations, ScalarNode, YMapOps}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.declaration._
@@ -101,17 +101,27 @@ case class Raml08WebFormParser(map: YMap, parentId: String)(implicit ctx: RamlWe
         entries.headOption.map {
           _ =>
             val webFormShape = NodeShape(entry.value).withName("schema").adopted(parentId)
-
             entries.foreach(e => {
 
               Raml08TypeParser(e, (shape: Shape) => shape.adopted(webFormShape.id), isAnnotation = false, StringDefaultType)
                 .parse()
                 .foreach(s => {
                   val property = webFormShape.withProperty(e.key.toString())
-                  s.fields.entry(ShapeModel.RequiredShape) match {
-                    case None                        => property.withMinCount(0)
-                    case Some(f) if !f.scalar.toBool => property.withMinCount(0)
-                    case _                           => property.withMinCount(1)
+                  // by default 0.8 fields are optional
+                  property.withMinCount(0)
+                  // find for an explicit annotation
+                  e.value.asOption[YMap] match {
+                    case Some(nestedMap) =>
+                      nestedMap.key(
+                        "required",
+                        entry => {
+                          val required = ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
+                          property.set(PropertyShapeModel.MinCount,
+                            AmfScalar(if (required) 1 else 0),
+                            Annotations(entry) += ExplicitField())
+                        }
+                      )
+                    case _ =>
                   }
                   property.withRange(s).adopted(property.id)
                 })

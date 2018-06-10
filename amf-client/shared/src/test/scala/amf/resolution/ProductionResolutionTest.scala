@@ -1,5 +1,6 @@
 package amf.resolution
 
+import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
@@ -63,31 +64,31 @@ class ProductionResolutionTest extends RamlResolutionTest {
           Raml)
   }
 
-  test("Resolves channel4.com1.0.0swagger.raml") {
+  test("HERE_HERE_HERE Resolves channel4.com1.0.0swagger.raml") {
     cycle("channel4.com1.0.0swagger.raml", "channel4.com1.0.0swagger.resolved.raml", RamlYamlHint, Raml)
   }
 
-  test("Types with unions raml to AMF") {
+  test("HERE_HERE_HERE Types with unions raml to AMF") {
     cycle("unions-example.raml", "unions-example.raml.jsonld", RamlYamlHint, Amf)
   }
 
-  test("Examples in header of type union") {
+  test("HERE_HERE_HERE Examples in header of type union") {
     cycle("example-in-union.raml", "example-in-union.raml.jsonld", RamlYamlHint, Amf)
   }
 
-  test("Complex types raml to raml") {
+  test("HERE_HERE_HERE Complex types raml to raml") {
     cycle("complex_types.raml", "complex_types.resolved.raml", RamlYamlHint, Raml)
   }
 
-  test("httpbin example") {
+  test("HERE_HERE_HERE httpbin example") {
     cycle("httpbin.raml", "httpbin.resolved.raml", RamlYamlHint, Raml, basePath + "httpbin/")
   }
 
-  test("sales-order example") {
+  test("HERE_HERE_HERE sales-order example") {
     cycle("sales-order-api.raml", "sales-order-api.resolved.raml", RamlYamlHint, Raml, basePath + "order-api/")
   }
 
-  test("american-flights-api example") {
+  test("HERE_HERE_HERE american-flights-api example") {
     cycle("american-flights-api.raml",
           "american-flights-api.resolved.raml",
           RamlYamlHint,
@@ -95,7 +96,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
           basePath + "american-flights-api/")
   }
 
-  test("version-manager example") {
+  test("HERE_HERE_HERE version-manager example") {
     cycle("version_manager.raml", "version_manager.resolved.raml", RamlYamlHint, Raml, basePath + "version-manager/")
   }
 
@@ -103,7 +104,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
     cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, basePath + "api-console/")
   }
 
-  test("test resource type") {
+  test("HERE_HERE_HERE test resource type") {
     cycle("input.raml",
           "input.resolved.raml",
           RamlYamlHint,
@@ -111,7 +112,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
           "amf-client/shared/src/test/resources/org/raml/api/v10/library-references-absolute/")
   }
 
-  test("test resource type non string scalar parameter example") {
+  test("HERE_HERE_HERE test resource type non string scalar parameter example") {
     cycle(
       "input.raml",
       "input.resolved.raml",
@@ -121,23 +122,24 @@ class ProductionResolutionTest extends RamlResolutionTest {
     )
   }
 
-  test("test problem inclusion parent test") {
+  test("HERE_HERE_HERE test problem inclusion parent test") {
     cycle("input.raml", "input.resolved.raml", RamlYamlHint, Raml, basePath + "include-parent/")
   }
 
-  test("test overlay documentation") {
+  test("HERE_HERE_HERE test overlay documentation") {
     cycle("overlay.raml", "api.resolved.raml", RamlYamlHint, Raml, basePath + "overlay-documentation/")
   }
 
-  test("test api_6109_ver_10147") {
+  // TODO: diff of final result is too slow
+  ignore("test api_6109_ver_10147") {
     cycle("api.raml", "api.resolved.raml", RamlYamlHint, Raml, basePath + "api_6109_ver_10147/")
   }
 
-  test("test definition_loops input") {
+  test("HERE_HERE test definition_loops input") {
     cycle("crossfiles2.raml", "crossfiles2.resolved.raml", RamlYamlHint, Raml, basePath + "definitions-loops/")
   }
 
-  test("test bad tabulation at end flow map of traits definitions") {
+  test("HERE_HERE test bad tabulation at end flow map of traits definitions") {
     cycle("healthcare-system-api.raml",
           "healthcare-system-api.resolved.raml",
           RamlYamlHint,
@@ -145,7 +147,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
           basePath + "Healthcare-FHIR-System-API/")
   }
 
-  test("test trait with quoted string example var") {
+  test("HERE_HERE test trait with quoted string example var") {
     cycle("trait-string-quoted-node.raml",
           "trait-string-quoted-node.resolved.raml",
           RamlYamlHint,
@@ -153,11 +155,11 @@ class ProductionResolutionTest extends RamlResolutionTest {
           completeCyclePath)
   }
 
-  test("test nullpointer in resolution") {
+  test("HERE_HERE test nullpointer in resolution") {
     cycle("api.raml", "api.resolved.raml", RamlYamlHint, Raml, validationPath + "retail-api-6.0.0-fat-raml/")
   }
 
-  test("Test resolve inherited array without items") {
+  test("HERE_HERE Test resolve inherited array without items") {
     cycle("inherits-array-without-items.raml",
           "inherits-array-without-items.resolved.raml",
           RamlYamlHint,
@@ -165,7 +167,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
           basePath + "types/")
   }
 
-  test("Test resolve resource type with '$' char in variable value") {
+  test("HERE_HERE Test resolve resource type with '$' char in variable value") {
     cycle("invalid-regexp-char-in-variable.raml",
           "invalid-regexp-char-in-variable.resolved.raml",
           RamlYamlHint,
@@ -173,11 +175,11 @@ class ProductionResolutionTest extends RamlResolutionTest {
           basePath)
   }
 
-  test("Test trait resolution null pointer exception test") {
+  test("HERE_HERE Test trait resolution null pointer exception test") {
     cycle("e-bo.raml", "e-bo.resolved.raml", RamlYamlHint, Raml, basePath + "e-gp-reference-1.0.6-fat-raml/")
   }
 
-  test("Test type resolution with property override") {
+  test("HERE_HERE Test type resolution with property override") {
     cycle("property-override.raml", "property-override.resolved.raml", RamlYamlHint, Raml, basePath + "types/")
   }
 }
@@ -186,7 +188,7 @@ class OASProductionResolutionTest extends OasResolutionTest {
   override val basePath = "amf-client/shared/src/test/resources/production/"
   val completeCyclePath = "amf-client/shared/src/test/resources/upanddown/"
 
-  test("OAS Response parameters resolution") {
+  test("HERE_HERE OAS Response parameters resolution") {
     cycle("oas_response_declaration.yaml",
           "oas_response_declaration.resolved.jsonld",
           OasYamlHint,
@@ -199,15 +201,15 @@ class Raml08ResolutionTest extends RamlResolutionTest {
   override val basePath: String = "amf-client/shared/src/test/resources/resolution/08/"
   val productionPath: String    = "amf-client/shared/src/test/resources/production/"
 
-  test("Resolve WebForm 08 Types test") {
+  test("HERE_HERE Resolve WebForm 08 Types test") {
     cycle("mincount-webform-types.raml", "mincount-webform-types.resolved.raml", RamlYamlHint, Raml08)
   }
 
-  test("Resolve Min and Max in header 08 test") {
+  test("HERE_HERE Resolve Min and Max in header 08 test") {
     cycle("min-max-in-header.raml", "min-max-in-header.resolved.raml", RamlYamlHint, Raml08)
   }
 
-  test("Test failing with exception") {
+  test("HERE_HERE Test failing with exception") {
     recoverToExceptionIf[Exception] {
       cycle("wrong-key.raml", "wrong-key.raml", RamlYamlHint, Raml08)
     }.map { ex =>
@@ -215,7 +217,7 @@ class Raml08ResolutionTest extends RamlResolutionTest {
     }
   }
 
-  test("Test empty trait in operations") {
+  test("HERE_HERE Test empty trait in operations") {
     cycle("empty-is-operation-endpoint.raml", "empty-is-operation-endpoint.raml.raml", RamlYamlHint, Raml08)
   }
 }

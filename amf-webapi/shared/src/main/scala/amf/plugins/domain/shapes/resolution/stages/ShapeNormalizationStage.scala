@@ -20,7 +20,9 @@ class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val
 
   protected val context = new NormalizationContext(errorHandler, keepEditingInfo, profile)
 
-  override def resolve(model: BaseUnit): BaseUnit = model.transform(findShapesPredicate, transform)
+  override def resolve(model: BaseUnit): BaseUnit = {
+    model.transform(findShapesPredicate, transform)
+  }
 
   def findShapesPredicate(element: DomainElement): Boolean = {
     val metaModelFound: Obj = metaModel(element)

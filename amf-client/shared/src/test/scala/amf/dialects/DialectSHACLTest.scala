@@ -24,19 +24,19 @@ class DialectSHACLTest extends AsyncFunSuite with PlatformSecrets with  BuildCyc
 
 
   /** Method for transforming parsed unit. Override if necessary. */
-  def transformRdf(unit: BaseUnit, config: CycleConfig): RdfModel = {
+  override def transformRdf(unit: BaseUnit, config: CycleConfig): RdfModel = {
     VocabulariesPlugin.shapesForDialect(unit.asInstanceOf[Dialect], "http://metadata.org/validations.js")
   }
 
   /** Method to render parsed unit. Override if necessary. */
-  def renderRdf(unit: RdfModel, config: CycleConfig): Future[String] = {
+  override def renderRdf(unit: RdfModel, config: CycleConfig): Future[String] = {
     Future {
       unit.toN3().split("\n").sorted.mkString("\n")
     }
   }
 
   /** Compile source with specified hint. Render to temporary file and assert against golden. */
-  final def cycleRdf(source: String,
+  override def cycleRdf(source: String,
                      golden: String,
                      hint: Hint = VocabularyYamlHint,
                      target: Vendor = Amf,

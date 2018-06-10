@@ -44,11 +44,6 @@ trait ShapeModel extends DomainElementModel with LinkableElementModel with KeyFi
 
   override val key: Field = Name
 
-  // This is just a placeholder for the required shape information that is
-  // stored in the model in the MinCount field of the PropertyShape
-  // This should not be serialised into the JSON-LD document
-  val RequiredShape = Field(Bool, Shapes + "requiredShape", jsonldField = false)
-
   // RAML user-defined facets: definitions and values
   lazy val CustomShapePropertyDefinitions = Field(Array(PropertyShapeModel), Shapes + "customShapePropertyDefinitions")
   lazy val CustomShapeProperties          = Field(Array(ShapeExtensionModel), Shapes + "customShapeProperties")

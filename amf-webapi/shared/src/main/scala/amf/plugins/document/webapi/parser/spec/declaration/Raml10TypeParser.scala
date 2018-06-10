@@ -387,7 +387,6 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
       .parse()
       .foreach(e => shape.setArray(ScalarShapeModel.Examples, Seq(e)))
 
-    map.key("required", ScalarShapeModel.RequiredShape in shape)
 
     map.key(
       "default",
@@ -1267,14 +1266,14 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             }
           }
 
-          var explicitRequired: Option[Value] = None
+          // var explicitRequired: Option[Value] = None
           entry.value.toOption[YMap] match {
             case Some(map) =>
               map.key(
                 "required",
                 entry => {
                   val required = ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
-                  explicitRequired = Some(Value(AmfScalar(required), Annotations(entry) += ExplicitField()))
+                  //explicitRequired = Some(Value(AmfScalar(required), Annotations(entry) += ExplicitField()))
                   property.set(PropertyShapeModel.MinCount,
                                AmfScalar(if (required) 1 else 0),
                                Annotations(entry) += ExplicitField())
@@ -1301,11 +1300,6 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
           Raml10TypeParser(entry, shape => shape.adopted(property.id), isAnnotation = false, StringDefaultType)
             .parse()
             .foreach { range =>
-              if (explicitRequired.isDefined) {
-                range.fields.setWithoutId(ShapeModel.RequiredShape,
-                                          explicitRequired.get.value,
-                                          explicitRequired.get.annotations)
-              }
 
               if (entry.value.tagType == YType.Null) {
                 range.annotations += SynthesizedField()

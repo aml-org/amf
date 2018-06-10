@@ -168,13 +168,13 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
 
     ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: Invoking platform validation")
 
-    ValidationMutex.synchronized {
+    //ValidationMutex.synchronized {
       PlatformValidator.instance.report(data, shapes, messageStyle).map {
         case report =>
           ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: validation finished")
           report
       }
-    }
+    //}
   }
 
   override def validate(model: BaseUnit, profileName: String, messageStyle: String): Future[AMFValidationReport] = {
