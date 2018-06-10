@@ -1,0 +1,419 @@
+#%RAML 1.0
+title: University of Denver Web Artifact API
+description: |
+  This API is used to serve up Web Artifacts.  These really are artifacts that
+  are *specific* to the web program and really are only used there.  We have deemed
+  these items as:
+  * Stories
+  * Quotes
+  * Events
+  * Articles
+  * Taxonomy
+version: 1.0
+baseUri: https://web-artifact-process-api.cloudhub.io/api/webArtifact/v{version}
+protocols: [HTTPS]
+
+uses:
+  duTraits: DUWebTraits.raml
+  duTypes: DUWebTypes.raml
+
+securedBy: []
+
+/news:
+  description: News related to the University of Denver
+  get:
+    is: [duTraits.taggable,duTraits.pageable,duTraits.secured,duTraits.xmlOutput]
+    queryParameters:
+      pub_date:
+        description: The date which to limit the articles
+        type: date-only
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+            type: duTypes.newsArticle[]
+            example:
+              -
+                id: "1"
+                title: "University of Denver's winning season"
+                imageUrl: "http://www.123.net/acs"
+                content: |
+                  "The hockey team keeps on winning"
+                linkUrl: http://www.acd.de/123
+                publicationDate: "2016-09-08"
+                tags:
+                  -
+                    "biology"
+          application/xml:
+            type: duTypes.newsArticle[]
+            example:
+              -
+                id: "1"
+                title: "University of Denver's winning season"
+                imageUrl: "http://www.123.net/acs"
+                content: |
+                  "The hockey team keeps on winning"
+                linkUrl: http://www.acd.de/123
+                publicationDate: "2016-09-08"
+                tags:
+                  -
+                    "biology"
+      500:
+        body:
+          application/json:
+            type: duTypes.exception
+            example:
+              message: "There was an error retrieving the Articles"
+              link: "http://www.asf.com/acd/123"
+/events:
+  description: Events affiliated to the University of Denver
+  get:
+    description: Returns an aggregated list of events
+    is: [duTraits.taggable,duTraits.pageable,duTraits.secured,duTraits.xmlOutput]
+    queryParameters:
+      start_date:
+        description: The Start Date by which to limit the events
+        type: string
+        required: false
+      end_date:
+        description: The End Date by which to limit the events
+        type: string
+        required: false
+      featured:
+        description: Is event featured flag
+        type: string
+        required: false  
+    responses:
+      200:
+        body:
+          application/json:
+            type: duTypes.event[]
+            example:
+              -
+                id: "1"
+                title: Live at the Apollo
+                imageUrl: http://www.123.com/123
+                description: |
+                  "<p>Come see your favorite band...live at the apollo</p>"
+                linkUrl: http://www.123.com/123
+                eventTimes:
+                  -
+                    startDate: "2016-02-28 16:41:41"
+                    endDate: "2016-02-28 16:41:41"
+                location: The Apollo Theatre
+                latitude: "0"
+                longitude: "0"
+                tags:
+                  -
+                    "campus-life"
+          application/xml:
+            type: duTypes.event[]
+            example:
+              -
+                id: "1"
+                title: Live at the Apollo
+                imageUrl: http://www.123.com/123
+                description: |
+                  "<p>Come see your favorite band...live at the apollo</p>"
+                linkUrl: http://www.123.com/123
+                eventTimes:
+                  -
+                    startDate: "2016-02-28 16:41:41"
+                    endDate: "2016-02-28 16:41:41"
+                location: The Apollo Theatre
+                latitude: "0"
+                longitude: "0"
+                tags:
+                  -
+                    "campus-life"
+      500:
+        body:
+          application/json:
+            type: duTypes.exception
+            example:
+              message: "There was an error retrieving the Programs.  Program_id does not exist"
+              link: "http://www.asf.com/acd/123"
+  /{id}:
+    get:
+      description: Returns an individual event
+      responses:
+        200:
+          body:
+            application/json:
+              type: duTypes.event
+              example:
+                id: "1"
+                title: Live at the Apollo
+                imageUrl: http://www.123.com/123
+                description: |
+                  Come see your favorite band...live at the apollo
+                linkUrl: http://www.123.com/123
+                eventTimes:
+                  -
+                    startDate: "2016-02-28 16:41:41"
+                    endDate: "2016-02-28 16:41:41"
+                location: The Apollo Theatre
+                latitude: "0"
+                longitude: "0"
+                tags:
+                  -
+                    "campus-life"
+            application/xml:
+              type: duTypes.event
+              example:
+                id: "1"
+                title: Live at the Apollo
+                imageUrl: http://www.123.com/123
+                description: |
+                  Come see your favorite band...live at the apollo
+                linkUrl: http://www.123.com/123
+                eventTimes:
+                  -
+                    startDate: "2016-02-28 16:41:41"
+                    endDate: "2016-02-28 16:41:41"
+                location: The Apollo Theatre
+                latitude: "0"
+                longitude: "0"
+                tags:
+                  -
+                    "campus-life"
+        404:
+          body:
+            application/json:
+              type: duTypes.exception
+#              example:
+#                error: "Cannot find Course with ID 1"
+        500:
+          body:
+            application/json:
+              type: duTypes.exception
+              example:
+                message: "There was an issues with finding Course with ID 1"
+                link: "http://www.asf.com/acd/123"
+/quotes:
+  description: Quotes for the Web
+  get:
+    description: Returns a list of Quotes for the Web Site
+    is: [duTraits.taggable,duTraits.limited,duTraits.secured,duTraits.xmlOutput]
+    responses:
+      200:
+        body:
+          application/json:
+            type: duTypes.quote[]
+            example:
+              -
+                id: 1
+                title: "Quote Title"
+                imageUrl: "http://www.123.com/123"
+                name: "Dr Evan Evanstein"
+                quoteText: "To be or not to be"
+                quoteCitation: "Socrates"
+                linkText: "Read More"
+                linkUrl: "http://123.com/123"
+                tags:
+                  -
+                    "Phylosophy"
+                  -
+                    "History"
+          application/xml:
+            type: duTypes.quote[]
+            example:
+              -
+                id: 1
+                title: "Quote Title"
+                imageUrl: "http://www.123.com/123"
+                name: "Dr Evan Evanstein"
+                quoteText: "To be or not to be"
+                quoteCitation: "Socrates"
+                linkText: "Read More"
+                linkUrl: "http://123.com/123"
+                tags:
+                  -
+                    "Phylosophy"
+                  -
+                    "History"
+      500:
+        body:
+          application/json:
+            type: duTypes.exception
+            example:
+              message: "There was an error getting stories."
+              link: "http://www.asf.com/acd/123"
+  /{id}:
+    get:
+      description: Returns an instance of a Quote
+      responses:
+        200:
+          body:
+            application/json:
+              type: duTypes.quote
+              example:
+                id: 1
+                title: "Quote Title"
+                imageUrl: "http://www.123.com/123"
+                name: "Dr Evan Evanstein"
+                quoteText: "To be or not to be"
+                quoteCitation: "Socrates"
+                linkText: "Read More"
+                linkUrl: "http://123.com/123"
+                tags:
+                  -
+                    "Phylosophy"
+                  -
+                    "History"
+            application/xml:
+              type: duTypes.quote
+              example:
+                id: 1
+                title: "Quote Title"
+                imageUrl: "http://www.123.com/123"
+                name: "Dr Evan Evanstein"
+                quoteText: "To be or not to be"
+                quoteCitation: "Socrates"
+                linkText: "Read More"
+                linkUrl: "http://123.com/123"
+                tags:
+                  -
+                    "Phylosophy"
+                  -
+                    "History"
+        500:
+          body:
+            application/json:
+              type: duTypes.exception
+              example:
+                message: "There was an issues with finding Quote with ID 1"
+                link: "http://www.asf.com/acd/123"
+        404:
+          body:
+            application/json:
+              type: duTypes.exception
+#              example:
+#                error: "Cannot find Quote with ID 1"
+/stories:
+  description: Stories for the Web
+  get:
+    description: Gets a list of Web Stories
+    is: [duTraits.limited,duTraits.taggable,duTraits.secured,duTraits.xmlOutput]
+    queryParameters:
+      type:
+        description: Parameter to define type of story (Short or Long).
+        type: string
+        required: false
+      pub_date:
+        description: The date which to limit the articles. Format is YYYY-MM-DD.
+        type: date-only
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+            type: duTypes.story[]
+            example:
+              -
+                id: 1
+                title: "Story Title"
+                imageUrl: "http://www.img.img/1234"
+                content: "Here is the excerpt of the text for the Story"
+                linkUrl: "http://www.123.com/123"
+                linkText: "Click here to read more"
+                publicationDate: "20XX-01-01"
+                tags:
+                  -
+                    "Biology"
+                  -
+                    "Agriculture"
+          application/xml:
+            type: duTypes.story[]
+            example:
+              -
+                id: 1
+                title: "Story Title"
+                imageUrl: "http://www.img.img/1234"
+                content: "Here is the excerpt of the text for the Story"
+                linkUrl: "http://www.123.com/123"
+                linkText: "Click here to read more"
+                publicationDate: "20XX-01-01"
+                tags:
+                  -
+                    "Biology"
+                  -
+                    "Agriculture"
+      500:
+        body:
+          application/json:
+            type: duTypes.exception
+            example:
+              message: "There was an error getting stories"
+              link: "http://www.asf.com/acd/123"
+  /{id}:
+    get:
+      description: Retrieves an individual Web Story
+      responses:
+        200:
+          body:
+            application/json:
+              type: duTypes.story
+              example:
+                id: 1
+                title: "Story Title"
+                imageUrl: "http://www.img.img/1234"
+                content: "Here is the excerpt of the text for the Story"
+                linkUrl: "http://www.123.com/123"
+                linkText: "Click here to read more"
+                publicationDate: "20XX-01-01"
+                tags:
+                  -
+                    "Biology"
+                  -
+                    "Agriculture"
+            application/xml:
+              type: duTypes.story
+              example:
+                id: 1
+                title: "Story Title"
+                imageUrl: "http://www.img.img/1234"
+                content: "Here is the excerpt of the text for the Story"
+                linkUrl: "http://www.123.com/123"
+                linkText: "Click here to read more"
+                publicationDate: "20XX-01-01"
+                tags:
+                  -
+                    "Biology"
+                  -
+                    "Agriculture"
+        404:
+          body:
+            application/json:
+              type: duTypes.exception
+#              example:
+#                error: "Cannot find story with ID 1"
+        500:
+          body:
+            application/json:
+              type: duTypes.exception
+              example:
+                message: "Cannot find story with ID 1"
+                link: "http://www.asf.com/acd/123"
+
+/tags:
+  get:
+    description: Return a list of taxonomies currently defined
+    responses:
+      200:
+        body:
+          application/json:
+            type: duTypes.taxonomy[]
+            example:
+              -
+                id: "1"
+                term: University Programs
+                slug: univ_programs
+      500:
+        body:
+          application/json:
+            type: duTypes.exception
+            example:
+              message: "There was an error retrieving the Taxonomy"
+              link: "http://www.asf.com/acd/123"

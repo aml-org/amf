@@ -1,0 +1,55 @@
+#%RAML 1.0 Library
+
+usage: |
+  provides commonly used query parameters that can be applied
+  to collection queries to sort and page through large
+  result sets
+
+
+traits:
+  taggable:
+    usage: Apply this to an API endpoint needing the tag query parameters
+    description: Some requests need a tag (taxonomy)
+    queryParameters:
+      tags:
+        description: Taxonomy term associated to the record
+        type: string
+        required: false
+  limited:
+    usage: Apply this to an API Endpoint needed the limit query parameter
+    description: Some request needs a limit to the number of requests they return
+    queryParameters:
+      limit:
+        description: The number of records that can be returned
+        type: integer
+        required: false
+  secured:
+    usage: Apply this to an API endpoint that needs Client ID + Secret security
+    description: Some requests need security applied to it for Client ID + Secret
+    queryParameters:
+      client_id:
+        description: The Client ID provided to you for access to this API
+        type: string
+      client_secret:
+        description: The Client Secret provided to you for access to this API
+        type: string
+  pageable:
+    usage: Apply this to an API endpoint that needs to be paged
+    description: Some requests needs to be paged
+    queryParameters:
+      limit:
+        description: The number of records returned
+        type: integer
+        required: false
+      offset:
+        description: The offset of the paging
+        type: integer
+        required: false
+  xmlOutput:
+    usage: Apply this to an API endpoint that needs to be output in XML
+    description: Provide result in XML format
+    queryParameters:
+      xml:
+        description: Output result as XML
+        type: boolean
+        required: false            

@@ -1,0 +1,185 @@
+#%RAML 1.0 Library
+
+usage: |
+  provides commonly used types
+
+types:
+  tag:
+    type: string
+#    minLength: 0
+#    maxLength: 50
+
+  searchTerm:
+    type: string
+#    minLength: 0
+#    maxLength: 100
+
+  story:
+    type: object
+    properties:
+      id:
+        required: true
+        type: integer
+      title:
+        required: true
+        type: string
+#        minLength: 0
+#        maxLength: 250
+      imageUrl:
+        required: false
+        type: string
+      content:
+        description: Excerpt text/teaser text
+        required: true
+        type: string
+#        minLength: 0
+#        maxLength: 5000
+      linkText:
+        required: false
+        type: string
+      linkUrl:
+        required: false
+        type: string
+      publicationDate:
+        required: false
+        type: string
+      tags:
+        required: true
+        type: tag[]
+  quote:
+    type: object
+    properties:
+      id:
+        required: true
+        type: integer
+      title:
+        required: true
+        type: string
+#        minLength: 0
+#        maxLength: 250
+      imageUrl:
+        required: false
+        type: string
+#        minLength: 0
+#        maxLength: 100
+      name:
+        required: true
+        type: string
+      quoteText:
+        required: true
+        type: string
+#        minLength: 0
+#        maxLength: 250
+      quoteCitation:
+        required: true
+        type: string
+#        minLength: 0
+#        maxLength: 50
+      linkText:
+        required: false
+        type: string
+      linkUrl:
+        required: false
+        type: string
+      tags:
+        required: true
+        type: tag[]
+  taxonomy:
+    type: object
+    properties:
+      id:
+        required: true
+        type: string
+#        maxLength: 10
+      term:
+        required: true
+        type: string
+#        maxLength: 100
+      slug:
+        required: true
+        type: string
+#        maxLength: 25
+  newsArticle:
+    type: object
+    properties:
+      id:
+        required: true
+        type: string
+#        maxLength: 10
+      title:
+        required: true
+        type: string
+#        maxLength: 50
+      imageUrl:
+        required: true
+        type: string
+#        maxLength: 100
+      content:
+        required: true
+        type: string
+#        maxLength: 500
+      linkUrl:
+        required: true
+        type: string
+#        maxLength: 100
+      publicationDate:
+        required: true
+        type: date-only
+      tags:
+        required: true
+        type: tag[]
+  exception:
+    type: object
+    properties:
+      message:
+        type: string
+      link:
+        type: string  
+  eventTime:
+    type: object
+    properties:
+      startDate:
+        type: string
+        required: true
+      endDate:
+        type: string
+        required: true
+  event:
+    type: object
+    properties:
+      id:
+        required: true
+        type: string
+      title:
+        required: true
+        type: string
+      imageUrl:
+        required: true
+        type: string
+      description:
+        required: true
+        type: string
+      linkUrl:
+        required: true
+        type: string
+      eventTimes:
+        type: eventTime[]
+        required: true
+      location:
+        required: true
+        type: string
+      latitude:
+        required: true
+        type: string
+      longitude:
+        required: true
+        type: string
+      autotags:
+        required: false
+        type: string
+      tags:
+        required: true
+        type: tag[]
+      categories:
+        required: false
+        type: string
