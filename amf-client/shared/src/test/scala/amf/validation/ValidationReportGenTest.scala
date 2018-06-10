@@ -25,7 +25,7 @@ trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTest {
       case None =>
         Future.successful({
           if (!report.conforms) fail("Report not conforms")
-          if (!report.results.isEmpty) fail("Report conforms but there is results, probably some warnings")
+          if (report.results.nonEmpty) fail("Report conforms but there is results, probably some warnings")
           succeed
         })
       // i have to check results in order to check warnings. If you pass none, and you are expeting some warnings, you should use the file assertion to check the warnings messages.
@@ -45,4 +45,12 @@ trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTest {
       r
     }
   }
+}
+
+trait ValidModelTest extends ValidationReportGenTest {
+  override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/"
+  override val reportsPath: String = ""
+
+  protected def cycle(api: String): Future[Assertion] = super.cycle(api, None, ProfileNames.RAML, None)
+
 }

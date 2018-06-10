@@ -18,4 +18,25 @@ class ModelValidationReportTest extends ValidationReportGenTest {
     cycle("closed_nodes/api.raml", Some("closed-nodes.report"))
   }
 
+  test("No title validation") {
+    cycle("webapi/no_title.raml", Some("webapi-no-title.report"))
+  }
+
+  //this is from resolution its ok here o i should add another test apart.
+
+  test("Property overwriting") {
+    cycle("types/property_overwriting.raml", Some("property_overwriting.report"))
+  }
+
+  test("Invalid media type") {
+    cycle("webapi/invalid_media_type.raml", Some("invalid-media-type.report"))
+  }
+
+  test("json schema inheritance") {
+    cycle("types/schema_inheritance.raml", Some("schema_inheritance.report"))
+  }
+
+  test("xml schema inheritance") {
+    cycle("types/schema_inheritance2.raml", Some("schema_inheritance2.report"))
+  }
 }

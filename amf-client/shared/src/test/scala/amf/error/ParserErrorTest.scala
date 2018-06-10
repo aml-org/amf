@@ -21,8 +21,10 @@ trait ParserErrorTest extends AsyncFunSuite with PlatformSecrets with Matchers {
       build(validation, basePath + file)
         .map { _ =>
           val report = validation.aggregatedReport
-          if (report.size != fixture.size) report.foreach(println)
-          report.size should be(fixture.size)
+          if (report.size != fixture.size) {
+            report.foreach(println)
+            fail(s"Expected results has lenght of ${fixture.size} while actual results are ${report.size}")
+          }
           fixture.zip(report).foreach {
             case (fn, result) => fn(result)
           }

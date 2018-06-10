@@ -135,6 +135,80 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
+  test("Duplicated endpoints validations test") {
+    validate(
+      "/dup_endpoint.raml",
+      numberViolation => {
+        numberViolation.level should be("Violation")
+        numberViolation.message should startWith("Duplicated resource path /users/foo")
+      }
+    )
+  }
+
+  test("Invalid baseUri validations test") {
+    validate(
+      "/invalid_baseuri.raml",
+      numberViolation => {
+        numberViolation.level should be("Violation")
+        numberViolation.message should startWith("'http://{myapi.com' is not a valid template uri")
+      }
+    )
+  }
+
+  ignore("Invalid mediaType validations test") {
+    validate(
+      "/invalid_media_type.raml",
+      numberViolation => {
+        numberViolation.level should be("Violation")
+        numberViolation.message should startWith("")
+      }
+    )
+  }
+
+  test("Mutually exclusive 'type' and 'schema' facets validations test") {
+    validate(
+      "/type-exclusive-facets.raml",
+      exclusive1 => {
+        exclusive1.level should be("Violation")
+        exclusive1.message should startWith("'schema' and 'type' properties are mutually exclusive")
+        exclusive1.position.map(_.range) should be(Some(Range((8, 4), (8, 10))))
+      },
+      exclusive1Warning => {
+        exclusive1Warning.level should be("Warning")
+        exclusive1Warning.message should startWith(
+          "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead")
+        exclusive1Warning.position.map(_.range) should be(Some(Range((8, 4), (8, 10))))
+      },
+      exclusive2 => {
+        exclusive2.level should be("Violation")
+        exclusive2.message should startWith("'schema' and 'type' properties are mutually exclusive")
+        exclusive2.position.map(_.range) should be(Some(Range((17, 12), (17, 18))))
+      },
+      exclusive2Warning => {
+        exclusive2Warning.level should be("Warning")
+        exclusive2Warning.message should startWith(
+          "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead")
+        exclusive2Warning.position.map(_.range) should be(Some(Range((17, 12), (17, 18))))
+
+      }
+    )
+  }
+
+  test("Mutually exclusive 'types' and 'schemas' facets validations test") {
+    validate(
+      "/webapi-exclusive-facets.raml",
+      exclusive1 => {
+        exclusive1.level should be("Violation")
+        exclusive1.message should startWith("'schemas' and 'types' properties are mutually exclusive")
+      },
+      warning => {
+        warning.level should be("Warning")
+        warning.message should startWith(
+          "'schemas' keyword it's deprecated for 1.0 version, should use 'types' instead")
+      }
+    )
+  }
+
 // todo hnajles: move to validmodelvalidationtest when branch of refactor is complete
   test("Empty describe by") {
     validate(

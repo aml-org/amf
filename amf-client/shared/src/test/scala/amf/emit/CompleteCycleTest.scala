@@ -10,6 +10,7 @@ class CompleteCycleTest extends BuildCycleTests {
   val base08Path        = "amf-client/shared/src/test/resources/upanddown/raml08/"
   val referencesPath    = "amf-client/shared/src/test/resources/references/"
   val productionPath    = "amf-client/shared/src/test/resources/production/"
+  val validationsPath   = "amf-client/shared/src/test/resources/validations/"
   val apiPath           = "amf-client/shared/src/test/resources/api/"
 
   test("Full raml to raml test") {
@@ -1154,7 +1155,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Example issue nil raml to amf") {
-    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, productionPath + "testIssueNil/")
+    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, validationsPath + "examples/inline-named-examples/")
   }
 
   test("Examples usage in raml 1.0 spec raml to amf") {
