@@ -5,11 +5,11 @@ types:
     additionalProperties: true
     properties:
       name:
-        required: true
         type: string
+        required: true
       age:
-        required: false
         type: number
+        required: false
       //:
         type: string
         required: true

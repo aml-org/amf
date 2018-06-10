@@ -1,0 +1,6477 @@
+#%RAML 1.0 Library
+usage: contains definitions for miscellaneous constructs
+annotationTypes:
+  oas-summary:
+    type: string
+    allowedTargets: Method
+  oas-responses-default:
+    type: any
+    allowedTargets: Method
+  oas-tags:
+    type: 'string[]'
+    allowedTargets: Method
+  oas-body-name:
+    type: string
+    allowedTargets: TypeDeclaration
+  oas-format:
+    type: string
+    allowedTargets: TypeDeclaration
+types:
+  Productivity:
+    type: array
+    items:
+      type: object
+      properties:
+        manager:
+          type: string
+          description: Site Manager name
+        today_published:
+          type: number
+          description: Today's WO's Published
+        today_pending:
+          type: number
+          description: Today's WO's Pending
+        today_in_progress:
+          type: number
+          description: Today's WO's In Progress
+        today_completed:
+          type: number
+          description: Today's WO's Completed
+        today_on_hold:
+          type: number
+          description: Today's WO's ON Hold
+        week_published:
+          type: number
+          description: Week's WO's Published
+        week_pending:
+          type: number
+          description: Week's WO's Pending
+        week_in_progress:
+          type: number
+          description: Week's WO's In Progress
+        week_completed:
+          type: number
+          description: Week's WO's Completed
+        week_on_hold:
+          type: number
+          description: Week's WO's ON Hold
+        tomorrow:
+          type: number
+          description: WO's Tomorrow
+        this_week:
+          type: number
+          description: WO's This Week
+        next_week:
+          type: number
+          description: WO's Next Week
+        next_four_weeks:
+          type: number
+          description: WO's Next 4 Weeks
+        jeopardy:
+          type: number
+          description: 72HR Jeopardy
+        completed:
+          type: number
+          description: WO's Completed to Date
+  FundTransaction:
+    properties:
+      id:
+        type: integer
+        required: false
+      type:
+        type: string
+        enum:
+          - payment
+          - withdrawal
+          - deposit
+          - loan
+          - service_fee
+          - insurance_fee
+          - ccauth
+      amount:
+        type: number
+      description:
+        type: string
+        required: false
+      status:
+        type: string
+        enum:
+          - pending
+          - completed
+          - holding
+          - failed
+        required: false
+      status_reason:
+        type: string
+        required: false
+      note:
+        type: string
+        required: false
+      credit_card_id:
+        type: string
+        required: false
+      external_id:
+        type: string
+        required: false
+      created:
+        type: Date
+        required: false
+      updated:
+        type: Date
+        required: false
+      work_order:
+        type: WorkOrder
+        required: false
+      credit_card:
+        type: CreditCard
+        required: false
+      bank:
+        type: Bank
+        required: false
+      billing_address:
+        type: BillingAddress
+        required: false
+  Bank:
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+      routingNumber:
+        type: number
+      accountNumber:
+        type: string
+      accountType:
+        type: string
+        enum:
+          - Checking
+          - Savings
+      accountCategory:
+        type: string
+        enum:
+          - Business
+          - Consumer
+  CreditCard:
+    properties:
+      type:
+        type: string
+        enum:
+          - visa
+          - mastercard
+          - american express
+          - discover
+          - jcb
+          - diners club
+      card_number:
+        type: string
+      exp_date:
+        type: string
+        pattern: '^\d{2}\/\d{2}$'
+        description: format MM/YY
+      cvv:
+        type: string
+      cardholder_name:
+        type: string
+  BillingAddress:
+    properties:
+      address:
+        type: string
+      address2:
+        type: string
+        required: false
+      city:
+        type: string
+      state:
+        type: string
+        description: 2-letter state code
+      zip:
+        type: string
+        pattern: '^\d{5}(\d{4})?$'
+      country:
+        type: string
+        description: 2-letter country code
+      email:
+        type: string
+        required: false
+      phone:
+        type: string
+        required: false
+  AvailableColumn:
+    properties:
+      group:
+        type: string
+        required: false
+      items:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              required: false
+            label:
+              type: string
+              required: false
+            group:
+              type: string
+              required: false
+            order:
+              type: integer
+              required: false
+            icon:
+              type: string
+              required: false
+            selected:
+              type: boolean
+              required: false
+            can_sort:
+              type: boolean
+              required: false
+            sort_dir:
+              type: string
+              required: false
+        required: false
+  Lists:
+    type: array
+    items:
+      type: List
+  List:
+    properties:
+      count:
+        type: integer
+        required: false
+      label:
+        type: string
+        required: false
+      empty_message:
+        type: string
+        required: false
+      selected:
+        type: boolean
+        required: false
+      unread:
+        type: integer
+        required: false
+      updated:
+        type: string
+        required: false
+      thumbnail:
+        type: string
+        required: false
+      subject:
+        type: string
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+        required: false
+  ListEnvelope:
+    properties:
+      total:
+        type: integer
+        required: false
+      total_unread:
+        type: integer
+        required: false
+      page:
+        type: integer
+        required: false
+      pages:
+        type: integer
+        required: false
+      per_page:
+        type: integer
+        required: false
+      columns:
+        type: string
+        required: false
+      available_columns:
+        type: array
+        items:
+          type: AvailableColumn
+        required: false
+      list:
+        type: string
+        required: false
+      view:
+        type: string
+        enum:
+          - map
+          - list
+          - schedule
+          - model
+          - card
+        required: false
+      sort:
+        type: string
+        required: false
+      order:
+        type: string
+        enum:
+          - asc
+          - desc
+        required: false
+      timings:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+              required: false
+            time:
+              type: integer
+              required: false
+        required: false
+  Coords:
+    properties:
+      latitude:
+        type: number
+        required: false
+      longitude:
+        type: number
+        required: false
+      exact:
+        type: boolean
+        required: false
+      success:
+        type: boolean
+        required: false
+      search:
+        type: string
+        required: false
+      distance:
+        type: number
+        required: false
+      map_href:
+        type: string
+        required: false
+  Screening:
+    properties:
+      user_id:
+        type: integer
+        required: false
+      name:
+        type: string
+        enum:
+          - background_check
+          - drug_test
+          - driving_records_check
+          - credit_check
+        required: false
+      extra:
+        type: string
+        required: false
+      verified:
+        type: Utc
+        required: false
+      expires:
+        type: Utc
+        required: false
+  BackgroundCheck:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      updated:
+        type: string
+        required: false
+      expires:
+        type: string
+        required: false
+      highlights:
+        type: array
+        items:
+          type: string
+        required: false
+  Routes:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - add
+        required: false
+      user_route:
+        type: Route
+        required: false
+      results:
+        type: array
+        items:
+          type: Route
+        required: false
+  Route:
+    properties:
+      id:
+        type: integer
+        required: false
+      declined:
+        type: boolean
+        required: false
+      assigned:
+        type: boolean
+        required: false
+      created:
+        type: Date
+        required: false
+      technician:
+        type: MinimalUser
+        required: false
+      routed:
+        type: MinimalUser
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - deny
+            - accept
+        required: false
+  Requests:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - add
+            - counter_offer
+        required: false
+      open_request:
+        type: Request
+        required: false
+      results:
+        type: array
+        items:
+          type: Request
+        required: false
+  Request:
+    properties:
+      id:
+        type: integer
+        required: false
+      counter:
+        type: boolean
+        required: false
+      counter_notes:
+        type: string
+        required: false
+      active:
+        type: boolean
+        required: false
+      created:
+        type: Date
+        required: false
+      expires:
+        type: Date
+        required: false
+      expired:
+        type: boolean
+        required: false
+      schedule:
+        type: Schedule
+        required: false
+      eta:
+        type: ETA
+        required: false
+      hour_estimate:
+        type: number
+        required: false
+      notes:
+        type: string
+        required: false
+      user:
+        type: MinimalUser
+        required: false
+      work_order:
+        type: MinimalWorkOrder
+        required: false
+      pay:
+        type: Pay
+        required: false
+      expenses:
+        type: array
+        items:
+          type: Expense
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - delete
+        required: false
+  Declines:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      sum:
+        type: object
+        properties:
+          all:
+            type: number
+            required: false
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - add
+        required: false
+      results:
+        type: array
+        items:
+          type: Decline
+        required: false
+  Decline:
+    properties:
+      id:
+        type: integer
+        required: false
+      created:
+        type: Date
+        required: false
+      user:
+        type: MinimalUser
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - delete
+        required: false
+  DrugTest:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      expires:
+        type: string
+        required: false
+  Utc:
+    type: string
+    pattern: '/^20[0-9]{2}-[0-9]{2}-[0-9]{2}$/'
+  Local:
+    properties:
+      date:
+        type: string
+        pattern: '/^20[0-9]{2}-[0-9]{2}-[0-9]{2}$/'
+        required: false
+      time:
+        type: string
+        pattern: '/^[0-9]{2}:[0-9]{2}$/'
+        required: false
+  Date:
+    properties:
+      utc:
+        type: Utc
+        required: false
+      local:
+        type: Local
+        required: false
+  IdResponse:
+    properties:
+      id:
+        type: integer
+        required: false
+  SavedList:
+    properties:
+      id:
+        type: string
+        required: false
+      count:
+        type: integer
+        required: false
+      default:
+        type: boolean
+        required: false
+      sort:
+        type: string
+        required: false
+      order:
+        type: string
+        enum:
+          - asc
+          - desc
+        required: false
+      columns:
+        type: string
+        required: false
+      label:
+        type: string
+        required: false
+  TimeZone:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      short:
+        type: string
+        required: false
+      offset:
+        type: number
+        required: false
+  MinimalUser:
+    properties:
+      id:
+        type: integer
+        required: false
+      first_name:
+        type: string
+        required: false
+      last_name:
+        type: string
+        required: false
+      thumbnail:
+        type: string
+        required: false
+  User:
+    properties:
+      actions:
+        type: array
+        items:
+          type: string
+        required: false
+      id:
+        type: integer
+        required: false
+      first_name:
+        type: string
+        required: false
+      last_name:
+        type: string
+        required: false
+      address:
+        type: string
+        required: false
+      city:
+        type: string
+        required: false
+      state:
+        type: string
+        required: false
+      zip:
+        type: string
+        required: false
+      country:
+        type: string
+        required: false
+      thumbnail:
+        type: string
+        required: false
+      w2:
+        type: boolean
+        required: false
+      created:
+        type: Date
+        required: false
+      worker_compensation:
+        type: boolean
+        required: false
+      time_zone:
+        type: TimeZone
+        required: false
+      insurances:
+        type: Insurances
+        required: false
+      request:
+        type: Request
+        required: false
+      notifications:
+        type: Notifications
+        required: false
+      messages:
+        type: Messages
+        required: false
+      route:
+        type: Route
+        required: false
+      website:
+        type: string
+        required: false
+      coords:
+        type: Coords
+        required: false
+      protec:
+        type: boolean
+        required: false
+      marketplace:
+        type: boolean
+        required: false
+      routable:
+        type: boolean
+        required: false
+      assigned:
+        type: boolean
+        required: false
+      assignable:
+        type: boolean
+        required: false
+      unassignable:
+        type: boolean
+        required: false
+      work_order:
+        type: object
+        required: false
+      previous_request:
+        type: object
+        properties:
+          at:
+            type: Date
+            required: false
+        required: false
+      previous_assignment:
+        type: object
+        properties:
+          removal:
+            type: Date
+            required: false
+          by:
+            type: MinimalUser
+            required: false
+          reason:
+            type: string
+            required: false
+        required: false
+      background_checks:
+        type: object
+        properties:
+          metadata:
+            type: ListEnvelope
+            required: false
+          results:
+            type: array
+            items:
+              type: BackgroundCheck
+            required: false
+        required: false
+      drug_tests:
+        type: object
+        properties:
+          metadata:
+            type: ListEnvelope
+            required: false
+          results:
+            type: array
+            items:
+              type: DrugTest
+            required: false
+        required: false
+      upcoming_schedule:
+        type: array
+        items:
+          type: object
+          properties:
+            date:
+              type: string
+              required: false
+            from:
+              type: string
+              required: false
+            to:
+              type: string
+              required: false
+        required: false
+      worked_with:
+        type: boolean
+        required: false
+      jobs:
+        type: object
+        properties:
+          marketplace:
+            type: integer
+            required: false
+          company:
+            type: integer
+            required: false
+          type_of_work:
+            type: object
+            properties:
+              name:
+                type: string
+                required: false
+              count:
+                type: integer
+                required: false
+            required: false
+        required: false
+      managed:
+        type: boolean
+        required: false
+      rating:
+        type: object
+        properties:
+          my_company:
+            type: Rating
+            required: false
+          marketplace:
+            type: Rating
+            required: false
+        required: false
+      company:
+        type: object
+        properties:
+          id:
+            type: integer
+            required: false
+          name:
+            type: string
+            required: false
+          features:
+            type: array
+            items:
+              type: string
+            required: false
+          technicians:
+            type: integer
+            required: false
+          vendors:
+            type: array
+            items:
+              type: Company
+            required: false
+          jobs:
+            type: object
+            properties:
+              marketplace:
+                type: integer
+                required: false
+              company:
+                type: integer
+                required: false
+            required: false
+          role:
+            type: object
+            properties:
+              marketplace_manager:
+                type: boolean
+                required: false
+            required: false
+        required: false
+      client:
+        type: Company
+        required: false
+      role:
+        type: string
+        required: false
+      last_active:
+        type: Date
+        required: false
+      email:
+        type: string
+        required: false
+      phone:
+        type: string
+        required: false
+      finance:
+        type: Finances
+        required: false
+      preferred_groups:
+        type: object
+        properties:
+          metadata:
+            type: ListEnvelope
+            required: false
+          actions:
+            type: array
+            items:
+              type: string
+              enum:
+                - add
+            required: false
+          results:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  required: false
+                name:
+                  type: string
+                  required: false
+                notes:
+                  type: string
+                  required: false
+                count:
+                  type: integer
+                  required: false
+                created:
+                  type: Date
+                  required: false
+            required: false
+        required: false
+      about:
+        type: string
+        required: false
+      tagline:
+        type: string
+        required: false
+      block:
+        type: Block
+        required: false
+      types_of_work:
+        type: TypesOfWork
+        required: false
+      experience:
+        type: Experiences
+        required: false
+      certifications:
+        type: Certifications
+        required: false
+      notes:
+        type: UserNotes
+        required: false
+      licenses:
+        type: Licenses
+        required: false
+      correlation_id:
+        type: string
+        required: false
+      education:
+        type: Educations
+        required: false
+      group:
+        type: object
+        properties:
+          id:
+            type: number
+            required: false
+          name:
+            type: string
+            required: false
+        required: false
+      experiments:
+        type: object
+        properties:
+          metadata:
+            type: ListEnvelope
+            required: false
+          actions:
+            type: array
+            items:
+              type: string
+            required: false
+          results:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: number
+                  required: false
+                name:
+                  type: string
+                  required: false
+                value:
+                  type: string
+                  required: false
+                created_date:
+                  type: Date
+                  required: false
+                actions:
+                  type: array
+                  items:
+                    type: string
+                  required: false
+            required: false
+        required: false
+      preferences:
+        type: object
+        properties:
+          metadata:
+            type: ListEnvelope
+            required: false
+          actions:
+            type: array
+            items:
+              type: string
+            required: false
+          results:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: number
+                  required: false
+                name:
+                  type: string
+                  required: false
+                value:
+                  type: string
+                  required: false
+                actions:
+                  type: array
+                  items:
+                    type: string
+                  required: false
+            required: false
+        required: false
+      features:
+        type: object
+        properties:
+          metadata:
+            type: ListEnvelope
+            required: false
+          actions:
+            type: array
+            items:
+              type: string
+            required: false
+          results:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: number
+                  required: false
+                name:
+                  type: string
+                  required: false
+                status:
+                  type: string
+                  required: false
+                actions:
+                  type: array
+                  items:
+                    type: string
+                  required: false
+            required: false
+        required: false
+      is_end_client:
+        type: boolean
+        required: false
+      portal:
+        type: object
+        properties:
+          id:
+            type: number
+            required: false
+          name:
+            type: string
+            required: false
+          hostname:
+            type: string
+            required: false
+          logo:
+            type: string
+            required: false
+        required: false
+      home:
+        type: string
+        required: false
+      email_verification:
+        type: boolean
+        required: false
+      is_screening_administrator:
+        type: boolean
+        required: false
+  WorkHistory:
+    type: array
+    items:
+      type: object
+      properties:
+        metadata:
+          type: ListEnvelope
+        total:
+          type: integer
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              type_of_work_id:
+                type: integer
+              type_of_work:
+                type: string
+              jobs:
+                type: integer
+              average_hourly_rate:
+                type: number
+        actions:
+          type: array
+          items:
+            type: string
+            enum:
+              - view
+  Bundle:
+    properties:
+      id:
+        type: integer
+        required: false
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: MinimalWorkOrder
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - view
+        required: false
+  MinimalNetwork:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+  Network:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      description:
+        type: string
+        required: false
+      access:
+        type: array
+        items:
+          type: string
+          enum:
+            - pending
+            - active
+            - suspended
+        required: false
+      view_available:
+        type: boolean
+        required: false
+      inactive_routing:
+        type: boolean
+        required: false
+      onboarding_complete:
+        type: boolean
+        required: false
+      onboarding_type:
+        type: OnboardingType
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+        required: false
+      options:
+        type: array
+        items:
+          type: NetworkOption
+        required: false
+      onboarding_steps:
+        type: array
+        items:
+          type: MinimalOnboardingStep
+        required: false
+  NetworkOption:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      description:
+        type: string
+        required: false
+      value:
+        type: string
+        required: false
+  MinimalOnboardingStep:
+    properties:
+      id:
+        type: integer
+        required: false
+      network:
+        type: MinimalNetwork
+        required: false
+      name:
+        type: string
+        required: false
+      complete:
+        type: boolean
+        required: false
+  OnboardingStep:
+    properties:
+      id:
+        type: integer
+        required: false
+      network:
+        type: Network
+        required: false
+      name:
+        type: string
+        required: false
+      complete:
+        type: boolean
+        required: false
+  OnboardingType:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+  Feature:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+  MinimalWorkOrder:
+    properties:
+      id:
+        type: integer
+        required: false
+      title:
+        type: string
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - set_network
+            - withdraw_request
+            - confirm
+            - messaging
+            - managed
+            - set_managed
+            - report_a_problem
+            - view_problem
+            - map
+            - closing_notes
+            - search-provider
+            - history
+            - copy
+            - print
+            - overview
+            - tasks
+            - counter_offer
+            - apply_tags
+            - publish
+            - route
+            - delete
+            - hold
+            - cancel
+            - unpublish
+            - revert
+            - approve
+            - complete
+            - incomplete
+            - request
+            - edit
+            - unapprove
+            - create_template
+            - paid
+            - unpaid
+            - service_types
+        required: false
+  WorkOrder:
+    properties:
+      id:
+        type: integer
+        required: false
+      networks:
+        type: array
+        items:
+          type: Network
+        required: false
+      correlation_id:
+        type: string
+        required: false
+      printable:
+        type: boolean
+        required: false
+      allow_counter_offers:
+        type: boolean
+        required: false
+      closing_notes:
+        type: string
+        required: false
+      title:
+        type: string
+        required: false
+      assignee:
+        type: Assignee
+        required: false
+      type_of_work:
+        type: TypeOfWork
+        required: false
+      manager:
+        type: Manager
+        required: false
+      template:
+        type: Template
+        required: false
+      bundle:
+        type: Bundle
+        required: false
+      project:
+        type: Project
+        required: false
+      role:
+        type: object
+        properties:
+          role:
+            type: string
+            required: false
+        required: false
+      client:
+        type: Company
+        required: false
+      company:
+        type: Company
+        required: false
+      custom_fields:
+        type: CustomFields
+        required: false
+      time_logs:
+        type: TimeLogs
+        required: false
+      w2:
+        type: boolean
+        required: false
+      location:
+        type: Location
+        required: false
+      schedule:
+        type: Schedule
+        required: false
+      eta:
+        type: ETA
+        required: false
+      qualifications:
+        type: Qualifications
+        required: false
+      signatures:
+        type: Signatures
+        required: false
+      pay:
+        type: Pay
+        required: false
+      contacts:
+        type: Contacts
+        required: false
+      shipments:
+        type: Shipments
+        required: false
+      attachments:
+        type: AttachmentFolders
+        required: false
+      tasks:
+        type: Tasks
+        required: false
+      messages:
+        type: Messages
+        required: false
+      requests:
+        type: Requests
+        required: false
+      routes:
+        type: Routes
+        required: false
+      declines:
+        type: Declines
+        required: false
+      status:
+        type: Status
+        required: false
+      holds:
+        type: Holds
+        required: false
+      milestones:
+        type: Milestones
+        required: false
+      description:
+        type: RichText
+        required: false
+      confidential:
+        type: RichText
+        required: false
+      policy_and_procedures:
+        type: RichText
+        required: false
+      standard_instructions:
+        type: RichText
+        required: false
+      selection_rule:
+        type: SelectionRule
+        required: false
+      ratings:
+        type: WorkOrderRatings
+        required: false
+      workflow_completion:
+        type: WorkflowCompletion
+        required: false
+      publish_stats:
+        type: PublishStats
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - set_network
+            - withdraw_request
+            - confirm
+            - messaging
+            - managed
+            - set_managed
+            - report_a_problem
+            - view_problem
+            - map
+            - closing_notes
+            - search-provider
+            - history
+            - copy
+            - print
+            - overview
+            - tasks
+            - counter_offer
+            - apply_tags
+            - publish
+            - route
+            - delete
+            - hold
+            - cancel
+            - unpublish
+            - revert
+            - approve
+            - complete
+            - incomplete
+            - request
+            - edit
+            - unapprove
+            - create_template
+            - paid
+            - unpaid
+            - service_types
+        required: false
+      service_contract:
+        type: ServiceContract
+        required: false
+      team:
+        type: Team
+        required: false
+      client_request:
+        type: ClientRequest
+        required: false
+      integration:
+        type: Integration
+        required: false
+      invoice:
+        type: object
+        properties:
+          id:
+            type: string
+            required: false
+        required: false
+      service_types:
+        type: array
+        items:
+          type: ServiceType
+        required: false
+  PublishStats:
+    properties:
+      requests:
+        type: integer
+        required: false
+      all_requests:
+        type: integer
+        required: false
+      counter_offers:
+        type: integer
+        required: false
+      routes:
+        type: integer
+        required: false
+      declines:
+        type: integer
+        required: false
+      correlation_id:
+        type: string
+        required: false
+  Manager:
+    properties:
+      id:
+        type: integer
+        required: false
+      first_name:
+        type: string
+        required: false
+      last_name:
+        type: string
+        required: false
+      email:
+        type: string
+        required: false
+      phone:
+        type: string
+        required: false
+  WorkOrders:
+    properties:
+      user_id:
+        type: integer
+        required: false
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: WorkOrder
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - feedback
+            - payment_link
+            - add_type_of_work
+            - remind
+            - create
+            - import
+            - highlight_problems
+            - publish_stats
+            - advanced_date_filtering
+            - edit
+            - publish
+            - revert
+            - cancel
+            - bundle
+            - unbundle
+            - dispatch
+            - message
+            - hold
+            - download_attachments
+            - approve
+            - auto_assign
+            - location_filtering
+        required: false
+  PPNs:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: PPN
+        required: false
+  PPN:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      members:
+        type: integer
+        required: false
+  HoldCategory:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+  Hold:
+    properties:
+      id:
+        type: integer
+        required: false
+      reason:
+        type: string
+        required: false
+      type:
+        type: HoldCategory
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - acknowledge
+            - delete
+            - edit
+        required: false
+      acknowledgment:
+        type: Acknowledgment
+        required: false
+  Publish:
+    properties:
+      credit_card_id:
+        type: string
+        required: false
+      credit_card:
+        type: CreditCard
+        required: false
+      billing_address:
+        type: BillingAddress
+        required: false
+  Acknowledgment:
+    properties:
+      status:
+        type: string
+        enum:
+          - acknowledged
+          - pending
+        required: false
+      author:
+        type: MinimalUser
+        required: false
+      created:
+        type: Date
+        required: false
+  Clients:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: Client
+        required: false
+  Client:
+    properties:
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - edit
+            - delete
+            - create_work_order
+            - create_project
+            - invoicing
+            - create_client_request
+            - deactivate
+            - reactivate
+            - create_user
+        required: false
+      active:
+        type: boolean
+        required: false
+      name:
+        type: string
+        required: false
+      id:
+        type: integer
+        required: false
+      print_logo:
+        type: boolean
+        required: false
+      address_1:
+        type: string
+        required: false
+      address_2:
+        type: string
+        required: false
+      city:
+        type: string
+        required: false
+      state:
+        type: string
+        required: false
+      zip:
+        type: string
+        required: false
+      country:
+        type: string
+        required: false
+      location_type:
+        type: integer
+        required: false
+      website:
+        type: string
+        required: false
+      policy_procedure:
+        type: string
+        required: false
+      standard_instruction:
+        type: string
+        required: false
+      about:
+        type: string
+        required: false
+      created:
+        type: Date
+        required: false
+      projects:
+        type: MinimalProjects
+        required: false
+      manager:
+        type: MinimalUser
+        required: false
+      work_order_counts:
+        type: object
+        properties:
+          all:
+            type: integer
+            required: false
+          today:
+            type: integer
+            required: false
+          published_routed:
+            type: integer
+            required: false
+          assigned:
+            type: integer
+            required: false
+          approved_paid:
+            type: integer
+            required: false
+          draft:
+            type: integer
+            required: false
+          work_done:
+            type: integer
+            required: false
+        required: false
+  Holds:
+    properties:
+      actions:
+        type: array
+        items:
+          type: string
+        required: false
+      metadata:
+        type: ListEnvelope
+        required: false
+      categories:
+        type: array
+        items:
+          type: HoldCategory
+        required: false
+      results:
+        type: array
+        items:
+          type: Hold
+        required: false
+  Status:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      actions:
+        type: string
+        enum:
+          - add
+        required: false
+      display:
+        type: string
+        required: false
+      problem_reported:
+        type: boolean
+        required: false
+      is_routed:
+        type: boolean
+        required: false
+      problem:
+        type: Problem
+        required: false
+      code:
+        type: string
+        required: false
+      sub_status:
+        type: string
+        required: false
+      delay:
+        type: integer
+        required: false
+      ncns:
+        type: boolean
+        required: false
+      confirmed:
+        type: boolean
+        required: false
+      correlation_id:
+        type: string
+        required: false
+  MinimalProject:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+  Project:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      correlation_id:
+        type: string
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - cancel
+            - complete
+            - reopen
+            - create_template
+            - create_work_order
+            - late_notification
+            - cancellation_fee
+            - edit
+            - delete
+        required: false
+      client:
+        type: Client
+        required: false
+      status:
+        type: string
+        enum:
+          - active
+          - completed
+          - cancelled
+        required: false
+      created:
+        type: Date
+        required: false
+      start:
+        type: Date
+        required: false
+      end:
+        type: Date
+        required: false
+      policy_and_procedures:
+        type: string
+        required: false
+      standard_instructions:
+        type: string
+        required: false
+      network:
+        type: Network
+        required: false
+      manager:
+        type: MinimalUser
+        required: false
+      templates:
+        type: Templates
+        required: false
+      finance:
+        type: Finance
+        required: false
+      cancellation_fee:
+        type: number
+        required: false
+      service_contract:
+        type: ServiceContract
+        required: false
+      selection_rule:
+        type: SelectionRule
+        required: false
+      auto_dispatch:
+        type: AutoDispatch
+        required: false
+      late_notification:
+        type: boolean
+        required: false
+      notifications:
+        type: object
+        properties:
+          email_subject:
+            type: object
+            properties:
+              manager:
+                type: string
+                required: false
+              provider:
+                type: string
+                required: false
+            required: false
+          email_body:
+            type: object
+            properties:
+              manager:
+                type: string
+                required: false
+              provider:
+                type: string
+                required: false
+            required: false
+          digest_email:
+            type: object
+            properties:
+              manager:
+                type: string
+                required: false
+              provider:
+                type: string
+                required: false
+            required: false
+          sms:
+            type: object
+            properties:
+              manager:
+                type: string
+                required: false
+              provider:
+                type: string
+                required: false
+            required: false
+          notification:
+            type: object
+            properties:
+              manager:
+                type: string
+                required: false
+              provider:
+                type: string
+                required: false
+            required: false
+        required: false
+      work_orders_counts:
+        type: object
+        properties:
+          today:
+            type: integer
+            required: false
+          draft:
+            type: integer
+            required: false
+          published_routed:
+            type: integer
+            required: false
+          assigned:
+            type: integer
+            required: false
+          work_done:
+            type: integer
+            required: false
+          approved_paid:
+            type: integer
+            required: false
+        required: false
+      spend_chart:
+        type: object
+        properties:
+          dates:
+            type: array
+            items:
+              type: string
+            required: false
+          spend:
+            type: object
+            required: false
+          budget:
+            type: array
+            items:
+              type: number
+            required: false
+          tickValues:
+            type: array
+            items:
+              type: string
+            required: false
+          yGridLines:
+            type: array
+            items:
+              type: object
+              properties:
+                value:
+                  type: integer
+                  required: false
+                axis:
+                  type: string
+                  required: false
+            required: false
+          yTickValues:
+            type: array
+            items:
+              type: integer
+            required: false
+        required: false
+      timings:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+              required: false
+            time:
+              type: integer
+              required: false
+        required: false
+  Projects:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - add
+        required: false
+      results:
+        type: array
+        items:
+          type: Project
+        required: false
+  MinimalProjects:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: MinimalProject
+        required: false
+  Location:
+    properties:
+      work_order_id:
+        type: integer
+        required: false
+      mode:
+        type: string
+        enum:
+          - custom
+          - remote
+          - location
+        required: false
+      role:
+        type: string
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - edit
+            - map
+        required: false
+      correlation_id:
+        type: string
+        required: false
+      status_id:
+        type: integer
+        required: false
+      address1:
+        type: string
+        required: false
+      address2:
+        type: string
+        required: false
+      city:
+        type: string
+        required: false
+      state:
+        type: string
+        required: false
+      zip:
+        type: string
+        required: false
+      country:
+        type: string
+        required: false
+      coordinates:
+        type: Coords
+        required: false
+      type:
+        type: object
+        properties:
+          id:
+            type: integer
+            required: false
+          name:
+            type: string
+            required: false
+        required: false
+      save_location:
+        type: string
+        required: false
+      save_location_group:
+        type: integer
+        required: false
+      saved_location:
+        type: StoredLocation
+        required: false
+      time_zone:
+        type: TimeZone
+        required: false
+      contacts:
+        type: array
+        items:
+          type: Contact
+        required: false
+      map:
+        type: Map
+        required: false
+      notes:
+        type: LocationNotes
+        required: false
+      validation:
+        type: object
+        properties:
+          is_valid:
+            type: boolean
+            required: false
+          messages:
+            type: array
+            items:
+              type: string
+            required: false
+        required: false
+  Map:
+    properties:
+      href:
+        type: string
+        required: false
+      url:
+        type: string
+        required: false
+  LocationCoordinates:
+    properties:
+      type:
+        type: string
+        description: Type of the object being looked up
+        required: false
+      id:
+        type: integer
+        description: Id of the item being looked up.
+        required: false
+      latitude:
+        type: number
+        description: Latitude of the item being looked up.
+        required: false
+      longitude:
+        type: number
+        description: Longitude of the item being looked up.
+        required: false
+      exact:
+        type: boolean
+        description: Whether the coordinates are an exact match.
+        required: false
+      city:
+        type: string
+        description: City of the item
+        required: false
+      state:
+        type: string
+        description: State of the item
+        required: false
+      zip:
+        type: string
+        description: Zip/Postal Code of the item
+        required: false
+      country:
+        type: string
+        description: Country of the item
+        required: false
+  CustomFields:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: CustomFieldCategory
+        required: false
+  CustomFieldCategory:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      role:
+        type: string
+        required: false
+      results:
+        type: array
+        items:
+          type: CustomField
+        required: false
+  CustomField:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      tip:
+        type: string
+        required: false
+      type:
+        type: string
+        enum:
+          - text
+          - numeric
+          - date
+          - date_time
+          - time
+          - predefined
+          - phone
+        required: false
+      options:
+        type: array
+        items:
+          type: string
+        required: false
+      role:
+        type: string
+        enum:
+          - buyer
+          - assigned_provider
+        required: false
+      value:
+        type: string
+        required: false
+      dependency:
+        type: object
+        properties:
+          id:
+            type: integer
+            required: false
+          value:
+            type: string
+            required: false
+          operator:
+            type: string
+            enum:
+              - less_than
+              - greater_than
+              - equals
+              - less_than_equals
+              - greater_than_equals
+            required: false
+        required: false
+      flags:
+        type: array
+        items:
+          type: string
+          enum:
+            - unique
+            - required
+            - internal_id
+            - required_during_checkin
+            - included_in_alerts
+            - shown_in_header
+            - seen_by_provider
+            - seen_by_clients
+            - visible_to_clients
+            - client_request_required
+            - client_request_use_for
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - edit
+        required: false
+      category:
+        type: string
+        required: false
+  ErrorTrace:
+    properties:
+      file:
+        type: string
+        required: false
+      line:
+        type: integer
+        required: false
+      function:
+        type: string
+        required: false
+      class:
+        type: string
+        required: false
+      object:
+        type: object
+        required: false
+      type:
+        type: string
+        required: false
+      args:
+        type: array
+        items:
+          type: object
+          properties:
+            status_code:
+              type: integer
+              required: false
+            message:
+              type: string
+              required: false
+        required: false
+  Error:
+    properties:
+      code:
+        type: integer
+        format: int32
+        required: false
+      message:
+        type: string
+        required: false
+      trace:
+        type: array
+        items:
+          type: ErrorTrace
+        required: false
+      fields:
+        type: string
+        required: false
+  MinimalPayIncrease:
+    properties:
+      id:
+        type: integer
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - accept
+            - edit
+            - deny
+            - delete
+        required: false
+      description:
+        type: string
+        required: false
+      status:
+        type: string
+        enum:
+          - denied
+          - accepted
+          - pending
+        required: false
+      status_description:
+        type: string
+        required: false
+      author:
+        type: MinimalUser
+        required: false
+      created:
+        type: Date
+        required: false
+  PayIncrease:
+    properties:
+      id:
+        type: integer
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - accept
+            - edit
+            - deny
+            - delete
+        required: false
+      description:
+        type: string
+        required: false
+      status:
+        type: string
+        enum:
+          - denied
+          - accepted
+          - pending
+        required: false
+      status_description:
+        type: string
+        required: false
+      pay:
+        type: Pay
+        required: false
+      author:
+        type: MinimalUser
+        required: false
+      created:
+        type: Date
+        required: false
+  MinimalPayIncreases:
+    properties:
+      sum:
+        type: object
+        properties:
+          all:
+            type: number
+            required: false
+        required: false
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: MinimalPayIncrease
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - add
+        required: false
+  PayIncreases:
+    properties:
+      sum:
+        type: object
+        properties:
+          all:
+            type: number
+            required: false
+        required: false
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: PayIncrease
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - add
+        required: false
+  OnMyWay:
+    properties:
+      active:
+        type: boolean
+        required: false
+      created:
+        type: Date
+        required: false
+      drive_time:
+        type: integer
+        required: false
+      distance:
+        type: number
+        required: false
+      status:
+        type: string
+        required: false
+      substatus:
+        type: string
+        required: false
+      estimated_delay:
+        type: integer
+        required: false
+      coords:
+        type: Coords
+        required: false
+  TimeLog:
+    properties:
+      id:
+        type: integer
+        required: false
+      time_zone:
+        type: TimeZone
+        required: false
+      in:
+        type: CheckInOut
+        required: false
+      out:
+        type: CheckInOut
+        required: false
+      devices:
+        type: number
+        required: false
+      hours:
+        type: number
+        required: false
+      verified:
+        type: boolean
+        required: false
+      should_verify:
+        type: boolean
+        required: false
+      was_late:
+        type: boolean
+        required: false
+      logged_by:
+        type: MinimalUser
+        required: false
+      on_my_way:
+        type: OnMyWay
+        required: false
+      status:
+        type: string
+        enum:
+          - checked_in
+          - checked_out
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - edit
+            - verify
+            - delete
+        required: false
+  TimeLogs:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      time_zone:
+        type: TimeZone
+        required: false
+      hours:
+        type: number
+        required: false
+      status:
+        type: string
+        required: false
+      confirmed:
+        type: Date
+        required: false
+      onmyway:
+        type: OnMyWay
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - can_verify
+            - add
+            - checkin
+        required: false
+      open_time_log:
+        type: TimeLog
+        required: false
+      results:
+        type: array
+        items:
+          type: TimeLog
+        required: false
+  LocationGroup:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+  LocationAttribute:
+    properties:
+      key:
+        type: string
+        required: false
+      value:
+        type: string
+        required: false
+      private:
+        type: boolean
+        required: false
+  LocationType:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+  Contact:
+    properties:
+      name:
+        type: string
+        required: false
+      role:
+        type: string
+        required: false
+      phone:
+        type: string
+        required: false
+      ext:
+        type: string
+        required: false
+      email:
+        type: string
+        required: false
+      notes:
+        type: string
+        required: false
+  Contacts:
+    properties:
+      correlation_id:
+        type: string
+        required: false
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: Contact
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - edit
+        required: false
+  Company:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      features:
+        type: array
+        items:
+          type: Feature
+        required: false
+      rating:
+        type: Rating
+        required: false
+      blocked:
+        type: boolean
+        required: false
+      location_address1:
+        type: string
+        required: false
+      location_address2:
+        type: string
+        required: false
+      location_city:
+        type: string
+        required: false
+      location_state:
+        type: string
+        required: false
+      location_zip:
+        type: string
+        required: false
+      location_country:
+        type: string
+        required: false
+      about:
+        type: string
+        required: false
+      provider_count:
+        type: integer
+        required: false
+      jobs:
+        type: object
+        properties:
+          marketplace:
+            type: integer
+            required: false
+          my_company:
+            type: integer
+            required: false
+        required: false
+      photo:
+        type: string
+        required: false
+  StoredLocation:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      company:
+        type: Company
+        required: false
+      group:
+        type: LocationGroup
+        required: false
+      type:
+        type: LocationType
+        required: false
+      address1:
+        type: string
+        required: false
+      address2:
+        type: string
+        required: false
+      city:
+        type: string
+        required: false
+      state:
+        type: string
+        required: false
+      zip:
+        type: string
+        required: false
+      country:
+        type: string
+        required: false
+      time_zone:
+        type: TimeZone
+        required: false
+      contact:
+        type: Contact
+        required: false
+      notes:
+        type: LocationNotes
+        required: false
+      active:
+        type: boolean
+        required: false
+      client:
+        type: Company
+        required: false
+      geo:
+        type: Coords
+        required: false
+      attributes:
+        type: array
+        items:
+          type: LocationAttribute
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - edit
+        required: false
+  StoredLocations:
+    properties:
+      work_order_id:
+        type: integer
+        required: false
+      mode:
+        type: string
+        enum:
+          - custom
+          - location
+          - remote
+        required: false
+      role:
+        type: string
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - edit
+        required: false
+      results:
+        type: array
+        items:
+          type: Location
+        required: false
+  ETA:
+    properties:
+      work_order_id:
+        type: integer
+        required: false
+      user:
+        type: MinimalUser
+        required: false
+      mode:
+        type: string
+        enum:
+          - hours
+          - between
+          - exact
+        required: false
+      start:
+        type: Date
+        required: false
+      end:
+        type: Date
+        required: false
+      hour_estimate:
+        type: number
+        required: false
+      notes:
+        type: string
+        required: false
+      status:
+        type: object
+        properties:
+          name:
+            type: string
+            enum:
+              - unconfirmed
+              - confirmed
+              - set
+              - readytogo
+              - onmyway
+            required: false
+          updated:
+            type: Date
+            required: false
+        required: false
+      condition:
+        type: Condition
+        required: false
+      task:
+        type: MinimalTask
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - add
+            - edit
+            - set_eta
+            - confirm
+            - running_late
+            - cancel
+            - on_my_way
+            - mark_ready_to_go
+        required: false
+  Condition:
+    properties:
+      user:
+        type: MinimalUser
+        required: false
+      created:
+        type: Date
+        required: false
+      drive_time:
+        type: integer
+        required: false
+      distance:
+        type: number
+        required: false
+      status:
+        type: string
+        enum:
+          - ''
+          - on_schedule
+          - delayed
+          - cancelled
+          - at_risk
+          - reschedule_requested
+        required: false
+      estimated_delay:
+        type: integer
+        required: false
+      coords:
+        type: Coords
+        required: false
+      route:
+        type: Coords
+        required: false
+  Schedule:
+    properties:
+      work_order_id:
+        type: integer
+        required: false
+      correlation_id:
+        type: string
+        required: false
+      today_tomorrow:
+        type: string
+        enum:
+          - Today
+          - Tomorrow
+          - ''
+        required: false
+      service_window:
+        type: object
+        properties:
+          start:
+            type: Date
+            required: false
+          end:
+            type: Date
+            required: false
+          mode:
+            type: string
+            enum:
+              - hours
+              - between
+              - exact
+            required: false
+        required: false
+      on_my_way:
+        type: OnMyWay
+        required: false
+      time_zone:
+        type: TimeZone
+        required: false
+      role:
+        type: string
+        required: false
+      status_id:
+        type: integer
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - edit
+        required: false
+      no_refresh:
+        type: boolean
+        required: false
+  Pay:
+    properties:
+      work_order_id:
+        type: integer
+        required: false
+      type:
+        type: string
+        enum:
+          - ''
+          - hourly
+          - fixed
+          - device
+          - blended
+        required: false
+      correlation_id:
+        type: string
+        required: false
+      role:
+        type: string
+        required: false
+      minimum_payment:
+        type: number
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - edit
+            - print
+            - view
+        required: false
+      base:
+        type: object
+        properties:
+          units:
+            type: number
+            required: false
+          amount:
+            type: number
+            required: false
+        required: false
+      additional:
+        type: object
+        properties:
+          units:
+            type: number
+            required: false
+          amount:
+            type: number
+            required: false
+        required: false
+      finance:
+        type: object
+        properties:
+          id:
+            type: integer
+            required: false
+          terms:
+            type: string
+            required: false
+          description:
+            type: string
+            required: false
+          limit:
+            type: number
+            required: false
+        required: false
+      range:
+        type: object
+        properties:
+          min:
+            type: number
+            required: false
+          max:
+            type: number
+            required: false
+        required: false
+      pricing_insights:
+        type: PricingInsights
+        required: false
+      reported_hours:
+        type: number
+        required: false
+      number_of_devices:
+        type: number
+        required: false
+      labor_sum:
+        type: number
+        required: false
+      total:
+        type: number
+        required: false
+      estimated_payment_date:
+        type: Date
+        required: false
+      hold:
+        type: PayModifier
+        required: false
+      payment:
+        type: PayModifier
+        required: false
+      fees:
+        type: array
+        items:
+          type: PayModifier
+        required: false
+      bonuses:
+        type: PayModifiers
+        required: false
+      penalties:
+        type: PayModifiers
+        required: false
+      discounts:
+        type: PayModifiers
+        required: false
+      expenses:
+        type: Expenses
+        required: false
+      increases:
+        type: MinimalPayIncreases
+        required: false
+      max_pay:
+        type: number
+        required: false
+      calculated_total:
+        type: PayCalculatedTotal
+        required: false
+      term:
+        type: object
+        properties:
+          id:
+            type: string
+            required: false
+          explanation:
+            type: string
+            required: false
+        required: false
+  PayCalculatedTotal:
+    properties:
+      total:
+        type: object
+        properties:
+          min:
+            type: number
+            required: false
+          max:
+            type: number
+            required: false
+        required: false
+      total_with_pending_expenses:
+        type: object
+        properties:
+          min:
+            type: number
+            required: false
+          max:
+            type: number
+            required: false
+        required: false
+  PricingInsights:
+    properties:
+      region:
+        type: object
+        properties:
+          name:
+            type: string
+            required: false
+          id:
+            type: integer
+            required: false
+          distance:
+            type: number
+            required: false
+          providers:
+            type: object
+            properties:
+              marketplace:
+                type: integer
+                required: false
+            required: false
+          average_rate:
+            type: object
+            properties:
+              first_quartile:
+                type: number
+                required: false
+              median:
+                type: number
+                required: false
+              third_quartile:
+                type: number
+                required: false
+            required: false
+        required: false
+  Shipment:
+    properties:
+      id:
+        type: integer
+        required: false
+      user:
+        type: MinimalUser
+        required: false
+      name:
+        type: string
+        required: false
+      direction:
+        type: string
+        enum:
+          - to site
+          - from site
+        required: false
+      carrier:
+        type: object
+        properties:
+          name:
+            type: string
+            enum:
+              - fedex
+              - ups
+              - usps
+              - other
+            required: false
+          other:
+            type: string
+            required: false
+          tracking:
+            type: string
+            required: false
+          arrival:
+            type: Date
+            required: false
+          arrived:
+            type: Date
+            required: false
+        required: false
+      created:
+        type: Date
+        required: false
+      task:
+        type: object
+        properties:
+          id:
+            type: integer
+            required: false
+        required: false
+      status:
+        type: string
+        enum:
+          - Arrived
+          - En Route
+          - Error
+          - Lost
+          - New
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - edit
+            - delete
+        required: false
+  Shipments:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: Shipment
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - add
+        required: false
+  AttachmentFolders:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: AttachmentFolder
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - add_slot
+            - download
+        required: false
+  AttachmentFolder:
+    properties:
+      id:
+        type: integer
+        required: false
+      type:
+        type: string
+        enum:
+          - slot
+          - document
+        required: false
+      min_files:
+        type: integer
+        required: false
+      max_files:
+        type: integer
+        required: false
+      min_bytes:
+        type: integer
+        required: false
+      max_bytes:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      results:
+        type: array
+        items:
+          type: Attachment
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - edit
+            - upload
+            - delete
+        required: false
+      task:
+        type: MinimalTask
+        required: false
+  AttachmentConflict:
+    properties:
+      status:
+        type: string
+        enum:
+          - unique
+          - duplicate
+        required: false
+      work_order_id:
+        type: integer
+        required: false
+      conflicts:
+        type: array
+        items:
+          type: integer
+        required: false
+  Attachment:
+    properties:
+      id:
+        type: integer
+        required: false
+      folder_id:
+        type: integer
+        required: false
+      file:
+        type: File
+        required: false
+      coords:
+        type: Coords
+        required: false
+      created:
+        type: Date
+        required: false
+      author:
+        type: MinimalUser
+        required: false
+      reviewer:
+        type: MinimalUser
+        required: false
+      notes:
+        type: string
+        required: false
+      status:
+        type: string
+        enum:
+          - pending
+          - approved
+          - denied
+        required: false
+      status_description:
+        type: string
+        required: false
+      show_before_assignment:
+        type: boolean
+        required: false
+      task:
+        type: MinimalTask
+        required: false
+      reviewed:
+        type: Date
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - view
+            - visibility
+            - make_public
+            - make_private
+            - notes
+            - edit
+            - delete
+            - approve
+            - deny
+            - reopen
+        required: false
+  File:
+    properties:
+      name:
+        type: string
+        required: false
+      icon:
+        type: string
+        required: false
+      type:
+        type: string
+        enum:
+          - file
+          - link
+        required: false
+      description:
+        type: string
+        required: false
+      size_bytes:
+        type: integer
+        required: false
+      mime:
+        type: string
+        required: false
+      hash:
+        type: string
+        required: false
+      storage:
+        type: string
+        enum:
+          - s3
+        required: false
+      thumbnail:
+        type: string
+        required: false
+      link:
+        type: string
+        required: false
+      preview_full:
+        type: string
+        required: false
+  TaskAlert:
+    properties:
+      id:
+        type: integer
+        required: false
+      email:
+        type: string
+        required: false
+      sent:
+        type: Utc
+        required: false
+  CheckInOut:
+    properties:
+      time_log:
+        type: object
+        properties:
+          id:
+            type: integer
+            required: false
+        required: false
+      created:
+        type: Date
+        required: false
+      actor:
+        type: MinimalUser
+        required: false
+      coords:
+        type: Coords
+        required: false
+      distance:
+        type: number
+        required: false
+      distance_from_check_in:
+        type: number
+        required: false
+      verified:
+        type: boolean
+        required: false
+  Signatures:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - add
+        required: false
+      results:
+        type: array
+        items:
+          type: Signature
+        required: false
+      correlation_id:
+        type: string
+        required: false
+  Signature:
+    properties:
+      name:
+        type: string
+        required: false
+      format:
+        type: string
+        required: false
+      closing_notes:
+        type: string
+        required: false
+      data:
+        type: string
+        required: false
+      id:
+        type: integer
+        required: false
+      hash:
+        type: string
+        required: false
+      author:
+        type: MinimalUser
+        required: false
+      created:
+        type: Date
+        required: false
+      worklog:
+        type: string
+        required: false
+      time_zone:
+        type: TimeZone
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - delete
+        required: false
+      task:
+        type: MinimalTask
+        required: false
+  MinimalTask:
+    properties:
+      id:
+        type: integer
+        required: false
+  Task:
+    properties:
+      id:
+        type: integer
+        required: false
+      alerts:
+        type: array
+        items:
+          type: TaskAlert
+        required: false
+      description:
+        type: string
+        required: false
+      descriptions:
+        type: object
+        properties:
+          task:
+            type: string
+            required: false
+          first:
+            type: string
+            required: false
+          second:
+            type: string
+            required: false
+          third:
+            type: string
+            required: false
+          fourth:
+            type: string
+            required: false
+        required: false
+      label:
+        type: string
+        required: false
+      group:
+        type: object
+        properties:
+          label:
+            type: string
+            required: false
+          id:
+            type: string
+            required: false
+        required: false
+      status:
+        type: string
+        enum:
+          - complete
+          - incomplete
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - incomplete
+            - alerts
+            - complete
+            - edit
+            - delete
+            - reorder
+        required: false
+      type:
+        type: object
+        properties:
+          id:
+            type: integer
+            required: false
+          key:
+            type: string
+            required: false
+          name:
+            type: string
+            required: false
+        required: false
+      created:
+        type: Date
+        required: false
+      author:
+        type: MinimalUser
+        required: false
+      completed:
+        type: Date
+        required: false
+      check_in:
+        type: TimeLog
+        required: false
+      check_out:
+        type: TimeLog
+        required: false
+      closing_notes:
+        type: string
+        required: false
+      attachments:
+        type: AttachmentFolder
+        required: false
+      custom_field:
+        type: CustomField
+        required: false
+      phone:
+        type: string
+        required: false
+      email:
+        type: string
+        required: false
+      signature:
+        type: Signature
+        required: false
+      shipment:
+        type: Shipment
+        required: false
+      eta:
+        type: ETA
+        required: false
+  Tasks:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: Task
+        required: false
+  MinimalMessage:
+    properties:
+      id:
+        type: integer
+        required: false
+      from:
+        type: object
+        properties:
+          id:
+            type: integer
+            required: false
+          name:
+            type: string
+            required: false
+          thumbnail:
+            type: string
+            required: false
+          hideWoManager:
+            type: boolean
+            required: false
+          msgLink:
+            type: string
+            required: false
+          role:
+            type: string
+            required: false
+        required: false
+      to:
+        type: object
+        properties:
+          id:
+            type: integer
+            required: false
+          name:
+            type: string
+            required: false
+          thumbnail:
+            type: string
+            required: false
+          role:
+            type: string
+            required: false
+        required: false
+      role:
+        type: string
+        required: false
+      msg_id:
+        type: integer
+        required: false
+      parent_id:
+        type: integer
+        required: false
+      read:
+        type: boolean
+        required: false
+      created:
+        type: Date
+        required: false
+      message:
+        type: string
+        required: false
+      type:
+        type: string
+        enum:
+          - INTERNAL
+          - ASSIGNEDTECH
+          - REQUESTEDTECHS
+          - SPECIFICTECH
+          - FROMTECH
+          - REPLY
+          - TECHTOMANAGER
+          - ROUTEDTECHS
+          - REPLYTOTHREAD
+          - STAFF_NOTE
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+        required: false
+  Message:
+    properties:
+      id:
+        type: integer
+        required: false
+      from:
+        type: object
+        properties:
+          id:
+            type: integer
+            required: false
+          name:
+            type: string
+            required: false
+          thumbnail:
+            type: string
+            required: false
+          hideWoManager:
+            type: boolean
+            required: false
+          msgLink:
+            type: string
+            required: false
+          role:
+            type: string
+            required: false
+        required: false
+      to:
+        type: object
+        properties:
+          id:
+            type: integer
+            required: false
+          name:
+            type: string
+            required: false
+          thumbnail:
+            type: string
+            required: false
+          role:
+            type: string
+            required: false
+        required: false
+      role:
+        type: string
+        required: false
+      msg_id:
+        type: integer
+        required: false
+      parent_id:
+        type: integer
+        required: false
+      read:
+        type: boolean
+        required: false
+      created:
+        type: Date
+        required: false
+      message:
+        type: string
+        required: false
+      type:
+        type: string
+        enum:
+          - INTERNAL
+          - ASSIGNEDTECH
+          - REQUESTEDTECHS
+          - SPECIFICTECH
+          - FROMTECH
+          - REPLY
+          - TECHTOMANAGER
+          - ROUTEDTECHS
+          - REPLYTOTHREAD
+          - STAFF_NOTE
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+        required: false
+      replies:
+        type: MinimalMessages
+        required: false
+  MinimalMessages:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      unread:
+        type: integer
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - add
+            - messageProvider
+            - messageCompany
+            - staffNote
+        required: false
+      results:
+        type: array
+        items:
+          type: MinimalMessage
+        required: false
+      sum:
+        type: integer
+        required: false
+      problem_reported:
+        type: boolean
+        required: false
+  Messages:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      unread:
+        type: integer
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - add
+            - messageProvider
+            - messageCompany
+            - staffNote
+        required: false
+      results:
+        type: array
+        items:
+          type: Message
+        required: false
+      sum:
+        type: integer
+        required: false
+      problem_reported:
+        type: boolean
+        required: false
+  Notifications:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: Notification
+        required: false
+  Notification:
+    properties:
+      id:
+        type: integer
+        required: false
+      read:
+        type: boolean
+        required: false
+      created:
+        type: Date
+        required: false
+      link:
+        type: string
+        required: false
+      message:
+        type: string
+        required: false
+      correlation_id:
+        type: string
+        required: false
+      loading_time:
+        type: string
+        required: false
+  Assignee:
+    properties:
+      correlation_id:
+        type: string
+        required: false
+      role:
+        type: string
+        required: false
+      user:
+        type: MinimalUser
+        required: false
+      work_order_id:
+        type: integer
+        required: false
+      status_id:
+        type: integer
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - unassign
+            - ready_to_go
+        required: false
+      reason_id:
+        type: integer
+        required: false
+      comment:
+        type: string
+        required: false
+  Country:
+    properties:
+      name:
+        type: string
+        required: false
+      iso:
+        type: string
+        required: false
+      address1:
+        type: object
+        properties:
+          required:
+            type: boolean
+            required: false
+          label:
+            type: string
+            required: false
+        required: false
+      address2:
+        type: object
+        properties:
+          required:
+            type: boolean
+            required: false
+          label:
+            type: string
+            required: false
+        required: false
+      city:
+        type: object
+        properties:
+          required:
+            type: boolean
+            required: false
+          label:
+            type: string
+            required: false
+        required: false
+      state:
+        type: object
+        properties:
+          required:
+            type: boolean
+            required: false
+          label:
+            type: string
+            required: false
+          values:
+            type: array
+            items:
+              type: object
+              properties:
+                value:
+                  type: string
+                  required: false
+                label:
+                  type: string
+                  required: false
+            required: false
+        required: false
+      zip:
+        type: object
+        properties:
+          required:
+            type: boolean
+            required: false
+          label:
+            type: string
+            required: false
+        required: false
+      amexfx:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              required: false
+            pattern:
+              type: string
+              required: false
+        required: false
+  Countries:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: Country
+        required: false
+  LocationNote:
+    properties:
+      id:
+        type: integer
+        required: false
+      text:
+        type: string
+        required: false
+      created:
+        type: string
+        required: false
+      private:
+        type: boolean
+        required: false
+      user_id:
+        type: integer
+        required: false
+  LocationNotes:
+    type: array
+    items:
+      type: LocationNote
+  PayModifiers:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      sum:
+        type: object
+        properties:
+          all:
+            type: number
+            required: false
+          charged:
+            type: number
+            required: false
+          uncharged:
+            type: number
+            required: false
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - edit
+            - add
+        required: false
+      results:
+        type: array
+        items:
+          type: PayModifier
+        required: false
+  PayModifier:
+    properties:
+      id:
+        type: integer
+        required: false
+      charged:
+        type: boolean
+        required: false
+      amount:
+        type: number
+        required: false
+      modifier:
+        type: number
+        required: false
+      calculation:
+        type: string
+        enum:
+          - fixed
+          - percent
+        required: false
+      name:
+        type: string
+        required: false
+      description:
+        type: string
+        required: false
+      hours24_applicable:
+        type: boolean
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - charge
+            - delete
+        required: false
+  RichText:
+    properties:
+      html:
+        type: string
+        required: false
+      markdown:
+        type: string
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - edit
+        required: false
+  Milestones:
+    properties:
+      time_to_dispatch:
+        type: number
+        required: false
+      time_to_work_done:
+        type: number
+        required: false
+      time_alive:
+        type: number
+        required: false
+      created:
+        type: Date
+        required: false
+      published:
+        type: Date
+        required: false
+      routed:
+        type: Date
+        required: false
+      assigned:
+        type: Date
+        required: false
+      workdone:
+        type: Date
+        required: false
+      approved:
+        type: Date
+        required: false
+      paid:
+        type: Date
+        required: false
+      canceled:
+        type: Date
+        required: false
+  UpdateModel:
+    properties:
+      metadata:
+        type: object
+        properties:
+          universal_context:
+            type: object
+            properties:
+              correlation_id:
+                type: string
+                required: false
+            required: false
+          data:
+            type: object
+            properties:
+              route:
+                type: string
+                required: false
+              role:
+                type: string
+                required: false
+              user_id:
+                type: integer
+                required: false
+              company_id:
+                type: integer
+                required: false
+              group_id:
+                type: integer
+                required: false
+              work_order_id:
+                type: integer
+                required: false
+            required: false
+        required: false
+      timestamp:
+        type: string
+        required: false
+      service_name:
+        type: string
+        required: false
+      version:
+        type: string
+        required: false
+      params:
+        type: object
+        properties:
+          model:
+            type: object
+            required: false
+          updateScheduleByWorkOrder:
+            type: EventUpdateScheduleByWorkOrder
+            required: false
+        required: false
+  EventUpdateScheduleByWorkOrder:
+    properties:
+      old:
+        type: object
+        properties:
+          mode:
+            type: string
+            required: false
+          start:
+            type: string
+            required: false
+          end:
+            type: string
+            required: false
+          time_zone:
+            type: string
+            required: false
+        required: false
+      new:
+        type: object
+        properties:
+          mode:
+            type: string
+            required: false
+          start:
+            type: string
+            required: false
+          end:
+            type: string
+            required: false
+          time_zone:
+            type: string
+            required: false
+        required: false
+  KeyValue:
+    type: object
+  CompanyIntegration:
+    properties:
+      company_integration_id:
+        type: string
+        required: false
+      company_id:
+        type: string
+        required: false
+      integration_type:
+        type: string
+        required: false
+      active:
+        type: boolean
+        required: false
+      api_key:
+        type: string
+        required: false
+      api_pass:
+        type: string
+        (oas-format): password
+        required: false
+      api_domain_name:
+        type: string
+        required: false
+      disable_notifications:
+        type: boolean
+        required: false
+      external_api_integration_id:
+        type: string
+        required: false
+  CompanyIntegrations:
+    properties:
+      envelope:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: CompanyIntegration
+        required: false
+  SavedCreditCard:
+    properties:
+      card_id:
+        type: integer
+        required: false
+      card_type:
+        type: string
+        enum:
+          - visa
+          - mastercard
+          - american express
+          - discover
+          - jcb
+          - diners club
+        required: false
+      expiration_date:
+        type: string
+        pattern: '^\d{2}\/\d{2}$'
+        description: format MM/YY
+        required: false
+      isExpired:
+        type: integer
+        required: false
+      last_four:
+        type: string
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - disable
+            - enable
+            - request
+            - deny
+        required: false
+  SavedCreditCards:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: SavedCreditCard
+        required: false
+  CompanyFeature:
+    properties:
+      company_features_id:
+        type: integer
+        required: false
+      company_id:
+        type: integer
+        required: false
+      feature_id:
+        type: integer
+        required: false
+      status:
+        type: string
+        enum:
+          - enabled
+          - disabled
+          - requested
+          - denied
+        required: false
+  CompanyFeatures:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: CompanyFeature
+        required: false
+  SwapResponse:
+    properties:
+      success:
+        type: boolean
+        required: false
+  UserTaxInfo:
+    properties:
+      user_id:
+        type: integer
+        required: false
+      first_name:
+        type: string
+        required: false
+      last_name:
+        type: string
+        required: false
+      phone:
+        type: string
+        required: false
+      tech_w9_id:
+        type: integer
+        required: false
+      tech_user_id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      business_name:
+        type: string
+        required: false
+      entity_type:
+        type: string
+        required: false
+      other:
+        type: string
+        required: false
+      address1:
+        type: string
+        required: false
+      address2:
+        type: string
+        required: false
+      city:
+        type: string
+        required: false
+      state:
+        type: string
+        required: false
+      zip:
+        type: integer
+        required: false
+      has_ein:
+        type: integer
+        required: false
+      tin:
+        type: string
+        required: false
+      electronic_consent:
+        type: integer
+        required: false
+      files_separate_business_taxes:
+        type: integer
+        required: false
+      technician_w9_status_id:
+        type: integer
+        required: false
+      technician_w9_status:
+        type: array
+        items:
+          type: TechnicianW9Status
+        required: false
+  TechnicianW9Status:
+    properties:
+      status_name:
+        type: string
+        required: false
+      technician_w9_status_id:
+        type: integer
+        required: false
+  UserTaxInfoUpdate:
+    properties:
+      first_name:
+        type: string
+        required: false
+      last_name:
+        type: string
+        required: false
+      phone:
+        type: string
+        required: false
+      name:
+        type: string
+        required: false
+      business_name:
+        type: string
+        required: false
+      entity_type:
+        type: string
+        required: false
+      other:
+        type: string
+        required: false
+      address1:
+        type: string
+        required: false
+      address2:
+        type: string
+        required: false
+      city:
+        type: string
+        required: false
+      state:
+        type: string
+        required: false
+      zip:
+        type: integer
+        required: false
+      has_ein:
+        type: integer
+        required: false
+      tin:
+        type: string
+        required: false
+      electronic_consent:
+        type: integer
+        required: false
+      has_separate_tax:
+        type: integer
+        required: false
+      technician_w9_status_id:
+        type: integer
+        required: false
+      company_id:
+        type: integer
+        required: false
+      from_vendor_buyer_invite:
+        type: integer
+        required: false
+      buyer_company_id:
+        type: integer
+        required: false
+      vendor_company_id:
+        type: integer
+        required: false
+  Experiences:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: Experience
+        required: false
+  Experience:
+    properties:
+      id:
+        type: integer
+        required: false
+      company:
+        type: string
+        required: false
+      title:
+        type: string
+        required: false
+      description:
+        type: string
+        required: false
+      location:
+        type: string
+        required: false
+      start:
+        type: Date
+        required: false
+      end:
+        type: Date
+        required: false
+  UserNotes:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - add
+        required: false
+      results:
+        type: array
+        items:
+          type: UserNote
+        required: false
+  UserNote:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      note:
+        type: string
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - edit
+            - delete
+        required: false
+  Licenses:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: License
+        required: false
+  License:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      number:
+        type: string
+        required: false
+  Certifications:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: Certification
+        required: false
+  Certification:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      term_id:
+        type: integer
+        required: false
+      number:
+        type: string
+        required: false
+  Educations:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: Education
+        required: false
+  Education:
+    properties:
+      id:
+        type: integer
+        required: false
+      school_name:
+        type: string
+        required: false
+      degree:
+        type: string
+        required: false
+      field_of_study:
+        type: string
+        required: false
+      start:
+        type: Date
+        required: false
+      end:
+        type: Date
+        required: false
+  TypesOfWork:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: TypeOfWork
+        required: false
+  TypeOfWork:
+    properties:
+      id:
+        type: integer
+        required: false
+      industry:
+        type: string
+        required: false
+      name:
+        type: string
+        required: false
+  Cancellation:
+    properties:
+      cancel_reason:
+        type: integer
+        required: false
+      message_to_provider:
+        type: string
+        required: false
+      notes:
+        type: string
+        required: false
+      cancel_request_not_charge:
+        type: boolean
+        required: false
+  Expenses:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      sum:
+        type: object
+        properties:
+          all:
+            type: number
+            required: false
+          charged:
+            type: number
+            required: false
+          uncharged:
+            type: number
+            required: false
+        required: false
+      results:
+        type: array
+        items:
+          type: Expense
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - add
+        required: false
+  Expense:
+    properties:
+      id:
+        type: integer
+        required: false
+      description:
+        type: string
+        required: false
+      quantity:
+        type: number
+        required: false
+      status:
+        type: string
+        enum:
+          - new
+          - approved
+          - disapproved
+        required: false
+      status_description:
+        type: string
+        required: false
+      category:
+        type: object
+        properties:
+          id:
+            type: integer
+            required: false
+          name:
+            type: string
+            required: false
+        required: false
+      added:
+        type: Date
+        required: false
+      author:
+        type: MinimalUser
+        required: false
+      company_expense:
+        type: object
+        properties:
+          id:
+            type: integer
+            required: false
+          expense_amount:
+            type: number
+            required: false
+          hidden_tags:
+            type: string
+            required: false
+          api_code:
+            type: string
+            required: false
+          description:
+            type: string
+            required: false
+        required: false
+      amount:
+        type: number
+        required: false
+      reason:
+        type: string
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - edit
+            - delete
+            - approve
+            - deny
+            - reopen
+        required: false
+  Finances:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: Finance
+        required: false
+  Finance:
+    properties:
+      id:
+        type: integer
+        required: false
+      description:
+        type: string
+        required: false
+      balance:
+        type: number
+        required: false
+      terms:
+        type: integer
+        required: false
+      limit:
+        type: number
+        required: false
+  EmailTemplates:
+    properties:
+      results:
+        type: array
+        items:
+          type: EmailTemplate
+        required: false
+  EmailTemplate:
+    properties:
+      id:
+        type: integer
+        required: false
+      label:
+        type: string
+        required: false
+  Robocalls:
+    properties:
+      results:
+        type: array
+        items:
+          type: Robocall
+        required: false
+  Robocall:
+    properties:
+      id:
+        type: integer
+        required: false
+      label:
+        type: string
+        required: false
+  EtaMassAcceptWithLocation:
+    properties:
+      work_order_id:
+        type: integer
+        required: false
+      title:
+        type: string
+        required: false
+      bundle:
+        type: Bundle
+        required: false
+      schedule:
+        type: Schedule
+        required: false
+      location:
+        type: Location
+        required: false
+  SelectionRules:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+  SelectionRule:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      metadata:
+        type: ListEnvelope
+        required: false
+      sum:
+        type: object
+        properties:
+          match:
+            type: integer
+            required: false
+          no_match_optional:
+            type: integer
+            required: false
+          no_match_required:
+            type: integer
+            required: false
+          total:
+            type: integer
+            required: false
+        required: false
+      status:
+        type: string
+        enum:
+          - no_match_optional
+          - no_match_required
+          - match
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - delete
+        required: false
+      results:
+        type: array
+        items:
+          type: SelectionRuleCriteria
+        required: false
+  SelectionRuleCriteria:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        enum:
+          - SC_CERTIFICATION
+          - SC_SERVICE_CATEGORY
+          - SC_SERVICE_CATEGORY_OF_WORKORDER
+          - SC_AMOUNT_CURRENTLY_ASSIGNED
+          - SC_AMOUNT_COMPLETED_FOR_ALL_COMPANIES
+          - SC_AMOUNT_COMPLETED_FOR_MY_COMPANY
+          - SC_DISTANCE_FROM_WORK_ORDER
+          - SC_CUSTOM_PROVIDER_FIELDS
+          - SC_MY_TECHNICIAN_GROUP
+          - SC_OVERALL_RATING
+          - SC_PROVIDER_AND_WORK_ORDER
+          - SC_INSURANCE
+          - SC_BACKGROUND_CHECK
+          - SC_DRUG_TEST
+          - SC_ASSIGNED_BEFORE
+          - SC_ASSIGNED_NEARBY
+          - SC_REQUESTED
+          - SC_RECENTLY_MATCHED_WO
+          - SC_VERIFICATION
+          - SC_BLOCK_RATIO
+          - SC_CANCEL_RATIO
+          - SC_STAR_BASED_RATING
+          - SC_PROTEC_PROVIDER
+          - SC_EQUIPMENT
+          - SC_TYPE_OF_WORK
+          - SC_PHONE_INTERVIEW
+          - SC_PHONE_CALL_BUYER
+          - SC_DISCLOSE_ADDRESS
+        required: false
+      service:
+        type: string
+        required: false
+      description:
+        type: string
+        required: false
+      required:
+        type: boolean
+        required: false
+      weight:
+        type: integer
+        required: false
+      operation:
+        type: string
+        enum:
+          - equal_to
+          - greater_than
+          - less_than
+          - not_equal_to
+        required: false
+      status:
+        type: string
+        enum:
+          - no_match_optional
+          - no_match_required
+          - match
+        required: false
+      value:
+        type: string
+        required: false
+      order:
+        type: integer
+        required: false
+      custom_field:
+        type: CustomField
+        required: false
+      extra:
+        type: string
+        required: false
+  Qualifications:
+    properties:
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - edit
+            - add
+        required: false
+      selection_rule:
+        type: SelectionRule
+        required: false
+  Satisfaction:
+    properties:
+      stars:
+        type: number
+        required: false
+      clear_expectation:
+        type: integer
+        required: false
+      respect_rating:
+        type: integer
+        required: false
+      average_days_to_approval:
+        type: integer
+        required: false
+      total_ratings:
+        type: integer
+        required: false
+  CompanyRating:
+    properties:
+      rating:
+        type: object
+        properties:
+          marketplace:
+            type: Satisfaction
+            required: false
+          mine:
+            type: Satisfaction
+            required: false
+          toggle_visible:
+            type: boolean
+            required: false
+        required: false
+  LocationProviders:
+    properties:
+      results:
+        type: array
+        items:
+          type: MinimalUser
+        required: false
+      location_id:
+        type: integer
+        required: false
+  ProfileAndWorkHistory:
+    properties:
+      rating:
+        type: object
+        properties:
+          profile:
+            type: MinimalUser
+            required: false
+          work_history:
+            type: WorkHistory
+            required: false
+          more_results:
+            type: boolean
+            required: false
+        required: false
+  Rating:
+    properties:
+      stars:
+        type: number
+        required: false
+      total_ratings:
+        type: integer
+        required: false
+      on_time_percent:
+        type: number
+        required: false
+      follow_instructions_percent:
+        type: number
+        required: false
+      assignment_fulfilled_percent:
+        type: number
+        required: false
+      right_deliverables_percent:
+        type: number
+        required: false
+      days90:
+        type: object
+        properties:
+          stars:
+            type: number
+            required: false
+          total_ratings:
+            type: integer
+            required: false
+          on_time_percent:
+            type: number
+            required: false
+          follow_instructions_percent:
+            type: number
+            required: false
+          assignment_fulfilled_percent:
+            type: number
+            required: false
+          right_deliverables_percent:
+            type: number
+            required: false
+        required: false
+      days180:
+        type: object
+        properties:
+          stars:
+            type: number
+            required: false
+          total_ratings:
+            type: integer
+            required: false
+          on_time_percent:
+            type: number
+            required: false
+          follow_instructions_percent:
+            type: number
+            required: false
+          assignment_fulfilled_percent:
+            type: number
+            required: false
+          right_deliverables_percent:
+            type: number
+            required: false
+        required: false
+      company:
+        type: object
+        properties:
+          marketplace:
+            type: object
+            properties:
+              stars:
+                type: number
+                required: false
+              clear_expectations:
+                type: integer
+                required: false
+              respect_rating:
+                type: integer
+                required: false
+              average_days_to_approval:
+                type: integer
+                required: false
+              total_ratings:
+                type: integer
+                required: false
+            required: false
+          mine:
+            type: object
+            properties:
+              stars:
+                type: number
+                required: false
+              clear_expectations:
+                type: integer
+                required: false
+              respect_rating:
+                type: integer
+                required: false
+              average_days_to_approval:
+                type: integer
+                required: false
+              total_ratings:
+                type: integer
+                required: false
+            required: false
+          blocked:
+            type: boolean
+            required: false
+          work_completed:
+            type: integer
+            required: false
+        required: false
+  Problems:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      correlation_id:
+        type: string
+        required: false
+      results:
+        type: array
+        items:
+          type: Problem
+        required: false
+      active:
+        type: Problem
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - add
+            - resolve
+            - edit
+            - delete
+            - reopen
+            - view_message
+        required: false
+      types:
+        type: array
+        items:
+          type: ProblemType
+        required: false
+  MinimalProblemType:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      has_other:
+        type: boolean
+        required: false
+      other:
+        type: string
+        required: false
+      performance_event:
+        type: boolean
+        required: false
+      file_with_support:
+        type: boolean
+        required: false
+      show_pqap_warning:
+        type: boolean
+        required: false
+  ProblemType:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      has_other:
+        type: boolean
+        required: false
+      other:
+        type: string
+        required: false
+      performance_event:
+        type: boolean
+        required: false
+      file_with_support:
+        type: boolean
+        required: false
+      show_pqap_warning:
+        type: boolean
+        required: false
+      children:
+        type: array
+        items:
+          type: MinimalProblemType
+        required: false
+  Problem:
+    properties:
+      id:
+        type: integer
+        required: false
+      type:
+        type: ProblemType
+        required: false
+      comments:
+        type: string
+        required: false
+      contact:
+        type: string
+        enum:
+          - support
+          - buyer
+          - provider
+          - all
+        required: false
+      escalate:
+        type: boolean
+        required: false
+      use_provider:
+        type: boolean
+        required: false
+      only_company_can_mark_resolved:
+        type: boolean
+        required: false
+      resolution:
+        type: object
+        properties:
+          status:
+            type: string
+            enum:
+              - resolved
+              - open
+            required: false
+          at:
+            type: Date
+            required: false
+          by:
+            type: MinimalUser
+            required: false
+          allowed_resolvers:
+            type: array
+            items:
+              type: string
+              enum:
+                - support
+                - buyer
+                - assigned_provider
+            required: false
+        required: false
+      author:
+        type: MinimalUser
+        required: false
+      created:
+        type: Date
+        required: false
+      message:
+        type: object
+        properties:
+          id:
+            type: integer
+            required: false
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - resolve
+            - edit
+            - delete
+            - reopen
+            - view_message
+        required: false
+  WorkflowCompletion:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: string
+        required: false
+      status:
+        type: string
+        enum:
+          - invalid
+          - valid
+        required: false
+  Banner:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: integer
+        image:
+          type: string
+        href:
+          type: string
+        deleted:
+          type: boolean
+        author:
+          type: MinimalUser
+        groups:
+          type: array
+          items:
+            type: integer
+        company_ids:
+          type: array
+          items:
+            type: integer
+        created_at:
+          type: Utc
+        starts_at:
+          type: Utc
+        ends_at:
+          type: Utc
+  Tags:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: Tag
+        required: false
+      correlation_id:
+        type: string
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - add
+        required: false
+  Tag:
+    properties:
+      id:
+        type: integer
+        required: false
+      author:
+        type: MinimalUser
+        required: false
+      created:
+        type: Date
+        required: false
+      label:
+        type: string
+        required: false
+      hex_color:
+        type: string
+        required: false
+      types:
+        type: array
+        items:
+          type: string
+          enum:
+            - substatus
+            - hold
+            - problem
+            - show_in_dashboard
+            - hide_from_provider
+            - custom_company
+            - provider_can_edit
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - delete
+            - edit
+        required: false
+      valid_statuses:
+        type: array
+        items:
+          type: string
+          enum:
+            - created
+            - published
+            - routed
+            - assigned
+            - workdone
+            - approved
+            - paid
+            - canceled
+        required: false
+  Template:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      default:
+        type: boolean
+        required: false
+      project:
+        type: MinimalProject
+        required: false
+      client:
+        type: Client
+        required: false
+      created:
+        type: Date
+        required: false
+      updated:
+        type: Date
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - edit
+            - delete
+            - create_work_order
+            - copy
+        required: false
+      author:
+        type: MinimalUser
+        required: false
+      work_order_title:
+        type: string
+        required: false
+      type_of_work:
+        type: TypeOfWork
+        required: false
+      service_contract:
+        type: ServiceContract
+        required: false
+      work_orders:
+        type: integer
+        required: false
+  Templates:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+        required: false
+      results:
+        type: array
+        items:
+          type: Template
+        required: false
+      correlation_id:
+        type: string
+        required: false
+  WorkOrderOverview:
+    properties:
+      type_of_work:
+        type: object
+        properties:
+          company:
+            type: object
+            properties:
+              jobs:
+                type: integer
+                required: false
+              average_hourly_rate:
+                type: number
+                required: false
+              average_duration:
+                type: number
+                required: false
+            required: false
+          marketplace:
+            type: object
+            properties:
+              average_hourly_rate:
+                type: number
+                required: false
+              average_duration:
+                type: number
+                required: false
+            required: false
+        required: false
+      company:
+        type: object
+        properties:
+          average_duration:
+            type: integer
+            required: false
+          jobs:
+            type: integer
+            required: false
+          paid:
+            type: number
+            required: false
+          percent_counters:
+            type: number
+            required: false
+          percent_expenses:
+            type: number
+            required: false
+          active_jobs:
+            type: integer
+            required: false
+          cancelled_jobs:
+            type: integer
+            required: false
+        required: false
+  WorkOrderOverviewValues:
+    properties:
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - edit
+            - service_contracts
+            - networks
+            - teams
+        required: false
+      team_id:
+        type: integer
+        required: false
+      client_id:
+        type: integer
+        required: false
+      project_id:
+        type: integer
+        required: false
+      service_contract_id:
+        type: integer
+        required: false
+      type_of_work_id:
+        type: integer
+        required: false
+      client_request_id:
+        type: integer
+        required: false
+      network_id:
+        type: array
+        items:
+          type: integer
+        required: false
+      service_type_id:
+        type: array
+        items:
+          type: integer
+        required: false
+      clients:
+        type: array
+        items:
+          type: object
+          properties:
+            value:
+              type: integer
+              required: false
+            label:
+              type: string
+              required: false
+        required: false
+      projects:
+        type: array
+        items:
+          type: object
+          properties:
+            value:
+              type: integer
+              required: false
+            label:
+              type: string
+              required: false
+        required: false
+      networks:
+        type: array
+        items:
+          type: object
+          properties:
+            value:
+              type: integer
+              required: false
+            label:
+              type: string
+              required: false
+        required: false
+      service_contracts:
+        type: array
+        items:
+          type: object
+          properties:
+            value:
+              type: integer
+              required: false
+            label:
+              type: string
+              required: false
+        required: false
+      types_of_work:
+        type: array
+        items:
+          type: object
+          properties:
+            value:
+              type: integer
+              required: false
+            label:
+              type: string
+              required: false
+        required: false
+      teams:
+        type: array
+        items:
+          type: object
+          properties:
+            value:
+              type: integer
+              required: false
+            label:
+              type: string
+              required: false
+        required: false
+      client_requests:
+        type: object
+        properties:
+          metadata:
+            type: object
+            properties:
+              total:
+                type: integer
+                required: false
+              message:
+                type: string
+                required: false
+            required: false
+          results:
+            type: array
+            items:
+              type: object
+              properties:
+                value:
+                  type: integer
+                  required: false
+                label:
+                  type: string
+                  required: false
+            required: false
+        required: false
+      service_types:
+        type: array
+        items:
+          type: object
+          properties:
+            value:
+              type: integer
+              required: false
+            label:
+              type: string
+              required: false
+        required: false
+  ServiceContract:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+  Team:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+  ClientRequest:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      source:
+        type: string
+        enum:
+          - portal
+          - scrape
+          - email
+        required: false
+  Integration:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+      href:
+        type: string
+        required: false
+  WorkOrderRatings:
+    properties:
+      correlation_id:
+        type: string
+        required: false
+      buyer:
+        type: object
+        properties:
+          actions:
+            type: array
+            items:
+              type: string
+              enum:
+                - add
+                - edit
+            required: false
+          manager:
+            type: MinimalUser
+            required: false
+          company:
+            type: object
+            properties:
+              id:
+                type: integer
+                required: false
+            required: false
+          overall:
+            type: object
+            properties:
+              ratings:
+                type: integer
+                required: false
+              stars:
+                type: number
+                required: false
+              jobs:
+                type: integer
+                required: false
+              percent_clear_expectations:
+                type: integer
+                required: false
+              percent_respectful:
+                type: integer
+                required: false
+              approval_days:
+                type: integer
+                required: false
+              approval_period:
+                type: integer
+                required: false
+              percent_approval:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    days:
+                      type: integer
+                      required: false
+                    percent:
+                      type: integer
+                      required: false
+                required: false
+            required: false
+          work_order:
+            type: object
+            properties:
+              created:
+                type: Date
+                required: false
+              stars:
+                type: integer
+                required: false
+              recommend:
+                type: boolean
+                required: false
+              comment:
+                type: string
+                required: false
+              hidden:
+                type: boolean
+                required: false
+              flagged:
+                type: boolean
+                required: false
+              remaining_approval_period:
+                type: boolean
+                required: false
+              form:
+                type: string
+                enum:
+                  - old
+                  - new
+                required: false
+              categories:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                        - professionalism
+                        - scope
+                        - respect
+                      required: false
+                    rating:
+                      type: integer
+                      required: false
+                required: false
+            required: false
+          blocks:
+            type: Block
+            required: false
+        required: false
+      assigned_provider:
+        type: object
+        properties:
+          actions:
+            type: array
+            items:
+              type: string
+              enum:
+                - add
+                - edit
+                - delete
+            required: false
+          user:
+            type: MinimalUser
+            required: false
+          work_order:
+            type: object
+            properties:
+              created:
+                type: Date
+                required: false
+              stars:
+                type: integer
+                required: false
+              categories:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                        - on_time
+                        - follow_instructions
+                        - assignment_fulfilled
+                        - right_deliverables
+                      required: false
+                    value:
+                      type: integer
+                      required: false
+                required: false
+              comment:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    required: false
+                  private:
+                    type: boolean
+                    required: false
+                required: false
+            required: false
+          overall:
+            type: object
+            properties:
+              company:
+                type: ProviderRatings
+                required: false
+              marketplace:
+                type: ProviderRatings
+                required: false
+            required: false
+          blocks:
+            type: Block
+            required: false
+        required: false
+      service_company:
+        type: object
+        properties:
+          overall:
+            type: object
+            properties:
+              ratings:
+                type: integer
+                required: false
+              stars:
+                type: number
+                required: false
+              penalized:
+                type: boolean
+                required: false
+              categories:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      required: false
+                    percent:
+                      type: integer
+                      required: false
+                required: false
+            required: false
+        required: false
+  Block:
+    properties:
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - add
+            - delete
+        required: false
+      blocked:
+        type: boolean
+        required: false
+      created:
+        type: Date
+        required: false
+      author:
+        type: MinimalUser
+        required: false
+      reason_id:
+        type: integer
+        required: false
+      reason:
+        type: string
+        required: false
+      category:
+        type: string
+        required: false
+      types:
+        type: array
+        items:
+          type: string
+          enum:
+            - work_order
+            - company
+            - client
+            - location
+            - project
+            - service_company
+        required: false
+  NetworkUser:
+    properties:
+      network_id:
+        type: integer
+        required: false
+      user_id:
+        type: integer
+        required: false
+      access:
+        type: string
+        enum:
+          - active
+          - pending
+          - suspended
+        required: false
+      view_available:
+        type: boolean
+        required: false
+      inactive_routing:
+        type: boolean
+        required: false
+  ProviderRatings:
+    properties:
+      ratings:
+        type: integer
+        required: false
+      stars:
+        type: number
+        required: false
+      categories:
+        type: array
+        items:
+          type: object
+          properties:
+            type:
+              type: string
+              required: false
+            percent:
+              type: integer
+              required: false
+        required: false
+  Swaps:
+    properties:
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - add
+        required: false
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: Swap
+        required: false
+      correlation_id:
+        type: string
+        required: false
+  Swap:
+    properties:
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - accept
+            - deny
+            - delete
+        required: false
+      id:
+        type: integer
+        required: false
+      description:
+        type: string
+        required: false
+      status:
+        type: string
+        enum:
+          - accepted
+          - denied
+          - pending
+        required: false
+      from:
+        type: MinimalUser
+        required: false
+      to:
+        type: MinimalUser
+        required: false
+      requestor:
+        type: MinimalUser
+        required: false
+      actor:
+        type: MinimalUser
+        required: false
+      created:
+        type: Date
+        required: false
+      accepted:
+        type: Date
+        required: false
+      denied:
+        type: Date
+        required: false
+  ServiceContracts:
+    type: array
+    items:
+      type: object
+      properties:
+        value:
+          type: integer
+        label:
+          type: string
+  ExpenseCategories:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - add
+        required: false
+      results:
+        type: array
+        items:
+          type: ExpenseCategory
+        required: false
+  ExpenseCategory:
+    properties:
+      uid:
+        type: integer
+        required: false
+      id:
+        type: integer
+        required: false
+      company_expense_id:
+        type: integer
+        required: false
+      label:
+        type: string
+        required: false
+      description:
+        type: string
+        required: false
+      type:
+        type: string
+        enum:
+          - system
+          - custom
+        required: false
+      amount:
+        type: number
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - edit
+            - delete
+        required: false
+  AutoDispatch:
+    properties:
+      id:
+        type: integer
+        required: false
+      work_order_ids:
+        type: array
+        items:
+          type: integer
+        required: false
+      selection_rule_id:
+        type: integer
+        required: false
+      selection_rule:
+        type: SelectionRule
+        required: false
+      delay:
+        type: integer
+        required: false
+      w2_skippub:
+        type: boolean
+        required: false
+      w2_failswitch:
+        type: boolean
+        required: false
+      should_route:
+        type: boolean
+        required: false
+  MessageCounts:
+    properties:
+      total:
+        type: integer
+        required: false
+      page:
+        type: integer
+        required: false
+      per_page:
+        type: integer
+        required: false
+      columns:
+        type: string
+        required: false
+      view:
+        type: string
+        required: false
+      sort:
+        type: string
+        required: false
+      order:
+        type: string
+        required: false
+      has_unread_messages:
+        type: boolean
+        required: false
+  Taxes:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      results:
+        type: array
+        items:
+          type: Tax
+        required: false
+  Tax:
+    properties:
+      id:
+        type: integer
+        required: false
+      tax_id:
+        type: string
+        required: false
+      year:
+        type: string
+        required: false
+      total_paid:
+        type: number
+        required: false
+      type:
+        type: string
+        required: false
+      action:
+        type: string
+        required: false
+  Threads:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      lists:
+        type: array
+        items:
+          type: List
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+        required: false
+      correlation_id:
+        type: string
+        required: false
+      results:
+        type: array
+        items:
+          type: ThreadMessage
+        required: false
+  ThreadMessage:
+    properties:
+      id:
+        type: integer
+        required: false
+      participant:
+        type: MinimalUser
+        required: false
+      message:
+        type: string
+        required: false
+      created:
+        type: Date
+        required: false
+      type:
+        type: string
+        enum:
+          - INTERNAL
+          - ASSIGNEDTECH
+          - REQUESTEDTECHS
+          - SPECIFICTECH
+          - FROMTECH
+          - REPLY
+          - TECHTOMANAGER
+          - ROUTEDTECHS
+          - REPLYTOTHREAD
+          - STAFF_NOTE
+        required: false
+  Insurances:
+    properties:
+      metadata:
+        type: ListEnvelope
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - add
+        required: false
+      results:
+        type: array
+        items:
+          type: Insurance
+        required: false
+  Insurance:
+    properties:
+      id:
+        type: integer
+        required: false
+      status:
+        type: string
+        required: false
+      insurance_company:
+        type: string
+        required: false
+      effective:
+        type: Date
+        required: false
+      expires:
+        type: Date
+        required: false
+      coverage_amount:
+        type: integer
+        required: false
+      policy_number:
+        type: string
+        required: false
+      type_id:
+        type: integer
+        required: false
+      type_name:
+        type: string
+        required: false
+      policy_url:
+        type: string
+        required: false
+      actions:
+        type: array
+        items:
+          type: string
+          enum:
+            - delete
+        required: false
+  InvoiceProcess:
+    properties:
+      id:
+        type: integer
+        required: false
+      scheduled_date:
+        type: object
+        properties:
+          local:
+            type: Local
+            required: false
+          utc:
+            type: Utc
+            required: false
+          full_date_time:
+            type: string
+            required: false
+          time_zone:
+            type: TimeZone
+            required: false
+          actions:
+            type: string
+            required: false
+        required: false
+      status:
+        type: object
+        properties:
+          id:
+            type: integer
+            required: false
+          title:
+            type: string
+            required: false
+          type:
+            type: string
+            required: false
+        required: false
+      information:
+        type: string
+        required: false
+      tracking_progress_id:
+        type: integer
+        required: false
+  ServiceType:
+    properties:
+      id:
+        type: integer
+        required: false
+      name:
+        type: string
+        required: false
+  GrafanaDashboardData:
+    type: array
+    items:
+      properties:
+        work_order_mass_uploads_success:
+          type: number
+          description: Today's WO's Mass Upload Success
+        work_order_mass_uploads_failures:
+          type: number
+          description: Today's WO's Mass Upload Failure
+        todays_wo:
+          type: number
+          description: Today's WO's Scheduled
+        published_today:
+          type: number
+          description: Today's WO's Published
+        available_today:
+          type: number
+          description: Today's WO's Available
+        created_today:
+          type: number
+          description: Today's WO's Created
+        counter_offers:
+          type: number
+          description: Today's WO's Counter Offered
+        requests_today:
+          type: number
+          description: Today's WO's Requested
+        assigned_today:
+          type: number
+          description: Today's WO's Assigned
+        buyer_signups:
+          type: number
+          description: Today's Buyer's Signup
+        provider_signups:
+          type: number
+          description: Today's Provider's Signup

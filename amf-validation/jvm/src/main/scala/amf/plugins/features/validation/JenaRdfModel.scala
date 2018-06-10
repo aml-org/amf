@@ -1,6 +1,6 @@
 package amf.plugins.features.validation
 
-import java.io.PrintWriter
+import java.io.{FileWriter, PrintWriter}
 
 import amf.core.rdf.RdfModel
 import org.apache.jena.rdf.model.Model
@@ -37,6 +37,7 @@ class JenaRdfModel(val model: Model = JenaUtil.createMemoryModel()) extends RdfM
 
   def dump() = {
     val out = new PrintWriter("/tmp/test.n3")
+    /*
     model.listStatements().toList.forEach { st =>
       if (st.getObject.isLiteral) {
         out.println(s"<${st.getSubject.getURI}> <${st.getPredicate.getURI}> '${st.getObject.asLiteral().getLexicalForm}' .")
@@ -44,7 +45,8 @@ class JenaRdfModel(val model: Model = JenaUtil.createMemoryModel()) extends RdfM
         out.println(s"<${st.getSubject.getURI}> <${st.getPredicate.getURI}> <${st.getObject.asResource().getURI}> .")
       }
     }
-    //out.println(RDFPrinter(model, "JSON-LD"))
+    */
+    out.println(RDFPrinter(model, "N3"))
     out.close()
   }
 

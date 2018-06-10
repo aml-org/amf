@@ -42,9 +42,30 @@ description: API that returns sample data for MuleSoft training
                   plane:
                     type: Boeing 777
                     totalSeats: 300
-            type: array
             items:
               type: object
+              examples:
+                value:
+                  code: GQ574
+                  price: 399
+                  departureDate: 2016/12/20
+                  origin: ORD
+                  destination: SFO
+                  emptySeats: 200
+                  plane:
+                    type: Boeing 747
+                    totalSeats: 400
+                example_0:
+                  ID: 1
+                  code: GQ574
+                  price: 399
+                  departureDate: 2016/12/20
+                  origin: ORD
+                  destination: SFO
+                  emptySeats: 200
+                  plane:
+                    type: Boeing 747
+                    totalSeats: 400
               additionalProperties: true
               properties:
                 ID:
@@ -70,7 +91,6 @@ description: API that returns sample data for MuleSoft training
                   required: true
                 plane:
                   type: object
-                  required: false
                   additionalProperties: true
                   properties:
                     type:
@@ -79,12 +99,24 @@ description: API that returns sample data for MuleSoft training
                     totalSeats:
                       type: integer
                       required: true
+                  required: false
   post:
     displayName: Add a flight
     body:
       application/json:
         examples:
           value:
+            code: GQ574
+            price: 399
+            departureDate: 2016/12/20
+            origin: ORD
+            destination: SFO
+            emptySeats: 200
+            plane:
+              type: Boeing 747
+              totalSeats: 400
+          example_0:
+            ID: 1
             code: GQ574
             price: 399
             departureDate: 2016/12/20
@@ -120,7 +152,6 @@ description: API that returns sample data for MuleSoft training
             required: true
           plane:
             type: object
-            required: false
             additionalProperties: true
             properties:
               type:
@@ -129,6 +160,7 @@ description: API that returns sample data for MuleSoft training
               totalSeats:
                 type: integer
                 required: true
+            required: false
     responses:
       201:
         body:
@@ -145,6 +177,16 @@ description: API that returns sample data for MuleSoft training
             application/json:
               examples:
                 value:
+                  code: GQ574
+                  price: 399
+                  departureDate: 2016/12/20
+                  origin: ORD
+                  destination: SFO
+                  emptySeats: 200
+                  plane:
+                    type: Boeing 747
+                    totalSeats: 400
+                example_0:
                   ID: 1
                   code: GQ574
                   price: 399
@@ -181,7 +223,6 @@ description: API that returns sample data for MuleSoft training
                   required: true
                 plane:
                   type: object
-                  required: false
                   additionalProperties: true
                   properties:
                     type:
@@ -190,6 +231,7 @@ description: API that returns sample data for MuleSoft training
                     totalSeats:
                       type: integer
                       required: true
+                  required: false
     delete:
       displayName: Delete a flight
       responses:
@@ -205,6 +247,17 @@ description: API that returns sample data for MuleSoft training
         application/json:
           examples:
             value:
+              code: GQ574
+              price: 399
+              departureDate: 2016/12/20
+              origin: ORD
+              destination: SFO
+              emptySeats: 200
+              plane:
+                type: Boeing 747
+                totalSeats: 400
+            example_0:
+              ID: 1
               code: GQ574
               price: 399
               departureDate: 2016/12/20
@@ -240,7 +293,6 @@ description: API that returns sample data for MuleSoft training
               required: true
             plane:
               type: object
-              required: false
               additionalProperties: true
               properties:
                 type:
@@ -249,6 +301,7 @@ description: API that returns sample data for MuleSoft training
                 totalSeats:
                   type: integer
                   required: true
+              required: false
       responses:
         200:
           body:

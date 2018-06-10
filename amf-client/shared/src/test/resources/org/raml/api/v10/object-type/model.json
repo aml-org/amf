@@ -2,21 +2,6 @@
 title: simple object
 types:
   Person:
-    additionalProperties: true
-    properties:
-      name:
-        type: string
-        required: true
-      email:
-        type: string
-        pattern: .+@.+\..+
-        required: true
-      age:
-        type: integer
-        minimum: 0
-        required: true
-  Office:
-    type: object
     example:
       name: John
       email: john@raml.org

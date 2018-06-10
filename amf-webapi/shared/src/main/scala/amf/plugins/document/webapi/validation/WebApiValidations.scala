@@ -45,7 +45,7 @@ trait WebApiValidations extends ValidationResultProcessor {
                             validations: EffectiveValidations) = {
     for {
       examplesResults <- UnitPayloadsValidation(baseUnit, platform).validate()
-      shaclReport <- {
+      shaclReport     <- {
         ExecutionLog.log("WebApiValidations#validationRequestsForBaseUnit: validating now WebAPI")
         RuntimeValidator.shaclValidation(baseUnit, validations, messageStyle)
       }

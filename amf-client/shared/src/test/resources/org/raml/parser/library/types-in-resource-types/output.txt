@@ -6,7 +6,6 @@ baseUri: http://localhost:8081/api
   get:
     queryParameters:
       rt:
-        type: object
         additionalProperties: true
         properties:
           hi:

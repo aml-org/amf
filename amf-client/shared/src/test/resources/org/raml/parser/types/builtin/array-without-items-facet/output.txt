@@ -4,6 +4,38 @@ version: v1
 types:
   DummyObject:
     type: object
+    examples:
+      one:
+        id: 1
+        dummyList:
+          - Some string
+          - 314
+          - 3.14
+          -
+            hello: world
+          -
+            - this
+            - is
+            - other
+            - array
+            - 34
+            - 3.14
+          - (string | number)
+      two:
+        id: 2
+        dummyList:
+          - Some string
+          - 314
+          - 3.14
+          -
+            hello: world
+          -
+            - this
+            - is
+            - other
+            - array
+            - 34
+            - 3.14
     additionalProperties: true
     properties:
       id:

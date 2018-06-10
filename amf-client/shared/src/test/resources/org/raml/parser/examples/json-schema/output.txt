@@ -6,16 +6,12 @@ title: sample api
       200:
         body:
           application/json:
+            type: object
             examples:
               example1:
                 name: null
-            type: |-
-              {
-                "$schema": "http://json-schema.org/draft-04/schema#",
-                "type": "object",
-                "properties": {
-                  "currency": {
-                    "type": "string"
-                  }
-                }
-              }
+            additionalProperties: true
+            properties:
+              currency:
+                type: string
+                required: false
