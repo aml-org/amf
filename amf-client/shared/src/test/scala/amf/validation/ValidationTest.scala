@@ -10,7 +10,7 @@ import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.SeverityLevels
 import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
-import amf.plugins.document.webapi.validation.{AMFShapeValidations, UnitPayloadsValidation}
+import amf.plugins.document.webapi.validation.AMFShapeValidations
 import amf.plugins.document.webapi.{RAML08Plugin, RAML10Plugin}
 import amf.plugins.domain.shapes.models.ArrayShape
 import amf.plugins.features.validation.ParserSideValidations
@@ -36,157 +36,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   // todo serialize json of validation report?
   // Example validations test and Example model validation test were the same, because the resolution runs always for validation
 
-  test("Shape facets validations test") {
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(examplesPath + "facets/custom-facets.raml", platform, RamlYamlHint, validation)
-        .build()
-      results <- UnitPayloadsValidation(library, platform).validate()
-    } yield {
-      assert(results.length == 1)
-    }
-  }
-
-  test("Shape facets model validations test") {
-    for {
-      validation <- Validation(platform)
-      library    <- AMFCompiler(examplesPath + "facets/custom-facets.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      report.results.foreach(result => assert(result.position.isDefined))
-      assert(report.results.length == 4)
-    }
-  }
-
-  test("Annotations validations test") {
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(examplesPath + "annotations/annotations.raml", platform, RamlYamlHint, validation)
-        .build()
-      results <- UnitPayloadsValidation(library, platform).validate()
-    } yield {
-      assert(results.length == 1)
-    }
-  }
-
-  test("Annotations enum validations test") {
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(examplesPath + "annotations/annotations_enum.raml", platform, RamlYamlHint, validation)
-        .build()
-      results <- UnitPayloadsValidation(library, platform).validate()
-    } yield {
-      assert(results.length == 2)
-    }
-  }
-
-  test("Duplicated endpoints validations test") {
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(examplesPath + "endpoint/duplicated.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      report.results.foreach(result => assert(result.position.isDefined))
-      assert(report.results.length == 1)
-    }
-  }
-
-  test("Invalid baseUri validations test") {
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(examplesPath + "webapi/invalid_baseuri.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      report.results.foreach(result => assert(result.position.isDefined))
-      assert(report.results.length == 1)
-    }
-  }
-
-  ignore("Invalid mediaType validations test") {
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(examplesPath + "webapi/invalid_media_type.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      report.results.foreach(result => assert(result.position.isDefined))
-      assert(report.results.length == 1)
-    }
-  }
-
-  test("MinLength, maxlength facets validations test") {
-    for {
-      validation <- Validation(platform)
-      doc        <- AMFCompiler(examplesPath + "types/lengths.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(doc, ProfileNames.RAML)
-    } yield {
-      report.results.foreach(result => assert(result.position.isDefined))
-      val (violations, warnings) = report.results.partition(r => r.level.equals(SeverityLevels.VIOLATION))
-      assert(violations.lengthCompare(1) == 0)
-    }
-  }
-
-  test("big numbers validations test") {
-    for {
-      validation <- Validation(platform)
-      doc        <- AMFCompiler(examplesPath + "types/big_nums.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(doc, ProfileNames.RAML)
-    } yield {
-      report.results.foreach(result => assert(result.position.isDefined))
-      val (violations, warnings) = report.results.partition(r => r.level.equals(SeverityLevels.VIOLATION))
-      assert(violations.lengthCompare(1) == 0)
-    }
-  }
-
-  test("Mutually exclusive 'type' and 'schema' facets validations test") {
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(examplesPath + "types/exclusive_facets.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      report.results.foreach(result => assert(result.position.isDefined))
-      val (violations, warnings) = report.results.partition(r => r.level.equals(SeverityLevels.VIOLATION))
-      assert(violations.lengthCompare(2) == 0)
-    }
-  }
-
-  test("Mutually exclusive 'types' and 'schemas' facets validations test") {
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(examplesPath + "webapi/exclusive_facets.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      val (violations, warnings) = report.results.partition(r => r.level.equals(SeverityLevels.VIOLATION))
-      report.results.foreach(result => assert(result.position.isDefined))
-      assert(violations.lengthCompare(1) == 0)
-    }
-  }
-
-  test("Valid baseUri validations test") {
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(examplesPath + "webapi/valid_baseuri.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      assert(report.results.isEmpty)
-    }
-  }
-
-  test("No title validation") {
-    for {
-      validation <- Validation(platform)
-      library    <- AMFCompiler(productionPath + "no_title.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      assert(!report.conforms)
-    }
-  }
-
+  // generic examples test? Extracted from spec? is not testing a particular cases, but testing different examples. This should be an unit test?
   test("Spec usage examples example validation") {
     for {
       validation <- Validation(platform)
@@ -194,39 +44,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report     <- validation.validate(library, ProfileNames.RAML)
     } yield {
       assert(report.conforms)
-    }
-  }
-
-  test("Test Issue Nil validation") {
-    for {
-      validation <- Validation(platform)
-      library    <- AMFCompiler(productionPath + "/testIssueNil/api.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("Nil value validation") {
-    for {
-      validation <- Validation(platform)
-      library    <- AMFCompiler(validationsPath + "nil_validation.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.size == 1)
-    }
-  }
-
-  test("Property overwriting") {
-    for {
-      validation <- Validation(platform)
-      library    <- AMFCompiler(productionPath + "property_overwriting.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.size == 1)
-      assert(report.results.head.level == SeverityLevels.VIOLATION)
     }
   }
 
@@ -240,129 +57,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Invalid media type") {
-    for {
-      validation <- Validation(platform)
-      library    <- AMFCompiler(productionPath + "invalid_media_type.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      assert(!report.conforms)
-    }
-  }
-
-  test("Example validation of a resource type") {
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(validationsPath + "resource_types/resource_type1.raml",
-                             platform,
-                             RamlYamlHint,
-                             validation)
-        .build()
-      report <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("Annotations model validations test") {
-    for {
-      validation <- Validation(platform)
-      library    <- AMFCompiler(examplesPath + "annotations/annotations.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      report.results.foreach(result => assert(result.position.isDefined))
-      assert(report.results.length == 1)
-    }
-  }
-
-  test("Example of object validations test") {
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(examplesPath + "examples/object-name-example.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("Example min and max constraint validations test") {
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(examplesPath + "examples/max-min-constraint.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("json schema inheritance") {
-    for {
-      validation <- Validation(platform)
-      library    <- AMFCompiler(upDownPath + "schema_inheritance.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      assert(report.results.size == 1)
-      assert(report.results.head.level == SeverityLevels.WARNING)
-      assert(report.conforms)
-    }
-  }
-
-  test("xml schema inheritance") {
-    for {
-      validation <- Validation(platform)
-      library    <- AMFCompiler(upDownPath + "schema_inheritance2.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      assert(!report.conforms)
-    }
-  }
-
-  test("Example invalid min and max constraint validations test") {
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(examplesPath + "examples/invalid-max-min-constraint.raml",
-                             platform,
-                             RamlYamlHint,
-                             validation)
-        .build()
-      report <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.lengthCompare(6) == 0)
-    }
-  }
-
-  test("Test js custom validation - multiple of") {
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(examplesPath + "/custom-js-validations/mutiple-of.raml",
-                             platform,
-                             RamlYamlHint,
-                             validation)
-        .build()
-      report <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.length == 1)
-
-    }
-  }
-
-  ignore("Example JS library validations") {
-    for {
-      validation <- Validation(platform)
-      _          <- validation.loadValidationDialect()
-      library    <- AMFCompiler(examplesPath + "libraries/api.raml", platform, RamlYamlHint, validation).build()
-      _          <- validation.loadValidationProfile(examplesPath + "libraries/profile.raml")
-      report     <- validation.validate(library, "Test")
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.length == 1)
-    }
-  }
-
+  //this shoulnot be an unit test
   test("Can parse and validate a complex recursive API") {
     for {
       validation <- Validation(platform) //
@@ -374,6 +69,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  // this is not a validation test
   test("Can parse a recursive API") {
     for {
       validation <- Validation(platform)

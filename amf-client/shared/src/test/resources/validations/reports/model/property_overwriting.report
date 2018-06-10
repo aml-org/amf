@@ -1,0 +1,13 @@
+Model: file://amf-client/shared/src/test/resources/validations/types/property_overwriting.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://raml.org/vocabularies/amf/parser#invalid-type-inheritance
+  Message: Resolution error: Invalid scalar inheritance base type http://raml.org/vocabularies/shapes#number < http://www.w3.org/2001/XMLSchema#string 
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/types/property_overwriting.raml#/declarations/types/Employee/property/name/scalar/name
+  Property: http://raml.org/vocabularies/shapes#inherits
+  Position: Some(LexicalInformation([(12,8)-(13,21)]))

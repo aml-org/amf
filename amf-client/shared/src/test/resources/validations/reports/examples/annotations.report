@@ -1,0 +1,13 @@
+Model: file://amf-client/shared/src/test/resources/validations/annotations/annotations.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: file://amf-client/shared/src/test/resources/validations/annotations/annotations.raml#/declarations/annotations/b/scalar/schema_validation_range/prop
+  Message: Scalar at / must have data type http://www.w3.org/2001/XMLSchema#integer
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/annotations/annotations.raml#/web-api/b/scalar_1
+  Property: http://raml.org/vocabularies/data#value
+  Position: Some(LexicalInformation([(10,5)-(10,7)]))

@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: External Types Invalid
+
+types:
+  Person:
+    type: |
+      {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    properties: # invalid
+      single: boolean

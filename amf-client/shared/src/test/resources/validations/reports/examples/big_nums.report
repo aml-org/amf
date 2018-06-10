@@ -1,0 +1,13 @@
+Model: file://amf-client/shared/src/test/resources/validations/types/big_nums.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: file://amf-client/shared/src/test/resources/validations/types/big_nums.raml#/declarations/types/scalar/LongNumber_validation_validation_maximum/prop
+  Message: Data at / must be smaller than or equal to 999999999999
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/types/big_nums.raml#/declarations/types/scalar/LongNumber/example/three
+  Property: http://raml.org/vocabularies/data#value
+  Position: Some(LexicalInformation([(11,13)-(11,26)]))

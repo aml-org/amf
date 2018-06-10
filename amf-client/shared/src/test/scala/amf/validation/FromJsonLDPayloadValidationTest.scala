@@ -7,7 +7,10 @@ import amf.plugins.features.validation.PlatformValidator
 import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
 import org.scalatest.AsyncFunSuite
 
+import scala.concurrent.ExecutionContext
+
 class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val path = "file://amf-client/shared/src/test/resources/validations/"
 

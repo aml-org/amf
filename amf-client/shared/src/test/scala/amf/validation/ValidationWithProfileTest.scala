@@ -19,8 +19,6 @@ class ValidationWithProfileTest extends ValidationReportGenTest {
 
   test("Raml Vocabulary") {
     cycle("data/error1.raml", "Test Profile", Some("data/custom_function_validation_success.raml"))
-//    assert(report.conforms)
-//    assert(report.results.isEmpty)
   }
 
   test("Custom function validation failure test") {
@@ -28,9 +26,6 @@ class ValidationWithProfileTest extends ValidationReportGenTest {
           Some("custom-validation-error.report"),
           "Test Profile",
           Some("data/custom_function_validation_error.raml"))
-//    assert(report.conforms)
-//    assert(report.results.length == 1)
-//    assert(report.results.head.validationId == "http://raml.org/vocabularies/data#my_custom_validation")
   }
 
   test("Validation test, custom validation profile") {
@@ -42,9 +37,12 @@ class ValidationWithProfileTest extends ValidationReportGenTest {
 
   test("Banking example validation") {
     cycle("banking/api.raml", Some("baking-api.report"), "Banking", Some("banking/profile.raml"))
-//    assert(!report.conforms)
-//    assert(report.results.length == 10)
-//    assert(report.results.nonEmpty)
+  }
+
+  ignore("Example JS library validations") {
+    cycle("libraries/api.raml", Some("libraries-profile.report"), "Test", Some("libraries/profile.raml"))
+//      assert(!report.conforms)
+//      assert(report.results.length == 1)
   }
 
 }

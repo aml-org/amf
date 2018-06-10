@@ -15,11 +15,12 @@ class EditingResolutionTest extends BuildCycleTests {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val extendsPath    = "amf-client/shared/src/test/resources/resolution/extends/"
-  val productionPath = "amf-client/shared/src/test/resources/production/"
-  val resolutionPath = "amf-client/shared/src/test/resources/resolution/"
-  val cyclePath      = "amf-client/shared/src/test/resources/upanddown/"
-  val referencesPath = "amf-client/shared/src/test/resources/references/"
+  val extendsPath     = "amf-client/shared/src/test/resources/resolution/extends/"
+  val productionPath  = "amf-client/shared/src/test/resources/production/"
+  val resolutionPath  = "amf-client/shared/src/test/resources/resolution/"
+  val cyclePath       = "amf-client/shared/src/test/resources/upanddown/"
+  val referencesPath  = "amf-client/shared/src/test/resources/references/"
+  val validationsPath = "amf-client/shared/src/test/resources/validations/"
 
   test("Simple extends resolution to Raml") {
     cycle("simple-merge.raml", "simple-merge.editing.jsonld", RamlYamlHint, Amf, extendsPath)
@@ -50,7 +51,7 @@ class EditingResolutionTest extends BuildCycleTests {
   }
 
   test("Exchange issueNil API resolution to Amf") {
-    cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, productionPath + "testIssueNil/")
+    cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, validationsPath + "examples/inline-named-examples/")
   }
 
   test("Location in annotation of Trait declared in lib") {

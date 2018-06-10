@@ -1,0 +1,13 @@
+Model: file://amf-client/shared/src/test/resources/validations/webapi/no_title.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://raml.org/vocabularies/amf/parser#WebAPI-name-minLength
+  Message: API name must not be an empty string
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/webapi/no_title.raml#/web-api
+  Property: http://schema.org/name
+  Position: Some(LexicalInformation([(2,6)-(2,6)]))

@@ -1,0 +1,24 @@
+#%RAML 1.0
+title: External Types Invalid
+
+types:
+  Person:
+    type: |
+      <?xml version="1.0" encoding="UTF-8"?>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="https://www.w3schools.com"
+                 xmlns="https://www.w3schools.com"
+                 elementFormDefault="qualified">
+
+          <xs:element name="person">
+              <xs:complexType>
+                  <xs:sequence>
+                      <xs:element name="name" type="xs:string"
+                                  maxOccurs="unbounded"/>
+                  </xs:sequence>
+              </xs:complexType>
+          </xs:element>
+
+      </xs:schema>
+    properties: # invalid
+      single: boolean
