@@ -44,18 +44,17 @@ description: Lets you access a cloud hosted machine learning service that makes 
             properties:
               input:
                 type: object
-                required: false
                 additionalProperties: true
                 properties:
                   csvInstance:
                     type: array
-                    required: false
                     items: {}
+                    required: false
+                required: false
         responses:
           200:
             body:
               application/json:
-                type: object
                 additionalProperties: true
                 properties:
                   id:
@@ -63,14 +62,13 @@ description: Lets you access a cloud hosted machine learning service that makes 
                     required: false
                   kind:
                     type: string
-                    required: false
                     default: prediction#output
+                    required: false
                   outputLabel:
                     type: string
                     required: false
                   outputMulti:
                     type: array
-                    required: false
                     items:
                       type: object
                       additionalProperties: true
@@ -82,6 +80,7 @@ description: Lets you access a cloud hosted machine learning service that makes 
                           format: double
                           type: number
                           required: false
+                    required: false
                   outputValue:
                     format: double
                     type: number
@@ -138,13 +137,12 @@ description: Lets you access a cloud hosted machine learning service that makes 
             csvInstance:
               description: The input features for this instance
               type: array
-              required: false
               items: {}
+              required: false
       responses:
         200:
           body:
             application/json:
-              type: object
               additionalProperties: true
               properties:
                 id:
@@ -152,11 +150,10 @@ description: Lets you access a cloud hosted machine learning service that makes 
                   required: false
                 kind:
                   type: string
-                  required: false
                   default: prediction#training
+                  required: false
                 modelInfo:
                   type: object
-                  required: false
                   additionalProperties: true
                   properties:
                     classificationAccuracy:
@@ -170,6 +167,7 @@ description: Lets you access a cloud hosted machine learning service that makes 
                     modelType:
                       type: string
                       required: false
+                  required: false
                 selfLink:
                   type: string
                   required: false
@@ -239,7 +237,6 @@ description: Lets you access a cloud hosted machine learning service that makes 
         200:
           body:
             application/json:
-              type: object
               additionalProperties: true
               properties:
                 id:
@@ -247,11 +244,10 @@ description: Lets you access a cloud hosted machine learning service that makes 
                   required: false
                 kind:
                   type: string
-                  required: false
                   default: prediction#training
+                  required: false
                 modelInfo:
                   type: object
-                  required: false
                   additionalProperties: true
                   properties:
                     classificationAccuracy:
@@ -265,6 +261,7 @@ description: Lets you access a cloud hosted machine learning service that makes 
                     modelType:
                       type: string
                       required: false
+                  required: false
                 selfLink:
                   type: string
                   required: false
@@ -324,11 +321,10 @@ description: Lets you access a cloud hosted machine learning service that makes 
             required: false
           kind:
             type: string
-            required: false
             default: prediction#training
+            required: false
           modelInfo:
             type: object
-            required: false
             additionalProperties: true
             properties:
               classificationAccuracy:
@@ -342,6 +338,7 @@ description: Lets you access a cloud hosted machine learning service that makes 
               modelType:
                 type: string
                 required: false
+            required: false
           selfLink:
             type: string
             required: false
@@ -352,7 +349,6 @@ description: Lets you access a cloud hosted machine learning service that makes 
       200:
         body:
           application/json:
-            type: object
             additionalProperties: true
             properties:
               id:
@@ -360,11 +356,10 @@ description: Lets you access a cloud hosted machine learning service that makes 
                 required: false
               kind:
                 type: string
-                required: false
                 default: prediction#training
+                required: false
               modelInfo:
                 type: object
-                required: false
                 additionalProperties: true
                 properties:
                   classificationAccuracy:
@@ -378,6 +373,7 @@ description: Lets you access a cloud hosted machine learning service that makes 
                   modelType:
                     type: string
                     required: false
+                required: false
               selfLink:
                 type: string
                 required: false
@@ -434,18 +430,17 @@ description: Lets you access a cloud hosted machine learning service that makes 
             properties:
               input:
                 type: object
-                required: false
                 additionalProperties: true
                 properties:
                   csvInstance:
                     type: array
-                    required: false
                     items: {}
+                    required: false
+                required: false
         responses:
           200:
             body:
               application/json:
-                type: object
                 additionalProperties: true
                 properties:
                   id:
@@ -453,14 +448,13 @@ description: Lets you access a cloud hosted machine learning service that makes 
                     required: false
                   kind:
                     type: string
-                    required: false
                     default: prediction#output
+                    required: false
                   outputLabel:
                     type: string
                     required: false
                   outputMulti:
                     type: array
-                    required: false
                     items:
                       type: object
                       additionalProperties: true
@@ -472,6 +466,7 @@ description: Lets you access a cloud hosted machine learning service that makes 
                           format: double
                           type: number
                           required: false
+                    required: false
                   outputValue:
                     format: double
                     type: number

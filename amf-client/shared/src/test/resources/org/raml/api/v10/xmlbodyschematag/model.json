@@ -29,6 +29,16 @@ types:
   get:
     body:
       application/xml:
+        type: object
+        examples:
+          batman:
+            firstname: bruce
+            lastname: wayne
+            age: 77
+          daredevil:
+            firstname: matt
+            lastname: murdock
+            age: 52
         additionalProperties: true
         properties:
           firstname:
@@ -46,6 +56,16 @@ types:
       200:
         body:
           application/xml:
+            type: object
+            examples:
+              batman:
+                firstname: bruce
+                lastname: wayne
+                age: 77
+              daredevil:
+                firstname: matt
+                lastname: murdock
+                age: 52
             additionalProperties: true
             properties:
               firstname:

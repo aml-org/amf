@@ -4,12 +4,14 @@ import amf.core.annotations.ExplicitField
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain.{AmfArray, PerpetualAnnotation, RecursiveShape, Shape}
+import amf.core.model.domain._
 import amf.core.parser.Annotations
+import amf.plugins.document.webapi.annotations.ParsedJSONSchema
 import amf.plugins.domain.shapes.annotations.InheritedShapes
-import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, NodeShapeModel, TupleShapeModel, UnionShapeModel}
+import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
 
+import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 private[stages] object ShapeCanonizer {
@@ -19,7 +21,7 @@ private[stages] object ShapeCanonizer {
 sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) extends ShapeNormalizer {
 
   protected def cleanUnnecessarySyntax(shape: Shape): Shape = {
-    shape.annotations.reject(!_.isInstanceOf[PerpetualAnnotation])
+    shape.annotations.reject(a => !a.isInstanceOf[PerpetualAnnotation] ||  (!context.isRaml08 && a.isInstanceOf[ParsedJSONSchema]))
     shape
   }
 
@@ -52,6 +54,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       case any: AnyShape             => canonicalShape(any)
     }
     if (!withoutCaching) context.cache + canonical // i should never add a shape if is not resolved yet
+
     canonical
   }
 
@@ -100,36 +103,102 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
   }
 
   protected def canonicalInheritance(shape: Shape): Shape = {
-    val superTypes = shape.inherits
-    val oldInherits: Seq[Shape] = if (context.keepEditingInfo) shape.inherits.collect {
-      case rec: RecursiveShape => rec
-      case shape: Shape        => shape.link(shape.name.value()).asInstanceOf[Shape]
-    } else Nil
-    shape.fields.removeField(ShapeModel.Inherits) // i need to remove the resolved type without inhertis, because later it will be added to cache once it will be fully resolved
-    var accShape: Shape = normalizeWithoutCaching(shape)
-    var superShapeswithDiscriminator: Seq[AnyShape] = Nil
-    superTypes.foreach { superNode =>
-      val canonicalSuperNode = normalizeAction(superNode)
+    if (endpointSimpleInheritance(shape)) {
+      val referencedShape = shape.inherits.head
+      aggregateExamples(shape, referencedShape)
+      normalize(referencedShape)
+    } else {
+      val superTypes = shape.inherits
+      val oldInherits: Seq[Shape] = if (context.keepEditingInfo) shape.inherits.collect {
+        case rec: RecursiveShape => rec
+        case shape: Shape => shape.link(shape.name.value()).asInstanceOf[Shape]
+      } else Nil
+      shape.fields.removeField(ShapeModel.Inherits) // i need to remove the resolved type without inhertis, because later it will be added to cache once it will be fully resolved
+      var accShape: Shape = normalizeWithoutCaching(shape)
+      var superShapeswithDiscriminator: Seq[AnyShape] = Nil
+      superTypes.foreach { superNode =>
+        val canonicalSuperNode = normalizeAction(superNode)
 
-      // we save this information to connect the references once we have computed the minShape
-      if (hasDiscriminator(canonicalSuperNode)) superShapeswithDiscriminator = superShapeswithDiscriminator ++ Seq(canonicalSuperNode.asInstanceOf[NodeShape])
+        // we save this information to connect the references once we have computed the minShape
+        if (hasDiscriminator(canonicalSuperNode)) superShapeswithDiscriminator = superShapeswithDiscriminator ++ Seq(canonicalSuperNode.asInstanceOf[NodeShape])
 
-      val newMinShape        = context.minShape(accShape, canonicalSuperNode)
-      accShape = actionWithoutCaching(newMinShape)
+        val newMinShape = context.minShape(accShape, canonicalSuperNode)
+        accShape = actionWithoutCaching(newMinShape)
+      }
+      if (context.keepEditingInfo) accShape.annotations += InheritedShapes(oldInherits.map(_.id))
+      if (!shape.id.equals(accShape.id)) {
+        context.cache.registerMapping(shape.id, accShape.id)
+        accShape.withId(shape.id) // i need to override id, if not i will override the father catched shape
+      }
+
+      // adjust inheritance chain if discriminator is defined
+      accShape match {
+        case any: AnyShape => superShapeswithDiscriminator.foreach(_.linkSubType(any))
+        case _ => // ignore
+      }
+
+      accShape
     }
-    if (context.keepEditingInfo) accShape.annotations += InheritedShapes(oldInherits.map(_.id))
-    if (!shape.id.equals(accShape.id)) {
-      context.cache.registerMapping(shape.id, accShape.id)
-      accShape.withId(shape.id) // i need to override id, if not i will override the father catched shape
+  }
+
+  protected def aggregateExamples(shape: Shape, referencedShape: Shape) = {
+    val names: mutable.Set[String] = mutable.Set() // duplicated names
+    var exCounter = 0
+    if (shape.isInstanceOf[AnyShape] && referencedShape.isInstanceOf[AnyShape]) {
+      val accShape = shape.asInstanceOf[AnyShape]
+      val refShape = referencedShape.asInstanceOf[AnyShape]
+      accShape.examples.foreach { example =>
+        val oldExamples = refShape.examples
+        oldExamples.find(old => old.id == example.id || old.raw.value().trim == example.raw.value().trim) match {
+          case Some(_) => // duplicated
+          case None => {
+            refShape.setArrayWithoutId(AnyShapeModel.Examples, oldExamples ++ Seq(example))
+          }
+        }
+      }
+      // we give proper names if there are more than one example, so it cannot be null
+      if (refShape.examples.length > 1) {
+        refShape.examples.foreach { example =>
+          // we generate a unique new name if the no name or the name is already in the list of named examples
+          if (example.name.option().isEmpty || names.contains(example.name.value())) {
+            var name = s"example_$exCounter"
+            while (names.contains(name)) {
+              exCounter += 1
+              name = s"example_$exCounter"
+            }
+            names.add(name)
+            example.withName(name)
+          } else {
+            names.add(example.name.value())
+          }
+        }
+      }
     }
 
-    // adjust inheritance chain if discriminator is defined
-    accShape match {
-      case any: AnyShape => superShapeswithDiscriminator.foreach(_.linkSubType(any))
-      case _             => // ignore
-    }
+  }
 
-    accShape
+  def endpointSimpleInheritance(shape: Shape): Boolean = {
+    shape match {
+      case any: AnyShape =>
+        val singleInheritance = any.inherits.size == 1
+        val effectiveFields = shape.fields.fields().filter { f =>
+          f.field != ShapeModel.Inherits &&
+          f.field != AnyShapeModel.Examples &&
+          f.field != AnyShapeModel.Name
+        }
+        if (singleInheritance) {
+          val superType = any.inherits.head
+          effectiveFields.foldLeft(true) { case (acc, f) =>
+              superType.fields.entry(f.field) match {
+                case Some(e) if f.field == NodeShapeModel.Closed     => acc && e.value.value.asInstanceOf[AmfScalar].toBool == f.value.value.asInstanceOf[AmfScalar].toBool
+                case _                                               => false
+              }
+          }
+        } else {
+          false
+        }
+      case _ => false
+    }
   }
 
   protected def hasDiscriminator(shape: Shape): Boolean = {

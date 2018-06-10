@@ -226,7 +226,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#/declarations/types/PropertyNoArray/property/complex/union/default-union",
+                "@id": "#/declarations/types/PropertyNoArray/property/complex/union/default-union/union/default-union",
                 "@type": [
                   "raml-shapes:UnionShape",
                   "shacl:Shape",
@@ -283,18 +283,7 @@
                       }
                     }
                   }
-                ],
-                "smaps": {
-                  "inherited-shapes": {
-                    "#/declarations/types/PropertyNoArray/property/complex/union/default-union": "file://amf-client/shared/src/test/resources/upanddown/union_arrays.raml#/declarations/types/PropertyNoArray/property/complex/union/default-union/union/default-union"
-                  },
-                  "lexical": {
-                    "#/declarations/types/PropertyNoArray/property/complex/union/default-union": "[(13,0)-(13,39)]"
-                  },
-                  "type-property-lexical-info": {
-                    "#/declarations/types/PropertyNoArray/property/complex/union/default-union": "[(13,8)-(13,12)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [

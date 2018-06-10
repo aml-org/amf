@@ -1,16 +1,18 @@
 #%RAML 1.0
 types:
-  UserJson: |
-    {
-     "$schema": "http://json-schema.org/draft-04/schema",
-     "type": "object",
-     "properties": {
-       "firstname":  { "type": "string" },
-       "lastname":  { "type": "string" },
-       "age":  { "type": "integer" }
-     },
-     "required": [ "firstname", "lastname" ]
-    }
+  UserJson:
+    type: object
+    additionalProperties: true
+    properties:
+      firstname:
+        type: string
+        required: true
+      lastname:
+        type: string
+        required: true
+      age:
+        type: integer
+        required: false
 title: api title
 description: api description
 version: "1.0"
@@ -18,6 +20,7 @@ version: "1.0"
   post:
     body:
       application/json:
+        type: object
         additionalProperties: true
         properties:
           firstname:

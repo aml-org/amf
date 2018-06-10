@@ -23,7 +23,6 @@ baseUri: https://localhost:8081/api
       200:
         body:
           application/json:
-            type: array
             items:
               additionalProperties: true
               properties:
@@ -40,7 +39,6 @@ baseUri: https://localhost:8081/api
                   type: string
                   required: true
                 billingAddress:
-                  type: object
                   additionalProperties: true
                   properties:
                     address:
@@ -65,7 +63,6 @@ baseUri: https://localhost:8081/api
                       required: false
                   required: false
                 shippingAddress:
-                  type: object
                   additionalProperties: true
                   properties:
                     address:
@@ -101,7 +98,6 @@ baseUri: https://localhost:8081/api
             type: any
     body:
       application/json:
-        type: object
         additionalProperties: true
         properties:
           id:
@@ -117,7 +113,6 @@ baseUri: https://localhost:8081/api
             type: string
             required: true
           billingAddress:
-            type: object
             additionalProperties: true
             properties:
               address:
@@ -142,7 +137,6 @@ baseUri: https://localhost:8081/api
                 required: false
             required: false
           shippingAddress:
-            type: object
             additionalProperties: true
             properties:
               address:
@@ -184,9 +178,11 @@ baseUri: https://localhost:8081/api
         400:
           body:
             application/json:
-              type: object
-              example:
-                message: Bad message
+              examples:
+                example_0:
+                  message: Bad message
+                example_1:
+                  message: Resource not found
               additionalProperties: true
               properties:
                 message:
@@ -198,7 +194,6 @@ baseUri: https://localhost:8081/api
         200:
           body:
             application/json:
-              type: object
               additionalProperties: true
               properties:
                 id:
@@ -214,7 +209,6 @@ baseUri: https://localhost:8081/api
                   type: string
                   required: true
                 billingAddress:
-                  type: object
                   additionalProperties: true
                   properties:
                     address:
@@ -239,7 +233,6 @@ baseUri: https://localhost:8081/api
                       required: false
                   required: false
                 shippingAddress:
-                  type: object
                   additionalProperties: true
                   properties:
                     address:
@@ -266,9 +259,11 @@ baseUri: https://localhost:8081/api
         404:
           body:
             application/json:
-              type: object
-              example:
-                message: Resource not found
+              examples:
+                example_0:
+                  message: Bad message
+                example_1:
+                  message: Resource not found
               additionalProperties: true
               properties:
                 message:
@@ -284,7 +279,6 @@ baseUri: https://localhost:8081/api
           body: {}
       body:
         application/json:
-          type: object
           additionalProperties: true
           properties:
             id:
@@ -300,7 +294,6 @@ baseUri: https://localhost:8081/api
               type: string
               required: true
             billingAddress:
-              type: object
               additionalProperties: true
               properties:
                 address:
@@ -325,7 +318,6 @@ baseUri: https://localhost:8081/api
                   required: false
               required: false
             shippingAddress:
-              type: object
               additionalProperties: true
               properties:
                 address:
@@ -371,9 +363,11 @@ baseUri: https://localhost:8081/api
         400:
           body:
             application/json:
-              type: object
-              example:
-                message: Bad message
+              examples:
+                example_0:
+                  message: Bad message
+                example_1:
+                  message: Resource not found
               additionalProperties: true
               properties:
                 message:
@@ -403,7 +397,6 @@ baseUri: https://localhost:8081/api
                       type: string
                       required: true
                     billingAddress:
-                      type: object
                       additionalProperties: true
                       properties:
                         address:
@@ -428,7 +421,6 @@ baseUri: https://localhost:8081/api
                           required: false
                       required: false
                     shippingAddress:
-                      type: object
                       additionalProperties: true
                       properties:
                         address:
@@ -471,9 +463,11 @@ baseUri: https://localhost:8081/api
         404:
           body:
             application/json:
-              type: object
-              example:
-                message: Resource not found
+              examples:
+                example_0:
+                  message: Bad message
+                example_1:
+                  message: Resource not found
               additionalProperties: true
               properties:
                 message:

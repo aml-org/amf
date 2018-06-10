@@ -5,7 +5,8 @@ import amf.common.Tests.checkDiff
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.{AMFCompiler, AMFRenderer, Validation}
 import amf.core.model.document.BaseUnit
-import amf.core.remote.{Hint, Vendor}
+import amf.core.rdf.RdfModel
+import amf.core.remote.{Amf, Hint, Vendor, VocabularyYamlHint}
 import org.mulesoft.common.io.{AsyncFile, FileSystem}
 import org.scalatest.{Assertion, AsyncFunSuite}
 
@@ -70,6 +71,36 @@ trait BuildCycleTests extends AsyncFunSuite with PlatformSecrets {
     val target = config.target
     new AMFRenderer(unit, target, target.defaultSyntax, RenderOptions().withSourceMaps).renderToString
   }
+
+  /** Method for transforming parsed unit. Override if necessary. */
+  def transformRdf(unit: BaseUnit, config: CycleConfig): RdfModel = {
+    unit.toNativeRdfModel()
+  }
+
+  /** Method to render parsed unit. Override if necessary. */
+  def renderRdf(unit: RdfModel, config: CycleConfig): Future[String] = {
+    Future {
+      unit.toN3().split("\n").sorted.mkString("\n")
+    }
+  }
+
+  /** Compile source with specified hint. Render to temporary file and assert against golden. */
+  def cycleRdf(source: String,
+                     golden: String,
+                     hint: Hint,
+                     target: Vendor = Amf,
+                     directory: String = basePath,
+                     validation: Option[Validation] = None): Future[Assertion] = {
+
+    val config = CycleConfig(source, golden, hint, target, directory)
+
+    build(config, validation)
+      .map(transformRdf(_, config))
+      .flatMap(renderRdf(_, config))
+      .flatMap(writeTemporaryFile(golden))
+      .flatMap(assertDifferences(_, config.goldenPath))
+  }
+
 
   protected def writeTemporaryFile(golden: String)(content: String): Future[AsyncFile] = {
     val file = tmp(s"$golden.tmp")

@@ -1,103 +1,24 @@
-#%RAML 1.0
-title: World Music API
-baseUri: http://example.api.com/{version}
-version: v1
-traits:
-  trait:
-    queryParameters:
-      access_token: string
-/songs:
-  get:
-    (monitoringInterval): 30
-    queryParameters:
-      access_token:
-        type: string
-      genre:
-        description: filter the songs by genre
-    responses:
-      200:
-        body:
-          application/json:
-            type: object
-            additionalProperties: true
-            properties:
-              name:
-                type: string
-                required: true
-              discography:
-                items:
-                  anyOf:
-                    -
-                      additionalProperties: true
-                      properties:
-                        title:
-                          type: string
-                          required: true
-                        length:
-                          type: number
-                          multipleOf: 100
-                          required: true
-                    -
-                      additionalProperties: true
-                      properties:
-                        title:
-                          type: string
-                          required: true
-                        songs:
-                          items:
-                            additionalProperties: true
-                            properties:
-                              title:
-                                type: string
-                                required: true
-                              length:
-                                type: number
-                                multipleOf: 100
-                                required: true
-                          required: true
-                required: true
-  post:
-    queryParameters:
-      access_token:
-        type: string
-  /{songId}:
-    get:
-      responses:
-        200:
-          body:
-            application/json:
-              type: object
-              additionalProperties: true
-              properties:
-                title:
-                  type: string
-                  required: true
-                length:
-                  type: number
-                  multipleOf: 100
-                  required: true
-            application/xml:
-              example: |
-                <?xml version="1.0" encoding="utf-8"?>
-                <song>
-                  <title>str1234</title>
-                  <artist>str1234</artist>
-                </song>
-              type: |
-                <?xml version="1.0" encoding="UTF-8"?>
-                <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                  elementFormDefault="qualified" attributeFormDefault="unqualified">
-                  <xs:element name="song">
-                    <xs:complexType>
-                      <xs:sequence>
-                        <xs:element name="title" type="xs:string" />
-                        <xs:element name="artist" type="xs:string" />
-                      </xs:sequence>
-                    </xs:complexType>
-                  </xs:element>
-                </xs:schema>
-annotationTypes:
-  monitoringInterval:
-    type: integer
-uses:
-  Songs: songs-library.raml
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/examples/music-api/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/music-api/songs-library.raml#/declarations/types/Musician_validation
+  Message: Object at / must be valid
+Array items at //discography must be valid
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/music-api/songs-library.raml#/declarations/types/Musician/example/default-example
+  Property: http://raml.org/vocabularies/data#discography
+  Position: Some(LexicalInformation([(20,0)-(28,0)]))
+
+Level: Warning
+
+- Source: http://raml.org/vocabularies/amf/parser#unsupported-example-media-type-warning
+  Message: Unsupported validation for mediatype: application/xml and shape file://amf-client/shared/src/test/resources/org/raml/parser/examples/music-api/input.raml#/web-api/end-points/%2Fsongs%2F%7BsongId%7D/get/200/application%2Fxml/schema/schema
+  Level: Warning
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/music-api/input.raml#/web-api/end-points/%2Fsongs%2F%7BsongId%7D/get/200/application%2Fxml/schema/schema/example/default-example
+  Property: http://raml.org/vocabularies/document#value
+  Position: None
