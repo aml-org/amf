@@ -1,0 +1,32 @@
+{
+  "@type": "http://www.w3.org/ns/shacl#ValidationReport",
+  "http://www.w3.org/ns/shacl#conforms": true,
+  "http://www.w3.org/ns/shacl#result": [
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Info"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-client/shared/src/test/resources/validations/data/error1.raml#/web-api"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "This is a function constraint",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://raml.org/vocabularies/data#my_custom_validation"
+      },
+      "http://raml.org/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://raml.org/vocabularies/amf/parser#Position",
+        "http://raml.org/vocabularies/amf/parser#start": {
+          "@type": "http://raml.org/vocabularies/amf/parser#Location",
+          "http://raml.org/vocabularies/amf/parser#line": 3,
+          "http://raml.org/vocabularies/amf/parser#column": 0
+        },
+        "http://raml.org/vocabularies/amf/parser#end": {
+          "@type": "http://raml.org/vocabularies/amf/parser#Location",
+          "http://raml.org/vocabularies/amf/parser#line": 8,
+          "http://raml.org/vocabularies/amf/parser#column": 8
+        }
+      }
+    }
+  ]
+}

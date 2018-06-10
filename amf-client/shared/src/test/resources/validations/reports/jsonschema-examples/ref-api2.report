@@ -1,0 +1,15 @@
+Model: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api2.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api2.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/schema_validation
+  Message: Object at / must be valid
+Scalar at //bar must have data type http://www.w3.org/2001/XMLSchema#integer
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api2.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/schema/example/default-example
+  Property: http://raml.org/vocabularies/data#bar
+  Position: Some(LexicalInformation([(31,0)-(31,23)]))

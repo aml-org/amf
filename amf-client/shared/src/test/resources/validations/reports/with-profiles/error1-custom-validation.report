@@ -1,0 +1,35 @@
+{
+  "@type": "http://www.w3.org/ns/shacl#ValidationReport",
+  "http://www.w3.org/ns/shacl#conforms": true,
+  "http://www.w3.org/ns/shacl#result": [
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Info"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-client/shared/src/test/resources/validations/data/error1.raml#/web-api"
+      },
+      "http://www.w3.org/ns/shacl#resultPath": {
+        "@id": "http://raml.org/vocabularies/http#scheme"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "error wadus",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://raml.org/vocabularies/data#my-custom-validation"
+      },
+      "http://raml.org/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://raml.org/vocabularies/amf/parser#Position",
+        "http://raml.org/vocabularies/amf/parser#start": {
+          "@type": "http://raml.org/vocabularies/amf/parser#Location",
+          "http://raml.org/vocabularies/amf/parser#line": 7,
+          "http://raml.org/vocabularies/amf/parser#column": 0
+        },
+        "http://raml.org/vocabularies/amf/parser#end": {
+          "@type": "http://raml.org/vocabularies/amf/parser#Location",
+          "http://raml.org/vocabularies/amf/parser#line": 8,
+          "http://raml.org/vocabularies/amf/parser#column": 8
+        }
+      }
+    }
+  ]
+}
