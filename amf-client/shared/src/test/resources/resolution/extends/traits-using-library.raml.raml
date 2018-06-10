@@ -236,7 +236,6 @@ baseUri: acme-banking.com/apis
         200:
           body:
             application/json:
-              type: object
               additionalProperties: true
               properties:
                 lei:
@@ -320,7 +319,6 @@ baseUri: acme-banking.com/apis
           200:
             body:
               application/json:
-                type: array
                 items:
                   additionalProperties: true
                   properties:
@@ -390,7 +388,6 @@ baseUri: acme-banking.com/apis
         description: Requests the creation of a new BankAccount
         body:
           application/json:
-            type: object
             additionalProperties: true
             properties:
               accountType:
@@ -409,7 +406,6 @@ baseUri: acme-banking.com/apis
             200:
               body:
                 application/json:
-                  type: object
                   additionalProperties: true
                   properties:
                     id:
@@ -502,7 +498,6 @@ baseUri: acme-banking.com/apis
           200:
             body:
               application/json:
-                type: array
                 items:
                   additionalProperties: true
                   properties:
@@ -582,7 +577,6 @@ baseUri: acme-banking.com/apis
         description: Requests the creation of a new Loan
         body:
           application/json:
-            type: object
             additionalProperties: true
             properties:
               category:

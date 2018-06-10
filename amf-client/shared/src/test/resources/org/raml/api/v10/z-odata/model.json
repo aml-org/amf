@@ -102,7 +102,6 @@ types:
       200:
         body:
           application/json:
-            type: array
             items:
               (odata.remote): Orders
               type: object
@@ -164,6 +163,7 @@ types:
         body:
           application/json:
             type: object
+            (odata.remote): Orders
             additionalProperties: true
             properties:
               OrderID:
@@ -208,6 +208,7 @@ types:
           body:
             application/json:
               type: object
+              (odata.remote): Orders
               additionalProperties: true
               properties:
                 OrderID:
@@ -233,6 +234,7 @@ types:
           body:
             application/json:
               type: object
+              (odata.remote): Orders
               additionalProperties: true
               properties:
                 OrderID:
@@ -270,6 +272,7 @@ types:
       body:
         application/json:
           type: object
+          (odata.remote): Orders
           additionalProperties: true
           properties:
             OrderID:
@@ -311,6 +314,7 @@ types:
           body:
             application/json:
               type: object
+              (odata.remote): Orders
               additionalProperties: true
               properties:
                 OrderID:
@@ -370,7 +374,6 @@ types:
       200:
         body:
           application/json:
-            type: array
             items:
               (odata.remote): Customers
               type: object
@@ -437,6 +440,7 @@ types:
         body:
           application/json:
             type: object
+            (odata.remote): Customers
             additionalProperties: true
             properties:
               CustomerID:
@@ -486,6 +490,7 @@ types:
           body:
             application/json:
               type: object
+              (odata.remote): Customers
               additionalProperties: true
               properties:
                 CustomerID:
@@ -516,6 +521,7 @@ types:
           body:
             application/json:
               type: object
+              (odata.remote): Customers
               additionalProperties: true
               properties:
                 CustomerID:
@@ -558,6 +564,7 @@ types:
       body:
         application/json:
           type: object
+          (odata.remote): Customers
           additionalProperties: true
           properties:
             CustomerID:
@@ -604,6 +611,7 @@ types:
           body:
             application/json:
               type: object
+              (odata.remote): Customers
               additionalProperties: true
               properties:
                 CustomerID:
@@ -668,7 +676,6 @@ types:
       200:
         body:
           application/json:
-            type: array
             items:
               (odata.remote): Weird-resource_NAME
               type: object
@@ -725,6 +732,7 @@ types:
         body:
           application/json:
             type: object
+            (odata.remote): Weird-resource_NAME
             additionalProperties: true
             properties:
               just-A_key:
@@ -764,6 +772,7 @@ types:
           body:
             application/json:
               type: object
+              (odata.remote): Weird-resource_NAME
               additionalProperties: true
               properties:
                 just-A_key:
@@ -784,6 +793,7 @@ types:
           body:
             application/json:
               type: object
+              (odata.remote): Weird-resource_NAME
               additionalProperties: true
               properties:
                 just-A_key:
@@ -816,6 +826,7 @@ types:
       body:
         application/json:
           type: object
+          (odata.remote): Weird-resource_NAME
           additionalProperties: true
           properties:
             just-A_key:
@@ -852,6 +863,7 @@ types:
           body:
             application/json:
               type: object
+              (odata.remote): Weird-resource_NAME
               additionalProperties: true
               properties:
                 just-A_key:

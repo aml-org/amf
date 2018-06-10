@@ -32,7 +32,7 @@ class JSLibraryEmitter(profile: Option[ValidationProfile] = None) {
 
     validations.foreach { (validation) =>
       val constraint = validation.functionConstraint.get
-      val additionalParams = if (constraint.parameters.length > 0) {
+      val additionalParams = if (constraint.parameters.nonEmpty) {
         "," + constraint.parameters.map { param =>
           "$" + param.path.split("#").last
         }.mkString(",")

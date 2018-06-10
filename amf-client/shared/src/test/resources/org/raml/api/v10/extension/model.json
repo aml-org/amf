@@ -11,7 +11,6 @@ types:
   post:
     body:
       text/xml:
-        type: object
         additionalProperties: true
         properties:
           name:
@@ -30,7 +29,6 @@ traits:
   post:
     body:
       application/json:
-        type: object
         additionalProperties: true
         properties:
           name:

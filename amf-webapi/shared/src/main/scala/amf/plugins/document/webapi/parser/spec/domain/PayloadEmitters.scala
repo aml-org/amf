@@ -3,17 +3,13 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.SynthesizedField
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
+import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, FieldEntry, Position}
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
 import amf.plugins.document.webapi.contexts.RamlSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  AnnotationsEmitter,
-  Raml08TypePartEmitter,
-  Raml10TypeEmitter,
-  Raml10TypePartEmitter
-}
+import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
@@ -154,7 +150,18 @@ case class Raml08FormPropertiesEmitter(nodeShape: NodeShape, ordering: SpecOrder
           nodeShape.properties.foreach { p =>
             p.range match {
               case anyShape: AnyShape =>
-                ob.entry(p.name.value(), Raml08TypePartEmitter(anyShape, ordering, None, Seq(), Seq()).emit(_))
+                ob.entry(p.name.value(), pb => {
+                  Raml08TypePartEmitter(anyShape, ordering, None, Seq(), Seq()).emitter match {
+                    case Left(p)        => p.emit(pb)
+                    case Right(entries) =>
+                      val additionalEmitters: Seq[EntryEmitter] = RequiredShapeEmitter(shape = p.range, p.fields.entry(PropertyShapeModel.MinCount)).emitter() match {
+                        case Some(emitter) => Seq(emitter)
+                        case None          => Nil
+                      }
+                      pb.obj(traverse(ordering.sorted(entries ++ additionalEmitters), _))
+                  }
+                })
+
               case other =>
                 ob.entry(p.name.value(),
                          CommentEmitter(

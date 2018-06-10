@@ -171,8 +171,9 @@ sealed case class ShapeExpander(root: Shape)(implicit val context: Normalization
     // property is mandatory and must be explicit
     var required: Boolean = false
     property.fields.entry(PropertyShapeModel.MinCount) match {
-      case None => throw new Exception("MinCount field is mandatory in a shape")
+      case None => // throw new Exception("MinCount field is mandatory in a shape")
       case Some(entry) =>
+        entry.value.annotations += ExplicitField() // so we don't use the '?' shortcut in raml
         if (entry.value.value.asInstanceOf[AmfScalar].toNumber.intValue() != 0) {
           required = true
         }
@@ -180,16 +181,8 @@ sealed case class ShapeExpander(root: Shape)(implicit val context: Normalization
 
     val oldRange = property.fields.getValue(PropertyShapeModel.Range)
     if (Option(oldRange).isDefined) {
-//      val expandedRange = recursiveNormalization(property.range)
       val expandedRange =
         if (!required) traverseOptionalPropertyRange(property.range) else recursiveNormalization(property.range)
-      // Making the required property explicit
-      checkRequiredShape(expandedRange, required)
-      expandedRange.fields
-        .entry(ShapeModel.RequiredShape)
-        .foreach(f =>
-          if (f.value.annotations.contains(classOf[ExplicitField]))
-            property.fields.entry(PropertyShapeModel.MinCount).foreach(f => f.value.annotations.+=(ExplicitField())))
 
       property.fields.setWithoutId(PropertyShapeModel.Range, expandedRange, oldRange.annotations)
     } else {
@@ -204,14 +197,6 @@ sealed case class ShapeExpander(root: Shape)(implicit val context: Normalization
       case None if range.inherits.nonEmpty =>
         traversed.runWithIgnoredIds(() => normalize(range), range.inherits.map(_.id).toSet)
       case _ => traversed.runWithIgnoredId(() => normalize(range), range.id)
-    }
-  }
-
-  protected def checkRequiredShape(shape: Shape, required: Boolean): Unit = {
-    Option(shape.fields.getValue(ShapeModel.RequiredShape)) match {
-      case Some(v) => v.annotations += ExplicitField()
-      case None =>
-        shape.fields.setWithoutId(ShapeModel.RequiredShape, AmfScalar(required), Annotations() += ExplicitField())
     }
   }
 

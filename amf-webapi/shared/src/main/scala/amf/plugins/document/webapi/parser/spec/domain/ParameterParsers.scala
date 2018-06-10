@@ -175,11 +175,16 @@ case class Raml08ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
           .foreach(parameter.withSchema)
     }
 
-    parameter.schema.fields.entry(ShapeModel.RequiredShape) match {
-      case Some(e) =>
-        parameter.set(ParameterModel.Required, value = e.scalar.toBool)
-      case None =>
-        parameter.set(ParameterModel.Required, value = false)
+    entry.value.toOption[YMap] match {
+      case Some(map) =>
+        map.key(
+          "required",
+          entry => {
+            val required = ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
+            parameter.set(ParameterModel.Required, value = required)
+          }
+        )
+      case _ =>
     }
 
     val stringName = name.text().toString

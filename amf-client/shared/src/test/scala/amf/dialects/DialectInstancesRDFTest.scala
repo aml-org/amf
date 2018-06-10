@@ -23,34 +23,6 @@ class DialectInstancesRDFTest extends AsyncFunSuite with PlatformSecrets with Bu
 
 
 
-  /** Method for transforming parsed unit. Override if necessary. */
-  def transformRdf(unit: BaseUnit, config: CycleConfig): RdfModel = {
-    unit.toNativeRdfModel()
-  }
-
-  /** Method to render parsed unit. Override if necessary. */
-  def renderRdf(unit: RdfModel, config: CycleConfig): Future[String] = {
-    Future {
-      unit.toN3().split("\n").sorted.mkString("\n")
-    }
-  }
-
-  /** Compile source with specified hint. Render to temporary file and assert against golden. */
-  final def cycleRdf(source: String,
-                     golden: String,
-                     hint: Hint = VocabularyYamlHint,
-                     target: Vendor = Amf,
-                     directory: String = basePath,
-                     validation: Option[Validation] = None): Future[Assertion] = {
-
-    val config = CycleConfig(source, golden, hint, target, directory)
-
-    build(config, validation)
-      .map(transformRdf(_, config))
-      .flatMap(renderRdf(_, config))
-      .flatMap(writeTemporaryFile(golden))
-      .flatMap(assertDifferences(_, config.goldenPath))
-  }
 
   protected def withDialect(dialect: String,
                             source: String,

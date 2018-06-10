@@ -35,17 +35,19 @@ documentation:
       multi
       line
 types:
-  UserJson: |
-    {
-     "$schema": "http://json-schema.org/draft-04/schema",
-     "type": "object",
-     "properties": {
-       "firstname":  { "type": "string" },
-       "lastname":  { "type": "string" },
-       "age":  { "type": "integer" }
-     },
-     "required": [ "firstname", "lastname" ]
-    }
+  UserJson:
+    type: object
+    additionalProperties: true
+    properties:
+      firstname:
+        type: string
+        required: true
+      lastname:
+        type: string
+        required: true
+      age:
+        type: integer
+        required: false
   User:
     type: object
     examples:
@@ -64,6 +66,10 @@ types:
         age: 104
         height: 1.563
         goggles: true
+      example_0:
+        firstname: tato
+        lastname: bores
+        age: 66
     additionalProperties: true
     properties:
       firstname:
@@ -131,6 +137,10 @@ types:
           age: 104
           height: 1.563
           goggles: true
+        example_0:
+          firstname: tato
+          lastname: bores
+          age: 66
       additionalProperties: true
       properties:
         firstname:
@@ -252,7 +262,6 @@ annotationTypes:
             type: string
             required: true
           names:
-            type: array
             items:
               type: string
             required: true
@@ -281,7 +290,6 @@ annotationTypes:
         displayName: The One
         type: number
       two:
-        type: array
         items:
           anyOf:
             -
@@ -327,10 +335,26 @@ annotationTypes:
         body:
           application/json:
             type: object
-            example:
-              firstname: tato
-              lastname: bores
-              age: 66
+            examples:
+              batman:
+                firstname: bruce
+                lastname: wayne
+                age: 77
+                height: 1.82
+              daredevil:
+                firstname: matt
+                lastname: murdock
+                age: 52
+              quicksilver:
+                firstname: pietro
+                lastname: maximoff
+                age: 104
+                height: 1.563
+                goggles: true
+              example_0:
+                firstname: tato
+                lastname: bores
+                age: 66
             additionalProperties: true
             properties:
               firstname:
@@ -370,10 +394,26 @@ annotationTypes:
     body:
       application/json:
         type: object
-        example:
-          firstname: tato
-          lastname: bores
-          age: 66
+        examples:
+          batman:
+            firstname: bruce
+            lastname: wayne
+            age: 77
+            height: 1.82
+          daredevil:
+            firstname: matt
+            lastname: murdock
+            age: 52
+          quicksilver:
+            firstname: pietro
+            lastname: maximoff
+            age: 104
+            height: 1.563
+            goggles: true
+          example_0:
+            firstname: tato
+            lastname: bores
+            age: 66
         additionalProperties: true
         properties:
           firstname:
@@ -416,6 +456,7 @@ annotationTypes:
     post:
       body:
         application/json:
+          type: object
           additionalProperties: true
           properties:
             firstname:

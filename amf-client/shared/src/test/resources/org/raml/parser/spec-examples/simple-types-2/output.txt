@@ -211,6 +211,7 @@ types:
       200:
         body:
           application/json:
+            type: object
             additionalProperties: true
             properties:
               onCall:

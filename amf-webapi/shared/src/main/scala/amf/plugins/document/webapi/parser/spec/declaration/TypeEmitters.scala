@@ -1040,15 +1040,16 @@ case class RamlPropertiesShapeEmitter(f: FieldEntry, ordering: SpecOrdering, ref
   override def position(): Position = pos(f.value.annotations)
 }
 
-case class RequiredShapeEmitter(shape: Shape) {
+case class RequiredShapeEmitter(shape: Shape, minCount: Option[FieldEntry]) {
 
   def emitter(): Option[EntryEmitter] = {
-    Option(shape.fields.getValue(ShapeModel.RequiredShape))
-      .filter(_.annotations.contains(classOf[ExplicitField]))
-      .flatMap { v =>
-        shape.fields.entry(ShapeModel.RequiredShape).map(f => ValueEmitter("required", f))
+    minCount.flatMap { entry =>
+      if (entry.value.annotations.contains(classOf[ExplicitField])) {
+        Some(EntryPartEmitter("required", RawEmitter(if (entry.scalar.toNumber.intValue() > 0) "true" else "false", YType.Bool)))
+      } else {
+        None
       }
-
+    }
   }
 }
 
@@ -1081,7 +1082,7 @@ case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrder
       val additionalEmitters: Seq[EntryEmitter] =
         (property.fields
           .entry(PropertyShapeModel.ReadOnly)
-          .map(fe => ValueEmitter("readOnly".asRamlAnnotation, fe)) ++ RequiredShapeEmitter(shape = property.range)
+          .map(fe => ValueEmitter("readOnly".asRamlAnnotation, fe)) ++ RequiredShapeEmitter(shape = property.range, property.fields.entry(PropertyShapeModel.MinCount))
           .emitter()).toSeq
 
       property.range match {
@@ -1857,7 +1858,6 @@ case class SimpleTypeEmitter(shape: ScalarShape, ordering: SpecOrdering)(implici
       .map(f => result += ValueEmitter("maximum", f, Some(NumberTypeToYTypeConverter.convert(typeDef))))
 
     shape.examples.headOption.foreach(e => result += SingleExampleEmitter("example", e, ordering))
-    fs.entry(ScalarShapeModel.RequiredShape).map(f => result += ValueEmitter("required", f))
 
     fs.entry(ShapeModel.Default)
       .map(f => {

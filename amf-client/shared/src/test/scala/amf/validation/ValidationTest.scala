@@ -18,11 +18,7 @@ import amf.plugins.document.webapi.validation.{AMFShapeValidations, PayloadValid
 import amf.plugins.document.webapi.{RAML08Plugin, RAML10Plugin}
 import amf.plugins.domain.shapes.models.ArrayShape
 import amf.plugins.domain.webapi.models.WebApi
-import amf.plugins.features.validation.emitters.{
-  JSLibraryEmitter,
-  ValidationJSONLDEmitter,
-  ValidationReportJSONLDEmitter
-}
+import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter, ValidationReportJSONLDEmitter}
 import amf.plugins.features.validation.{ParserSideValidations, PlatformValidator}
 import org.scalatest.AsyncFunSuite
 import org.yaml.render.JsonRender
@@ -703,8 +699,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     "endpoint/valid.jsonld"                   -> ExpectedReport(conforms = true, 0, ProfileNames.AMF),
     "operation/amf.jsonld"                    -> ExpectedReport(conforms = false, 1, ProfileNames.AMF),
     "operation/valid.jsonld"                  -> ExpectedReport(conforms = true, 0, ProfileNames.AMF),
-    "parameters/amf_properties.jsonld"        -> ExpectedReport(conforms = false, 4, ProfileNames.AMF),
-    "parameters/amf_empty.jsonld"             -> ExpectedReport(conforms = false, 4, ProfileNames.AMF),
+    "parameters/amf_properties.jsonld"        -> ExpectedReport(conforms = false, 3, ProfileNames.AMF),
+    "parameters/amf_empty.jsonld"             -> ExpectedReport(conforms = false, 3, ProfileNames.AMF),
     "parameters/amf_valid.jsonld"             -> ExpectedReport(conforms = true, 0, ProfileNames.AMF),
     "shapes/enum_amf.jsonld"                  -> ExpectedReport(conforms = false, 2, ProfileNames.OAS),
     "shapes/enum_valid.jsonld"                -> ExpectedReport(conforms = true, 0, ProfileNames.OAS),
@@ -716,8 +712,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     "types/scalars/missing_type_valid.jsonld" -> ExpectedReport(conforms = true, 0, ProfileNames.RAML),
     "types/scalars/wrong_facet.jsonld"        -> ExpectedReport(conforms = false, 2, ProfileNames.RAML),
     "types/scalars/valid_facet.jsonld"        -> ExpectedReport(conforms = true, 0, ProfileNames.RAML),
-    "types/arrays/wrong_items.jsonld"         -> ExpectedReport(conforms = false, 1, ProfileNames.RAML),
-    "types/arrays/right_items.jsonld"         -> ExpectedReport(conforms = true, 0, ProfileNames.RAML),
+//   we commentated the range of items validation
+//    "types/arrays/wrong_items.jsonld"         -> ExpectedReport(conforms = false, 1, ProfileNames.RAML),
+//    "types/arrays/right_items.jsonld"         -> ExpectedReport(conforms = true, 0, ProfileNames.RAML),
     "types/arrays/empty_items.jsonld"         -> ExpectedReport(conforms = true, 0, ProfileNames.RAML),
     "types/arrays/empty_items.jsonld"         -> ExpectedReport(conforms = false, 1, ProfileNames.OAS),
     "annotationTypes/invalid.jsonld"          -> ExpectedReport(conforms = false, 1, ProfileNames.RAML),
@@ -727,7 +724,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   for {
     (file, expectedReport) <- testValidations
   } yield {
-    test(s"SHACL Validator $file") {
+    test(s"AQUI SHACL Validator $file") {
       validate(file, expectedReport)
     }
   }
@@ -1204,7 +1201,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       val resolved      = RAML10Plugin.resolve(doc)
       val A: ArrayShape = resolved.asInstanceOf[Module].declares.head.asInstanceOf[ArrayShape]
       assert(A.items.isInstanceOf[RecursiveShape])
-      assert(A.items.name.is("items"))
       val AOrig   = doc.asInstanceOf[Module].declares.head.asInstanceOf[ArrayShape]
       val profile = new AMFShapeValidations(AOrig).profile(ObjectNode())
       assert(profile != null)
@@ -2959,4 +2955,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.conforms)
     }
   }
+/*
+  test("HERE_HERE test field_nation") {
+    for {
+      validation <- Validation(platform)
+      model      <- AMFCompiler(productionPath + "field-nation-v2-api-2.0.7-fat-raml/FN_API_full.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      ExecutionLog.finish()
+      ExecutionLog.buildReport()
+      assert(report.conforms)
+    }
+  }
+  */
 }

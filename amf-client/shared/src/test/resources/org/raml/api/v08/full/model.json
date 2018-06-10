@@ -1,16 +1,21 @@
 #%RAML 0.8
 schemas:
-  UserJson: |
-    {
-       "$schema": "http://json-schema.org/draft-04/schema",
-       "type": "object",
-       "properties": {
-         "firstname":  { "type": "string" },
-         "lastname":  { "type": "string" },
-         "age":  { "type": "integer" }
-       },
-       "required": [ "firstname", "lastname" ]
-    }
+  UserJson:
+    example:
+      firstname: tato
+      lastname: bores
+      age: 66
+    schema: |
+      {
+         "$schema": "http://json-schema.org/draft-04/schema",
+         "type": "object",
+         "properties": {
+           "firstname":  { "type": "string" },
+           "lastname":  { "type": "string" },
+           "age":  { "type": "integer" }
+         },
+         "required": [ "firstname", "lastname" ]
+      }
   UserXml: |
     <xs:schema attributeFormDefault="unqualified"
                elementFormDefault="qualified"
@@ -180,17 +185,22 @@ resourceTypes:
     description: child description
     post:
       body:
-        application/json: |
-          {
-             "$schema": "http://json-schema.org/draft-04/schema",
-             "type": "object",
-             "properties": {
-               "firstname":  { "type": "string" },
-               "lastname":  { "type": "string" },
-               "age":  { "type": "integer" }
-             },
-             "required": [ "firstname", "lastname" ]
-          }
+        application/json:
+          example:
+            firstname: tato
+            lastname: bores
+            age: 66
+          schema: |
+            {
+               "$schema": "http://json-schema.org/draft-04/schema",
+               "type": "object",
+               "properties": {
+                 "firstname":  { "type": "string" },
+                 "lastname":  { "type": "string" },
+                 "age":  { "type": "integer" }
+               },
+               "required": [ "firstname", "lastname" ]
+            }
     /{childId}:
       uriParameters:
         childId:

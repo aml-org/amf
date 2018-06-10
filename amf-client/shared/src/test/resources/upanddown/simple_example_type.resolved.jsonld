@@ -107,7 +107,7 @@
                         ],
                         "raml-http:schema": [
                           {
-                            "@id": "#/web-api/end-points/%2Fpeople/post/request/application%2Fjson/schema",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/app-person.raml/type",
                             "@type": [
                               "shacl:NodeShape",
                               "shacl:Shape",
@@ -180,18 +180,75 @@
                                 "@value": "AppPerson"
                               }
                             ],
+                            "doc:examples": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example",
+                                "@type": [
+                                  "doc:Example",
+                                  "doc:DomainElement"
+                                ],
+                                "doc:strict": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "doc:structuredValue": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1",
+                                    "@type": [
+                                      "data:Object"
+                                    ],
+                                    "data:a": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1/scalar_2",
+                                        "@type": [
+                                          "data:Scalar"
+                                        ],
+                                        "data:value": [
+                                          {
+                                            "@value": "wadus",
+                                            "@type": "xsd:string"
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "lexical": {
+                                            "file://amf-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1/scalar_2": "[(6,5)-(6,10)]"
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "file://amf-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1": "[(6,0)-(6,10)]"
+                                      },
+                                      "data-node-properties": {
+                                        "file://amf-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1": "a->[(6,2)-(6,10)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "shacl:raw": [
+                                  {
+                                    "@value": "  a: wadus"
+                                  }
+                                ],
+                                "smaps": {
+                                  "synthesized-field": {
+                                    "doc:strict": "true"
+                                  },
+                                  "lexical": {
+                                    "shacl:raw": "[(6,0)-(6,10)]",
+                                    "file://amf-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example": "[(6,0)-(6,10)]"
+                                  }
+                                }
+                              }
+                            ],
                             "smaps": {
-                              "inheritance-provenance": {
-                                "shacl:name": "file://amf-client/shared/src/test/resources/upanddown/app-person.raml/type"
-                              },
                               "type-property-lexical-info": {
-                                "#/web-api/end-points/%2Fpeople/post/request/application%2Fjson/schema": "[(16,8)-(16,12)]"
+                                "file://amf-client/shared/src/test/resources/upanddown/app-person.raml/type": "[(2,0)-(2,4)]"
                               },
                               "lexical": {
-                                "#/web-api/end-points/%2Fpeople/post/request/application%2Fjson/schema": "[(15,6)-(16,23)]"
-                              },
-                              "inherited-shapes": {
-                                "#/web-api/end-points/%2Fpeople/post/request/application%2Fjson/schema": "file://amf-client/shared/src/test/resources/upanddown/app-person.raml/type"
+                                "file://amf-client/shared/src/test/resources/upanddown/app-person.raml/type": "[(2,0)-(6,10)]"
                               }
                             }
                           }
