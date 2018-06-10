@@ -115,6 +115,26 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
+  test("Overflow number") {
+    validate(
+      "/overflow-number.raml",
+      numberViolation => {
+        numberViolation.level should be("Violation")
+        numberViolation.message should startWith("Cannot parse '9223372036854776000' with tag '?'")
+      }
+    )
+  }
+
+  test("Duplicated title property test") {
+    validate(
+      "/dup_title.raml",
+      numberViolation => {
+        numberViolation.level should be("Violation")
+        numberViolation.message should startWith("Property 'title' is duplicated")
+      }
+    )
+  }
+
 // todo hnajles: move to validmodelvalidationtest when branch of refactor is complete
   test("Empty describe by") {
     validate(

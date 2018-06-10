@@ -25,9 +25,10 @@ object ValidationReportJSONLDEmitter {
         b.entry("@type", shacl("ValidationReport"))
         b.entry(shacl("conforms"), raw(_, report.conforms.toString, YType.Bool))
         if (report.results.nonEmpty) {
+          val sorted = report.results.sorted
           b.entry(
             shacl("result"),
-            _.list(b => report.results.foreach(emitResult(b, _)))
+            _.list(b => sorted.foreach(emitResult(b, _)))
           )
         }
       }

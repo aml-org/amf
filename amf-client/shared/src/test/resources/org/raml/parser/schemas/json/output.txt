@@ -6,6 +6,13 @@ Number of results: 6
 Level: Violation
 
 - Source: http://raml.org/vocabularies/amf/parser#parsing-error
+  Message: Not a YMap
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/schemas/json/user.json
+  Property: 
+  Position: None
+
+- Source: http://raml.org/vocabularies/amf/parser#parsing-error
   Message: Error node '{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "id": "http://jsonschema.net",
@@ -99,10 +106,3 @@ Level: Violation
   Target: 
   Property: 
   Position: Some(LexicalInformation([(5,10)-(5,28)]))
-
-- Source: http://raml.org/vocabularies/amf/parser#parsing-error
-  Message: Not a YMap
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/schemas/json/user.json
-  Property: 
-  Position: None

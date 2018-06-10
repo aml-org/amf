@@ -16,7 +16,7 @@ import org.scalatest.Matchers._
 import scala.concurrent.ExecutionContext
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class PayloadValidationTest extends AsyncFunSuite with ShapesFixture {
+class SchemaPayloadValidationTest extends AsyncFunSuite with ShapesFixture {
 
   override val executionContext: ExecutionContext = global
 
