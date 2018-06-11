@@ -351,7 +351,7 @@ class ValidationRdfModelEmitter(targetProfile: String,
       case Some(dt) =>
         rdfModel.addTriple(subject, property, s, Some(dt))
       case None =>
-        if (s.matches("[1-9][\\d]*")) { // if the number starts with 0, its a string and should be quoted
+        if (s.matches("^-?[1-9]\\d*$|^0$")) { // if the number starts with 0 (and is not 0), its a string and should be quoted
           rdfModel.addTriple(subject, property, s, Some((Namespace.Xsd + "long").iri()))
         } else if (s == "true" || s == "false") {
           rdfModel.addTriple(subject, property, s, Some((Namespace.Xsd + "boolean").iri()))
