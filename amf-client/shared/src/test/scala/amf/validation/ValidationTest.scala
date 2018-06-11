@@ -2,6 +2,7 @@ package amf.validation
 
 import amf.ProfileNames
 import amf.core.AMFSerializer
+import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.Module
 import amf.core.model.domain.{ObjectNode, RecursiveShape}
@@ -1859,7 +1860,10 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Test web artifact process api") {
     for {
       validation <- Validation(platform)
-      model      <- AMFCompiler(productionPath + "web-artifact-process-api-1.0.0-fat-raml/WebArtifactAPI.raml", platform, RamlYamlHint, validation)
+      model <- AMFCompiler(productionPath + "web-artifact-process-api-1.0.0-fat-raml/WebArtifactAPI.raml",
+                           platform,
+                           RamlYamlHint,
+                           validation)
         .build()
       report <- validation.validate(model, ProfileNames.RAML)
     } yield {
@@ -1867,7 +1871,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.conforms)
     }
   }
-/*
+  /*
   test("HERE_HERE test field_nation") {
     for {
       validation <- Validation(platform)
@@ -1880,5 +1884,5 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.conforms)
     }
   }
-  */
+ */
 }

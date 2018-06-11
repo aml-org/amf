@@ -1,0 +1,13 @@
+#%RAML 1.0
+version: v2
+title: MyTest AP
+/new-resource:
+  get:
+    headers:
+      newHeader:
+        maximum: 111
+        minimum: 11
+        format: int64
+        example: 12
+        type: number
+    queryParameters:

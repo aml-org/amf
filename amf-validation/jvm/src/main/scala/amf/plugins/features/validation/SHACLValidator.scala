@@ -11,12 +11,11 @@ import amf.core.validation.core.{ValidationReport, ValidationSpecification}
 import amf.plugins.features.validation.emitters.ValidationRdfModelEmitter
 import org.apache.commons.io.IOUtils
 import org.apache.commons.lang3.StringUtils
-import org.apache.jena.query.{QueryExecutionFactory, QueryFactory}
 import org.apache.jena.rdf.model.{Model, Resource}
 import org.apache.jena.util.FileUtils
+import org.topbraid.jenax.util.JenaUtil
 import org.topbraid.shacl.js.{JSScriptEngine, JSScriptEngineFactory, NashornScriptEngine, SHACLScriptEngineManager}
 import org.topbraid.shacl.validation.ValidationUtil
-import org.topbraid.jenax.util.JenaUtil
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Future, Promise}
@@ -95,26 +94,26 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
   }
 
   override def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: String): Future[String] = {
-    val promise = Promise[String]()
-    try {
-      Future {
-        ExecutionLog.log("SHACLValidator#validate: loading Jena data model")
-        val dataModel = new JenaRdfModel()
-        new RdfModelEmitter(dataModel).emit(data, RenderOptions().withValidation)
-        ExecutionLog.log("SHACLValidator#validate: loading Jena shapes model")
-        val shapesModel = new JenaRdfModel()
-        new ValidationRdfModelEmitter(messageStyle, shapesModel).emit(shapes)
-        ExecutionLog.log("SHACLValidator#validate: loading library")
-        loadLibrary()
-        ExecutionLog.log("SHACLValidator#validate: starting script engine")
-        val res = SHACLScriptEngineManager.begin()
-        var report: Option[Resource] = None
-        try {
-          SHACLScriptEngineManager.getCurrentEngine.executeScriptFromURL(NashornScriptEngine.RDFQUERY_JS)
-          ExecutionLog.log(s"SHACLValidator#validate: Number of data triples -> ${dataModel.model.listStatements().toList.size()}")
-          ExecutionLog.log(s"SHACLValidator#validate: Number of shapes triples -> ${shapesModel.model.listStatements().toList.size()}")
+    Future {
+      ExecutionLog.log("SHACLValidator#validate: loading Jena data model")
+      val dataModel = new JenaRdfModel()
+      new RdfModelEmitter(dataModel).emit(data, RenderOptions().withValidation)
+      ExecutionLog.log("SHACLValidator#validate: loading Jena shapes model")
+      val shapesModel = new JenaRdfModel()
+      new ValidationRdfModelEmitter(messageStyle, shapesModel).emit(shapes)
+      ExecutionLog.log("SHACLValidator#validate: loading library")
+      loadLibrary()
+      ExecutionLog.log("SHACLValidator#validate: starting script engine")
+      val res                      = SHACLScriptEngineManager.begin()
+      var report: Option[Resource] = None
+      try {
+        SHACLScriptEngineManager.getCurrentEngine.executeScriptFromURL(NashornScriptEngine.RDFQUERY_JS)
+        ExecutionLog.log(
+          s"SHACLValidator#validate: Number of data triples -> ${dataModel.model.listStatements().toList.size()}")
+        ExecutionLog.log(
+          s"SHACLValidator#validate: Number of shapes triples -> ${shapesModel.model.listStatements().toList.size()}")
 
-          /*
+        /*
         dataModel.dump()
         println("\n\n=======> SHAPES")
         println(shapesModel.toN3())
@@ -142,22 +141,17 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
             println(s"$varName -> ${solution.get(varName)}")
           }
         }
-        */
-          ExecutionLog.log(s"SHACLValidator#validate: validating...")
-          report = Some(ValidationUtil.validateModel(dataModel.model, shapesModel.model, false))
-        } finally {
-          ExecutionLog.log(s"SHACLValidator#validate: releasing script manager resources")
-          SHACLScriptEngineManager.end(res)
-        }
-        ExecutionLog.log(s"SHACLValidator#validate: Generating JSON-LD report")
-        val output = RDFPrinter(report.get.getModel, "JSON-LD")
-        ExecutionLog.log(s"SHACLValidator#validate: finishing")
-        promise.success(output)
+         */
+        ExecutionLog.log(s"SHACLValidator#validate: validating...")
+        report = Some(ValidationUtil.validateModel(dataModel.model, shapesModel.model, false))
+      } finally {
+        ExecutionLog.log(s"SHACLValidator#validate: releasing script manager resources")
+        SHACLScriptEngineManager.end(res)
       }
-      promise.future
-    } catch {
-      case e: Exception =>
-        promise.failure(e).future
+      ExecutionLog.log(s"SHACLValidator#validate: Generating JSON-LD report")
+      val output = RDFPrinter(report.get.getModel, "JSON-LD")
+      ExecutionLog.log(s"SHACLValidator#validate: finishing")
+      output
     }
   }
 
@@ -165,7 +159,6 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
                       shapes: Seq[ValidationSpecification],
                       messageStyle: String): Future[ValidationReport] =
     validate(data, shapes, messageStyle).map(new JVMValidationReport(_))
-
 
   override def shapes(shapes: Seq[ValidationSpecification], functionsUrl: String): RdfModel = {
     val shapesModel = new JenaRdfModel()

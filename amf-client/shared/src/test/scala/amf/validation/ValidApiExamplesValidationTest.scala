@@ -17,4 +17,8 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   test("Force enum values as string in default string header") {
     checkValid("examples/force-enum-string.raml")
   }
+
+  test("Minimun and maximun over float format") {
+    checkValid("examples/min-max-float-format.raml")
+  }
 }

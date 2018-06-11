@@ -143,7 +143,9 @@ class ValidationRdfModelEmitter(targetProfile: String,
       constraint.pattern.foreach(v => genPropertyConstraintValue(constraintId, "pattern", v))
       constraint.node.foreach(genPropertyConstraintValue(constraintId, "node", _))
       constraint.datatype.foreach { v =>
-        if (!v.endsWith("#float") && !v.endsWith("#number")) {
+        if (v.endsWith("#integer")) {
+          link(constraintId, (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "long").iri())
+        } else if (!v.endsWith("#float") && !v.endsWith("#number")) {
           // raml/oas 'number' are actually the union of integers and floats
           // i handle the data type integer and float inside of every constraint. Here only need to generate the simples data types for path entry
           link(constraintId, (Namespace.Shacl + "datatype").iri(), v)
@@ -245,7 +247,7 @@ class ValidationRdfModelEmitter(targetProfile: String,
         genValue(orConstraintListId + "_v",
                  (Namespace.Shacl + constraintName).iri(),
                  value.toDouble.floor.toInt.toString,
-                 Some((Namespace.Xsd + "integer").iri()))
+                 Some((Namespace.Xsd + "long").iri()))
         link(orConstraintListId, (Namespace.Rdf + "rest").iri(), nextConstraintListId)
         link(nextConstraintListId, (Namespace.Rdf + "first").iri(), nextConstraintListId + "_v")
         genValue(nextConstraintListId + "_v",
@@ -309,11 +311,14 @@ class ValidationRdfModelEmitter(targetProfile: String,
                  (Namespace.Shacl + constraintName).iri(),
                  value.toDouble.toString,
                  Some((Namespace.Xsd + "float").iri()))
-      case Some(scalarType) if scalarType == (Namespace.Xsd + "integer").iri() =>
+      case Some(scalarType)
+          if scalarType == (Namespace.Xsd + "integer").iri() || scalarType == (Namespace.Xsd + "long")
+            .iri() => // serialize the int has integer beacuse the example it is parsed with that datatype
         genValue(constraintId,
                  (Namespace.Shacl + constraintName).iri(),
                  value.toDouble.floor.toInt.toString,
-                 Some((Namespace.Xsd + "integer").iri()))
+                 Some((Namespace.Xsd + "long").iri()))
+      case _ => // ignore
     }
   }
 
@@ -347,7 +352,7 @@ class ValidationRdfModelEmitter(targetProfile: String,
         rdfModel.addTriple(subject, property, s, Some(dt))
       case None =>
         if (s.matches("[1-9][\\d]*")) { // if the number starts with 0, its a string and should be quoted
-          rdfModel.addTriple(subject, property, s, Some((Namespace.Xsd + "integer").iri()))
+          rdfModel.addTriple(subject, property, s, Some((Namespace.Xsd + "long").iri()))
         } else if (s == "true" || s == "false") {
           rdfModel.addTriple(subject, property, s, Some((Namespace.Xsd + "boolean").iri()))
         } else if (Namespace.expand(s).iri() == Namespace.expand("amf-parser:NonEmptyList").iri()) {
