@@ -13,4 +13,8 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   test("Array minCount 2") {
     checkValid("examples/arrayItems2.raml")
   }
+
+  test("Force enum values as string in default string header") {
+    checkValid("examples/force-enum-string.raml")
+  }
 }

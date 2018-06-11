@@ -5,7 +5,9 @@ import amf.core.rdf.RdfModel
 import amf.core.validation.core.{FunctionConstraint, PropertyConstraint, ValidationSpecification}
 import amf.core.vocabulary.Namespace
 
-class ValidationRdfModelEmitter(targetProfile: String, rdfModel: RdfModel, defaultJSLibraryUrl: String = ValidationJSONLDEmitter.validationLibraryUrl) {
+class ValidationRdfModelEmitter(targetProfile: String,
+                                rdfModel: RdfModel,
+                                defaultJSLibraryUrl: String = ValidationJSONLDEmitter.validationLibraryUrl) {
 
   /**
     * Emit the triples for the validations
@@ -117,9 +119,8 @@ class ValidationRdfModelEmitter(targetProfile: String, rdfModel: RdfModel, defau
 
   private def isPropertyConstraintUri(name: String): Boolean = {
     (name.startsWith("http://") || name.startsWith("https://") || name.startsWith("file:")) &&
-      name.indexOf("/prop") > -1
+    name.indexOf("/prop") > -1
   }
-
 
   private def emitConstraint(constraintId: String, constraint: PropertyConstraint): Unit = {
     if (Option(constraint.ramlPropertyId).isDefined) {
@@ -129,11 +130,16 @@ class ValidationRdfModelEmitter(targetProfile: String, rdfModel: RdfModel, defau
       constraint.minCount.foreach(genPropertyConstraintValue(constraintId, "minCount", _, Some(constraint)))
       constraint.maxLength.foreach(genPropertyConstraintValue(constraintId, "maxLength", _, Some(constraint)))
       constraint.minLength.foreach(genPropertyConstraintValue(constraintId, "minLength", _, Some(constraint)))
-      constraint.maxExclusive.foreach(genNumericPropertyConstraintValue(constraintId, "maxExclusive", _, Some(constraint)))
-      constraint.minExclusive.foreach(genNumericPropertyConstraintValue(constraintId, "minExclusive", _, Some(constraint)))
-      constraint.maxInclusive.foreach(genNumericPropertyConstraintValue(constraintId, "maxInclusive", _, Some(constraint)))
-      constraint.minInclusive.foreach(genNumericPropertyConstraintValue(constraintId, "minInclusive", _, Some(constraint)))
-      constraint.multipleOf.foreach(genCustomPropertyConstraintValue(constraintId, (Namespace.Shapes + "multipleOfValidationParam").iri(), _))
+      constraint.maxExclusive.foreach(
+        genNumericPropertyConstraintValue(constraintId, "maxExclusive", _, Some(constraint)))
+      constraint.minExclusive.foreach(
+        genNumericPropertyConstraintValue(constraintId, "minExclusive", _, Some(constraint)))
+      constraint.maxInclusive.foreach(
+        genNumericPropertyConstraintValue(constraintId, "maxInclusive", _, Some(constraint)))
+      constraint.minInclusive.foreach(
+        genNumericPropertyConstraintValue(constraintId, "minInclusive", _, Some(constraint)))
+      constraint.multipleOf.foreach(
+        genCustomPropertyConstraintValue(constraintId, (Namespace.Shapes + "multipleOfValidationParam").iri(), _))
       constraint.pattern.foreach(v => genPropertyConstraintValue(constraintId, "pattern", v))
       constraint.node.foreach(genPropertyConstraintValue(constraintId, "node", _))
       constraint.datatype.foreach { v =>
@@ -158,7 +164,7 @@ class ValidationRdfModelEmitter(targetProfile: String, rdfModel: RdfModel, defau
       }
 
       if (constraint.in.nonEmpty) {
-        val inListId = emitList(constraint.in, (s,p,o) => genValue(s, p, o, None))
+        val inListId = emitList(constraint.in, (s, p, o) => genValue(s, p, o, constraint.datatype))
         link(constraintId, (Namespace.Shacl + "in").iri(), inListId)
       }
     }
@@ -196,15 +202,17 @@ class ValidationRdfModelEmitter(targetProfile: String, rdfModel: RdfModel, defau
 
     rdfModel.addTriple(validatorId, (Namespace.Rdf + "type").iri(), (Namespace.Shacl + "JSValidator").iri())
     f.message.foreach(msg => genValue(validatorId, (Namespace.Shacl + "message").iri(), msg))
-     val libraryUrl = validatorId + "_url"
+    val libraryUrl = validatorId + "_url"
     //val libraryUrl = ValidationJSONLDEmitter.validationLibraryUrl
     link(validatorId, (Namespace.Shacl + "jsLibrary").iri(), libraryUrl)
-
 
     f.functionName match {
       case Some(fnName) =>
         for { library <- f.libraries } {
-          rdfModel.addTriple(libraryUrl, (Namespace.Shacl + "jsLibraryURL").iri(), library, Some("http://www.w3.org/2001/XMLSchema#anyUri"))
+          rdfModel.addTriple(libraryUrl,
+                             (Namespace.Shacl + "jsLibraryURL").iri(),
+                             library,
+                             Some("http://www.w3.org/2001/XMLSchema#anyUri"))
         }
         genValue(validatorId, (Namespace.Shacl + "jsFunctionName").iri(), fnName)
 
@@ -212,7 +220,10 @@ class ValidationRdfModelEmitter(targetProfile: String, rdfModel: RdfModel, defau
         f.code match {
           case Some(_) =>
             for { library <- Seq(defaultJSLibraryUrl) ++ f.libraries } {
-              rdfModel.addTriple(libraryUrl, (Namespace.Shacl + "jsLibraryURL").iri(), library, Some("http://www.w3.org/2001/XMLSchema#anyUri"))
+              rdfModel.addTriple(libraryUrl,
+                                 (Namespace.Shacl + "jsLibraryURL").iri(),
+                                 library,
+                                 Some("http://www.w3.org/2001/XMLSchema#anyUri"))
             }
             genValue(validatorId, (Namespace.Shacl + "jsFunctionName").iri(), f.computeFunctionName(validationId))
 
@@ -227,14 +238,20 @@ class ValidationRdfModelEmitter(targetProfile: String, rdfModel: RdfModel, defau
                                          constraint: Option[PropertyConstraint] = None): Unit = {
     constraint.flatMap(_.datatype) match {
       case Some(scalarType) if scalarType == (Namespace.Shapes + "number").iri() =>
-        val orConstraintListId = constraintId + "_ointdoub1"
+        val orConstraintListId   = constraintId + "_ointdoub1"
         val nextConstraintListId = constraintId + "_ointdoub2"
         rdfModel.addTriple(constraintId, (Namespace.Shacl + "or").iri(), orConstraintListId)
         link(orConstraintListId, (Namespace.Rdf + "first").iri(), orConstraintListId + "_v")
-        genValue(orConstraintListId + "_v", (Namespace.Shacl + constraintName).iri(), value.toDouble.floor.toInt.toString, Some((Namespace.Xsd + "integer").iri()))
+        genValue(orConstraintListId + "_v",
+                 (Namespace.Shacl + constraintName).iri(),
+                 value.toDouble.floor.toInt.toString,
+                 Some((Namespace.Xsd + "integer").iri()))
         link(orConstraintListId, (Namespace.Rdf + "rest").iri(), nextConstraintListId)
         link(nextConstraintListId, (Namespace.Rdf + "first").iri(), nextConstraintListId + "_v")
-        genValue(nextConstraintListId + "_v", (Namespace.Shacl + constraintName).iri(), value.toDouble.toString, Some((Namespace.Xsd + "double").iri()))
+        genValue(nextConstraintListId + "_v",
+                 (Namespace.Shacl + constraintName).iri(),
+                 value.toDouble.toString,
+                 Some((Namespace.Xsd + "double").iri()))
         link(nextConstraintListId, (Namespace.Rdf + "rest").iri(), (Namespace.Rdf + "nil").iri())
       case Some(_) =>
         genValue(constraintId, (Namespace.Shacl + constraintName).iri(), value, constraint.flatMap(_.datatype))
@@ -244,30 +261,28 @@ class ValidationRdfModelEmitter(targetProfile: String, rdfModel: RdfModel, defau
 
   }
 
-  private def genCustomPropertyConstraintValue(constraintId: String,
-                                               constraintIri: String,
-                                               value: String): Unit = {
+  private def genCustomPropertyConstraintValue(constraintId: String, constraintIri: String, value: String): Unit = {
     genValue(constraintId, constraintIri, value, None)
   }
 
   def emitList(listValues: Seq[String], generator: (String, String, String) => Unit): String = {
     val baseListId = rdfModel.nextAnonId()
-    var c = 1
-    var listId = baseListId + s"_$c"
+    var c          = 1
+    var listId     = baseListId + s"_$c"
     val origListId = listId
 
     val totalElements = listValues.length
-    listValues.zipWithIndex.foreach { case (value, i) =>
-
-      generator(listId, (Namespace.Rdf + "first").iri(), value)
-      c += 1
-      if (i < totalElements - 1) {
-        val nextListId = baseListId + s"_$c"
-        link(listId, (Namespace.Rdf + "rest").iri(), nextListId)
-        listId = nextListId
-      } else {
-        link(listId, (Namespace.Rdf + "rest").iri(), (Namespace.Rdf + "nil").iri())
-      }
+    listValues.zipWithIndex.foreach {
+      case (value, i) =>
+        generator(listId, (Namespace.Rdf + "first").iri(), value)
+        c += 1
+        if (i < totalElements - 1) {
+          val nextListId = baseListId + s"_$c"
+          link(listId, (Namespace.Rdf + "rest").iri(), nextListId)
+          listId = nextListId
+        } else {
+          link(listId, (Namespace.Rdf + "rest").iri(), (Namespace.Rdf + "nil").iri())
+        }
     }
 
     origListId
@@ -279,14 +294,26 @@ class ValidationRdfModelEmitter(targetProfile: String, rdfModel: RdfModel, defau
                                                 constraint: Option[PropertyConstraint] = None): Unit = {
     constraint.flatMap(_.datatype) match {
       case Some(scalarType)
-        if scalarType == (Namespace.Shapes + "number").iri() || scalarType == (Namespace.Xsd + "double").iri() =>
-        genValue(constraintId, (Namespace.Shacl + constraintName).iri(), value.toDouble.toString, Some((Namespace.Xsd + "double").iri()))
+          if scalarType == (Namespace.Shapes + "number").iri() || scalarType == (Namespace.Xsd + "double").iri() =>
+        genValue(constraintId,
+                 (Namespace.Shacl + constraintName).iri(),
+                 value.toDouble.toString,
+                 Some((Namespace.Xsd + "double").iri()))
       case None =>
-        genValue(constraintId, (Namespace.Shacl + constraintName).iri(), value.toDouble.toString, Some((Namespace.Xsd + "double").iri()))
+        genValue(constraintId,
+                 (Namespace.Shacl + constraintName).iri(),
+                 value.toDouble.toString,
+                 Some((Namespace.Xsd + "double").iri()))
       case Some(scalarType) if scalarType == (Namespace.Xsd + "float").iri() =>
-        genValue(constraintId, (Namespace.Shacl + constraintName).iri(), value.toDouble.toString, Some((Namespace.Xsd + "float").iri()))
+        genValue(constraintId,
+                 (Namespace.Shacl + constraintName).iri(),
+                 value.toDouble.toString,
+                 Some((Namespace.Xsd + "float").iri()))
       case Some(scalarType) if scalarType == (Namespace.Xsd + "integer").iri() =>
-        genValue(constraintId, (Namespace.Shacl + constraintName).iri(), value.toDouble.floor.toInt.toString, Some((Namespace.Xsd + "integer").iri()))
+        genValue(constraintId,
+                 (Namespace.Shacl + constraintName).iri(),
+                 value.toDouble.floor.toInt.toString,
+                 Some((Namespace.Xsd + "integer").iri()))
     }
   }
 
@@ -298,14 +325,21 @@ class ValidationRdfModelEmitter(targetProfile: String, rdfModel: RdfModel, defau
     }
 
   private def genNonEmptyList(subject: String, property: String): Unit = {
-    val listId = rdfModel.nextAnonId()
+    val listId           = rdfModel.nextAnonId()
     val listIdConstraint = listId + "_c"
     rdfModel.addTriple(listId, (Namespace.Rdf + "type").iri(), (Namespace.Shacl + "NodeShape").iri())
     rdfModel.addTriple(listId, (Namespace.Shacl + "message").iri(), "List cannot be empty", None)
     rdfModel.addTriple(listId, (Namespace.Shacl + "property").iri(), listIdConstraint)
     rdfModel.addTriple(listIdConstraint, (Namespace.Shacl + "path").iri(), (Namespace.Rdfs + "_1").iri())
-    rdfModel.addTriple(listIdConstraint, (Namespace.Shacl + "minCount").iri(), "1", Some((Namespace.Xsd + "integer").iri()))
+    rdfModel.addTriple(listIdConstraint,
+                       (Namespace.Shacl + "minCount").iri(),
+                       "1",
+                       Some((Namespace.Xsd + "integer").iri()))
   }
+
+  private def inGenValue(subject: String, property: String, s: String): Unit =
+    rdfModel.addTriple(subject, property, s, Some("http://www.w3.org/2001/XMLSchema#string"))
+//    genValue(subject, property, s, Some("http://www.w3.org/2001/XMLSchema#string"))
 
   private def genValue(subject: String, property: String, s: String, dType: Option[String] = None): Unit = {
     dType match {
