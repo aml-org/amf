@@ -31,10 +31,10 @@ trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTest {
       // i have to check results in order to check warnings. If you pass none, and you are expeting some warnings, you should use the file assertion to check the warnings messages.
     }
 
-  protected def cycle(api: String,
-                      golden: Option[String] = None,
-                      profile: String = ProfileNames.RAML,
-                      profileFile: Option[String] = None): Future[Assertion] = {
+  protected def validate(api: String,
+                         golden: Option[String] = None,
+                         profile: String = ProfileNames.RAML,
+                         profileFile: Option[String] = None): Future[Assertion] = {
     for {
       validation <- Validation(platform)
       _          <- if (profileFile.isDefined) validation.loadValidationProfile(basePath + profileFile.get) else Future.unit
@@ -51,6 +51,6 @@ trait ValidModelTest extends ValidationReportGenTest {
   override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath: String = ""
 
-  protected def cycle(api: String): Future[Assertion] = super.cycle(api, None, ProfileNames.RAML, None)
+  protected def checkValid(api: String): Future[Assertion] = super.validate(api, None, ProfileNames.RAML, None)
 
 }
