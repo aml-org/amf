@@ -21,7 +21,7 @@ Scalar at //b must have data type http://www.w3.org/2001/XMLSchema#integer
   Property: http://raml.org/vocabularies/data#value
   Position: Some(LexicalInformation([(33,13)-(33,17)]))
 
-- Source: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/H_validation_g_validation_minCount/prop
+- Source: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/H/type_validation_g_validation_minCount/prop
   Message: Data at //g must have min. cardinality 1
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/H/example/default-example
@@ -31,7 +31,7 @@ Scalar at //b must have data type http://www.w3.org/2001/XMLSchema#integer
 Level: Warning
 
 - Source: http://raml.org/vocabularies/amf/parser#unsupported-example-media-type-warning
-  Message: Unsupported validation for mediatype: application/xml and shape file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/I
+  Message: Unsupported validation for mediatype: application/xml and shape file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/I/type
   Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/I/example/default-example
   Property: http://raml.org/vocabularies/document#value

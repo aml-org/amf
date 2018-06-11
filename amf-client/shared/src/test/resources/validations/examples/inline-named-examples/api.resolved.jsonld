@@ -74,7 +74,7 @@
                             ],
                             "raml-shapes:items": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type",
+                                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type",
                                 "@type": [
                                   "shacl:NodeShape",
                                   "shacl:Shape",
@@ -88,7 +88,7 @@
                                 ],
                                 "shacl:property": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id",
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id",
                                     "@type": [
                                       "shacl:PropertyShape",
                                       "shacl:Shape",
@@ -101,7 +101,7 @@
                                     ],
                                     "raml-shapes:range": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union",
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union",
                                         "@type": [
                                           "raml-shapes:UnionShape",
                                           "shacl:Shape",
@@ -138,14 +138,14 @@
                                         ],
                                         "smaps": {
                                           "inherited-shapes": {
-                                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml#shape/property/alternate_id%3F/union/default-union/union/default-union"
+                                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#shape/property/alternate_id%3F/union/default-union/union/default-union"
                                           },
                                           "lexical": {
                                             "schema-org:description": "[(6,4)-(7,0)]",
-                                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "[(5,0)-(7,0)]"
+                                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "[(5,0)-(7,0)]"
                                           },
                                           "type-property-lexical-info": {
-                                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "[(5,4)-(5,8)]"
+                                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "[(5,4)-(5,8)]"
                                           }
                                         }
                                       }
@@ -162,12 +162,12 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id": "[(4,2)-(7,0)]"
+                                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id": "[(4,2)-(7,0)]"
                                       }
                                     }
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category",
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category",
                                     "@type": [
                                       "shacl:PropertyShape",
                                       "shacl:Shape",
@@ -180,7 +180,7 @@
                                     ],
                                     "raml-shapes:range": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category",
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category",
                                         "@type": [
                                           "shacl:NodeShape",
                                           "shacl:Shape",
@@ -194,7 +194,7 @@
                                         ],
                                         "shacl:property": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id",
+                                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id",
                                             "@type": [
                                               "shacl:PropertyShape",
                                               "shacl:Shape",
@@ -207,7 +207,7 @@
                                             ],
                                             "raml-shapes:range": [
                                               {
-                                                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id",
+                                                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id",
                                                 "@type": [
                                                   "raml-shapes:ScalarShape",
                                                   "shacl:Shape",
@@ -231,11 +231,11 @@
                                                 ],
                                                 "smaps": {
                                                   "type-property-lexical-info": {
-                                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id": "[(12,8)-(12,12)]"
+                                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id": "[(12,8)-(12,12)]"
                                                   },
                                                   "lexical": {
                                                     "schema-org:description": "[(13,8)-(14,0)]",
-                                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id": "[(11,6)-(14,0)]",
+                                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id": "[(11,6)-(14,0)]",
                                                     "shacl:datatype": "[(12,8)-(13,0)]"
                                                   }
                                                 }
@@ -253,12 +253,12 @@
                                             ],
                                             "smaps": {
                                               "lexical": {
-                                                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id": "[(11,6)-(14,0)]"
+                                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id": "[(11,6)-(14,0)]"
                                               }
                                             }
                                           },
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name",
+                                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name",
                                             "@type": [
                                               "shacl:PropertyShape",
                                               "shacl:Shape",
@@ -271,7 +271,7 @@
                                             ],
                                             "raml-shapes:range": [
                                               {
-                                                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name",
+                                                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name",
                                                 "@type": [
                                                   "raml-shapes:ScalarShape",
                                                   "shacl:Shape",
@@ -295,11 +295,11 @@
                                                 ],
                                                 "smaps": {
                                                   "type-property-lexical-info": {
-                                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name": "[(15,8)-(15,12)]"
+                                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name": "[(15,8)-(15,12)]"
                                                   },
                                                   "lexical": {
                                                     "schema-org:description": "[(16,8)-(17,0)]",
-                                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name": "[(14,6)-(17,0)]",
+                                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name": "[(14,6)-(17,0)]",
                                                     "shacl:datatype": "[(15,8)-(16,0)]"
                                                   }
                                                 }
@@ -317,7 +317,7 @@
                                             ],
                                             "smaps": {
                                               "lexical": {
-                                                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name": "[(14,6)-(17,0)]"
+                                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name": "[(14,6)-(17,0)]"
                                               }
                                             }
                                           }
@@ -334,11 +334,11 @@
                                         ],
                                         "smaps": {
                                           "type-property-lexical-info": {
-                                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category": "[(9,4)-(9,8)]"
+                                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category": "[(9,4)-(9,8)]"
                                           },
                                           "lexical": {
                                             "schema-org:description": "[(8,4)-(9,0)]",
-                                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category": "[(7,2)-(17,0)]"
+                                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category": "[(7,2)-(17,0)]"
                                           }
                                         }
                                       }
@@ -355,12 +355,12 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category": "[(7,2)-(17,0)]"
+                                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category": "[(7,2)-(17,0)]"
                                       }
                                     }
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at",
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at",
                                     "@type": [
                                       "shacl:PropertyShape",
                                       "shacl:Shape",
@@ -373,7 +373,7 @@
                                     ],
                                     "raml-shapes:range": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at",
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at",
                                         "@type": [
                                           "raml-shapes:ScalarShape",
                                           "shacl:Shape",
@@ -397,11 +397,11 @@
                                         ],
                                         "smaps": {
                                           "type-property-lexical-info": {
-                                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at": "[(18,4)-(18,8)]"
+                                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at": "[(18,4)-(18,8)]"
                                           },
                                           "lexical": {
                                             "schema-org:description": "[(19,4)-(20,0)]",
-                                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at": "[(17,2)-(20,0)]",
+                                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at": "[(17,2)-(20,0)]",
                                             "shacl:datatype": "[(18,4)-(19,0)]"
                                           }
                                         }
@@ -419,7 +419,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at": "[(17,2)-(20,0)]"
+                                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at": "[(17,2)-(20,0)]"
                                       }
                                     }
                                   }
@@ -431,7 +431,7 @@
                                 ],
                                 "doc:examples": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value",
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value",
                                     "@type": [
                                       "doc:Example",
                                       "doc:DomainElement"
@@ -448,13 +448,13 @@
                                     ],
                                     "doc:structuredValue": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1",
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1",
                                         "@type": [
                                           "data:Object"
                                         ],
                                         "data:alternate_id": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_2",
+                                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_2",
                                             "@type": [
                                               "data:Scalar"
                                             ],
@@ -466,20 +466,20 @@
                                             ],
                                             "smaps": {
                                               "lexical": {
-                                                "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_2": "[(3,18)-(3,19)]"
+                                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_2": "[(3,18)-(3,19)]"
                                               }
                                             }
                                           }
                                         ],
                                         "data:category": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3",
+                                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3",
                                             "@type": [
                                               "data:Object"
                                             ],
                                             "data:id": [
                                               {
-                                                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_4",
+                                                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_4",
                                                 "@type": [
                                                   "data:Scalar"
                                                 ],
@@ -491,14 +491,14 @@
                                                 ],
                                                 "smaps": {
                                                   "lexical": {
-                                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_4": "[(5,10)-(5,15)]"
+                                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_4": "[(5,10)-(5,15)]"
                                                   }
                                                 }
                                               }
                                             ],
                                             "data:name": [
                                               {
-                                                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_5",
+                                                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_5",
                                                 "@type": [
                                                   "data:Scalar"
                                                 ],
@@ -510,24 +510,24 @@
                                                 ],
                                                 "smaps": {
                                                   "lexical": {
-                                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_5": "[(6,12)-(6,35)]"
+                                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_5": "[(6,12)-(6,35)]"
                                                   }
                                                 }
                                               }
                                             ],
                                             "smaps": {
                                               "data-node-properties": {
-                                                "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
+                                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
                                               },
                                               "lexical": {
-                                                "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3": "[(5,0)-(7,0)]"
+                                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3": "[(5,0)-(7,0)]"
                                               }
                                             }
                                           }
                                         ],
                                         "data:created_at": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_6",
+                                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_6",
                                             "@type": [
                                               "data:Scalar"
                                             ],
@@ -539,17 +539,17 @@
                                             ],
                                             "smaps": {
                                               "lexical": {
-                                                "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_6": "[(7,16)-(7,36)]"
+                                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_6": "[(7,16)-(7,36)]"
                                               }
                                             }
                                           }
                                         ],
                                         "smaps": {
                                           "lexical": {
-                                            "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1": "[(3,0)-(9,0)]"
+                                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1": "[(3,0)-(9,0)]"
                                           },
                                           "data-node-properties": {
-                                            "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1": "created_at->[(7,4)-(9,0)]#alternate_id->[(3,4)-(4,0)]#category->[(4,4)-(7,0)]"
+                                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1": "created_at->[(7,4)-(9,0)]#alternate_id->[(3,4)-(4,0)]#category->[(4,4)-(7,0)]"
                                           }
                                         }
                                       }
@@ -564,32 +564,32 @@
                                         "doc:strict": "true"
                                       },
                                       "source-vendor": {
-                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value": "raml 1.0"
+                                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value": "raml 1.0"
                                       },
                                       "lexical": {
                                         "shacl:raw": "[(3,0)-(9,0)]",
-                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value": "[(2,6)-(9,0)]",
+                                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value": "[(2,6)-(9,0)]",
                                         "schema-org:name": "[(2,0)-(9,0)]"
                                       },
                                       "resolved-link": {
-                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value": "file://amf-client/shared/src/test/resources/production/testIssueNil/api.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/example/default-example"
+                                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/example/default-example"
                                       }
                                     }
                                   }
                                 ],
                                 "smaps": {
                                   "type-property-lexical-info": {
-                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type": "[(2,0)-(2,4)]"
+                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type": "[(2,0)-(2,4)]"
                                   },
                                   "lexical": {
-                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type": "[(2,0)-(20,0)]"
+                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type": "[(2,0)-(20,0)]"
                                   }
                                 }
                               }
                             ],
                             "doc:examples": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-array-response.raml/example/value",
+                                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml/example/value",
                                 "@type": [
                                   "doc:Example",
                                   "doc:DomainElement"
@@ -814,15 +814,15 @@
                                     "doc:strict": "true"
                                   },
                                   "source-vendor": {
-                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-array-response.raml/example/value": "raml 1.0"
+                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml/example/value": "raml 1.0"
                                   },
                                   "lexical": {
                                     "shacl:raw": "[(3,0)-(15,3)]",
-                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-array-response.raml/example/value": "[(2,6)-(15,3)]",
+                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml/example/value": "[(2,6)-(15,3)]",
                                     "schema-org:name": "[(2,0)-(15,3)]"
                                   },
                                   "resolved-link": {
-                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-array-response.raml/example/value": "file://amf-client/shared/src/test/resources/production/testIssueNil/api.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/default-example"
+                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml/example/value": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/default-example"
                                   }
                                 }
                               }
@@ -905,7 +905,7 @@
                             ],
                             "raml-shapes:items": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type",
+                                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type",
                                 "@type": [
                                   "shacl:NodeShape",
                                   "shacl:Shape",
@@ -919,7 +919,7 @@
                                 ],
                                 "shacl:property": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id",
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id",
                                     "@type": [
                                       "shacl:PropertyShape",
                                       "shacl:Shape",
@@ -932,7 +932,7 @@
                                     ],
                                     "raml-shapes:range": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union",
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union",
                                         "@type": [
                                           "raml-shapes:UnionShape",
                                           "shacl:Shape",
@@ -969,14 +969,14 @@
                                         ],
                                         "smaps": {
                                           "inherited-shapes": {
-                                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml#shape/property/alternate_id%3F/union/default-union/union/default-union"
+                                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#shape/property/alternate_id%3F/union/default-union/union/default-union"
                                           },
                                           "lexical": {
                                             "schema-org:description": "[(6,4)-(7,0)]",
-                                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "[(5,0)-(7,0)]"
+                                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "[(5,0)-(7,0)]"
                                           },
                                           "type-property-lexical-info": {
-                                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "[(5,4)-(5,8)]"
+                                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "[(5,4)-(5,8)]"
                                           }
                                         }
                                       }
@@ -993,12 +993,12 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id": "[(4,2)-(7,0)]"
+                                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id": "[(4,2)-(7,0)]"
                                       }
                                     }
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category",
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category",
                                     "@type": [
                                       "shacl:PropertyShape",
                                       "shacl:Shape",
@@ -1011,7 +1011,7 @@
                                     ],
                                     "raml-shapes:range": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category",
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category",
                                         "@type": [
                                           "shacl:NodeShape",
                                           "shacl:Shape",
@@ -1025,7 +1025,7 @@
                                         ],
                                         "shacl:property": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id",
+                                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id",
                                             "@type": [
                                               "shacl:PropertyShape",
                                               "shacl:Shape",
@@ -1038,7 +1038,7 @@
                                             ],
                                             "raml-shapes:range": [
                                               {
-                                                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id",
+                                                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id",
                                                 "@type": [
                                                   "raml-shapes:ScalarShape",
                                                   "shacl:Shape",
@@ -1062,11 +1062,11 @@
                                                 ],
                                                 "smaps": {
                                                   "type-property-lexical-info": {
-                                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id": "[(12,8)-(12,12)]"
+                                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id": "[(12,8)-(12,12)]"
                                                   },
                                                   "lexical": {
                                                     "schema-org:description": "[(13,8)-(14,0)]",
-                                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id": "[(11,6)-(14,0)]",
+                                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id": "[(11,6)-(14,0)]",
                                                     "shacl:datatype": "[(12,8)-(13,0)]"
                                                   }
                                                 }
@@ -1084,12 +1084,12 @@
                                             ],
                                             "smaps": {
                                               "lexical": {
-                                                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id": "[(11,6)-(14,0)]"
+                                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id": "[(11,6)-(14,0)]"
                                               }
                                             }
                                           },
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name",
+                                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name",
                                             "@type": [
                                               "shacl:PropertyShape",
                                               "shacl:Shape",
@@ -1102,7 +1102,7 @@
                                             ],
                                             "raml-shapes:range": [
                                               {
-                                                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name",
+                                                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name",
                                                 "@type": [
                                                   "raml-shapes:ScalarShape",
                                                   "shacl:Shape",
@@ -1126,11 +1126,11 @@
                                                 ],
                                                 "smaps": {
                                                   "type-property-lexical-info": {
-                                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name": "[(15,8)-(15,12)]"
+                                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name": "[(15,8)-(15,12)]"
                                                   },
                                                   "lexical": {
                                                     "schema-org:description": "[(16,8)-(17,0)]",
-                                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name": "[(14,6)-(17,0)]",
+                                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name": "[(14,6)-(17,0)]",
                                                     "shacl:datatype": "[(15,8)-(16,0)]"
                                                   }
                                                 }
@@ -1148,7 +1148,7 @@
                                             ],
                                             "smaps": {
                                               "lexical": {
-                                                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name": "[(14,6)-(17,0)]"
+                                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name": "[(14,6)-(17,0)]"
                                               }
                                             }
                                           }
@@ -1165,11 +1165,11 @@
                                         ],
                                         "smaps": {
                                           "type-property-lexical-info": {
-                                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category": "[(9,4)-(9,8)]"
+                                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category": "[(9,4)-(9,8)]"
                                           },
                                           "lexical": {
                                             "schema-org:description": "[(8,4)-(9,0)]",
-                                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category": "[(7,2)-(17,0)]"
+                                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category": "[(7,2)-(17,0)]"
                                           }
                                         }
                                       }
@@ -1186,12 +1186,12 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category": "[(7,2)-(17,0)]"
+                                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category": "[(7,2)-(17,0)]"
                                       }
                                     }
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at",
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at",
                                     "@type": [
                                       "shacl:PropertyShape",
                                       "shacl:Shape",
@@ -1204,7 +1204,7 @@
                                     ],
                                     "raml-shapes:range": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at",
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at",
                                         "@type": [
                                           "raml-shapes:ScalarShape",
                                           "shacl:Shape",
@@ -1228,11 +1228,11 @@
                                         ],
                                         "smaps": {
                                           "type-property-lexical-info": {
-                                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at": "[(18,4)-(18,8)]"
+                                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at": "[(18,4)-(18,8)]"
                                           },
                                           "lexical": {
                                             "schema-org:description": "[(19,4)-(20,0)]",
-                                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at": "[(17,2)-(20,0)]",
+                                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at": "[(17,2)-(20,0)]",
                                             "shacl:datatype": "[(18,4)-(19,0)]"
                                           }
                                         }
@@ -1250,7 +1250,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at": "[(17,2)-(20,0)]"
+                                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at": "[(17,2)-(20,0)]"
                                       }
                                     }
                                   }
@@ -1262,7 +1262,7 @@
                                 ],
                                 "doc:examples": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value",
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value",
                                     "@type": [
                                       "doc:Example",
                                       "doc:DomainElement"
@@ -1279,13 +1279,13 @@
                                     ],
                                     "doc:structuredValue": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1",
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1",
                                         "@type": [
                                           "data:Object"
                                         ],
                                         "data:alternate_id": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_2",
+                                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_2",
                                             "@type": [
                                               "data:Scalar"
                                             ],
@@ -1297,20 +1297,20 @@
                                             ],
                                             "smaps": {
                                               "lexical": {
-                                                "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_2": "[(3,18)-(3,19)]"
+                                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_2": "[(3,18)-(3,19)]"
                                               }
                                             }
                                           }
                                         ],
                                         "data:category": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3",
+                                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3",
                                             "@type": [
                                               "data:Object"
                                             ],
                                             "data:id": [
                                               {
-                                                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_4",
+                                                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_4",
                                                 "@type": [
                                                   "data:Scalar"
                                                 ],
@@ -1322,14 +1322,14 @@
                                                 ],
                                                 "smaps": {
                                                   "lexical": {
-                                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_4": "[(5,10)-(5,15)]"
+                                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_4": "[(5,10)-(5,15)]"
                                                   }
                                                 }
                                               }
                                             ],
                                             "data:name": [
                                               {
-                                                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_5",
+                                                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_5",
                                                 "@type": [
                                                   "data:Scalar"
                                                 ],
@@ -1341,24 +1341,24 @@
                                                 ],
                                                 "smaps": {
                                                   "lexical": {
-                                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_5": "[(6,12)-(6,35)]"
+                                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_5": "[(6,12)-(6,35)]"
                                                   }
                                                 }
                                               }
                                             ],
                                             "smaps": {
                                               "data-node-properties": {
-                                                "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
+                                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
                                               },
                                               "lexical": {
-                                                "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3": "[(5,0)-(7,0)]"
+                                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3": "[(5,0)-(7,0)]"
                                               }
                                             }
                                           }
                                         ],
                                         "data:created_at": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_6",
+                                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_6",
                                             "@type": [
                                               "data:Scalar"
                                             ],
@@ -1370,17 +1370,17 @@
                                             ],
                                             "smaps": {
                                               "lexical": {
-                                                "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_6": "[(7,16)-(7,36)]"
+                                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_6": "[(7,16)-(7,36)]"
                                               }
                                             }
                                           }
                                         ],
                                         "smaps": {
                                           "lexical": {
-                                            "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1": "[(3,0)-(9,0)]"
+                                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1": "[(3,0)-(9,0)]"
                                           },
                                           "data-node-properties": {
-                                            "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1": "created_at->[(7,4)-(9,0)]#alternate_id->[(3,4)-(4,0)]#category->[(4,4)-(7,0)]"
+                                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1": "created_at->[(7,4)-(9,0)]#alternate_id->[(3,4)-(4,0)]#category->[(4,4)-(7,0)]"
                                           }
                                         }
                                       }
@@ -1395,32 +1395,32 @@
                                         "doc:strict": "true"
                                       },
                                       "source-vendor": {
-                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value": "raml 1.0"
+                                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value": "raml 1.0"
                                       },
                                       "lexical": {
                                         "shacl:raw": "[(3,0)-(9,0)]",
-                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value": "[(2,6)-(9,0)]",
+                                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value": "[(2,6)-(9,0)]",
                                         "schema-org:name": "[(2,0)-(9,0)]"
                                       },
                                       "resolved-link": {
-                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value": "file://amf-client/shared/src/test/resources/production/testIssueNil/api.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/example/default-example"
+                                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/example/default-example"
                                       }
                                     }
                                   }
                                 ],
                                 "smaps": {
                                   "type-property-lexical-info": {
-                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type": "[(2,0)-(2,4)]"
+                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type": "[(2,0)-(2,4)]"
                                   },
                                   "lexical": {
-                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type": "[(2,0)-(20,0)]"
+                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type": "[(2,0)-(20,0)]"
                                   }
                                 }
                               }
                             ],
                             "doc:examples": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-array-response.raml/example/value",
+                                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml/example/value",
                                 "@type": [
                                   "doc:Example",
                                   "doc:DomainElement"
@@ -1645,15 +1645,15 @@
                                     "doc:strict": "true"
                                   },
                                   "source-vendor": {
-                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-array-response.raml/example/value": "raml 1.0"
+                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml/example/value": "raml 1.0"
                                   },
                                   "lexical": {
                                     "shacl:raw": "[(3,0)-(15,3)]",
-                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-array-response.raml/example/value": "[(2,6)-(15,3)]",
+                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml/example/value": "[(2,6)-(15,3)]",
                                     "schema-org:name": "[(2,0)-(15,3)]"
                                   },
                                   "resolved-link": {
-                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-array-response.raml/example/value": "file://amf-client/shared/src/test/resources/production/testIssueNil/api.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/default-example"
+                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml/example/value": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/default-example"
                                   }
                                 }
                               }
@@ -1834,7 +1834,7 @@
                         ],
                         "raml-http:schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type",
                             "@type": [
                               "shacl:NodeShape",
                               "shacl:Shape",
@@ -1848,7 +1848,7 @@
                             ],
                             "shacl:property": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id",
+                                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -1861,7 +1861,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union",
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union",
                                     "@type": [
                                       "raml-shapes:UnionShape",
                                       "shacl:Shape",
@@ -1898,14 +1898,14 @@
                                     ],
                                     "smaps": {
                                       "inherited-shapes": {
-                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml#shape/property/alternate_id%3F/union/default-union/union/default-union"
+                                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#shape/property/alternate_id%3F/union/default-union/union/default-union"
                                       },
                                       "lexical": {
                                         "schema-org:description": "[(6,4)-(7,0)]",
-                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "[(5,0)-(7,0)]"
+                                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "[(5,0)-(7,0)]"
                                       },
                                       "type-property-lexical-info": {
-                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "[(5,4)-(5,8)]"
+                                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "[(5,4)-(5,8)]"
                                       }
                                     }
                                   }
@@ -1922,12 +1922,12 @@
                                 ],
                                 "smaps": {
                                   "lexical": {
-                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id": "[(4,2)-(7,0)]"
+                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id": "[(4,2)-(7,0)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category",
+                                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -1940,7 +1940,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category",
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category",
                                     "@type": [
                                       "shacl:NodeShape",
                                       "shacl:Shape",
@@ -1954,7 +1954,7 @@
                                     ],
                                     "shacl:property": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id",
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id",
                                         "@type": [
                                           "shacl:PropertyShape",
                                           "shacl:Shape",
@@ -1967,7 +1967,7 @@
                                         ],
                                         "raml-shapes:range": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id",
+                                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id",
                                             "@type": [
                                               "raml-shapes:ScalarShape",
                                               "shacl:Shape",
@@ -1991,11 +1991,11 @@
                                             ],
                                             "smaps": {
                                               "type-property-lexical-info": {
-                                                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id": "[(12,8)-(12,12)]"
+                                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id": "[(12,8)-(12,12)]"
                                               },
                                               "lexical": {
                                                 "schema-org:description": "[(13,8)-(14,0)]",
-                                                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id": "[(11,6)-(14,0)]",
+                                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id": "[(11,6)-(14,0)]",
                                                 "shacl:datatype": "[(12,8)-(13,0)]"
                                               }
                                             }
@@ -2013,12 +2013,12 @@
                                         ],
                                         "smaps": {
                                           "lexical": {
-                                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id": "[(11,6)-(14,0)]"
+                                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id": "[(11,6)-(14,0)]"
                                           }
                                         }
                                       },
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name",
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name",
                                         "@type": [
                                           "shacl:PropertyShape",
                                           "shacl:Shape",
@@ -2031,7 +2031,7 @@
                                         ],
                                         "raml-shapes:range": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name",
+                                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name",
                                             "@type": [
                                               "raml-shapes:ScalarShape",
                                               "shacl:Shape",
@@ -2055,11 +2055,11 @@
                                             ],
                                             "smaps": {
                                               "type-property-lexical-info": {
-                                                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name": "[(15,8)-(15,12)]"
+                                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name": "[(15,8)-(15,12)]"
                                               },
                                               "lexical": {
                                                 "schema-org:description": "[(16,8)-(17,0)]",
-                                                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name": "[(14,6)-(17,0)]",
+                                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name": "[(14,6)-(17,0)]",
                                                 "shacl:datatype": "[(15,8)-(16,0)]"
                                               }
                                             }
@@ -2077,7 +2077,7 @@
                                         ],
                                         "smaps": {
                                           "lexical": {
-                                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name": "[(14,6)-(17,0)]"
+                                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name": "[(14,6)-(17,0)]"
                                           }
                                         }
                                       }
@@ -2094,11 +2094,11 @@
                                     ],
                                     "smaps": {
                                       "type-property-lexical-info": {
-                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category": "[(9,4)-(9,8)]"
+                                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category": "[(9,4)-(9,8)]"
                                       },
                                       "lexical": {
                                         "schema-org:description": "[(8,4)-(9,0)]",
-                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category": "[(7,2)-(17,0)]"
+                                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category": "[(7,2)-(17,0)]"
                                       }
                                     }
                                   }
@@ -2115,12 +2115,12 @@
                                 ],
                                 "smaps": {
                                   "lexical": {
-                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category": "[(7,2)-(17,0)]"
+                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category": "[(7,2)-(17,0)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at",
+                                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -2133,7 +2133,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at",
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -2157,11 +2157,11 @@
                                     ],
                                     "smaps": {
                                       "type-property-lexical-info": {
-                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at": "[(18,4)-(18,8)]"
+                                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at": "[(18,4)-(18,8)]"
                                       },
                                       "lexical": {
                                         "schema-org:description": "[(19,4)-(20,0)]",
-                                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at": "[(17,2)-(20,0)]",
+                                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at": "[(17,2)-(20,0)]",
                                         "shacl:datatype": "[(18,4)-(19,0)]"
                                       }
                                     }
@@ -2179,7 +2179,7 @@
                                 ],
                                 "smaps": {
                                   "lexical": {
-                                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at": "[(17,2)-(20,0)]"
+                                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at": "[(17,2)-(20,0)]"
                                   }
                                 }
                               }
@@ -2339,10 +2339,10 @@
                             ],
                             "smaps": {
                               "type-property-lexical-info": {
-                                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type": "[(2,0)-(2,4)]"
+                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type": "[(2,0)-(2,4)]"
                               },
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type": "[(2,0)-(20,0)]"
+                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type": "[(2,0)-(20,0)]"
                               }
                             }
                           }
@@ -2394,7 +2394,7 @@
     ],
     "doc:declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type",
+        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type",
         "@type": [
           "shacl:NodeShape",
           "shacl:Shape",
@@ -2408,7 +2408,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id",
+            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -2421,7 +2421,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union",
+                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union",
                 "@type": [
                   "raml-shapes:UnionShape",
                   "shacl:Shape",
@@ -2458,14 +2458,14 @@
                 ],
                 "smaps": {
                   "inherited-shapes": {
-                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml#shape/property/alternate_id%3F/union/default-union/union/default-union"
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#shape/property/alternate_id%3F/union/default-union/union/default-union"
                   },
                   "lexical": {
                     "schema-org:description": "[(6,4)-(7,0)]",
-                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "[(5,0)-(7,0)]"
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "[(5,0)-(7,0)]"
                   },
                   "type-property-lexical-info": {
-                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "[(5,4)-(5,8)]"
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "[(5,4)-(5,8)]"
                   }
                 }
               }
@@ -2482,12 +2482,12 @@
             ],
             "smaps": {
               "lexical": {
-                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id": "[(4,2)-(7,0)]"
+                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id": "[(4,2)-(7,0)]"
               }
             }
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category",
+            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -2500,7 +2500,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category",
+                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category",
                 "@type": [
                   "shacl:NodeShape",
                   "shacl:Shape",
@@ -2514,7 +2514,7 @@
                 ],
                 "shacl:property": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id",
                     "@type": [
                       "shacl:PropertyShape",
                       "shacl:Shape",
@@ -2527,7 +2527,7 @@
                     ],
                     "raml-shapes:range": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id",
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id",
                         "@type": [
                           "raml-shapes:ScalarShape",
                           "shacl:Shape",
@@ -2551,11 +2551,11 @@
                         ],
                         "smaps": {
                           "type-property-lexical-info": {
-                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id": "[(12,8)-(12,12)]"
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id": "[(12,8)-(12,12)]"
                           },
                           "lexical": {
                             "schema-org:description": "[(13,8)-(14,0)]",
-                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id": "[(11,6)-(14,0)]",
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id": "[(11,6)-(14,0)]",
                             "shacl:datatype": "[(12,8)-(13,0)]"
                           }
                         }
@@ -2573,12 +2573,12 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id": "[(11,6)-(14,0)]"
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id": "[(11,6)-(14,0)]"
                       }
                     }
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name",
                     "@type": [
                       "shacl:PropertyShape",
                       "shacl:Shape",
@@ -2591,7 +2591,7 @@
                     ],
                     "raml-shapes:range": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name",
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name",
                         "@type": [
                           "raml-shapes:ScalarShape",
                           "shacl:Shape",
@@ -2615,11 +2615,11 @@
                         ],
                         "smaps": {
                           "type-property-lexical-info": {
-                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name": "[(15,8)-(15,12)]"
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name": "[(15,8)-(15,12)]"
                           },
                           "lexical": {
                             "schema-org:description": "[(16,8)-(17,0)]",
-                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name": "[(14,6)-(17,0)]",
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name": "[(14,6)-(17,0)]",
                             "shacl:datatype": "[(15,8)-(16,0)]"
                           }
                         }
@@ -2637,7 +2637,7 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name": "[(14,6)-(17,0)]"
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name": "[(14,6)-(17,0)]"
                       }
                     }
                   }
@@ -2654,11 +2654,11 @@
                 ],
                 "smaps": {
                   "type-property-lexical-info": {
-                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category": "[(9,4)-(9,8)]"
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category": "[(9,4)-(9,8)]"
                   },
                   "lexical": {
                     "schema-org:description": "[(8,4)-(9,0)]",
-                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category": "[(7,2)-(17,0)]"
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category": "[(7,2)-(17,0)]"
                   }
                 }
               }
@@ -2675,12 +2675,12 @@
             ],
             "smaps": {
               "lexical": {
-                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category": "[(7,2)-(17,0)]"
+                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category": "[(7,2)-(17,0)]"
               }
             }
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at",
+            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -2693,7 +2693,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at",
+                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "shacl:Shape",
@@ -2717,11 +2717,11 @@
                 ],
                 "smaps": {
                   "type-property-lexical-info": {
-                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at": "[(18,4)-(18,8)]"
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at": "[(18,4)-(18,8)]"
                   },
                   "lexical": {
                     "schema-org:description": "[(19,4)-(20,0)]",
-                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at": "[(17,2)-(20,0)]",
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at": "[(17,2)-(20,0)]",
                     "shacl:datatype": "[(18,4)-(19,0)]"
                   }
                 }
@@ -2739,7 +2739,7 @@
             ],
             "smaps": {
               "lexical": {
-                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at": "[(17,2)-(20,0)]"
+                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at": "[(17,2)-(20,0)]"
               }
             }
           }
@@ -2751,7 +2751,7 @@
         ],
         "doc:examples": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value",
+            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value",
             "@type": [
               "doc:Example",
               "doc:DomainElement"
@@ -2768,13 +2768,13 @@
             ],
             "doc:structuredValue": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1",
+                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1",
                 "@type": [
                   "data:Object"
                 ],
                 "data:alternate_id": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_2",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_2",
                     "@type": [
                       "data:Scalar"
                     ],
@@ -2786,20 +2786,20 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_2": "[(3,18)-(3,19)]"
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_2": "[(3,18)-(3,19)]"
                       }
                     }
                   }
                 ],
                 "data:category": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3",
                     "@type": [
                       "data:Object"
                     ],
                     "data:id": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_4",
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_4",
                         "@type": [
                           "data:Scalar"
                         ],
@@ -2811,14 +2811,14 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_4": "[(5,10)-(5,15)]"
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_4": "[(5,10)-(5,15)]"
                           }
                         }
                       }
                     ],
                     "data:name": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_5",
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_5",
                         "@type": [
                           "data:Scalar"
                         ],
@@ -2830,24 +2830,24 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_5": "[(6,12)-(6,35)]"
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_5": "[(6,12)-(6,35)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "data-node-properties": {
-                        "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
                       },
                       "lexical": {
-                        "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3": "[(5,0)-(7,0)]"
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3": "[(5,0)-(7,0)]"
                       }
                     }
                   }
                 ],
                 "data:created_at": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_6",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_6",
                     "@type": [
                       "data:Scalar"
                     ],
@@ -2859,17 +2859,17 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_6": "[(7,16)-(7,36)]"
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_6": "[(7,16)-(7,36)]"
                       }
                     }
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1": "[(3,0)-(9,0)]"
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1": "[(3,0)-(9,0)]"
                   },
                   "data-node-properties": {
-                    "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1": "created_at->[(7,4)-(9,0)]#alternate_id->[(3,4)-(4,0)]#category->[(4,4)-(7,0)]"
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1": "created_at->[(7,4)-(9,0)]#alternate_id->[(3,4)-(4,0)]#category->[(4,4)-(7,0)]"
                   }
                 }
               }
@@ -2884,25 +2884,25 @@
                 "doc:strict": "true"
               },
               "source-vendor": {
-                "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value": "raml 1.0"
+                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value": "raml 1.0"
               },
               "lexical": {
                 "shacl:raw": "[(3,0)-(9,0)]",
-                "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value": "[(2,6)-(9,0)]",
+                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value": "[(2,6)-(9,0)]",
                 "schema-org:name": "[(2,0)-(9,0)]"
               },
               "resolved-link": {
-                "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value": "file://amf-client/shared/src/test/resources/production/testIssueNil/api.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/example/default-example"
+                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/example/default-example"
               }
             }
           }
         ],
         "smaps": {
           "type-property-lexical-info": {
-            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type": "[(2,0)-(2,4)]"
+            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type": "[(2,0)-(2,4)]"
           },
           "lexical": {
-            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type": "[(2,0)-(20,0)]"
+            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type": "[(2,0)-(20,0)]"
           }
         }
       }
@@ -3078,7 +3078,7 @@
         ],
         "doc:encodes": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type",
+            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type",
             "@type": [
               "shacl:NodeShape",
               "shacl:Shape",
@@ -3092,7 +3092,7 @@
             ],
             "shacl:property": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id",
+                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -3105,7 +3105,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union",
                     "@type": [
                       "raml-shapes:UnionShape",
                       "shacl:Shape",
@@ -3142,14 +3142,14 @@
                     ],
                     "smaps": {
                       "inherited-shapes": {
-                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml#shape/property/alternate_id%3F/union/default-union/union/default-union"
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#shape/property/alternate_id%3F/union/default-union/union/default-union"
                       },
                       "lexical": {
                         "schema-org:description": "[(6,4)-(7,0)]",
-                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "[(5,0)-(7,0)]"
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "[(5,0)-(7,0)]"
                       },
                       "type-property-lexical-info": {
-                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "[(5,4)-(5,8)]"
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id/union/default-union": "[(5,4)-(5,8)]"
                       }
                     }
                   }
@@ -3166,12 +3166,12 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/alternate_id": "[(4,2)-(7,0)]"
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/alternate_id": "[(4,2)-(7,0)]"
                   }
                 }
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category",
+                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -3184,7 +3184,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category",
                     "@type": [
                       "shacl:NodeShape",
                       "shacl:Shape",
@@ -3198,7 +3198,7 @@
                     ],
                     "shacl:property": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id",
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id",
                         "@type": [
                           "shacl:PropertyShape",
                           "shacl:Shape",
@@ -3211,7 +3211,7 @@
                         ],
                         "raml-shapes:range": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id",
                             "@type": [
                               "raml-shapes:ScalarShape",
                               "shacl:Shape",
@@ -3235,11 +3235,11 @@
                             ],
                             "smaps": {
                               "type-property-lexical-info": {
-                                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id": "[(12,8)-(12,12)]"
+                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id": "[(12,8)-(12,12)]"
                               },
                               "lexical": {
                                 "schema-org:description": "[(13,8)-(14,0)]",
-                                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id": "[(11,6)-(14,0)]",
+                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id/scalar/id": "[(11,6)-(14,0)]",
                                 "shacl:datatype": "[(12,8)-(13,0)]"
                               }
                             }
@@ -3257,12 +3257,12 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/id": "[(11,6)-(14,0)]"
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/id": "[(11,6)-(14,0)]"
                           }
                         }
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name",
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name",
                         "@type": [
                           "shacl:PropertyShape",
                           "shacl:Shape",
@@ -3275,7 +3275,7 @@
                         ],
                         "raml-shapes:range": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name",
                             "@type": [
                               "raml-shapes:ScalarShape",
                               "shacl:Shape",
@@ -3299,11 +3299,11 @@
                             ],
                             "smaps": {
                               "type-property-lexical-info": {
-                                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name": "[(15,8)-(15,12)]"
+                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name": "[(15,8)-(15,12)]"
                               },
                               "lexical": {
                                 "schema-org:description": "[(16,8)-(17,0)]",
-                                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name": "[(14,6)-(17,0)]",
+                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name/scalar/name": "[(14,6)-(17,0)]",
                                 "shacl:datatype": "[(15,8)-(16,0)]"
                               }
                             }
@@ -3321,7 +3321,7 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category/property/name": "[(14,6)-(17,0)]"
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category/property/name": "[(14,6)-(17,0)]"
                           }
                         }
                       }
@@ -3338,11 +3338,11 @@
                     ],
                     "smaps": {
                       "type-property-lexical-info": {
-                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category": "[(9,4)-(9,8)]"
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category": "[(9,4)-(9,8)]"
                       },
                       "lexical": {
                         "schema-org:description": "[(8,4)-(9,0)]",
-                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category/category": "[(7,2)-(17,0)]"
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category/category": "[(7,2)-(17,0)]"
                       }
                     }
                   }
@@ -3359,12 +3359,12 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/category": "[(7,2)-(17,0)]"
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/category": "[(7,2)-(17,0)]"
                   }
                 }
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at",
+                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -3377,7 +3377,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "shacl:Shape",
@@ -3401,11 +3401,11 @@
                     ],
                     "smaps": {
                       "type-property-lexical-info": {
-                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at": "[(18,4)-(18,8)]"
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at": "[(18,4)-(18,8)]"
                       },
                       "lexical": {
                         "schema-org:description": "[(19,4)-(20,0)]",
-                        "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at": "[(17,2)-(20,0)]",
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at/scalar/created_at": "[(17,2)-(20,0)]",
                         "shacl:datatype": "[(18,4)-(19,0)]"
                       }
                     }
@@ -3423,7 +3423,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type/property/created_at": "[(17,2)-(20,0)]"
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type/property/created_at": "[(17,2)-(20,0)]"
                   }
                 }
               }
@@ -3435,7 +3435,7 @@
             ],
             "doc:examples": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value",
+                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value",
                 "@type": [
                   "doc:Example",
                   "doc:DomainElement"
@@ -3452,13 +3452,13 @@
                 ],
                 "doc:structuredValue": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1",
                     "@type": [
                       "data:Object"
                     ],
                     "data:alternate_id": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_2",
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_2",
                         "@type": [
                           "data:Scalar"
                         ],
@@ -3470,20 +3470,20 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_2": "[(3,18)-(3,19)]"
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_2": "[(3,18)-(3,19)]"
                           }
                         }
                       }
                     ],
                     "data:category": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3",
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3",
                         "@type": [
                           "data:Object"
                         ],
                         "data:id": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_4",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_4",
                             "@type": [
                               "data:Scalar"
                             ],
@@ -3495,14 +3495,14 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_4": "[(5,10)-(5,15)]"
+                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_4": "[(5,10)-(5,15)]"
                               }
                             }
                           }
                         ],
                         "data:name": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_5",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_5",
                             "@type": [
                               "data:Scalar"
                             ],
@@ -3514,24 +3514,24 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_5": "[(6,12)-(6,35)]"
+                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3/scalar_5": "[(6,12)-(6,35)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "data-node-properties": {
-                            "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
                           },
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/object_3": "[(5,0)-(7,0)]"
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/object_3": "[(5,0)-(7,0)]"
                           }
                         }
                       }
                     ],
                     "data:created_at": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_6",
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_6",
                         "@type": [
                           "data:Scalar"
                         ],
@@ -3543,17 +3543,17 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_6": "[(7,16)-(7,36)]"
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1/scalar_6": "[(7,16)-(7,36)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "lexical": {
-                        "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1": "[(3,0)-(9,0)]"
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1": "[(3,0)-(9,0)]"
                       },
                       "data-node-properties": {
-                        "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value/object_1": "created_at->[(7,4)-(9,0)]#alternate_id->[(3,4)-(4,0)]#category->[(4,4)-(7,0)]"
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value/object_1": "created_at->[(7,4)-(9,0)]#alternate_id->[(3,4)-(4,0)]#category->[(4,4)-(7,0)]"
                       }
                     }
                   }
@@ -3568,25 +3568,25 @@
                     "doc:strict": "true"
                   },
                   "source-vendor": {
-                    "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value": "raml 1.0"
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value": "raml 1.0"
                   },
                   "lexical": {
                     "shacl:raw": "[(3,0)-(9,0)]",
-                    "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value": "[(2,6)-(9,0)]",
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value": "[(2,6)-(9,0)]",
                     "schema-org:name": "[(2,0)-(9,0)]"
                   },
                   "resolved-link": {
-                    "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-individual-response.raml/example/value": "file://amf-client/shared/src/test/resources/production/testIssueNil/api.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/example/default-example"
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml/example/value": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/example/default-example"
                   }
                 }
               }
             ],
             "smaps": {
               "type-property-lexical-info": {
-                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type": "[(2,0)-(2,4)]"
+                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type": "[(2,0)-(2,4)]"
               },
               "lexical": {
-                "file://amf-client/shared/src/test/resources/production/testIssueNil/data-types/organization-data-type.raml/type": "[(2,0)-(20,0)]"
+                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml/type": "[(2,0)-(20,0)]"
               }
             }
           }
@@ -3606,7 +3606,7 @@
         ],
         "doc:encodes": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-array-response.raml/example/value",
+            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml/example/value",
             "@type": [
               "doc:Example",
               "doc:DomainElement"
@@ -3831,15 +3831,15 @@
                 "doc:strict": "true"
               },
               "source-vendor": {
-                "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-array-response.raml/example/value": "raml 1.0"
+                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml/example/value": "raml 1.0"
               },
               "lexical": {
                 "shacl:raw": "[(3,0)-(15,3)]",
-                "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-array-response.raml/example/value": "[(2,6)-(15,3)]",
+                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml/example/value": "[(2,6)-(15,3)]",
                 "schema-org:name": "[(2,0)-(15,3)]"
               },
               "resolved-link": {
-                "file://amf-client/shared/src/test/resources/production/testIssueNil/examples/organization/organization-array-response.raml/example/value": "file://amf-client/shared/src/test/resources/production/testIssueNil/api.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/default-example"
+                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml/example/value": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/example/default-example"
               }
             }
           }
