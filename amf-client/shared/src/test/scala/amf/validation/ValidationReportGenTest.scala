@@ -24,8 +24,9 @@ trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTest {
         writeTemporaryFile(golden.get)(generate(report)).flatMap(assertDifferences(_, reportsPath + golden.get))
       case None =>
         Future.successful({
-          if (!report.conforms) fail("Report not conforms")
-          if (report.results.nonEmpty) fail("Report conforms but there is results, probably some warnings")
+          if (!report.conforms) fail("Report not conforms:\n" + report.toString)
+          if (report.results.nonEmpty)
+            fail("Report conforms but there is results, probably some warnings\n:" + report.toString)
           succeed
         })
       // i have to check results in order to check warnings. If you pass none, and you are expeting some warnings, you should use the file assertion to check the warnings messages.

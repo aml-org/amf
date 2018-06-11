@@ -64,6 +64,6 @@ class ApiExamplesValidationTest extends ValidationReportGenTest {
 
   test("Can validate an array example") {
     validate("examples/invalid-property-in-array-items.raml", Some("invalid-property-in-array-items.report"))
-//      assert(!report.conforms)
   }
+
 }

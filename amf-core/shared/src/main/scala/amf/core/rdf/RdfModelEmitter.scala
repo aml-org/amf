@@ -212,7 +212,7 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
 
     def emitIntLiteral(subject: String, property: String, v: String): Unit = {
       try {
-        rdfmodel.addTriple(subject, property, v.toInt.toString, Some((Namespace.Xsd + "integer").iri()))
+        rdfmodel.addTriple(subject, property, v.toInt.toString, Some((Namespace.Xsd + "long").iri()))
       } catch {
         case _: NumberFormatException =>
           rdfmodel.addTriple(subject, property, v, None)
@@ -264,7 +264,11 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
     }
 
     private def typedScalar(subject: String, property: String, content: String, dataType: String): Unit = {
-      rdfmodel.addTriple(subject, property, content, Some(dataType))
+      dataType match {
+        case _ if dataType == (Namespace.Xsd + "integer").iri() =>
+          rdfmodel.addTriple(subject, property, content, Some((Namespace.Xsd + "long").iri()))
+        case _ => rdfmodel.addTriple(subject, property, content, Some(dataType))
+      }
     }
 
     private def createDynamicTypeNode(id: String, obj: DynamicDomainElement): Unit = {
