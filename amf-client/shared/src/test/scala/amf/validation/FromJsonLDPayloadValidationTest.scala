@@ -20,8 +20,8 @@ class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets
     "endpoint/valid.jsonld"                   -> ExpectedReport(conforms = true, 0, ProfileNames.AMF),
     "operation/amf.jsonld"                    -> ExpectedReport(conforms = false, 1, ProfileNames.AMF),
     "operation/valid.jsonld"                  -> ExpectedReport(conforms = true, 0, ProfileNames.AMF),
-    "parameters/amf_properties.jsonld"        -> ExpectedReport(conforms = false, 4, ProfileNames.AMF),
-    "parameters/amf_empty.jsonld"             -> ExpectedReport(conforms = false, 4, ProfileNames.AMF),
+    "parameters/amf_properties.jsonld"        -> ExpectedReport(conforms = false, 3, ProfileNames.AMF),
+    "parameters/amf_empty.jsonld"             -> ExpectedReport(conforms = false, 3, ProfileNames.AMF),
     "parameters/amf_valid.jsonld"             -> ExpectedReport(conforms = true, 0, ProfileNames.AMF),
     "shapes/enum_amf.jsonld"                  -> ExpectedReport(conforms = false, 2, ProfileNames.OAS),
     "shapes/enum_valid.jsonld"                -> ExpectedReport(conforms = true, 0, ProfileNames.OAS),
@@ -36,10 +36,10 @@ class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets
     //   we commentated the range of items validation
     //    "types/arrays/wrong_items.jsonld"         -> ExpectedReport(conforms = false, 1, ProfileNames.RAML),
     //    "types/arrays/right_items.jsonld"         -> ExpectedReport(conforms = true, 0, ProfileNames.RAML),
-    "types/arrays/empty_items.jsonld"         -> ExpectedReport(conforms = true, 0, ProfileNames.RAML),
-    "types/arrays/empty_items.jsonld"         -> ExpectedReport(conforms = false, 1, ProfileNames.OAS),
-    "annotationTypes/invalid.jsonld"          -> ExpectedReport(conforms = false, 1, ProfileNames.RAML),
-    "annotationTypes/valid.jsonld"            -> ExpectedReport(conforms = true, 0, ProfileNames.RAML)
+    "types/arrays/empty_items.jsonld" -> ExpectedReport(conforms = true, 0, ProfileNames.RAML),
+    "types/arrays/empty_items.jsonld" -> ExpectedReport(conforms = false, 1, ProfileNames.OAS),
+    "annotationTypes/invalid.jsonld"  -> ExpectedReport(conforms = false, 1, ProfileNames.RAML),
+    "annotationTypes/valid.jsonld"    -> ExpectedReport(conforms = true, 0, ProfileNames.RAML)
   )
 
   for {

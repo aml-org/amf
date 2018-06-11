@@ -5,11 +5,11 @@ Number of results: 1
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/validations/examples/discriminator2.raml#/web-api/end-points/%2Forgs%2F%7BorgId%7D/get/200/application%2Fjson/schema_validation
+- Source: file://amf-client/shared/src/test/resources/validations/examples/discriminator2.raml#/declarations/types/Manager_validation
   Message: Object at / must be valid
-Array items at //reports/items/union_4/reports must be valid
-Object at //reports/items/union_4/reports/items must be valid
-Data at //reports/items/union_4/reports/items/kind must match pattern ^Person$
+Array items at //reports/items/union_3/reports must be valid
+Object at //reports/items/union_3/reports/items must be valid
+Data at //reports/items/union_3/reports/items/kind must match pattern ^Person$
 Data at //phone must match pattern ^[0-9|-]+$
 
   Level: Violation
