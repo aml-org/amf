@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: PSN
+version: v0.1
+/psn:
+  head:
+    responses:
+      204:
+        headers:
+          X-PSN-Exists:
+            enum: [true, false]
+            example: "true"

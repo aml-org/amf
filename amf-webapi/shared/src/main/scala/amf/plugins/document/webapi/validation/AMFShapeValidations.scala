@@ -20,8 +20,8 @@ import scala.collection.mutable
 
 class AMFShapeValidations(root: Shape) {
 
-  var emitMultipleOf: Boolean     = false
-  var currentDataNode: Option[DataNode] = None
+  var emitMultipleOf: Boolean                           = false
+  var currentDataNode: Option[DataNode]                 = None
   var polymorphicExpanded: mutable.Map[String, Boolean] = mutable.Map()
 
   def profile(dataNode: DataNode): ValidationProfile = {
@@ -47,10 +47,11 @@ class AMFShapeValidations(root: Shape) {
           message = msg,
           ramlMessage = Some(msg),
           oasMessage = Some(msg),
-          functionConstraint = Some(FunctionConstraint(
-            message = Some(msg),
-            code = Some(
-              """|function(shape, value, multipleOf) {
+          functionConstraint = Some(
+            FunctionConstraint(
+              message = Some(msg),
+              code = Some(
+                """|function(shape, value, multipleOf) {
                  |  if (value != null && multipleOf != null) {
                  |    return (amfExtractLiteral(value) % amfExtractLiteral(multipleOf)) === 0;
                  |  } else {
@@ -58,14 +59,14 @@ class AMFShapeValidations(root: Shape) {
                  |  }
                  |}
               """.stripMargin
-            ),
-            parameters = Seq(
-              FunctionConstraintParameter(
-                (Namespace.Shapes + "multipleOfValidationParam").iri(),
-                (Namespace.Xsd + "integer").iri()
+              ),
+              parameters = Seq(
+                FunctionConstraintParameter(
+                  (Namespace.Shapes + "multipleOfValidationParam").iri(),
+                  (Namespace.Xsd + "integer").iri()
+                )
               )
             ))
-          )
         )
       )
     }
@@ -73,23 +74,22 @@ class AMFShapeValidations(root: Shape) {
     acc
   }
 
-
   def polymorphic(obj: NodeShape) = {
     obj.supportsInheritance && !polymorphicExpanded.getOrElse(obj.id, false)
   }
 
   protected def emitShapeValidations(context: String, shape: Shape): List[ValidationSpecification] = {
     shape match {
-      case union: UnionShape                    => unionConstraints(context, union)
-      case scalar: ScalarShape                  => scalarConstraints(context, scalar)
-      case tuple: TupleShape                    => tupleConstraints(context, tuple)
-      case array: ArrayShape                    => arrayConstraints(context, array)
-      case obj: NodeShape if !polymorphic(obj)  => nodeConstraints(context, obj)
-      case obj: NodeShape if polymorphic(obj)   => polymorphicNodeConstraints(context, obj)
-      case nil: NilShape                        => nilConstraints(context, nil)
-      case recur: RecursiveShape                => recursiveShapeConstraints(context, recur)
-      case any: AnyShape                        => anyConstraints(context, any)
-      case _                                    => List.empty
+      case union: UnionShape                   => unionConstraints(context, union)
+      case scalar: ScalarShape                 => scalarConstraints(context, scalar)
+      case tuple: TupleShape                   => tupleConstraints(context, tuple)
+      case array: ArrayShape                   => arrayConstraints(context, array)
+      case obj: NodeShape if !polymorphic(obj) => nodeConstraints(context, obj)
+      case obj: NodeShape if polymorphic(obj)  => polymorphicNodeConstraints(context, obj)
+      case nil: NilShape                       => nilConstraints(context, nil)
+      case recur: RecursiveShape               => recursiveShapeConstraints(context, recur)
+      case any: AnyShape                       => anyConstraints(context, any)
+      case _                                   => List.empty
     }
   }
 
@@ -177,7 +177,8 @@ class AMFShapeValidations(root: Shape) {
   }
 
   def isPolymorphicUnion(union: UnionShape): Boolean = {
-    union.anyOf.foldLeft(true) { case (acc, shape) =>
+    union.anyOf.foldLeft(true) {
+      case (acc, shape) =>
         acc && shape.isInstanceOf[AnyShape] && shape.asInstanceOf[AnyShape].supportsInheritance
     }
   }
@@ -287,11 +288,11 @@ class AMFShapeValidations(root: Shape) {
 
     // Property shape generated from the discriminator definition
     val discriminatorProperty = node.discriminator.option() match {
-      case None                => Seq()
+      case None => Seq()
       case Some(discriminator) => {
         val discriminatorValueRegex = node.discriminatorValue.option() match {
-          case None     => node.name.value()
-          case Some(v)  => v
+          case None    => node.name.value()
+          case Some(v) => v
         }
         Seq(
           PropertyShape()
@@ -310,7 +311,7 @@ class AMFShapeValidations(root: Shape) {
 
     (node.properties ++ discriminatorProperty).foreach { property =>
       val patternedProperty = property.patternName.option()
-      val encodedName = property.name.value().urlComponentEncoded
+      val encodedName       = property.name.value().urlComponentEncoded
       nestedConstraints ++= emitShapeValidations(context + s"/$encodedName", property.range)
 
       val propertyValidationId = validationId(property.range)
@@ -333,7 +334,7 @@ class AMFShapeValidations(root: Shape) {
     node.fields.entry(NodeShapeModel.AdditionalPropertiesSchema) match {
       case Some(f) =>
         val encodedName = "json_schema_additional_property"
-        val range = f.value.value.asInstanceOf[Shape]
+        val range       = f.value.value.asInstanceOf[Shape]
         nestedConstraints ++= emitShapeValidations(context + s"/$encodedName", range)
 
         val propertyValidationId = validationId(range)
@@ -374,7 +375,7 @@ class AMFShapeValidations(root: Shape) {
       findPolymorphicEffectiveShape(closure) match {
         case Some(shape: NodeShape) =>
           nodeConstraints(context, shape)
-        case _        =>
+        case _ =>
           closure.map { s =>
             polymorphicExpanded.put(s.id, true)
             s
@@ -395,25 +396,25 @@ class AMFShapeValidations(root: Shape) {
   }
 
   def findPolymorphicEffectiveShape(polymorphicUnion: Seq[Shape]): Option[Shape] = {
-    polymorphicUnion.filter(_.isInstanceOf[NodeShape]).find { case nodeShape: NodeShape =>
-      nodeShape.discriminator.option() match {
-        case Some(discriminatorProp) =>
-          val discriminatorValue = nodeShape.discriminatorValue.option().getOrElse(nodeShape.name.value())
-          currentDataNode match {
-            case Some(obj: ObjectNode) =>
-              obj.properties.get(discriminatorProp) match {
-                case Some(v: ScalarNode) => {
-                  v.value == discriminatorValue
+    polymorphicUnion.filter(_.isInstanceOf[NodeShape]).find {
+      case nodeShape: NodeShape =>
+        nodeShape.discriminator.option() match {
+          case Some(discriminatorProp) =>
+            val discriminatorValue = nodeShape.discriminatorValue.option().getOrElse(nodeShape.name.value())
+            currentDataNode match {
+              case Some(obj: ObjectNode) =>
+                obj.properties.get(discriminatorProp) match {
+                  case Some(v: ScalarNode) => {
+                    v.value == discriminatorValue
+                  }
+                  case _ => false
                 }
-                case _ => false
-              }
-            case None => false
-          }
-        case None => false
-      }
+              case None => false
+            }
+          case None => false
+        }
     }
   }
-
 
   protected def checkClosed(validation: ValidationSpecification, shape: NodeShape): ValidationSpecification = {
     shape.fields.?[AmfScalar](NodeShapeModel.Closed) match {
@@ -979,13 +980,19 @@ class AMFShapeValidations(root: Shape) {
                           shape: Shape with CommonShapeFields): ValidationSpecification = {
     shape.fields.?[AmfArray](ScalarShapeModel.Values) match {
       case Some(valuesArray) =>
+        // When the shape is of type string, force the enum values to be of string type too.
+        val dataType = root.fields
+          .?[AmfScalar](ScalarShapeModel.DataType)
+          .map(_.toString)
+          .filter(_ == "http://www.w3.org/2001/XMLSchema#string")
         val values = valuesArray.scalars.map(_.toString)
         val msg    = s"Data at $context must be within the values (${values.mkString(",")})"
         val propertyValidation = PropertyConstraint(
           ramlPropertyId = (Namespace.Data + "value").iri(),
           name = validation.name + "_validation_enum/prop",
           message = Some(msg),
-          in = values
+          in = values,
+          datatype = dataType
         )
         validation.copy(propertyConstraints = validation.propertyConstraints ++ Seq(propertyValidation))
       case None => validation
