@@ -70,7 +70,12 @@ class Validation(platform: Platform) {
   // The aggregated report
   def reset(): Unit = validator.reset()
 
-  def aggregatedReport: List[AMFValidationResult] = validator.aggregatedReport(validator.aggregatedReport.keySet.max)
+  def aggregatedReport: List[AMFValidationResult] = {
+    val set = validator.aggregatedReport.keySet
+    if (set.isEmpty) Nil
+    else
+      validator.aggregatedReport(set.max)
+  }
 
   // disable temporarily the reporting of validations
   def enabled: Boolean = validator.enabled

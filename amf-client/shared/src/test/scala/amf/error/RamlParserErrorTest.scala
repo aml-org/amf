@@ -115,6 +115,19 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
+// todo hnajles: move to validmodelvalidationtest when branch of refactor is complete
+  test("Empty describe by") {
+    validate(
+      "/empty-described-by.raml"
+    )
+  }
+
+  test("Empty uri parameters") {
+    validate(
+      "/empty-uri-parameters.raml"
+    )
+  }
+
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/error/"
 
   override protected def build(validation: Validation, file: String): Future[BaseUnit] =

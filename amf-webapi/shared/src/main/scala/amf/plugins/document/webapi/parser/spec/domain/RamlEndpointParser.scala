@@ -113,23 +113,21 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     var annotations: Annotations = Annotations()
 
     val entries = map.regex(uriParametersKey)
-    val implicitExplicitPathParams = entries match {
-      case Nil =>
+    val implicitExplicitPathParams = entries.collectFirst({ case e if e.value.tagType == YType.Map => e }) match {
+      case None =>
         implicitPathParamsOrdered(endpoint)
 
-      case _ =>
-        entries.flatMap { entry =>
-          annotations = Annotations(entries.head.value)
+      case Some(e) =>
+        annotations = Annotations(e.value)
 
-          val explicitParameters =
-            RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(endpoint.id))
-              .parse()
-              .map(_.withBinding("path"))
+        val explicitParameters =
+          RamlParametersParser(e.value.as[YMap], (p: Parameter) => p.adopted(endpoint.id))
+            .parse()
+            .map(_.withBinding("path"))
 
-          implicitPathParamsOrdered(endpoint,
-                                    variable => !explicitParameters.exists(_.name.is(variable)),
-                                    explicitParameters)
-        }.toSeq
+        implicitPathParamsOrdered(endpoint,
+                                  variable => !explicitParameters.exists(_.name.is(variable)),
+                                  explicitParameters)
     }
 
     parameters = parameters.add(Parameters(path = implicitExplicitPathParams))
