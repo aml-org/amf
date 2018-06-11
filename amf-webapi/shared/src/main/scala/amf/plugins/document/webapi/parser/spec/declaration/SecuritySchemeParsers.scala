@@ -77,71 +77,75 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
     map.key(
       key,
       entry => {
-        val value = entry.value.as[YMap]
+        entry.value.toOption[YMap] match {
+          case Some(value) =>
+            value.key(
+              "headers",
+              entry => {
+                val parameters: Seq[Parameter] =
+                  RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(scheme.id)) // todo replace in separation
+                    .parse()
+                    .map(_.withBinding("header"))
+                scheme.set(SecuritySchemeModel.Headers,
+                           AmfArray(parameters, Annotations(entry.value)),
+                           Annotations(entry))
+              }
+            )
 
-        value.key(
-          "headers",
-          entry => {
-            val parameters: Seq[Parameter] =
-              RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(scheme.id)) // todo replace in separation
-                .parse()
-                .map(_.withBinding("header"))
-            scheme.set(SecuritySchemeModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
-          }
-        )
-
-        if (map.key("queryParameters").isDefined && map.key("queryString").isDefined) {
-          ctx.violation(
-            ParserSideValidations.ExclusivePropertiesSpecification.id,
-            scheme.id,
-            s"Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together",
-            map
-          )
-        }
-
-        value.key(
-          "queryParameters",
-          entry => {
-            val parameters: Seq[Parameter] =
-              RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(scheme.id)) // todo replace in separation
-                .parse()
-                .map(_.withBinding("query"))
-            scheme.set(SecuritySchemeModel.QueryParameters,
-                       AmfArray(parameters, Annotations(entry.value)),
-                       Annotations(entry))
-          }
-        )
-
-        value.key(
-          "queryString",
-          queryEntry => {
-            Raml10TypeParser(queryEntry, shape => shape.adopted(scheme.id))
-              .parse()
-              .map(scheme.withQueryString)
-          }
-        )
-
-        value.key(
-          "responses",
-          entry => {
-            entry.value
-              .as[YMap]
-              .regex(
-                "\\d{3}",
-                entries => {
-                  val responses = mutable.ListBuffer[Response]()
-                  entries.foreach(entry => {
-                    responses += ctx.factory
-                      .responseParser(entry, (r: Response) => r.adopted(scheme.id), false)
-                      .parse() // todo replace in separation
-                  })
-                  scheme.set(SecuritySchemeModel.Responses,
-                             AmfArray(responses, Annotations(entry.value)),
-                             Annotations(entry))
-                }
+            if (map.key("queryParameters").isDefined && map.key("queryString").isDefined) {
+              ctx.violation(
+                ParserSideValidations.ExclusivePropertiesSpecification.id,
+                scheme.id,
+                s"Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together",
+                map
               )
-          }
-        )
+            }
+
+            value.key(
+              "queryParameters",
+              entry => {
+                val parameters: Seq[Parameter] =
+                  RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(scheme.id)) // todo replace in separation
+                    .parse()
+                    .map(_.withBinding("query"))
+                scheme.set(SecuritySchemeModel.QueryParameters,
+                           AmfArray(parameters, Annotations(entry.value)),
+                           Annotations(entry))
+              }
+            )
+
+            value.key(
+              "queryString",
+              queryEntry => {
+                Raml10TypeParser(queryEntry, shape => shape.adopted(scheme.id))
+                  .parse()
+                  .map(scheme.withQueryString)
+              }
+            )
+
+            value.key(
+              "responses",
+              entry => {
+                entry.value
+                  .as[YMap]
+                  .regex(
+                    "\\d{3}",
+                    entries => {
+                      val responses = mutable.ListBuffer[Response]()
+                      entries.foreach(entry => {
+                        responses += ctx.factory
+                          .responseParser(entry, (r: Response) => r.adopted(scheme.id), false)
+                          .parse() // todo replace in separation
+                      })
+                      scheme.set(SecuritySchemeModel.Responses,
+                                 AmfArray(responses, Annotations(entry.value)),
+                                 Annotations(entry))
+                    }
+                  )
+              }
+            )
+          case _ => // should add some warning or violation for secs ?
+        }
       }
     )
   }
