@@ -21,4 +21,8 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   test("Minimun and maximun over float format") {
     checkValid("examples/min-max-float-format.raml")
   }
+
+  test("Enum with integer values") {
+    checkValid("examples/enum-integer.raml")
+  }
 }

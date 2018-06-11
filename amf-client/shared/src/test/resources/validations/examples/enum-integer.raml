@@ -1,0 +1,21 @@
+#%RAML 1.0
+version: v1
+title: HR_API
+
+types:
+  SomeType:
+    properties:
+      ID:
+        type: integer
+        description: blabla
+        required: false
+      HouseType:
+        type: integer
+        enum:
+          - 0
+          - 1
+        description: blablabla
+        required: true
+    example:
+      ID: 123456
+      HouseType: 0
