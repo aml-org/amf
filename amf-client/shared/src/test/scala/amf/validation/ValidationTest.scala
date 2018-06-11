@@ -80,16 +80,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Can validate an array example") {
-    for {
-      validation <- Validation(platform)
-      doc        <- AMFCompiler(productionPath + "wrong_example1.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(doc, ProfileNames.RAML)
-    } yield {
-      assert(!report.conforms)
-    }
-  }
-
   test("Null trait API") {
     for {
       validation <- Validation(platform)
