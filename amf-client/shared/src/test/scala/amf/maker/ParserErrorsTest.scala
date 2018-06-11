@@ -48,4 +48,5 @@ class ParserErrorsTest extends AsyncFunSuite with CompilerTestBuilder {
     }
 
   }
+
 }
