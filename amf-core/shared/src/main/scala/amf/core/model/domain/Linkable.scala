@@ -58,11 +58,12 @@ trait Linkable extends AmfObject { this: DomainElement with Linkable =>
   // Unresolved references to things that can be linked
   // TODO: another trait?
   var isUnresolved: Boolean         = false
+  var unresolvedSeverity: String    = "error"
   var refName                       = ""
   var refAst: Option[YPart]         = None
   var refCtx: Option[ParserContext] = None
 
-  def unresolved(refName: String, refAst: YPart)(implicit ctx: ParserContext) = {
+  def unresolved(refName: String, refAst: YPart, unresolvedSeverity: String = "error")(implicit ctx: ParserContext) = {
     isUnresolved = true
     this.refName = refName
     this.refAst = Some(refAst)
@@ -79,9 +80,15 @@ trait Linkable extends AmfObject { this: DomainElement with Linkable =>
           DeclarationPromise(
             resolve,
             () =>
-              ctx.violation(id,
-                            s"Unresolved reference '$refName' from root context ${ctx.rootContextDocument}",
-                            refAst.get)
+              if (unresolvedSeverity == "warning") {
+                ctx.warning(id,
+                  s"Unresolved reference '$refName' from root context ${ctx.rootContextDocument}",
+                  refAst.get)
+              } else {
+                ctx.violation(id,
+                  s"Unresolved reference '$refName' from root context ${ctx.rootContextDocument}",
+                  refAst.get)
+              }
           )
         )
       case none => throw new Exception("Cannot create unresolved reference with missing parsing context")
