@@ -24,8 +24,8 @@ class DataArrangementShape extends AnyShapeModel {
 
   val CollectionFormat = Field(Str, Shapes + "collectionFormat")
 
-  override val fields
-    : List[Field] = List(Items, MinItems, MaxItems, UniqueItems, CollectionFormat) ++ AnyShapeModel.fields ++ DomainElementModel.fields
+  val specificFields               = List(Items, MinItems, MaxItems, UniqueItems, CollectionFormat)
+  override val fields: List[Field] = specificFields ++ AnyShapeModel.fields ++ DomainElementModel.fields
 }
 
 object ArrayShapeModel extends DataArrangementShape with DomainElementModel {
@@ -43,11 +43,15 @@ object MatrixShapeModel extends DataArrangementShape with DomainElementModel {
 
 object TupleShapeModel extends DataArrangementShape with DomainElementModel {
   val AdditionalItems = Field(Bool, Shapes + "additionalItems")
-  val TupleItems = Field(SortedArray(ShapeModel), Shapes + "items")
+  val TupleItems      = Field(SortedArray(ShapeModel), Shapes + "items")
   override val `type`
     : List[ValueType]        = List(Shapes + "TupleShape", Shapes + "ArrayShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
   override def modelInstance = TupleShape()
 
-  override val fields
-    : List[Field] = List(TupleItems, MinItems, MaxItems, UniqueItems, AdditionalItems, CollectionFormat) ++ AnyShapeModel.fields ++ DomainElementModel.fields
+  override val fields: List[Field] = List(TupleItems,
+                                          MinItems,
+                                          MaxItems,
+                                          UniqueItems,
+                                          AdditionalItems,
+                                          CollectionFormat) ++ AnyShapeModel.fields ++ DomainElementModel.fields
 }

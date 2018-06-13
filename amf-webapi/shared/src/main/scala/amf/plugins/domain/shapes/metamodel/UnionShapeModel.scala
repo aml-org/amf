@@ -10,7 +10,9 @@ object UnionShapeModel extends AnyShapeModel {
 
   val AnyOf = Field(Array(ShapeModel), Namespace.Shapes + "anyOf")
 
-  override def fields: List[Field] = List(AnyOf) ++ AnyShapeModel.fields ++ DomainElementModel.fields
+  val specificFields = List(AnyOf)
+
+  override def fields: List[Field] = specificFields ++ AnyShapeModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] =
     List(Namespace.Shapes + "UnionShape", Namespace.Shacl + "Shape", Namespace.Shapes + "Shape")
