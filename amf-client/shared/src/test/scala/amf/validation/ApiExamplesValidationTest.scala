@@ -74,6 +74,6 @@ class ApiExamplesValidationTest extends ValidationReportGenTest {
   }
 
   test("Validation error raml 0.8 example 1") {
-    validate("08/validation_error1.raml", Some("validation_error1.report"), profile = ProfileNames.RAML) //in raml 10 validations throws a violation. In 08 no. Bug? we should review this case
+    validate("08/validation_error1.raml", Some("validation_error1.report"), profile = ProfileNames.RAML08) //in raml 10 validations throws a violation. In 08 no. Bug? we should review this case
   }
 }
