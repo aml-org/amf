@@ -409,7 +409,7 @@ class AMFShapeValidations(root: Shape) {
                   }
                   case _ => false
                 }
-              case None => false
+              case _ => false
             }
           case None => false
         }

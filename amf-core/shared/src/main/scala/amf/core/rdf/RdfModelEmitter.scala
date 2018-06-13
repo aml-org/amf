@@ -3,15 +3,17 @@ package amf.core.rdf
 import amf.core.annotations.{DomainExtensionAnnotation, ScalarType}
 import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Type.{Array, Bool, EncodedIri, Iri, SortedArray, Str}
+import amf.core.metamodel.document.SourceMapModel
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ShapeModel}
 import amf.core.metamodel.{Field, MetaModelTypeMapping, Obj, Type}
-import amf.core.model.document.BaseUnit
+import amf.core.model.document.{BaseUnit, SourceMap}
 import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.{Annotations, FieldEntry, Value}
-import amf.core.vocabulary.Namespace
+import amf.core.vocabulary.{Namespace, ValueType}
+import amf.plugins.document.graph.parser.EmissionContext
 import org.mulesoft.common.time.SimpleDateTime
 
 import scala.collection.mutable.ListBuffer
@@ -35,12 +37,22 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
       if (!idsTraversionCheck.hasId(element.id)) {
         val id = element.id
         idsTraversionCheck + id
+
+        val sources = SourceMap(id, element)
+
         val obj = metaModel(element)
 
         if (obj.dynamic) traverseDynamicMetaModel(id, element, obj)
         else traverseStaticMetamodel(id, element, obj)
 
         createCustomExtensions(element)
+
+        val sourceMapId = if (id.endsWith("/")) {
+          id + "source-map"
+        } else {
+          id + "/source-map"
+        }
+        createSourcesNode(id, sources, sourceMapId)
       }
     }
 
@@ -286,6 +298,26 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
         if (t != "http://raml.org/vocabularies/document#DomainElement" && t != "http://www.w3.org/ns/shacl#Shape" && t != "http://raml.org/vocabularies/shapes#Shape")
           rdfmodel.addTriple(id, (Namespace.Rdf + "type").iri(), t)
       }
+    }
+
+    private def createSourcesNode(id: String, sources: SourceMap, sourceMapId: String): Unit = {
+      if (options.isWithSourceMaps && sources.nonEmpty) {
+        rdfmodel.addTriple(id, DomainElementModel.Sources.value.iri(), sourceMapId)
+        createTypeNode(sourceMapId, SourceMapModel, None)
+        createAnnotationNodes(sourceMapId, sources)
+      }
+    }
+
+    private def createAnnotationNodes(id: String, sources: SourceMap): Unit = {
+      sources.annotations.foreach({
+        case (a, values) =>
+          values.zipWithIndex.foreach { case((iri, v),i) =>
+            val valueNodeId = s"${id}_$i"
+            rdfmodel.addTriple(id, ValueType(Namespace.SourceMaps, a).iri(), valueNodeId)
+            rdfmodel.addTriple(valueNodeId, SourceMapModel.Element.value.iri(), iri)
+            rdfmodel.addTriple(valueNodeId, SourceMapModel.Value.value.iri(), v, None)
+          }
+      })
     }
   }
 }

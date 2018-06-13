@@ -1872,7 +1872,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
   /*
-  test("HERE_HERE test field_nation") {
+  test("test field_nation") {
     for {
       validation <- Validation(platform)
       model      <- AMFCompiler(productionPath + "field-nation-v2-api-2.0.7-fat-raml/FN_API_full.raml", platform, RamlYamlHint, validation)
