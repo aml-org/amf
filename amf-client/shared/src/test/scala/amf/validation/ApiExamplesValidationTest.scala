@@ -1,5 +1,7 @@
 package amf.validation
 
+import amf.ProfileNames
+
 class ApiExamplesValidationTest extends ValidationReportGenTest {
 
   override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/"
@@ -66,4 +68,12 @@ class ApiExamplesValidationTest extends ValidationReportGenTest {
     validate("examples/invalid-property-in-array-items.raml", Some("invalid-property-in-array-items.report"))
   }
 
+// pass to another suit raml 08 cases? profile implemented as overrided var in class?
+  test("Param in raml 0.8 api") {
+    validate("08/pattern.raml", Some("pattern-08.report"), profile = ProfileNames.RAML08)
+  }
+
+  test("Validation error raml 0.8 example 1") {
+    validate("08/validation_error1.raml", Some("validation_error1.report"), profile = ProfileNames.RAML) //in raml 10 validations throws a violation. In 08 no. Bug? we should review this case
+  }
 }
