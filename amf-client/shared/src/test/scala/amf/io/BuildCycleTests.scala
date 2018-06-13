@@ -2,10 +2,11 @@ package amf.io
 
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
+import amf.core.parser.ParserContext
 import amf.core.remote.{Hint, Vendor}
 import amf.facades.{AMFCompiler, AMFRenderer, Validation}
 import org.scalatest.Assertion
-import amf.core.rdf.RdfModel
+import amf.core.rdf.{RdfModel, RdfModelParser}
 import amf.core.remote.{Amf, Hint, Vendor, VocabularyYamlHint}
 import org.mulesoft.common.io.{AsyncFile, FileSystem}
 import org.scalatest.{Assertion, AsyncFunSuite}
@@ -70,6 +71,12 @@ trait BuildCycleTests extends FileAssertionTest {
     unit.toNativeRdfModel()
   }
 
+  /** Method for transforming parsed unit. Override if necessary. */
+  def transformThroughRdf(unit: BaseUnit, config: CycleConfig): BaseUnit = {
+    val rdfModel = unit.toNativeRdfModel(RenderOptions().withSourceMaps)
+    new RdfModelParser(platform)(ParserContext()).parse(rdfModel, unit.id)
+  }
+
   /** Method to render parsed unit. Override if necessary. */
   def renderRdf(unit: RdfModel, config: CycleConfig): Future[String] = {
     Future {
@@ -97,5 +104,21 @@ trait BuildCycleTests extends FileAssertionTest {
   case class CycleConfig(source: String, golden: String, hint: Hint, target: Vendor, directory: String) {
     val sourcePath: String = directory + source
     val goldenPath: String = directory + golden
+  }
+
+  def cycleFullRdf(source: String,
+                   golden: String,
+                   hint: Hint,
+                   target: Vendor = Amf,
+                   directory: String = basePath,
+                   validation: Option[Validation] = None): Future[Assertion] = {
+
+    val config = CycleConfig(source, golden, hint, target, directory)
+
+    build(config, validation)
+      .map(transformThroughRdf(_, config))
+      .flatMap(render(_, config))
+      .flatMap(writeTemporaryFile(golden))
+      .flatMap(assertDifferences(_, config.goldenPath))
   }
 }
