@@ -32,15 +32,17 @@ object NodeShapeModel extends AnyShapeModel {
 
   val Dependencies = Field(Array(PropertyDependenciesModel), Shapes + "dependencies")
 
+  val specificFields = List(MinProperties,
+                            MaxProperties,
+                            Closed,
+                            AdditionalPropertiesSchema,
+                            Discriminator,
+                            DiscriminatorValue,
+                            Properties,
+                            Dependencies)
+
   override def fields: List[Field] =
-    List(MinProperties,
-         MaxProperties,
-         Closed,
-         AdditionalPropertiesSchema,
-         Discriminator,
-         DiscriminatorValue,
-         Properties,
-         Dependencies) ++ AnyShapeModel.fields ++ DomainElementModel.fields
+    specificFields ++ AnyShapeModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = List(Shacl + "NodeShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
 

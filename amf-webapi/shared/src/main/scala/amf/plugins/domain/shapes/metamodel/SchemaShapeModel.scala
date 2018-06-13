@@ -10,7 +10,8 @@ import amf.plugins.domain.shapes.models.SchemaShape
 object SchemaShapeModel extends AnyShapeModel with ExternalSourceElementModel {
   val MediaType = Field(Str, Shacl + "mediaType")
 
-  override val fields = List(MediaType) ++
+  val specificFields = List(MediaType)
+  override val fields: List[Field] = specificFields ++
     AnyShapeModel.fields ++
     DomainElementModel.fields ++
     LinkableElementModel.fields

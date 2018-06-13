@@ -1,18 +1,11 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
+import amf.core.metamodel.Field
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
 
 /*
  * Search unique and identifiers fields to guess if tha any shape really its something else
- * If your anyShape has:
- *   NodeShapeModel.properties: return a NodeShape
- *   ArrayShapeModel.items: return an ArrayShape
- *   FileShapeModel.FileTypes: return a FileShape
- *   ScalarShapeModel.DataType: return a ScalarShape
- *   SchemaShapeModel.MediaType: return a SchemaShape
- *   UnionShapeModel.AnyOf: return a UnionShape
- *
  *   This is for that border cases when resolving a resource type (or trait) or simply that resolved inherits from any shape
  *
  *   Is there any cases that i'm missing?
@@ -48,20 +41,22 @@ private[shape_normalization] case class AnyShapeAdjuster(any: AnyShape) {
   }
 
   def adjust: AnyShape = {
-    if (any.fields.exists(NodeShapeModel.Properties))
+    if (checkModelFields(NodeShapeModel.specificFields))
       any.toNodeShape
-    else if (any.fields.exists(ArrayShapeModel.Items))
+    else if (checkModelFields(ArrayShapeModel.specificFields))
       any.toArrayShape
-    else if (any.fields.exists(FileShapeModel.FileTypes))
+    else if (checkModelFields(FileShapeModel.specificFields))
       any.toFileShape
-    else if (any.fields.exists(ScalarShapeModel.DataType))
+    else if (checkModelFields(ScalarShapeModel.specificFields))
       any.toScalarShape
-    else if (any.fields.exists(SchemaShapeModel.MediaType))
+    else if (checkModelFields(SchemaShapeModel.specificFields))
       any.toSchemaShape
-    else if (any.fields.exists(UnionShapeModel.AnyOf))
+    else if (checkModelFields(UnionShapeModel.specificFields))
       any.toUnionShape
     else any
   }
+
+  private def checkModelFields(specificFields: List[Field]): Boolean = specificFields.exists(f => any.fields.exists(f))
 
 }
 
