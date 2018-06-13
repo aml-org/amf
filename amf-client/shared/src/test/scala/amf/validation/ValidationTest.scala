@@ -1811,7 +1811,21 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         .build()
       report <- validation.validate(model, ProfileNames.RAML)
     } yield {
-      println(report)
+      assert(report.conforms)
+    }
+  }
+
+  test("Test json refs as warnings") {
+    for {
+      validation <- Validation(platform)
+      model <- AMFCompiler(productionPath + "api-authentication-strategy-gateway-1.0.0-fat-raml/api.raml",
+        platform,
+        RamlYamlHint,
+        validation)
+        .build()
+      report <- validation.validate(model, ProfileNames.RAML)
+    } yield {
+      assert(report.results.count(_.level == SeverityLevels.WARNING) == 1)
       assert(report.conforms)
     }
   }
