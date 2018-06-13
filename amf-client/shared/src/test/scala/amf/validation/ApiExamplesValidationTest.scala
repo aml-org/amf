@@ -74,6 +74,19 @@ class ApiExamplesValidationTest extends ValidationReportGenTest {
   }
 
   test("Validation error raml 0.8 example 1") {
-    validate("08/validation_error1.raml", Some("validation_error1.report"), profile = ProfileNames.RAML08) //in raml 10 validations throws a violation. In 08 no. Bug? we should review this case
+    validate("08/validation_error1.raml", Some("validation_error1.report"), profile = ProfileNames.RAML08)
   }
+
+  test("Test validate pattern with invalid example") {
+    validate("examples/pattern-invalid.raml", Some("pattern-invalid.report"))
+  }
+
+  test("Test failed union ex 1 with invalid example") {
+    validate("examples/union1-invalid.raml", Some("union1-invalid.report"))
+  }
+  // this is not in ParaPayloadValidation test because we need to check the validation against a raml 08 parsed and resolved model (with that profile).
+  test("Raml 0.8 Query Parameter Negative test case") {
+    validate("/08/date-query-parameter.raml", Some("date-query-parameter.report"), profile = ProfileNames.RAML08)
+  }
+
 }

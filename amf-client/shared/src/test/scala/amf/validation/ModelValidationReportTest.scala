@@ -39,4 +39,25 @@ class ModelValidationReportTest extends ValidationReportGenTest {
   test("xml schema inheritance") {
     validate("types/schema_inheritance2.raml", Some("schema_inheritance2.report"))
   }
+
+  // Test that the library works ok or that there are some recursive ??
+  test("Library with includes") {
+    validate("library/with-include/api.raml", Some("library-includes-api.report"))
+  }
+
+  test("Max length validation") {
+    validate("shapes/max-length.raml", Some("max-length.report"))
+  }
+
+  test("Min length validation") {
+    validate("shapes/min-length.raml", Some("min-length.report"))
+  }
+
+  test("Exclusive example vs examples validation") {
+    validate("facets/example_examples.raml", Some("example-examples.report"))
+  }
+
+  test("Exclusive queryString vs queryParameters validation") {
+    validate("operation/query_string_parameters.raml", Some("query_string_parameters.report"))
+  }
 }

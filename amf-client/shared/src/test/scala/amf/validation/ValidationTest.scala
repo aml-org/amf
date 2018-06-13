@@ -126,7 +126,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         profile.violationLevel.head == "file://amf-client/shared/src/test/resources/production/recursive2.raml#/declarations/types/array/A_validation")
     }
   }
-
+  // is testing that the api has no errors. Should be in Platform?
   test("Some production api with includes") {
     for {
       validation <- Validation(platform)
@@ -142,201 +142,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Library with includes") {
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(validationsPath + "library/with-include/api.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      assert(!report.results.exists(_.validationId != ParserSideValidations.RecursiveShapeSpecification.id))
-    }
-  }
-
-  test("Max length validation") {
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(validationsPath + "shapes/max-length.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      assert(report.results.size == 1)
-    }
-  }
-
-  test("Min length validation") {
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(validationsPath + "shapes/min-length.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      assert(report.results.size == 1)
-    }
-  }
-
-  test("Headers example array validation") {
-    for {
-      validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "production/headers.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(doc, ProfileNames.RAML)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("Exclusive example vs examples validation") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "production/example_examples.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(doc, ProfileNames.RAML)
-    } yield {
-      assert(
-        report.results.exists(
-          _.message.contains("Properties 'example' and 'examples' are exclusive and cannot be declared together")))
-      assert(!report.conforms)
-    }
-  }
-
-  test("Exclusive queryString vs queryParameters validation") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "production/query_string_parameters.raml",
-                         platform,
-                         RamlYamlHint,
-                         validation).build()
-      report <- validation.validate(doc, ProfileNames.RAML)
-    } yield {
-      assert(
-        report.results.exists(_.message.contains(
-          "Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together")))
-      assert(!report.conforms)
-    }
-  }
-
-  test("Annotation target usage") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "annotations/target-annotations.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(doc, ProfileNames.RAML)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("Spec extension") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "extends/extension.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(doc, ProfileNames.RAML)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("Spec overlay 1") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "extends/overlay1.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(doc, ProfileNames.RAML)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("Spec overlay 2") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "extends/overlay2.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(doc, ProfileNames.RAML)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("Spec resource type fragment") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "resource_types/fragment.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(doc, ProfileNames.RAML)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("08 Validation") {
-
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(validationsPath + "08/some.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(library, ProfileNames.RAML08)
-    } yield {
-      assert(report.results.isEmpty)
-    }
-  }
-
-  test("Test validate pattern with valid example") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "examples/pattern-valid.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(doc, ProfileNames.RAML)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("Test validate pattern with invalid example") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "examples/pattern-invalid.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(doc, ProfileNames.RAML)
-    } yield {
-      assert(!report.conforms)
-    }
-  }
-
-  test("Test validate union ex 1 with valid example a)") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "examples/union1a-valid.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(doc, ProfileNames.RAML)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("Test validate union ex 1 with valid example b)") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "examples/union1b-valid.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(doc, ProfileNames.RAML)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("Test failed union ex 1 with invalid example") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "examples/union1-invalid.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(doc, ProfileNames.RAML)
-    } yield {
-      assert(!report.conforms)
-    }
-  }
-
+  // tck examples?! for definition this name its wrong. What it's testing? the name makes refference to an external fragment exception, but the golden its a normal and small api.
   test("Test validate external fragment cast exception") {
     for {
       validation <- Validation(platform)
@@ -351,49 +157,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Raml 0.8 Parameter") {
-
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(validationsPath + "/tck-examples/query-parameter.raml",
-                             platform,
-                             RamlYamlHint,
-                             validation)
-        .build()
-      report <- validation.validate(library, ProfileNames.RAML08)
-    } yield {
-      assert(report.results.isEmpty)
-    }
-  }
-
-  test("Raml 0.8 Query Parameter Negative test case") {
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(validationsPath + "/08/date-query-parameter.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(library, ProfileNames.RAML08)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.size == 1)
-    }
-  }
-
-  test("Raml 0.8 Query Parameter Positive test case") {
-
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(validationsPath + "/08/date-query-parameter-correct.raml",
-                             platform,
-                             RamlYamlHint,
-                             validation)
-        .build()
-      report <- validation.validate(library, ProfileNames.RAML08)
-    } yield {
-      assert(report.conforms)
-      assert(report.results.isEmpty)
-    }
-  }
-
+  // the reported null pointer case could not be reproduced. This test was added with the whole api to prove that there is any null pointer.
+  // should we delete this case?
   test("Raml 0.8 Null pointer tck case APIMF-429") {
 
     for {
@@ -405,19 +170,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         .build()
       report <- validation.validate(library, ProfileNames.RAML08)
     } yield {
-      assert(report.results.isEmpty)
-    }
-  }
-
-  test("JSON API Validation positive case") {
-    for {
-      validation <- Validation(platform)
-      _          <- validation.loadValidationDialect()
-      _          <- validation.loadValidationProfile(examplesPath + "jsonapi/jsonapi_profile.raml")
-      model      <- AMFCompiler(examplesPath + "jsonapi/correct.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, "JSON API")
-    } yield {
-      assert(report.conforms)
       assert(report.results.isEmpty)
     }
   }
@@ -1764,7 +1516,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       model <- AMFCompiler(validationsPath + "shapes/union-recursive.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(model, ProfileNames.RAML08)
+      report <- validation.validate(model, ProfileNames.RAML)
     } yield {
       assert(report.conforms)
     }
