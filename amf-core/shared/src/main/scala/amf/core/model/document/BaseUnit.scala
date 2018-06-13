@@ -7,8 +7,8 @@ import amf.core.metamodel.document.DocumentModel.References
 import amf.core.metamodel.{MetaModelTypeMapping, Obj}
 import amf.core.model.StrField
 import amf.core.model.domain._
-import amf.core.parser.{FieldEntry, Value}
-import amf.core.rdf.RdfModel
+import amf.core.parser.{FieldEntry, ParserContext, Value}
+import amf.core.rdf.{RdfModel, RdfModelParser}
 import amf.core.unsafe.PlatformSecrets
 
 import scala.collection.mutable.ListBuffer
@@ -328,4 +328,9 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
     }
   }
 
+}
+
+object BaseUnit extends PlatformSecrets  {
+  def fromNativeRdfModel(id: String, rdfModel: RdfModel, ctx: ParserContext = ParserContext()) =
+    new RdfModelParser(platform)(ctx).parse(rdfModel, id)
 }
