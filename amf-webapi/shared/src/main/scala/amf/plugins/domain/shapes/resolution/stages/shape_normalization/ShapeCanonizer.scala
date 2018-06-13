@@ -21,7 +21,8 @@ private[stages] object ShapeCanonizer {
 sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) extends ShapeNormalizer {
 
   protected def cleanUnnecessarySyntax(shape: Shape): Shape = {
-    shape.annotations.reject(a => !a.isInstanceOf[PerpetualAnnotation] ||  (!context.isRaml08 && a.isInstanceOf[ParsedJSONSchema]))
+    shape.annotations.reject(a =>
+      !a.isInstanceOf[PerpetualAnnotation] || (!context.isRaml08 && a.isInstanceOf[ParsedJSONSchema]))
     shape
   }
 
@@ -51,7 +52,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       case nil: NilShape             => canonicalShape(nil)
       case node: NodeShape           => canonicalNode(node)
       case recursive: RecursiveShape => recursive
-      case any: AnyShape             => canonicalShape(any)
+      case any: AnyShape             => canonicalAny(any)
     }
     if (!withoutCaching) context.cache + canonical // i should never add a shape if is not resolved yet
 
@@ -93,6 +94,15 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
     }
   }
 
+  private def canonicalAny(any: AnyShape) = {
+    canonicalLogicalConstraints(any)
+    if (any.inherits.nonEmpty) {
+      canonicalInheritance(any)
+    } else {
+      AnyShapeAdjuster(any)
+    }
+  }
+
   protected def canonicalScalar(scalar: ScalarShape): Shape = {
     canonicalLogicalConstraints(scalar)
     if (Option(scalar.inherits).isDefined && scalar.inherits.nonEmpty) {
@@ -111,16 +121,18 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       val superTypes = shape.inherits
       val oldInherits: Seq[Shape] = if (context.keepEditingInfo) shape.inherits.collect {
         case rec: RecursiveShape => rec
-        case shape: Shape => shape.link(shape.name.value()).asInstanceOf[Shape]
+        case shape: Shape        => shape.link(shape.name.value()).asInstanceOf[Shape]
       } else Nil
       shape.fields.removeField(ShapeModel.Inherits) // i need to remove the resolved type without inhertis, because later it will be added to cache once it will be fully resolved
-      var accShape: Shape = normalizeWithoutCaching(shape)
+      var accShape: Shape                             = normalizeWithoutCaching(shape)
       var superShapeswithDiscriminator: Seq[AnyShape] = Nil
       superTypes.foreach { superNode =>
         val canonicalSuperNode = normalizeAction(superNode)
 
         // we save this information to connect the references once we have computed the minShape
-        if (hasDiscriminator(canonicalSuperNode)) superShapeswithDiscriminator = superShapeswithDiscriminator ++ Seq(canonicalSuperNode.asInstanceOf[NodeShape])
+        if (hasDiscriminator(canonicalSuperNode))
+          superShapeswithDiscriminator = superShapeswithDiscriminator ++ Seq(
+            canonicalSuperNode.asInstanceOf[NodeShape])
 
         val newMinShape = context.minShape(accShape, canonicalSuperNode)
         accShape = actionWithoutCaching(newMinShape)
@@ -134,7 +146,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       // adjust inheritance chain if discriminator is defined
       accShape match {
         case any: AnyShape => superShapeswithDiscriminator.foreach(_.linkSubType(any))
-        case _ => // ignore
+        case _             => // ignore
       }
 
       accShape
@@ -143,13 +155,18 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
 
   protected def aggregateExamples(shape: Shape, referencedShape: Shape) = {
     val names: mutable.Set[String] = mutable.Set() // duplicated names
-    var exCounter = 0
+    var exCounter                  = 0
     if (shape.isInstanceOf[AnyShape] && referencedShape.isInstanceOf[AnyShape]) {
       val accShape = shape.asInstanceOf[AnyShape]
       val refShape = referencedShape.asInstanceOf[AnyShape]
       accShape.examples.foreach { example =>
         val oldExamples = refShape.examples
-        oldExamples.find(old => old.id == example.id || old.raw.option().getOrElse("").trim == example.raw.option().getOrElse("").trim) match {
+        oldExamples.find(
+          old =>
+            old.id == example.id || old.raw
+              .option()
+              .getOrElse("")
+              .trim == example.raw.option().getOrElse("").trim) match {
           case Some(_) => // duplicated
           case None => {
             refShape.setArrayWithoutId(AnyShapeModel.Examples, oldExamples ++ Seq(example))
@@ -188,10 +205,12 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
         }
         if (singleInheritance) {
           val superType = any.inherits.head
-          effectiveFields.foldLeft(true) { case (acc, f) =>
+          effectiveFields.foldLeft(true) {
+            case (acc, f) =>
               superType.fields.entry(f.field) match {
-                case Some(e) if f.field == NodeShapeModel.Closed     => acc && e.value.value.asInstanceOf[AmfScalar].toBool == f.value.value.asInstanceOf[AmfScalar].toBool
-                case _                                               => false
+                case Some(e) if f.field == NodeShapeModel.Closed =>
+                  acc && e.value.value.asInstanceOf[AmfScalar].toBool == f.value.value.asInstanceOf[AmfScalar].toBool
+                case _ => false
               }
           }
         } else {
