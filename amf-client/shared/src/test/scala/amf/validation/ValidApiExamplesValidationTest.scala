@@ -25,4 +25,20 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   test("Enum with integer values") {
     checkValid("examples/enum-integer.raml")
   }
+
+  test("Test validate pattern with valid example") {
+    checkValid("examples/pattern-valid.raml")
+  }
+
+  test("Test validate union ex 1 with valid example a)") {
+    checkValid("examples/union1a-valid.raml")
+  }
+
+  test("Test validate union ex 1 with valid example b)") {
+    checkValid("examples/union1b-valid.raml")
+  }
+
+  test("Raml 0.8 Query Parameter Positive test case") {
+    checkValid("/08/date-query-parameter-correct.raml")
+  }
 }

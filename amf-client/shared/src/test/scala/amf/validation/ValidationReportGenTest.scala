@@ -52,6 +52,7 @@ trait ValidModelTest extends ValidationReportGenTest {
   override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath: String = ""
 
-  protected def checkValid(api: String): Future[Assertion] = super.validate(api, None, ProfileNames.RAML, None)
+  protected def checkValid(api: String, profile: String = ProfileNames.RAML08): Future[Assertion] =
+    super.validate(api, None, ProfileNames.RAML, None)
 
 }

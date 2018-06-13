@@ -1,0 +1,13 @@
+Model: file://amf-client/shared/src/test/resources/validations/facets/example_examples.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://raml.org/vocabularies/amf/parser#exclusive-properties-error
+  Message: Properties 'example' and 'examples' are exclusive and cannot be declared together
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/facets/example_examples.raml#/declarations/types/User
+  Property: 
+  Position: Some(LexicalInformation([(5,0)-(17,24)]))

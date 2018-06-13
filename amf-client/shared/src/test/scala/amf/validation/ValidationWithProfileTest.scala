@@ -45,4 +45,8 @@ class ValidationWithProfileTest extends ValidationReportGenTest {
 //      assert(report.results.length == 1)
   }
 
+  test("JSON API Validation positive case") {
+    validate("jsonapi/correct.raml", None, "JSON API", Some("jsonapi/jsonapi_profile.raml"))
+  }
+
 }
