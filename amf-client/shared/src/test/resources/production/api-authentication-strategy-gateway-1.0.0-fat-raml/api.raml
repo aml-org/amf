@@ -1,0 +1,200 @@
+#%RAML 0.8
+title: api-authentication-strategy
+version: v1
+baseUri: http://api-authentication-strategy.au.cloudhub.io/api/
+#baseUri: https://mocksvc.mulesoft.com/mocks/402463a9-c0bb-4660-ae74-2f44503a4644/{version}/
+schemas: 
+- authCodeResponse : | 
+    {
+      "type": "object",
+      "$schema": "http://json-schema.org/draft-03/schema#",
+      "description": "Response to the generation of the new auth cod request",
+      "id": "authCodeResponse",
+      "properties": {
+        "authcode": {
+          "type": "string",         
+          "title": "authcode"
+        },
+        "response": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "integer",
+              "required": true,
+              "title": "status"
+            },
+            "message": {
+              "type": "string",
+              "required": true,
+              "title": "message"
+            }
+          },           
+          "title": "Response"
+        },
+        "customer": {
+          "type": "object",
+          "$ref": "customer",          
+          "title": "customer"
+        }
+      }
+    }
+- response : | 
+    {    
+      "type": "object",
+      "$schema": "http://json-schema.org/draft-03/schema#",
+      "description": "Top level object for showing the status code and message",
+      "id": "response",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "required": true,
+          "title": "status"
+        },
+        "message": {
+          "type": "string",
+          "required": true,
+          "title": "message"
+        }
+      }    
+    }
+- authCodeCreateRequest : | 
+    {
+      "type": "object",
+      "$schema": "http://json-schema.org/draft-03/schema#",
+      "description": "Data structure to create new AUTH code.",
+      "title": "authCodeCreateRequest",
+      "properties": {
+        "project": {
+          "type": "object",
+          "properties": {
+            "projectName": {
+              "type": "string",
+              "required": true
+            },
+            "classifierName": {
+              "type": "string",
+              "required": true
+            },
+            "customer": {
+              "type": "object",
+              "properties": {
+                "customerId": {
+                  "type": "string",
+                  "required": true,
+                  "title": "customerId"
+                },
+                "customerName": {
+                  "type": "string",
+                  "required": true,
+                  "title": "customerName"
+                }
+              }  
+            }
+          } 
+        },        
+        "createdBy": {
+          "type": "string",
+          "required": true
+        }
+      }
+    }            
+/authcode: 
+    displayName: AuthCodeService
+    description: An interface that would expose all the services for generation & authentication of auth code services.
+    post: 
+        description: This request when successful return the generated auth code for a customer.
+        body: 
+            application/json: 
+                schema: authCodeCreateRequest
+                example: '{"project" : {"projectName" : "CCD","classifierName" : "GBUG"},"customer" : {"customerId" : "vikass","customerName" : "Surya Vikas"},"createdBy" : "masona"}'
+        responses: 
+            "200": 
+                body: 
+                    application/json: 
+                        schema: authCodeResponse
+                        example: '{"authcode":"JAN0286Y9816","Response":{"status":0,"message":"Authorization code created successfully."},"customer":{"customerId":"vikass","customerName":"Surya Vikas"}}'
+            "400": 
+                body: 
+                    application/json: 
+                        example: ""
+    get: 
+        description: This call validates a pre generated Auth code, and return the auth code with validity
+        queryParameters: 
+            authCode: 
+                displayName: authCode
+                description: Pre generated Auth code
+                type: string
+                required: true
+                repeat: false
+            requestedBy: 
+                displayName: requestedBy
+                description: The person/ system requested to validate the Auth code.
+                type: string
+                required: true
+                repeat: false
+        responses: 
+            "200": 
+                body: 
+                    application/json: 
+                        schema: authCodeResponse
+                        example: |
+                          {
+                            "authcode":"JAN0286Y9816",
+                            "response":
+                              {
+                                "status":0,
+                                "message":"Authorization code valid"
+                              },
+                              "customer":
+                              {
+                                "customerId":"vikass",
+                                "customerName":"Surya Vikas"
+                              }
+                          }
+            "404": 
+                body: 
+                    application/json: 
+                        example: ""
+            "400": 
+                description: When input validation fails or server cant process the request due to constraints.
+                body: 
+                    application/json: 
+                        example: ""
+    delete: 
+        description: This is used the mark the AUTH code expired.
+        queryParameters: 
+            authCode: 
+                displayName: authCode
+                description: Auth code which is to be expired
+                type: string
+                required: true
+                repeat: false
+            deletedBy: 
+                displayName: deletedBy
+                description: Who expired the auth code.
+                type: string
+                required: true
+                repeat: false
+            reason: 
+                displayName: reason
+                description: Reason for auth code expiry
+                type: string
+                required: false
+                repeat: false
+        responses: 
+            "404": 
+                description: When Auth code cannot be found.
+                body: 
+                    application/json: 
+                        example: ""
+            "400": 
+                description: When validation fails on server side
+                body: 
+                    application/json: 
+                        example: ""
+            "200": 
+                description: When auth code is successfully expired.
+                body: 
+                    application/json: 
+                        schema: response
+                        example: '{"status":0,"message":"Authorization code expired."}'

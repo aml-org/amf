@@ -293,6 +293,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                     // Introduces the problem of an invalid link
                     val tmpShape =
                       UnresolvedShape(fullRef, map).withName(fullRef).withId(fullRef).withSupportsRecursion(true)
+                    tmpShape.unresolvedSeverity = "warning"
                     tmpShape.withContext(ctx)
                     adopt(tmpShape)
                     ctx.registerJsonSchema(fullRef, tmpShape)
@@ -323,7 +324,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                       } match {
                         case None =>
                           // it might still be resolvable at the RAML (not JSON Schema) level
-                          tmpShape.unresolved(text, map).withSupportsRecursion(true)
+                          tmpShape.unresolved(text, map, "warning").withSupportsRecursion(true)
                           Some(tmpShape)
                         case someShape => someShape
                       }
@@ -333,7 +334,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 // normal path for a variable in a regular OAS, not inlined JSON Schema
                 val shape = UnresolvedShape(text, map).withName(text)
                 shape.withContext(ctx)
-                shape.unresolved(text, map)
+                shape.unresolved(text, map, "warning")
                 adopt(shape)
                 Some(shape)
             }
