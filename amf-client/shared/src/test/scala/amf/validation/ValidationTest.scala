@@ -2,7 +2,6 @@ package amf.validation
 
 import amf.ProfileNames
 import amf.core.AMFSerializer
-import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.Module
 import amf.core.model.domain.{ObjectNode, RecursiveShape}
@@ -81,19 +80,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Null trait API") {
-    for {
-      validation <- Validation(platform)
-      doc        <- AMFCompiler(productionPath + "null_trait.raml", platform, RamlYamlHint, validation).build()
-      generated  <- new AMFSerializer(doc, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
-      report     <- validation.validate(doc, ProfileNames.RAML)
-    } yield {
-      assert(report.results.size == 1)
-      assert(report.results.head.level == "Warning")
-      assert(report.conforms)
-    }
-  }
-
+  // is not a validation test, its cheking that the generated profile for effective validations exists
   test("Can parse a recursive array API") {
     for {
       validation <- Validation(platform)
@@ -108,6 +95,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  // mmm, resolution test? not even invoke validation
   test("Can parse the production financial api") {
     for {
       validation <- Validation(platform)
@@ -124,6 +112,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  // is not a validation test, its cheking that the generated profile for effective validations exists
   test("Can normalize a recursive array API") {
     for {
       validation <- Validation(platform)
@@ -135,51 +124,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(profile.violationLevel.size == 1)
       assert(
         profile.violationLevel.head == "file://amf-client/shared/src/test/resources/production/recursive2.raml#/declarations/types/array/A_validation")
-    }
-  }
-
-  test("Type inheritance with enum") {
-    for {
-      validation <- Validation(platform)
-      library    <- AMFCompiler(productionPath + "enum-inheritance.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      assert(report.results.isEmpty)
-    }
-  }
-
-  test("External raml 0.8 fragment") {
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(validationsPath + "08/external_fragment_test.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      assert(report.results.isEmpty)
-    }
-  }
-
-  test("Param in raml 0.8 api") {
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(validationsPath + "08/pattern.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.size == 1)
-    }
-  }
-
-  test("Validation error raml 0.8 example 1") {
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(validationsPath + "08/validation_error1.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.size == 1)
     }
   }
 

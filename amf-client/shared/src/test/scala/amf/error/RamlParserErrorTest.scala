@@ -12,7 +12,7 @@ class RamlParserErrorTest extends ParserErrorTest {
 
   test("Test unexpected node types") {
     validate(
-      "unexpected-nodes.raml",
+      "error/unexpected-nodes.raml",
       invalid => {
         invalid.level should be("Violation")
         invalid.message should be("Unexpected key 'invalid'. Options are 'value' or annotations \\(.+\\)")
@@ -38,29 +38,29 @@ class RamlParserErrorTest extends ParserErrorTest {
 
   test("Custom facets work correctly with the closed node detection mechanism") {
     validate(
-      "custom-facets.raml",
+      "error/custom-facets.raml",
       erroneousTypeShape => {
         erroneousTypeShape.level should be("Violation")
         erroneousTypeShape.targetNode should be(
-          "file://amf-client/shared/src/test/resources/error/custom-facets.raml#/declarations/types/scalar/ErroneousType")
+          "file://amf-client/shared/src/test/resources/parser-results/error/custom-facets.raml#/declarations/types/scalar/ErroneousType")
         erroneousTypeShape.validationId should be(ParserSideValidations.ClosedShapeSpecification.id)
       },
       incorrect1 => {
         incorrect1.level should be("Violation")
         incorrect1.targetNode should be(
-          "file://amf-client/shared/src/test/resources/error/custom-facets.raml#/declarations/types/union/Incorrect1")
+          "file://amf-client/shared/src/test/resources/parser-results/error/custom-facets.raml#/declarations/types/union/Incorrect1")
         incorrect1.validationId should be(ParserSideValidations.ClosedShapeSpecification.id)
       },
       incorrect2 => {
         incorrect2.level should be("Violation")
         incorrect2.targetNode should be(
-          "file://amf-client/shared/src/test/resources/error/custom-facets.raml#/declarations/types/union/Incorrect2")
+          "file://amf-client/shared/src/test/resources/parser-results/error/custom-facets.raml#/declarations/types/union/Incorrect2")
         incorrect2.validationId should be(ParserSideValidations.ClosedShapeSpecification.id)
       },
       incorrect3 => {
         incorrect3.level should be("Violation")
         incorrect3.targetNode should be(
-          "file://amf-client/shared/src/test/resources/error/custom-facets.raml#/declarations/types/union/Incorrect3")
+          "file://amf-client/shared/src/test/resources/parser-results/error/custom-facets.raml#/declarations/types/union/Incorrect3")
         incorrect3.validationId should be(ParserSideValidations.ClosedShapeSpecification.id)
       }
     )
@@ -68,7 +68,7 @@ class RamlParserErrorTest extends ParserErrorTest {
 
   test("Invalid node parsing type") {
     validate(
-      "invalid-type.raml",
+      "error/invalid-type.raml",
       artist => {
         artist.level should be("Violation")
         artist.message should be("Expecting !!str and !!seq provided")
@@ -84,7 +84,7 @@ class RamlParserErrorTest extends ParserErrorTest {
 
   test("Inline external fragment from non mutable ref") {
     validate(
-      "/inline-non-mutable-ref/api.raml",
+      "error/inline-non-mutable-ref/api.raml",
       invalidRef => {
         invalidRef.level should be("Violation")
         invalidRef.message should be("Cannot inline a fragment in a not mutable node")
@@ -106,7 +106,7 @@ class RamlParserErrorTest extends ParserErrorTest {
   // todo: json schema parser test? should expose json schema parser?
   test("Not seq in dependencies entry at json schema type def") {
     validate(
-      "/not-seq-dependency-def-jsonchema.raml",
+      "error/not-seq-dependency-def-jsonchema.raml",
       invalidSeq => {
         invalidSeq.level should be("Violation")
         invalidSeq.message should startWith("Expected scalar but found:")
@@ -117,7 +117,7 @@ class RamlParserErrorTest extends ParserErrorTest {
 
   test("Overflow number") {
     validate(
-      "/overflow-number.raml",
+      "error/overflow-number.raml",
       numberViolation => {
         numberViolation.level should be("Violation")
         numberViolation.message should startWith("Cannot parse '9223372036854776000' with tag '?'")
@@ -127,7 +127,7 @@ class RamlParserErrorTest extends ParserErrorTest {
 
   test("Duplicated title property test") {
     validate(
-      "/dup_title.raml",
+      "/error/dup_title.raml",
       numberViolation => {
         numberViolation.level should be("Violation")
         numberViolation.message should startWith("Property 'title' is duplicated")
@@ -137,7 +137,7 @@ class RamlParserErrorTest extends ParserErrorTest {
 
   test("Duplicated endpoints validations test") {
     validate(
-      "/dup_endpoint.raml",
+      "error/dup_endpoint.raml",
       numberViolation => {
         numberViolation.level should be("Violation")
         numberViolation.message should startWith("Duplicated resource path /users/foo")
@@ -147,7 +147,7 @@ class RamlParserErrorTest extends ParserErrorTest {
 
   test("Invalid baseUri validations test") {
     validate(
-      "/invalid_baseuri.raml",
+      "error/invalid_baseuri.raml",
       numberViolation => {
         numberViolation.level should be("Violation")
         numberViolation.message should startWith("'http://{myapi.com' is not a valid template uri")
@@ -167,7 +167,7 @@ class RamlParserErrorTest extends ParserErrorTest {
 
   test("Mutually exclusive 'type' and 'schema' facets validations test") {
     validate(
-      "/type-exclusive-facets.raml",
+      "error/type-exclusive-facets.raml",
       exclusive1 => {
         exclusive1.level should be("Violation")
         exclusive1.message should startWith("'schema' and 'type' properties are mutually exclusive")
@@ -196,7 +196,7 @@ class RamlParserErrorTest extends ParserErrorTest {
 
   test("Mutually exclusive 'types' and 'schemas' facets validations test") {
     validate(
-      "/webapi-exclusive-facets.raml",
+      "error/webapi-exclusive-facets.raml",
       exclusive1 => {
         exclusive1.level should be("Violation")
         exclusive1.message should startWith("'schemas' and 'types' properties are mutually exclusive")
@@ -209,20 +209,30 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
+  test("Null trait API") {
+    validate(
+      "warning/null_trait.raml",
+      warning => {
+        warning.level should be("Warning")
+        warning.message should startWith("Generating abstract declaration (resource type / trait)  with null value")
+      }
+    )
+  }
+
 // todo hnajles: move to validmodelvalidationtest when branch of refactor is complete
   test("Empty describe by") {
     validate(
-      "/empty-described-by.raml"
+      "error/empty-described-by.raml"
     )
   }
 
   test("Empty uri parameters") {
     validate(
-      "/empty-uri-parameters.raml"
+      "error/empty-uri-parameters.raml"
     )
   }
 
-  override protected val basePath: String = "file://amf-client/shared/src/test/resources/error/"
+  override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/"
 
   override protected def build(validation: Validation, file: String): Future[BaseUnit] =
     AMFCompiler(file, platform, RamlYamlHint, validation).build()
