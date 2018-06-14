@@ -79,6 +79,10 @@ class ProductionResolutionTest extends RamlResolutionTest {
     cycle("complex_types.raml", "complex_types.resolved.raml", RamlYamlHint, Raml)
   }
 
+  test("sales-order example") {
+    cycle("sales-order-api.raml", "sales-order-api.resolved.raml", RamlYamlHint, Raml, basePath + "order-api/")
+  }
+
   test("american-flights-api example") {
     cycle("american-flights-api.raml",
           "american-flights-api.resolved.raml",
