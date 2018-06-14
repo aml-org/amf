@@ -56,6 +56,13 @@ class ProductionResolutionTest extends RamlResolutionTest {
   val completeCyclePath = "amf-client/shared/src/test/resources/upanddown/"
   val validationPath    = "amf-client/shared/src/test/resources/validations/"
 
+  test("Resolves googleapis.compredictionv1.2swagger.raml") {
+    cycle("googleapis.compredictionv1.2swagger.raml",
+          "googleapis.compredictionv1.2swagger.raml.resolved.raml",
+          RamlYamlHint,
+          Raml)
+  }
+
   test("test definition_loops input") {
     cycle("crossfiles2.raml", "crossfiles2.resolved.raml", RamlYamlHint, Raml, basePath + "definitions-loops/")
   }
