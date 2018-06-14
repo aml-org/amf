@@ -139,6 +139,14 @@ class ProductionResolutionTest extends RamlResolutionTest {
           basePath + "types/")
   }
 
+  test("Test resolve resource type with '$' char in variable value") {
+    cycle("invalid-regexp-char-in-variable.raml",
+          "invalid-regexp-char-in-variable.resolved.raml",
+          RamlYamlHint,
+          Raml,
+          basePath)
+  }
+
   test("Test type resolution with property override") {
     cycle("property-override.raml", "property-override.resolved.raml", RamlYamlHint, Raml, basePath + "types/")
   }
