@@ -1,14 +1,14 @@
-# RAML Vocabulary 1.0
+# AML Vocabularies 1.0
 
-RAML Vocabularies is mechanism to describe information about any domain of discourse using familiar RAML syntax and RAML re-usability features.
-A RAML Vocabulary defines a hierarchy of classes and properties according to the semantics of W3C Standard [OWL 2](https://www.w3.org/TR/owl2-overview/) that can be used as the formal foundation for any information processing system.
+AML Vocabularies is a mechanism to describe information about any domain of discourse using familiar YAML syntax and modular documents.
+AML Vocabularies define a hierarchy of classes and properties according to the semantics of W3C Standard [OWL 2](https://www.w3.org/TR/owl2-overview/) that can be used as the formal foundation for any information processing system.
 
 ## Vocabulary declaration
 
-RAML Vocabularies are declares using the `#%RAML 1.0 Vocabulary` header and must provide a mandatory `base` property providing a [URI prefix](https://www.w3.org/TR/curie/) that will be used to generate unique URIs for all terms in the vocabulary.
+AML Vocabularies are declares using the `#%Vocabulary 1.0` header and must provide a mandatory `base` property providing a [URI prefix](https://www.w3.org/TR/curie/) that will be used to generate unique URIs for all terms in the vocabulary.
 
 ``` yaml
-#%RAML 1.0 Vocabulary
+#%Vocabulary 1.0
 
 vocabulary: amf-validation
 
@@ -17,10 +17,10 @@ base: "http://raml.org/vocabularies/amf-validation#"
 
 Vocabularies can refer to terms in other vocabularies, that can be imported using the `uses` property.
 
-The RAML vocabulary parser will introduce those terms in the vocabulary graph.
+The AML processor will introduce those terms in the vocabulary graph.
 
 Additionally, vocabularies can refer to terms defined in any other ontology or standard that are defined or identified using URIs. The `external` property can be used for this.
-The RAML vocabulary parser will not try to process the external reference. It will just build URIs for the external URI prefix and include that in the graph for the vocabulary being edited.
+The AML vocabulary parser will not try to process the external reference. It will just build URIs using the external URI prefix and include those URIs in the graph for the vocabulary being edited.
 
 In the following example we are introducing [schema.org](http://schema.org) as an external vocabulary, and then using it to define a schema.org class term:
 
@@ -33,14 +33,14 @@ classTerms:
   schema-org.Person:
 ```
 
-The rest of the vocabulary are two maps: `classTerms` declaring class terms and `propertyTerms` declaring property terms.
+The rest of the vocabulary document consist of two maps: `classTerms` declaring class terms and `propertyTerms` declaring property terms.
 
 | Property | Description|
 | ---      | --- |
 | vocabulary | Name for the vocabulary |
 | usage? | Description of the vocabulary |
 | base | URI prefix for the terms in the vocabulary |
-| uses? | Property introducing aliases to reuse terms defined in other RAML Vocabularies |
+| uses? | Property introducing aliases to reuse terms defined in other AML Vocabularies |
 | external? | Property introducing aliases for external ontologies/standares |
 
 
@@ -63,7 +63,7 @@ The following table shows all the properties that can be used in a property term
 
 | Property | Description |
 | --- | --- |
-| displayname? | Human readable name for the property term |
+| displayName? | Human readable name for the property term |
 | description? | Human readable description of the property term |
 | range? | Range of the property relation |
 | extends? | Inheritance from other property term |
@@ -105,8 +105,8 @@ This is an example of data type property declaration:
 propertyTerms:
 
   ramlClassId:
-    displayName: RAML class ID
-    description: A well known string identifier for a RAML vocabulary class
+    displayName: Class ID
+    description: A well known string identifier for a vocabulary class
     range: string
 ```
 
@@ -114,8 +114,8 @@ With OWL semantics:
 
 ``` n3
 base:ramlClassId rdfs:type owl:DatatypeProperty ;
-  schema-org:name "RAML class ID" ;
-  schema-org:description "A well known string identifier for a RAML vocabulary class" ;
+  schema-org:name "Class ID" ;
+  schema-org:description "A well known string identifier for a vocabulary class" ;
   rdfs:range xsd:string .
 ```
 
@@ -171,13 +171,13 @@ myProfile vocab:extends otherProfile .
 
 ## Class terms
 
-Class terms represent sets of individuals. They are declared using an identifier and RAML Vocabularies will generate a URI identifying the class in a unique way using the prefix provided in the `base` property of the vocabulary.
+Class terms represent sets of individuals. They are declared using an identifier and AML Vocabularies will generate a URI identifying the class in a unique way using the prefix provided in the `base` property of the vocabulary.
 
 The following table shows the properties that can be used to define a class term:
 
 | Property | Description |
 | --- | --- |
-| displayname? | Human readable name for the class term |
+| displayName? | Human readable name for the class term |
 | description? | Human readable description of the class term |
 | properties? | Properties with this class term in the domain |
 | extends? | Inheritance from other class term |
@@ -202,13 +202,13 @@ classTerm:
 
   Profile:
     displayName: Profile
-    description: A set of validations that will be applied together over a parsed RAML HTTP data model
+    description: A set of validations that will be applied together over a parsed HTTP data model
 ```
 The OWL translation for these properties is:
 
 ``` n3
 base:Profile schema-org:name "Profile" ;
-  schema-org:description "A set of validations that will be applied together over a parsed RAML HTTP data model" .
+  schema-org:description "A set of validations that will be applied together over a parsed HTTP data model" .
 ```
 
 ### Class inheritance
@@ -264,6 +264,5 @@ a rdfs:type vocab:JSConstraint
 
 ## References
 
-- [RAML 1.0 Spec](https://github.com/raml-org/raml-spec/blob/master/versions/raml-10/raml-10.md)
 - [RDF 1.1 Concepts and Abstract Syntax](https://www.w3.org/TR/rdf11-concepts/)
 - [OWL 2.0 Direct Semantics](https://www.w3.org/TR/owl-direct-semantics/)
