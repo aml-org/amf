@@ -98,6 +98,22 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  // is testing that the api has no errors. Should be in Platform?
+  test("Some production api with includes") {
+    for {
+      validation <- Validation(platform)
+      library    <- AMFCompiler(productionPath + "includes-api/api.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(library, ProfileNames.RAML)
+    } yield {
+      val (violations, others) =
+        report.results.partition(r => r.level.equals(SeverityLevels.VIOLATION))
+      assert(violations.isEmpty)
+      assert(others.lengthCompare(1) == 0)
+      assert(others.head.level == SeverityLevels.WARNING)
+      assert(others.head.message.equals("'schema' keyword it's deprecated for 1.0 version, should use 'type' instead"))
+    }
+  }
+
   // tck examples?! for definition this name its wrong. What it's testing? the name makes refference to an external fragment exception, but the golden its a normal and small api.
   test("Test validate external fragment cast exception") {
     for {
