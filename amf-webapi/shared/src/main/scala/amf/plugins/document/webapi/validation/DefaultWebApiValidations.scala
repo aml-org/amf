@@ -259,14 +259,12 @@ object JsCustomValidations {
       """.stripMargin,
     "minMaxPropertiesValidation" ->
       """|function(shape) {
-         |  //console.log(JSON.stringify(shape));
          |  var minProperties = shape["raml-shapes:minProperties"];
          |  var maxProperties = shape["raml-shapes:maxProperties"];
          |  if (minProperties == undefined || maxProperties == undefined) return true;
          |  else return (parseInt(minProperties) <= parseInt(maxProperties));
          |}
       """.stripMargin
-
   )
 
   def apply(name: String): Option[String] = functions.get(name)
