@@ -57,18 +57,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  //this shoulnot be an unit test
-  test("Can parse and validate a complex recursive API") {
-    for {
-      validation <- Validation(platform) //
-      library <- AMFCompiler(productionPath + "getsandbox.comv1swagger.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      assert(Option(report).isDefined)
-    }
-  }
-
   // this is not a validation test
   test("Can parse a recursive API") {
     for {
@@ -95,23 +83,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  // mmm, resolution test? not even invoke validation
-  test("Can parse the production financial api") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(productionPath + "/financial-api/infor-financial-api.raml",
-                         platform,
-                         RamlYamlHint,
-                         validation)
-        .build()
-      // TODO: FIXME! problem serialising to JSON
-      // generated <- new AMFSerializer(doc, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
-    } yield {
-      val resolved = RAML10Plugin.resolve(doc)
-      assert(Option(resolved).isDefined)
-    }
-  }
-
   // is not a validation test, its cheking that the generated profile for effective validations exists
   test("Can normalize a recursive array API") {
     for {
@@ -124,21 +95,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(profile.violationLevel.size == 1)
       assert(
         profile.violationLevel.head == "file://amf-client/shared/src/test/resources/production/recursive2.raml#/declarations/types/array/A_validation")
-    }
-  }
-  // is testing that the api has no errors. Should be in Platform?
-  test("Some production api with includes") {
-    for {
-      validation <- Validation(platform)
-      library    <- AMFCompiler(productionPath + "includes-api/api.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(library, ProfileNames.RAML)
-    } yield {
-      val (violations, others) =
-        report.results.partition(r => r.level.equals(SeverityLevels.VIOLATION))
-      assert(violations.isEmpty)
-      assert(others.lengthCompare(1) == 0)
-      assert(others.head.level == SeverityLevels.WARNING)
-      assert(others.head.message.equals("'schema' keyword it's deprecated for 1.0 version, should use 'type' instead"))
     }
   }
 
@@ -837,20 +793,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Test not stackoverflow when exists target to unresolved shapes") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(upDownPath + "/sapi-notification-saas-1.0.0-raml/api.raml",
-                         platform,
-                         RamlYamlHint,
-                         validation)
-        .build()
-      report <- validation.validate(doc, ProfileNames.RAML, ProfileNames.RAML)
-    } yield {
-      assert(!report.conforms)
-    }
-  }
-
   test("Test validate headers in request") {
     for {
       validation <- Validation(platform)
@@ -1122,85 +1064,11 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Validate json schema with non url id.") {
     for {
       validation <- Validation(platform)
-      doc <- AMFCompiler(productionPath + "master-data---current-api-2.0.1-fat-raml/currencyapi.raml",
-                         platform,
-                         RamlYamlHint,
-                         validation)
+      doc <- AMFCompiler(productionPath + "card-data/currencyapi.raml", platform, RamlYamlHint, validation)
         .build()
       report <- validation.validate(doc, ProfileNames.RAML)
     } yield {
       assert(report.conforms)
-    }
-  }
-
-  test("spi-viewer-api production example test") {
-    for {
-      validation <- Validation(platform)
-      _          <- validation.loadValidationDialect()
-      model <- AMFCompiler(productionPath + "spi-viewer-api-1.0.0-fat-raml/spi-viewer-api.raml",
-                           platform,
-                           RamlYamlHint,
-                           validation).build()
-      report <- validation.validate(model, ProfileNames.RAML)
-    } yield {
-      assert(report.conforms)
-      assert(!report.results.exists(_.level != SeverityLevels.WARNING))
-    }
-  }
-
-  test("survey-system production example test") {
-    for {
-      validation <- Validation(platform)
-      _          <- validation.loadValidationDialect()
-      model <- AMFCompiler(productionPath + "survey-system-api-1.0.0-fat-raml/api.raml",
-                           platform,
-                           RamlYamlHint,
-                           validation).build()
-      report <- validation.validate(model, ProfileNames.RAML)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.size == 1)
-      assert(report.results.exists(_.message.equals("Cannot parse data node from AST structure '?'")))
-    }
-  }
-
-  test("servicenow production example test") {
-    for {
-      validation <- Validation(platform)
-      _          <- validation.loadValidationDialect()
-      model <- AMFCompiler(productionPath + "servicenow-system-api1-1.0.0-fat-raml/incident-api.raml",
-                           platform,
-                           RamlYamlHint,
-                           validation).build()
-      report <- validation.validate(model, ProfileNames.RAML)
-    } yield {
-      assert(report.results.nonEmpty)
-    }
-  }
-
-  test("salesforce-outbound example test") {
-    for {
-      validation <- Validation(platform)
-      _          <- validation.loadValidationDialect()
-      model <- AMFCompiler(productionPath + "salesforce-outbound-api-batchv2-1.0.0-fat-raml/api.raml",
-                           platform,
-                           RamlYamlHint,
-                           validation).build()
-      report <- validation.validate(model, ProfileNames.RAML)
-    } yield {
-      assert(report.results.nonEmpty)
-    }
-  }
-
-  test("myconnect example test") {
-    for {
-      validation <- Validation(platform)
-      _          <- validation.loadValidationDialect()
-      model <- AMFCompiler(productionPath + "myconnect-1.0.0-fat-raml/api.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(model, ProfileNames.RAML)
-    } yield {
-      assert(report.results.nonEmpty)
     }
   }
 
@@ -1215,42 +1083,12 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("gmc-services-api--training example test") {
-    for {
-      validation <- Validation(platform)
-      _          <- validation.loadValidationDialect()
-      model <- AMFCompiler(productionPath + "gmc-services-api---training-1.0.0-fat-raml/api.raml",
-                           platform,
-                           RamlYamlHint,
-                           validation).build()
-      report <- validation.validate(model, ProfileNames.RAML)
-    } yield {
-      assert(report.results.nonEmpty)
-    }
-  }
-
   test("lock-unlock example test") {
     for {
       validation <- Validation(platform)
       _          <- validation.loadValidationDialect()
-      model <- AMFCompiler(productionPath + "lock-unlock-api-1.0.0-fat-raml/lockUnlockStats.raml",
-                           platform,
-                           RamlYamlHint,
-                           validation).build()
-      report <- validation.validate(model, ProfileNames.RAML)
-    } yield {
-      assert(report.results.nonEmpty)
-    }
-  }
-
-  test("case00182429 example test") {
-    for {
-      validation <- Validation(platform)
-      _          <- validation.loadValidationDialect()
-      model <- AMFCompiler(productionPath + "case00182429-1.0.0-fat-raml/DarwinIntegration.raml",
-                           platform,
-                           RamlYamlHint,
-                           validation).build()
+      model <- AMFCompiler(productionPath + "lock-unlock/lockUnlockStats.raml", platform, RamlYamlHint, validation)
+        .build()
       report <- validation.validate(model, ProfileNames.RAML)
     } yield {
       assert(report.results.nonEmpty)
@@ -1369,18 +1207,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
-    }
-  }
-
-  test("vuconnectionapi example") {
-    for {
-      validation <- Validation(platform)
-      model <- AMFCompiler(productionPath + "vuconnectapi-1.0.0-fat-raml/api.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(model, ProfileNames.RAML)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.nonEmpty)
     }
   }
 
@@ -1543,34 +1369,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Test web artifact process api") {
-    for {
-      validation <- Validation(platform)
-      model <- AMFCompiler(productionPath + "web-artifact-process-api-1.0.0-fat-raml/WebArtifactAPI.raml",
-                           platform,
-                           RamlYamlHint,
-                           validation)
-        .build()
-      report <- validation.validate(model, ProfileNames.RAML)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("Test json refs as warnings") {
-    for {
-      validation <- Validation(platform)
-      model <- AMFCompiler(productionPath + "api-authentication-strategy-gateway-1.0.0-fat-raml/api.raml",
-                           platform,
-                           RamlYamlHint,
-                           validation)
-        .build()
-      report <- validation.validate(model, ProfileNames.RAML)
-    } yield {
-      assert(report.results.count(_.level == SeverityLevels.WARNING) == 1)
-      assert(report.conforms)
-    }
-  }
   /*
   test("test field_nation") {
     for {

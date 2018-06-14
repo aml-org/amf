@@ -922,12 +922,12 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("with_references.json", "with_references.json.jsonld", OasJsonHint, Amf)
   }
 
-  test("Uber oas to oas") {
-    cycle("uber.json", "uber.json", OasJsonHint, Oas)
+  test("Car oas to oas") {
+    cycle("somecars.json", "somecars.json", OasJsonHint, Oas)
   }
 
-  test("Uber oas to raml") {
-    cycle("uber.json", "uber.raml", OasJsonHint, Raml)
+  test("Car oas to raml") {
+    cycle("somecars.json", "somecars.raml", OasJsonHint, Raml)
   }
 
   test("konst1 raml to amf") {
@@ -1138,16 +1138,8 @@ class CompleteCycleTest extends BuildCycleTests {
           productionPath + "s-suez-delivery-collection-api-1.0.0-fat-raml/")
   }
 
-  test("Test definitons-loops example raml to amf") {
-    cycle("input.raml", "input.jsonld", RamlYamlHint, Amf, productionPath + "definitions-loops/")
-  }
-
-  test("Test definitons-loops crossfile raml to amf") {
-    cycle("crossfiles.raml", "crossfiles.jsonld", RamlYamlHint, Amf, productionPath + "definitions-loops/")
-  }
-
   test("Test financial-api/othercases example raml to amf") {
-    cycle("api.raml", "api.raml.jsonld", RamlYamlHint, Amf, productionPath + "financial-api/othercases/jsonschema/")
+    cycle("api.raml", "api.raml.jsonld", RamlYamlHint, Amf, productionPath + "othercases/jsonschema/")
   }
 
   test("production from exchange raml to raml") {
@@ -1162,32 +1154,12 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("spec_examples_example.raml", "spec_examples_example.jsonld", RamlYamlHint, Amf, productionPath)
   }
 
-  test("Example with URN") {
-    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, productionPath + "sys-sap-menasha-proxy-1.0.0-fat-raml/")
-  }
-
-  test("Examples usage in open banking 1.3 spec oas to raml") {
-    cycle("openbanking_1_3.yaml", "openbanking_1_3.raml", OasYamlHint, Raml, productionPath)
-  }
-
-  test("Examples usage in open wowza spec oas to amf") {
-    cycle("wowza.yaml", "wowza.jsonld", OasYamlHint, Amf, productionPath)
-  }
-
   test("Example in included type fragment") {
     cycle("simple_example_type.raml", "simple_example_type.jsonld", RamlYamlHint, Amf)
   }
 
   test("Description in XML Schema shape") {
     cycle("simple_xml_schema.raml", "simple_xml_schema.jsonld", RamlYamlHint, Amf)
-  }
-
-  test("Declared documentation raml to amf") {
-    cycle("declared-documentation.raml",
-          "declared-documentation.jsonld",
-          RamlYamlHint,
-          Amf,
-          basePath + "/api-console/")
   }
 
   test("Response declaration oas to amf") {
@@ -1225,7 +1197,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Bad fragment named examples") {
-    cycle("api.raml", "api.raml.raml", RamlYamlHint, Raml, basePath + "sapi-customer-db-1.0.0-fat-raml/")
+    cycle("api.raml", "api.raml.raml", RamlYamlHint, Raml, basePath + "sapi-customer/")
   }
 
   test("Test parse references with [] in path") {
@@ -1283,11 +1255,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("lock-unlock example raml to oas") {
-    cycle("lockUnlockStats.raml",
-          "lockUnlockStats.jsonld",
-          RamlYamlHint,
-          Amf,
-          productionPath + "lock-unlock-api-1.0.0-fat-raml/")
+    cycle("lockUnlockStats.raml", "lockUnlockStats.jsonld", RamlYamlHint, Amf, productionPath + "lock-unlock/")
   }
 
   test("PatternProperties JSON Schema oas to raml") {

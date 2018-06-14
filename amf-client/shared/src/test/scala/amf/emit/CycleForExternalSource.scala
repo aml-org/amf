@@ -5,8 +5,8 @@ import amf.io.BuildCycleTests
 
 class CycleForExternalSource extends BuildCycleTests {
 
-  val jsonPath = "amf-client/shared/src/test/resources/production/financial-api/othercases/jsonschema/"
-  val xsdPath  = "amf-client/shared/src/test/resources/production/financial-api/othercases/xsdschema/"
+  val jsonPath = "amf-client/shared/src/test/resources/production/othercases/jsonschema/"
+  val xsdPath  = "amf-client/shared/src/test/resources/production/othercases/xsdschema/"
 
   // todo : rename and do this test ok
 
@@ -77,7 +77,7 @@ class CycleForExternalSource extends BuildCycleTests {
       "api.raml.jsonld",
       RamlYamlHint,
       Amf,
-      "amf-client/shared/src/test/resources/production/financial-api/othercases/xsdexample/"
+      "amf-client/shared/src/test/resources/production/othercases/xsdexample/"
     )
   }
 

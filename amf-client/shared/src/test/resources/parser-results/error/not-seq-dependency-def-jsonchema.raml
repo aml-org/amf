@@ -1,9 +1,8 @@
 #%RAML 1.0
-title: Contact Centre Toolset
+title: JsonSchema array test
 
 
-/contacts:
-  description: Operations on CRM contacts
+/endpoints:
   get:
     responses:
       200:
@@ -26,20 +25,17 @@ title: Contact Centre Toolset
               					"mobile",
               					"alternate"
               				],
-              				"id": "#type",
-              				"description": "Type of the phone number, e.g. home or work"
+              				"id": "#type"
               			},
               			"number": {
               				"type": "string",
               				"pattern": ".+",
-              				"id": "#number",
-              				"description": "The phone number"
+              				"id": "#number"
               			},
               			"extension": {
               				"type": "string",
               				"pattern": ".+",
-              				"id": "#extension",
-              				"description": "The phone extension (only allowed on work numbers)"
+              				"id": "#extension"
               			}
               		},
               		"dependencies": {

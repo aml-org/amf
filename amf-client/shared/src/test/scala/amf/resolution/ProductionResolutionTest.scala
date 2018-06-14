@@ -1,6 +1,5 @@
 package amf.resolution
 
-import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
@@ -57,17 +56,6 @@ class ProductionResolutionTest extends RamlResolutionTest {
   val completeCyclePath = "amf-client/shared/src/test/resources/upanddown/"
   val validationPath    = "amf-client/shared/src/test/resources/validations/"
 
-  test("Resolves googleapis.compredictionv1.2swagger.raml") {
-    cycle("googleapis.compredictionv1.2swagger.raml",
-          "googleapis.compredictionv1.2swagger.raml.resolved.raml",
-          RamlYamlHint,
-          Raml)
-  }
-
-  test("Resolves channel4.com1.0.0swagger.raml") {
-    cycle("channel4.com1.0.0swagger.raml", "channel4.com1.0.0swagger.resolved.raml", RamlYamlHint, Raml)
-  }
-
   test("Types with unions raml to AMF") {
     cycle("unions-example.raml", "unions-example.raml.jsonld", RamlYamlHint, Amf)
   }
@@ -80,24 +68,12 @@ class ProductionResolutionTest extends RamlResolutionTest {
     cycle("complex_types.raml", "complex_types.resolved.raml", RamlYamlHint, Raml)
   }
 
-  test("httpbin example") {
-    cycle("httpbin.raml", "httpbin.resolved.raml", RamlYamlHint, Raml, basePath + "httpbin/")
-  }
-
-  test("sales-order example") {
-    cycle("sales-order-api.raml", "sales-order-api.resolved.raml", RamlYamlHint, Raml, basePath + "order-api/")
-  }
-
   test("american-flights-api example") {
     cycle("american-flights-api.raml",
           "american-flights-api.resolved.raml",
           RamlYamlHint,
           Raml,
           basePath + "american-flights-api/")
-  }
-
-  test("version-manager example") {
-    cycle("version_manager.raml", "version_manager.resolved.raml", RamlYamlHint, Raml, basePath + "version-manager/")
   }
 
   ignore("API Console test api") {
@@ -135,16 +111,8 @@ class ProductionResolutionTest extends RamlResolutionTest {
     cycle("api.raml", "api.resolved.raml", RamlYamlHint, Raml, basePath + "api_6109_ver_10147/")
   }
 
-  test("test definition_loops input") {
-    cycle("crossfiles2.raml", "crossfiles2.resolved.raml", RamlYamlHint, Raml, basePath + "definitions-loops/")
-  }
-
   test("test bad tabulation at end flow map of traits definitions") {
-    cycle("healthcare-system-api.raml",
-          "healthcare-system-api.resolved.raml",
-          RamlYamlHint,
-          Raml,
-          basePath + "Healthcare-FHIR-System-API/")
+    cycle("healthcare.raml", "healthcare.resolved.raml", RamlYamlHint, Raml, basePath + "healthcare/")
   }
 
   test("test trait with quoted string example var") {
@@ -156,7 +124,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
   }
 
   test("test nullpointer in resolution") {
-    cycle("api.raml", "api.resolved.raml", RamlYamlHint, Raml, validationPath + "retail-api-6.0.0-fat-raml/")
+    cycle("api.raml", "api.resolved.raml", RamlYamlHint, Raml, validationPath + "retail-api/")
   }
 
   test("Test resolve inherited array without items") {
@@ -165,18 +133,6 @@ class ProductionResolutionTest extends RamlResolutionTest {
           RamlYamlHint,
           Raml,
           basePath + "types/")
-  }
-
-  test("Test resolve resource type with '$' char in variable value") {
-    cycle("invalid-regexp-char-in-variable.raml",
-          "invalid-regexp-char-in-variable.resolved.raml",
-          RamlYamlHint,
-          Raml,
-          basePath)
-  }
-
-  test("Test trait resolution null pointer exception test") {
-    cycle("e-bo.raml", "e-bo.resolved.raml", RamlYamlHint, Raml, basePath + "e-gp-reference-1.0.6-fat-raml/")
   }
 
   test("Test type resolution with property override") {

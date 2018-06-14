@@ -3,13 +3,8 @@ title: title
 /media/popular:
   displayName: Most Popular Media
   get:
-    description: |
-      Get a list of what media is most popular at the moment.
     responses:
       503:
-        description: |
-          The service is currently unavailable or you exceeded the maximum requests
-          per hour allowed to your application.
         headers:
           X-waiting-period:
             description: |

@@ -1,7 +1,6 @@
 #%RAML 0.8
-title: RBStamm Service API
+title: test
 version: v1
-baseUri: https://api.raiffeisen.ch/rbstamm/{version}
 mediaType: application/json
 
 schemas:
@@ -46,15 +45,13 @@ traits:
           default: false
 
 /rbs: 
-  displayName: Raiffeisen Banken Resource
-  type: 
+  type:
     readOnlyCollection:
       schemaCollection: banks
   get:
     is: [ withGeschaeftstellen ]
         
   /{sitzcode}:
-    displayName: Raiffeisen Bank
     type:
       collection-item:
         schemaItem: bank
@@ -62,7 +59,6 @@ traits:
       is: [ withGeschaeftstellen ]
     
   /byPosition:          
-    displayName: Raiffeisen Bank
     type:
       readOnlyCollection:
         schemaCollection: banks

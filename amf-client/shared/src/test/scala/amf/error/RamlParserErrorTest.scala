@@ -72,12 +72,12 @@ class RamlParserErrorTest extends ParserErrorTest {
       artist => {
         artist.level should be("Violation")
         artist.message should be("Expecting !!str and !!seq provided")
-        artist.position.map(_.range) should be(Some(Range((115, 10), (115, 12))))
+        artist.position.map(_.range) should be(Some(Range((44, 10), (44, 12))))
       },
       tracks => {
         tracks.level should be("Violation")
         tracks.message should be("Expecting !!str and !!seq provided")
-        tracks.position.map(_.range) should be(Some(Range((120, 10), (120, 12))))
+        tracks.position.map(_.range) should be(Some(Range((49, 10), (49, 12))))
       }
     )
   }
@@ -110,7 +110,7 @@ class RamlParserErrorTest extends ParserErrorTest {
       invalidSeq => {
         invalidSeq.level should be("Violation")
         invalidSeq.message should startWith("Expected scalar but found:")
-        invalidSeq.position.map(_.range) should be(Some(Range((34, 16), (42, 4))))
+        invalidSeq.position.map(_.range) should be(Some(Range((31, 16), (39, 4))))
       }
     )
   }
@@ -220,11 +220,6 @@ class RamlParserErrorTest extends ParserErrorTest {
   }
 
 // todo hnajles: move to validmodelvalidationtest when branch of refactor is complete
-  test("Empty describe by") {
-    validate(
-      "error/empty-described-by.raml"
-    )
-  }
 
   test("Empty uri parameters") {
     validate(

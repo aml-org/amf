@@ -17,19 +17,19 @@
         ],
         "schema-org:name": [
           {
-            "@value": "ACME Banking HTTP API"
+            "@value": "test"
           }
         ],
         "raml-http:server": [
           {
-            "@id": "#/web-api/acme-banking.com%2Fapis",
+            "@id": "#/web-api/aa-bbb.com%2Fapis",
             "@type": [
               "raml-http:Server",
               "doc:DomainElement"
             ],
             "raml-http:url": [
               {
-                "@value": "acme-banking.com/apis"
+                "@value": "aa-bbb.com/apis"
               }
             ],
             "smaps": {
@@ -37,7 +37,7 @@
                 "raml-http:url": "[(4,0)-(6,0)]"
               },
               "synthesized-field": {
-                "#/web-api/acme-banking.com%2Fapis": "true"
+                "#/web-api/aa-bbb.com%2Fapis": "true"
               }
             }
           }

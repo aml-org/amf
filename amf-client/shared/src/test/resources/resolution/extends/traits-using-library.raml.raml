@@ -1,12 +1,11 @@
 #%RAML 1.0
-title: ACME Banking HTTP API
+title: test
 version: "1.0"
-baseUri: acme-banking.com/apis
+baseUri: aaa-bbb.com/apis
 /customers:
   displayName: Customer Resource
   /corporate:
     post:
-      description: Customer data created correctly for an Organization
       body:
         type: object
         additionalProperties: true
@@ -46,7 +45,6 @@ baseUri: acme-banking.com/apis
             required: true
   /commercial:
     post:
-      description: Customer data created correctly for a Person
       body:
         type: object
         additionalProperties: true
@@ -109,7 +107,6 @@ baseUri: acme-banking.com/apis
       customer_id:
         type: string
     get:
-      description: Returns Customer data
       responses:
         200:
           body:
@@ -231,7 +228,6 @@ baseUri: acme-banking.com/apis
                       type: date-only
                       required: false
     patch:
-      description: Updates Customer data
       responses:
         200:
           body:
@@ -291,8 +287,7 @@ baseUri: acme-banking.com/apis
                 street_address:
                   type: string
                   required: false
-    delete:
-      description: Removes a Customer from the system
+    delete: {}
     /accounts:
       get:
         queryParameters:
@@ -314,7 +309,6 @@ baseUri: acme-banking.com/apis
           sort?:
             example: name,-age
             type: string
-        description: Returns a collection accounts
         responses:
           200:
             body:
@@ -385,7 +379,6 @@ baseUri: acme-banking.com/apis
                           required: true
                       required: true
       post:
-        description: Requests the creation of a new BankAccount
         body:
           application/json:
             additionalProperties: true
@@ -401,7 +394,6 @@ baseUri: acme-banking.com/apis
           account_id:
             type: string
         get:
-          description: Returns BankAccount data
           responses:
             200:
               body:
@@ -470,8 +462,7 @@ baseUri: acme-banking.com/apis
                           type: string
                           required: true
                       required: true
-        delete:
-          description: Removes a BankAccount from the system
+        delete: {}
     /loans:
       get:
         queryParameters:
@@ -493,7 +484,6 @@ baseUri: acme-banking.com/apis
           sort?:
             example: name,-age
             type: string
-        description: Returns a collection accounts
         responses:
           200:
             body:
@@ -574,7 +564,6 @@ baseUri: acme-banking.com/apis
                           required: true
                       required: true
       post:
-        description: Requests the creation of a new Loan
         body:
           application/json:
             additionalProperties: true

@@ -1,33 +1,26 @@
 #%RAML 1.0 SecurityScheme
 
-description: |
-  Dropbox supports OAuth 2.0 for authenticating all API requests.
 type: OAuth 2.0
 describedBy:
   headers:
     Authorization:
       description: |
-         Used to send a valid OAuth 2 access token. Do not use
-         with the "access_token" query string parameter.
+         the first description
       type: string
   queryParameters:
     access_token:
       description: |
-         Used to send a valid OAuth 2 access token. Do not use with
-         the "Authorization" header.
+         simple description
       type: string
   responses:
     401:
       description: |
-          Bad or expired token. This can happen if the user or Dropbox
-          revoked or expired an access token. To fix, re-authenticate
-          the user.
+          a description
     403:
       description: |
-          Bad OAuth request (wrong consumer key, bad nonce, expired
-          timestamp...). Unfortunately, re-authenticating the user won't help here.
+          another description
 settings:
-  authorizationUri: https://www.dropbox.com/1/oauth2/authorize
-  accessTokenUri: https://api.dropbox.com/1/oauth2/token
-  authorizationGrants: [ authorization_code, implicit, 'urn:ietf:params:oauth:grant-type:saml2-bearer' ]
+  authorizationUri: https://www.false.com/1/oauth2/authorize
+  accessTokenUri: https://api.false.com/1/oauth2/token
+  authorizationGrants: [ authorization_code, implicit, 'urn:ietf:params:oauth:grant-type:false2-false' ]
   scopes: [ "ADMINISTRATOR" ]

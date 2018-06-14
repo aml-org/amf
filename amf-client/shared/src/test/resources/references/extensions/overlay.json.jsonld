@@ -143,24 +143,24 @@
             ],
             "http://schema.org/name": [
               {
-                "@value": "ACME Banking HTTP API"
+                "@value": "test"
               }
             ],
             "http://a.ml/vocabularies/http#server": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/banking-api.raml#/web-api/acme-banking.com%2Fapis",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/banking-api.raml#/web-api/falsedomain.com%2Fapis",
                 "@type": [
                   "http://a.ml/vocabularies/http#Server",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/http#url": [
                   {
-                    "@value": "acme-banking.com/apis"
+                    "@value": "falsedomain.com/apis"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/banking-api.raml#/web-api/acme-banking.com%2Fapis/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/banking-api.raml#/web-api/falsedomain.com%2Fapis/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -182,7 +182,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/banking-api.raml#/web-api/acme-banking.com%2Fapis"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/banking-api.raml#/web-api/falsedomain.com%2Fapis"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [

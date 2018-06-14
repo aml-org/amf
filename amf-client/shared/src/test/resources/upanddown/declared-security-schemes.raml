@@ -2,7 +2,6 @@
 title: example security schemes
 securitySchemes:
   oauth_2_0:
-    description: Dropbox supports OAuth 2.0 for authenticating all API requests.
     type: OAuth 2.0
     describedBy:
       headers:
@@ -15,7 +14,7 @@ securitySchemes:
           type: string
       responses:
         401:
-          description: Bad or expired token. This can happen if the user or Dropbox revoked or expired an access token.
+          description: Bad or expired token.
         403:
           description: Bad OAuth request (wrong consumer key, bad nonce, expired timestamp...).
     settings:
@@ -28,9 +27,9 @@ securitySchemes:
     description: OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.
     type: OAuth 1.0
     settings:
-      requestTokenUri: https://api.dropbox.com/1/oauth/request_token
-      authorizationUri: https://www.dropbox.com/1/oauth/authorize
-      tokenCredentialsUri: https://api.dropbox.com/1/oauth/access_token
+      requestTokenUri: https://apidomain.com/1/oauth/request_token
+      authorizationUri: https://www.site.com/1/oauth/authorize
+      tokenCredentialsUri: https://apidomain.com/1/oauth/access_token
   basic_auth:
       type: Basic Authentication
   digest_auth:

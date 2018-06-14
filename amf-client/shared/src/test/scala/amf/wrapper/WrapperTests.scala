@@ -29,16 +29,9 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   private val demos2Dialect = "file://amf-client/shared/src/test/resources/api/dialects/eng-demos-2.raml"
   private val demosInstance = "file://amf-client/shared/src/test/resources/api/examples/libraries/demo.raml"
   private val security      = "file://amf-client/shared/src/test/resources/upanddown/unnamed-security-scheme.raml"
-  private val music         = "file://amf-client/shared/src/test/resources/production/world-music-api/api.raml"
-  private val devops =
-    "file://amf-client/shared/src/test/resources/production/devops-getstarted-1.0.1-fat-raml/devops-getstarted.raml"
-  private val procDesignCenter =
-    "file://amf-client/shared/src/test/resources/production/proc-design-center-pub-status-api-1.0.0-fat-raml/proc-design-center-pub-status-api.raml"
-  private val banking = "file://amf-client/shared/src/test/resources/production/banking-api/api.raml"
   private val amflight =
     "file://amf-client/shared/src/test/resources/production/american-flight-api-2.0.1-raml/api.raml"
   private val defaultValue = "file://amf-client/shared/src/test/resources/api/shape-default.raml"
-  private val traits       = "file://amf-client/shared/src/test/resources/production/banking-api/traits/traits.raml"
   private val profile      = "file://amf-client/shared/src/test/resources/api/validation/custom-profile.raml"
   //  private val banking       = "file://amf-client/shared/src/test/resources/api/banking.raml"
   private val raml_doc = "file://vocabularies/vocabularies/raml_doc.raml"
@@ -78,17 +71,6 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       unit <- new Raml08Parser().parseFileAsync(zencoder08).asFuture
     } yield {
       assertBaseUnit(unit, zencoder08)
-    }
-  }
-
-  test("Parsing refs test") {
-    for {
-      _    <- AMF.init().asFuture
-      unit <- new RamlParser().parseFileAsync(banking).asFuture
-    } yield {
-      val refs = unit.references().asSeq
-      assert(refs.size == 4)
-      assert(refs.head.location.endsWith("traits/content-cacheable.raml"))
     }
   }
 
@@ -319,71 +301,6 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       output <- new Oas20Renderer().generateString(unit).asFuture
     } yield {
       assert(!output.isEmpty)
-    }
-  }
-
-  test("proc-design-center") {
-    for {
-      _        <- AMF.init().asFuture
-      unit     <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(procDesignCenter).asFuture
-      report   <- AMF.validate(unit, "RAML", "RAML").asFuture
-      resolved <- Future.successful(new Raml10Resolver().resolve(unit))
-    } yield {
-      assert(unit.isInstanceOf[Document])
-      assert(resolved.isInstanceOf[Document])
-      assert(report.conforms)
-    }
-  }
-
-  test("devops-getstarted") {
-    for {
-      _        <- AMF.init().asFuture
-      unit     <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(devops).asFuture
-      report   <- AMF.validate(unit, "RAML", "RAML").asFuture
-      resolved <- Future.successful(new Raml10Resolver().resolve(unit))
-    } yield {
-      assert(unit.isInstanceOf[Document])
-      assert(resolved.isInstanceOf[Document])
-      assert(report.conforms)
-    }
-  }
-
-  test("world-music-test") {
-    for {
-      _      <- AMF.init().asFuture
-      unit   <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(music).asFuture
-      report <- AMF.validate(unit, "RAML", "RAML").asFuture
-    } yield {
-      assert(!unit.references().asSeq.map(_.location).contains(null))
-      assert(report.conforms)
-    }
-  }
-
-  test("banking-api-test") {
-    for {
-      _    <- AMF.init().asFuture
-      unit <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(banking).asFuture
-    } yield {
-      val references = unit.references().asSeq
-      assert(!references.map(_.location).contains(null))
-      val traits = references.find(ref => ref.location.endsWith("traits.raml")).head.references().asSeq
-      val first  = traits.head
-      assert(first.location != null)
-      assert(first.asInstanceOf[TraitFragment].encodes != null)
-      assert(!traits.map(_.location).contains(null))
-    }
-  }
-
-  test("banking-api-traits-test") {
-    for {
-      _    <- AMF.init().asFuture
-      unit <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(traits).asFuture
-    } yield {
-      val references = unit.references().asSeq
-      val first      = references.head
-      assert(first.location != null)
-      assert(first.asInstanceOf[TraitFragment].encodes != null)
-      assert(!references.map(_.location).contains(null))
     }
   }
 
@@ -647,30 +564,6 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       unit shouldBe a[Document]
       val declarations = unit.asInstanceOf[Document].declares.asSeq
       declarations should have size 1
-    }
-  }
-
-  test("Generate unit with source maps") {
-    val options = new RenderOptions().withSourceMaps
-
-    for {
-      _      <- AMF.init().asFuture
-      unit   <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(banking).asFuture
-      jsonld <- amf.Core.generator("AMF Graph", "application/ld+json").generateString(unit, options).asFuture
-    } yield {
-      jsonld should include("[(3,0)-(252,0)]")
-    }
-  }
-
-  test("Generate unit without source maps") {
-    val options = new RenderOptions().withoutSourceMaps
-
-    for {
-      _      <- AMF.init().asFuture
-      unit   <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(banking).asFuture
-      jsonld <- amf.Core.generator("AMF Graph", "application/ld+json").generateString(unit, options).asFuture
-    } yield {
-      jsonld should not include "[(3,0)-(252,0)]"
     }
   }
 
