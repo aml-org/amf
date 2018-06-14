@@ -33,9 +33,11 @@ class JSLibraryEmitter(profile: Option[ValidationProfile] = None) {
     validations.foreach { (validation) =>
       val constraint = validation.functionConstraint.get
       val additionalParams = if (constraint.parameters.nonEmpty) {
-        "," + constraint.parameters.map { param =>
-          "$" + param.path.split("#").last
-        }.mkString(",")
+        "," + constraint.parameters
+          .map { param =>
+            "$" + param.path.split("#").last
+          }
+          .mkString(",")
       } else {
         ""
       }
@@ -105,12 +107,10 @@ class JSLibraryEmitter(profile: Option[ValidationProfile] = None) {
        |        acc[prop] = value;
        |        if(prop === "@type") {
        |            value.push(amfCompactProperty(pair.o.value));
-       |        } else if(pair.o.termType === "BlankNode" || pair.o.value.indexOf("urn:") === 0 ) {
+       |        } else if(pair.o.termType === "BlankNode" || pair.o.termType === "NamedNode") {
        |            value.push(cache[pair.o.value] || amfFindNode(pair.o, cache));
-       |        } else if (pair.o.value.indexOf("http:/") === 0 || pair.o.value.indexOf("file:/") === 0 || pair.o.value.indexOf("null/") === 0) {
-       |            value.push(cache[pair.o.value] || amfFindNode(pair.o, cache));
-       |        } else {
-       |            value.push(amfExtractLiteral(pair.o));
+       |        } else if (pair.o.termType === "Literal"){
+       |          value.push(amfExtractLiteral(pair.o));
        |        }
        |    }
        |
