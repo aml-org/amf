@@ -220,6 +220,11 @@ class RamlParserErrorTest extends ParserErrorTest {
   }
 
 // todo hnajles: move to validmodelvalidationtest when branch of refactor is complete
+  test("Empty describe by") {
+    validate(
+      "error/empty-described-by.raml"
+    )
+  }
 
   test("Empty uri parameters") {
     validate(
