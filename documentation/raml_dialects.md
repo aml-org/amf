@@ -1,8 +1,10 @@
 # AML Dialects 1.0
 
 AML Dialect defines a set of constraints over a RDF data-model composed by a graph of nodes connected by properties.
+
 In this data-model, all node types and properties have associated terms that must have been defined in a AML Vocabulary.
 Additionally, the AML Dialect also defines a mapping of this nodes over a set of modular documents (including partial definitions encoded in fragments and libraries of reusable components), that encode a mapping function capable of transforming document instances of the dialect encoded in YAML or JSON documents into RDF graphs encoded in JSON-LD documents.
+
 An AML Dialect processor must accept this set of constraints and the projection over the modular documents and produce a parsing logic for the mapping function according to the syntactical rules defined in this specification.
 
 ## Dialect declaration
@@ -33,7 +35,7 @@ When encoding dialect document instances using JSON syntax, is not possible to u
 
 ```json
 {
-  “$dialect”: “Validation Profile 1.0”
+  "$dialect": "Validation Profile 1.0"
 }
 ```
 
