@@ -84,6 +84,10 @@ class ProductionResolutionTest extends RamlResolutionTest {
     cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, basePath + "api-console/")
   }
 
+  test("Test trait resolution null pointer exception test") {
+    cycle("e-bo.raml", "e-bo.resolved.raml", RamlYamlHint, Raml, basePath + "reference-api/")
+  }
+
   test("test resource type") {
     cycle("input.raml",
           "input.resolved.raml",
