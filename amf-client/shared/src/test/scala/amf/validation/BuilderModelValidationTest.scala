@@ -8,7 +8,11 @@ import amf.facades.Validation
 import amf.plugins.domain.shapes.models.{NodeShape, ScalarShape}
 import org.scalatest.{AsyncFunSuite, Matchers}
 
+import scala.concurrent.ExecutionContext
+
 class BuilderModelValidationTest extends AsyncFunSuite with PlatformSecrets with Matchers {
+
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Test node shape with https id for js validation functions") {
 
