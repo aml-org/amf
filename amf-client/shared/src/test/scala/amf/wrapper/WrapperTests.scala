@@ -26,6 +26,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   private val banking       = "file://amf-client/shared/src/test/resources/production/banking-api/api.raml"
   private val zencoder      = "file://amf-client/shared/src/test/resources/api/zencoder.raml"
   private val zencoder08    = "file://amf-client/shared/src/test/resources/api/zencoder08.raml"
+  private val music         = "file://amf-client/shared/src/test/resources/production/world-music-api/api.raml"
   private val demosDialect  = "file://amf-client/shared/src/test/resources/api/dialects/eng-demos.raml"
   private val demos2Dialect = "file://amf-client/shared/src/test/resources/api/dialects/eng-demos-2.raml"
   private val demosInstance = "file://amf-client/shared/src/test/resources/api/examples/libraries/demo.raml"
@@ -302,6 +303,17 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       output <- new Oas20Renderer().generateString(unit).asFuture
     } yield {
       assert(!output.isEmpty)
+    }
+  }
+
+  test("world-music-test") {
+    for {
+      _      <- AMF.init().asFuture
+      unit   <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(music).asFuture
+      report <- AMF.validate(unit, "RAML", "RAML").asFuture
+    } yield {
+      assert(!unit.references().asSeq.map(_.location).contains(null))
+      assert(report.conforms)
     }
   }
 
