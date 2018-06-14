@@ -56,6 +56,10 @@ class ProductionResolutionTest extends RamlResolutionTest {
   val completeCyclePath = "amf-client/shared/src/test/resources/upanddown/"
   val validationPath    = "amf-client/shared/src/test/resources/validations/"
 
+  test("test definition_loops input") {
+    cycle("crossfiles2.raml", "crossfiles2.resolved.raml", RamlYamlHint, Raml, basePath + "definitions-loops/")
+  }
+
   test("Types with unions raml to AMF") {
     cycle("unions-example.raml", "unions-example.raml.jsonld", RamlYamlHint, Amf)
   }
