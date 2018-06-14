@@ -23,6 +23,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
+  private val banking       = "file://amf-client/shared/src/test/resources/production/banking-api/api.raml"
   private val zencoder      = "file://amf-client/shared/src/test/resources/api/zencoder.raml"
   private val zencoder08    = "file://amf-client/shared/src/test/resources/api/zencoder08.raml"
   private val demosDialect  = "file://amf-client/shared/src/test/resources/api/dialects/eng-demos.raml"
@@ -1064,6 +1065,45 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       report <- shape.asInstanceOf[AnyShape].validate(payload).asFuture
     } yield {
       assert(report.conforms)
+    }
+  }
+
+  test("Generate unit with source maps") {
+    val options = new RenderOptions().withSourceMaps
+
+    for {
+      _      <- AMF.init().asFuture
+      unit   <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(banking).asFuture
+      jsonld <- amf.Core.generator("AMF Graph", "application/ld+json").generateString(unit, options).asFuture
+    } yield {
+      jsonld should include("[(3,0)-(252,0)]")
+    }
+  }
+
+  test("Generate unit without source maps") {
+    val options = new RenderOptions().withoutSourceMaps
+
+    for {
+      _      <- AMF.init().asFuture
+      unit   <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(banking).asFuture
+      jsonld <- amf.Core.generator("AMF Graph", "application/ld+json").generateString(unit, options).asFuture
+    } yield {
+      jsonld should not include "[(3,0)-(252,0)]"
+    }
+  }
+
+  test("banking-api-test") {
+    for {
+      _    <- AMF.init().asFuture
+      unit <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(banking).asFuture
+    } yield {
+      val references = unit.references().asSeq
+      assert(!references.map(_.location).contains(null))
+      val traits = references.find(ref => ref.location.endsWith("traits.raml")).head.references().asSeq
+      val first  = traits.head
+      assert(first.location != null)
+      assert(first.asInstanceOf[TraitFragment].encodes != null)
+      assert(!traits.map(_.location).contains(null))
     }
   }
 }
