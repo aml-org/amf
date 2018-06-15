@@ -111,14 +111,10 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
   def registerDialect(uri: String, environment: Environment = Environment()): Future[Dialect] = {
     map.get(uri) match {
-      case Some(dialect) => Future { dialect }
+      case Some(dialect) => Future.successful(dialect)
       case _ =>
         RuntimeValidator.disableValidationsAsync() { reenable =>
-          RuntimeCompiler(uri,
-                          Some("application/yaml"),
-                          AMLPlugin.ID,
-                          Context(platform),
-                          env = environment)
+          RuntimeCompiler(uri, Some("application/yaml"), AMLPlugin.ID, Context(platform), env = environment)
             .map {
               case dialect: Dialect =>
                 reenable()
