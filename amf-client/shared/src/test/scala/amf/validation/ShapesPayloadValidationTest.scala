@@ -107,48 +107,48 @@ trait ShapesFixture {
     private val intXds: String = XsdTypeDefMapping.xsd(IntType)
 
     private val Name: ScalarShape =
-      ScalarShape().withName("name").withDataType(strXds).withId("http://raml.org/payloadTest/name")
+      ScalarShape().withName("name").withDataType(strXds).withId("http://a.ml/payloadTest/name")
     private val LastName: ScalarShape =
       ScalarShape().withName("lastName").withDataType(strXds).withId("payloadTest/lastName")
 
     private val Street: ScalarShape =
-      ScalarShape().withName("street").withDataType(strXds).withId("http://raml.org/payloadTest/street")
+      ScalarShape().withName("street").withDataType(strXds).withId("http://a.ml/payloadTest/street")
     private val Number: ScalarShape =
-      ScalarShape().withName("number").withDataType(intXds).withId("http://raml.org/payloadTest/number")
+      ScalarShape().withName("number").withDataType(intXds).withId("http://a.ml/payloadTest/number")
 
-    private val Address: NodeShape = NodeShape().withName("address").withId("http://raml.org/payloadTest/address")
+    private val Address: NodeShape = NodeShape().withName("address").withId("http://a.ml/payloadTest/address")
     Address
       .withProperty(Street.name.value())
       .withMinCount(1)
       .withRange(Street)
-      .withId("http://raml.org/payloadTest/property/street")
+      .withId("http://a.ml/payloadTest/property/street")
     Address
       .withProperty(Number.name.value())
       .withMinCount(1)
       .withRange(Number)
-      .withId("http://raml.org/payloadTest/property/number")
+      .withId("http://a.ml/payloadTest/property/number")
 
-    val Customer: NodeShape = NodeShape().withName("Customer").withId("http://raml.org/payloadTest/customer")
+    val Customer: NodeShape = NodeShape().withName("Customer").withId("http://a.ml/payloadTest/customer")
     Customer
       .withProperty(Name.name.value())
       .withMinCount(1)
       .withRange(Name)
-      .withId("http://raml.org/payloadTest/property/name")
+      .withId("http://a.ml/payloadTest/property/name")
     Customer
       .withProperty(LastName.name.value())
       .withMinCount(0)
       .withRange(LastName)
-      .withId("http://raml.org/payloadTest/property.lastName")
+      .withId("http://a.ml/payloadTest/property.lastName")
     Customer
       .withProperty(Address.name.value())
       .withMinCount(1)
       .withRange(Address)
-      .withId("http://raml.org/payloadTest/property/address")
+      .withId("http://a.ml/payloadTest/property/address")
 
     val SimpleStrScalar: ScalarShape =
-      ScalarShape().withName("simpleStr").withDataType(strXds).withId("http://raml.org/payloadTest/simpleStr")
+      ScalarShape().withName("simpleStr").withDataType(strXds).withId("http://a.ml/payloadTest/simpleStr")
     val SimpleIntScalar: ScalarShape =
-      ScalarShape().withName("simpleInt").withDataType(intXds).withId("http://raml.org/payloadTest/simpleInt")
+      ScalarShape().withName("simpleInt").withDataType(intXds).withId("http://a.ml/payloadTest/simpleInt")
 
     private val xmlUser: String =
       """|<?xml version="1.0"?>

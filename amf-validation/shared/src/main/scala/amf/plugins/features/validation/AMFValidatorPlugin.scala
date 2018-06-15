@@ -43,7 +43,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
 
   override def dependencies() = Seq(SYamlSyntaxPlugin, VocabulariesPlugin, AMFGraphPlugin)
 
-  val url = "http://raml.org/dialects/profile.raml"
+  val url = "http://a.ml/dialects/profile.raml"
 
   // All the profiles are collected here, plugins can generate their own profiles
   def profiles: Map[String, () => ValidationProfile] =

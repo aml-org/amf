@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-        xmlns:tns="http://raml.org/subdir2/user"
-        targetNamespace="http://raml.org/subdir2/user"
-        xmlns:person="http://raml.org/subdir2/person"
+        xmlns:tns="http://a.ml/subdir2/user"
+        targetNamespace="http://a.ml/subdir2/user"
+        xmlns:person="http://a.ml/subdir2/person"
         version="1.0"
         elementFormDefault="qualified"
         attributeFormDefault="unqualified">
 
-    <import namespace="http://raml.org/subdir2/person" schemaLocation="person.xsd" />
+    <import namespace="http://a.ml/subdir2/person" schemaLocation="person.xsd" />
 
     <complexType name="User">
         <sequence>

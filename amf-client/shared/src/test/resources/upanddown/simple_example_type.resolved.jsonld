@@ -129,7 +129,7 @@
                                 ],
                                 "shacl:path": [
                                   {
-                                    "@id": "http://raml.org/vocabularies/data#a"
+                                    "@id": "http://a.ml/vocabularies/data#a"
                                   }
                                 ],
                                 "raml-shapes:range": [
@@ -321,7 +321,7 @@
             ],
             "shacl:path": [
               {
-                "@id": "http://raml.org/vocabularies/data#a"
+                "@id": "http://a.ml/vocabularies/data#a"
               }
             ],
             "raml-shapes:range": [
@@ -477,7 +477,7 @@
                 ],
                 "shacl:path": [
                   {
-                    "@id": "http://raml.org/vocabularies/data#a"
+                    "@id": "http://a.ml/vocabularies/data#a"
                   }
                 ],
                 "raml-shapes:range": [
@@ -610,11 +610,11 @@
     ],
     "@context": {
       "@base": "file://amf-client/shared/src/test/resources/upanddown/simple_example_type.raml",
-      "raml-http": "http://raml.org/vocabularies/http#",
-      "raml-shapes": "http://raml.org/vocabularies/shapes#",
+      "raml-http": "http://a.ml/vocabularies/http#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "shacl": "http://www.w3.org/ns/shacl#",
-      "data": "http://raml.org/vocabularies/data#",
-      "doc": "http://raml.org/vocabularies/document#",
+      "data": "http://a.ml/vocabularies/data#",
+      "doc": "http://a.ml/vocabularies/document#",
       "schema-org": "http://schema.org/",
       "xsd": "http://www.w3.org/2001/XMLSchema#",
       "hydra": "http://www.w3.org/ns/hydra/core#"

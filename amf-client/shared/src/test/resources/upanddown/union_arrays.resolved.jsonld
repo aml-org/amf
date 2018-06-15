@@ -77,7 +77,7 @@
             ],
             "shacl:path": [
               {
-                "@id": "http://raml.org/vocabularies/data#complex"
+                "@id": "http://a.ml/vocabularies/data#complex"
               }
             ],
             "raml-shapes:range": [
@@ -122,7 +122,7 @@
                         ],
                         "shacl:datatype": [
                           {
-                            "@id": "http://raml.org/vocabularies/shapes#number"
+                            "@id": "http://a.ml/vocabularies/shapes#number"
                           }
                         ]
                       },
@@ -221,7 +221,7 @@
             ],
             "shacl:path": [
               {
-                "@id": "http://raml.org/vocabularies/data#complex"
+                "@id": "http://a.ml/vocabularies/data#complex"
               }
             ],
             "raml-shapes:range": [
@@ -257,7 +257,7 @@
                     ],
                     "shacl:datatype": [
                       {
-                        "@id": "http://raml.org/vocabularies/shapes#number"
+                        "@id": "http://a.ml/vocabularies/shapes#number"
                       }
                     ]
                   },
@@ -322,8 +322,8 @@
     "@context": {
       "@base": "file://amf-client/shared/src/test/resources/upanddown/union_arrays.raml",
       "shacl": "http://www.w3.org/ns/shacl#",
-      "raml-shapes": "http://raml.org/vocabularies/shapes#",
-      "doc": "http://raml.org/vocabularies/document#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "doc": "http://a.ml/vocabularies/document#",
       "schema-org": "http://schema.org/"
     }
   }

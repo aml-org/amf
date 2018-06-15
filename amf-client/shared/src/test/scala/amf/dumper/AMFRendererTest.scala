@@ -69,18 +69,18 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |  {
         |    "@id": "file:///tmp/test",
         |    "@type": [
-        |      "http://raml.org/vocabularies/document#Document",
-        |      "http://raml.org/vocabularies/document#Fragment",
-        |      "http://raml.org/vocabularies/document#Module",
-        |      "http://raml.org/vocabularies/document#Unit"
+        |      "http://a.ml/vocabularies/document#Document",
+        |      "http://a.ml/vocabularies/document#Fragment",
+        |      "http://a.ml/vocabularies/document#Module",
+        |      "http://a.ml/vocabularies/document#Unit"
         |    ],
-        |    "http://raml.org/vocabularies/document#encodes": [
+        |    "http://a.ml/vocabularies/document#encodes": [
         |      {
         |        "@id": "file:///tmp/test#/web-api",
         |        "@type": [
         |          "http://schema.org/WebAPI",
-        |          "http://raml.org/vocabularies/document#RootDomainElement",
-        |          "http://raml.org/vocabularies/document#DomainElement"
+        |          "http://a.ml/vocabularies/document#RootDomainElement",
+        |          "http://a.ml/vocabularies/document#DomainElement"
         |        ],
         |        "http://schema.org/name": [
         |          {
@@ -92,31 +92,31 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |            "@value": "test description"
         |          }
         |        ],
-        |        "http://raml.org/vocabularies/http#server": [
+        |        "http://a.ml/vocabularies/http#server": [
         |          {
         |            "@id": "file:///tmp/test#/web-api/localhost.com%2Fapi",
         |            "@type": [
-        |              "http://raml.org/vocabularies/http#Server",
-        |              "http://raml.org/vocabularies/document#DomainElement"
+        |              "http://a.ml/vocabularies/http#Server",
+        |              "http://a.ml/vocabularies/document#DomainElement"
         |            ],
-        |            "http://raml.org/vocabularies/http#url": [
+        |            "http://a.ml/vocabularies/http#url": [
         |              {
         |                "@value": "localhost.com/api"
         |              }
         |            ]
         |          }
         |        ],
-        |        "http://raml.org/vocabularies/http#accepts": [
+        |        "http://a.ml/vocabularies/http#accepts": [
         |          {
         |            "@value": "application/json"
         |          }
         |        ],
-        |        "http://raml.org/vocabularies/http#contentType": [
+        |        "http://a.ml/vocabularies/http#contentType": [
         |          {
         |            "@value": "application/json"
         |          }
         |        ],
-        |        "http://raml.org/vocabularies/http#scheme": [
+        |        "http://a.ml/vocabularies/http#scheme": [
         |          {
         |            "@value": "http"
         |          },
@@ -148,18 +148,18 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |  {
         |    "@id": "file:///tmp/test",
         |    "@type": [
-        |      "http://raml.org/vocabularies/document#Document",
-        |      "http://raml.org/vocabularies/document#Fragment",
-        |      "http://raml.org/vocabularies/document#Module",
-        |      "http://raml.org/vocabularies/document#Unit"
+        |      "http://a.ml/vocabularies/document#Document",
+        |      "http://a.ml/vocabularies/document#Fragment",
+        |      "http://a.ml/vocabularies/document#Module",
+        |      "http://a.ml/vocabularies/document#Unit"
         |    ],
-        |    "http://raml.org/vocabularies/document#encodes": [
+        |    "http://a.ml/vocabularies/document#encodes": [
         |      {
         |        "@id": "file:///tmp/test#/web-api",
         |        "@type": [
         |          "http://schema.org/WebAPI",
-        |          "http://raml.org/vocabularies/document#RootDomainElement",
-        |          "http://raml.org/vocabularies/document#DomainElement"
+        |          "http://a.ml/vocabularies/document#RootDomainElement",
+        |          "http://a.ml/vocabularies/document#DomainElement"
         |        ],
         |        "http://schema.org/name": [
         |          {
@@ -171,31 +171,31 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |            "@value": "test description"
         |          }
         |        ],
-        |        "http://raml.org/vocabularies/http#server": [
+        |        "http://a.ml/vocabularies/http#server": [
         |          {
         |            "@id": "file:///tmp/test#/web-api/localhost.com%2Fapi",
         |            "@type": [
-        |              "http://raml.org/vocabularies/http#Server",
-        |              "http://raml.org/vocabularies/document#DomainElement"
+        |              "http://a.ml/vocabularies/http#Server",
+        |              "http://a.ml/vocabularies/document#DomainElement"
         |            ],
-        |            "http://raml.org/vocabularies/http#url": [
+        |            "http://a.ml/vocabularies/http#url": [
         |              {
         |                "@value": "localhost.com/api"
         |              }
         |            ]
         |          }
         |        ],
-        |        "http://raml.org/vocabularies/http#accepts": [
+        |        "http://a.ml/vocabularies/http#accepts": [
         |          {
         |            "@value": "application/json"
         |          }
         |        ],
-        |        "http://raml.org/vocabularies/http#contentType": [
+        |        "http://a.ml/vocabularies/http#contentType": [
         |          {
         |            "@value": "application/json"
         |          }
         |        ],
-        |        "http://raml.org/vocabularies/http#scheme": [
+        |        "http://a.ml/vocabularies/http#scheme": [
         |          {
         |            "@value": "http"
         |          },
@@ -218,7 +218,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |            "@id": "file:///tmp/test#/web-api/organization",
         |            "@type": [
         |              "http://schema.org/Organization",
-        |              "http://raml.org/vocabularies/document#DomainElement"
+        |              "http://a.ml/vocabularies/document#DomainElement"
         |            ],
         |            "http://schema.org/url": [
         |              {
@@ -241,8 +241,8 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |          {
         |            "@id": "file:///tmp/test#/web-api/license",
         |            "@type": [
-        |              "http://raml.org/vocabularies/http#License",
-        |              "http://raml.org/vocabularies/document#DomainElement"
+        |              "http://a.ml/vocabularies/http#License",
+        |              "http://a.ml/vocabularies/document#DomainElement"
         |            ],
         |            "http://schema.org/url": [
         |              {
@@ -261,7 +261,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |            "@id": "file:///tmp/test#/web-api/creative-work/creativoWorkUrl",
         |            "@type": [
         |              "http://schema.org/CreativeWork",
-        |              "http://raml.org/vocabularies/document#DomainElement"
+        |              "http://a.ml/vocabularies/document#DomainElement"
         |            ],
         |            "http://schema.org/url": [
         |              {
@@ -275,14 +275,14 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |            ]
         |          }
         |        ],
-        |        "http://raml.org/vocabularies/http#endpoint": [
+        |        "http://a.ml/vocabularies/http#endpoint": [
         |          {
         |            "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint",
         |            "@type": [
-        |              "http://raml.org/vocabularies/http#EndPoint",
-        |              "http://raml.org/vocabularies/document#DomainElement"
+        |              "http://a.ml/vocabularies/http#EndPoint",
+        |              "http://a.ml/vocabularies/document#DomainElement"
         |            ],
-        |            "http://raml.org/vocabularies/http#path": [
+        |            "http://a.ml/vocabularies/http#path": [
         |              {
         |                "@value": "/endpoint"
         |              }
@@ -302,7 +302,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |                "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/get",
         |                "@type": [
         |                  "http://www.w3.org/ns/hydra/core#Operation",
-        |                  "http://raml.org/vocabularies/document#DomainElement"
+        |                  "http://a.ml/vocabularies/document#DomainElement"
         |                ],
         |                "http://www.w3.org/ns/hydra/core#method": [
         |                  {
@@ -319,7 +319,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |                    "@value": "test operation get"
         |                  }
         |                ],
-        |                "http://raml.org/vocabularies/http#guiSummary": [
+        |                "http://a.ml/vocabularies/http#guiSummary": [
         |                  {
         |                    "@value": "summary of operation get"
         |                  }
@@ -329,7 +329,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |                    "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/get/creative-work/localhost%3A8080%2Fendpoint%2Foperation",
         |                    "@type": [
         |                      "http://schema.org/CreativeWork",
-        |                      "http://raml.org/vocabularies/document#DomainElement"
+        |                      "http://a.ml/vocabularies/document#DomainElement"
         |                    ],
         |                    "http://schema.org/url": [
         |                      {
@@ -343,7 +343,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |                    ]
         |                  }
         |                ],
-        |                "http://raml.org/vocabularies/http#scheme": [
+        |                "http://a.ml/vocabularies/http#scheme": [
         |                  {
         |                    "@value": "http"
         |                  }
@@ -353,7 +353,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |                "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/post",
         |                "@type": [
         |                  "http://www.w3.org/ns/hydra/core#Operation",
-        |                  "http://raml.org/vocabularies/document#DomainElement"
+        |                  "http://a.ml/vocabularies/document#DomainElement"
         |                ],
         |                "http://www.w3.org/ns/hydra/core#method": [
         |                  {
@@ -370,12 +370,12 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |                    "@value": "test operation post"
         |                  }
         |                ],
-        |                "http://raml.org/vocabularies/document#deprecated": [
+        |                "http://a.ml/vocabularies/document#deprecated": [
         |                  {
         |                    "@value": true
         |                  }
         |                ],
-        |                "http://raml.org/vocabularies/http#guiSummary": [
+        |                "http://a.ml/vocabularies/http#guiSummary": [
         |                  {
         |                    "@value": "summary of operation post"
         |                  }
@@ -385,7 +385,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |                    "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/post/creative-work/localhost%3A8080%2Fendpoint%2Foperation",
         |                    "@type": [
         |                      "http://schema.org/CreativeWork",
-        |                      "http://raml.org/vocabularies/document#DomainElement"
+        |                      "http://a.ml/vocabularies/document#DomainElement"
         |                    ],
         |                    "http://schema.org/url": [
         |                      {
@@ -399,7 +399,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |                    ]
         |                  }
         |                ],
-        |                "http://raml.org/vocabularies/http#scheme": [
+        |                "http://a.ml/vocabularies/http#scheme": [
         |                  {
         |                    "@value": "http"
         |                  }

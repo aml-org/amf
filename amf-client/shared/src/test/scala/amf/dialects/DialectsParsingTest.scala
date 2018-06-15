@@ -76,66 +76,66 @@ class DialectsParsingTest extends BuildCycleTests {
   }
 
   test("generate 1 test") {
-    cycle("example1.json", "example1.raml",  AmfJsonHint, RamlVocabulary)
+    cycle("example1.json", "example1.raml",  AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 2 test") {
-    cycle("example2.json", "example2.raml", AmfJsonHint, RamlVocabulary)
+    cycle("example2.json", "example2.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 3 test") {
-    cycle("example3.json", "example3.raml", AmfJsonHint, RamlVocabulary)
+    cycle("example3.json", "example3.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 4 test") {
-    cycle("example4.json", "example4.raml", AmfJsonHint, RamlVocabulary)
+    cycle("example4.json", "example4.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 5 test") {
-    cycle("example5.json", "example5.raml", AmfJsonHint, RamlVocabulary)
+    cycle("example5.json", "example5.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 6 test") {
-    cycle("example6.json", "example6.raml", AmfJsonHint, RamlVocabulary)
+    cycle("example6.json", "example6.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 7 test") {
-    cycle("example7.json", "example7.raml", AmfJsonHint, RamlVocabulary)
+    cycle("example7.json", "example7.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 8 test") {
-    cycle("example8.json", "example8.raml", AmfJsonHint, RamlVocabulary)
+    cycle("example8.json", "example8.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 9 test") {
-    cycle("example9.json", "example9.raml", AmfJsonHint, RamlVocabulary)
+    cycle("example9.json", "example9.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 10 test") {
-    cycle("example10.json", "example10.raml", AmfJsonHint, RamlVocabulary)
+    cycle("example10.json", "example10.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 11 test") {
-    cycle("example11.json", "example11.raml", AmfJsonHint, RamlVocabulary)
+    cycle("example11.json", "example11.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 12 test") {
-    cycle("example12.json", "example12.raml", AmfJsonHint, RamlVocabulary)
+    cycle("example12.json", "example12.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 13 test") {
-    cycle("example13.json", "example13.raml", AmfJsonHint, RamlVocabulary)
+    cycle("example13.json", "example13.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 14 test") {
-    cycle("example14.json", "example14.raml", AmfJsonHint, RamlVocabulary)
+    cycle("example14.json", "example14.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 15 test") {
-    cycle("example15.json", "example15.raml", AmfJsonHint, RamlVocabulary)
+    cycle("example15.json", "example15.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate mappings_lib test") {
-    cycle("mappings_lib.json", "mappings_lib.raml", AmfJsonHint, RamlVocabulary)
+    cycle("mappings_lib.json", "mappings_lib.raml", AmfJsonHint, AmlVocabulary)
   }
 }

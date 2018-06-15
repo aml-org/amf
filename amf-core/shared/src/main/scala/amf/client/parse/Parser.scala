@@ -161,5 +161,5 @@ class Parser(vendor: String, mediaType: String, private val env: Option[Environm
 
   private def fromStream(stream: String): ResourceLoader = fromStream(DEFAULT_DOCUMENT_URL, stream)
 
-  private val DEFAULT_DOCUMENT_URL = "http://raml.org/amf/default_document"
+  private val DEFAULT_DOCUMENT_URL = "http://a.ml/amf/default_document"
 }

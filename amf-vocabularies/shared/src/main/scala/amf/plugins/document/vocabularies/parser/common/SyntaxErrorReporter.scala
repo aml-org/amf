@@ -34,7 +34,7 @@ trait SyntaxErrorReporter { this: ErrorHandler =>
       ParserSideValidations.InconsistentPropertyRangeValueSpecification.id,
       node,
       Some(property.nodePropertyMapping().value()),
-      s"Cannot find expected range for property ${property.nodePropertyMapping().value()} (${property.name().value()})",
+      s"Cannot find expected range for property ${property.nodePropertyMapping().value()} (${property.name().value()}). Found '$found', expected '$expected'",
       Annotations(valueNode).find(classOf[LexicalInformation]))
   }
 
