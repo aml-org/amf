@@ -58,14 +58,14 @@
     ],
     "http://raml.org/vocabularies/meta#documents": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#",
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/documents",
         "@type": [
           "http://raml.org/vocabularies/meta#DocumentsModel",
           "http://raml.org/vocabularies/document#DomainElement"
         ],
         "http://raml.org/vocabularies/meta#rootDocument": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/documents",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/documents/root",
             "@type": [
               "http://raml.org/vocabularies/meta#DocumentMapping",
               "http://raml.org/vocabularies/document#DomainElement"
@@ -82,7 +82,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/documents/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/documents/root/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -90,7 +90,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/documents"
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/documents/root"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -129,7 +129,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/PersonNode/property/id",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -221,7 +220,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/FirstLevelNode/property/second",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -319,7 +317,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/ContainerNode/property/container",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -403,7 +400,7 @@
     ],
     "http://raml.org/vocabularies/document#references": [
       {
-        "@id": "http://mulesoft.com/vocabularies/amf-learning#",
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/vocabulary.raml",
         "@type": [
           "http://www.w3.org/2002/07/owl#Ontology2",
           "http://raml.org/vocabularies/meta#Vocabulary",
@@ -505,6 +502,11 @@
             ]
           }
         ],
+        "http://raml.org/vocabularies/meta#base": [
+          {
+            "@value": "http://mulesoft.com/vocabularies/amf-learning#"
+          }
+        ],
         "http://raml.org/vocabularies/document#location": [
           {
             "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/vocabulary.raml"
@@ -517,7 +519,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "http://mulesoft.com/vocabularies/amf-learning#/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/vocabulary.raml/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -537,7 +539,19 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://mulesoft.com/vocabularies/amf-learning#"
+                    "@value": "http://schema.org/name"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(4,0)-(6,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/vocabulary.raml"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -549,12 +563,12 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/name"
+                    "@value": "http://raml.org/vocabularies/meta#base"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(4,0)-(6,0)]"
+                    "@value": "[(10,0)-(12,0)]"
                   }
                 ]
               }
