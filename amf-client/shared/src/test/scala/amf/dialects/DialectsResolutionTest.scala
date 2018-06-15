@@ -1,7 +1,7 @@
 package amf.dialects
 
 import amf.core.model.document.BaseUnit
-import amf.core.remote.{RamlVocabulary, VocabularyYamlHint}
+import amf.core.remote.{AmlVocabulary, VocabularyYamlHint}
 import amf.io.BuildCycleTests
 import amf.plugins.document.vocabularies.VocabulariesPlugin
 
@@ -19,14 +19,14 @@ class DialectsResolutionTest extends DialectResolutionCycleTests {
   val basePath = "amf-client/shared/src/test/resources/vocabularies2/dialects/"
 
   test("resolve include test") {
-    cycle("example9.raml", "example9.resolved.raml", VocabularyYamlHint, RamlVocabulary)
+    cycle("example9.raml", "example9.resolved.raml", VocabularyYamlHint, AmlVocabulary)
   }
 
   test("resolve library test") {
-    cycle("example7.raml", "example7.resolved.raml", VocabularyYamlHint, RamlVocabulary)
+    cycle("example7.raml", "example7.resolved.raml", VocabularyYamlHint, AmlVocabulary)
   }
 
   test("resolve 13 test") {
-    cycle("example13.raml", "example13.resolved.raml", VocabularyYamlHint, RamlVocabulary)
+    cycle("example13.raml", "example13.resolved.raml", VocabularyYamlHint, AmlVocabulary)
   }
 }

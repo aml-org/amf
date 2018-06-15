@@ -41,7 +41,7 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: Rende
 
   private def render(): Future[String] = {
     val vendorString = vendor match {
-      case RamlVocabulary => "RAML Vocabularies"
+      case AmlVocabulary => "RAML Vocabularies"
       case Amf            => "AMF Graph"
       case Payload        => "AMF Payload"
       case Raml08         => "RAML 0.8"
@@ -57,7 +57,7 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: Rende
     val mediaType = vendor match {
       case Amf                                     => "application/ld+json"
       case Payload                                 => "application/amf+json"
-      case Raml10 | Raml08 | Raml | RamlVocabulary => "application/yaml"
+      case Raml10 | Raml08 | Raml | AmlVocabulary => "application/yaml"
       case Oas | Oas2 | Oas3                       => "application/json"
       case Extension | Oas2Yaml                    => "application/yaml"
       case _                                       => "text/plain"

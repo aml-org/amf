@@ -76,9 +76,9 @@ trait OasYaml extends Vendor {
   }
 }
 
-trait RamlVocabulary extends Vendor {
+trait AmlVocabulary extends Vendor {
 
-  override val name: String          = "RAML Vocabularies"
+  override val name: String          = "AML Vocabularies"
   override val defaultSyntax: Syntax = Yaml
 
   override def toString: String = name.trim
@@ -111,7 +111,7 @@ object Raml extends Raml {
   override def version: String = ""
 }
 
-object RamlVocabulary extends RamlVocabulary
+object AmlVocabulary extends AmlVocabulary
 
 object Raml10 extends Raml {
   override def version: String = "1.0"

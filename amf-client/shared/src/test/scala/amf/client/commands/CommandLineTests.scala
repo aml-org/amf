@@ -113,7 +113,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
 
   test("Dialects parsing command") {
     val args = Array("parse",
-      "-in", "RAML Vocabulary",
+      "-in", "AML 1.0",
       "-mime-in", "application/yaml",
       "-ds", "file://amf-client/shared/src/test/resources/vocabularies2/production/k8/dialects/pod.raml",
       "file://amf-client/shared/src/test/resources/vocabularies2/production/k8/examples/pod.raml")
