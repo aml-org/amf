@@ -130,6 +130,7 @@ case class RamlSingleExampleParser(key: String,
           node.tagType match {
             case YType.Map =>
               Option(RamlSingleExampleValueParser(node.as[YMap], newProducer, options).parse())
+            case YType.Null => None
             case _ => // example can be any type or scalar value, like string int datetime etc. We will handle all like strings in this stage
               Option(
                 RamlExampleValueAsString(node, newProducer().add(Annotations(entry.value)), options)
@@ -146,22 +147,25 @@ case class RamlSingleExampleValueParser(node: YNode, producer: () => Example, op
   def parse(): Example = {
     val example = producer().add(Annotations(node))
 
-    node.to[YMap] match {
-      case Right(map) if map.key("value").nonEmpty =>
-        map.key("displayName", (ExampleModel.DisplayName in example).allowingAnnotations)
-        map.key("description", (ExampleModel.Description in example).allowingAnnotations)
-        map.key("strict", (ExampleModel.Strict in example).allowingAnnotations)
+    node.tagType match {
+      case YType.Map =>
+        val map = node.as[YMap]
 
-        map
-          .key("value")
-          .foreach { entry =>
-            RamlExampleValueAsString(entry.value, example, options).populate()
-          }
+        if (map.key("value").nonEmpty) {
+          map.key("displayName", (ExampleModel.DisplayName in example).allowingAnnotations)
+          map.key("description", (ExampleModel.Description in example).allowingAnnotations)
+          map.key("strict", (ExampleModel.Strict in example).allowingAnnotations)
 
-        AnnotationParser(example, map).parse()
+          map
+            .key("value")
+            .foreach { entry =>
+              RamlExampleValueAsString(entry.value, example, options).populate()
+            }
 
-      case _ =>
-        RamlExampleValueAsString(node, example, options).populate()
+          AnnotationParser(example, map).parse()
+        } else RamlExampleValueAsString(node, example, options).populate()
+      case YType.Null => // ignore
+      case _          => RamlExampleValueAsString(node, example, options).populate()
     }
 
     example
