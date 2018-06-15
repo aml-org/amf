@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-        xmlns:tns="http://raml.org/subdir2/message"
-        xmlns:types="http://raml.org/subdir2/types"
-        xmlns:user="http://raml.org/subdir2/user"
-        targetNamespace="http://raml.org/subdir2/message"
+        xmlns:tns="http://a.ml/subdir2/message"
+        xmlns:types="http://a.ml/subdir2/types"
+        xmlns:user="http://a.ml/subdir2/user"
+        targetNamespace="http://a.ml/subdir2/message"
         version="1.0"
         elementFormDefault="qualified"
         attributeFormDefault="unqualified">
 
-    <import namespace="http://raml.org/subdir2/types" schemaLocation="types.xsd" />
-    <import namespace="http://raml.org/subdir2/user" schemaLocation="user.xsd" />
+    <import namespace="http://a.ml/subdir2/types" schemaLocation="types.xsd" />
+    <import namespace="http://a.ml/subdir2/user" schemaLocation="user.xsd" />
 
     <complexType name="Header">
         <sequence>

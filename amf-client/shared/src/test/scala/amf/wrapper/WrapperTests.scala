@@ -116,7 +116,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       output <- new Raml08Renderer().generateString(unit).asFuture
       result <- new Raml08Parser().parseStringAsync(output).asFuture
     } yield {
-      assertBaseUnit(result, "http://raml.org/amf/default_document")
+      assertBaseUnit(result, "http://a.ml/amf/default_document")
     }
   }
 
@@ -127,7 +127,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       output <- new Raml10Renderer().generateString(unit).asFuture
       result <- new Raml10Parser().parseStringAsync(output).asFuture
     } yield {
-      assertBaseUnit(result, "http://raml.org/amf/default_document")
+      assertBaseUnit(result, "http://a.ml/amf/default_document")
     }
   }
 
@@ -138,7 +138,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       output <- new Oas20Renderer().generateString(unit).asFuture
       result <- new Oas20Parser().parseStringAsync(output).asFuture
     } yield {
-      assertBaseUnit(result, "http://raml.org/amf/default_document")
+      assertBaseUnit(result, "http://a.ml/amf/default_document")
     }
   }
 
@@ -149,7 +149,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       output <- new AmfGraphRenderer().generateString(unit).asFuture
       result <- new AmfGraphParser().parseStringAsync(output).asFuture
     } yield {
-      assertBaseUnit(result, "http://raml.org/amf/default_document")
+      assertBaseUnit(result, "http://a.ml/amf/default_document")
     }
   }
 
@@ -421,7 +421,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
         Seq(
           new VocabularyReference()
             .withAlias("raml-doc")
-            .withReference("http://raml.org/vocabularies/doc#")
+            .withReference("http://a.ml/vocabularies/doc#")
         ).toClient)*/
 
     assert(vocab.base.option.asOption.isDefined)
@@ -430,7 +430,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     assert(vocab.description.is("Just a small sample vocabulary"))
 
     val propertyTerm = new DatatypePropertyTerm()
-      .withId("http://raml.org/vocabularies/doc#test")
+      .withId("http://a.ml/vocabularies/doc#test")
       .withRange("http://www.w3.org/2001/XMLSchema#string")
 
     val classTerm = new ClassTerm()
@@ -438,7 +438,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       .withDescription("A sample class")
       .withDisplayName("Class")
 //      .withSubClassOf(Seq("http://test.com/vocabulary/other#Class").asClient)
-//      .withProperties(Seq("http://raml.org/vocabularies/doc#test").asClient)
+//      .withProperties(Seq("http://a.ml/vocabularies/doc#test").asClient)
 
     vocab.withDeclaredElement(classTerm).withDeclaredElement(propertyTerm)
 
@@ -470,7 +470,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
         |external:
         |  other: http://test.com/vocabulary/other#
         |uses:
-        |  raml-doc: http://raml.org/vocabularies/doc#
+        |  raml-doc: http://a.ml/vocabularies/doc#
         |classTerms:
         |  Class:
         |    displayName: Class
@@ -1137,10 +1137,10 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     assert(first.mediaType.is("application/json"))
 
     val typeIds = first.schema.graph().types().asSeq
-    assert(typeIds.contains("http://raml.org/vocabularies/shapes#ScalarShape"))
+    assert(typeIds.contains("http://a.ml/vocabularies/shapes#ScalarShape"))
     assert(typeIds.contains("http://www.w3.org/ns/shacl#Shape"))
-    assert(typeIds.contains("http://raml.org/vocabularies/shapes#Shape"))
-    assert(typeIds.contains("http://raml.org/vocabularies/document#DomainElement"))
+    assert(typeIds.contains("http://a.ml/vocabularies/shapes#Shape"))
+    assert(typeIds.contains("http://a.ml/vocabularies/document#DomainElement"))
 
     val responses = post.responses.asSeq
     assert(

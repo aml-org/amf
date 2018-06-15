@@ -2,25 +2,25 @@
   {
     "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#",
     "@type": [
-      "http://raml.org/vocabularies/meta#DialectInstance",
-      "http://raml.org/vocabularies/document#Document",
-      "http://raml.org/vocabularies/document#Fragment",
-      "http://raml.org/vocabularies/document#Module",
-      "http://raml.org/vocabularies/document#Unit"
+      "http://a.ml/vocabularies/meta#DialectInstance",
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
     ],
-    "http://raml.org/vocabularies/meta#definedBy": [
+    "http://a.ml/vocabularies/meta#definedBy": [
       {
         "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#"
       }
     ],
-    "http://raml.org/vocabularies/document#encodes": [
+    "http://a.ml/vocabularies/document#encodes": [
       {
         "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/",
         "@type": [
           "http://mulesoft.com/vocabularies/about#SoftwareProject",
           "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectNode",
-          "http://raml.org/vocabularies/meta#DialectDomainElement",
-          "http://raml.org/vocabularies/document#DomainElement"
+          "http://a.ml/vocabularies/meta#DialectDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
         ],
         "http://schema.org/codeRepository": [
           {
@@ -48,8 +48,8 @@
             "@type": [
               "http://mulesoft.com/vocabularies/about#License",
               "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/LicenseNode",
-              "http://raml.org/vocabularies/meta#DialectDomainElement",
-              "http://raml.org/vocabularies/document#DomainElement"
+              "http://a.ml/vocabularies/meta#DialectDomainElement",
+              "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://mulesoft.com/vocabularies/about#licenseType": [
               {
@@ -61,20 +61,20 @@
                 "@value": "Apache-2.0"
               }
             ],
-            "http://raml.org/vocabularies/document-source-maps#sources": [
+            "http://a.ml/vocabularies/document-source-maps#sources": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/licenses/0/source-map",
                 "@type": [
-                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "http://raml.org/vocabularies/document-source-maps#element": [
+                    "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/licenses/0"
                       }
                     ],
-                    "http://raml.org/vocabularies/document-source-maps#value": [
+                    "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(20,4)-(23,0)]"
                       }
@@ -96,8 +96,8 @@
             "@type": [
               "http://mulesoft.com/vocabularies/about#Contributor",
               "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ContributorNode",
-              "http://raml.org/vocabularies/meta#DialectDomainElement",
-              "http://raml.org/vocabularies/document#DomainElement"
+              "http://a.ml/vocabularies/meta#DialectDomainElement",
+              "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://schema.org/giveName": [
               {
@@ -117,20 +117,20 @@
                 "@value": "vromero@mulesoft.com"
               }
             ],
-            "http://raml.org/vocabularies/document-source-maps#sources": [
+            "http://a.ml/vocabularies/document-source-maps#sources": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/contributors/0/source-map",
                 "@type": [
-                  "http://raml.org/vocabularies/document-source-maps#SourceMap"
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://raml.org/vocabularies/document-source-maps#lexical": [
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "http://raml.org/vocabularies/document-source-maps#element": [
+                    "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/contributors/0"
                       }
                     ],
-                    "http://raml.org/vocabularies/document-source-maps#value": [
+                    "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(24,2)-(30,0)]"
                       }
@@ -165,20 +165,20 @@
             "@value": "repository"
           }
         ],
-        "http://raml.org/vocabularies/document-source-maps#sources": [
+        "http://a.ml/vocabularies/document-source-maps#sources": [
           {
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/source-map",
             "@type": [
-              "http://raml.org/vocabularies/document-source-maps#SourceMap"
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://raml.org/vocabularies/document-source-maps#lexical": [
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "http://raml.org/vocabularies/document-source-maps#element": [
+                "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/"
                   }
                 ],
-                "http://raml.org/vocabularies/document-source-maps#value": [
+                "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(3,0)-(30,0)]"
                   }
@@ -189,20 +189,20 @@
         ]
       }
     ],
-    "http://raml.org/vocabularies/document-source-maps#sources": [
+    "http://a.ml/vocabularies/document-source-maps#sources": [
       {
         "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/source-map",
         "@type": [
-          "http://raml.org/vocabularies/document-source-maps#SourceMap"
+          "http://a.ml/vocabularies/document-source-maps#SourceMap"
         ],
-        "http://raml.org/vocabularies/document-source-maps#lexical": [
+        "http://a.ml/vocabularies/document-source-maps#lexical": [
           {
-            "http://raml.org/vocabularies/document-source-maps#element": [
+            "http://a.ml/vocabularies/document-source-maps#element": [
               {
                 "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#"
               }
             ],
-            "http://raml.org/vocabularies/document-source-maps#value": [
+            "http://a.ml/vocabularies/document-source-maps#value": [
               {
                 "@value": "[(3,0)-(30,0)]"
               }

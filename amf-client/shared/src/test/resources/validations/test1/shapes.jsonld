@@ -1,20 +1,20 @@
 [
   {
-    "@id": "http://raml.org/vocabularies/amf/parser/DomainElement-name-datatype",
+    "@id": "http://a.ml/vocabularies/amf/parser/DomainElement-name-datatype",
     "@type": "http://www.w3.org/ns/shacl#NodeShape",
-    "http://raml.org/vocabularies/validation#spec": [
+    "http://a.ml/vocabularies/validation#spec": [
       {
         "@value": "AMF"
       }
     ],
     "http://www.w3.org/ns/shacl#targetClass": [
       {
-        "@id": "http://raml.org/vocabularies/http#DomainElement"
+        "@id": "http://a.ml/vocabularies/http#DomainElement"
       }
     ],
     "http://www.w3.org/ns/shacl#property": [
       {
-        "@id": "http://raml.org/vocabularies/amf/parser/DomainElement-name-datatype#property",
+        "@id": "http://a.ml/vocabularies/amf/parser/DomainElement-name-datatype#property",
         "http://www.w3.org/ns/shacl#path": [
           {
             "@id": "http://schema.org/name"
@@ -29,9 +29,9 @@
     ]
   },
   {
-    "@id": "http://raml.org/vocabularies/amf/parser/mandatory-api-version",
+    "@id": "http://a.ml/vocabularies/amf/parser/mandatory-api-version",
     "@type": "http://www.w3.org/ns/shacl#NodeShape",
-    "http://raml.org/vocabularies/validation#spec": [
+    "http://a.ml/vocabularies/validation#spec": [
       {
         "@value": "OpenAPI"
       }
@@ -43,7 +43,7 @@
     ],
     "http://www.w3.org/ns/shacl#property": [
       {
-        "@id": "http://raml.org/vocabularies/amf/parser/mandatory-api-version#property",
+        "@id": "http://a.ml/vocabularies/amf/parser/mandatory-api-version#property",
         "http://www.w3.org/ns/shacl#path": [
           {
             "@id": "http://schema.org/version"

@@ -104,7 +104,7 @@ class ValidationDialectTextGenerator(profile: ValidationProfile) {
            |    targetClass: schema-org.WebAPI
            |    functionConstraint:
            |      functionName: parserSide_${compact(validation.name.split("#").last).replace("-", "_")}
-           |      libraries: http://raml.org/amf/validations/parser_side_validations.js
+           |      libraries: http://a.ml/amf/validations/parser_side_validations.js
         """.stripMargin
     }
   }

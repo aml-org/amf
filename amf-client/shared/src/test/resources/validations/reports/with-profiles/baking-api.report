@@ -12,7 +12,7 @@
       },
       "http://www.w3.org/ns/shacl#resultMessage": "Resource format may be accepted in header",
       "http://www.w3.org/ns/shacl#sourceShape": {
-        "@id": "http://raml.org/vocabularies/data#response-with-accepts"
+        "@id": "http://a.ml/vocabularies/data#response-with-accepts"
       }
     },
     {
@@ -25,19 +25,19 @@
       },
       "http://www.w3.org/ns/shacl#resultMessage": "The version of the resource URLs must match the API version",
       "http://www.w3.org/ns/shacl#sourceShape": {
-        "@id": "http://raml.org/vocabularies/data#matching-version-in-urls"
+        "@id": "http://a.ml/vocabularies/data#matching-version-in-urls"
       },
-      "http://raml.org/vocabularies/amf/parser#lexicalPosition": {
-        "@type": "http://raml.org/vocabularies/amf/parser#Position",
-        "http://raml.org/vocabularies/amf/parser#start": {
-          "@type": "http://raml.org/vocabularies/amf/parser#Location",
-          "http://raml.org/vocabularies/amf/parser#line": 3,
-          "http://raml.org/vocabularies/amf/parser#column": 0
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 3,
+          "http://a.ml/vocabularies/amf/parser#column": 0
         },
-        "http://raml.org/vocabularies/amf/parser#end": {
-          "@type": "http://raml.org/vocabularies/amf/parser#Location",
-          "http://raml.org/vocabularies/amf/parser#line": 70,
-          "http://raml.org/vocabularies/amf/parser#column": 0
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 70,
+          "http://a.ml/vocabularies/amf/parser#column": 0
         }
       }
     },
@@ -50,23 +50,23 @@
         "@id": "file://amf-client/shared/src/test/resources/validations/banking/api.raml#/web-api/end-points/%2Fv3.4%2Fpath/get/200/application%2Fxml"
       },
       "http://www.w3.org/ns/shacl#resultPath": {
-        "@id": "http://raml.org/vocabularies/http#mediaType"
+        "@id": "http://a.ml/vocabularies/http#mediaType"
       },
       "http://www.w3.org/ns/shacl#resultMessage": "JSON should be used to format content passed in and out of an API in the message body",
       "http://www.w3.org/ns/shacl#sourceShape": {
-        "@id": "http://raml.org/vocabularies/data#json-payloads"
+        "@id": "http://a.ml/vocabularies/data#json-payloads"
       },
-      "http://raml.org/vocabularies/amf/parser#lexicalPosition": {
-        "@type": "http://raml.org/vocabularies/amf/parser#Position",
-        "http://raml.org/vocabularies/amf/parser#start": {
-          "@type": "http://raml.org/vocabularies/amf/parser#Location",
-          "http://raml.org/vocabularies/amf/parser#line": 16,
-          "http://raml.org/vocabularies/amf/parser#column": 10
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 16,
+          "http://a.ml/vocabularies/amf/parser#column": 10
         },
-        "http://raml.org/vocabularies/amf/parser#end": {
-          "@type": "http://raml.org/vocabularies/amf/parser#Location",
-          "http://raml.org/vocabularies/amf/parser#line": 19,
-          "http://raml.org/vocabularies/amf/parser#column": 0
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 19,
+          "http://a.ml/vocabularies/amf/parser#column": 0
         }
       }
     },
@@ -79,23 +79,23 @@
         "@id": "file://amf-client/shared/src/test/resources/validations/banking/api.raml#/web-api/end-points/%2Fv3.4%2Fpathxml/get/request/application%2Fxml"
       },
       "http://www.w3.org/ns/shacl#resultPath": {
-        "@id": "http://raml.org/vocabularies/http#mediaType"
+        "@id": "http://a.ml/vocabularies/http#mediaType"
       },
       "http://www.w3.org/ns/shacl#resultMessage": "JSON should be used to format content passed in and out of an API in the message body",
       "http://www.w3.org/ns/shacl#sourceShape": {
-        "@id": "http://raml.org/vocabularies/data#json-payloads"
+        "@id": "http://a.ml/vocabularies/data#json-payloads"
       },
-      "http://raml.org/vocabularies/amf/parser#lexicalPosition": {
-        "@type": "http://raml.org/vocabularies/amf/parser#Position",
-        "http://raml.org/vocabularies/amf/parser#start": {
-          "@type": "http://raml.org/vocabularies/amf/parser#Location",
-          "http://raml.org/vocabularies/amf/parser#line": 26,
-          "http://raml.org/vocabularies/amf/parser#column": 6
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 26,
+          "http://a.ml/vocabularies/amf/parser#column": 6
         },
-        "http://raml.org/vocabularies/amf/parser#end": {
-          "@type": "http://raml.org/vocabularies/amf/parser#Location",
-          "http://raml.org/vocabularies/amf/parser#line": 28,
-          "http://raml.org/vocabularies/amf/parser#column": 0
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 28,
+          "http://a.ml/vocabularies/amf/parser#column": 0
         }
       }
     },
@@ -108,23 +108,23 @@
         "@id": "file://amf-client/shared/src/test/resources/validations/banking/api.raml#/web-api/end-points/%2Fv3.4%2Fpathxml/get/200/application%2Fblah"
       },
       "http://www.w3.org/ns/shacl#resultPath": {
-        "@id": "http://raml.org/vocabularies/http#mediaType"
+        "@id": "http://a.ml/vocabularies/http#mediaType"
       },
       "http://www.w3.org/ns/shacl#resultMessage": "JSON should be used to format content passed in and out of an API in the message body",
       "http://www.w3.org/ns/shacl#sourceShape": {
-        "@id": "http://raml.org/vocabularies/data#allowed-payloads"
+        "@id": "http://a.ml/vocabularies/data#allowed-payloads"
       },
-      "http://raml.org/vocabularies/amf/parser#lexicalPosition": {
-        "@type": "http://raml.org/vocabularies/amf/parser#Position",
-        "http://raml.org/vocabularies/amf/parser#start": {
-          "@type": "http://raml.org/vocabularies/amf/parser#Location",
-          "http://raml.org/vocabularies/amf/parser#line": 31,
-          "http://raml.org/vocabularies/amf/parser#column": 10
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 31,
+          "http://a.ml/vocabularies/amf/parser#column": 10
         },
-        "http://raml.org/vocabularies/amf/parser#end": {
-          "@type": "http://raml.org/vocabularies/amf/parser#Location",
-          "http://raml.org/vocabularies/amf/parser#line": 35,
-          "http://raml.org/vocabularies/amf/parser#column": 0
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 35,
+          "http://a.ml/vocabularies/amf/parser#column": 0
         }
       }
     },
@@ -137,23 +137,23 @@
         "@id": "file://amf-client/shared/src/test/resources/validations/banking/api.raml#/web-api/end-points/%2Fv3.4%2Fpathxml/get/200/application%2Fblah"
       },
       "http://www.w3.org/ns/shacl#resultPath": {
-        "@id": "http://raml.org/vocabularies/http#mediaType"
+        "@id": "http://a.ml/vocabularies/http#mediaType"
       },
       "http://www.w3.org/ns/shacl#resultMessage": "JSON should be used to format content passed in and out of an API in the message body",
       "http://www.w3.org/ns/shacl#sourceShape": {
-        "@id": "http://raml.org/vocabularies/data#json-payloads"
+        "@id": "http://a.ml/vocabularies/data#json-payloads"
       },
-      "http://raml.org/vocabularies/amf/parser#lexicalPosition": {
-        "@type": "http://raml.org/vocabularies/amf/parser#Position",
-        "http://raml.org/vocabularies/amf/parser#start": {
-          "@type": "http://raml.org/vocabularies/amf/parser#Location",
-          "http://raml.org/vocabularies/amf/parser#line": 31,
-          "http://raml.org/vocabularies/amf/parser#column": 10
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 31,
+          "http://a.ml/vocabularies/amf/parser#column": 10
         },
-        "http://raml.org/vocabularies/amf/parser#end": {
-          "@type": "http://raml.org/vocabularies/amf/parser#Location",
-          "http://raml.org/vocabularies/amf/parser#line": 35,
-          "http://raml.org/vocabularies/amf/parser#column": 0
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 35,
+          "http://a.ml/vocabularies/amf/parser#column": 0
         }
       }
     },
@@ -170,19 +170,19 @@
       },
       "http://www.w3.org/ns/shacl#resultMessage": "Identifiers must be camel-cased",
       "http://www.w3.org/ns/shacl#sourceShape": {
-        "@id": "http://raml.org/vocabularies/data#resource-camel-case-identifiers"
+        "@id": "http://a.ml/vocabularies/data#resource-camel-case-identifiers"
       },
-      "http://raml.org/vocabularies/amf/parser#lexicalPosition": {
-        "@type": "http://raml.org/vocabularies/amf/parser#Position",
-        "http://raml.org/vocabularies/amf/parser#start": {
-          "@type": "http://raml.org/vocabularies/amf/parser#Location",
-          "http://raml.org/vocabularies/amf/parser#line": 36,
-          "http://raml.org/vocabularies/amf/parser#column": 15
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 36,
+          "http://a.ml/vocabularies/amf/parser#column": 15
         },
-        "http://raml.org/vocabularies/amf/parser#end": {
-          "@type": "http://raml.org/vocabularies/amf/parser#Location",
-          "http://raml.org/vocabularies/amf/parser#line": 36,
-          "http://raml.org/vocabularies/amf/parser#column": 31
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 36,
+          "http://a.ml/vocabularies/amf/parser#column": 31
         }
       }
     },
@@ -199,19 +199,19 @@
       },
       "http://www.w3.org/ns/shacl#resultMessage": "Property keys must be camel cased",
       "http://www.w3.org/ns/shacl#sourceShape": {
-        "@id": "http://raml.org/vocabularies/data#json-properties"
+        "@id": "http://a.ml/vocabularies/data#json-properties"
       },
-      "http://raml.org/vocabularies/amf/parser#lexicalPosition": {
-        "@type": "http://raml.org/vocabularies/amf/parser#Position",
-        "http://raml.org/vocabularies/amf/parser#start": {
-          "@type": "http://raml.org/vocabularies/amf/parser#Location",
-          "http://raml.org/vocabularies/amf/parser#line": 45,
-          "http://raml.org/vocabularies/amf/parser#column": 10
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 45,
+          "http://a.ml/vocabularies/amf/parser#column": 10
         },
-        "http://raml.org/vocabularies/amf/parser#end": {
-          "@type": "http://raml.org/vocabularies/amf/parser#Location",
-          "http://raml.org/vocabularies/amf/parser#line": 47,
-          "http://raml.org/vocabularies/amf/parser#column": 0
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 47,
+          "http://a.ml/vocabularies/amf/parser#column": 0
         }
       }
     },
@@ -224,23 +224,23 @@
         "@id": "file://amf-client/shared/src/test/resources/validations/banking/api.raml#/web-api/end-points/%2Fpath%2Fduplicated"
       },
       "http://www.w3.org/ns/shacl#resultPath": {
-        "@id": "http://raml.org/vocabularies/http#path"
+        "@id": "http://a.ml/vocabularies/http#path"
       },
       "http://www.w3.org/ns/shacl#resultMessage": "The version must be before the resource name, for example v1.3/payments/",
       "http://www.w3.org/ns/shacl#sourceShape": {
-        "@id": "http://raml.org/vocabularies/data#version-in-urls"
+        "@id": "http://a.ml/vocabularies/data#version-in-urls"
       },
-      "http://raml.org/vocabularies/amf/parser#lexicalPosition": {
-        "@type": "http://raml.org/vocabularies/amf/parser#Position",
-        "http://raml.org/vocabularies/amf/parser#start": {
-          "@type": "http://raml.org/vocabularies/amf/parser#Location",
-          "http://raml.org/vocabularies/amf/parser#line": 56,
-          "http://raml.org/vocabularies/amf/parser#column": 0
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 56,
+          "http://a.ml/vocabularies/amf/parser#column": 0
         },
-        "http://raml.org/vocabularies/amf/parser#end": {
-          "@type": "http://raml.org/vocabularies/amf/parser#Location",
-          "http://raml.org/vocabularies/amf/parser#line": 56,
-          "http://raml.org/vocabularies/amf/parser#column": 16
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 56,
+          "http://a.ml/vocabularies/amf/parser#column": 16
         }
       }
     },
@@ -254,19 +254,19 @@
       },
       "http://www.w3.org/ns/shacl#resultMessage": "Resource names must be unique",
       "http://www.w3.org/ns/shacl#sourceShape": {
-        "@id": "http://raml.org/vocabularies/data#unique-identifiers"
+        "@id": "http://a.ml/vocabularies/data#unique-identifiers"
       },
-      "http://raml.org/vocabularies/amf/parser#lexicalPosition": {
-        "@type": "http://raml.org/vocabularies/amf/parser#Position",
-        "http://raml.org/vocabularies/amf/parser#start": {
-          "@type": "http://raml.org/vocabularies/amf/parser#Location",
-          "http://raml.org/vocabularies/amf/parser#line": 56,
-          "http://raml.org/vocabularies/amf/parser#column": 0
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 56,
+          "http://a.ml/vocabularies/amf/parser#column": 0
         },
-        "http://raml.org/vocabularies/amf/parser#end": {
-          "@type": "http://raml.org/vocabularies/amf/parser#Location",
-          "http://raml.org/vocabularies/amf/parser#line": 70,
-          "http://raml.org/vocabularies/amf/parser#column": 0
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 70,
+          "http://a.ml/vocabularies/amf/parser#column": 0
         }
       }
     }

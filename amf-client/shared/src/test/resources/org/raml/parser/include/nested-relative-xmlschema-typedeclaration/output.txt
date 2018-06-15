@@ -7,17 +7,17 @@ version: "1.0"
       application/xml:
         example: |-
           <?xml version="1.0" encoding="UTF-8"?>
-          <tns1:Request xmlns:tns1="http://raml.org/subdir1/request"
-                        xmlns:tns2="http://raml.org/subdir2/message"
-                        xmlns:tns3="http://raml.org/subdir2/user"
-                        xmlns:tns4="http://raml.org/subdir2/person">
+          <tns1:Request xmlns:tns1="http://a.ml/subdir1/request"
+                        xmlns:tns2="http://a.ml/subdir2/message"
+                        xmlns:tns3="http://a.ml/subdir2/user"
+                        xmlns:tns4="http://a.ml/subdir2/person">
               <tns1:Header>
                   <tns2:User>
                       <tns3:Id>ramluserid</tns3:Id>
                       <tns3:Gender>MA</tns3:Gender>
                       <tns3:EmailAddresses>
                           <tns4:EmailAddress>
-                              <tns4:EmailAddress>user@raml.org</tns4:EmailAddress>
+                              <tns4:EmailAddress>user@a.ml</tns4:EmailAddress>
                           </tns4:EmailAddress>
                       </tns3:EmailAddresses>
                   </tns2:User>
@@ -30,12 +30,12 @@ version: "1.0"
         type: |-
           <?xml version="1.0" encoding="UTF-8"?>
           <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                     targetNamespace="http://raml.org/subdir1/request"
-                     xmlns:tns="http://raml.org/subdir1/request"
-                     xmlns:message="http://raml.org/subdir2/message"
+                     targetNamespace="http://a.ml/subdir1/request"
+                     xmlns:tns="http://a.ml/subdir1/request"
+                     xmlns:message="http://a.ml/subdir2/message"
                      elementFormDefault="qualified">
 
-              <xs:import namespace="http://raml.org/subdir2/message" schemaLocation="../subdir2/message.xsd" />
+              <xs:import namespace="http://a.ml/subdir2/message" schemaLocation="../subdir2/message.xsd" />
 
               <xs:element name="Request">
                   <xs:complexType>
@@ -51,17 +51,17 @@ types:
   Request:
     example: |-
       <?xml version="1.0" encoding="UTF-8"?>
-      <tns1:Request xmlns:tns1="http://raml.org/subdir1/request"
-                    xmlns:tns2="http://raml.org/subdir2/message"
-                    xmlns:tns3="http://raml.org/subdir2/user"
-                    xmlns:tns4="http://raml.org/subdir2/person">
+      <tns1:Request xmlns:tns1="http://a.ml/subdir1/request"
+                    xmlns:tns2="http://a.ml/subdir2/message"
+                    xmlns:tns3="http://a.ml/subdir2/user"
+                    xmlns:tns4="http://a.ml/subdir2/person">
           <tns1:Header>
               <tns2:User>
                   <tns3:Id>ramluserid</tns3:Id>
                   <tns3:Gender>MA</tns3:Gender>
                   <tns3:EmailAddresses>
                       <tns4:EmailAddress>
-                          <tns4:EmailAddress>user@raml.org</tns4:EmailAddress>
+                          <tns4:EmailAddress>user@a.ml</tns4:EmailAddress>
                       </tns4:EmailAddress>
                   </tns3:EmailAddresses>
               </tns2:User>
@@ -74,12 +74,12 @@ types:
     type: |-
       <?xml version="1.0" encoding="UTF-8"?>
       <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                 targetNamespace="http://raml.org/subdir1/request"
-                 xmlns:tns="http://raml.org/subdir1/request"
-                 xmlns:message="http://raml.org/subdir2/message"
+                 targetNamespace="http://a.ml/subdir1/request"
+                 xmlns:tns="http://a.ml/subdir1/request"
+                 xmlns:message="http://a.ml/subdir2/message"
                  elementFormDefault="qualified">
 
-          <xs:import namespace="http://raml.org/subdir2/message" schemaLocation="../subdir2/message.xsd" />
+          <xs:import namespace="http://a.ml/subdir2/message" schemaLocation="../subdir2/message.xsd" />
 
           <xs:element name="Request">
               <xs:complexType>
