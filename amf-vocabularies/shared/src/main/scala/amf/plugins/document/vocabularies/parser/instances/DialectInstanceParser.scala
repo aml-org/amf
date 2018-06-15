@@ -835,8 +835,9 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
                                                     value)
         None
       case YType.Float
-          if property.literalRange().value() == (Namespace.Xsd + "float")
-            .iri() || property.literalRange().value() == (Namespace.Shapes + "number").iri() =>
+          if property.literalRange().value() == (Namespace.Xsd + "float").iri() ||
+            property.literalRange().value() == (Namespace.Shapes + "number").iri() ||
+            property.literalRange().value() == (Namespace.Xsd + "double").iri() =>
         Some(value.as[Double])
       case YType.Float =>
         ctx.inconsistentPropertyRangeValueViolation(node.id,

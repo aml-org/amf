@@ -19,31 +19,31 @@ class DialectInstancesRDFTest extends AsyncFunSuite with PlatformSecrets with Bu
   }
 
   test("RDF 2 full test") {
-    withDialectFull("dialect2.raml", "example2.raml", "example2.raml", VocabularyYamlHint, RamlVocabulary)
+    withDialectFull("dialect2.raml", "example2.raml", "example2.raml", VocabularyYamlHint, AmlVocabulary)
   }
 
   ignore("RDF 3 full test") {
-    withDialectFull("dialect3.raml", "example3.raml", "example3.raml", VocabularyYamlHint, RamlVocabulary)
+    withDialectFull("dialect3.raml", "example3.raml", "example3.raml", VocabularyYamlHint, AmlVocabulary)
   }
 
   test("RDF 4 full test") {
-    withDialectFull("dialect4.raml", "example4.raml", "example4.raml", VocabularyYamlHint, RamlVocabulary)
+    withDialectFull("dialect4.raml", "example4.raml", "example4.raml", VocabularyYamlHint, AmlVocabulary)
   }
 
   test("RDF 5 full test") {
-    withDialectFull("dialect5.raml", "example5.raml", "example5.raml", VocabularyYamlHint, RamlVocabulary)
+    withDialectFull("dialect5.raml", "example5.raml", "example5.raml", VocabularyYamlHint, AmlVocabulary)
   }
 
   test("RDF 6 full test") {
-    withDialectFull("dialect6.raml", "example6.raml", "example6.raml", VocabularyYamlHint, RamlVocabulary)
+    withDialectFull("dialect6.raml", "example6.raml", "example6.raml", VocabularyYamlHint, AmlVocabulary)
   }
 
   test("RDF 1 Vocabulary full test") {
-    cycleFullRdf("example1.raml", "example1.raml", VocabularyYamlHint, RamlVocabulary, "amf-client/shared/src/test/resources/vocabularies2/vocabularies/")
+    cycleFullRdf("example1.raml", "example1.raml", VocabularyYamlHint, AmlVocabulary, "amf-client/shared/src/test/resources/vocabularies2/vocabularies/")
   }
 
   test("RDF 1 Dialect full test") {
-    cycleFullRdf("example1.raml", "example1.raml", VocabularyYamlHint, RamlVocabulary, "amf-client/shared/src/test/resources/vocabularies2/dialects/")
+    cycleFullRdf("example1.raml", "example1.raml", VocabularyYamlHint, AmlVocabulary, "amf-client/shared/src/test/resources/vocabularies2/dialects/")
   }
 
 

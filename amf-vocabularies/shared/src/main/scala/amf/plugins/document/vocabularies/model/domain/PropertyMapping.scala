@@ -117,6 +117,7 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
         case literal if literal.endsWith("number")                   => Type.Float
         case literal if literal == (Namespace.Xsd + "integer").iri() => Type.Int
         case literal if literal == (Namespace.Xsd + "float").iri()   => Type.Float
+        case literal if literal == (Namespace.Xsd + "double").iri()  => Type.Double
         case literal if literal == (Namespace.Xsd + "boolean").iri() => Type.Bool
         case literal if literal == (Namespace.Xsd + "decimal").iri() => Type.Int
         case literal if literal == (Namespace.Xsd + "time").iri()    => Type.Time

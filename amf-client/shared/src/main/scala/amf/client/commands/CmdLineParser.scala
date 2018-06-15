@@ -16,12 +16,12 @@ object CmdLineParser {
     "RAML 0.8" == f ||
     "OAS 3.0.0" == f ||
     "OAS 2.0" == f ||
-    "RAML Vocabulary" == f
+    "AML 1.0" == f
 
   }
 
   val parser: OptionParser[ParserConfig] = new scopt.OptionParser[ParserConfig]("amf") {
-    head("Application Modeling Framework", "1.0")
+    head("Anything Modeling Framework", "1.0")
 
     arg[String]("<file_in> [<file_out>]")
       .unbounded()
@@ -44,7 +44,7 @@ object CmdLineParser {
         if (knownSpec(f)) {
           success
         } else {
-          failure("Invalid value, values supported: 'RAML 1.0', 'RAML 0.8', 'OpenAPI 2.0','AMF'")
+          failure("Invalid value, values supported: 'RAML 1.0', 'RAML 0.8', 'OpenAPI 2.0', 'AML 1.0', 'AMF'")
         }
       })
       .action((f, c) => c.copy(inputFormat = Some(f)))
@@ -61,7 +61,7 @@ object CmdLineParser {
         if (knownSpec(f)) {
           success
         } else {
-          failure("Invalid value, values supported: 'RAML 1.0', 'RAML 0.8', 'OpenAPI 2.0', 'AMF'")
+          failure("Invalid value, values supported: 'RAML 1.0', 'RAML 0.8', 'OpenAPI 2.0', 'AML 1.0', 'AMF'")
         }
       })
       .action((f, c) => c.copy(validationProfile = f))
@@ -103,7 +103,7 @@ object CmdLineParser {
             if (knownSpec(f)) {
               success
             } else {
-              failure("Invalid value, values supported: 'RAML 1.0', 'RAML 0.8', 'OpenAPI 2.0', 'AMF'")
+              failure("Invalid value, values supported: 'RAML 1.0', 'RAML 0.8', 'OpenAPI 2.0', 'AML 1.0', 'AMF'")
             }
           })
           .action((f, c) => c.copy(outputFormat = Some(f)))

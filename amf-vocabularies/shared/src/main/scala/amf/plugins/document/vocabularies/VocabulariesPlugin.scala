@@ -93,9 +93,9 @@ object VocabulariesPlugin
 
   val registry = new DialectsRegistry
 
-  override val ID: String = "AMF Vocabularies"
+  override val ID: String = "AML 1.0"
 
-  override val vendors: Seq[String] = Seq("AMF Vocabularies")
+  override val vendors: Seq[String] = Seq("AML 1.0")
 
   override def init(): Future[AMFPlugin] = Future { this }
 
