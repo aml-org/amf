@@ -7,7 +7,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote._
 import amf.plugins.document.graph.AMFGraphPlugin
-import amf.plugins.document.vocabularies.VocabulariesPlugin
+import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML08Plugin, RAML10Plugin, _}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
@@ -29,7 +29,7 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, syntax: Syntax, options: Rende
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(JsonSchemaPlugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(VocabulariesPlugin)
+  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMLPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(WebAPIDomainPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
 

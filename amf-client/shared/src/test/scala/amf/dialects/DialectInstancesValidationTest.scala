@@ -3,7 +3,7 @@ package amf.dialects
 import amf.core.AMFCompiler
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.vocabularies.VocabulariesPlugin
+import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.features.validation.AMFValidatorPlugin
 import org.scalatest.AsyncFunSuite
@@ -134,7 +134,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
   }
 
   protected def validate(dialect: String, instance: String, numErrors: Int) = {
-    amf.core.AMF.registerPlugin(VocabulariesPlugin)
+    amf.core.AMF.registerPlugin(AMLPlugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     for {
       _ <- amf.core.AMF.init()
@@ -144,7 +144,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
           platform,
           None,
           Some("application/yaml"),
-          VocabulariesPlugin.ID
+          AMLPlugin.ID
         ).build()
       }
       instance <- {
@@ -154,7 +154,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
           platform,
           None,
           Some("application/yaml"),
-          VocabulariesPlugin.ID
+          AMLPlugin.ID
         ).build()
       }
       report <- {
@@ -178,7 +178,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
                                         name: String,
                                         numErrors: Int,
                                         directory: String = basePath) = {
-    amf.core.AMF.registerPlugin(VocabulariesPlugin)
+    amf.core.AMF.registerPlugin(AMLPlugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     for {
       _ <- amf.core.AMF.init()
@@ -188,7 +188,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
           platform,
           None,
           Some("application/yaml"),
-          VocabulariesPlugin.ID
+          AMLPlugin.ID
         ).build()
       }
       profile <- {
@@ -202,7 +202,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
           platform,
           None,
           Some("application/yaml"),
-          VocabulariesPlugin.ID
+          AMLPlugin.ID
         ).build()
       }
       report <- {

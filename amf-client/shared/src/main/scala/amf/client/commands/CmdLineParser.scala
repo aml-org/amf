@@ -85,6 +85,11 @@ object CmdLineParser {
           .text("Generate source maps in AMF output")
           .action((f, c) => c.copy(withSourceMaps = f))
 
+        opt[Boolean]("compacted")
+          .abbr("ctx")
+          .text("Compact namespaces in context")
+          .action((f, c) => c.copy(withCompactNamespaces = f))
+
         opt[Boolean]("validate")
           .abbr("v")
           .text("Perform validation")

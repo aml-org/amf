@@ -116,7 +116,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
         RuntimeValidator.disableValidationsAsync() { reenable =>
           RuntimeCompiler(uri,
                           Some("application/yaml"),
-                          VocabulariesPlugin.ID,
+                          AMLPlugin.ID,
                           Context(platform),
                           env = environment)
             .map {

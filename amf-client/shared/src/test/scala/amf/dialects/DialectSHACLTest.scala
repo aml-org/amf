@@ -6,7 +6,7 @@ import amf.core.remote.{Amf, Hint, Vendor, VocabularyYamlHint}
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.Validation
 import amf.io.BuildCycleTests
-import amf.plugins.document.vocabularies.VocabulariesPlugin
+import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.Dialect
 import org.scalatest.{Assertion, AsyncFunSuite}
 
@@ -25,7 +25,7 @@ class DialectSHACLTest extends AsyncFunSuite with PlatformSecrets with  BuildCyc
 
   /** Method for transforming parsed unit. Override if necessary. */
   override def transformRdf(unit: BaseUnit, config: CycleConfig): RdfModel = {
-    VocabulariesPlugin.shapesForDialect(unit.asInstanceOf[Dialect], "http://metadata.org/validations.js")
+    AMLPlugin.shapesForDialect(unit.asInstanceOf[Dialect], "http://metadata.org/validations.js")
   }
 
   /** Method to render parsed unit. Override if necessary. */
