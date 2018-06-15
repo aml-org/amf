@@ -40,14 +40,14 @@
     ],
     "http://raml.org/vocabularies/meta#documents": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#",
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/documents",
         "@type": [
           "http://raml.org/vocabularies/meta#DocumentsModel",
           "http://raml.org/vocabularies/document#DomainElement"
         ],
         "http://raml.org/vocabularies/meta#rootDocument": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/documents",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/documents/root",
             "@type": [
               "http://raml.org/vocabularies/meta#DocumentMapping",
               "http://raml.org/vocabularies/document#DomainElement"
@@ -64,7 +64,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/documents/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/documents/root/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -72,7 +72,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/documents"
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/documents/root"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -168,7 +168,7 @@
         ],
         "http://raml.org/vocabularies/meta#library": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/documents",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/documents/modules",
             "@type": [
               "http://raml.org/vocabularies/meta#DocumentMapping",
               "http://raml.org/vocabularies/document#DomainElement"
@@ -260,7 +260,7 @@
             ],
             "http://raml.org/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/documents/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/documents/modules/source-map",
                 "@type": [
                   "http://raml.org/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -268,7 +268,7 @@
                   {
                     "http://raml.org/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/documents"
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/documents/modules"
                       }
                     ],
                     "http://raml.org/vocabularies/document-source-maps#value": [
@@ -307,7 +307,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ContributorNode/property/givenName",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -357,7 +356,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ContributorNode/property/middleName",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -407,7 +405,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ContributorNode/property/familyName",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -457,7 +454,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ContributorNode/property/email",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -507,7 +503,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ContributorNode/property/repositoryUser",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -557,7 +552,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ContributorNode/property/roles",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -654,7 +648,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectNode/property/name",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -704,7 +697,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectNode/property/description",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -754,7 +746,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectNode/property/homepage",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -804,7 +795,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectNode/property/logo",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -854,7 +844,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectNode/property/copyrightHolder",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -904,7 +893,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectNode/property/developmentStatus",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -954,7 +942,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectNode/property/repository",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -1004,7 +991,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectNode/property/keywords",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -1054,7 +1040,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectNode/property/discussion",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -1115,7 +1100,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectNode/property/continuousIntegration",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -1176,7 +1160,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectNode/property/projectManagement",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -1237,7 +1220,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectNode/property/licenses",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -1298,7 +1280,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectNode/property/contributors",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -1359,7 +1340,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectNode/property/partOf",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -1414,7 +1394,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectNode/property/hasPart",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -1469,7 +1448,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectNode/property/sameAs",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -1524,7 +1502,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectNode/property/forkedFrom",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -1616,7 +1593,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectManagementNode/property/name",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -1666,7 +1642,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectManagementNode/property/url",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -1716,7 +1691,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectManagementNode/property/description",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -1766,7 +1740,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectManagementNode/property/type",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -1816,7 +1789,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectManagementNode/property/systemUrl",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -1908,7 +1880,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/DiscussionChannelNode/property/name",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -1958,7 +1929,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/DiscussionChannelNode/property/url",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -2008,7 +1978,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/DiscussionChannelNode/property/description",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -2058,7 +2027,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/DiscussionChannelNode/property/type",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -2150,7 +2118,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ContinuousIntegrationNode/property/name",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -2200,7 +2167,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ContinuousIntegrationNode/property/url",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -2250,7 +2216,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ContinuousIntegrationNode/property/description",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -2300,7 +2265,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ContinuousIntegrationNode/property/type",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -2350,7 +2314,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ContinuousIntegrationNode/property/systemUrl",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -2442,7 +2405,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/LicenseNode/property/name",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -2492,7 +2454,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/LicenseNode/property/url",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -2565,7 +2526,7 @@
     ],
     "http://raml.org/vocabularies/document#references": [
       {
-        "@id": "http://mulesoft.com/vocabularies/about#",
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-vocabulary.raml",
         "@type": [
           "http://www.w3.org/2002/07/owl#Ontology2",
           "http://raml.org/vocabularies/meta#Vocabulary",
@@ -2578,7 +2539,7 @@
         ],
         "http://raml.org/vocabularies/meta#externals": [
           {
-            "@id": "http://mulesoft.com/vocabularies/about#/externals/schema-org",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-vocabulary.raml/externals/schema-org",
             "@type": [
               "http://www.w3.org/2002/07/owl#Ontology",
               "http://raml.org/vocabularies/meta#ExternalVocabulary",
@@ -4025,6 +3986,11 @@
             ]
           }
         ],
+        "http://raml.org/vocabularies/meta#base": [
+          {
+            "@value": "http://mulesoft.com/vocabularies/about#"
+          }
+        ],
         "http://raml.org/vocabularies/document#location": [
           {
             "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-vocabulary.raml"
@@ -4038,7 +4004,7 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "http://mulesoft.com/vocabularies/about#/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-vocabulary.raml/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
@@ -4058,7 +4024,19 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://mulesoft.com/vocabularies/about#"
+                    "@value": "http://schema.org/name"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(3,0)-(5,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-vocabulary.raml"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
@@ -4070,12 +4048,12 @@
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/name"
+                    "@value": "http://raml.org/vocabularies/meta#base"
                   }
                 ],
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(3,0)-(5,0)]"
+                    "@value": "[(9,0)-(11,0)]"
                   }
                 ]
               }

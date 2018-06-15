@@ -38,6 +38,14 @@ class DialectInstancesRDFTest extends AsyncFunSuite with PlatformSecrets with Bu
     withDialectFull("dialect6.raml", "example6.raml", "example6.raml", VocabularyYamlHint, RamlVocabulary)
   }
 
+  test("RDF 1 Vocabulary full test") {
+    cycleFullRdf("example1.raml", "example1.raml", VocabularyYamlHint, RamlVocabulary, "amf-client/shared/src/test/resources/vocabularies2/vocabularies/")
+  }
+
+  test("RDF 1 Dialect full test") {
+    cycleFullRdf("example1.raml", "example1.raml", VocabularyYamlHint, RamlVocabulary, "amf-client/shared/src/test/resources/vocabularies2/dialects/")
+  }
+
 
 
 
