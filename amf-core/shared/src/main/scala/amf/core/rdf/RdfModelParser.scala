@@ -498,14 +498,15 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
       case key@AnnotationName(annotation) =>
         val consumer = result.annotation(annotation)
         node.properties.get(key) match {
-          case Some(properties) if properties.nonEmpty && properties.head.isInstanceOf[Uri] =>
-            findLink(properties.head) match {
-              case Some(linkedNode) =>
-                val k: PropertyObject = linkedNode.properties(SourceMapModel.Element.value.iri()).head
-                val v: PropertyObject = linkedNode.properties(SourceMapModel.Value.value.iri()).head
-                consumer(k.value, v.value)
-              case _ => //
-
+          case Some(properties) =>
+            properties.foreach { property =>
+              findLink(property) match {
+                case Some(linkedNode) =>
+                  val k: PropertyObject = linkedNode.properties(SourceMapModel.Element.value.iri()).head
+                  val v: PropertyObject = linkedNode.properties(SourceMapModel.Value.value.iri()).head
+                  consumer(k.value, v.value)
+                case _ => //
+              }
             }
         }
       case _ => // Unknown annotation identifier

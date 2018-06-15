@@ -24,6 +24,13 @@ case class PublicNodeMapping(fields: Fields, annotations: Annotations) extends D
 
   override def meta: Obj = PublicNodeMappingModel
 
+  override def adopted(parent: String): this.type = {
+    if (Option(id).isEmpty) {
+      simpleAdoption(parent)
+    }
+    this
+  }
+
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = ""
 }
@@ -47,6 +54,13 @@ case class DocumentMapping(fields: Fields, annotations: Annotations) extends Dom
 
   override def meta: Obj = DocumentMappingModel
 
+  override def adopted(parent: String): this.type = {
+    if (Option(id).isEmpty) {
+      simpleAdoption(parent)
+    }
+    this
+  }
+
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = ""
 }
@@ -69,7 +83,7 @@ case class DocumentsModel(fields: Fields, annotations: Annotations) extends Doma
   override def meta: Obj = DocumentsModelModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = ""
+  override def componentId: String = "/documents"
 }
 
 object DocumentsModel {

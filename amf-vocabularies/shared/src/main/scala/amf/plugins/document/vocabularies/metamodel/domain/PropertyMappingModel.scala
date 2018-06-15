@@ -32,6 +32,6 @@ object PropertyMappingModel extends DomainElementModel {
 
   override def modelInstance: AmfObject = PropertyMapping()
 
-  override val `type`: List[ValueType] = Namespace.Meta + "NodePropertyMapping" :: Namespace.Shacl + "PropertyShape" :: DomainElementModel.`type`
+  override val `type`: List[ValueType] = Namespace.Meta + "NodePropertyMapping" :: /* Namespace.Shacl + "PropertyShape" :: */ DomainElementModel.`type`
 
 }
