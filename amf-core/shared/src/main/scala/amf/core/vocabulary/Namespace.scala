@@ -11,17 +11,17 @@ case class Namespace(base: String) {
 
 object Namespace {
 
-  val Document = Namespace("http://raml.org/vocabularies/document#")
+  val Document = Namespace("http://a.ml/vocabularies/document#")
 
-  val Http = Namespace("http://raml.org/vocabularies/http#")
+  val Http = Namespace("http://a.ml/vocabularies/http#")
 
-  val Security = Namespace("http://raml.org/vocabularies/security#")
+  val Security = Namespace("http://a.ml/vocabularies/security#")
 
-  val Shapes = Namespace("http://raml.org/vocabularies/shapes#")
+  val Shapes = Namespace("http://a.ml/vocabularies/shapes#")
 
-  val Data = Namespace("http://raml.org/vocabularies/data#")
+  val Data = Namespace("http://a.ml/vocabularies/data#")
 
-  val SourceMaps = Namespace("http://raml.org/vocabularies/document-source-maps#")
+  val SourceMaps = Namespace("http://a.ml/vocabularies/document-source-maps#")
 
   val Shacl = Namespace("http://www.w3.org/ns/shacl#")
 
@@ -31,22 +31,22 @@ object Namespace {
 
   val Xsd = Namespace("http://www.w3.org/2001/XMLSchema#")
 
-  val AnonShapes = Namespace("http://raml.org/vocabularies/shapes/anon#")
+  val AnonShapes = Namespace("http://a.ml/vocabularies/shapes/anon#")
 
   val Rdf = Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#")
 
   // To build full URIs without namespace
   val WihtoutNamespace = Namespace("")
 
-  val Meta = Namespace("http://raml.org/vocabularies/meta#")
+  val Meta = Namespace("http://a.ml/vocabularies/meta#")
 
   val Owl = Namespace("http://www.w3.org/2002/07/owl#")
 
   val Rdfs = Namespace("http://www.w3.org/2000/01/rdf-schema#")
 
-  val AmfParser = Namespace("http://raml.org/vocabularies/amf/parser#")
+  val AmfParser = Namespace("http://a.ml/vocabularies/amf/parser#")
 
-  val AmfValidation = Namespace("http://raml.org/vocabularies/amf/validation#")
+  val AmfValidation = Namespace("http://a.ml/vocabularies/amf/validation#")
 
   val ns = mutable.HashMap(
     "rdf"         -> Rdf,
@@ -122,17 +122,17 @@ object Namespace {
   }
 
   def find(uri: String): Namespace = uri match {
-    case "http://raml.org/vocabularies/document" => Document
+    case "http://a.ml/vocabularies/document" => Document
 
-    case "http://raml.org/vocabularies/http" => Http
+    case "http://a.ml/vocabularies/http" => Http
 
-    case "http://raml.org/vocabularies/security" => Security
+    case "http://a.ml/vocabularies/security" => Security
 
-    case "http://raml.org/vocabularies/shapes" => Shapes
+    case "http://a.ml/vocabularies/shapes" => Shapes
 
-    case "http://raml.org/vocabularies/data" => Data
+    case "http://a.ml/vocabularies/data" => Data
 
-    case "http://raml.org/vocabularies/document-source-maps" => SourceMaps
+    case "http://a.ml/vocabularies/document-source-maps" => SourceMaps
 
     case "http://www.w3.org/ns/shacl" => Shacl
 
@@ -142,20 +142,20 @@ object Namespace {
 
     case "http://www.w3.org/2001/XMLSchema" => Xsd
 
-    case "http://raml.org/vocabularies/shapes/anon" => AnonShapes
+    case "http://a.ml/vocabularies/shapes/anon" => AnonShapes
 
     case "http://www.w3.org/1999/02/22-rdf-syntax-ns" => Rdf
 
     // To build full URIs without namespace
     case "" => WihtoutNamespace
 
-    case "http://raml.org/vocabularies/meta" => Meta
+    case "http://a.ml/vocabularies/meta" => Meta
 
     case "http://www.w3.org/2002/07/owl" => Owl
 
     case "http://www.w3.org/2000/01/rdf-schema" => Rdfs
 
-    case "http://raml.org/vocabularies/amf/parser" => AmfParser
+    case "http://a.ml/vocabularies/amf/parser" => AmfParser
   }
 
   private def resolve(prefix: String): Option[Namespace] = ns.get(prefix)

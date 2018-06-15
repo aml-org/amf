@@ -12,7 +12,7 @@ object ValidationDialectText {
       |external:
       |  schema-org: "http://schema.org/"
       |  shacl: "http://www.w3.org/ns/shacl#"
-      |  validation: "http://raml.org/vocabularies/amf-validation#"
+      |  validation: "http://a.ml/vocabularies/amf-validation#"
       |nodeMappings:
       |  functionConstraintNode:
       |    classTerm: shacl.JSConstraint

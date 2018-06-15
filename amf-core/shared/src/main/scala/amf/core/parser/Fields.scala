@@ -97,7 +97,7 @@ class Fields {
 
   /** Set field value entry-point. */
   def set(id: String, field: Field, value: AmfElement, annotations: Annotations = Annotations()): this.type = {
-    if (field.value.iri() == "http://raml.org/vocabularies/document#declares") {
+    if (field.value.iri() == "http://a.ml/vocabularies/document#declares") {
       // declaration, set correctly the id
       adopt(id + "#/declarations", value)
     } else {

@@ -5,9 +5,9 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://raml.org/vocabularies/amf/parser#invalid-type-inheritance
+- Source: http://a.ml/vocabularies/amf/parser#invalid-type-inheritance
   Message: Resolution error: sub type has a weaker constraint for max-length than base type for maxProperties
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/string-invalid/input.raml#/declarations/types/scalar/MyThirdType
-  Property: http://raml.org/vocabularies/shapes#inherits
+  Property: http://a.ml/vocabularies/shapes#inherits
   Position: Some(LexicalInformation([(14,4)-(18,0)]))

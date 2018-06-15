@@ -50,7 +50,7 @@ class Validation(platform: Platform) {
     RuntimeValidator.validatorOption.get.asInstanceOf[AMFValidatorPlugin.type]
   //
 
-  val url = "http://raml.org/dialects/profile.raml"
+  val url = "http://a.ml/dialects/profile.raml"
 
   /**
     * Loads the validation dialect from the provided URL

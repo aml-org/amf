@@ -143,7 +143,7 @@ trait Platform extends FileMediaType {
   var rdfFramework: Option[RdfFramework] = None
 
   /** Location where the helper functions for custom validations must be retrieved */
-  protected def customValidationLibraryHelperLocation: String = "http://raml.org/amf/validation.js"
+  protected def customValidationLibraryHelperLocation: String = "http://a.ml/amf/validation.js"
 
   /** Write specified content on given url. */
   def write(url: String, content: String): Future[Unit] = {

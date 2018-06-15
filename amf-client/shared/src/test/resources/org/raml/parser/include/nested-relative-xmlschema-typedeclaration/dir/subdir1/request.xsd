@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           targetNamespace="http://raml.org/subdir1/request"
-           xmlns:tns="http://raml.org/subdir1/request"
-           xmlns:message="http://raml.org/subdir2/message"
+           targetNamespace="http://a.ml/subdir1/request"
+           xmlns:tns="http://a.ml/subdir1/request"
+           xmlns:message="http://a.ml/subdir2/message"
            elementFormDefault="qualified">
 
-    <xs:import namespace="http://raml.org/subdir2/message" schemaLocation="../subdir2/message.xsd" />
+    <xs:import namespace="http://a.ml/subdir2/message" schemaLocation="../subdir2/message.xsd" />
 
     <xs:element name="Request">
         <xs:complexType>

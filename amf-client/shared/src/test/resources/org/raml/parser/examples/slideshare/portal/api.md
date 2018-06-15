@@ -8,7 +8,7 @@ This portal provides
 
 _This portal is built on the Anypoint Platform for APIs, using RAML version 0.8._
 
-_For more information about RAML, see [http://raml.org](http://raml.org)._
+_For more information about RAML, see [http://a.ml](http://a.ml)._
 
 _The API notebooks are all executable! Hit "enter" in any code cell to execute it (and all cells before it that have not executed yet), or scroll to the bottom of the notebook and click "Play notebook". For more information, see [http://apinotebook.com](http://apinotebook.com)._
 
