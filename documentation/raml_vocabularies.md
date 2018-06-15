@@ -1,11 +1,11 @@
 # AML Vocabularies 1.0
 
-AML Vocabularies is a mechanism to describe information about any domain of discourse using familiar YAML syntax and modular documents.
+AML Vocabularies is a mechanism to describe any domain of discourse using familiar YAML syntax and modular documents.
 AML Vocabularies define a hierarchy of classes and properties according to the semantics of W3C Standard [OWL 2](https://www.w3.org/TR/owl2-overview/) that can be used as the formal foundation for any information processing system.
 
 ## Vocabulary declaration
 
-AML Vocabularies are declares using the `#%Vocabulary 1.0` header and must provide a mandatory `base` property providing a [URI prefix](https://www.w3.org/TR/curie/) that will be used to generate unique URIs for all terms in the vocabulary.
+AML Vocabularies are declared using the `#%Vocabulary 1.0` header. A mandatory `base` property provides a [URI prefix](https://www.w3.org/TR/curie/) that will be used to generate unique URIs for all terms in the vocabulary.
 
 ``` yaml
 #%Vocabulary 1.0
@@ -46,11 +46,9 @@ The rest of the vocabulary document consist of two maps: `classTerms` declaring 
 
 ## Property terms
 
-Property terms represent relations between individuals and data types or between individuals of different classes.
+Property terms, introduced by the `propertyTerms` property in the top level document, represent relations between individuals and data types or between individuals of different classes.
 
-They are introduced by the `propertyTerms` property in the top level document.
-
-In the first case, we will be defining a data type property, in the second case we will be introducing an object property.
+Will be defining a data type property for the former, and introducing an object property for the latter.
 
 The `range` property can be used to define the type of property:
 
@@ -98,7 +96,7 @@ base:extendsProfile rdfs:type owl:ObjectProperty ;
 
 ### Datatype properties
 
-This is an example of data type property declaration:
+This is an example of a data type property declaration:
 
 ``` yaml
 
@@ -134,8 +132,8 @@ The available data type identifiers and their RDF translation can be found in th
 ### Property inheritance
 
 Properties can hold an inheritance relationship. The `extends` property is used to express the inheritance relationship.
-One property term can inherit from multiple property terms. Data type properties cannot inherit from object properties and the other way around.
-Semantics for inheritance is also provided by OWL semantics as in the following example:
+One property term can inherit from multiple property terms. Data type properties cannot inherit from object properties and vice versa.
+Semantics for inheritance is also provided by OWL semantics as shown in the following example:
 
 ``` yaml
 propertyTerms:
@@ -155,7 +153,7 @@ base:extendsProfile rdfs:type owl:ObjectProperty ;
   rdfs:range base:Profile .
 ```
 
-Meaning that for each assertion:
+Consequently for each assertion like:
 
 ``` n3
 myProfile base:extendsProfile otherProfile .
@@ -233,7 +231,7 @@ base:Validation rdfs:subClassOf shacl:Shape .
 
 ### Class and property domains
 
-A class can be added to the domain of a property terms usin ghte `properties` property of a class term definition.
+A class can be added to the domain of a property terms using the `properties` property of a class term definition.
 The value of `properties` is a list of propertyTerms that will have this class in the domain.
 Semantics of the property domain are provided by the OWL translation.
 
@@ -249,7 +247,7 @@ Semantics of the property domain are provided by the OWL translation.
 vocab:jsCode rdfs:domain vocab:JSConstraint
 ```
 
-The implications of introducing a class in the domain of a property is that provided this assertion based on the previous example:
+The implications of introducing a class in the domain of a property is provided by this assertion, which is based on the previous example:
 
 ``` n3
 a vocab:jsCode b .
