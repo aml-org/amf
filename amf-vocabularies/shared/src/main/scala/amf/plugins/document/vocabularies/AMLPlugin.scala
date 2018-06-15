@@ -83,7 +83,7 @@ object DialectHeader extends RamlHeaderExtractor with JsonHeaderExtractor {
   }
 }
 
-object VocabulariesPlugin
+object AMLPlugin
     extends AMFDocumentPlugin
     with RamlHeaderExtractor
     with JsonHeaderExtractor

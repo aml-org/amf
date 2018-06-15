@@ -4,7 +4,7 @@ import amf.client.model.document._
 import amf.client.model.domain._
 import amf.core.metamodel.Obj
 import amf.core.remote.Platform
-import amf.plugins.document.vocabularies.VocabulariesPlugin
+import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.metamodel.document._
 import amf.plugins.document.vocabularies.metamodel.domain._
 import amf.plugins.document.vocabularies.model.{document, domain}
@@ -70,6 +70,6 @@ object VocabulariesRegister {
       case s: document.DialectInstanceLibrary => new DialectInstanceLibrary(s)
     }
 
-    amf.Core.registerPlugin(VocabulariesPlugin)
+    amf.Core.registerPlugin(AMLPlugin)
   }
 }
