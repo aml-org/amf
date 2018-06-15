@@ -10,7 +10,7 @@ import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{FieldEntry, Position, Value}
 import amf.core.utils._
-import amf.plugins.document.vocabularies.VocabulariesPlugin
+import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, JsonPointerRef, RefInclude}
 import amf.plugins.document.vocabularies.emitters.common.IdCounter
 import amf.plugins.document.vocabularies.model.document._
@@ -54,7 +54,7 @@ trait DialectEmitterHelper {
   }
 
   def findNodeInRegistry(nodeMappingId: String): Option[(Dialect, NodeMapping)] =
-    VocabulariesPlugin.registry.findNode(nodeMappingId)
+    AMLPlugin.registry.findNode(nodeMappingId)
 }
 
 case class ReferencesEmitter(baseUnit: BaseUnit, ordering: SpecOrdering, aliases: Map[String, (String, String)])

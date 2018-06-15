@@ -13,7 +13,7 @@ import amf.core.validation.core.{ValidationProfile, ValidationReport, Validation
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations}
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.graph.parser.ScalarEmitter
-import amf.plugins.document.vocabularies.VocabulariesPlugin
+import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
 import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
@@ -35,13 +35,13 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     ExecutionLog.log("Register RDF framework")
     platform.rdfFramework = Some(PlatformValidator.instance)
     ExecutionLog.log(s"AMFValidatorPlugin#init: registering validation dialect")
-    VocabulariesPlugin.registry.registerDialect(url, ValidationDialectText.text) map { _ =>
+    AMLPlugin.registry.registerDialect(url, ValidationDialectText.text) map { _ =>
       ExecutionLog.log(s"AMFValidatorPlugin#init: validation dialect registered")
       this
     }
   }
 
-  override def dependencies() = Seq(SYamlSyntaxPlugin, VocabulariesPlugin, AMFGraphPlugin)
+  override def dependencies() = Seq(SYamlSyntaxPlugin, AMLPlugin, AMFGraphPlugin)
 
   val url = "http://a.ml/dialects/profile.raml"
 
@@ -69,7 +69,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     RuntimeCompiler(
       validationProfilePath,
       Some("application/yaml"),
-      VocabulariesPlugin.ID,
+      AMLPlugin.ID,
       Context(platform)
     ).map {
         case parsed: DialectInstance if parsed.definedBy().is(url + "#") =>
@@ -87,7 +87,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
               profilesPlugins.get(profile.baseProfileName.getOrElse("AMF")) match {
                 case Some(plugin) =>
                   plugin
-                case None => VocabulariesPlugin
+                case None => AMLPlugin
 
               }
           }

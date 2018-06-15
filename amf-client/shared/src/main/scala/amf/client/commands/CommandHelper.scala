@@ -6,7 +6,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.services.{RuntimeCompiler, RuntimeSerializer}
-import amf.plugins.document.vocabularies.VocabulariesPlugin
+import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.document.webapi.{OAS20Plugin, OAS30Plugin, RAML08Plugin, RAML10Plugin}
 import amf.plugins.features.validation.AMFValidatorPlugin
@@ -18,7 +18,7 @@ trait CommandHelper {
   val platform: Platform
 
   def AMFInit(): Future[Unit] = {
-    amf.core.AMF.registerPlugin(VocabulariesPlugin)
+    amf.core.AMF.registerPlugin(AMLPlugin)
     amf.core.AMF.registerPlugin(RAML10Plugin)
     amf.core.AMF.registerPlugin(RAML08Plugin)
     amf.core.AMF.registerPlugin(OAS20Plugin)
@@ -41,7 +41,7 @@ trait CommandHelper {
 
   protected def processDialects(config: ParserConfig): Future[Unit] = {
     val dialectFutures = config.dialects.map { dialect =>
-      VocabulariesPlugin.registry.registerDialect(dialect)
+      AMLPlugin.registry.registerDialect(dialect)
     }
     Future.sequence(dialectFutures).map[Unit] { _ =>
       }
@@ -62,6 +62,9 @@ trait CommandHelper {
     val generateOptions = RenderOptions()
     if (config.withSourceMaps) {
       generateOptions.withSourceMaps
+    }
+    if (config.withCompactNamespaces) {
+      generateOptions.withCompactUris
     }
     val mediaType = effectiveMediaType(config.outputMediaType, config.outputFormat)
     val vendor    = effectiveVendor(config.outputMediaType, config.outputFormat)
