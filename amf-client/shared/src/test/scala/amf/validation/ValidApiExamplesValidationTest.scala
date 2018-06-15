@@ -41,4 +41,8 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   test("Raml 0.8 Query Parameter Positive test case") {
     checkValid("/08/date-query-parameter-correct.raml")
   }
+
+  test("Ignore empty example") {
+    checkValid("/examples/empty-example.raml")
+  }
 }
