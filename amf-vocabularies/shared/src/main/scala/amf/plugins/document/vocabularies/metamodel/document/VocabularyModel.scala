@@ -20,5 +20,5 @@ object VocabularyModel extends ModuleModel {
   override val `type`: List[ValueType] =
     Namespace.Owl + "Ontology2" :: Namespace.Meta + "Vocabulary" :: BaseUnitModel.`type`
 
-  override def fields: List[Field] = Name :: Imports :: Externals :: Declares :: BaseUnitModel.Location :: BaseUnitModel.fields
+  override def fields: List[Field] = Name :: Imports :: Externals :: Declares :: Base :: BaseUnitModel.Location :: BaseUnitModel.fields
 }

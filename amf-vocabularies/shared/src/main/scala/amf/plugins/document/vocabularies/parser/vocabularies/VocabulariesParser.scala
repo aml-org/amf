@@ -264,7 +264,7 @@ case class VocabulariesReferencesParser(map: YMap, references: Seq[ParsedReferen
 class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContext) extends BaseSpecParser {
 
   val map: YMap = root.parsed.document.as[YMap]
-  val vocabulary: Vocabulary = Vocabulary(Annotations(map)).withLocation(root.location)
+  val vocabulary: Vocabulary = Vocabulary(Annotations(map)).withLocation(root.location).withId(root.location)
 
   def parseDocument(): BaseUnit = {
 
@@ -283,10 +283,6 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
       vocabulary.set(VocabularyModel.Usage, value.string(), Annotations(entry))
     })
 
-    // base must have a value and is different from the location, but ID is the base
-    vocabulary.withLocation(root.location)
-    vocabulary.adopted(vocabulary.base.value())
-
     // closed node validation
     ctx.closedNode("vocabulary", vocabulary.id, map)
 
@@ -301,7 +297,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
 
     val declarables = ctx.terms()
     val imported = ctx.imported map { case (alias, library) =>
-        VocabularyReference().withAlias(alias).withReference(library.id).adopted(vocabulary.id)
+        VocabularyReference().withAlias(alias).withReference(library.id).withBase(library.base.value()).adopted(vocabulary.id)
     }
     if (imported.nonEmpty)
       vocabulary.withImports(imported.toSeq)
@@ -330,7 +326,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
     val classTermAlias = classTermDeclaration.key.as[YScalar].text
     classTerm.withName(classTermAlias)
 
-    ctx.resolveClassTermAlias(vocabulary.id, classTermAlias, classTermDeclaration.key, strictLocal = false) match {
+    ctx.resolveClassTermAlias(vocabulary.base.value(), classTermAlias, classTermDeclaration.key, strictLocal = false) match {
       case None     => ctx.missingTermViolation(classTermAlias, vocabulary.id, classTermDeclaration.key)
       case Some(id) => classTerm.id = id
     }
@@ -358,7 +354,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
           }
 
           val properties: Seq[String] = refs.map { term: String =>
-            ctx.resolvePropertyTermAlias(vocabulary.id, term, entry.value, strictLocal =  true) match {
+            ctx.resolvePropertyTermAlias(vocabulary.base.value(), term, entry.value, strictLocal =  true) match {
               case Some(v) => Some(v)
               case None =>
                 ctx.missingTermViolation(term, vocabulary.id, entry.value)
@@ -380,7 +376,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
           }
 
           val superClasses: Seq[String] = refs.map { term: String =>
-            ctx.resolveClassTermAlias(vocabulary.id, term, entry.value, strictLocal = true) match {
+            ctx.resolveClassTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true) match {
               case Some(v) => Some(v)
               case None =>
                 ctx.missingTermViolation(term, vocabulary.id, entry.value)
@@ -420,7 +416,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
     val propertyTermAlias = propertyTermDeclaration.key.as[YScalar].text
     propertyTerm.withName(propertyTermAlias)
 
-    ctx.resolvePropertyTermAlias(vocabulary.id, propertyTermAlias, propertyTermDeclaration.key, strictLocal = false) match {
+    ctx.resolvePropertyTermAlias(vocabulary.base.value(), propertyTermAlias, propertyTermDeclaration.key, strictLocal = false) match {
       case None     => ctx.missingTermViolation(propertyTermAlias, vocabulary.id, propertyTermDeclaration.key)
       case Some(id) => propertyTerm.id = id
     }
@@ -447,7 +443,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
             case "any" => Some((Namespace.Xsd + "anyType").iri())
             case "string" |  "integer" | "float" | "boolean" | "time" | "date" | "dateTime" =>  Some((Namespace.Xsd + entry.value.as[YScalar].text).iri())
             case classAlias =>
-              ctx.resolveClassTermAlias(vocabulary.id, classAlias, entry.value, strictLocal = true) match {
+              ctx.resolveClassTermAlias(vocabulary.base.value(), classAlias, entry.value, strictLocal = true) match {
                 case Some(classTermId) => Some(classTermId)
                 case None              =>
                   ctx.missingTermViolation(classAlias, vocabulary.id, entry.value)
@@ -470,7 +466,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
           }
 
           val superClasses: Seq[String] = refs.map { term: String =>
-            ctx.resolvePropertyTermAlias(vocabulary.id, term, entry.value, strictLocal = true) match {
+            ctx.resolvePropertyTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true) match {
               case Some(v) => Some(v)
               case None =>
                 ctx.missingTermViolation(term, vocabulary.id, entry.value)

@@ -20,7 +20,7 @@
     ],
     "http://raml.org/vocabularies/meta#documents": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example2.raml#",
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example2.raml#/documents",
         "@type": [
           "http://raml.org/vocabularies/meta#DocumentsModel",
           "http://raml.org/vocabularies/document#DomainElement"
@@ -130,7 +130,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example2.raml#/declarations/nodeB/property/za",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -223,7 +222,6 @@
             "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/example2.raml#/declarations/nodeA/property/a",
             "@type": [
               "http://raml.org/vocabularies/meta#NodePropertyMapping",
-              "http://www.w3.org/ns/shacl#PropertyShape",
               "http://raml.org/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
@@ -291,7 +289,7 @@
     ],
     "http://raml.org/vocabularies/document#references": [
       {
-        "@id": "http://raml.org/vocabularies/vocab2#",
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/vocab2.raml",
         "@type": [
           "http://www.w3.org/2002/07/owl#Ontology2",
           "http://raml.org/vocabularies/meta#Vocabulary",
@@ -363,6 +361,11 @@
             ]
           }
         ],
+        "http://raml.org/vocabularies/meta#base": [
+          {
+            "@value": "http://raml.org/vocabularies/vocab2#"
+          }
+        ],
         "http://raml.org/vocabularies/document#location": [
           {
             "@value": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/vocab2.raml"
@@ -370,11 +373,35 @@
         ],
         "http://raml.org/vocabularies/document-source-maps#sources": [
           {
-            "@id": "http://raml.org/vocabularies/vocab2#/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/vocab2.raml/source-map",
             "@type": [
               "http://raml.org/vocabularies/document-source-maps#SourceMap"
             ],
             "http://raml.org/vocabularies/document-source-maps#lexical": [
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://raml.org/vocabularies/meta#base"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(3,0)]"
+                  }
+                ]
+              },
+              {
+                "http://raml.org/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/dialects/vocab2.raml"
+                  }
+                ],
+                "http://raml.org/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(8,4)]"
+                  }
+                ]
+              },
               {
                 "http://raml.org/vocabularies/document-source-maps#element": [
                   {
@@ -384,18 +411,6 @@
                 "http://raml.org/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(3,0)-(4,0)]"
-                  }
-                ]
-              },
-              {
-                "http://raml.org/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://raml.org/vocabularies/vocab2#"
-                  }
-                ],
-                "http://raml.org/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(2,0)-(8,4)]"
                   }
                 ]
               }

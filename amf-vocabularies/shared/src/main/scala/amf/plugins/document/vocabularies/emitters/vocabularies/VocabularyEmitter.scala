@@ -41,7 +41,7 @@ trait AliasMapper {
       aliasMapping += (external.base.value() -> external.alias.value())
     }
     vocabulary.imports.foreach { imported =>
-      aliasMapping += (imported.reference.value() -> imported.alias.value())
+      aliasMapping += (imported.base.value() -> imported.alias.value())
     }
     aliasMapping
   }
@@ -284,7 +284,7 @@ case class VocabularyEmitter(vocabulary: Vocabulary) extends AliasMapper {
 
     emitters ++= Seq(new EntryEmitter {
       override def emit(b: EntryBuilder): Unit = {
-        MapEntryEmitter("base", vocabulary.id).emit(b)
+        MapEntryEmitter("base", vocabulary.base.value()).emit(b)
       }
 
       override def position(): Position = ZERO

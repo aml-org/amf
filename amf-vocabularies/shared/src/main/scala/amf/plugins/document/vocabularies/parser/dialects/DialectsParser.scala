@@ -10,7 +10,7 @@ import amf.core.parser.{Annotations, BaseSpecParser, ErrorHandler, FutureDeclara
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
-import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel
+import amf.plugins.document.vocabularies.metamodel.domain.{DocumentsModelModel, PropertyMappingModel}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary, Vocabulary}
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.SyntaxErrorReporter
@@ -238,6 +238,9 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
             val alias: String = e.key.as[YScalar].text
             val url: String   = library(e)
             target(url).foreach {
+              case module: Vocabulary =>
+                collectAlias(dialect, alias -> (module.base.value(), url))
+                result += (alias, module)
               case module: DeclaresModel =>
                 collectAlias(dialect, alias -> (module.id, url))
                 result += (alias, module)

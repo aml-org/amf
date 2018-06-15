@@ -43,7 +43,7 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
         val obj = metaModel(element)
 
         if (obj.dynamic) traverseDynamicMetaModel(id, element, obj)
-        else traverseStaticMetamodel(id, element, obj)
+        else traverseStaticMetamodel(id, element, obj, sources)
 
         createCustomExtensions(element)
 
@@ -90,7 +90,7 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
       }
     }
 
-    def traverseStaticMetamodel(id: String, element: AmfObject, obj: Obj): Unit = {
+    def traverseStaticMetamodel(id: String, element: AmfObject, obj: Obj, sources: SourceMap): Unit = {
       createTypeNode(id, obj, Some(element))
 
       // workaround for lazy values in shape
@@ -98,6 +98,7 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
       obj.fields.map(element.fields.entryJsonld) foreach {
         case Some(FieldEntry(f, v)) =>
           val url = f.value.iri()
+          sources.property(url)(v)
           objectValue(id, url, f.`type`, v)
         case None => // Missing field
       }
@@ -309,10 +310,10 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
     }
 
     private def createAnnotationNodes(id: String, sources: SourceMap): Unit = {
-      sources.annotations.foreach({
-        case (a, values) =>
-          values.zipWithIndex.foreach { case((iri, v),i) =>
-            val valueNodeId = s"${id}_$i"
+      sources.annotations.zipWithIndex.foreach({
+        case ((a, values), i) =>
+          values.zipWithIndex.foreach { case((iri, v),j) =>
+            val valueNodeId = s"${id}_${i}_$j"
             rdfmodel.addTriple(id, ValueType(Namespace.SourceMaps, a).iri(), valueNodeId)
             rdfmodel.addTriple(valueNodeId, SourceMapModel.Element.value.iri(), iri)
             rdfmodel.addTriple(valueNodeId, SourceMapModel.Value.value.iri(), v, None)

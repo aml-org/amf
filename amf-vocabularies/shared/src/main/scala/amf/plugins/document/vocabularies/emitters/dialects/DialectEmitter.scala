@@ -10,6 +10,7 @@ import amf.core.model.domain.{AmfScalar, DomainElement}
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
 import amf.core.vocabulary.Namespace
+import amf.plugins.document.vocabularies.model.document.Vocabulary
 import amf.plugins.document.vocabularies.annotations.AliasesLocation
 import amf.plugins.document.vocabularies.emitters.common.{ExternalEmitter, IdCounter}
 import amf.plugins.document.vocabularies.emitters.instances.DialectEmitterHelper
@@ -487,11 +488,15 @@ case class ReferencesEmitter(baseUnit: BaseUnit, ordering: SpecOrdering, aliases
     baseUnit.annotations.find(classOf[AliasesLocation]).map(annot => Position((annot.position, 0))).getOrElse(ZERO)
 }
 
-case class ReferenceEmitter(reference: BaseUnit, ordering: SpecOrdering, aliases: Map[String, (String, String)])
+case class ReferenceEmitter(reference: DeclaresModel, ordering: SpecOrdering, aliases: Map[String, (String, String)])
     extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
-    aliases.get(reference.id) match {
+    val aliasKey = reference match {
+      case vocabulary: Vocabulary => vocabulary.base.value()
+      case _                      => reference.id
+    }
+    aliases.get(aliasKey) match {
       case Some((alias, location)) =>
         MapEntryEmitter(alias, location).emit(b)
       case _ => // TODO: emit violation
@@ -528,12 +533,16 @@ trait DialectDocumentsEmitters {
           m.location.replace("file://", "")
         }
 
-        if (maps.get(m.id).isDefined) {
-          val alias = maps(m.id)
-          acc + (m.id -> (alias, importLocation))
+        val aliasKey = m match {
+          case v: Vocabulary => v.base.value()
+          case _             => m.id
+        }
+        if (maps.get(aliasKey).isDefined) {
+          val alias = maps(aliasKey)
+          acc + (aliasKey -> (alias, importLocation))
         } else {
           val nextAlias = idCounter.genId("uses_")
-          acc + (m.id -> (nextAlias, importLocation))
+          acc + (aliasKey -> (nextAlias, importLocation))
         }
       case (acc: Map[String, (String, String)], _) => acc
     }
