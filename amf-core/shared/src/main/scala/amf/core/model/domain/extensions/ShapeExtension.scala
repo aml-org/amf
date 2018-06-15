@@ -8,7 +8,7 @@ import org.yaml.model.YPart
 
 case class ShapeExtension(fields: Fields, annotations: Annotations) extends DomainElement {
 
-  id = "http://raml.org/vocabularies#document/shape_extension"
+  id = "http://a.ml/vocabularies#document/shape_extension"
 
   def definedBy: PropertyShape = fields.field(DefinedBy)
   def extension: DataNode      = fields.field(Extension)

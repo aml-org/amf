@@ -9,17 +9,17 @@ Level: Violation
   Message: Data at / must be greater than or equal to 10.5
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/number-invalid/input.raml#/declarations/types/scalar/DefaultMax/example/bad
-  Property: http://raml.org/vocabularies/data#value
+  Property: http://a.ml/vocabularies/data#value
   Position: Some(LexicalInformation([(10,13)-(10,17)]))
 
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/number-invalid/input.raml#/declarations/types/scalar/DefaultMin_validation_validation_maximum/prop
   Message: Data at / must be smaller than or equal to 20.2
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/number-invalid/input.raml#/declarations/types/scalar/DefaultMin/example/bad
-  Property: http://raml.org/vocabularies/data#value
+  Property: http://a.ml/vocabularies/data#value
   Position: Some(LexicalInformation([(16,13)-(16,17)]))
 
-- Source: http://raml.org/vocabularies/amf/parser#min-max-inclusive
+- Source: http://a.ml/vocabularies/amf/parser#min-max-inclusive
   Message: Maximum must be greater than or equal to minimum
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/number-invalid/input.raml#/declarations/types/scalar/RangeError

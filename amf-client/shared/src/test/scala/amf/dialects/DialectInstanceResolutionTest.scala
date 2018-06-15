@@ -1,7 +1,7 @@
 package amf.dialects
 
 import amf.core.model.document.BaseUnit
-import amf.core.remote.{Hint, RamlVocabulary, Vendor, VocabularyYamlHint}
+import amf.core.remote.{Hint, AmlVocabulary, Vendor, VocabularyYamlHint}
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.BuildCycleTests
 import amf.plugins.document.vocabularies.VocabulariesPlugin
@@ -21,11 +21,11 @@ class DialectInstanceResolutionTest extends DialectInstanceResolutionCycleTests 
   val basePath = "amf-client/shared/src/test/resources/vocabularies2/instances/"
 
   test("resolve fragment test") {
-    withDialect("dialect8.raml", "example8.raml", "example8.resolved.raml", VocabularyYamlHint, RamlVocabulary)
+    withDialect("dialect8.raml", "example8.raml", "example8.resolved.raml", VocabularyYamlHint, AmlVocabulary)
   }
 
   test("resolve library test") {
-    withDialect("dialect9.raml", "example9.raml", "example9.resolved.raml", VocabularyYamlHint, RamlVocabulary)
+    withDialect("dialect9.raml", "example9.raml", "example9.resolved.raml", VocabularyYamlHint, AmlVocabulary)
   }
 
   protected def withDialect(dialect: String,

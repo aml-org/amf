@@ -17,7 +17,7 @@ class DialectProductionTest extends BuildCycleTests {
   }
 
   test("Can parse validation dialect instance"){
-    withDialect("validation_dialect.raml", "validation_instance1.raml", "validation_instance1.raml.raml", VocabularyYamlHint, RamlVocabulary)
+    withDialect("validation_dialect.raml", "validation_instance1.raml", "validation_instance1.raml.raml", VocabularyYamlHint, AmlVocabulary)
   }
 
   test("Can parse validation dialect cfg1 instance"){
@@ -37,15 +37,15 @@ class DialectProductionTest extends BuildCycleTests {
   }
 
   test("Can parse and generated ABOUT dialect") {
-    cycle("ABOUT-dialect.raml", "ABOUT-dialect.raml.raml", VocabularyYamlHint, RamlVocabulary, basePath + "ABOUT/")
+    cycle("ABOUT-dialect.raml", "ABOUT-dialect.raml.raml", VocabularyYamlHint, AmlVocabulary, basePath + "ABOUT/")
   }
 
   test("Can parse and generate ABOUT dialect instance"){
-    withDialect("ABOUT-dialect.raml", "ABOUT.yaml", "ABOUT.yaml.raml", VocabularyYamlHint, RamlVocabulary, basePath + "ABOUT/")
+    withDialect("ABOUT-dialect.raml", "ABOUT.yaml", "ABOUT.yaml.raml", VocabularyYamlHint, AmlVocabulary, basePath + "ABOUT/")
   }
 
   test("Can parse and generate ABOUT-github dialect instance"){
-    withDialect("ABOUT-GitHub-dialect.raml", "example.yaml", "example.yaml.raml", VocabularyYamlHint, RamlVocabulary, basePath + "ABOUT/github/")
+    withDialect("ABOUT-GitHub-dialect.raml", "example.yaml", "example.yaml.raml", VocabularyYamlHint, AmlVocabulary, basePath + "ABOUT/github/")
   }
 
   test("Can parse and generate the Instagram dialect") {

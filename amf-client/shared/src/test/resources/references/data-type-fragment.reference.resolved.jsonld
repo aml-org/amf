@@ -61,7 +61,7 @@
             ],
             "shacl:path": [
               {
-                "@id": "http://raml.org/vocabularies/data#name"
+                "@id": "http://a.ml/vocabularies/data#name"
               }
             ],
             "raml-shapes:range": [
@@ -155,7 +155,7 @@
                 ],
                 "shacl:path": [
                   {
-                    "@id": "http://raml.org/vocabularies/data#name"
+                    "@id": "http://a.ml/vocabularies/data#name"
                   }
                 ],
                 "raml-shapes:range": [
@@ -226,9 +226,9 @@
     ],
     "@context": {
       "@base": "file://amf-client/shared/src/test/resources/references/data-type-fragment.reference.raml",
-      "raml-shapes": "http://raml.org/vocabularies/shapes#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "shacl": "http://www.w3.org/ns/shacl#",
-      "doc": "http://raml.org/vocabularies/document#",
+      "doc": "http://a.ml/vocabularies/document#",
       "schema-org": "http://schema.org/"
     }
   }

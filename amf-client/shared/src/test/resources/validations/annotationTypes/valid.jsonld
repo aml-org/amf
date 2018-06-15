@@ -1,8 +1,8 @@
 {
   "@context": {
-    "raml-doc": "http://raml.org/vocabularies/document#",
-    "raml-http": "http://raml.org/vocabularies/http#",
-    "raml-shapes": "http://raml.org/vocabularies/shapes#",
+    "raml-doc": "http://a.ml/vocabularies/document#",
+    "raml-http": "http://a.ml/vocabularies/http#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "hydra": "http://www.w3.org/ns/hydra/core#",
     "shacl": "http://www.w3.org/ns/shacl#",
     "schema-org": "http://schema.org/",
@@ -33,22 +33,22 @@
     "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/Wadus",
     "@type": [
       "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
-      "http://raml.org/vocabularies/document#DomainProperty",
-      "http://raml.org/vocabularies/document#DomainElement"
+      "http://a.ml/vocabularies/document#DomainProperty",
+      "http://a.ml/vocabularies/document#DomainElement"
     ],
     "http://www.w3.org/2000/01/rdf-schema#domain": [
       {
-        "@id": "http://raml.org/vocabularies/http#EndPoint"
+        "@id": "http://a.ml/vocabularies/http#EndPoint"
       }
     ],
-    "http://raml.org/vocabularies/shapes#schema": [
+    "http://a.ml/vocabularies/shapes#schema": [
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/Wadus/type",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
           "http://www.w3.org/ns/shacl#Shape",
-          "http://raml.org/vocabularies/shapes#Shape",
-          "http://raml.org/vocabularies/document#DomainElement"
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
         ],
         "http://www.w3.org/ns/shacl#closed": [
           {
@@ -61,21 +61,21 @@
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
-              "http://raml.org/vocabularies/shapes#Shape"
+              "http://a.ml/vocabularies/shapes#Shape"
             ],
             "http://www.w3.org/ns/shacl#path": [
               {
-                "@id": "http://raml.org/vocabularies/data#wadus"
+                "@id": "http://a.ml/vocabularies/data#wadus"
               }
             ],
-            "http://raml.org/vocabularies/shapes#range": [
+            "http://a.ml/vocabularies/shapes#range": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/declarations-small.raml#/declarations/Wadus/type/property/wadus/scalar/wadus",
                 "@type": [
                   "http://www.w3.org/ns/shacl#ScalarShape",
                   "http://www.w3.org/ns/shacl#Shape",
-                  "http://raml.org/vocabularies/shapes#Shape",
-                  "http://raml.org/vocabularies/document#DomainElement"
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://www.w3.org/ns/shacl#datatype": [
                   {
@@ -108,7 +108,7 @@
         ]
       }
     ],
-    "http://raml.org/vocabularies/document#name": [
+    "http://a.ml/vocabularies/document#name": [
       {
         "@value": "Wadus"
       }

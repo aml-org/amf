@@ -113,95 +113,95 @@ class DialectInstancesParsingTest extends BuildCycleTests {
   }
 
   test("generate 1 test") {
-    withDialect("dialect1.raml", "example1.json", "example1.raml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect1.raml", "example1.json", "example1.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 2 test") {
-    withDialect("dialect2.raml", "example2.json", "example2.raml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect2.raml", "example2.json", "example2.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 3 test") {
-    withDialect("dialect3.raml", "example3.json", "example3.raml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect3.raml", "example3.json", "example3.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 4 test") {
-    withDialect("dialect4.raml", "example4.json", "example4.raml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect4.raml", "example4.json", "example4.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 5 test") {
-    withDialect("dialect5.raml", "example5.json", "example5.raml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect5.raml", "example5.json", "example5.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 6 test") {
-    withDialect("dialect6.raml", "example6.json", "example6.raml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect6.raml", "example6.json", "example6.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 6b $ref test") {
-    withDialect("dialect6.raml", "example6b.json", "example6b.raml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect6.raml", "example6b.json", "example6b.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 7 test") {
-    withDialect("dialect7.raml", "example7.json", "example7.raml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect7.raml", "example7.json", "example7.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 8 test") {
-    withDialect("dialect8.raml", "example8.json", "example8.raml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect8.raml", "example8.json", "example8.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 8b $include test") {
-    withDialect("dialect8.raml", "example8b.json", "example8b.yaml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect8.raml", "example8b.json", "example8b.yaml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 8c $ref test") {
-    withDialect("dialect8.raml", "example8c.json", "example8c.yaml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect8.raml", "example8c.json", "example8c.yaml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 9 test") {
-    withDialect("dialect9.raml", "example9.json", "example9.raml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect9.raml", "example9.json", "example9.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 9b $ref test") {
-    withDialect("dialect9.raml", "example9b.json", "example9b.json.raml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect9.raml", "example9b.json", "example9b.json.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 10a test") {
-    withDialect("dialect10.raml", "example10a.json", "example10a.raml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect10.raml", "example10a.json", "example10a.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 10b test") {
-    withDialect("dialect10.raml", "example10b.json", "example10b.raml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect10.raml", "example10b.json", "example10b.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 10c test") {
-    withDialect("dialect10.raml", "example10c.json", "example10c.raml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect10.raml", "example10c.json", "example10c.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 11 test") {
-    withDialect("dialect11.raml", "example11.json", "example11.raml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect11.raml", "example11.json", "example11.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 13 test") {
-    withDialect("dialect13.raml", "example13.json", "example13.raml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect13.raml", "example13.json", "example13.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 14 test") {
-    withDialect("dialect14.raml", "example14.json", "example14.raml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect14.raml", "example14.json", "example14.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 15 test") {
-    withDialect("dialect15a.raml", "example15.json", "example15.raml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect15a.raml", "example15.json", "example15.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 16 test") {
-    withDialect("dialect16a.raml", "example16a.json", "example16a.raml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect16a.raml", "example16a.json", "example16a.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 16c test") {
-    withDialect("dialect16a.raml", "example16c.json", "example16c.yaml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect16a.raml", "example16c.json", "example16c.yaml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 18 test") {
-    withDialect("dialect18.raml", "example18.json", "example18.raml", AmfJsonHint, RamlVocabulary)
+    withDialect("dialect18.raml", "example18.json", "example18.raml", AmfJsonHint, AmlVocabulary)
   }
 
   protected def withDialect(dialect: String,

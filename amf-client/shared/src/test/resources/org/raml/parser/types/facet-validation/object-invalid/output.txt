@@ -5,21 +5,21 @@ Number of results: 3
 
 Level: Violation
 
-- Source: http://raml.org/vocabularies/amf/parser#min-max-inclusive
+- Source: http://a.ml/vocabularies/amf/parser#min-max-inclusive
   Message: Maximum must be greater than or equal to minimum
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/object-invalid/input.raml#/declarations/types/scalar/invalid-range
   Property: 
   Position: Some(LexicalInformation([(8,4)-(12,0)]))
 
-- Source: http://raml.org/vocabularies/amf/parser#min-max-inclusive
+- Source: http://a.ml/vocabularies/amf/parser#min-max-inclusive
   Message: Maximum must be greater than or equal to minimum
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/object-invalid/input.raml#/declarations/types/object-range/property/range-invalid-through-extension/scalar/range-invalid-through-extension
   Property: 
   Position: Some(LexicalInformation([(15,12)-(18,0)]))
 
-- Source: http://raml.org/vocabularies/amf/parser#min-max-properties
+- Source: http://a.ml/vocabularies/amf/parser#min-max-properties
   Message: MaxProperties must be greater than or equal to minProperties
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/object-invalid/input.raml#/declarations/types/object-props1

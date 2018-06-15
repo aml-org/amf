@@ -85,7 +85,7 @@ object ParsedFunctionConstraint extends DialectWrapper {
 
 
 object ParsedPropertyConstraint extends DialectWrapper {
-  val validationNs = "http://raml.org/vocabularies/amf-validation#"
+  val validationNs = "http://a.ml/vocabularies/amf-validation#"
 
   def apply(node: DialectDomainElement, prefixes: mutable.Map[String,String]): PropertyConstraint = {
     PropertyConstraint(

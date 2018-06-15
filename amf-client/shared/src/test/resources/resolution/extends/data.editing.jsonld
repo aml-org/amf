@@ -134,114 +134,6 @@
                             ],
                             "shacl:property": [
                               {
-                                "@id": "#/declarations/types/Bank/property/b",
-                                "@type": [
-                                  "shacl:PropertyShape",
-                                  "shacl:Shape",
-                                  "raml-shapes:Shape"
-                                ],
-                                "shacl:path": [
-                                  {
-                                    "@id": "http://raml.org/vocabularies/data#b"
-                                  }
-                                ],
-                                "raml-shapes:range": [
-                                  {
-                                    "@id": "#/declarations/types/Bank/property/b/scalar/b",
-                                    "@type": [
-                                      "raml-shapes:ScalarShape",
-                                      "shacl:Shape",
-                                      "raml-shapes:Shape",
-                                      "doc:DomainElement"
-                                    ],
-                                    "shacl:datatype": [
-                                      {
-                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
-                                      }
-                                    ],
-                                    "shacl:name": [
-                                      {
-                                        "@value": "b"
-                                      }
-                                    ],
-                                    "smaps": {
-                                      "lexical": {
-                                        "#/declarations/types/Bank/property/b/scalar/b": "[(17,6)-(18,0)]"
-                                      }
-                                    }
-                                  }
-                                ],
-                                "shacl:minCount": [
-                                  {
-                                    "@value": 1
-                                  }
-                                ],
-                                "shacl:name": [
-                                  {
-                                    "@value": "b"
-                                  }
-                                ],
-                                "smaps": {
-                                  "lexical": {
-                                    "#/declarations/types/Bank/property/b": "[(17,6)-(18,0)]"
-                                  }
-                                }
-                              },
-                              {
-                                "@id": "#/declarations/types/FinancialInstitution/property/e",
-                                "@type": [
-                                  "shacl:PropertyShape",
-                                  "shacl:Shape",
-                                  "raml-shapes:Shape"
-                                ],
-                                "shacl:path": [
-                                  {
-                                    "@id": "http://raml.org/vocabularies/data#e"
-                                  }
-                                ],
-                                "raml-shapes:range": [
-                                  {
-                                    "@id": "#/declarations/types/FinancialInstitution/property/e/scalar/e",
-                                    "@type": [
-                                      "raml-shapes:ScalarShape",
-                                      "shacl:Shape",
-                                      "raml-shapes:Shape",
-                                      "doc:DomainElement"
-                                    ],
-                                    "shacl:datatype": [
-                                      {
-                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
-                                      }
-                                    ],
-                                    "shacl:name": [
-                                      {
-                                        "@value": "e"
-                                      }
-                                    ],
-                                    "smaps": {
-                                      "lexical": {
-                                        "#/declarations/types/FinancialInstitution/property/e/scalar/e": "[(12,6)-(13,0)]"
-                                      }
-                                    }
-                                  }
-                                ],
-                                "shacl:minCount": [
-                                  {
-                                    "@value": 1
-                                  }
-                                ],
-                                "shacl:name": [
-                                  {
-                                    "@value": "e"
-                                  }
-                                ],
-                                "smaps": {
-                                  "lexical": {
-                                    "#/declarations/types/FinancialInstitution/property/e": "[(12,6)-(13,0)]"
-                                  }
-                                }
-                              },
-                              {
                                 "@id": "#/declarations/types/FinancialInstitution/property/d",
                                 "@type": [
                                   "shacl:PropertyShape",
@@ -250,7 +142,7 @@
                                 ],
                                 "shacl:path": [
                                   {
-                                    "@id": "http://raml.org/vocabularies/data#d"
+                                    "@id": "http://a.ml/vocabularies/data#d"
                                   }
                                 ],
                                 "raml-shapes:range": [
@@ -304,7 +196,7 @@
                                 ],
                                 "shacl:path": [
                                   {
-                                    "@id": "http://raml.org/vocabularies/data#a"
+                                    "@id": "http://a.ml/vocabularies/data#a"
                                   }
                                 ],
                                 "raml-shapes:range": [
@@ -358,7 +250,7 @@
                                 ],
                                 "shacl:path": [
                                   {
-                                    "@id": "http://raml.org/vocabularies/data#l"
+                                    "@id": "http://a.ml/vocabularies/data#l"
                                   }
                                 ],
                                 "raml-shapes:range": [
@@ -412,7 +304,7 @@
                                 ],
                                 "shacl:path": [
                                   {
-                                    "@id": "http://raml.org/vocabularies/data#c"
+                                    "@id": "http://a.ml/vocabularies/data#c"
                                   }
                                 ],
                                 "raml-shapes:range": [
@@ -454,6 +346,114 @@
                                 "smaps": {
                                   "lexical": {
                                     "#/declarations/types/FinancialInstitution/property/c": "[(10,6)-(11,0)]"
+                                  }
+                                }
+                              },
+                              {
+                                "@id": "#/declarations/types/FinancialInstitution/property/e",
+                                "@type": [
+                                  "shacl:PropertyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape"
+                                ],
+                                "shacl:path": [
+                                  {
+                                    "@id": "http://a.ml/vocabularies/data#e"
+                                  }
+                                ],
+                                "raml-shapes:range": [
+                                  {
+                                    "@id": "#/declarations/types/FinancialInstitution/property/e/scalar/e",
+                                    "@type": [
+                                      "raml-shapes:ScalarShape",
+                                      "shacl:Shape",
+                                      "raml-shapes:Shape",
+                                      "doc:DomainElement"
+                                    ],
+                                    "shacl:datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "shacl:name": [
+                                      {
+                                        "@value": "e"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "#/declarations/types/FinancialInstitution/property/e/scalar/e": "[(12,6)-(13,0)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "shacl:minCount": [
+                                  {
+                                    "@value": 1
+                                  }
+                                ],
+                                "shacl:name": [
+                                  {
+                                    "@value": "e"
+                                  }
+                                ],
+                                "smaps": {
+                                  "lexical": {
+                                    "#/declarations/types/FinancialInstitution/property/e": "[(12,6)-(13,0)]"
+                                  }
+                                }
+                              },
+                              {
+                                "@id": "#/declarations/types/Bank/property/b",
+                                "@type": [
+                                  "shacl:PropertyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape"
+                                ],
+                                "shacl:path": [
+                                  {
+                                    "@id": "http://a.ml/vocabularies/data#b"
+                                  }
+                                ],
+                                "raml-shapes:range": [
+                                  {
+                                    "@id": "#/declarations/types/Bank/property/b/scalar/b",
+                                    "@type": [
+                                      "raml-shapes:ScalarShape",
+                                      "shacl:Shape",
+                                      "raml-shapes:Shape",
+                                      "doc:DomainElement"
+                                    ],
+                                    "shacl:datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "shacl:name": [
+                                      {
+                                        "@value": "b"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "#/declarations/types/Bank/property/b/scalar/b": "[(17,6)-(18,0)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "shacl:minCount": [
+                                  {
+                                    "@value": 1
+                                  }
+                                ],
+                                "shacl:name": [
+                                  {
+                                    "@value": "b"
+                                  }
+                                ],
+                                "smaps": {
+                                  "lexical": {
+                                    "#/declarations/types/Bank/property/b": "[(17,6)-(18,0)]"
                                   }
                                 }
                               }
@@ -548,7 +548,7 @@
             ],
             "shacl:path": [
               {
-                "@id": "http://raml.org/vocabularies/data#c"
+                "@id": "http://a.ml/vocabularies/data#c"
               }
             ],
             "raml-shapes:range": [
@@ -602,7 +602,7 @@
             ],
             "shacl:path": [
               {
-                "@id": "http://raml.org/vocabularies/data#d"
+                "@id": "http://a.ml/vocabularies/data#d"
               }
             ],
             "raml-shapes:range": [
@@ -656,7 +656,7 @@
             ],
             "shacl:path": [
               {
-                "@id": "http://raml.org/vocabularies/data#e"
+                "@id": "http://a.ml/vocabularies/data#e"
               }
             ],
             "raml-shapes:range": [
@@ -735,114 +735,6 @@
         ],
         "shacl:property": [
           {
-            "@id": "#/declarations/types/Bank/property/b",
-            "@type": [
-              "shacl:PropertyShape",
-              "shacl:Shape",
-              "raml-shapes:Shape"
-            ],
-            "shacl:path": [
-              {
-                "@id": "http://raml.org/vocabularies/data#b"
-              }
-            ],
-            "raml-shapes:range": [
-              {
-                "@id": "#/declarations/types/Bank/property/b/scalar/b",
-                "@type": [
-                  "raml-shapes:ScalarShape",
-                  "shacl:Shape",
-                  "raml-shapes:Shape",
-                  "doc:DomainElement"
-                ],
-                "shacl:datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "shacl:name": [
-                  {
-                    "@value": "b"
-                  }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#/declarations/types/Bank/property/b/scalar/b": "[(17,6)-(18,0)]"
-                  }
-                }
-              }
-            ],
-            "shacl:minCount": [
-              {
-                "@value": 1
-              }
-            ],
-            "shacl:name": [
-              {
-                "@value": "b"
-              }
-            ],
-            "smaps": {
-              "lexical": {
-                "#/declarations/types/Bank/property/b": "[(17,6)-(18,0)]"
-              }
-            }
-          },
-          {
-            "@id": "#/declarations/types/FinancialInstitution/property/e",
-            "@type": [
-              "shacl:PropertyShape",
-              "shacl:Shape",
-              "raml-shapes:Shape"
-            ],
-            "shacl:path": [
-              {
-                "@id": "http://raml.org/vocabularies/data#e"
-              }
-            ],
-            "raml-shapes:range": [
-              {
-                "@id": "#/declarations/types/FinancialInstitution/property/e/scalar/e",
-                "@type": [
-                  "raml-shapes:ScalarShape",
-                  "shacl:Shape",
-                  "raml-shapes:Shape",
-                  "doc:DomainElement"
-                ],
-                "shacl:datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "shacl:name": [
-                  {
-                    "@value": "e"
-                  }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#/declarations/types/FinancialInstitution/property/e/scalar/e": "[(12,6)-(13,0)]"
-                  }
-                }
-              }
-            ],
-            "shacl:minCount": [
-              {
-                "@value": 1
-              }
-            ],
-            "shacl:name": [
-              {
-                "@value": "e"
-              }
-            ],
-            "smaps": {
-              "lexical": {
-                "#/declarations/types/FinancialInstitution/property/e": "[(12,6)-(13,0)]"
-              }
-            }
-          },
-          {
             "@id": "#/declarations/types/FinancialInstitution/property/d",
             "@type": [
               "shacl:PropertyShape",
@@ -851,7 +743,7 @@
             ],
             "shacl:path": [
               {
-                "@id": "http://raml.org/vocabularies/data#d"
+                "@id": "http://a.ml/vocabularies/data#d"
               }
             ],
             "raml-shapes:range": [
@@ -905,7 +797,7 @@
             ],
             "shacl:path": [
               {
-                "@id": "http://raml.org/vocabularies/data#a"
+                "@id": "http://a.ml/vocabularies/data#a"
               }
             ],
             "raml-shapes:range": [
@@ -959,7 +851,7 @@
             ],
             "shacl:path": [
               {
-                "@id": "http://raml.org/vocabularies/data#c"
+                "@id": "http://a.ml/vocabularies/data#c"
               }
             ],
             "raml-shapes:range": [
@@ -1003,6 +895,114 @@
                 "#/declarations/types/FinancialInstitution/property/c": "[(10,6)-(11,0)]"
               }
             }
+          },
+          {
+            "@id": "#/declarations/types/FinancialInstitution/property/e",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#e"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#/declarations/types/FinancialInstitution/property/e/scalar/e",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "e"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#/declarations/types/FinancialInstitution/property/e/scalar/e": "[(12,6)-(13,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "e"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#/declarations/types/FinancialInstitution/property/e": "[(12,6)-(13,0)]"
+              }
+            }
+          },
+          {
+            "@id": "#/declarations/types/Bank/property/b",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#b"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#/declarations/types/Bank/property/b/scalar/b",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "b"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#/declarations/types/Bank/property/b/scalar/b": "[(17,6)-(18,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "b"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#/declarations/types/Bank/property/b": "[(17,6)-(18,0)]"
+              }
+            }
           }
         ],
         "shacl:name": [
@@ -1026,10 +1026,10 @@
     ],
     "@context": {
       "@base": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml",
-      "raml-http": "http://raml.org/vocabularies/http#",
-      "raml-shapes": "http://raml.org/vocabularies/shapes#",
+      "raml-http": "http://a.ml/vocabularies/http#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "shacl": "http://www.w3.org/ns/shacl#",
-      "doc": "http://raml.org/vocabularies/document#",
+      "doc": "http://a.ml/vocabularies/document#",
       "schema-org": "http://schema.org/",
       "hydra": "http://www.w3.org/ns/hydra/core#"
     }
