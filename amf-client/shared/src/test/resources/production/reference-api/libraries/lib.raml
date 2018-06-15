@@ -1,0 +1,18 @@
+#%RAML 1.0 Library
+
+traits: 
+  headers: !include /modules/definition/1.0.6/traits/headers.raml
+
+  sample:
+    is: [headers]
+    headers:
+      X-No-Cache:
+        description: Define if it is cacheable
+        type: boolean
+        required: false
+        default: true
+      X-Reset-Cache:
+        description: Set whether to reset the cache
+        type: boolean
+        required: false
+        default: false

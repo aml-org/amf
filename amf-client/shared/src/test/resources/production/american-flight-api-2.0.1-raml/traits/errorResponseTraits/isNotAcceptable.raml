@@ -1,0 +1,17 @@
+#%RAML 1.0 Trait
+usage: Use this trait for resources that could respond with a 406 status
+responses:
+  406:
+    description: |
+      The API is not able to generate any of the client’s preferred media types, 
+      as indicated by the 'Accept' request header. 
+      Example: a client request for data formatted as application/xml will 
+      receive a 406 response if the API is only willing to format data as 
+      application/json.
+    body: 
+      application/json:
+        example: |
+            {
+              "message": "Response format not supported. Valid response type is application/json.",
+              "code": "1006 <example code. Replace with your own error code>"
+            }

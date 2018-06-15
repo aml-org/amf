@@ -1,0 +1,13 @@
+#%RAML 1.0 Trait
+
+responses: 
+  200:
+    headers: 
+      ETag:
+        description: The current value of the entity tag for the requested variant
+        examples:
+          UUID-etag: 155f0df6-8dfc-11e7-bb31-be2e44b06b34
+    body: 
+      application/json:
+        type: <<updateItemResponseType>>
+        examples:  <<updateItemResponseExamples>>

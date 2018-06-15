@@ -1,0 +1,17 @@
+#%RAML 1.0 Trait
+
+usage: Define standard aproaches
+
+queryParameters:
+  maxResults:
+    displayName: Maximum Number of Records.
+    description: |
+      The maximum number of entries to return. This is optional.
+    type: integer
+    default: 25
+  offset:
+    displayName: Starting from Record
+    description: |
+      The 1-based index of the first result to be retrieved (for paging).
+    type: integer
+    default: 0

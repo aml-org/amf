@@ -1,0 +1,23 @@
+#%RAML 1.0 SecurityScheme
+type: OAuth 2.0
+description: 
+describedBy: 
+  headers:
+    Authorization:
+      description: |
+        Used to send a valid OAuth 2 access token. Do not use
+        with the "access_token" query string parameter.
+      type: string
+  queryParameters:
+    access_token:
+      description: |
+        Used to send a valid OAuth 2 access token. Do not use with
+        the "Authorization" header.
+      type: string
+  
+settings: 
+  authorizationUri: https://demo-american-flight.cloudhub.io/authorize
+  accessTokenUri: https://demo-american-flight.cloudhub.io/access-token
+  # customize the authorization grants depending on need
+  authorizationGrants: [authorization_code]
+  scopes: [READ]

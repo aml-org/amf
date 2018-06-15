@@ -1,0 +1,12 @@
+#%RAML 1.0 DataType
+
+properties:
+  version:
+    description: The version of the microservice
+    type: string
+    required: true
+  name:
+    description: The name of the microservice.
+    type: string
+    required: true
+example: !include ../examples/InfoResponseExample.raml

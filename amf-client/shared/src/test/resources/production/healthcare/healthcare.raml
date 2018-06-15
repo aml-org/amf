@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: generic healthcare test api
+
+resourceTypes:
+  rtName:
+    description: rtName description
+
+traits:
+  tSearch:
+    queryParameters:
+      param: string
+
+### API definition ###
+/Appointment:
+  type: {rtName: {
+      postExample : !include post.json,
+      getExample  : !include get.json,
+    }
+  }
+  get:
+    is: [ tSearch ]

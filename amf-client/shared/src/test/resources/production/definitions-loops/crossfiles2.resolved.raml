@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: test
+version: "0.2"
+baseUri: https://domain.test.com/
+/test:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            description: Comment describing your JSON Schema
+            type: object
+            additionalProperties: true
+            properties:
+              a1:
+                description: Comment describing your JSON Schema
+                type: object
+                additionalProperties: true
+                properties:
+                  b:
+                    type: string
+                    required: false
+                required: false
+              a2:
+                type: array
+                items:
+                  type: string
+                required: false

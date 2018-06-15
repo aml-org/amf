@@ -1,0 +1,311 @@
+#%RAML 1.0
+baseUri: http://{environment}-american-ws.cloudhub.io/api/
+version: "1.0"
+title: Z My American Flights API
+description: API that returns sample data for MuleSoft training
+/flights:
+  get:
+    displayName: Get all flights
+    queryParameters:
+      code:
+        displayName: Get all flights to a specific destination (by airport code)
+        required: false
+        enum:
+          - SFO
+          - LAX
+          - CLE
+    responses:
+      200:
+        body:
+          application/json:
+            examples:
+              value:
+                -
+                  ID: 1
+                  code: ER38sd
+                  price: 400
+                  departureDate: 2017/07/26
+                  origin: CLE
+                  destination: SFO
+                  emptySeats: 0
+                  plane:
+                    type: Boeing 737
+                    totalSeats: 150
+                -
+                  ID: 2
+                  code: ER45if
+                  price: 540.99
+                  departureDate: 2017/07/27
+                  origin: SFO
+                  destination: ORD
+                  emptySeats: 54
+                  plane:
+                    type: Boeing 777
+                    totalSeats: 300
+            items:
+              type: object
+              examples:
+                value:
+                  code: GQ574
+                  price: 399
+                  departureDate: 2016/12/20
+                  origin: ORD
+                  destination: SFO
+                  emptySeats: 200
+                  plane:
+                    type: Boeing 747
+                    totalSeats: 400
+                example_0:
+                  ID: 1
+                  code: GQ574
+                  price: 399
+                  departureDate: 2016/12/20
+                  origin: ORD
+                  destination: SFO
+                  emptySeats: 200
+                  plane:
+                    type: Boeing 747
+                    totalSeats: 400
+              additionalProperties: true
+              properties:
+                ID:
+                  type: integer
+                  required: false
+                code:
+                  type: string
+                  required: true
+                price:
+                  type: number
+                  required: true
+                departureDate:
+                  type: string
+                  required: true
+                origin:
+                  type: string
+                  required: true
+                destination:
+                  type: string
+                  required: true
+                emptySeats:
+                  type: integer
+                  required: true
+                plane:
+                  type: object
+                  additionalProperties: true
+                  properties:
+                    type:
+                      type: string
+                      required: true
+                    totalSeats:
+                      type: integer
+                      required: true
+                  required: false
+  post:
+    displayName: Add a flight
+    body:
+      application/json:
+        examples:
+          value:
+            code: GQ574
+            price: 399
+            departureDate: 2016/12/20
+            origin: ORD
+            destination: SFO
+            emptySeats: 200
+            plane:
+              type: Boeing 747
+              totalSeats: 400
+          example_0:
+            ID: 1
+            code: GQ574
+            price: 399
+            departureDate: 2016/12/20
+            origin: ORD
+            destination: SFO
+            emptySeats: 200
+            plane:
+              type: Boeing 747
+              totalSeats: 400
+        type: object
+        additionalProperties: true
+        properties:
+          ID:
+            type: integer
+            required: false
+          code:
+            type: string
+            required: true
+          price:
+            type: number
+            required: true
+          departureDate:
+            type: string
+            required: true
+          origin:
+            type: string
+            required: true
+          destination:
+            type: string
+            required: true
+          emptySeats:
+            type: integer
+            required: true
+          plane:
+            type: object
+            additionalProperties: true
+            properties:
+              type:
+                type: string
+                required: true
+              totalSeats:
+                type: integer
+                required: true
+            required: false
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+              message: Flight added (but not really)
+            type: any
+  /{ID}:
+    get:
+      displayName: Get a flight by ID
+      responses:
+        200:
+          body:
+            application/json:
+              examples:
+                value:
+                  code: GQ574
+                  price: 399
+                  departureDate: 2016/12/20
+                  origin: ORD
+                  destination: SFO
+                  emptySeats: 200
+                  plane:
+                    type: Boeing 747
+                    totalSeats: 400
+                example_0:
+                  ID: 1
+                  code: GQ574
+                  price: 399
+                  departureDate: 2016/12/20
+                  origin: ORD
+                  destination: SFO
+                  emptySeats: 200
+                  plane:
+                    type: Boeing 747
+                    totalSeats: 400
+              type: object
+              additionalProperties: true
+              properties:
+                ID:
+                  type: integer
+                  required: false
+                code:
+                  type: string
+                  required: true
+                price:
+                  type: number
+                  required: true
+                departureDate:
+                  type: string
+                  required: true
+                origin:
+                  type: string
+                  required: true
+                destination:
+                  type: string
+                  required: true
+                emptySeats:
+                  type: integer
+                  required: true
+                plane:
+                  type: object
+                  additionalProperties: true
+                  properties:
+                    type:
+                      type: string
+                      required: true
+                    totalSeats:
+                      type: integer
+                      required: true
+                  required: false
+    delete:
+      displayName: Delete a flight
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                message: Flight deleted (but not really)
+              type: any
+    put:
+      displayName: Update a flight
+      body:
+        application/json:
+          examples:
+            value:
+              code: GQ574
+              price: 399
+              departureDate: 2016/12/20
+              origin: ORD
+              destination: SFO
+              emptySeats: 200
+              plane:
+                type: Boeing 747
+                totalSeats: 400
+            example_0:
+              ID: 1
+              code: GQ574
+              price: 399
+              departureDate: 2016/12/20
+              origin: ORD
+              destination: SFO
+              emptySeats: 200
+              plane:
+                type: Boeing 747
+                totalSeats: 400
+          type: object
+          additionalProperties: true
+          properties:
+            ID:
+              type: integer
+              required: false
+            code:
+              type: string
+              required: true
+            price:
+              type: number
+              required: true
+            departureDate:
+              type: string
+              required: true
+            origin:
+              type: string
+              required: true
+            destination:
+              type: string
+              required: true
+            emptySeats:
+              type: integer
+              required: true
+            plane:
+              type: object
+              additionalProperties: true
+              properties:
+                type:
+                  type: string
+                  required: true
+                totalSeats:
+                  type: integer
+                  required: true
+              required: false
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                message: Flight updated (but not really)
+              type: any

@@ -1,0 +1,11 @@
+#%RAML 1.0 Library
+
+usage: Company Types
+uses:
+  location: locationTypes.raml
+types:
+  Company:
+    properties:
+      id: number
+      name: string
+      address: location.AddressData

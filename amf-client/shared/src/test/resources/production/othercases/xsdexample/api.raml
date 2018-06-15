@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: test
+
+types:
+  Customer:
+    properties:
+      name: string
+      lastName: string
+      address:
+        properties:
+          street: string
+          number: integer
+    example: !include example.xsd

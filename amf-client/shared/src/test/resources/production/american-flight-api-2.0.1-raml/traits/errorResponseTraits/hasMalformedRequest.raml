@@ -1,0 +1,16 @@
+#%RAML 1.0 Trait
+usage: Use this trait for resources that could respond with a 400 status
+responses:
+  400:
+    description: |
+      A generic client-side error status, 
+      used when no other 4xx error code is appropriate. 
+      Errors can be like malformed request syntax, 
+      invalid request message parameters, etc.
+    body: 
+      application/json:
+        example: |
+            {
+              "message": "An error occurred while processing the request. Please verify the request structure based on the API specification.",
+              "code": "1000 <example code. Replace with your own error code>"
+            }

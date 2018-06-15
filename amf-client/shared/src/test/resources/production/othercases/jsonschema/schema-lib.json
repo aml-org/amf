@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Comment describing your JSON Schema",
+  "type": "object",
+  "properties": {
+    "address": {
+      "$ref": "#/definitions/address"
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "address": {
+      "type": "object",
+      "properties": {
+        "street": {
+          "type": "string"
+        },
+        "number": {
+          "type": "number"
+        },
+        "location": {
+          "$ref": "#/definitions/location"
+        }
+      }
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,72 @@
+#%RAML 1.0 Library
+
+types:
+
+  header:
+    type: object
+    properties:
+      timeStamp:
+        description: 'It represents the response generated timestamp  {yyyy-MM-dd,HH:mm:ss.SSSZ}'
+        type: datetime
+      status:
+        description: 'Status of the Request {true=Success, false=Failure}'
+        type: boolean
+      info:
+        description: Detailed information in case of Success
+        type: info
+        required: false
+      error:
+        description: Detailed information in case of Failure
+        type: error
+        required: false
+
+  error:
+    type: object
+    properties:
+      code:
+        description: Error unique identification.
+        type: string
+        required: true
+      message:
+        description: Error message title. It is just an overview about the error thrown.
+        type: string
+        required: true
+      description:
+        description: Error message description. It provides more detailed information about the error generated.
+        type: string
+        required: false
+
+  info:
+    description: Represents an information structure returned by an API when it works successfully.
+    type: object
+    properties:
+      messageCode:
+        description: Unique identification of the information here provided.
+        type: string
+        required: true
+      message:
+        description: Description of the message that represents the propertly execution.
+        type: string
+        required: true
+
+  pagination:
+    description: Represents the pagination summary returned when a partial collection is retrieved.
+    type: object
+    properties:
+      page:
+        description: Identifies the page index of the current pagination.
+        type: number
+        required: false
+      size:
+        description: Represents the amount of rows retrieved in the ecurrent pagination.
+        type: number
+        required: false
+      totalPages:
+        description: Identifies the total pages of rows available.
+        type: number
+        required: false
+      totalResults:
+        description: Represents the amount of rows available to be consumed regardeless pagination.
+        type: number
+        required: false
+

@@ -1,0 +1,57 @@
+#%RAML 1.0
+title: test
+version: v1
+
+uses:
+  types : /types/types.raml
+
+traits: 
+  headers: !include /traits/headers.raml
+  response-success: !include /traits/response-success.raml
+  response-error: !include /traits/response-error.raml
+types:
+  customer:
+    type: object
+    properties:
+      id:
+        description: unique identificator of a customer
+        type: number
+        required: true
+      name:
+        description: describes the retail customer.
+        type: string
+        required: true
+  customer-collection:
+    type: object
+    properties:
+      pagination:
+        description: represents the pagination summary of the query.
+        type: types.pagination
+        required: true
+      customers:
+        description: represents a collection of customers.
+        type: customer[]
+        required: false
+
+/customers:
+  get:
+    is: [
+      headers,
+      response-success: {
+        business-data : customer-collection,
+        business-data-description: "Represents the retail customer."},
+        response-error: {
+        business-data-description: "Represents the retail customer."}]
+
+  post:
+    is: [
+      headers,
+      response-success: {
+        business-data : customer,
+        business-data-description: "Represents the retail customer." },
+        response-error: {
+        business-data-description: "Represents the retail customer."}]
+    body:
+      application/json:
+        type: customer
+        example: !include examples/sample-customer.raml

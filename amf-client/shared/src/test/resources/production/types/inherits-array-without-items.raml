@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: SFDC-sAPI
+version: v1
+baseUri: http://alcwc-sfdc-sapi.cloudhub.io/
+
+types: 
+  AttendeesType:
+      description: collection of type attendee
+      type: array
+
+/attendees:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: AttendeesType

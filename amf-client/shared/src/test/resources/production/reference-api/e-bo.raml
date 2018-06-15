@@ -1,0 +1,17 @@
+#%RAML 1.0
+version: v1
+title: test
+mediaType: application/json
+protocols:
+  - HTTP
+  - HTTPS
+
+uses:
+  lib: /libraries/lib.raml
+
+/games:
+  description: Retrieves type of game entities.
+  
+  get:
+    displayName: all games
+    is: [ lib.sample]

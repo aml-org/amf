@@ -1,0 +1,36 @@
+#%RAML 1.0 ResourceType
+
+uses: 
+  std: ../common.raml
+
+is: [std.common-errors]
+description: The collection of <<resourcePathName>>
+get?:
+  description: Get a list of <<resourcePathName>>.
+  responses:
+    200:
+      headers:         
+        ETag:
+          required: false
+          description: The current value of the entity tag for the requested variant
+          examples:
+            UUID-etag: 155f0df6-8dfc-11e7-bb31-be2e44b06b34
+      body:
+        application/json:
+          type: <<itemType>>[]
+          examples: <<collectionExamples>>
+post?:
+  description: |
+    Create a new <<resourcePathName|!singularize>>.
+  body: 
+    application/json:
+      type: <<itemCreateRequestType>>
+      examples: <<itemCreateRequestExamples>>
+  responses: 
+     400:
+      description: Bad Request.
+      body:
+        application/json:
+          type: !include ../dataTypes/error-message.raml
+          example: |
+                { "message" : "Your request does not have the correct values"}

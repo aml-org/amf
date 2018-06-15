@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: test
+/status_confirmations:
+  post:
+    body:
+      application/json:
+        example:
+          update_payment_status_request:
+            from: CCLABEB0
+            business_service: "121"
+            transaction_identification: 97ed4827-7b6f-4491-a06f-b548d5a7512d
+            instruction_identification: CCLABEB0ACSPG000
+            payment_status:
+              detailed_status:
+                originator: CCLABEB0
+                transaction_status:
+                  status: ACSP
+                  reason: G000
+                confirmed_amount:
+                  $: 1000.
+                  "@currency": USD
+        type: any

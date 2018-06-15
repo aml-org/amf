@@ -1,0 +1,58 @@
+#%RAML 1.0 Trait
+
+headers: 
+  X-Integration-Id:
+    description: Represents the integrator identification.
+    type: string
+    required: false
+  X-Origin-Id:
+    description: Source identification.
+    type: string
+    required: false
+  X-Origin-Request-Id:
+    description: Consumer request identification.
+    type: string
+    required: false
+  X-Channel-Id:
+    description: Channel identification.
+    type: string
+    required: false
+      
+responses:
+  200:
+    headers:
+      X-Integration-Id:
+        description: Represents the integrator identification.
+        type: string
+        required: false
+      X-Origin-Id:
+        description: Source identification.
+        type: string
+        required: false
+      X-Origin-Request-Id:
+        description: Consumer request identification.
+        type: string
+        required: false
+      X-Channel-Id:
+        description: Channel identification.
+        type: string
+        required: false
+
+  500:
+    headers:
+      X-Integration-Id:
+        description: Represents the integrator identification.
+        type: string
+        required: false
+      X-Origin-Id:
+        description: Source identification.
+        type: string
+        required: false
+      X-Origin-Request-Id:
+        description: Consumer request identification.
+        type: string
+        required: false
+      X-Channel-Id:
+        description: Channel identification.
+        type: string
+        required: false

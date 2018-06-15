@@ -1,0 +1,36 @@
+#%RAML 1.0 DataType
+properties:
+  ID:
+    description: The flight id
+    type: string
+    required: false
+  code: 
+    description: The flight code
+    type: string
+  price:
+    description: The price of the flight 
+    type: number
+  departureDate:
+    description: The flight's departure date
+    type: date-only
+  origin:
+    description: The three letter airport code of the origin airport
+    enum: [SFO,LAX,DEN,AUS,MUA] 
+  destination:
+    description: The three letter airport code of the destination airport
+    enum: [SFO,LAX,DEN,AUS,MUA] 
+  emptySeats:
+    description: The number of available seats
+    type: integer
+    required: false
+  plane:
+    description: the type of plane
+    type: object
+    properties: 
+      type:
+        description: Aircraft specifications and type
+        type: string
+      totalSeats:
+        description: Number of total seats on the aircraft
+        type: integer
+

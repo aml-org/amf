@@ -1,0 +1,305 @@
+#%RAML 1.0
+title: Sales Order API
+version: "1.0"
+baseUri: https://mocksvc.mulesoft.com/mocks/18f878aa-683e-4f79-94a6-feffe69aec41/api
+/order:
+  displayName: Order
+  get:
+    description: Lists the user orders
+    queryParameters:
+      maxResults:
+        description: |
+          The maximum number of entries to return. This is optional.
+        displayName: Maximum Number of Records.
+        type: integer
+        default: 25
+      offset:
+        description: |
+          The 1-based index of the first result to be retrieved (for paging).
+        displayName: Starting from Record
+        type: integer
+        default: 0
+      trackingNumber:
+        displayName: Order Tracking Number
+        required: false
+        type: string
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              -
+                id: "1"
+                userId: "1001"
+                billingAddress:
+                  -
+                    address1: Towne
+                    address2: "5813"
+                    city: Fresno
+                    state: California
+                    postalCode: "93794"
+                    country: United States
+                products:
+                  -
+                    id: "1"
+                    productName: Lakeside
+                    quantity: "1"
+                  -
+                    id: "2"
+                    productName: Copper Creek
+                    quantity: "1"
+                  -
+                    id: "3"
+                    productName: Rockhill
+                    quantity: "1"
+                status: new
+                price: "727"
+                creationDate: 08/17/2017
+                trackingNumber: 6a521ed9-c208-437d-8b9c-62f1875e4336
+              -
+                id: "2"
+                userID: "1012"
+                customerName: Fred Carr
+                customerEmail: fcarr1@live.com
+                billingAddress:
+                  -
+                    address1: Ridgeview
+                    address2: "619"
+                    city: Virginia Beach
+                    state: Virginia
+                    postalCode: "23454"
+                    country: United States
+                products:
+                  -
+                    id: "1"
+                    productName: Brookside
+                    quantity: "1"
+                  -
+                    id: "2"
+                    productName: Gean Estates
+                    quantity: "1"
+                status: new
+                price: "1645"
+                creationDate: 08/17/2017
+                trackingNumber: 7d0d25a4-b4bd-4b28-ba30-785415eedad2
+            (amf-tuple): true
+      404:
+        body:
+          application/json:
+            example:
+              message: Resource not found
+            type: any
+  post:
+    description: Create a new Order.
+    body:
+      application/json:
+        type: object
+        example:
+          products:
+            -
+              id: "1"
+              productName: Estates at Rockhill
+              quantity: "1"
+          status: new
+          price: "625"
+        additionalProperties: true
+        properties:
+          products:
+            type: array
+            items:
+              type: object
+              additionalProperties: true
+              properties:
+                id:
+                  type: string
+                  required: true
+                productName:
+                  type: string
+                  required: true
+                quantity:
+                  type: string
+                  required: true
+            required: true
+          status:
+            type: string
+            required: true
+          price:
+            type: string
+            required: true
+    responses:
+      201:
+        body:
+          application/json:
+            type: object
+            example:
+              id: "1"
+            additionalProperties: true
+            properties:
+              id:
+                type: string
+                required: true
+      400:
+        body:
+          application/json:
+            example:
+              message: Bad Request
+            type: any
+  /{id}:
+    displayName: Order ID
+    description: Get Order by ID
+    uriParameters:
+      id:
+        type: string
+        example: "1000"
+        required: true
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                id: "40"
+                price: "625"
+                products:
+                  -
+                    productId: "1"
+                    quantity: "1"
+                status: new
+                trackingNumber: 1964401a-a8b3-40c1-b86e-d8b9f75b5842
+                userId: bigboy
+              type: any
+        404:
+          body:
+            application/json:
+              example:
+                message: Resource not found
+              type: any
+    put:
+      body:
+        application/json:
+          type: object
+          example:
+            id: "1"
+            userId: "1001"
+            billingAddress:
+              address1: Graceland
+              address2: "646"
+              city: Philadelphia
+              state: Pennsylvania
+              postalCode: "19172"
+              country: United States
+            payment:
+              name: John Doe
+              number: 1323-12313-121321
+              type: VISA
+            products:
+              -
+                id: "1"
+                productName: Artesia at Lakeside
+                quantity: "1"
+            status: new
+            price: "1304"
+            creationDate: 12/01/2015
+            trackingNumber: 6a381a7a-65b8-4858-b884-d2897b7a5564
+          additionalProperties: true
+          properties:
+            id:
+              type: string
+              required: false
+            userId:
+              type: string
+              required: false
+            billingAddress:
+              type: object
+              additionalProperties: true
+              properties:
+                address1:
+                  type: string
+                  required: false
+                address2:
+                  type: string
+                  required: false
+                city:
+                  type: string
+                  required: false
+                state:
+                  type: string
+                  required: false
+                postalCode:
+                  type: string
+                  required: false
+                country:
+                  type: string
+                  required: false
+              required: false
+            payment:
+              type: object
+              additionalProperties: true
+              properties:
+                name:
+                  type: string
+                  required: false
+                number:
+                  type: string
+                  required: false
+                type:
+                  type: string
+                  required: false
+              required: false
+            products:
+              type: array
+              items:
+                type: object
+                additionalProperties: true
+                properties:
+                  id:
+                    type: string
+                    required: false
+                  productName:
+                    type: string
+                    required: false
+                  quantity:
+                    type: string
+                    required: false
+              required: false
+            status:
+              type: string
+              required: false
+            price:
+              type: string
+              required: false
+            creationDate:
+              type: string
+              required: false
+            trackingNumber:
+              type: string
+              required: false
+      responses:
+        204: {}
+        400:
+          body:
+            application/json:
+              example:
+                message: Bad Request
+              type: any
+        404:
+          body:
+            application/json:
+              example:
+                message: Order not found
+              type: any
+    delete:
+      responses:
+        204: {}
+        400:
+          body:
+            application/json:
+              example:
+                message: Bad Request
+              type: any
+        404:
+          body:
+            application/json:
+              example:
+                message: Order not found
+              type: any

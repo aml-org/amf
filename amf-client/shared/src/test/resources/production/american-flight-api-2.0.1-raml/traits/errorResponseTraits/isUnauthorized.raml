@@ -1,0 +1,15 @@
+#%RAML 1.0 Trait
+usage: Use this trait for resources that could respond with a 401 status
+responses:
+    401:
+      description: |
+        Unauthorized. Either the provided username and password
+        combination is invalid, or the user is not allowed to
+        access the content provided by the requested URL.   
+      body:
+        application/json:
+          example: |
+            {
+              "message": "Unauthorized. Either the provided credentials are invalid, or the user is not allowed to access the content provided by the requested URL.",
+              "code": "1001 <example code. Replace with your own error code>"
+            }

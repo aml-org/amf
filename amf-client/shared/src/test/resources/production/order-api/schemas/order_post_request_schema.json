@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://jsonschema.net",
+  "type": "object",
+  "properties": {
+    "products": {
+      "id": "http://jsonschema.net/products",
+      "type": "array",
+      "items": {
+        "id": "http://jsonschema.net/products/0",
+        "type": "object",
+        "properties": {
+          "id": {
+            "id": "http://jsonschema.net/products/0/id",
+            "type": "string"
+          },
+          "productName": {
+            "id": "http://jsonschema.net/products/0/productName",
+            "type": "string"
+          },
+          "quantity": {
+            "id": "http://jsonschema.net/products/0/quantity",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "productName",
+          "quantity"
+        ]
+      },
+      "required": [
+        "0"
+      ]
+    },
+    "status": {
+      "id": "http://jsonschema.net/status",
+      "type": "string"
+    },
+    "price": {
+      "id": "http://jsonschema.net/price",
+      "type": "string"
+    }
+  },
+  "required": [
+    "products",
+    "status",
+    "price"
+  ]
+}

@@ -1,0 +1,9 @@
+#%RAML 1.0 Trait
+
+responses: 
+  202:
+    headers: 
+      Location:
+        description: URL where the new <<resourcePathName|!singularize>> can be found
+        examples:
+          deployment-location: https://anypoint.mulesoft.com/<<resourcePathName|!singularize>>/3f6b7470-dcba-11e6-bf26-cec0c932ce01
