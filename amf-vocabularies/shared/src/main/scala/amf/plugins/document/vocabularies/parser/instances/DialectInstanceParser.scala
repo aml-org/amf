@@ -20,7 +20,7 @@ import amf.core.parser.{
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.vocabularies.VocabulariesPlugin
+import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, JsonPointerRef, RefInclude}
 import amf.plugins.document.vocabularies.model.document.{
   Dialect,
@@ -450,7 +450,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
           case Some(nested) if nested.value.tagType == YType.Str =>
             val dialectNode = nested.value.as[YScalar].text
             // TODO: resolve dialect node URI to absolute normalised URI
-            VocabulariesPlugin.registry.findNode(dialectNode) match {
+            AMLPlugin.registry.findNode(dialectNode) match {
               case Some((dialect, nodeMapping)) =>
                 ctx.nestedDialects ++= Seq(dialect)
                 ctx.withCurrentDialect(dialect) {
@@ -1058,7 +1058,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
     }
     refTuple match {
       case (text: String, Some(s)) =>
-        VocabulariesPlugin.registry.findNode(s.definedBy.id) match {
+        AMLPlugin.registry.findNode(s.definedBy.id) match {
           case Some((dialect, _)) =>
             ctx.nestedDialects ++= Seq(dialect)
             val linkedExternal = s
@@ -1099,7 +1099,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
         .withId(id)
     } match {
       case Some(s) =>
-        VocabulariesPlugin.registry.findNode(s.definedBy.id) match {
+        AMLPlugin.registry.findNode(s.definedBy.id) match {
           case Some((dialect, _)) =>
             ctx.nestedDialects ++= Seq(dialect)
             val linkedExternal = s
