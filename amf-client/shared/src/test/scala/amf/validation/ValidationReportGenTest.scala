@@ -1,7 +1,7 @@
 package amf.validation
 
 import amf.ProfileNames
-import amf.core.remote.RamlYamlHint
+import amf.core.remote.{Hint, Oas, Raml, RamlYamlHint}
 import amf.core.validation.AMFValidationReport
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
@@ -13,6 +13,13 @@ trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTest {
 
   val basePath: String
   val reportsPath: String
+  val hint: Hint
+
+  private lazy val defaultProfile: String = hint.vendor match {
+    case Raml => ProfileNames.RAML
+    case Oas  => ProfileNames.OAS
+    case _    => ProfileNames.AMF
+  }
 
   protected def generate(report: AMFValidationReport): String = {
     report.toString
@@ -34,7 +41,7 @@ trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTest {
 
   protected def validate(api: String,
                          golden: Option[String] = None,
-                         profile: String = ProfileNames.RAML,
+                         profile: String = defaultProfile,
                          profileFile: Option[String] = None): Future[Assertion] = {
     for {
       validation <- Validation(platform)

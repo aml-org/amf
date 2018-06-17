@@ -1,5 +1,8 @@
 package amf.validation
 
+import amf.ProfileNames
+import amf.core.remote.{Hint, RamlYamlHint}
+
 class ValidApiExamplesValidationTest extends ValidModelTest {
 
   test("Example of object validations test") {
@@ -45,4 +48,26 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   test("Ignore empty example") {
     checkValid("/examples/empty-example.raml")
   }
+
+  test("Empty payload with example validation") {
+    checkValid("/08/empty-payload-with-example.raml", ProfileNames.RAML08)
+  }
+
+  test("Invalid yaml with scalar an map as value") {
+    checkValid("/shapes/expanded-inheritance-with-example.raml")
+  }
+
+  test("Valid examples validation over union shapes") {
+    checkValid("/shapes/examples-in-unions.raml")
+  }
+
+  test("Valid examples validation over union shapes 2") {
+    checkValid("/shapes/unions_examples.raml")
+  }
+
+  test("Test validation of body with only example (default any shape)") {
+    checkValid("/examples/only-example-body.raml")
+  }
+
+  override val hint: Hint = RamlYamlHint
 }

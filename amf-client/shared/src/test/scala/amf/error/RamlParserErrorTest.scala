@@ -219,16 +219,52 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
-// todo hnajles: move to validmodelvalidationtest when branch of refactor is complete
-  test("Empty describe by") {
+  test("Invalid example in any shape") {
     validate(
-      "error/empty-described-by.raml"
+      "/warning/any-shape-invalid-example.raml",
+      warning => {
+        warning.level should be("Warning")
+        warning.message should startWith("Error node '{")
+      }
     )
   }
 
-  test("Empty uri parameters") {
+  test("Chained references violation test") {
     validate(
-      "error/empty-uri-parameters.raml"
+      "/error/chained/api.raml",
+      chained => {
+        chained.level should be("Violation")
+        chained.message should startWith("Chained reference")
+      }
+    )
+  }
+
+  test("Invalid path template syntax text") {
+    validate(
+      "/error/unbalanced_paths.raml",
+      baseUri => {
+        baseUri.level should be("Violation")
+        baseUri.message should startWith("Invalid path template syntax")
+        baseUri.position.map(_.range) should be(Some(Range((4, 23), (6, 0))))
+
+      },
+      param => {
+        param.level should be("Violation")
+        param.message should startWith("Invalid path template syntax")
+        param.position.map(_.range) should be(Some(Range((3, 9), (3, 38))))
+
+      }
+    )
+  }
+
+  test("Empty library entry") {
+    validate(
+      "/valid/empty-library-entry.raml",
+      violation => {
+        violation.level should be("Violation")
+        violation.message should be("Missing library location")
+        violation.position.map(_.range) should be(Some(Range((4, 2), (4, 14))))
+      }
     )
   }
 

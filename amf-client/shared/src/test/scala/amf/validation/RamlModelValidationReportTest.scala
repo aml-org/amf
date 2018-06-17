@@ -1,6 +1,8 @@
 package amf.validation
 
-class ModelValidationReportTest extends ValidationReportGenTest {
+import amf.core.remote.{Hint, RamlYamlHint}
+
+class RamlModelValidationReportTest extends ValidationReportGenTest {
 
   override val basePath    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath = "amf-client/shared/src/test/resources/validations/reports/model/"
@@ -60,4 +62,38 @@ class ModelValidationReportTest extends ValidationReportGenTest {
   test("Exclusive queryString vs queryParameters validation") {
     validate("operation/query_string_parameters.raml", Some("query_string_parameters.report"))
   }
+
+  test("float numeric constraints") {
+    validate("/shapes/floats.raml", Some("shapes-floats.report"))
+  }
+
+  test("Invalid example no media types") {
+    validate("/examples/example-no-media-type.raml", Some("example-no-media-type.report"))
+  }
+
+  test("Test out of range status code") {
+    validate("/webapi/invalid_status_code.raml", Some("invalid-status-code.report"))
+  }
+
+  test("Test empty string in title") {
+    validate("/webapi/invalid_title1.raml", Some("empty-title.report"))
+  }
+
+  test("Mandatory RAML documentation properties test") {
+    validate("/documentation/api.raml", Some("documentation-api.report"))
+  }
+
+  test("Test minimum maximum constraint between facets") {
+    validate("/facets/min-max-between.raml", Some("min-max-between.report"))
+  }
+
+  test("Test minItems maxItems constraint between facets") {
+    validate("/facets/min-max-items-between.raml", Some("min-max-items-between.report"))
+  }
+
+  test("Test minLength maxLength constraint between facets") {
+    validate("/facets/min-max-length-between.raml", Some("min-max-length-between.report"))
+  }
+
+  override val hint: Hint = RamlYamlHint
 }

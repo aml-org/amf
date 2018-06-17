@@ -1,5 +1,6 @@
 package amf.validation
 
+import amf.core.remote.{Hint, RamlYamlHint}
 import amf.core.validation.AMFValidationReport
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 
@@ -49,4 +50,11 @@ class ValidationWithProfileTest extends ValidationReportGenTest {
     validate("jsonapi/correct.raml", None, "JSON API", Some("jsonapi/jsonapi_profile.raml"))
   }
 
+  test("JSON API Validation negative case") {
+    validate("jsonapi/incorrect.raml",
+             Some("jsonapi-incorrect.report"),
+             "JSON API 1.0",
+             Some("jsonapi/jsonapi_profile.raml"))
+  }
+  override val hint: Hint = RamlYamlHint
 }

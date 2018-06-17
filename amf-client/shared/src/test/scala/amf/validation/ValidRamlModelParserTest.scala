@@ -1,8 +1,9 @@
 package amf.validation
 
 import amf.ProfileNames
+import amf.core.remote.{Hint, RamlYamlHint}
 
-class ValidModelParserTest extends ValidModelTest {
+class ValidRamlModelParserTest extends ValidModelTest {
   test("Valid baseUri validations test") {
     checkValid("webapi/valid_baseuri.raml")
   }
@@ -54,4 +55,25 @@ class ValidModelParserTest extends ValidModelTest {
     checkValid("/tck-examples/query-parameter.raml", ProfileNames.RAML08)
   }
 
+
+  test("Empty parameter validation") {
+    checkValid("/08/empty-param.raml", ProfileNames.RAML08)
+  }
+
+  test("Empty describe by") {
+    checkValid("securitySchemes/empty-described-by.raml")
+  }
+
+  test("Empty uri parameters") {
+    checkValid("parameters/empty-uri-parameters.raml")
+  }
+
+  test("Date parameter validation") {
+    checkValid("08/empty-param.raml",ProfileNames.RAML08)
+  }
+
+  test("Shape with items in oas") {
+    checkValid("/shapes/shape-with-items.json",ProfileNames.OAS)
+  }
+  override val hint: Hint = RamlYamlHint
 }

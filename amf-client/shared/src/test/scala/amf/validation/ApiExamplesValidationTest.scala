@@ -1,6 +1,7 @@
 package amf.validation
 
 import amf.ProfileNames
+import amf.core.remote.{Hint, RamlYamlHint}
 
 class ApiExamplesValidationTest extends ValidationReportGenTest {
 
@@ -89,4 +90,36 @@ class ApiExamplesValidationTest extends ValidationReportGenTest {
     validate("/08/date-query-parameter.raml", Some("date-query-parameter.report"), profile = ProfileNames.RAML08)
   }
 
+  test("Invalid example validation over union shapes") {
+    validate("/shapes/invalid-example-in-unions.raml", Some("example-in-unions.report"))
+  }
+
+  test("Test resource type invalid examples args validation") {
+    validate("/resource_types/parameterized-references/input.raml", Some("examples-resource-types.report"))
+  }
+
+  // In fact, the violation its while resolving the model, not running validation itself
+  test("Invalid key in trait test") {
+    validate("/traits/trait1.raml", Some("invalid-hey-trait.report"))
+  }
+
+  test("Test minItems maxItems examples") {
+    validate("/examples/min-max-items.raml", Some("min-max-items.report"))
+  }
+
+  test("Test validate declared type with two uses") {
+    validate("/examples/declared-type-ref.raml", Some("declared-type-ref.report"))
+  }
+
+  test("Test declared type with two uses adding example") {
+    validate("/examples/declared-type-ref-add-example.raml", Some("declared-type-ref-add-example.report"))
+  }
+
+  test("Test unsupported example with raml08 profile") {
+    validate("/examples/unsupported-examples-08.raml",
+             Some("unsupported-examples-08.report"),
+             profile = ProfileNames.RAML08)
+  }
+
+  override val hint: Hint = RamlYamlHint
 }

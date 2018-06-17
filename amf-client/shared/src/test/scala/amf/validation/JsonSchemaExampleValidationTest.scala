@@ -1,5 +1,7 @@
 package amf.validation
 
+import amf.core.remote.{Hint, RamlYamlHint}
+
 class JsonSchemaExampleValidationTest extends ValidationReportGenTest {
   override val basePath = "file://amf-client/shared/src/test/resources/validations/jsonschema/"
 
@@ -79,5 +81,5 @@ class JsonSchemaExampleValidationTest extends ValidationReportGenTest {
   ignore("JSON Schema ref test6") {
     validate("/ref/api6.raml", Some("ref-api6.report"))
   }
-
+  override val hint: Hint = RamlYamlHint
 }
