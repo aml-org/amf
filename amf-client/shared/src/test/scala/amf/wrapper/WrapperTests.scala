@@ -36,7 +36,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   private val defaultValue = "file://amf-client/shared/src/test/resources/api/shape-default.raml"
   private val profile      = "file://amf-client/shared/src/test/resources/api/validation/custom-profile.raml"
   //  private val banking       = "file://amf-client/shared/src/test/resources/api/banking.raml"
-  private val raml_doc = "file://vocabularies/vocabularies/raml_doc.raml"
+  private val aml_doc = "file://vocabularies/vocabularies/aml_doc.raml"
   private val scalarAnnotations =
     "file://amf-client/shared/src/test/resources/org/raml/parser/annotation/scalar-nodes/input.raml"
 
@@ -436,10 +436,10 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   }
    */
 
-  test("Vocabularies parsing raml_doc") {
+  test("Vocabularies parsing aml_doc") {
     for {
       _    <- AMF.init().asFuture
-      unit <- amf.Core.parser("AMF Vocabularies", "application/yaml").parseFileAsync(raml_doc).asFuture
+      unit <- amf.Core.parser("AMF Vocabularies", "application/yaml").parseFileAsync(aml_doc).asFuture
     } yield {
       val declarations = unit.asInstanceOf[Vocabulary].declares.asSeq
 

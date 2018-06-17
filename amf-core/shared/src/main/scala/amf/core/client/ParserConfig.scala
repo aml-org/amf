@@ -41,6 +41,7 @@ case class ParserConfig(mode: Option[String] = None,
                         validate: Boolean = true,
                         validationProfile: String = ProfileNames.AMF,
                         customProfile: Option[String] = None,
+                        resolve: Boolean = false,
                         // list of dialects that will be loaded in the registry
                         // before parsing
                         dialects: Seq[String] = Seq(),

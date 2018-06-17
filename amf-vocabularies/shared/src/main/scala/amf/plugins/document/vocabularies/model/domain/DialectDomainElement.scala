@@ -156,6 +156,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
           } foreach {
             case updatedValues: Seq[DialectDomainElement] =>
               objectCollectionProperties.put(property.id, updatedValues)
+            case _ => // ignore
           }
         })
       case _ => // ignore

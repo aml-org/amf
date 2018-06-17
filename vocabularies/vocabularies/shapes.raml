@@ -1,13 +1,13 @@
 #%Vocabulary 1.0
 
-base: "http://raml.org/vocabularies/shapes#"
+base: "http://a.ml/vocabularies/shapes#"
 
 version: "1.0"
 
 usage: Vocabulary defining data shapes, used as an extension to SHACL
 
 uses:
-  raml-doc: ./raml_doc.raml
+  doc: ./aml_doc.raml
 
 external:
   shacl: "http://www.w3.org/ns/shacl#"
@@ -21,7 +21,7 @@ classTerms:
       They can be used to define and enforce schemas for the data graph information through SHACL.
       Shapes can be recursive and inherit from other shapes.
     extends:
-      - raml-doc.DomainElement
+      - doc.DomainElement
       - shacl.Shape
     properties:
       - inherits
@@ -200,5 +200,5 @@ propertyTerms:
 
   raw:
     description: raw value of the external data schema
-    extends: raml-doc.raw
+    extends: doc.raw
     range: string
