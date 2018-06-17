@@ -508,6 +508,8 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
                 case _ => //
               }
             }
+
+          case _ => // ignore
         }
       case _ => // Unknown annotation identifier
     }

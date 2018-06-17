@@ -5,8 +5,9 @@ import amf.client.model.document.BaseUnit
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.RuntimeResolver
 
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
+@JSExportTopLevel("Resolver")
 @JSExportAll
 class Resolver(vendor: String) {
 

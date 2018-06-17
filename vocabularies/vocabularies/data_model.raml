@@ -1,6 +1,6 @@
 #%Vocabulary 1.0
 
-base: "http://raml.org/vocabularies/data#"
+base: "http://a.ml/vocabularies/data#"
 
 version: "1.0"
 
@@ -10,7 +10,7 @@ usage: |
   They can be validated using data shapes.
 
 uses:
-  raml-doc: ./raml_doc.raml
+  doc: ./aml_doc.raml
 
 classTerms:
 
@@ -18,7 +18,7 @@ classTerms:
     displayName: Data Node
     description: Base class for all data nodes parsed from the data structure
     extends:
-      - raml-doc.DomainElement
+      - doc.DomainElement
 
   Object:
     displayName: Object

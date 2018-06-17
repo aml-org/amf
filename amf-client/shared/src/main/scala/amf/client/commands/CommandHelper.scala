@@ -5,7 +5,8 @@ import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
-import amf.core.services.{RuntimeCompiler, RuntimeSerializer}
+import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.services.{RuntimeCompiler, RuntimeResolver, RuntimeSerializer}
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.document.webapi.{OAS20Plugin, OAS30Plugin, RAML08Plugin, RAML10Plugin}
@@ -49,14 +50,44 @@ trait CommandHelper {
 
   protected def parseInput(config: ParserConfig): Future[BaseUnit] = {
     var inputFile   = ensureUrl(config.input.get)
-    val inputFormat = config.inputFormat.get
-    RuntimeCompiler(
+    val vendor = effectiveVendor(config.inputMediaType, config.inputFormat)
+    val parsed = RuntimeCompiler(
       inputFile,
       Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
-      effectiveVendor(config.inputMediaType, config.inputFormat),
+      vendor,
       Context(platform)
     )
+
+    if (config.resolve) {
+      parsed map { unit =>
+        RuntimeResolver.resolve(vendor, unit, ResolutionPipeline.DEFAULT_PIPELINE)
+      }
+    } else {
+      parsed
+    }
   }
+
+  protected def resolve(config: ParserConfig, unit: BaseUnit): Future[BaseUnit] = {
+    val vendor = effectiveVendor(config.inputMediaType, config.inputFormat)
+    if (config.resolve && config.validate) {
+      var inputFile   = ensureUrl(config.input.get)
+      val parsed = RuntimeCompiler(
+        inputFile,
+        Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
+        vendor,
+        Context(platform)
+      )
+      parsed map { parsed =>
+        RuntimeResolver.resolve(vendor, parsed, ResolutionPipeline.DEFAULT_PIPELINE)
+      }
+    } else if (config.resolve) {
+      Future { RuntimeResolver.resolve(vendor, unit, ResolutionPipeline.DEFAULT_PIPELINE) }
+    } else {
+      Future { unit }
+    }
+  }
+
+
 
   protected def generateOutput(config: ParserConfig, unit: BaseUnit): Future[Unit] = {
     val generateOptions = RenderOptions()

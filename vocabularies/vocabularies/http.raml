@@ -1,65 +1,65 @@
 #%Vocabulary 1.0
 
-base: "http://raml.org/vocabularies/http#"
+base: "http://a.ml/vocabularies/http#"
 
 usage: HTTP APIs vocabulary for AMF
 
 uses:
-  shapes: ./raml_shapes.raml
-  raml-doc: ./raml_doc.raml
+  shapes: ./shapes.raml
+  doc: ./aml_doc.raml
 
 external:
   schema-org: "http://schema.org/"
   hydra: "http://www.w3.org/ns/hydra/core#"
   shacl: "http://www.w3.org/ns/shacl#"
-  security: "http://raml.org/vocabularies/security#"
+  security: "http://a.ml/vocabularies/security#"
 
 classTerms:
 
-  raml-doc.DocumentationItemFragment:
+  doc.DocumentationItemFragment:
     displayName: Documentation Item Fragment
     description: Fragment encoding documentation about a Web API
-    extends: raml-doc.Fragment
+    extends: doc.Fragment
 
-  raml-doc.DataTypeFragment:
+  doc.DataTypeFragment:
     displayName: Data Type Fragment
     description: Fragment encoding information about a payload data shape
-    extends: raml-doc.Fragment
+    extends: doc.Fragment
 
-  raml-doc.NamedExampleFragment:
+  doc.NamedExampleFragment:
     displayName:  Named Example Fragment
     description: Fragment encoding information about a named example for an API endpoint
-    extends: raml-doc.Fragment
+    extends: doc.Fragment
 
-  raml-doc.ResourceTypeFragment:
+  doc.ResourceTypeFragment:
     displayName: Resource Type Fragment
     description: Fragment encoding information about an EndPoint graph template
-    extends: raml-doc.Fragment
+    extends: doc.Fragment
 
-  raml-doc.TraitFragment:
+  doc.TraitFragment:
     displayName: Trait Fragment
     description: Fragment encoding information about an operation graph template
-    extends: raml-doc.Fragment
+    extends: doc.Fragment
 
-  raml-doc.AnnotationTypeDeclarationFragment:
+  doc.AnnotationTypeDeclarationFragment:
     displayName: Annotation Type Declaration Fragment
     description: Fragment encoding information about an API spec extension
-    extends: raml-doc.Fragment
+    extends: doc.Fragment
 
-  raml-doc.SecuritySchemeFragment:
+  doc.SecuritySchemeFragment:
     displayName: Security Scheme Fragment
     description: Fragment encoding information about a Security Scheme
-    extends: raml-doc.Fragment
+    extends: doc.Fragment
 
-  raml-doc.Extension:
+  doc.Extension:
     displayName: API Spec Extension
     description: |
       An extension broadens a RAML API definition by adding to, or modifying aspects of its behavior and other functionality.
       An extension can be useful in separating a core, broadly-available API from layers of functionality available to
       more restricted audiences, for creating variants of an API for somewhat different purposes, or for specifying instance-specific nodes of an API, such as its service endpoint (URL) without altering its pure interface definition document.
-    extends: raml-doc.DocumentExtension
+    extends: doc.DocumentExtension
 
-  raml-doc.Overlay:
+  doc.Overlay:
     displayName: API Spec Overlay
     description: |
       An overlay adds or overrides nodes of a RAML API definition while preserving its behavioral, functional aspects.
@@ -67,12 +67,12 @@ classTerms:
       These nodes cannot be changed by applying an overlay. In contrast, other nodes, such as descriptions or annotations,
       address concerns beyond the functional interface, such as the human-oriented descriptive documentation in some language,
       or implementation or verification information for use in automated tools. These nodes can be changed by applying an overlay.
-    extends: raml-doc.DocumentExtension
+    extends: doc.DocumentExtension
 
   schema-org.WebAPI:
     displayName: Web API
     description: Top level element describing a HTTP API
-    extends: raml-doc.RootDomainElement
+    extends: doc.RootDomainElement
     properties:
       - host
       - scheme
@@ -85,22 +85,22 @@ classTerms:
       - endpoint
 
   schema-org.Organization:
-    extends: raml-doc.DomainElement
+    extends: doc.DomainElement
     description: |
       The service provider, service operator, or service performer; the goods producer.
       Another party (a seller) may offer those services or goods on behalf of the provider.
       A provider may also serve as the seller.
 
   License:
-    extends: raml-doc.DomainElement
+    extends: doc.DomainElement
     description: License for the API
 
   Documentation:
-    extends: raml-doc.DomainElement
+    extends: doc.DomainElement
     description: Documentation associated to the API, stored externally.
 
   EndPoint:
-    extends: raml-doc.DomainElement
+    extends: doc.DomainElement
     displayName: End Point
     description: EndPoint in the API holding a number of executable operations
     properties:
@@ -108,7 +108,7 @@ classTerms:
       - hydra.supportedOperation
 
   hydra.Operation:
-    extends: raml-doc.DomainElement
+    extends: doc.DomainElement
     description: Action that can be executed using a particular HTTP invocation
     properties:
       - hydra.method
@@ -120,24 +120,24 @@ classTerms:
       - hydra.expects
 
   hydra.Request:
-    extends: raml-doc.DomainElement
+    extends: doc.DomainElement
     description: Request information for an operation
 
   hydra.Response:
-    extends: raml-doc.DomainElement
+    extends: doc.DomainElement
     description: Response information for an operation
     properties:
       - statusCode
 
   Parameter:
-    extends: raml-doc.DomainElement
+    extends: doc.DomainElement
     description: Piece of data required or returned by an Operation
     properties:
       - hydra.required
       - binding
 
   Payload:
-    extends: raml-doc.DomainElement
+    extends: doc.DomainElement
     description: Encoded payload for a particular media-type
     properties:
       - mediaType
@@ -313,7 +313,7 @@ propertyTerms:
 
   schema:
     description: Schema for an API spec Domain Element
-    extends: raml-doc.schema
+    extends: doc.schema
     range: shapes.AnyShape
 
   header:
@@ -327,7 +327,7 @@ propertyTerms:
 
   examples:
     description: Examples for a particular domain element
-    range: raml-doc.Example
+    range: doc.Example
 
   security.type:
     displayName: security scheme type

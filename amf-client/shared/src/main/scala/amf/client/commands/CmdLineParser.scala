@@ -94,6 +94,11 @@ object CmdLineParser {
           .abbr("v")
           .text("Perform validation")
           .action((f, c) => c.copy(validate = f))
+
+        opt[Boolean]("resolve")
+          .abbr("r")
+          .text("Resolve after parsing")
+          .action((f, c) => c.copy(resolve = f))
       }
 
     cmd("translate")

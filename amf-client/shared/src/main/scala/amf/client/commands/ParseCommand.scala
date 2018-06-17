@@ -15,6 +15,7 @@ class ParseCommand(override val platform: Platform) extends TranslateCommand(pla
       _         <- processDialects(config)
       model     <- parseInput(config)
       _         <- checkValidation(config, model)
+      model     <- resolve(config, model)
       generated <- generateOutput(config, model)
     } yield {
       generated

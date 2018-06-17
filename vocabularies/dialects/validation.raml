@@ -6,7 +6,7 @@ usage: Dialect to describe validations over RAML documents
 external:
   schema-org: http://schema.org/
   shacl: http://www.w3.org/ns/shacl#
-  validation: http://raml.org/vocabularies/amf-validation#
+  validation: http://a.ml/vocabularies/amf-validation#
 nodeMappings:
   functionConstraintNode:
     classTerm: shacl.JSConstraint
@@ -155,8 +155,8 @@ nodeMappings:
           - functionValidationNode
         asMap: true
         hash: schema-org.name
-raml:
-  document:
+documents:
+  root:
     encodes: profileNode
   module:
     declares:
