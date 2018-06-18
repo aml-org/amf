@@ -154,7 +154,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#inherits": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/simple_example_type.raml#/declarations/types/AppPerson",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/simple_example_type.raml#/declarations/types/AppPerson/linked_1",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -178,7 +178,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/simple_example_type.raml#/declarations/types/AppPerson/source-map",
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/simple_example_type.raml#/declarations/types/AppPerson/linked_1/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -186,7 +186,7 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/simple_example_type.raml#/declarations/types/AppPerson"
+                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/simple_example_type.raml#/declarations/types/AppPerson/linked_1"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [

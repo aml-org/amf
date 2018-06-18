@@ -131,4 +131,19 @@ package object utils {
     def variables(path: String): Seq[String] =
       varPattern.findAllIn(path).toSeq.map(v => v.replace("{", "").replace("}", ""))
   }
+
+  /**
+    * We need to generate unique IDs for all data nodes if the name is not set
+    */
+  class IdCounter {
+    private var c = 0
+
+    def genId(id: String): String = {
+      c += 1
+      s"${id}_$c"
+    }
+
+    def reset(): Unit = c = 0
+  }
+
 }

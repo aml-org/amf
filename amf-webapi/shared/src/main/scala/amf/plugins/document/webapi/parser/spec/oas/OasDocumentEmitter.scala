@@ -11,6 +11,7 @@ import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.core.remote.{Oas, Vendor}
+import amf.core.utils.{IdCounter, Strings}
 import amf.plugins.document.webapi.contexts.{
   BaseSpecEmitter,
   OasSpecEmitterContext,
@@ -19,8 +20,6 @@ import amf.plugins.document.webapi.contexts.{
 }
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Overlay}
-import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.common.IdCounter
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.shapes.models._
@@ -29,7 +28,6 @@ import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import amf.core.utils.Strings
 
 import scala.collection.mutable
 

@@ -4,6 +4,7 @@ import amf.core.metamodel.domain.LinkableElementModel
 import amf.core.model.{BoolField, StrField}
 import amf.core.parser.{Annotations, DeclarationPromise, ParserContext}
 import org.yaml.model.YPart
+import amf.core.utils._
 
 trait Linkable extends AmfObject { this: DomainElement with Linkable =>
 
@@ -32,7 +33,9 @@ trait Linkable extends AmfObject { this: DomainElement with Linkable =>
   def withSupportsRecursion(recursive: Boolean): this.type = set(LinkableElementModel.SupportsRecursion, recursive)
 
   def link[T](label: String, annotations: Annotations = Annotations()): T = {
-    linkCopy()
+    val copied = linkCopy()
+    copied
+      .withId(linkCounter.genId(copied.id + "/linked"))
       .withLinkTarget(this)
       .withLinkLabel(label)
       .add(annotations)
@@ -82,16 +85,18 @@ trait Linkable extends AmfObject { this: DomainElement with Linkable =>
             () =>
               if (unresolvedSeverity == "warning") {
                 ctx.warning(id,
-                  s"Unresolved reference '$refName' from root context ${ctx.rootContextDocument}",
-                  refAst.get)
+                            s"Unresolved reference '$refName' from root context ${ctx.rootContextDocument}",
+                            refAst.get)
               } else {
                 ctx.violation(id,
-                  s"Unresolved reference '$refName' from root context ${ctx.rootContextDocument}",
-                  refAst.get)
-              }
+                              s"Unresolved reference '$refName' from root context ${ctx.rootContextDocument}",
+                              refAst.get)
+            }
           )
         )
       case none => throw new Exception("Cannot create unresolved reference with missing parsing context")
     }
   }
+
+  private val linkCounter = new IdCounter()
 }

@@ -13,7 +13,6 @@ import amf.core.remote._
 import amf.core.utils.TSort.tsort
 import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.common.IdCounter
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.oas.{OasDeclaredResponsesEmitter, TagsEmitter}
@@ -23,7 +22,7 @@ import amf.plugins.domain.webapi.models._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode}
 import org.yaml.render.YamlRender
-import amf.core.utils.Strings
+import amf.core.utils.{IdCounter, Strings}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer

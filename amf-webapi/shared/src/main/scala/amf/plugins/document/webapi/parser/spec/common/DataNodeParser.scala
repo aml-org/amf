@@ -13,20 +13,6 @@ import org.yaml.parser.YamlParser
 import scala.collection.mutable.ListBuffer
 
 /**
-  * We need to generate unique IDs for all data nodes if the name is not set
-  */
-class IdCounter {
-  private var c = 0
-
-  def genId(id: String): String = {
-    c += 1
-    s"${id}_$c"
-  }
-
-  def reset(): Unit = c = 0
-}
-
-/**
   * Parse an object as a fully dynamic value.
   */
 case class DataNodeParser(node: YNode,

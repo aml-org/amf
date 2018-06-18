@@ -5,7 +5,6 @@ import amf.core.model.domain.Shape
 import amf.core.utils._
 import amf.core.validation.ValidationCandidate
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.webapi.parser.spec.common.IdCounter
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ScalarShape}
 

@@ -55,7 +55,6 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("/tck-examples/query-parameter.raml", ProfileNames.RAML08)
   }
 
-
   test("Empty parameter validation") {
     checkValid("/08/empty-param.raml", ProfileNames.RAML08)
   }
@@ -69,11 +68,15 @@ class ValidRamlModelParserTest extends ValidModelTest {
   }
 
   test("Date parameter validation") {
-    checkValid("08/empty-param.raml",ProfileNames.RAML08)
+    checkValid("08/empty-param.raml", ProfileNames.RAML08)
   }
 
-  test("Shape with items in oas") {
-    checkValid("/shapes/shape-with-items.json",ProfileNames.OAS)
+  test("Recursive property") {
+    checkValid("/recursive-property.raml")
+  }
+
+  test("Link to declared type with recursive optional properties") {
+    checkValid("/shapes/link-declared-recursive-optional.raml")
   }
   override val hint: Hint = RamlYamlHint
 }

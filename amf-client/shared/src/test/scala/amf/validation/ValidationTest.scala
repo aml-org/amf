@@ -949,17 +949,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.conforms)
     }
   }
-  test("Recursive property") {
-    for {
-      validation <- Validation(platform)
-      model      <- AMFCompiler(validationsPath + "recursive-property.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.size == 1)
-      assert(report.results.head.message == "Error recursive shape")
-    }
-  }
 
   test("Test valid recursive union recursive") {
     for {

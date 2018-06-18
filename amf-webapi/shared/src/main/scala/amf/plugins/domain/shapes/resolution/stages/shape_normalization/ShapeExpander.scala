@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
-import amf.core.annotations.{ExplicitField, LexicalInformation}
+import amf.core.annotations.ExplicitField
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain._
@@ -8,40 +8,21 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.Annotations
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.domain.shapes.resolution.stages.RecursionErrorRegister
 
 private[stages] object ShapeExpander {
-  def apply(s: Shape, context: NormalizationContext): Shape = new ShapeExpander(s)(context).normalize()
+  def apply(s: Shape, context: NormalizationContext, recursionRegister: RecursionErrorRegister): Shape =
+    new ShapeExpander(s, recursionRegister: RecursionErrorRegister)(context).normalize()
 }
 
-sealed case class ShapeExpander(root: Shape)(implicit val context: NormalizationContext) extends ShapeNormalizer {
+sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRegister)(
+    implicit val context: NormalizationContext)
+    extends ShapeNormalizer {
 
   def normalize(): Shape = normalize(root)
 
   protected val traversed: IdsTraversionCheck =
     IdsTraversionCheck().withAllowedCyclesInstances(Seq(classOf[UnresolvedShape]))
-
-  private def buildRecursion(base: Option[String], s: Shape): RecursiveShape = {
-    val fixPointId = base.getOrElse(s.id)
-    RecursiveShape(s).withFixPoint(fixPointId)
-  }
-
-  private def recursionAndError(base: Option[String], s: Shape): RecursiveShape =
-    recursionError(root, buildRecursion(base, s))
-
-  private def recursionError(original: Shape, r: RecursiveShape): RecursiveShape = {
-    if (!r.supportsRecursion
-          .option()
-          .getOrElse(false) && !traversed.avoidError(original.id)) // todo should store in recursion it use to
-      context.errorHandler.violation(
-        ParserSideValidations.RecursiveShapeSpecification.id,
-        original.id,
-        None,
-        "Error recursive shape",
-        original.annotations.find(classOf[LexicalInformation])
-      )
-    r
-  }
 
   protected def ensureCorrect(shape: Shape): Unit = {
     if (Option(shape.id).isEmpty) {
@@ -53,8 +34,9 @@ sealed case class ShapeExpander(root: Shape)(implicit val context: Normalization
 
   override def normalizeAction(shape: Shape): Shape = {
     shape match {
-      case l: Linkable if l.isLink                                          => recursionAndError(Some(root.id), shape)
-      case _ if traversed.has(shape) && !shape.isInstanceOf[RecursiveShape] => recursionAndError(None, shape)
+      case l: Linkable if l.isLink => recursionRegister.recursionAndError(root, Some(root.id), shape, traversed)
+      case _ if traversed.has(shape) && !shape.isInstanceOf[RecursiveShape] =>
+        recursionRegister.recursionAndError(root, None, shape, traversed)
       case _ =>
         ensureCorrect(shape)
         traversed + shape.id
@@ -81,7 +63,7 @@ sealed case class ShapeExpander(root: Shape)(implicit val context: Normalization
     if (Option(oldInherits).isDefined) {
       // in this case i use the father shape id and position, because the inheritance could be a recursive shape already
       val newInherits = shape.inherits.map {
-        case r: RecursiveShape => recursionError(shape, r)
+        case r: RecursiveShape => recursionRegister.recursionError(shape, r, traversed)
         case other             => recursiveNormalization(other)
       }
       shape.setArrayWithoutId(ShapeModel.Inherits, newInherits, oldInherits.annotations)
@@ -193,10 +175,10 @@ sealed case class ShapeExpander(root: Shape)(implicit val context: Normalization
 
   private def traverseOptionalPropertyRange(range: Shape) = {
     range.linkTarget match {
-      case Some(t) => traversed.runWithIgnoredId(() => normalize(range), t.id)
+      case Some(t) => traversed.runWithIgnoredIds(() => normalize(range), Set(root.id, t.id))
       case None if range.inherits.nonEmpty =>
-        traversed.runWithIgnoredIds(() => normalize(range), range.inherits.map(_.id).toSet)
-      case _ => traversed.runWithIgnoredId(() => normalize(range), range.id)
+        traversed.runWithIgnoredIds(() => normalize(range), range.inherits.map(_.id).toSet + root.id)
+      case _ => traversed.runWithIgnoredIds(() => normalize(range), Set(range.id, range.id))
     }
   }
 
