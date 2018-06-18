@@ -69,5 +69,9 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     checkValid("/examples/only-example-body.raml")
   }
 
+  test("Test seq in seq example") {
+    checkValid("/examples/seq-in-seq.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

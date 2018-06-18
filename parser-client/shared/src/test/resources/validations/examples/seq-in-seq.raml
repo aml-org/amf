@@ -1,0 +1,29 @@
+#%RAML 1.0
+
+title: title
+
+types:
+  RangeValues:
+    type: array
+    items:
+      type:
+        type: array
+        items:
+            type: string
+
+  RangeData:
+    type: object
+    properties:
+      range:
+        type: string
+        required: false
+      values:
+        type: RangeValues
+        required: false
+    example:
+      range: 'A1:B2'
+      values:
+        - - Row1-Column1 Data
+          - Row1-Column2 Data
+        - - Row2-Column1 Data
+          - Row2-Column2 Data
