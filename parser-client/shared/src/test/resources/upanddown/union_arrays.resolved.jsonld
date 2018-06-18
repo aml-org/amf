@@ -1,0 +1,330 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#/web-api",
+        "@type": [
+          "schema-org:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "schema-org:name": [
+          {
+            "@value": "test"
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#/web-api": "raml 1.0"
+          },
+          "lexical": {
+            "schema-org:name": "[(2,0)-(3,0)]",
+            "#/web-api": "[(2,0)-(13,39)]"
+          }
+        }
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#/declarations/types/any/Product",
+        "@type": [
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape"
+        ],
+        "shacl:name": [
+          {
+            "@value": "Product"
+          }
+        ],
+        "smaps": {
+          "declared-element": {
+            "#/declarations/types/any/Product": ""
+          },
+          "lexical": {
+            "shacl:name": "[(4,2)-(4,9)]",
+            "#/declarations/types/any/Product": "[(4,2)-(5,0)]"
+          }
+        }
+      },
+      {
+        "@id": "#/declarations/types/PropertyArray",
+        "@type": [
+          "shacl:NodeShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:closed": [
+          {
+            "@value": false
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#/declarations/types/PropertyArray/property/complex",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#complex"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#/declarations/types/PropertyArray/property/complex/array/complex",
+                "@type": [
+                  "raml-shapes:ArrayShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "raml-shapes:items": [
+                  {
+                    "@id": "#/declarations/types/PropertyArray/property/complex/array/complex/union/default-union",
+                    "@type": [
+                      "raml-shapes:UnionShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape"
+                    ],
+                    "raml-shapes:anyOf": [
+                      {
+                        "@id": "#/declarations/types/PropertyArray/property/complex/array/complex/items/scalar/scalar-expression-0",
+                        "@type": [
+                          "raml-shapes:ScalarShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "#/declarations/types/PropertyArray/property/complex/array/complex/items/scalar/scalar-expression-2",
+                        "@type": [
+                          "raml-shapes:ScalarShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://a.ml/vocabularies/shapes#number"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "#/declarations/types/any/Product",
+                        "@type": [
+                          "raml-shapes:AnyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape"
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "Product"
+                          }
+                        ],
+                        "smaps": {
+                          "declared-element": {
+                            "#/declarations/types/any/Product": ""
+                          },
+                          "lexical": {
+                            "shacl:name": "[(4,2)-(4,9)]",
+                            "#/declarations/types/any/Product": "[(4,2)-(5,0)]"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "complex"
+                  }
+                ],
+                "smaps": {
+                  "type-property-lexical-info": {
+                    "#/declarations/types/PropertyArray/property/complex/array/complex": "[(8,8)-(8,12)]"
+                  },
+                  "lexical": {
+                    "#/declarations/types/PropertyArray/property/complex/array/complex": "[(7,6)-(10,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "complex"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#/declarations/types/PropertyArray/property/complex": "[(7,6)-(10,0)]"
+              }
+            }
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "PropertyArray"
+          }
+        ],
+        "smaps": {
+          "declared-element": {
+            "#/declarations/types/PropertyArray": ""
+          },
+          "lexical": {
+            "shacl:name": "[(5,2)-(5,15)]",
+            "#/declarations/types/PropertyArray": "[(5,2)-(10,0)]"
+          }
+        }
+      },
+      {
+        "@id": "#/declarations/types/PropertyNoArray",
+        "@type": [
+          "shacl:NodeShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:closed": [
+          {
+            "@value": false
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#/declarations/types/PropertyNoArray/property/complex",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#complex"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#/declarations/types/PropertyNoArray/property/complex/union/default-union/union/default-union",
+                "@type": [
+                  "raml-shapes:UnionShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape"
+                ],
+                "raml-shapes:anyOf": [
+                  {
+                    "@id": "#/declarations/types/PropertyNoArray/property/complex/union/default-union/scalar/scalar-expression-0",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/types/PropertyNoArray/property/complex/union/default-union/scalar/scalar-expression-2",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://a.ml/vocabularies/shapes#number"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/types/any/Product",
+                    "@type": [
+                      "raml-shapes:AnyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape"
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "Product"
+                      }
+                    ],
+                    "smaps": {
+                      "declared-element": {
+                        "#/declarations/types/any/Product": ""
+                      },
+                      "lexical": {
+                        "shacl:name": "[(4,2)-(4,9)]",
+                        "#/declarations/types/any/Product": "[(4,2)-(5,0)]"
+                      }
+                    }
+                  }
+                ]
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "complex"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#/declarations/types/PropertyNoArray/property/complex": "[(12,6)-(13,39)]"
+              }
+            }
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "PropertyNoArray"
+          }
+        ],
+        "smaps": {
+          "declared-element": {
+            "#/declarations/types/PropertyNoArray": ""
+          },
+          "lexical": {
+            "shacl:name": "[(10,2)-(10,17)]",
+            "#/declarations/types/PropertyNoArray": "[(10,2)-(13,39)]"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "file://parser-client/shared/src/test/resources/upanddown/union_arrays.raml",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "schema-org": "http://schema.org/"
+    }
+  }
+]

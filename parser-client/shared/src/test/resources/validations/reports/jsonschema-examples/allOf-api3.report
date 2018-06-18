@@ -1,0 +1,13 @@
+Model: file://parser-client/shared/src/test/resources/validations/jsonschema/allOf/api3.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: file://parser-client/shared/src/test/resources/validations/jsonschema/allOf/api3.raml#/declarations/types/any/test1_validation
+  Message: Data at / must be a valid shape
+  Level: Violation
+  Target: file://parser-client/shared/src/test/resources/validations/jsonschema/allOf/api3.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/any/schema/example/default-example
+  Property: 
+  Position: Some(LexicalInformation([(29,21)-(29,23)]))

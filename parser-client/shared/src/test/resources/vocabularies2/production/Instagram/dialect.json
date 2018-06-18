@@ -1,0 +1,641 @@
+[
+  {
+    "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#",
+    "@type": [
+      "http://a.ml/vocabularies/meta#Dialect",
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://schema.org/name": [
+      {
+        "@value": "Instagram Data"
+      }
+    ],
+    "http://schema.org/version": [
+      {
+        "@value": "0.1"
+      }
+    ],
+    "http://a.ml/vocabularies/meta#externals": [
+      {
+        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/externals/linked-data-platform",
+        "@type": [
+          "http://www.w3.org/2002/07/owl#Ontology",
+          "http://a.ml/vocabularies/meta#ExternalVocabulary",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://schema.org/alias": [
+          {
+            "@value": "linked-data-platform"
+          }
+        ],
+        "http://a.ml/vocabularies/meta#base": [
+          {
+            "@value": "http://www.w3.org/ns/ldp#"
+          }
+        ]
+      },
+      {
+        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/externals/tests",
+        "@type": [
+          "http://www.w3.org/2002/07/owl#Ontology",
+          "http://a.ml/vocabularies/meta#ExternalVocabulary",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://schema.org/alias": [
+          {
+            "@value": "tests"
+          }
+        ],
+        "http://a.ml/vocabularies/meta#base": [
+          {
+            "@value": "http://a.ml/vocabularies/tests#"
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/meta#documents": [
+      {
+        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/documents",
+        "@type": [
+          "http://a.ml/vocabularies/meta#DocumentsModel",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/meta#rootDocument": [
+          {
+            "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/documents/root",
+            "@type": [
+              "http://a.ml/vocabularies/meta#DocumentMapping",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/meta#name": [
+              {
+                "@value": "Instagram Data 0.1"
+              }
+            ],
+            "http://a.ml/vocabularies/meta#encodedNode": [
+              {
+                "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/ContainerNode"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/documents/root/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/documents/root"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(4,0)-(45,23)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#declares": [
+      {
+        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/PersonNode",
+        "@type": [
+          "http://a.ml/vocabularies/meta#NodeMapping",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#targetClass": [
+          {
+            "@id": "http://mulesoft.com/vocabularies/amf-learning#Person"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "PersonNode"
+          }
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/PersonNode/property/id",
+            "@type": [
+              "http://a.ml/vocabularies/meta#NodePropertyMapping",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://mulesoft.com/vocabularies/amf-learning#name"
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "id"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/PersonNode/property/id/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/PersonNode/property/id"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(25,0)-(29,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/PersonNode/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/PersonNode"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(22,0)-(29,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/FirstLevelNode",
+        "@type": [
+          "http://a.ml/vocabularies/meta#NodeMapping",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#targetClass": [
+          {
+            "@id": "http://a.ml/vocabularies/tests#FirstLevelNode"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "FirstLevelNode"
+          }
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/FirstLevelNode/property/second",
+            "@type": [
+              "http://a.ml/vocabularies/meta#NodePropertyMapping",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/tests#nextLevel"
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "second"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#node": [
+              {
+                "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/FirstLevelNode/property/second/list",
+                "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+                "http://www.w3.org/2000/01/rdf-schema#_1": [
+                  {
+                    "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/PersonNode"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/FirstLevelNode/property/second/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/FirstLevelNode/property/second"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(33,0)-(37,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/FirstLevelNode/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/FirstLevelNode"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(30,0)-(37,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/ContainerNode",
+        "@type": [
+          "http://a.ml/vocabularies/meta#NodeMapping",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/shacl#targetClass": [
+          {
+            "@id": "http://www.w3.org/ns/ldp#BasicContainer"
+          }
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "ContainerNode"
+          }
+        ],
+        "http://www.w3.org/ns/shacl#property": [
+          {
+            "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/ContainerNode/property/container",
+            "@type": [
+              "http://a.ml/vocabularies/meta#NodePropertyMapping",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://www.w3.org/ns/ldp#contains"
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "container"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#node": [
+              {
+                "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/ContainerNode/property/container/list",
+                "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+                "http://www.w3.org/2000/01/rdf-schema#_1": [
+                  {
+                    "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/PersonNode"
+                  }
+                ],
+                "http://www.w3.org/2000/01/rdf-schema#_2": [
+                  {
+                    "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/FirstLevelNode"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/ContainerNode/property/container/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/ContainerNode/property/container"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(41,0)-(45,23)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/ContainerNode/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/ContainerNode"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(38,0)-(45,23)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#references": [
+      {
+        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/vocabulary.raml",
+        "@type": [
+          "http://www.w3.org/2002/07/owl#Ontology2",
+          "http://a.ml/vocabularies/meta#Vocabulary",
+          "http://a.ml/vocabularies/document#Unit"
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "Custom Vocabulary"
+          }
+        ],
+        "http://a.ml/vocabularies/document#declares": [
+          {
+            "@id": "http://mulesoft.com/vocabularies/amf-learning#Person",
+            "@type": [
+              "http://www.w3.org/2002/07/owl#Class",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/meta#displayName": [
+              {
+                "@value": "Person"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Person description"
+              }
+            ],
+            "http://a.ml/vocabularies/meta#properties": [
+              {
+                "@id": "http://mulesoft.com/vocabularies/amf-learning#name"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "http://mulesoft.com/vocabularies/amf-learning#Person/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://mulesoft.com/vocabularies/amf-learning#Person"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(15,2)-(21,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "http://mulesoft.com/vocabularies/amf-learning#name",
+            "@type": [
+              "http://www.w3.org/2002/07/owl#DatatypeProperty",
+              "http://a.ml/vocabularies/meta#Property",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/meta#displayName": [
+              {
+                "@value": "Name"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Name description"
+              }
+            ],
+            "http://www.w3.org/2000/01/rdf-schema#range": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "http://mulesoft.com/vocabularies/amf-learning#name/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://mulesoft.com/vocabularies/amf-learning#name"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(25,2)-(28,17)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/meta#base": [
+          {
+            "@value": "http://mulesoft.com/vocabularies/amf-learning#"
+          }
+        ],
+        "http://a.ml/vocabularies/document#location": [
+          {
+            "@value": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/vocabulary.raml"
+          }
+        ],
+        "http://a.ml/vocabularies/document#usage": [
+          {
+            "@value": "Learn AMF"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/vocabulary.raml/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/document#usage"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(6,0)-(10,0)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/name"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(4,0)-(6,0)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/vocabulary.raml"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(4,0)-(28,17)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/meta#base"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(10,0)-(12,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/source-map",
+        "@type": [
+          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://a.ml/vocabularies/document-source-maps#aliases-array": [
+          {
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "learning->http://mulesoft.com/vocabularies/amf-learning#::vocabulary.raml"
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#lexical": [
+          {
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "http://schema.org/version"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(5,0)-(8,0)]"
+              }
+            ]
+          },
+          {
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(4,0)-(45,23)]"
+              }
+            ]
+          },
+          {
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "http://schema.org/name"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(4,0)-(5,0)]"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

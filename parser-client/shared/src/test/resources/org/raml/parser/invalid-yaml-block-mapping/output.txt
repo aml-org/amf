@@ -1,0 +1,54 @@
+Model: file://parser-client/shared/src/test/resources/org/raml/parser/invalid-yaml-block-mapping/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 4
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#parsing-error
+  Message: Not a YMap
+  Level: Violation
+  Target: file://parser-client/shared/src/test/resources/org/raml/parser/invalid-yaml-block-mapping/input.raml
+  Property: 
+  Position: None
+
+- Source: http://a.ml/vocabularies/amf/parser#parsing-error
+  Message: Error node '{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Employee",
+  "type": "object",
+  "properties": {
+      "id": {
+          "description": "The unique identifier for an employee",
+          "type": "integer"
+      },
+      "name": {
+          "description": "Name of the employee",
+          "type": "string"
+      },
+      "title": {
+          "description": "Title of the employee in the company",
+          "type": "string"
+      }
+  },
+  "required": ["id", "name"]
+'
+  Level: Violation
+  Target: file://parser-client/shared/src/test/resources/org/raml/parser/invalid-yaml-block-mapping/input.raml
+  Property: 
+  Position: Some(LexicalInformation([(1,0)-(20,0)]))
+
+- Source: http://a.ml/vocabularies/amf/parser#parsing-error
+  Message: invalid json schema expression
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(7,13)-(27,0)]))
+
+- Source: http://a.ml/vocabularies/amf/parser#parsing-error
+  Message: Error node '        }
+# above '}' should close in its correct indentation'
+  Level: Violation
+  Target: file://parser-client/shared/src/test/resources/org/raml/parser/invalid-yaml-block-mapping/input.raml
+  Property: 
+  Position: Some(LexicalInformation([(27,0)-(28,51)]))

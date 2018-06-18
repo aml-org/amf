@@ -1,0 +1,22 @@
+Model: file://parser-client/shared/src/test/resources/org/raml/parser/exclusive-fields/empty-types-schemas/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#parsing-error
+  Message: 'schemas' and 'types' properties are mutually exclusive
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(4,0)-(4,7)]))
+
+Level: Warning
+
+- Source: http://a.ml/vocabularies/amf/parser#parsing-warning
+  Message: 'schemas' keyword it's deprecated for 1.0 version, should use 'types' instead
+  Level: Warning
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(4,0)-(4,7)]))

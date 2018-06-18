@@ -1,0 +1,13 @@
+Model: file://parser-client/shared/src/test/resources/org/raml/parser/resource-types/invalid-status-code/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#raml-status-code
+  Message: Status code must be numeric and in the 1xx-5xx range
+  Level: Violation
+  Target: file://parser-client/shared/src/test/resources/org/raml/parser/resource-types/invalid-status-code/input.raml#/web-api/end-points/%2Fresource/get/699
+  Property: http://www.w3.org/ns/hydra/core#statusCode
+  Position: Some(LexicalInformation([(7,6)-(7,9)]))

@@ -1,0 +1,27 @@
+Model: file://parser-client/shared/src/test/resources/org/raml/parser/duplicated-paths/lots-of-duplicated-res/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 3
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#parsing-error
+  Message: Duplicated resource path /tons/of/api/resources
+  Level: Violation
+  Target: file://parser-client/shared/src/test/resources/org/raml/parser/duplicated-paths/lots-of-duplicated-res/input.raml#/web-api/end-points/%2Ftons%2Fof%2Fapi%2Fresources
+  Property: 
+  Position: Some(LexicalInformation([(25,4)-(27,0)]))
+
+- Source: http://a.ml/vocabularies/amf/parser#parsing-error
+  Message: Duplicated resource path /tons/of/api
+  Level: Violation
+  Target: file://parser-client/shared/src/test/resources/org/raml/parser/duplicated-paths/lots-of-duplicated-res/input.raml#/web-api/end-points/%2Ftons%2Fof%2Fapi
+  Property: 
+  Position: Some(LexicalInformation([(27,2)-(29,0)]))
+
+- Source: http://a.ml/vocabularies/amf/parser#parsing-error
+  Message: Duplicated resource path /tons/of/api/resources/even/and/more
+  Level: Violation
+  Target: file://parser-client/shared/src/test/resources/org/raml/parser/duplicated-paths/lots-of-duplicated-res/input.raml#/web-api/end-points/%2Ftons%2Fof%2Fapi%2Fresources%2Feven%2Fand%2Fmore
+  Property: 
+  Position: Some(LexicalInformation([(39,4)-(41,0)]))

@@ -1,0 +1,13 @@
+Model: file://parser-client/shared/src/test/resources/org/raml/parser/types/facet-validation/string-invalid/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#invalid-type-inheritance
+  Message: Resolution error: sub type has a weaker constraint for max-length than base type for maxProperties
+  Level: Violation
+  Target: file://parser-client/shared/src/test/resources/org/raml/parser/types/facet-validation/string-invalid/input.raml#/declarations/types/scalar/MyThirdType
+  Property: http://a.ml/vocabularies/shapes#inherits
+  Position: Some(LexicalInformation([(14,4)-(18,0)]))

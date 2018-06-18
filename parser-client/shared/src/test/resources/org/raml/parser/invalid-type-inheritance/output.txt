@@ -1,0 +1,13 @@
+Model: file://parser-client/shared/src/test/resources/org/raml/parser/invalid-type-inheritance/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#parsing-error
+  Message: Unresolved reference 'UnexistentType' from root context file://parser-client/shared/src/test/resources/org/raml/parser/invalid-type-inheritance/input.raml
+  Level: Violation
+  Target: file://parser-client/shared/src/test/resources/org/raml/parser/invalid-type-inheritance/input.raml#/declarations/types/Employee/unresolved
+  Property: 
+  Position: Some(LexicalInformation([(5,9)-(5,23)]))

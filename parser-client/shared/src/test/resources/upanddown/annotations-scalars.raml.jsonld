@@ -1,0 +1,1458 @@
+[
+  {
+    "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml",
+    "@type": [
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api",
+        "@type": [
+          "http://schema.org/WebAPI",
+          "http://a.ml/vocabularies/document#RootDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "test"
+          }
+        ],
+        "http://a.ml/vocabularies/http#server": [
+          {
+            "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/falsedomain.com%2Fapis",
+            "@type": [
+              "http://a.ml/vocabularies/http#Server",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/http#url": [
+              {
+                "@value": "falsedomain.com/apis"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/falsedomain.com%2Fapis/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/http#url"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(18,0)-(19,0)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/falsedomain.com%2Fapis"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/http#accepts": [
+          {
+            "@value": "application/json"
+          }
+        ],
+        "http://a.ml/vocabularies/http#contentType": [
+          {
+            "@value": "application/json"
+          }
+        ],
+        "http://schema.org/version": [
+          {
+            "@value": "1.0"
+          }
+        ],
+        "http://schema.org/documentation": [
+          {
+            "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/creative-work/Documentation%20title",
+            "@type": [
+              "http://schema.org/CreativeWork",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/title": [
+              {
+                "@value": "Documentation title"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "Documentation content"
+              }
+            ],
+            "null/extension#AnnotationInDocumentationRoot": {
+              "http://a.ml/vocabularies/document#name": [
+                {
+                  "@value": "AnnotationInDocumentationRoot"
+                }
+              ],
+              "@id": "null/AnnotationInDocumentationRoot/scalar_1",
+              "@type": [
+                "http://a.ml/vocabularies/data#Scalar"
+              ],
+              "http://a.ml/vocabularies/data#value": [
+                {
+                  "@value": "sjf",
+                  "@type": "http://www.w3.org/2001/XMLSchema#string"
+                }
+              ],
+              "http://a.ml/vocabularies/document-source-maps#sources": [
+                {
+                  "@id": "null/AnnotationInDocumentationRoot/scalar_1/source-map",
+                  "@type": [
+                    "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#lexical": [
+                    {
+                      "http://a.ml/vocabularies/document-source-maps#element": [
+                        {
+                          "@value": "null/AnnotationInDocumentationRoot/scalar_1"
+                        }
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#value": [
+                        {
+                          "@value": "[(10,37)-(10,40)]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/creative-work/Documentation%20title/scalar-valued/1/AnnotationInDocumentationTitle": {
+              "http://a.ml/vocabularies/document#name": [
+                {
+                  "@value": "AnnotationInDocumentationTitle"
+                }
+              ],
+              "http://a.ml/vocabularies/document#element": [
+                {
+                  "@value": "http://schema.org/title"
+                }
+              ],
+              "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/creative-work/Documentation%20title/scalar-valued/1/AnnotationInDocumentationTitle/scalar_1",
+              "@type": [
+                "http://a.ml/vocabularies/data#Scalar"
+              ],
+              "http://a.ml/vocabularies/data#value": [
+                {
+                  "@value": "sjf",
+                  "@type": "http://www.w3.org/2001/XMLSchema#string"
+                }
+              ],
+              "http://a.ml/vocabularies/document-source-maps#sources": [
+                {
+                  "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/creative-work/Documentation%20title/scalar-valued/1/AnnotationInDocumentationTitle/scalar_1/source-map",
+                  "@type": [
+                    "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#lexical": [
+                    {
+                      "http://a.ml/vocabularies/document-source-maps#element": [
+                        {
+                          "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/creative-work/Documentation%20title/scalar-valued/1/AnnotationInDocumentationTitle/scalar_1"
+                        }
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#value": [
+                        {
+                          "@value": "[(13,40)-(13,43)]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/creative-work/Documentation%20title/scalar-valued/2/AnnotationInDocumentationContent": {
+              "http://a.ml/vocabularies/document#name": [
+                {
+                  "@value": "AnnotationInDocumentationContent"
+                }
+              ],
+              "http://a.ml/vocabularies/document#element": [
+                {
+                  "@value": "http://schema.org/description"
+                }
+              ],
+              "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/creative-work/Documentation%20title/scalar-valued/2/AnnotationInDocumentationContent/scalar_1",
+              "@type": [
+                "http://a.ml/vocabularies/data#Scalar"
+              ],
+              "http://a.ml/vocabularies/data#value": [
+                {
+                  "@value": "sjf",
+                  "@type": "http://www.w3.org/2001/XMLSchema#string"
+                }
+              ],
+              "http://a.ml/vocabularies/document-source-maps#sources": [
+                {
+                  "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/creative-work/Documentation%20title/scalar-valued/2/AnnotationInDocumentationContent/scalar_1/source-map",
+                  "@type": [
+                    "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#lexical": [
+                    {
+                      "http://a.ml/vocabularies/document-source-maps#element": [
+                        {
+                          "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/creative-work/Documentation%20title/scalar-valued/2/AnnotationInDocumentationContent/scalar_1"
+                        }
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#value": [
+                        {
+                          "@value": "[(16,42)-(16,45)]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://a.ml/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "null/extension#AnnotationInDocumentationRoot"
+              },
+              {
+                "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/creative-work/Documentation%20title/scalar-valued/1/AnnotationInDocumentationTitle"
+              },
+              {
+                "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/creative-work/Documentation%20title/scalar-valued/2/AnnotationInDocumentationContent"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/creative-work/Documentation%20title/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(14,4)-(17,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/creative-work/Documentation%20title"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(10,0)-(17,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/title"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(11,4)-(14,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/http#endpoint": [
+          {
+            "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers",
+            "@type": [
+              "http://a.ml/vocabularies/http#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/http#path": [
+              {
+                "@value": "/customers"
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "EndPoint display name"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "EndPoint description"
+              }
+            ],
+            "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/extension/AnnotationInEndPointAlpha": {
+              "http://a.ml/vocabularies/document#name": [
+                {
+                  "@value": "AnnotationInEndPointAlpha"
+                }
+              ],
+              "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/AnnotationInEndPointAlpha/scalar_1",
+              "@type": [
+                "http://a.ml/vocabularies/data#Scalar"
+              ],
+              "http://a.ml/vocabularies/data#value": [
+                {
+                  "@value": "alpha",
+                  "@type": "http://www.w3.org/2001/XMLSchema#string"
+                }
+              ],
+              "http://a.ml/vocabularies/document-source-maps#sources": [
+                {
+                  "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/AnnotationInEndPointAlpha/scalar_1/source-map",
+                  "@type": [
+                    "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#lexical": [
+                    {
+                      "http://a.ml/vocabularies/document-source-maps#element": [
+                        {
+                          "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/AnnotationInEndPointAlpha/scalar_1"
+                        }
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#value": [
+                        {
+                          "@value": "[(43,31)-(43,36)]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/extension/AnnotationInEndPointBeta": {
+              "http://a.ml/vocabularies/document#name": [
+                {
+                  "@value": "AnnotationInEndPointBeta"
+                }
+              ],
+              "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/AnnotationInEndPointBeta/scalar_1",
+              "@type": [
+                "http://a.ml/vocabularies/data#Scalar"
+              ],
+              "http://a.ml/vocabularies/data#value": [
+                {
+                  "@value": "beta",
+                  "@type": "http://www.w3.org/2001/XMLSchema#string"
+                }
+              ],
+              "http://a.ml/vocabularies/document-source-maps#sources": [
+                {
+                  "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/AnnotationInEndPointBeta/scalar_1/source-map",
+                  "@type": [
+                    "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#lexical": [
+                    {
+                      "http://a.ml/vocabularies/document-source-maps#element": [
+                        {
+                          "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/AnnotationInEndPointBeta/scalar_1"
+                        }
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#value": [
+                        {
+                          "@value": "[(44,30)-(44,34)]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/scalar-valued/1/AnnotationInEndPointDisplayName": {
+              "http://a.ml/vocabularies/document#name": [
+                {
+                  "@value": "AnnotationInEndPointDisplayName"
+                }
+              ],
+              "http://a.ml/vocabularies/document#element": [
+                {
+                  "@value": "http://schema.org/name"
+                }
+              ],
+              "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/scalar-valued/1/AnnotationInEndPointDisplayName/scalar_1",
+              "@type": [
+                "http://a.ml/vocabularies/data#Scalar"
+              ],
+              "http://a.ml/vocabularies/data#value": [
+                {
+                  "@value": "sjf",
+                  "@type": "http://www.w3.org/2001/XMLSchema#string"
+                }
+              ],
+              "http://a.ml/vocabularies/document-source-maps#sources": [
+                {
+                  "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/scalar-valued/1/AnnotationInEndPointDisplayName/scalar_1/source-map",
+                  "@type": [
+                    "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#lexical": [
+                    {
+                      "http://a.ml/vocabularies/document-source-maps#element": [
+                        {
+                          "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/scalar-valued/1/AnnotationInEndPointDisplayName/scalar_1"
+                        }
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#value": [
+                        {
+                          "@value": "[(22,39)-(22,42)]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/scalar-valued/2/AnnotationInEndPointDescription": {
+              "http://a.ml/vocabularies/document#name": [
+                {
+                  "@value": "AnnotationInEndPointDescription"
+                }
+              ],
+              "http://a.ml/vocabularies/document#element": [
+                {
+                  "@value": "http://schema.org/description"
+                }
+              ],
+              "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/scalar-valued/2/AnnotationInEndPointDescription/scalar_1",
+              "@type": [
+                "http://a.ml/vocabularies/data#Scalar"
+              ],
+              "http://a.ml/vocabularies/data#value": [
+                {
+                  "@value": "sjf",
+                  "@type": "http://www.w3.org/2001/XMLSchema#string"
+                }
+              ],
+              "http://a.ml/vocabularies/document-source-maps#sources": [
+                {
+                  "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/scalar-valued/2/AnnotationInEndPointDescription/scalar_1/source-map",
+                  "@type": [
+                    "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#lexical": [
+                    {
+                      "http://a.ml/vocabularies/document-source-maps#element": [
+                        {
+                          "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/scalar-valued/2/AnnotationInEndPointDescription/scalar_1"
+                        }
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#value": [
+                        {
+                          "@value": "[(25,39)-(25,42)]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "http://a.ml/vocabularies/document#customDomainProperties": [
+              {
+                "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/extension/AnnotationInEndPointAlpha"
+              },
+              {
+                "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/extension/AnnotationInEndPointBeta"
+              },
+              {
+                "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/scalar-valued/1/AnnotationInEndPointDisplayName"
+              },
+              {
+                "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/scalar-valued/2/AnnotationInEndPointDescription"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(23,2)-(26,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(19,0)-(45,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/name"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(20,2)-(23,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D",
+            "@type": [
+              "http://a.ml/vocabularies/http#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/http#path": [
+              {
+                "@value": "/customers/{customer_id}"
+              }
+            ],
+            "http://www.w3.org/ns/hydra/core#supportedOperation": [
+              {
+                "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get",
+                "@type": [
+                  "http://www.w3.org/ns/hydra/core#Operation",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/hydra/core#method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "http://schema.org/description": [
+                  {
+                    "@value": "Returns Customer data"
+                  }
+                ],
+                "http://www.w3.org/ns/hydra/core#returns": [
+                  {
+                    "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200",
+                    "@type": [
+                      "http://a.ml/vocabularies/http#Response",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://schema.org/description": [
+                      {
+                        "@value": "Response description"
+                      }
+                    ],
+                    "http://www.w3.org/ns/hydra/core#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/http#payload": [
+                      {
+                        "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application%2Fjson",
+                        "@type": [
+                          "http://a.ml/vocabularies/http#Payload",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/http#mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/http#schema": [
+                          {
+                            "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application%2Fjson/any/schema",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape"
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#sources": [
+                              {
+                                "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application%2Fjson/any/schema/source-map",
+                                "@type": [
+                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application%2Fjson/any/schema"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "true"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application%2Fjson/any/schema"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(41,12)-(42,0)]"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application%2Fjson/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/application%2Fjson"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(41,12)-(42,0)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/scalar-valued/1/AnnotationInResponseDescription": {
+                      "http://a.ml/vocabularies/document#name": [
+                        {
+                          "@value": "AnnotationInResponseDescription"
+                        }
+                      ],
+                      "http://a.ml/vocabularies/document#element": [
+                        {
+                          "@value": "http://schema.org/description"
+                        }
+                      ],
+                      "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/scalar-valued/1/AnnotationInResponseDescription/scalar_1",
+                      "@type": [
+                        "http://a.ml/vocabularies/data#Scalar"
+                      ],
+                      "http://a.ml/vocabularies/data#value": [
+                        {
+                          "@value": "sjf",
+                          "@type": "http://www.w3.org/2001/XMLSchema#string"
+                        }
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#sources": [
+                        {
+                          "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/scalar-valued/1/AnnotationInResponseDescription/scalar_1/source-map",
+                          "@type": [
+                            "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                          ],
+                          "http://a.ml/vocabularies/document-source-maps#lexical": [
+                            {
+                              "http://a.ml/vocabularies/document-source-maps#element": [
+                                {
+                                  "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/scalar-valued/1/AnnotationInResponseDescription/scalar_1"
+                                }
+                              ],
+                              "http://a.ml/vocabularies/document-source-maps#value": [
+                                {
+                                  "@value": "[(39,47)-(39,50)]"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "http://a.ml/vocabularies/document#customDomainProperties": [
+                      {
+                        "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/scalar-valued/1/AnnotationInResponseDescription"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/http#payload"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(40,10)-(42,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(36,8)-(42,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://schema.org/description"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(37,10)-(40,0)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/extension/AnnotationInOperation": {
+                  "http://a.ml/vocabularies/document#name": [
+                    {
+                      "@value": "AnnotationInOperation"
+                    }
+                  ],
+                  "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/AnnotationInOperation/scalar_1",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "sjf",
+                      "@type": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#sources": [
+                    {
+                      "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/AnnotationInOperation/scalar_1/source-map",
+                      "@type": [
+                        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#lexical": [
+                        {
+                          "http://a.ml/vocabularies/document-source-maps#element": [
+                            {
+                              "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/AnnotationInOperation/scalar_1"
+                            }
+                          ],
+                          "http://a.ml/vocabularies/document-source-maps#value": [
+                            {
+                              "@value": "[(42,31)-(42,34)]"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/scalar-valued/1/AnnotationInOperationDescription": {
+                  "http://a.ml/vocabularies/document#name": [
+                    {
+                      "@value": "AnnotationInOperationDescription"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/document#element": [
+                    {
+                      "@value": "http://schema.org/description"
+                    }
+                  ],
+                  "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/scalar-valued/1/AnnotationInOperationDescription/scalar_1",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "sjf",
+                      "@type": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#sources": [
+                    {
+                      "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/scalar-valued/1/AnnotationInOperationDescription/scalar_1/source-map",
+                      "@type": [
+                        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#lexical": [
+                        {
+                          "http://a.ml/vocabularies/document-source-maps#element": [
+                            {
+                              "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/scalar-valued/1/AnnotationInOperationDescription/scalar_1"
+                            }
+                          ],
+                          "http://a.ml/vocabularies/document-source-maps#value": [
+                            {
+                              "@value": "[(34,44)-(34,47)]"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "http://a.ml/vocabularies/document#customDomainProperties": [
+                  {
+                    "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/extension/AnnotationInOperation"
+                  },
+                  {
+                    "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/scalar-valued/1/AnnotationInOperationDescription"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://www.w3.org/ns/hydra/core#returns"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(35,6)-(42,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(31,4)-(43,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://schema.org/description"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(32,6)-(35,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/http#parameter": [
+              {
+                "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id",
+                "@type": [
+                  "http://a.ml/vocabularies/http#Parameter",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "customer_id"
+                  }
+                ],
+                "http://a.ml/vocabularies/http#paramName": [
+                  {
+                    "@value": "customer_id"
+                  }
+                ],
+                "http://www.w3.org/ns/hydra/core#required": [
+                  {
+                    "@value": true
+                  }
+                ],
+                "http://a.ml/vocabularies/http#binding": [
+                  {
+                    "@value": "path"
+                  }
+                ],
+                "http://a.ml/vocabularies/http#schema": [
+                  {
+                    "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/scalar/schema",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "schema"
+                      }
+                    ],
+                    "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/scalar/schema/extension/AnnotationInParameter": {
+                      "http://a.ml/vocabularies/document#name": [
+                        {
+                          "@value": "AnnotationInParameter"
+                        }
+                      ],
+                      "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/scalar/schema/AnnotationInParameter/scalar_1",
+                      "@type": [
+                        "http://a.ml/vocabularies/data#Scalar"
+                      ],
+                      "http://a.ml/vocabularies/data#value": [
+                        {
+                          "@value": "sjf",
+                          "@type": "http://www.w3.org/2001/XMLSchema#string"
+                        }
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#sources": [
+                        {
+                          "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/scalar/schema/AnnotationInParameter/scalar_1/source-map",
+                          "@type": [
+                            "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                          ],
+                          "http://a.ml/vocabularies/document-source-maps#lexical": [
+                            {
+                              "http://a.ml/vocabularies/document-source-maps#element": [
+                                {
+                                  "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/scalar/schema/AnnotationInParameter/scalar_1"
+                                }
+                              ],
+                              "http://a.ml/vocabularies/document-source-maps#value": [
+                                {
+                                  "@value": "[(30,33)-(30,36)]"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "http://a.ml/vocabularies/document#customDomainProperties": [
+                      {
+                        "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/scalar/schema/extension/AnnotationInParameter"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/scalar/schema/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/scalar/schema"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(29,8)-(29,12)]"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://www.w3.org/ns/shacl#datatype"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(29,8)-(30,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/scalar/schema"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(28,6)-(31,0)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/extension/AnnotationInParameter": {
+                  "http://a.ml/vocabularies/document#name": [
+                    {
+                      "@value": "AnnotationInParameter"
+                    }
+                  ],
+                  "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/AnnotationInParameter/scalar_1",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "sjf",
+                      "@type": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#sources": [
+                    {
+                      "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/AnnotationInParameter/scalar_1/source-map",
+                      "@type": [
+                        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#lexical": [
+                        {
+                          "http://a.ml/vocabularies/document-source-maps#element": [
+                            {
+                              "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/AnnotationInParameter/scalar_1"
+                            }
+                          ],
+                          "http://a.ml/vocabularies/document-source-maps#value": [
+                            {
+                              "@value": "[(30,33)-(30,36)]"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "http://a.ml/vocabularies/document#customDomainProperties": [
+                  {
+                    "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/extension/AnnotationInParameter"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/http#schema"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(28,6)-(31,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(28,6)-(31,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#parent-end-point": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/http#parameter"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(27,18)-(31,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(26,2)-(43,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/extension/AnnotationInRoot": {
+          "http://a.ml/vocabularies/document#name": [
+            {
+              "@value": "AnnotationInRoot"
+            }
+          ],
+          "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/AnnotationInRoot/scalar_1",
+          "@type": [
+            "http://a.ml/vocabularies/data#Scalar"
+          ],
+          "http://a.ml/vocabularies/data#value": [
+            {
+              "@value": "sjf",
+              "@type": "http://www.w3.org/2001/XMLSchema#string"
+            }
+          ],
+          "http://a.ml/vocabularies/document-source-maps#sources": [
+            {
+              "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/AnnotationInRoot/scalar_1/source-map",
+              "@type": [
+                "http://a.ml/vocabularies/document-source-maps#SourceMap"
+              ],
+              "http://a.ml/vocabularies/document-source-maps#lexical": [
+                {
+                  "http://a.ml/vocabularies/document-source-maps#element": [
+                    {
+                      "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/AnnotationInRoot/scalar_1"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#value": [
+                    {
+                      "@value": "[(45,20)-(45,23)]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/scalar-valued/1/AnnotationInTitle": {
+          "http://a.ml/vocabularies/document#name": [
+            {
+              "@value": "AnnotationInTitle"
+            }
+          ],
+          "http://a.ml/vocabularies/document#element": [
+            {
+              "@value": "http://schema.org/name"
+            }
+          ],
+          "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/scalar-valued/1/AnnotationInTitle/scalar_1",
+          "@type": [
+            "http://a.ml/vocabularies/data#Scalar"
+          ],
+          "http://a.ml/vocabularies/data#value": [
+            {
+              "@value": "sjf",
+              "@type": "http://www.w3.org/2001/XMLSchema#string"
+            }
+          ],
+          "http://a.ml/vocabularies/document-source-maps#sources": [
+            {
+              "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/scalar-valued/1/AnnotationInTitle/scalar_1/source-map",
+              "@type": [
+                "http://a.ml/vocabularies/document-source-maps#SourceMap"
+              ],
+              "http://a.ml/vocabularies/document-source-maps#lexical": [
+                {
+                  "http://a.ml/vocabularies/document-source-maps#element": [
+                    {
+                      "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/scalar-valued/1/AnnotationInTitle/scalar_1"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#value": [
+                    {
+                      "@value": "[(4,23)-(4,26)]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/scalar-valued/2/AnnotationInVersion": {
+          "http://a.ml/vocabularies/document#name": [
+            {
+              "@value": "AnnotationInVersion"
+            }
+          ],
+          "http://a.ml/vocabularies/document#element": [
+            {
+              "@value": "http://schema.org/version"
+            }
+          ],
+          "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/scalar-valued/2/AnnotationInVersion/scalar_1",
+          "@type": [
+            "http://a.ml/vocabularies/data#Scalar"
+          ],
+          "http://a.ml/vocabularies/data#value": [
+            {
+              "@value": "sjf",
+              "@type": "http://www.w3.org/2001/XMLSchema#string"
+            }
+          ],
+          "http://a.ml/vocabularies/document-source-maps#sources": [
+            {
+              "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/scalar-valued/2/AnnotationInVersion/scalar_1/source-map",
+              "@type": [
+                "http://a.ml/vocabularies/document-source-maps#SourceMap"
+              ],
+              "http://a.ml/vocabularies/document-source-maps#lexical": [
+                {
+                  "http://a.ml/vocabularies/document-source-maps#element": [
+                    {
+                      "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/scalar-valued/2/AnnotationInVersion/scalar_1"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#value": [
+                    {
+                      "@value": "[(7,25)-(7,28)]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "http://a.ml/vocabularies/document#customDomainProperties": [
+          {
+            "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/extension/AnnotationInRoot"
+          },
+          {
+            "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/scalar-valued/1/AnnotationInTitle"
+          },
+          {
+            "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/scalar-valued/2/AnnotationInVersion"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#single-value-array": [
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/http#contentType"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/http#accepts"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/documentation"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(8,0)-(17,0)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/http#contentType"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(17,0)-(18,0)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/http#server"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(18,0)-(19,0)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(46,0)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/name"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(5,0)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/http#accepts"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(17,0)-(18,0)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/version"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(5,0)-(8,0)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://parser-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "raml 1.0"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
