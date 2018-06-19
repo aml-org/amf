@@ -303,7 +303,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
               case Some(n) => parse(n)
               case _       => None
             })
-            case Str | Iri => items.map(n => str(n))
+            case Str | Iri => items.map(n => strCoercion(n))
           }
           a.element match {
             case _: DomainElementModel if f == DocumentModel.Declares =>
