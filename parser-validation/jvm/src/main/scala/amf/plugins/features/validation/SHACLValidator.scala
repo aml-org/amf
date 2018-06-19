@@ -94,7 +94,8 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
   }
 
   override def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: String): Future[String] = {
-    Future {
+    val promise = Promise[String]()
+    try {
       ExecutionLog.log("SHACLValidator#validate: loading Jena data model")
       val dataModel = new JenaRdfModel()
       new RdfModelEmitter(dataModel).emit(data, RenderOptions().withValidation)
@@ -114,33 +115,33 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
           s"SHACLValidator#validate: Number of shapes triples -> ${shapesModel.model.listStatements().toList.size()}")
 
         /*
-        dataModel.dump()
-        println("\n\n=======> SHAPES")
-        println(shapesModel.toN3())
-        println("\n\n=======> DATA")
-        println(dataModel.toN3())
+      dataModel.dump()
+      println("\n\n=======> SHAPES")
+      println(shapesModel.toN3())
+      println("\n\n=======> DATA")
+      println(dataModel.toN3())
 
-        val queryText =
-          """
-            |select (count(*) as ?total) ?name {
-            | ?s a <http://www.w3.org/ns/shacl#NodeShape> .
-            | ?s <http://www.w3.org/ns/shacl#name> ?name
-            |}
-            |group by ?name
-            |order by desc(?total)
-          """.stripMargin
+      val queryText =
+        """
+          |select (count(*) as ?total) ?name {
+          | ?s a <http://www.w3.org/ns/shacl#NodeShape> .
+          | ?s <http://www.w3.org/ns/shacl#name> ?name
+          |}
+          |group by ?name
+          |order by desc(?total)
+        """.stripMargin
 
-        val query = QueryFactory.create(queryText)
-        val queryExec = QueryExecutionFactory.create(query, dataModel.model)
-        val results = queryExec.execSelect()
-        while (results.hasNext) {
-          val solution = results.next()
-          val varNames = solution.varNames()
-          while (varNames.hasNext) {
-            val varName = varNames.next()
-            println(s"$varName -> ${solution.get(varName)}")
-          }
+      val query = QueryFactory.create(queryText)
+      val queryExec = QueryExecutionFactory.create(query, dataModel.model)
+      val results = queryExec.execSelect()
+      while (results.hasNext) {
+        val solution = results.next()
+        val varNames = solution.varNames()
+        while (varNames.hasNext) {
+          val varName = varNames.next()
+          println(s"$varName -> ${solution.get(varName)}")
         }
+      }
          */
         ExecutionLog.log(s"SHACLValidator#validate: validating...")
         report = Some(ValidationUtil.validateModel(dataModel.model, shapesModel.model, false))
@@ -151,7 +152,11 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
       ExecutionLog.log(s"SHACLValidator#validate: Generating JSON-LD report")
       val output = RDFPrinter(report.get.getModel, "JSON-LD")
       ExecutionLog.log(s"SHACLValidator#validate: finishing")
-      output
+      promise.success(output)
+      promise.future
+    } catch {
+      case e: Exception =>
+        promise.failure(e).future
     }
   }
 
