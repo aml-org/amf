@@ -54,6 +54,10 @@ class DialectInstancesRDFTest extends AsyncFunSuite with PlatformSecrets with Bu
                  "parser-client/shared/src/test/resources/vocabularies2/dialects/")
   }
 
+  ignore("EngDemos vocabulary test"){
+    cycleFullRdf("eng_demos.yaml", "eng_demos.yaml.yaml", VocabularyYamlHint, AmlVocabulary, "parser-client/shared/src/test/resources/vocabularies2/production/")
+  }
+
   protected def withDialect(dialect: String,
                             source: String,
                             golden: String,
