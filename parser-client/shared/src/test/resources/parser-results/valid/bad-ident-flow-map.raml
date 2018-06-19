@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: employeeRAML
+version: 1.0
+baseUri: http://provider.abc.com
+/employee:
+  get:
+    description: Retrieve a list of all employees
+    responses:
+      400:
+        body:
+          application/json:
+            example: {
+            "message" : "Error occured while getting account ID"
+            }

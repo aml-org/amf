@@ -268,6 +268,18 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
+  test("Bad ident flow array and map") {
+    validate(
+      "/valid/bad-ident-flow.raml"
+    )
+  }
+
+  test("Bad ident flow map") {
+    validate(
+      "/valid/bad-ident-flow-map.raml"
+    )
+  }
+
   override protected val basePath: String = "file://parser-client/shared/src/test/resources/parser-results/"
 
   override protected def build(validation: Validation, file: String): Future[BaseUnit] =

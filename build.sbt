@@ -34,7 +34,7 @@ lazy val core = crossProject
   .settings(
     Seq(
       name := "parser-core",
-      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.2.1"
+      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.2.2"
     ))
   .in(file("./parser-core"))
   .settings(settings: _*)

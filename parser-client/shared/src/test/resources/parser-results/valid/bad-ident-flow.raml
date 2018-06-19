@@ -1,0 +1,27 @@
+#%RAML 1.0
+title: employeeRAML
+version: 1.0
+baseUri: http://provider.abc.com
+/employee:
+  get:
+    description: Retrieve a list of all employees
+
+
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+             [{
+            "employeeID": 01,
+            "lastName": "ala",
+            "firstName": "Sita",
+             "phone": 12345
+             },
+             {
+            "employeeID": 02,
+            "lastName": "bbb",
+            "firstName": "nita",
+             "phone": 2222
+             }
+             ]
