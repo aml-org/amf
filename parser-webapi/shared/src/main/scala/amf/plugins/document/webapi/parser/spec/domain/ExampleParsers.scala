@@ -11,7 +11,7 @@ import amf.plugins.domain.shapes.models.Example
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
-import org.yaml.parser.YamlParser
+import org.yaml.parser.JsonParser
 import org.yaml.render.YamlRender
 
 import scala.collection.mutable.ListBuffer
@@ -220,7 +220,7 @@ case class NodeDataNodeParser(node: YNode, parentId: String, quiet: Boolean)(imp
         node
           .toOption[YScalar]
           .flatMap { scalar =>
-            YamlParser(scalar.text)(errorHandler).parse(true).collectFirst({ case doc: YDocument => doc.node })
+            JsonParser(scalar.text)(errorHandler).parse(true).collectFirst({ case doc: YDocument => doc.node })
           }
       case Some(scalar) if XMLSchema.unapply(scalar.text).isDefined => None
       case _                                                        => Some(node) // return default node for xml too.
