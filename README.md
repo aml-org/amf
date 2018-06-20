@@ -171,6 +171,9 @@ Validation is one of the key features of AMF. Please check the following link to
 
 [Validation insights](./documentation/validation.md)
 
-## Want to know more?
-[Click here for more documentation and playground](https://mulesoft.github.io/amf/)
+## Want to learn more?
+[Click here for more documentation and playground](https://a.ml)
+
+## Want to contribute?
+If you are interested in contributing code to this project, thanks! Please [read and accept the Contributors Agreement](https://api-notebook.anypoint.mulesoft.com/notebooks#bc1cf75a0284268407e4).
 
