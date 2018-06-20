@@ -853,6 +853,10 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
             property.literalRange().value() == (Namespace.Xsd + "dateTime").iri() =>
         Some(value.as[SimpleDateTime])
 
+      case YType.Timestamp
+        if property.literalRange().value() == (Namespace.Xsd + "string").iri() =>
+        Some(value.as[YScalar].text)
+
       case YType.Timestamp =>
         ctx.inconsistentPropertyRangeValueViolation(node.id,
                                                     property,
