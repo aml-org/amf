@@ -13,6 +13,7 @@ import amf.core.model.domain._
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.{Annotations, FieldEntry, Value}
 import amf.core.vocabulary.{Namespace, ValueType}
+import amf.core.utils._
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model._
@@ -397,12 +398,14 @@ object GraphEmitter extends MetaModelTypeMapping {
         case Type.Float =>
           scalarEmitter.scalar(b, v.value.asInstanceOf[AmfScalar].toString, YType.Float)
           sources(v)
+        case Type.DateTime =>
+          val dateTime = v.value.asInstanceOf[AmfScalar].value.asInstanceOf[SimpleDateTime]
+          typedScalar(b, emitDateFormat(dateTime), (Namespace.Xsd + "dateTime").iri(), inArray = false, ctx)
+          sources(v)
         case Type.Date =>
           val dateTime = v.value.asInstanceOf[AmfScalar].value.asInstanceOf[SimpleDateTime]
           if (dateTime.timeOfDay.isDefined || dateTime.zoneOffset.isDefined) {
-            // TODO: add support for RFC3339 here
-            //typedScalar(b, dateTime.toRFC3339, (Namespace.Xsd + "dateTime").iri())
-            throw new Exception("Serialisation of timestamps not supported yet")
+            typedScalar(b, emitDateFormat(dateTime), (Namespace.Xsd + "dateTime").iri(), inArray = false, ctx)
           } else {
             typedScalar(b,
                         f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d",
@@ -452,6 +455,28 @@ object GraphEmitter extends MetaModelTypeMapping {
                 seq.values
                   .asInstanceOf[Seq[AmfScalar]]
                   .foreach(e => scalarEmitter.scalar(b, e.value.toString, YType.Bool, inArray = true))
+              case Type.DateTime =>
+                seq.values
+                  .asInstanceOf[Seq[AmfScalar]]
+                  .foreach { e =>
+                    val dateTime = e.value.asInstanceOf[SimpleDateTime]
+                    typedScalar(b, emitDateFormat(dateTime), (Namespace.Xsd + "dateTime").iri(), inArray = false, ctx)
+                  }
+              case Type.Date =>
+                seq.values
+                  .asInstanceOf[Seq[AmfScalar]]
+                  .foreach { e =>
+                    val dateTime = e.value.asInstanceOf[SimpleDateTime]
+                    if (dateTime.timeOfDay.isDefined || dateTime.zoneOffset.isDefined) {
+                      typedScalar(b, emitDateFormat(dateTime), (Namespace.Xsd + "dateTime").iri(), inArray = false, ctx)
+                    } else {
+                      typedScalar(b,
+                        f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d",
+                        (Namespace.Xsd + "date").iri(),
+                        inArray = false,
+                        ctx)
+                  }
+                }
               case Any =>
                 seq.values.asInstanceOf[Seq[AmfScalar]].foreach { scalarElement =>
                   scalarElement.value match {
@@ -622,5 +647,7 @@ object GraphEmitter extends MetaModelTypeMapping {
             b.entry(ctx.emitIri(SourceMapModel.Value.value.iri()), DefaultScalarEmitter.scalar(_, v))
           }
       }
+
+    private def emitDateFormat(dateTime: SimpleDateTime) = dateTime.rfc3339
   }
 }

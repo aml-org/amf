@@ -21,6 +21,10 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
     validate("dialect1.raml", "instance1_correct1.raml", 0)
   }
 
+  test("validation dialect 1b example 1b correct") {
+    validate("dialect1b.raml", "example1b.raml", 0)
+  }
+
   test("validation dialect 1 example 1 incorrect") {
     validate("dialect1.raml", "instance1_incorrect1.raml", 6)
   }

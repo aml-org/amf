@@ -42,6 +42,8 @@ object Type {
 
   object Date extends Scalar("date")
 
+  object DateTime extends Scalar("dateTime")
+
   object Iri extends Scalar("url")
 
   object EncodedIri extends Scalar("encodedUrl")

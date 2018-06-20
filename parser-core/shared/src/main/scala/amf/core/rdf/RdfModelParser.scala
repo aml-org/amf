@@ -290,6 +290,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
         case Type.Int           => instance.set(f, int(property), annotations(nodes, sources, key))
         case Type.Float         => instance.set(f, float(property), annotations(nodes, sources, key))
         case Type.Double        => instance.set(f, double(property), annotations(nodes, sources, key))
+        case Type.DateTime      => instance.set(f, date(property), annotations(nodes, sources, key))
         case Type.Date          => instance.set(f, date(property), annotations(nodes, sources, key))
 
         case l: SortedArray if properties.length == 1 =>
