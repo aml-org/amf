@@ -228,23 +228,20 @@ class ReferenceResolutionStage(profile: String,
   }
 
   def resolveReferenced(element: DomainElement): DomainElement = {
-    if (idsTraversionCheck.hasId(element.id)) {
-      element
-    } else {
-      cache.get(element.id) match {
-        case Some(e) => e
-        case _ =>
-          val nested = Document()
-          nested.fields.setWithoutId(DocumentModel.Encodes, element)
-          idsTraversionCheck + element.id
-          val resolved = idsTraversionCheck.runPushed[DomainElement]((itc: IdsTraversionCheck) => {
-            val result = new ReferenceResolutionStage(profile, keepEditingInfo, idsTraversionCheck, cache)
-              .recursiveResolveInvocation(nested, modelResolver)
-            result.asInstanceOf[Document].encodes
-          })
-          cache.put(element.id, resolved)
-          resolved
-      }
+    cache.get(element.id) match {
+      case Some(e)                                   => e
+      case _ if idsTraversionCheck.hasId(element.id) => element
+      case _ =>
+        val nested = Document()
+        nested.fields.setWithoutId(DocumentModel.Encodes, element)
+        idsTraversionCheck + element.id
+        val resolved = idsTraversionCheck.runPushed[DomainElement]((itc: IdsTraversionCheck) => {
+          val result = new ReferenceResolutionStage(profile, keepEditingInfo, idsTraversionCheck, cache)
+            .recursiveResolveInvocation(nested, modelResolver)
+          result.asInstanceOf[Document].encodes
+        })
+        cache.put(element.id, resolved)
+        resolved
     }
   }
 

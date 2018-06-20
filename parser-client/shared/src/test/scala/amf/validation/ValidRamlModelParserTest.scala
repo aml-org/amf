@@ -78,5 +78,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
   test("Link to declared type with recursive optional properties") {
     checkValid("/shapes/link-declared-recursive-optional.raml")
   }
+
+  test("Double link resource type used twice") {
+    checkValid("/resource_types/double-linked-resourcetype-twice/api.raml")
+  }
   override val hint: Hint = RamlYamlHint
 }

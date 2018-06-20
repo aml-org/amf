@@ -1,0 +1,10 @@
+#%RAML 1.0 ResourceType
+displayName: <<resourcePathName>>
+description:  <<resourcePathName>>
+get:
+  description: Get <<resourcePathName | !uppercamelcase | !singularize>> by Identifier.
+  responses:
+    200:
+      body:
+        application/json:
+          type: <<resourcePathName | !singularize | !uppercamelcase>>
