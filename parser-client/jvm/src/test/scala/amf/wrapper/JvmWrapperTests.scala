@@ -55,7 +55,8 @@ class JvmWrapperTests extends WrapperTests {
 
       statusCode.message should (endWith("Unhandled status code 404 => https://a.ml/notexists") or
         endWith("java.net.UnknownHostException: a.ml") or
-        endWith("java.net.SocketTimeoutException: connect timed out"))
+        endWith("java.net.SocketTimeoutException: connect timed out") or
+        endWith("javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target"))
       statusCode.position should be(Range((6, 10), (6, 41)))
 
       val unresolvedRef = seq.last

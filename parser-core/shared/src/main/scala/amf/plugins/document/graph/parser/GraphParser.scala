@@ -247,6 +247,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
         case Type.Int           => instance.set(f, int(node), annotations(nodes, sources, key))
         case Type.Float         => instance.set(f, float(node), annotations(nodes, sources, key))
         case Type.Double        => instance.set(f, double(node), annotations(nodes, sources, key))
+        case Type.DateTime      => instance.set(f, date(node), annotations(nodes, sources, key))
         case Type.Date          => instance.set(f, date(node), annotations(nodes, sources, key))
         case l: SortedArray =>
           instance.setArray(f, parseList(instance.id, l.element, node.as[YMap]), annotations(nodes, sources, key))

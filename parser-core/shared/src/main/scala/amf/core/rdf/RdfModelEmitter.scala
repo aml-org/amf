@@ -13,8 +13,8 @@ import amf.core.model.domain._
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.{Annotations, FieldEntry, Value}
 import amf.core.vocabulary.{Namespace, ValueType}
-import amf.plugins.document.graph.parser.EmissionContext
 import org.mulesoft.common.time.SimpleDateTime
+import amf.core.utils._
 
 import scala.collection.mutable.ListBuffer
 
@@ -202,17 +202,24 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
                              Some((Namespace.Xsd + "double").iri()))
         case Type.Float =>
           emitFloatLiteral(subject, property, v.value.asInstanceOf[AmfScalar].toString)
+        case Type.DateTime =>
+          val dateTime = v.value.asInstanceOf[AmfScalar].value.asInstanceOf[SimpleDateTime]
+          typedScalar(subject,
+            property,
+            dateTime.rfc3339,
+            (Namespace.Xsd + "dateTime").iri())
         case Type.Date =>
           val dateTime = v.value.asInstanceOf[AmfScalar].value.asInstanceOf[SimpleDateTime]
           if (dateTime.timeOfDay.isDefined || dateTime.zoneOffset.isDefined) {
-            // TODO: add support for RFC3339 here
-            //typedScalar(b, dateTime.toRFC3339, (Namespace.Xsd + "dateTime").iri())
-            throw new Exception("Serialisation of timestamps not supported yet")
+            typedScalar(subject,
+              property,
+              dateTime.rfc3339,
+              (Namespace.Xsd + "dateTime").iri())
           } else {
             typedScalar(subject,
                         property,
-                        f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d",
-                        (Namespace.Xsd + "date").iri())
+              dateTime.rfc3339,
+              (Namespace.Xsd + "date").iri())
           }
         case a: SortedArray =>
           createSortedArray(subject, property, v.value.asInstanceOf[AmfArray].values, a.element)

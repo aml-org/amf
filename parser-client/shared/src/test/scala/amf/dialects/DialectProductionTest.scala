@@ -89,6 +89,19 @@ class DialectProductionTest extends BuildCycleTests {
     withDialect("dialect.raml", "instance2.raml", "instance2.json", VocabularyYamlHint, Amf, basePath + "Instagram/")
   }
 
+  test("Can parse and generate the activity dialect") {
+    cycle("activity.yaml", "activity.json", VocabularyYamlHint, Amf, basePath + "streams/")
+  }
+
+  test("Can parse activity instances") {
+    withDialect("activity.yaml",
+      "stream1.yaml",
+      "stream1.json",
+      VocabularyYamlHint,
+      Amf,
+      basePath + "streams/")
+  }
+
   protected def withDialect(dialect: String,
                             source: String,
                             golden: String,

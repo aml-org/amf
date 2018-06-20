@@ -15,9 +15,11 @@ import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId,
 import amf.plugins.document.vocabularies.emitters.common.IdCounter
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
+import amf.core.utils._
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode}
+
 
 trait DialectEmitterHelper {
   val dialect: Dialect
@@ -318,9 +320,8 @@ case class DialectNodeEmitter(node: DialectDomainElement,
 
   protected def emitScalar(key: String, field: Field, scalar: AmfScalar): Seq[EntryEmitter] = {
     val formatted = scalar.value match {
-      case date: SimpleDateTime =>
-        f"${date.year}%04d-${date.month}%02d-${date.day}%02d"
-      case other => other
+      case date: SimpleDateTime => date.rfc3339
+      case other                => other
     }
 
     Seq(ValueEmitter(key, FieldEntry(field, Value(AmfScalar(formatted), scalar.annotations))))
