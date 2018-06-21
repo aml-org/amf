@@ -95,5 +95,9 @@ class RamlModelValidationReportTest extends ValidationReportGenTest {
     validate("/facets/min-max-length-between.raml", Some("min-max-length-between.report"))
   }
 
+  test("Test optional node implemented without var") {
+    validate("/resource_types/optional-node-implemented.raml", Some("optional-node-implemented.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

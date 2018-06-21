@@ -32,7 +32,7 @@ abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
   override def componentId: String = "/" + name.option().getOrElse("data-node").urlComponentEncoded
 
   /** Replace all raml variables (any name inside double chevrons -> '<<>>') with the provided values. */
-  def replaceVariables(values: Set[Variable])(reportError: (String) => Unit): DataNode
+  def replaceVariables(values: Set[Variable], keys: Seq[ElementTree])(reportError: (String) => Unit): DataNode
 
   def forceAdopted(parent: String): this.type = {
     val adoptedId = parent + "/" + name.option().map(_.urlComponentEncoded).orNull
@@ -117,11 +117,20 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
     maybeNode map { Value(_, Annotations()) }
   }
 
-  override def replaceVariables(values: Set[Variable])(reportError: String => Unit): DataNode = {
+  override def replaceVariables(values: Set[Variable], keys: Seq[ElementTree])(reportError: String => Unit): DataNode = {
     properties.keys.foreach { key =>
-      val value = properties(key).replaceVariables(values)(reportError)
+      val decodedKey = key.urlComponentDecoded
+      val finalKey: String =
+        if (decodedKey.endsWith("?")) decodedKey.substring(0, decodedKey.length - 1) else decodedKey
+      val maybeTree = keys.find(_.key.equals(finalKey))
+
+      val value = properties(key)
+        .replaceVariables(values, maybeTree.map(_.subtrees).getOrElse(Nil))(if (decodedKey
+                                                                                  .endsWith("?") && maybeTree.isEmpty)
+          (_: String) => Unit
+        else reportError) // if its an optional node, ignore the violation of the var not implement
       properties.remove(key)
-      properties += VariableReplacer.replaceVariables(key.urlComponentDecoded, values) -> value
+      properties += VariableReplacer.replaceVariables(decodedKey, values) -> value
     }
 
     propertyAnnotations.keys.foreach { key =>
@@ -191,7 +200,8 @@ class ScalarNode(var value: String,
     case _ => None
   }
 
-  override def replaceVariables(values: Set[Variable])(reportError: (String) => Unit): DataNode = {
+  override def replaceVariables(values: Set[Variable], keys: Seq[ElementTree])(
+      reportError: (String) => Unit): DataNode = {
     VariableReplacer.replaceVariables(this, values, reportError)
   }
 
@@ -247,8 +257,9 @@ class ArrayNode(override val fields: Fields, val annotations: Annotations) exten
     case _ => None
   }
 
-  override def replaceVariables(values: Set[Variable])(reportError: (String) => Unit): DataNode = {
-    members = members.map(_.replaceVariables(values)(reportError))
+  override def replaceVariables(values: Set[Variable], keys: Seq[ElementTree])(
+      reportError: (String) => Unit): DataNode = {
+    members = members.map(_.replaceVariables(values, keys)(reportError))
     this
   }
 
@@ -306,7 +317,8 @@ class LinkNode(var alias: String, var value: String, override val fields: Fields
     maybeScalar map { amf.core.parser.Value(_, Annotations()) }
   }
 
-  override def replaceVariables(values: Set[Variable])(reportError: (String) => Unit): DataNode = this
+  override def replaceVariables(values: Set[Variable], keys: Seq[ElementTree])(
+      reportError: (String) => Unit): DataNode = this
 
   override def cloneNode(): LinkNode = {
     val cloned = LinkNode(annotations)
@@ -338,3 +350,5 @@ object LinkNode {
   def apply(alias: String, value: String, annotations: Annotations): LinkNode =
     new LinkNode(alias, value, Fields(), annotations)
 }
+
+case class ElementTree(key: String, subtrees: Seq[ElementTree])

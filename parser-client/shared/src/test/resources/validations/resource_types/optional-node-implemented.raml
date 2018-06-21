@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: test
+
+resourceTypes:
+  get-resource-optional-patch :
+    patch?:
+      body:
+        application/json:
+          example: <<patchExample>>
+
+
+/person:
+  /{id}:
+    /employmentDetails:
+      type: get-resource-optional-patch
+      patch:

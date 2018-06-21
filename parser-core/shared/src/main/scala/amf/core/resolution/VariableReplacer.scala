@@ -1,6 +1,6 @@
 package amf.core.resolution
 
-import amf.core.annotations.SourceAST
+import amf.core.annotations.{ErrorRegistered, SourceAST}
 import amf.core.model.domain.templates.Variable
 import amf.core.model.domain.{DataNode, ScalarNode}
 import amf.core.utils.InflectorBase.Inflector
@@ -30,7 +30,10 @@ object VariableReplacer {
           case Some(Variable(_, scalar: ScalarNode)) => scalar
           case Some(Variable(_, node))               => node
           case None =>
-            errorFunction(s"Cannot find variable '$name'.")
+            if (s.annotations.find(classOf[ErrorRegistered]).isEmpty) {
+              errorFunction(s"Cannot find variable '$name'.")
+              s.annotations += ErrorRegistered()
+            }
             s
         }
 

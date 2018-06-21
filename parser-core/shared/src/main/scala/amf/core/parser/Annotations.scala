@@ -9,7 +9,7 @@ import scala.collection.mutable.ArrayBuffer
 /**
   * Element annotations
   */
-    class Annotations(hintSize: Int = 4) {
+class Annotations(hintSize: Int = 4) {
 
   private var annotations: ArrayBuffer[Annotation] = new ArrayBuffer(hintSize)
 

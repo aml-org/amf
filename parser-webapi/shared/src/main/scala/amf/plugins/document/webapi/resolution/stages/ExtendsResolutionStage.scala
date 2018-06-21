@@ -2,21 +2,28 @@ package amf.plugins.document.webapi.resolution.stages
 
 import amf.ProfileNames
 import amf.core.annotations.{LexicalInformation, SourceAST}
+import amf.core.emitter.SpecOrdering
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{DataNode, DomainElement}
+import amf.core.model.domain.{DataNode, DomainElement, ElementTree}
 import amf.core.parser.ParserContext
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
+import amf.plugins.document.webapi.contexts.{
+  Raml08WebApiContext,
+  Raml10SpecEmitterContext,
+  Raml10WebApiContext,
+  RamlWebApiContext
+}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.{ErrorDeclaration, ErrorEndPoint, ErrorTrait}
+import amf.plugins.document.webapi.parser.spec.domain.{Raml10EndPointEmitter, Raml10OperationEmitter}
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging._
-import org.yaml.model.YNode
-
+import org.yaml.model._
+import amf.core.parser.YNodeLikeOps
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
@@ -40,11 +47,14 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
   override def resolve(model: BaseUnit): BaseUnit =
     model.transform(findExtendsPredicate, transform(model))
 
-  def asEndPoint(r: ParametrizedResourceType, context: Context, apiContext: RamlWebApiContext): EndPoint = {
+  def asEndPoint(r: ParametrizedResourceType,
+                 context: Context,
+                 apiContext: RamlWebApiContext,
+                 tree: ElementTree): EndPoint = {
     Option(r.target) match {
       case Some(rt: ResourceType) =>
         val node = rt.dataNode.cloneNode()
-        node.replaceVariables(context.variables)((message: String) =>
+        node.replaceVariables(context.variables, tree.subtrees)((message: String) =>
           apiContext.violation(r.id, message, r.annotations.find(classOf[LexicalInformation])))
 
         ExtendsHelper.asEndpoint(
@@ -74,23 +84,26 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
 
   private def collectResourceTypes(endpoint: EndPoint,
                                    context: Context,
-                                   apiContext: RamlWebApiContext): ListBuffer[EndPoint] = {
+                                   apiContext: RamlWebApiContext,
+                                   tree: ElementTree): ListBuffer[EndPoint] = {
     val result = ListBuffer[EndPoint]()
-    collectResourceTypes(result, endpoint, context, apiContext)
+
+    collectResourceTypes(result, endpoint, context, apiContext, tree)
     result
   }
 
   private def collectResourceTypes(collector: ListBuffer[EndPoint],
                                    endpoint: EndPoint,
                                    initial: Context,
-                                   apiContext: RamlWebApiContext): Unit = {
+                                   apiContext: RamlWebApiContext,
+                                   tree: ElementTree): Unit = {
     endpoint.resourceType.foreach { resourceType =>
       val context = initial.add(resourceType.variables)
 
-      val resolved = asEndPoint(resourceType, context, apiContext)
+      val resolved = asEndPoint(resourceType, context, apiContext, tree)
       collector += resolved
 
-      collectResourceTypes(collector, resolved, context, apiContext)
+      collectResourceTypes(collector, resolved, context, apiContext, tree)
     }
   }
 
@@ -107,7 +120,8 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
       .add("resourcePath", resourcePath(endpoint))
       .add("resourcePathName", resourcePathName(endpoint))
 
-    val resourceTypes = collectResourceTypes(endpoint, context, ctx(context.model.parserRun.get))
+    val tree          = EndPointTreeBuilder(endpoint).build()
+    val resourceTypes = collectResourceTypes(endpoint, context, ctx(context.model.parserRun.get), tree)
     apply(endpoint, resourceTypes) // Apply ResourceTypes to EndPoint
 
     val resolver = TraitResolver()
@@ -118,15 +132,16 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
 
       val branches = ListBuffer[BranchContainer]()
 
+      val operationTree = OperationTreeBuilder(operation).build()
       // Method branch
-      branches += Branches.method(resolver, operation, local)
+      branches += Branches.method(resolver, operation, local, operationTree)
 
       // EndPoint branch
-      branches += Branches.endpoint(resolver, endpoint, local)
+      branches += Branches.endpoint(resolver, endpoint, local, tree)
 
       // ResourceType branches
       resourceTypes.foreach { rt =>
-        branches += Branches.resourceType(resolver, rt, local, operation.method.value())
+        branches += Branches.resourceType(resolver, rt, local, operation.method.value(), tree)
       }
 
       // Compute final traits
@@ -165,33 +180,42 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
   object Branches {
     def apply(branches: Seq[Branch]): BranchContainer = BranchContainer(branches)
 
-    def endpoint(resolver: TraitResolver, endpoint: EndPoint, context: Context): BranchContainer = {
-      BranchContainer(resolveTraits(resolver, endpoint.traits, context))
+    def endpoint(resolver: TraitResolver, endpoint: EndPoint, context: Context, tree: ElementTree): BranchContainer = {
+      BranchContainer(resolveTraits(resolver, endpoint.traits, context, tree.subtrees))
     }
 
     def resourceType(traits: TraitResolver,
                      resourceType: EndPoint,
                      context: Context,
-                     operation: String): BranchContainer = {
+                     operation: String,
+                     tree: ElementTree): BranchContainer = {
 
       // Resolve resource type method traits
       val o = resourceType.operations
         .find(_.method.value() == operation)
-        .map(method(traits, _, context).flatten())
+        .map(op => {
+          method(traits,
+                 op,
+                 context,
+                 tree.subtrees.find(_.key.equals(operation)).getOrElse(ElementTree(operation, Nil))).flatten()
+        })
         .getOrElse(Seq())
 
       // Resolve resource type traits
-      val e = endpoint(traits, resourceType, context).flatten()
+      val e = endpoint(traits, resourceType, context, tree).flatten()
 
       BranchContainer(BranchContainer.merge(o, e))
     }
 
-    def method(resolver: TraitResolver, operation: Operation, context: Context): BranchContainer = {
-      BranchContainer(resolveTraits(resolver, operation.traits, context))
+    def method(resolver: TraitResolver, operation: Operation, context: Context, tree: ElementTree): BranchContainer = {
+      BranchContainer(resolveTraits(resolver, operation.traits, context, tree.subtrees))
     }
 
-    private def resolveTraits(resolver: TraitResolver, parameterized: Seq[ParametrizedTrait], context: Context) = {
-      parameterized.map(resolver.resolve(_, context, ctx(context.model.parserRun.get)))
+    private def resolveTraits(resolver: TraitResolver,
+                              parameterized: Seq[ParametrizedTrait],
+                              context: Context,
+                              subTree: Seq[ElementTree]) = {
+      parameterized.map(resolver.resolve(_, context, ctx(context.model.parserRun.get), subTree))
     }
   }
 
@@ -203,16 +227,20 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
 
     val resolved: mutable.Map[Key, TraitBranch] = mutable.Map()
 
-    def resolve(t: ParametrizedTrait, context: Context, apiContext: RamlWebApiContext): TraitBranch = {
+    def resolve(t: ParametrizedTrait,
+                context: Context,
+                apiContext: RamlWebApiContext,
+                subTree: Seq[ElementTree]): TraitBranch = {
       val local = context.add(t.variables)
       val key   = Key(t.target.id, local)
-      resolved.getOrElseUpdate(key, resolveOperation(key, t, context, apiContext))
+      resolved.getOrElseUpdate(key, resolveOperation(key, t, context, apiContext, subTree))
     }
 
     private def resolveOperation(key: Key,
                                  parameterized: ParametrizedTrait,
                                  context: Context,
-                                 apiContext: RamlWebApiContext): TraitBranch = {
+                                 apiContext: RamlWebApiContext,
+                                 subTree: Seq[ElementTree]): TraitBranch = {
       val local = context.add(parameterized.variables)
 
       Option(parameterized.target) match {
@@ -223,7 +251,7 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
               TraitBranch(key, Operation().withId(err.id + "_op"), Nil)
             case t: Trait =>
               val node: DataNode = t.dataNode.cloneNode()
-              node.replaceVariables(local.variables)((message: String) =>
+              node.replaceVariables(local.variables, subTree)((message: String) =>
                 apiContext.violation(t.id, message, t.annotations.find(classOf[LexicalInformation])))
 
               val op = ExtendsHelper.asOperation(
@@ -237,7 +265,7 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
                 Some(apiContext)
               )
 
-              val children = op.traits.map(resolve(_, context, apiContext))
+              val children = op.traits.map(resolve(_, context, apiContext, subTree))
 
               TraitBranch(key, op, children)
           }
@@ -247,5 +275,61 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
   }
 
   case class TraitBranch(key: Key, operation: Operation, children: Seq[Branch]) extends Branch
+
+  private abstract class ElementTreeBuilder(element: DomainElement) {
+
+    private def buildEntry(entry: YMapEntry) = {
+      val sons: Seq[ElementTree] = buildNode(entry.value)
+      ElementTree(entry.key.toString(), sons)
+    }
+
+    private def buildNode(node: YNode): Seq[ElementTree] = {
+      node.tagType match {
+        case YType.Map =>
+          node.as[YMap].entries.map { buildEntry }
+        case YType.Seq =>
+          node.as[Seq[YNode]].flatMap { buildNode }
+        case _ => Nil
+      }
+    }
+
+    def build(): ElementTree = {
+      val node: YNode =
+        element.annotations.find(classOf[SourceAST]).map(_.ast).collectFirst({ case e: YMapEntry => e }) match {
+          case Some(entry) => entry.value
+          case _           => astFromEmition
+        }
+      ElementTree(rootKey, buildNode(node))
+    }
+
+    protected def astFromEmition: YNode
+    protected val rootKey: String
+  }
+
+  private case class EndPointTreeBuilder(endpoint: EndPoint) extends ElementTreeBuilder(endpoint) {
+    override protected def astFromEmition: YNode =
+      YDocument(f => f.obj(Raml10EndPointEmitter(endpoint, SpecOrdering.Lexical)(new Raml10SpecEmitterContext()).emit)).node
+        .toOption[YMap]
+        .map(_.entries)
+        .getOrElse(Nil)
+        .headOption
+        .map(_.value)
+        .getOrElse(YNode.Null)
+
+    override protected val rootKey: String = endpoint.path.value()
+  }
+
+  private case class OperationTreeBuilder(operation: Operation) extends ElementTreeBuilder(operation) {
+    override protected def astFromEmition: YNode =
+      YDocument(f =>
+        f.obj(Raml10OperationEmitter(operation, SpecOrdering.Lexical, Nil)(new Raml10SpecEmitterContext()).emit)).node
+        .as[YMap]
+        .entries
+        .headOption
+        .map(_.value)
+        .getOrElse(YNode.Null)
+
+    override protected val rootKey: String = operation.method.value()
+  }
 
 }

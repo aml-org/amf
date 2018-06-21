@@ -82,5 +82,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
   test("Double link resource type used twice") {
     checkValid("/resource_types/double-linked-resourcetype-twice/api.raml")
   }
+
+  test("Test optional node in resource type without var") {
+    checkValid("/resource_types/optional-node.raml")
+  }
   override val hint: Hint = RamlYamlHint
 }
