@@ -7,6 +7,7 @@ import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.features.validation.ParserSideValidations
+import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model._
 import org.yaml.parser.YamlParser
 
@@ -42,88 +43,25 @@ case class DataNodeParser(node: YNode,
 
   def parse(): DataNode = {
     node.tag.tagType match {
-      case YType.Str =>
-        if (node
-              .as[YScalar]
-              .text
-              .matches(
-                "(\\d{4})-(\\d{2})-(\\d{2})(T|t)(\\d{2})\\:(\\d{2})\\:(\\d{2})(([+-](\\d{2})\\:(\\d{2}))|(\\.\\d+)?Z|(\\.\\d+)?z)")) {
-          val (dateParts, timeParts) = parseTimestamp(node)
-          if (dateParts(1).toInt < 13 && dateParts(2).toInt < 32 && timeParts(0).toInt < 24 && timeParts(1).toInt < 60 && timeParts(
-                1).toInt < 60)
-            parseScalar(node.as[YScalar], "dateTime")
-          else
-            parseScalar(node.as[YScalar], "string")
-
-        } else if (node.as[YScalar].text.matches("^\\d{2}:\\d{2}:\\d{2}$")) {
-          val nodeScalar = node.as[YScalar]
-          val parts      = nodeScalar.text.split(":")
-          if (parts(0).toInt < 24 && parts(1).toInt < 60 && parts(1).toInt < 60)
-            parseScalar(nodeScalar, "time")
-          else
-            parseScalar(node.as[YScalar], "string")
-        } else if (node.as[YScalar].text.matches("^\\d{2}:\\d{2}$")) {
-          val text  = node.as[YScalar].text
-          val parts = text.split(":")
-          if (parts(0).toInt < 24 && parts(1).toInt < 60)
-            parseScalar(YScalar(text + ":00"), "time")
-          else
-            parseScalar(node.as[YScalar], "string")
-        } else if (node.as[YScalar].text.matches("^\\d{4}-\\d{1,2}-\\d{1,2}?$")) {
-          val nodeScalar = node.as[YScalar]
-          val parts      = nodeScalar.text.split("-")
-          if (parts(1).toInt < 13 && parts(2).toInt < 32)
-            parseScalar(nodeScalar, "date")
-          else
-            parseScalar(node.as[YScalar], "string")
-        } else {
-          parseScalar(node.as[YScalar], "string")
-        }
-      case YType.Int   => parseScalar(node.as[YScalar], "integer")
-      case YType.Float => parseScalar(node.as[YScalar], "double")
-      case YType.Bool  => parseScalar(node.as[YScalar], "boolean")
-      case YType.Null  => parseScalar(node.as[YScalar], "nil")
-      case YType.Seq   => parseArray(node.as[Seq[YNode]], node)
-      case YType.Map   => parseObject(node.as[YMap])
+      case YType.Str       => parseScalar(node.as[YScalar], "string") // Date/time types are evaluated with patterns
+      case YType.Int       => parseScalar(node.as[YScalar], "integer")
+      case YType.Float     => parseScalar(node.as[YScalar], "double")
+      case YType.Bool      => parseScalar(node.as[YScalar], "boolean")
+      case YType.Null      => parseScalar(node.as[YScalar], "nil")
+      case YType.Seq       => parseArray(node.as[Seq[YNode]], node)
+      case YType.Map       => parseObject(node.as[YMap])
       case YType.Timestamp =>
-        try {
-          val (dateParts, timeParts) = parseTimestamp(node)
-
-          if (node
-                .as[YScalar]
-                .text
-                .matches(
-                  "(\\d{4})-(\\d{2})-(\\d{2})(T|t)(\\d{2})\\:(\\d{2})\\:(\\d{2})(([+-](\\d{2})\\:(\\d{2}))|(\\.\\d+)?Z|(\\.\\d+)?z)")) {
-
-            if (dateParts(1).toInt < 13 && dateParts(2).toInt < 32 && timeParts(0).toInt < 24 && timeParts(1).toInt < 60 && timeParts(
-                  1).toInt < 60)
-              parseScalar(node.as[YScalar], "dateTime")
-            else
-              parseScalar(node.as[YScalar], "string")
-          } else if (node
-                       .as[YScalar]
-                       .text
-                       .indexOf(":") > -1 && node.as[YScalar].text.toLowerCase().indexOf("t") > -1) {
-            if (dateParts(1).toInt < 13 && dateParts(2).toInt < 32 && timeParts(0).toInt < 24 && timeParts(1).toInt < 60 && timeParts(
-                  1).toInt < 60)
+        // TODO add time-only type in syaml and amf
+        SimpleDateTime.parse(node.toString()) match {
+          case Some(timestamp) =>
+            if (timestamp.timeOfDay.isEmpty)
+              parseScalar(node.as[YScalar], "date")
+            else if (timestamp.zoneOffset.isEmpty)
               parseScalar(node.as[YScalar], "dateTimeOnly")
             else
-              parseScalar(node.as[YScalar], "string")
-          } else if (node.as[YScalar].text.indexOf(":") > -1) {
-            if (dateParts(1).toInt < 13 && dateParts(2).toInt < 32 && timeParts(0).toInt < 24 && timeParts(1).toInt < 60 && timeParts(
-                  1).toInt < 60)
               parseScalar(node.as[YScalar], "dateTime")
-            else
-              parseScalar(node.as[YScalar], "string")
-          } else {
-            if (dateParts(1).toInt < 13 && dateParts(2).toInt < 32)
-              parseScalar(node.as[YScalar], "date")
-            else
-              parseScalar(node.as[YScalar], "string")
-          }
-        } catch {
-          case e: Exception =>
-            parseScalar(node.as[YScalar], "string")
+
+          case None => parseScalar(node.as[YScalar], "string")
         }
 
       // Included external fragment
@@ -217,8 +155,6 @@ case class DataNodeParser(node: YNode,
   protected def parseScalar(ast: YScalar, dataType: String): DataNode = {
     val finalDataType = if (dataType == "dateTimeOnly") {
       Some((Namespace.Shapes + "dateTimeOnly").iri())
-    } else if (dataType == "rfc2616") {
-      Some((Namespace.Shapes + "rfc2616").iri())
     } else {
       Some((Namespace.Xsd + dataType).iri())
     }

@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: asyncCompletion_process
+version: 1.0
+baseUri: https://mocksvc.mulesoft.com/mocks/f390ebfc-8884-4b22-a593-62c2131ff1bc/asyncStatus
+description: handles async completion logistics
+
+types:
+  SomeType:
+    properties:
+      theDate: datetime-only
+  OtherType:
+    properties:
+      theString: string
+    example:
+      theString: pepe
+
+/asyncTask:
+  post:
+    description: creates a new item whose state is to be tracked
+    responses:
+      201:
+        body:
+          application/json:
+            type: SomeType
+            example:
+              {
+                "theDate": "2015-07-04T21:32:43"
+              }

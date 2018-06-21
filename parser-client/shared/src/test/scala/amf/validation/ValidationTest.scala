@@ -415,18 +415,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Test examples in oas") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "/examples/examples-in-oas.json", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(doc, ProfileNames.OAS, ProfileNames.AMF)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.length == 4)
-    }
-  }
-
   test("Test validate headers in request") {
     for {
       validation <- Validation(platform)

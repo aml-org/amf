@@ -444,253 +444,192 @@ class AMFShapeValidations(root: Shape) {
   }
 
   protected def scalarConstraints(context: String, scalar: ScalarShape): List[ValidationSpecification] = {
-    if (scalar.format.option().isDefined && scalar.format
-          .value()
-          .toLowerCase() == "rfc2616" && scalar.dataType.value().endsWith("dateTime")) {
-      // RAML 0.8 date type following RFC2616
-      val msg = s"Scalar at $context must be valid RFC2616 date"
-      var validation = new ValidationSpecification(
-        name = validationId(scalar),
-        message = msg,
-        ramlMessage = Some(msg),
-        oasMessage = Some(msg),
-        targetClass = Seq.empty,
-        propertyConstraints = Seq(
-          PropertyConstraint(
-            ramlPropertyId = (Namespace.Data + "value").iri(),
-            name = scalar.id + "_validation_range/prop",
-            message = Some(msg),
-            pattern = Some(
-              "((Mon|Tue|Wed|Thu|Fri|Sat|Sun), [0-9]{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT)")
-          ))
-      )
-      checkLogicalConstraints(context, scalar, validation, Nil)
-    } else {
-      val msg = s"Scalar at $context must be valid"
 
-      var propertyConstraints = if (scalar.dataType.value() == (Namespace.Xsd + "string").iri()) {
-        val custom = Some((b: EntryBuilder, parentId: String) => {
-          b.entry(
-            (Namespace.Shacl + "or").iri(),
-            _.obj(
-              _.entry(
-                "@list",
-                _.list {
-                  l =>
-                    l.obj { v =>
-                      v.entry((Namespace.Shacl + "datatype").iri(),
-                              _.obj(_.entry("@id", (Namespace.Xsd + "string").iri().trim)))
-                    }
-                    l.obj { v =>
-                      v.entry((Namespace.Shacl + "datatype").iri(),
-                              _.obj(_.entry("@id", (Namespace.Xsd + "time").iri().trim)))
-                    }
-                    l.obj { v =>
-                      v.entry((Namespace.Shacl + "datatype").iri(),
-                              _.obj(_.entry("@id", (Namespace.Xsd + "date").iri().trim)))
-                    }
-                    l.obj { v =>
-                      v.entry((Namespace.Shacl + "datatype").iri(),
-                              _.obj(_.entry("@id", (Namespace.Xsd + "dateTime").iri().trim)))
-                    }
-                    l.obj { v =>
-                      v.entry((Namespace.Shacl + "datatype").iri(),
-                              _.obj(_.entry("@id", (Namespace.Shapes + "dateTimeOnly").iri().trim)))
-                    }
-                }
-              ))
-          )
-        })
+    val propertyConstraints = scalar.dataType.value() match {
+      case s if s == (Namespace.Xsd + "date").iri() =>
+        val rfc3339DateRegex = "([0-9]+)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])"
+        // OAS 2.0 and RAML 1.0 date type uses notation of RFC3339. RAML 0.8 has not "date" type (the date type of RAML 0.8 is noted as dateTime in amf model)
+        val msg = s"Scalar at $context must be valid RFC3339 date"
+        val dateDataTypes = List(
+          (Namespace.Xsd + "string").iri().trim,
+          (Namespace.Xsd + "date").iri().trim
+        )
 
-        val customRdf = Some((rdfModel: RdfModel, subject: String) => {
-          val propId                = rdfModel.nextAnonId()
-          val firstConstraintListId = propId + "_ointdoub1"
-          val nextConstraintListId2 = propId + "_ointdoub2"
-          val nextConstraintListId3 = propId + "_ointdoub3"
-          val nextConstraintListId4 = propId + "_ointdoub4"
-          val nextConstraintListId5 = propId + "_ointdoub5"
+        val patternConstraint  = createPatternPropertyConstraint(msg, rfc3339DateRegex, scalar)
+        val dataTypeConstraint = createDataTypeConstraint(scalar, context, dateDataTypes)
+        Seq(patternConstraint, dataTypeConstraint)
 
-          rdfModel.addTriple(subject, (Namespace.Shacl + "or").iri(), firstConstraintListId)
-          rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "first").iri(), firstConstraintListId + "_v")
-          rdfModel.addTriple(firstConstraintListId + "_v",
-                             (Namespace.Shacl + "datatype").iri(),
-                             (Namespace.Xsd + "string").iri().trim)
-          rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "rest").iri(), nextConstraintListId2)
-          rdfModel.addTriple(nextConstraintListId2, (Namespace.Rdf + "first").iri(), nextConstraintListId2 + "_v")
-          rdfModel.addTriple(nextConstraintListId2 + "_v",
-                             (Namespace.Shacl + "datatype").iri(),
-                             (Namespace.Xsd + "time").iri().trim)
-          rdfModel.addTriple(nextConstraintListId2, (Namespace.Rdf + "rest").iri(), nextConstraintListId3)
-          rdfModel.addTriple(nextConstraintListId3, (Namespace.Rdf + "first").iri(), nextConstraintListId3 + "_v")
-          rdfModel.addTriple(nextConstraintListId3 + "_v",
-                             (Namespace.Shacl + "datatype").iri(),
-                             (Namespace.Xsd + "date").iri().trim)
-          rdfModel.addTriple(nextConstraintListId3, (Namespace.Rdf + "rest").iri(), nextConstraintListId4)
-          rdfModel.addTriple(nextConstraintListId4, (Namespace.Rdf + "first").iri(), nextConstraintListId4 + "_v")
-          rdfModel.addTriple(nextConstraintListId4 + "_v",
-                             (Namespace.Shacl + "datatype").iri(),
-                             (Namespace.Xsd + "dateTime").iri().trim)
-          rdfModel.addTriple(nextConstraintListId4, (Namespace.Rdf + "rest").iri(), nextConstraintListId5)
-          rdfModel.addTriple(nextConstraintListId5, (Namespace.Rdf + "first").iri(), nextConstraintListId5 + "_v")
-          rdfModel.addTriple(nextConstraintListId5 + "_v",
-                             (Namespace.Shacl + "datatype").iri(),
-                             (Namespace.Shapes + "dateTimeOnly").iri().trim)
-          rdfModel.addTriple(nextConstraintListId5, (Namespace.Rdf + "rest").iri(), (Namespace.Rdf + "nil").iri())
-        })
+      case s if s == (Namespace.Xsd + "time").iri() =>
+        val timeRegex = "([0-9]{2}:[0-9]{2}:[0-9]{2}){1}(\\.\\d*)?"
+        val msg       = s"Scalar at $context must be valid RFC3339 time"
+        val timeDataTypes = List(
+          (Namespace.Xsd + "string").iri().trim,
+          (Namespace.Xsd + "time").iri().trim
+        )
 
-        Seq(
-          PropertyConstraint(
-            ramlPropertyId = (Namespace.Data + "value").iri(),
-            name = scalar.id + "_validation_range/prop",
-            message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
-            custom = custom,
-            customRdf = customRdf
-          ))
-      } else if (scalar.dataType.value() == (Namespace.Shapes + "number").iri()) {
-        val custom = Some((b: EntryBuilder, parentId: String) => {
-          b.entry(
-            (Namespace.Shacl + "or").iri(),
-            _.obj(
-              _.entry(
-                "@list",
-                _.list {
-                  l =>
-                    l.obj { v =>
-                      v.entry((Namespace.Shacl + "datatype").iri(),
-                              _.obj(_.entry("@id", (Namespace.Xsd + "integer").iri().trim)))
-                    }
-                    l.obj { v =>
-                      v.entry((Namespace.Shacl + "datatype").iri(),
-                              _.obj(_.entry("@id", (Namespace.Xsd + "long").iri().trim)))
-                    }
-                    l.obj { v =>
-                      v.entry((Namespace.Shacl + "datatype").iri(),
-                              _.obj(_.entry("@id", (Namespace.Xsd + "float").iri().trim)))
-                    }
-                    l.obj { v =>
-                      v.entry((Namespace.Shacl + "datatype").iri(),
-                              _.obj(_.entry("@id", (Namespace.Xsd + "double").iri().trim)))
-                    }
-                }
-              ))
-          )
-        })
+        val patternConstraint  = createPatternPropertyConstraint(msg, timeRegex, scalar)
+        val dataTypeConstraint = createDataTypeConstraint(scalar, context, timeDataTypes)
+        Seq(patternConstraint, dataTypeConstraint)
 
-        val customRdf = Some((rdfModel: RdfModel, subject: String) => {
-          val propId                = rdfModel.nextAnonId()
-          val firstConstraintListId = propId + "_ointdoub1"
-          val nextConstraintListId2 = propId + "_ointdoub2"
-          val nextConstraintListId3 = propId + "_ointdoub3"
-          val nextConstraintListId4 = propId + "_ointdoub4"
+      case s if s == (Namespace.Shapes + "dateTimeOnly").iri() =>
+        val rfc3339DateTimeOnlyRegex =
+          "([0-9]+)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\\.[0-9]+)?"
+        // OAS 2.0 and RAML 1.0 dateTimeOnly type uses notation of RFC3339. RAML 0.8 has not "dateTimeOnly" type.
+        val msg = s"Scalar at $context must be valid RFC3339 date"
+        val dateTimeOnlyDataTypes = List(
+          (Namespace.Xsd + "string").iri().trim,
+          (Namespace.Shapes + "dateTimeOnly").iri().trim
+        )
 
-          rdfModel.addTriple(subject, (Namespace.Shacl + "or").iri(), firstConstraintListId)
-          rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "first").iri(), firstConstraintListId + "_v")
-          rdfModel.addTriple(firstConstraintListId + "_v",
-                             (Namespace.Shacl + "datatype").iri(),
-                             (Namespace.Xsd + "integer").iri().trim)
-          rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "rest").iri(), nextConstraintListId2)
-          rdfModel.addTriple(nextConstraintListId2, (Namespace.Rdf + "first").iri(), nextConstraintListId2 + "_v")
-          rdfModel.addTriple(nextConstraintListId2 + "_v",
-                             (Namespace.Shacl + "datatype").iri(),
-                             (Namespace.Xsd + "long").iri().trim)
-          rdfModel.addTriple(nextConstraintListId2, (Namespace.Rdf + "rest").iri(), nextConstraintListId3)
-          rdfModel.addTriple(nextConstraintListId3, (Namespace.Rdf + "first").iri(), nextConstraintListId3 + "_v")
-          rdfModel.addTriple(nextConstraintListId3 + "_v",
-                             (Namespace.Shacl + "datatype").iri(),
-                             (Namespace.Xsd + "float").iri().trim)
-          rdfModel.addTriple(nextConstraintListId3, (Namespace.Rdf + "rest").iri(), nextConstraintListId4)
-          rdfModel.addTriple(nextConstraintListId4, (Namespace.Rdf + "first").iri(), nextConstraintListId4 + "_v")
-          rdfModel.addTriple(nextConstraintListId4 + "_v",
-                             (Namespace.Shacl + "datatype").iri(),
-                             (Namespace.Xsd + "double").iri().trim)
-          rdfModel.addTriple(nextConstraintListId4, (Namespace.Rdf + "rest").iri(), (Namespace.Rdf + "nil").iri())
-        })
+        val patternConstraint  = createPatternPropertyConstraint(msg, rfc3339DateTimeOnlyRegex, scalar)
+        val dataTypeConstraint = createDataTypeConstraint(scalar, context, dateTimeOnlyDataTypes)
+        Seq(patternConstraint, dataTypeConstraint)
 
-        Seq(
-          PropertyConstraint(
-            ramlPropertyId = (Namespace.Data + "value").iri(),
-            name = scalar.id + "_validation_range/prop",
-            message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
-            custom = custom,
-            customRdf = customRdf
-          ))
-      } else if (scalar.dataType.value() == (Namespace.Xsd + "float")
-                   .iri() || scalar.dataType.value() == (Namespace.Xsd + "double").iri()) {
-        val custom = Some((b: EntryBuilder, parentId: String) => {
-          b.entry(
-            (Namespace.Shacl + "or").iri(),
-            _.obj(
-              _.entry(
-                "@list",
-                _.list { l =>
-                  l.obj { v =>
-                    v.entry((Namespace.Shacl + "datatype").iri(),
-                            _.obj(_.entry("@id", (Namespace.Xsd + "float").iri().trim)))
-                  }
-                  l.obj { v =>
-                    v.entry((Namespace.Shacl + "datatype").iri(),
-                            _.obj(_.entry("@id", (Namespace.Xsd + "double").iri().trim)))
-                  }
-                }
-              ))
-          )
-        })
+      case s if s == (Namespace.Xsd + "dateTime").iri() =>
+        val rfc3339 =
+          "([0-9]+)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\\.[0-9]+)?(([Zz])|([\\+|\\-]([01][0-9]|2[0-3]):[0-5][0-9]))"
+        val rfc2616 =
+          "((Mon|Tue|Wed|Thu|Fri|Sat|Sun), [0-9]{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT)"
+        val dateTimeDataTypes = List(
+          (Namespace.Xsd + "string").iri().trim,
+          (Namespace.Xsd + "dateTime").iri().trim
+        )
 
-        val customRdf = Some((rdfModel: RdfModel, subject: String) => {
-          val propId                = rdfModel.nextAnonId()
-          val firstConstraintListId = propId + "_ointdoub1"
-          val nextConstraintListId2 = propId + "_ointdoub2"
+        scalar.format.option().map(_.toLowerCase()) match {
+          case Some(f) if f == "rfc2616" =>
+            // RAML 0.8 date type following RFC2616 (default for this spec)
+            val msg                = s"Scalar at $context must be valid RFC2616 date"
+            val patternConstraint  = createPatternPropertyConstraint(msg, rfc2616, scalar)
+            val dataTypeConstraint = createDataTypeConstraint(scalar, context, dateTimeDataTypes)
+            Seq(patternConstraint, dataTypeConstraint)
 
-          rdfModel.addTriple(subject, (Namespace.Shacl + "or").iri(), firstConstraintListId)
-          rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "first").iri(), firstConstraintListId + "_v")
-          rdfModel.addTriple(firstConstraintListId + "_v",
-                             (Namespace.Shacl + "datatype").iri(),
-                             (Namespace.Xsd + "float").iri().trim)
-          rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "rest").iri(), nextConstraintListId2)
-          rdfModel.addTriple(nextConstraintListId2, (Namespace.Rdf + "first").iri(), nextConstraintListId2 + "_v")
-          rdfModel.addTriple(nextConstraintListId2 + "_v",
-                             (Namespace.Shacl + "datatype").iri(),
-                             (Namespace.Xsd + "double").iri().trim)
-          rdfModel.addTriple(nextConstraintListId2, (Namespace.Rdf + "rest").iri(), (Namespace.Rdf + "nil").iri())
-        })
+          case _ => // If format is not RFC2616, it is RFC3339 (default for RAML 1.0 and OAS 2.0)
+            val msg                = s"Scalar at $context must be valid RFC3339 date"
+            val patternConstraint  = createPatternPropertyConstraint(msg, rfc3339, scalar)
+            val dataTypeConstraint = createDataTypeConstraint(scalar, context, dateTimeDataTypes)
+            Seq(patternConstraint, dataTypeConstraint)
+        }
 
-        Seq(
-          PropertyConstraint(
-            ramlPropertyId = (Namespace.Data + "value").iri(),
-            name = scalar.id + "_validation_range/prop",
-            message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
-            custom = custom,
-            customRdf = customRdf
-          ))
-      } else {
+      case s if s == (Namespace.Xsd + "string").iri() =>
+        val stringDataTypes = List(
+          (Namespace.Xsd + "string").iri().trim,
+          (Namespace.Xsd + "time").iri().trim,
+          (Namespace.Xsd + "date").iri().trim,
+          (Namespace.Xsd + "dateTime").iri().trim,
+          (Namespace.Shapes + "dateTimeOnly").iri().trim
+        )
+        Seq(createDataTypeConstraint(scalar, context, stringDataTypes))
+
+      case s if s == (Namespace.Shapes + "number").iri() =>
+        val numberDataTypes = List(
+          (Namespace.Xsd + "integer").iri().trim,
+          (Namespace.Xsd + "long").iri().trim,
+          (Namespace.Xsd + "float").iri().trim,
+          (Namespace.Xsd + "double").iri().trim
+        )
+        Seq(createDataTypeConstraint(scalar, context, numberDataTypes))
+
+      case s if s == (Namespace.Xsd + "float").iri() || s == (Namespace.Xsd + "double").iri() =>
+        val floatDataTypes = List(
+          (Namespace.Xsd + "float").iri().trim,
+          (Namespace.Xsd + "double").iri().trim,
+          (Namespace.Xsd + "integer").iri().trim,
+          (Namespace.Xsd + "long").iri().trim
+        )
+        Seq(createDataTypeConstraint(scalar, context, floatDataTypes))
+
+      case _ =>
         Seq(
           PropertyConstraint(
             ramlPropertyId = (Namespace.Data + "value").iri(),
             name = scalar.id + "_validation_range/prop",
             message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
             datatype = Some(scalar.dataType.value())
-          ))
-      }
-
-      var validation = new ValidationSpecification(
-        name = validationId(scalar),
-        message = msg,
-        ramlMessage = Some(msg),
-        oasMessage = Some(msg),
-        targetClass = Seq.empty,
-        propertyConstraints = propertyConstraints
-      )
-      validation = checkScalarType(scalar, context, validation)
-      validation = checkPattern(context, validation, scalar)
-      validation = checkMinLength(context, validation, scalar)
-      validation = checkMaxLength(context, validation, scalar)
-      validation = checkMinimum(context, validation, scalar)
-      validation = checkMaximum(context, validation, scalar)
-      validation = checkMultipleOf(context, validation, scalar)
-      validation = checkEnum(context, validation, scalar)
-
-      checkLogicalConstraints(context, scalar, validation, Nil)
+          )
+        )
     }
+
+    val msg = s"Scalar at $context must be valid"
+
+    var validation = new ValidationSpecification(
+      name = validationId(scalar),
+      message = msg,
+      ramlMessage = Some(msg),
+      oasMessage = Some(msg),
+      targetClass = Seq.empty,
+      propertyConstraints = propertyConstraints
+    )
+    validation = checkScalarType(scalar, context, validation)
+    validation = checkPattern(context, validation, scalar)
+    validation = checkMinLength(context, validation, scalar)
+    validation = checkMaxLength(context, validation, scalar)
+    validation = checkMinimum(context, validation, scalar)
+    validation = checkMaximum(context, validation, scalar)
+    validation = checkMultipleOf(context, validation, scalar)
+    validation = checkEnum(context, validation, scalar)
+
+    checkLogicalConstraints(context, scalar, validation, Nil)
+
+  }
+
+  protected def createPatternPropertyConstraint(msg: String, pattern: String, scalar: Shape): PropertyConstraint = {
+    PropertyConstraint(
+      ramlPropertyId = (Namespace.Data + "value").iri(),
+      name = scalar.id + "_validation_range/prop",
+      message = Some(msg),
+      pattern = Some(pattern)
+    )
+  }
+
+  protected def createDataTypeConstraint(scalar: ScalarShape,
+                                         context: String,
+                                         datatypes: List[String]): PropertyConstraint = {
+
+    val shaclOrNamespace       = (Namespace.Shacl + "or").iri()
+    val shaclDatatypeNamespace = (Namespace.Shacl + "datatype").iri()
+
+    val custom = Some((b: EntryBuilder, parentId: String) => {
+      b.entry(
+        shaclOrNamespace,
+        _.obj(
+          _.entry(
+            "@list",
+            _.list { l =>
+              datatypes.foreach { dt =>
+                l.obj { v =>
+                  v.entry(shaclDatatypeNamespace, _.obj(_.entry("@id", dt)))
+                }
+              }
+            }
+          )
+        )
+      )
+    })
+
+    val customRdf = Some((rdfModel: RdfModel, subject: String) => {
+      val propId  = rdfModel.nextAnonId()
+      var counter = 0
+      datatypes.foreach {
+        dt =>
+          counter = counter + 1
+          val constraintListId = propId + "_ointdoub" + counter
+          if (counter == 1) rdfModel.addTriple(subject, shaclOrNamespace, constraintListId)
+          rdfModel.addTriple(constraintListId, (Namespace.Rdf + "first").iri(), constraintListId + "_v")
+          rdfModel.addTriple(constraintListId + "_v", shaclDatatypeNamespace, dt)
+          if (counter < datatypes.size) {
+            val nextConstraintListId = propId + "_ointdoub" + (counter + 1)
+            rdfModel.addTriple(constraintListId, (Namespace.Rdf + "rest").iri(), nextConstraintListId)
+          } else rdfModel.addTriple(constraintListId, (Namespace.Rdf + "rest").iri(), (Namespace.Rdf + "nil").iri())
+      }
+    })
+
+    PropertyConstraint(
+      ramlPropertyId = (Namespace.Data + "value").iri(),
+      name = scalar.id + "_validation_range/prop",
+      message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
+      custom = custom,
+      customRdf = customRdf
+    )
   }
 
   protected def checkScalarType(shape: Shape,

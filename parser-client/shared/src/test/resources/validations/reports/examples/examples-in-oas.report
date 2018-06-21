@@ -1,0 +1,35 @@
+Model: file://parser-client/shared/src/test/resources/validations/examples/examples-in-oas.json
+Profile: OpenAPI
+Conforms? false
+Number of results: 3
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#mandatory-api-version
+  Message: API Version is Mandatory
+  Level: Violation
+  Target: file://parser-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/web-api
+  Property: http://schema.org/version
+  Position: Some(LexicalInformation([(1,0)-(556,1)]))
+
+- Source: file://parser-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/User_validation
+  Message: Object at / must be valid
+Scalar at //phoneNo must have data type http://www.w3.org/2001/XMLSchema#integer
+Scalar at //dateOfBirth must be valid RFC3339 date
+
+  Level: Violation
+  Target: file://parser-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/User/example/default-example
+  Property: file://parser-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/User/example/default-example
+  Position: Some(LexicalInformation([(255,18)-(282,7)]))
+
+- Source: file://parser-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/LoanApplication_validation
+  Message: Object at / must be valid
+Object at //application must be valid
+Object at / must be valid
+Scalar at //dateOfBirth must be valid RFC3339 date
+Scalar at //monthsAtCurrAdd must have data type http://www.w3.org/2001/XMLSchema#integer
+
+  Level: Violation
+  Target: file://parser-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/LoanApplication/example/default-example
+  Property: file://parser-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/LoanApplication/example/default-example
+  Position: Some(LexicalInformation([(338,18)-(436,7)]))

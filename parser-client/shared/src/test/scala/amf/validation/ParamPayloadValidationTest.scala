@@ -63,7 +63,8 @@ class ParamPayloadValidationTest extends FileAssertionTest with Matchers {
     test(f.name){
       validate(f.payload).map{ report =>
         f.result match {
-          case None if !report.conforms=> fail("report not conforms")
+          case None if !report.conforms =>
+            fail("report not conforms")
           case None if report.results.nonEmpty => fail("report has results (probably warnings because conforms)")
           case None => succeed
           case Some(expected) if report.results.isEmpty => fail(s"report it's empty while should be ${expected.toString}")

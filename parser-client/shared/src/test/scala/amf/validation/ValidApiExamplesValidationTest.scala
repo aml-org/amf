@@ -73,5 +73,13 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     checkValid("/examples/seq-in-seq.raml")
   }
 
+  test("DateTimeOnly json example") {
+    checkValid("examples/datetimeonly-json.raml")
+  }
+
+  test("Test test") {
+    checkValid("examples/test.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

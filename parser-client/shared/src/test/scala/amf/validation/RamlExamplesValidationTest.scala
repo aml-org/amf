@@ -3,7 +3,7 @@ package amf.validation
 import amf.ProfileNames
 import amf.core.remote.{Hint, RamlYamlHint}
 
-class ApiExamplesValidationTest extends ValidationReportGenTest {
+class RamlExamplesValidationTest extends ValidationReportGenTest {
 
   override val basePath: String    = "file://parser-client/shared/src/test/resources/validations/"
   override val reportsPath: String = "parser-client/shared/src/test/resources/validations/reports/examples/"
