@@ -95,6 +95,8 @@ Maven example:
 </dependency>
 ```
 
+NOTE: you may use the `-SNAPSHOT` versions of the JVM artifacts but note that this is at your own risks since those snapshot versions may contain breaking changes. It is strongly recommended that you use 
+
 ### JS artifacts
 
 Execute the command
@@ -175,5 +177,4 @@ Validation is one of the key features of AMF. Please check the following link to
 [Click here for more documentation and playground](https://a.ml)
 
 ## Want to contribute?
-If you are interested in contributing code to this project, thanks! Please [read and accept the Contributors Agreement](https://api-notebook.anypoint.mulesoft.com/notebooks#bc1cf75a0284268407e4).
-
+If you are interested in contributing code to this project, thanks! Please [read and accept the Contributors Agreement](https://api-notebook.anypoint.mulesoft.com/notebooks#380297ed0e474010ff43). This should automatically create a Github issue with the record of your signature [here](https://github.com/mulesoft/contributor-agreements/issues). If for any reason, you do not see your signature there, please contact us.
