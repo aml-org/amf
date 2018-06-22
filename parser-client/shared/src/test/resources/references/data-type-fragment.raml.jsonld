@@ -64,7 +64,7 @@
         ],
         "http://a.ml/vocabularies/document#link-target": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type"
+            "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type"
           }
         ],
         "http://a.ml/vocabularies/document#link-label": [
@@ -89,7 +89,7 @@
         ],
         "http://a.ml/vocabularies/document#encodes": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type",
+            "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -103,7 +103,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type/property/name",
+                "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -111,7 +111,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type/property/name/scalar/name",
+                    "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name/scalar/name",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -130,7 +130,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type/property/name/scalar/name/source-map",
+                        "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name/scalar/name/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -150,7 +150,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type/property/name/scalar/name"
+                                "@value": "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name/scalar/name"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -176,7 +176,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type/property/name/source-map",
+                    "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -184,7 +184,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type/property/name"
+                            "@value": "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -205,7 +205,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type/source-map",
+                "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -225,7 +225,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type"
+                        "@value": "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -241,7 +241,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml/source-map",
+            "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],

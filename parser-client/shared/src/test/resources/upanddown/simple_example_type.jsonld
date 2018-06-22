@@ -467,7 +467,7 @@
         ],
         "http://a.ml/vocabularies/document#link-target": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type"
+            "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type"
           }
         ],
         "http://a.ml/vocabularies/document#link-label": [
@@ -528,7 +528,7 @@
         ],
         "http://a.ml/vocabularies/document#encodes": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type",
+            "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -542,7 +542,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type/property/a",
+                "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type/property/a",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -555,7 +555,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type/property/a/scalar/a",
+                    "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type/property/a/scalar/a",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -574,7 +574,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type/property/a/scalar/a/source-map",
+                        "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type/property/a/scalar/a/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -582,7 +582,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type/property/a/scalar/a"
+                                "@value": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type/property/a/scalar/a"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -608,7 +608,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type/property/a/source-map",
+                    "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type/property/a/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -616,7 +616,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type/property/a"
+                            "@value": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type/property/a"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -637,7 +637,7 @@
             ],
             "http://a.ml/vocabularies/document#examples": [
               {
-                "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example",
+                "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example",
                 "@type": [
                   "http://a.ml/vocabularies/document#Example",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -649,13 +649,13 @@
                 ],
                 "http://a.ml/vocabularies/document#structuredValue": [
                   {
-                    "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1",
+                    "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/object_1",
                     "@type": [
                       "http://a.ml/vocabularies/data#Object"
                     ],
                     "http://a.ml/vocabularies/data#a": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1/scalar_2",
+                        "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/object_1/scalar_2",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -667,7 +667,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1/scalar_2/source-map",
+                            "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/object_1/scalar_2/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -675,7 +675,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1/scalar_2"
+                                    "@value": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/object_1/scalar_2"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -691,7 +691,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1/source-map",
+                        "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/object_1/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -699,7 +699,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1"
+                                "@value": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/object_1"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -713,7 +713,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1"
+                                "@value": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/object_1"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -734,7 +734,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/source-map",
+                    "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -768,7 +768,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example"
+                            "@value": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -796,7 +796,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type/source-map",
+                "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -804,7 +804,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type"
+                        "@value": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -830,7 +830,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type"
+                        "@value": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -844,7 +844,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type"
+                        "@value": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -860,7 +860,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/source-map",
+            "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],

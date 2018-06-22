@@ -107,7 +107,7 @@
                         ],
                         "raml-http:schema": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type",
+                            "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type",
                             "@type": [
                               "shacl:NodeShape",
                               "shacl:Shape",
@@ -121,7 +121,7 @@
                             ],
                             "shacl:property": [
                               {
-                                "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type/property/a",
+                                "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type/property/a",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -134,7 +134,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type/property/a/scalar/a",
+                                    "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type/property/a/scalar/a",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -153,7 +153,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type/property/a/scalar/a": "[(4,2)-(5,0)]"
+                                        "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type/property/a/scalar/a": "[(4,2)-(5,0)]"
                                       }
                                     }
                                   }
@@ -170,7 +170,7 @@
                                 ],
                                 "smaps": {
                                   "lexical": {
-                                    "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type/property/a": "[(4,2)-(5,0)]"
+                                    "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type/property/a": "[(4,2)-(5,0)]"
                                   }
                                 }
                               }
@@ -182,7 +182,7 @@
                             ],
                             "doc:examples": [
                               {
-                                "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example",
+                                "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example",
                                 "@type": [
                                   "doc:Example",
                                   "doc:DomainElement"
@@ -194,13 +194,13 @@
                                 ],
                                 "doc:structuredValue": [
                                   {
-                                    "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1",
+                                    "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/object_1",
                                     "@type": [
                                       "data:Object"
                                     ],
                                     "data:a": [
                                       {
-                                        "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1/scalar_2",
+                                        "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/object_1/scalar_2",
                                         "@type": [
                                           "data:Scalar"
                                         ],
@@ -212,17 +212,17 @@
                                         ],
                                         "smaps": {
                                           "lexical": {
-                                            "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1/scalar_2": "[(6,5)-(6,10)]"
+                                            "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/object_1/scalar_2": "[(6,5)-(6,10)]"
                                           }
                                         }
                                       }
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1": "[(6,0)-(6,10)]"
+                                        "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/object_1": "[(6,0)-(6,10)]"
                                       },
                                       "data-node-properties": {
-                                        "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1": "a->[(6,2)-(6,10)]"
+                                        "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/object_1": "a->[(6,2)-(6,10)]"
                                       }
                                     }
                                   }
@@ -238,17 +238,17 @@
                                   },
                                   "lexical": {
                                     "shacl:raw": "[(6,0)-(6,10)]",
-                                    "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example": "[(6,0)-(6,10)]"
+                                    "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example": "[(6,0)-(6,10)]"
                                   }
                                 }
                               }
                             ],
                             "smaps": {
                               "type-property-lexical-info": {
-                                "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type": "[(2,0)-(2,4)]"
+                                "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type": "[(2,0)-(2,4)]"
                               },
                               "lexical": {
-                                "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type": "[(2,0)-(6,10)]"
+                                "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type": "[(2,0)-(6,10)]"
                               }
                             }
                           }
@@ -299,7 +299,7 @@
     ],
     "doc:declares": [
       {
-        "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type",
+        "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type",
         "@type": [
           "shacl:NodeShape",
           "shacl:Shape",
@@ -313,7 +313,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type/property/a",
+            "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type/property/a",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -326,7 +326,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type/property/a/scalar/a",
+                "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type/property/a/scalar/a",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "shacl:Shape",
@@ -345,7 +345,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type/property/a/scalar/a": "[(4,2)-(5,0)]"
+                    "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type/property/a/scalar/a": "[(4,2)-(5,0)]"
                   }
                 }
               }
@@ -362,7 +362,7 @@
             ],
             "smaps": {
               "lexical": {
-                "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type/property/a": "[(4,2)-(5,0)]"
+                "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type/property/a": "[(4,2)-(5,0)]"
               }
             }
           }
@@ -374,7 +374,7 @@
         ],
         "doc:examples": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example",
+            "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example",
             "@type": [
               "doc:Example",
               "doc:DomainElement"
@@ -386,13 +386,13 @@
             ],
             "doc:structuredValue": [
               {
-                "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1",
+                "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/object_1",
                 "@type": [
                   "data:Object"
                 ],
                 "data:a": [
                   {
-                    "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1/scalar_2",
+                    "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/object_1/scalar_2",
                     "@type": [
                       "data:Scalar"
                     ],
@@ -404,17 +404,17 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1/scalar_2": "[(6,5)-(6,10)]"
+                        "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/object_1/scalar_2": "[(6,5)-(6,10)]"
                       }
                     }
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1": "[(6,0)-(6,10)]"
+                    "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/object_1": "[(6,0)-(6,10)]"
                   },
                   "data-node-properties": {
-                    "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1": "a->[(6,2)-(6,10)]"
+                    "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/object_1": "a->[(6,2)-(6,10)]"
                   }
                 }
               }
@@ -430,17 +430,17 @@
               },
               "lexical": {
                 "shacl:raw": "[(6,0)-(6,10)]",
-                "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example": "[(6,0)-(6,10)]"
+                "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example": "[(6,0)-(6,10)]"
               }
             }
           }
         ],
         "smaps": {
           "type-property-lexical-info": {
-            "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type": "[(2,0)-(2,4)]"
+            "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type": "[(2,0)-(2,4)]"
           },
           "lexical": {
-            "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type": "[(2,0)-(6,10)]"
+            "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type": "[(2,0)-(6,10)]"
           }
         }
       }
@@ -455,7 +455,7 @@
         ],
         "doc:encodes": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type",
+            "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type",
             "@type": [
               "shacl:NodeShape",
               "shacl:Shape",
@@ -469,7 +469,7 @@
             ],
             "shacl:property": [
               {
-                "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type/property/a",
+                "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type/property/a",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -482,7 +482,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type/property/a/scalar/a",
+                    "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type/property/a/scalar/a",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "shacl:Shape",
@@ -501,7 +501,7 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type/property/a/scalar/a": "[(4,2)-(5,0)]"
+                        "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type/property/a/scalar/a": "[(4,2)-(5,0)]"
                       }
                     }
                   }
@@ -518,7 +518,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type/property/a": "[(4,2)-(5,0)]"
+                    "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type/property/a": "[(4,2)-(5,0)]"
                   }
                 }
               }
@@ -530,7 +530,7 @@
             ],
             "doc:examples": [
               {
-                "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example",
+                "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example",
                 "@type": [
                   "doc:Example",
                   "doc:DomainElement"
@@ -542,13 +542,13 @@
                 ],
                 "doc:structuredValue": [
                   {
-                    "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1",
+                    "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/object_1",
                     "@type": [
                       "data:Object"
                     ],
                     "data:a": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1/scalar_2",
+                        "@id": "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/object_1/scalar_2",
                         "@type": [
                           "data:Scalar"
                         ],
@@ -560,17 +560,17 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1/scalar_2": "[(6,5)-(6,10)]"
+                            "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/object_1/scalar_2": "[(6,5)-(6,10)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "lexical": {
-                        "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1": "[(6,0)-(6,10)]"
+                        "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/object_1": "[(6,0)-(6,10)]"
                       },
                       "data-node-properties": {
-                        "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example/object_1": "a->[(6,2)-(6,10)]"
+                        "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example/object_1": "a->[(6,2)-(6,10)]"
                       }
                     }
                   }
@@ -586,17 +586,17 @@
                   },
                   "lexical": {
                     "shacl:raw": "[(6,0)-(6,10)]",
-                    "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#shape/example/default-example": "[(6,0)-(6,10)]"
+                    "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/shape/example/default-example": "[(6,0)-(6,10)]"
                   }
                 }
               }
             ],
             "smaps": {
               "type-property-lexical-info": {
-                "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type": "[(2,0)-(2,4)]"
+                "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type": "[(2,0)-(2,4)]"
               },
               "lexical": {
-                "file://parser-client/shared/src/test/resources/upanddown/app-person.raml/type": "[(2,0)-(6,10)]"
+                "file://parser-client/shared/src/test/resources/upanddown/app-person.raml#/type": "[(2,0)-(6,10)]"
               }
             }
           }

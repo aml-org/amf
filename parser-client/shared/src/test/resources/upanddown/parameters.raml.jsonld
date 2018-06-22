@@ -393,7 +393,7 @@
         ],
         "http://a.ml/vocabularies/http#schema": [
           {
-            "@id": "null/schema",
+            "@id": "null#/schema",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -407,7 +407,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "null/schema/property/prop",
+                "@id": "null#/schema/property/prop",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -420,7 +420,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "null/schema/property/prop/scalar/prop",
+                    "@id": "null#/schema/property/prop/scalar/prop",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -439,7 +439,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "null/schema/property/prop/scalar/prop/source-map",
+                        "@id": "null#/schema/property/prop/scalar/prop/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -447,7 +447,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "null/schema/property/prop/scalar/prop"
+                                "@value": "null#/schema/property/prop/scalar/prop"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -473,7 +473,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "null/schema/property/prop/scalar/prop"
+                                "@value": "null#/schema/property/prop/scalar/prop"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -499,7 +499,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "null/schema/property/prop/source-map",
+                    "@id": "null#/schema/property/prop/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -519,7 +519,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "null/schema/property/prop"
+                            "@value": "null#/schema/property/prop"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -540,7 +540,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "null/schema/source-map",
+                "@id": "null#/schema/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -548,7 +548,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "null/schema"
+                        "@value": "null#/schema"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -574,7 +574,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "null/schema"
+                        "@value": "null#/schema"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [

@@ -254,7 +254,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://parser-client/shared/src/test/resources/upanddown/referred.raml/scalar/type/source-map",
+                                        "@id": "file://parser-client/shared/src/test/resources/upanddown/referred.raml/scalar/type#/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
@@ -810,7 +810,7 @@
                         ],
                         "http://a.ml/vocabularies/security#scope": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/references/fragments/security-scheme.raml#fragment/settings/oauth2/profile",
+                            "@id": "file://parser-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/settings/oauth2/profile",
                             "@type": [
                               "http://a.ml/vocabularies/security#Scope",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -822,7 +822,7 @@
                             ]
                           },
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/references/fragments/security-scheme.raml#fragment/settings/oauth2/history",
+                            "@id": "file://parser-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/settings/oauth2/history",
                             "@type": [
                               "http://a.ml/vocabularies/security#Scope",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -1031,7 +1031,7 @@
                     }
                   ]
                 },
-                "file://parser-client/shared/src/test/resources/upanddown/referred_annotation.raml#annotation": {
+                "file://parser-client/shared/src/test/resources/upanddown/referred_annotation.raml#/annotation": {
                   "http://a.ml/vocabularies/document#name": [
                     {
                       "@value": "annotB"
@@ -1075,7 +1075,7 @@
                     "@id": "file://parser-client/shared/src/test/resources/upanddown/with_references.raml#/declarations/annotations/annotA"
                   },
                   {
-                    "@id": "file://parser-client/shared/src/test/resources/upanddown/referred_annotation.raml#annotation"
+                    "@id": "file://parser-client/shared/src/test/resources/upanddown/referred_annotation.raml#/annotation"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [

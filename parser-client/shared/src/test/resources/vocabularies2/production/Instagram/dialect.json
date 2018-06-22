@@ -65,7 +65,7 @@
         ],
         "http://a.ml/vocabularies/meta#rootDocument": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml/documents/root",
+            "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/documents/root",
             "@type": [
               "http://a.ml/vocabularies/meta#DocumentMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -82,7 +82,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml/documents/root/source-map",
+                "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/documents/root/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -90,7 +90,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml/documents/root"
+                        "@value": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/documents/root"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -519,7 +519,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/vocabulary.raml/source-map",
+            "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/vocabulary.raml#/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -579,7 +579,7 @@
     ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
       {
-        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml/source-map",
+        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/source-map",
         "@type": [
           "http://a.ml/vocabularies/document-source-maps#SourceMap"
         ],

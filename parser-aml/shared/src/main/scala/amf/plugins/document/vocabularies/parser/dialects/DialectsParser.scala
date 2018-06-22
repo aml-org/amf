@@ -924,7 +924,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
   }
 
   private def parseDocumentsMapping(map: YMap, parent: String): Unit = {
-    val documentsMapping = DocumentsModel().withId(parent + "/documents")
+    val documentsMapping = DocumentsModel().withId(parent + "#/documents")
     map.key("documents").foreach { e =>
       ctx.closedNode("documentsMapping", documentsMapping.id, e.value.as[YMap])
       parseRootDocumentMapping(e.value, documentsMapping.id) foreach { rootMapping: DocumentMapping =>

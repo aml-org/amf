@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#",
+    "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml",
     "@type": [
       "http://a.ml/vocabularies/meta#DialectInstance",
       "http://a.ml/vocabularies/document#Document",
@@ -58,7 +58,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "http://clients.api.org/user132332/source-map",
+                    "@id": "http://clients.api.org/user132332#/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -96,7 +96,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "http://individuals.api.org/i34994/source-map",
+                    "@id": "http://individuals.api.org/i34994#/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -176,7 +176,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "file://parser-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#"
+                "@value": "file://parser-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [

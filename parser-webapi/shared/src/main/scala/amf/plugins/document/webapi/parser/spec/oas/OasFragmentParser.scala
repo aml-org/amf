@@ -62,7 +62,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
   case class DocumentationItemFragmentParser(map: YMap) {
     def parse(): DocumentationItemFragment = {
 
-      val item = DocumentationItemFragment().adopted(root.location)
+      val item = DocumentationItemFragment().adopted(root.location + "#/")
 
       item.withEncodes(OasCreativeWorkParser(map).parse())
 
@@ -77,7 +77,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       val shapeOption =
         OasTypeParser(map,
                       "type",
-                      (shape: Shape) => shape.withId(root.location + "#shape"),
+                      (shape: Shape) => shape.withId(root.location + "#/shape"),
                       OAS20SchemaVersion(position = "schema"))
           .parse()
       shapeOption.map(dataType.withEncodes(_))
@@ -95,7 +95,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
         AnnotationTypesParser(map,
                               "annotation",
                               map,
-                              (annotation: CustomDomainProperty) => annotation.adopted(root.location)).parse()
+                              (annotation: CustomDomainProperty) => annotation.adopted(root.location + "#/")).parse()
 
       annotation.withEncodes(property)
     }
@@ -137,7 +137,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
                                 "securityDefinitions",
                                 map,
                                 (security: amf.plugins.domain.webapi.models.security.SecurityScheme) =>
-                                  security.adopted(root.location))
+                                  security.adopted(root.location + "#/"))
           .parse())
     }
   }
@@ -145,7 +145,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
   case class NamedExampleFragmentParser(map: YMap) {
     def parse(): NamedExampleFragment = {
       val entries      = map.entries.filter(e => e.key.as[YScalar].text != "fragmentType".asOasExtension)
-      val namedExample = NamedExampleFragment().adopted(root.location)
+      val namedExample = NamedExampleFragment().adopted(root.location + "#/")
 
       val producer = (name: Option[String]) => {
         val example = Example()
