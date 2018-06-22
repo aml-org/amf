@@ -329,13 +329,13 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
       }
     }
 
-    buffer.flatMap { (n) =>
+    val res = buffer.map { (n) =>
       listElement match {
         case _: Obj             => findLink(n) match {
           case Some(node) => parse(node)
           case _          => None
         }
-        case Str | RegExp | Iri => try { Some(str(n)) } catch { case _: Exception => None }
+        case Str | RegExp | Iri => try { Some(strCoercion(n)) } catch { case _: Exception => None }
         case Bool               => try { Some(bool(n))  } catch { case _: Exception => None }
         case Type.Int           => try { Some(int(n))  } catch { case _: Exception => None }
         case Type.Float         => try { Some(float(n))  } catch { case _: Exception => None }
@@ -344,6 +344,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
         case _                  => throw new Exception("Unknown list element type ")
       }
     }
+    res collect { case Some(x) => x }
   }
 
 
