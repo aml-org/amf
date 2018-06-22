@@ -61,7 +61,7 @@ This will generate *jvm* jars in each of the module's targets.
 ```sh
 sbt buildJS
 ```
-This will generate a *js* artifact in ./parser-client/js/amf.js
+This will generate a *js* artifact in ./file://amf-client/js/amf.js
 
 ### JVM artifacts
 
@@ -71,7 +71,7 @@ Gradle example:
 
 ```groovy
 dependencies {
-    compile 'amf:parser-client_2.12:1.4.0'
+    compile 'amf:amf-client_2.12:1.4.0'
 }
 ```
 
@@ -90,7 +90,7 @@ Maven example:
 ```xml
 <dependency>
     <groupId>amf</groupId>
-    <artifactId>parser-client_2.12</artifactId>
+    <artifactId>amf-client_2.12</artifactId>
     <version>1.4.0</version>
 </dependency>
 ```

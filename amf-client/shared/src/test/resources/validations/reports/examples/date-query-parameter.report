@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/validations/08/date-query-parameter.raml
+Profile: RAML08
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: file://amf-client/shared/src/test/resources/validations/08/date-query-parameter.raml#/web-api/end-points/%2Ftickets/get/request/parameter/createdAfter/scalar/createdAfter_validation_range/prop
+  Message: Scalar at / must be valid RFC2616 date
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/08/date-query-parameter.raml#/web-api/end-points/%2Ftickets/get/request/parameter/createdAfter/scalar/createdAfter/example/default-example
+  Property: file://amf-client/shared/src/test/resources/validations/08/date-query-parameter.raml#/web-api/end-points/%2Ftickets/get/request/parameter/createdAfter/scalar/createdAfter/example/default-example
+  Position: Some(LexicalInformation([(16,17)-(16,36)]))

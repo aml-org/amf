@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/uri-templates/unopened-brace-in-resource-path/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#parsing-error
+  Message: Error node '/root/}{id:
+'
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/uri-templates/unopened-brace-in-resource-path/input.raml
+  Property: 
+  Position: Some(LexicalInformation([(4,0)-(5,0)]))

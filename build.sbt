@@ -13,7 +13,7 @@ publish := {}
 jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
 
 val settings = Common.settings ++ Common.publish ++ Seq(
-  organization := "amf",
+  organization := "com.github.amlorg",
   resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal),
   credentials ++= Common.credentials(),
   aggregate in assembly := false,
@@ -24,7 +24,7 @@ val settings = Common.settings ++ Common.publish ++ Seq(
 )
 
 /** **********************************************
-  * Parser-Core
+  * AMF-Core
   ********************************************** */
 lazy val defaultProfilesGenerationTask = TaskKey[Unit](
   "defaultValidationProfilesGeneration",
@@ -33,82 +33,82 @@ lazy val defaultProfilesGenerationTask = TaskKey[Unit](
 lazy val core = crossProject
   .settings(
     Seq(
-      name := "parser-core",
+      name := "amf-core",
       libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.2.1"
     ))
-  .in(file("./parser-core"))
+  .in(file("./amf-core"))
   .settings(settings: _*)
   .jvmSettings(
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
     libraryDependencies += "org.json4s"             %% "json4s-jackson"         % "3.5.2",
-    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "parser-core-javadoc.jar"
+    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-core-javadoc.jar"
   )
   .jsSettings(
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
-    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "parser-core-module.js"
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-core-module.js"
   )
 
-lazy val coreJVM = core.jvm.in(file("./parser-core/jvm"))
-lazy val coreJS  = core.js.in(file("./parser-core/js"))
+lazy val coreJVM = core.jvm.in(file("./amf-core/jvm"))
+lazy val coreJS  = core.js.in(file("./amf-core/js"))
 
 /** **********************************************
-  * Parser-WebAPI
+  * AMF-WebAPI
   ********************************************** */
 lazy val webapi = crossProject
-  .settings(name := "parser-webapi")
+  .settings(name := "amf-webapi")
   .dependsOn(core)
-  .in(file("./parser-webapi"))
+  .in(file("./amf-webapi"))
   .settings(settings: _*)
   .jvmSettings(
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
     libraryDependencies += "org.json4s"             %% "json4s-jackson"         % "3.5.2",
-    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "parser-webapi-javadoc.jar"
+    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-webapi-javadoc.jar"
   )
   .jsSettings(
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
-    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "parser-webapi-module.js"
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-webapi-module.js"
   )
 
-lazy val webapiJVM = webapi.jvm.in(file("./parser-webapi/jvm"))
-lazy val webapiJS  = webapi.js.in(file("./parser-webapi/js"))
+lazy val webapiJVM = webapi.jvm.in(file("./amf-webapi/jvm"))
+lazy val webapiJS  = webapi.js.in(file("./amf-webapi/js"))
 
 /** **********************************************
-  * Parser-AML
+  * AMF-AML
   ********************************************** */
 lazy val vocabularies = crossProject
-  .settings(name := "parser-aml")
+  .settings(name := "amf-aml")
   .dependsOn(core)
-  .in(file("./parser-aml"))
+  .in(file("./amf-aml"))
   .settings(settings: _*)
   .jvmSettings(
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
     libraryDependencies += "org.json4s"             %% "json4s-jackson"         % "3.5.2",
-    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "parser-aml-javadoc.jar"
+    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-aml-javadoc.jar"
   )
   .jsSettings(
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
-    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "parser-aml-module.js"
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-aml-module.js"
   )
 
-lazy val vocabulariesJVM = vocabularies.jvm.in(file("./parser-aml/jvm"))
-lazy val vocabulariesJS  = vocabularies.js.in(file("./parser-aml/js"))
+lazy val vocabulariesJVM = vocabularies.jvm.in(file("./amf-aml/jvm"))
+lazy val vocabulariesJS  = vocabularies.js.in(file("./amf-aml/js"))
 
 /** **********************************************
-  * Parser-Validation
+  * AMF-Validation
   ********************************************** */
 lazy val validation = crossProject
-  .settings(name := "parser-validation")
+  .settings(name := "amf-validation")
   .dependsOn(core, vocabularies)
-  .in(file("./parser-validation"))
+  .in(file("./amf-validation"))
   .settings(settings: _*)
   .jvmSettings(
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
@@ -116,27 +116,27 @@ lazy val validation = crossProject
     libraryDependencies += "org.json4s"             %% "json4s-jackson"         % "3.5.2",
     libraryDependencies += "org.topbraid"           % "shacl"                   % "1.1.0",
     libraryDependencies += "org.slf4j"              % "slf4j-simple"            % "1.7.12",
-    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "parser-validation-javadoc.jar"
+    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-validation-javadoc.jar"
   )
   .jsSettings(
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
-    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "parser-validation-module.js"
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-validation-module.js"
   )
 
-lazy val validationJVM = validation.jvm.in(file("./parser-validation/jvm"))
-lazy val validationJS  = validation.js.in(file("./parser-validation/js"))
+lazy val validationJVM = validation.jvm.in(file("./amf-validation/jvm"))
+lazy val validationJS  = validation.js.in(file("./amf-validation/js"))
 
 /** **********************************************
   * AMF Client
   ********************************************** */
 lazy val client = crossProject
   .settings(Seq(
-    name := "parser-client",
+    name := "amf-client",
     fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter")))
   .dependsOn(core, webapi, vocabularies, validation)
-  .in(file("./parser-client"))
+  .in(file("./amf-client"))
   .settings(settings: _*)
   .jvmSettings(
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
@@ -144,11 +144,11 @@ lazy val client = crossProject
     libraryDependencies += "org.json4s"             %% "json4s-jackson"         % "3.5.2",
     libraryDependencies += "org.topbraid"           % "shacl"                   % "1.1.0",
     mainClass in Compile := Some("amf.Main"),
-    packageOptions in (Compile, packageBin) += Package.ManifestAttributes("Automatic-Module-Name" → "amf"),
-      aggregate in assembly := true,
+    packageOptions in (Compile, packageBin) += Package.ManifestAttributes("Automatic-Module-Name" → "org.mule.amf"),
+    aggregate in assembly := true,
     test in assembly := {},
     mainClass in assembly := Some("amf.Main"),
-    assemblyOutputPath in assembly := file(s"./parser-${version.value}.jar"),
+    assemblyOutputPath in assembly := file(s"./amf-${version.value}.jar"),
     assemblyMergeStrategy in assembly := {
       case x if x.toString.endsWith("JS_DEPENDENCIES")             => MergeStrategy.discard
       case PathList(ps @ _*) if ps.last endsWith "JS_DEPENDENCIES" => MergeStrategy.discard
@@ -162,11 +162,11 @@ lazy val client = crossProject
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
-    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "parser-client-module.js"
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-client-module.js"
   )
 
-lazy val clientJVM = client.jvm.in(file("./parser-client/jvm"))
-lazy val clientJS  = client.js.in(file("./parser-client/js"))
+lazy val clientJVM = client.jvm.in(file("./amf-client/jvm"))
+lazy val clientJS  = client.js.in(file("./amf-client/js"))
 
 // Tasks
 
@@ -176,7 +176,7 @@ val publishJS = TaskKey[Unit](
 
 publishJS := {
   val _ = (fullOptJS in Compile in clientJS).value
-  "./parser-client/js/build-scripts/deploy-develop.sh".!
+  "./amf-client/js/build-scripts/deploy-develop.sh".!
 }
 
 val buildJS = TaskKey[Unit](
@@ -184,7 +184,7 @@ val buildJS = TaskKey[Unit](
   "Build npm module")
 buildJS := {
   val _ = (fullOptJS in Compile in clientJS).value
-  "./parser-client/js/build-scripts/buildjs.sh".!
+  "./amf-client/js/build-scripts/buildjs.sh".!
 }
 
 publish := {

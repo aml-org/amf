@@ -1,0 +1,641 @@
+[
+  {
+    "@id": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld",
+    "@type": [
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api",
+        "@type": [
+          "http://schema.org/WebAPI",
+          "http://a.ml/vocabularies/document#RootDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://schema.org/name": [
+          {
+            "@value": "test title"
+          }
+        ],
+        "http://schema.org/description": [
+          {
+            "@value": "test description"
+          }
+        ],
+        "http://a.ml/vocabularies/http#accepts": [
+          {
+            "@value": "application/yaml"
+          }
+        ],
+        "http://a.ml/vocabularies/http#contentType": [
+          {
+            "@value": "application/yaml"
+          }
+        ],
+        "http://a.ml/vocabularies/http#scheme": [
+          {
+            "@value": "http"
+          },
+          {
+            "@value": "https"
+          }
+        ],
+        "http://schema.org/version": [
+          {
+            "@value": "1.1"
+          }
+        ],
+        "http://schema.org/termsOfService": [
+          {
+            "@value": "terms of service"
+          }
+        ],
+        "http://schema.org/provider": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/organization",
+            "@type": [
+              "http://schema.org/Organization",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/url": [
+              {
+                "@id": "contactUrl"
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "contactName"
+              }
+            ],
+            "http://schema.org/email": [
+              {
+                "@value": "contactEmail"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/organization/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/email"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(18,2)-(18,21)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/url"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(16,2)-(16,17)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/organization"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(15,0)-(18,21)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/name"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(17,2)-(17,19)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://schema.org/license": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/license",
+            "@type": [
+              "http://a.ml/vocabularies/http#License",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/url": [
+              {
+                "@id": "licenseUrl"
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "licenseName"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/license/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/name"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(8,2)-(8,19)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/license"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(6,0)-(8,19)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/url"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(7,2)-(7,17)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://schema.org/documentation": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/creative-work/externalDocsUrl",
+            "@type": [
+              "http://schema.org/CreativeWork",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/url": [
+              {
+                "@id": "externalDocsUrl"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "externalDocsDescription"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/creative-work/externalDocsUrl/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(21,2)-(21,38)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/creative-work/externalDocsUrl"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(19,0)-(21,38)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/url"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(20,2)-(20,22)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/http#endpoint": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero",
+            "@type": [
+              "http://a.ml/vocabularies/http#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/http#path": [
+              {
+                "@value": "/level-zero"
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "Name"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/name"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(23,2)-(23,19)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(22,0)-(28,40)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/http#path"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(22,0)-(22,11)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Flevel-one",
+            "@type": [
+              "http://a.ml/vocabularies/http#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/http#path": [
+              {
+                "@value": "/level-zero/level-one"
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "One display name"
+              }
+            ],
+            "http://schema.org/description": [
+              {
+                "@value": "and this description!"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Flevel-one/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#parent-end-point": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Flevel-one"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/description"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(26,4)-(26,38)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/http#path"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(24,2)-(24,12)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Flevel-one"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(24,2)-(26,38)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/name"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(25,4)-(25,33)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Fanother-level-one",
+            "@type": [
+              "http://a.ml/vocabularies/http#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/http#path": [
+              {
+                "@value": "/level-zero/another-level-one"
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "some other display name"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Fanother-level-one/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#parent-end-point": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Fanother-level-one"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/name"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(28,4)-(28,40)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Flevel-zero%2Fanother-level-one"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(27,2)-(28,40)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/http#path"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(27,2)-(27,20)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Fanother-level-zero",
+            "@type": [
+              "http://a.ml/vocabularies/http#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/http#path": [
+              {
+                "@value": "/another-level-zero"
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "Root name"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Fanother-level-zero/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://schema.org/name"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(30,2)-(30,24)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/end-points/%2Fanother-level-zero"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(29,0)-(30,24)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/http#path"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(29,0)-(29,19)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/termsOfService"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(4,0)-(4,34)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/description"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(3,0)-(3,29)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/endpoints.jsonld#/web-api"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(1,0)-(30,24)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/name"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(2,17)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://schema.org/version"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(5,0)-(5,12)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#references": []
+  }
+]

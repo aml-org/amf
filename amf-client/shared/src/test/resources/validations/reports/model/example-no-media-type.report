@@ -1,0 +1,20 @@
+Model: file://amf-client/shared/src/test/resources/validations/examples/example-no-media-type.raml
+Profile: RAML
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#parsing-error
+  Message: Invalid media type
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/examples/example-no-media-type.raml#/web-api/end-points/%2Fbad0/post/request
+  Property: 
+  Position: Some(LexicalInformation([(6,0)-(7,0)]))
+
+- Source: http://a.ml/vocabularies/amf/parser#parsing-error
+  Message: Invalid media type
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/examples/example-no-media-type.raml#/web-api/end-points/%2Fbad1/post/201
+  Property: 
+  Position: Some(LexicalInformation([(12,0)-(13,0)]))
