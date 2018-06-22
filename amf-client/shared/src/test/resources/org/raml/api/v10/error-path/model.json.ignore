@@ -1,0 +1,65 @@
+Model: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 5
+
+Level: Violation
+
+- Source: 
+  Message: Object at / must be valid
+Property family at / must have a valid value
+Array items at //family must be valid
+Scalar at //family/items must have data type http://www.w3.org/2001/XMLSchema#string
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User/example/badExample/object_1
+  Property: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User/example/badExample/object_1
+  Position: Some(LexicalInformation([(26,0)-(31,0)]))
+
+- Source: 
+  Message: Data at //age must have min. cardinality 1
+Data at //family must have min. cardinality 1
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User/example/anotherBadExample/object_1
+  Property: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User/example/anotherBadExample/object_1
+  Position: Some(LexicalInformation([(32,0)-(33,0)]))
+
+- Source: 
+  Message: Property age at / must have a valid value
+Object at / must be valid
+Property name at / must have a valid value
+Scalar at //name must have data type http://www.w3.org/2001/XMLSchema#string
+Scalar at //age must have data type http://www.w3.org/2001/XMLSchema#integer
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User/example/anotherOne/object_1
+  Property: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/User/example/anotherOne/object_1
+  Position: Some(LexicalInformation([(34,0)-(39,0)]))
+
+- Source: 
+  Message: Data at ///slashedProperty must have min. cardinality 1
+Object at / must be valid
+Array items at //users must be valid
+Array items at //family must be valid
+Scalar at //family/items must have data type http://www.w3.org/2001/XMLSchema#string
+Property age at / must have a valid value
+Scalar at //age must have data type http://www.w3.org/2001/XMLSchema#integer
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/example/one/object_1
+  Property: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/example/one/object_1
+  Position: Some(LexicalInformation([(51,0)-(72,0)]))
+
+- Source: 
+  Message: Data at ///slashedProperty must have min. cardinality 1
+Object at / must be valid
+Array items at //authors must be valid
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/example/two/object_1
+  Property: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/Book/example/two/object_1
+  Position: Some(LexicalInformation([(73,0)-(84,0)]))
+
+
+missing violation over:     example: [[1,invalid], [3,invalid]]

@@ -1,0 +1,20 @@
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/reference-with-parametrized-types/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#unknown-security-scheme
+  Message: Security scheme 'undefined' not found in declarations.
+  Level: Violation
+  Target: null/undefined
+  Property: 
+  Position: None
+
+- Source: http://a.ml/vocabularies/amf/parser#unknown-security-scheme
+  Message: Security scheme 'undefined' not found in declarations.
+  Level: Violation
+  Target: null/undefined
+  Property: 
+  Position: None
