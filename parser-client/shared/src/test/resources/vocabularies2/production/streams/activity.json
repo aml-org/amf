@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#",
+    "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml",
     "@type": [
       "http://a.ml/vocabularies/meta#Dialect",
       "http://a.ml/vocabularies/document#Document",
@@ -20,7 +20,7 @@
     ],
     "http://a.ml/vocabularies/meta#externals": [
       {
-        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/externals/stream",
+        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml/externals/stream",
         "@type": [
           "http://www.w3.org/2002/07/owl#Ontology",
           "http://a.ml/vocabularies/meta#ExternalVocabulary",
@@ -40,14 +40,14 @@
     ],
     "http://a.ml/vocabularies/meta#documents": [
       {
-        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/documents",
+        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml/documents",
         "@type": [
           "http://a.ml/vocabularies/meta#DocumentsModel",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
         "http://a.ml/vocabularies/meta#rootDocument": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/documents/root",
+            "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml/documents/root",
             "@type": [
               "http://a.ml/vocabularies/meta#DocumentMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -64,7 +64,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/documents/root/source-map",
+                "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml/documents/root/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -72,7 +72,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://parser-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/documents/root"
+                        "@value": "file://parser-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml/documents/root"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -9322,7 +9322,7 @@
     ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
       {
-        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/source-map",
+        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml/source-map",
         "@type": [
           "http://a.ml/vocabularies/document-source-maps#SourceMap"
         ],
@@ -9330,7 +9330,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "file://parser-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#"
+                "@value": "file://parser-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -9356,7 +9356,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "file://parser-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#"
+                "@value": "file://parser-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [

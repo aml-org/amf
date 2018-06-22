@@ -72,7 +72,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
       AMLPlugin.ID,
       Context(platform)
     ).map {
-        case parsed: DialectInstance if parsed.definedBy().is(url + "#") =>
+        case parsed: DialectInstance if parsed.definedBy().is(url) =>
           parsed.encodes
         case _ =>
           throw new Exception(
