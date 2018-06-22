@@ -12,7 +12,8 @@ class DialectInstancesRDFTest extends AsyncFunSuite with PlatformSecrets with Bu
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath = "parser-client/shared/src/test/resources/vocabularies2/instances/"
+  val basePath       = "parser-client/shared/src/test/resources/vocabularies2/instances/"
+  val productionPath = "parser-client/shared/src/test/resources/vocabularies2/production/"
 
   test("RDF 1 test") {
     withDialect("dialect1.raml", "example1.raml", "example1.ttl", VocabularyYamlHint, Amf)
@@ -82,7 +83,7 @@ class DialectInstancesRDFTest extends AsyncFunSuite with PlatformSecrets with Bu
     for {
       v         <- Validation(platform).map(_.withEnabledValidation(false))
       something <- AMFCompiler(s"file://$directory/$dialect", platform, VocabularyYamlHint, v).build()
-      res       <- cycleFullRdf(source, golden, hint, target)
+      res       <- cycleFullRdf(source, golden, hint, target, directory)
     } yield {
       res
     }
