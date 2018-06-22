@@ -209,7 +209,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#link-target": [
                                   {
-                                    "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah"
+                                    "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#link-label": [
@@ -2857,7 +2857,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/commons-datatypes/1.0.0/locationTypes.raml/source-map",
+                "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/commons-datatypes/1.0.0/locationTypes.raml#/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -2912,7 +2912,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml/source-map",
+            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -2974,7 +2974,7 @@
         ]
       },
       {
-        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml",
+        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/",
         "@type": [
           "http://a.ml/vocabularies/document#NamedExample",
           "http://a.ml/vocabularies/document#Fragment",
@@ -2982,7 +2982,7 @@
         ],
         "http://a.ml/vocabularies/document#encodes": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah",
+            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah",
             "@type": [
               "http://a.ml/vocabularies/document#Example",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -2999,20 +2999,20 @@
             ],
             "http://a.ml/vocabularies/document#structuredValue": [
               {
-                "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1",
+                "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1",
                 "@type": [
                   "http://a.ml/vocabularies/data#Array",
                   "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"
                 ],
                 "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
                   {
-                    "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2",
+                    "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2",
                     "@type": [
                       "http://a.ml/vocabularies/data#Object"
                     ],
                     "http://a.ml/vocabularies/data#addressType": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2/scalar_4",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2/scalar_4",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -3024,7 +3024,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2/scalar_4/source-map",
+                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2/scalar_4/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3032,7 +3032,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2/scalar_4"
+                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2/scalar_4"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3048,7 +3048,7 @@
                     ],
                     "http://a.ml/vocabularies/data#city": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2/scalar_7",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2/scalar_7",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -3060,7 +3060,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2/scalar_7/source-map",
+                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2/scalar_7/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3068,7 +3068,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2/scalar_7"
+                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2/scalar_7"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3084,7 +3084,7 @@
                     ],
                     "http://a.ml/vocabularies/data#country": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2/scalar_5",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2/scalar_5",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -3096,7 +3096,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2/scalar_5/source-map",
+                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2/scalar_5/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3104,7 +3104,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2/scalar_5"
+                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2/scalar_5"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3120,7 +3120,7 @@
                     ],
                     "http://a.ml/vocabularies/data#id": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2/scalar_3",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2/scalar_3",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -3132,7 +3132,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2/scalar_3/source-map",
+                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2/scalar_3/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3140,7 +3140,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2/scalar_3"
+                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2/scalar_3"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3156,7 +3156,7 @@
                     ],
                     "http://a.ml/vocabularies/data#state": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2/scalar_6",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2/scalar_6",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -3168,7 +3168,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2/scalar_6/source-map",
+                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2/scalar_6/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3176,7 +3176,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2/scalar_6"
+                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2/scalar_6"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3192,7 +3192,7 @@
                     ],
                     "http://a.ml/vocabularies/data#street_address": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2/scalar_8",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2/scalar_8",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -3204,7 +3204,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2/scalar_8/source-map",
+                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2/scalar_8/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3212,7 +3212,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2/scalar_8"
+                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2/scalar_8"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3228,7 +3228,7 @@
                     ],
                     "http://a.ml/vocabularies/data#zip": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2/scalar_9",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2/scalar_9",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -3240,7 +3240,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2/scalar_9/source-map",
+                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2/scalar_9/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3248,7 +3248,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2/scalar_9"
+                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2/scalar_9"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3264,7 +3264,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2/source-map",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -3272,7 +3272,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2"
+                                "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3286,7 +3286,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2"
+                                "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3300,13 +3300,13 @@
                     ]
                   },
                   {
-                    "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10",
+                    "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10",
                     "@type": [
                       "http://a.ml/vocabularies/data#Object"
                     ],
                     "http://a.ml/vocabularies/data#addressType": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10/scalar_12",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10/scalar_12",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -3318,7 +3318,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10/scalar_12/source-map",
+                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10/scalar_12/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3326,7 +3326,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10/scalar_12"
+                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10/scalar_12"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3342,7 +3342,7 @@
                     ],
                     "http://a.ml/vocabularies/data#city": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10/scalar_15",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10/scalar_15",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -3354,7 +3354,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10/scalar_15/source-map",
+                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10/scalar_15/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3362,7 +3362,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10/scalar_15"
+                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10/scalar_15"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3378,7 +3378,7 @@
                     ],
                     "http://a.ml/vocabularies/data#country": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10/scalar_13",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10/scalar_13",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -3390,7 +3390,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10/scalar_13/source-map",
+                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10/scalar_13/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3398,7 +3398,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10/scalar_13"
+                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10/scalar_13"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3414,7 +3414,7 @@
                     ],
                     "http://a.ml/vocabularies/data#id": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10/scalar_11",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10/scalar_11",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -3426,7 +3426,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10/scalar_11/source-map",
+                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10/scalar_11/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3434,7 +3434,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10/scalar_11"
+                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10/scalar_11"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3450,7 +3450,7 @@
                     ],
                     "http://a.ml/vocabularies/data#state": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10/scalar_14",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10/scalar_14",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -3462,7 +3462,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10/scalar_14/source-map",
+                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10/scalar_14/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3470,7 +3470,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10/scalar_14"
+                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10/scalar_14"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3486,7 +3486,7 @@
                     ],
                     "http://a.ml/vocabularies/data#street_address": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10/scalar_16",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10/scalar_16",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -3498,7 +3498,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10/scalar_16/source-map",
+                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10/scalar_16/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3506,7 +3506,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10/scalar_16"
+                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10/scalar_16"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3522,7 +3522,7 @@
                     ],
                     "http://a.ml/vocabularies/data#zip": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10/scalar_17",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10/scalar_17",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -3534,7 +3534,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10/scalar_17/source-map",
+                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10/scalar_17/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3542,7 +3542,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10/scalar_17"
+                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10/scalar_17"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3558,7 +3558,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10/source-map",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -3566,7 +3566,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10"
+                                "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3580,7 +3580,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10"
+                                "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3594,13 +3594,13 @@
                     ]
                   },
                   {
-                    "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18",
+                    "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18",
                     "@type": [
                       "http://a.ml/vocabularies/data#Object"
                     ],
                     "http://a.ml/vocabularies/data#addressType": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18/scalar_20",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18/scalar_20",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -3612,7 +3612,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18/scalar_20/source-map",
+                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18/scalar_20/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3620,7 +3620,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18/scalar_20"
+                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18/scalar_20"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3636,7 +3636,7 @@
                     ],
                     "http://a.ml/vocabularies/data#city": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18/scalar_23",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18/scalar_23",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -3648,7 +3648,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18/scalar_23/source-map",
+                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18/scalar_23/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3656,7 +3656,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18/scalar_23"
+                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18/scalar_23"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3672,7 +3672,7 @@
                     ],
                     "http://a.ml/vocabularies/data#country": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18/scalar_21",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18/scalar_21",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -3684,7 +3684,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18/scalar_21/source-map",
+                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18/scalar_21/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3692,7 +3692,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18/scalar_21"
+                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18/scalar_21"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3708,7 +3708,7 @@
                     ],
                     "http://a.ml/vocabularies/data#id": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18/scalar_19",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18/scalar_19",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -3720,7 +3720,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18/scalar_19/source-map",
+                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18/scalar_19/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3728,7 +3728,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18/scalar_19"
+                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18/scalar_19"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3744,7 +3744,7 @@
                     ],
                     "http://a.ml/vocabularies/data#state": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18/scalar_22",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18/scalar_22",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -3756,7 +3756,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18/scalar_22/source-map",
+                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18/scalar_22/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3764,7 +3764,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18/scalar_22"
+                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18/scalar_22"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3780,7 +3780,7 @@
                     ],
                     "http://a.ml/vocabularies/data#street_address": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18/scalar_24",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18/scalar_24",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -3792,7 +3792,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18/scalar_24/source-map",
+                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18/scalar_24/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3800,7 +3800,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18/scalar_24"
+                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18/scalar_24"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3816,7 +3816,7 @@
                     ],
                     "http://a.ml/vocabularies/data#zip": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18/scalar_25",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18/scalar_25",
                         "@type": [
                           "http://a.ml/vocabularies/data#Scalar"
                         ],
@@ -3828,7 +3828,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18/scalar_25/source-map",
+                            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18/scalar_25/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -3836,7 +3836,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18/scalar_25"
+                                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18/scalar_25"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3852,7 +3852,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18/source-map",
+                        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -3860,7 +3860,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18"
+                                "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3874,7 +3874,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18"
+                                "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3890,22 +3890,22 @@
                 ],
                 "http://a.ml/vocabularies/data#pos0": [
                   {
-                    "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_2"
+                    "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_2"
                   }
                 ],
                 "http://a.ml/vocabularies/data#pos1": [
                   {
-                    "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_10"
+                    "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_10"
                   }
                 ],
                 "http://a.ml/vocabularies/data#pos2": [
                   {
-                    "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/object_18"
+                    "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/object_18"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1/source-map",
+                    "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -3913,7 +3913,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/array_1"
+                            "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/array_1"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3934,7 +3934,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah/source-map",
+                "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -3980,7 +3980,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah"
+                        "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -4006,7 +4006,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/example/blah"
+                        "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/example/blah"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -4022,7 +4022,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml/source-map",
+            "@id": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -4030,7 +4030,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml"
+                    "@value": "file://parser-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -4046,7 +4046,7 @@
     ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
       {
-        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/locations-api.raml/source-map",
+        "@id": "file://parser-client/shared/src/test/resources/production/locations-api/locations-api.raml#/source-map",
         "@type": [
           "http://a.ml/vocabularies/document-source-maps#SourceMap"
         ],

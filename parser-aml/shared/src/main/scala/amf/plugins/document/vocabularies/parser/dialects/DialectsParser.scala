@@ -286,7 +286,7 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
 class DialectsParser(root: Root)(implicit override val ctx: DialectContext) extends BaseSpecParser {
 
   val map: YMap        = root.parsed.document.as[YMap]
-  val dialect: Dialect = Dialect(Annotations(map)).withLocation(root.location).withId(root.location + "#")
+  val dialect: Dialect = Dialect(Annotations(map)).withLocation(root.location).withId(root.location)
 
   def parseDocument(): BaseUnit = {
 
@@ -924,7 +924,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
   }
 
   private def parseDocumentsMapping(map: YMap, parent: String): Unit = {
-    val documentsMapping = DocumentsModel().withId(parent + "/documents")
+    val documentsMapping = DocumentsModel().withId(parent + "#/documents")
     map.key("documents").foreach { e =>
       ctx.closedNode("documentsMapping", documentsMapping.id, e.value.as[YMap])
       parseRootDocumentMapping(e.value, documentsMapping.id) foreach { rootMapping: DocumentMapping =>

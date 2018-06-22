@@ -255,7 +255,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
   def parseDocument(): Option[DialectInstance] = {
     val dialectInstance: DialectInstance = DialectInstance(Annotations(map))
       .withLocation(root.location)
-      .withId(root.location + "#")
+      .withId(root.location)
       .withDefinedBy(ctx.dialect.id)
     parseDeclarations("root")
     val references =
@@ -289,7 +289,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
   def parseFragment(): Option[DialectInstanceFragment] = {
     val dialectInstanceFragment: DialectInstanceFragment = DialectInstanceFragment(Annotations(map))
       .withLocation(root.location)
-      .withId(root.location + "#")
+      .withId(root.location)
       .withDefinedBy(ctx.dialect.id)
     parseEncodedFragment(dialectInstanceFragment) match {
       case Some(dialectDomainElement) =>
@@ -304,7 +304,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
   def parseLibrary(): Option[DialectInstanceLibrary] = {
     val dialectInstance: DialectInstanceLibrary = DialectInstanceLibrary(Annotations(map))
       .withLocation(root.location)
-      .withId(root.location + "#")
+      .withId(root.location)
       .withDefinedBy(ctx.dialect.id)
 
     parseDeclarations("library")
@@ -357,7 +357,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
     Option(ctx.dialect.documents()) flatMap { documents: DocumentsModel =>
       Option(documents.root()) flatMap { mapping =>
         ctx.findNodeMapping(mapping.encoded().value()) match {
-          case Some(nodeMapping) => parseNode(dialectInstance.id + "/", map, nodeMapping)
+          case Some(nodeMapping) => parseNode(dialectInstance.id + "#/", map, nodeMapping)
           case _                 => None
         }
       }
@@ -371,7 +371,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
       } match {
         case Some(documentMapping) =>
           ctx.findNodeMapping(documentMapping.encoded().value()) match {
-            case Some(nodeMapping) => parseNode(dialectInstanceFragment.id + "/", map, nodeMapping)
+            case Some(nodeMapping) => parseNode(dialectInstanceFragment.id + "#/", map, nodeMapping)
             case _                 => None
           }
         case None => None

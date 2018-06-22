@@ -98,7 +98,7 @@
         ],
         "http://a.ml/vocabularies/document#link-target": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.json/type"
+            "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.json#/type"
           }
         ],
         "http://a.ml/vocabularies/document#link-label": [
@@ -176,7 +176,7 @@
         ],
         "http://a.ml/vocabularies/document#encodes": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.json/type",
+            "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.json#/type",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://www.w3.org/ns/shacl#Shape",
@@ -190,7 +190,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.json/type/property/name",
+                "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.json#/type/property/name",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -203,7 +203,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.json/type/property/name/scalar/name",
+                    "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.json#/type/property/name/scalar/name",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -222,7 +222,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.json/type/property/name/scalar/name/source-map",
+                        "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.json#/type/property/name/scalar/name/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -230,7 +230,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://parser-client/shared/src/test/resources/references/fragments/person.json/type/property/name/scalar/name"
+                                "@value": "file://parser-client/shared/src/test/resources/references/fragments/person.json#/type/property/name/scalar/name"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -256,7 +256,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://parser-client/shared/src/test/resources/references/fragments/person.json/type/property/name/scalar/name"
+                                "@value": "file://parser-client/shared/src/test/resources/references/fragments/person.json#/type/property/name/scalar/name"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -282,7 +282,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.json/type/property/name/source-map",
+                    "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.json#/type/property/name/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -302,7 +302,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://parser-client/shared/src/test/resources/references/fragments/person.json/type/property/name"
+                            "@value": "file://parser-client/shared/src/test/resources/references/fragments/person.json#/type/property/name"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -323,7 +323,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.json/type/source-map",
+                "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.json#/type/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -331,7 +331,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://parser-client/shared/src/test/resources/references/fragments/person.json/type"
+                        "@value": "file://parser-client/shared/src/test/resources/references/fragments/person.json#/type"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -357,7 +357,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://parser-client/shared/src/test/resources/references/fragments/person.json/type"
+                        "@value": "file://parser-client/shared/src/test/resources/references/fragments/person.json#/type"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -373,7 +373,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.json/source-map",
+            "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.json#/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],

@@ -55,7 +55,10 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
   }
 
   override def adopted(parent: String): this.type = {
-    simpleAdoption(parent)
+    if (("" + parent).contains("#")) // TODO: NULL ARRIVING HERE
+      simpleAdoption(parent)
+    else
+      simpleAdoption(parent + "#/")
     properties.foreach(_.adopted(id))
     this
   }

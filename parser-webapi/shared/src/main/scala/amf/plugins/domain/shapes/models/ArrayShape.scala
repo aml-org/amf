@@ -44,7 +44,10 @@ abstract class DataArrangementShape(fields: Fields, annotations: Annotations) ex
   override def componentId: String = "/array/" + name.option().getOrElse("default-array").urlComponentEncoded
 
   override def adopted(parent: String): this.type = {
-    simpleAdoption(parent)
+    if ((parent + "").contains("#")) // TODO: NULL ARRIVING HERE
+      simpleAdoption(parent)
+    else
+      simpleAdoption(parent + "#/")
     fields.entry(Items) match {
       case Some(items) =>
         items.value.value match {

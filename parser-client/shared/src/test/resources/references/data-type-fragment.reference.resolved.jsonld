@@ -39,7 +39,7 @@
     ],
     "doc:declares": [
       {
-        "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type",
+        "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type",
         "@type": [
           "shacl:NodeShape",
           "shacl:Shape",
@@ -53,7 +53,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type/property/name",
+            "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -66,7 +66,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type/property/name/scalar/name",
+                "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name/scalar/name",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "shacl:Shape",
@@ -85,11 +85,11 @@
                 ],
                 "smaps": {
                   "type-property-lexical-info": {
-                    "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type/property/name/scalar/name": "[(4,4)-(4,8)]"
+                    "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name/scalar/name": "[(4,4)-(4,8)]"
                   },
                   "lexical": {
                     "shacl:datatype": "[(4,4)-(5,0)]",
-                    "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type/property/name/scalar/name": "[(3,2)-(5,0)]"
+                    "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name/scalar/name": "[(3,2)-(5,0)]"
                   }
                 }
               }
@@ -106,7 +106,7 @@
             ],
             "smaps": {
               "lexical": {
-                "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type/property/name": "[(3,2)-(5,0)]"
+                "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name": "[(3,2)-(5,0)]"
               }
             }
           }
@@ -118,7 +118,7 @@
         ],
         "smaps": {
           "lexical": {
-            "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type": "[(2,0)-(5,0)]"
+            "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type": "[(2,0)-(5,0)]"
           }
         }
       }
@@ -133,7 +133,7 @@
         ],
         "doc:encodes": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type",
+            "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type",
             "@type": [
               "shacl:NodeShape",
               "shacl:Shape",
@@ -147,7 +147,7 @@
             ],
             "shacl:property": [
               {
-                "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type/property/name",
+                "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -160,7 +160,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type/property/name/scalar/name",
+                    "@id": "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name/scalar/name",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "shacl:Shape",
@@ -179,11 +179,11 @@
                     ],
                     "smaps": {
                       "type-property-lexical-info": {
-                        "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type/property/name/scalar/name": "[(4,4)-(4,8)]"
+                        "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name/scalar/name": "[(4,4)-(4,8)]"
                       },
                       "lexical": {
                         "shacl:datatype": "[(4,4)-(5,0)]",
-                        "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type/property/name/scalar/name": "[(3,2)-(5,0)]"
+                        "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name/scalar/name": "[(3,2)-(5,0)]"
                       }
                     }
                   }
@@ -200,7 +200,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type/property/name": "[(3,2)-(5,0)]"
+                    "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name": "[(3,2)-(5,0)]"
                   }
                 }
               }
@@ -212,7 +212,7 @@
             ],
             "smaps": {
               "lexical": {
-                "file://parser-client/shared/src/test/resources/references/fragments/person.raml/type": "[(2,0)-(5,0)]"
+                "file://parser-client/shared/src/test/resources/references/fragments/person.raml#/type": "[(2,0)-(5,0)]"
               }
             }
           }

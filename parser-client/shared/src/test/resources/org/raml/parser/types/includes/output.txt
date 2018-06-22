@@ -5,7 +5,7 @@ Number of results: 1
 
 Level: Violation
 
-- Source: file://parser-client/shared/src/test/resources/org/raml/parser/types/includes/book.raml/type_validation
+- Source: file://parser-client/shared/src/test/resources/org/raml/parser/types/includes/book.raml#/type_validation
   Message: Object at / must be valid
 Data at //name must have length smaller than 10
 Array items at //chapters must be valid
@@ -15,6 +15,6 @@ Scalar at //chapters/items/name must have data type http://www.w3.org/2001/XMLSc
 Scalar at //chapters/items/content must have data type http://www.w3.org/2001/XMLSchema#string
 
   Level: Violation
-  Target: file://parser-client/shared/src/test/resources/org/raml/parser/types/includes/book.raml#shape/example/default-example
-  Property: file://parser-client/shared/src/test/resources/org/raml/parser/types/includes/book.raml#shape/example/default-example
+  Target: file://parser-client/shared/src/test/resources/org/raml/parser/types/includes/book.raml#/shape/example/default-example
+  Property: file://parser-client/shared/src/test/resources/org/raml/parser/types/includes/book.raml#/shape/example/default-example
   Position: Some(LexicalInformation([(14,0)-(23,16)]))

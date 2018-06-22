@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/example3.raml#",
+    "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/example3.raml",
     "@type": [
       "http://a.ml/vocabularies/meta#Dialect",
       "http://a.ml/vocabularies/document#Document",
@@ -20,7 +20,7 @@
     ],
     "http://a.ml/vocabularies/meta#documents": [
       {
-        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/example3.raml#/documents",
+        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/example3.raml/documents",
         "@type": [
           "http://a.ml/vocabularies/meta#DocumentsModel",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -409,7 +409,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/vocab2.raml/source-map",
+            "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/vocab2.raml#/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -465,7 +465,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/example3.raml#"
+                "@value": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/example3.raml"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -491,7 +491,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/example3.raml#"
+                "@value": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/example3.raml"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [

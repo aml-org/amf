@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/example9.raml#",
+    "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/example9.raml",
     "@type": [
       "http://a.ml/vocabularies/meta#Dialect",
       "http://a.ml/vocabularies/document#Document",
@@ -20,7 +20,7 @@
     ],
     "http://a.ml/vocabularies/meta#externals": [
       {
-        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/example9.raml#/externals/v2",
+        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/example9.raml/externals/v2",
         "@type": [
           "http://www.w3.org/2002/07/owl#Ontology",
           "http://a.ml/vocabularies/meta#ExternalVocabulary",
@@ -40,7 +40,7 @@
     ],
     "http://a.ml/vocabularies/meta#documents": [
       {
-        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/example9.raml#/documents",
+        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/example9.raml/documents",
         "@type": [
           "http://a.ml/vocabularies/meta#DocumentsModel",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -103,7 +103,7 @@
         ],
         "http://a.ml/vocabularies/document#link-target": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.raml#/fragment"
+            "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.raml/fragment"
           }
         ],
         "http://a.ml/vocabularies/document#link-label": [
@@ -137,7 +137,7 @@
     ],
     "http://a.ml/vocabularies/document#references": [
       {
-        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.raml#",
+        "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.raml",
         "@type": [
           "http://a.ml/vocabularies/meta#DialectFragment",
           "http://a.ml/vocabularies/document#Fragment",
@@ -145,7 +145,7 @@
         ],
         "http://a.ml/vocabularies/meta#externals": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.raml#/externals/v2",
+            "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.raml/externals/v2",
             "@type": [
               "http://www.w3.org/2002/07/owl#Ontology",
               "http://a.ml/vocabularies/meta#ExternalVocabulary",
@@ -170,7 +170,7 @@
         ],
         "http://a.ml/vocabularies/document#encodes": [
           {
-            "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.raml#/fragment",
+            "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.raml/fragment",
             "@type": [
               "http://a.ml/vocabularies/meta#NodeMapping",
               "http://www.w3.org/ns/shacl#Shape",
@@ -188,7 +188,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.raml#/fragment/property/za",
+                "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.raml/fragment/property/za",
                 "@type": [
                   "http://a.ml/vocabularies/meta#NodePropertyMapping",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -210,7 +210,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.raml#/fragment/property/za/source-map",
+                    "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.raml/fragment/property/za#/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -218,7 +218,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.raml#/fragment/property/za"
+                            "@value": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.raml/fragment/property/za"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -234,7 +234,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.raml#/fragment/source-map",
+                "@id": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.raml/fragment#/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -242,7 +242,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.raml#/fragment"
+                        "@value": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.raml/fragment"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -267,7 +267,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.raml#"
+                    "@value": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.raml"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -303,7 +303,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/example9.raml#"
+                "@value": "file://parser-client/shared/src/test/resources/vocabularies2/dialects/example9.raml"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [

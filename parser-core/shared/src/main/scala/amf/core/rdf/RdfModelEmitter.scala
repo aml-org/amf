@@ -49,8 +49,10 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
 
         val sourceMapId = if (id.endsWith("/")) {
           id + "source-map"
-        } else {
+        } else if (id.contains("#") || id.startsWith("null")) { // TODO: remove this null case
           id + "/source-map"
+        } else {
+          id + "#/source-map"
         }
         createSourcesNode(id, sources, sourceMapId)
       }
