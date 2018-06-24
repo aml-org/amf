@@ -42,25 +42,25 @@ class RamlParserErrorTest extends ParserErrorTest {
       erroneousTypeShape => {
         erroneousTypeShape.level should be("Violation")
         erroneousTypeShape.targetNode should be(
-          "file://amf-client/shared/src/test/resources/parser-results/error/custom-facets.raml#/declarations/types/scalar/ErroneousType")
+          "file://amf-client/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declarations/types/scalar/ErroneousType")
         erroneousTypeShape.validationId should be(ParserSideValidations.ClosedShapeSpecification.id)
       },
       incorrect1 => {
         incorrect1.level should be("Violation")
         incorrect1.targetNode should be(
-          "file://amf-client/shared/src/test/resources/parser-results/error/custom-facets.raml#/declarations/types/union/Incorrect1")
+          "file://amf-client/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declarations/types/union/Incorrect1")
         incorrect1.validationId should be(ParserSideValidations.ClosedShapeSpecification.id)
       },
       incorrect2 => {
         incorrect2.level should be("Violation")
         incorrect2.targetNode should be(
-          "file://amf-client/shared/src/test/resources/parser-results/error/custom-facets.raml#/declarations/types/union/Incorrect2")
+          "file://amf-client/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declarations/types/union/Incorrect2")
         incorrect2.validationId should be(ParserSideValidations.ClosedShapeSpecification.id)
       },
       incorrect3 => {
         incorrect3.level should be("Violation")
         incorrect3.targetNode should be(
-          "file://amf-client/shared/src/test/resources/parser-results/error/custom-facets.raml#/declarations/types/union/Incorrect3")
+          "file://amf-client/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declarations/types/union/Incorrect3")
         incorrect3.validationId should be(ParserSideValidations.ClosedShapeSpecification.id)
       }
     )
@@ -276,7 +276,29 @@ class RamlParserErrorTest extends ParserErrorTest {
     validate("/valid/bad-ident-flow-map.raml")
   }
 
-  override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/"
+  test("Invalid custom facets name format") {
+    validate(
+      "/error/invalid-facet-format.raml",
+      violation => {
+        violation.level should be("Violation")
+        violation.message should be("Default type name cannot be used to name a custom type")
+        violation.position.map(_.range) should be(Some(Range((4, 2), (4, 10))))
+      }
+    )
+  }
+
+  test("Invalid closed shape media type 08") {
+    validate(
+      "/error/invalid-mediatype.raml",
+      violation => {
+        violation.level should be("Violation")
+        violation.message should be("Property applicationjson not supported in a raml 0.8 shape node")
+        violation.position.map(_.range) should be(Some(Range((8, 10), (8, 26))))
+      }
+    )
+  }
+
+  override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/raml/"
 
   override protected def build(validation: Validation, file: String): Future[BaseUnit] =
     AMFCompiler(file, platform, RamlYamlHint, validation).build()

@@ -1,0 +1,20 @@
+Model: file://amf-client/shared/src/test/resources/validations/types/recursive-shape.raml
+Profile: RAML
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#recursive-shape
+  Message: Error recursive shape
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/types/recursive-shape.raml#/declarations/types/any/SomeTypeb
+  Property: 
+  Position: Some(LexicalInformation([(19,2)-(22,0)]))
+
+- Source: http://a.ml/vocabularies/amf/parser#recursive-shape
+  Message: Error recursive shape
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/types/recursive-shape.raml#/declarations/types/any/OneMoreType2
+  Property: 
+  Position: Some(LexicalInformation([(28,2)-(29,22)]))

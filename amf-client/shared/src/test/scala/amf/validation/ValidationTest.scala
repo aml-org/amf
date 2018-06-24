@@ -48,6 +48,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  //what is speciy testing?? should be partitioned in a some new of tests?
   test("Trailing spaces validation") {
     for {
       validation <- Validation(platform)
@@ -205,125 +206,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   //test("Test resource type non string scalar parameter example") { its already tested in java parser tests
-
-  test("Empty type ref") {
-    for {
-      validation <- Validation(platform)
-      doc        <- AMFCompiler(productionPath + "/types/empty-type-ref.yaml", platform, OasYamlHint, validation).build()
-      report     <- validation.validate(doc, ProfileNames.RAML)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.size == 2)
-    }
-  }
-
-  test("Date times examples test") {
-    for {
-      validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "date_time_validations.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(doc, ProfileNames.AMF)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("Date times invalid examples test") {
-    for {
-      validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "date_time_validations2.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(doc, ProfileNames.AMF)
-    } yield {
-      assert(!report.conforms)
-    }
-  }
-
-  test("Example xml with sons results test") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(examplesPath + "/xmlexample/offices_xml_type.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(doc, ProfileNames.AMF)
-    } yield {
-      assert(report.conforms)
-      assert(report.results.count(_.level == SeverityLevels.WARNING) == 3) // all warnings
-    }
-  }
-
-  test("Invalid type example 1 test") {
-    for {
-      validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "invalidex1.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(doc, ProfileNames.AMF)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 1)
-    }
-  }
-
-  test("Invalid type example 2 test") {
-    for {
-      validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "invalidex2.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(doc, ProfileNames.AMF)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 1)
-    }
-  }
-
-  test("Invalid type example 3 test") {
-    for {
-      validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "invalidex3.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(doc, ProfileNames.AMF)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 1)
-    }
-  }
-
-  test("Invalid type example 4 test") {
-    for {
-      validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "invalidex4.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(doc, ProfileNames.AMF)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 1)
-    }
-  }
-
-  test("Invalid type example 5 test") {
-    for {
-      validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "invalidex5.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(doc, ProfileNames.AMF)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 1)
-    }
-  }
-
-  test("Invalid type example 6 test") {
-    for {
-      validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "invalidex6.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(doc, ProfileNames.AMF)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 1)
-    }
-  }
-
-  test("Invalid type example 7 test") {
-    for {
-      validation <- Validation(platform)
-      doc        <- AMFCompiler(validationsPath + "invalidex7.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(doc, ProfileNames.RAML)
-    } yield {
-      assert(!report.conforms)
-    }
-  }
 
   test("Valid type example 1 test") {
     for {

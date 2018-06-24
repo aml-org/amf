@@ -1,0 +1,37 @@
+Model: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml
+Profile: RAML
+Conforms? false
+Number of results: 4
+
+Level: Violation
+
+- Source: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/fireworks_validation_range/prop
+  Message: Scalar at / must be valid RFC3339 date
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/fireworks/example/bad
+  Property: http://a.ml/vocabularies/data#value
+  Position: Some(LexicalInformation([(8,11)-(8,30)]))
+
+- Source: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/birthday_validation_range/prop
+  Message: Scalar at / must be valid RFC3339 date
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/birthday/example/default-example
+  Property: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/birthday/example/default-example
+  Position: Some(LexicalInformation([(11,13)-(11,23)]))
+
+- Source: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/created_validation_range/prop
+  Message: Scalar at / must be valid RFC3339 date
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/created/example/default-example
+  Property: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/created/example/default-example
+  Position: Some(LexicalInformation([(17,13)-(17,37)]))
+
+- Source: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/If-Modified-Since2_validation_range/prop
+  Message: Scalar at / must be valid RFC3339 date
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/If-Modified-Since2/example/default-example
+  Property: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/If-Modified-Since2/example/default-example
+  Position: Some(LexicalInformation([(25,13)-(25,38)]))

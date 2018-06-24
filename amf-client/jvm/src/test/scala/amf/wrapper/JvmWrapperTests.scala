@@ -41,7 +41,7 @@ class JvmWrapperTests extends WrapperTests {
       a <- AMF
         .raml08Parser()
         .parseFileAsync(
-          "file://amf-client/shared/src/test/resources/parser-results/error/not-existing-http-include.raml")
+          "file://amf-client/shared/src/test/resources/parser-results/raml/error/not-existing-http-include.raml")
         .asFuture
       r <- AMF.validate(a, ProfileNames.RAML08, RAMLStyle).asFuture
     } yield {

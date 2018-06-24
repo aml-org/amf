@@ -81,5 +81,9 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     checkValid("examples/test.raml")
   }
 
+  test("Date times examples test") {
+    checkValid("examples/date_time_validations.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

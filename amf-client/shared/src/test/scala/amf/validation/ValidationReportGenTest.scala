@@ -3,9 +3,10 @@ package amf.validation
 import amf.ProfileNames
 import amf.ProfileNames.ProfileName
 import amf.core.remote.{Hint, Oas, Raml, RamlYamlHint}
-import amf.core.validation.AMFValidationReport
+import amf.core.validation.{AMFValidationReport, SeverityLevels}
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
+import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.Future
@@ -16,7 +17,7 @@ trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTest {
   val reportsPath: String
   val hint: Hint
 
-  private lazy val defaultProfile: ProfileName = hint.vendor match {
+  protected lazy val defaultProfile: ProfileName = hint.vendor match {
     case Raml => ProfileNames.RAML
     case Oas  => ProfileNames.OAS
     case _    => ProfileNames.AMF
@@ -52,6 +53,28 @@ trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTest {
       r          <- handleReport(report, golden)
     } yield {
       r
+    }
+  }
+}
+
+trait ResolutionForValidationReportTest extends ValidationReportGenTest {
+
+  protected def checkReport(api: String,
+                            golden: Option[String] = None,
+                            profile: ProfileName = defaultProfile,
+                            profileFile: Option[String] = None): Future[Assertion] = {
+    for {
+      validation <- Validation(platform)
+      model      <- AMFCompiler(basePath + api, platform, RamlYamlHint, validation).build()
+      report <- {
+        new ValidationResolutionPipeline(profile, model).resolve()
+        val results = validation.aggregatedReport
+        val report =
+          AMFValidationReport(!results.exists(_.level == SeverityLevels.VIOLATION), model.id, profile, results)
+        handleReport(report, golden)
+      }
+    } yield {
+      report
     }
   }
 }

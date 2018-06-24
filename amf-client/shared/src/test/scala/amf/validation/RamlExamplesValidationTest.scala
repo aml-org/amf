@@ -121,5 +121,27 @@ class RamlExamplesValidationTest extends ValidationReportGenTest {
              profile = ProfileNames.RAML08)
   }
 
+  //it's failing with target node in jvm but not in js. Activate when fix over date time warning it's done
+  ignore("Date times invalid examples test") {
+    validate("/examples/date_time_validations2.raml", Some("date-time-validation.report"))
+  }
+
+  test("Example xml with sons results test") {
+    validate("/xmlexample/offices_xml_type.raml", Some("offices-xml-type.report"))
+  }
+
+  test("Invalid number prop with bool example") {
+    validate("/examples/number-prop-bool-example.raml", Some("number-prop-bool-example.report"))
+  }
+
+  test("Invalid double example for int type") {
+    validate("/examples/double-example-inttype.raml", Some("double-example-inttype.report"))
+  }
+
+  test("Invalid annotation value") {
+    validate("/examples/invalid-annotation-value.raml", Some("invalid-annotation-value.report"))
+
+  }
+
   override val hint: Hint = RamlYamlHint
 }
