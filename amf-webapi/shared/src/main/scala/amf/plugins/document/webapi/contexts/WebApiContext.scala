@@ -57,7 +57,7 @@ class Raml08WebApiContext(loc: String,
     new Raml08WebApiContext(loc, refs, wrapped, Some(declarations))
 }
 
-abstract class RamlWebApiContext(loc: String,
+abstract class RamlWebApiContext(override val loc: String,
                                  refs: Seq[ParsedReference],
                                  private val wrapped: ParserContext,
                                  private val ds: Option[RamlWebApiDeclarations] = None)
@@ -199,7 +199,7 @@ class Oas3WebApiContext(loc: String,
   override val syntax: SpecSyntax          = Oas3Syntax
 }
 
-abstract class WebApiContext(loc: String,
+abstract class WebApiContext(val loc: String,
                              refs: Seq[ParsedReference],
                              private val wrapped: ParserContext,
                              private val ds: Option[WebApiDeclarations] = None)

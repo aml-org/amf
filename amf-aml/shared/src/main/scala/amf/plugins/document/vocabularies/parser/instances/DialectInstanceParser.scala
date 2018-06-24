@@ -171,7 +171,7 @@ case class ReferenceDeclarations(references: mutable.Map[String, Any] = mutable.
           case decl => library += decl
         }
       case f: DialectInstanceFragment =>
-        ctx.declarations.fragments += (alias -> f.encodes)
+        ctx.declarations.fragments += (alias -> FragmentRef(f.encodes, Option(f.location)))
     }
   }
 
@@ -853,8 +853,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
             property.literalRange().value() == (Namespace.Xsd + "dateTime").iri() =>
         Some(value.as[SimpleDateTime])
 
-      case YType.Timestamp
-        if property.literalRange().value() == (Namespace.Xsd + "string").iri() =>
+      case YType.Timestamp if property.literalRange().value() == (Namespace.Xsd + "string").iri() =>
         Some(value.as[YScalar].text)
 
       case YType.Timestamp =>

@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{LexicalInformation, SynthesizedField}
+import amf.core.metamodel.domain.ExternalSourceElementModel
 import amf.core.model.domain.{AmfScalar, DataNode}
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -183,7 +184,10 @@ case class RamlExampleValueAsString(node: YNode, example: Example, options: Exam
       case mut: MutRef =>
         ctx.declarations.fragments
           .get(mut.origValue.asInstanceOf[YScalar].text)
-          .foreach(e => example.withReference(e.id))
+          .foreach { e =>
+            example.withReference(e.encoded.id)
+            example.set(ExternalSourceElementModel.Location, e.location.getOrElse(ctx.loc))
+          }
         mut.target.getOrElse(node)
       case _ => node // render always (even if xml) for | multiline strings. (If set scalar.text we lose the token)
 

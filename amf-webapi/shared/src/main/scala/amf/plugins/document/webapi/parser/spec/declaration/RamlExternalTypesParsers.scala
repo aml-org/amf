@@ -20,6 +20,7 @@ import amf.plugins.document.webapi.parser.spec.domain.NodeDataNodeParser
 import amf.plugins.document.webapi.parser.spec.oas.Oas2DocumentParser
 import amf.plugins.document.webapi.parser.spec.raml.RamlSpecParser
 import amf.plugins.document.webapi.parser.spec.toOas
+import amf.plugins.domain.shapes.metamodel.SchemaShapeModel
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape, UnresolvedShape}
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
@@ -45,7 +46,7 @@ case class RamlJsonSchemaExpression(name: String,
             val shape = s.copyShape().withName(name)
             ctx.declarations.fragments
               .get(path)
-              .foreach(e => shape.withReference(e.id + extFrament.getOrElse("")))
+              .foreach(e => shape.withReference(e.encoded.id + extFrament.getOrElse("")))
             shape
           case _ if fragment.isDefined => // oas lib
             RamlExternalOasLibParser(ctx, origin.text, origin.valueAST, path).parse()
@@ -58,7 +59,7 @@ case class RamlJsonSchemaExpression(name: String,
             }
             ctx.declarations.fragments
               .get(path)
-              .foreach(e => shape.withReference(e.id + extFrament.get))
+              .foreach(e => shape.withReference(e.encoded.id + extFrament.get))
 
             shape.annotations += ExternalFragmentRef(extFrament.get)
             shape
@@ -66,7 +67,7 @@ case class RamlJsonSchemaExpression(name: String,
             val shape = parseJsonShape(origin.text, name, origin.valueAST, adopt, value)
             ctx.declarations.fragments
               .get(path)
-              .foreach(e => shape.withReference(e.id))
+              .foreach(e => shape.withReference(e.encoded.id))
             ctx.declarations.registerExternalRef(path, shape)
             shape
         }
@@ -193,15 +194,18 @@ case class RamlXmlSchemaExpression(name: String,
                                    parseExample: Boolean = false)(override implicit val ctx: RamlWebApiContext)
     extends RamlExternalTypesParser {
   override def parseValue(origin: ValueAndOrigin): AnyShape = {
-    val (maybeReferenceId, maybeFragmentLabel): (Option[String], Option[String]) = origin.oriUrl
-      .map(ReferenceFragmentPartition.apply) match {
-      case Some((path, uri)) =>
-        (ctx.declarations.fragments
-           .get(path)
-           .map(_.id + uri.map(u => if (u.startsWith("/")) u else "/" + u).getOrElse("")),
-         uri)
-      case None => (None, None)
-    }
+    val (maybeReferenceId, maybeLocation, maybeFragmentLabel): (Option[String], Option[String], Option[String]) =
+      origin.oriUrl
+        .map(ReferenceFragmentPartition.apply) match {
+        case Some((path, uri)) =>
+          val maybeRef = ctx.declarations.fragments
+            .get(path)
+          (maybeRef
+             .map(_.encoded.id + uri.map(u => if (u.startsWith("/")) u else "/" + u).getOrElse("")),
+           maybeRef.flatMap(_.location),
+           uri)
+        case None => (None, None, None)
+      }
 
     val parsed = value.tagType match {
       case YType.Map =>
@@ -248,6 +252,7 @@ case class RamlXmlSchemaExpression(name: String,
         shape
     }
     maybeReferenceId.foreach { parsed.withReference }
+    parsed.set(SchemaShapeModel.Location, maybeLocation.getOrElse(ctx.loc))
     maybeFragmentLabel.foreach { parsed.annotations += ExternalFragmentRef(_) }
     parsed
   }

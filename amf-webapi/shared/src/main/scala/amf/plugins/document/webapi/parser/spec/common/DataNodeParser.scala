@@ -88,7 +88,7 @@ case class DataNodeParser(node: YNode,
           case Some(ref) if ref.unit.isInstanceOf[EncodesModel] =>
             parseLink(reference.text).withLinkedDomainElement(ref.unit.asInstanceOf[EncodesModel].encodes)
           case _ =>
-            ctx.declarations.fragments.get(reference.text) match {
+            ctx.declarations.fragments.get(reference.text).map(_.encoded) match {
               case Some(domainElement) =>
                 parseLink(reference.text).withLinkedDomainElement(domainElement)
               case _ =>

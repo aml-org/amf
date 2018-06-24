@@ -14,6 +14,7 @@ case class SchemaShape(override private[amf] val _internal: InternalSchemaShape)
 
   def mediaType: StrField = _internal.mediaType
   def raw: StrField       = _internal.raw
+  def location: StrField  = _internal.location
 
   def withMediatype(mediaType: String): this.type = {
     _internal.withMediaType(mediaType)

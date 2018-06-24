@@ -8,14 +8,14 @@ import amf.core.utils.QName
 import org.yaml.model.YPart
 
 class Declarations(var libraries: Map[String, Declarations] = Map(),
-                   var fragments: Map[String, DomainElement] = Map(),
+                   var fragments: Map[String, FragmentRef] = Map(),
                    var annotations: Map[String, CustomDomainProperty] = Map(),
                    errorHandler: Option[ErrorHandler],
                    futureDeclarations: FutureDeclarations) {
 
   def +=(fragment: (String, Fragment)): Declarations = {
     fragment match {
-      case (url, f) => fragments = fragments + (url -> f.encodes)
+      case (url, f) => fragments = fragments + (url -> FragmentRef(f.encodes, Some(f.location)))
     }
     this
   }
@@ -84,8 +84,8 @@ class Declarations(var libraries: Map[String, Declarations] = Map(),
     }
 
     scope match {
-      case All       => inRef().orElse(fragments.get(key))
-      case Fragments => fragments.get(key)
+      case All       => inRef().orElse(fragments.get(key).map(_.encoded))
+      case Fragments => fragments.get(key).map(_.encoded)
       case Named     => inRef()
     }
   }
@@ -94,6 +94,12 @@ class Declarations(var libraries: Map[String, Declarations] = Map(),
 
   object ErrorCustomDomainProperty extends CustomDomainProperty(Fields(), Annotations()) with ErrorDeclaration
 
+}
+
+case class FragmentRef(encoded: DomainElement, location: Option[String])
+
+object FragmentRef {
+  def apply(f: Fragment): FragmentRef = new FragmentRef(f.encodes, Option(f.location))
 }
 
 object Declarations {

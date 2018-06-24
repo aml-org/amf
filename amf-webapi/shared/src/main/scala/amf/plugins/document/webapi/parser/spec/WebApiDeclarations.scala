@@ -8,6 +8,7 @@ import amf.core.parser.{
   EmptyFutureDeclarations,
   ErrorHandler,
   Fields,
+  FragmentRef,
   FutureDeclarations,
   SearchScope
 }
@@ -23,7 +24,7 @@ import org.yaml.model.YPart
   */
 class WebApiDeclarations(val alias: Option[String],
                          var libs: Map[String, WebApiDeclarations] = Map(),
-                         var frags: Map[String, DomainElement] = Map(),
+                         var frags: Map[String, FragmentRef] = Map(),
                          var shapes: Map[String, Shape] = Map(),
                          var anns: Map[String, CustomDomainProperty] = Map(),
                          var resourceTypes: Map[String, ResourceType] = Map(),
@@ -218,7 +219,9 @@ class WebApiDeclarations(val alias: Option[String],
       ErrorNamedExample(key, ast)
   }
 
-  def findNamedExample(key: String): Option[Example] = fragments.get(key) collect { case e: Example => e }
+  def findNamedExample(key: String): Option[Example] = fragments.get(key).map(_.encoded) collect {
+    case e: Example => e
+  }
 }
 
 object WebApiDeclarations {

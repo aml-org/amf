@@ -1119,4 +1119,38 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       assert(!traits.map(_.location).contains(null))
     }
   }
+
+  test("Parsing external xml shape") {
+    for {
+      _ <- AMF.init().asFuture
+      unit <- new RamlParser()
+        .parseFileAsync("file://amf-client/shared/src/test/resources/production/othercases/xsdschema/api.raml")
+        .asFuture
+    } yield {
+      unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[SchemaShape].location.value() should be(
+        "file://amf-client/shared/src/test/resources/production/othercases/xsdschema/schema.xsd")
+
+    }
+  }
+
+  test("Parsing external xml example") {
+    for {
+      _ <- AMF.init().asFuture
+      unit <- new RamlParser()
+        .parseFileAsync("file://amf-client/shared/src/test/resources/production/othercases/xsdexample/api.raml")
+        .asFuture
+    } yield {
+      unit
+        .asInstanceOf[Document]
+        .declares
+        .asSeq
+        .head
+        .asInstanceOf[AnyShape]
+        .examples
+        .asSeq
+        .head
+        .location
+        .value() should be("file://amf-client/shared/src/test/resources/production/othercases/xsdexample/example.xsd")
+    }
+  }
 }

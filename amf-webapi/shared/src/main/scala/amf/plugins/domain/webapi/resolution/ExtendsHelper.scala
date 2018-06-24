@@ -6,7 +6,7 @@ import amf.core.annotations.{Aliases, LexicalInformation}
 import amf.core.emitter.SpecOrdering
 import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
 import amf.core.model.domain.{AmfArray, DataNode, DomainElement, NamedDomainElement}
-import amf.core.parser.{ErrorHandler, ParserContext}
+import amf.core.parser.{ErrorHandler, FragmentRef, ParserContext}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolvedNamedEntity}
 import amf.core.services.{RuntimeValidator, ValidationsMerger}
 import amf.core.validation.AMFValidationResult
@@ -49,7 +49,9 @@ object ExtendsHelper {
 
     val entry = document.as[YMap].entries.head
     declarations(ctx, unit)
-    referencesCollector.foreach { case (alias, ref) => ctx.declarations.fragments += (alias -> ref) }
+    referencesCollector.foreach {
+      case (alias, ref) => ctx.declarations.fragments += (alias -> FragmentRef(ref, None))
+    }
 
     val mergeMissingSecuritySchemes = new ValidationsMerger {
       override val parserRun: Int = ctx.parserCount
@@ -116,7 +118,9 @@ object ExtendsHelper {
     val collector     = ListBuffer[EndPoint]()
 
     declarations(ctx, unit)
-    referencesCollector.foreach { case (alias, ref) => ctx.declarations.fragments += (alias -> ref) }
+    referencesCollector.foreach {
+      case (alias, ref) => ctx.declarations.fragments += (alias -> FragmentRef(ref, None))
+    }
 
     val mergeMissingSecuritySchemes = new ValidationsMerger {
       override val parserRun: Int = ctx.parserCount

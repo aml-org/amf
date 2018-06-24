@@ -9,8 +9,9 @@ import amf.core.vocabulary.ValueType
 trait ExternalSourceElement extends DynamicDomainElement {
   val fields: Fields
   val annotations: Annotations
-  def raw: StrField         = fields.field(Raw)         //we should set this while parsing
+  def raw: StrField         = fields.field(Raw) //we should set this while parsing
   def referenceId: StrField = fields.field(ReferenceId) /// only for graph parser logic
+  def location: StrField    = fields.field(Location)
 
   override def dynamicFields: List[Field] = meta.fields
 

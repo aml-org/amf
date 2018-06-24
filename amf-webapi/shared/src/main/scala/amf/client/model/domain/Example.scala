@@ -22,6 +22,7 @@ case class Example(override private[amf] val _internal: InternalExample) extends
   def structuredValue: DataNode = _internal.structuredValue
   def strict: BoolField         = _internal.strict
   def mediaType: StrField       = _internal.mediaType
+  def location: StrField        = _internal.location
 
   def withName(name: String): this.type = {
     _internal.withName(name)

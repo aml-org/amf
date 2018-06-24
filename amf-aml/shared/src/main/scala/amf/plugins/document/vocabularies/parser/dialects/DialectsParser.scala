@@ -10,7 +10,7 @@ import amf.core.parser.{Annotations, BaseSpecParser, ErrorHandler, FutureDeclara
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
-import amf.plugins.document.vocabularies.metamodel.domain.{DocumentsModelModel, PropertyMappingModel}
+import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary, Vocabulary}
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.SyntaxErrorReporter
@@ -195,7 +195,7 @@ case class ReferenceDeclarations(references: mutable.Map[String, Any] = mutable.
           case decl                     => library += decl
         }
       case f: DialectFragment =>
-        ctx.declarations.fragments += (alias -> f.encodes)
+        ctx.declarations.fragments += (alias -> FragmentRef(f.encodes, Option(f.location)))
     }
   }
 
