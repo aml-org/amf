@@ -1,10 +1,15 @@
 package amf.core.validation
 
-case class AMFValidationReport(conforms: Boolean, model: String, profile: String, results: Seq[AMFValidationResult]) {
+import amf.ProfileNames.ProfileName
+
+case class AMFValidationReport(conforms: Boolean,
+                               model: String,
+                               profile: ProfileName,
+                               results: Seq[AMFValidationResult]) {
 
   override def toString: String = {
     var str = s"Model: $model\n"
-    str += s"Profile: $profile\n"
+    str += s"Profile: ${profile.profile}\n"
     str += s"Conforms? $conforms\n"
     str += s"Number of results: ${results.length}\n"
     results.sorted.groupBy(_.level) foreach {

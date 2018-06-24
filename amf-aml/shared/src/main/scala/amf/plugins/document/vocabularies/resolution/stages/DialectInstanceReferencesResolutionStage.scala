@@ -1,39 +1,39 @@
 package amf.plugins.document.vocabularies.resolution.stages
 
-import amf.ProfileNames
 import amf.core.metamodel.document.DocumentModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{DomainElement, Linkable}
+import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.{ModelReferenceResolver, ResolutionStage}
 import amf.plugins.document.vocabularies.model.document.DialectInstance
-import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
 
-
-class DialectInstanceReferencesResolutionStage(profile: String = ProfileNames.AMF) extends ResolutionStage(profile) {
-  var model: Option[BaseUnit] = None
+class DialectInstanceReferencesResolutionStage()(override implicit val errorHandler: ErrorHandler)
+    extends ResolutionStage() {
+  var model: Option[BaseUnit]                       = None
   var modelResolver: Option[ModelReferenceResolver] = None
-  var mutuallyRecursive: Seq[String] = Nil
+  var mutuallyRecursive: Seq[String]                = Nil
 
-  override def resolve(model: BaseUnit): BaseUnit = {
+  override def resolve[T <: BaseUnit](model: T): T = {
     this.model = Some(model)
     this.modelResolver = Some(new ModelReferenceResolver(model))
-    model.transform(findLinkPredicates, transform)
+    model.transform(findLinkPredicates, transform).asInstanceOf[T]
   }
 
   def findLinkPredicates(element: DomainElement): Boolean =
     element match {
-      case l: Linkable             => l.isLink
-      case _                       => false
+      case l: Linkable => l.isLink
+      case _           => false
     }
 
   // Internal request that checks for mutually recursive types
-  protected def recursiveResolveInvocation(model: BaseUnit, modelResolver: Option[ModelReferenceResolver], mutuallyRecursive: Seq[String]): BaseUnit = {
+  protected def recursiveResolveInvocation(model: BaseUnit,
+                                           modelResolver: Option[ModelReferenceResolver],
+                                           mutuallyRecursive: Seq[String]): BaseUnit = {
     this.mutuallyRecursive = mutuallyRecursive
     this.model = Some(model)
     this.modelResolver = Some(modelResolver.getOrElse(new ModelReferenceResolver(model)))
     model.transform(findLinkPredicates, transform)
   }
-
 
   def transform(element: DomainElement, isCycle: Boolean): Option[DomainElement] = {
     element match {
@@ -50,14 +50,14 @@ class DialectInstanceReferencesResolutionStage(profile: String = ProfileNames.AM
     }
   }
 
-
   def resolveLinked(element: DomainElement): DomainElement = {
     if (mutuallyRecursive.contains(element.id)) {
       element
     } else {
       val nested = DialectInstance()
       nested.fields.setWithoutId(DocumentModel.Encodes, element)
-      val result = new DialectInstanceReferencesResolutionStage(profile).recursiveResolveInvocation(nested, modelResolver, mutuallyRecursive ++ Seq(element.id))
+      val result = new DialectInstanceReferencesResolutionStage()
+        .recursiveResolveInvocation(nested, modelResolver, mutuallyRecursive ++ Seq(element.id))
       result.asInstanceOf[DialectInstance].encodes
     }
   }

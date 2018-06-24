@@ -1,6 +1,7 @@
 package amf.plugins.features.validation
 
 import amf.ProfileNames
+import amf.ProfileNames.ProfileName
 import amf.core.validation.SeverityLevels
 import amf.core.validation.core.ValidationSpecification
 import amf.core.vocabulary.Namespace
@@ -156,6 +157,14 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
+  val MissingExtensionInReferences = ValidationSpecification(
+    (Namespace.AmfParser + "missing-extension").iri(),
+    "Missing extension in reference",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val JsonSchemaInheratinaceWarningSpecification = ValidationSpecification(
     (Namespace.AmfParser + "json-schema-inheritance").iri(),
     "Inheriting from JSON Schema",
@@ -228,7 +237,7 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
-  val levels: Map[String, Map[String, String]] = Map(
+  val levels: Map[String, Map[ProfileName, String]] = Map(
     RecursiveShapeSpecification.id -> Map(
       ProfileNames.RAML   -> SeverityLevels.VIOLATION,
       ProfileNames.RAML08 -> SeverityLevels.VIOLATION,
@@ -278,6 +287,13 @@ object ParserSideValidations {
     OasFormDataNotFileSpecification.id -> Map(
       ProfileNames.OAS -> SeverityLevels.VIOLATION,
       ProfileNames.OAS -> SeverityLevels.VIOLATION
+    ),
+    MissingExtensionInReferences.id -> Map(
+      ProfileNames.RAML   -> SeverityLevels.VIOLATION,
+      ProfileNames.RAML08 -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS    -> SeverityLevels.VIOLATION,
+      ProfileNames.OAS3   -> SeverityLevels.VIOLATION,
+      ProfileNames.AMF    -> SeverityLevels.VIOLATION
     ),
     InvalidTypeInheritanceErrorSpecification.id -> Map(
       ProfileNames.RAML   -> SeverityLevels.VIOLATION,
@@ -430,6 +446,7 @@ object ParserSideValidations {
     UnknownSecuritySchemeErrorSpecification,
     JsonSchemaInheratinaceWarningSpecification,
     InvalidTypeInheritanceErrorSpecification,
+    MissingExtensionInReferences,
     ClosedShapeSpecification,
     DuplicatedPropertySpecification,
     DialectAmbiguousRangeSpecification,

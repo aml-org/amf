@@ -1,5 +1,6 @@
 package amf.plugins.domain.shapes.resolution.stages
 
+import amf.ProfileNames.ProfileName
 import amf.core.annotations.LexicalInformation
 import amf.core.metamodel.{MetaModelTypeMapping, Obj}
 import amf.core.model.document.BaseUnit
@@ -18,14 +19,15 @@ import scala.collection.mutable.ListBuffer
   *  - All type references have been replaced by their expanded forms
   * @param profile
   */
-class ShapeNormalizationStage(profile: String, val keepEditingInfo: Boolean, val errorHandler: ErrorHandler)
-    extends ResolutionStage(profile)
+class ShapeNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean)(
+    override implicit val errorHandler: ErrorHandler)
+    extends ResolutionStage()
     with MetaModelTypeMapping {
 
   protected val context = new NormalizationContext(errorHandler, keepEditingInfo, profile)
 
-  override def resolve(model: BaseUnit): BaseUnit = {
-    model.transform(findShapesPredicate, transform)
+  override def resolve[T <: BaseUnit](model: T): T = {
+    model.transform(findShapesPredicate, transform).asInstanceOf[T]
   }
 
   def findShapesPredicate(element: DomainElement): Boolean = {

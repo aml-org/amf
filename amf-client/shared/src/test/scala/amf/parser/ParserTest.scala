@@ -1,5 +1,6 @@
 package amf.parser
 
+import amf.ProfileNames.MessageStyle
 import amf.core.model.document.BaseUnit
 import amf.core.validation.core.{SHACLValidator, ValidationReport, ValidationSpecification}
 import amf.core.parser._
@@ -145,15 +146,20 @@ class ParserTest extends FunSuite {
 
       override def registerLibrary(url: String, code: String): Unit = throw new Exception("Validation not supported")
 
-      override def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: String): Future[String] =
+      override def validate(data: BaseUnit,
+                            shapes: Seq[ValidationSpecification],
+                            messageStyle: MessageStyle): Future[String] =
         throw new Exception("Validation not supported")
 
-      override def report(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: String): Future[ValidationReport] =
+      override def report(data: BaseUnit,
+                          shapes: Seq[ValidationSpecification],
+                          messageStyle: MessageStyle): Future[ValidationReport] =
         throw new Exception("Validation not supported")
 
       override def emptyRdfModel(): RdfModel = throw new Exception("Validation not supported")
 
-      override def shapes(shapes: Seq[ValidationSpecification], functionsUrl: String): RdfModel = throw new Exception("Validation not supported")
+      override def shapes(shapes: Seq[ValidationSpecification], functionsUrl: String): RdfModel =
+        throw new Exception("Validation not supported")
     }
   }
 }

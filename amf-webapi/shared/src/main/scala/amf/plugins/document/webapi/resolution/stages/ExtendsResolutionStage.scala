@@ -1,12 +1,13 @@
 package amf.plugins.document.webapi.resolution.stages
 
 import amf.ProfileNames
+import amf.ProfileNames.ProfileName
 import amf.core.annotations.{LexicalInformation, SourceAST}
 import amf.core.emitter.SpecOrdering
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{DataNode, DomainElement, ElementTree}
-import amf.core.parser.ParserContext
+import amf.core.parser.{ErrorHandler, ParserContext, YNodeLikeOps}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.contexts.{
@@ -23,7 +24,7 @@ import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging._
 import org.yaml.model._
-import amf.core.parser.YNodeLikeOps
+
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
@@ -34,8 +35,9 @@ import scala.collection.mutable.ListBuffer
   * 4) Resolve each trait and merge each one to the operation in the provided order..
   * 5) Remove 'extends' property from the endpoint and from the operations.
   */
-class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val fromOverlay: Boolean = false)
-    extends ResolutionStage(profile)
+class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean, val fromOverlay: Boolean = false)(
+    override implicit val errorHandler: ErrorHandler)
+    extends ResolutionStage()
     with PlatformSecrets {
 
   /** Default to raml10 context. */
@@ -44,8 +46,8 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
     case _                   => new Raml10WebApiContext("", Nil, ParserContext(parserCount = parserRun))
   }
 
-  override def resolve(model: BaseUnit): BaseUnit =
-    model.transform(findExtendsPredicate, transform(model))
+  override def resolve[T <: BaseUnit](model: T): T =
+    model.transform(findExtendsPredicate, transform(model)).asInstanceOf[T]
 
   def asEndPoint(r: ParametrizedResourceType,
                  context: Context,
@@ -65,7 +67,8 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
           r.id,
           Option(r.target).flatMap(t => ExtendsHelper.findUnitLocationOfElement(t.id, context.model)),
           keepEditingInfo,
-          Some(apiContext)
+          Some(apiContext),
+          errorHandler
         )
 
       case _ =>
@@ -162,7 +165,7 @@ class ExtendsResolutionStage(profile: String, val keepEditingInfo: Boolean, val 
     // This is required in the case where the extension comes from an overlay/extension
     if (!keepEditingInfo && !fromOverlay) endpoint.fields.removeField(DomainElementModel.Extends)
 
-    new ReferenceResolutionStage(profile, keepEditingInfo).resolveDomainElement(endpoint)
+    new ReferenceResolutionStage(keepEditingInfo).resolveDomainElement(endpoint)
   }
 
   private def resourcePathName(endPoint: EndPoint): String = {

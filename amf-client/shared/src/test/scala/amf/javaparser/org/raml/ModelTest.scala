@@ -1,6 +1,7 @@
 package amf.javaparser.org.raml
 
 import amf.ProfileNames
+import amf.ProfileNames.ProfileName
 import amf.core.annotations.SourceVendor
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{BaseUnit, Document, EncodesModel, Module}
@@ -47,7 +48,7 @@ trait ModelValidationTest extends DirectoryTest {
   def transform(unit: BaseUnit, d: String, vendor: Vendor): BaseUnit =
     unit
 
-  private def profileFromModel(unit: BaseUnit): String = {
+  private def profileFromModel(unit: BaseUnit): ProfileName = {
     val maybeVendor = Option(unit)
       .collect({ case d: Document => d })
       .flatMap(_.encodes.annotations.find(classOf[SourceVendor]).map(_.vendor))
@@ -79,7 +80,7 @@ trait ModelResolutionTest extends ModelValidationTest {
   override def transform(unit: BaseUnit, d: String, vendor: Vendor): BaseUnit =
     transform(unit, CycleConfig("", "", hintFromTarget(vendor), vendor, d))
 
-  private def profileFromVendor(vendor: Vendor): String = {
+  private def profileFromVendor(vendor: Vendor): ProfileName = {
     vendor match {
       case Raml08        => ProfileNames.RAML08
       case Raml | Raml10 => ProfileNames.RAML
@@ -95,7 +96,7 @@ trait ModelResolutionTest extends ModelValidationTest {
       case Raml | Raml10 => RAML10Plugin.resolve(unit, EDITING_PIPELINE)
       case Oas3          => OAS30Plugin.resolve(unit, EDITING_PIPELINE)
       case Oas | Oas2    => OAS20Plugin.resolve(unit, EDITING_PIPELINE)
-      case Amf           => new AmfEditingPipeline().resolve(unit)
+      case Amf           => new AmfEditingPipeline(unit).resolve()
       case target        => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit
     }

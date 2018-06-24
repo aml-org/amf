@@ -5,6 +5,7 @@ import amf.core.metamodel.document.DocumentModel
 import amf.core.metamodel.domain.ExternalSourceElementModel
 import amf.core.model.document.{BaseUnit, Document, EncodesModel}
 import amf.core.model.domain._
+import amf.core.parser.ErrorHandler
 import org.mulesoft.common.core.Strings
 
 import scala.collection.mutable
@@ -56,20 +57,20 @@ class ModelReferenceResolver(model: BaseUnit) {
 /**
   * Resolves the local and remote references found in the model.
   */
-class ReferenceResolutionStage(profile: String,
-                               keepEditingInfo: Boolean,
-                               idsTraversionCheck: IdsTraversionCheck = IdsTraversionCheck(),
-                               cache: mutable.Map[String, DomainElement] = mutable.Map())
-    extends ResolutionStage(profile) {
+class ReferenceResolutionStage(
+    keepEditingInfo: Boolean,
+    idsTraversionCheck: IdsTraversionCheck = IdsTraversionCheck(),
+    cache: mutable.Map[String, DomainElement] = mutable.Map())(override implicit val errorHandler: ErrorHandler)
+    extends ResolutionStage() {
 
   var mutuallyRecursive: Seq[String]                = Nil
   var model: Option[BaseUnit]                       = None
   var modelResolver: Option[ModelReferenceResolver] = None
 
-  override def resolve(model: BaseUnit): BaseUnit = {
+  override def resolve[T <: BaseUnit](model: T): T = {
     this.model = Some(model)
     this.modelResolver = Some(new ModelReferenceResolver(model))
-    model.transform(findLinkPredicates, transform)
+    model.transform(findLinkPredicates, transform).asInstanceOf[T]
   }
 
   def resolveDomainElement[T <: DomainElement](element: T): T = {
@@ -236,7 +237,7 @@ class ReferenceResolutionStage(profile: String,
         nested.fields.setWithoutId(DocumentModel.Encodes, element)
         idsTraversionCheck + element.id
         val resolved = idsTraversionCheck.runPushed[DomainElement]((itc: IdsTraversionCheck) => {
-          val result = new ReferenceResolutionStage(profile, keepEditingInfo, idsTraversionCheck, cache)
+          val result = new ReferenceResolutionStage(keepEditingInfo, idsTraversionCheck, cache)
             .recursiveResolveInvocation(nested, modelResolver)
           result.asInstanceOf[Document].encodes
         })

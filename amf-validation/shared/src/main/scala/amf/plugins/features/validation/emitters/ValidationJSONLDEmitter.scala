@@ -1,13 +1,14 @@
 package amf.plugins.features.validation.emitters
 
 import amf.ProfileNames
+import amf.ProfileNames.ProfileName
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.PartEmitter
 import amf.core.parser.Position
 import amf.core.validation.core.{FunctionConstraint, PropertyConstraint, ValidationSpecification}
 import amf.core.vocabulary.Namespace
-import org.yaml.model.{YDocument, YType}
 import org.yaml.model.YDocument._
+import org.yaml.model.{YDocument, YType}
 import org.yaml.render.JsonRender
 
 import scala.collection.mutable.ListBuffer
@@ -16,7 +17,7 @@ import scala.collection.mutable.ListBuffer
   * Generates a JSON-LD graph with the shapes for a set of validations
   * @param targetProfile which kind of messages should be generated
   */
-class ValidationJSONLDEmitter(targetProfile: String) {
+class ValidationJSONLDEmitter(targetProfile: ProfileName) {
 
   private val jsValidatorEmitters: ListBuffer[PartEmitter]  = ListBuffer()
   private val jsConstraintEmitters: ListBuffer[PartEmitter] = ListBuffer()
@@ -180,7 +181,8 @@ class ValidationJSONLDEmitter(targetProfile: String) {
         constraint.minExclusive.foreach(genNumericPropertyConstraintValue(b, "minExclusive", _, Some(constraint)))
         constraint.maxInclusive.foreach(genNumericPropertyConstraintValue(b, "maxInclusive", _, Some(constraint)))
         constraint.minInclusive.foreach(genNumericPropertyConstraintValue(b, "minInclusive", _, Some(constraint)))
-        constraint.multipleOf.foreach(genCustomPropertyConstraintValue(b, (Namespace.Shapes + "multipleOfValidationParam").iri(), _))
+        constraint.multipleOf.foreach(
+          genCustomPropertyConstraintValue(b, (Namespace.Shapes + "multipleOfValidationParam").iri(), _))
         constraint.pattern.foreach(v => genPropertyConstraintValue(b, "pattern", v))
         constraint.node.foreach(genPropertyConstraintValue(b, "node", _))
         constraint.datatype.foreach { v =>
@@ -372,12 +374,9 @@ class ValidationJSONLDEmitter(targetProfile: String) {
 
   }
 
-  private def genCustomPropertyConstraintValue(b: EntryBuilder,
-                                               constraintIri: String,
-                                               value: String): Unit = {
+  private def genCustomPropertyConstraintValue(b: EntryBuilder, constraintIri: String, value: String): Unit = {
     b.entry(constraintIri, value)
   }
-
 
 //  case class NumValueContainer(value:String, dataType:String)
 //

@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi
 
+import amf.ProfileNames.ProfileName
 import amf.core.model.document.BaseUnit
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.remote.Platform
@@ -54,7 +55,7 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
     "form-body-parameter"   -> FormBodyParameter
   )
 
-  val validationProfile: String
+  val validationProfile: ProfileName
 
   /**
     * Validation profiles supported by this plugin by default
@@ -63,10 +64,10 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
     defaultValidationProfiles
 
   def validationRequest(baseUnit: BaseUnit,
-                        profile: String,
+                        profile: ProfileName,
                         validations: EffectiveValidations,
                         platform: Platform): Future[AMFValidationReport] = {
-    validationRequestsForBaseUnit(baseUnit, profile, validations, validationProfile, platform)
+    validationRequestsForBaseUnit(baseUnit, profile, validations, validationProfile.messageStyle, platform)
   }
 
   override def init(): Future[AMFPlugin] = Future.successful(this)

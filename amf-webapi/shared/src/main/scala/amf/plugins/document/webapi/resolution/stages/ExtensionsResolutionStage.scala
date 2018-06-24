@@ -1,7 +1,8 @@
 package amf.plugins.document.webapi.resolution.stages
 
 import amf.ProfileNames
-import amf.core.annotations.{Aliases, SynthesizedField}
+import amf.ProfileNames.ProfileName
+import amf.core.annotations.{Aliases, LexicalInformation, SynthesizedField}
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.DomainElementModel._
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
@@ -11,7 +12,7 @@ import amf.core.metamodel.{Field, Type}
 import amf.core.model.document._
 import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
-import amf.core.parser.{Annotations, EmptyFutureDeclarations, FieldEntry, ParserContext, Value}
+import amf.core.parser.{Annotations, EmptyFutureDeclarations, ErrorHandler, FieldEntry, ParserContext, Value}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.annotations.ExtensionProvenance
@@ -23,6 +24,7 @@ import amf.plugins.domain.webapi.metamodel.templates.ParametrizedTraitModel
 import amf.plugins.domain.webapi.models.WebApi
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DataNodeMerging
+import amf.plugins.features.validation.ParserSideValidations
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -30,21 +32,24 @@ import scala.collection.mutable.ListBuffer
 /**
   *
   */
-class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean)
-    extends ResolutionStage(profile)
+// todo: refactor to support error handler in all resolution stages
+class ExtensionsResolutionStage(profile: ProfileName, keepEditingInfo: Boolean)(
+    override implicit val errorHandler: ErrorHandler)
+    extends ResolutionStage()
     with PlatformSecrets {
 
   /** Default to raml10 context. */
   implicit val ctx: RamlWebApiContext = profile match {
-    case ProfileNames.RAML08 => new Raml08WebApiContext("", Nil,ParserContext())
-    case _                   => new Raml10WebApiContext("", Nil,ParserContext())
+    case ProfileNames.RAML08 => new Raml08WebApiContext("", Nil, ParserContext())
+    case _                   => new Raml10WebApiContext("", Nil, ParserContext())
   }
 
-  override def resolve(model: BaseUnit): BaseUnit = {
+  override def resolve[T <: BaseUnit](model: T): T = {
     val extendsStage = new ExtendsResolutionStage(profile, keepEditingInfo)
     model match {
-      case overlay: ExtensionLike[_] => resolveOverlay(model, overlay.asInstanceOf[ExtensionLike[WebApi]])
-      case _                         => extendsStage.resolve(model)
+      case overlay: ExtensionLike[_] =>
+        resolveOverlay(model, overlay.asInstanceOf[ExtensionLike[WebApi]]).asInstanceOf[T]
+      case _ => extendsStage.resolve(model)
     }
   }
 
@@ -80,9 +85,10 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean)
     val documentAliases   = document.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases
 
     extensionsAliases.map(_._1).intersect(documentAliases.map(_._1)).foreach { alias =>
-      val extensionFullUrl =  extensionsAliases.find(_._1 == alias).map(_._2._1).get
-      val docFullUrl =  documentAliases.find(_._1 == alias).map(_._2._1).get
-      if (extensionFullUrl != docFullUrl) throw new Exception(s"Conflicting urls for alias '$alias' and libraries: '$extensionFullUrl' - '$docFullUrl'")
+      val extensionFullUrl = extensionsAliases.find(_._1 == alias).map(_._2._1).get
+      val docFullUrl       = documentAliases.find(_._1 == alias).map(_._2._1).get
+      if (extensionFullUrl != docFullUrl)
+        throw new Exception(s"Conflicting urls for alias '$alias' and libraries: '$extensionFullUrl' - '$docFullUrl'")
     }
 
     val totalAliases = extensionsAliases.union(documentAliases)
@@ -93,53 +99,56 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean)
   }
 
   private def resolveOverlay(model: BaseUnit, entryPoint: ExtensionLike[WebApi]): BaseUnit = {
-    val (document: Document) :: extensions = extensionsQueue(ListBuffer[BaseUnit](entryPoint), entryPoint)
-    // Don't remove Extends field from the model when traits and resource types are resolved.
-    val extendsStage   = new ExtendsResolutionStage(profile, keepEditingInfo, fromOverlay = true) // this false is required to merge overlays with traits/resource types
-    val referenceStage = new ReferenceResolutionStage(profile, keepEditingInfo)
+    extensionsQueue(ListBuffer[BaseUnit](entryPoint), entryPoint) match {
+      case (document: Document) :: extensions =>
+        // Don't remove Extends field from the model when traits and resource types are resolved.
+        val extendsStage   = new ExtendsResolutionStage(profile, keepEditingInfo, fromOverlay = true) // this false is required to merge overlays with traits/resource types
+        val referenceStage = new ReferenceResolutionStage(keepEditingInfo)
 
-    // All includes are resolved and applied for both Master Tree and Extension Tree.
-    referenceStage.resolve(document)
-    // All Trait and Resource Types applications are applied in the Master Tree.
-    extendsStage.resolve(document)
-
-    // Current Target Tree Object is set to the Target Tree root (API).
-    val masterTree = document.asInstanceOf[EncodesModel].encodes.asInstanceOf[WebApi]
-
-    extensions.foreach {
-      // Current Extension Tree Object is set to the Extension Tree root (API).
-      case extension: ExtensionLike[_] =>
-        // Resolve references.
-        referenceStage.resolve(extension)
-
-        val iriMerger = IriMerger(document.id + "#", extension.id + "#")
-
-        mergeDeclarations(document,
-                          extension.asInstanceOf[ExtensionLike[WebApi]],
-                          iriMerger,
-                          extension.id,
-                          ExtendsHelper.findUnitLocationOfElement(extension.id, model))
-
-        mergeAliases(document, extension)
-
-        mergeReferences(document,
-                        extension.asInstanceOf[ExtensionLike[WebApi]],
-                        extension.id,
-                        ExtendsHelper.findUnitLocationOfElement(extension.id, model))
-
-        merge(masterTree,
-              extension.encodes,
-              extension.id,
-              ExtendsHelper.findUnitLocationOfElement(extension.id, model))
-
-        adoptIris(iriMerger, masterTree)
-
-        // Traits and Resource Types applications are applied one more time to the Target Tree.
+        // All includes are resolved and applied for both Master Tree and Extension Tree.
+        referenceStage.resolve(document)
+        // All Trait and Resource Types applications are applied in the Master Tree.
         extendsStage.resolve(document)
-    }
 
-    // now we can remove is/type predicates safely if requested by pipeline
-    removeExtends(document)
+        // Current Target Tree Object is set to the Target Tree root (API).
+        val masterTree = document.asInstanceOf[EncodesModel].encodes.asInstanceOf[WebApi]
+
+        extensions.foreach {
+          // Current Extension Tree Object is set to the Extension Tree root (API).
+          case extension: ExtensionLike[_] =>
+            // Resolve references.
+            referenceStage.resolve(extension)
+
+            val iriMerger = IriMerger(document.id + "#", extension.id + "#")
+
+            mergeDeclarations(document,
+                              extension.asInstanceOf[ExtensionLike[WebApi]],
+                              iriMerger,
+                              extension.id,
+                              ExtendsHelper.findUnitLocationOfElement(extension.id, model))
+
+            mergeAliases(document, extension)
+
+            mergeReferences(document,
+                            extension.asInstanceOf[ExtensionLike[WebApi]],
+                            extension.id,
+                            ExtendsHelper.findUnitLocationOfElement(extension.id, model))
+
+            merge(masterTree,
+                  extension.encodes,
+                  extension.id,
+                  ExtendsHelper.findUnitLocationOfElement(extension.id, model))
+
+            adoptIris(iriMerger, masterTree)
+
+            // Traits and Resource Types applications are applied one more time to the Target Tree.
+            extendsStage.resolve(document)
+        }
+
+        // now we can remove is/type predicates safely if requested by pipeline
+        removeExtends(document)
+      case _ => model
+    }
   }
 
   case class IriMerger(master: String = "", extension: String = "") {
@@ -174,9 +183,7 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean)
                               extensionId,
                               extensionLocation)
               case _: ShapeModel if incompatibleType(existing.domainElement, entry.domainElement) =>
-                master.set(field,
-                           entry.domainElement,
-                           Annotations(ExtensionProvenance(overlay.id, extensionLocation)))
+                master.set(field, entry.domainElement, Annotations(ExtensionProvenance(overlay.id, extensionLocation)))
               case _: DomainElementModel =>
                 merge(existing.domainElement, entry.domainElement, extensionId, extensionLocation)
               case _ => throw new Exception(s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)")
@@ -386,7 +393,24 @@ class ExtensionsResolutionStage(profile: String, keepEditingInfo: Boolean)
         case Some(e) =>
           collector += e
           extensionsQueue(collector, e)
-        case None => throw new Exception(s"BaseUnit '${extension.extend}' not found in references.")
+        case None if Option(extension.extend).isDefined =>
+          errorHandler.violation(
+            ParserSideValidations.MissingExtensionInReferences.id,
+            model.id,
+            Some(extension.extend),
+            s"BaseUnit '${extension.extend}' not found in references.",
+            extension.annotations.find(classOf[LexicalInformation])
+          )
+          Nil
+        case _ =>
+          errorHandler.violation(
+            ParserSideValidations.MissingExtensionInReferences.id,
+            model.id,
+            Some(extension.extend),
+            s"Missing extend property for model '${model.id}'.",
+            extension.annotations.find(classOf[LexicalInformation])
+          )
+          Nil
       }
     case _ => collector.reverse.toList
   }

@@ -1,6 +1,7 @@
 package amf.core.client
 
 import amf.ProfileNames
+import amf.ProfileNames.ProfileName
 import amf.core.unsafe.PlatformSecrets
 
 abstract class ProcWriter {
@@ -24,10 +25,9 @@ object StdErrWriter extends ProcWriter {
   override def print(e: Throwable): Unit = System.err.println(e)
 }
 
-object RuntimeProc extends  Proc {
+object RuntimeProc extends Proc {
   override def exit(statusCode: Int): Unit = System.exit(statusCode)
 }
-
 
 case class ParserConfig(mode: Option[String] = None,
                         input: Option[String] = None,
@@ -39,7 +39,7 @@ case class ParserConfig(mode: Option[String] = None,
                         withSourceMaps: Boolean = false,
                         withCompactNamespaces: Boolean = false,
                         validate: Boolean = true,
-                        validationProfile: String = ProfileNames.AMF,
+                        validationProfile: ProfileName = ProfileNames.AMF,
                         customProfile: Option[String] = None,
                         resolve: Boolean = false,
                         // list of dialects that will be loaded in the registry

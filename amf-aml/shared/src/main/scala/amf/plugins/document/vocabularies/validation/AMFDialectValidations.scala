@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies.validation
 
+import amf.ProfileNames.ProfileName
 import amf.core.rdf.RdfModel
 import amf.core.validation.core.{PropertyConstraint, ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.Namespace
@@ -17,8 +18,8 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
   def profile() = {
     val parsedValidations = validations()
     ValidationProfile(
-      name = dialect.nameAndVersion(),
-      baseProfileName = None,
+      name = ProfileName(dialect.nameAndVersion()),
+      baseProfile = None,
       violationLevel = parsedValidations.map(_.name),
       validations = parsedValidations ++ ParserSideValidations.validations
     )
@@ -194,16 +195,26 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
                   )
                 }),
                 customRdf = Some((rdfModel: RdfModel, subject: String) => {
-                  val propId = rdfModel.nextAnonId()
+                  val propId                = rdfModel.nextAnonId()
                   val firstConstraintListId = propId + "_ointdoub1"
-                  val nextConstraintListId = propId + "_ointdoub2"
+                  val nextConstraintListId  = propId + "_ointdoub2"
                   rdfModel.addTriple(subject, (Namespace.Shacl + "or").iri(), firstConstraintListId)
-                  rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "first").iri(), firstConstraintListId + "_v")
-                  rdfModel.addTriple(firstConstraintListId + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "integer").iri().trim)
+                  rdfModel.addTriple(firstConstraintListId,
+                                     (Namespace.Rdf + "first").iri(),
+                                     firstConstraintListId + "_v")
+                  rdfModel.addTriple(firstConstraintListId + "_v",
+                                     (Namespace.Shacl + "datatype").iri(),
+                                     (Namespace.Xsd + "integer").iri().trim)
                   rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "rest").iri(), nextConstraintListId)
-                  rdfModel.addTriple(nextConstraintListId, (Namespace.Rdf + "first").iri(), nextConstraintListId + "_v")
-                  rdfModel.addTriple(nextConstraintListId + "_v", (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "double").iri().trim)
-                  rdfModel.addTriple(nextConstraintListId, (Namespace.Rdf + "rest").iri(), (Namespace.Rdf + "nil").iri())
+                  rdfModel.addTriple(nextConstraintListId,
+                                     (Namespace.Rdf + "first").iri(),
+                                     nextConstraintListId + "_v")
+                  rdfModel.addTriple(nextConstraintListId + "_v",
+                                     (Namespace.Shacl + "datatype").iri(),
+                                     (Namespace.Xsd + "double").iri().trim)
+                  rdfModel.addTriple(nextConstraintListId,
+                                     (Namespace.Rdf + "rest").iri(),
+                                     (Namespace.Rdf + "nil").iri())
                 })
               ))
           )

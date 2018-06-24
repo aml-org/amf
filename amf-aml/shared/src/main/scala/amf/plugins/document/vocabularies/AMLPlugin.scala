@@ -1,6 +1,7 @@
 package amf.plugins.document.vocabularies
 
 import amf.ProfileNames
+import amf.ProfileNames.ProfileName
 import amf.core.Root
 import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Obj
@@ -28,7 +29,10 @@ import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReference
 import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, DialectsParser}
 import amf.plugins.document.vocabularies.parser.instances.{DialectInstanceContext, DialectInstanceParser}
 import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
-import amf.plugins.document.vocabularies.resolution.pipelines.{DialectInstanceResolutionPipeline, DialectResolutionPipeline}
+import amf.plugins.document.vocabularies.resolution.pipelines.{
+  DialectInstanceResolutionPipeline,
+  DialectResolutionPipeline
+}
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import org.yaml.model._
 
@@ -53,7 +57,7 @@ trait JsonHeaderExtractor {
                 entry.value.as[String]
               }
             } catch {
-              case _:YException => None
+              case _: YException => None
             }
           case None => None
         }
@@ -131,8 +135,8 @@ object AMLPlugin
     */
   override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
     unit match {
-      case dialect: Dialect         => new DialectResolutionPipeline().resolve(dialect)
-      case dialect: DialectInstance => new DialectInstanceResolutionPipeline().resolve(dialect)
+      case dialect: Dialect         => new DialectResolutionPipeline(dialect).resolve()
+      case dialect: DialectInstance => new DialectInstanceResolutionPipeline(dialect).resolve()
       case _                        => unit
     }
 
@@ -264,7 +268,7 @@ object AMLPlugin
     validationsProfilesMap.get(profileName) match {
       case Some(profile) => profile
       case _ =>
-        val resolvedDialect = new DialectResolutionPipeline().resolve(dialect)
+        val resolvedDialect = new DialectResolutionPipeline(dialect).resolve()
         val profile         = new AMFDialectValidations(resolvedDialect).profile()
         validationsProfilesMap += (profileName -> profile)
         profile
@@ -282,12 +286,12 @@ object AMLPlugin
     * Request for validation of a particular model, profile and list of effective validations for that profile
     */
   override def validationRequest(baseUnit: BaseUnit,
-                                 profile: String,
+                                 profile: ProfileName,
                                  validations: EffectiveValidations,
                                  platform: Platform): Future[AMFValidationReport] = {
     baseUnit match {
       case dialectInstance: DialectInstance =>
-        val resolvedModel = new DialectInstanceResolutionPipeline().resolve(dialectInstance)
+        val resolvedModel = new DialectInstanceResolutionPipeline(dialectInstance).resolve()
 
         val dependenciesValidations: Future[Seq[ValidationProfile]] = Future.sequence(
           dialectInstance.graphDependencies.map { instance =>
@@ -304,7 +308,7 @@ object AMLPlugin
 
           // adding model-side validations
           val results = shaclReport.results.flatMap { r =>
-            buildValidationResult(baseUnit, r, ProfileNames.RAML, validations)
+            buildValidationResult(baseUnit, r, ProfileNames.RAML.messageStyle, validations)
           }
 
           AMFValidationReport(
@@ -327,7 +331,7 @@ object AMLPlugin
 
   def shapesForDialect(dialect: Dialect, validationFunctionsUrl: String): RdfModel = {
     val validationProfile = computeValidationProfile(dialect)
-    val validations = validationProfile.validations
+    val validations       = validationProfile.validations
 
     RuntimeValidator.shaclModel(validations, validationFunctionsUrl)
   }

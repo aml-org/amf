@@ -1,6 +1,5 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.ProfileNames
 import amf.core.Root
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.{AmfScalar, Shape}
@@ -119,7 +118,7 @@ case class RamlJsonSchemaExpression(name: String,
         context)
         .parseTypeDeclarations(schemaEntry.node.as[YMap], url + "#/definitions/")
       val libraryShapes = context.declarations.shapes
-      val resolvedShapes = new ReferenceResolutionStage(ProfileNames.RAML, false)
+      val resolvedShapes = new ReferenceResolutionStage(false)(ctx)
         .resolveDomainElementSet[Shape](libraryShapes.values.toSeq)
 
       val shapesMap = mutable.Map[String, AnyShape]()

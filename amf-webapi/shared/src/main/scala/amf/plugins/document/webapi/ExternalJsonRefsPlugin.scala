@@ -1,20 +1,27 @@
 package amf.plugins.document.webapi
 
-import amf.core.utils._
 import amf.core.Root
 import amf.core.metamodel.Obj
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.{AnnotationGraphLoader, ExternalDomainElement}
-import amf.core.parser.{InferredLinkReference, LinkReference, ParsedDocument, ParserContext, ReferenceCollector, ReferenceHandler, SchemaAliasReference}
+import amf.core.parser.{
+  InferredLinkReference,
+  LinkReference,
+  ParsedDocument,
+  ParserContext,
+  ReferenceCollector,
+  ReferenceHandler
+}
 import amf.core.plugins.{AMFDocumentPluginSettings, AMFPlugin}
 import amf.core.remote.Platform
+import amf.core.utils._
 import org.yaml.model._
 
 import scala.concurrent.Future
 
 class JsonRefsReferenceHandler extends ReferenceHandler {
 
-  private val references = ReferenceCollector()
+  private val references           = ReferenceCollector()
   private var refUrls: Set[String] = Set()
 
   override def collect(parsed: ParsedDocument, ctx: ParserContext): ReferenceCollector = {
@@ -30,8 +37,8 @@ class JsonRefsReferenceHandler extends ReferenceHandler {
 
   def links(part: YPart, ctx: ParserContext): Unit = {
     part match {
-      case map: YMap if map.map.get("$ref").isDefined           => collectRef(map, ctx)
-      case _                                                    => part.children.foreach(c => links(c, ctx))
+      case map: YMap if map.map.get("$ref").isDefined => collectRef(map, ctx)
+      case _                                          => part.children.foreach(c => links(c, ctx))
     }
   }
 
@@ -41,12 +48,10 @@ class JsonRefsReferenceHandler extends ReferenceHandler {
       case YType.Str =>
         val refValue = ref.as[String]
         if (!refValue.startsWith("#")) refUrls += refValue.split("#").head
-      case _         => ctx.violation("", s"Unexpected $$ref with $ref", ref.value)
+      case _ => ctx.violation("", s"Unexpected $$ref with $ref", ref.value)
     }
   }
 }
-
-
 
 class ExternalJsonRefsPlugin extends JsonSchemaPlugin {
 
@@ -75,14 +80,18 @@ class ExternalJsonRefsPlugin extends JsonSchemaPlugin {
     * Parses an accepted document returning an optional BaseUnit
     */
   override def parse(document: Root, ctx: ParserContext, platform: Platform): Option[BaseUnit] = {
-    val result = ExternalDomainElement().withId(document.location + "#/").withRaw(document.raw).withMediaType("application/json")
+    val result =
+      ExternalDomainElement().withId(document.location + "#/").withRaw(document.raw).withMediaType("application/json")
     result.parsed = Some(document.parsed.document.node)
     val references = document.references.map(_.unit)
-    val fragment = ExternalFragment().withLocation(document.location).withId(document.location).withEncodes(result).withLocation(document.location)
+    val fragment = ExternalFragment()
+      .withLocation(document.location)
+      .withId(document.location)
+      .withEncodes(result)
+      .withLocation(document.location)
     if (references.nonEmpty) fragment.withReferences(references)
     Some(fragment)
   }
-
 
   override def canParse(document: Root): Boolean = document.raw.isJson
 

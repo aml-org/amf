@@ -9,9 +9,8 @@ import amf.plugins.document.vocabularies.AMLPlugin
 import scala.concurrent.ExecutionContext
 
 abstract class DialectInstanceResolutionCycleTests extends BuildCycleTests {
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
+  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
     AMLPlugin.resolve(unit)
-  }
 }
 
 class DialectInstanceResolutionTest extends DialectInstanceResolutionCycleTests {

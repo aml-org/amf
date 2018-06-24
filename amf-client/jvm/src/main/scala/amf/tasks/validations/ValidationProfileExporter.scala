@@ -9,8 +9,9 @@ object ValidationProfileExporter {
   def main(args: Array[String]): Unit = {
     DefaultAMFValidations.profiles().foreach { profile =>
       val generator = new ValidationDialectTextGenerator(profile)
-      val text = generator.emit()
-      val writer = new BufferedWriter(new FileWriter(s"./documentation/validations/${profile.name.toLowerCase}_profile.raml"))
+      val text      = generator.emit()
+      val writer = new BufferedWriter(
+        new FileWriter(s"./documentation/validations/${profile.name.profile.toLowerCase}_profile.raml"))
       writer.write(text)
       writer.close()
     }

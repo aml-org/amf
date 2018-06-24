@@ -1,6 +1,7 @@
 package amf.plugins.domain.webapi.resolution.stages
 
 import amf.core.model.document.{BaseUnit, Document}
+import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.metamodel.ResponseModel
@@ -11,10 +12,10 @@ import amf.plugins.domain.webapi.models.WebApi
   * MediaTypeResolution and Shape Normalization stages must already been run
   * for mutate each payload schema
   */
-class ExamplesResolutionStage(profile: String) extends ResolutionStage(profile) {
-  override def resolve(model: BaseUnit): BaseUnit = model match {
+class ExamplesResolutionStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
+  override def resolve[T <: BaseUnit](model: T): T = model match {
     case d: Document if d.encodes.isInstanceOf[WebApi] =>
-      d.withEncodes(resolveWebApi(d.encodes.asInstanceOf[WebApi]))
+      d.withEncodes(resolveWebApi(d.encodes.asInstanceOf[WebApi])).asInstanceOf[T]
     case _ => model
   }
 

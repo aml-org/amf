@@ -1,6 +1,7 @@
 package amf.client
 
 import amf.Core
+import amf.ProfileNames.{AMFStyle, MessageStyle, ProfileName}
 import amf.client.convert.CoreClientConverters._
 import amf.client.model.document.{BaseUnit, Dialect}
 import amf.client.parse._
@@ -45,10 +46,12 @@ object AMF {
 
   def amfGraphGenerator(): AmfGraphRenderer = new AmfGraphRenderer()
 
-  def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): ClientFuture[ValidationReport] =
+  def validate(model: BaseUnit,
+               profileName: ProfileName,
+               messageStyle: MessageStyle = AMFStyle): ClientFuture[ValidationReport] =
     Core.validate(model, profileName, messageStyle)
 
-  def loadValidationProfile(url: String): ClientFuture[String] = Core.loadValidationProfile(url)
+  def loadValidationProfile(url: String): ClientFuture[ProfileName] = Core.loadValidationProfile(url)
 
   def registerNamespace(alias: String, prefix: String): Boolean = Core.registerNamespace(alias, prefix)
 
@@ -78,10 +81,12 @@ object CoreWrapper {
 
   def resolver(vendor: String): Resolver = Core.resolver(vendor)
 
-  def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): ClientFuture[ValidationReport] =
+  def validate(model: BaseUnit,
+               profileName: ProfileName,
+               messageStyle: MessageStyle = AMFStyle): ClientFuture[ValidationReport] =
     Core.validate(model, profileName, messageStyle)
 
-  def loadValidationProfile(url: String): ClientFuture[String] = Core.loadValidationProfile(url)
+  def loadValidationProfile(url: String): ClientFuture[ProfileName] = Core.loadValidationProfile(url)
 
   def registerNamespace(alias: String, prefix: String): Boolean = Core.registerNamespace(alias, prefix)
 

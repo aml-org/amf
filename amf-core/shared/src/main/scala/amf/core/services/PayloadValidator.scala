@@ -1,14 +1,15 @@
 package amf.core.services
 
+import amf.ProfileNames.ProfileName
 import amf.core.annotations.LexicalInformation
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.Shape
 import amf.core.plugins.{AMFPayloadValidationPlugin, AMFPlugin}
 import amf.core.registries.AMFPluginsRegistry
+import amf.core.utils._
 import amf.core.validation._
 import amf.core.vocabulary.Namespace
 import amf.plugins.features.validation.ParserSideValidations
-import amf.core.utils._
 
 import scala.collection.immutable
 import scala.concurrent.Future
@@ -29,7 +30,7 @@ object PayloadValidator {
         val seq = s.flatMap { report =>
           report.results.sortWith({ case (l, r) => l.validationId.compareTo(r.validationId) > 0 })
         }.toSeq
-        AMFValidationReport(!seq.exists(_.level == SeverityLevels.VIOLATION), "", "", seq)
+        AMFValidationReport(!seq.exists(_.level == SeverityLevels.VIOLATION), "", ProfileName(""), seq)
       })
   }
 
@@ -77,7 +78,10 @@ object PayloadValidator {
           null
         )
       }
-      AMFValidationReport(if (set.defaultSeverity == SeverityLevels.WARNING) true else false, "", "Payload", results)
+      AMFValidationReport(if (set.defaultSeverity == SeverityLevels.WARNING) true else false,
+                          "",
+                          ProfileName("Payload"),
+                          results)
     }
 
     override protected def parsePayload(payload: String, mediaType: String): PayloadFragment =

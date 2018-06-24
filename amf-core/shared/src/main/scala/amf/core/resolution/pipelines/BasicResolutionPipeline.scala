@@ -1,17 +1,12 @@
 package amf.core.resolution.pipelines
 
 import amf.ProfileNames
+import amf.ProfileNames.ProfileName
 import amf.core.model.document.BaseUnit
-import amf.core.resolution.stages.ReferenceResolutionStage
+import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 
-class BasicResolutionPipeline extends ResolutionPipeline{
-
-  val references = new ReferenceResolutionStage(ProfileNames.AMF, keepEditingInfo = false)
-
-  override def resolve[T <: BaseUnit](model: T): T = {
-    withModel(model) { () =>
-      step(references)
-    }
-  }
-
+class BasicResolutionPipeline(override val model: BaseUnit) extends ResolutionPipeline[BaseUnit] {
+  val references                                     = new ReferenceResolutionStage(keepEditingInfo = false)
+  override protected val steps: Seq[ResolutionStage] = Seq(references)
+  override def profileName: ProfileName              = ProfileNames.AMF
 }

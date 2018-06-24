@@ -1,6 +1,7 @@
 package amf.plugins.features.validation
 
 import amf.ProfileNames
+import amf.ProfileNames.{MessageStyle, ProfileName}
 import amf.core.annotations.LexicalInformation
 import amf.core.model.document.BaseUnit
 import amf.core.plugins.{AMFFeaturePlugin, AMFPlugin}
@@ -24,7 +25,7 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
     this
   }
 
-  def parserSideValidationsProfile(profile: String): ValidationProfile = {
+  def parserSideValidationsProfile(profile: ProfileName): ValidationProfile = {
     // sorting parser side validation for this profile
     val violationParserSideValidations = ParserSideValidations.validations
       .filter { v =>
@@ -52,8 +53,8 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
       .map(_.name)
 
     ValidationProfile(
-      name = ID,
-      baseProfileName = None,
+      name = ProfileName(ID),
+      baseProfile = None,
       infoLevel = infoParserSideValidations,
       warningLevel = warningParserSideValidations,
       violationLevel = violationParserSideValidations,
@@ -109,14 +110,14 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
   /**
     * Loads a validation profile from a URL
     */
-  override def loadValidationProfile(validationProfilePath: String): Future[String] = Future { ID }
+  override def loadValidationProfile(validationProfilePath: String): Future[ProfileName] = Future { ProfileName(ID) }
 
   /**
     * Low level validation returning a SHACL validation report
     */
   override def shaclValidation(model: BaseUnit,
                                validations: EffectiveValidations,
-                               messageStyle: String): Future[ValidationReport] = Future {
+                               messageStyle: MessageStyle): Future[ValidationReport] = Future {
     new ValidationReport {
       override def conforms: Boolean               = false
       override def results: List[ValidationResult] = Nil
@@ -127,10 +128,14 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
     * Main validation function returning an AMF validation report linking validation errors
     * for validations in the profile to domain elements in the model
     */
-  override def validate(model: BaseUnit, profileName: String, messageStyle: String): Future[AMFValidationReport] =
+  override def validate(model: BaseUnit,
+                        profileName: ProfileName,
+                        messageStyle: MessageStyle): Future[AMFValidationReport] =
     aggregateReport(model, profileName, messageStyle)
 
-  final def aggregateReport(model: BaseUnit, profileName: String, messageStyle: String): Future[AMFValidationReport] = {
+  final def aggregateReport(model: BaseUnit,
+                            profileName: ProfileName,
+                            messageStyle: MessageStyle): Future[AMFValidationReport] = {
     val validations = EffectiveValidations().someEffective(parserSideValidationsProfile(profileName))
     // aggregating parser-side validations
     val results = model.parserRun match {
@@ -197,6 +202,6 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
     */
   override def shaclModel(validations: Seq[ValidationSpecification],
                           functionUrls: String,
-                          messgeStyle: String): RdfModel =
+                          messgeStyle: MessageStyle): RdfModel =
     throw new Exception("SHACL Support not available")
 }

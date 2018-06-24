@@ -1,6 +1,7 @@
 package amf.plugins.features.validation
 
 import amf.ProfileNames
+import amf.ProfileNames.{MessageStyle, ProfileName, RAMLStyle}
 import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.BaseUnit
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
@@ -65,7 +66,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
   var customValidationProfiles: Map[String, () => ValidationProfile]  = Map.empty
   var customValidationProfilesPlugins: Map[String, AMFDocumentPlugin] = Map.empty
 
-  override def loadValidationProfile(validationProfilePath: String): Future[String] = {
+  override def loadValidationProfile(validationProfilePath: String): Future[ProfileName] = {
     RuntimeCompiler(
       validationProfilePath,
       Some("application/yaml"),
@@ -81,20 +82,20 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
       .map {
         case encoded: DialectDomainElement if encoded.definedBy.name.is("profileNode") =>
           val profile = ParsedValidationProfile(encoded)
-          val domainPlugin = profilesPlugins.get(profile.name) match {
+          val domainPlugin = profilesPlugins.get(profile.name.profile) match {
             case Some(plugin) => plugin
             case None =>
-              profilesPlugins.get(profile.baseProfileName.getOrElse("AMF")) match {
+              profilesPlugins.get(profile.baseProfile.getOrElse(ProfileNames.AMF).profile) match {
                 case Some(plugin) =>
                   plugin
                 case None => AMLPlugin
 
               }
           }
-          customValidationProfiles += (profile.name -> { () =>
+          customValidationProfiles += (profile.name.profile -> { () =>
             profile
           })
-          customValidationProfilesPlugins += (profile.name -> domainPlugin)
+          customValidationProfilesPlugins += (profile.name.profile -> domainPlugin)
           profile.name
 
         case other =>
@@ -103,17 +104,17 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
       }
   }
 
-  def computeValidations(profileName: String,
+  def computeValidations(profileName: ProfileName,
                          computed: EffectiveValidations = new EffectiveValidations()): EffectiveValidations = {
-    val maybeProfile = profiles.get(profileName) match {
+    val maybeProfile = profiles.get(profileName.profile) match {
       case Some(profileGenerator) => Some(profileGenerator())
       case _                      => None
     }
 
     maybeProfile match {
       case Some(foundProfile) =>
-        if (foundProfile.baseProfileName.isDefined) {
-          computeValidations(foundProfile.baseProfileName.get, computed).someEffective(foundProfile)
+        if (foundProfile.baseProfile.isDefined) {
+          computeValidations(foundProfile.baseProfile.get, computed).someEffective(foundProfile)
         } else {
           computed.someEffective(foundProfile)
         }
@@ -146,7 +147,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
 
   override def shaclValidation(model: BaseUnit,
                                validations: EffectiveValidations,
-                               messageStyle: String): Future[ValidationReport] = {
+                               messageStyle: MessageStyle): Future[ValidationReport] = {
     ExecutionLog.log(
       s"AMFValidatorPlugin#shaclValidation: shacl validation for ${validations.effective.values.size} validations")
     // println(s"VALIDATIONS: ${validations.effective.values.size} / ${validations.all.values.size} => $profileName")
@@ -177,7 +178,9 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
 //    }
   }
 
-  override def validate(model: BaseUnit, profileName: String, messageStyle: String): Future[AMFValidationReport] = {
+  override def validate(model: BaseUnit,
+                        profileName: ProfileName,
+                        messageStyle: MessageStyle): Future[AMFValidationReport] = {
 
     super.validate(model, profileName, messageStyle) flatMap {
       case parseSideValidation if !parseSideValidation.conforms => Future.successful(parseSideValidation)
@@ -187,10 +190,10 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
   }
 
   private def modelValidation(model: BaseUnit,
-                              profileName: String,
-                              messageStyle: String,
+                              profileName: ProfileName,
+                              messageStyle: MessageStyle,
                               warningResults: Seq[AMFValidationResult]): Future[AMFValidationReport] = {
-    profilesPlugins.get(profileName) match {
+    profilesPlugins.get(profileName.profile) match {
       case Some(domainPlugin: AMFValidationPlugin) =>
         val validations = computeValidations(profileName)
         domainPlugin
@@ -203,7 +206,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     }
   }
 
-  def profileNotFoundWarningReport(model: BaseUnit, profileName: String) = {
+  def profileNotFoundWarningReport(model: BaseUnit, profileName: ProfileName) = {
     AMFValidationReport(conforms = true, model.location, profileName, Seq())
   }
 
@@ -211,8 +214,8 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     * Generates a JSON-LD graph with the SHACL shapes for the requested profile validations
     * @return JSON-LD graph
     */
-  def shapesGraph(validations: EffectiveValidations, messageStyle: String = ProfileNames.RAML): String = {
-    new ValidationJSONLDEmitter(messageStyle).emitJSON(customValidations(validations))
+  def shapesGraph(validations: EffectiveValidations, messageStyle: MessageStyle = RAMLStyle): String = {
+    new ValidationJSONLDEmitter(messageStyle.profileName).emitJSON(customValidations(validations))
   }
 
   def customValidations(validations: EffectiveValidations): Seq[ValidationSpecification] =
@@ -223,7 +226,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     */
   override def shaclModel(validations: Seq[ValidationSpecification],
                           functionUrls: String,
-                          messageStyle: String): RdfModel =
+                          messageStyle: MessageStyle): RdfModel =
     PlatformValidator.instance.shapes(validations, functionUrls)
 
 }

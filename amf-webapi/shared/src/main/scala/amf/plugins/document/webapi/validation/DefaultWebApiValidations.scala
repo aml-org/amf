@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.validation
 
 import amf.ProfileNames
+import amf.ProfileNames.ProfileName
 import amf.core.validation.SeverityLevels
 import amf.core.validation.core._
 import amf.core.vocabulary.{Namespace, ValueType}
@@ -116,7 +117,8 @@ object DefaultAMFValidations extends ImportUtils {
   def profiles(): List[ValidationProfile] = {
     val groups = validations().groupBy(_.spec)
     groups.map {
-      case (profile, validationsInGroup) =>
+      case (p, validationsInGroup) =>
+        val profile              = ProfileName(p)
         val violationValidations = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.VIOLATION))
         val infoValidations      = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.INFO))
         val warningValidations   = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.WARNING))
@@ -142,7 +144,7 @@ object DefaultAMFValidations extends ImportUtils {
 
         ValidationProfile(
           name = profile,
-          baseProfileName = if (profile == ProfileNames.AMF) None else Some(ProfileNames.AMF),
+          baseProfile = if (profile == ProfileNames.AMF) None else Some(ProfileNames.AMF),
           infoLevel = infoParserSideValidations ++ infoValidations.map(_.name),
           warningLevel = warningParserSideValidations ++ warningValidations.map(_.name),
           violationLevel = violationParserSideValidations ++ violationValidations.map(_.name),

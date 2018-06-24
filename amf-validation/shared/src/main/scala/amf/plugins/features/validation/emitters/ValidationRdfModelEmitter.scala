@@ -1,11 +1,12 @@
 package amf.plugins.features.validation.emitters
 
 import amf.ProfileNames
+import amf.ProfileNames.ProfileName
 import amf.core.rdf.RdfModel
 import amf.core.validation.core.{FunctionConstraint, PropertyConstraint, ValidationSpecification}
 import amf.core.vocabulary.Namespace
 
-class ValidationRdfModelEmitter(targetProfile: String,
+class ValidationRdfModelEmitter(targetProfile: ProfileName,
                                 rdfModel: RdfModel,
                                 defaultJSLibraryUrl: String = ValidationJSONLDEmitter.validationLibraryUrl) {
 

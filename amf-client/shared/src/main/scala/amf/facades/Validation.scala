@@ -1,6 +1,6 @@
 package amf.facades
 
-import amf.ProfileNames
+import amf.ProfileNames.{MessageStyle, ProfileName, RAMLStyle}
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
 import amf.core.services.RuntimeValidator
@@ -87,7 +87,7 @@ class Validation(platform: Platform) {
 
   def disableValidations[T]()(f: () => T): T = validator.disableValidations()(f)
 
-  def loadValidationProfile(validationProfilePath: String): Future[String] = {
+  def loadValidationProfile(validationProfilePath: String): Future[ProfileName] = {
     validator.loadValidationProfile(validationProfilePath)
   }
 
@@ -100,15 +100,15 @@ class Validation(platform: Platform) {
     profile = None // Some(new AMFDialectValidations(dialect).profile())
 
   def validate(model: BaseUnit,
-               profileName: String,
-               messageStyle: String = ProfileNames.RAML): Future[AMFValidationReport] = {
+               profileName: ProfileName,
+               messageStyle: MessageStyle = RAMLStyle): Future[AMFValidationReport] = {
 
     validator.validate(model, profileName, messageStyle)
   }
 
-  def computeValidations(profileName: String): EffectiveValidations = validator.computeValidations(profileName)
+  def computeValidations(profileName: ProfileName): EffectiveValidations = validator.computeValidations(profileName)
 
-  def shapesGraph(validations: EffectiveValidations, messageStyle: String = ProfileNames.RAML): String =
+  def shapesGraph(validations: EffectiveValidations, messageStyle: MessageStyle = RAMLStyle): String =
     validator.shapesGraph(validations, messageStyle)
 }
 

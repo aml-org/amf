@@ -1,5 +1,6 @@
 package amf.plugins.features.validation.model
 
+import amf.ProfileNames.ProfileName
 import amf.core.validation.core._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
@@ -125,8 +126,8 @@ object ParsedValidationProfile extends DialectWrapper {
   def apply(node: DialectDomainElement): ValidationProfile = {
     val prfx = prefixes(node)
     ValidationProfile(
-      name            = mandatory("profile in validation profile", extractString(node, "profile")),
-      baseProfileName = extractString(node, "extends"),
+      name            = ProfileName(mandatory("profile in validation profile", extractString(node, "profile"))),
+      baseProfile = extractString(node, "extends").map(ProfileName.apply),
       violationLevel  = extractStrings(node, "violation"),
       infoLevel       = extractStrings(node, "info"),
       warningLevel    = extractStrings(node, "warning"),

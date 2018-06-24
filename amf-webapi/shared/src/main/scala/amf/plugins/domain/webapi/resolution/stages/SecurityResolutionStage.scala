@@ -3,13 +3,14 @@ package amf.plugins.domain.webapi.resolution.stages
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.DomainElement
+import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.webapi.metamodel.security.{ParametrizedSecuritySchemeModel, SecuritySchemeModel}
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel, WebApiModel}
 import amf.plugins.domain.webapi.models.WebApi
 import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityScheme, Settings}
 
-class SecurityResolutionStage(profile: String) extends ResolutionStage(profile) {
+class SecurityResolutionStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
 
   private def asSecurityScheme(finder: String => Option[DomainElement],
                                scheme: ParametrizedSecurityScheme,
@@ -65,13 +66,12 @@ class SecurityResolutionStage(profile: String) extends ResolutionStage(profile) 
                     ep: Option[Seq[ParametrizedSecurityScheme]]): Option[Seq[ParametrizedSecurityScheme]] =
     ep.orElse(root).filter(_.nonEmpty)
 
-  override def resolve(model: BaseUnit): BaseUnit = {
+  override def resolve[T <: BaseUnit](model: T): T = {
     model match {
       case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
         resolveSecurity(model.findById, doc.encodes.asInstanceOf[WebApi])
       case _ =>
     }
-
-    model
+    model.asInstanceOf[T]
   }
 }

@@ -1,17 +1,18 @@
 package amf.client.commands
 
 import amf.ProfileNames
+import amf.ProfileNames.ProfileName
 import amf.core.client.ParserConfig
 import scopt.OptionParser
 
 object CmdLineParser {
 
   def knownSpec(f: String): Boolean = {
-    ProfileNames.RAML == f ||
-    ProfileNames.RAML08 == f ||
-    ProfileNames.OAS3 == f ||
-    ProfileNames.OAS == f ||
-    ProfileNames.AMF == f ||
+    ProfileNames.RAML.profile == f ||
+    ProfileNames.RAML08.profile == f ||
+    ProfileNames.OAS3.profile == f ||
+    ProfileNames.OAS.profile == f ||
+    ProfileNames.AMF.profile == f ||
     "RAML 1.0" == f ||
     "RAML 0.8" == f ||
     "OAS 3.0.0" == f ||
@@ -64,7 +65,7 @@ object CmdLineParser {
           failure("Invalid value, values supported: 'RAML 1.0', 'RAML 0.8', 'OpenAPI 2.0', 'AML 1.0', 'AMF'")
         }
       })
-      .action((f, c) => c.copy(validationProfile = f))
+      .action((f, c) => c.copy(validationProfile = ProfileName(f)))
 
     opt[String]("custom-validation-profile")
       .abbr("cp")

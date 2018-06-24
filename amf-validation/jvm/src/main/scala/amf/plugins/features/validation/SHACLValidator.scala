@@ -3,6 +3,7 @@ package amf.plugins.features.validation
 import java.io.{InputStreamReader, Reader, StringReader}
 import java.nio.charset.Charset
 
+import amf.ProfileNames.{AMF, MessageStyle}
 import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
@@ -79,14 +80,16 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
     })
   }
 
-  override def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: String): Future[String] =
+  override def validate(data: BaseUnit,
+                        shapes: Seq[ValidationSpecification],
+                        messageStyle: MessageStyle): Future[String] =
     Future {
       ExecutionLog.log("SHACLValidator#validate: loading Jena data model")
       val dataModel = new JenaRdfModel()
       new RdfModelEmitter(dataModel).emit(data, RenderOptions().withValidation)
       ExecutionLog.log("SHACLValidator#validate: loading Jena shapes model")
       val shapesModel = new JenaRdfModel()
-      new ValidationRdfModelEmitter(messageStyle, shapesModel).emit(shapes)
+      new ValidationRdfModelEmitter(messageStyle.profileName, shapesModel).emit(shapes)
       ExecutionLog.log("SHACLValidator#validate: loading library")
       loadLibrary()
       ExecutionLog.log("SHACLValidator#validate: starting script engine")
@@ -142,12 +145,12 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
 
   override def report(data: BaseUnit,
                       shapes: Seq[ValidationSpecification],
-                      messageStyle: String): Future[ValidationReport] =
+                      messageStyle: MessageStyle): Future[ValidationReport] =
     validate(data, shapes, messageStyle).map(new JVMValidationReport(_))
 
   override def shapes(shapes: Seq[ValidationSpecification], functionsUrl: String): RdfModel = {
     val shapesModel = new JenaRdfModel()
-    new ValidationRdfModelEmitter("AMF", shapesModel).emit(shapes)
+    new ValidationRdfModelEmitter(AMF, shapesModel).emit(shapes)
     shapesModel
   }
 

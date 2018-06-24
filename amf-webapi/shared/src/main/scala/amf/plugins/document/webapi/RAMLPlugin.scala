@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi
 
 import amf.ProfileNames
-import amf.ProfileNames.RAML
+import amf.ProfileNames.{ProfileName, RAML}
 import amf.core.emitter.RenderOptions
 import amf.core.Root
 import amf.core.model.document._
@@ -111,7 +111,7 @@ sealed trait RAMLPlugin extends BaseWebApiPlugin {
 object RAML08Plugin extends RAMLPlugin {
   override def version: String = "0.8"
 
-  override val validationProfile: String = ProfileNames.RAML08
+  override val validationProfile: ProfileName = ProfileNames.RAML08
 
   def canParse(root: Root): Boolean = {
     RamlHeader(root) exists {
@@ -155,8 +155,8 @@ object RAML08Plugin extends RAMLPlugin {
     */
   override def resolve(unit: BaseUnit, pipelineId: String = "default"): BaseUnit = {
     pipelineId match {
-      case ResolutionPipeline.DEFAULT_PIPELINE => new Raml08ResolutionPipeline().resolve(unit)
-      case ResolutionPipeline.EDITING_PIPELINE => new Raml08EditingPipeline().resolve(unit)
+      case ResolutionPipeline.DEFAULT_PIPELINE => new Raml08ResolutionPipeline(unit).resolve()
+      case ResolutionPipeline.EDITING_PIPELINE => new Raml08EditingPipeline(unit).resolve()
     }
   }
 }
@@ -165,7 +165,7 @@ object RAML10Plugin extends RAMLPlugin {
 
   override def version: String = "1.0"
 
-  override val validationProfile: String = RAML
+  override val validationProfile: ProfileName = RAML
 
   def canParse(root: Root): Boolean = RamlHeader(root) exists {
     case Raml10 | Raml10Overlay | Raml10Extension | Raml10Library => true
@@ -214,8 +214,8 @@ object RAML10Plugin extends RAMLPlugin {
     */
   override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = {
     pipelineId match {
-      case ResolutionPipeline.DEFAULT_PIPELINE => new Raml10ResolutionPipeline().resolve(unit)
-      case ResolutionPipeline.EDITING_PIPELINE => new Raml10EditingPipeline().resolve(unit)
+      case ResolutionPipeline.DEFAULT_PIPELINE => new Raml10ResolutionPipeline(unit).resolve()
+      case ResolutionPipeline.EDITING_PIPELINE => new Raml10EditingPipeline(unit).resolve()
     }
   }
 }

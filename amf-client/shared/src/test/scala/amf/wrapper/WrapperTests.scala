@@ -1,5 +1,6 @@
 package amf.wrapper
 
+import amf.ProfileNames.{ProfileName, RAML, RAMLStyle}
 import amf.client.AMF
 import amf.client.convert.NativeOps
 import amf.client.convert.WebApiClientConverters._
@@ -141,7 +142,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     for {
       _           <- AMF.init().asFuture
       unit        <- new RamlParser().parseFileAsync(zencoder).asFuture
-      report      <- AMF.validate(unit, "RAML").asFuture
+      report      <- AMF.validate(unit, RAML).asFuture
       profileName <- AMF.loadValidationProfile(profile).asFuture
       custom      <- AMF.validate(unit, profileName).asFuture
     } yield {
@@ -155,7 +156,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       _        <- AMF.init().asFuture
       unit     <- new RamlParser().parseFileAsync(zencoder).asFuture
       resolved <- Future.successful(AMF.resolveRaml10(unit))
-      report   <- AMF.validate(resolved, "RAML").asFuture
+      report   <- AMF.validate(resolved, RAML).asFuture
     } yield {
       assert(report.conforms)
     }
@@ -166,7 +167,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       _           <- AMF.init().asFuture
       dialectName <- AMF.registerDialect(demosDialect).asFuture
       unit        <- new RamlParser().parseFileAsync(demosInstance).asFuture
-      report      <- AMF.validate(unit, "Eng Demos 0.1").asFuture
+      report      <- AMF.validate(unit, ProfileName("Eng Demos 0.1")).asFuture
     } yield {
       AMF.registerNamespace("eng-demos", "http://mulesoft.com/vocabularies/eng-demos#")
       val elem = unit.asInstanceOf[DialectInstance].encodes
@@ -285,7 +286,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       _           <- AMF.init().asFuture
       dialectName <- Vocabularies.registerDialect(demos2Dialect, env).asFuture
       unit        <- new RamlParser().parseFileAsync(demosInstance).asFuture
-      report      <- AMF.validate(unit, "Eng Demos 0.1").asFuture
+      report      <- AMF.validate(unit, ProfileName("Eng Demos 0.1")).asFuture
     } yield {
       AMF.registerNamespace("eng-demos", "http://mulesoft.com/vocabularies/eng-demos#")
       val elem = unit.asInstanceOf[DialectInstance].encodes
@@ -310,7 +311,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     for {
       _      <- AMF.init().asFuture
       unit   <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(music).asFuture
-      report <- AMF.validate(unit, "RAML", "RAML").asFuture
+      report <- AMF.validate(unit, RAML, RAMLStyle).asFuture
     } yield {
       assert(!unit.references().asSeq.map(_.location).contains(null))
       assert(report.conforms)

@@ -1,11 +1,9 @@
 package amf.plugins.document.webapi.resolution.pipelines
 
 import amf.ProfileNames
-import amf.plugins.document.webapi.resolution.stages.ExtensionsResolutionStage
-import amf.plugins.domain.webapi.resolution.stages.ParametersNormalizationStage
+import amf.ProfileNames.ProfileName
+import amf.core.model.document.BaseUnit
 
-class Raml08ResolutionPipeline extends AmfResolutionPipeline {
-  override val profileName: String = ProfileNames.RAML08
-  override val parameters          = new ParametersNormalizationStage(ProfileNames.RAML08)
-  override val extensions          = new ExtensionsResolutionStage(ProfileNames.RAML08, keepEditingInfo = false)
+class Raml08ResolutionPipeline(override val model: BaseUnit) extends AmfResolutionPipeline(model) {
+  override def profileName: ProfileName = ProfileNames.RAML08
 }

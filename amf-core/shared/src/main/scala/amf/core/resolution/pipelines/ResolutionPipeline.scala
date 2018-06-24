@@ -1,42 +1,52 @@
 package amf.core.resolution.pipelines
 
+import amf.ProfileNames.ProfileName
 import amf.core.AMFCompilerRunCount
 import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.BaseUnit
 import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 
-abstract class ResolutionPipeline {
+trait ResolutionPipeline[T <: BaseUnit] {
 
-  var model: Option[BaseUnit] = None
+  val model: T
 
-  def resolve[T <: BaseUnit](model: T): T
+  // todo: replace for actual context when remove static error collection
+  // default should be unhandled? or we need to provide a result at resolution??
+  implicit val errorHandler: ErrorHandler = {
 
-  protected def step(stage: ResolutionStage): Unit = {
-    ExecutionLog.log(s"ResolutionPipeline#step: applying resolution stage ${stage.getClass.getName}")
-    model = Some(stage.resolve(model.get))
-    ExecutionLog.log(s"ResolutionPipeline#step: finished applying stage ${stage.getClass.getName}")
-  }
-
-  protected def withModel[T <: BaseUnit](unit: T)(block: () => Unit): T = {
-    model = Some(unit)
-    block()
-    model.get.asInstanceOf[T]
-  }
-
-  protected def errorHandlerForModel(model: BaseUnit): ErrorHandler = {
     new ErrorHandler {
       override val parserCount: Int = {
         // this can get not set if the model has been created manually without parsing
         model.parserRun match {
           case Some(run) => run
-          case None      =>
+          case None =>
             model.parserRun = Some(AMFCompilerRunCount.nextRun())
             model.parserRun.get
         }
       }
       override val currentFile: String = model.location
     }
+  }
+
+  def profileName: ProfileName
+  protected val steps: Seq[ResolutionStage]
+
+  final def resolve(): T = {
+    ExecutionLog.log(s"${this.getClass.getName}#resolve: resolving ${model.location}")
+    var m = model
+    steps.foreach { s =>
+      m = step(m, s)
+    }
+    ExecutionLog.log(s"${this.getClass.getName}#resolve: resolved model ${m.location}")
+    m
+  }
+
+  protected def step(unit: T, stage: ResolutionStage): T = {
+    ExecutionLog.log(s"ResolutionPipeline#step: applying resolution stage ${stage.getClass.getName}")
+    val resolved = stage.resolve(unit)
+    ExecutionLog.log(s"ResolutionPipeline#step: finished applying stage ${stage.getClass.getName}")
+    resolved
   }
 }
 

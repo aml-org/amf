@@ -1,16 +1,18 @@
 package amf.plugins.domain.webapi.resolution
 
 import amf.ProfileNames
+import amf.ProfileNames.ProfileName
 import amf.core.annotations.{Aliases, LexicalInformation}
 import amf.core.emitter.SpecOrdering
 import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
 import amf.core.model.domain.{AmfArray, DataNode, DomainElement, NamedDomainElement}
-import amf.core.parser.ParserContext
+import amf.core.parser.{ErrorHandler, ParserContext}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolvedNamedEntity}
 import amf.core.services.{RuntimeValidator, ValidationsMerger}
 import amf.core.validation.AMFValidationResult
 import amf.plugins.document.webapi.annotations.ExtensionProvenance
 import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorEndPoint
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.features.validation.ParserSideValidations
@@ -20,12 +22,12 @@ import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 object ExtendsHelper {
-  def custom(profile: String): RamlWebApiContext = profile match {
+  def custom(profile: ProfileName): RamlWebApiContext = profile match {
     case ProfileNames.RAML08 => new CustomRaml08WebApiContext()
     case _                   => new CustomRaml10WebApiContext()
   }
 
-  def asOperation[T <: BaseUnit](profile: String,
+  def asOperation[T <: BaseUnit](profile: ProfileName,
                                  node: DataNode,
                                  unit: T,
                                  name: String,
@@ -91,13 +93,14 @@ object ExtendsHelper {
   }
 
   def asEndpoint[T <: BaseUnit](unit: T,
-                                profile: String,
+                                profile: ProfileName,
                                 dataNode: DataNode,
                                 name: String,
                                 extensionId: String,
                                 extensionLocation: Option[String],
                                 keepEditingInfo: Boolean,
-                                context: Option[RamlWebApiContext] = None): EndPoint = {
+                                context: Option[RamlWebApiContext] = None,
+                                errorHandler: ErrorHandler): EndPoint = {
     val ctx = context.getOrElse(custom(profile))
 
     val referencesCollector = mutable.Map[String, DomainElement]()
@@ -135,9 +138,17 @@ object ExtendsHelper {
     collector.toList match {
       case element :: Nil =>
         if (keepEditingInfo) annotateExtensionId(element, extensionId, extensionLocation)
-        new ReferenceResolutionStage(profile, keepEditingInfo).resolveDomainElement(element)
-      case Nil => throw new Exception(s"Couldn't parse an endpoint from resourceType '$name'.")
-      case _   => throw new Exception(s"Nested endpoints found in resourceType '$name'.")
+        new ReferenceResolutionStage(keepEditingInfo)(errorHandler).resolveDomainElement(element)
+      case Nil =>
+        errorHandler.violation(dataNode.id,
+                               s"Couldn't parse an endpoint from resourceType '$name'.",
+                               dataNode.annotations.find(classOf[LexicalInformation]))
+        ErrorEndPoint(dataNode.id, document.node)
+      case _ =>
+        errorHandler.violation(dataNode.id,
+                               s"Nested endpoints found in resourceType '$name'.",
+                               dataNode.annotations.find(classOf[LexicalInformation]))
+        ErrorEndPoint(dataNode.id, document.node)
     }
   }
 
@@ -198,7 +209,13 @@ object ExtendsHelper {
         }
         nestedDeclarations(ctx, m)
       case other =>
-        ctx.violation(ParserSideValidations.ResolutionErrorSpecification.id, other.id, None, "Error resolving nested declaration, found something that is not a library or a fragment", other.annotations.find(classOf[LexicalInformation]))
+        ctx.violation(
+          ParserSideValidations.ResolutionErrorSpecification.id,
+          other.id,
+          None,
+          "Error resolving nested declaration, found something that is not a library or a fragment",
+          other.annotations.find(classOf[LexicalInformation])
+        )
         other
     }
   }

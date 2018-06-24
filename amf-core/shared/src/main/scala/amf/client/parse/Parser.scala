@@ -1,6 +1,6 @@
 package amf.client.parse
 
-import amf.ProfileNames
+import amf.ProfileNames.{MessageStyle, ProfileName, RAMLStyle}
 import amf.client.convert.CoreClientConverters._
 import amf.client.environment.{DefaultEnvironment, Environment}
 import amf.client.model.document.BaseUnit
@@ -74,25 +74,25 @@ class Parser(vendor: String, mediaType: String, private val env: Option[Environm
 
   /**
     * Generates the validation report for the last parsed model.
-    * @param profile name of the profile to be parsed
+    * @param profile the profile to be parsed
     * @param messageStyle if a RAML/OAS profile, this can be set to the preferred error reporting styl
     * @return the AMF validation report
     */
   @JSExport
-  def reportValidation(profile: String, messageStyle: String): ClientFuture[ValidationReport] =
+  def reportValidation(profile: ProfileName, messageStyle: MessageStyle): ClientFuture[ValidationReport] =
     report(profile, messageStyle)
 
   @JSExport
-  def reportValidation(profile: String): ClientFuture[ValidationReport] = report(profile)
+  def reportValidation(profile: ProfileName): ClientFuture[ValidationReport] = report(profile)
 
   /**
     * Generates a custom validaton profile as specified in the input validation profile file
-    * @param profile name of the profile to be parsed
+    * @param profile the profile to be parsed
     * @param customProfilePath path to the custom profile file
     * @return the AMF validation report
     */
   @JSExport
-  def reportCustomValidation(profile: String, customProfilePath: String): ClientFuture[ValidationReport] =
+  def reportCustomValidation(profile: ProfileName, customProfilePath: String): ClientFuture[ValidationReport] =
     reportCustomValidationImplementation(profile, customProfilePath)
 
   private def parseAsync(url: String,
@@ -113,11 +113,12 @@ class Parser(vendor: String, mediaType: String, private val env: Option[Environm
 
   /**
     * Generates the validation report for the last parsed model.
-    * @param profileName name of the profile to be parsed
+    * @param profileName the profile to be parsed
     * @param messageStyle if a RAML/OAS profile, this can be set to the preferred error reporting style
     * @return the AMF validation report
     */
-  private def report(profileName: String, messageStyle: String = ProfileNames.RAML): ClientFuture[ValidationReport] = {
+  private def report(profileName: ProfileName,
+                     messageStyle: MessageStyle = RAMLStyle): ClientFuture[ValidationReport] = {
 
     val result = parsedModel.map(RuntimeValidator(_, profileName, messageStyle)) match {
       case Some(validation) => validation
@@ -133,7 +134,7 @@ class Parser(vendor: String, mediaType: String, private val env: Option[Environm
     * @param customProfilePath path to the custom profile file
     * @return the AMF validation report
     */
-  private def reportCustomValidationImplementation(profileName: String,
+  private def reportCustomValidationImplementation(profileName: ProfileName,
                                                    customProfilePath: String): ClientFuture[ValidationReport] = {
     val result = parsedModel match {
       case Some(model) =>

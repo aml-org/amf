@@ -1,5 +1,6 @@
 package amf.client.convert
 
+import amf.ProfileNames.ProfileName
 import amf.client.handler.{FileHandler, Handler}
 import amf.client.model.document.{BaseUnit => ClientBaseUnit}
 import amf.client.model.domain.{
@@ -9,13 +10,13 @@ import amf.client.model.domain.{
   DataNode => ClientDataNode,
   DomainElement => ClientDomainElement,
   DomainExtension => ClientDomainExtension,
+  Graph => ClientGraph,
   ObjectNode => ClientObjectNode,
   ParametrizedDeclaration => ClientParameterizedDeclaration,
   PropertyShape => ClientPropertyShape,
   ScalarNode => ClientScalarNode,
   Shape => ClientShape,
-  VariableValue => ClientVariableValue,
-  Graph => ClientGraph
+  VariableValue => ClientVariableValue
 }
 import amf.client.model.{
   Annotations => ClientAnnotations,
@@ -37,7 +38,7 @@ import amf.core.model.domain.templates.{AbstractDeclaration, ParametrizedDeclara
 import amf.core.parser.Annotations
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.{AMFValidationReport, AMFValidationResult}
-import amf.internal.resource.{ResourceLoaderAdapter, ResourceLoader}
+import amf.internal.resource.{ResourceLoader, ResourceLoaderAdapter}
 
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -68,13 +69,14 @@ trait CoreBaseConverter
   implicit def asInternal[Internal, Client](from: Client)(
       implicit m: ClientInternalMatcher[Client, Internal]): Internal = m.asInternal(from)
 
-  implicit object StringMatcher  extends IdentityMatcher[String]
-  implicit object BooleanMatcher extends IdentityMatcher[Boolean]
-  implicit object IntMatcher     extends IdentityMatcher[Int]
-  implicit object DoubleMatcher  extends IdentityMatcher[Double]
-  implicit object FloatMatcher   extends IdentityMatcher[Float]
-  implicit object AnyMatcher     extends IdentityMatcher[Any]
-  implicit object UnitMatcher    extends IdentityMatcher[Unit]
+  implicit object StringMatcher      extends IdentityMatcher[String]
+  implicit object BooleanMatcher     extends IdentityMatcher[Boolean]
+  implicit object IntMatcher         extends IdentityMatcher[Int]
+  implicit object DoubleMatcher      extends IdentityMatcher[Double]
+  implicit object FloatMatcher       extends IdentityMatcher[Float]
+  implicit object AnyMatcher         extends IdentityMatcher[Any]
+  implicit object UnitMatcher        extends IdentityMatcher[Unit]
+  implicit object ProfileNameMatcher extends IdentityMatcher[ProfileName]
 
   implicit object ContentMatcher extends IdentityMatcher[Content]
 

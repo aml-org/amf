@@ -76,15 +76,15 @@ class EditingResolutionTest extends BuildCycleTests {
   }
    */
 
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = config.target match {
-    case Raml08                => RAML08Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
-    case Raml | Raml10         => RAML10Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
-    case Oas3                  => OAS30Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
-    case Oas | Oas2 | Oas2Yaml => OAS20Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
-    case Amf                   => new AmfEditingPipeline().resolve(unit)
-    case target                => throw new Exception(s"Cannot resolve $target")
-    //    case _ => unit
-  }
+  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
+    config.target match {
+      case Raml08                => RAML08Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
+      case Raml | Raml10         => RAML10Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
+      case Oas3                  => OAS30Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
+      case Oas | Oas2 | Oas2Yaml => OAS20Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
+      case Amf                   => new AmfEditingPipeline(unit).resolve()
+      case target                => throw new Exception(s"Cannot resolve $target")
+    }
 
   override def render(unit: BaseUnit, config: CycleConfig): Future[String] = {
     new AMFRenderer(unit,

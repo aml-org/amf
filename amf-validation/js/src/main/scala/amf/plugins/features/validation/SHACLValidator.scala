@@ -1,5 +1,6 @@
 package amf.plugins.features.validation
 
+import amf.ProfileNames.{AMF, MessageStyle}
 import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
@@ -16,14 +17,15 @@ import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 @JSExportTopLevel("SHACLValidator")
 class SHACLValidator extends amf.core.validation.core.SHACLValidator {
 
-  var functionUrl: Option[String] = None
+  var functionUrl: Option[String]  = None
   var functionCode: Option[String] = None
 
-  def nativeShacl: js.Dynamic = if (js.isUndefined(js.Dynamic.global.SHACLValidator)) {
-    throw new Exception("Cannot find global SHACLValidator object")
-  }  else {
-    js.Dynamic.global.SHACLValidator
-  }
+  def nativeShacl: js.Dynamic =
+    if (js.isUndefined(js.Dynamic.global.SHACLValidator)) {
+      throw new Exception("Cannot find global SHACLValidator object")
+    } else {
+      js.Dynamic.global.SHACLValidator
+    }
 
   /**
     * Version of the validate function that retuern a JS promise instead of a Scala future
@@ -37,18 +39,26 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
   def validateJS(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): js.Promise[String] =
     validate(data, dataMediaType, shapes, shapesMediaType).toJSPromise
 
-  override def report(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): Future[ValidationReport] = {
-    val promise = Promise[ValidationReport]()
+  override def report(data: String,
+                      dataMediaType: String,
+                      shapes: String,
+                      shapesMediaType: String): Future[ValidationReport] = {
+    val promise   = Promise[ValidationReport]()
     val validator = js.Dynamic.newInstance(nativeShacl)()
     loadLibrary(validator)
-    validator.validate(data, dataMediaType, shapes, shapesMediaType, { (e: js.Error, report: js.Dynamic) =>
-      if (js.isUndefined(e) || e == null) {
-        val result = new JSValidationReport(report)
-        promise.success(result)
-      } else {
-        promise.failure(js.JavaScriptException(e))
+    validator.validate(
+      data,
+      dataMediaType,
+      shapes,
+      shapesMediaType, { (e: js.Error, report: js.Dynamic) =>
+        if (js.isUndefined(e) || e == null) {
+          val result = new JSValidationReport(report)
+          promise.success(result)
+        } else {
+          promise.failure(js.JavaScriptException(e))
+        }
       }
-    })
+    )
     promise.future
   }
 
@@ -61,7 +71,10 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
     * @return
     */
   @JSExport("report")
-  def reportJS(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): js.Promise[ValidationReport] =
+  def reportJS(data: String,
+               dataMediaType: String,
+               shapes: String,
+               shapesMediaType: String): js.Promise[ValidationReport] =
     report(data, dataMediaType, shapes, shapesMediaType).toJSPromise
 
   /**
@@ -77,16 +90,21 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
   }
 
   override def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): Future[String] = {
-    val promise = Promise[String]()
+    val promise   = Promise[String]()
     val validator = js.Dynamic.newInstance(nativeShacl)()
     loadLibrary(validator)
-    validator.validate(data, dataMediaType, shapes, shapesMediaType, { (e: js.Dynamic, r: js.Dynamic) =>
-      if (js.isUndefined(e) || e == null) {
-        promise.success(js.Dynamic.global.JSON.stringify(r).toString)
-      } else {
-        promise.failure(js.JavaScriptException(e))
+    validator.validate(
+      data,
+      dataMediaType,
+      shapes,
+      shapesMediaType, { (e: js.Dynamic, r: js.Dynamic) =>
+        if (js.isUndefined(e) || e == null) {
+          promise.success(js.Dynamic.global.JSON.stringify(r).toString)
+        } else {
+          promise.failure(js.JavaScriptException(e))
+        }
       }
-    })
+    )
     promise.future
   }
 
@@ -96,7 +114,9 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
     }
   }
 
-  override def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: String): Future[String] = {
+  override def validate(data: BaseUnit,
+                        shapes: Seq[ValidationSpecification],
+                        messageStyle: MessageStyle): Future[String] = {
     val promise = Promise[String]()
     try {
       ExecutionLog.log("SHACLValidator#validate: Creating SHACL-JS instance and loading JS libraries")
@@ -108,16 +128,18 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
       new RdfModelEmitter(dataModel).emit(data, RenderOptions().withValidation)
       ExecutionLog.log("SHACLValidator#validate: loading Jena shapes model")
       val shapesModel = new RdflibRdfModel()
-      new ValidationRdfModelEmitter(messageStyle, shapesModel).emit(shapes)
+      new ValidationRdfModelEmitter(messageStyle.profileName, shapesModel).emit(shapes)
 
-
-      validator.validateFroModels(dataModel.model, shapesModel.model, { (e: js.Dynamic, r: js.Dynamic) =>
-        if (js.isUndefined(e) || e == null) {
-          promise.success(js.Dynamic.global.JSON.stringify(r).toString)
-        } else {
-          promise.failure(js.JavaScriptException(e))
+      validator.validateFroModels(
+        dataModel.model,
+        shapesModel.model, { (e: js.Dynamic, r: js.Dynamic) =>
+          if (js.isUndefined(e) || e == null) {
+            promise.success(js.Dynamic.global.JSON.stringify(r).toString)
+          } else {
+            promise.failure(js.JavaScriptException(e))
+          }
         }
-      })
+      )
 
       promise.future
     } catch {
@@ -126,7 +148,9 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
     }
   }
 
-  override def report(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: String): Future[ValidationReport] = {
+  override def report(data: BaseUnit,
+                      shapes: Seq[ValidationSpecification],
+                      messageStyle: MessageStyle): Future[ValidationReport] = {
     val promise = Promise[ValidationReport]()
     try {
       ExecutionLog.log("SHACLValidator#validate: Creating SHACL-JS instance and loading JS libraries")
@@ -138,17 +162,19 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
       new RdfModelEmitter(dataModel).emit(data, RenderOptions().withValidation)
       ExecutionLog.log("SHACLValidator#validate: loading Jena shapes model")
       val shapesModel = new RdflibRdfModel()
-      new ValidationRdfModelEmitter(messageStyle, shapesModel).emit(shapes)
+      new ValidationRdfModelEmitter(messageStyle.profileName, shapesModel).emit(shapes)
 
-
-      validator.validateFromModels(dataModel.model, shapesModel.model, { (e: js.Dynamic, report: js.Dynamic) =>
-        if (js.isUndefined(e) || e == null) {
-          val result = new JSValidationReport(report)
-          promise.success(result)
-        } else {
-          promise.failure(js.JavaScriptException(e))
+      validator.validateFromModels(
+        dataModel.model,
+        shapesModel.model, { (e: js.Dynamic, report: js.Dynamic) =>
+          if (js.isUndefined(e) || e == null) {
+            val result = new JSValidationReport(report)
+            promise.success(result)
+          } else {
+            promise.failure(js.JavaScriptException(e))
+          }
         }
-      })
+      )
 
       promise.future
     } catch {
@@ -159,7 +185,7 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
 
   override def shapes(shapes: Seq[ValidationSpecification], functionsUrl: String): RdfModel = {
     val shapesModel = new RdflibRdfModel()
-    new ValidationRdfModelEmitter("AMF", shapesModel, functionsUrl).emit(shapes)
+    new ValidationRdfModelEmitter(AMF, shapesModel, functionsUrl).emit(shapes)
     shapesModel
   }
 

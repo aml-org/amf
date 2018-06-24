@@ -1,6 +1,7 @@
 package amf.compiler
 
 import amf.ProfileNames
+import amf.ProfileNames.RAMLStyle
 import amf.client.remote.Content
 import amf.core.exception.CyclicReferenceException
 import amf.core.model.document.{BaseUnit, Document, ExternalFragment}
@@ -112,7 +113,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
               RamlYamlHint,
               validation = Some(v))
           .flatMap(bu => {
-            v.validate(bu, ProfileNames.RAML, ProfileNames.RAML)
+            v.validate(bu, ProfileNames.RAML, RAMLStyle)
           })
       })
       .map(r => {

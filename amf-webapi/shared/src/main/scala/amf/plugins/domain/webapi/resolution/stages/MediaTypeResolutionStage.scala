@@ -1,6 +1,7 @@
 package amf.plugins.domain.webapi.resolution.stages
 
 import amf.ProfileNames
+import amf.ProfileNames.ProfileName
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.{AmfScalar, DomainElement}
@@ -14,15 +15,16 @@ import amf.plugins.domain.webapi.models.{Payload, WebApi}
   * Request payloads will have as default mime type the 'accepts' field.
   * Response payloads will have as default mime type the 'contentType' field.
   */
-class MediaTypeResolutionStage(profile: String, errorHandler: ErrorHandler) extends ResolutionStage(profile) {
-  override def resolve(model: BaseUnit): BaseUnit = {
+class MediaTypeResolutionStage(profile: ProfileName)(override implicit val errorHandler: ErrorHandler)
+    extends ResolutionStage() {
+  override def resolve[T <: BaseUnit](model: T): T = {
     model match {
       case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
         resolvePayloads(doc.encodes.asInstanceOf[WebApi])
         resolveMediaTypes(doc.encodes.asInstanceOf[WebApi])
       case _ =>
     }
-    model
+    model.asInstanceOf[T]
   }
 
   def resolvePayloads(api: WebApi): Unit = {

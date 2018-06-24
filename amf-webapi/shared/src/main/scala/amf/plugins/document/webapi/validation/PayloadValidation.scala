@@ -24,7 +24,7 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
                              validations: EffectiveValidations = EffectiveValidations())
     extends WebApiValidations {
 
-  val profiles: ListBuffer[ValidationProfile] = ListBuffer[ValidationProfile]()
+  val profiles: ListBuffer[ValidationProfile]                  = ListBuffer[ValidationProfile]()
   val validationsCache: mutable.Map[String, ValidationProfile] = mutable.Map()
 
   def validate(): Future[AMFValidationReport] = {
@@ -64,7 +64,7 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
 
 //      var finalValidations          = Seq(entryValidationWithTarget) ++ restValidations
 
-    val targetValidations =   new mutable.LinkedHashMap[String, ValidationSpecification]()
+    val targetValidations = new mutable.LinkedHashMap[String, ValidationSpecification]()
     targetValidations.put(entryValidationWithTarget.id, entryValidationWithTarget)
     for (v <- localProfile.validations.tail) targetValidations.put(v.id, v)
 
@@ -72,7 +72,6 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
 
     profiles += localProfile.copy(validations = finalValidations.values.toSeq)
   }
-
 
   protected def profileForShape(shape: Shape, dataNode: DataNode): ValidationProfile = {
     if (shape.isInstanceOf[AnyShape] && shape.asInstanceOf[AnyShape].supportsInheritance) {
@@ -99,13 +98,15 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
   // Recursively traverse the tree of shape nodes and data nodes setting the target of the
   // shape validation to point to the matching node in the data nodes tree
   // We will also set pattern matching properties here.
-  protected def processTargets(validation: ValidationSpecification,
-                               node: DataNode,
-                               validations: mutable.Map[String, ValidationSpecification]): mutable.Map[String, ValidationSpecification] = node match {
-    case obj: ObjectNode  => processObjectNode(obj, validation, node, validations)
-    case array: ArrayNode => processArrayNode(array, validation, node, validations)
-    case _: ScalarNode    => filterValidations(validation, node, validations)
-  }
+  protected def processTargets(
+      validation: ValidationSpecification,
+      node: DataNode,
+      validations: mutable.Map[String, ValidationSpecification]): mutable.Map[String, ValidationSpecification] =
+    node match {
+      case obj: ObjectNode  => processObjectNode(obj, validation, node, validations)
+      case array: ArrayNode => processArrayNode(array, validation, node, validations)
+      case _: ScalarNode    => filterValidations(validation, node, validations)
+    }
 
   private def processObjectNode(obj: ObjectNode,
                                 validation: ValidationSpecification,
@@ -124,7 +125,7 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
       pc                <- allProperties
       if pc.ramlPropertyId.endsWith(s"#$propName") || matchPatternedProperty(pc, propName)
       itemsValidationId <- pc.node
-      (id, v)  <- validationsAcc
+      (id, v)           <- validationsAcc
       if id == itemsValidationId
     } {
       validationsAcc = processTargets(v, nodes, validationsAcc)
@@ -141,7 +142,7 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
       pc <- validation.propertyConstraints
       if pc.ramlPropertyId == (Namespace.Rdf + "member").iri()
       itemsValidationId <- pc.node
-      (id, v)  <- validationsAcc
+      (id, v)           <- validationsAcc
       if id == itemsValidationId
       memberShape <- array.members
     } {

@@ -1,5 +1,6 @@
 package amf
 
+import amf.ProfileNames.{AMFStyle, MessageStyle, ProfileName}
 import amf.client.convert.CoreClientConverters._
 import amf.client.convert.CoreRegister
 import amf.client.model.document._
@@ -30,10 +31,12 @@ object Core extends PlatformSecrets {
 
   def resolver(vendor: String): Resolver = new Resolver(vendor)
 
-  def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): ClientFuture[ValidationReport] =
+  def validate(model: BaseUnit,
+               profileName: ProfileName,
+               messageStyle: MessageStyle = AMFStyle): ClientFuture[ValidationReport] =
     Validator.validate(model, profileName, messageStyle)
 
-  def loadValidationProfile(url: String): ClientFuture[String] = Validator.loadValidationProfile(url)
+  def loadValidationProfile(url: String): ClientFuture[ProfileName] = Validator.loadValidationProfile(url)
 
   def registerNamespace(alias: String, prefix: String): Boolean = platform.registerNamespace(alias, prefix).isDefined
 

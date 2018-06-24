@@ -23,12 +23,12 @@ trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
     defaultValue
   }
 
-  private def reportConstraint(id: String,
-                               node: String,
-                               property: Option[String],
-                               message: String,
-                               lexical: Option[LexicalInformation],
-                               level: String): Unit = {
+  protected def reportConstraint(id: String,
+                                 node: String,
+                                 property: Option[String],
+                                 message: String,
+                                 lexical: Option[LexicalInformation],
+                                 level: String): Unit = {
     RuntimeValidator.reportConstraintFailure(level, id, node, property, message, lexical, parserCount)
   }
 
@@ -152,4 +152,25 @@ case class WarningOnlyHandler(override val currentFile: String) extends ErrorHan
   private var warningRegister: Boolean = false
 
   def hasRegister: Boolean = warningRegister
+}
+
+trait UnhandledError extends ErrorHandler {
+  override def handle(node: YPart, e: SyamlException): Unit = {
+    throw new Exception(e.getMessage + " at: " + node.range, e)
+  }
+
+  override protected def reportConstraint(id: String,
+                                          node: String,
+                                          property: Option[String],
+                                          message: String,
+                                          lexical: Option[LexicalInformation],
+                                          level: String): Unit = {
+    throw new Exception(
+      s"  Message: $message\n  Target: $node\nProperty: ${property.getOrElse("")}\n  Position: $lexical\n")
+  }
+}
+object DefaultUnhandledError extends UnhandledError {
+  override val parserCount: Int    = AMFCompilerRunCount.count
+  override val currentFile: String = ""
+
 }

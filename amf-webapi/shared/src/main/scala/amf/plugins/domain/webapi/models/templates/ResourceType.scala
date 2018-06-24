@@ -1,10 +1,11 @@
 package amf.plugins.domain.webapi.models.templates
 
 import amf.ProfileNames
+import amf.ProfileNames.ProfileName
 import amf.core.metamodel.domain.templates.AbstractDeclarationModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.templates.AbstractDeclaration
-import amf.core.parser.{Annotations, Fields}
+import amf.core.parser.{Annotations, DefaultUnhandledError, ErrorHandler, Fields}
 import amf.plugins.domain.webapi.metamodel.templates.ResourceTypeModel
 import amf.plugins.domain.webapi.models.EndPoint
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
@@ -17,10 +18,12 @@ class ResourceType(override val fields: Fields, override val annotations: Annota
 
   override def meta: AbstractDeclarationModel = ResourceTypeModel
 
-  def asEndpoint[T <: BaseUnit](unit: T, profile: String = ProfileNames.RAML): EndPoint = {
+  def asEndpoint[T <: BaseUnit](unit: T,
+                                profile: ProfileName = ProfileNames.RAML,
+                                errorHandler: ErrorHandler = DefaultUnhandledError): EndPoint = {
     linkTarget match {
       case Some(_) =>
-        effectiveLinkTarget.asInstanceOf[ResourceType].asEndpoint(unit, profile)
+        effectiveLinkTarget.asInstanceOf[ResourceType].asEndpoint(unit, profile, errorHandler)
       case _ =>
         ExtendsHelper.asEndpoint(unit,
                                  profile,
@@ -28,7 +31,8 @@ class ResourceType(override val fields: Fields, override val annotations: Annota
                                  name.value(),
                                  id,
                                  ExtendsHelper.findUnitLocationOfElement(id, unit),
-                                 keepEditingInfo = false)
+                                 keepEditingInfo = false,
+                                 errorHandler = errorHandler)
     }
   }
 }

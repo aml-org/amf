@@ -1,6 +1,7 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
 import amf.ProfileNames
+import amf.ProfileNames.ProfileName
 import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.core.parser.ErrorHandler
 
@@ -8,7 +9,7 @@ import scala.collection.mutable
 
 private[plugins] class NormalizationContext(final val errorHandler: ErrorHandler,
                                             final val keepEditingInfo: Boolean,
-                                            final val profile: String,
+                                            final val profile: ProfileName,
                                             val cache: NormalizationCache = NormalizationCache()) {
 
   val isRaml08: Boolean                        = profile.equals(ProfileNames.RAML08)

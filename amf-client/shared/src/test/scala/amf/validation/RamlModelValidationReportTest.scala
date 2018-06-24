@@ -99,5 +99,13 @@ class RamlModelValidationReportTest extends ValidationReportGenTest {
     validate("/resource_types/optional-node-implemented.raml", Some("optional-node-implemented.report"))
   }
 
+  test("Test overlay without extends") {
+    validate("/extends/Overlay-Extension/overlay.raml", Some("overlay-without-extends.report"))
+  }
+
+  test("Test extension without extends") {
+    validate("/extends/Overlay-Extension/extension.raml", Some("extension-without-extends.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

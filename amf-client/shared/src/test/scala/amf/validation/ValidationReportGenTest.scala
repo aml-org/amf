@@ -1,6 +1,7 @@
 package amf.validation
 
 import amf.ProfileNames
+import amf.ProfileNames.ProfileName
 import amf.core.remote.{Hint, Oas, Raml, RamlYamlHint}
 import amf.core.validation.AMFValidationReport
 import amf.facades.{AMFCompiler, Validation}
@@ -15,7 +16,7 @@ trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTest {
   val reportsPath: String
   val hint: Hint
 
-  private lazy val defaultProfile: String = hint.vendor match {
+  private lazy val defaultProfile: ProfileName = hint.vendor match {
     case Raml => ProfileNames.RAML
     case Oas  => ProfileNames.OAS
     case _    => ProfileNames.AMF
@@ -41,7 +42,7 @@ trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTest {
 
   protected def validate(api: String,
                          golden: Option[String] = None,
-                         profile: String = defaultProfile,
+                         profile: ProfileName = defaultProfile,
                          profileFile: Option[String] = None): Future[Assertion] = {
     for {
       validation <- Validation(platform)
@@ -59,7 +60,7 @@ trait ValidModelTest extends ValidationReportGenTest {
   override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath: String = ""
 
-  protected def checkValid(api: String, profile: String = ProfileNames.RAML08): Future[Assertion] =
-    super.validate(api, None, ProfileNames.RAML, None)
+  protected def checkValid(api: String, profile: ProfileName = ProfileNames.RAML): Future[Assertion] =
+    super.validate(api, None, profile, None)
 
 }

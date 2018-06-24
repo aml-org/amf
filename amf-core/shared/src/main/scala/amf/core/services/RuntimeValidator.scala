@@ -1,5 +1,6 @@
 package amf.core.services
 
+import amf.ProfileNames.{AMFStyle, MessageStyle, ProfileName}
 import amf.core.annotations.LexicalInformation
 import amf.core.model.document.BaseUnit
 import amf.core.rdf.RdfModel
@@ -26,27 +27,27 @@ trait RuntimeValidator {
   /**
     * Loads a validation profile from a URL
     */
-  def loadValidationProfile(validationProfilePath: String): Future[String]
+  def loadValidationProfile(validationProfilePath: String): Future[ProfileName]
 
   /**
     * Low level validation returning a SHACL validation report
     */
   def shaclValidation(model: BaseUnit,
                       validations: EffectiveValidations,
-                      messageStyle: String): Future[ValidationReport]
+                      messageStyle: MessageStyle): Future[ValidationReport]
 
   /**
     * Returns a native RDF model with the SHACL shapes graph
     */
   def shaclModel(validations: Seq[ValidationSpecification],
                  validationFunctionUrl: String,
-                 messgeStyle: String = "AMF"): RdfModel
+                 messgeStyle: MessageStyle = AMFStyle): RdfModel
 
   /**
     * Main validation function returning an AMF validation report linking validation errors
     * for validations in the profile to domain elements in the model
     */
-  def validate(model: BaseUnit, profileName: String, messageStyle: String): Future[AMFValidationReport]
+  def validate(model: BaseUnit, profileName: ProfileName, messageStyle: MessageStyle): Future[AMFValidationReport]
 
   def reset()
 
@@ -73,7 +74,9 @@ trait RuntimeValidator {
     */
   def disableValidationsAsync[T]()(f: (() => Unit) => T): T
 
-  def aggregateReport(model: BaseUnit, profileName: String, messageStyle: String): Future[AMFValidationReport]
+  def aggregateReport(model: BaseUnit,
+                      profileName: ProfileName,
+                      messageStyle: MessageStyle): Future[AMFValidationReport]
 }
 
 object RuntimeValidator {
@@ -93,20 +96,22 @@ object RuntimeValidator {
 
   def shaclValidation(model: BaseUnit,
                       validations: EffectiveValidations,
-                      messageStyle: String = "AMF"): Future[ValidationReport] =
+                      messageStyle: MessageStyle = AMFStyle): Future[ValidationReport] =
     validator.shaclValidation(model, validations, messageStyle)
 
   def shaclModel(validations: Seq[ValidationSpecification],
                  validationFunctionUrl: String,
-                 messageStyle: String = "AMF"): RdfModel =
+                 messageStyle: MessageStyle = AMFStyle): RdfModel =
     validator.shaclModel(validations, validationFunctionUrl, messageStyle)
 
-  def apply(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): Future[AMFValidationReport] =
+  def apply(model: BaseUnit,
+            profileName: ProfileName,
+            messageStyle: MessageStyle = AMFStyle): Future[AMFValidationReport] =
     validator.validate(model, profileName, messageStyle)
 
   def aggregateReport(model: BaseUnit,
-                      profileName: String,
-                      messageStyle: String = "AMF"): Future[AMFValidationReport] =
+                      profileName: ProfileName,
+                      messageStyle: MessageStyle = AMFStyle): Future[AMFValidationReport] =
     validator.aggregateReport(model, profileName, messageStyle)
 
   def reset() = validator.reset()

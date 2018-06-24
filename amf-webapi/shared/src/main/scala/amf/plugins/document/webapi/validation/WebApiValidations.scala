@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.validation
 
+import amf.ProfileNames.{MessageStyle, ProfileName}
 import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
@@ -18,19 +19,19 @@ trait WebApiValidations extends ValidationResultProcessor {
 
   val defaultValidationProfiles = DefaultAMFValidations.profiles().foldLeft(Map[String, () => ValidationProfile]()) {
     case (acc, profile) =>
-      acc.updated(profile.name, { () =>
+      acc.updated(profile.name.profile, { () =>
         profile
       })
   }
 
   protected def validationRequestsForBaseUnit(unresolvedUnit: BaseUnit,
-                                              profile: String,
+                                              profile: ProfileName,
                                               validations: EffectiveValidations,
-                                              messageStyle: String,
+                                              messageStyle: MessageStyle,
                                               platform: Platform): Future[AMFValidationReport] = {
 
     // Before validating we need to resolve to get all the model information
-    val baseUnit = new ValidationResolutionPipeline(profile).resolve(unresolvedUnit)
+    val baseUnit = new ValidationResolutionPipeline(profile, unresolvedUnit).resolve()
     aggregatedReport = List()
     RuntimeValidator.aggregateReport(baseUnit, profile, messageStyle) flatMap {
       case resolutionResults if !resolutionResults.conforms => Future.successful(resolutionResults)
@@ -39,13 +40,13 @@ trait WebApiValidations extends ValidationResultProcessor {
   }
 
   private def validateModel(baseUnit: BaseUnit,
-                            profile: String,
+                            profile: ProfileName,
                             platform: Platform,
-                            messageStyle: String,
+                            messageStyle: MessageStyle,
                             validations: EffectiveValidations) = {
     for {
       examplesResults <- UnitPayloadsValidation(baseUnit, platform).validate()
-      shaclReport     <- {
+      shaclReport <- {
         ExecutionLog.log("WebApiValidations#validationRequestsForBaseUnit: validating now WebAPI")
         RuntimeValidator.shaclValidation(baseUnit, validations, messageStyle)
       }
@@ -134,7 +135,7 @@ trait WebApiValidations extends ValidationResultProcessor {
 
   def buildValidationWithCustomLevelForProfile(model: BaseUnit,
                                                result: AMFValidationResult,
-                                               messageStyle: String,
+                                               messageStyle: MessageStyle,
                                                validations: EffectiveValidations): Option[AMFValidationResult] = {
     Some(result.copy(level = findLevel(result.validationId, validations)))
   }

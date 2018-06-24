@@ -1,6 +1,6 @@
 package amf.core.validation
 
-import amf.ProfileNames
+import amf.ProfileNames.{MessageStyle, OASStyle, RAMLStyle}
 import amf.core.model.document.BaseUnit
 import amf.core.validation.core.{ValidationResult, ValidationSpecification}
 import amf.core.vocabulary.Namespace
@@ -10,7 +10,7 @@ import scala.collection.mutable
 trait ValidationResultProcessor {
 
   protected def processAggregatedResult(result: AMFValidationResult,
-                                        messageStyle: String,
+                                        messageStyle: MessageStyle,
                                         validations: EffectiveValidations): AMFValidationResult = {
     val spec = validations.all.get(result.validationId) match {
       case Some(s) => s
@@ -18,9 +18,9 @@ trait ValidationResultProcessor {
     }
 
     var message: String = messageStyle match {
-      case ProfileNames.RAML | ProfileNames.RAML08 => spec.ramlMessage.getOrElse(result.message)
-      case ProfileNames.OAS                        => spec.oasMessage.getOrElse(result.message)
-      case _                                       => spec.message
+      case RAMLStyle => spec.ramlMessage.getOrElse(result.message)
+      case OASStyle  => spec.oasMessage.getOrElse(result.message)
+      case _         => spec.message
     }
     if (message == "") {
       message = "Constraint violation"
@@ -42,7 +42,7 @@ trait ValidationResultProcessor {
 
   protected def buildValidationResult(model: BaseUnit,
                                       result: ValidationResult,
-                                      messageStyle: String,
+                                      messageStyle: MessageStyle,
                                       validations: EffectiveValidations): Option[AMFValidationResult] = {
     val validationSpecToLook = if (result.sourceShape.startsWith(Namespace.Data.base)) {
       result.sourceShape
@@ -78,9 +78,9 @@ trait ValidationResultProcessor {
     maybeTargetSpec match {
       case Some(targetSpec) =>
         var message = messageStyle match {
-          case ProfileNames.RAML | ProfileNames.RAML08 => targetSpec.ramlMessage.getOrElse(targetSpec.message)
-          case ProfileNames.OAS                        => targetSpec.ramlMessage.getOrElse(targetSpec.message)
-          case _                                       => Option(targetSpec.message).getOrElse(result.message.getOrElse(""))
+          case RAMLStyle => targetSpec.ramlMessage.getOrElse(targetSpec.message)
+          case OASStyle  => targetSpec.ramlMessage.getOrElse(targetSpec.message)
+          case _         => Option(targetSpec.message).getOrElse(result.message.getOrElse(""))
         }
 
         if (Option(message).isEmpty || message == "") {

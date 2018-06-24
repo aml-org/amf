@@ -1,13 +1,13 @@
 package amf.plugins.document.webapi.resolution.pipelines
 
+import amf.ProfileNames.ProfileName
 import amf.core.annotations.LexicalInformation
-import amf.core.benchmark.ExecutionLog
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
 import amf.core.parser.ErrorHandler
 import amf.core.resolution.pipelines.ResolutionPipeline
-import amf.core.resolution.stages.ReferenceResolutionStage
+import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 import amf.plugins.document.webapi.resolution.stages.ExtensionsResolutionStage
 import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
 import amf.plugins.domain.shapes.resolution.stages.shape_normalization.{
@@ -16,10 +16,9 @@ import amf.plugins.domain.shapes.resolution.stages.shape_normalization.{
 }
 import amf.plugins.features.validation.ParserSideValidations
 
-class ValidationShapeNormalisationStage(profile: String,
-                                        override val keepEditingInfo: Boolean,
-                                        errorHandler: ErrorHandler)
-    extends ShapeNormalizationStage(profile, keepEditingInfo, errorHandler) {
+class ValidationShapeNormalisationStage(profile: ProfileName, override val keepEditingInfo: Boolean)(
+    override implicit val errorHandler: ErrorHandler)
+    extends ShapeNormalizationStage(profile, keepEditingInfo) {
 
   override protected val context: NormalizationContext = HandledNormalizationContext()
 
@@ -44,22 +43,14 @@ class ValidationShapeNormalisationStage(profile: String,
   }
 }
 
-class ValidationResolutionPipeline(profile: String) extends ResolutionPipeline {
+class ValidationResolutionPipeline(profile: ProfileName, override val model: BaseUnit)
+    extends ResolutionPipeline[BaseUnit] {
 
-  val references = new ReferenceResolutionStage(profile, keepEditingInfo = false)
-  val extensions = new ExtensionsResolutionStage(profile, keepEditingInfo = false)
+  override protected val steps: Seq[ResolutionStage] = Seq(
+    new ReferenceResolutionStage(keepEditingInfo = false),
+    new ExtensionsResolutionStage(profile, keepEditingInfo = false),
+    new ValidationShapeNormalisationStage(profile, keepEditingInfo = false)
+  )
 
-  override def resolve[T <: BaseUnit](model: T): T = {
-
-    val shapes = new ValidationShapeNormalisationStage(profile, keepEditingInfo = false, errorHandlerForModel(model))
-
-    ExecutionLog.log(s"ValidationResolutionPipeline#resolve: resolving ${model.location}")
-    withModel(model) { () =>
-      step(references)
-      step(extensions)
-      step(shapes)
-      ExecutionLog.log(s"ValidationResolutionPipeline#resolve: resolution finished ${model.location}")
-    }
-  }
-
+  override def profileName: ProfileName = profile
 }

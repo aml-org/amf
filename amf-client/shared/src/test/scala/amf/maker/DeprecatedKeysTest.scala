@@ -1,6 +1,7 @@
 package amf.maker
 
 import amf.ProfileNames
+import amf.ProfileNames.ProfileName
 import amf.compiler.CompilerTestBuilder
 import amf.core.remote.RamlYamlHint
 import amf.core.validation.SeverityLevels
@@ -15,7 +16,7 @@ class DeprecatedKeysTest extends AsyncFunSuite with CompilerTestBuilder {
   private val basePath = "file://amf-client/shared/src/test/resources/maker/deprecatedwarnings/"
 
   case class FixtureResult(level: String, message: String)
-  case class Fixture(name: String, file: String, profileName: String, results: Seq[FixtureResult])
+  case class Fixture(name: String, file: String, profileName: ProfileName, results: Seq[FixtureResult])
 
   val fixture = List(
     Fixture(

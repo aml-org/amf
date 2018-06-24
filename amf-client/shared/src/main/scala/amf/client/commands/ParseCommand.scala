@@ -22,10 +22,10 @@ class ParseCommand(override val platform: Platform) extends TranslateCommand(pla
     }
 
     res.onComplete {
-      case Failure(ex: Throwable) => {
+
+      case Failure(ex: Throwable) =>
         config.stderr.print(ex)
         config.proc.exit(ExitCodes.Exception)
-      }
       case Success(other) => other
     }
 

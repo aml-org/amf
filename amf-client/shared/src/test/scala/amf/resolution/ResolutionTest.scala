@@ -18,7 +18,7 @@ abstract class ResolutionTest extends BuildCycleTests {
       case Raml | Raml10 => RAML10Plugin.resolve(unit)
       case Oas3          => OAS30Plugin.resolve(unit)
       case Oas | Oas2    => OAS20Plugin.resolve(unit)
-      case Amf           => new AmfResolutionPipeline().resolve(unit)
+      case Amf           => new AmfResolutionPipeline(unit).resolve()
       case target        => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit
     }

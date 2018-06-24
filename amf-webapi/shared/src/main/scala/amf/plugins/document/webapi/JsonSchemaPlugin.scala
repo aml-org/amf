@@ -5,7 +5,16 @@ import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document._
 import amf.core.model.domain.AnnotationGraphLoader
-import amf.core.parser.{EmptyFutureDeclarations, ParsedDocument, ParsedReference, ParserContext, Reference, ReferenceHandler, SchemaReference, SimpleReferenceHandler}
+import amf.core.parser.{
+  EmptyFutureDeclarations,
+  ParsedDocument,
+  ParsedReference,
+  ParserContext,
+  Reference,
+  ReferenceHandler,
+  SchemaReference,
+  SimpleReferenceHandler
+}
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.remote.{Oas3, Platform, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
@@ -45,7 +54,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
   override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
-    new OasResolutionPipeline().resolve(unit)
+    new OasResolutionPipeline(unit).resolve()
 
   /**
     * List of media types used to encode serialisations of

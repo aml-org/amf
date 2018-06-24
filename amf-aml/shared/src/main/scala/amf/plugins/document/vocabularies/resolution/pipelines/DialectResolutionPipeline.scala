@@ -1,17 +1,14 @@
 package amf.plugins.document.vocabularies.resolution.pipelines
 
 import amf.ProfileNames
-import amf.core.model.document.BaseUnit
+import amf.ProfileNames.ProfileName
 import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.stages.ResolutionStage
+import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.resolution.stages.DialectReferencesResolutionStage
 
-class DialectResolutionPipeline extends ResolutionPipeline {
+class DialectResolutionPipeline(override val model: Dialect) extends ResolutionPipeline[Dialect] {
 
-  val references = new DialectReferencesResolutionStage(ProfileNames.AMF)
-
-  override def resolve[T <: BaseUnit](model: T): T = {
-    withModel(model) { () =>
-      step(references)
-    }
-  }
+  override protected val steps: Seq[ResolutionStage] = Seq(new DialectReferencesResolutionStage())
+  override def profileName: ProfileName              = ProfileNames.AMF
 }

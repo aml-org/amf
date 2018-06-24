@@ -49,8 +49,8 @@ trait CommandHelper {
   }
 
   protected def parseInput(config: ParserConfig): Future[BaseUnit] = {
-    var inputFile   = ensureUrl(config.input.get)
-    val vendor = effectiveVendor(config.inputMediaType, config.inputFormat)
+    var inputFile = ensureUrl(config.input.get)
+    val vendor    = effectiveVendor(config.inputMediaType, config.inputFormat)
     val parsed = RuntimeCompiler(
       inputFile,
       Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
@@ -70,7 +70,7 @@ trait CommandHelper {
   protected def resolve(config: ParserConfig, unit: BaseUnit): Future[BaseUnit] = {
     val vendor = effectiveVendor(config.inputMediaType, config.inputFormat)
     if (config.resolve && config.validate) {
-      var inputFile   = ensureUrl(config.input.get)
+      var inputFile = ensureUrl(config.input.get)
       val parsed = RuntimeCompiler(
         inputFile,
         Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
@@ -86,8 +86,6 @@ trait CommandHelper {
       Future { unit }
     }
   }
-
-
 
   protected def generateOutput(config: ParserConfig, unit: BaseUnit): Future[Unit] = {
     val generateOptions = RenderOptions()

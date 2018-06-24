@@ -1,5 +1,6 @@
 package amf.core.validation.core
 
+import amf.ProfileNames.MessageStyle
 import amf.core.model.document.BaseUnit
 import amf.core.rdf.{RdfFramework, RdfModel}
 
@@ -8,8 +9,6 @@ import scala.concurrent.Future
 /**
   * Created by antoniogarrote on 17/07/2017.
   */
-
-
 /**
   * Interface for SHACL Validators in the different platforms
   */
@@ -27,7 +26,8 @@ trait SHACLValidator extends RdfFramework {
     */
   def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): Future[String]
 
-  def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: String): Future[String]
+  def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: MessageStyle): Future[String]
+
   /**
     * Validates a data graph against a shapes graph. Graphs are expressed as Strings in a particular format, identified
     * Returns ValidationReport object
@@ -39,7 +39,9 @@ trait SHACLValidator extends RdfFramework {
     */
   def report(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): Future[ValidationReport]
 
-  def report(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: String): Future[ValidationReport]
+  def report(data: BaseUnit,
+             shapes: Seq[ValidationSpecification],
+             messageStyle: MessageStyle): Future[ValidationReport]
 
   /**
     * Registers a library in the validator
@@ -48,7 +50,6 @@ trait SHACLValidator extends RdfFramework {
     * @return
     */
   def registerLibrary(url: String, code: String): Unit
-
 
   def emptyRdfModel(): RdfModel
   def shapes(shapes: Seq[ValidationSpecification], functionsUrl: String): RdfModel

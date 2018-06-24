@@ -1,6 +1,7 @@
 package amf.validation
 
 import amf.ProfileNames
+import amf.ProfileNames.RAMLStyle
 import amf.core.model.document.{Document, Module}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.vocabulary.Namespace.Xsd
@@ -30,7 +31,7 @@ class BuilderModelValidationTest extends AsyncFunSuite with PlatformSecrets with
 
     for {
       validation <- Validation(platform)
-      report     <- validation.validate(module, ProfileNames.RAML, ProfileNames.RAML)
+      report     <- validation.validate(module, ProfileNames.RAML, RAMLStyle)
     } yield {
       report.conforms should be(true)
     }

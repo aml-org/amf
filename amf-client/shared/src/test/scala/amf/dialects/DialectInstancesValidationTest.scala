@@ -1,5 +1,6 @@
 package amf.dialects
 
+import amf.ProfileNames.ProfileName
 import amf.core.AMFCompiler
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
@@ -112,7 +113,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
   test("custom validation profile for dialect") {
     customValidationProfile("eng_demos_dialect1.raml",
                             "eng_demos_instance1.raml",
-                            "eng_demos_profile.raml",
+                            ProfileName("eng_demos_profile.raml"),
                             "Custom Eng-Demos Validation",
                             6)
   }
@@ -120,7 +121,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
   test("custom validation profile for dialect default profile") {
     customValidationProfile("eng_demos_dialect1.raml",
                             "eng_demos_instance1.raml",
-                            "eng_demos_profile.raml",
+                            ProfileName("eng_demos_profile.raml"),
                             "Eng Demos 0.1",
                             0)
   }
@@ -128,7 +129,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
   test("custom validation profile for ABOUT dialect default profile") {
     customValidationProfile("ABOUT-dialect.raml",
                             "ABOUT.yaml",
-                            "ABOUT-validation.raml",
+                            ProfileName("ABOUT-validation.raml"),
                             "ABOUT-validation",
                             2,
                             productionPath)
@@ -137,7 +138,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
   test("Custom validation profile for ABOUT dialect default profile negative case") {
     customValidationProfile("ABOUT-dialect.raml",
                             "ABOUT.custom.errors.yaml",
-                            "ABOUT-validation.raml",
+                            ProfileName("ABOUT-validation.raml"),
                             "ABOUT-validation",
                             4,
                             productionPath)
@@ -170,7 +171,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
       report <- {
         RuntimeValidator(
           instance,
-          dialect.asInstanceOf[Dialect].nameAndVersion()
+          ProfileName(dialect.asInstanceOf[Dialect].nameAndVersion())
         )
       }
     } yield {
@@ -184,7 +185,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
 
   protected def customValidationProfile(dialect: String,
                                         instance: String,
-                                        profile: String,
+                                        profile: ProfileName,
                                         name: String,
                                         numErrors: Int,
                                         directory: String = basePath) = {
@@ -203,7 +204,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
       }
       profile <- {
         AMFValidatorPlugin.enabled = true
-        AMFValidatorPlugin.loadValidationProfile(directory + profile)
+        AMFValidatorPlugin.loadValidationProfile(directory + profile.profile)
       }
       instance <- {
         AMFValidatorPlugin.enabled = true
@@ -218,7 +219,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
       report <- {
         RuntimeValidator(
           instance,
-          name
+          ProfileName(name)
         )
       }
     } yield {
