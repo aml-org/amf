@@ -1,16 +1,13 @@
 package amf.plugins.document.webapi.validation
 
 import amf.ProfileNames.{MessageStyle, ProfileName}
-import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
-import amf.core.services.RuntimeValidator
 import amf.core.validation._
 import amf.core.validation.core.{ValidationProfile, ValidationResult, ValidationSpecification}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 trait WebApiValidations extends ValidationResultProcessor {
@@ -33,62 +30,6 @@ trait WebApiValidations extends ValidationResultProcessor {
     // Before validating we need to resolve to get all the model information
     val baseUnit = new ValidationResolutionPipeline(profile, unresolvedUnit).resolve()
     WebApiValidationsRunner(ValidationContext(baseUnit, profile, platform, messageStyle, validations)).runSteps
-//    aggregatedReport = List()
-//    RuntimeValidator.aggregateReport(baseUnit, profile, messageStyle) flatMap {
-//      case resolutionResults if !resolutionResults.conforms => Future.successful(resolutionResults)
-//      case _                                                => validateModel(baseUnit, profile, platform, messageStyle, validations)
-//    }
-  }
-
-  private def validateModel(baseUnit: BaseUnit,
-                            profile: ProfileName,
-                            platform: Platform,
-                            messageStyle: MessageStyle,
-                            validations: EffectiveValidations) = {
-    for {
-      examplesResults <- UnitPayloadsValidation(baseUnit, platform).validate()
-      shaclReport <- {
-        ExecutionLog.log("WebApiValidations#validationRequestsForBaseUnit: validating now WebAPI")
-        RuntimeValidator.shaclValidation(baseUnit, validations, messageStyle)
-      }
-    } yield {
-      // aggregating parser-side validations
-      var results = aggregatedReport.map(r => processAggregatedResult(r, messageStyle, validations))
-
-      // adding model-side validations
-      results ++= shaclReport.results
-        .map(r => buildValidationResult(baseUnit, r, messageStyle, validations))
-        .filter(_.isDefined)
-        .map(_.get)
-
-      // adding example validations
-      results ++= examplesResults
-        .map(r => buildValidationWithCustomLevelForProfile(baseUnit, r, messageStyle, validations))
-        .filter(_.isDefined)
-        .map(_.get)
-
-      AMFValidationReport(
-        conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
-        model = baseUnit.id,
-        profile = profile,
-        results = results
-      )
-    }
-  }
-
-  private def validatePayloads(baseUnit: BaseUnit,
-                               profile: ProfileName,
-                               platform: Platform,
-                               messageStyle: MessageStyle,
-                               validations: EffectiveValidations): Future[Seq[AMFValidationResult]] = {
-    UnitPayloadsValidation(baseUnit, platform)
-      .validate()
-      .map { results =>
-        results
-          .map(r => buildValidationWithCustomLevelForProfile(baseUnit, r, messageStyle, validations))
-          .filter(_.isDefined)
-          .map(_.get)
-      }
   }
 
   protected def buildPayloadValidationResult(model: BaseUnit,
@@ -147,13 +88,6 @@ trait WebApiValidations extends ValidationResultProcessor {
                                           AMFValidationResult.fromSHACLValidation(model, message, severity, result)))
       case _ => None
     }
-  }
-
-  def buildValidationWithCustomLevelForProfile(model: BaseUnit,
-                                               result: AMFValidationResult,
-                                               messageStyle: MessageStyle,
-                                               validations: EffectiveValidations): Option[AMFValidationResult] = {
-    Some(result.copy(level = findLevel(result.validationId, validations)))
   }
 
 }

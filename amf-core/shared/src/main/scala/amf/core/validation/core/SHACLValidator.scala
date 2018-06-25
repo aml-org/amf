@@ -1,8 +1,8 @@
 package amf.core.validation.core
 
-import amf.ProfileNames.MessageStyle
 import amf.core.model.document.BaseUnit
 import amf.core.rdf.{RdfFramework, RdfModel}
+import amf.core.services.ValidationOptions
 
 import scala.concurrent.Future
 
@@ -26,7 +26,7 @@ trait SHACLValidator extends RdfFramework {
     */
   def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): Future[String]
 
-  def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], messageStyle: MessageStyle): Future[String]
+  def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], options: ValidationOptions): Future[String]
 
   /**
     * Validates a data graph against a shapes graph. Graphs are expressed as Strings in a particular format, identified
@@ -41,7 +41,7 @@ trait SHACLValidator extends RdfFramework {
 
   def report(data: BaseUnit,
              shapes: Seq[ValidationSpecification],
-             messageStyle: MessageStyle): Future[ValidationReport]
+             options: ValidationOptions): Future[ValidationReport]
 
   /**
     * Registers a library in the validator

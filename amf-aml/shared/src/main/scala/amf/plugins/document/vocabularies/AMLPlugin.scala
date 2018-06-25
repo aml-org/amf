@@ -13,7 +13,7 @@ import amf.core.rdf.RdfModel
 import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.Platform
 import amf.core.resolution.pipelines.ResolutionPipeline
-import amf.core.services.RuntimeValidator
+import amf.core.services.{RuntimeValidator, ValidationOptions}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels, ValidationResultProcessor}
@@ -303,7 +303,8 @@ object AMLPlugin
         for {
           validationsFromDeps <- dependenciesValidations
           shaclReport <- RuntimeValidator.shaclValidation(resolvedModel,
-                                                          aggregateValidations(validations, validationsFromDeps))
+                                                          aggregateValidations(validations, validationsFromDeps),
+                                                          options = new ValidationOptions())
         } yield {
 
           // adding model-side validations

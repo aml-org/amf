@@ -2,9 +2,11 @@ package amf.plugins.document.webapi.validation
 
 import amf.ProfileNames.{MessageStyle, ProfileName}
 import amf.core.benchmark.ExecutionLog
+import amf.core.metamodel.Field
+import amf.core.metamodel.domain.DataNodeModel
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
-import amf.core.services.RuntimeValidator
+import amf.core.services.{RuntimeValidator, ValidationOptions}
 import amf.core.validation._
 import amf.core.validation.core.ValidationResult
 
@@ -53,12 +55,18 @@ trait ValidationStep extends ValidationResultProcessor {
   def endStep: Boolean
 }
 
+case class FilterDataNodeOptions() extends ValidationOptions {
+  override val filterFields: (Field) => Boolean = (f: Field) => f.`type` == DataNodeModel
+}
+
 case class ModelValidationStep(override val validationContext: ValidationContext) extends ValidationStep {
 
   override protected def validate(): Future[Seq[AMFValidationResult]] = {
     ExecutionLog.log("WebApiValidations#validationRequestsForBaseUnit: validating now WebAPI")
     RuntimeValidator
-      .shaclValidation(validationContext.baseUnit, validationContext.validations, validationContext.messageStyle)
+      .shaclValidation(validationContext.baseUnit,
+                       validationContext.validations,
+                       FilterDataNodeOptions().withMessageStyle(validationContext.messageStyle))
       .map { report =>
         report.results.flatMap { buildValidationResult }
       }

@@ -79,7 +79,7 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
         case _ => // Nothing to do
       }
 
-      modelFields.foreach { f: Field =>
+      modelFields.filter(options.renderField).foreach { f: Field =>
         schema.valueForField(f).foreach { amfValue =>
           val url = f.value.iri()
           schema match {
@@ -97,7 +97,7 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
 
       // workaround for lazy values in shape
 
-      obj.fields.map(element.fields.entryJsonld) foreach {
+      obj.fields.filter(options.renderField).map(element.fields.entryJsonld) foreach {
         case Some(FieldEntry(f, v)) =>
           val url = f.value.iri()
           sources.property(url)(v)
@@ -206,22 +206,13 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
           emitFloatLiteral(subject, property, v.value.asInstanceOf[AmfScalar].toString)
         case Type.DateTime =>
           val dateTime = v.value.asInstanceOf[AmfScalar].value.asInstanceOf[SimpleDateTime]
-          typedScalar(subject,
-            property,
-            dateTime.rfc3339,
-            (Namespace.Xsd + "dateTime").iri())
+          typedScalar(subject, property, dateTime.rfc3339, (Namespace.Xsd + "dateTime").iri())
         case Type.Date =>
           val dateTime = v.value.asInstanceOf[AmfScalar].value.asInstanceOf[SimpleDateTime]
           if (dateTime.timeOfDay.isDefined || dateTime.zoneOffset.isDefined) {
-            typedScalar(subject,
-              property,
-              dateTime.rfc3339,
-              (Namespace.Xsd + "dateTime").iri())
+            typedScalar(subject, property, dateTime.rfc3339, (Namespace.Xsd + "dateTime").iri())
           } else {
-            typedScalar(subject,
-                        property,
-              dateTime.rfc3339,
-              (Namespace.Xsd + "date").iri())
+            typedScalar(subject, property, dateTime.rfc3339, (Namespace.Xsd + "date").iri())
           }
         case a: SortedArray =>
           createSortedArray(subject, property, v.value.asInstanceOf[AmfArray].values, a.element)
@@ -321,11 +312,12 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
     private def createAnnotationNodes(id: String, sources: SourceMap): Unit = {
       sources.annotations.zipWithIndex.foreach({
         case ((a, values), i) =>
-          values.zipWithIndex.foreach { case((iri, v),j) =>
-            val valueNodeId = s"${id}_${i}_$j"
-            rdfmodel.addTriple(id, ValueType(Namespace.SourceMaps, a).iri(), valueNodeId)
-            rdfmodel.addTriple(valueNodeId, SourceMapModel.Element.value.iri(), iri)
-            rdfmodel.addTriple(valueNodeId, SourceMapModel.Value.value.iri(), v, None)
+          values.zipWithIndex.foreach {
+            case ((iri, v), j) =>
+              val valueNodeId = s"${id}_${i}_$j"
+              rdfmodel.addTriple(id, ValueType(Namespace.SourceMaps, a).iri(), valueNodeId)
+              rdfmodel.addTriple(valueNodeId, SourceMapModel.Element.value.iri(), iri)
+              rdfmodel.addTriple(valueNodeId, SourceMapModel.Value.value.iri(), v, None)
           }
       })
     }

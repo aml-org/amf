@@ -1,10 +1,10 @@
 package amf.parser
 
-import amf.ProfileNames.MessageStyle
 import amf.core.model.document.BaseUnit
-import amf.core.validation.core.{SHACLValidator, ValidationReport, ValidationSpecification}
 import amf.core.parser._
 import amf.core.rdf.RdfModel
+import amf.core.services.ValidationOptions
+import amf.core.validation.core.{SHACLValidator, ValidationReport, ValidationSpecification}
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 import org.yaml.model._
@@ -148,12 +148,12 @@ class ParserTest extends FunSuite {
 
       override def validate(data: BaseUnit,
                             shapes: Seq[ValidationSpecification],
-                            messageStyle: MessageStyle): Future[String] =
+                            options: ValidationOptions): Future[String] =
         throw new Exception("Validation not supported")
 
       override def report(data: BaseUnit,
                           shapes: Seq[ValidationSpecification],
-                          messageStyle: MessageStyle): Future[ValidationReport] =
+                          options: ValidationOptions): Future[ValidationReport] =
         throw new Exception("Validation not supported")
 
       override def emptyRdfModel(): RdfModel = throw new Exception("Validation not supported")

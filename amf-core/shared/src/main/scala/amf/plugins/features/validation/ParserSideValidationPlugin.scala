@@ -6,7 +6,7 @@ import amf.core.annotations.LexicalInformation
 import amf.core.model.document.BaseUnit
 import amf.core.plugins.{AMFFeaturePlugin, AMFPlugin}
 import amf.core.rdf.RdfModel
-import amf.core.services.{IgnoreValidationsMerger, RuntimeValidator, ValidationsMerger}
+import amf.core.services.{IgnoreValidationsMerger, RuntimeValidator, ValidationOptions, ValidationsMerger}
 import amf.core.validation._
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationResult, ValidationSpecification}
 
@@ -117,7 +117,7 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
     */
   override def shaclValidation(model: BaseUnit,
                                validations: EffectiveValidations,
-                               messageStyle: MessageStyle): Future[ValidationReport] = Future {
+                               options: ValidationOptions): Future[ValidationReport] = Future {
     new ValidationReport {
       override def conforms: Boolean               = false
       override def results: List[ValidationResult] = Nil

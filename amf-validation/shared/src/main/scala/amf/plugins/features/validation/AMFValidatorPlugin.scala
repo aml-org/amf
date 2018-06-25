@@ -8,7 +8,7 @@ import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Context
-import amf.core.services.{RuntimeCompiler, RuntimeValidator}
+import amf.core.services.{RuntimeCompiler, RuntimeValidator, ValidationOptions}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationSpecification}
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations}
@@ -147,7 +147,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
 
   override def shaclValidation(model: BaseUnit,
                                validations: EffectiveValidations,
-                               messageStyle: MessageStyle): Future[ValidationReport] = {
+                               options: ValidationOptions): Future[ValidationReport] = {
     ExecutionLog.log(
       s"AMFValidatorPlugin#shaclValidation: shacl validation for ${validations.effective.values.size} validations")
     // println(s"VALIDATIONS: ${validations.effective.values.size} / ${validations.all.values.size} => $profileName")
@@ -170,7 +170,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: Invoking platform validation")
 
 //    ValidationMutex.synchronized {
-    PlatformValidator.instance.report(data, shapes, messageStyle).map {
+    PlatformValidator.instance.report(data, shapes, options).map {
       case report =>
         ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: validation finished")
         report

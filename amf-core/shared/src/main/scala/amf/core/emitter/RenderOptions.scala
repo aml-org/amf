@@ -2,6 +2,7 @@ package amf.core.emitter
 
 import amf.plugins.document.graph.parser.ScalarEmitter
 import amf.client.render.{RenderOptions => ClientRenderOptions}
+import amf.core.metamodel.Field
 
 /**
   * Render options
@@ -13,6 +14,7 @@ class RenderOptions {
   private var compactUris: Boolean                 = false
   private var rawSourceMaps: Boolean               = false
   private var validating: Boolean                  = false
+  private var filterFields: (Field) => Boolean     = (_: Field) => false
 
   /** Include source maps when rendering to graph. */
   def withSourceMaps: RenderOptions = {
@@ -61,21 +63,29 @@ class RenderOptions {
     this
   }
 
+  def withFilterFieldsFunc(f: (Field) => Boolean): RenderOptions = {
+    filterFields = f
+    this
+  }
+
   def isCompactUris: Boolean                  = compactUris
   def isWithSourceMaps: Boolean               = sources
   def isWithRawSoureMaps: Boolean             = rawSourceMaps
   def getCustomEmitter: Option[ScalarEmitter] = customEmitter
-  def isValidation: Boolean                   = customEmitter.isDefined || validating// I consider that if CustomEmitter is defined, is a validation
+  def isValidation: Boolean =
+    customEmitter.isDefined || validating // I consider that if CustomEmitter is defined, is a validation
+  def renderField(field: Field): Boolean = !filterFields(field)
 }
 
 object RenderOptions {
   def apply(): RenderOptions = new RenderOptions()
 
   def apply(client: ClientRenderOptions): RenderOptions = {
-    val opts = if (client.isWithSourceMaps)
-      new RenderOptions().withSourceMaps
-    else
-      new RenderOptions().withoutSourceMaps
+    val opts =
+      if (client.isWithSourceMaps)
+        new RenderOptions().withSourceMaps
+      else
+        new RenderOptions().withoutSourceMaps
     if (client.isWithCompactUris)
       opts.withCompactUris
     else

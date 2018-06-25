@@ -3,11 +3,11 @@ package amf.plugins.features.validation
 import java.io.{InputStreamReader, Reader, StringReader}
 import java.nio.charset.Charset
 
-import amf.ProfileNames.{AMF, MessageStyle}
+import amf.ProfileNames.AMF
 import amf.core.benchmark.ExecutionLog
-import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.rdf.{RdfModel, RdfModelEmitter}
+import amf.core.services.ValidationOptions
 import amf.core.validation.core.{ValidationReport, ValidationSpecification}
 import amf.plugins.features.validation.emitters.ValidationRdfModelEmitter
 import org.apache.commons.io.IOUtils
@@ -82,14 +82,14 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
 
   override def validate(data: BaseUnit,
                         shapes: Seq[ValidationSpecification],
-                        messageStyle: MessageStyle): Future[String] =
+                        options: ValidationOptions): Future[String] =
     Future {
       ExecutionLog.log("SHACLValidator#validate: loading Jena data model")
       val dataModel = new JenaRdfModel()
-      new RdfModelEmitter(dataModel).emit(data, RenderOptions().withValidation)
+      new RdfModelEmitter(dataModel).emit(data, options.toRenderOptions)
       ExecutionLog.log("SHACLValidator#validate: loading Jena shapes model")
       val shapesModel = new JenaRdfModel()
-      new ValidationRdfModelEmitter(messageStyle.profileName, shapesModel).emit(shapes)
+      new ValidationRdfModelEmitter(options.messageStyle.profileName, shapesModel).emit(shapes)
       ExecutionLog.log("SHACLValidator#validate: loading library")
       loadLibrary()
       ExecutionLog.log("SHACLValidator#validate: starting script engine")
@@ -108,7 +108,6 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
     println(shapesModel.toN3())
     println("\n\n=======> DATA")
     println(dataModel.toN3())
-
     val queryText =
       """
         |select (count(*) as ?total) ?name {
@@ -145,8 +144,8 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
 
   override def report(data: BaseUnit,
                       shapes: Seq[ValidationSpecification],
-                      messageStyle: MessageStyle): Future[ValidationReport] =
-    validate(data, shapes, messageStyle).map(new JVMValidationReport(_))
+                      options: ValidationOptions): Future[ValidationReport] =
+    validate(data, shapes, options: ValidationOptions).map(new JVMValidationReport(_))
 
   override def shapes(shapes: Seq[ValidationSpecification], functionsUrl: String): RdfModel = {
     val shapesModel = new JenaRdfModel()

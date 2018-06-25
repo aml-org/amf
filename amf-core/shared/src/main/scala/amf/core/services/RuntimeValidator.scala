@@ -2,6 +2,8 @@ package amf.core.services
 
 import amf.ProfileNames.{AMFStyle, MessageStyle, ProfileName}
 import amf.core.annotations.LexicalInformation
+import amf.core.emitter.RenderOptions
+import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.rdf.RdfModel
 import amf.core.validation.core.{ValidationReport, ValidationSpecification}
@@ -34,7 +36,7 @@ trait RuntimeValidator {
     */
   def shaclValidation(model: BaseUnit,
                       validations: EffectiveValidations,
-                      messageStyle: MessageStyle): Future[ValidationReport]
+                      options: ValidationOptions): Future[ValidationReport]
 
   /**
     * Returns a native RDF model with the SHACL shapes graph
@@ -96,8 +98,8 @@ object RuntimeValidator {
 
   def shaclValidation(model: BaseUnit,
                       validations: EffectiveValidations,
-                      messageStyle: MessageStyle = AMFStyle): Future[ValidationReport] =
-    validator.shaclValidation(model, validations, messageStyle)
+                      options: ValidationOptions): Future[ValidationReport] =
+    validator.shaclValidation(model, validations, options)
 
   def shaclModel(validations: Seq[ValidationSpecification],
                  validationFunctionUrl: String,
@@ -140,3 +142,16 @@ object RuntimeValidator {
     )
   }
 }
+
+class ValidationOptions() {
+  val filterFields: (Field) => Boolean = (_: Field) => false
+  var messageStyle: MessageStyle       = AMFStyle
+  def toRenderOptions: RenderOptions   = RenderOptions().withValidation.withFilterFieldsFunc(filterFields)
+
+  def withMessageStyle(style: MessageStyle): ValidationOptions = {
+    var messageStyle = style
+    this
+  }
+}
+
+object DefaultValidationOptions extends ValidationOptions {}

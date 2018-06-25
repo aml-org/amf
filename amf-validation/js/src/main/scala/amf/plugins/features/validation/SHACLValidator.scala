@@ -1,10 +1,11 @@
 package amf.plugins.features.validation
 
-import amf.ProfileNames.{AMF, MessageStyle}
+import amf.ProfileNames.AMF
 import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.rdf.{RdfModel, RdfModelEmitter}
+import amf.core.services.ValidationOptions
 import amf.core.validation.core.{ValidationReport, ValidationSpecification}
 import amf.plugins.features.validation.emitters.ValidationRdfModelEmitter
 
@@ -116,7 +117,7 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
 
   override def validate(data: BaseUnit,
                         shapes: Seq[ValidationSpecification],
-                        messageStyle: MessageStyle): Future[String] = {
+                        options: ValidationOptions): Future[String] = {
     val promise = Promise[String]()
     try {
       ExecutionLog.log("SHACLValidator#validate: Creating SHACL-JS instance and loading JS libraries")
@@ -125,10 +126,10 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
 
       ExecutionLog.log("SHACLValidator#validate: loading Jena data model")
       val dataModel = new RdflibRdfModel()
-      new RdfModelEmitter(dataModel).emit(data, RenderOptions().withValidation)
+      new RdfModelEmitter(dataModel).emit(data, options.toRenderOptions)
       ExecutionLog.log("SHACLValidator#validate: loading Jena shapes model")
       val shapesModel = new RdflibRdfModel()
-      new ValidationRdfModelEmitter(messageStyle.profileName, shapesModel).emit(shapes)
+      new ValidationRdfModelEmitter(options.messageStyle.profileName, shapesModel).emit(shapes)
 
       validator.validateFroModels(
         dataModel.model,
@@ -150,7 +151,7 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
 
   override def report(data: BaseUnit,
                       shapes: Seq[ValidationSpecification],
-                      messageStyle: MessageStyle): Future[ValidationReport] = {
+                      options: ValidationOptions): Future[ValidationReport] = {
     val promise = Promise[ValidationReport]()
     try {
       ExecutionLog.log("SHACLValidator#validate: Creating SHACL-JS instance and loading JS libraries")
@@ -162,7 +163,7 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
       new RdfModelEmitter(dataModel).emit(data, RenderOptions().withValidation)
       ExecutionLog.log("SHACLValidator#validate: loading Jena shapes model")
       val shapesModel = new RdflibRdfModel()
-      new ValidationRdfModelEmitter(messageStyle.profileName, shapesModel).emit(shapes)
+      new ValidationRdfModelEmitter(options.messageStyle.profileName, shapesModel).emit(shapes)
 
       validator.validateFromModels(
         dataModel.model,

@@ -5,7 +5,7 @@ import amf.core.model.document.{Module, PayloadFragment}
 import amf.core.model.domain._
 import amf.core.parser.ParserContext
 import amf.core.plugins.{AMFPayloadValidationPlugin, AMFPlugin}
-import amf.core.services.RuntimeValidator
+import amf.core.services.{DefaultValidationOptions, RuntimeValidator}
 import amf.core.validation._
 import amf.core.validation.core.{PropertyConstraint, ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.Namespace
@@ -42,7 +42,7 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
     }
 
     ExecutionLog.log(s"PayloadValidation#validate: Validating payload for ${validationCandidates.size} candidates")
-    RuntimeValidator.shaclValidation(bu, finalValidations) map { report =>
+    RuntimeValidator.shaclValidation(bu, finalValidations, DefaultValidationOptions) map { report =>
       val results = report.results
         .map(r => buildPayloadValidationResult(bu, r, finalValidations))
         .filter(_.isDefined)
