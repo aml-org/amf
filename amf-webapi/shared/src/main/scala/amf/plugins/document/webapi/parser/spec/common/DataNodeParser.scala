@@ -53,14 +53,18 @@ case class DataNodeParser(node: YNode,
       case YType.Timestamp =>
         // TODO add time-only type in syaml and amf
         SimpleDateTime.parse(node.toString()) match {
-          case Some(timestamp) =>
-            if (timestamp.timeOfDay.isEmpty)
-              parseScalar(node.as[YScalar], "date")
-            else if (timestamp.zoneOffset.isEmpty)
-              parseScalar(node.as[YScalar], "dateTimeOnly")
-            else
-              parseScalar(node.as[YScalar], "dateTime")
-
+          case Some(sdt) =>
+            try {
+              sdt.toDate // This is to validate the parsed timestamp
+              if (sdt.timeOfDay.isEmpty)
+                parseScalar(node.as[YScalar], "date")
+              else if (sdt.zoneOffset.isEmpty)
+                parseScalar(node.as[YScalar], "dateTimeOnly")
+              else
+                parseScalar(node.as[YScalar], "dateTime")
+            } catch {
+              case _: Exception => parseScalar(node.as[YScalar], "string")
+            }
           case None => parseScalar(node.as[YScalar], "string")
         }
 

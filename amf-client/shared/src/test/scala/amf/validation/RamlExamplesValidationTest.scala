@@ -125,8 +125,7 @@ class RamlExamplesValidationTest extends ValidationReportGenTest {
              profile = ProfileNames.RAML08)
   }
 
-  //it's failing with target node in jvm but not in js. Activate when fix over date time warning it's done
-  ignore("Date times invalid examples test") {
+  test("Date times invalid examples test") {
     validate("/examples/date_time_validations2.raml", Some("date-time-validation.report"))
   }
 

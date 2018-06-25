@@ -456,8 +456,8 @@ class AMFShapeValidations(root: Shape) {
           (Namespace.Xsd + "date").iri().trim
         )
 
-        val patternConstraint  = createPatternPropertyConstraint(msg, rfc3339DateRegex, scalar)
         val dataTypeConstraint = createDataTypeConstraint(scalar, context, dateDataTypes)
+        val patternConstraint  = createPatternPropertyConstraint(msg, rfc3339DateRegex, scalar)
         Seq(patternConstraint, dataTypeConstraint)
 
       case s if s == (Namespace.Xsd + "time").iri() =>
@@ -468,8 +468,8 @@ class AMFShapeValidations(root: Shape) {
           (Namespace.Xsd + "time").iri().trim
         )
 
-        val patternConstraint  = createPatternPropertyConstraint(msg, timeRegex, scalar)
         val dataTypeConstraint = createDataTypeConstraint(scalar, context, timeDataTypes)
+        val patternConstraint  = createPatternPropertyConstraint(msg, timeRegex, scalar)
         Seq(patternConstraint, dataTypeConstraint)
 
       case s if s == (Namespace.Shapes + "dateTimeOnly").iri() =>
@@ -482,8 +482,8 @@ class AMFShapeValidations(root: Shape) {
           (Namespace.Shapes + "dateTimeOnly").iri().trim
         )
 
-        val patternConstraint  = createPatternPropertyConstraint(msg, rfc3339DateTimeOnlyRegex, scalar)
         val dataTypeConstraint = createDataTypeConstraint(scalar, context, dateTimeOnlyDataTypes)
+        val patternConstraint  = createPatternPropertyConstraint(msg, rfc3339DateTimeOnlyRegex, scalar)
         Seq(patternConstraint, dataTypeConstraint)
 
       case s if s == (Namespace.Xsd + "dateTime").iri() =>
@@ -496,18 +496,17 @@ class AMFShapeValidations(root: Shape) {
           (Namespace.Xsd + "dateTime").iri().trim
         )
 
+        val dataTypeConstraint = createDataTypeConstraint(scalar, context, dateTimeDataTypes)
         scalar.format.option().map(_.toLowerCase()) match {
           case Some(f) if f == "rfc2616" =>
             // RAML 0.8 date type following RFC2616 (default for this spec)
-            val msg                = s"Scalar at $context must be valid RFC2616 date"
-            val patternConstraint  = createPatternPropertyConstraint(msg, rfc2616, scalar)
-            val dataTypeConstraint = createDataTypeConstraint(scalar, context, dateTimeDataTypes)
+            val msg               = s"Scalar at $context must be valid RFC2616 date"
+            val patternConstraint = createPatternPropertyConstraint(msg, rfc2616, scalar)
             Seq(patternConstraint, dataTypeConstraint)
 
           case _ => // If format is not RFC2616, it is RFC3339 (default for RAML 1.0 and OAS 2.0)
-            val msg                = s"Scalar at $context must be valid RFC3339 date"
-            val patternConstraint  = createPatternPropertyConstraint(msg, rfc3339, scalar)
-            val dataTypeConstraint = createDataTypeConstraint(scalar, context, dateTimeDataTypes)
+            val msg               = s"Scalar at $context must be valid RFC3339 date"
+            val patternConstraint = createPatternPropertyConstraint(msg, rfc3339, scalar)
             Seq(patternConstraint, dataTypeConstraint)
         }
 
@@ -540,14 +539,7 @@ class AMFShapeValidations(root: Shape) {
         Seq(createDataTypeConstraint(scalar, context, floatDataTypes))
 
       case _ =>
-        Seq(
-          PropertyConstraint(
-            ramlPropertyId = (Namespace.Data + "value").iri(),
-            name = scalar.id + "_validation_range/prop",
-            message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
-            datatype = Some(scalar.dataType.value())
-          )
-        )
+        Seq(createDataTypeConstraint(scalar, context))
     }
 
     val msg = s"Scalar at $context must be valid"
@@ -579,6 +571,17 @@ class AMFShapeValidations(root: Shape) {
       name = scalar.id + "_validation_range/prop",
       message = Some(msg),
       pattern = Some(pattern)
+    )
+  }
+
+  protected def createDataTypeConstraint(scalar: ScalarShape,
+                                         context: String,
+                                         datetype: Option[String] = None): PropertyConstraint = {
+    PropertyConstraint(
+      ramlPropertyId = (Namespace.Data + "value").iri(),
+      name = scalar.id + "_validation_range/prop",
+      message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
+      datatype = Some(datetype.getOrElse(scalar.dataType.value()))
     )
   }
 
