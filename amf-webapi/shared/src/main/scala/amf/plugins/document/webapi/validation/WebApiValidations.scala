@@ -32,11 +32,12 @@ trait WebApiValidations extends ValidationResultProcessor {
 
     // Before validating we need to resolve to get all the model information
     val baseUnit = new ValidationResolutionPipeline(profile, unresolvedUnit).resolve()
-    aggregatedReport = List()
-    RuntimeValidator.aggregateReport(baseUnit, profile, messageStyle) flatMap {
-      case resolutionResults if !resolutionResults.conforms => Future.successful(resolutionResults)
-      case _                                                => validateModel(baseUnit, profile, platform, messageStyle, validations)
-    }
+    WebApiValidationsRunner(ValidationContext(baseUnit, profile, platform, messageStyle, validations)).runSteps
+//    aggregatedReport = List()
+//    RuntimeValidator.aggregateReport(baseUnit, profile, messageStyle) flatMap {
+//      case resolutionResults if !resolutionResults.conforms => Future.successful(resolutionResults)
+//      case _                                                => validateModel(baseUnit, profile, platform, messageStyle, validations)
+//    }
   }
 
   private def validateModel(baseUnit: BaseUnit,
@@ -73,6 +74,21 @@ trait WebApiValidations extends ValidationResultProcessor {
         results = results
       )
     }
+  }
+
+  private def validatePayloads(baseUnit: BaseUnit,
+                               profile: ProfileName,
+                               platform: Platform,
+                               messageStyle: MessageStyle,
+                               validations: EffectiveValidations): Future[Seq[AMFValidationResult]] = {
+    UnitPayloadsValidation(baseUnit, platform)
+      .validate()
+      .map { results =>
+        results
+          .map(r => buildValidationWithCustomLevelForProfile(baseUnit, r, messageStyle, validations))
+          .filter(_.isDefined)
+          .map(_.get)
+      }
   }
 
   protected def buildPayloadValidationResult(model: BaseUnit,
