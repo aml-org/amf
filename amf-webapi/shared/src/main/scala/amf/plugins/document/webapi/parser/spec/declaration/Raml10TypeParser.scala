@@ -184,7 +184,8 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
             })
           })
       case YType.Seq =>
-        Option(Raml08UnionTypeParser(UnionShape(node).withName(name), node.as[Seq[YNode]], node).parse())
+        Option(
+          Raml08UnionTypeParser(UnionShape(node).withName(name).adopted(shape.id), node.as[Seq[YNode]], node).parse())
       case _ => Raml08TextParser(node, adopt, name, defaultType).parse()
     }
   }
@@ -386,7 +387,6 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
     RamlSingleExampleParser("example", map, shape.withExample, ExampleOptions(strictDefault = true, quiet = true))
       .parse()
       .foreach(e => shape.setArray(ScalarShapeModel.Examples, Seq(e)))
-
 
     map.key(
       "default",
@@ -1300,7 +1300,6 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
           Raml10TypeParser(entry, shape => shape.adopted(property.id), isAnnotation = false, StringDefaultType)
             .parse()
             .foreach { range =>
-
               if (entry.value.tagType == YType.Null) {
                 range.annotations += SynthesizedField()
               }
