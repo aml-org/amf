@@ -95,7 +95,7 @@ Maven example:
 </dependency>
 ```
 
-NOTE: you may use the `-SNAPSHOT` versions of the JVM artifacts but note that this is at your own risks since those snapshot versions may contain breaking changes. It is strongly recommended that you use 
+NOTE: you may use the `-SNAPSHOT` versions of the JVM artifacts at your own risk since those snapshot versions may contain breaking changes.
 
 ### JS artifacts
 
