@@ -18,6 +18,7 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
   val rdf: js.Dynamic = RDF.instance
 
   override def addTriple(subject: String, predicate: String, objResource: String): RdfModel = {
+    nodesCache = nodesCache - subject
     val s = rdf.namedNode(subject)
     val p = rdf.namedNode(predicate)
     val o = rdf.namedNode(objResource)
@@ -28,6 +29,7 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
   }
 
   override def addTriple(subject: String, predicate: String, objLiteralValue: String, objLiteralType: Option[String]): RdfModel = {
+    nodesCache = nodesCache - subject
     val s = rdf.namedNode(subject)
     val p = rdf.namedNode(predicate)
     val o = objLiteralType match {
