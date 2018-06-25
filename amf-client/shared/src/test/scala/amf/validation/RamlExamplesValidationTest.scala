@@ -103,6 +103,10 @@ class RamlExamplesValidationTest extends ValidationReportGenTest {
     validate("/traits/trait1.raml", Some("invalid-hey-trait.report"))
   }
 
+  test("Invalid nested endpoint in resource type") {
+    validate("/resource_types/nested-endpoint.raml", Some("nested-endpoint.report"))
+  }
+
   test("Test minItems maxItems examples") {
     validate("/examples/min-max-items.raml", Some("min-max-items.report"))
   }

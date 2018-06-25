@@ -68,14 +68,18 @@ object ExtendsHelper {
           ctx.factory.operationParser(entry, _ => Operation(), true).parse()
         }
       }
-    checkNoNestedEndpoints(entry, ctx, node, extensionId)
+    checkNoNestedEndpoints(entry, ctx, node, extensionId, "trait")
 
     if (keepEditingInfo) annotateExtensionId(operation, extensionId, findUnitLocationOfElement(extensionId, unit))
     operation
     // new ReferenceResolutionStage(profile, keepEditingInfo).resolveDomainElement(operation)
   }
 
-  def checkNoNestedEndpoints(entry: YMapEntry, ctx: RamlWebApiContext, node: DataNode, extensionId: String) = {
+  private def checkNoNestedEndpoints(entry: YMapEntry,
+                                     ctx: RamlWebApiContext,
+                                     node: DataNode,
+                                     extensionId: String,
+                                     extension: String): Unit = {
     entry.value.tagType match {
       case YType.Map =>
         entry.value.as[YMap].map.keySet.foreach { propertyNode =>
@@ -85,7 +89,7 @@ object ExtendsHelper {
               ParserSideValidations.ParsingErrorSpecification.id,
               extensionId,
               None,
-              s"Nested endpoint in trait: '$property'",
+              s"Nested endpoint in $extension: '$property'",
               node.annotations.find(classOf[LexicalInformation])
             )
           }
@@ -139,19 +143,20 @@ object ExtendsHelper {
       }
     }
 
+    checkNoNestedEndpoints(endPointEntry, ctx, dataNode, extensionId, "resourceType")
+
     collector.toList match {
-      case element :: Nil =>
+      case element :: _ =>
         if (keepEditingInfo) annotateExtensionId(element, extensionId, extensionLocation)
         new ReferenceResolutionStage(keepEditingInfo)(errorHandler).resolveDomainElement(element)
       case Nil =>
-        errorHandler.violation(dataNode.id,
-                               s"Couldn't parse an endpoint from resourceType '$name'.",
-                               dataNode.annotations.find(classOf[LexicalInformation]))
-        ErrorEndPoint(dataNode.id, document.node)
-      case _ =>
-        errorHandler.violation(dataNode.id,
-                               s"Nested endpoints found in resourceType '$name'.",
-                               dataNode.annotations.find(classOf[LexicalInformation]))
+        errorHandler.violation(
+          ParserSideValidations.ParsingErrorSpecification.id,
+          extensionId,
+          None,
+          s"Couldn't parse an endpoint from resourceType '$name'.",
+          dataNode.annotations.find(classOf[LexicalInformation])
+        )
         ErrorEndPoint(dataNode.id, document.node)
     }
   }
