@@ -10,6 +10,7 @@ import org.topbraid.jenax.util.JenaUtil
 class JenaRdfModel(val model: Model = JenaUtil.createMemoryModel()) extends RdfModel {
 
   override def addTriple(subject: String, predicate: String, objResource: String): RdfModel = {
+    nodesCache = nodesCache - subject
     model.add(
       model.createStatement(
         model.createResource(subject),
@@ -21,6 +22,7 @@ class JenaRdfModel(val model: Model = JenaUtil.createMemoryModel()) extends RdfM
   }
 
   override def addTriple(subject: String, predicate: String, objLiteralValue: String, objLiteralType: Option[String]): RdfModel = {
+    nodesCache = nodesCache - subject
     model.add(
       model.createStatement(
         model.createResource(subject),
