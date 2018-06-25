@@ -1,6 +1,6 @@
 package amf.wrapper
 
-import amf.ProfileNames.{ProfileName, RAML, RAMLStyle}
+import amf.ProfileNames.{AMFStyle, ProfileName, RAML, RAMLStyle}
 import amf.client.AMF
 import amf.client.convert.NativeOps
 import amf.client.convert.WebApiClientConverters._
@@ -142,9 +142,9 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     for {
       _           <- AMF.init().asFuture
       unit        <- new RamlParser().parseFileAsync(zencoder).asFuture
-      report      <- AMF.validate(unit, RAML).asFuture
+      report      <- AMF.validate(unit, RAML, AMFStyle).asFuture
       profileName <- AMF.loadValidationProfile(profile).asFuture
-      custom      <- AMF.validate(unit, profileName).asFuture
+      custom      <- AMF.validate(unit, profileName, AMFStyle).asFuture
     } yield {
       assert(report.conforms)
       assert(!custom.conforms)
@@ -156,7 +156,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       _        <- AMF.init().asFuture
       unit     <- new RamlParser().parseFileAsync(zencoder).asFuture
       resolved <- Future.successful(AMF.resolveRaml10(unit))
-      report   <- AMF.validate(resolved, RAML).asFuture
+      report   <- AMF.validate(resolved, RAML, AMFStyle).asFuture
     } yield {
       assert(report.conforms)
     }
@@ -167,7 +167,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       _           <- AMF.init().asFuture
       dialectName <- AMF.registerDialect(demosDialect).asFuture
       unit        <- new RamlParser().parseFileAsync(demosInstance).asFuture
-      report      <- AMF.validate(unit, ProfileName("Eng Demos 0.1")).asFuture
+      report      <- AMF.validate(unit, ProfileName("Eng Demos 0.1"), AMFStyle).asFuture
     } yield {
       AMF.registerNamespace("eng-demos", "http://mulesoft.com/vocabularies/eng-demos#")
       val elem = unit.asInstanceOf[DialectInstance].encodes
@@ -286,7 +286,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       _           <- AMF.init().asFuture
       dialectName <- Vocabularies.registerDialect(demos2Dialect, env).asFuture
       unit        <- new RamlParser().parseFileAsync(demosInstance).asFuture
-      report      <- AMF.validate(unit, ProfileName("Eng Demos 0.1")).asFuture
+      report      <- AMF.validate(unit, ProfileName("Eng Demos 0.1"), AMFStyle).asFuture
     } yield {
       AMF.registerNamespace("eng-demos", "http://mulesoft.com/vocabularies/eng-demos#")
       val elem = unit.asInstanceOf[DialectInstance].encodes

@@ -11,6 +11,9 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 object Validator {
 
+  def validate(model: BaseUnit, profileName: String, messageStyle: String): ClientFuture[ValidationReport] =
+    validate(model, ProfileName(profileName), MessageStyle(messageStyle))
+
   def validate(model: BaseUnit,
                profileName: ProfileName,
                messageStyle: MessageStyle = AMFStyle): ClientFuture[ValidationReport] =

@@ -46,10 +46,11 @@ object AMF {
 
   def amfGraphGenerator(): AmfGraphRenderer = new AmfGraphRenderer()
 
-  def validate(model: BaseUnit,
-               profileName: ProfileName,
-               messageStyle: MessageStyle = AMFStyle): ClientFuture[ValidationReport] =
+  def validate(model: BaseUnit, profileName: ProfileName, messageStyle: MessageStyle): ClientFuture[ValidationReport] =
     Core.validate(model, profileName, messageStyle)
+
+  def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): ClientFuture[ValidationReport] =
+    validate(model, profileName, messageStyle)
 
   def loadValidationProfile(url: String): ClientFuture[ProfileName] = Core.loadValidationProfile(url)
 

@@ -41,6 +41,14 @@ object ProfileNames {
     }
   }
 
+  object MessageStyle {
+    def apply(name: String): MessageStyle = name match {
+      case "RAML" | "RAML08" => RAMLStyle
+      case "OAS" | "OAS3"    => OASStyle
+      case _                 => AMFStyle
+    }
+  }
+
   trait MessageStyle {
     def profileName: ProfileName
   }
