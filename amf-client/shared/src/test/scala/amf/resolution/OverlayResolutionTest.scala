@@ -3,7 +3,7 @@ package amf.resolution
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{Raml, RamlYamlHint}
-import amf.facades.{AMFRenderer, Validation}
+import amf.facades.AMFRenderer
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -23,6 +23,10 @@ class OverlayResolutionTest extends ResolutionTest {
 
   test("Overlay with documentation to Raml") {
     cycle("input.raml", "output.raml", RamlYamlHint, Raml, basePath + "documentation/")
+  }
+
+  test("Overlay with documentation one item to Raml") {
+    cycle("input.raml", "output.raml", RamlYamlHint, Raml, basePath + "documentation/overlay-one-item/")
   }
 
   test("Overlay with examples to Raml") {

@@ -17,6 +17,7 @@ import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.annotations.ExtensionProvenance
 import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
+import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
@@ -33,24 +34,30 @@ import scala.collection.mutable.ListBuffer
   *
   */
 // todo: refactor to support error handler in all resolution stages
-class ExtensionsResolutionStage(profile: ProfileName, keepEditingInfo: Boolean)(
+class ExtensionsResolutionStage(val profile: ProfileName, val keepEditingInfo: Boolean)(
     override implicit val errorHandler: ErrorHandler)
     extends ResolutionStage()
     with PlatformSecrets {
+  override def resolve[T <: BaseUnit](model: T): T = {
+    val extendsStage = new ExtendsResolutionStage(profile, keepEditingInfo)
+    model match {
+      case overlay: Overlay =>
+        new OverlayResolutionStage(profile, keepEditingInfo).resolve(model, overlay).asInstanceOf[T]
+      case extension: Extension =>
+        new ExtensionResolutionStage(profile, keepEditingInfo).resolve(model, extension).asInstanceOf[T]
+      case _ => extendsStage.resolve(model)
+    }
+  }
+}
+
+abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElement]](
+    val profile: ProfileName,
+    val keepEditingInfo: Boolean)(implicit val errorHandler: ErrorHandler) {
 
   /** Default to raml10 context. */
   implicit val ctx: RamlWebApiContext = profile match {
     case ProfileNames.RAML08 => new Raml08WebApiContext("", Nil, ParserContext())
     case _                   => new Raml10WebApiContext("", Nil, ParserContext())
-  }
-
-  override def resolve[T <: BaseUnit](model: T): T = {
-    val extendsStage = new ExtendsResolutionStage(profile, keepEditingInfo)
-    model match {
-      case overlay: ExtensionLike[_] =>
-        resolveOverlay(model, overlay.asInstanceOf[ExtensionLike[WebApi]]).asInstanceOf[T]
-      case _ => extendsStage.resolve(model)
-    }
   }
 
   def removeExtends(document: Document): BaseUnit = {
@@ -98,7 +105,9 @@ class ExtensionsResolutionStage(profile: ProfileName, keepEditingInfo: Boolean)(
     }
   }
 
-  private def resolveOverlay(model: BaseUnit, entryPoint: ExtensionLike[WebApi]): BaseUnit = {
+  def resolve(model: BaseUnit, entryPoint: T): BaseUnit
+
+  protected def resolveOverlay(model: BaseUnit, entryPoint: T): BaseUnit = {
     extensionsQueue(ListBuffer[BaseUnit](entryPoint), entryPoint) match {
       case (document: Document) :: extensions =>
         // Don't remove Extends field from the model when traits and resource types are resolved.
@@ -251,16 +260,11 @@ class ExtensionsResolutionStage(profile: ProfileName, keepEditingInfo: Boolean)(
     master.withDeclares(declarables)
   }
 
-  def addAll(target: DomainElement,
-             field: Field,
-             other: AmfArray,
-             extensionId: String,
-             extensionLocation: Option[String]): Unit = {
-    other.values.foreach { value =>
-      if (keepEditingInfo) value.annotations += ExtensionProvenance(extensionId, extensionLocation)
-      target.add(field, value)
-    }
-  }
+  def setDomainElementArrayValue(target: DomainElement,
+                                 field: Field,
+                                 other: AmfArray,
+                                 extensionId: String,
+                                 extensionLocation: Option[String]): Unit
 
   private def mergeByValue(target: DomainElement,
                            field: Field,
@@ -275,7 +279,7 @@ class ExtensionsResolutionStage(profile: ProfileName, keepEditingInfo: Boolean)(
     element match {
       case _: Type.Scalar        => mergeByValue(target, field, m, o, extensionId, extensionLocation)
       case key: KeyField         => mergeByKeyValue(target, field, element, key, m, o, extensionId, extensionLocation)
-      case _: DomainElementModel => addAll(target, field, o, extensionId, extensionLocation)
+      case _: DomainElementModel => setDomainElementArrayValue(target, field, o, extensionId, extensionLocation)
       case _                     => throw new Exception(s"Cannot merge '$element': not a KeyField nor a Scalar")
     }
   }
@@ -413,5 +417,40 @@ class ExtensionsResolutionStage(profile: ProfileName, keepEditingInfo: Boolean)(
           Nil
       }
     case _ => collector.reverse.toList
+  }
+}
+
+class ExtensionResolutionStage(override val profile: ProfileName, override val keepEditingInfo: Boolean)(
+    override implicit val errorHandler: ErrorHandler)
+    extends ExtensionLikeResolutionStage[Extension](profile, keepEditingInfo) {
+  override def resolve(model: BaseUnit, entryPoint: Extension): BaseUnit = resolveOverlay(model, entryPoint)
+
+  override def setDomainElementArrayValue(target: DomainElement,
+                                          field: Field,
+                                          other: AmfArray,
+                                          extensionId: String,
+                                          extensionLocation: Option[String]): Unit = {
+    other.values.foreach { value =>
+      if (keepEditingInfo) value.annotations += ExtensionProvenance(extensionId, extensionLocation)
+      target.add(field, value)
+    }
+  }
+}
+
+class OverlayResolutionStage(override val profile: ProfileName, override val keepEditingInfo: Boolean)(
+    override implicit val errorHandler: ErrorHandler)
+    extends ExtensionLikeResolutionStage[Overlay](profile, keepEditingInfo) {
+  override def resolve(model: BaseUnit, entryPoint: Overlay): BaseUnit = resolveOverlay(model, entryPoint)
+
+  override def setDomainElementArrayValue(target: DomainElement,
+                                          field: Field,
+                                          other: AmfArray,
+                                          extensionId: String,
+                                          extensionLocation: Option[String]): Unit = {
+    val seq: Seq[AmfElement] = other.values.map { value =>
+      if (keepEditingInfo) value.annotations += ExtensionProvenance(extensionId, extensionLocation)
+      value
+    }
+    target.setArray(field, seq)
   }
 }
