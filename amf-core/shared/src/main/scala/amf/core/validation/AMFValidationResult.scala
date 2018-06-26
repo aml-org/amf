@@ -26,19 +26,21 @@ case class AMFValidationResult(message: String,
 
   override def compare(that: AMFValidationResult): Int = {
 
-    val i = this.position
+    val thatPosition = if (that.position != null) that.position else None
+    val thisPosition = if (this.position != null) this.position else None
+    val i = thisPosition
       .map(_.range.start)
-      .getOrElse(Position(0, 0)) compareTo that.position.map(_.range.start).getOrElse(Position(0, 0)) match {
+      .getOrElse(Position(0, 0)) compareTo thatPosition.map(_.range.start).getOrElse(Position(0, 0)) match {
       case 0 =>
-        this.position
+        thisPosition
           .map(_.range.end)
-          .getOrElse(Position(0, 0)) compareTo that.position.map(_.range.end).getOrElse(Position(0, 0)) match {
+          .getOrElse(Position(0, 0)) compareTo thatPosition.map(_.range.end).getOrElse(Position(0, 0)) match {
           case 0 =>
             this.targetProperty.getOrElse("") compareTo that.targetProperty.getOrElse("") match {
               case 0 =>
-                this.targetNode compareTo that.targetNode match {
+                Option(this.targetNode).getOrElse("") compareTo Option(that.targetNode).getOrElse("") match {
                   case 0 =>
-                    this.validationId compareTo that.validationId
+                    Option(this.validationId).getOrElse("") compareTo Option(that.validationId).getOrElse("")
                   case x => x
                 }
               case x => x
