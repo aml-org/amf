@@ -5,17 +5,11 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 @JSExportTopLevel("ProfileNames")
 object ProfileNames {
-  val AMFProfile: ProfileName    = AMFProfile
-  val OASProfile: ProfileName    = OASProfile
-  val OAS3Profile: ProfileName   = OAS3Profile
-  val RAMLProfile: ProfileName   = RAMLProfile
-  val RAML08Profile: ProfileName = RAML08Profile
-
-  val AMF    = "AMF"
-  val OAS    = "OpenAPI"
-  val OAS3   = "OpenAPI3"
-  val RAML   = "RAML"
-  val RAML08 = "RAML08"
+  val AMF    = AMFProfile
+  val OAS    = OASProfile
+  val OAS3   = OAS3Profile
+  val RAML   = RAMLProfile
+  val RAML08 = RAML08Profile
 }
 
 case class ProfileName(profile: String, messageStyle: MessageStyle = AMFStyle) {
