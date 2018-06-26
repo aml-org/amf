@@ -1,7 +1,6 @@
 package amf.plugins.document.webapi
 
-import amf.ProfileNames
-import amf.ProfileNames.{ProfileName, RAML}
+import amf.{ProfileName, RAML08Profile, RAMLProfile}
 import amf.core.emitter.RenderOptions
 import amf.core.Root
 import amf.core.model.document._
@@ -111,7 +110,7 @@ sealed trait RAMLPlugin extends BaseWebApiPlugin {
 object RAML08Plugin extends RAMLPlugin {
   override def version: String = "0.8"
 
-  override val validationProfile: ProfileName = ProfileNames.RAML08
+  override val validationProfile: ProfileName = RAML08Profile
 
   def canParse(root: Root): Boolean = {
     RamlHeader(root) exists {
@@ -165,7 +164,7 @@ object RAML10Plugin extends RAMLPlugin {
 
   override def version: String = "1.0"
 
-  override val validationProfile: ProfileName = RAML
+  override val validationProfile: ProfileName = RAMLProfile
 
   def canParse(root: Root): Boolean = RamlHeader(root) exists {
     case Raml10 | Raml10Overlay | Raml10Extension | Raml10Library => true

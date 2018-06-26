@@ -1,6 +1,6 @@
 package amf.client.validate
 
-import amf.ProfileNames.ProfileName
+import amf.ProfileName
 import amf.client.convert.CoreClientConverters._
 import amf.core.validation.{AMFValidationReport => InternalValidatorReport}
 

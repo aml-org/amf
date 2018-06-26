@@ -1,7 +1,6 @@
 package amf.wrapper
 
-import amf.ProfileNames
-import amf.ProfileNames.{AMFStyle, ProfileName, RAML, RAMLStyle}
+import amf._
 import amf.client.AMF
 import amf.client.convert.NativeOps
 import amf.client.convert.WebApiClientConverters._
@@ -17,7 +16,7 @@ import amf.common.Diff
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.plugins.document.Vocabularies
-import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
+import _root_.org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -143,7 +142,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     for {
       _           <- AMF.init().asFuture
       unit        <- new RamlParser().parseFileAsync(zencoder).asFuture
-      report      <- AMF.validate(unit, RAML, AMFStyle).asFuture
+      report      <- AMF.validate(unit, RAMLProfile, AMFStyle).asFuture
       profileName <- AMF.loadValidationProfile(profile).asFuture
       custom      <- AMF.validate(unit, profileName, AMFStyle).asFuture
     } yield {
@@ -157,7 +156,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       _        <- AMF.init().asFuture
       unit     <- new RamlParser().parseFileAsync(zencoder).asFuture
       resolved <- Future.successful(AMF.resolveRaml10(unit))
-      report   <- AMF.validate(resolved, RAML, AMFStyle).asFuture
+      report   <- AMF.validate(resolved, RAMLProfile, AMFStyle).asFuture
     } yield {
       assert(report.conforms)
     }
@@ -312,7 +311,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     for {
       _      <- AMF.init().asFuture
       unit   <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(music).asFuture
-      report <- AMF.validate(unit, RAML, RAMLStyle).asFuture
+      report <- AMF.validate(unit, RAMLProfile, RAMLStyle).asFuture
     } yield {
       assert(!unit.references().asSeq.map(_.location).contains(null))
       assert(report.conforms)
@@ -1173,7 +1172,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       unit <- new Raml10Parser()
         .parseFileAsync(scalarAnnotations)
         .asFuture
-      v <- AMF.validate(unit, ProfileNames.RAML, ProfileNames.RAML.messageStyle).asFuture
+      v <- AMF.validate(unit, RAMLProfile, RAMLProfile.messageStyle).asFuture
     } yield {
       assert(v.conforms)
     }

@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.resolution.pipelines
 
-import amf.ProfileNames.ProfileName
+import amf.ProfileName
 import amf.core.annotations.LexicalInformation
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.document.BaseUnit

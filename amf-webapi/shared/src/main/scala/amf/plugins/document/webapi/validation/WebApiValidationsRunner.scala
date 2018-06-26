@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.validation
 
-import amf.ProfileNames.{MessageStyle, ProfileName}
+import amf.{MessageStyle, ProfileName}
 import amf.core.benchmark.ExecutionLog
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.DataNodeModel

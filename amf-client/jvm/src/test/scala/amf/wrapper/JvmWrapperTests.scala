@@ -3,8 +3,7 @@ package amf.wrapper
 import java.util
 import java.util.concurrent.CompletableFuture
 
-import amf.ProfileNames
-import amf.ProfileNames.RAMLStyle
+import amf.{RAML08Profile, RAMLStyle}
 import amf.client.AMF
 import amf.client.convert.VocabulariesClientConverter._
 import amf.core.parser.Range
@@ -43,7 +42,7 @@ class JvmWrapperTests extends WrapperTests {
         .parseFileAsync(
           "file://amf-client/shared/src/test/resources/parser-results/raml/error/not-existing-http-include.raml")
         .asFuture
-      r <- AMF.validate(a, ProfileNames.RAML08, RAMLStyle).asFuture
+      r <- AMF.validate(a, RAML08Profile, RAMLStyle).asFuture
     } yield {
       r.conforms should be(false)
       val seq = r.results.asSeq

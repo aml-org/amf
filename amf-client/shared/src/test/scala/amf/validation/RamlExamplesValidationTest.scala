@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.ProfileNames
+import amf.RAML08Profile
 import amf.core.remote.{Hint, RamlYamlHint}
 
 class RamlExamplesValidationTest extends ValidationReportGenTest {
@@ -71,11 +71,11 @@ class RamlExamplesValidationTest extends ValidationReportGenTest {
 
 // pass to another suit raml 08 cases? profile implemented as overrided var in class?
   test("Param in raml 0.8 api") {
-    validate("08/pattern.raml", Some("pattern-08.report"), profile = ProfileNames.RAML08)
+    validate("08/pattern.raml", Some("pattern-08.report"), profile = RAML08Profile)
   }
 
   test("Validation error raml 0.8 example 1") {
-    validate("08/validation_error1.raml", Some("validation_error1.report"), profile = ProfileNames.RAML08)
+    validate("08/validation_error1.raml", Some("validation_error1.report"), profile = RAML08Profile)
   }
 
   test("Test validate pattern with invalid example") {
@@ -87,7 +87,7 @@ class RamlExamplesValidationTest extends ValidationReportGenTest {
   }
   // this is not in ParaPayloadValidation test because we need to check the validation against a raml 08 parsed and resolved model (with that profile).
   test("Raml 0.8 Query Parameter Negative test case") {
-    validate("/08/date-query-parameter.raml", Some("date-query-parameter.report"), profile = ProfileNames.RAML08)
+    validate("/08/date-query-parameter.raml", Some("date-query-parameter.report"), profile = RAML08Profile)
   }
 
   test("Invalid example validation over union shapes") {
@@ -120,9 +120,7 @@ class RamlExamplesValidationTest extends ValidationReportGenTest {
   }
 
   test("Test unsupported example with raml08 profile") {
-    validate("/examples/unsupported-examples-08.raml",
-             Some("unsupported-examples-08.report"),
-             profile = ProfileNames.RAML08)
+    validate("/examples/unsupported-examples-08.raml", Some("unsupported-examples-08.report"), profile = RAML08Profile)
   }
 
   test("Date times invalid examples test") {

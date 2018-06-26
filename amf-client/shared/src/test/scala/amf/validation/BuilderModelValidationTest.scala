@@ -1,12 +1,11 @@
 package amf.validation
 
-import amf.ProfileNames
-import amf.ProfileNames.RAMLStyle
 import amf.core.model.document.{Document, Module}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.vocabulary.Namespace.Xsd
 import amf.facades.Validation
 import amf.plugins.domain.shapes.models.{NodeShape, ScalarShape}
+import amf.{RAMLProfile, RAMLStyle}
 import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.ExecutionContext
@@ -31,7 +30,7 @@ class BuilderModelValidationTest extends AsyncFunSuite with PlatformSecrets with
 
     for {
       validation <- Validation(platform)
-      report     <- validation.validate(module, ProfileNames.RAML, RAMLStyle)
+      report     <- validation.validate(module, RAMLProfile, RAMLStyle)
     } yield {
       report.conforms should be(true)
     }

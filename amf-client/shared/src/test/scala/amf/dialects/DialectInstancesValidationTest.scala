@@ -1,6 +1,6 @@
 package amf.dialects
 
-import amf.ProfileNames.ProfileName
+import amf.ProfileName
 import amf.core.AMFCompiler
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets

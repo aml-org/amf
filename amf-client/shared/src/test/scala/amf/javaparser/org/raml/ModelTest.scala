@@ -1,7 +1,6 @@
 package amf.javaparser.org.raml
 
-import amf.ProfileNames
-import amf.ProfileNames.ProfileName
+import amf._
 import amf.core.annotations.SourceVendor
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{BaseUnit, Document, EncodesModel, Module}
@@ -12,8 +11,8 @@ import amf.facades.{AMFCompiler, AMFRenderer, Validation}
 import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
 import amf.plugins.document.webapi.{OAS20Plugin, OAS30Plugin, RAML08Plugin, RAML10Plugin}
 import amf.resolution.ResolutionTest
-import org.mulesoft.common.io.{Fs, SyncFile}
-import org.scalatest.compatible.Assertion
+import _root_.org.mulesoft.common.io.{Fs, SyncFile}
+import _root_.org.scalatest.compatible.Assertion
 
 import scala.concurrent.Future
 
@@ -53,8 +52,8 @@ trait ModelValidationTest extends DirectoryTest {
       .collect({ case d: Document => d })
       .flatMap(_.encodes.annotations.find(classOf[SourceVendor]).map(_.vendor))
     maybeVendor match {
-      case Some(Raml08) => ProfileNames.RAML08
-      case _            => ProfileNames.RAML
+      case Some(Raml08) => RAML08Profile
+      case _            => RAMLProfile
     }
   }
 
@@ -82,11 +81,11 @@ trait ModelResolutionTest extends ModelValidationTest {
 
   private def profileFromVendor(vendor: Vendor): ProfileName = {
     vendor match {
-      case Raml08        => ProfileNames.RAML08
-      case Raml | Raml10 => ProfileNames.RAML
-      case Oas | Oas2    => ProfileNames.OAS
-      case Oas3          => ProfileNames.OAS3
-      case _             => ProfileNames.AMF
+      case Raml08        => RAML08Profile
+      case Raml | Raml10 => RAMLProfile
+      case Oas | Oas2    => OASProfile
+      case Oas3          => OAS3Profile
+      case _             => AMFProfile
     }
   }
 

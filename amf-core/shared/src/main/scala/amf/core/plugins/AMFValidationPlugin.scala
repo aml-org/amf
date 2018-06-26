@@ -1,6 +1,6 @@
 package amf.core.plugins
 
-import amf.ProfileNames.ProfileName
+import amf.ProfileName
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
 import amf.core.validation.core.ValidationProfile

@@ -1,6 +1,6 @@
 package amf.core.validation.core
 
-import amf.ProfileNames.ProfileName
+import amf.ProfileName
 
 import scala.collection.mutable
 

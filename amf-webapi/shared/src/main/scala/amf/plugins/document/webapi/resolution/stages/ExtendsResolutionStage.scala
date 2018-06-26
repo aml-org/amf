@@ -1,7 +1,6 @@
 package amf.plugins.document.webapi.resolution.stages
 
-import amf.ProfileNames
-import amf.ProfileNames.ProfileName
+import amf.{ProfileName, RAML08Profile}
 import amf.core.annotations.{LexicalInformation, SourceAST}
 import amf.core.emitter.SpecOrdering
 import amf.core.metamodel.domain.DomainElementModel
@@ -42,8 +41,8 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
 
   /** Default to raml10 context. */
   def ctx(parserRun: Int): RamlWebApiContext = profile match {
-    case ProfileNames.RAML08 => new Raml08WebApiContext("", Nil, ParserContext(parserCount = parserRun))
-    case _                   => new Raml10WebApiContext("", Nil, ParserContext(parserCount = parserRun))
+    case RAML08Profile => new Raml08WebApiContext("", Nil, ParserContext(parserCount = parserRun))
+    case _             => new Raml10WebApiContext("", Nil, ParserContext(parserCount = parserRun))
   }
 
   override def resolve[T <: BaseUnit](model: T): T =

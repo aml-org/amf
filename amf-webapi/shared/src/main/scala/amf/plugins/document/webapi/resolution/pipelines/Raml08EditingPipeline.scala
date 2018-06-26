@@ -1,9 +1,7 @@
 package amf.plugins.document.webapi.resolution.pipelines
-
-import amf.ProfileNames
-import amf.ProfileNames.ProfileName
 import amf.core.model.document.BaseUnit
+import amf.{ProfileName, RAML08Profile}
 
 class Raml08EditingPipeline(override val model: BaseUnit) extends AmfEditingPipeline(model) {
-  override def profileName: ProfileName = ProfileNames.RAML08
+  override def profileName: ProfileName = RAML08Profile
 }

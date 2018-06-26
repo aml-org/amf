@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.ProfileNames.ProfileName
+import amf.ProfileName
 import amf.core.remote.{Hint, RamlYamlHint}
 import amf.core.validation.AMFValidationReport
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter

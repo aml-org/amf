@@ -1,7 +1,6 @@
 package amf.plugins.features.validation
 
-import amf.ProfileNames
-import amf.ProfileNames.{MessageStyle, ProfileName}
+import amf.{MessageStyle, ProfileName, ProfileNames}
 import amf.core.annotations.LexicalInformation
 import amf.core.model.document.BaseUnit
 import amf.core.plugins.{AMFFeaturePlugin, AMFPlugin}

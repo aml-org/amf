@@ -1,7 +1,6 @@
 package amf.plugins.features.validation
 
-import amf.ProfileNames
-import amf.ProfileNames.{MessageStyle, ProfileName, RAMLStyle}
+import amf._
 import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.BaseUnit
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
@@ -85,7 +84,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
           val domainPlugin = profilesPlugins.get(profile.name.profile) match {
             case Some(plugin) => plugin
             case None =>
-              profilesPlugins.get(profile.baseProfile.getOrElse(ProfileNames.AMF).profile) match {
+              profilesPlugins.get(profile.baseProfile.getOrElse(AMFProfile).profile) match {
                 case Some(plugin) =>
                   plugin
                 case None => AMLPlugin

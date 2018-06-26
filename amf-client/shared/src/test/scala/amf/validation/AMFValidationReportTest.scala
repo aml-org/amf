@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.ProfileNames
+import amf.RAMLProfile
 import amf.core.validation.{AMFValidationReport, AMFValidationResult}
 import org.scalatest.FunSuite
 
@@ -12,7 +12,7 @@ class AMFValidationReportTest extends FunSuite {
     AMFValidationReport(
       conforms = true,
       null,
-      ProfileNames.RAML,
+      RAMLProfile,
       Seq(
         AMFValidationResult(null, null, null, None, null, null, null),
         AMFValidationResult(null, null, null, None, null, None, null)

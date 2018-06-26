@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes.resolution.stages
 
-import amf.ProfileNames.ProfileName
+import amf.ProfileName
 import amf.core.annotations.LexicalInformation
 import amf.core.metamodel.{MetaModelTypeMapping, Obj}
 import amf.core.model.document.BaseUnit

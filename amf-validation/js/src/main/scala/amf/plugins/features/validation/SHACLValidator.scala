@@ -1,6 +1,6 @@
 package amf.plugins.features.validation
 
-import amf.ProfileNames.AMF
+import amf.AMFProfile
 import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
@@ -186,7 +186,7 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
 
   override def shapes(shapes: Seq[ValidationSpecification], functionsUrl: String): RdfModel = {
     val shapesModel = new RdflibRdfModel()
-    new ValidationRdfModelEmitter(AMF, shapesModel, functionsUrl).emit(shapes)
+    new ValidationRdfModelEmitter(AMFProfile, shapesModel, functionsUrl).emit(shapes)
     shapesModel
   }
 

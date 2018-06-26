@@ -1,6 +1,6 @@
 package amf.core.services
 
-import amf.ProfileNames.{AMFStyle, MessageStyle, ProfileName}
+import amf.{AMFStyle, MessageStyle, ProfileName}
 import amf.core.annotations.LexicalInformation
 import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Field

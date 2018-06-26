@@ -1,7 +1,6 @@
 package amf.plugins.features.validation.emitters
 
-import amf.ProfileNames
-import amf.ProfileNames.ProfileName
+import amf._
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.PartEmitter
 import amf.core.parser.Position
@@ -48,9 +47,9 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
       p.entry("@type", (Namespace.Shacl + "NodeShape").iri())
 
       val message = targetProfile match {
-        case ProfileNames.RAML | ProfileNames.RAML08 => validation.ramlMessage.getOrElse(validation.message)
-        case ProfileNames.OAS                        => validation.oasMessage.getOrElse(validation.message)
-        case _                                       => validation.message
+        case RAMLProfile | RAML08Profile => validation.ramlMessage.getOrElse(validation.message)
+        case OASProfile                  => validation.oasMessage.getOrElse(validation.message)
+        case _                           => validation.message
       }
       if (message != "") {
         p.entry((Namespace.Shacl + "message").iri(), genValue(_, message))

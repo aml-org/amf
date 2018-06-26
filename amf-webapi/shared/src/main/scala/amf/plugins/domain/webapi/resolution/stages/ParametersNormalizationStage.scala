@@ -1,7 +1,6 @@
 package amf.plugins.domain.webapi.resolution.stages
 
-import amf.ProfileNames
-import amf.ProfileNames.ProfileName
+import amf._
 import amf.core.annotations.SynthesizedField
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.AmfArray
@@ -21,10 +20,10 @@ class ParametersNormalizationStage(profile: ProfileName)(override implicit val e
 
   override def resolve[T <: BaseUnit](model: T): T = {
     profile match {
-      case ProfileNames.RAML                      => parametersRaml10(model).asInstanceOf[T]
-      case ProfileNames.OAS | ProfileNames.RAML08 => parametersOpenApi(model).asInstanceOf[T]
-      case ProfileNames.AMF                       => parametersAmf(model).asInstanceOf[T]
-      case _                                      => throw new Exception(s"Unknown profile ${profile.profile}")
+      case RAMLProfile                => parametersRaml10(model).asInstanceOf[T]
+      case OASProfile | RAML08Profile => parametersOpenApi(model).asInstanceOf[T]
+      case AMFProfile                 => parametersAmf(model).asInstanceOf[T]
+      case _                          => throw new Exception(s"Unknown profile ${profile.profile}")
     }
   }
 

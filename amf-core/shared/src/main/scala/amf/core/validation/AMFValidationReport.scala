@@ -1,6 +1,6 @@
 package amf.core.validation
 
-import amf.ProfileNames.ProfileName
+import amf.ProfileName
 
 case class AMFValidationReport(conforms: Boolean,
                                model: String,

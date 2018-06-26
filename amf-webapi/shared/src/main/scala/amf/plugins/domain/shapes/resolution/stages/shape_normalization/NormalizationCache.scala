@@ -1,9 +1,7 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
-
-import amf.ProfileNames
-import amf.ProfileNames.ProfileName
 import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.core.parser.ErrorHandler
+import amf.{ProfileName, RAML08Profile}
 
 import scala.collection.mutable
 
@@ -12,7 +10,7 @@ private[plugins] class NormalizationContext(final val errorHandler: ErrorHandler
                                             final val profile: ProfileName,
                                             val cache: NormalizationCache = NormalizationCache()) {
 
-  val isRaml08: Boolean                        = profile.equals(ProfileNames.RAML08)
+  val isRaml08: Boolean                        = profile.equals(RAML08Profile)
   private val minShapeClass: MinShapeAlgorithm = new MinShapeAlgorithm()(this)
 
   def minShape(base: Shape, superShape: Shape): Shape = minShapeClass.computeMinShape(base, superShape)

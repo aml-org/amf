@@ -1,7 +1,6 @@
 package amf.plugins.document.vocabularies
 
-import amf.ProfileNames
-import amf.ProfileNames.ProfileName
+import amf.{ProfileName, ProfileNames, RAMLProfile}
 import amf.core.Root
 import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Obj
@@ -309,7 +308,7 @@ object AMLPlugin
 
           // adding model-side validations
           val results = shaclReport.results.flatMap { r =>
-            buildValidationResult(baseUnit, r, ProfileNames.RAML.messageStyle, validations)
+            buildValidationResult(baseUnit, r, RAMLProfile.messageStyle, validations)
           }
 
           AMFValidationReport(

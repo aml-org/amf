@@ -1,7 +1,6 @@
 package amf.plugins.features.validation.emitters
 
-import amf.ProfileNames
-import amf.ProfileNames.ProfileName
+import amf._
 import amf.core.rdf.RdfModel
 import amf.core.validation.core.{FunctionConstraint, PropertyConstraint, ValidationSpecification}
 import amf.core.vocabulary.Namespace
@@ -23,9 +22,9 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
 
     rdfModel.addTriple(validationId, (Namespace.Rdf + "type").iri(), (Namespace.Shacl + "NodeShape").iri())
     val message = targetProfile match {
-      case ProfileNames.RAML | ProfileNames.RAML08 => validation.ramlMessage.getOrElse(validation.message)
-      case ProfileNames.OAS                        => validation.oasMessage.getOrElse(validation.message)
-      case _                                       => validation.message
+      case RAMLProfile | RAML08Profile => validation.ramlMessage.getOrElse(validation.message)
+      case OASProfile                  => validation.oasMessage.getOrElse(validation.message)
+      case _                           => validation.message
     }
 
     if (message != "") {

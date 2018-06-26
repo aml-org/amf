@@ -41,7 +41,7 @@ object IntellijTest extends PlatformSecrets with App {
         RuntimeCompiler(file, Option("application/yaml"), "RAML 0.8", Context(platform))
       } flatMap { model =>
         println("** validating")
-        validation.validate(model, ProfileNames.RAML08) map { report =>
+        validation.validate(model, RAML08Profile) map { report =>
           println("** validation report")
           println(report)
           model

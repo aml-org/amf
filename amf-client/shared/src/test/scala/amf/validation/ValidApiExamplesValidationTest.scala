@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.ProfileNames
+import amf.RAML08Profile
 import amf.core.remote.{Hint, RamlYamlHint}
 
 class ValidApiExamplesValidationTest extends ValidModelTest {
@@ -50,7 +50,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Empty payload with example validation") {
-    checkValid("/08/empty-payload-with-example.raml", ProfileNames.RAML08)
+    checkValid("/08/empty-payload-with-example.raml", RAML08Profile)
   }
 
   test("Invalid yaml with scalar an map as value") {

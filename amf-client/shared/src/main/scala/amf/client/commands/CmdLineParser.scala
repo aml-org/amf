@@ -1,18 +1,18 @@
 package amf.client.commands
 
-import amf.ProfileNames
-import amf.ProfileNames.ProfileName
+import amf._
+
 import amf.core.client.ParserConfig
 import scopt.OptionParser
 
 object CmdLineParser {
 
   def knownSpec(f: String): Boolean = {
-    ProfileNames.RAML.profile == f ||
-    ProfileNames.RAML08.profile == f ||
-    ProfileNames.OAS3.profile == f ||
-    ProfileNames.OAS.profile == f ||
-    ProfileNames.AMF.profile == f ||
+    RAMLProfile.profile == f ||
+    RAML08Profile.profile == f ||
+    OAS3Profile.profile == f ||
+    OASProfile.profile == f ||
+    AMFProfile.profile == f ||
     "RAML 1.0" == f ||
     "RAML 0.8" == f ||
     "OAS 3.0.0" == f ||

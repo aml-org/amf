@@ -1,7 +1,5 @@
 package amf.validation
 
-import amf.ProfileNames
-import amf.ProfileNames.PAYLOAD
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{Module, PayloadFragment}
 import amf.core.model.domain.Shape
@@ -12,6 +10,7 @@ import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.document.graph.parser.GraphEmitter
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 import amf.plugins.document.webapi.validation.PayloadValidation
+import amf.{AMFProfile, PAYLOADProfile}
 import org.scalatest.AsyncFunSuite
 import org.yaml.render.JsonRender
 
@@ -24,33 +23,35 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
   val payloadsPath = "file://amf-client/shared/src/test/resources/payloads/"
 
   val payloadValidations = Map(
-    ("payloads.raml", "A", "a_valid.json")                        -> ExpectedReport(conforms = true, 0, PAYLOAD),
-    ("payloads.raml", "A", "a_invalid.json")                      -> ExpectedReport(conforms = false, 4, PAYLOAD),
-    ("payloads.raml", "B", "b_valid.json")                        -> ExpectedReport(conforms = true, 0, PAYLOAD),
-    ("payloads.raml", "B", "b_invalid.json")                      -> ExpectedReport(conforms = false, 1, PAYLOAD),
-    ("payloads.raml", "B", "b_valid.yaml")                        -> ExpectedReport(conforms = true, 0, PAYLOAD),
-    ("payloads.raml", "B", "b_invalid.yaml")                      -> ExpectedReport(conforms = false, 1, PAYLOAD),
-    ("payloads.raml", "C", "c_valid.json")                        -> ExpectedReport(conforms = true, 0, PAYLOAD),
-    ("payloads.raml", "C", "c_invalid.json")                      -> ExpectedReport(conforms = false, 8, PAYLOAD),
-    ("payloads.raml", "D", "d_valid.json")                        -> ExpectedReport(conforms = true, 0, PAYLOAD),
-    ("payloads.raml", "D", "d_invalid.json")                      -> ExpectedReport(conforms = false, 7, PAYLOAD),
-    ("payloads.raml", "E", "e_valid.json")                        -> ExpectedReport(conforms = true, 0, PAYLOAD),
-    ("payloads.raml", "E", "e_invalid.json")                      -> ExpectedReport(conforms = false, 1, PAYLOAD),
-    ("payloads.raml", "F", "f_valid.json")                        -> ExpectedReport(conforms = true, 0, PAYLOAD),
-    ("payloads.raml", "F", "f_invalid.json")                      -> ExpectedReport(conforms = false, 1, PAYLOAD),
-    ("payloads.raml", "G", "g1_valid.json")                       -> ExpectedReport(conforms = true, 0, PAYLOAD),
-    ("payloads.raml", "G", "g2_valid.json")                       -> ExpectedReport(conforms = true, 0, PAYLOAD),
-    ("payloads.raml", "G", "g_invalid.json")                      -> ExpectedReport(conforms = false, 1, PAYLOAD),
-    ("payloads.raml", "H", "h_invalid.json")                      -> ExpectedReport(conforms = false, 1, PAYLOAD),
-    ("payloads.raml", "PersonData", "person_valid.yaml")          -> ExpectedReport(conforms = true, 0, PAYLOAD),
-    ("payloads.raml", "PersonData", "person_invalid.yaml")        -> ExpectedReport(conforms = false, 2, PAYLOAD),
-    ("payloads.raml", "CustomerData", "customer_data_valid.yaml") -> ExpectedReport(conforms = true, 0, PAYLOAD),
-    ("payloads.raml", "CustomerData", "person_valid.yaml")        -> ExpectedReport(conforms = true, 0, PAYLOAD),
-    ("payloads.raml", "CustomerData", "person_invalid.yaml")      -> ExpectedReport(conforms = false, 2, PAYLOAD),
-    ("test_cases.raml", "A", "test_case_a_valid.json")            -> ExpectedReport(conforms = true, 0, PAYLOAD),
-    ("test_cases.raml", "A", "test_case_a_invalid.json")          -> ExpectedReport(conforms = false, 2, PAYLOAD),
-    ("test_cases.raml", "A", "test_case_a2_valid.json")           -> ExpectedReport(conforms = true, 0, PAYLOAD),
-    ("test_cases.raml", "A", "test_case_a2_invalid.json")         -> ExpectedReport(conforms = false, 2, PAYLOAD)
+    ("payloads.raml", "A", "a_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
+    ("payloads.raml", "A", "a_invalid.json")               -> ExpectedReport(conforms = false, 4, PAYLOADProfile),
+    ("payloads.raml", "B", "b_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
+    ("payloads.raml", "B", "b_invalid.json")               -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
+    ("payloads.raml", "B", "b_valid.yaml")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
+    ("payloads.raml", "B", "b_invalid.yaml")               -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
+    ("payloads.raml", "C", "c_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
+    ("payloads.raml", "C", "c_invalid.json")               -> ExpectedReport(conforms = false, 8, PAYLOADProfile),
+    ("payloads.raml", "D", "d_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
+    ("payloads.raml", "D", "d_invalid.json")               -> ExpectedReport(conforms = false, 7, PAYLOADProfile),
+    ("payloads.raml", "E", "e_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
+    ("payloads.raml", "E", "e_invalid.json")               -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
+    ("payloads.raml", "F", "f_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
+    ("payloads.raml", "F", "f_invalid.json")               -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
+    ("payloads.raml", "G", "g1_valid.json")                -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
+    ("payloads.raml", "G", "g2_valid.json")                -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
+    ("payloads.raml", "G", "g_invalid.json")               -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
+    ("payloads.raml", "H", "h_invalid.json")               -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
+    ("payloads.raml", "PersonData", "person_valid.yaml")   -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
+    ("payloads.raml", "PersonData", "person_invalid.yaml") -> ExpectedReport(conforms = false, 2, PAYLOADProfile),
+    ("payloads.raml", "CustomerData", "customer_data_valid.yaml") -> ExpectedReport(conforms = true,
+                                                                                    0,
+                                                                                    PAYLOADProfile),
+    ("payloads.raml", "CustomerData", "person_valid.yaml")   -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
+    ("payloads.raml", "CustomerData", "person_invalid.yaml") -> ExpectedReport(conforms = false, 2, PAYLOADProfile),
+    ("test_cases.raml", "A", "test_case_a_valid.json")       -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
+    ("test_cases.raml", "A", "test_case_a_invalid.json")     -> ExpectedReport(conforms = false, 2, PAYLOADProfile),
+    ("test_cases.raml", "A", "test_case_a2_valid.json")      -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
+    ("test_cases.raml", "A", "test_case_a2_invalid.json")    -> ExpectedReport(conforms = false, 2, PAYLOADProfile)
   )
 
   for {
@@ -67,7 +68,7 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
         payload    <- AMFCompiler(payloadsPath + payloadFile, platform, hint, validation).build()
       } yield {
         // todo check with antonio, i removed the canonical shape from validation, so i need to resolve here
-        new ValidationResolutionPipeline(ProfileNames.AMF, library).resolve()
+        new ValidationResolutionPipeline(AMFProfile, library).resolve()
         val targetType = library
           .asInstanceOf[Module]
           .declares

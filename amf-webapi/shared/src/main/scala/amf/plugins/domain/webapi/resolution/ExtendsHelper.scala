@@ -1,7 +1,6 @@
 package amf.plugins.domain.webapi.resolution
 
-import amf.ProfileNames
-import amf.ProfileNames.ProfileName
+import amf.{ProfileName, RAML08Profile}
 import amf.core.annotations.{Aliases, LexicalInformation}
 import amf.core.emitter.SpecOrdering
 import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
@@ -23,8 +22,8 @@ import scala.collection.mutable.ListBuffer
 
 object ExtendsHelper {
   def custom(profile: ProfileName): RamlWebApiContext = profile match {
-    case ProfileNames.RAML08 => new CustomRaml08WebApiContext()
-    case _                   => new CustomRaml10WebApiContext()
+    case RAML08Profile => new CustomRaml08WebApiContext()
+    case _             => new CustomRaml10WebApiContext()
   }
 
   def asOperation[T <: BaseUnit](profile: ProfileName,

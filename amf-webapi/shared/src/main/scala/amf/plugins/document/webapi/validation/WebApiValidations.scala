@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.validation
 
-import amf.ProfileNames.{MessageStyle, ProfileName}
+import amf.{MessageStyle, ProfileName}
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
 import amf.core.validation._

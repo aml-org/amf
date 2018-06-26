@@ -1,7 +1,5 @@
 package amf.plugins.document.webapi.resolution.pipelines
 
-import amf.ProfileNames
-import amf.ProfileNames.ProfileName
 import amf.core.model.document.BaseUnit
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
@@ -13,10 +11,11 @@ import amf.plugins.domain.webapi.resolution.stages.{
   ParametersNormalizationStage,
   SecurityResolutionStage
 }
+import amf.{AMFProfile, ProfileName}
 
 class AmfEditingPipeline(override val model: BaseUnit) extends ResolutionPipeline[BaseUnit] {
 
-  override def profileName: ProfileName = ProfileNames.AMF
+  override def profileName: ProfileName = AMFProfile
 
   val references = new ReferenceResolutionStage(keepEditingInfo = true)
 

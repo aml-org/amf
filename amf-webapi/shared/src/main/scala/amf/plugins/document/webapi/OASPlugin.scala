@@ -1,7 +1,6 @@
 package amf.plugins.document.webapi
 
-import amf.ProfileNames
-import amf.ProfileNames.{OAS, ProfileName}
+import amf.{OAS3Profile, OASProfile, ProfileName}
 import amf.core.emitter.RenderOptions
 import amf.core.Root
 import amf.core.model.document._
@@ -76,7 +75,7 @@ object OAS20Plugin extends OASPlugin {
 
   override def version: String = "2.0"
 
-  override val validationProfile: ProfileName = OAS
+  override val validationProfile: ProfileName = OASProfile
 
   /**
     * Decides if this plugin can parse the provided document instance.
@@ -130,7 +129,7 @@ object OAS30Plugin extends OASPlugin {
 
   override def version: String = "3.0.0"
 
-  override val validationProfile: ProfileName = ProfileNames.OAS3
+  override val validationProfile: ProfileName = OAS3Profile
 
   /**
     * Decides if this plugin can parse the provided document instance.

@@ -1,6 +1,5 @@
 package amf.core.unsafe
 
-import amf.ProfileNames.MessageStyle
 import amf.client.remote.Content
 import amf.core.model.document.BaseUnit
 import amf.core.rdf.RdfModel

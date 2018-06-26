@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.validation
 
-import amf.ProfileNames.ProfileName
+import amf.ProfileName
 import amf.core.rdf.RdfModel
 import amf.core.validation.core.{PropertyConstraint, ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.Namespace

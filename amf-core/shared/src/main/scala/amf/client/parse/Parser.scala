@@ -1,6 +1,6 @@
 package amf.client.parse
 
-import amf.ProfileNames.{MessageStyle, ProfileName, RAMLStyle}
+import amf.{MessageStyle, ProfileName, RAMLStyle}
 import amf.client.convert.CoreClientConverters._
 import amf.client.environment.{DefaultEnvironment, Environment}
 import amf.client.model.document.BaseUnit

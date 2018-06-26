@@ -1,6 +1,6 @@
 package amf.core.validation
 
-import amf.ProfileNames.{MessageStyle, OASStyle, RAMLStyle}
+import amf.{MessageStyle, OASStyle, RAMLStyle}
 import amf.core.model.document.BaseUnit
 import amf.core.validation.core.{ValidationResult, ValidationSpecification}
 import amf.core.vocabulary.Namespace

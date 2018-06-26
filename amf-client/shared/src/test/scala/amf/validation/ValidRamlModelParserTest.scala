@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.ProfileNames
+import amf.RAML08Profile
 import amf.core.remote.{Hint, RamlYamlHint}
 
 class ValidRamlModelParserTest extends ValidModelTest {
@@ -46,17 +46,17 @@ class ValidRamlModelParserTest extends ValidModelTest {
 
   // what its testing this? the api is empty
   test("08 Validation") {
-    checkValid("08/some.raml", ProfileNames.RAML08)
+    checkValid("08/some.raml", RAML08Profile)
   }
 
   // this test has not sense for me. What is testing? parameter parsing? validation? it should not be here.
   // delete tck-examples folder
   test("Raml 0.8 Parameter") {
-    checkValid("/tck-examples/query-parameter.raml", ProfileNames.RAML08)
+    checkValid("/tck-examples/query-parameter.raml", RAML08Profile)
   }
 
   test("Empty parameter validation") {
-    checkValid("/08/empty-param.raml", ProfileNames.RAML08)
+    checkValid("/08/empty-param.raml", RAML08Profile)
   }
 
   test("Empty describe by") {
@@ -68,7 +68,7 @@ class ValidRamlModelParserTest extends ValidModelTest {
   }
 
   test("Date parameter validation") {
-    checkValid("08/empty-param.raml", ProfileNames.RAML08)
+    checkValid("08/empty-param.raml", RAML08Profile)
   }
 
   test("Recursive property") {

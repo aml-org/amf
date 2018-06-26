@@ -1,6 +1,6 @@
 package amf.plugins.features.validation.model
 
-import amf.ProfileNames.ProfileName
+import amf.ProfileName
 import amf.core.validation.core._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement

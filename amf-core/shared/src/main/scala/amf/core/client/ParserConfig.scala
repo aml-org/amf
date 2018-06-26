@@ -1,8 +1,7 @@
 package amf.core.client
 
-import amf.ProfileNames
-import amf.ProfileNames.ProfileName
 import amf.core.unsafe.PlatformSecrets
+import amf.{AMFProfile, ProfileName}
 
 abstract class ProcWriter {
   def print(s: String)
@@ -39,7 +38,7 @@ case class ParserConfig(mode: Option[String] = None,
                         withSourceMaps: Boolean = false,
                         withCompactNamespaces: Boolean = false,
                         validate: Boolean = true,
-                        validationProfile: ProfileName = ProfileNames.AMF,
+                        validationProfile: ProfileName = AMFProfile,
                         customProfile: Option[String] = None,
                         resolve: Boolean = false,
                         // list of dialects that will be loaded in the registry

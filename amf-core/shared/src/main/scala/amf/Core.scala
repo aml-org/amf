@@ -1,6 +1,5 @@
 package amf
 
-import amf.ProfileNames.{MessageStyle, ProfileName}
 import amf.client.convert.CoreClientConverters._
 import amf.client.convert.CoreRegister
 import amf.client.model.document._

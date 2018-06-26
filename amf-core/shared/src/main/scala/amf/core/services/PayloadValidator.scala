@@ -1,6 +1,6 @@
 package amf.core.services
 
-import amf.ProfileNames.ProfileName
+import amf.ProfileName
 import amf.core.annotations.LexicalInformation
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.Shape

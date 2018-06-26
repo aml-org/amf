@@ -5,62 +5,79 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 @JSExportTopLevel("ProfileNames")
 object ProfileNames {
+  val AMFProfile: ProfileName    = AMFProfile
+  val OASProfile: ProfileName    = OASProfile
+  val OAS3Profile: ProfileName   = OAS3Profile
+  val RAMLProfile: ProfileName   = RAMLProfile
+  val RAML08Profile: ProfileName = RAML08Profile
 
-  case class ProfileName(profile: String, messageStyle: MessageStyle = AMFStyle) {
+  val AMF    = "AMF"
+  val OAS    = "OpenAPI"
+  val OAS3   = "OpenAPI3"
+  val RAML   = "RAML"
+  val RAML08 = "RAML08"
+}
 
-    @JSExportTopLevel("ProfileName")
-    def this(profile: String) = this(profile, AMFStyle)
-    override def toString: String = profile
-  }
+case class ProfileName(profile: String, messageStyle: MessageStyle = AMFStyle) {
+  @JSExportTopLevel("ProfileName")
+  def this(profile: String) = this(profile, AMFStyle)
+  override def toString: String = profile
+}
 
-  object AMF     extends ProfileName("AMF")
-  object OAS     extends ProfileName("OpenAPI", OASStyle)
-  object OAS3    extends ProfileName("OpenAPI3", OASStyle)
-  object RAML    extends ProfileName("RAML", RAMLStyle)
-  object RAML08  extends ProfileName("RAML08", RAMLStyle)
-  object PAYLOAD extends ProfileName("Payload")
+object AMFProfile     extends ProfileName("AMF")
+object OASProfile     extends ProfileName("OpenAPI", OASStyle)
+object OAS3Profile    extends ProfileName("OpenAPI3", OASStyle)
+object RAMLProfile    extends ProfileName("RAML", RAMLStyle)
+object RAML08Profile  extends ProfileName("RAML08", RAMLStyle)
+object PAYLOADProfile extends ProfileName("Payload")
 
-  object ProfileName {
-    def unapply(name: String): Option[ProfileName] =
-      name match {
-        case AMF.profile    => Some(AMF)
-        case OAS.profile    => Some(OAS)
-        case OAS3.profile   => Some(OAS3)
-        case RAML.profile   => Some(RAML)
-        case RAML08.profile => Some(RAML08)
-        case _              => None
-      }
-
-    def apply(profile: String): ProfileName = profile match {
-      case "AMF"    => AMF
-      case "OAS"    => OAS
-      case "OAS3"   => OAS3
-      case "RAML"   => RAML
-      case "RAML08" => RAML08
-      case other    => new ProfileName(other)
+object ProfileName {
+  def unapply(name: String): Option[ProfileName] =
+    name match {
+      case AMFProfile.profile    => Some(AMFProfile)
+      case OASProfile.profile    => Some(OASProfile)
+      case OAS3Profile.profile   => Some(OAS3Profile)
+      case RAMLProfile.profile   => Some(RAMLProfile)
+      case RAML08Profile.profile => Some(RAML08Profile)
+      case _                     => None
     }
-  }
 
-  object MessageStyle {
-    def apply(name: String): MessageStyle = name match {
-      case "RAML" | "RAML08" => RAMLStyle
-      case "OAS" | "OAS3"    => OASStyle
-      case _                 => AMFStyle
-    }
+  def apply(profile: String): ProfileName = profile match {
+    case "AMF"    => AMFProfile
+    case "OAS"    => OASProfile
+    case "OAS3"   => OAS3Profile
+    case "RAML"   => RAMLProfile
+    case "RAML08" => RAML08Profile
+    case other    => new ProfileName(other)
   }
+}
 
-  trait MessageStyle {
-    def profileName: ProfileName
+object MessageStyle {
+  def apply(name: String): MessageStyle = name match {
+    case "RAML" | "RAML08" => RAMLStyle
+    case "OAS" | "OAS3"    => OASStyle
+    case _                 => AMFStyle
   }
+}
 
-  object RAMLStyle extends MessageStyle {
-    override def profileName: ProfileName = RAML
-  }
-  object OASStyle extends MessageStyle {
-    override def profileName: ProfileName = OAS
-  }
-  object AMFStyle extends MessageStyle {
-    override def profileName: ProfileName = AMF
-  }
+trait MessageStyle {
+  def profileName: ProfileName
+}
 
+@JSExportAll
+@JSExportTopLevel("MessageStyles")
+object MessageStyles {
+  val RAML: MessageStyle = RAMLStyle
+  val OAS: MessageStyle  = OASStyle
+  val AMF: MessageStyle  = AMFStyle
+}
+
+object RAMLStyle extends MessageStyle {
+  override def profileName: ProfileName = RAMLProfile
+}
+object OASStyle extends MessageStyle {
+  override def profileName: ProfileName = OASProfile
+}
+object AMFStyle extends MessageStyle {
+  override def profileName: ProfileName = AMFProfile
 }

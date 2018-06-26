@@ -1,6 +1,6 @@
 package amf.client.validate
 
-import amf.ProfileNames.{AMFStyle, MessageStyle, ProfileName}
+import amf.{AMFStyle, MessageStyle, ProfileName}
 import amf.client.convert.CoreClientConverters._
 import amf.client.model.document.BaseUnit
 import amf.core.services.RuntimeValidator

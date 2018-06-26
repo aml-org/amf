@@ -1,6 +1,6 @@
 package amf.core.resolution.pipelines
 
-import amf.ProfileNames.ProfileName
+import amf.ProfileName
 import amf.core.AMFCompilerRunCount
 import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.BaseUnit

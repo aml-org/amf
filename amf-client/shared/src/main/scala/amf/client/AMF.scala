@@ -1,7 +1,6 @@
 package amf.client
 
-import amf.Core
-import amf.ProfileNames.{AMFStyle, MessageStyle, ProfileName}
+import amf.{AMFStyle, Core, MessageStyle, ProfileName}
 import amf.client.convert.CoreClientConverters._
 import amf.client.model.document.{BaseUnit, Dialect}
 import amf.client.parse._

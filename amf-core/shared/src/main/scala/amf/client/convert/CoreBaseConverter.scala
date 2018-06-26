@@ -1,6 +1,6 @@
 package amf.client.convert
 
-import amf.ProfileNames.ProfileName
+import amf.ProfileName
 import amf.client.handler.{FileHandler, Handler}
 import amf.client.model.document.{BaseUnit => ClientBaseUnit}
 import amf.client.model.domain.{

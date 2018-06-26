@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi
 
-import amf.ProfileNames.ProfileName
+import amf.ProfileName
 import amf.core.model.document.BaseUnit
 import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.remote.Platform

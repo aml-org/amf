@@ -1,12 +1,10 @@
 package amf.plugins.document.webapi.resolution.pipelines
-
-import amf.ProfileNames
-import amf.ProfileNames.ProfileName
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.plugins.domain.webapi.models.Response
+import amf.{OASProfile, ProfileName}
 
 class OasReferenceResolutionStage(keepEditingInfo: Boolean = false)(override implicit val errorHandler: ErrorHandler)
     extends ReferenceResolutionStage(keepEditingInfo) {
@@ -25,6 +23,6 @@ class OasReferenceResolutionStage(keepEditingInfo: Boolean = false)(override imp
 }
 
 class OasResolutionPipeline(override val model: BaseUnit) extends AmfResolutionPipeline(model) {
-  override def profileName: ProfileName = ProfileNames.OAS
+  override def profileName: ProfileName = OASProfile
   override lazy val references          = new OasReferenceResolutionStage()
 }

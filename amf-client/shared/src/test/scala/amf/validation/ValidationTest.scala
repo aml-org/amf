@@ -1,7 +1,6 @@
 package amf.validation
 
-import amf.ProfileNames
-import amf.ProfileNames.{OASStyle, ProfileName, RAMLStyle}
+import amf._
 import amf.core.AMFSerializer
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.Module
@@ -15,7 +14,7 @@ import amf.plugins.document.webapi.validation.AMFShapeValidations
 import amf.plugins.document.webapi.{RAML08Plugin, RAML10Plugin}
 import amf.plugins.domain.shapes.models.ArrayShape
 import amf.plugins.features.validation.ParserSideValidations
-import org.scalatest.AsyncFunSuite
+import _root_.org.scalatest.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -42,7 +41,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       library    <- AMFCompiler(productionPath + "spec_examples_example.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(library, ProfileNames.RAML)
+      report     <- validation.validate(library, RAMLProfile)
     } yield {
       assert(report.conforms)
     }
@@ -53,7 +52,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       library    <- AMFCompiler(productionPath + "americanflightapi.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(library, ProfileNames.RAML)
+      report     <- validation.validate(library, RAMLProfile)
     } yield {
       assert(report.conforms)
     }
@@ -92,7 +91,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       doc        <- AMFCompiler(productionPath + "recursive2.raml", platform, RamlYamlHint, validation).build()
     } yield {
       val A: ArrayShape = doc.asInstanceOf[Module].declares.head.asInstanceOf[ArrayShape]
-      new ValidationResolutionPipeline(ProfileNames.RAML, Module().withDeclares(Seq(A))).resolve()
+      new ValidationResolutionPipeline(RAMLProfile, Module().withDeclares(Seq(A))).resolve()
       val profile = new AMFShapeValidations(A).profile(ObjectNode())
       assert(profile.violationLevel.size == 1)
       assert(
@@ -105,7 +104,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       library    <- AMFCompiler(productionPath + "includes-api/api.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(library, ProfileNames.RAML)
+      report     <- validation.validate(library, RAMLProfile)
     } yield {
       val (violations, others) =
         report.results.partition(r => r.level.equals(SeverityLevels.VIOLATION))
@@ -125,7 +124,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                          RamlYamlHint,
                          validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML)
+      report <- validation.validate(doc, RAMLProfile)
     } yield {
       assert(report.conforms)
     }
@@ -142,7 +141,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                              RamlYamlHint,
                              validation)
         .build()
-      report <- validation.validate(library, ProfileNames.RAML08)
+      report <- validation.validate(library, RAML08Profile)
     } yield {
       assert(report.results.isEmpty)
     }
@@ -156,7 +155,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       library <- AMFCompiler(validationsPath + "/tck-examples/examples.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(library, ProfileNames.RAML)
+      report <- validation.validate(library, RAMLProfile)
     } yield {
       assert(report.results.isEmpty)
     }
@@ -168,7 +167,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       library <- AMFCompiler(validationsPath + "/stackoverflow/api.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(library, ProfileNames.RAML)
+      report <- validation.validate(library, RAMLProfile)
     } yield {
       assert(!report.results.exists(_.validationId != ParserSideValidations.RecursiveShapeSpecification.id))
     }
@@ -180,7 +179,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       library <- AMFCompiler(validationsPath + "/stackoverflow2/api.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(library, ProfileNames.RAML08)
+      report <- validation.validate(library, RAML08Profile)
     } yield {
       assert(report.conforms)
       assert(report.results.isEmpty)
@@ -196,7 +195,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         RAML10Plugin.resolve(doc)
       }
       generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
-      report    <- validation.validate(doc, ProfileNames.RAML)
+      report    <- validation.validate(doc, RAMLProfile)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 2)
@@ -211,7 +210,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       doc        <- AMFCompiler(validationsPath + "validex1.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(doc, ProfileNames.AMF)
+      report     <- validation.validate(doc, AMFProfile)
     } yield {
       assert(report.conforms)
     }
@@ -221,7 +220,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       doc        <- AMFCompiler(validationsPath + "validex2.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(doc, ProfileNames.AMF)
+      report     <- validation.validate(doc, AMFProfile)
     } yield {
       assert(report.conforms)
     }
@@ -234,7 +233,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                          platform,
                          OasYamlHint,
                          validation).build()
-      report <- validation.validate(doc, ProfileNames.AMF)
+      report <- validation.validate(doc, AMFProfile)
     } yield {
       assert(!report.conforms)
       assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 2)
@@ -246,7 +245,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "parameters/invalid-body-parameter.json", platform, OasYamlHint, validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.AMF)
+      report <- validation.validate(doc, AMFProfile)
     } yield {
       assert(!report.conforms)
       assert(doc != null)
@@ -259,7 +258,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       doc        <- AMFCompiler(upDownPath + "trait-string-quoted-node.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(doc, ProfileNames.AMF)
+      report     <- validation.validate(doc, AMFProfile)
     } yield {
       assert(report.conforms)
     }
@@ -273,7 +272,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                          RamlYamlHint,
                          validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML)
+      report <- validation.validate(doc, RAMLProfile)
     } yield {
       assert(!report.conforms)
       assert(report.results.length == 1)
@@ -289,7 +288,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                          RamlYamlHint,
                          validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML)
+      report <- validation.validate(doc, RAMLProfile)
     } yield {
       assert(!report.conforms)
       assert(report.results.length == 2)
@@ -303,7 +302,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/parameters/request-header.json", platform, OasJsonHint, validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.OAS, OASStyle)
+      report <- validation.validate(doc, OASProfile, OASStyle)
     } yield {
       assert(report.conforms)
     }
@@ -314,7 +313,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/missing-includes/in-type-def.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML, RAMLStyle)
+      report <- validation.validate(doc, RAMLProfile, RAMLStyle)
     } yield {
       assert(!report.conforms)
     }
@@ -328,7 +327,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                          RamlYamlHint,
                          validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML, RAMLStyle)
+      report <- validation.validate(doc, RAMLProfile, RAMLStyle)
     } yield {
       assert(!report.conforms)
       assert(report.results.length == 2)
@@ -340,7 +339,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/missing-includes/in-trait-def.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML, RAMLStyle)
+      report <- validation.validate(doc, RAMLProfile, RAMLStyle)
     } yield {
       assert(!report.conforms)
       assert(report.results.length == 2)
@@ -352,7 +351,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/multiple-tags.json", platform, OasJsonHint, validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.OAS, OASStyle)
+      report <- validation.validate(doc, OASProfile, OASStyle)
     } yield {
       assert(report.conforms)
     }
@@ -362,7 +361,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       doc        <- AMFCompiler(validationsPath + "property-names.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(doc, ProfileNames.AMF)
+      report     <- validation.validate(doc, AMFProfile)
     } yield {
       assert(report.conforms)
     }
@@ -373,7 +372,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(productionPath + "/enum-number-string/api.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML, RAMLStyle)
+      report <- validation.validate(doc, RAMLProfile, RAMLStyle)
     } yield {
       assert(report.conforms)
     }
@@ -384,7 +383,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "production/array-without-items.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML, RAMLStyle)
+      report <- validation.validate(doc, RAMLProfile, RAMLStyle)
     } yield {
       assert(report.conforms)
     }
@@ -398,7 +397,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                          RamlYamlHint,
                          validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML, RAMLStyle)
+      report <- validation.validate(doc, RAMLProfile, RAMLStyle)
     } yield {
       assert(report.conforms)
     }
@@ -412,7 +411,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                          RamlYamlHint,
                          validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML, RAMLStyle)
+      report <- validation.validate(doc, RAMLProfile, RAMLStyle)
     } yield {
       assert(!report.conforms)
       assert(report.results.lengthCompare(1) == 0)
@@ -425,7 +424,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/media-type-resource-type.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML, RAMLStyle)
+      report <- validation.validate(doc, RAMLProfile, RAMLStyle)
     } yield {
       assert(report.conforms)
     }
@@ -436,7 +435,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/invalid-char-property-name.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML, RAMLStyle)
+      report <- validation.validate(doc, RAMLProfile, RAMLStyle)
     } yield {
       assert(report.conforms)
     }
@@ -447,7 +446,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/no-base-uri.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML, RAMLStyle)
+      report <- validation.validate(doc, RAMLProfile, RAMLStyle)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
@@ -460,7 +459,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "parameters/multiple-formdata.yaml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.OAS, OASStyle)
+      report <- validation.validate(doc, OASProfile, OASStyle)
     } yield {
       assert(report.conforms)
     }
@@ -471,7 +470,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "invalid-security.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML08)
+      report <- validation.validate(doc, RAML08Profile)
     } yield {
       assert(report.results.length == 1)
     }
@@ -485,7 +484,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                          RamlYamlHint,
                          validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML)
+      report <- validation.validate(doc, RAMLProfile)
     } yield {
       assert(report.results.length == 1)
       assert(report.results.head.message.equals("Cannot parse JSON Schema expression out of a non string value"))
@@ -500,7 +499,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                          RamlYamlHint,
                          validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML)
+      report <- validation.validate(doc, RAMLProfile)
     } yield {
       assert(report.conforms)
     }
@@ -514,7 +513,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                          RamlYamlHint,
                          validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML)
+      report <- validation.validate(doc, RAMLProfile)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 2)
@@ -531,7 +530,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                          RamlYamlHint,
                          validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML)
+      report <- validation.validate(doc, RAMLProfile)
     } yield {
       assert(!report.conforms)
       assert(report.results.exists(_.message.equals("Missing library location")))
@@ -545,7 +544,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "null-name.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML)
+      report <- validation.validate(doc, RAMLProfile)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
@@ -558,7 +557,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "08/max-exclusive-schema.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML08)
+      report <- validation.validate(doc, RAML08Profile)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
@@ -571,7 +570,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(productionPath + "card-data/currencyapi.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML)
+      report <- validation.validate(doc, RAMLProfile)
     } yield {
       assert(report.conforms)
     }
@@ -582,7 +581,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       _          <- validation.loadValidationDialect()
       model      <- AMFCompiler(validationsPath + "08/ramlpattern.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML)
+      report     <- validation.validate(model, RAMLProfile)
     } yield {
       assert(report.results.nonEmpty)
     }
@@ -594,7 +593,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       _          <- validation.loadValidationDialect()
       model <- AMFCompiler(productionPath + "lock-unlock/lockUnlockStats.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(model, ProfileNames.RAML)
+      report <- validation.validate(model, RAMLProfile)
     } yield {
       assert(report.results.nonEmpty)
     }
@@ -608,7 +607,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                            platform,
                            RamlYamlHint,
                            validation).build()
-      report <- validation.validate(model, ProfileNames.RAML)
+      report <- validation.validate(model, RAMLProfile)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
@@ -624,7 +623,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                            platform,
                            RamlYamlHint,
                            validation).build()
-      report <- validation.validate(model, ProfileNames.RAML08)
+      report <- validation.validate(model, RAML08Profile)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
@@ -636,7 +635,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       model      <- AMFCompiler(validationsPath + "map-key.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML)
+      report     <- validation.validate(model, RAMLProfile)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
@@ -650,7 +649,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       model <- AMFCompiler(validationsPath + "data/pattern_properties.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(model, ProfileNames.RAML)
+      report <- validation.validate(model, RAMLProfile)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
@@ -662,7 +661,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       model <- AMFCompiler(validationsPath + "data/pattern_properties2.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(model, ProfileNames.RAML)
+      report <- validation.validate(model, RAMLProfile)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
@@ -674,7 +673,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       model <- AMFCompiler(validationsPath + "data/pattern_properties3.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(model, ProfileNames.RAML)
+      report <- validation.validate(model, RAMLProfile)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
@@ -686,7 +685,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       model <- AMFCompiler(validationsPath + "data/pattern_properties4.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(model, ProfileNames.RAML)
+      report <- validation.validate(model, RAMLProfile)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
@@ -698,7 +697,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "production/reuse-json-schema/api.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML08)
+      report <- validation.validate(doc, RAML08Profile)
     } yield {
       assert(report.conforms)
     }
@@ -708,7 +707,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       model      <- AMFCompiler(validationsPath + "jsonSchemaProperties.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML)
+      report     <- validation.validate(model, RAMLProfile)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
@@ -723,7 +722,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                          RamlYamlHint,
                          validation)
         .build()
-      report <- validation.validate(doc, ProfileNames.RAML08)
+      report <- validation.validate(doc, RAML08Profile)
     } yield {
       assert(report.conforms)
     }
@@ -734,7 +733,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "discriminator_union.raml", platform, RamlYamlHint, validation)
         .build()
-      report   <- validation.validate(doc, ProfileNames.RAML08)
+      report   <- validation.validate(doc, RAML08Profile)
       resolved <- Future { RAML08Plugin.resolve(doc) }
     } yield {
       assert(!report.conforms)
@@ -746,7 +745,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       model <- AMFCompiler(validationsPath + "types/mhra-e-payment-v1.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(model, ProfileNames.RAML)
+      report <- validation.validate(model, RAMLProfile)
     } yield {
       assert(report.conforms)
     }
@@ -756,7 +755,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       model      <- AMFCompiler(validationsPath + "jsonschema/misc_shapes.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML)
+      report     <- validation.validate(model, RAMLProfile)
     } yield {
       assert(!report.conforms)
     }
@@ -766,7 +765,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       model      <- AMFCompiler(validationsPath + "connect-trace.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML08)
+      report     <- validation.validate(model, RAML08Profile)
     } yield {
       assert(report.conforms)
     }
@@ -776,7 +775,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       model      <- AMFCompiler(validationsPath + "empty-responses.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML)
+      report     <- validation.validate(model, RAMLProfile)
     } yield {
       assert(report.conforms)
     }
@@ -787,7 +786,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       model <- AMFCompiler(validationsPath + "recursive-optional-property.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(model, ProfileNames.RAML)
+      report <- validation.validate(model, RAMLProfile)
     } yield {
       assert(report.conforms)
     }
@@ -802,7 +801,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                            RamlYamlHint,
                            validation) // Change hint here for a different syntax parsing.
         .build()
-      report <- validation.validate(model, ProfileNames.RAML) // Change profile name here to validate for a different spec.
+      report <- validation.validate(model, RAMLProfile) // Change profile name here to validate for a different spec.
     } yield {
       //RAML10Plugin.resolve(model) // Change plugin here to resolve for a different spec.
       assert(report.results.isEmpty)
@@ -815,7 +814,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       model <- AMFCompiler(validationsPath + "08/examples-json-schema.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(model, ProfileNames.RAML08)
+      report <- validation.validate(model, RAML08Profile)
     } yield {
       assert(report.conforms)
     }
@@ -826,7 +825,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       model <- AMFCompiler(validationsPath + "shapes/union-recursive.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(model, ProfileNames.RAML)
+      report <- validation.validate(model, RAMLProfile)
     } yield {
       assert(report.conforms)
     }
@@ -837,7 +836,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       model <- AMFCompiler(validationsPath + "traits/two-included-examples.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(model, ProfileNames.RAML)
+      report <- validation.validate(model, RAMLProfile)
     } yield {
       assert(report.conforms)
     }
@@ -847,7 +846,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       model      <- AMFCompiler(validationsPath + "declarations/api.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML08)
+      report     <- validation.validate(model, RAML08Profile)
     } yield {
       assert(report.conforms)
     }
@@ -857,7 +856,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       validation <- Validation(platform)
       model      <- AMFCompiler(validationsPath + "empty-usage-uses.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, ProfileNames.RAML)
+      report     <- validation.validate(model, RAMLProfile)
     } yield {
       assert(report.conforms)
     }
@@ -868,7 +867,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       model      <- AMFCompiler(productionPath + "field-nation-v2-api-2.0.7-fat-raml/FN_API_full.raml", platform, RamlYamlHint, validation)
         .build()
-      report <- validation.validate(model, ProfileNames.RAML)
+      report <- validation.validate(model, RAMLProfile)
     } yield {
       ExecutionLog.finish()
       ExecutionLog.buildReport()

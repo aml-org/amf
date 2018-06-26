@@ -1,7 +1,5 @@
 package amf.plugins.domain.webapi.models.templates
 
-import amf.ProfileNames
-import amf.ProfileNames.ProfileName
 import amf.core.metamodel.domain.templates.AbstractDeclarationModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.templates.AbstractDeclaration
@@ -9,6 +7,7 @@ import amf.core.parser.{Annotations, DefaultUnhandledError, ErrorHandler, Fields
 import amf.plugins.domain.webapi.metamodel.templates.ResourceTypeModel
 import amf.plugins.domain.webapi.models.EndPoint
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
+import amf.{ProfileName, RAMLProfile}
 import org.yaml.model.YPart
 
 class ResourceType(override val fields: Fields, override val annotations: Annotations)
@@ -19,7 +18,7 @@ class ResourceType(override val fields: Fields, override val annotations: Annota
   override def meta: AbstractDeclarationModel = ResourceTypeModel
 
   def asEndpoint[T <: BaseUnit](unit: T,
-                                profile: ProfileName = ProfileNames.RAML,
+                                profile: ProfileName = RAMLProfile,
                                 errorHandler: ErrorHandler = DefaultUnhandledError): EndPoint = {
     linkTarget match {
       case Some(_) =>

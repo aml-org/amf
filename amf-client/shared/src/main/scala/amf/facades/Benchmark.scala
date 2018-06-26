@@ -1,11 +1,11 @@
 package amf.facades
 
-import amf.ProfileNames
+import amf.RAMLProfile
 import amf.core.benchmark.ExecutionLog
 import amf.core.remote.RamlYamlHint
 import amf.core.unsafe.PlatformSecrets
 
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
 
@@ -32,7 +32,7 @@ object Benchmark extends PlatformSecrets {
       val current = for {
         validation <- Validation(platform)
         model      <- AMFCompiler(file, platform, RamlYamlHint, validation).build()
-        report     <- validation.validate(model, ProfileNames.RAML)
+        report     <- validation.validate(model, RAMLProfile)
       } yield {
         ExecutionLog.finish()
       }

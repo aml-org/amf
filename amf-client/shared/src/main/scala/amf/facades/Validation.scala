@@ -1,6 +1,6 @@
 package amf.facades
 
-import amf.ProfileNames.{MessageStyle, ProfileName, RAMLStyle}
+import amf.{MessageStyle, ProfileName, RAMLStyle}
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
 import amf.core.services.RuntimeValidator
