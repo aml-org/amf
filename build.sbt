@@ -4,7 +4,7 @@ import sbt.Keys.{libraryDependencies, resolvers}
 
 name := "amf"
 
-version in ThisBuild := "1.5.1"
+version in ThisBuild := "1.6.0-SNAPSHOT"
 
 scalaVersion in ThisBuild := "2.12.2"
 
