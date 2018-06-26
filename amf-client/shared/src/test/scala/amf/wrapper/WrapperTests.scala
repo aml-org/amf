@@ -1,5 +1,6 @@
 package amf.wrapper
 
+import amf.ProfileNames
 import amf.ProfileNames.{AMFStyle, ProfileName, RAML, RAMLStyle}
 import amf.client.AMF
 import amf.client.convert.NativeOps
@@ -1151,6 +1152,30 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
         .head
         .location
         .value() should be("file://amf-client/shared/src/test/resources/production/othercases/xsdexample/example.xsd")
+    }
+  }
+
+  test("Test validate with string amf pair method") {
+    for {
+      _ <- AMF.init().asFuture
+      unit <- new Raml10Parser()
+        .parseFileAsync(scalarAnnotations)
+        .asFuture
+      v <- AMF.validate(unit, "RAML", "RAML").asFuture
+    } yield {
+      assert(v.conforms)
+    }
+  }
+
+  test("Test validate with typed enum amf pair method") {
+    for {
+      _ <- AMF.init().asFuture
+      unit <- new Raml10Parser()
+        .parseFileAsync(scalarAnnotations)
+        .asFuture
+      v <- AMF.validate(unit, ProfileNames.RAML, ProfileNames.RAML.messageStyle).asFuture
+    } yield {
+      assert(v.conforms)
     }
   }
 }

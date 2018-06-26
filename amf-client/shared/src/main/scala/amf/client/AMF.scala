@@ -50,7 +50,7 @@ object AMF {
     Core.validate(model, profileName, messageStyle)
 
   def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): ClientFuture[ValidationReport] =
-    validate(model, profileName, messageStyle)
+    Core.validate(model, profileName, messageStyle)
 
   def loadValidationProfile(url: String): ClientFuture[ProfileName] = Core.loadValidationProfile(url)
 
