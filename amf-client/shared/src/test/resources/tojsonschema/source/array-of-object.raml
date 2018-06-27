@@ -1,0 +1,30 @@
+#%RAML 1.0
+baseUri: http://apdev-american-ws.cloudhub.io/api/
+version: 1.0
+title: American Flights API
+description: API that returns sample data for MuleSoft training
+
+types:
+  AmericanFlight:
+    type: object
+    properties:
+      name: string
+      date: string
+      destination:
+        enum: [SFO, LAX, CLE]
+
+/flights:
+  description: flights endpoint
+  get:
+    displayName: Get all flights
+    description: get flights endpoint
+    queryParameters:
+      code:
+        displayName: Get all flights to a specific destination (by airport code)
+        required: false
+        enum: [SFO, LAX, CLE]
+    responses:
+      200:
+        body:
+          application/json:
+            type: AmericanFlight[]

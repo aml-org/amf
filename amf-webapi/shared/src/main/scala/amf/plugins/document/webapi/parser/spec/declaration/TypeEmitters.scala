@@ -15,11 +15,21 @@ import amf.core.parser.{Annotations, FieldEntry, Fields, Position, Value}
 import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
-import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
+import amf.plugins.document.webapi.contexts.{
+  OasSpecEmitterContext,
+  RamlScalarEmitter,
+  RamlSpecEmitterContext,
+  SpecEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
-import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, OasTypeDefStringValueMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
+import amf.plugins.document.webapi.parser.{
+  OasTypeDefMatcher,
+  OasTypeDefStringValueMatcher,
+  RamlTypeDefMatcher,
+  RamlTypeDefStringValueMatcher
+}
 import amf.plugins.domain.shapes.annotations.{NilUnion, ParsedFromTypeExpression}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
@@ -27,7 +37,7 @@ import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.{TypeDefXsdMapping, TypeDefYTypeMapping, XsdTypeDefMapping}
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YNode, YScalar, YType}
+import org.yaml.model.{YNode, YType}
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -47,7 +57,7 @@ case class RamlNamedTypeEmitter(shape: AnyShape,
                                     Seq[BaseUnit]) => RamlTypePartEmitter)(implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    val name = shape.name.option().getOrElse(throw new Exception(s"Cannot declare shape without name $shape"))
+    val name = shape.name.option().getOrElse("schema") // this used to throw an exception, but with the resolution optimizacion, we use the father shape, so it could have not name (if it's from an endpoint for example, and you want to write a new single shape, like a json schema)
     b.entry(name, if (shape.isLink) emitLink _ else emitInline _)
   }
 
@@ -69,7 +79,7 @@ case class OasNamedTypeEmitter(shape: Shape, ordering: SpecOrdering, references:
     implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    val name = shape.name.option().getOrElse(throw new Exception(s"Cannot declare shape without name $shape"))
+    val name = shape.name.option().getOrElse("schema") // this used to throw an exception, but with the resolution optimizacion, we use the father shape, so it could have not name (if it's from an endpoint for example, and you want to write a new single shape, like a json schema)
     b.entry(name, OasTypePartEmitter(shape, ordering, references = references).emit(_))
   }
 
@@ -1024,8 +1034,8 @@ case class RamlTupleItemsShapeEmitter(tuple: TupleShape, ordering: SpecOrdering,
 }
 
 case class RamlPropertiesShapeEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-  implicit spec: RamlSpecEmitterContext)
-  extends EntryEmitter {
+    implicit spec: RamlSpecEmitterContext)
+    extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       "properties",
@@ -1045,7 +1055,9 @@ case class RequiredShapeEmitter(shape: Shape, minCount: Option[FieldEntry]) {
   def emitter(): Option[EntryEmitter] = {
     minCount.flatMap { entry =>
       if (entry.value.annotations.contains(classOf[ExplicitField])) {
-        Some(EntryPartEmitter("required", RawEmitter(if (entry.scalar.toNumber.intValue() > 0) "true" else "false", YType.Bool)))
+        Some(
+          EntryPartEmitter("required",
+                           RawEmitter(if (entry.scalar.toNumber.intValue() > 0) "true" else "false", YType.Bool)))
       } else {
         None
       }
@@ -1082,7 +1094,9 @@ case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrder
       val additionalEmitters: Seq[EntryEmitter] =
         (property.fields
           .entry(PropertyShapeModel.ReadOnly)
-          .map(fe => ValueEmitter("readOnly".asRamlAnnotation, fe)) ++ RequiredShapeEmitter(shape = property.range, property.fields.entry(PropertyShapeModel.MinCount))
+          .map(fe => ValueEmitter("readOnly".asRamlAnnotation, fe)) ++ RequiredShapeEmitter(
+          shape = property.range,
+          property.fields.entry(PropertyShapeModel.MinCount))
           .emitter()).toSeq
 
       property.range match {
@@ -1502,8 +1516,10 @@ case class OasNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referenc
 
     fs.entry(NodeShapeModel.Properties).map(f => result += OasRequiredPropertiesShapeEmitter(f, references))
 
-    fs.entry(NodeShapeModel.Properties).map(f => result += OasPropertiesShapeEmitter(f, ordering, references, patterned = false))
-    fs.entry(NodeShapeModel.Properties).map(f => result += OasPropertiesShapeEmitter(f, ordering, references, patterned = true))
+    fs.entry(NodeShapeModel.Properties)
+      .map(f => result += OasPropertiesShapeEmitter(f, ordering, references, patterned = false))
+    fs.entry(NodeShapeModel.Properties)
+      .map(f => result += OasPropertiesShapeEmitter(f, ordering, references, patterned = true))
 
     val properties = ListMap(node.properties.map(p => p.id -> p): _*)
 
@@ -1723,17 +1739,22 @@ case class OasRequiredPropertiesShapeEmitter(f: FieldEntry, references: Seq[Base
   override def position(): Position = pos(f.value.annotations)
 }
 
-case class OasPropertiesShapeEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit], patterned: Boolean)(
-    implicit spec: OasSpecEmitterContext)
+case class OasPropertiesShapeEmitter(f: FieldEntry,
+                                     ordering: SpecOrdering,
+                                     references: Seq[BaseUnit],
+                                     patterned: Boolean)(implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val propertiesKey = if (patterned) "patternProperties" else "properties"
-    val properties = f.array.values.filter { _.asInstanceOf[PropertyShape].patternName.option().isDefined == patterned }
+    val properties = f.array.values.filter {
+      _.asInstanceOf[PropertyShape].patternName.option().isDefined == patterned
+    }
     if (properties.nonEmpty) {
       b.entry(
         propertiesKey,
         _.obj { b =>
-          val result = properties.map(v => OasPropertyShapeEmitter(v.asInstanceOf[PropertyShape], ordering, references))
+          val result =
+            properties.map(v => OasPropertyShapeEmitter(v.asInstanceOf[PropertyShape], ordering, references))
           traverse(ordering.sorted(result), b)
         }
       )

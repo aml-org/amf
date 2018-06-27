@@ -19,7 +19,15 @@ trait JsonSchemaSerializer {
 
   protected def toJsonSchema(element: AnyShape): String = {
     AMFSerializer.init()
-    RuntimeSerializer(Document().withDeclaredElement(element), "application/schema+json", "JSON Schema")
+    RuntimeSerializer(Document().withDeclaredElement(fixNameIfNeeded(element)),
+                      "application/schema+json",
+                      "JSON Schema")
+  }
+
+  private def fixNameIfNeeded(element: AnyShape): AnyShape = {
+    if (element.name.option().isEmpty)
+      element.copyShape().withName("root")
+    else element
   }
 }
 
