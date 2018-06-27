@@ -24,7 +24,7 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   val payloadValidations = Map(
     ("payloads.raml", "A", "a_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
-    ("payloads.raml", "A", "a_invalid.json")               -> ExpectedReport(conforms = false, 4, PAYLOADProfile),
+    ("payloads.raml", "A", "a_invalid.json")               -> ExpectedReport(conforms = false, 2, PAYLOADProfile),
     ("payloads.raml", "B", "b_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
     ("payloads.raml", "B", "b_invalid.json")               -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
     ("payloads.raml", "B", "b_valid.yaml")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
@@ -32,7 +32,7 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
     ("payloads.raml", "C", "c_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
     ("payloads.raml", "C", "c_invalid.json")               -> ExpectedReport(conforms = false, 8, PAYLOADProfile),
     ("payloads.raml", "D", "d_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
-    ("payloads.raml", "D", "d_invalid.json")               -> ExpectedReport(conforms = false, 7, PAYLOADProfile),
+    ("payloads.raml", "D", "d_invalid.json")               -> ExpectedReport(conforms = false, 5, PAYLOADProfile),
     ("payloads.raml", "E", "e_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
     ("payloads.raml", "E", "e_invalid.json")               -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
     ("payloads.raml", "F", "f_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),

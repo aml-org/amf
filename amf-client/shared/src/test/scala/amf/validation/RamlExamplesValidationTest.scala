@@ -85,6 +85,7 @@ class RamlExamplesValidationTest extends ValidationReportGenTest {
   test("Test failed union ex 1 with invalid example") {
     validate("examples/union1-invalid.raml", Some("union1-invalid.report"))
   }
+
   // this is not in ParaPayloadValidation test because we need to check the validation against a raml 08 parsed and resolved model (with that profile).
   test("Raml 0.8 Query Parameter Negative test case") {
     validate("/08/date-query-parameter.raml", Some("date-query-parameter.report"), profile = RAML08Profile)
@@ -109,14 +110,6 @@ class RamlExamplesValidationTest extends ValidationReportGenTest {
 
   test("Test minItems maxItems examples") {
     validate("/examples/min-max-items.raml", Some("min-max-items.report"))
-  }
-
-  test("Test validate declared type with two uses") {
-    validate("/examples/declared-type-ref.raml", Some("declared-type-ref.report"))
-  }
-
-  test("Test declared type with two uses adding example") {
-    validate("/examples/declared-type-ref-add-example.raml", Some("declared-type-ref-add-example.report"))
   }
 
   test("Test unsupported example with raml08 profile") {

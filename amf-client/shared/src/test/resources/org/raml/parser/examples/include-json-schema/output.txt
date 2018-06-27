@@ -7,20 +7,18 @@ Level: Violation
 
 - Source: file://user.json/#/definitions/User_validation
   Message: Object at / must be valid
-Scalar at //name must have data type http://www.w3.org/2001/XMLSchema#string
 Scalar at //age must have data type http://www.w3.org/2001/XMLSchema#integer
 
   Level: Violation
   Target: file://user.json/#/definitions/User/example/bad
-  Property: file://user.json/#/definitions/User/example/bad
+  Property: http://a.ml/vocabularies/data#age
   Position: Some(LexicalInformation([(12,11)-(17,0)]))
 
 - Source: file://user.json/#/definitions/User_validation
   Message: Object at / must be valid
-Scalar at //name must have data type http://www.w3.org/2001/XMLSchema#string
 Scalar at //age must have data type http://www.w3.org/2001/XMLSchema#integer
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/include-json-schema/input.raml#/web-api/end-points/%2Fsend/post/request/application%2Fjson/schema/example/default-example
-  Property: file://amf-client/shared/src/test/resources/org/raml/parser/examples/include-json-schema/input.raml#/web-api/end-points/%2Fsend/post/request/application%2Fjson/schema/example/default-example
+  Property: http://a.ml/vocabularies/data#age
   Position: Some(LexicalInformation([(22,17)-(27,0)]))

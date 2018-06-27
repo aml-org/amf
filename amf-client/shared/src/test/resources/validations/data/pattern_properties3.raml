@@ -5,7 +5,7 @@ types:
     properties:
       a: integer
       //: # force all additional properties to be a string
-        type: string
+        type: integer
 
 /test:
   get:
@@ -16,5 +16,5 @@ types:
             type: Person
             example:
               a: 34
-              note2: 123 # not valid as it is not a string
-              note1: "US" # valid as it does not match the pattern
+              note1: "US" # not valid as it is not an integer
+              note2: 123 # valid as it does not match the pattern

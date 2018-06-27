@@ -1,16 +1,9 @@
 Model: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/string/input.raml
 Profile: RAML
 Conforms? false
-Number of results: 3
+Number of results: 2
 
 Level: Violation
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/string/input.raml#/declarations/annotations/image/scalar/schema_validation_range/prop
-  Message: Scalar at / must have data type http://www.w3.org/2001/XMLSchema#string
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/string/input.raml#/web-api/end-points/%2Ftext/image/scalar_1
-  Property: http://a.ml/vocabularies/data#value
-  Position: Some(LexicalInformation([(18,11)-(18,12)]))
 
 - Source: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/string/input.raml#/declarations/annotations/foo/scalar/schema_validation_validation_maxLength/prop
   Message: Data at / must have length smaller than 2

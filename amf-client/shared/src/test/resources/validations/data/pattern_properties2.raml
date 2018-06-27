@@ -4,7 +4,7 @@ types:
   Person:
     properties:
       //: # force all additional properties to be a string
-        type: string
+        type: integer
 
 /test:
   get:
@@ -14,5 +14,5 @@ types:
           application/json:
             type: Person
             example:
-              note2: 123 # not valid as it is not a string
-              note1: "US" # valid as it does not match the pattern
+              note1: "US" # not valid as it is not an integer
+              note2: 123 # valid as it does not match the pattern

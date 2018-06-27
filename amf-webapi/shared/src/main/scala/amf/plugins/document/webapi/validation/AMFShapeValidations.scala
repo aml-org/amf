@@ -79,17 +79,20 @@ class AMFShapeValidations(root: Shape) {
     obj.supportsInheritance && !polymorphicExpanded.getOrElse(obj.id, false)
   }
 
-  protected def emitShapeValidations(context: String, shape: Shape): List[ValidationSpecification] = {
+  protected def emitShapeValidations(
+      context: String,
+      shape: Shape,
+      dataNodeTypeHierarchy: DataNodeTypeHierarchy = DataNodeTypeHierarchyStandard): List[ValidationSpecification] = {
     shape match {
-      case union: UnionShape                   => unionConstraints(context, union)
-      case scalar: ScalarShape                 => scalarConstraints(context, scalar)
-      case tuple: TupleShape                   => tupleConstraints(context, tuple)
-      case array: ArrayShape                   => arrayConstraints(context, array)
-      case obj: NodeShape if !polymorphic(obj) => nodeConstraints(context, obj)
-      case obj: NodeShape if polymorphic(obj)  => polymorphicNodeConstraints(context, obj)
-      case nil: NilShape                       => nilConstraints(context, nil)
-      case recur: RecursiveShape               => recursiveShapeConstraints(context, recur)
-      case any: AnyShape                       => anyConstraints(context, any)
+      case union: UnionShape                   => unionConstraints(context, union, dataNodeTypeHierarchy)
+      case scalar: ScalarShape                 => scalarConstraints(context, scalar, dataNodeTypeHierarchy)
+      case tuple: TupleShape                   => tupleConstraints(context, tuple, dataNodeTypeHierarchy)
+      case array: ArrayShape                   => arrayConstraints(context, array, dataNodeTypeHierarchy)
+      case obj: NodeShape if !polymorphic(obj) => nodeConstraints(context, obj, dataNodeTypeHierarchy)
+      case obj: NodeShape if polymorphic(obj)  => polymorphicNodeConstraints(context, obj, dataNodeTypeHierarchy)
+      case nil: NilShape                       => nilConstraints(context, nil, dataNodeTypeHierarchy)
+      case recur: RecursiveShape               => recursiveShapeConstraints(context, recur, dataNodeTypeHierarchy)
+      case any: AnyShape                       => anyConstraints(context, any, dataNodeTypeHierarchy)
       case _                                   => List.empty
     }
   }
@@ -130,7 +133,9 @@ class AMFShapeValidations(root: Shape) {
 
     if (Option(parent.and).isDefined && parent.and.nonEmpty) {
       parent.and.foreach { shape =>
-        nestedConstraints ++= emitShapeValidations(context + s"/and_$count", shape)
+        nestedConstraints ++= emitShapeValidations(context + s"/and_$count",
+                                                   shape,
+                                                   DataNodeTypeHierarchyLogicalConstraint)
         count += 1
       }
 
@@ -140,7 +145,9 @@ class AMFShapeValidations(root: Shape) {
     count = 0
     if (Option(parent.or).isDefined && parent.or.nonEmpty) {
       parent.or.foreach { shape =>
-        nestedConstraints ++= emitShapeValidations(context + s"/or_$count", shape)
+        nestedConstraints ++= emitShapeValidations(context + s"/or_$count",
+                                                   shape,
+                                                   DataNodeTypeHierarchyLogicalConstraint)
         count += 1
       }
 
@@ -150,7 +157,9 @@ class AMFShapeValidations(root: Shape) {
     count = 0
     if (Option(parent.xone).isDefined && parent.xone.nonEmpty) {
       parent.xone.foreach { shape =>
-        nestedConstraints ++= emitShapeValidations(context + s"/xone_$count", shape)
+        nestedConstraints ++= emitShapeValidations(context + s"/xone_$count",
+                                                   shape,
+                                                   DataNodeTypeHierarchyLogicalConstraint)
         count += 1
       }
 
@@ -158,13 +167,15 @@ class AMFShapeValidations(root: Shape) {
     }
 
     if (Option(parent.not).isDefined) {
-      nestedConstraints ++= emitShapeValidations(context + "/not", parent.not)
+      nestedConstraints ++= emitShapeValidations(context + "/not", parent.not, DataNodeTypeHierarchyLogicalConstraint)
       computedValidation = computedValidation.copy(notConstraint = Some(validationId(parent.not)))
     }
     List(computedValidation) ++ nestedConstraints
   }
 
-  protected def anyConstraints(context: String, any: AnyShape): List[ValidationSpecification] = {
+  protected def anyConstraints(context: String,
+                               any: AnyShape,
+                               typeHierarchy: DataNodeTypeHierarchy): List[ValidationSpecification] = {
     val msg = s"Data at $context must be a valid shape"
 
     val validation = new ValidationSpecification(
@@ -184,7 +195,9 @@ class AMFShapeValidations(root: Shape) {
     }
   }
 
-  protected def unionConstraints(context: String, union: UnionShape): List[ValidationSpecification] = {
+  protected def unionConstraints(context: String,
+                                 union: UnionShape,
+                                 typeHierarchy: DataNodeTypeHierarchy): List[ValidationSpecification] = {
     val msg = if (union.isPolymorphicUnion) {
       s"Data at $context must be a valid polymorphic type: ${union.anyOf.map(_.name.option().getOrElse("type").urlDecoded).distinct.mkString(", ")}"
     } else {
@@ -193,7 +206,7 @@ class AMFShapeValidations(root: Shape) {
     var nestedConstraints: List[ValidationSpecification] = List.empty
     var count                                            = 0
     union.anyOf.foreach { shape =>
-      nestedConstraints ++= emitShapeValidations(context + s"/union_$count", shape)
+      nestedConstraints ++= emitShapeValidations(context + s"/union_$count", shape, typeHierarchy)
       count += 1
     }
     val validation = new ValidationSpecification(
@@ -206,7 +219,9 @@ class AMFShapeValidations(root: Shape) {
     checkLogicalConstraints(context, union, validation, nestedConstraints)
   }
 
-  protected def arrayConstraints(context: String, array: ArrayShape): List[ValidationSpecification] = {
+  protected def arrayConstraints(context: String,
+                                 array: ArrayShape,
+                                 typeHierarchy: DataNodeTypeHierarchy): List[ValidationSpecification] = {
     val msg                                              = s"Array at $context must be valid"
     var nestedConstraints: List[ValidationSpecification] = List.empty
     var validation = new ValidationSpecification(
@@ -219,7 +234,7 @@ class AMFShapeValidations(root: Shape) {
     )
 
     if (array.fields.entry(ArrayShapeModel.Items).isDefined) {
-      nestedConstraints ++= emitShapeValidations(context + "/items", array.items)
+      nestedConstraints ++= emitShapeValidations(context + "/items", array.items, typeHierarchy)
 
       val itemsValidationId = validationId(array) + "/prop"
       val itemsConstraint = PropertyConstraint(
@@ -239,7 +254,9 @@ class AMFShapeValidations(root: Shape) {
     checkLogicalConstraints(context, array, validation, nestedConstraints)
   }
 
-  protected def tupleConstraints(context: String, tuple: TupleShape): List[ValidationSpecification] = {
+  protected def tupleConstraints(context: String,
+                                 tuple: TupleShape,
+                                 typeHierarchy: DataNodeTypeHierarchy): List[ValidationSpecification] = {
     val msg                                              = s"Tuple at $context must be valid"
     var nestedConstraints: List[ValidationSpecification] = List.empty
     var validation = new ValidationSpecification(
@@ -253,7 +270,7 @@ class AMFShapeValidations(root: Shape) {
 
     val itemsConstraints = tuple.items.zipWithIndex.map {
       case (item, i) =>
-        nestedConstraints ++= emitShapeValidations(context + s"/items/", item)
+        nestedConstraints ++= emitShapeValidations(context + s"/items/", item, typeHierarchy)
         val itemsValidationId = validationId(item) + "/prop"
         PropertyConstraint(
           ramlPropertyId = (Namespace.Data + s"pos$i").iri(),
@@ -271,11 +288,15 @@ class AMFShapeValidations(root: Shape) {
     checkLogicalConstraints(context, tuple, validation, nestedConstraints)
   }
 
-  protected def recursiveShapeConstraints(context: String, shape: RecursiveShape): List[ValidationSpecification] = {
+  protected def recursiveShapeConstraints(context: String,
+                                          shape: RecursiveShape,
+                                          typeHierarchy: DataNodeTypeHierarchy): List[ValidationSpecification] = {
     Nil
   }
 
-  protected def nodeConstraints(context: String, node: NodeShape): List[ValidationSpecification] = {
+  protected def nodeConstraints(context: String,
+                                node: NodeShape,
+                                typeHierarchy: DataNodeTypeHierarchy): List[ValidationSpecification] = {
     val msg                                              = s"Object at $context must be valid"
     var nestedConstraints: List[ValidationSpecification] = List.empty
     var validation = new ValidationSpecification(
@@ -313,7 +334,7 @@ class AMFShapeValidations(root: Shape) {
     (node.properties ++ discriminatorProperty).foreach { property =>
       val patternedProperty = property.patternName.option()
       val encodedName       = property.name.value().urlComponentEncoded
-      nestedConstraints ++= emitShapeValidations(context + s"/$encodedName", property.range)
+      nestedConstraints ++= emitShapeValidations(context + s"/$encodedName", property.range, typeHierarchy)
 
       val propertyValidationId = validationId(property.range)
       val propertyId           = (Namespace.Data + encodedName).iri()
@@ -336,7 +357,7 @@ class AMFShapeValidations(root: Shape) {
       case Some(f) =>
         val encodedName = "json_schema_additional_property"
         val range       = f.value.value.asInstanceOf[Shape]
-        nestedConstraints ++= emitShapeValidations(context + s"/$encodedName", range)
+        nestedConstraints ++= emitShapeValidations(context + s"/$encodedName", range, typeHierarchy)
 
         val propertyValidationId = validationId(range)
         val propertyId           = (Namespace.Data + encodedName).iri()
@@ -369,13 +390,15 @@ class AMFShapeValidations(root: Shape) {
     checkLogicalConstraints(context, node, validation, nestedConstraints)
   }
 
-  def polymorphicNodeConstraints(context: String, obj: NodeShape): List[ValidationSpecification] = {
+  def polymorphicNodeConstraints(context: String,
+                                 obj: NodeShape,
+                                 typeHierarchy: DataNodeTypeHierarchy): List[ValidationSpecification] = {
     val closure: Seq[Shape] = obj.effectiveStructuralShapes
     if (currentDataNode.isDefined && context == "/") {
       // we try to find a matching shape without using shacl
       findPolymorphicEffectiveShape(closure) match {
         case Some(shape: NodeShape) =>
-          nodeConstraints(context, shape)
+          nodeConstraints(context, shape, typeHierarchy)
         case _ =>
           closure.map { s =>
             polymorphicExpanded.put(s.id, true)
@@ -383,7 +406,7 @@ class AMFShapeValidations(root: Shape) {
           }
           val polymorphicUnion = UnionShape().withId(obj.id + "_polymorphic")
           polymorphicUnion.setArrayWithoutId(UnionShapeModel.AnyOf, closure)
-          emitShapeValidations(context, polymorphicUnion)
+          emitShapeValidations(context, polymorphicUnion, typeHierarchy)
       }
     } else {
       closure.map { s =>
@@ -392,7 +415,7 @@ class AMFShapeValidations(root: Shape) {
       }
       val polymorphicUnion = UnionShape().withId(obj.id + "_polymorphic")
       polymorphicUnion.setArrayWithoutId(UnionShapeModel.AnyOf, closure)
-      emitShapeValidations(context, polymorphicUnion)
+      emitShapeValidations(context, polymorphicUnion, typeHierarchy)
     }
   }
 
@@ -424,7 +447,9 @@ class AMFShapeValidations(root: Shape) {
     }
   }
 
-  protected def nilConstraints(context: String, nil: NilShape): List[ValidationSpecification] = {
+  protected def nilConstraints(context: String,
+                               nil: NilShape,
+                               typeHierarchy: DataNodeTypeHierarchy): List[ValidationSpecification] = {
     val msg = s"Property at $context must be null"
     var validation = new ValidationSpecification(
       name = validationId(nil),
@@ -444,31 +469,25 @@ class AMFShapeValidations(root: Shape) {
     List(validation)
   }
 
-  protected def scalarConstraints(context: String, scalar: ScalarShape): List[ValidationSpecification] = {
+  protected def scalarConstraints(context: String,
+                                  scalar: ScalarShape,
+                                  typeHierarchy: DataNodeTypeHierarchy): List[ValidationSpecification] = {
 
     val propertyConstraints = scalar.dataType.value() match {
       case s if s == (Namespace.Xsd + "date").iri() =>
         val rfc3339DateRegex = "([0-9]+)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])"
         // OAS 2.0 and RAML 1.0 date type uses notation of RFC3339. RAML 0.8 has not "date" type (the date type of RAML 0.8 is noted as dateTime in amf model)
         val msg = s"Scalar at $context must be valid RFC3339 date"
-        val dateDataTypes = List(
-          (Namespace.Xsd + "string").iri().trim,
-          (Namespace.Xsd + "date").iri().trim
-        )
 
-        val dataTypeConstraint = createDataTypeConstraint(scalar, context, dateDataTypes)
+        val dataTypeConstraint = createDataTypeConstraint(scalar, context, typeHierarchy.getDateOnlyHierarchy)
         val patternConstraint  = createPatternPropertyConstraint(msg, rfc3339DateRegex, scalar)
         Seq(patternConstraint, dataTypeConstraint)
 
       case s if s == (Namespace.Xsd + "time").iri() =>
         val timeRegex = "([0-9]{2}:[0-9]{2}:[0-9]{2}){1}(\\.\\d*)?"
         val msg       = s"Scalar at $context must be valid RFC3339 time"
-        val timeDataTypes = List(
-          (Namespace.Xsd + "string").iri().trim,
-          (Namespace.Xsd + "time").iri().trim
-        )
 
-        val dataTypeConstraint = createDataTypeConstraint(scalar, context, timeDataTypes)
+        val dataTypeConstraint = createDataTypeConstraint(scalar, context, typeHierarchy.getTimeHierarchy)
         val patternConstraint  = createPatternPropertyConstraint(msg, timeRegex, scalar)
         Seq(patternConstraint, dataTypeConstraint)
 
@@ -477,12 +496,8 @@ class AMFShapeValidations(root: Shape) {
           "([0-9]+)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\\.[0-9]+)?"
         // OAS 2.0 and RAML 1.0 dateTimeOnly type uses notation of RFC3339. RAML 0.8 has not "dateTimeOnly" type.
         val msg = s"Scalar at $context must be valid RFC3339 date"
-        val dateTimeOnlyDataTypes = List(
-          (Namespace.Xsd + "string").iri().trim,
-          (Namespace.Shapes + "dateTimeOnly").iri().trim
-        )
 
-        val dataTypeConstraint = createDataTypeConstraint(scalar, context, dateTimeOnlyDataTypes)
+        val dataTypeConstraint = createDataTypeConstraint(scalar, context, typeHierarchy.getDateTimeOnlyHierarchy)
         val patternConstraint  = createPatternPropertyConstraint(msg, rfc3339DateTimeOnlyRegex, scalar)
         Seq(patternConstraint, dataTypeConstraint)
 
@@ -491,12 +506,8 @@ class AMFShapeValidations(root: Shape) {
           "([0-9]+)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\\.[0-9]+)?(([Zz])|([\\+|\\-]([01][0-9]|2[0-3]):[0-5][0-9]))"
         val rfc2616 =
           "((Mon|Tue|Wed|Thu|Fri|Sat|Sun), [0-9]{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT)"
-        val dateTimeDataTypes = List(
-          (Namespace.Xsd + "string").iri().trim,
-          (Namespace.Xsd + "dateTime").iri().trim
-        )
 
-        val dataTypeConstraint = createDataTypeConstraint(scalar, context, dateTimeDataTypes)
+        val dataTypeConstraint = createDataTypeConstraint(scalar, context, typeHierarchy.getDateTimeHierarchy)
         scalar.format.option().map(_.toLowerCase()) match {
           case Some(f) if f == "rfc2616" =>
             // RAML 0.8 date type following RFC2616 (default for this spec)
@@ -511,32 +522,19 @@ class AMFShapeValidations(root: Shape) {
         }
 
       case s if s == (Namespace.Xsd + "string").iri() =>
-        val stringDataTypes = List(
-          (Namespace.Xsd + "string").iri().trim,
-          (Namespace.Xsd + "time").iri().trim,
-          (Namespace.Xsd + "date").iri().trim,
-          (Namespace.Xsd + "dateTime").iri().trim,
-          (Namespace.Shapes + "dateTimeOnly").iri().trim
-        )
-        Seq(createDataTypeConstraint(scalar, context, stringDataTypes))
+        Seq(createDataTypeConstraint(scalar, context, typeHierarchy.getStringHierarchy))
+
+      case s if s == (Namespace.Xsd + "integer").iri() =>
+        Seq(createDataTypeConstraint(scalar, context, typeHierarchy.getIntegerHierarchy))
 
       case s if s == (Namespace.Shapes + "number").iri() =>
-        val numberDataTypes = List(
-          (Namespace.Xsd + "integer").iri().trim,
-          (Namespace.Xsd + "long").iri().trim,
-          (Namespace.Xsd + "float").iri().trim,
-          (Namespace.Xsd + "double").iri().trim
-        )
-        Seq(createDataTypeConstraint(scalar, context, numberDataTypes))
+        Seq(createDataTypeConstraint(scalar, context, typeHierarchy.getNumberHierarchy))
 
-      case s if s == (Namespace.Xsd + "float").iri() || s == (Namespace.Xsd + "double").iri() =>
-        val floatDataTypes = List(
-          (Namespace.Xsd + "float").iri().trim,
-          (Namespace.Xsd + "double").iri().trim,
-          (Namespace.Xsd + "integer").iri().trim,
-          (Namespace.Xsd + "long").iri().trim
-        )
-        Seq(createDataTypeConstraint(scalar, context, floatDataTypes))
+      case s if s == (Namespace.Xsd + "float").iri() =>
+        Seq(createDataTypeConstraint(scalar, context, typeHierarchy.getFloatHierarchy))
+
+      case s if s == (Namespace.Xsd + "double").iri() =>
+        Seq(createDataTypeConstraint(scalar, context, typeHierarchy.getDoubleHierarchy))
 
       case _ =>
         Seq(createDataTypeConstraint(scalar, context))
@@ -576,64 +574,68 @@ class AMFShapeValidations(root: Shape) {
 
   protected def createDataTypeConstraint(scalar: ScalarShape,
                                          context: String,
-                                         datetype: Option[String] = None): PropertyConstraint = {
+                                         dateType: Option[String] = None): PropertyConstraint = {
     PropertyConstraint(
       ramlPropertyId = (Namespace.Data + "value").iri(),
       name = scalar.id + "_validation_range/prop",
       message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
-      datatype = Some(datetype.getOrElse(scalar.dataType.value()))
+      datatype = Some(dateType.getOrElse(scalar.dataType.value()))
     )
   }
 
   protected def createDataTypeConstraint(scalar: ScalarShape,
                                          context: String,
-                                         datatypes: List[String]): PropertyConstraint = {
+                                         dataTypes: Set[String]): PropertyConstraint = {
 
-    val shaclOrNamespace       = (Namespace.Shacl + "or").iri()
-    val shaclDatatypeNamespace = (Namespace.Shacl + "datatype").iri()
+    if (dataTypes.size == 1)
+      createDataTypeConstraint(scalar, context, dataTypes.headOption)
+    else {
+      val shaclOrNamespace       = (Namespace.Shacl + "or").iri()
+      val shaclDataTypeNamespace = (Namespace.Shacl + "datatype").iri()
 
-    val custom = Some((b: EntryBuilder, parentId: String) => {
-      b.entry(
-        shaclOrNamespace,
-        _.obj(
-          _.entry(
-            "@list",
-            _.list { l =>
-              datatypes.foreach { dt =>
-                l.obj { v =>
-                  v.entry(shaclDatatypeNamespace, _.obj(_.entry("@id", dt)))
+      val custom = Some((b: EntryBuilder, parentId: String) => {
+        b.entry(
+          shaclOrNamespace,
+          _.obj(
+            _.entry(
+              "@list",
+              _.list { l =>
+                dataTypes.foreach { dt =>
+                  l.obj { v =>
+                    v.entry(shaclDataTypeNamespace, _.obj(_.entry("@id", dt)))
+                  }
                 }
               }
-            }
+            )
           )
         )
+      })
+
+      val customRdf = Some((rdfModel: RdfModel, subject: String) => {
+        val propId  = rdfModel.nextAnonId()
+        var counter = 0
+        dataTypes.foreach {
+          dt =>
+            counter = counter + 1
+            val constraintListId = propId + "_ointdoub" + counter
+            if (counter == 1) rdfModel.addTriple(subject, shaclOrNamespace, constraintListId)
+            rdfModel.addTriple(constraintListId, (Namespace.Rdf + "first").iri(), constraintListId + "_v")
+            rdfModel.addTriple(constraintListId + "_v", shaclDataTypeNamespace, dt)
+            if (counter < dataTypes.size) {
+              val nextConstraintListId = propId + "_ointdoub" + (counter + 1)
+              rdfModel.addTriple(constraintListId, (Namespace.Rdf + "rest").iri(), nextConstraintListId)
+            } else rdfModel.addTriple(constraintListId, (Namespace.Rdf + "rest").iri(), (Namespace.Rdf + "nil").iri())
+        }
+      })
+
+      PropertyConstraint(
+        ramlPropertyId = (Namespace.Data + "value").iri(),
+        name = scalar.id + "_validation_range/prop",
+        message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
+        custom = custom,
+        customRdf = customRdf
       )
-    })
-
-    val customRdf = Some((rdfModel: RdfModel, subject: String) => {
-      val propId  = rdfModel.nextAnonId()
-      var counter = 0
-      datatypes.foreach {
-        dt =>
-          counter = counter + 1
-          val constraintListId = propId + "_ointdoub" + counter
-          if (counter == 1) rdfModel.addTriple(subject, shaclOrNamespace, constraintListId)
-          rdfModel.addTriple(constraintListId, (Namespace.Rdf + "first").iri(), constraintListId + "_v")
-          rdfModel.addTriple(constraintListId + "_v", shaclDatatypeNamespace, dt)
-          if (counter < datatypes.size) {
-            val nextConstraintListId = propId + "_ointdoub" + (counter + 1)
-            rdfModel.addTriple(constraintListId, (Namespace.Rdf + "rest").iri(), nextConstraintListId)
-          } else rdfModel.addTriple(constraintListId, (Namespace.Rdf + "rest").iri(), (Namespace.Rdf + "nil").iri())
-      }
-    })
-
-    PropertyConstraint(
-      ramlPropertyId = (Namespace.Data + "value").iri(),
-      name = scalar.id + "_validation_range/prop",
-      message = Some(s"Scalar at $context must have data type ${scalar.dataType.value()}"),
-      custom = custom,
-      customRdf = customRdf
-    )
+    }
   }
 
   protected def checkScalarType(shape: Shape,
