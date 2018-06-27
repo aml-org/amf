@@ -1,5 +1,6 @@
 package amf.wrapper
 
+import _root_.org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 import amf._
 import amf.client.AMF
 import amf.client.convert.NativeOps
@@ -16,7 +17,6 @@ import amf.common.Diff
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.plugins.document.Vocabularies
-import _root_.org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
 

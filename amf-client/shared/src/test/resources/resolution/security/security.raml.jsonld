@@ -650,7 +650,7 @@
                         ],
                         "http://a.ml/vocabularies/security#scope": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2/profile",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/web-api/end-points/%2Fusers/get/oauth_2_0/settings/oauth2/profile",
                             "@type": [
                               "http://a.ml/vocabularies/security#Scope",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -662,7 +662,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2/history",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/web-api/end-points/%2Fusers/get/oauth_2_0/settings/oauth2/history",
                             "@type": [
                               "http://a.ml/vocabularies/security#Scope",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -1812,16 +1812,46 @@
                           "http://a.ml/vocabularies/security#Settings",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
+                        "http://a.ml/vocabularies/security#authorizationUri": [
+                          {
+                            "@value": "https://example.com/oauth/authorize"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/security#accessTokenUri": [
+                          {
+                            "@value": "https://example.com/oauth/token"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/security#authorizationGrant": [
+                          {
+                            "@value": "authorization_code"
+                          },
+                          {
+                            "@value": "implicit"
+                          }
+                        ],
                         "http://a.ml/vocabularies/security#scope": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get/oauth_2_0/settings/oauth2/ADMINISTRATOR",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get/oauth_2_0/settings/oauth2/profile",
                             "@type": [
                               "http://a.ml/vocabularies/security#Scope",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
                             "http://a.ml/vocabularies/security#name": [
                               {
-                                "@value": "ADMINISTRATOR"
+                                "@value": "profile"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get/oauth_2_0/settings/oauth2/history",
+                            "@type": [
+                              "http://a.ml/vocabularies/security#Scope",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/security#name": [
+                              {
+                                "@value": "history"
                               }
                             ]
                           }
@@ -1841,7 +1871,19 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(54,10)-(55,27)]"
+                                    "@value": "[(14,6)-(17,0)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/security#accessTokenUri"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(10,6)-(11,0)]"
                                   }
                                 ]
                               },
@@ -1853,7 +1895,31 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(54,0)-(55,27)]"
+                                    "@value": "[(9,0)-(17,0)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/security#authorizationUri"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(9,6)-(10,0)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/security#authorizationGrant"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(11,6)-(14,0)]"
                                   }
                                 ]
                               }

@@ -22,7 +22,12 @@ class SecurityResolutionStage()(override implicit val errorHandler: ErrorHandler
           case s: SecurityScheme =>
             val cloned = s.cloneScheme(parent)
 
-            validateSettings(s.settings, scheme.settings).foreach(cloned.set(SecuritySchemeModel.Settings, _))
+            if (Option(s.settings).isEmpty) Option(scheme.settings).foreach {
+              cloned.set(SecuritySchemeModel.Settings, _)
+            }
+
+            // keep root definition  for now. If has scopes defined override only scopes??
+//            validateSettings(s.settings, scheme.settings).foreach(cloned.set(SecuritySchemeModel.Settings, _))
 
             cloned
           case _ => throw new Exception(s"Security scheme not found for parameterized security scheme ${scheme.id}.")
