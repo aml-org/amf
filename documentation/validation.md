@@ -684,6 +684,7 @@ public class ValidationTest {
 Both functions produce a `AMFValidationReport` object that can be used to check conformance and inspect the validations.
 The interface is the same in the JavaScript version of the library.
 
+What to expect from AMF - [basic use cases](./basic_use_cases.md)
 
 ## Appendix: AMF model classes
 
