@@ -1432,8 +1432,6 @@ case class OasArrayShapeEmitter(shape: ArrayShape, ordering: SpecOrdering, refer
 
     fs.entry(NodeShapeModel.Inherits).map(f => result += OasShapeInheritsEmitter(f, ordering, references))
 
-    result ++= AnnotationsEmitter(shape, ordering).emitters
-
     result ++= FacetsEmitter(shape, ordering).emitters
 
     result

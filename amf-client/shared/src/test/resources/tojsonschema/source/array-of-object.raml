@@ -16,13 +16,6 @@ types:
 /flights:
   description: flights endpoint
   get:
-    displayName: Get all flights
-    description: get flights endpoint
-    queryParameters:
-      code:
-        displayName: Get all flights to a specific destination (by airport code)
-        required: false
-        enum: [SFO, LAX, CLE]
     responses:
       200:
         body:

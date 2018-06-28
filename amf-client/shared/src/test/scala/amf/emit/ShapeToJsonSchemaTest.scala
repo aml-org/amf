@@ -26,6 +26,18 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
     cycle("array-of-object.raml", "array-of-object.json", func)
   }
 
+  test("Test array annotation type") {
+    val func = (u: BaseUnit) =>
+      encodedWebApi(u)
+        .flatMap(_.endPoints.headOption)
+        .flatMap(_.operations.headOption)
+        .flatMap(_.request.queryParameters.headOption)
+        .map(_.schema)
+        .collectFirst({ case any: AnyShape => any })
+
+    cycle("param-with-annotation.raml", "param-with-annotation.json", func)
+  }
+
   private val basePath: String   = "file://amf-client/shared/src/test/resources/tojsonschema/source/"
   private val goldenPath: String = "amf-client/shared/src/test/resources/tojsonschema/schemas/"
 

@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: project44 REST API
+annotationTypes:
+  oas-collectionFormat:
+    type: string
+/statuses:
+  get:
+    queryParameters:
+      shipmentIds:
+        description: shipmentIds
+        required: true
+        type: array
+        items:
+          type: string
+        (oas-collectionFormat): multi
