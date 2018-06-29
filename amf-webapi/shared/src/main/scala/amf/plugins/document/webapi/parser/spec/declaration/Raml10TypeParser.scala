@@ -1066,7 +1066,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             node.as[String] match {
               case RamlTypeDefMatcher.TypeExpression(s) =>
                 RamlTypeExpressionParser(adopt, Some(node)).parse(s).get
-              case s if wellKnownType(s) => parseWellKnownTypeRef(s)
+              case s if wellKnownType(s) =>
+                parseWellKnownTypeRef(s).withName(s).adopted(shape.id)
               case s =>
                 ctx.declarations.findType(s, SearchScope.All) match {
                   case Some(ancestor) => ancestor
@@ -1074,8 +1075,9 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 }
             }
           }
-          shape.set(ShapeModel.Inherits, AmfArray(inherits, Annotations(entry.value)), Annotations(entry))
-
+          shape.fields.setWithoutId(ShapeModel.Inherits,
+                                    AmfArray(inherits, Annotations(entry.value)),
+                                    Annotations(entry))
         case YType.Map =>
           Raml10TypeParser(entry, s => s.adopted(shape.id))
             .parse()

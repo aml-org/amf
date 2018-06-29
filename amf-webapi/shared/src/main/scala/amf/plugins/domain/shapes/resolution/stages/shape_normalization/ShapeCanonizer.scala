@@ -202,6 +202,8 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
           f.field != ShapeModel.Inherits &&
           f.field != AnyShapeModel.Examples &&
           f.field != AnyShapeModel.Name
+        //          f.field != AnyShapeModel.Name &&
+//          f.field != ScalarShapeModel.DataType // ignore default datatype value
         }
         if (singleInheritance) {
           val superType = any.inherits.head

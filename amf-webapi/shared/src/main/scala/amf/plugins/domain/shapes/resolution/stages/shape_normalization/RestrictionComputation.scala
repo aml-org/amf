@@ -88,13 +88,13 @@ private[shape_normalization] trait RestrictionComputation {
           case None if superValue.isDefined =>
             val finalAnnotations = Annotations(superValue.get.annotations)
             if (keepEditingInfo) inheritAnnotations(finalAnnotations, superShape)
-            baseShape.set(f, superValue.get.value, finalAnnotations)
+            baseShape.fields.setWithoutId(f, superValue.get.value, finalAnnotations)
 
           case Some(bvalue) if superValue.isDefined =>
             val finalValue       = computeNarrow(f, bvalue.value, superValue.get.value)
             val finalAnnotations = Annotations(bvalue.annotations)
             if (finalValue != bvalue.value && keepEditingInfo) inheritAnnotations(finalAnnotations, superShape)
-            baseShape.set(f, finalValue, finalAnnotations)
+            baseShape.fields.setWithoutId(f, finalValue, finalAnnotations)
           case _ => // ignore
         }
       }

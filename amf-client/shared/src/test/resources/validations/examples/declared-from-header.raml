@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: api
+version: "1.0"
+types:
+  person:
+    type: string
+    maxLength: 2
+    example: Example
+/customers:
+  get:
+    headers:
+      newHeader:
+        type:
+          - person

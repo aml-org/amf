@@ -137,5 +137,10 @@ class RamlExamplesValidationTest extends ValidationReportGenTest {
 
   }
 
+  test("Test validate declared type from header") {
+    validate("/examples/declared-from-header.raml", Some("declared-from-header.report"))
+
+  }
+
   override val hint: Hint = RamlYamlHint
 }
