@@ -51,7 +51,7 @@ abstract class DataArrangementShape(fields: Fields, annotations: Annotations) ex
     fields.entry(Items) match {
       case Some(items) =>
         items.value.value match {
-          case shape: Shape => shape.adopted(id)
+          case shape: Shape => shape.adopted(id + "/items")
         }
       case _ => // ignore
     }
@@ -63,8 +63,11 @@ abstract class DataArrangementShape(fields: Fields, annotations: Annotations) ex
 case class ArrayShape(override val fields: Fields, override val annotations: Annotations)
     extends DataArrangementShape(fields, annotations) {
 
-  def items: Shape                       = fields.field(Items)
-  def withItems(items: Shape): this.type = set(Items, items)
+  def items: Shape = fields.field(Items)
+  def withItems(items: Shape): this.type = {
+    fields.set(id + "/items", Items, items, Annotations())
+    this
+  }
 
   def toMatrixShape: MatrixShape = MatrixShape(fields, annotations).withId(id)
 

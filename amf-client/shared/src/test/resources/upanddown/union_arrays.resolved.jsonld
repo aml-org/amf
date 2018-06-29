@@ -91,7 +91,7 @@
                 ],
                 "raml-shapes:items": [
                   {
-                    "@id": "#/declarations/types/PropertyArray/property/complex/array/complex/union/default-union",
+                    "@id": "#/declarations/types/PropertyArray/property/complex/array/complex/items/union/default-union",
                     "@type": [
                       "raml-shapes:UnionShape",
                       "shacl:Shape",
@@ -99,7 +99,7 @@
                     ],
                     "raml-shapes:anyOf": [
                       {
-                        "@id": "#/declarations/types/PropertyArray/property/complex/array/complex/items/scalar/scalar-expression-0",
+                        "@id": "#/declarations/types/PropertyArray/property/complex/array/complex/scalar/scalar-expression-0",
                         "@type": [
                           "raml-shapes:ScalarShape",
                           "shacl:Shape",
@@ -113,7 +113,7 @@
                         ]
                       },
                       {
-                        "@id": "#/declarations/types/PropertyArray/property/complex/array/complex/items/scalar/scalar-expression-2",
+                        "@id": "#/declarations/types/PropertyArray/property/complex/array/complex/scalar/scalar-expression-2",
                         "@type": [
                           "raml-shapes:ScalarShape",
                           "shacl:Shape",

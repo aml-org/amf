@@ -975,7 +975,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
       val finalShape = (for {
         itemsEntry <- map.key("items")
-        item <- Raml10TypeParser(itemsEntry, items => items.adopted(shape.id + "/items"), defaultType = defaultType)
+        item <- Raml10TypeParser(itemsEntry, items => items.adopted(shape.id), defaultType = defaultType)
           .parse()
       } yield {
         item match {
