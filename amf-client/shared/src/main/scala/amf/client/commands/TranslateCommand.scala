@@ -22,7 +22,6 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
       generated
     }
 
-
     res.onComplete {
       case Failure(ex: Throwable) => {
         config.stderr.print(ex)
@@ -33,7 +32,6 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
     res
   }
 
-
   def checkValidation(config: ParserConfig, model: BaseUnit): Future[Unit] = {
     val customProfileLoaded = if (config.customProfile.isDefined) {
       RuntimeValidator.loadValidationProfile(config.customProfile.get) map { profileName =>
@@ -41,7 +39,7 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
       }
     } else {
       Future {
-        config.validationProfile
+        config.profile
       }
     }
     customProfileLoaded map { profileName =>

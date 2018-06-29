@@ -65,7 +65,7 @@ object CmdLineParser {
           failure("Invalid value, values supported: 'RAML 1.0', 'RAML 0.8', 'OpenAPI 2.0', 'AML 1.0', 'AMF'")
         }
       })
-      .action((f, c) => c.copy(validationProfile = ProfileName(f)))
+      .action((f, c) => c.copy(validationProfile = f))
 
     opt[String]("custom-validation-profile")
       .abbr("cp")

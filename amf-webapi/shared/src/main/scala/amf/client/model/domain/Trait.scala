@@ -19,4 +19,7 @@ case class Trait(override private[amf] val _internal: InternalTrait) extends Abs
 
   def asOperation[T <: BaseUnit](unit: T, profile: ProfileName = RAMLProfile): Operation =
     Operation(_internal.asOperation(unit._internal, profile))
+
+  def asOperation[T <: BaseUnit](unit: T, profile: String): Operation = asOperation(unit, ProfileName(profile))
+
 }

@@ -18,6 +18,8 @@ case class ResourceType(override private[amf] val _internal: InternalResourceTyp
 
   override def linkCopy(): ResourceType = _internal.linkCopy()
 
+  def asEndpoint[T <: BaseUnit](unit: T, profile: String): EndPoint = asEndpoint(unit, ProfileName(profile))
+
   def asEndpoint[T <: BaseUnit](unit: T, profile: ProfileName = RAMLProfile): EndPoint =
     _internal.asEndpoint(unit._internal, profile)
 }

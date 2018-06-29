@@ -14,10 +14,10 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
 
   def run(config: ParserConfig): Future[Any] = {
     val res = for {
-      _          <- AMFInit()
-      _          <- processDialects(config)
-      model      <- parseInput(config)
-      report     <- report(model, config)
+      _      <- AMFInit()
+      _      <- processDialects(config)
+      model  <- parseInput(config)
+      report <- report(model, config)
     } yield {
       processOutput(report, config)
     }
@@ -33,7 +33,6 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
     res
   }
 
-
   def report(model: BaseUnit, config: ParserConfig) = {
     val customProfileLoaded = if (config.customProfile.isDefined) {
       RuntimeValidator.loadValidationProfile(config.customProfile.get) map { profileName =>
@@ -41,10 +40,10 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
       }
     } else {
       Future {
-        config.validationProfile
+        config.profile
       }
     }
-    customProfileLoaded flatMap  { profileName =>
+    customProfileLoaded flatMap { profileName =>
       RuntimeValidator(model, profileName)
     }
   }
