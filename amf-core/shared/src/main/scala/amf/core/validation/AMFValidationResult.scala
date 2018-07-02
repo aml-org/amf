@@ -15,13 +15,14 @@ case class AMFValidationResult(message: String,
                                source: Any)
     extends Ordered[AMFValidationResult] {
   override def toString: String = {
-    var str = s"\n- Source: $validationId\n"
-    str += s"  Message: $message\n"
-    str += s"  Level: $level\n"
-    str += s"  Target: $targetNode\n"
-    str += s"  Property: ${targetProperty.getOrElse("")}\n"
-    str += s"  Position: $position\n"
-    str
+    val str = StringBuilder.newBuilder
+    str.append(s"\n- Source: $validationId\n")
+    str.append(s"  Message: $message\n")
+    str.append(s"  Level: $level\n")
+    str.append(s"  Target: $targetNode\n")
+    str.append(s"  Property: ${targetProperty.getOrElse("")}\n")
+    str.append(s"  Position: $position\n")
+    str.toString
   }
 
   override def compare(that: AMFValidationResult): Int = {
@@ -55,10 +56,11 @@ case class AMFValidationResult(message: String,
   }
 
   val completeMessage: String = {
-    var str = s"\n- Source: $validationId\n"
-    str += s"  Message: $message\n"
-    str += s"  Property: ${targetProperty.getOrElse("")}\n"
-    str
+    val str = StringBuilder.newBuilder
+    str.append(s"\n- Source: $validationId\n")
+    str.append(s"  Message: $message\n")
+    str.append(s"  Property: ${targetProperty.getOrElse("")}\n")
+    str.toString
   }
 }
 

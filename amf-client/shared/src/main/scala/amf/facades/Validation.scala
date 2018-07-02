@@ -74,7 +74,7 @@ class Validation(platform: Platform) {
     val set = validator.aggregatedReport.keySet
     if (set.isEmpty) Nil
     else
-      validator.aggregatedReport(set.max)
+      validator.aggregatedReport(set.max).toList
   }
 
   // disable temporarily the reporting of validations

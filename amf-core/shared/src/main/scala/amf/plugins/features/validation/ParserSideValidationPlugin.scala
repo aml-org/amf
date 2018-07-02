@@ -9,6 +9,7 @@ import amf.core.services.{IgnoreValidationsMerger, RuntimeValidator, ValidationO
 import amf.core.validation._
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationResult, ValidationSpecification}
 
+import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
@@ -18,8 +19,8 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
 
   override def init(): Future[AMFPlugin] = Future {
     RuntimeValidator.validatorOption match {
-      case Some(validator) => // ignore, we use whatever has already been initialised by client code
-      case None            => RuntimeValidator.register(new ParserSideValidationPlugin())
+      case Some(_) => // ignore, we use whatever has already been initialised by client code
+      case None    => RuntimeValidator.register(new ParserSideValidationPlugin())
     }
     this
   }
@@ -63,7 +64,7 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
 
   override def dependencies(): Seq[AMFPlugin] = Seq()
 
-  var aggregatedReport: Map[Int, List[AMFValidationResult]] = Map()
+  var aggregatedReport: Map[Int, ListBuffer[AMFValidationResult]] = Map()
   // disable temporarily the reporting of validations
   var enabled: Boolean = true
 
@@ -165,9 +166,11 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
                                        parserRun: Int): Unit = synchronized {
     val validationError = AMFValidationResult(message, level, targetNode, targetProperty, validationId, position, this)
     if (enabled) {
-      var report = aggregatedReport.getOrElse(parserRun, List())
-      report ++= Seq(validationError)
-      aggregatedReport += (parserRun -> report)
+      aggregatedReport.get(parserRun) match {
+        case Some(validations) => validations += validationError
+        case None =>
+          aggregatedReport += (parserRun -> ListBuffer(validationError))
+      }
     } else {
       if (level == SeverityLevels.VIOLATION)
         throw new Exception(validationError.toString)
@@ -175,20 +178,20 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
   }
 
   override def nestedValidation[T](merger: ValidationsMerger)(k: => T): T = {
-    var oldAggregatedReport = aggregatedReport.getOrElse(merger.parserRun, Nil)
+    val oldAggregatedReport = aggregatedReport.getOrElse(merger.parserRun, ListBuffer())
     val oldEnabled          = enabled
 
     // reset
     enabled = true
-    aggregatedReport = aggregatedReport.updated(merger.parserRun, Nil)
+    aggregatedReport = aggregatedReport.updated(merger.parserRun, ListBuffer())
 
     val res = k
 
     // undo reset
     if (merger.parserRun == IgnoreValidationsMerger.parserRun) {
-      aggregatedReport = aggregatedReport.updated(merger.parserRun, Nil) // clean the ignore merger validations
+      aggregatedReport = aggregatedReport.updated(merger.parserRun, ListBuffer()) // clean the ignore merger validations
     } else {
-      val toMerge = aggregatedReport.getOrElse(merger.parserRun, Nil).filter(merger.merge)
+      val toMerge = aggregatedReport.getOrElse(merger.parserRun, ListBuffer()).filter(merger.merge)
       aggregatedReport = aggregatedReport.updated(merger.parserRun, oldAggregatedReport ++ toMerge)
       enabled = oldEnabled
     }
