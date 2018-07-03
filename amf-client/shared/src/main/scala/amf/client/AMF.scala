@@ -48,6 +48,7 @@ object AMF {
   def validate(model: BaseUnit, profileName: ProfileName, messageStyle: MessageStyle): ClientFuture[ValidationReport] =
     Core.validate(model, profileName, messageStyle)
 
+  @deprecated
   def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): ClientFuture[ValidationReport] =
     Core.validate(model, profileName, messageStyle)
 

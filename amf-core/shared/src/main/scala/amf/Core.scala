@@ -33,6 +33,7 @@ object Core extends PlatformSecrets {
   def validate(model: BaseUnit, profileName: ProfileName, messageStyle: MessageStyle): ClientFuture[ValidationReport] =
     Validator.validate(model, profileName, messageStyle)
 
+  @deprecated
   def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): ClientFuture[ValidationReport] =
     Validator.validate(model, profileName, messageStyle)
 
