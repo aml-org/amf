@@ -1,6 +1,5 @@
 package amf.client.convert
 
-import amf.client.handler.{FileHandler, Handler, JsFileHandler, JsHandler}
 import amf.client.resource.{ClientResourceLoader, ResourceLoader}
 
 import scala.collection.mutable
@@ -20,9 +19,6 @@ trait CoreBaseClientConverter extends CoreBaseConverter {
 
   override type ClientLoader = ClientResourceLoader with ResourceLoader
   override type Loader       = ClientResourceLoader
-
-  override type ClientResultHandler[T] = JsHandler[T] with Handler[T]
-  override type ClientFileHandler      = JsFileHandler with FileHandler
 
   override protected def asClientOption[Internal, Client](
       from: Option[Internal],

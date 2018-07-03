@@ -1,6 +1,5 @@
 package amf.client.parse
 
-import amf.{MessageStyle, ProfileName, RAMLStyle}
 import amf.client.convert.CoreClientConverters._
 import amf.client.environment.{DefaultEnvironment, Environment}
 import amf.client.model.document.BaseUnit
@@ -10,11 +9,11 @@ import amf.core.model.document.{BaseUnit => InternalBaseUnit}
 import amf.core.remote.Context
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.internal.resource.{ResourceLoader, StringResourceLoader}
+import amf.{MessageStyle, ProfileName, RAMLStyle}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.scalajs.js.annotation.JSExport
-import scala.util.{Failure, Success}
 
 /**
   * Base class for parsers.
@@ -22,34 +21,6 @@ import scala.util.{Failure, Success}
 class Parser(vendor: String, mediaType: String, private val env: Option[Environment]) {
 
   private var parsedModel: Option[InternalBaseUnit] = None
-
-  /**
-    * Generates a BaseUnit from the api at the given url.
-    * @param url : Location of the base unit.
-    * @param handler Handler object to execute the success or fail functions with the result object model.
-    */
-  @JSExport
-  def parseFile(url: String, handler: ClientResultHandler[BaseUnit]): Unit = parse(url, handler)
-
-  /**
-    * Generates the BaseUnit from a given string.
-    * @param stream: The unit as string.
-    * @param handler Handler object to execute the success or fail functions with the result object model.
-    */
-  @JSExport
-  def parseString(stream: String, handler: ClientResultHandler[BaseUnit]): Unit =
-    parse(DEFAULT_DOCUMENT_URL, handler, Some(fromStream(stream)))
-
-  /**
-    * Generates the BaseUnit from a given string.
-    *
-    * @param url: Base URL to used in the graph of information generated for the input stream of data
-    * @param stream: The api as a string.
-    * @param handler Handler object to execute the success or fail functions with the result object model.
-    */
-  @JSExport
-  def parseString(url: String, stream: String, handler: ClientResultHandler[BaseUnit]): Unit =
-    parse(url, handler, Some(fromStream(url, stream)))
 
   /**
     * Asynchronously generate a BaseUnit from the unit located in the given url.
@@ -149,13 +120,6 @@ class Parser(vendor: String, mediaType: String, private val env: Option[Environm
 
     result.asClient
   }
-
-  private def parse(url: String, handler: ClientResultHandler[BaseUnit], loader: Option[ResourceLoader] = None): Unit =
-    parseAsync(url, loader)
-      .onComplete {
-        case Success(result: InternalBaseUnit) => handler.success(result)
-        case Failure(exception)                => handler.error(exception)
-      }
 
   private def fromStream(url: String, stream: String): ResourceLoader =
     StringResourceLoader(platform.resolvePath(url), stream)

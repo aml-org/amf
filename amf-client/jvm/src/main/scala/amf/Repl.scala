@@ -3,15 +3,13 @@ package amf
 import java.io.{InputStream, PrintStream}
 import java.util.Scanner
 
-import amf.client.convert.CoreClientConverters
-import amf.client.handler.Handler
 import amf.client.model.document.{BaseUnit, Document}
 import amf.client.parse._
 import amf.client.render._
-import amf.core.model.document
+import amf.convert.NativeOpsFromJvm
 import amf.core.remote._
-
-class Repl(val in: InputStream, val out: PrintStream) {
+import scala.concurrent.ExecutionContext.Implicits.global
+class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
 
   init()
 
@@ -40,38 +38,19 @@ class Repl(val in: InputStream, val out: PrintStream) {
         None
     }
 
-    val handler = new Handler[String] {
-      override def error(exception: Throwable): Unit = println(s"An error occurred: $exception")
-      override def success(generation: String): Unit = out.print(generation)
-    }
-
     generator.foreach(g => {
-      g.generateString(
-        unit,
-        handler.asInstanceOf[CoreClientConverters.ClientResultHandler[String]]
-      )
+      g.generateString(unit).asFuture.map(out.print)
     })
   }
 
   private def remote(vendor: Vendor, url: String, callback: (Option[Document]) => Unit): Unit = {
-    parser(vendor).parseFile(
-      url,
-      unitHandler(callback).asInstanceOf[CoreClientConverters.ClientResultHandler[BaseUnit]]
-    )
-  }
-
-  private def unitHandler(callback: Option[Document] => Unit) = {
-    new Handler[BaseUnit] {
-      override def success(unit: BaseUnit): Unit = {
-        out.println("Successfully parsed. Type `:generate raml` or `:generate oas` or `:generate amf`")
-        callback(Some(new Document(unit.asInstanceOf[document.Document])))
-      }
-
-      override def error(exception: Throwable): Unit = {
-        callback(None)
-        out.println(exception)
-      }
-    }
+    parser(vendor)
+      .parseFileAsync(url)
+      .asFuture
+      .map({
+        case d: Document => callback(Some(d))
+        case _           => callback(None)
+      })
   }
 
   private object Parse {

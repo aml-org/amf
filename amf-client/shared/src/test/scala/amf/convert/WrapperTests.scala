@@ -1,4 +1,4 @@
-package amf.wrapper
+package amf.convert
 
 import _root_.org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 import amf._

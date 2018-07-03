@@ -1,4 +1,4 @@
-package amf.wrapper
+package amf.convert
 
 import amf.client.convert.VocabulariesClientConverter.{ClientFuture, ClientList, ClientOption}
 

@@ -1,7 +1,6 @@
 package amf.client.convert
 
 import amf.ProfileName
-import amf.client.handler.{FileHandler, Handler}
 import amf.client.model.document.{BaseUnit => ClientBaseUnit}
 import amf.client.model.domain.{
   AbstractDeclaration => ClientAbstractDeclaration,
@@ -49,7 +48,6 @@ trait CoreBaseConverter
     with CollectionConverter
     with FutureConverter
     with FieldConverter
-    with HandlerConverter
     with CustomDomainPropertyConverter
     with ShapeConverter
     with PropertyShapeConverter
@@ -205,12 +203,6 @@ trait FieldConverter extends CollectionConverter {
   implicit object AnnotationsFieldMatcher extends InternalClientMatcher[Annotations, ClientAnnotations] {
     override def asClient(from: Annotations): ClientAnnotations = ClientAnnotations(from)
   }
-}
-
-trait HandlerConverter {
-
-  type ClientResultHandler[T] <: Handler[T]
-  type ClientFileHandler <: FileHandler
 }
 
 trait DomainExtensionConverter {

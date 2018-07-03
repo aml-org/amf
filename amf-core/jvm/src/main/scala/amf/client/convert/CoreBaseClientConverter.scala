@@ -4,7 +4,6 @@ import java.util
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
 
-import amf.client.handler.{FileHandler, Handler}
 import amf.client.resource.{ResourceLoader => ClientResourceLoader}
 
 import scala.collection.JavaConverters._
@@ -24,9 +23,6 @@ trait CoreBaseClientConverter extends CoreBaseConverter {
 
   override type ClientLoader = ClientResourceLoader
   override type Loader       = ClientResourceLoader
-
-  override type ClientResultHandler[T] = Handler[T]
-  override type ClientFileHandler      = FileHandler
 
   override protected def asClientOption[Internal, Client](
       from: Option[Internal],
