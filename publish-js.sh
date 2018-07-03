@@ -87,6 +87,6 @@ else
 fi
 
 # Reset package.json so that the new version is not pushed
-npm version generated --force --no-git-tag-version
+git checkout package.json
 
 cd ../..
