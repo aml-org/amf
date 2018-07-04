@@ -37,14 +37,14 @@ object ExtendsHelper {
     val ctx = context.getOrElse(custom(profile))
 
     val referencesCollector = mutable.Map[String, DomainElement]()
-    val document = YDocument {
+    val document = YDocument({
       _.obj {
         _.entry(
           "extends",
           DataNodeEmitter(node, SpecOrdering.Default, resolvedLinks = true, referencesCollector).emit(_)
         )
       }
-    }
+    }, node.location().getOrElse(""))
 
     val entry = document.as[YMap].entries.head
     declarations(ctx, unit)
@@ -89,7 +89,8 @@ object ExtendsHelper {
               extensionId,
               None,
               s"Nested endpoint in $extension: '$property'",
-              node.annotations.find(classOf[LexicalInformation])
+              node.position(),
+              node.location()
             )
           }
         }
@@ -109,14 +110,18 @@ object ExtendsHelper {
     val ctx = context.getOrElse(custom(profile))
 
     val referencesCollector = mutable.Map[String, DomainElement]()
-    val document = YDocument {
-      _.obj {
-        _.entry(
-          "/endpoint",
-          DataNodeEmitter(dataNode, SpecOrdering.Default, resolvedLinks = true, referencesCollector).emit(_)
-        )
-      }
-    }
+    val document = YDocument(
+      {
+        _.obj {
+          _.entry(
+            "/endpoint",
+            DataNodeEmitter(dataNode, SpecOrdering.Default, resolvedLinks = true, referencesCollector).emit(_)
+          )
+        }
+      },
+      dataNode.location().getOrElse("")
+    )
+
     val endPointEntry = document.as[YMap].entries.head
     val collector     = ListBuffer[EndPoint]()
 
@@ -154,7 +159,8 @@ object ExtendsHelper {
           extensionId,
           None,
           s"Couldn't parse an endpoint from resourceType '$name'.",
-          dataNode.annotations.find(classOf[LexicalInformation])
+          dataNode.position(),
+          dataNode.location()
         )
         ErrorEndPoint(dataNode.id, document.node)
     }
@@ -163,8 +169,8 @@ object ExtendsHelper {
   def findUnitLocationOfElement(elementId: String, unit: BaseUnit): Option[String] = {
 
     unit.references.collectFirst({
-      case l: Module if l.declares.exists(_.id == elementId) => l.location
-      case f: Fragment if f.encodes.id == elementId          => f.location
+      case l: Module if l.declares.exists(_.id == elementId) => l.location().getOrElse(l.id)
+      case f: Fragment if f.encodes.id == elementId          => f.location().getOrElse(f.id)
     })
   }
 
@@ -202,7 +208,7 @@ object ExtendsHelper {
   private def nestedDeclarations(ctx: RamlWebApiContext, model: BaseUnit): Unit = {
     model.references.foreach {
       case f: Fragment =>
-        ctx.declarations += (f.location, f)
+        ctx.declarations += (f.location().getOrElse(f.id), f)
         nestedDeclarations(ctx, f)
       case m: DeclaresModel =>
         model.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases.foreach {
@@ -219,10 +225,9 @@ object ExtendsHelper {
       case other =>
         ctx.violation(
           ParserSideValidations.ResolutionErrorSpecification.id,
-          other.id,
+          other,
           None,
-          "Error resolving nested declaration, found something that is not a library or a fragment",
-          other.annotations.find(classOf[LexicalInformation])
+          "Error resolving nested declaration, found something that is not a library or a fragment"
         )
         other
     }
@@ -233,8 +238,12 @@ object ExtendsHelper {
       case Some(resolvedNamedEntity) =>
         resolvedNamedEntity.vals.foreach {
           case (_, namedEntities) =>
-            val inContext = namedEntities.find(entity =>
-              entity.isInstanceOf[DomainElement] && entity.asInstanceOf[DomainElement].id.contains(model.location))
+            val inContext = namedEntities.find(
+              entity =>
+                entity.isInstanceOf[DomainElement] && entity
+                  .asInstanceOf[DomainElement]
+                  .id
+                  .contains(model.location().getOrElse("")))
             declaration match {
               // we recover the local alias we removed when resolving
               case element: NamedDomainElement if inContext.isDefined =>
@@ -258,14 +267,16 @@ class CustomRaml08WebApiContext extends Raml08WebApiContext("", Nil, ParserConte
                          node: String,
                          property: Option[String],
                          message: String,
-                         lexical: Option[LexicalInformation]): Unit =
-    super.violation(id, node, property, message, lexical)
+                         lexical: Option[LexicalInformation],
+                         location: Option[String]): Unit =
+    super.violation(id, node, property, message, lexical, location)
   override def warning(id: String,
                        node: String,
                        property: Option[String],
                        message: String,
-                       lexical: Option[LexicalInformation]): Unit = {}
-  override def handle(node: YPart, e: SyamlException): Unit       = {}
+                       lexical: Option[LexicalInformation],
+                       location: Option[String]): Unit      = {}
+  override def handle(node: YPart, e: SyamlException): Unit = {}
 }
 
 class CustomRaml10WebApiContext extends Raml10WebApiContext("", Nil, ParserContext()) {
@@ -274,12 +285,14 @@ class CustomRaml10WebApiContext extends Raml10WebApiContext("", Nil, ParserConte
                          node: String,
                          property: Option[String],
                          message: String,
-                         lexical: Option[LexicalInformation]): Unit =
-    super.violation(id, node, property, message, lexical)
+                         lexical: Option[LexicalInformation],
+                         location: Option[String]): Unit =
+    super.violation(id, node, property, message, lexical, location)
   override def warning(id: String,
                        node: String,
                        property: Option[String],
                        message: String,
-                       lexical: Option[LexicalInformation]): Unit = {}
-  override def handle(node: YPart, e: SyamlException): Unit       = {}
+                       lexical: Option[LexicalInformation],
+                       location: Option[String]): Unit      = {}
+  override def handle(node: YPart, e: SyamlException): Unit = {}
 }

@@ -1,6 +1,5 @@
 package amf.core.parser
 
-import amf.core.annotations.LexicalInformation
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.plugins.features.validation.ParserSideValidations
 
@@ -25,11 +24,10 @@ trait UnresolvedReference { this: DomainElement =>
           () =>
             c.violation(
               ParserSideValidations.ParsingErrorSpecification.id,
-              id,
+              this,
               None,
-              s"Unresolved reference $reference from root context ${c.rootContextDocument}",
-              annotations.find(classOf[LexicalInformation])
-            )
+              s"Unresolved reference $reference from root context ${c.rootContextDocument}"
+          )
         )
       )
     case _ => throw new Exception("Cannot create unresolved reference with missing parsing context")

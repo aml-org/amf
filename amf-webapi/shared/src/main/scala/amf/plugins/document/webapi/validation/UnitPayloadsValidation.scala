@@ -1,6 +1,5 @@
 package amf.plugins.document.webapi.validation
 
-import amf.core.annotations.LexicalInformation
 import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{ArrayNode, DataNode, ObjectNode}
@@ -52,7 +51,8 @@ sealed case class DataNodeEntry(d: DataNode, sonsKeys: Seq[String]) {
             d.id,
             sonsResults.head.targetProperty,
             sonsResults.head.validationId, // ??
-            d.annotations.find(classOf[LexicalInformation]),
+            d.position(),
+            d.location(),
             null
           ))
       case _ => None // not results for the dataNode, ignore
@@ -84,7 +84,8 @@ sealed case class DataNodeEntry(d: DataNode, sonsKeys: Seq[String]) {
           sortedResults.head.targetNode,
           Option(d.id),
           sortedResults.head.validationId, //?
-          d.annotations.find(classOf[LexicalInformation]),
+          d.position(),
+          d.location(),
           null
         )
     }

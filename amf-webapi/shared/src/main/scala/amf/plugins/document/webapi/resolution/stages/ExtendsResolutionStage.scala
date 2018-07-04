@@ -1,7 +1,6 @@
 package amf.plugins.document.webapi.resolution.stages
 
-import amf.{ProfileName, RAML08Profile}
-import amf.core.annotations.{LexicalInformation, SourceAST}
+import amf.core.annotations.SourceAST
 import amf.core.emitter.SpecOrdering
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
@@ -22,6 +21,7 @@ import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging._
+import amf.{ProfileName, RAML08Profile}
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -56,7 +56,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
       case Some(rt: ResourceType) =>
         val node = rt.dataNode.cloneNode()
         node.replaceVariables(context.variables, tree.subtrees)((message: String) =>
-          apiContext.violation(r.id, message, r.annotations.find(classOf[LexicalInformation])))
+          apiContext.violation(r.id, message, r.position(), r.location()))
 
         ExtendsHelper.asEndpoint(
           context.model,
@@ -73,7 +73,8 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
       case _ =>
         apiContext.violation(r.id,
                              s"Cannot find target for parametrized resource type ${r.id}",
-                             r.annotations.find(classOf[LexicalInformation]))
+                             r.position(),
+                             r.location())
         ErrorEndPoint(r.id, r.annotations.find(classOf[SourceAST]).map(_.ast).getOrElse(YNode.Null))
     }
   }
@@ -254,7 +255,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
             case t: Trait =>
               val node: DataNode = t.dataNode.cloneNode()
               node.replaceVariables(local.variables, subTree)((message: String) =>
-                apiContext.violation(t.id, message, t.annotations.find(classOf[LexicalInformation])))
+                apiContext.violation(t.id, message, t.position(), t.location()))
 
               val op = ExtendsHelper.asOperation(
                 profile,

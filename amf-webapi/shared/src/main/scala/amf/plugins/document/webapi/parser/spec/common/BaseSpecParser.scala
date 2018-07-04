@@ -209,7 +209,7 @@ object SingleArrayNode {
 case class MapEntriesArrayNode(obj: YMap)(override implicit val iv: IllegalTypeHandler) extends BaseArrayNode {
 
   override def nodes: (Seq[YNode], YNode) = {
-    val maps = obj.entries.map(e => YNode(YMap(IndexedSeq(e))))
+    val maps = obj.entries.map(e => YNode(YMap(IndexedSeq(e), obj.sourceName)))
     (maps, obj)
   }
 }

@@ -23,7 +23,7 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
         }
       case None =>
         throw new Exception(
-          s"Cannot serialize domain model '${unit.location}' for detected media type $mediaType and vendor $vendor")
+          s"Cannot serialize domain model '${unit.location()}' for detected media type $mediaType and vendor $vendor")
     }
   }
 
@@ -34,7 +34,7 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
   def renderToFile(remote: Platform, path: String): Future[Unit] = remote.write(path, render())
 
   protected def render(): String = {
-    ExecutionLog.log(s"AMFSerializer#render: Rendering to $mediaType ($vendor file) ${unit.location}")
+    ExecutionLog.log(s"AMFSerializer#render: Rendering to $mediaType ($vendor file) ${unit.location()}")
     val ast = make()
 
     // Let's try to find a syntax plugin for the media type and vendor

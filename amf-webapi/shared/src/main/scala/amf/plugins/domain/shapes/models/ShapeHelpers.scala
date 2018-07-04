@@ -1,8 +1,8 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.annotations.{ExplicitField, LexicalInformation}
+import amf.core.annotations.ExplicitField
 import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain.{Linkable, RecursiveShape, Shape, IdsTraversionCheck}
+import amf.core.model.domain.{IdsTraversionCheck, Linkable, RecursiveShape, Shape}
 import amf.core.parser.ErrorHandler
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.features.validation.ParserSideValidations
@@ -70,7 +70,8 @@ trait ShapeHelpers { this: Shape =>
         link.id,
         None,
         "Error recursive shape",
-        link.annotations.find(classOf[LexicalInformation])
+        link.position(),
+        link.location()
       )
     }
     val fixPointId = id.getOrElse(link.id)

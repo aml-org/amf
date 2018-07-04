@@ -1,6 +1,6 @@
 package amf.core.emitter
 
-import amf.core.annotations.{LexicalInformation, SingleValueArray}
+import amf.core.annotations.{LexicalInformation, SingleValueArray, SourceAST}
 import amf.core.metamodel.{Field, Type}
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.Position._
@@ -55,10 +55,17 @@ package object BaseEmitters {
   }
 
   case class TextScalarEmitter(value: String, annotations: Annotations, tag: YType = YType.Str) extends PartEmitter {
-    override def emit(b: PartBuilder): Unit =
-      sourceOr(annotations, {
-        b += YNode(new YScalar.Builder(value, tag.tag).scalar, tag)
-      })
+    override def emit(b: PartBuilder): Unit = {
+      sourceOr(
+        annotations, {
+          b += YNode(new YScalar.Builder(
+                       value,
+                       tag.tag,
+                       sourceName = annotations.find(classOf[SourceAST]).map(_.ast.sourceName).getOrElse("")).scalar,
+                     tag)
+        }
+      )
+    }
 
     override def position(): Position = pos(annotations)
   }

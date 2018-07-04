@@ -15,7 +15,7 @@ class Declarations(var libraries: Map[String, Declarations] = Map(),
 
   def +=(fragment: (String, Fragment)): Declarations = {
     fragment match {
-      case (url, f) => fragments = fragments + (url -> FragmentRef(f.encodes, Some(f.location)))
+      case (url, f) => fragments = fragments + (url -> FragmentRef(f.encodes, f.location()))
     }
     this
   }
@@ -99,7 +99,7 @@ class Declarations(var libraries: Map[String, Declarations] = Map(),
 case class FragmentRef(encoded: DomainElement, location: Option[String])
 
 object FragmentRef {
-  def apply(f: Fragment): FragmentRef = new FragmentRef(f.encodes, Option(f.location))
+  def apply(f: Fragment): FragmentRef = new FragmentRef(f.encodes, f.location())
 }
 
 object Declarations {

@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.validation
 
 import amf.core.model.document.{BaseUnit, PayloadFragment}
-import amf.core.model.domain.Shape
+import amf.core.model.domain.{ScalarNode, Shape}
 import amf.core.utils._
 import amf.core.validation.ValidationCandidate
 import amf.core.vocabulary.Namespace
@@ -63,7 +63,7 @@ class ExamplesValidationCollector(model: BaseUnit) {
       if (example.fields.exists(ExampleModel.StructuredValue))
         PayloadFragment(example.structuredValue, mediaType)
       else
-        PayloadFragment(example.raw.value(), mediaType) // todo: review with antonio
+        PayloadFragment(ScalarNode(example.raw.value(), None, example.annotations), mediaType) // todo: review with antonio
 
     fragment.encodes.withId(example.id)
     fragment

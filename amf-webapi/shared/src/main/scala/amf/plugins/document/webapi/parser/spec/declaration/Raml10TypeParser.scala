@@ -302,10 +302,13 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
       val shape = ArrayShape(map).withName(name)
       adopt(shape)
       val items =
-        SimpleTypeParser("items",
-                         (s: Shape) => s.adopted(shape.id),
-                         YMap(map.entries.filter(entry => !entry.key.as[YScalar].text.equals("repeat"))),
-                         defaultType).parse()
+        SimpleTypeParser(
+          "items",
+          (s: Shape) => s.adopted(shape.id),
+          YMap(map.entries.filter(entry => !entry.key.as[YScalar].text.equals("repeat")),
+               map.entries.headOption.map(_.sourceName).getOrElse("")),
+          defaultType
+        ).parse()
       shape.withItems(items)
       shape
     } else {
@@ -485,7 +488,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             entry
           }
         }
-        val toParse = YMapEntry(YNode(""), YMap(newEntries))
+
+        val toParse = YMapEntry(YNode(""), YMap(newEntries, newEntries.headOption.map(_.sourceName).getOrElse("")))
         ctx.factory.typeParser(toParse, s => s.withId(union.id), isAnnotation, defaultType).parse().get
     }
     union.withAnyOf(

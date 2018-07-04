@@ -79,14 +79,17 @@ class DialectReferencesResolutionStage()(override implicit val errorHandler: Err
 
     val finalExternals: Seq[External] = allExternals.toSeq.zipWithIndex.map {
       case (external: String, i) =>
-        External().withBase(external).withAlias(s"external$i").withId(model.location + s"#/external/external$i")
+        External()
+          .withBase(external)
+          .withAlias(s"external$i")
+          .withId(model.location().getOrElse(model.id) + s"#/external/external$i")
     }
 
     val resolved = model match {
       case dialect: Dialect =>
         Dialect()
           .withId(dialect.id)
-          .withLocation(dialect.location)
+          .withLocation(dialect.location().getOrElse(dialect.id))
           .withDocuments(dialect.documents())
           .withDeclares(finalDeclarations)
           .withExternals(finalExternals)
@@ -95,13 +98,13 @@ class DialectReferencesResolutionStage()(override implicit val errorHandler: Err
       case library: DialectLibrary =>
         DialectLibrary()
           .withId(library.id)
-          .withLocation(library.location)
+          .withLocation(library.location().getOrElse(library.id))
           .withDeclares(finalDeclarations)
           .withExternals(finalExternals)
       case fragment: DialectFragment =>
         DialectFragment()
           .withId(fragment.id)
-          .withLocation(fragment.location)
+          .withLocation(fragment.location().getOrElse(fragment.id))
           .withEncodes(fragment.encodes)
           .withExternals(finalExternals)
     }

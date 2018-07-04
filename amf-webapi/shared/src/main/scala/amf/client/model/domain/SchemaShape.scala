@@ -1,5 +1,6 @@
 package amf.client.model.domain
 
+import amf.client.convert.CoreClientConverters.ClientOption
 import amf.client.convert.WebApiClientConverters._
 import amf.client.model.StrField
 import amf.plugins.domain.shapes.models.{SchemaShape => InternalSchemaShape}
@@ -12,9 +13,9 @@ case class SchemaShape(override private[amf] val _internal: InternalSchemaShape)
   @JSExportTopLevel("model.domain.SchemaShape")
   def this() = this(InternalSchemaShape())
 
-  def mediaType: StrField = _internal.mediaType
-  def raw: StrField       = _internal.raw
-  def location: StrField  = _internal.location
+  def mediaType: StrField            = _internal.mediaType
+  def raw: StrField                  = _internal.raw
+  def location: ClientOption[String] = _internal.location().asClient
 
   def withMediatype(mediaType: String): this.type = {
     _internal.withMediaType(mediaType)

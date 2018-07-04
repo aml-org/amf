@@ -15,14 +15,14 @@ case class Example(override private[amf] val _internal: InternalExample) extends
   @JSExportTopLevel("model.domain.Example")
   def this() = this(InternalExample())
 
-  def name: StrField            = _internal.name
-  def displayName: StrField     = _internal.displayName
-  def description: StrField     = _internal.description
-  def value: StrField           = _internal.raw
-  def structuredValue: DataNode = _internal.structuredValue
-  def strict: BoolField         = _internal.strict
-  def mediaType: StrField       = _internal.mediaType
-  def location: StrField        = _internal.location
+  def name: StrField                 = _internal.name
+  def displayName: StrField          = _internal.displayName
+  def description: StrField          = _internal.description
+  def value: StrField                = _internal.raw
+  def structuredValue: DataNode      = _internal.structuredValue
+  def strict: BoolField              = _internal.strict
+  def mediaType: StrField            = _internal.mediaType
+  def location: ClientOption[String] = _internal.location().asClient
 
   def withName(name: String): this.type = {
     _internal.withName(name)

@@ -9,7 +9,7 @@ import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.metamodel.UnionShapeModel
 import amf.plugins.domain.shapes.models._
 import org.yaml.model.{YNode, YPart}
-
+import amf.core.utils.Strings
 protected case class ParsingResult(result: Option[Shape], remaining: Seq[Char])
 
 class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Option[YPart] = None, checking: Boolean)(
@@ -85,7 +85,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Opti
         case "date-only"     => ScalarShape().withDataType((Namespace.Xsd + "date").iri())
         case other =>
           ctx.declarations
-            .findType(other, SearchScope.Named) match { //i should not have a reference to fragment in a type expression.
+            .findType(other, SearchScope.Named) match { // i should not have a reference to fragment in a type expression.
             case Some(s) => s.link(other).asInstanceOf[Shape]
             case _ =>
               val shape = UnresolvedShape(other, part).withName(other)
@@ -121,7 +121,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Opti
       case None =>
         val union = UnionShape()
         adopt(union)
-        ctx.violation(union.id, "", None, "Syntax error, cannot create empty Union", lexical)
+        ctx.violation(union.id, "", None, "Syntax error, cannot create empty Union", lexical, location)
         union
       case Some(u: UnionShape) => u
       case Some(shape) =>
@@ -165,7 +165,12 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Opti
                 union.fields.setWithoutId(UnionShapeModel.AnyOf, AmfArray(newAnyOf))
             }
           case _ =>
-            ctx.violation(shape.id, "", None, s"Error parsing type expression, cannot accept type $shape", lexical)
+            ctx.violation(shape.id,
+                          "",
+                          None,
+                          s"Error parsing type expression, cannot accept type $shape",
+                          lexical,
+                          location)
             Some(shape)
         }
     }
@@ -175,13 +180,13 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Opti
     shape match {
       case array: ArrayShape if array.isLink && array.effectiveLinkTarget.isInstanceOf[DataArrangementShape] =>
         isEmptyArray(array.effectiveLinkTarget.asInstanceOf[DataArrangementShape])
-      case array: ArrayShape   =>
+      case array: ArrayShape =>
         Option(array.items).isEmpty
       case matrix: MatrixShape if matrix.isLink && matrix.effectiveLinkTarget.isInstanceOf[DataArrangementShape] =>
         isEmptyArray(matrix.effectiveLinkTarget.asInstanceOf[DataArrangementShape])
       case matrix: MatrixShape =>
         isEmptyArray(matrix.items.asInstanceOf[DataArrangementShape])
-      case _                   =>
+      case _ =>
         false
     }
   }
@@ -211,10 +216,13 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Opti
       case m: MatrixShape => isEmptyArray(m)
       case _              => false
     }
-    if (empty) ctx.violation(t.id, "Syntax error, generating empty array", lexical)
+    if (empty) ctx.violation(t.id, "Syntax error, generating empty array", lexical, location)
   }
 
-  private val lexical = part.map(p => Range(p.range)).map(range => LexicalInformation(range))
+  private val (lexical, location) = part match {
+    case (p: YPart) => (Some(new LexicalInformation(Range(p.range))), p.sourceName.option)
+    case _          => (None, None)
+  }
 }
 
 object RamlTypeExpressionParser {

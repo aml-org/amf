@@ -188,11 +188,11 @@ private case class ImportEmitter(vocabularyReference: VocabularyReference,
                                  ordering: SpecOrdering)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    val vocabFile       = vocabulary.location.split("/").last
-    val vocabFilePrefix = vocabulary.location.replace(vocabFile, "")
+    val vocabFile       = vocabulary.location().getOrElse(vocabulary.id).split("/").last
+    val vocabFilePrefix = vocabulary.location().getOrElse(vocabulary.id).replace(vocabFile, "")
 
     val vocabularyReferenceFile = vocabulary.references.find(_.id == vocabularyReference.reference.value()) match {
-      case Some(reference: BaseUnit) => reference.location
+      case Some(reference: BaseUnit) => reference.location().getOrElse(reference.id)
       case None                      => throw new Exception("Cannot regenerate vocabulary link without reference")
     }
 

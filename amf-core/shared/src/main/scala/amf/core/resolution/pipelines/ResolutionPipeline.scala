@@ -25,7 +25,7 @@ trait ResolutionPipeline[T <: BaseUnit] {
             model.parserRun.get
         }
       }
-      override val currentFile: String = model.location
+      override val currentFile: String = model.location().getOrElse(model.id)
     }
   }
 
@@ -33,12 +33,12 @@ trait ResolutionPipeline[T <: BaseUnit] {
   protected val steps: Seq[ResolutionStage]
 
   final def resolve(): T = {
-    ExecutionLog.log(s"${this.getClass.getName}#resolve: resolving ${model.location}")
+    ExecutionLog.log(s"${this.getClass.getName}#resolve: resolving ${model.location().getOrElse("")}")
     var m = model
     steps.foreach { s =>
       m = step(m, s)
     }
-    ExecutionLog.log(s"${this.getClass.getName}#resolve: resolved model ${m.location}")
+    ExecutionLog.log(s"${this.getClass.getName}#resolve: resolved model ${m.location().getOrElse("")}")
     m
   }
 

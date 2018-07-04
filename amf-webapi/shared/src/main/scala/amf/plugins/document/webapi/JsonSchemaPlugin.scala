@@ -74,11 +74,10 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
             case doc: YDocument => doc.node
             case _ =>
               ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
-                            inputFragment.id,
+                            inputFragment,
                             None,
-                            "Cannot parse JSON Schema from unit with missing syntax information",
-                            None)
-              YNode(YMap(IndexedSeq()))
+                            "Cannot parse JSON Schema from unit with missing syntax information")
+              YNode(YMap(IndexedSeq(), ""))
           }
         }
       case fragment: RecursiveUnit if fragment.raw.isDefined =>
@@ -90,11 +89,10 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
           .node
       case _ =>
         ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
-                      inputFragment.id,
+                      inputFragment,
                       None,
-                      "Cannot parse JSON Schema from unit with missing syntax information",
-                      None)
-        YNode(YMap(IndexedSeq()))
+                      "Cannot parse JSON Schema from unit with missing syntax information")
+        YNode(YMap(IndexedSeq(), ""))
     }
 
     val doc = Root(
@@ -102,9 +100,9 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
         None,
         YDocument(encoded)
       ),
-      inputFragment.location + (if (pointer.isDefined) s"#${pointer.get}" else ""),
+      inputFragment.location().getOrElse(inputFragment.id) + (if (pointer.isDefined) s"#${pointer.get}" else ""),
       "application/json",
-      inputFragment.references.map(ref => ParsedReference(ref, Reference(ref.location, Nil), None)),
+      inputFragment.references.map(ref => ParsedReference(ref, Reference(ref.location().getOrElse(""), Nil), None)),
       SchemaReference,
       ExternalJsonRefsPlugin.ID,
       inputFragment.raw.getOrElse("")

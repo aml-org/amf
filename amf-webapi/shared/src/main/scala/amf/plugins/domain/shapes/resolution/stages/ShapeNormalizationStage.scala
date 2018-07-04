@@ -1,7 +1,6 @@
 package amf.plugins.domain.shapes.resolution.stages
 
 import amf.ProfileName
-import amf.core.annotations.LexicalInformation
 import amf.core.metamodel.{MetaModelTypeMapping, Obj}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
@@ -74,7 +73,8 @@ private[stages] case class RecursionErrorRegister() {
         original.id,
         None,
         "Error recursive shape",
-        original.annotations.find(classOf[LexicalInformation])
+        original.position(),
+        original.location()
       )
     }
     if (canRegister) avoidRegister += r.id

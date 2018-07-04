@@ -512,8 +512,8 @@ trait DialectDocumentsEmitters {
   val aliases: Map[String, (String, String)]
 
   def collectAliases(): Map[String, (Aliases.FullUrl, Aliases.Alias)] = {
-    val vocabFile       = dialect.location.split("/").last
-    val vocabFilePrefix = dialect.location.replace(vocabFile, "")
+    val vocabFile       = dialect.location().getOrElse(dialect.id).split("/").last
+    val vocabFilePrefix = dialect.location().getOrElse(dialect.id).replace(vocabFile, "")
 
     val maps = dialect.annotations
       .find(classOf[Aliases])
@@ -527,10 +527,10 @@ trait DialectDocumentsEmitters {
     val idCounter = new IdCounter()
     val dialectReferences = dialect.references.foldLeft(Map[String, (String, String)]()) {
       case (acc: Map[String, (String, String)], m: DeclaresModel) =>
-        val importLocation: String = if (m.location.contains(vocabFilePrefix)) {
-          m.location.replace(vocabFilePrefix, "")
+        val importLocation: String = if (m.location().exists(_.contains(vocabFilePrefix))) {
+          m.location().getOrElse(m.id).replace(vocabFilePrefix, "")
         } else {
-          m.location.replace("file://", "")
+          m.location().getOrElse(m.id).replace("file://", "")
         }
 
         val aliasKey = m match {

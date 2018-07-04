@@ -1,5 +1,6 @@
 package amf.core.model.domain
 
+import amf.core.annotations.{LexicalInformation, SourceAST}
 import amf.core.parser.Annotations
 
 /**
@@ -21,4 +22,10 @@ trait AmfElement {
     annotations ++= other
     this
   }
+
+  /** search for position in annotations */
+  def position(): Option[LexicalInformation] = annotations.find(classOf[LexicalInformation])
+
+  /** search for location in annotations */
+  def location(): Option[String] = annotations.find(classOf[SourceAST]).map(_.ast.sourceName)
 }

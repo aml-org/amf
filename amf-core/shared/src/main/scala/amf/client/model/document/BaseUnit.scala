@@ -24,7 +24,7 @@ trait BaseUnit extends AmfObjectWrapper with PlatformSecrets {
   def raw: ClientOption[String] = _internal.raw.asClient
 
   /** Returns the file location for the document that has been parsed to generate this model */
-  def location: String = _internal.location
+  def location: String = _internal.location().getOrElse("")
 
   /** Returns the usage comment for de element */
   def usage: StrField = _internal.usage

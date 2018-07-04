@@ -1,7 +1,6 @@
 package amf.core.services
 
 import amf.ProfileName
-import amf.core.annotations.LexicalInformation
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.Shape
 import amf.client.plugins.{AMFPayloadValidationPlugin, AMFPlugin}
@@ -66,15 +65,17 @@ object PayloadValidator {
 
     override def validateSet(set: ValidationShapeSet): Future[AMFValidationReport] = Future {
       val results = set.candidates.map { c =>
+        val e = c.payload.encodes
         AMFValidationResult(
           s"Unsupported validation for mediatype: ${c.payload.mediaType} and shape ${c.shape.id}",
           set.defaultSeverity,
-          c.payload.encodes.id,
+          e.id,
           Some((Namespace.Document + "value").iri()),
           if (set.defaultSeverity == SeverityLevels.VIOLATION)
             ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification.id
           else ParserSideValidations.UnsupportedExampleMediaTypeWarningSpecification.id,
-          c.payload.encodes.annotations.find(classOf[LexicalInformation]),
+          e.position(),
+          e.location(),
           null
         )
       }

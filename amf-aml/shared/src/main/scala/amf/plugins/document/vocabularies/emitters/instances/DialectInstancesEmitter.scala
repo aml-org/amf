@@ -15,11 +15,9 @@ import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId,
 import amf.plugins.document.vocabularies.emitters.common.IdCounter
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
-import amf.core.utils._
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode}
-
 
 trait DialectEmitterHelper {
   val dialect: Dialect
@@ -94,8 +92,8 @@ case class DialectInstancesEmitter(instance: DialectInstance, dialect: Dialect) 
   val aliases: Map[String, (String, String)] = collectAliases()
 
   def collectAliases(): Map[String, (String, String)] = {
-    val vocabFile       = instance.location.split("/").last
-    val vocabFilePrefix = instance.location.replace(vocabFile, "")
+    val vocabFile       = instance.location().getOrElse(instance.id).split("/").last
+    val vocabFilePrefix = instance.location().getOrElse(instance.id).replace(vocabFile, "")
 
     val maps = instance.annotations
       .find(classOf[Aliases])
@@ -109,7 +107,7 @@ case class DialectInstancesEmitter(instance: DialectInstance, dialect: Dialect) 
     val idCounter = new IdCounter()
     instance.references.foldLeft(Map[String, (String, String)]()) {
       case (acc: Map[String, (String, String)], m: DeclaresModel) =>
-        val location = Option(m.location).getOrElse(m.id).replace("#", "")
+        val location = m.location().getOrElse(m.id).replace("#", "")
         val importLocation: String = if (location.contains(vocabFilePrefix)) {
           location.replace(vocabFilePrefix, "")
         } else {
@@ -220,7 +218,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
         emitters ++= Seq(MapEntryEmitter(discriminatorName, discriminatorValue))
       }
       if (node.annotations.find(classOf[CustomId]).isDefined) {
-        val customId = if (node.id.contains(dialect.location)) {
+        val customId = if (node.id.contains(dialect.location().getOrElse(""))) {
           node.id.replace(dialect.id, "")
         } else {
           node.id

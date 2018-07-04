@@ -109,7 +109,7 @@ class EmissionContext(val prefixes: mutable.Map[String, String], var base: Strin
 
 object EmissionContext {
   def apply(unit: BaseUnit, options: RenderOptions) =
-    new EmissionContext(mutable.Map(), Option(unit.location).getOrElse(unit.id), options)
+    new EmissionContext(mutable.Map(), unit.location().getOrElse(unit.id), options)
 }
 
 object GraphEmitter extends MetaModelTypeMapping {
@@ -470,15 +470,19 @@ object GraphEmitter extends MetaModelTypeMapping {
                   .foreach { e =>
                     val dateTime = e.value.asInstanceOf[SimpleDateTime]
                     if (dateTime.timeOfDay.isDefined || dateTime.zoneOffset.isDefined) {
-                      typedScalar(b, emitDateFormat(dateTime), (Namespace.Xsd + "dateTime").iri(), inArray = false, ctx)
+                      typedScalar(b,
+                                  emitDateFormat(dateTime),
+                                  (Namespace.Xsd + "dateTime").iri(),
+                                  inArray = false,
+                                  ctx)
                     } else {
                       typedScalar(b,
-                        f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d",
-                        (Namespace.Xsd + "date").iri(),
-                        inArray = false,
-                        ctx)
+                                  f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d",
+                                  (Namespace.Xsd + "date").iri(),
+                                  inArray = false,
+                                  ctx)
+                    }
                   }
-                }
               case Any =>
                 seq.values.asInstanceOf[Seq[AmfScalar]].foreach { scalarElement =>
                   scalarElement.value match {

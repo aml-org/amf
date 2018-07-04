@@ -30,7 +30,7 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
   )
 
   override def parse(mediaType: String, text: CharSequence, ctx: ParserContext) = {
-    val parser = YamlParser(text)(ctx).withIncludeTag("!include")
+    val parser = YamlParser.apply(text, ctx.currentFile)(ctx).withIncludeTag("!include")
     val parts  = parser.parse(true)
 
     if (parts.exists(v => v.isInstanceOf[YDocument])) {
@@ -40,7 +40,7 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
       }
     } else {
       parts collectFirst { case d: YComment => d } map { comment =>
-        ParsedDocument(Some(comment), YDocument(IndexedSeq(YNode(YMap.empty))))
+        ParsedDocument(Some(comment), YDocument(IndexedSeq(YNode(YMap.empty)), ctx.currentFile))
       }
     }
   }

@@ -7,7 +7,7 @@ import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.features.validation.ParserSideValidations
-import org.yaml.model.{YMap, YNode, YScalar, YType}
+import org.yaml.model._
 import amf.core.utils.Strings
 
 object RamlParametrizedSecuritySchemeParser {
@@ -90,13 +90,14 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSet
   val apiKeyConst: String = "apiKey".asOasExtension
 
   def dynamicSettings(settings: Settings, properties: String*): Settings = {
-    val entries = map.entries.filterNot { entry =>
+    val entries: IndexedSeq[YMapEntry] = map.entries.filterNot { entry =>
       val key: String = entry.key.as[YScalar].text
       properties.contains(key) || isRamlAnnotation(key)
     }
 
     if (entries.nonEmpty) {
-      val node = DataNodeParser(YNode(YMap(entries)), parent = Some(settings.id)).parse()
+      val node = DataNodeParser(YNode(YMap(entries, entries.headOption.map(_.sourceName).getOrElse(""))),
+                                parent = Some(settings.id)).parse()
       settings.set(SettingsModel.AdditionalProperties, node)
     }
     settings

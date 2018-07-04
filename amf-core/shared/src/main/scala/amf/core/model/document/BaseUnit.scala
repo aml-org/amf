@@ -29,7 +29,10 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
   def references: Seq[BaseUnit]
 
   /** Returns the file location for the document that has been parsed to generate this model */
-  def location: String = fields(Location)
+  override def location(): Option[String] = {
+    val fieldValue: StrField = fields.field(Location)
+    fieldValue.option().orElse(super.location())
+  }
 
   /** Returns the usage. */
   def usage: StrField = fields.field(Usage)
@@ -324,13 +327,13 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
   def toNativeRdfModel(renderOptions: RenderOptions = new RenderOptions()): RdfModel = {
     platform.rdfFramework match {
       case Some(rdf) => rdf.unitToRdfModel(this, renderOptions)
-      case None => throw new Exception("RDF Framework not registered cannot export to native RDF model")
+      case None      => throw new Exception("RDF Framework not registered cannot export to native RDF model")
     }
   }
 
 }
 
-object BaseUnit extends PlatformSecrets  {
+object BaseUnit extends PlatformSecrets {
   def fromNativeRdfModel(id: String, rdfModel: RdfModel, ctx: ParserContext = ParserContext()) =
     new RdfModelParser(platform)(ctx).parse(rdfModel, id)
 }

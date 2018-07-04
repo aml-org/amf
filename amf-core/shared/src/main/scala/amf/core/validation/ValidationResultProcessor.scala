@@ -37,6 +37,7 @@ trait ValidationResultProcessor {
                             result.targetProperty,
                             spec.id,
                             result.position,
+                            result.location,
                             result.source)
   }
 

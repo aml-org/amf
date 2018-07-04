@@ -480,12 +480,7 @@ class OasSpecEmitter(implicit val spec: OasSpecEmitterContext) extends BaseSpecE
       MapEntryEmitter(effectiveAlias._1, effectiveAlias._2).emit(b)
     }
 
-    private def name: String = {
-      Option(reference.location) match {
-        case Some(location) => location
-        case None           => reference.id
-      }
-    }
+    private def name: String = reference.location().getOrElse(reference.id)
 
     override def position(): Position = ZERO
   }

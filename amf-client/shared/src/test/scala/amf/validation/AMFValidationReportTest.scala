@@ -14,8 +14,8 @@ class AMFValidationReportTest extends FunSuite {
       null,
       RAMLProfile,
       Seq(
-        AMFValidationResult(null, null, null, None, null, null, null),
-        AMFValidationResult(null, null, null, None, null, None, null)
+        AMFValidationResult(null, null, null, None, null, null, None, null),
+        AMFValidationResult(null, null, null, None, null, None, None, null)
       )
     ).toString
   }

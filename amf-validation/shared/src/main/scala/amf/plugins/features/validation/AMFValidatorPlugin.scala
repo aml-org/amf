@@ -203,8 +203,8 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     }
   }
 
-  def profileNotFoundWarningReport(model: BaseUnit, profileName: ProfileName) = {
-    AMFValidationReport(conforms = true, model.location, profileName, Seq())
+  def profileNotFoundWarningReport(model: BaseUnit, profileName: ProfileName): AMFValidationReport = {
+    AMFValidationReport(conforms = true, model.location().getOrElse(model.id), profileName, Seq())
   }
 
   /**

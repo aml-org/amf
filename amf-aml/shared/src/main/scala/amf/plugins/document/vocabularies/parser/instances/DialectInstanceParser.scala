@@ -171,7 +171,7 @@ case class ReferenceDeclarations(references: mutable.Map[String, Any] = mutable.
           case decl => library += decl
         }
       case f: DialectInstanceFragment =>
-        ctx.declarations.fragments += (alias -> FragmentRef(f.encodes, Option(f.location)))
+        ctx.declarations.fragments += (alias -> FragmentRef(f.encodes, f.location()))
     }
   }
 
@@ -223,7 +223,8 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
     )
     // Parsing $refs to libraries
     references.foreach {
-      case ParsedReference(lib: DialectInstanceLibrary, _, _) if !parsedLibraries.contains(lib.location) =>
+      case ParsedReference(lib: DialectInstanceLibrary, _, _)
+          if !parsedLibraries.contains(lib.location().getOrElse(lib.id)) =>
         result += (lib.id, lib)
       case _ => // ignore
     }
@@ -259,7 +260,8 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
       .withDefinedBy(ctx.dialect.id)
     parseDeclarations("root")
     val references =
-      DialectInstanceReferencesParser(dialectInstance, map, root.references).parse(dialectInstance.location)
+      DialectInstanceReferencesParser(dialectInstance, map, root.references)
+        .parse(dialectInstance.location().getOrElse(dialectInstance.id))
 
     val document = parseEncoded(dialectInstance) match {
 
@@ -273,7 +275,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
         if (references.baseUnitReferences().nonEmpty)
           dialectInstance.withReferences(references.baseUnitReferences())
         if (ctx.nestedDialects.nonEmpty)
-          dialectInstance.withGraphDependencies(ctx.nestedDialects.map(_.location))
+          dialectInstance.withGraphDependencies(ctx.nestedDialects.map(nd => nd.location().getOrElse(nd.id)))
         Some(dialectInstance)
 
       case _ => None
@@ -310,7 +312,8 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
     parseDeclarations("library")
 
     val references =
-      DialectInstanceReferencesParser(dialectInstance, map, root.references).parse(dialectInstance.location)
+      DialectInstanceReferencesParser(dialectInstance, map, root.references)
+        .parse(dialectInstance.location().getOrElse(dialectInstance.id))
 
     if (ctx.declarations.declarables.nonEmpty)
       dialectInstance.withDeclares(ctx.declarations.declarables)
@@ -1134,7 +1137,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
       val externalId = if (rawId.contains("://")) {
         rawId
       } else {
-        (ctx.dialect.location.split("#").head + s"#$rawId").replace("##", "#")
+        (ctx.dialect.location().getOrElse(ctx.dialect.id).split("#").head + s"#$rawId").replace("##", "#")
       }
       node.annotations += CustomId()
       externalId

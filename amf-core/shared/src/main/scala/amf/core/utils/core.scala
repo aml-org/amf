@@ -38,17 +38,19 @@ package object utils {
     def rfc3339: String = {
       if (dateTime.timeOfDay.isDefined) {
         val timezone = dateTime.zoneOffset match {
-          case Some(0)     => "Z"
-          case Some(i:Int) => f"+$i%02d"
-          case None        => ""
+          case Some(0)      => "Z"
+          case Some(i: Int) => f"+$i%02d"
+          case None         => ""
         }
 
-        f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02dT${dateTime.timeOfDay.get.hour}%02d:${dateTime.timeOfDay.get.minute}%02d:${Option(dateTime.timeOfDay.get.second).getOrElse(0)}%02d$timezone"
+        f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02dT${dateTime.timeOfDay.get.hour}%02d:${dateTime.timeOfDay.get.minute}%02d:${Option(
+          dateTime.timeOfDay.get.second).getOrElse(0)}%02d$timezone"
       } else {
         f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d"
       }
     }
   }
+
   /**
     * Common utility methods to deal with Strings.
     */
@@ -107,6 +109,8 @@ package object utils {
     def asRamlAnnotation = s"(amf-$str)"
 
     def asOasExtension = s"x-amf-$str"
+
+    def option: Option[String] = if (str.isEmpty) None else Option(str)
   }
 
   case class QName(qualification: String, name: String) {

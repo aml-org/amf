@@ -49,7 +49,10 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
   def parse(): AbstractDeclaration = {
 
     if (entryValue.tagType == YType.Null)
-      ctx.warning(ParserSideValidations.ParsingWarningSpecification.id, parent, "Generating abstract declaration (resource type / trait)  with null value", entryValue)
+      ctx.warning(ParserSideValidations.ParsingWarningSpecification.id,
+                  parent,
+                  "Generating abstract declaration (resource type / trait)  with null value",
+                  entryValue)
 
     ctx.link(entryValue) match {
       case Left(link) => parseReferenced(declaration, link, entryValue).adopted(parent)
@@ -67,7 +70,7 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
                                 AmfScalar(usage.value.as[String], Annotations(usage)))
               })
             val fields = value.as[YMap].entries.filter(_.key.as[YScalar].text != "usage")
-            YMap(fields)
+            YMap(fields, fields.headOption.map(_.sourceName).getOrElse(""))
           case _ =>
             value
         }

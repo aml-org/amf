@@ -216,7 +216,8 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
       }
 
       if (entries.nonEmpty) {
-        val node = DataNodeParser(YNode(YMap(entries)), parent = Some(settings.id)).parse()
+        val node = DataNodeParser(YNode(YMap(entries, entries.headOption.map(_.sourceName).getOrElse(""))),
+                                  parent = Some(settings.id)).parse()
         settings.set(SettingsModel.AdditionalProperties, node)
       }
 

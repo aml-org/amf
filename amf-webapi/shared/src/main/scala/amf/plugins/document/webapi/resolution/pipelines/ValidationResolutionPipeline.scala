@@ -1,7 +1,6 @@
 package amf.plugins.document.webapi.resolution.pipelines
 
 import amf.ProfileName
-import amf.core.annotations.LexicalInformation
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
@@ -31,10 +30,9 @@ class ValidationShapeNormalisationStage(profile: ProfileName, override val keepE
         case e: InheritanceIncompatibleShapeError =>
           errorHandler.violation(
             ParserSideValidations.InvalidTypeInheritanceErrorSpecification.id,
-            base.id,
+            base,
             Some(ShapeModel.Inherits.value.iri()),
-            e.getMessage,
-            base.annotations.find(classOf[LexicalInformation])
+            e.getMessage
           )
           base
         case other: Exception => throw other

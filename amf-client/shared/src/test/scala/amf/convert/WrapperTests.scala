@@ -1127,8 +1127,10 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
         .parseFileAsync("file://amf-client/shared/src/test/resources/production/othercases/xsdschema/api.raml")
         .asFuture
     } yield {
-      unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[SchemaShape].location.value() should be(
-        "file://amf-client/shared/src/test/resources/production/othercases/xsdschema/schema.xsd")
+      val location: Option[String] =
+        unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[SchemaShape].location.asOption
+      location.isDefined should be(true)
+      location.get should be("file://amf-client/shared/src/test/resources/production/othercases/xsdschema/schema.xsd")
 
     }
   }
@@ -1140,7 +1142,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
         .parseFileAsync("file://amf-client/shared/src/test/resources/production/othercases/xsdexample/api.raml")
         .asFuture
     } yield {
-      unit
+      val location: Option[String] = unit
         .asInstanceOf[Document]
         .declares
         .asSeq
@@ -1150,7 +1152,10 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
         .asSeq
         .head
         .location
-        .value() should be("file://amf-client/shared/src/test/resources/production/othercases/xsdexample/example.xsd")
+        .asOption
+      location.isDefined should be(true)
+      location.get should be(
+        "file://amf-client/shared/src/test/resources/production/othercases/xsdexample/example.xsd")
     }
   }
 

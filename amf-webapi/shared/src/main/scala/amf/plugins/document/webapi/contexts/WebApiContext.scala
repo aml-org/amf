@@ -235,8 +235,8 @@ abstract class WebApiContext(val loc: String,
       }
     val baseFileUrl = fileUrl.split("#").head
     val res: Option[Option[AnyShape]] = refs
-      .filter(r => Option(r.unit.location).isDefined)
-      .filter(_.unit.location == baseFileUrl) collectFirst {
+      .filter(r => r.unit.location().isDefined)
+      .filter(_.unit.location().get == baseFileUrl) collectFirst {
       case ref if ref.unit.isInstanceOf[ExternalFragment] =>
         val jsonFile = ref.unit.asInstanceOf[ExternalFragment]
         JsonSchemaPlugin.parseFragment(jsonFile, referenceUrl)

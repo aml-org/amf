@@ -198,18 +198,20 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
   private def parseDisjointUnionType(): UnionShape = {
 
     val detectedTypes = map.key("type").get.value.as[YSequence].nodes.map(_.as[String])
-    val filtered      = YMap(map.entries.filter(_.key.as[String] != "type"))
+    val filtered      = YMap(map.entries.filter(_.key.as[String] != "type"), map.sourceName)
 
     val union = UnionShapeParser(Right(filtered), name).parse()
     adopt(union)
 
-    val exclusiveProps = YMap(filtered.entries.filter { entry =>
+    val finals = filtered.entries.filter { entry =>
       val prop = entry.key.as[String]
       prop != "example" && prop != "examples".asOasExtension && prop != "title" &&
       prop != "description" && prop != "default" && prop != "enum" &&
       prop != "externalDocs" && prop != "xml" && prop != "facets".asOasExtension &&
       prop != "anyOf" && prop != "allOf" && prop != "oneOf" && prop != "not"
-    })
+    }
+
+    val exclusiveProps = YMap(finals, finals.headOption.map(_.sourceName).getOrElse(""))
 
     val parsedTypes = detectedTypes map {
       case "object" => Some(parseObjectType(name, exclusiveProps, s => s.withId(union.id + "/object")))
@@ -682,7 +684,6 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         }
       }
 
-
       map.key("discriminator", NodeShapeModel.Discriminator in shape)
       map.key("discriminatorValue".asOasExtension, NodeShapeModel.DiscriminatorValue in shape)
 
@@ -773,7 +774,10 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     }
   }
 
-  case class PropertiesParser(map: YMap, producer: String => PropertyShape, requiredFields: Map[String, YNode], patterned: Boolean = false) {
+  case class PropertiesParser(map: YMap,
+                              producer: String => PropertyShape,
+                              requiredFields: Map[String, YNode],
+                              patterned: Boolean = false) {
     def parse(): Seq[PropertyShape] = {
       map.entries.map(entry => PropertyShapeParser(entry, producer, requiredFields, patterned).parse())
     }
@@ -802,21 +806,22 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         entry.value.toOption[YMap].foreach(_.key("deprecated", PropertyShapeModel.Deprecated in property))
       }
 
-
       // This comes from JSON Schema draft-3, we will parse it for backward compatibility but we will not generate it
-      entry.value.toOption[YMap].foreach(
-        _.key(
-          "required",
-          entry => {
-            if (entry.value.tagType == YType.Bool) {
-              val required = ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
-              property.set(PropertyShapeModel.MinCount,
-                AmfScalar(if (required) 1 else 0),
-                Annotations(entry) += ExplicitField())
+      entry.value
+        .toOption[YMap]
+        .foreach(
+          _.key(
+            "required",
+            entry => {
+              if (entry.value.tagType == YType.Bool) {
+                val required = ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
+                property.set(PropertyShapeModel.MinCount,
+                             AmfScalar(if (required) 1 else 0),
+                             Annotations(entry) += ExplicitField())
+              }
             }
-          }
+          )
         )
-      )
 
       OasTypeParser(entry, shape => shape.adopted(property.id), version)
         .parse()

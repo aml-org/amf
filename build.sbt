@@ -1,6 +1,6 @@
 import org.scalajs.core.tools.linker.ModuleKind
 import sbt.Keys.{libraryDependencies, resolvers}
-//val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns)
+val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns)
 
 name := "amf"
 
@@ -14,7 +14,7 @@ jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
 
 val settings = Common.settings ++ Common.publish ++ Seq(
   organization := "com.github.amlorg",
-  resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal),
+  resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal, ivyLocal),
   credentials ++= Common.credentials(),
   aggregate in assembly := false,
   libraryDependencies ++= Seq(
@@ -34,7 +34,7 @@ lazy val core = crossProject
   .settings(
     Seq(
       name := "amf-core",
-      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.2.3"
+      libraryDependencies += "org.mule.syaml" %%% "syaml" % "5.5.0-SNAPSHOT"
     ))
   .in(file("./amf-core"))
   .settings(settings: _*)

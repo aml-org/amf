@@ -36,8 +36,8 @@ class ModelReferenceResolver(model: BaseUnit) {
 
   def findFragment(url: String): Option[DomainElement] = {
     model match {
-      case encodes: EncodesModel if model.location == url => Some(encodes.encodes)
-      case _ if model.location == url                     => None
+      case encodes: EncodesModel if model.location().exists(_.equals(url)) => Some(encodes.encodes)
+      case _ if model.location().exists(_.equals(url))                     => None
       case _ =>
         var remaining                     = model.references.map(new ModelReferenceResolver(_))
         var result: Option[DomainElement] = None

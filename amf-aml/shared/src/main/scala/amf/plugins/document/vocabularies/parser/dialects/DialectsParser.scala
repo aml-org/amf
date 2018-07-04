@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.parser.dialects
 
 import amf.core.Root
-import amf.core.annotations.{Aliases, LexicalInformation}
+import amf.core.annotations.Aliases
 import amf.core.metamodel.document.FragmentModel
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.model.domain.{AmfScalar, DomainElement}
@@ -195,7 +195,7 @@ case class ReferenceDeclarations(references: mutable.Map[String, Any] = mutable.
           case decl                     => library += decl
         }
       case f: DialectFragment =>
-        ctx.declarations.fragments += (alias -> FragmentRef(f.encodes, Option(f.location)))
+        ctx.declarations.fragments += (alias -> FragmentRef(f.encodes, f.location()))
     }
   }
 
@@ -312,7 +312,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
     // closed node validation
     ctx.closedNode("dialect", dialect.id, map)
 
-    val references = DialectsReferencesParser(dialect, map, root.references).parse(dialect.location)
+    val references =
+      DialectsReferencesParser(dialect, map, root.references).parse(dialect.location().getOrElse(dialect.id))
 
     if (ctx.declarations.externals.nonEmpty)
       dialect.withExternals(ctx.declarations.externals.values.toSeq)
@@ -336,8 +337,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
                     nodeMapping.id,
                     propertyMapping.fields
                       .entry(PropertyMappingModel.ObjectRange)
-                      .flatMap(_.value.annotations.find(classOf[LexicalInformation]))
-                      .orElse(propertyMapping.annotations.find(classOf[LexicalInformation]))
+                      .map(_.value.annotations)
+                      .getOrElse(propertyMapping.annotations)
                   )
                   None
               }
@@ -360,8 +361,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
                         nodeMapping.id,
                         propertyMapping.fields
                           .entry(PropertyMappingModel.TypeDiscriminator)
-                          .flatMap(_.value.annotations.find(classOf[LexicalInformation]))
-                          .orElse(propertyMapping.annotations.find(classOf[LexicalInformation]))
+                          .map(_.value.annotations)
+                          .getOrElse(propertyMapping.annotations)
                       )
                       acc
                   }
@@ -399,7 +400,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
     // closed node validation
     ctx.closedNode("library", dialect.id, map)
 
-    val references = DialectsReferencesParser(dialect, map, root.references).parse(dialect.location)
+    val references =
+      DialectsReferencesParser(dialect, map, root.references).parse(dialect.location().getOrElse(dialect.id))
 
     if (ctx.declarations.externals.nonEmpty)
       dialect.withExternals(ctx.declarations.externals.values.toSeq)
@@ -423,8 +425,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
                     nodeMapping.id,
                     propertyMapping.fields
                       .entry(PropertyMappingModel.ObjectRange)
-                      .flatMap(_.value.annotations.find(classOf[LexicalInformation]))
-                      .orElse(propertyMapping.annotations.find(classOf[LexicalInformation]))
+                      .map(_.value.annotations)
+                      .getOrElse(propertyMapping.annotations)
                   )
                   None
               }
@@ -447,8 +449,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
                         nodeMapping.id,
                         propertyMapping.fields
                           .entry(PropertyMappingModel.TypeDiscriminator)
-                          .flatMap(_.value.annotations.find(classOf[LexicalInformation]))
-                          .orElse(propertyMapping.annotations.find(classOf[LexicalInformation]))
+                          .map(_.value.annotations)
+                          .getOrElse(propertyMapping.annotations)
                       )
                       acc
                   }
@@ -484,7 +486,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
     // closed node validation
     ctx.closedNode("fragment", dialect.id, map)
 
-    val references = DialectsReferencesParser(dialect, map, root.references).parse(dialect.location)
+    val references =
+      DialectsReferencesParser(dialect, map, root.references).parse(dialect.location().getOrElse(dialect.id))
 
     if (ctx.declarations.externals.nonEmpty)
       dialect.withExternals(ctx.declarations.externals.values.toSeq)
@@ -508,7 +511,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
   protected def toFragment(dialect: Dialect): DialectFragment = {
     val fragment = DialectFragment(dialect.annotations)
       .withId(dialect.id)
-      .withLocation(dialect.location)
+      .withLocation(dialect.location().getOrElse(dialect.id))
       .withReferences(dialect.references)
 
     dialect.usage.option().foreach(usage => fragment.withUsage(usage))
@@ -522,7 +525,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
   protected def toLibrary(dialect: Dialect): DialectLibrary = {
     val library = DialectLibrary(dialect.annotations)
       .withId(dialect.id)
-      .withLocation(dialect.location)
+      .withLocation(dialect.location().getOrElse(dialect.id))
       .withReferences(dialect.references)
 
     dialect.usage.option().foreach(usage => library.withUsage(usage))

@@ -138,7 +138,8 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
                     })
                   }
                 )
-                val others = YMap(m.entries.filter(e => !e.key.as[YScalar].text.matches(".*/.*")))
+                val entries = m.entries.filter(e => !e.key.as[YScalar].text.matches(".*/.*"))
+                val others  = YMap(entries, m.sourceName)
                 if (others.entries.nonEmpty) {
                   if (payloads.isEmpty) {
                     if (others.entries.map(_.key.as[YScalar].text) == List("example") && !ctx.globalMediatype) {

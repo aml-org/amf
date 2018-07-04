@@ -169,10 +169,10 @@ case class RamlJsonSchemaExpression(name: String,
         if (inlined.origTag.tagType == YType.Include) {
           // JSON schema file we need to update the context
           val fileHint = inlined.origValue.asInstanceOf[YScalar].text.split("/").last.split("#").head
-          ctx.refs.filter(r => Option(r.unit.location).isDefined).find(_.unit.location.endsWith(fileHint)) match {
+          ctx.refs.find(r => r.unit.location().exists(_.endsWith(fileHint))) match {
             case Some(ref) =>
-              toOas(ref.unit.location,
-                    ref.unit.references.map(r => ParsedReference(r, Reference(ref.unit.location, Nil), None)),
+              toOas(ref.unit.location().get,
+                    ref.unit.references.map(r => ParsedReference(r, Reference(ref.unit.location().get, Nil), None)),
                     ctx)
             case _ => toOas(ctx)
           }

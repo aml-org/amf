@@ -64,7 +64,8 @@ trait RuntimeValidator {
                               targetProperty: Option[String] = None,
                               message: String = "",
                               position: Option[LexicalInformation] = None,
-                              parserRun: Int)
+                              parserRun: Int,
+                              location: Option[String])
 
   /**
     * Temporary disable checking of runtime validations for the duration of the passed block
@@ -130,7 +131,8 @@ object RuntimeValidator {
                               targetProperty: Option[String] = None,
                               message: String = "",
                               position: Option[LexicalInformation] = None,
-                              parserRun: Int) = {
+                              parserRun: Int,
+                              location: Option[String]) = {
     validator.reportConstraintFailure(
       level,
       validationId,
@@ -138,7 +140,8 @@ object RuntimeValidator {
       targetProperty,
       message,
       position,
-      parserRun
+      parserRun,
+      location
     )
   }
 }

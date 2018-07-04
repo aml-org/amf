@@ -1,7 +1,6 @@
 package amf.plugins.document.webapi.resolution.stages
 
-import amf.{ProfileName, RAML08Profile}
-import amf.core.annotations.{Aliases, LexicalInformation, SynthesizedField}
+import amf.core.annotations.{Aliases, SynthesizedField}
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.DomainElementModel._
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
@@ -25,6 +24,7 @@ import amf.plugins.domain.webapi.models.WebApi
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DataNodeMerging
 import amf.plugins.features.validation.ParserSideValidations
+import amf.{ProfileName, RAML08Profile}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -399,19 +399,17 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
         case None if Option(extension.extend).isDefined =>
           errorHandler.violation(
             ParserSideValidations.MissingExtensionInReferences.id,
-            model.id,
+            model,
             Some(extension.extend),
-            s"BaseUnit '${extension.extend}' not found in references.",
-            extension.annotations.find(classOf[LexicalInformation])
+            s"BaseUnit '${extension.extend}' not found in references."
           )
           Nil
         case _ =>
           errorHandler.violation(
             ParserSideValidations.MissingExtensionInReferences.id,
-            model.id,
+            model,
             Some(extension.extend),
-            s"Missing extend property for model '${model.id}'.",
-            extension.annotations.find(classOf[LexicalInformation])
+            s"Missing extend property for model '${model.id}'."
           )
           Nil
       }

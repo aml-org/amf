@@ -2,11 +2,13 @@ package amf.core.parser
 
 import amf.core.{AMFCompilerRunCount, annotations}
 import amf.core.annotations.LexicalInformation
+import amf.core.model.domain.AmfObject
 import amf.core.services.RuntimeValidator
 import amf.core.validation.SeverityLevels.{VIOLATION, WARNING}
 import amf.plugins.features.validation.ParserSideValidations.{ParsingErrorSpecification, ParsingWarningSpecification}
 import org.mulesoft.lexer.InputRange
 import org.yaml.model._
+import amf.core.utils.Strings
 
 import scala.collection.mutable
 
@@ -28,8 +30,9 @@ trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
                                  property: Option[String],
                                  message: String,
                                  lexical: Option[LexicalInformation],
-                                 level: String): Unit = {
-    RuntimeValidator.reportConstraintFailure(level, id, node, property, message, lexical, parserCount)
+                                 level: String,
+                                 location: Option[String]): Unit = {
+    RuntimeValidator.reportConstraintFailure(level, id, node, property, message, lexical, parserCount, location)
   }
 
   /** Report constraint failure of severity violation. */
@@ -37,18 +40,24 @@ trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
                 node: String,
                 property: Option[String],
                 message: String,
-                lexical: Option[LexicalInformation]): Unit = {
-    reportConstraint(id, node, property, message, lexical, VIOLATION)
+                lexical: Option[LexicalInformation],
+                location: Option[String]): Unit = {
+    reportConstraint(id, node, property, message, lexical, VIOLATION, location)
+  }
+
+  /** Report constraint failure of severity violation for the given amf object. */
+  def violation(id: String, element: AmfObject, target: Option[String], message: String): Unit = {
+    reportConstraint(id, element.id, None, message, element.position(), VIOLATION, element.location())
   }
 
   /** Report constraint failure of severity violation. WITHOUT NODE ID. */
   def violation(message: String, ast: YPart): Unit = {
-    violation(ParsingErrorSpecification.id, "", None, message, lexical(ast))
+    violation(ParsingErrorSpecification.id, "", None, message, lexical(ast), ast.sourceName.option)
   }
 
   /** Report constraint failure of severity violation. */
   def violation(id: String, node: String, property: Option[String], message: String, ast: YPart): Unit = {
-    violation(id, node, property, message, lexical(ast))
+    violation(id, node, property, message, lexical(ast), ast.sourceName.option)
   }
 
   /** Report constraint failure of severity violation. */
@@ -62,10 +71,16 @@ trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
     violation(ParsingErrorSpecification.id, errorLocation, message, ast)
   }
 
-  /** Report constraint failure of severity violation. */
-  def violation(node: String, message: String, lexical: Option[LexicalInformation]): Unit = {
+  /** Report constraint failure of severity violation with location file. */
+  def violation(node: String, message: String, location: String): Unit = {
     val errorLocation = if (node == "") currentFile else node
-    violation(ParsingErrorSpecification.id, errorLocation, None, message, lexical)
+    violation(ParsingErrorSpecification.id, errorLocation, None, message, None, location.option)
+  }
+
+  /** Report constraint failure of severity violation. */
+  def violation(node: String, message: String, lexical: Option[LexicalInformation], location: Option[String]): Unit = {
+    val errorLocation = if (node == "") currentFile else node
+    violation(ParsingErrorSpecification.id, errorLocation, None, message, lexical, location)
   }
 
   /** Report constraint failure of severity warning. */
@@ -73,18 +88,19 @@ trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
               node: String,
               property: Option[String],
               message: String,
-              lexical: Option[LexicalInformation]): Unit = {
-    reportConstraint(id, node, property, message, lexical, WARNING)
+              lexical: Option[LexicalInformation],
+              location: Option[String]): Unit = {
+    reportConstraint(id, node, property, message, lexical, WARNING, location)
   }
 
   /** Report constraint failure of severity warning. WITHOUT NODE ID. */
   def warning(message: String, ast: YPart): Unit = {
-    warning(ParsingWarningSpecification.id, "", None, message, lexical(ast))
+    warning(ParsingWarningSpecification.id, "", None, message, lexical(ast), ast.sourceName.option)
   }
 
   /** Report constraint failure of severity warning. */
   def warning(id: String, node: String, property: Option[String], message: String, ast: YPart): Unit = {
-    warning(id, node, property, message, lexical(ast))
+    warning(id, node, property, message, lexical(ast), ast.sourceName.option)
   }
 
   /** Report constraint failure of severity warning. */
@@ -133,6 +149,8 @@ case class ParserContext(rootContextDocument: String = "",
   override val currentFile: String = rootContextDocument
 
   var globalSpace: mutable.Map[String, Any] = mutable.Map()
+
+  def violation(node: String, message: String): Unit = violation(node, message, currentFile)
 }
 
 case class WarningOnlyHandler(override val currentFile: String) extends ErrorHandler {
@@ -164,9 +182,10 @@ trait UnhandledError extends ErrorHandler {
                                           property: Option[String],
                                           message: String,
                                           lexical: Option[LexicalInformation],
-                                          level: String): Unit = {
+                                          level: String,
+                                          location: Option[String]): Unit = {
     throw new Exception(
-      s"  Message: $message\n  Target: $node\nProperty: ${property.getOrElse("")}\n  Position: $lexical\n")
+      s"  Message: $message\n  Target: $node\nProperty: ${property.getOrElse("")}\n  Position: $lexical\n at location: $location")
   }
 }
 object DefaultUnhandledError extends UnhandledError {
