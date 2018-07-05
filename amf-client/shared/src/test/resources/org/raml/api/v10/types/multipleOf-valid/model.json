@@ -11,6 +11,7 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/types/multipleOf-valid/input.raml#/declarations/types/Foo/property/amount/scalar/amount/example/valid1
   Property: http://a.ml/vocabularies/data#value
   Position: Some(LexicalInformation([(12,18)-(12,24)]))
+  Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/types/multipleOf-valid/input.raml
 
 - Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/types/multipleOf-valid/input.raml#/declarations/types/Foo/property/amount/scalar/amount_validation_validation_multipleOf/prop
   Message: Data at is not a multipleOf '0.01'
@@ -18,6 +19,7 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/types/multipleOf-valid/input.raml#/declarations/types/Foo/property/amount/scalar/amount/example/valid2
   Property: http://a.ml/vocabularies/data#value
   Position: Some(LexicalInformation([(13,18)-(13,23)]))
+  Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/types/multipleOf-valid/input.raml
 
 - Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/types/multipleOf-valid/input.raml#/declarations/types/Foo/property/amount/scalar/amount_validation_validation_multipleOf/prop
   Message: Data at is not a multipleOf '0.01'
@@ -25,3 +27,4 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/types/multipleOf-valid/input.raml#/declarations/types/Foo/property/amount/scalar/amount/example/valid3
   Property: http://a.ml/vocabularies/data#value
   Position: Some(LexicalInformation([(14,18)-(14,21)]))
+  Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/types/multipleOf-valid/input.raml

@@ -224,7 +224,10 @@ case class NodeDataNodeParser(node: YNode, parentId: String, quiet: Boolean)(imp
         node
           .toOption[YScalar]
           .flatMap { scalar =>
-            JsonParser(scalar.text)(errorHandler).parse(true).collectFirst({ case doc: YDocument => doc.node })
+            JsonParser
+              .withSource(scalar.text, scalar.sourceName)(errorHandler)
+              .parse(true)
+              .collectFirst({ case doc: YDocument => doc.node })
           }
       case Some(scalar) if XMLSchema.unapply(scalar.text).isDefined => None
       case _                                                        => Some(node) // return default node for xml too.

@@ -1,6 +1,6 @@
 package amf.core.parser
 
-import amf.core.annotations.{LexicalInformation, SourceAST, SourceNode}
+import amf.core.annotations.{LexicalInformation, SourceAST, SourceLocation, SourceNode}
 import amf.core.model.domain.{Annotation, SerializableAnnotation}
 import org.yaml.model.{YMapEntry, YNode, YPart}
 
@@ -61,7 +61,9 @@ object Annotations {
   }
 
   def apply(ast: YPart): Annotations = {
-    val annotations = new Annotations() += LexicalInformation(Range(ast.range)) += SourceAST(ast)
+    val annotations = new Annotations() ++= Set(LexicalInformation(Range(ast.range)),
+                                                SourceAST(ast),
+                                                SourceLocation(ast.sourceName))
     ast match {
       case node: YNode      => annotations += SourceNode(node)
       case entry: YMapEntry => annotations += SourceNode(entry.value)

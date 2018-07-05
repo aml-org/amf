@@ -1,13 +1,12 @@
 package amf.plugins.document.vocabularies.parser.common
 
-import amf.core.annotations.{LexicalInformation, SourceAST}
-import amf.core.parser.{Annotations, ErrorHandler}
+import amf.core.annotations.{LexicalInformation, SourceLocation}
+import amf.core.parser.{Annotations, ErrorHandler, Range}
 import amf.core.utils.Strings
 import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel
 import amf.plugins.document.vocabularies.model.domain.PropertyMapping
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.{YNode, YPart}
-import amf.core.parser.Range
 trait SyntaxErrorReporter { this: ErrorHandler =>
 
   def missingTermViolation(term: String, node: String, ast: YPart): Unit = {
@@ -25,7 +24,7 @@ trait SyntaxErrorReporter { this: ErrorHandler =>
       Some(PropertyMappingModel.ObjectRange.value.iri()),
       s"Cannot find property range term $term",
       annotations.find(classOf[LexicalInformation]),
-      annotations.find(classOf[SourceAST]).map(_.ast.sourceName)
+      annotations.find(classOf[SourceLocation]).map(_.location)
     )
   }
 

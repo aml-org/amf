@@ -47,7 +47,7 @@ trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
 
   /** Report constraint failure of severity violation for the given amf object. */
   def violation(id: String, element: AmfObject, target: Option[String], message: String): Unit = {
-    reportConstraint(id, element.id, None, message, element.position(), VIOLATION, element.location())
+    reportConstraint(id, element.id, target, message, element.position(), VIOLATION, element.location())
   }
 
   /** Report constraint failure of severity violation. WITHOUT NODE ID. */

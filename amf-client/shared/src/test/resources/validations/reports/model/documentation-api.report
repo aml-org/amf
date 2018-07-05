@@ -11,6 +11,7 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/documentation/api.raml#/web-api/creative-work/foo
   Property: http://schema.org/description
   Position: Some(LexicalInformation([(4,6)-(5,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/documentation/api.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#CreativeWork-title-minCount
   Message: API documentation item title is mandatory
@@ -18,3 +19,4 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/documentation/api.raml#/web-api/creative-work/null
   Property: http://schema.org/title
   Position: Some(LexicalInformation([(5,6)-(6,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/documentation/api.raml

@@ -11,6 +11,7 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/schemas/json/user.json
   Property: 
   Position: None
+  Location: 
 
 - Source: http://a.ml/vocabularies/amf/parser#parsing-error
   Message: Error node '{
@@ -33,6 +34,7 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/schemas/json/input.raml
   Property: 
   Position: Some(LexicalInformation([(1,0)-(16,1)]))
+  Location: file://amf-client/shared/src/test/resources/org/raml/parser/schemas/json/input.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#parsing-error
   Message: Error node '{
@@ -55,6 +57,7 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/schemas/json/input.raml
   Property: 
   Position: Some(LexicalInformation([(1,0)-(16,1)]))
+  Location: file://amf-client/shared/src/test/resources/org/raml/parser/schemas/json/input.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#parsing-error
   Message: Error node '{
@@ -77,6 +80,7 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/schemas/json/input.raml
   Property: 
   Position: Some(LexicalInformation([(1,0)-(16,1)]))
+  Location: file://amf-client/shared/src/test/resources/org/raml/parser/schemas/json/input.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#parsing-error
   Message: Error node '{
@@ -99,6 +103,7 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/schemas/json/input.raml
   Property: 
   Position: Some(LexicalInformation([(1,0)-(16,1)]))
+  Location: file://amf-client/shared/src/test/resources/org/raml/parser/schemas/json/input.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#parsing-error
   Message: invalid json schema expression
@@ -106,3 +111,4 @@ Level: Violation
   Target: 
   Property: 
   Position: Some(LexicalInformation([(5,10)-(5,28)]))
+  Location: file://amf-client/shared/src/test/resources/org/raml/parser/schemas/json/input.raml

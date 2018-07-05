@@ -5,7 +5,7 @@ import amf.core.model.domain.Shape
 import amf.core.validation.{AMFValidationReport, ValidationShapeSet}
 
 import scala.concurrent.Future
-@JSE
+
 trait AMFPayloadValidationPlugin extends AMFPlugin {
 
   protected def parsePayload(payload: String, mediaType: String): PayloadFragment

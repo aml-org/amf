@@ -105,7 +105,7 @@ case class DataNodeParser(node: YNode,
   }
 
   def parseIncludedAST(raw: String): DataNode = {
-    YamlParser(raw).withIncludeTag("!include").parse().find(_.isInstanceOf[YNode]) match {
+    YamlParser(raw, node.sourceName).withIncludeTag("!include").parse().find(_.isInstanceOf[YNode]) match {
       case Some(node: YNode) => DataNodeParser(node, parameters, parent, idCounter).parse()
       case _                 => ScalarNode(raw, Some((Namespace.Xsd + "string").iri())).withId(parent.getOrElse("") + "/included")
     }

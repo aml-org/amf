@@ -67,7 +67,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     val encoded: YNode = inputFragment match {
       case fragment: ExternalFragment =>
         fragment.encodes.parsed.getOrElse {
-          YamlParser(fragment.encodes.raw.value())(ctx)
+          YamlParser(fragment.encodes.raw.value(), fragment.location().getOrElse(""))(ctx)
             .withIncludeTag("!include")
             .parse(keepTokens = true)
             .head match {
@@ -81,7 +81,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
           }
         }
       case fragment: RecursiveUnit if fragment.raw.isDefined =>
-        YamlParser(fragment.raw.get)(ctx)
+        YamlParser(fragment.raw.get, fragment.location().getOrElse(""))(ctx)
           .withIncludeTag("!include")
           .parse(keepTokens = true)
           .head

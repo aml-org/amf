@@ -103,7 +103,7 @@ case class RamlJsonSchemaExpression(name: String,
     def parse(): Unit = {
       // todo: should we add string begin position to each node position? in order to have the positions relatives to root api intead of absolut to text
       val url       = path.normalizeUrl + (if (!path.endsWith("/")) "/" else "") // alwarys add / to avoid ask if there is any one before add #
-      val schemaAst = YamlParser(text)(ctx).withIncludeTag("!include").parse(keepTokens = true)
+      val schemaAst = YamlParser(text, valueAST.sourceName)(ctx).withIncludeTag("!include").parse(keepTokens = true)
       val schemaEntry = schemaAst.collectFirst({ case d: YDocument => d }) match {
         case Some(d) => d
         case _       =>
@@ -137,7 +137,7 @@ case class RamlJsonSchemaExpression(name: String,
   }
 
   private def parseJsonShape(text: String, name: String, valueAST: YNode, adopt: Shape => Shape, value: YNode) = {
-    val schemaAst = YamlParser(text)(ctx).withIncludeTag("!include").parse(keepTokens = true)
+    val schemaAst = YamlParser(text, valueAST.sourceName)(ctx).withIncludeTag("!include").parse(keepTokens = true)
     val schemaEntry = schemaAst.head match {
       case d: YDocument => YMapEntry(name, d.node)
       case _            =>

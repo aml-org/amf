@@ -222,7 +222,9 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
     def parse(): Option[AnyShape] = {
       value.tagType match {
         case YType.Null =>
-          Raml08DefaultTypeParser(defaultType.typeDef, name, value, adopt).parse().map(s => s.add(SourceAST(value)))
+          Raml08DefaultTypeParser(defaultType.typeDef, name, value, adopt)
+            .parse()
+            .map(s => s.add(SourceAST(value)).add(SourceLocation(value.sourceName)))
         case _ =>
           value.as[YScalar].text match {
             case XMLSchema(_)  => Option(RamlXmlSchemaExpression(name, value, adopt).parse())

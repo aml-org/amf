@@ -1,6 +1,6 @@
 package amf.core.emitter
 
-import amf.core.annotations.{LexicalInformation, SingleValueArray, SourceAST}
+import amf.core.annotations.{LexicalInformation, SingleValueArray, SourceLocation}
 import amf.core.metamodel.{Field, Type}
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.Position._
@@ -61,7 +61,7 @@ package object BaseEmitters {
           b += YNode(new YScalar.Builder(
                        value,
                        tag.tag,
-                       sourceName = annotations.find(classOf[SourceAST]).map(_.ast.sourceName).getOrElse("")).scalar,
+                       sourceName = annotations.find(classOf[SourceLocation]).map(_.location).getOrElse("")).scalar,
                      tag)
         }
       )

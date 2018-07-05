@@ -221,7 +221,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
 
       case e: ExternalFragment if isRamlOrYaml(e.encodes) =>
         Right(
-          YamlParser(e.encodes.raw.value())(ctx)
+          YamlParser(e.encodes.raw.value(), e.location().getOrElse(""))(ctx)
             .withIncludeTag("!include")
             .parse()
             .collectFirst({ case d: YDocument => d })

@@ -1,6 +1,6 @@
 package amf.core.validation
 
-import amf.core.annotations.{LexicalInformation, SourceAST}
+import amf.core.annotations.{LexicalInformation, SourceLocation}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfArray, DomainElement}
 import amf.core.parser.{Annotations, Position}
@@ -126,6 +126,6 @@ object AMFValidationResult {
     } else {
       node.annotations
     }
-    (annotations.find(classOf[LexicalInformation]), annotations.find(classOf[SourceAST]).map(_.ast.sourceName))
+    (annotations.find(classOf[LexicalInformation]), annotations.find(classOf[SourceLocation]).map(_.location))
   }
 }

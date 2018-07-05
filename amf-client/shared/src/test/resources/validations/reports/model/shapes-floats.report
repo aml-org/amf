@@ -11,6 +11,7 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/shapes/floats.raml#/declarations/types/scalar/InvalidIntegerType
   Property: 
   Position: Some(LexicalInformation([(7,15)-(7,18)]))
+  Location: file://amf-client/shared/src/test/resources/validations/shapes/floats.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#parsing-error
   Message: Wrong precision for integer numeric facet value
@@ -18,6 +19,7 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/shapes/floats.raml#/declarations/types/scalar/InvalidIntegerType
   Property: 
   Position: Some(LexicalInformation([(8,15)-(8,19)]))
+  Location: file://amf-client/shared/src/test/resources/validations/shapes/floats.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#parsing-error
   Message: Wrong precision for integer numeric facet value
@@ -25,3 +27,4 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/shapes/floats.raml#/declarations/types/scalar/InvalidIntegerType
   Property: 
   Position: Some(LexicalInformation([(9,18)-(9,21)]))
+  Location: file://amf-client/shared/src/test/resources/validations/shapes/floats.raml
