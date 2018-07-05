@@ -5,7 +5,7 @@ import amf.core.Root
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{ParserContext, SimpleReferenceHandler}
-import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin}
+import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.remote.Platform
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.plugins.document.webapi.contexts.PayloadContext

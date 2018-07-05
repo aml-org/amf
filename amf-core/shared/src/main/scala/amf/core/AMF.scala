@@ -1,6 +1,6 @@
 package amf.core
 
-import amf.core.plugins._
+import amf.client.plugins._
 import amf.core.registries.AMFPluginsRegistry
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.features.validation.ParserSideValidationPlugin

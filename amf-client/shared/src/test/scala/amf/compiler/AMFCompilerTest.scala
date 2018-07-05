@@ -5,7 +5,7 @@ import amf.client.remote.Content
 import amf.core.exception.CyclicReferenceException
 import amf.core.model.document.{BaseUnit, Document, ExternalFragment}
 import amf.core.parser.{UnspecifiedReference, _}
-import amf.core.plugins.{AMFFeaturePlugin, AMFPlugin}
+import amf.client.plugins.{AMFFeaturePlugin, AMFPlugin}
 import amf.core.remote.Syntax.{Json, Syntax, Yaml}
 import amf.core.remote._
 import amf.core.services.RuntimeCompiler

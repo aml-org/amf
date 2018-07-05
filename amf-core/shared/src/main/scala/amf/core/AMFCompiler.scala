@@ -9,7 +9,7 @@ import amf.core.exception.CyclicReferenceException
 import amf.core.model.document.{BaseUnit, ExternalFragment, RecursiveUnit}
 import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser.{ParsedDocument, ParsedReference, ParserContext, ReferenceKind, UnspecifiedReference}
-import amf.core.plugins.AMFDocumentPlugin
+import amf.client.plugins.AMFDocumentPlugin
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.services.RuntimeCompiler
@@ -218,7 +218,8 @@ class AMFCompiler(val rawUrl: String,
             }
           })
           .recover {
-            case e @ (_: FileNotFound | _: URISyntaxException | _: SocketTimeout | _:UnsupportedUrlScheme | _:NetworkError)  =>
+            case e @ (_: FileNotFound | _: URISyntaxException | _: SocketTimeout | _: UnsupportedUrlScheme |
+                _: NetworkError) =>
               if (!link.isInferred()) {
                 link.refs.map(_.node).foreach { ref =>
                   ctx.violation(link.url, e.getMessage, ref)

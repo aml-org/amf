@@ -1,4 +1,4 @@
-package amf.core.plugins
+package amf.client.plugins
 
 import amf.core.emitter.RenderOptions
 import amf.core.Root

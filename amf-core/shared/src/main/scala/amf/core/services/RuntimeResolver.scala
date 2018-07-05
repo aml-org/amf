@@ -1,7 +1,7 @@
 package amf.core.services
 
 import amf.core.model.document.BaseUnit
-import amf.core.plugins.AMFDocumentPlugin
+import amf.client.plugins.AMFDocumentPlugin
 import amf.core.registries.AMFPluginsRegistry
 
 object RuntimeResolver {

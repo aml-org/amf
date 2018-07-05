@@ -1,12 +1,29 @@
 package amf.client.validate
 
+import amf.core.annotations.LexicalInformation
 import amf.core.parser.Range
 import amf.core.validation.{AMFValidationResult => InternalValidationResult}
 
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
 class ValidationResult(private[amf] val _internal: InternalValidationResult) {
+
+  @JSExportTopLevel("client.validate.ValidationResult")
+  def this(message: String,
+           level: String,
+           targetNode: String,
+           targetProperty: String,
+           validationId: String,
+           position: Range) =
+    this(
+      InternalValidationResult(message,
+                               level,
+                               targetNode,
+                               Some(targetProperty),
+                               validationId,
+                               Some(LexicalInformation(position)),
+                               null))
 
   val message: String        = _internal.message
   val level: String          = _internal.level

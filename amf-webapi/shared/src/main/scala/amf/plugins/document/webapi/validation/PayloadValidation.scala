@@ -4,7 +4,7 @@ import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.{Module, PayloadFragment}
 import amf.core.model.domain._
 import amf.core.parser.ParserContext
-import amf.core.plugins.{AMFPayloadValidationPlugin, AMFPlugin}
+import amf.client.plugins.{AMFPayloadValidationPlugin, AMFPlugin}
 import amf.core.services.{DefaultValidationOptions, RuntimeValidator}
 import amf.core.validation._
 import amf.core.validation.core.{PropertyConstraint, ValidationProfile, ValidationSpecification}

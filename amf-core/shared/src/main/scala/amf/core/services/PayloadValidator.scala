@@ -4,7 +4,7 @@ import amf.ProfileName
 import amf.core.annotations.LexicalInformation
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.Shape
-import amf.core.plugins.{AMFPayloadValidationPlugin, AMFPlugin}
+import amf.client.plugins.{AMFPayloadValidationPlugin, AMFPlugin}
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.utils._
 import amf.core.validation._

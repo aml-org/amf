@@ -2,7 +2,7 @@ package amf.plugins.syntax
 
 import amf.core.benchmark.ExecutionLog
 import amf.core.parser.{ParsedDocument, ParserContext}
-import amf.core.plugins.{AMFPlugin, AMFSyntaxPlugin}
+import amf.client.plugins.{AMFPlugin, AMFSyntaxPlugin}
 import org.yaml.model.{YComment, YDocument, YMap, YNode}
 import org.yaml.parser.YamlParser
 import org.yaml.render.{JsonRender, YamlRender}

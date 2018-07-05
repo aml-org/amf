@@ -15,7 +15,7 @@ import amf.core.parser.{
   SchemaReference,
   SimpleReferenceHandler
 }
-import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin}
+import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.remote.{Oas3, Platform, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.unsafe.PlatformSecrets

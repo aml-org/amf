@@ -7,7 +7,7 @@ import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
 import amf.core.parser.{ParserContext, ReferenceHandler}
-import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
+import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.Platform

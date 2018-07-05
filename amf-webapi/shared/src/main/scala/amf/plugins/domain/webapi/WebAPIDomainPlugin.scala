@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi
 
 import amf.core.metamodel.domain.extensions.{CustomDomainPropertyModel, DomainExtensionModel}
-import amf.core.plugins.{AMFDomainPlugin, AMFPlugin}
+import amf.client.plugins.{AMFDomainPlugin, AMFPlugin}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.webapi.annotations._

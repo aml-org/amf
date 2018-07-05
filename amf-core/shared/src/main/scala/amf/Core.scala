@@ -4,11 +4,11 @@ import amf.client.convert.CoreClientConverters._
 import amf.client.convert.CoreRegister
 import amf.client.model.document._
 import amf.client.parse.Parser
+import amf.client.plugins.AMFPlugin
 import amf.client.render.Renderer
 import amf.client.resolve.Resolver
 import amf.client.validate.{ValidationReport, Validator}
 import amf.core.AMF
-import amf.core.plugins.AMFPlugin
 import amf.core.unsafe.PlatformSecrets
 
 import scala.scalajs.js.annotation.JSExportAll
@@ -42,4 +42,5 @@ object Core extends PlatformSecrets {
   def registerNamespace(alias: String, prefix: String): Boolean = platform.registerNamespace(alias, prefix).isDefined
 
   def registerPlugin(plugin: AMFPlugin): Unit = AMF.registerPlugin(plugin)
+
 }

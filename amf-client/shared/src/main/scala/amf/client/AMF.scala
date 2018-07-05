@@ -1,17 +1,19 @@
 package amf.client
 
-import amf.{AMFStyle, Core, MessageStyle, ProfileName}
+import amf.client.convert.ClientPayloadPluginConverter
 import amf.client.convert.CoreClientConverters._
 import amf.client.model.document.{BaseUnit, Dialect}
 import amf.client.parse._
+import amf.client.plugins.{AMFPlugin, ClientAMFPayloadValidationPlugin}
 import amf.client.render._
 import amf.client.resolve._
 import amf.client.validate.ValidationReport
-import amf.core.plugins.AMFPlugin
+import amf.core.validation.{ValidationShapeSet => InternalValidationShapeSet}
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.document.{Vocabularies, WebApi}
 import amf.plugins.features.AMFValidation
 import amf.plugins.{document, features}
+import amf.{AMFStyle, Core, MessageStyle, ProfileName}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -92,6 +94,10 @@ object CoreWrapper {
   def registerNamespace(alias: String, prefix: String): Boolean = Core.registerNamespace(alias, prefix)
 
   def registerPlugin(plugin: AMFPlugin): Unit = Core.registerPlugin(plugin)
+
+  def registerPayloadPlugin(plugin: ClientAMFPayloadValidationPlugin): Unit =
+    Core.registerPlugin(ClientPayloadPluginConverter.convert(plugin))
+
 }
 
 @JSExportAll

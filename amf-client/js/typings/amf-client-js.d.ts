@@ -46,6 +46,12 @@ declare module "amf-client-js" {
             export class Module extends BaseUnit implements DeclaresModel {
                 declares: domain.DomainElement[];
             }
+
+            export class PayloadFragment extends Fragment{
+                constructor(scalar:model.domain.ScalarNode, mediatype:String)
+                constructor(scalar:model.domain.ObjectNode, mediatype:String)
+                constructor(scalar:model.domain.ArrayNode, mediatype:String)
+            }
         }
 
         namespace domain {
@@ -854,6 +860,14 @@ declare module "amf-client-js" {
 
                 withBaseUriParameter(name: string): Parameter;
             }
+
+            export class ScalarNode{
+                constructor(value: string, datatype: string)
+            }
+
+            export class ObjectNode{}
+
+            export class ArrayNode{}
         }
     }
 
@@ -896,32 +910,13 @@ declare module "amf-client-js" {
 
         namespace client {
 
-            export interface JsHandler<T> {
-                success(T): void;
-                error(Throwable): void;
-            }
-
-            export interface StringHandler {
-                success(string): void;
-                error(Throwable): void;
-            }
-
-            export interface FileHandler {
-                success(): void;
-                error(Throwable): void;
-            }
-
             export class Generator {
-                generateFile(unit: model.document.BaseUnit, url: string, handler: FileHandler): void;
-                generateString(unit: model.document.BaseUnit, handler: StringHandler): void;
                 generateFile(unit: model.document.BaseUnit, url: string): Promise<void>;
                 generateString(unit: model.document.BaseUnit): string;
             }
 
             export class Parser {
 
-                parseFile(url: string, handler: JsHandler<model.document.BaseUnit>): void
-                parseString(stream: string, handler: JsHandler<model.document.BaseUnit>): void
                 parseFileAsync(url: string): Promise<model.document.BaseUnit>
                 parseStringAsync(stream: string): Promise<model.document.BaseUnit>
                 reportValidation(profileName: string, messageStyle: string): Promise<validate.ValidationReport>
@@ -930,6 +925,20 @@ declare module "amf-client-js" {
 
             export class Resolver {
                 resolve(unit: model.document.BaseUnit): model.document.BaseUnit
+            }
+
+            namespace convert{
+                export interface ClientAMFPlugin{
+                    ID: String
+                    dependencies(): ClientAMFPlugin[]
+                    init(): Promise<ClientAMFPlugin>
+                }
+                export interface ClientAMFPayloadValidationPlugin extends ClientAMFPlugin{
+                    parsePayload(payload: String, mediaType: String): model.document.PayloadFragment
+                    validateSet(set: client.validate.ValidationShapeSet): Promise<validate.ValidationReport>
+                    payloadMediaType: String[]
+                    canValidate(shape: model.domain.Shape): Boolean
+                }
             }
         }
     }
@@ -1019,6 +1028,18 @@ declare module "amf-client-js" {
                 class BaseUnit {}
             }
 
+        }
+
+        namespace validate {
+            export class ValidationShapeSet{
+                constructor(candidates:ValidationCandidate[], defaultSeverity:String)
+            }
+
+            export class ValidationCandidate{
+                constructor(shape: model.domain.Shape, payload: model.document.PayloadFragment)
+                shape: model.domain.Shape
+                payload: model.document.PayloadFragment
+            }
         }
     }
 

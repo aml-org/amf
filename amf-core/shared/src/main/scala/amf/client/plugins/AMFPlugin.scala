@@ -1,4 +1,4 @@
-package amf.core.plugins
+package amf.client.plugins
 
 import scala.concurrent.Future
 

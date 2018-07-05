@@ -3,7 +3,7 @@ package amf.core
 import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{BaseUnit, ExternalFragment}
-import amf.core.plugins.{AMFDocumentPlugin, AMFSyntaxPlugin}
+import amf.client.plugins.{AMFDocumentPlugin, AMFSyntaxPlugin}
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Platform
 import amf.core.services.RuntimeSerializer

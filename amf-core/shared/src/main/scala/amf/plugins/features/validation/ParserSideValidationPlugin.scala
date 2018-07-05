@@ -3,7 +3,7 @@ package amf.plugins.features.validation
 import amf.{MessageStyle, ProfileName, ProfileNames}
 import amf.core.annotations.LexicalInformation
 import amf.core.model.document.BaseUnit
-import amf.core.plugins.{AMFFeaturePlugin, AMFPlugin}
+import amf.client.plugins.{AMFFeaturePlugin, AMFPlugin}
 import amf.core.rdf.RdfModel
 import amf.core.services.{IgnoreValidationsMerger, RuntimeValidator, ValidationOptions, ValidationsMerger}
 import amf.core.validation._

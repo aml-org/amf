@@ -1,4 +1,4 @@
-package amf.core.plugins
+package amf.client.plugins
 
 import amf.core.metamodel.Obj
 import amf.core.model.domain.AnnotationGraphLoader

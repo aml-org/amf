@@ -3,10 +3,11 @@ package amf.core.parser
 import amf.core.parser.Position.ZERO
 import org.mulesoft.lexer.InputRange
 
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /** Defines a position on an input */
 @JSExportAll
+@JSExportTopLevel("core.parser.Position")
 case class Position(line: Int, column: Int) extends Comparable[Position] {
 
   /** Return true if position is less than specified position. */
@@ -32,6 +33,7 @@ case class Position(line: Int, column: Int) extends Comparable[Position] {
 
 /** Defines a range on an input */
 @JSExportAll
+@JSExportTopLevel("core.parser.Range")
 case class Range(start: Position, end: Position) {
 
   /** Extent range */

@@ -1,6 +1,6 @@
 package amf.core.registries
 
-import amf.core.plugins._
+import amf.client.plugins._
 
 import scala.collection.mutable
 

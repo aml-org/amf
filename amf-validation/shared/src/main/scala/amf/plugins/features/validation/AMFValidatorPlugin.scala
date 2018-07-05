@@ -3,7 +3,7 @@ package amf.plugins.features.validation
 import amf._
 import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.BaseUnit
-import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
+import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Context

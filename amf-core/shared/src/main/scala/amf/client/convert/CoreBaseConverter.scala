@@ -36,8 +36,12 @@ import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, 
 import amf.core.model.domain.templates.{AbstractDeclaration, ParametrizedDeclaration, VariableValue}
 import amf.core.parser.Annotations
 import amf.core.unsafe.PlatformSecrets
-import amf.core.validation.{AMFValidationReport, AMFValidationResult}
+import amf.core.validation.{AMFValidationReport, AMFValidationResult, ValidationCandidate, ValidationShapeSet}
 import amf.internal.resource.{ResourceLoader, ResourceLoaderAdapter}
+import amf.client.validate.{
+  ValidationCandidate => ClientValidationCandidate,
+  ValidationShapeSet => ClientValidationShapeSet
+}
 
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -59,7 +63,9 @@ trait CoreBaseConverter
     with DomainElementConverter
     with BaseUnitConverter
     with ResourceLoaderConverter
-    with GraphDomainConverter {
+    with GraphDomainConverter
+    with ValidationCandidateConverter
+    with ValidationShapeSetConverter {
 
   implicit def asClient[Internal, Client](from: Internal)(
       implicit m: InternalClientMatcher[Internal, Client]): Client = m.asClient(from)
@@ -294,13 +300,16 @@ trait VariableValueConverter {
 }
 
 trait ValidationConverter {
-
-  implicit object ValidationReportMatcher extends InternalClientMatcher[AMFValidationReport, ClientValidatorReport] {
+  implicit object ValidationReportMatcher extends BidirectionalMatcher[AMFValidationReport, ClientValidatorReport] {
     override def asClient(from: AMFValidationReport): ClientValidatorReport = new ClientValidatorReport(from)
+
+    override def asInternal(from: ClientValidatorReport): AMFValidationReport = from._internal
   }
 
-  implicit object ValidationResultMatcher extends InternalClientMatcher[AMFValidationResult, ClientValidationResult] {
+  implicit object ValidationResultMatcher extends BidirectionalMatcher[AMFValidationResult, ClientValidationResult] {
     override def asClient(from: AMFValidationResult): ClientValidationResult = new ClientValidationResult(from)
+
+    override def asInternal(from: ClientValidationResult): AMFValidationResult = from._internal
   }
 }
 
@@ -364,4 +373,24 @@ trait ResourceLoaderConverter {
 //
 //  protected def asInternalLoader[Client, Internal](from: ClientLoader,
 //                                                   matcher: ClientInternalMatcher[Client, Internal]): ResourceLoader
+}
+
+trait ValidationCandidateConverter {
+
+  implicit object ValidationCandidateMatcher
+      extends BidirectionalMatcher[ValidationCandidate, ClientValidationCandidate] {
+    override def asClient(from: ValidationCandidate): ClientValidationCandidate = ClientValidationCandidate(from)
+
+    override def asInternal(from: ClientValidationCandidate): ValidationCandidate = from._internal
+  }
+}
+
+trait ValidationShapeSetConverter {
+
+  implicit object ValidationShapeSetMatcher
+      extends BidirectionalMatcher[ValidationShapeSet, ClientValidationShapeSet] {
+    override def asClient(from: ValidationShapeSet): ClientValidationShapeSet = ClientValidationShapeSet(from)
+
+    override def asInternal(from: ClientValidationShapeSet): ValidationShapeSet = from._internal
+  }
 }

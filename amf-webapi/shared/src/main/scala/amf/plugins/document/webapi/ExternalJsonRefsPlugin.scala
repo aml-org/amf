@@ -12,7 +12,7 @@ import amf.core.parser.{
   ReferenceCollector,
   ReferenceHandler
 }
-import amf.core.plugins.{AMFDocumentPluginSettings, AMFPlugin}
+import amf.client.plugins.{AMFDocumentPluginSettings, AMFPlugin}
 import amf.core.remote.Platform
 import amf.core.utils._
 import org.yaml.model._

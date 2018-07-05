@@ -6,7 +6,7 @@ import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
 import amf.core.parser._
-import amf.core.plugins.{AMFDocumentPlugin, AMFPlugin}
+import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.remote.Platform
 import amf.core.resolution.pipelines.{BasicResolutionPipeline, ResolutionPipeline}
 import amf.core.vocabulary.Namespace
