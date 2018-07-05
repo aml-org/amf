@@ -3,7 +3,7 @@ package amf.client.validate
 import amf.core.annotations.LexicalInformation
 import amf.core.parser.Range
 import amf.core.validation.{AMFValidationResult => InternalValidationResult}
-
+import amf.core.utils.Strings
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
@@ -15,14 +15,16 @@ class ValidationResult(private[amf] val _internal: InternalValidationResult) {
            targetNode: String,
            targetProperty: String,
            validationId: String,
-           position: Range) =
+           position: Range,
+           location: String) =
     this(
       InternalValidationResult(message,
                                level,
                                targetNode,
-                               Some(targetProperty),
+                               targetProperty.option,
                                validationId,
                                Some(LexicalInformation(position)),
+                               location.option,
                                null))
 
   val message: String        = _internal.message
