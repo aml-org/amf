@@ -1,19 +1,19 @@
 package amf.plugins.document.webapi
 
 import amf.AMFProfile
-import amf.core.Root
-import amf.core.emitter.RenderOptions
-import amf.core.model.document.BaseUnit
-import amf.core.parser.{ParserContext, SimpleReferenceHandler}
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
+import amf.core.model.document.{BaseUnit, PayloadFragment}
+import amf.core.parser.{ParserContext, SimpleReferenceHandler}
 import amf.core.remote.Platform
 import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.{Root, emitter}
 import amf.plugins.document.webapi.contexts.PayloadContext
 import amf.plugins.document.webapi.parser.PayloadParser
+import amf.plugins.document.webapi.parser.spec.common.PayloadEmitter
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
-import org.yaml.model.{YMap, YScalar}
+import org.yaml.model.{YDocument, YMap, YScalar}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -22,7 +22,7 @@ object PayloadPlugin extends AMFDocumentPlugin {
 
   override val ID = "AMF Payload"
 
-  val vendors = Seq("AMF Payload")
+  val vendors = Seq("AMF Payload", "JSON Payload", "YAML Payload")
 
   override def modelEntities = Nil
 
@@ -35,7 +35,9 @@ object PayloadPlugin extends AMFDocumentPlugin {
   // Fallback option should be an external fragment.
   override def documentSyntaxes = Seq(
     "application/amf+json",
-    "application/amf+yaml" /*,
+    "application/amf+yaml",
+    "application/payload+json",
+    "application/payload+yaml" /*,
     "application/json",
     "application/yaml"*/
   )
@@ -60,9 +62,12 @@ object PayloadPlugin extends AMFDocumentPlugin {
   }
 
   // Unparsing payloads not supported
-  override def unparse(unit: BaseUnit, options: RenderOptions) = None
+  override def unparse(unit: BaseUnit, options: emitter.RenderOptions): Option[YDocument] = unit match {
+    case p: PayloadFragment => Some(PayloadEmitter(p.encodes).emitDocument())
+    case _                  => None
+  }
 
-  override def canUnparse(unit: BaseUnit) = false
+  override def canUnparse(unit: BaseUnit) = unit.isInstanceOf[PayloadFragment]
 
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document

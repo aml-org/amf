@@ -60,4 +60,7 @@ case class Example(override private[amf] val _internal: InternalExample) extends
   }
 
   override def linkCopy(): Example = _internal.linkCopy()
+
+  def toJson: String = _internal.toJson
+  def toYaml: String = _internal.toYaml
 }

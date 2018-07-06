@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi
 
+import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.Root
 import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Obj
@@ -15,7 +16,6 @@ import amf.core.parser.{
   SchemaReference,
   SimpleReferenceHandler
 }
-import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.remote.{Oas3, Platform, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.unsafe.PlatformSecrets
@@ -44,7 +44,7 @@ class JsonSchemaWebApiContext(loc: String,
 }
 
 class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
-  override val vendors: Seq[String] = Seq("JSON Schema")
+  override val vendors: Seq[String] = Seq("JSON Schema", "JSON Payload")
 
   override def modelEntities: Seq[Obj] = Nil
 
@@ -60,7 +60,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     * List of media types used to encode serialisations of
     * this domain
     */
-  override def documentSyntaxes: Seq[String] = Seq("application/schema+json")
+  override def documentSyntaxes: Seq[String] = Seq("application/schema+json", "application/payload+json")
 
   def parseFragment(inputFragment: Fragment, pointer: Option[String])(
       implicit ctx: OasWebApiContext): Option[AnyShape] = {

@@ -9,6 +9,7 @@ import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.ExampleModel._
 import org.yaml.model.YPart
 import amf.core.utils.Strings
+import amf.plugins.document.webapi.parser.spec.common.PayloadSerializer
 
 /**
   *
@@ -17,7 +18,8 @@ class Example(override val fields: Fields, override val annotations: Annotations
     extends DomainElement
     with Linkable
     with NamedDomainElement
-    with ExternalSourceElement {
+    with ExternalSourceElement
+    with PayloadSerializer {
 
   def name: StrField            = fields.field(Name)
   def displayName: StrField     = fields.field(DisplayName)
@@ -41,6 +43,9 @@ class Example(override val fields: Fields, override val annotations: Annotations
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/example/" + name.option().getOrElse("default-example").urlComponentEncoded
 
+  def toJson: String = toJson(this)
+
+  def toYaml: String = toYaml(this)
 }
 
 object Example {

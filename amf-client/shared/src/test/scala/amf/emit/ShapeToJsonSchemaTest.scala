@@ -38,8 +38,8 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
     cycle("param-with-annotation.raml", "param-with-annotation.json", func)
   }
 
-  private val basePath: String   = "file://amf-client/shared/src/test/resources/tojsonschema/source/"
-  private val goldenPath: String = "amf-client/shared/src/test/resources/tojsonschema/schemas/"
+  private val basePath: String   = "file://amf-client/shared/src/test/resources/tojson/tojsonschema/source/"
+  private val goldenPath: String = "amf-client/shared/src/test/resources/tojson/tojsonschema/schemas/"
 
   private def cycle(file: String, golden: String, findShapeFunc: (BaseUnit) => Option[AnyShape]): Future[Assertion] = {
     val jsonSchema: Future[String] = for {
