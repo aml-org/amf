@@ -54,6 +54,21 @@ trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTest {
       r
     }
   }
+
+  protected def validatePlatform(api: String,
+                                 golden: Option[String] = None,
+                                 profile: ProfileName = defaultProfile,
+                                 profileFile: Option[String] = None): Future[Assertion] = {
+    for {
+      validation <- Validation(platform)
+      _          <- if (profileFile.isDefined) validation.loadValidationProfile(basePath + profileFile.get) else Future.unit
+      model      <- AMFCompiler(basePath + api, platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(model, profile)
+      r          <- handleReport(report, golden.map { g => g + s".${platform.name}"})
+    } yield {
+      r
+    }
+  }
 }
 
 trait ResolutionForValidationReportTest extends ValidationReportGenTest {

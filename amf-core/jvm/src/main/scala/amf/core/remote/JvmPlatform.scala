@@ -9,6 +9,8 @@ import org.mulesoft.common.io.{FileSystem, Fs}
 
 class JvmPlatform extends Platform {
 
+  override def name = "jvm"
+
   /** Underlying file system for platform. */
   override val fs: FileSystem = Fs
 

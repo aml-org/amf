@@ -1,0 +1,64 @@
+Model: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml
+Profile: RAML
+Conforms? false
+Number of results: 4
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance type (string) does not match any allowed primitive type (allowed: ["integer"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/properties/b"}
+    instance: {"pointer":"/b"}
+    domain: "validation"
+    keyword: "type"
+    found: "string"
+    expected: ["integer"]
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/A/example/default-example
+  Property: 
+  Position: Some(LexicalInformation([(13,0)-(16,0)]))
+  Location: 
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance type (string) does not match any allowed primitive type (allowed: ["integer"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "type"
+    found: "string"
+    expected: ["integer"]
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/scalar/D/example/default-example
+  Property: 
+  Position: Some(LexicalInformation([(33,13)-(33,17)]))
+  Location: 
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: object has missing required properties (["g"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "required"
+    required: ["f","g"]
+    missing: ["g"]
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/H/example/default-example
+  Property: 
+  Position: Some(LexicalInformation([(51,13)-(56,0)]))
+  Location: 
+
+Level: Warning
+
+- Source: http://a.ml/vocabularies/amf/parser#unsupported-example-media-type-warning
+  Message: Unsupported validation for mediatype: application/xml and shape file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/I/type
+  Level: Warning
+  Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/I/example/default-example
+  Property: http://a.ml/vocabularies/document#value
+  Position: Some(LexicalInformation([(62,12)-(67,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml

@@ -9,11 +9,11 @@ class RamlExamplesValidationTest extends ValidationReportGenTest {
   override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/examples/"
 
   test("Array minCount 1") {
-    validate("examples/arrayItems1.raml", Some("array-items1.report"))
+    validatePlatform("examples/arrayItems1.raml", Some("array-items1.report"))
   }
 
   test("Example model validation test") {
-    validate("examples/examples_validation.raml", Some("examples_validation.report"))
+    validatePlatform("examples/examples_validation.raml", Some("examples_validation.report"))
   }
 
   // todo: review test ofor warning schema
@@ -22,11 +22,11 @@ class RamlExamplesValidationTest extends ValidationReportGenTest {
   }
 
   test("Discriminator test 1") {
-    validate("examples/discriminator1.raml", Some("discriminator1.report"))
+    validatePlatform("examples/discriminator1.raml", Some("discriminator1.report"))
   }
 
   test("Discriminator test 2") {
-    validate("examples/discriminator2.raml", Some("discriminator2.report"))
+    validatePlatform("examples/discriminator2.raml", Some("discriminator2.report"))
   }
 
   test("Shape facets model validations test") {
@@ -38,11 +38,11 @@ class RamlExamplesValidationTest extends ValidationReportGenTest {
   }
 
   test("Annotations enum validations test") {
-    validate("annotations/annotations_enum.raml", Some("annotations_enum.report"))
+    validatePlatform("annotations/annotations_enum.raml", Some("annotations_enum.report"))
   }
 
   test("MinLength, maxlength facets validations test") {
-    validate("types/lengths.raml", Some("min-max-length.report"))
+    validatePlatform("types/lengths.raml", Some("min-max-length.report"))
   }
 
   test("big numbers validations test") {
@@ -54,11 +54,11 @@ class RamlExamplesValidationTest extends ValidationReportGenTest {
   }
 
   test("Nil value validation") {
-    validate("examples/nil_validation.raml", Some("nil-validation.report"))
+    validatePlatform("examples/nil_validation.raml", Some("nil-validation.report"))
   }
 
   test("Example invalid min and max constraint validations test") {
-    validate("examples/invalid-max-min-constraint.raml", Some("invalid-max-min-constraint.report"))
+    validatePlatform("examples/invalid-max-min-constraint.raml", Some("invalid-max-min-constraint.report"))
   }
 
   test("Test js custom validation - multiple of") {
@@ -66,29 +66,29 @@ class RamlExamplesValidationTest extends ValidationReportGenTest {
   }
 
   test("Can validate an array example") {
-    validate("examples/invalid-property-in-array-items.raml", Some("invalid-property-in-array-items.report"))
+    validatePlatform("examples/invalid-property-in-array-items.raml", Some("invalid-property-in-array-items.report"))
   }
 
 // pass to another suit raml 08 cases? profile implemented as overrided var in class?
   test("Param in raml 0.8 api") {
-    validate("08/pattern.raml", Some("pattern-08.report"), profile = RAML08Profile)
+    validatePlatform("08/pattern.raml", Some("pattern-08.report"), profile = RAML08Profile)
   }
 
   test("Validation error raml 0.8 example 1") {
-    validate("08/validation_error1.raml", Some("validation_error1.report"), profile = RAML08Profile)
+    validatePlatform("08/validation_error1.raml", Some("validation_error1.report"), profile = RAML08Profile)
   }
 
   test("Test validate pattern with invalid example") {
-    validate("examples/pattern-invalid.raml", Some("pattern-invalid.report"))
+    validatePlatform("examples/pattern-invalid.raml", Some("pattern-invalid.report"))
   }
 
   test("Test failed union ex 1 with invalid example") {
-    validate("examples/union1-invalid.raml", Some("union1-invalid.report"))
+    validatePlatform("examples/union1-invalid.raml", Some("union1-invalid.report"))
   }
 
   // this is not in ParaPayloadValidation test because we need to check the validation against a raml 08 parsed and resolved model (with that profile).
-  test("Raml 0.8 Query Parameter Negative test case") {
-    validate("/08/date-query-parameter.raml", Some("date-query-parameter.report"), profile = RAML08Profile)
+  test("HERE_HERE Raml 0.8 Query Parameter Negative test case") {
+    validatePlatform("/08/date-query-parameter.raml", Some("date-query-parameter.report"), profile = RAML08Profile)
   }
 
   test("Invalid example validation over union shapes") {

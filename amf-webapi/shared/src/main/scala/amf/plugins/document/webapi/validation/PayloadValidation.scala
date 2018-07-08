@@ -1,5 +1,7 @@
 package amf.plugins.document.webapi.validation
 
+import java.util
+
 import amf.ProfileNames
 import amf.client.plugins.{AMFPayloadValidationPlugin, AMFPlugin}
 import amf.core.annotations.LexicalInformation
@@ -20,12 +22,17 @@ import amf.plugins.domain.shapes.models.{AnyShape, NodeShape, SchemaShape}
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
-import com.github.fge.jackson.JsonLoader
+import com.github.fge.jackson.{JsonLoader, NodeType}
 import com.github.fge.jsonschema.cfg.ValidationConfiguration
-import com.github.fge.jsonschema.core.report.{ListProcessingReport, ListReportProvider, LogLevel}
+import com.github.fge.jsonschema.core.report.{ListProcessingReport, ListReportProvider, LogLevel, ProcessingReport}
+import com.github.fge.jsonschema.format.{AbstractFormatAttribute, FormatAttribute}
 import com.github.fge.jsonschema.format.draftv3.{DateAttribute, TimeAttribute}
+import com.github.fge.jsonschema.format.helpers.AbstractDateFormatAttribute
 import com.github.fge.jsonschema.library.DraftV4Library
 import com.github.fge.jsonschema.main.JsonSchemaFactory
+import com.github.fge.jsonschema.processors.data.FullData
+import com.github.fge.msgsimple.bundle.MessageBundle
+import org.joda.time.format.{DateTimeFormatter, DateTimeFormatterBuilder}
 import org.yaml.model.{YDocument, YNode}
 import org.yaml.parser.YamlParser
 
@@ -33,11 +40,31 @@ import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import scala.util.{Failure, Success}
 
 class ExampleUnknownException(e: Throwable) extends RuntimeException(e)
 class UnknownDiscriminator() extends RuntimeException
+object Rfc2616Attribute {
+  val instance = new Rfc2616Attribute()
+}
+class Rfc2616Attribute extends FormatAttribute {
+  val name = "RFC2616"
+  val pattern = "((Mon|Tue|Wed|Thu|Fri|Sat|Sun), [0-9]{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT)"
 
+  override def supportedTypes(): util.EnumSet[NodeType] = util.EnumSet.of(NodeType.STRING)
+
+  override def validate(report: ProcessingReport, bundle: MessageBundle, data: FullData): Unit = {
+    val value = data.getInstance().getNode().textValue()
+
+    if (!value.matches(pattern)) {
+      val msg = data.newMessage()
+        .put("domain", "validation")
+        .put("keyword", "format")
+        .setMessage("Invalid RFC2616 string")
+        .putArgument("value", value).putArgument("expected", pattern)
+      report.error(msg)
+    }
+  }
+}
 case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
                              validations: EffectiveValidations = EffectiveValidations())
     extends WebApiValidations {
@@ -113,6 +140,7 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
       .thaw
       .addFormatAttribute("date", DateAttribute.getInstance)
       .addFormatAttribute("time", TimeAttribute.getInstance)
+      .addFormatAttribute("RFC2616", Rfc2616Attribute.instance)
       .freeze
     val cfg = ValidationConfiguration.newBuilder.setDefaultLibrary(AML_JSON_SCHEMA, library).freeze
 

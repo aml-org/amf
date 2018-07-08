@@ -1,0 +1,22 @@
+Model: file://amf-client/shared/src/test/resources/validations/examples/nil_validation.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance type (string) does not match any allowed primitive type (allowed: ["null"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/properties/middlename"}
+    instance: {"pointer":"/middlename"}
+    domain: "validation"
+    keyword: "type"
+    found: "string"
+    expected: ["null"]
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/examples/nil_validation.raml#/declarations/types/User/example/wrong-type
+  Property: 
+  Position: Some(LexicalInformation([(15,0)-(17,31)]))
+  Location: 

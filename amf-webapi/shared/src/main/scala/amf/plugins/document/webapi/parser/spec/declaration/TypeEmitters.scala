@@ -43,6 +43,31 @@ import scala.collection.immutable.ListMap
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
+trait EnumEmitterHelper {
+  def enumTagType(shape: Shape) = shape match {
+    case scalarShape: ScalarShape =>
+      val dataType = scalarShape.dataType.option().getOrElse((Namespace.Xsd + "string").iri())
+      if (
+        dataType == (Namespace.Xsd + "integer").iri() ||
+          dataType == (Namespace.Xsd + "long").iri()
+      ) {
+        YType.Int
+      } else if (
+        dataType == (Namespace.Xsd + "float").iri() ||
+          dataType == (Namespace.Xsd + "double").iri() ||
+          dataType == (Namespace.Shapes + "number").iri()
+      ) {
+        YType.Float
+      } else if (
+        dataType == (Namespace.Xsd + "boolean").iri()
+      ) {
+        YType.Bool
+      } else {
+        YType.Str
+      }
+    case _ => YType.Str
+  }
+}
 /**
   *
   */
@@ -1224,7 +1249,7 @@ case class OasTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Fie
 }
 
 abstract class OasShapeEmitter(shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasSpecEmitterContext) {
+    implicit spec: OasSpecEmitterContext) extends EnumEmitterHelper {
   def emitters(): Seq[EntryEmitter] = {
 
     val result = ListBuffer[EntryEmitter]()
@@ -1241,7 +1266,8 @@ abstract class OasShapeEmitter(shape: Shape, ordering: SpecOrdering, references:
       case None => fs.entry(ShapeModel.DefaultValueString).map(dv => result += ValueEmitter("default", dv))
     }
 
-    fs.entry(ShapeModel.Values).map(f => result += ArrayEmitter("enum", f, ordering))
+
+    fs.entry(ShapeModel.Values).map(f => result += ArrayEmitter("enum", f, ordering, valuesTag = enumTagType(shape)))
 
     fs.entry(AnyShapeModel.Documentation)
       .map(f =>
@@ -1621,11 +1647,23 @@ case class OasNilShapeEmitter(nil: NilShape, ordering: SpecOrdering) extends Ent
   override def position(): Position = pos(nil.annotations)
 }
 
-trait OasCommonOASFieldsEmitter {
+trait RamlFormatTranslator {
+  def checkRamlFormats(format: String): String = {
+    format match {
+      case "date-only"     => "date"
+      case "time-only"     => "time"
+      case "datetime-only" => "date-time"
+      case "datetime"      => "date-time"
+      case other           => other
+    }
+  }
+}
+
+trait OasCommonOASFieldsEmitter extends RamlFormatTranslator {
 
   def typeDef: Option[TypeDef] = None
 
-  def emitCommonFields(fs: Fields, result: ListBuffer[EntryEmitter]): Option[result.type] = {
+  def emitCommonFields(fs: Fields, result: ListBuffer[EntryEmitter]): Unit = {
 
     fs.entry(ScalarShapeModel.Pattern).map(f => result += ValueEmitter("pattern", f))
 
@@ -1646,7 +1684,9 @@ trait OasCommonOASFieldsEmitter {
     fs.entry(ScalarShapeModel.MultipleOf)
       .map(f => result += ValueEmitter("multipleOf", f, Some(NumberTypeToYTypeConverter.convert(typeDef))))
 
-    fs.entry(ScalarShapeModel.Format).map(f => result += ValueEmitter("format", f))
+    fs.entry(ScalarShapeModel.Format).map { f =>
+      result += RawValueEmitter("format", ScalarShapeModel.Format, checkRamlFormats(f.scalar.toString), f.value.annotations)
+    }
   }
 }
 
@@ -1686,16 +1726,6 @@ case class OasScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, re
     emitCommonFields(fs, result)
 
     result
-  }
-
-  def checkRamlFormats(format: String): String = {
-    format match {
-      case "date-only"     => "date"
-      case "time-only"     => "time"
-      case "datetime-only" => "date-time"
-      case "datetime"      => "date-time"
-      case other           => other
-    }
   }
 }
 
@@ -1847,7 +1877,7 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
 }
 
 case class SimpleTypeEmitter(shape: ScalarShape, ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
-    extends RamlCommonOASFieldsEmitter {
+    extends RamlCommonOASFieldsEmitter with EnumEmitterHelper {
 
   def emitters(): Seq[EntryEmitter] = {
     val fs = shape.fields
@@ -1870,7 +1900,7 @@ case class SimpleTypeEmitter(shape: ScalarShape, ordering: SpecOrdering)(implici
 
     fs.entry(ScalarShapeModel.Description).map(f => result += ValueEmitter("description", f))
 
-    fs.entry(ScalarShapeModel.Values).map(f => result += ArrayEmitter("enum", f, ordering))
+    fs.entry(ScalarShapeModel.Values).map(f => result += ArrayEmitter("enum", f, ordering, valuesTag = enumTagType(shape)))
 
     fs.entry(ScalarShapeModel.Pattern).map { f =>
       result += RamlScalarEmitter("pattern", processRamlPattern(f))

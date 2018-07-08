@@ -8,6 +8,8 @@ import scala.scalajs.js.URIUtils
 
 trait JsPlatform extends Platform {
 
+  override  def name = "js"
+
   override def findCharInCharSequence(stream: CharSequence)(p: Char => Boolean): Option[Char] = stream.toString.find(p)
 
   /** encodes a complete uri. Not encodes chars like / */
