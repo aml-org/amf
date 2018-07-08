@@ -561,7 +561,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
-      assert(report.results.exists(_.message.equals("Data at / must be smaller than to 180")))
+      assert(report.results.exists(_.message.contains("is not strictly lower than the required maximum 180")))
     }
   }
 
@@ -595,7 +595,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         .build()
       report <- validation.validate(model, RAMLProfile)
     } yield {
-      assert(report.results.nonEmpty)
+      assert(report.results.isEmpty)
     }
   }
 

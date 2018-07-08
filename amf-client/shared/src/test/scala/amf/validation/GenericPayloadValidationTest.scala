@@ -30,9 +30,9 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
     ("payloads.raml", "B", "b_valid.yaml")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
     ("payloads.raml", "B", "b_invalid.yaml")               -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
     ("payloads.raml", "C", "c_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
-    ("payloads.raml", "C", "c_invalid.json")               -> ExpectedReport(conforms = false, 8, PAYLOADProfile),
+    ("payloads.raml", "C", "c_invalid.json")               -> ExpectedReport(conforms = false, 4, PAYLOADProfile),
     ("payloads.raml", "D", "d_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
-    ("payloads.raml", "D", "d_invalid.json")               -> ExpectedReport(conforms = false, 5, PAYLOADProfile),
+    ("payloads.raml", "D", "d_invalid.json")               -> ExpectedReport(conforms = false, 3, PAYLOADProfile),
     ("payloads.raml", "E", "e_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
     ("payloads.raml", "E", "e_invalid.json")               -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
     ("payloads.raml", "F", "f_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
@@ -42,22 +42,22 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
     ("payloads.raml", "G", "g_invalid.json")               -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
     ("payloads.raml", "H", "h_invalid.json")               -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
     ("payloads.raml", "PersonData", "person_valid.yaml")   -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
-    ("payloads.raml", "PersonData", "person_invalid.yaml") -> ExpectedReport(conforms = false, 2, PAYLOADProfile),
+    ("payloads.raml", "PersonData", "person_invalid.yaml") -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
     ("payloads.raml", "CustomerData", "customer_data_valid.yaml") -> ExpectedReport(conforms = true,
                                                                                     0,
                                                                                     PAYLOADProfile),
     ("payloads.raml", "CustomerData", "person_valid.yaml")   -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
-    ("payloads.raml", "CustomerData", "person_invalid.yaml") -> ExpectedReport(conforms = false, 2, PAYLOADProfile),
+    ("payloads.raml", "CustomerData", "person_invalid.yaml") -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
     ("test_cases.raml", "A", "test_case_a_valid.json")       -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
-    ("test_cases.raml", "A", "test_case_a_invalid.json")     -> ExpectedReport(conforms = false, 2, PAYLOADProfile),
+    ("test_cases.raml", "A", "test_case_a_invalid.json")     -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
     ("test_cases.raml", "A", "test_case_a2_valid.json")      -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
-    ("test_cases.raml", "A", "test_case_a2_invalid.json")    -> ExpectedReport(conforms = false, 2, PAYLOADProfile)
+    ("test_cases.raml", "A", "test_case_a2_invalid.json")    -> ExpectedReport(conforms = false, 1, PAYLOADProfile)
   )
 
   for {
     ((libraryFile, shapeName, payloadFile), expectedReport) <- payloadValidations
   } yield {
-    test(s"SHACL Payload Validator $shapeName -> $payloadFile") {
+    test(s"Payload Validator $shapeName -> $payloadFile") {
       val hint = payloadFile.split("\\.").last match {
         case "json" => PayloadJsonHint
         case "yaml" => PayloadYamlHint

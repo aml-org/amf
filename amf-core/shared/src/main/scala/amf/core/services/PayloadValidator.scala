@@ -39,7 +39,8 @@ object PayloadValidator {
   def validate(shape: Shape, payload: String, severity: String): Future[AMFValidationReport] = {
 
     val mediaType = payload.guessMediaType(isScalar = false)
-    plugin(mediaType, shape).validatePayload(shape, payload, mediaType)
+    val p = plugin(mediaType, shape)
+    p.validatePayload(shape, payload, mediaType)
   }
 
   def plugin(mediaType: String, shape: Shape): AMFPayloadValidationPlugin =
