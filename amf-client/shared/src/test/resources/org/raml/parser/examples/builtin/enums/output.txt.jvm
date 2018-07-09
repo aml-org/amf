@@ -1,0 +1,38 @@
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/examples/builtin/enums/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance value ("arg") not found in enum (possible values: ["usa","rus"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "enum"
+    value: "arg"
+    enum: ["usa","rus"]
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/builtin/enums/input.raml#/declarations/types/scalar/countryBad/example/default-example
+  Property: 
+  Position: Some(LexicalInformation([(11,13)-(11,16)]))
+  Location: 
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance value (4) not found in enum (possible values: [1,2,3])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "enum"
+    value: 4
+    enum: [1,2,3]
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/builtin/enums/input.raml#/declarations/types/scalar/sizesBad/example/default-example
+  Property: 
+  Position: Some(LexicalInformation([(19,13)-(19,14)]))
+  Location: 

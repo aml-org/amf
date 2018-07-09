@@ -87,16 +87,16 @@ class RamlExamplesValidationTest extends ValidationReportGenTest {
   }
 
   // this is not in ParaPayloadValidation test because we need to check the validation against a raml 08 parsed and resolved model (with that profile).
-  test("HERE_HERE Raml 0.8 Query Parameter Negative test case") {
+  test("Raml 0.8 Query Parameter Negative test case") {
     validatePlatform("/08/date-query-parameter.raml", Some("date-query-parameter.report"), profile = RAML08Profile)
   }
 
   test("Invalid example validation over union shapes") {
-    validate("/shapes/invalid-example-in-unions.raml", Some("example-in-unions.report"))
+    validatePlatform("/shapes/invalid-example-in-unions.raml", Some("example-in-unions.report"))
   }
 
   test("Test resource type invalid examples args validation") {
-    validate("/resource_types/parameterized-references/input.raml", Some("examples-resource-types.report"))
+    validatePlatform("/resource_types/parameterized-references/input.raml", Some("examples-resource-types.report"))
   }
 
   // In fact, the violation its while resolving the model, not running validation itself
@@ -109,7 +109,7 @@ class RamlExamplesValidationTest extends ValidationReportGenTest {
   }
 
   test("Test minItems maxItems examples") {
-    validate("/examples/min-max-items.raml", Some("min-max-items.report"))
+    validatePlatform("/examples/min-max-items.raml", Some("min-max-items.report"))
   }
 
   test("Test unsupported example with raml08 profile") {
@@ -117,7 +117,7 @@ class RamlExamplesValidationTest extends ValidationReportGenTest {
   }
 
   test("Date times invalid examples test") {
-    validate("/examples/date_time_validations2.raml", Some("date-time-validation.report"))
+    validatePlatform("/examples/date_time_validations2.raml", Some("date-time-validation.report"))
   }
 
   test("Example xml with sons results test") {
@@ -125,20 +125,20 @@ class RamlExamplesValidationTest extends ValidationReportGenTest {
   }
 
   test("Invalid number prop with bool example") {
-    validate("/examples/number-prop-bool-example.raml", Some("number-prop-bool-example.report"))
+    validatePlatform("/examples/number-prop-bool-example.raml", Some("number-prop-bool-example.report"))
   }
 
   test("Invalid double example for int type") {
-    validate("/examples/double-example-inttype.raml", Some("double-example-inttype.report"))
+    validatePlatform("/examples/double-example-inttype.raml", Some("double-example-inttype.report"))
   }
 
   test("Invalid annotation value") {
-    validate("/examples/invalid-annotation-value.raml", Some("invalid-annotation-value.report"))
+    validatePlatform("/examples/invalid-annotation-value.raml", Some("invalid-annotation-value.report"))
 
   }
 
   test("Test validate declared type from header") {
-    validate("/examples/declared-from-header.raml", Some("declared-from-header.report"))
+    validatePlatform("/examples/declared-from-header.raml", Some("declared-from-header.report"))
 
   }
 

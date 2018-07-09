@@ -1,0 +1,68 @@
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance failed to match at least one required schema among 2
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/properties/testProperty/items"}
+    instance: {"pointer":"/testProperty/2"}
+    domain: "validation"
+    keyword: "anyOf"
+    nrSchemas: 2
+    reports: {"/properties/testProperty/items/anyOf/0":[{"level":"error","schema":{"loadingURI":"#","pointer":"/properties/testProperty/items/anyOf/0/properties/theProperty"},"instance":{"pointer":"/testProperty/2/theProperty"},"domain":"validation","keyword":"enum","message":"instance value (\"e\") not found in enum (possible values: [\"a\",\"b\"])","value":"e","enum":["a","b"]}],"/properties/testProperty/items/anyOf/1":[{"level":"error","schema":{"loadingURI":"#","pointer":"/properties/testProperty/items/anyOf/1/properties/theProperty"},"instance":{"pointer":"/testProperty/2/theProperty"},"domain":"validation","keyword":"enum","message":"instance value (\"e\") not found in enum (possible values: [\"c\",\"d\"])","value":"e","enum":["c","d"]}]}
+
+error: instance failed to match at least one required schema among 2
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/properties/testProperty/items"}
+    instance: {"pointer":"/testProperty/3"}
+    domain: "validation"
+    keyword: "anyOf"
+    nrSchemas: 2
+    reports: {"/properties/testProperty/items/anyOf/0":[{"level":"error","schema":{"loadingURI":"#","pointer":"/properties/testProperty/items/anyOf/0/properties/mandatory"},"instance":{"pointer":"/testProperty/3/mandatory"},"domain":"validation","keyword":"type","message":"instance type (integer) does not match any allowed primitive type (allowed: [\"string\"])","found":"integer","expected":["string"]}],"/properties/testProperty/items/anyOf/1":[{"level":"error","schema":{"loadingURI":"#","pointer":"/properties/testProperty/items/anyOf/1/properties/mandatory"},"instance":{"pointer":"/testProperty/3/mandatory"},"domain":"validation","keyword":"type","message":"instance type (integer) does not match any allowed primitive type (allowed: [\"string\"])","found":"integer","expected":["string"]},{"level":"error","schema":{"loadingURI":"#","pointer":"/properties/testProperty/items/anyOf/1/properties/theProperty"},"instance":{"pointer":"/testProperty/3/theProperty"},"domain":"validation","keyword":"enum","message":"instance value (\"a\") not found in enum (possible values: [\"c\",\"d\"])","value":"a","enum":["c","d"]}]}
+
+error: instance failed to match at least one required schema among 2
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/properties/testProperty/items"}
+    instance: {"pointer":"/testProperty/4"}
+    domain: "validation"
+    keyword: "anyOf"
+    nrSchemas: 2
+    reports: {"/properties/testProperty/items/anyOf/0":[{"level":"error","schema":{"loadingURI":"#","pointer":"/properties/testProperty/items/anyOf/0/properties/mandatory"},"instance":{"pointer":"/testProperty/4/mandatory"},"domain":"validation","keyword":"type","message":"instance type (integer) does not match any allowed primitive type (allowed: [\"string\"])","found":"integer","expected":["string"]},{"level":"error","schema":{"loadingURI":"#","pointer":"/properties/testProperty/items/anyOf/0/properties/theProperty"},"instance":{"pointer":"/testProperty/4/theProperty"},"domain":"validation","keyword":"enum","message":"instance value (\"c\") not found in enum (possible values: [\"a\",\"b\"])","value":"c","enum":["a","b"]}],"/properties/testProperty/items/anyOf/1":[{"level":"error","schema":{"loadingURI":"#","pointer":"/properties/testProperty/items/anyOf/1/properties/mandatory"},"instance":{"pointer":"/testProperty/4/mandatory"},"domain":"validation","keyword":"type","message":"instance type (integer) does not match any allowed primitive type (allowed: [\"string\"])","found":"integer","expected":["string"]}]}
+
+error: instance failed to match at least one required schema among 2
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/properties/testProperty/items"}
+    instance: {"pointer":"/testProperty/7"}
+    domain: "validation"
+    keyword: "anyOf"
+    nrSchemas: 2
+    reports: {"/properties/testProperty/items/anyOf/0":[{"level":"error","schema":{"loadingURI":"#","pointer":"/properties/testProperty/items/anyOf/0/properties/mandatory"},"instance":{"pointer":"/testProperty/7/mandatory"},"domain":"validation","keyword":"type","message":"instance type (integer) does not match any allowed primitive type (allowed: [\"string\"])","found":"integer","expected":["string"]}],"/properties/testProperty/items/anyOf/1":[{"level":"error","schema":{"loadingURI":"#","pointer":"/properties/testProperty/items/anyOf/1/properties/mandatory"},"instance":{"pointer":"/testProperty/7/mandatory"},"domain":"validation","keyword":"type","message":"instance type (integer) does not match any allowed primitive type (allowed: [\"string\"])","found":"integer","expected":["string"]}]}
+
+error: instance failed to match at least one required schema among 2
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/properties/testProperty/items"}
+    instance: {"pointer":"/testProperty/8"}
+    domain: "validation"
+    keyword: "anyOf"
+    nrSchemas: 2
+    reports: {"/properties/testProperty/items/anyOf/0":[{"level":"error","schema":{"loadingURI":"#","pointer":"/properties/testProperty/items/anyOf/0"},"instance":{"pointer":"/testProperty/8"},"domain":"validation","keyword":"required","message":"object has missing required properties ([\"mandatory\"])","required":["mandatory"],"missing":["mandatory"]}],"/properties/testProperty/items/anyOf/1":[{"level":"error","schema":{"loadingURI":"#","pointer":"/properties/testProperty/items/anyOf/1"},"instance":{"pointer":"/testProperty/8"},"domain":"validation","keyword":"required","message":"object has missing required properties ([\"mandatory\"])","required":["mandatory"],"missing":["mandatory"]}]}
+
+error: instance failed to match at least one required schema among 2
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/properties/testProperty/items"}
+    instance: {"pointer":"/testProperty/9"}
+    domain: "validation"
+    keyword: "anyOf"
+    nrSchemas: 2
+    reports: {"/properties/testProperty/items/anyOf/0":[{"level":"error","schema":{"loadingURI":"#","pointer":"/properties/testProperty/items/anyOf/0"},"instance":{"pointer":"/testProperty/9"},"domain":"validation","keyword":"required","message":"object has missing required properties ([\"mandatory\"])","required":["mandatory"],"missing":["mandatory"]}],"/properties/testProperty/items/anyOf/1":[{"level":"error","schema":{"loadingURI":"#","pointer":"/properties/testProperty/items/anyOf/1"},"instance":{"pointer":"/testProperty/9"},"domain":"validation","keyword":"required","message":"object has missing required properties ([\"mandatory\"])","required":["mandatory"],"missing":["mandatory"]}]}
+
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml#/declarations/types/Item/example/default-example
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml#/declarations/types/Item/example/default-example
+  Position: Some(LexicalInformation([(20,0)-(38,0)]))
+  Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/union-type-not-required-property/input.raml

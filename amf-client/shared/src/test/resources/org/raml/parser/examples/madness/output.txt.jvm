@@ -1,0 +1,22 @@
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/examples/madness/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance failed to match at least one required schema among 6
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "anyOf"
+    nrSchemas: 6
+    reports: {"/anyOf/0":[{"level":"error","schema":{"loadingURI":"#","pointer":"/anyOf/0"},"instance":{"pointer":""},"domain":"validation","keyword":"required","message":"object has missing required properties ([\"bite\"])","required":["bite","discriminator","livesInside"],"missing":["bite"]}],"/anyOf/1":[{"level":"error","schema":{"loadingURI":"#","pointer":"/anyOf/1"},"instance":{"pointer":""},"domain":"validation","keyword":"required","message":"object has missing required properties ([\"claw\"])","required":["claw","discriminator","livesInside"],"missing":["claw"]}],"/anyOf/2":[{"level":"error","schema":{"loadingURI":"#","pointer":"/anyOf/2/properties/feathers"},"instance":{"pointer":"/feathers"},"domain":"validation","keyword":"maxLength","message":"string \"colourful\" is too long (length: 9, maximum allowed: 5)","value":"colourful","found":9,"maxLength":5},{"level":"error","schema":{"loadingURI":"#","pointer":"/anyOf/2/properties/livesInside"},"instance":{"pointer":"/livesInside"},"domain":"validation","keyword":"type","message":"instance type (string) does not match any allowed primitive type (allowed: [\"boolean\"])","found":"string","expected":["boolean"]}],"/anyOf/3":[{"level":"error","schema":{"loadingURI":"#","pointer":"/anyOf/3"},"instance":{"pointer":""},"domain":"validation","keyword":"required","message":"object has missing required properties ([\"bite\",\"livesOutside\"])","required":["bite","discriminator","livesOutside"],"missing":["bite","livesOutside"]}],"/anyOf/4":[{"level":"error","schema":{"loadingURI":"#","pointer":"/anyOf/4"},"instance":{"pointer":""},"domain":"validation","keyword":"required","message":"object has missing required properties ([\"claw\",\"livesOutside\"])","required":["claw","discriminator","livesOutside"],"missing":["claw","livesOutside"]}],"/anyOf/5":[{"level":"error","schema":{"loadingURI":"#","pointer":"/anyOf/5"},"instance":{"pointer":""},"domain":"validation","keyword":"required","message":"object has missing required properties ([\"livesOutside\"])","required":["discriminator","feathers","livesOutside"],"missing":["livesOutside"]}]}
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/madness/input.raml#/declarations/types/union/HomeAnimal/example/default-example
+  Property: 
+  Position: Some(LexicalInformation([(36,0)-(39,0)]))
+  Location: 

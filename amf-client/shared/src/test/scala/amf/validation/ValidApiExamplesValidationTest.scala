@@ -5,6 +5,8 @@ import amf.core.remote.{Hint, RamlYamlHint}
 
 class ValidApiExamplesValidationTest extends ValidModelTest {
 
+  override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/examples/"
+
   test("Example of object validations test") {
     checkValid("examples/object-name-example.raml")
   }
@@ -82,15 +84,15 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Test declared type with two uses adding example") {
-    validate("/examples/declared-type-ref-add-example.raml")
+    validatePlatform("/examples/declared-type-ref-add-example.raml", golden = Some("declared-type-ref-add-example.report"))
   }
 
   test("Test validate declared type with two uses") {
-    validate("/examples/declared-type-ref.raml")
+    validatePlatform("/examples/declared-type-ref.raml", golden = Some("declared-type-ref.report"))
   }
 
   test("Test valid string hierarchy examples") {
-    validate("/examples/string-hierarchy.raml")
+    validatePlatform("/examples/string-hierarchy.raml", golden = Some("string-hierarchy.report"))
   }
 
   override val hint: Hint = RamlYamlHint

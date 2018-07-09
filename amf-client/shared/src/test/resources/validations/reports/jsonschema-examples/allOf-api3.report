@@ -5,10 +5,19 @@ Number of results: 1
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api3.raml#/declarations/types/any/test1_validation
-  Message: Data at / must be a valid shape
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance failed to match all required schemas (matched only 1 out of 2)
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "allOf"
+    matched: 1
+    nrSchemas: 2
+    reports: {"/allOf/0":[{"level":"error","schema":{"loadingURI":"#","pointer":"/allOf/0"},"instance":{"pointer":""},"domain":"validation","keyword":"maximum","message":"numeric instance is greater than the required maximum (maximum: 30, found: 35)","maximum":30,"found":35}],"/allOf/1":[]}
+
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api3.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/any/schema/example/default-example
   Property: 
   Position: Some(LexicalInformation([(29,21)-(29,23)]))
-  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api3.raml
+  Location: 

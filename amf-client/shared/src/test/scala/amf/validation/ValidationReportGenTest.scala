@@ -100,4 +100,7 @@ trait ValidModelTest extends ValidationReportGenTest {
   protected def checkValid(api: String, profile: ProfileName = RAMLProfile): Future[Assertion] =
     super.validate(api, None, profile, None)
 
+  protected def checkValidPlatform(api: String, profile: ProfileName = RAMLProfile): Future[Assertion] =
+    super.validatePlatform(api, None, profile, None)
+
 }

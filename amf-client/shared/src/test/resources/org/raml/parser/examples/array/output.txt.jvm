@@ -1,0 +1,32 @@
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/examples/array/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance type (string) does not match any allowed primitive type (allowed: ["boolean"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/items/properties/active"}
+    instance: {"pointer":"/1/active"}
+    domain: "validation"
+    keyword: "type"
+    found: "string"
+    expected: ["boolean"]
+
+error: instance type (boolean) does not match any allowed primitive type (allowed: ["string"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/items/properties/address"}
+    instance: {"pointer":"/1/address"}
+    domain: "validation"
+    keyword: "type"
+    found: "boolean"
+    expected: ["string"]
+
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/array/input.raml#/declarations/types/array/Emails/example/default-example
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/examples/array/input.raml#/declarations/types/array/Emails/example/default-example
+  Position: Some(LexicalInformation([(11,0)-(14,25)]))
+  Location: file://amf-client/shared/src/test/resources/org/raml/parser/examples/array/input.raml

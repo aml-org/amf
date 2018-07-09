@@ -47,7 +47,7 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
                                                                                     0,
                                                                                     PAYLOADProfile),
     ("payloads.raml", "CustomerData", "person_valid.yaml")   -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
-    ("payloads.raml", "CustomerData", "person_invalid.yaml") -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
+    ("payloads.raml", "CustomerData", "person_invalid.yaml") -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
     ("test_cases.raml", "A", "test_case_a_valid.json")       -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
     ("test_cases.raml", "A", "test_case_a_invalid.json")     -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
     ("test_cases.raml", "A", "test_case_a2_valid.json")      -> ExpectedReport(conforms = true, 0, PAYLOADProfile),

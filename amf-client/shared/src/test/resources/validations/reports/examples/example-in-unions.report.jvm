@@ -1,0 +1,22 @@
+Model: file://amf-client/shared/src/test/resources/validations/shapes/invalid-example-in-unions.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance failed to match at least one required schema among 2
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "anyOf"
+    nrSchemas: 2
+    reports: {"/anyOf/0":[{"level":"error","schema":{"loadingURI":"#","pointer":"/anyOf/0"},"instance":{"pointer":""},"domain":"validation","keyword":"type","message":"instance type (object) does not match any allowed primitive type (allowed: [\"string\"])","found":"object","expected":["string"]}],"/anyOf/1":[{"level":"error","schema":{"loadingURI":"#","pointer":"/anyOf/1"},"instance":{"pointer":""},"domain":"validation","keyword":"type","message":"instance type (object) does not match any allowed primitive type (allowed: [\"integer\"])","found":"object","expected":["integer"]}]}
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/shapes/invalid-example-in-unions.raml#/shape/example/ex3
+  Property: 
+  Position: Some(LexicalInformation([(8,0)-(9,22)]))
+  Location: 

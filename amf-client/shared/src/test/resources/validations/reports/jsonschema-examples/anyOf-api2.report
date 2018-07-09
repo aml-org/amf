@@ -5,18 +5,34 @@ Number of results: 2
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/validations/jsonschema/anyOf/api2.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/scalar/schema_validation
-  Message: Scalar at / must be valid
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance type (integer) does not match any allowed primitive type (allowed: ["string"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "type"
+    found: "integer"
+    expected: ["string"]
+
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/anyOf/api2.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/scalar/schema/example/default-example
   Property: 
   Position: Some(LexicalInformation([(25,21)-(25,22)]))
-  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/anyOf/api2.raml
+  Location: 
 
-- Source: file://amf-client/shared/src/test/resources/validations/jsonschema/anyOf/api2.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/scalar/schema_validation
-  Message: Scalar at / must be valid
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance failed to match at least one required schema among 2
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "anyOf"
+    nrSchemas: 2
+    reports: {"/anyOf/0":[{"level":"error","schema":{"loadingURI":"#","pointer":"/anyOf/0"},"instance":{"pointer":""},"domain":"validation","keyword":"maxLength","message":"string \"foo\" is too long (length: 3, maximum allowed: 2)","value":"foo","found":3,"maxLength":2}],"/anyOf/1":[{"level":"error","schema":{"loadingURI":"#","pointer":"/anyOf/1"},"instance":{"pointer":""},"domain":"validation","keyword":"minLength","message":"string \"foo\" is too short (length: 3, required minimum: 4)","value":"foo","found":3,"minLength":4}]}
+
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/anyOf/api2.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/scalar/schema/example/default-example
   Property: 
   Position: Some(LexicalInformation([(43,21)-(43,24)]))
-  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/anyOf/api2.raml
+  Location: 

@@ -5,10 +5,18 @@ Number of results: 1
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/validations/types/big_nums.raml#/declarations/types/scalar/LongNumber_validation_validation_maximum/prop
-  Message: Data at / must be smaller than or equal to 999999999999
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: numeric instance is greater than the required maximum (maximum: 999999999999, found: 1000000000000)
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "maximum"
+    maximum: 999999999999
+    found: 1000000000000
+
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/types/big_nums.raml#/declarations/types/scalar/LongNumber/example/three
-  Property: http://a.ml/vocabularies/data#value
+  Property: 
   Position: Some(LexicalInformation([(11,13)-(11,26)]))
-  Location: file://amf-client/shared/src/test/resources/validations/types/big_nums.raml
+  Location: 

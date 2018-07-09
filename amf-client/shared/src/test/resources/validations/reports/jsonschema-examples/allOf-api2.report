@@ -5,34 +5,69 @@ Number of results: 4
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml#/declarations/types/test1_validation_bar_validation_minCount/prop
-  Message: Data at //bar must have min. cardinality 1
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: object has missing required properties (["bar"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "required"
+    required: ["bar"]
+    missing: ["bar"]
+
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/schema/example/default-example
-  Property: http://a.ml/vocabularies/data#bar
+  Property: 
   Position: Some(LexicalInformation([(45,0)-(49,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml
+  Location: 
 
-- Source: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml#/declarations/types/test1_validation
-  Message: Object at / must be valid
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance failed to match all required schemas (matched only 1 out of 2)
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "allOf"
+    matched: 1
+    nrSchemas: 2
+    reports: {"/allOf/0":[{"level":"error","schema":{"loadingURI":"#","pointer":"/allOf/0"},"instance":{"pointer":""},"domain":"validation","keyword":"required","message":"object has missing required properties ([\"foo\"])","required":["foo"],"missing":["foo"]}],"/allOf/1":[]}
+
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/schema/example/default-example
   Property: 
   Position: Some(LexicalInformation([(57,0)-(61,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml
+  Location: 
 
-- Source: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml#/declarations/types/test1_validation
-  Message: Object at / must be valid
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance failed to match all required schemas (matched only 1 out of 2)
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "allOf"
+    matched: 1
+    nrSchemas: 2
+    reports: {"/allOf/0":[],"/allOf/1":[{"level":"error","schema":{"loadingURI":"#","pointer":"/allOf/1"},"instance":{"pointer":""},"domain":"validation","keyword":"required","message":"object has missing required properties ([\"baz\"])","required":["baz"],"missing":["baz"]}]}
+
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/schema/example/default-example
   Property: 
   Position: Some(LexicalInformation([(69,0)-(72,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml
+  Location: 
 
-- Source: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml#/declarations/types/test1_validation
-  Message: Object at / must be valid
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance failed to match all required schemas (matched only 0 out of 2)
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "allOf"
+    matched: 0
+    nrSchemas: 2
+    reports: {"/allOf/0":[{"level":"error","schema":{"loadingURI":"#","pointer":"/allOf/0"},"instance":{"pointer":""},"domain":"validation","keyword":"required","message":"object has missing required properties ([\"foo\"])","required":["foo"],"missing":["foo"]}],"/allOf/1":[{"level":"error","schema":{"loadingURI":"#","pointer":"/allOf/1"},"instance":{"pointer":""},"domain":"validation","keyword":"required","message":"object has missing required properties ([\"baz\"])","required":["baz"],"missing":["baz"]}]}
+
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml#/web-api/end-points/%2Fep5/get/200/application%2Fjson/schema/example/default-example
   Property: 
   Position: Some(LexicalInformation([(80,0)-(80,20)]))
-  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml
+  Location: 

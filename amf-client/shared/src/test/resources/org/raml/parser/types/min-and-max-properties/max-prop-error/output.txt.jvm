@@ -1,0 +1,22 @@
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/min-and-max-properties/max-prop-error/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: object has too many properties (found 3 but schema requires at most 2)
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "maxProperties"
+    found: 3
+    required: 2
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/min-and-max-properties/max-prop-error/input.raml#/declarations/types/Initial_comments/example/default-example
+  Property: 
+  Position: Some(LexicalInformation([(12,0)-(15,0)]))
+  Location: 

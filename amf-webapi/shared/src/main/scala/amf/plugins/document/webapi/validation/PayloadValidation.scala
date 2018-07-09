@@ -15,6 +15,7 @@ import amf.core.validation._
 import amf.core.validation.core.{PropertyConstraint, ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.PayloadContext
+import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
 import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin}
@@ -43,10 +44,8 @@ import scala.concurrent.Future
 
 class ExampleUnknownException(e: Throwable) extends RuntimeException(e)
 class UnknownDiscriminator() extends RuntimeException
-object Rfc2616Attribute {
-  val instance = new Rfc2616Attribute()
-}
-class Rfc2616Attribute extends FormatAttribute {
+
+object Rfc2616Attribute extends FormatAttribute {
   val name = "RFC2616"
   val pattern = "((Mon|Tue|Wed|Thu|Fri|Sat|Sun), [0-9]{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT)"
 
@@ -65,6 +64,31 @@ class Rfc2616Attribute extends FormatAttribute {
     }
   }
 }
+
+object DateTimeOnlyFormatAttribute extends AbstractDateFormatAttribute("date-time-only", "yyyy-MM-ddTHH:mm:ss") {
+  val name = "date-time-only"
+
+  import org.joda.time.DateTimeFieldType._
+
+  override def getFormatter: DateTimeFormatter = {
+    var builder = new DateTimeFormatterBuilder();
+
+    builder = builder.appendFixedDecimal(year(), 4)
+      .appendLiteral('-')
+      .appendFixedDecimal(monthOfYear(), 2)
+      .appendLiteral('-')
+      .appendFixedDecimal(dayOfMonth(), 2)
+      .appendLiteral('T')
+      .appendFixedDecimal(hourOfDay(), 2)
+      .appendLiteral(':')
+      .appendFixedDecimal(minuteOfHour(), 2)
+      .appendLiteral(':')
+      .appendFixedDecimal(secondOfMinute(), 2)
+
+    builder.toFormatter
+  }
+}
+
 case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
                              validations: EffectiveValidations = EffectiveValidations())
     extends WebApiValidations {
@@ -118,7 +142,9 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
           case anyShape: AnyShape if anyShape.supportsInheritance => findPolymorphicShape(anyShape, vc.payload.encodes)
           case _ => vc.shape
         }
-        val dataType = DataTypeFragment().withEncodes(fragmentShape)
+        val dataType = DataTypeFragment()
+        dataType.fields.setWithoutId(DataTypeFragmentModel.Encodes, fragmentShape) // careful, we don't want to modify the ID
+
         OAS20Plugin.unparse(dataType, RenderOptions()) match {
           case Some(doc) =>
             SYamlSyntaxPlugin.unparse("application/json", doc) match {
@@ -140,7 +166,8 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
       .thaw
       .addFormatAttribute("date", DateAttribute.getInstance)
       .addFormatAttribute("time", TimeAttribute.getInstance)
-      .addFormatAttribute("RFC2616", Rfc2616Attribute.instance)
+      .addFormatAttribute("RFC2616", Rfc2616Attribute)
+      .addFormatAttribute("date-time-only", DateTimeOnlyFormatAttribute)
       .freeze
     val cfg = ValidationConfiguration.newBuilder.setDefaultLibrary(AML_JSON_SCHEMA, library).freeze
 
@@ -174,10 +201,9 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
               schemaNode.remove("example")
               schemaNode.remove("examples")
               schemaNode = schemaNode.put("$schema", AML_JSON_SCHEMA) // this must match the one we set up
-            val schema = schemaFactory.getJsonSchema(schemaNode)
+              val schema = schemaFactory.getJsonSchema(schemaNode)
               val report = schema.validate(dataNode)
 
-              /*
               println("\n\nValidating...")
               println("  - SCHEMA:")
               println(jsonSchema)
@@ -186,7 +212,6 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
               println(s"  ====> RESULT: ${report.isSuccess}")
               println(report.toString)
               println("-----------------------\n\n")
-              */
 
               if (!report.isSuccess) {
                 val listReport = report.asInstanceOf[ListProcessingReport].iterator()
@@ -253,8 +278,9 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
 
   def literalRepresentation(payload: PayloadFragment): Option[String] = {
     val futureText = payload.raw match {
-      case Some(v) => Some(v)
-      case None    =>
+      case Some("") => None
+      case Some(v)  => Some(v)
+      case None     =>
         val mediaType = if (payload.mediaType.option().getOrElse("application/json").contains("yaml")) "application/yaml" else "application/json"
         PayloadPlugin.unparse(payload, RenderOptions()) match {
           case Some(doc) => SYamlSyntaxPlugin.unparse(mediaType, doc) match {
@@ -267,9 +293,9 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
 
     futureText map { text =>
       payload.encodes match {
-        case node: ScalarNode if node.dataType.getOrElse("") == (Namespace.Xsd + "string").iri() && text.head != '"' =>
-          "\"" + text + "\""
-        case _ => text
+        case node: ScalarNode if node.dataType.getOrElse("") == (Namespace.Xsd + "string").iri() && text.nonEmpty && text.head != '"' =>
+          "\"" + text.stripLineEnd + "\""
+        case _ => text.stripLineEnd
       }
     }
   }

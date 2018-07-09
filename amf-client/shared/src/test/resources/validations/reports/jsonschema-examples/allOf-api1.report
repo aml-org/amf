@@ -5,26 +5,53 @@ Number of results: 3
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api1.raml#/declarations/types/any/test1_validation
-  Message: Data at / must be a valid shape
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance failed to match all required schemas (matched only 1 out of 2)
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "allOf"
+    matched: 1
+    nrSchemas: 2
+    reports: {"/allOf/0":[{"level":"error","schema":{"loadingURI":"#","pointer":"/allOf/0"},"instance":{"pointer":""},"domain":"validation","keyword":"required","message":"object has missing required properties ([\"bar\"])","required":["bar"],"missing":["bar"]}],"/allOf/1":[]}
+
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api1.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/any/schema/example/default-example
   Property: 
   Position: Some(LexicalInformation([(42,0)-(44,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api1.raml
+  Location: 
 
-- Source: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api1.raml#/declarations/types/any/test1_validation
-  Message: Data at / must be a valid shape
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance failed to match all required schemas (matched only 1 out of 2)
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "allOf"
+    matched: 1
+    nrSchemas: 2
+    reports: {"/allOf/0":[],"/allOf/1":[{"level":"error","schema":{"loadingURI":"#","pointer":"/allOf/1"},"instance":{"pointer":""},"domain":"validation","keyword":"required","message":"object has missing required properties ([\"foo\"])","required":["foo"],"missing":["foo"]}]}
+
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/any/schema/example/default-example
   Property: 
   Position: Some(LexicalInformation([(52,0)-(54,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api1.raml
+  Location: 
 
-- Source: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api1.raml#/declarations/types/any/test1_validation
-  Message: Data at / must be a valid shape
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance failed to match all required schemas (matched only 1 out of 2)
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "allOf"
+    matched: 1
+    nrSchemas: 2
+    reports: {"/allOf/0":[{"level":"error","schema":{"loadingURI":"#","pointer":"/allOf/0/properties/bar"},"instance":{"pointer":"/bar"},"domain":"validation","keyword":"type","message":"instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])","found":"string","expected":["integer"]}],"/allOf/1":[]}
+
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/any/schema/example/default-example
   Property: 
   Position: Some(LexicalInformation([(62,0)-(63,23)]))
-  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api1.raml
+  Location: 

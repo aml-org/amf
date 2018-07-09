@@ -58,19 +58,19 @@ class JsonSchemaExampleValidationTest extends ValidationReportGenTest {
     validate("/not/api4.raml", Some("not-api4.report"))
   }
 
-  test("JSON Schema ref test1") {
+  ignore("JSON Schema ref test1") {
     validate("/ref/api1.raml", Some("ref-api1.report"))
   }
 
-  test("JSON Schema ref test2") {
+  ignore("JSON Schema ref test2") {
     validate("/ref/api2.raml", Some("ref-api2.report"))
   }
 
-  test("JSON Schema ref test3") {
+  ignore("JSON Schema ref test3") {
     validate("/ref/api3.raml", Some("ref-api3.report"))
   }
 
-  test("JSON Schema ref test4") {
+  ignore("JSON Schema ref test4") {
     validate("/ref/api4.raml", Some("ref-api4.report"))
   }
 

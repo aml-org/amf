@@ -1,0 +1,32 @@
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/examples/include-json-schema-yaml-example/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance type (string) does not match any allowed primitive type (allowed: ["integer"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/properties/age"}
+    instance: {"pointer":"/age"}
+    domain: "validation"
+    keyword: "type"
+    found: "string"
+    expected: ["integer"]
+
+error: instance type (integer) does not match any allowed primitive type (allowed: ["string"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/properties/name"}
+    instance: {"pointer":"/name"}
+    domain: "validation"
+    keyword: "type"
+    found: "integer"
+    expected: ["string"]
+
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/include-json-schema-yaml-example/input.raml#/declarations/types/User/example/default-example
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/examples/include-json-schema-yaml-example/input.raml#/declarations/types/User/example/default-example
+  Position: Some(LexicalInformation([(7,0)-(9,0)]))
+  Location: file://amf-client/shared/src/test/resources/org/raml/parser/examples/include-json-schema-yaml-example/input.raml

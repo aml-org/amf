@@ -1,0 +1,74 @@
+Model: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml
+Profile: RAML
+Conforms? false
+Number of results: 4
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: string "2015-13-33T25:61:61" is invalid against requested date format(s) yyyy-MM-ddTHH:mm:ss
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "format"
+    attribute: "date-time-only"
+    value: "2015-13-33T25:61:61"
+    expected: "yyyy-MM-ddTHH:mm:ss"
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/fireworks/example/bad
+  Property: 
+  Position: Some(LexicalInformation([(8,11)-(8,30)]))
+  Location: 
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: string "2015-14-53" is invalid against requested date format(s) yyyy-MM-dd
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "format"
+    attribute: "date"
+    value: "2015-14-53"
+    expected: "yyyy-MM-dd"
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/birthday/example/default-example
+  Property: 
+  Position: Some(LexicalInformation([(11,13)-(11,23)]))
+  Location: 
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: string "34:80:90" is invalid against requested date format(s) HH:mm:ss
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "format"
+    attribute: "time"
+    value: "34:80:90"
+    expected: "HH:mm:ss"
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/lunchtime/example/default-example
+  Property: 
+  Position: Some(LexicalInformation([(14,13)-(14,21)]))
+  Location: 
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: string "2002-66-66T66:66:66-06:00" is invalid against requested date format(s) [yyyy-MM-dd'T'HH:mm:ssZ, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,12}Z]
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "format"
+    attribute: "date-time"
+    value: "2002-66-66T66:66:66-06:00"
+    expected: ["yyyy-MM-dd'T'HH:mm:ssZ","yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,12}Z"]
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/If-Modified-Since2/example/default-example
+  Property: 
+  Position: Some(LexicalInformation([(25,13)-(25,38)]))
+  Location: 

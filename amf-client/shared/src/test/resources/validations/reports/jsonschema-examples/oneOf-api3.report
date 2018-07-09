@@ -5,18 +5,36 @@ Number of results: 2
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/validations/jsonschema/oneOf/api3.raml#/declarations/types/any/test1_validation
-  Message: Data at / must be a valid shape
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance failed to match exactly one schema (matched 2 out of 2)
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "oneOf"
+    matched: 2
+    nrSchemas: 2
+    reports: {"/oneOf/0":[],"/oneOf/1":[]}
+
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/oneOf/api3.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/any/schema/example/default-example
   Property: 
   Position: Some(LexicalInformation([(51,0)-(54,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/oneOf/api3.raml
+  Location: 
 
-- Source: file://amf-client/shared/src/test/resources/validations/jsonschema/oneOf/api3.raml#/declarations/types/any/test1_validation
-  Message: Data at / must be a valid shape
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance failed to match exactly one schema (matched 0 out of 2)
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "oneOf"
+    matched: 0
+    nrSchemas: 2
+    reports: {"/oneOf/0":[{"level":"error","schema":{"loadingURI":"#","pointer":"/oneOf/0/properties/bar"},"instance":{"pointer":"/bar"},"domain":"validation","keyword":"type","message":"instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])","found":"string","expected":["integer"]}],"/oneOf/1":[{"level":"error","schema":{"loadingURI":"#","pointer":"/oneOf/1/properties/foo"},"instance":{"pointer":"/foo"},"domain":"validation","keyword":"type","message":"instance type (integer) does not match any allowed primitive type (allowed: [\"string\"])","found":"integer","expected":["string"]}]}
+
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/oneOf/api3.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/any/schema/example/default-example
   Property: 
   Position: Some(LexicalInformation([(62,0)-(63,23)]))
-  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/oneOf/api3.raml
+  Location: 
