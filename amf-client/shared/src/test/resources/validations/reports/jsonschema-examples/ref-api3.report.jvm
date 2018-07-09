@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api3.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api3.raml#/declarations/types/array/test1/scalar/member1_validation
+  Message: Scalar at //items/ must be valid
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api3.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/any/schema/example/default-example
+  Property: http://a.ml/vocabularies/data#pos1
+  Position: Some(LexicalInformation([(29,21)-(29,31)]))
+  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api3.raml

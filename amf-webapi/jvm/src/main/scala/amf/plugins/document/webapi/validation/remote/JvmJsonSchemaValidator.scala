@@ -31,8 +31,6 @@ import org.joda.time.format.{DateTimeFormatter, DateTimeFormatterBuilder}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class ExampleUnknownException(e: Throwable) extends RuntimeException(e)
-class UnknownDiscriminator() extends RuntimeException
 
 object Rfc2616Attribute extends FormatAttribute {
   val name = "RFC2616"
@@ -84,31 +82,8 @@ object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
 
   def validate(validationCandidates: Seq[ValidationCandidate],
                profile: ValidationProfile): Future[AMFValidationReport] = {
-    // return validateWithShacl()
 
-    val jsonSchemaCandidates: Seq[(PayloadFragment, String, String, Option[Throwable])] = validationCandidates.map { vc =>
-      try {
-        val fragmentShape = vc.shape match {
-          case anyShape: AnyShape if anyShape.supportsInheritance => findPolymorphicShape(anyShape, vc.payload.encodes)
-          case _ => vc.shape
-        }
-        val dataType = DataTypeFragment()
-        dataType.fields.setWithoutId(DataTypeFragmentModel.Encodes, fragmentShape) // careful, we don't want to modify the ID
-
-        OAS20Plugin.unparse(dataType, RenderOptions()) match {
-          case Some(doc) =>
-            SYamlSyntaxPlugin.unparse("application/json", doc) match {
-              case Some(jsonSchema) =>
-                Some((vc.payload, jsonSchema.replace("x-amf-union", "anyOf"), vc.shape.id, None))
-              case _ =>
-                None
-            }
-          case _ => None
-        }
-      } catch {
-        case e: UnknownDiscriminator => Some((vc.payload, "", vc.shape.id, Some(e)))
-      }
-    } collect { case Some(s) => s }
+    val jsonSchemaCandidates: Seq[(PayloadFragment, String, String, Option[Throwable])] = computeJsonSchemaCandidates(validationCandidates)
 
     // This is a hack to add back missing formats due to a problem in the JSON-Schema library
     // See https://github.com/java-json-tools/json-schema-validator/issues/103 for an explanation
@@ -197,41 +172,6 @@ object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
         profile = profile.name, // profiles.headOption.map(_.name).getOrElse(ProfileNames.AMF)
         results = results
       )
-    }
-  }
-
-  def findPolymorphicShape(anyShape: AnyShape, payload: DataNode): Shape = {
-    val closure: Seq[Shape] = anyShape.effectiveStructuralShapes
-    findPolymorphicEffectiveShape(closure, payload) match {
-      case Some(shape: NodeShape) => shape
-      case _ => // TODO: structurally can be a valid type, should we fail? By default RAML expects a failure
-        /*
-        val polymorphicUnion = UnionShape().withId(payload.id + "_polymorphic")
-        polymorphicUnion.setArrayWithoutId(UnionShapeModel.AnyOf, closure)
-        polymorphicUnion
-        */
-        throw new UnknownDiscriminator()
-    }
-  }
-
-  def findPolymorphicEffectiveShape(polymorphicUnion: Seq[Shape], currentDataNode: DataNode): Option[Shape] = {
-    polymorphicUnion.filter(_.isInstanceOf[NodeShape]).find {
-      case nodeShape: NodeShape =>
-        nodeShape.discriminator.option() match {
-          case Some(discriminatorProp) =>
-            val discriminatorValue = nodeShape.discriminatorValue.option().getOrElse(nodeShape.name.value())
-            currentDataNode match {
-              case obj: ObjectNode =>
-                obj.properties.get(discriminatorProp) match {
-                  case Some(v: ScalarNode) => {
-                    v.value == discriminatorValue
-                  }
-                  case _ => false
-                }
-              case _ => false
-            }
-          case None => false
-        }
     }
   }
 

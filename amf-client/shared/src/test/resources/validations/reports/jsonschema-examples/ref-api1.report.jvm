@@ -1,0 +1,26 @@
+Model: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml
+Profile: RAML
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/schema_validation
+  Message: Object at / must be valid
+Data at //foo must be a valid shape
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/schema/example/default-example
+  Property: http://a.ml/vocabularies/data#foo
+  Position: Some(LexicalInformation([(48,0)-(51,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml
+
+- Source: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/schema_validation
+  Message: Object at / must be valid
+Data at //foo must be a valid shape
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/schema/example/default-example
+  Property: http://a.ml/vocabularies/data#foo
+  Position: Some(LexicalInformation([(59,0)-(60,27)]))
+  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml
