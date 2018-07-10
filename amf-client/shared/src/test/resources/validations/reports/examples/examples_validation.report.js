@@ -5,31 +5,29 @@ Number of results: 4
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/A_validation
-  Message: Object at / must be valid
-Scalar at //b must have data type http://www.w3.org/2001/XMLSchema#integer
-
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: {"keyword":"type","dataPath":".b","schemaPath":"#/properties/b/type","params":{"type":"integer"},"message":"should be integer"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/A/example/default-example
-  Property: http://a.ml/vocabularies/data#b
+  Property: 
   Position: Some(LexicalInformation([(13,0)-(16,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml
+  Location: 
 
-- Source: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/scalar/D_validation_range/prop
-  Message: Scalar at / must have data type http://www.w3.org/2001/XMLSchema#integer
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: {"keyword":"type","dataPath":"","schemaPath":"#/type","params":{"type":"integer"},"message":"should be integer"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/scalar/D/example/default-example
-  Property: http://a.ml/vocabularies/data#value
+  Property: 
   Position: Some(LexicalInformation([(33,13)-(33,17)]))
-  Location: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml
+  Location: 
 
-- Source: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/H/type_validation_g_validation_minCount/prop
-  Message: Data at //g must have min. cardinality 1
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: {"keyword":"required","dataPath":"","schemaPath":"#/required","params":{"missingProperty":"g"},"message":"should have required property 'g'"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/H/example/default-example
-  Property: http://a.ml/vocabularies/data#g
+  Property: 
   Position: Some(LexicalInformation([(51,13)-(56,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml
+  Location: 
 
 Level: Warning
 

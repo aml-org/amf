@@ -1654,6 +1654,7 @@ trait RamlFormatTranslator {
       case "time-only"     => "time"
       case "datetime-only" => "date-time"
       case "datetime"      => "date-time"
+      case "rfc3339"       => "date-time"
       case other           => other
     }
   }
@@ -1719,7 +1720,9 @@ case class OasScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, re
       case Some(_) => // ignore, this will be set with the explicit information
       case None =>
         OasTypeDefStringValueMatcher.matchFormat(typeDef.getOrElse(UndefinedType)) match {
-          case Some(format) => result += RawValueEmitter("format", ScalarShapeModel.Format, checkRamlFormats(format))
+          case Some(format) => {
+            result += RawValueEmitter("format", ScalarShapeModel.Format, checkRamlFormats(format))
+          }
           case None         => // ignore
         }
     }

@@ -5,22 +5,18 @@ Number of results: 2
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/validations/annotations/annotations_enum.raml#/declarations/annotations/test/schema_validation
-  Message: Object at / must be valid
-Data at //items must be within the values (W,A)
-
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: {"keyword":"enum","dataPath":".items","schemaPath":"#/properties/items/enum","params":{"allowedValues":["W","A"]},"message":"should be equal to one of the allowed values"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/annotations/annotations_enum.raml#/web-api/test/object_1
-  Property: http://a.ml/vocabularies/data#items
+  Property: 
   Position: Some(LexicalInformation([(23,0)-(25,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/annotations/annotations_enum.raml
+  Location: 
 
-- Source: file://amf-client/shared/src/test/resources/validations/annotations/annotations_enum.raml#/declarations/annotations/testInt/schema_validation
-  Message: Object at / must be valid
-Data at //items must be within the values (2,3)
-
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: {"keyword":"enum","dataPath":".items","schemaPath":"#/properties/items/enum","params":{"allowedValues":[2,3]},"message":"should be equal to one of the allowed values"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/annotations/annotations_enum.raml#/web-api/testInt/object_1
-  Property: http://a.ml/vocabularies/data#items
+  Property: 
   Position: Some(LexicalInformation([(26,0)-(28,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/annotations/annotations_enum.raml
+  Location: 

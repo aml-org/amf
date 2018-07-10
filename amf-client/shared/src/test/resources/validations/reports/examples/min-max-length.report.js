@@ -5,10 +5,9 @@ Number of results: 1
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/validations/types/lengths.raml#/declarations/types/User_validation
-  Message: Object at / must be valid
-Data at //name must have length greater than 5
-Data at //lastname must have length smaller than 5
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: {"keyword":"minLength","dataPath":".name","schemaPath":"#/properties/name/minLength","params":{"limit":5},"message":"should NOT be shorter than 5 characters"}
+{"keyword":"maxLength","dataPath":".lastname","schemaPath":"#/properties/lastname/maxLength","params":{"limit":5},"message":"should NOT be longer than 5 characters"}
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/types/lengths.raml#/declarations/types/User/example/default-example

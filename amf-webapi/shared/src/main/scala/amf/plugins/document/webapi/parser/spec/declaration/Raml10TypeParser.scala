@@ -331,7 +331,9 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
               Some(shape.withName(name))
             case (Some(iri: String), format: Option[String]) =>
               val shape = ScalarShape(value).set(ScalarShapeModel.DataType, AmfScalar(iri), Annotations(value))
-              format.foreach(f => shape.set(ScalarShapeModel.Format, AmfScalar(f), Annotations()))
+              format.foreach { f =>
+                if (f != "") shape.set(ScalarShapeModel.Format, AmfScalar(f), Annotations())
+              }
               Some(shape.withName(name))
             case _ =>
               ctx.violation(s"Invalid type def ${value.text} for raml 08", value)
@@ -437,7 +439,9 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         "",
         node
           .toOption[YMap]
-          .flatMap(m => m.key("format").orElse(m.key("format".asRamlAnnotation)).map(_.value.toString())),
+          .flatMap { m =>
+            m.key("format").orElse(m.key("format".asRamlAnnotation)).map(_.value.toString())
+          },
         defaultType)
     val result = info.map {
       case XMLSchemaType                         => RamlXmlSchemaExpression(name, node, adopt, parseExample = true).parse()

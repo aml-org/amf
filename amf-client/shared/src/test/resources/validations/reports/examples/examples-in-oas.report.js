@@ -5,10 +5,9 @@ Number of results: 2
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/User_validation
-  Message: Object at //user must be valid
-Scalar at //user/phoneNo must have data type http://www.w3.org/2001/XMLSchema#integer
-Scalar at //user/dateOfBirth must be valid RFC3339 date
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: {"keyword":"format","dataPath":".dateOfBirth","schemaPath":"#/properties/dateOfBirth/format","params":{"format":"date-time"},"message":"should match format \"date-time\""}
+{"keyword":"type","dataPath":".phoneNo","schemaPath":"#/properties/phoneNo/type","params":{"type":"integer"},"message":"should be integer"}
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/User/example/default-example
@@ -16,12 +15,11 @@ Scalar at //user/dateOfBirth must be valid RFC3339 date
   Position: Some(LexicalInformation([(256,18)-(283,7)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json
 
-- Source: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/LoanApplication_validation
-  Message: Object at / must be valid
-Object at //application must be valid
-Object at //user must be valid
-Scalar at //user/dateOfBirth must be valid RFC3339 date
-Scalar at //user/monthsAtCurrAdd must have data type http://www.w3.org/2001/XMLSchema#integer
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: {"keyword":"format","dataPath":".application.user.dateOfBirth","schemaPath":"#/properties/application/properties/user/properties/dateOfBirth/format","params":{"format":"date-time"},"message":"should match format \"date-time\""}
+{"keyword":"type","dataPath":".application.user.monthsAtCurrAdd","schemaPath":"#/properties/application/properties/user/properties/monthsAtCurrAdd/type","params":{"type":"integer"},"message":"should be integer"}
+{"keyword":"format","dataPath":".user.dateOfBirth","schemaPath":"#/properties/user/properties/dateOfBirth/format","params":{"format":"date-time"},"message":"should match format \"date-time\""}
+{"keyword":"type","dataPath":".user.monthsAtCurrAdd","schemaPath":"#/properties/user/properties/monthsAtCurrAdd/type","params":{"type":"integer"},"message":"should be integer"}
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/LoanApplication/example/default-example

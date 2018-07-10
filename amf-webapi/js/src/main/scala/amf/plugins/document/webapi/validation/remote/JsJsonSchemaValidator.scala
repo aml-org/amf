@@ -45,14 +45,17 @@ object JsJsonSchemaValidator extends PlatformJsonSchemaValidator {
               schemaNode -= "example"
               schemaNode -= "examples"
 
-              val correct = validator.validate(schemaNode.asInstanceOf[js.Object], dataNode)
-
               /*
               println("\n\nValidating...")
               println("  - SCHEMA:")
-              println(js.JSON.stringify(jsonSchema))
+              println(js.JSON.stringify(schemaNode))
               println("  - DATA:")
               println(js.JSON.stringify(dataNode))
+              */
+
+              val correct = validator.validate(schemaNode.asInstanceOf[js.Object], dataNode)
+
+              /*
               println(s"  ====> RESULT: $correct")
               println(js.JSON.stringify(validator.errors))
               println("-----------------------\n\n")

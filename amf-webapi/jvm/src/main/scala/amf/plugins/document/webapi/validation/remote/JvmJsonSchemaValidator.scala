@@ -5,14 +5,11 @@ import java.util
 import amf.core.annotations.LexicalInformation
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.PayloadFragment
-import amf.core.model.domain.{DataNode, ObjectNode, ScalarNode, Shape}
+import amf.core.model.domain.ScalarNode
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, ValidationCandidate, _}
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
-import amf.plugins.document.webapi.model.DataTypeFragment
-import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin}
-import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
+import amf.plugins.document.webapi.PayloadPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
@@ -34,7 +31,7 @@ import scala.concurrent.Future
 
 object Rfc2616Attribute extends FormatAttribute {
   val name = "RFC2616"
-  val pattern = "((Mon|Tue|Wed|Thu|Fri|Sat|Sun), [0-9]{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT)"
+  val pattern = "^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), (0[1-9]|[12][0-9]|3[01]) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) ([0-9]{4}) ([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60) (GMT)$"
 
   override def supportedTypes(): util.EnumSet[NodeType] = util.EnumSet.of(NodeType.STRING)
 
@@ -92,6 +89,7 @@ object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
       .addFormatAttribute("date", DateAttribute.getInstance)
       .addFormatAttribute("time", TimeAttribute.getInstance)
       .addFormatAttribute("RFC2616", Rfc2616Attribute)
+      .addFormatAttribute("rfc2616", Rfc2616Attribute)
       .addFormatAttribute("date-time-only", DateTimeOnlyFormatAttribute)
       .freeze
     val cfg = ValidationConfiguration.newBuilder.setDefaultLibrary(AML_JSON_SCHEMA, library).freeze

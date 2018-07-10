@@ -18,7 +18,7 @@ import _root_.org.scalatest.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}
 
-case class ExpectedReport(conforms: Boolean, numErrors: Integer, profile: ProfileName)
+case class ExpectedReport(conforms: Boolean, numErrors: Integer, profile: ProfileName, jsNumErrors: Option[Integer] = None)
 
 class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
@@ -559,7 +559,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
-      assert(report.results.exists(_.message.contains("is not strictly lower than the required maximum 180")))
     }
   }
 

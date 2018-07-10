@@ -5,15 +5,10 @@ Number of results: 1
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/validations/examples/invalid-property-in-array-items.raml#/declarations/types/Orders_validation
-  Message: Object at / must be valid
-Array items at //orders must be valid
-Object at //orders/items must be valid
-Array items at //orders/items/items must be valid
-Scalar at //orders/items/items/items/quantity must have data type http://www.w3.org/2001/XMLSchema#integer
-
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: {"keyword":"type","dataPath":".orders[0].items[0].quantity","schemaPath":"#/properties/orders/items/properties/items/items/properties/quantity/type","params":{"type":"integer"},"message":"should be integer"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/invalid-property-in-array-items.raml#/web-api/end-points/%2Forders/get/200/application%2Fjson/schema/example/single-order
-  Property: http://a.ml/vocabularies/data#orders
+  Property: 
   Position: Some(LexicalInformation([(16,0)-(27,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/examples/invalid-property-in-array-items.raml
+  Location: 

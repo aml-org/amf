@@ -34,7 +34,7 @@ class RamlExamplesValidationTest extends ValidationReportGenTest {
   }
 
   test("Annotations validations test") {
-    validate("annotations/annotations.raml", Some("annotations.report"))
+    validatePlatform("annotations/annotations.raml", Some("annotations.report"))
   }
 
   test("Annotations enum validations test") {
@@ -46,7 +46,7 @@ class RamlExamplesValidationTest extends ValidationReportGenTest {
   }
 
   test("big numbers validations test") {
-    validate("types/big_nums.raml", Some("big_nums.report"))
+    validatePlatform("types/big_nums.raml", Some("big_nums.report"))
   }
 
   test("Parse and validate named examples as external framents") {

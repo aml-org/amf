@@ -6,24 +6,8 @@ Number of results: 2
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: instance type (integer) does not match any allowed primitive type (allowed: ["string"])
-    level: "error"
-    schema: {"loadingURI":"#","pointer":"/properties/lastName"}
-    instance: {"pointer":"/lastName"}
-    domain: "validation"
-    keyword: "type"
-    found: "integer"
-    expected: ["string"]
-
-error: instance type (integer) does not match any allowed primitive type (allowed: ["string"])
-    level: "error"
-    schema: {"loadingURI":"#","pointer":"/properties/name"}
-    instance: {"pointer":"/name"}
-    domain: "validation"
-    keyword: "type"
-    found: "integer"
-    expected: ["string"]
-
+  Message: {"keyword":"type","dataPath":".name","schemaPath":"#/properties/name/type","params":{"type":"string"},"message":"should be string"}
+{"keyword":"type","dataPath":".lastName","schemaPath":"#/properties/lastName/type","params":{"type":"string"},"message":"should be string"}
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/declared-type-ref-add-example.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/schema/example/default-example
@@ -32,24 +16,8 @@ error: instance type (integer) does not match any allowed primitive type (allowe
   Location: file://amf-client/shared/src/test/resources/validations/examples/declared-type-ref-add-example.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: instance type (integer) does not match any allowed primitive type (allowed: ["string"])
-    level: "error"
-    schema: {"loadingURI":"#","pointer":"/properties/lastName"}
-    instance: {"pointer":"/lastName"}
-    domain: "validation"
-    keyword: "type"
-    found: "integer"
-    expected: ["string"]
-
-error: instance type (integer) does not match any allowed primitive type (allowed: ["string"])
-    level: "error"
-    schema: {"loadingURI":"#","pointer":"/properties/name"}
-    instance: {"pointer":"/name"}
-    domain: "validation"
-    keyword: "type"
-    found: "integer"
-    expected: ["string"]
-
+  Message: {"keyword":"type","dataPath":".name","schemaPath":"#/properties/name/type","params":{"type":"string"},"message":"should be string"}
+{"keyword":"type","dataPath":".lastName","schemaPath":"#/properties/lastName/type","params":{"type":"string"},"message":"should be string"}
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/declared-type-ref-add-example.raml#/web-api/end-points/%2Fendpoint/post/request/application%2Fjson/schema/example/default-example

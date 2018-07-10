@@ -5,12 +5,10 @@ Number of results: 1
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/validations/examples/pattern-invalid.raml#/declarations/annotations/clearanceLevel/schema_validation
-  Message: Object at / must be valid
-Data at //signature must match pattern ^\d{3}-\w{12}$
-
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: {"keyword":"pattern","dataPath":".signature","schemaPath":"#/properties/signature/pattern","params":{"pattern":"^\\d{3}-\\w{12}$"},"message":"should match pattern \"^\\d{3}-\\w{12}$\""}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/pattern-invalid.raml#/web-api/end-points/%2Fusers/clearanceLevel/object_1
-  Property: http://a.ml/vocabularies/data#signature
+  Property: 
   Position: Some(LexicalInformation([(15,0)-(16,23)]))
-  Location: file://amf-client/shared/src/test/resources/validations/examples/pattern-invalid.raml
+  Location: 

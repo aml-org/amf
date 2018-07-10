@@ -5,15 +5,10 @@ Number of results: 1
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/validations/examples/discriminator2.raml#/declarations/types/Manager_validation
-  Message: Object at / must be valid
-Array items at //reports/items/union_3/reports must be valid
-Object at //reports/items/union_3/reports/items must be valid
-Data at //reports/items/union_3/reports/items/kind must match pattern ^Person$
-Data at //phone must match pattern ^[0-9|-]+$
-
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: {"keyword":"pattern","dataPath":".phone","schemaPath":"#/properties/phone/pattern","params":{"pattern":"^[0-9|-]+$"},"message":"should match pattern \"^[0-9|-]+$\""}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/discriminator2.raml#/web-api/end-points/%2Forgs%2F%7BorgId%7D/get/200/application%2Fjson/schema/example/default-example
-  Property: file://amf-client/shared/src/test/resources/validations/examples/discriminator2.raml#/web-api/end-points/%2Forgs%2F%7BorgId%7D/get/200/application%2Fjson/schema/example/default-example
+  Property: 
   Position: Some(LexicalInformation([(44,0)-(52,29)]))
-  Location: file://amf-client/shared/src/test/resources/validations/examples/discriminator2.raml
+  Location: 

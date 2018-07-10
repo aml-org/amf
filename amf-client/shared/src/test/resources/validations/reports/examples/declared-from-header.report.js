@@ -5,8 +5,8 @@ Number of results: 1
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/validations/examples/declared-from-header.raml#/declarations/types/scalar/person_validation_validation_maxLength/prop
-  Message: Data at / must have length smaller than 2
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: {"keyword":"maxLength","dataPath":"","schemaPath":"#/maxLength","params":{"limit":2},"message":"should NOT be longer than 2 characters"}
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/declared-from-header.raml#/declarations/types/scalar/person/example/default-example

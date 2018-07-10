@@ -5,12 +5,10 @@ Number of results: 1
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/validations/examples/arrayItems1.raml#/declarations/types/Notification_validation
-  Message: Object at / must be valid
-Number of items at //recipients must be greater than 1
-
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: {"keyword":"minItems","dataPath":".recipients","schemaPath":"#/properties/recipients/minItems","params":{"limit":1},"message":"should NOT have less than 1 items"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/arrayItems1.raml#/web-api/end-points/%2Fnotifications%2Femails/post/request/application%2Fjson/schema/example/default-example
-  Property: http://a.ml/vocabularies/data#recipients
+  Property: 
   Position: Some(LexicalInformation([(53,17)-(63,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/examples/arrayItems1.raml
+  Location: 

@@ -5,12 +5,10 @@ Number of results: 1
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/validations/examples/nil_validation.raml#/declarations/types/User_validation
-  Message: Object at / must be valid
-Property at //middlename must be null
-
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: {"keyword":"type","dataPath":".middlename","schemaPath":"#/properties/middlename/type","params":{"type":"null"},"message":"should be null"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/nil_validation.raml#/declarations/types/User/example/wrong-type
-  Property: http://a.ml/vocabularies/data#middlename
+  Property: 
   Position: Some(LexicalInformation([(15,0)-(17,31)]))
-  Location: file://amf-client/shared/src/test/resources/validations/examples/nil_validation.raml
+  Location: 
