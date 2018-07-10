@@ -6,7 +6,7 @@ Number of results: 2
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#CreativeWork-description-minCount
-  Message: API documentation item content is mandatory
+  Message: API documentation content is mandatory
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/documentation/api.raml#/web-api/creative-work/foo
   Property: http://schema.org/description
@@ -14,7 +14,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/documentation/api.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#CreativeWork-title-minCount
-  Message: API documentation item title is mandatory
+  Message: API documentation title is mandatory
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/documentation/api.raml#/web-api/creative-work/null
   Property: http://schema.org/title
