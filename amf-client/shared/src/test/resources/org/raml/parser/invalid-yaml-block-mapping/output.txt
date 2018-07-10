@@ -14,6 +14,14 @@ Level: Violation
   Location: 
 
 - Source: http://a.ml/vocabularies/amf/parser#parsing-error
+  Message: invalid json schema expression
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(7,13)-(27,0)]))
+  Location: file://amf-client/shared/src/test/resources/org/raml/parser/invalid-yaml-block-mapping/input.raml
+
+- Source: http://a.ml/vocabularies/amf/parser#parsing-error
   Message: Error node '{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "Employee",
@@ -37,15 +45,7 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/invalid-yaml-block-mapping/input.raml
   Property: 
-  Position: Some(LexicalInformation([(1,0)-(20,0)]))
-  Location: file://amf-client/shared/src/test/resources/org/raml/parser/invalid-yaml-block-mapping/input.raml
-
-- Source: http://a.ml/vocabularies/amf/parser#parsing-error
-  Message: invalid json schema expression
-  Level: Violation
-  Target: 
-  Property: 
-  Position: Some(LexicalInformation([(7,13)-(27,0)]))
+  Position: Some(LexicalInformation([(8,13)-(27,13)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/invalid-yaml-block-mapping/input.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#parsing-error

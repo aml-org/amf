@@ -21,6 +21,16 @@ class CycleForExternalSource extends BuildCycleTests {
     )
   }
 
+  test("Test ext ref json example raml to jsonld") {
+    cycle(
+      "api-external-example.raml",
+      "api-external-example.raml.jsonld",
+      RamlYamlHint,
+      Amf,
+      jsonPath
+    )
+  }
+
   test("Test ext ref json schema jsonld to raml") {
     cycle(
       "api.raml.jsonld",

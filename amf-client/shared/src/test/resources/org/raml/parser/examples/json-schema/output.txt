@@ -6,10 +6,10 @@ title: sample api
       200:
         body:
           application/json:
-            type: object
             examples:
               example1:
                 name: null
+            type: object
             additionalProperties: true
             properties:
               currency:

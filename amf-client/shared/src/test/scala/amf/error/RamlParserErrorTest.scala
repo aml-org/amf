@@ -110,7 +110,7 @@ class RamlParserErrorTest extends ParserErrorTest {
       invalidSeq => {
         invalidSeq.level should be("Violation")
         invalidSeq.message should startWith("Expected scalar but found:")
-        invalidSeq.position.map(_.range) should be(Some(Range((31, 16), (39, 4))))
+        invalidSeq.position.map(_.range) should be(Some(Range((42, 33), (50, 21))))
       }
     )
   }

@@ -162,6 +162,18 @@ types:
           required: false
   nString:
     maxLength: 10
+  UserXml: |
+    <xs:schema attributeFormDefault="unqualified"
+              elementFormDefault="qualified"
+              xmlns:xs="http://www.w3.org/2001/XMLSchema">
+     <xs:element name="api-request">
+       <xs:complexType>
+         <xs:sequence>
+           <xs:element type="xs:string" name="input"/>
+         </xs:sequence>
+       </xs:complexType>
+     </xs:element>
+    </xs:schema>
   TypeWithCustomFacets:
     type: string
     facets:
@@ -175,18 +187,6 @@ types:
       facet4?:
         type: integer
         required: false
-  UserXml: |
-    <xs:schema attributeFormDefault="unqualified"
-              elementFormDefault="qualified"
-              xmlns:xs="http://www.w3.org/2001/XMLSchema">
-     <xs:element name="api-request">
-       <xs:complexType>
-         <xs:sequence>
-           <xs:element type="xs:string" name="input"/>
-         </xs:sequence>
-       </xs:complexType>
-     </xs:element>
-    </xs:schema>
 traits:
   traitOne:
     displayName: uno

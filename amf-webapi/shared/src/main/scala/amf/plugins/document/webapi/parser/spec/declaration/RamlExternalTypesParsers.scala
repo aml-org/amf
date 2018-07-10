@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.Root
+import amf.core.annotations.LexicalInformation
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{
@@ -22,6 +23,8 @@ import amf.plugins.document.webapi.parser.spec.raml.RamlSpecParser
 import amf.plugins.document.webapi.parser.spec.toOas
 import amf.plugins.domain.shapes.metamodel.SchemaShapeModel
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape, UnresolvedShape}
+import org.mulesoft.lexer.CharSequenceLexerInput
+import org.yaml.lexer.YamlLexer
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.YamlParser
@@ -64,7 +67,7 @@ case class RamlJsonSchemaExpression(name: String,
             shape.annotations += ExternalFragmentRef(extFrament.get)
             shape
           case _ =>
-            val shape = parseJsonShape(origin.text, name, origin.valueAST, adopt, value)
+            val shape = parseJsonShape(origin.text, name, origin.valueAST, adopt, value, origin.oriUrl)
             ctx.declarations.fragments
               .get(path)
               .foreach(e => shape.withReference(e.encoded.id))
@@ -72,7 +75,7 @@ case class RamlJsonSchemaExpression(name: String,
             shape
         }
       case None =>
-        val shape = parseJsonShape(origin.text, name, origin.valueAST, adopt, value)
+        val shape = parseJsonShape(origin.text, name, origin.valueAST, adopt, value, None)
         shape.annotations += ParsedJSONSchema(origin.text)
         shape
     }
@@ -136,8 +139,18 @@ case class RamlJsonSchemaExpression(name: String,
     }
   }
 
-  private def parseJsonShape(text: String, name: String, valueAST: YNode, adopt: Shape => Shape, value: YNode) = {
-    val schemaAst = YamlParser(text, valueAST.sourceName)(ctx).withIncludeTag("!include").parse(keepTokens = true)
+  private def parseJsonShape(text: String,
+                             name: String,
+                             valueAST: YNode,
+                             adopt: Shape => Shape,
+                             value: YNode,
+                             extLocation: Option[String]) = {
+    val url = extLocation.flatMap(ctx.declarations.fragments.get).flatMap(_.location)
+    val parser =
+      if (extLocation.isEmpty)
+        YamlParser(text, valueAST.sourceName, (valueAST.range.lineFrom, valueAST.range.columnFrom))(ctx)
+      else YamlParser(text, url.getOrElse(valueAST.sourceName))(ctx)
+    val schemaAst = parser.withIncludeTag("!include").parse(keepTokens = true)
     val schemaEntry = schemaAst.head match {
       case d: YDocument => YMapEntry(name, d.node)
       case _            =>
@@ -168,7 +181,7 @@ case class RamlJsonSchemaExpression(name: String,
       case inlined: MutRef =>
         if (inlined.origTag.tagType == YType.Include) {
           // JSON schema file we need to update the context
-          val fileHint = inlined.origValue.asInstanceOf[YScalar].text.split("/").last.split("#").head
+          val fileHint = inlined.origValue.asInstanceOf[YScalar].text.split("/").last.split("#").head // should replace ast for originUrl?? use ReferenceFragmentPartition?
           ctx.refs.find(r => r.unit.location().exists(_.endsWith(fileHint))) match {
             case Some(ref) =>
               toOas(ref.unit.location().get,
@@ -251,7 +264,10 @@ case class RamlXmlSchemaExpression(name: String,
         adopt(shape)
         shape
     }
-    maybeReferenceId.foreach { parsed.withReference }
+    maybeReferenceId match {
+      case Some(r) => parsed.withReference(r)
+      case _       => parsed.annotations += LexicalInformation(Range(value.range))
+    }
     parsed.set(SchemaShapeModel.Location, maybeLocation.getOrElse(ctx.loc))
     maybeFragmentLabel.foreach { parsed.annotations += ExternalFragmentRef(_) }
     parsed

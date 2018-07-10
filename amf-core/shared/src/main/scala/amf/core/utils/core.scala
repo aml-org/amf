@@ -1,7 +1,9 @@
 package amf.core
 
+import amf.core.parser.{Position, Range}
 import amf.core.unsafe.PlatformSecrets
 import org.mulesoft.common.time.SimpleDateTime
+import org.mulesoft.lexer.InputRange
 
 import scala.annotation.tailrec
 
@@ -164,6 +166,11 @@ package object utils {
     }
 
     def reset(): Unit = c = 0
+  }
+
+  implicit class RangeOps(val range: InputRange) extends AnyVal {
+    def toOffset: Position = Position(range.lineFrom, range.columnFrom)
+    def toRange: Range     = Range(range)
   }
 
 }

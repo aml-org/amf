@@ -10,9 +10,11 @@ import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNod
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.features.validation.ParserSideValidations
+import org.mulesoft.lexer.CharSequenceLexerInput
+import org.yaml.lexer.YamlLexer
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
-import org.yaml.parser.JsonParser
+import org.yaml.parser.YamlParser
 import org.yaml.render.YamlRender
 
 import scala.collection.mutable.ListBuffer
@@ -180,7 +182,7 @@ case class RamlExampleValueAsString(node: YNode, example: Example, options: Exam
       example.set(ExampleModel.Strict, AmfScalar(options.strictDefault), Annotations() += SynthesizedField())
     }
 
-    val targetNode = node match {
+    val (targetNode, mutTarget) = node match {
       case mut: MutRef =>
         ctx.declarations.fragments
           .get(mut.origValue.asInstanceOf[YScalar].text)
@@ -188,8 +190,9 @@ case class RamlExampleValueAsString(node: YNode, example: Example, options: Exam
             example.withReference(e.encoded.id)
             example.set(ExternalSourceElementModel.Location, e.location.getOrElse(ctx.loc))
           }
-        mut.target.getOrElse(node)
-      case _ => node // render always (even if xml) for | multiline strings. (If set scalar.text we lose the token)
+        (mut.target.getOrElse(node), true)
+      case _ =>
+        (node, false) // render always (even if xml) for | multiline strings. (If set scalar.text we lose the token)
 
     }
 
@@ -205,7 +208,7 @@ case class RamlExampleValueAsString(node: YNode, example: Example, options: Exam
 
     }
 
-    val result = NodeDataNodeParser(targetNode, example.id, options.quiet).parse()
+    val result = NodeDataNodeParser(targetNode, example.id, options.quiet, mutTarget).parse()
 
     result.dataNode.foreach { dataNode =>
       example.set(ExampleModel.StructuredValue, dataNode, Annotations(node))
@@ -215,7 +218,8 @@ case class RamlExampleValueAsString(node: YNode, example: Example, options: Exam
   }
 }
 
-case class NodeDataNodeParser(node: YNode, parentId: String, quiet: Boolean)(implicit ctx: WebApiContext) {
+case class NodeDataNodeParser(node: YNode, parentId: String, quiet: Boolean, fromExternal: Boolean = false)(
+    implicit ctx: WebApiContext) {
   def parse(): DataNodeParserResult = {
     val errorHandler = if (quiet) WarningOnlyHandler(ctx.rootContextDocument) else ctx
 
@@ -224,8 +228,11 @@ case class NodeDataNodeParser(node: YNode, parentId: String, quiet: Boolean)(imp
         node
           .toOption[YScalar]
           .flatMap { scalar =>
-            JsonParser
-              .withSource(scalar.text, scalar.sourceName)(errorHandler)
+            val parser =
+              if (!fromExternal)
+                YamlParser(scalar.text, scalar.sourceName, (node.range.lineFrom, node.range.columnFrom))(errorHandler)
+              else YamlParser(scalar.text, scalar.text)
+            parser
               .parse(true)
               .collectFirst({ case doc: YDocument => doc.node })
           }
