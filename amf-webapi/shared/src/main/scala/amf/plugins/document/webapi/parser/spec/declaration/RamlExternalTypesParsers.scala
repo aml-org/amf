@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.Root
 import amf.core.annotations.LexicalInformation
+import amf.core.annotations.ExternalFragmentRef
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{
@@ -15,7 +16,7 @@ import amf.core.parser.{
 }
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.core.utils.Strings
-import amf.plugins.document.webapi.annotations.{ExternalFragmentRef, JSONSchemaId, ParsedJSONSchema}
+import amf.plugins.document.webapi.annotations.{JSONSchemaId, ParsedJSONSchema}
 import amf.plugins.document.webapi.contexts.{Oas2WebApiContext, OasWebApiContext, RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.spec.domain.NodeDataNodeParser
 import amf.plugins.document.webapi.parser.spec.oas.Oas2DocumentParser

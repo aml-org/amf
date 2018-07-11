@@ -206,8 +206,10 @@ trait FieldConverter extends CollectionConverter {
     override def asClient(from: AnyField): ClientAnyField = ClientAnyField(from)
   }
 
-  implicit object AnnotationsFieldMatcher extends InternalClientMatcher[Annotations, ClientAnnotations] {
+  implicit object AnnotationsFieldMatcher extends BidirectionalMatcher[Annotations, ClientAnnotations] {
     override def asClient(from: Annotations): ClientAnnotations = ClientAnnotations(from)
+
+    override def asInternal(from: ClientAnnotations): Annotations = from._internal
   }
 }
 

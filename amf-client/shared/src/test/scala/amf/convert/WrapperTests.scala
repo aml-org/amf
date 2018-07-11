@@ -1159,6 +1159,43 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Parsing external xml with inner ref annotation") {
+    for {
+      _ <- AMF.init().asFuture
+      unit <- new RamlParser()
+        .parseFileAsync(
+          "file://amf-client/shared/src/test/resources/production/othercases/xsdschema/api-with-fragment-ref-xml.raml")
+        .asFuture
+    } yield {
+      val shape = unit
+        .asInstanceOf[Document]
+        .declares
+        .asSeq
+        .head
+        .asInstanceOf[AnyShape]
+      shape.isInstanceOf[SchemaShape] should be(true)
+      shape.annotations().fragmentName().asOption.get should be("address")
+    }
+  }
+
+  test("Parsing external json with inner ref annotation") {
+    for {
+      _ <- AMF.init().asFuture
+      unit <- new RamlParser()
+        .parseFileAsync(
+          "file://amf-client/shared/src/test/resources/production/othercases/jsonschema/api-with-fragment-ref.raml")
+        .asFuture
+    } yield {
+      val shape = unit
+        .asInstanceOf[Document]
+        .declares
+        .asSeq
+        .head
+        .asInstanceOf[AnyShape]
+      shape.annotations().fragmentName().asOption.get should be("/definitions/address")
+    }
+  }
+
   test("Test validate with string amf pair method") {
     for {
       _ <- AMF.init().asFuture

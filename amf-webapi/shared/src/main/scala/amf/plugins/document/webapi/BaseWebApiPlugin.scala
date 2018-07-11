@@ -3,6 +3,7 @@ package amf.plugins.document.webapi
 import amf.ProfileName
 import amf.core.model.document.BaseUnit
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
+import amf.core.annotations.ExternalFragmentRef
 import amf.core.remote.Platform
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile

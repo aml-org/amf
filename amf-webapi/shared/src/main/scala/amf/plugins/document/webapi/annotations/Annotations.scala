@@ -30,17 +30,6 @@ object JSONSchemaId extends AnnotationGraphLoader {
   }
 }
 
-case class ExternalFragmentRef(fragment: String) extends SerializableAnnotation with PerpetualAnnotation {
-  override val name: String  = "external-fragment-ref"
-  override val value: String = fragment
-}
-
-object ExternalFragmentRef extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    ExternalFragmentRef(annotatedValue)
-  }
-}
-
 case class FormBodyParameter() extends SerializableAnnotation with PerpetualAnnotation {
   override val name: String  = "form-body-parameter"
   override val value: String = "true"
