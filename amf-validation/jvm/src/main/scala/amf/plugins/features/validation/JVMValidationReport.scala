@@ -3,8 +3,7 @@ package amf.plugins.features.validation
 import amf.core.validation.core.{ValidationReport, ValidationResult}
 import org.json4s
 import org.json4s._
-import org.json4s.jackson.JsonMethods._
-
+import org.json4s.native.JsonMethods._
 
 /**
   * Parses a JSON-LD report
@@ -12,36 +11,38 @@ import org.json4s.jackson.JsonMethods._
 class JVMValidationReport(jsonld: String) extends ValidationReport with JSONLDParser {
 
   val SHACL_CONFORMS = "http://www.w3.org/ns/shacl#conforms"
-  val SHACL_RESULT = "http://www.w3.org/ns/shacl#result"
+  val SHACL_RESULT   = "http://www.w3.org/ns/shacl#result"
 
   val parsed: JArray = parse(jsonld) match {
-    case list@JArray(_) => list
-    case other => JArray(List(other))
+    case list @ JArray(_) => list
+    case other            => JArray(List(other))
   }
   val reportNode: JObject = findReport()
 
   override def conforms: Boolean = extractValue(reportNode, SHACL_CONFORMS) match {
     case Some(JBool(b)) => b
-    case _ => throw new Exception(s"Cannot find property $SHACL_CONFORMS in report")
+    case _              => throw new Exception(s"Cannot find property $SHACL_CONFORMS in report")
   }
 
   override def results: List[ValidationResult] =
     extractIds(reportNode, SHACL_RESULT)
-     .map { resultNodeId => JVMValidationResult(findNode(resultNodeId)) }
-
+      .map { resultNodeId =>
+        JVMValidationResult(findNode(resultNodeId))
+      }
 
   private def findNode(resultId: String): JObject = {
     val foundNode = parsed.arr.find {
-      case JObject(properties) => properties.exists {
-        case ("@id", JString(s)) => s == resultId
-        case _ => false
-      }
+      case JObject(properties) =>
+        properties.exists {
+          case ("@id", JString(s)) => s == resultId
+          case _                   => false
+        }
       case _ => false
     }
 
     foundNode match {
       case Some(node: JObject) => node
-      case _ => throw new Exception(s"Cannot find node with ID $resultId")
+      case _                   => throw new Exception(s"Cannot find node with ID $resultId")
     }
   }
 
@@ -63,7 +64,6 @@ class JVMValidationReport(jsonld: String) extends ValidationReport with JSONLDPa
     }
   }
 
-
   /**
     * Checks if the JSON-LD node passed as an argument is the SHACL report by checking the shacl:conforms property
     *
@@ -75,7 +75,7 @@ class JVMValidationReport(jsonld: String) extends ValidationReport with JSONLDPa
       case JObject(_) =>
         extractValue(value, SHACL_CONFORMS) match {
           case Some(_) => true
-          case None => false
+          case None    => false
         }
       case _ => false
     }
