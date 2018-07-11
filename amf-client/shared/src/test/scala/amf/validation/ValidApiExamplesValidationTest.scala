@@ -95,5 +95,21 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     validatePlatform("/examples/string-hierarchy.raml", golden = Some("string-hierarchy.report"))
   }
 
+  test("Test valid api with pattern properties") {
+    validatePlatform("/production/pattern_properties.raml", golden = Some("production_pattern_properties.report"))
+  }
+
+  test("Test valid api with type problems 1") {
+    validatePlatform("/production/type_problems1.raml", golden = Some("type_problems1.report"))
+  }
+
+  test("Test valid api with type problems 2") {
+    validatePlatform("/production/type_problems2/api.raml", golden = Some("type_problems2.report"))
+  }
+
+  test("Test valid api with type problems 3") {
+    validatePlatform("/production/type_problems3.raml", golden = Some("type_problems3.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

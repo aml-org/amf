@@ -9,7 +9,7 @@ import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin}
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
 import amf.plugins.document.webapi.model.DataTypeFragment
-import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
+import amf.plugins.domain.shapes.models.{AnyShape, FileShape, NodeShape}
 import amf.plugins.syntax.SYamlSyntaxPlugin
 
 import scala.concurrent.Future
@@ -58,22 +58,26 @@ trait PlatformJsonSchemaValidator {
 
   def computeJsonSchemaCandidates(validationCandidates: Seq[ValidationCandidate]): Seq[(PayloadFragment, String, String, Option[Throwable])] = validationCandidates.map { vc =>
     try {
-      val fragmentShape = vc.shape match {
-        case anyShape: AnyShape if anyShape.supportsInheritance => findPolymorphicShape(anyShape, vc.payload.encodes)
-        case _ => vc.shape
-      }
-      val dataType = DataTypeFragment()
-      dataType.fields.setWithoutId(DataTypeFragmentModel.Encodes, fragmentShape) // careful, we don't want to modify the ID
+      if (vc.shape.isInstanceOf[FileShape]) {
+        None
+      } else {
+        val fragmentShape = vc.shape match {
+          case anyShape: AnyShape if anyShape.supportsInheritance => findPolymorphicShape(anyShape, vc.payload.encodes)
+          case _ => vc.shape
+        }
+        val dataType = DataTypeFragment()
+        dataType.fields.setWithoutId(DataTypeFragmentModel.Encodes, fragmentShape) // careful, we don't want to modify the ID
 
-      OAS20Plugin.unparse(dataType, RenderOptions()) match {
-        case Some(doc) =>
-          SYamlSyntaxPlugin.unparse("application/json", doc) match {
-            case Some(jsonSchema) =>
-              Some((vc.payload, jsonSchema.replace("x-amf-union", "anyOf"), vc.shape.id, None))
-            case _ =>
-              None
-          }
-        case _ => None
+        OAS20Plugin.unparse(dataType, RenderOptions()) match {
+          case Some(doc) =>
+            SYamlSyntaxPlugin.unparse("application/json", doc) match {
+              case Some(jsonSchema) =>
+                Some((vc.payload, jsonSchema.replace("x-amf-union", "anyOf"), vc.shape.id, None))
+              case _ =>
+                None
+            }
+          case _ => None
+        }
       }
     } catch {
       case e: UnknownDiscriminator => Some((vc.payload, "", vc.shape.id, Some(e)))

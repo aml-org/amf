@@ -1,0 +1,30 @@
+#%RAML 1.0
+title: test
+version: 1.0
+
+types: 
+  customer: !include /datatypes/customer-datatype.raml
+  
+/customer:
+  post:
+    body: 
+      application/json:
+        type: customer
+        example: !include /samples/customer-post-example.raml
+    responses: 
+      201:
+        body:
+          application/json:
+            type: customer
+            example: !include /samples/customer-example.raml
+      400:
+        description: Issue encountered
+  /{id}:
+    get:
+      responses:
+        200:
+          body: 
+            application/json:
+              type: customer
+              example: !include /samples/customer-with-accounts-example.raml
+          

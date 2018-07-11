@@ -99,8 +99,8 @@ object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
         case None                          => // standard ase, we have a payload and shape
           loadDataNodeString(payload) match {
             case Some(dataNode) =>
-
-              loadJson(jsonSchema) match {
+              // hack! TODO: clean json object properly
+              loadJson(jsonSchema.replace("\"type\": \"file\"", "\"type\": \"string\"")) match {
                 case schemaNode: JSONObject =>
                   schemaNode.remove("x-amf-fragmentType")
                   schemaNode.remove("example")

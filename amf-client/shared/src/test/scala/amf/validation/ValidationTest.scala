@@ -550,7 +550,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("HERE_HERE Exclusive Maximum Schema") {
+  test("Exclusive Maximum Schema") {
     for {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "08/max-exclusive-schema.raml", platform, RamlYamlHint, validation)

@@ -391,7 +391,8 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
       shape.set(ScalarShapeModel.Maximum, value.text(), Annotations(entry))
     })
 
-    RamlSingleExampleParser("example", map, shape.withExample, ExampleOptions(strictDefault = true, quiet = true))
+    val isParamString = shape.isInstanceOf[ScalarShape] && shape.asInstanceOf[ScalarShape].dataType.option().getOrElse("") == (Namespace.Xsd + "string").iri()
+    RamlSingleExampleParser("example", map, shape.withExample, ExampleOptions(strictDefault = true, quiet = true, paramString = isParamString))
       .parse()
       .foreach(e => shape.setArray(ScalarShapeModel.Examples, Seq(e)))
 
@@ -1282,13 +1283,17 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
                        (Namespace.Data + entry.key.as[YScalar].text.urlComponentEncoded).iri())
 
           if (property.fields.?(PropertyShapeModel.MinCount).isEmpty) {
-            val required = !prop.endsWith("?")
+            if (property.patternName.option().isDefined) {
+              property.set(PropertyShapeModel.MinCount, 0)
+            } else {
+              val required = !prop.endsWith("?")
 
-            property.set(PropertyShapeModel.MinCount, if (required) 1 else 0)
-            property.set(
-              PropertyShapeModel.Name,
-              if (required) prop else prop.stripSuffix("?").stripPrefix("/").stripSuffix("/")) // TODO property id is using a name that is not final.
-            property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text.stripSuffix("?")).iri())
+              property.set(PropertyShapeModel.MinCount, if (required) 1 else 0)
+              property.set(
+                PropertyShapeModel.Name,
+                if (required) prop else prop.stripSuffix("?").stripPrefix("/").stripSuffix("/")) // TODO property id is using a name that is not final.
+              property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text.stripSuffix("?")).iri())
+            }
           }
 
           Raml10TypeParser(entry, shape => shape.adopted(property.id), isAnnotation = false, StringDefaultType)

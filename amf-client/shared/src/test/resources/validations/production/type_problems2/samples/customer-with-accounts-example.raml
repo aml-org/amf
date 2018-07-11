@@ -1,0 +1,19 @@
+#%RAML 1.0 NamedExample
+id: 'CUS-324-JO-34'
+firstname: 'James'
+lastname: 'Willford'
+ssn: '328-12-8920'
+email: 'james.willford@gmil.com'
+phone: '520.342.1938'
+address: !include address-example.raml
+accounts:
+- id: '289-3243AN'
+  customerId: 'CUS-324-JO-34'
+  type: 'checking' 
+  balance: 3892.23
+  interest: 0.01
+- id: '983-3243PW'
+  customerId: 'CUS-324-JO-34'
+  type: 'savings' 
+  balance: 1520.38
+  interest: 0.30

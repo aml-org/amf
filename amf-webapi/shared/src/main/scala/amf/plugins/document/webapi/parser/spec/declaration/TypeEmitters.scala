@@ -1814,10 +1814,11 @@ case class OasPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrderi
     val readOnlyEmitter: Option[ValueEmitter] =
       property.fields.entry(PropertyShapeModel.ReadOnly).map(fe => ValueEmitter("readOnly", fe))
 
+    val propertyName: String  = property.patternName.option().getOrElse(property.name.value())
     property.range match {
       case range: AnyShape =>
         b.entry(
-          property.name.value(),
+          propertyName,
           pb => {
             emitter match {
               case Left(p)        => p.emit(pb)
@@ -1825,8 +1826,8 @@ case class OasPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrderi
             }
           }
         )
-      case _ => // ignreo
-        b.entry(property.name.value(), _.obj(e => traverse(readOnlyEmitter.toSeq, e)))
+      case _ => // ignore
+        b.entry(propertyName, _.obj(e => traverse(readOnlyEmitter.toSeq, e)))
     }
   }
 
