@@ -23,6 +23,8 @@ trait InheritanceChain { this: AnyShape =>
   // Array of subtypes to compute
   var subTypes: mutable.Seq[Shape]   = mutable.Seq()
   var superTypes: mutable.Seq[Shape] = mutable.Seq()
+  // Any ID, not only the ones with discriminator, just keep the ID ref
+  var inheritedIds: mutable.Seq[String] = mutable.Seq()
 
   def addSubType(shape: Shape): Unit = {
     subTypes.find(_.id == shape.id) match {
@@ -38,7 +40,7 @@ trait InheritanceChain { this: AnyShape =>
     }
   }
 
-  def linkSubType(shape: AnyShape) = {
+    def linkSubType(shape: AnyShape) = {
     addSubType(shape)
     shape.addSuperType(this)
   }

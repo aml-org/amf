@@ -74,8 +74,7 @@ lazy val webapi = crossProject
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
-    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-webapi-module.js",
-    jsDependencies += ProvidedJS / "ajv.min.js"
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-webapi-module.js"
   )
 
 lazy val webapiJVM = webapi.jvm.in(file("./amf-webapi/jvm"))
@@ -162,6 +161,7 @@ lazy val client = crossProject
   )
   .jsSettings(
     jsDependencies += ProvidedJS / "shacl.js",
+    jsDependencies += ProvidedJS / "ajv.min.js",
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,

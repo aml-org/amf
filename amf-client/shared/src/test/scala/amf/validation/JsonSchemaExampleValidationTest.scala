@@ -34,7 +34,8 @@ class JsonSchemaExampleValidationTest extends ValidationReportGenTest {
     validatePlatform("/oneOf/api1.raml", Some("oneOf-api1.report"))
   }
 
-  test("JSON Schema oneOf test2") {
+  // TODO: error messages are arriving in a non-deterministic order in the JVM. No golden file can be added
+  ignore("JSON Schema oneOf test2") {
     validatePlatform("/oneOf/api2.raml", Some("oneOf-api2.report"))
   }
 
@@ -46,8 +47,7 @@ class JsonSchemaExampleValidationTest extends ValidationReportGenTest {
     validatePlatform("/not/api1.raml", Some("not-api1.report"))
   }
 
-  // TODO: messages are arriving in a non-deterministic order in the JVM. No golden file can be added
-  ignore("JSON Schema not test2") {
+  test("JSON Schema not test2") {
     validatePlatform("/not/api2.raml", Some("not-api2.report"))
   }
 
@@ -59,27 +59,27 @@ class JsonSchemaExampleValidationTest extends ValidationReportGenTest {
     validatePlatform("/not/api4.raml", Some("not-api4.report"))
   }
 
-  ignore("JSON Schema ref test1") {
+  test("JSON Schema ref test1") {
     validatePlatform("/ref/api1.raml", Some("ref-api1.report"))
   }
 
-  ignore("JSON Schema ref test2") {
+  test("JSON Schema ref test2") {
     validatePlatform("/ref/api2.raml", Some("ref-api2.report"))
   }
 
-  ignore("JSON Schema ref test3") {
+  test("JSON Schema ref test3") {
     validatePlatform("/ref/api3.raml", Some("ref-api3.report"))
   }
 
-  ignore("JSON Schema ref test4") {
+  test("JSON Schema ref test4") {
     validatePlatform("/ref/api4.raml", Some("ref-api4.report"))
   }
 
-  ignore("JSON Schema ref test5") {
+  test("JSON Schema ref test5") {
     validatePlatform("/ref/api5.raml", Some("ref-api5.report"))
   }
 
-  ignore("JSON Schema ref test6") {
+  test("JSON Schema ref test6") {
     validatePlatform("/ref/api6.raml", Some("ref-api6.report"))
   }
   override val hint: Hint = RamlYamlHint
