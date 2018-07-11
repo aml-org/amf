@@ -5,7 +5,8 @@ import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DataNode, ObjectNode, ScalarNode, Shape}
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, ValidationCandidate}
-import amf.plugins.document.webapi.OAS20Plugin
+import amf.core.vocabulary.Namespace
+import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin}
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
@@ -78,4 +79,26 @@ trait PlatformJsonSchemaValidator {
       case e: UnknownDiscriminator => Some((vc.payload, "", vc.shape.id, Some(e)))
     }
   } collect { case Some(s) => s }
+
+  def literalRepresentation(payload: PayloadFragment): Option[String] = {
+    val futureText = payload.raw match {
+      case Some("") => None
+      case _     =>
+        PayloadPlugin.unparse(payload, RenderOptions()) match {
+          case Some(doc) => SYamlSyntaxPlugin.unparse("application/json", doc) match {
+            case Some(serialized) => Some(serialized)
+            case _                => None
+          }
+          case _         => None
+        }
+    }
+
+    futureText map { text =>
+      payload.encodes match {
+        case node: ScalarNode if node.dataType.getOrElse("") == (Namespace.Xsd + "string").iri() && text.nonEmpty && text.head != '"' =>
+          "\"" + text.stripLineEnd + "\""
+        case _ => text.stripLineEnd
+      }
+    }
+  }
 }

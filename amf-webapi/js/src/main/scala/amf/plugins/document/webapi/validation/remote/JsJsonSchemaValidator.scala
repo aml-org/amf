@@ -1,14 +1,10 @@
 package amf.plugins.document.webapi.validation.remote
 
 import amf.core.annotations.LexicalInformation
-import amf.core.emitter.RenderOptions
 import amf.core.model.document.PayloadFragment
-import amf.core.model.domain.ScalarNode
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, ValidationCandidate, _}
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.webapi.PayloadPlugin
-import amf.plugins.syntax.SYamlSyntaxPlugin
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -93,27 +89,7 @@ object JsJsonSchemaValidator extends PlatformJsonSchemaValidator {
   }
 
 
-  def literalRepresentation(payload: PayloadFragment): Option[String] = {
-    val futureText = payload.raw match {
-      case Some("") => None
-      case _     =>
-        PayloadPlugin.unparse(payload, RenderOptions()) match {
-          case Some(doc) => SYamlSyntaxPlugin.unparse("application/json", doc) match {
-            case Some(serialized) => Some(serialized)
-            case _                => None
-          }
-          case _         => None
-        }
-    }
 
-    futureText map { text =>
-      payload.encodes match {
-        case node: ScalarNode if node.dataType.getOrElse("") == (Namespace.Xsd + "string").iri() && text.nonEmpty && text.head != '"' =>
-          "\"" + text.stripLineEnd + "\""
-        case _ => text.stripLineEnd
-      }
-    }
-  }
 
   protected def loadDataNodeString(payload: PayloadFragment): Option[js.Dynamic] = {
     try {

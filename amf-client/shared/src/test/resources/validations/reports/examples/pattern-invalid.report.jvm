@@ -6,15 +6,7 @@ Number of results: 1
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: ECMA 262 regex "^\d{3}-\w{12}$" does not match input string "aaa-5555"
-    level: "error"
-    schema: {"loadingURI":"#","pointer":"/properties/signature"}
-    instance: {"pointer":"/signature"}
-    domain: "validation"
-    keyword: "pattern"
-    regex: "^\\d{3}-\\w{12}$"
-    string: "aaa-5555"
-
+  Message: {"schemaLocation":"#/properties/signature","pointerToViolation":"#/signature","causingExceptions":[],"keyword":"pattern","message":"string [aaa-5555] does not match pattern ^\\d{3}-\\w{12}$"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/pattern-invalid.raml#/web-api/end-points/%2Fusers/clearanceLevel/object_1
   Property: 

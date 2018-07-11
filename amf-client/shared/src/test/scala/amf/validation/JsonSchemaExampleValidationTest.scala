@@ -74,7 +74,7 @@ class JsonSchemaExampleValidationTest extends ValidationReportGenTest {
     validatePlatform("/ref/api4.raml", Some("ref-api4.report"))
   }
 
-  test("JSON Schema ref test5") {
+  ignore("JSON Schema ref test5") {
     validatePlatform("/ref/api5.raml", Some("ref-api5.report"))
   }
 

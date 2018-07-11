@@ -6,16 +6,7 @@ Number of results: 2
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: instance failed to match exactly one schema (matched 2 out of 2)
-    level: "error"
-    schema: {"loadingURI":"#","pointer":""}
-    instance: {"pointer":""}
-    domain: "validation"
-    keyword: "oneOf"
-    matched: 2
-    nrSchemas: 2
-    reports: {"/oneOf/0":[],"/oneOf/1":[]}
-
+  Message: {"schemaLocation":"#","pointerToViolation":"#","causingExceptions":[],"keyword":"oneOf","message":"#: 2 subschemas matched instead of one"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/oneOf/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/any/schema/example/default-example
   Property: 
@@ -23,18 +14,11 @@ Level: Violation
   Location: 
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: instance failed to match exactly one schema (matched 0 out of 2)
-    level: "error"
-    schema: {"loadingURI":"#","pointer":""}
-    instance: {"pointer":""}
-    domain: "validation"
-    keyword: "oneOf"
-    matched: 0
-    nrSchemas: 2
-    reports: {"/oneOf/0":[{"level":"error","schema":{"loadingURI":"#","pointer":"/oneOf/0"},"instance":{"pointer":""},"domain":"validation","keyword":"type","message":"instance type (number) does not match any allowed primitive type (allowed: [\"integer\"])","found":"number","expected":["integer"]}],"/oneOf/1":[{"level":"error","schema":{"loadingURI":"#","pointer":"/oneOf/1"},"instance":{"pointer":""},"domain":"validation","keyword":"minimum","message":"numeric instance is lower than the required minimum (minimum: 2, found: 1.5)","minimum":2,"found":1.5}]}
+  Message: {"schemaLocation":"#/oneOf/0","pointerToViolation":"#","causingExceptions":[],"keyword":"type","message":"expected type: Integer, found: Double"}
+{"schemaLocation":"#/oneOf/1","pointerToViolation":"#","causingExceptions":[],"keyword":"minimum","message":"1.5 is not greater or equal to 2.0"}
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/oneOf/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/any/schema/example/default-example
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/jsonschema/oneOf/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/any/schema/example/default-example
   Position: Some(LexicalInformation([(51,21)-(51,24)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/oneOf/api1.raml

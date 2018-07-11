@@ -6,26 +6,8 @@ Number of results: 1
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: string "Marley" is too long (length: 6, maximum allowed: 5)
-    level: "error"
-    schema: {"loadingURI":"#","pointer":"/properties/lastname"}
-    instance: {"pointer":"/lastname"}
-    domain: "validation"
-    keyword: "maxLength"
-    value: "Marley"
-    found: 6
-    maxLength: 5
-
-error: string "Bob" is too short (length: 3, required minimum: 5)
-    level: "error"
-    schema: {"loadingURI":"#","pointer":"/properties/name"}
-    instance: {"pointer":"/name"}
-    domain: "validation"
-    keyword: "minLength"
-    value: "Bob"
-    found: 3
-    minLength: 5
-
+  Message: {"schemaLocation":"#/properties/name","pointerToViolation":"#/name","causingExceptions":[],"keyword":"minLength","message":"expected minLength: 5, actual: 3"}
+{"schemaLocation":"#/properties/lastname","pointerToViolation":"#/lastname","causingExceptions":[],"keyword":"maxLength","message":"expected maxLength: 5, actual: 6"}
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/types/lengths.raml#/declarations/types/User/example/default-example

@@ -6,15 +6,7 @@ Number of results: 4
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: instance type (string) does not match any allowed primitive type (allowed: ["integer"])
-    level: "error"
-    schema: {"loadingURI":"#","pointer":"/properties/b"}
-    instance: {"pointer":"/b"}
-    domain: "validation"
-    keyword: "type"
-    found: "string"
-    expected: ["integer"]
-
+  Message: {"schemaLocation":"#/properties/b","pointerToViolation":"#/b","causingExceptions":[],"keyword":"type","message":"expected type: Number, found: String"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/A/example/default-example
   Property: 
@@ -22,15 +14,7 @@ Level: Violation
   Location: 
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: instance type (string) does not match any allowed primitive type (allowed: ["integer"])
-    level: "error"
-    schema: {"loadingURI":"#","pointer":""}
-    instance: {"pointer":""}
-    domain: "validation"
-    keyword: "type"
-    found: "string"
-    expected: ["integer"]
-
+  Message: {"schemaLocation":"#","pointerToViolation":"#","causingExceptions":[],"keyword":"type","message":"expected type: Number, found: String"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/scalar/D/example/default-example
   Property: 
@@ -38,15 +22,7 @@ Level: Violation
   Location: 
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: object has missing required properties (["g"])
-    level: "error"
-    schema: {"loadingURI":"#","pointer":""}
-    instance: {"pointer":""}
-    domain: "validation"
-    keyword: "required"
-    required: ["f","g"]
-    missing: ["g"]
-
+  Message: {"schemaLocation":"#","pointerToViolation":"#","causingExceptions":[],"keyword":"required","message":"required key [g] not found"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/H/example/default-example
   Property: 

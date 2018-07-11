@@ -15,6 +15,7 @@ jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
 val settings = Common.settings ++ Common.publish ++ Seq(
   organization := "com.github.amlorg",
   resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal, ivyLocal),
+  resolvers += "jitpack" at "https://jitpack.io",
   credentials ++= Common.credentials(),
   aggregate in assembly := false,
   libraryDependencies ++= Seq(
@@ -66,8 +67,7 @@ lazy val webapi = crossProject
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
     libraryDependencies += "org.json4s"             %% "json4s-native"         % "3.5.4",
-    libraryDependencies += "com.github.java-json-tools" % "json-schema-validator" % "2.2.10",
-    libraryDependencies += "com.fasterxml.jackson.dataformat" % "jackson-dataformat-yaml" % "2.9.6",
+    libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.9.1",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-webapi-javadoc.jar"
   )
   .jsSettings(

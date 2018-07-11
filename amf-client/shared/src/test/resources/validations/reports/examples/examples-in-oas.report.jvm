@@ -6,25 +6,8 @@ Number of results: 2
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: string "bla bla" is invalid against requested date format(s) [yyyy-MM-dd'T'HH:mm:ssZ, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,12}Z]
-    level: "error"
-    schema: {"loadingURI":"#","pointer":"/properties/dateOfBirth"}
-    instance: {"pointer":"/dateOfBirth"}
-    domain: "validation"
-    keyword: "format"
-    attribute: "date-time"
-    value: "bla bla"
-    expected: ["yyyy-MM-dd'T'HH:mm:ssZ","yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,12}Z"]
-
-error: instance type (string) does not match any allowed primitive type (allowed: ["integer"])
-    level: "error"
-    schema: {"loadingURI":"#","pointer":"/properties/phoneNo"}
-    instance: {"pointer":"/phoneNo"}
-    domain: "validation"
-    keyword: "type"
-    found: "string"
-    expected: ["integer"]
-
+  Message: {"schemaLocation":"#/properties/phoneNo","pointerToViolation":"#/phoneNo","causingExceptions":[{"pointerToViolation":"#/phoneNo","causingExceptions":[],"keyword":"type","message":"expected type: Number, found: String"}],"keyword":"allOf","message":"#: only 1 subschema matches out of 2"}
+{"schemaLocation":"#/properties/dateOfBirth","pointerToViolation":"#/dateOfBirth","causingExceptions":[],"keyword":"format","message":"[bla bla] is not a valid date-time. Expected [yyyy-MM-dd'T'HH:mm:ssZ, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}Z, yyyy-MM-dd'T'HH:mm:ss[+-]HH:mm, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}[+-]HH:mm]"}
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/User/example/default-example
@@ -33,25 +16,8 @@ error: instance type (string) does not match any allowed primitive type (allowed
   Location: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: string "bla bla" is invalid against requested date format(s) [yyyy-MM-dd'T'HH:mm:ssZ, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,12}Z]
-    level: "error"
-    schema: {"loadingURI":"#","pointer":"/properties/application/properties/user/properties/dateOfBirth"}
-    instance: {"pointer":"/application/user/dateOfBirth"}
-    domain: "validation"
-    keyword: "format"
-    attribute: "date-time"
-    value: "bla bla"
-    expected: ["yyyy-MM-dd'T'HH:mm:ssZ","yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,12}Z"]
-
-error: instance type (string) does not match any allowed primitive type (allowed: ["integer"])
-    level: "error"
-    schema: {"loadingURI":"#","pointer":"/properties/application/properties/user/properties/monthsAtCurrAdd"}
-    instance: {"pointer":"/application/user/monthsAtCurrAdd"}
-    domain: "validation"
-    keyword: "type"
-    found: "string"
-    expected: ["integer"]
-
+  Message: {"schemaLocation":"#/properties/application/properties/user","pointerToViolation":"#/application/user","causingExceptions":[{"schemaLocation":"#/properties/application/properties/user/properties/dateOfBirth","pointerToViolation":"#/application/user/dateOfBirth","causingExceptions":[],"keyword":"format","message":"[bla bla] is not a valid date-time. Expected [yyyy-MM-dd'T'HH:mm:ssZ, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}Z, yyyy-MM-dd'T'HH:mm:ss[+-]HH:mm, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}[+-]HH:mm]"},{"schemaLocation":"#/properties/application/properties/user/properties/monthsAtCurrAdd","pointerToViolation":"#/application/user/monthsAtCurrAdd","causingExceptions":[{"pointerToViolation":"#/application/user/monthsAtCurrAdd","causingExceptions":[],"keyword":"type","message":"expected type: Number, found: String"}],"keyword":"allOf","message":"#: only 1 subschema matches out of 2"}],"message":"2 schema violations found"}
+{"schemaLocation":"#/properties/user","pointerToViolation":"#/user","causingExceptions":[{"schemaLocation":"#/properties/user/properties/dateOfBirth","pointerToViolation":"#/user/dateOfBirth","causingExceptions":[],"keyword":"format","message":"[bla bla bla] is not a valid date-time. Expected [yyyy-MM-dd'T'HH:mm:ssZ, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}Z, yyyy-MM-dd'T'HH:mm:ss[+-]HH:mm, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}[+-]HH:mm]"},{"schemaLocation":"#/properties/user/properties/monthsAtCurrAdd","pointerToViolation":"#/user/monthsAtCurrAdd","causingExceptions":[{"pointerToViolation":"#/user/monthsAtCurrAdd","causingExceptions":[],"keyword":"type","message":"expected type: Number, found: String"}],"keyword":"allOf","message":"#: only 1 subschema matches out of 2"}],"message":"2 schema violations found"}
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/LoanApplication/example/default-example

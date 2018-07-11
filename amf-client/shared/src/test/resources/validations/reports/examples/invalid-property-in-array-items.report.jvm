@@ -6,15 +6,7 @@ Number of results: 1
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: instance type (string) does not match any allowed primitive type (allowed: ["integer"])
-    level: "error"
-    schema: {"loadingURI":"#","pointer":"/properties/orders/items/properties/items/items/properties/quantity"}
-    instance: {"pointer":"/orders/0/items/0/quantity"}
-    domain: "validation"
-    keyword: "type"
-    found: "string"
-    expected: ["integer"]
-
+  Message: {"schemaLocation":"#/properties/orders/items/properties/items/items/properties/quantity","pointerToViolation":"#/orders/0/items/0/quantity","causingExceptions":[],"keyword":"type","message":"expected type: Number, found: String"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/invalid-property-in-array-items.raml#/web-api/end-points/%2Forders/get/200/application%2Fjson/schema/example/single-order
   Property: 

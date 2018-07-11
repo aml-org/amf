@@ -6,15 +6,7 @@ Number of results: 1
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: ECMA 262 regex "^[0-9|-]+$" does not match input string "123+23"
-    level: "error"
-    schema: {"loadingURI":"#","pointer":"/properties/phone"}
-    instance: {"pointer":"/phone"}
-    domain: "validation"
-    keyword: "pattern"
-    regex: "^[0-9|-]+$"
-    string: "123+23"
-
+  Message: {"schemaLocation":"#/properties/phone","pointerToViolation":"#/phone","causingExceptions":[],"keyword":"pattern","message":"string [123+23] does not match pattern ^[0-9|-]+$"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/discriminator2.raml#/web-api/end-points/%2Forgs%2F%7BorgId%7D/get/200/application%2Fjson/schema/example/default-example
   Property: 

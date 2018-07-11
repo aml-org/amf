@@ -6,16 +6,7 @@ Number of results: 3
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: instance failed to match all required schemas (matched only 1 out of 2)
-    level: "error"
-    schema: {"loadingURI":"#","pointer":""}
-    instance: {"pointer":""}
-    domain: "validation"
-    keyword: "allOf"
-    matched: 1
-    nrSchemas: 2
-    reports: {"/allOf/0":[{"level":"error","schema":{"loadingURI":"#","pointer":"/allOf/0"},"instance":{"pointer":""},"domain":"validation","keyword":"required","message":"object has missing required properties ([\"bar\"])","required":["bar"],"missing":["bar"]}],"/allOf/1":[]}
-
+  Message: {"schemaLocation":"#/allOf/0","pointerToViolation":"#","causingExceptions":[],"keyword":"required","message":"required key [bar] not found"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api1.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/any/schema/example/default-example
   Property: 
@@ -23,16 +14,7 @@ Level: Violation
   Location: 
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: instance failed to match all required schemas (matched only 1 out of 2)
-    level: "error"
-    schema: {"loadingURI":"#","pointer":""}
-    instance: {"pointer":""}
-    domain: "validation"
-    keyword: "allOf"
-    matched: 1
-    nrSchemas: 2
-    reports: {"/allOf/0":[],"/allOf/1":[{"level":"error","schema":{"loadingURI":"#","pointer":"/allOf/1"},"instance":{"pointer":""},"domain":"validation","keyword":"required","message":"object has missing required properties ([\"foo\"])","required":["foo"],"missing":["foo"]}]}
-
+  Message: {"schemaLocation":"#/allOf/1","pointerToViolation":"#","causingExceptions":[],"keyword":"required","message":"required key [foo] not found"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/any/schema/example/default-example
   Property: 
@@ -40,16 +22,7 @@ Level: Violation
   Location: 
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: instance failed to match all required schemas (matched only 1 out of 2)
-    level: "error"
-    schema: {"loadingURI":"#","pointer":""}
-    instance: {"pointer":""}
-    domain: "validation"
-    keyword: "allOf"
-    matched: 1
-    nrSchemas: 2
-    reports: {"/allOf/0":[{"level":"error","schema":{"loadingURI":"#","pointer":"/allOf/0/properties/bar"},"instance":{"pointer":"/bar"},"domain":"validation","keyword":"type","message":"instance type (string) does not match any allowed primitive type (allowed: [\"integer\"])","found":"string","expected":["integer"]}],"/allOf/1":[]}
-
+  Message: {"schemaLocation":"#/allOf/0/properties/bar","pointerToViolation":"#/bar","causingExceptions":[],"keyword":"type","message":"expected type: Number, found: String"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/any/schema/example/default-example
   Property: 

@@ -6,15 +6,7 @@ Number of results: 6
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: numeric instance is lower than the required minimum (minimum: 2.4, found: 2)
-    level: "error"
-    schema: {"loadingURI":"#","pointer":""}
-    instance: {"pointer":""}
-    domain: "validation"
-    keyword: "minimum"
-    minimum: 2.4
-    found: 2
-
+  Message: {"schemaLocation":"#","pointerToViolation":"#","causingExceptions":[],"keyword":"minimum","message":"2 is not greater or equal to 2.4"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/invalid-max-min-constraint.raml#/declarations/types/scalar/OtherCustomType/example/bad1
   Property: 
@@ -22,15 +14,7 @@ Level: Violation
   Location: 
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: numeric instance is lower than the required minimum (minimum: 2.4, found: 2.0)
-    level: "error"
-    schema: {"loadingURI":"#","pointer":""}
-    instance: {"pointer":""}
-    domain: "validation"
-    keyword: "minimum"
-    minimum: 2.4
-    found: 2.0
-
+  Message: {"schemaLocation":"#","pointerToViolation":"#","causingExceptions":[],"keyword":"minimum","message":"2.0 is not greater or equal to 2.4"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/invalid-max-min-constraint.raml#/declarations/types/scalar/OtherCustomType/example/bad2
   Property: 
@@ -38,15 +22,7 @@ Level: Violation
   Location: 
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: numeric instance is lower than the required minimum (minimum: 2.4, found: 2.3)
-    level: "error"
-    schema: {"loadingURI":"#","pointer":""}
-    instance: {"pointer":""}
-    domain: "validation"
-    keyword: "minimum"
-    minimum: 2.4
-    found: 2.3
-
+  Message: {"schemaLocation":"#","pointerToViolation":"#","causingExceptions":[],"keyword":"minimum","message":"2.3 is not greater or equal to 2.4"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/invalid-max-min-constraint.raml#/declarations/types/scalar/OtherCustomType/example/bad3
   Property: 
@@ -54,15 +30,7 @@ Level: Violation
   Location: 
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: numeric instance is greater than the required maximum (maximum: 5.3, found: 5.4)
-    level: "error"
-    schema: {"loadingURI":"#","pointer":""}
-    instance: {"pointer":""}
-    domain: "validation"
-    keyword: "maximum"
-    maximum: 5.3
-    found: 5.4
-
+  Message: {"schemaLocation":"#","pointerToViolation":"#","causingExceptions":[],"keyword":"maximum","message":"5.4 is not less or equal to 5.3"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/invalid-max-min-constraint.raml#/declarations/types/scalar/OtherCustomType/example/bad4
   Property: 
@@ -70,15 +38,7 @@ Level: Violation
   Location: 
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: numeric instance is greater than the required maximum (maximum: 5.3, found: 6.0)
-    level: "error"
-    schema: {"loadingURI":"#","pointer":""}
-    instance: {"pointer":""}
-    domain: "validation"
-    keyword: "maximum"
-    maximum: 5.3
-    found: 6.0
-
+  Message: {"schemaLocation":"#","pointerToViolation":"#","causingExceptions":[],"keyword":"maximum","message":"6.0 is not less or equal to 5.3"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/invalid-max-min-constraint.raml#/declarations/types/scalar/OtherCustomType/example/bad5
   Property: 
@@ -86,15 +46,7 @@ Level: Violation
   Location: 
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: numeric instance is greater than the required maximum (maximum: 5.3, found: 6)
-    level: "error"
-    schema: {"loadingURI":"#","pointer":""}
-    instance: {"pointer":""}
-    domain: "validation"
-    keyword: "maximum"
-    maximum: 5.3
-    found: 6
-
+  Message: {"schemaLocation":"#","pointerToViolation":"#","causingExceptions":[],"keyword":"maximum","message":"6 is not less or equal to 5.3"}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/invalid-max-min-constraint.raml#/declarations/types/scalar/OtherCustomType/example/bad6
   Property: 
