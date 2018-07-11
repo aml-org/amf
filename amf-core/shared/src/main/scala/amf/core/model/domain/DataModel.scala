@@ -73,7 +73,8 @@ object DataNodeOps {
   */
 class ObjectNode(override val fields: Fields, val annotations: Annotations) extends DataNode(annotations) {
 
-  val properties: mutable.Map[String, DataNode] = mutable.HashMap()
+  val properties
+    : mutable.LinkedHashMap[String, DataNode] = mutable.LinkedHashMap() // i need to keep the order of some nodes (like params defined in traits). I could order by position at resolution time, but with this structure i avoid one more traverse.
   val propertyAnnotations: mutable.Map[String, Annotations] =
     annotations.find(classOf[DataNodePropertiesAnnotations]) match {
       case Some(ann) => mutable.HashMap() ++ ann.properties.map(t => t._1 -> Annotations(t._2))
@@ -118,17 +119,18 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
   }
 
   override def replaceVariables(values: Set[Variable], keys: Seq[ElementTree])(reportError: String => Unit): DataNode = {
-    properties.keys.foreach { key =>
+    properties.keys.toSeq.foreach { key =>
       val decodedKey = key.urlComponentDecoded
       val finalKey: String =
         if (decodedKey.endsWith("?")) decodedKey.substring(0, decodedKey.length - 1) else decodedKey
       val maybeTree = keys.find(_.key.equals(finalKey))
 
       val value = properties(key)
-        .replaceVariables(values, maybeTree.map(_.subtrees).getOrElse(Nil))(if (decodedKey
-                                                                                  .endsWith("?") && maybeTree.isEmpty)
-          (_: String) => Unit
-        else reportError) // if its an optional node, ignore the violation of the var not implement
+        .replaceVariables(values, maybeTree.map(_.subtrees).getOrElse(Nil))(
+          if (decodedKey
+                .endsWith("?") && maybeTree.isEmpty)
+            (_: String) => Unit
+          else reportError) // if its an optional node, ignore the violation of the var not implement
       properties.remove(key)
       properties += VariableReplacer.replaceVariables(decodedKey, values) -> value
     }

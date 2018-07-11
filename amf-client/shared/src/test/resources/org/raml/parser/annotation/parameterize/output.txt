@@ -34,9 +34,9 @@ annotationTypes:
         required: false
 /resource:
   get:
-    (objectAnnotation):
-      property2: baseProperty2_value
-      property1:
-        field2: 15
-        field1: someFieldValue
     (simpleAnnotation): simpleAnnotationValue
+    (objectAnnotation):
+      property1:
+        field1: someFieldValue
+        field2: 15
+      property2: baseProperty2_value

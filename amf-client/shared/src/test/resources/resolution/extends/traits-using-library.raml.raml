@@ -291,6 +291,11 @@ baseUri: aaa-bbb.com/apis
     /accounts:
       get:
         queryParameters:
+          offset?:
+            description: The `offset` parameter specifies the first entry to return from a collection.
+            type: integer
+            minimum: 0
+            default: 10
           limit?:
             description: The `limit` parameter restricts the number of entries returned.
             type: integer
@@ -301,11 +306,6 @@ baseUri: aaa-bbb.com/apis
             type: integer
             minimum: 1
             default: 1
-          offset?:
-            description: The `offset` parameter specifies the first entry to return from a collection.
-            type: integer
-            minimum: 0
-            default: 10
           sort?:
             example: name,-age
             type: string
@@ -466,6 +466,11 @@ baseUri: aaa-bbb.com/apis
     /loans:
       get:
         queryParameters:
+          offset?:
+            description: The `offset` parameter specifies the first entry to return from a collection.
+            type: integer
+            minimum: 0
+            default: 10
           limit?:
             description: The `limit` parameter restricts the number of entries returned.
             type: integer
@@ -476,11 +481,6 @@ baseUri: aaa-bbb.com/apis
             type: integer
             minimum: 1
             default: 1
-          offset?:
-            description: The `offset` parameter specifies the first entry to return from a collection.
-            type: integer
-            minimum: 0
-            default: 10
           sort?:
             example: name,-age
             type: string

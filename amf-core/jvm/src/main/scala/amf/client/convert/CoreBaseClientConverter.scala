@@ -38,6 +38,12 @@ trait CoreBaseClientConverter extends CoreBaseConverter {
     from.map { case (k, v) => k -> matcher.asClient(v) }.asJava
   }
 
+  override protected def asClientLinkedMap[Internal, Client](
+      from: mutable.LinkedHashMap[String, Internal],
+      matcher: InternalClientMatcher[Internal, Client]): util.Map[String, Client] = {
+    from.map { case (k, v) => k -> matcher.asClient(v) }.asJava
+  }
+
   override protected def asInternalSeq[Client, Internal](
       from: util.List[Client],
       matcher: ClientInternalMatcher[Client, Internal]): mutable.Buffer[Internal] =

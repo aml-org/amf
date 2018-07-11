@@ -1,0 +1,25 @@
+#%RAML 0.8
+title: Sanity RAML 0.8 API
+version: v0.1
+traits:
+  - post-item:
+      queryParameters:
+        code:
+          type: string
+          minLength: 3
+          maxLength: 10
+          required: true
+        size:
+          type: string
+          required: true
+          enum: [small, medium, large]
+        color:
+          type: string
+          required: false
+        description:
+          type: string
+          required: false
+
+/clients:
+  get:
+    is: [post-item]

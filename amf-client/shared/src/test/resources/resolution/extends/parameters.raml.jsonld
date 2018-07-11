@@ -58,132 +58,6 @@
                     ],
                     "http://a.ml/vocabularies/http#parameter": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields",
-                        "@type": [
-                          "http://a.ml/vocabularies/http#Parameter",
-                          "http://a.ml/vocabularies/document#DomainElement"
-                        ],
-                        "http://schema.org/name": [
-                          {
-                            "@value": "digest_all_fields"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/http#paramName": [
-                          {
-                            "@value": "digest_all_fields"
-                          }
-                        ],
-                        "http://schema.org/description": [
-                          {
-                            "@value": "If no values match the value given for title, use digest_all_fields instead"
-                          }
-                        ],
-                        "http://www.w3.org/ns/hydra/core#required": [
-                          {
-                            "@value": true
-                          }
-                        ],
-                        "http://a.ml/vocabularies/http#binding": [
-                          {
-                            "@value": "query"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/http#schema": [
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields/scalar/schema",
-                            "@type": [
-                              "http://a.ml/vocabularies/shapes#ScalarShape",
-                              "http://www.w3.org/ns/shacl#Shape",
-                              "http://a.ml/vocabularies/shapes#Shape",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#string"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#name": [
-                              {
-                                "@value": "schema"
-                              }
-                            ],
-                            "http://schema.org/description": [
-                              {
-                                "@value": "If no values match the value given for title, use digest_all_fields instead"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields/scalar/schema/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://schema.org/description"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(1,0)-(1,0)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields/scalar/schema"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(1,0)-(1,0)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://schema.org/description"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(1,0)-(1,0)]"
-                                  }
-                                ]
-                              },
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(1,0)-(1,0)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
                         "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/title",
                         "@type": [
                           "http://a.ml/vocabularies/http#Parameter",
@@ -297,6 +171,132 @@
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/title"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(1,0)-(1,0)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields",
+                        "@type": [
+                          "http://a.ml/vocabularies/http#Parameter",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://schema.org/name": [
+                          {
+                            "@value": "digest_all_fields"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/http#paramName": [
+                          {
+                            "@value": "digest_all_fields"
+                          }
+                        ],
+                        "http://schema.org/description": [
+                          {
+                            "@value": "If no values match the value given for title, use digest_all_fields instead"
+                          }
+                        ],
+                        "http://www.w3.org/ns/hydra/core#required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/http#binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/http#schema": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields/scalar/schema",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ],
+                            "http://schema.org/description": [
+                              {
+                                "@value": "If no values match the value given for title, use digest_all_fields instead"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#sources": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields/scalar/schema/source-map",
+                                "@type": [
+                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://schema.org/description"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(1,0)-(1,0)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields/scalar/schema"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(1,0)-(1,0)]"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://schema.org/description"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(1,0)-(1,0)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [

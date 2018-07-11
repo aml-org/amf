@@ -1219,4 +1219,34 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       assert(v.conforms)
     }
   }
+
+  // in fact the change were do it at parsing time (abstract declaration parser). I change the hashmap for a list map of the properties to preserve order, so this test could be parse and dump but i wanna be sure that nobody will change the resolved params order in any other place.
+  test("Test query parameters order") {
+    for {
+      _ <- AMF.init().asFuture
+      unit <- new Raml08Parser()
+        .parseFileAsync("file://amf-client/shared/src/test/resources/clients/params-order.raml")
+        .asFuture
+      v <- Future.successful(new Raml08Resolver().resolve(unit))
+    } yield {
+      val seq = v
+        .asInstanceOf[Document]
+        .encodes
+        .asInstanceOf[WebApi]
+        .endPoints
+        .asSeq
+        .head
+        .operations
+        .asSeq
+        .head
+        .request
+        .queryParameters
+        .asSeq
+      seq.head.name.value() should be("code")
+      seq(1).name.value() should be("size")
+      seq(2).name.value() should be("color")
+      seq(3).name.value() should be("description")
+
+    }
+  }
 }

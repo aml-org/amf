@@ -4,10 +4,10 @@ version: v1
 /books:
   get:
     queryParameters:
-      digest_all_fields:
-        description: If no values match the value given for title, use digest_all_fields instead
       title:
         description: Return books that have their title matching the given value
+      digest_all_fields:
+        description: If no values match the value given for title, use digest_all_fields instead
       access_token:
         description: A valid access_token is required
       numPages:
