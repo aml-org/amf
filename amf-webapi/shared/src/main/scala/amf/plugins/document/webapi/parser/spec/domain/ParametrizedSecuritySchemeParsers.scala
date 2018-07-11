@@ -1,6 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, _}
+import amf.core.utils.Strings
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.document.webapi.parser.spec.common._
@@ -8,7 +10,6 @@ import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model._
-import amf.core.utils.Strings
 
 object RamlParametrizedSecuritySchemeParser {
   def parse(producer: String => ParametrizedSecurityScheme)(node: YNode)(
@@ -72,7 +73,8 @@ object RamlSecuritySettingsParser {
   }
 }
 
-case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSettings)(implicit val ctx: WebApiContext)
+case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: DomainElement with WithSettings)(
+    implicit val ctx: WebApiContext)
     extends SpecParserOps {
   def parse(): Settings = {
     val result = `type` match {
@@ -118,7 +120,30 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: WithSet
     map.key("flow".asRamlAnnotation, OAuth2SettingsModel.Flow in settings)
     map.key("authorizationGrants", (OAuth2SettingsModel.AuthorizationGrants in settings).allowingSingleValue)
 
-    val ScopeParser = (n: YNode) => Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(scheme.id)
+    val ScopeParser = (n: YNode) => {
+      val element = ScalarNode(n).text()
+      scheme match {
+        case ss: ParametrizedSecurityScheme =>
+          ss.scheme.settings match {
+            case se: OAuth2Settings if se.scopes.map(_.name.value()).contains(element.toString) =>
+              Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(scheme.id)
+            case se: OAuth2Settings =>
+              val scope = Scope().adopted(scheme.id)
+              ctx.violation(
+                ParserSideValidations.UnknownScopeErrorSpecification.id,
+                scope.id,
+                s"Scope '${element.toString}' not found in settings of declared secured by ${ss.scheme.name.value()}.",
+                n
+              )
+              scope
+            case _ =>
+              Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(scheme.id)
+          }
+        case _ =>
+          Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(scheme.id)
+      }
+    }
+
     map.key("scopes", (OAuth2SettingsModel.Scopes in settings using ScopeParser).allowingSingleValue)
 
     dynamicSettings(settings, "authorizationUri", "accessTokenUri", "authorizationGrants", "scopes")

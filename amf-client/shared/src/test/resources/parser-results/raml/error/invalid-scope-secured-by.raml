@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: GitHub API
+
+securitySchemes:
+  oauth_2_0:
+    type: OAuth 2.0
+    settings:
+      scopes: [ADMINISTRATOR, COLLABORATOR]
+      authorizationUri: https://www.dropbox.com/1/oauth2/authorize
+      accessTokenUri: https://api.dropbox.com/1/oauth2/token
+      authorizationGrants: [ authorization_code ]
+
+/users:
+  get:
+    securedBy: [null, oauth_2_0: { scopes: [ USER ] } ]

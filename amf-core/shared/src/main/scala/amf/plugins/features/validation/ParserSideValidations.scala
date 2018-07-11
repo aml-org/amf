@@ -102,6 +102,14 @@ object ParserSideValidations {
     None,
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
+
+  val UnknownScopeErrorSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "unknown-scope").iri(),
+    "Cannot find the scope in the security settings",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
   val NamedExampleUsedInExample = ValidationSpecification(
     (Namespace.AmfParser + "named-example-used-inlined-example").iri(),
     "Named example should not be used as inline examples",
@@ -315,6 +323,13 @@ object ParserSideValidations {
       OAS3Profile   -> SeverityLevels.VIOLATION,
       AMFProfile    -> SeverityLevels.VIOLATION
     ),
+    UnknownScopeErrorSpecification.id -> Map(
+      RAMLProfile   -> SeverityLevels.VIOLATION,
+      RAML08Profile -> SeverityLevels.VIOLATION,
+      OASProfile    -> SeverityLevels.VIOLATION,
+      OAS3Profile   -> SeverityLevels.VIOLATION,
+      AMFProfile    -> SeverityLevels.VIOLATION
+    ),
     ClosedShapeSpecification.id -> Map(
       RAMLProfile   -> SeverityLevels.VIOLATION,
       RAML08Profile -> SeverityLevels.VIOLATION,
@@ -443,6 +458,7 @@ object ParserSideValidations {
     ExclusivePropertiesSpecification,
     PathTemplateUnbalancedParameters,
     UnknownSecuritySchemeErrorSpecification,
+    UnknownScopeErrorSpecification,
     JsonSchemaInheratinaceWarningSpecification,
     InvalidTypeInheritanceErrorSpecification,
     MissingExtensionInReferences,

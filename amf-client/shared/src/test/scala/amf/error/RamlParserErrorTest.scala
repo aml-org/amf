@@ -309,6 +309,17 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
+  test("Invalid scope at secured by") {
+    validate(
+      "/error/invalid-scope-secured-by.raml",
+      violation => {
+        violation.level should be("Violation")
+        violation.message should be("Scope 'USER' not found in settings of declared secured by oauth_2_0.")
+        violation.position.map(_.range) should be(Some(Range((15, 45), (15, 49))))
+      }
+    )
+  }
+
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/raml/"
 
   override protected def build(validation: Validation, file: String): Future[BaseUnit] =
