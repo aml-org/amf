@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: Api With Warnings
+
+/{songId}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            typically:
+              type: object
+              description: The canonical song representation
+              properties:
+                title:  string
+                artist: string

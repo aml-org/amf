@@ -5,14 +5,15 @@ import amf.core.model.domain.Shape
 import amf.core.model.domain.extensions.ShapeExtension
 import amf.core.parser._
 import amf.core.remote.{Oas, Raml}
-import amf.plugins.document.webapi.contexts.WebApiContext
-import org.yaml.model.YMap
 import amf.core.utils.Strings
+import amf.plugins.document.webapi.contexts.RamlWebApiContext
+import org.yaml.model.YMap
 
-case class ShapeExtensionParser(shape: Shape, map: YMap, ctx: WebApiContext) {
+case class ShapeExtensionParser(shape: Shape, map: YMap, ctx: RamlWebApiContext, isAnnotation: Boolean = false) {
   def parse(): Unit = {
     val shapeExtensionDefinitions = shape.collectCustomShapePropertyDefinitions(onlyInherited = true)
-    shapeExtensionDefinitions.flatMap(_.values).distinct.foreach { shapeExtensionDefinition =>
+    val properties                = shapeExtensionDefinitions.flatMap(_.values).distinct
+    properties.foreach { shapeExtensionDefinition =>
       val extensionKey = ctx.vendor match {
         case _: Raml => shapeExtensionDefinition.name.value() // TODO check this.
         case _: Oas  => s"facet-${shapeExtensionDefinition.name.value()}".asOasExtension
@@ -32,5 +33,11 @@ case class ShapeExtensionParser(shape: Shape, map: YMap, ctx: WebApiContext) {
         }
       )
     }
+    if (!shape.inherits.exists(s => s.isUnresolved)) { // only validate shapes when the father its resolved, to avoid close shape over custom annotations
+      val extensionsNames = properties.flatMap(_.name.option())
+      val m               = YMap(map.entries.filter(e => !extensionsNames.contains(e.key.value.toString)), "")
+      ctx.closedRamlTypeShape(shape, m, shape.ramlSyntaxKey, isAnnotation)
+    }
+    // todo: filter map.entries by extension key and call close shape by instance of for the rest?
   }
 }

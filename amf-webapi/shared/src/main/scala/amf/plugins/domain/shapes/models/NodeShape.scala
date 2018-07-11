@@ -72,6 +72,7 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
 
   override def copyShape(): NodeShape = NodeShape(fields.copy(), annotations.copy()).withId(id)
 
+  override val ramlSyntaxKey: String = "nodeShape"
 }
 
 object NodeShape {

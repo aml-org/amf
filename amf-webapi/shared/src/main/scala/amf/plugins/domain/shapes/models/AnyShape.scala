@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.model.document.{DeclaresModel, PayloadFragment}
+import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{ExternalSourceElement, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.services.PayloadValidator
@@ -21,7 +21,7 @@ import scala.concurrent.Future
 // defined in RAML
 trait InheritanceChain { this: AnyShape =>
   // Array of subtypes to compute
-  var subTypes: mutable.Seq[Shape] = mutable.Seq()
+  var subTypes: mutable.Seq[Shape]   = mutable.Seq()
   var superTypes: mutable.Seq[Shape] = mutable.Seq()
 
   def addSubType(shape: Shape): Unit = {
@@ -47,25 +47,30 @@ trait InheritanceChain { this: AnyShape =>
     isInstanceOf[NodeShape] && asInstanceOf[NodeShape].discriminator.option().isDefined
 
   def effectiveStructuralShapes: Seq[Shape] = {
-    val acc = if (annotations.contains(classOf[DeclaredElement])) { // problem with inlined types extending types with discriminator
-      computeSubtypesClosure()
-    } else {
-      superTypes.find(_.isInstanceOf[AnyShape]) match { // which one if multiple inheritance?
-        case Some(superType: AnyShape) => superType.effectiveStructuralShapes
-        case None                      => Nil
+    val acc =
+      if (annotations
+            .contains(classOf[DeclaredElement])) { // problem with inlined types extending types with discriminator
+        computeSubtypesClosure()
+      } else {
+        superTypes.find(_.isInstanceOf[AnyShape]) match { // which one if multiple inheritance?
+          case Some(superType: AnyShape) => superType.effectiveStructuralShapes
+          case None                      => Nil
+        }
       }
-    }
     (Seq(this) ++ acc).distinct
   }
 
   protected def computeSubtypesClosure(): Seq[Shape] = {
-    val res = if (subTypes.isEmpty) Nil
-    else subTypes.foldLeft(Seq[Shape]()) { case (acc, nextShape) =>
-      nextShape match {
-        case nestedNode: NodeShape => acc ++ Seq(nestedNode) ++ nestedNode.computeSubtypesClosure
-        case _                     => acc
-      }
-    }
+    val res =
+      if (subTypes.isEmpty) Nil
+      else
+        subTypes.foldLeft(Seq[Shape]()) {
+          case (acc, nextShape) =>
+            nextShape match {
+              case nestedNode: NodeShape => acc ++ Seq(nestedNode) ++ nestedNode.computeSubtypesClosure
+              case _                     => acc
+            }
+        }
     res.distinct
   }
 }
@@ -121,6 +126,8 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
   override def copyShape(): AnyShape = AnyShape(fields.copy(), annotations.copy()).withId(id)
 
   protected def inlined: Boolean = annotations.find(classOf[InlineDefinition]).isDefined
+
+  override def ramlSyntaxKey: String = "anyShape"
 }
 
 object AnyShape {

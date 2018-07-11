@@ -37,6 +37,21 @@ object Raml10Syntax extends RamlSyntax {
       "enum",
       "required"
     ),
+    "anyShape" -> Set(
+      "type",
+      "default",
+      "schema",
+      "example",
+      "examples",
+      "displayName",
+      "description",
+      "facets",
+      "xml",
+      "enum",
+      "required",
+      "example",
+      "examples"
+    ),
     "unionShape" -> Set(
       "type",
       "default",

@@ -24,10 +24,13 @@ case class UnionShape(override val fields: Fields, override val annotations: Ann
   override def copyShape(): UnionShape = UnionShape(fields.copy(), annotations.copy()).withId(id)
 
   def isPolymorphicUnion: Boolean = {
-    anyOf.foldLeft(true) { case (acc, shape) =>
-      acc && shape.isInstanceOf[AnyShape] && shape.asInstanceOf[AnyShape].supportsInheritance
+    anyOf.foldLeft(true) {
+      case (acc, shape) =>
+        acc && shape.isInstanceOf[AnyShape] && shape.asInstanceOf[AnyShape].supportsInheritance
     }
   }
+
+  override def ramlSyntaxKey: String = "unionShape"
 }
 
 object UnionShape {

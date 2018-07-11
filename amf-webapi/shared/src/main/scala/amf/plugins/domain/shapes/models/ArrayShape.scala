@@ -58,6 +58,7 @@ abstract class DataArrangementShape(fields: Fields, annotations: Annotations) ex
     this
   }
 
+  override def ramlSyntaxKey: String = "arrayShape"
 }
 
 case class ArrayShape(override val fields: Fields, override val annotations: Annotations)
@@ -129,7 +130,6 @@ case class TupleShape(override val fields: Fields, override val annotations: Ann
   override def meta: AnyShapeModel = TupleShapeModel
 
   override def copyShape(): TupleShape = TupleShape(fields.copy(), annotations.copy()).withId(id)
-
 }
 
 object TupleShape {

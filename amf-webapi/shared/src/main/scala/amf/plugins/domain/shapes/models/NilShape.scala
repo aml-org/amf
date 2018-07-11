@@ -17,6 +17,7 @@ case class NilShape(override val fields: Fields, override val annotations: Annot
 
   override def copyShape(): NilShape = NilShape(fields.copy(), annotations.copy()).withId(id)
 
+  override def ramlSyntaxKey: String = "shape"
 }
 
 object NilShape {

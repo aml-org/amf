@@ -298,6 +298,17 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
+  test("Invalid payload key - close shape") {
+    validate(
+      "/error/invalid-payload-facet.raml",
+      violation => {
+        violation.level should be("Violation")
+        violation.message should be("Properties typically not supported in a raml 1.0 anyShape node")
+        violation.position.map(_.range) should be(Some(Range((10, 12), (15, 30))))
+      }
+    )
+  }
+
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/raml/"
 
   override protected def build(validation: Validation, file: String): Future[BaseUnit] =

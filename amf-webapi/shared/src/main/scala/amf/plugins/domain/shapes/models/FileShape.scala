@@ -24,6 +24,7 @@ case class FileShape(override val fields: Fields, override val annotations: Anno
 
   override def copyShape(): FileShape = FileShape(fields.copy(), annotations.copy()).withId(id)
 
+  override val ramlSyntaxKey: String = "fileShape"
 }
 
 object FileShape {

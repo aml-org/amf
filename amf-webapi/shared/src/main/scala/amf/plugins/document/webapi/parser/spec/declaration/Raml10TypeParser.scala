@@ -507,7 +507,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
   // The shape definitions are parsed in the common parser of all shapes, not here.
   private def parseCustomShapeFacetInstances(shapeResult: Option[Shape]): Unit = {
     node.value match {
-      case map: YMap if shapeResult.isDefined => ShapeExtensionParser(shapeResult.get, map, ctx).parse()
+      case map: YMap if shapeResult.isDefined => ShapeExtensionParser(shapeResult.get, map, ctx, isAnnotation).parse()
       case _                                  => // ignore if it is not a map or we haven't been able to parse a shape
     }
   }
@@ -726,15 +726,6 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         }
       )
 
-      val syntaxType = shape.dataType.option().getOrElse("#shape").split("#").last match {
-        case "integer" | "float" | "double" | "long" | "number" => "numberScalarShape"
-        case "string"                                           => "stringScalarShape"
-        case "dateTime"                                         => "dateScalarShape"
-        case _                                                  => "shape"
-      }
-
-      ctx.closedRamlTypeShape(shape, map, syntaxType, isAnnotation)
-
       // shape.set(ScalarShapeModel.Repeat, value = false) // 0.8 support, not exists in 1/.0, set default
 
       shape
@@ -783,8 +774,6 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
           }
         }
       )
-
-      ctx.closedRamlTypeShape(shape, map, "unionShape", isAnnotation)
 
       shape
     }
@@ -936,8 +925,6 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         shape.set(ScalarShapeModel.MultipleOf, value.text(), Annotations(entry))
       })
 
-      ctx.closedRamlTypeShape(shape, map, "fileShape", isAnnotation)
-
       shape
     }
   }
@@ -993,7 +980,6 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
       finalShape match {
         case Some(parsed: AnyShape) =>
-          ctx.closedRamlTypeShape(parsed, map, "arrayShape", isAnnotation)
           adopt(parsed)
           parsed
         case _ =>
@@ -1052,8 +1038,6 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             }
           shape.withItems(items.filter(_.isDefined).map(_.get))
       }
-
-      ctx.closedRamlTypeShape(shape, map, "arrayShape", isAnnotation)
 
       shape
     }
@@ -1220,8 +1204,6 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
           shape.set(NodeShapeModel.Dependencies, AmfArray(dependencies, Annotations(entry.value)), Annotations(entry))
         }
       )
-
-      ctx.closedRamlTypeShape(shape, map, "nodeShape", isAnnotation)
 
       shape
     }

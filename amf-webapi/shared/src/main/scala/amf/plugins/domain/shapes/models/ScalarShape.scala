@@ -27,6 +27,13 @@ case class ScalarShape(override val fields: Fields, override val annotations: An
 
   override def copyShape(): ScalarShape = ScalarShape(fields.copy(), annotations.copy()).withId(id)
 
+  override def ramlSyntaxKey: String = dataType.option().getOrElse("#shape").split("#").last match {
+    case "integer" | "float" | "double" | "long" | "number" => "numberScalarShape"
+    case "string"                                           => "stringScalarShape"
+    case "dateTime"                                         => "dateScalarShape"
+    case _                                                  => "shape"
+  }
+
 }
 
 object ScalarShape {
