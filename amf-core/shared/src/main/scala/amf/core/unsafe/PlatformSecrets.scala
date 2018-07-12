@@ -95,4 +95,7 @@ case class TrunkPlatform(content: String, wrappedPlatform: Option[Platform] = No
   override def normalizeURL(url: String): String = url
 
   override def normalizePath(url: String): String = url
+
+  /** Return the OS (win, mac, nux). */
+  override def operativeSystem(): String = throw new Exception("Unsupported operativeSystem operation")
 }

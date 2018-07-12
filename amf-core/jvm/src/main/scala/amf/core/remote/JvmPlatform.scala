@@ -59,6 +59,15 @@ class JvmPlatform extends Platform {
   private def replaceWhiteSpaces(url: String) = url.replaceAll(" ", "%20")
 
   override def normalizePath(url: String): String = new URI(encodeURI(url)).normalize.toString
+
+  /** Return the OS (win, mac, nux). */
+  override def operativeSystem(): String = {
+    System.getProperty("os.name").toLowerCase() match {
+      case os if os.contains("win") => "win"
+      case os if os.contains("mac") => "mac"
+      case _                        => "nux"
+    }
+  }
 }
 
 object JvmPlatform {

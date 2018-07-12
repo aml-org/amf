@@ -156,6 +156,9 @@ trait Platform extends FileMediaType {
   /** Return temporary directory. */
   def tmpdir(): String
 
+  /** Return the OS (win, mac, nux). */
+  def operativeSystem(): String
+
   /** Write specified content on specified file path. */
   protected def writeFile(path: String, content: String): Future[Unit] = fs.asyncFile(path).write(content)
 }

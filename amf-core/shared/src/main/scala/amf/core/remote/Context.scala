@@ -14,12 +14,13 @@ class Context protected (val platform: Platform,
 
   def update(url: String): Context = Context(platform, history, resolve(url), mappings)
 
-  def resolve(url: String): String =
+  def resolve(url: String): String = {
     applyMapping(platform.resolvePath(url match {
       case Absolute(s)               => s
-      case RelativeToRoot(s)         => Context.stripFile(root) + s
-      case RelativeToIncludedFile(s) => Context.stripFile(current) + s
+      case RelativeToRoot(s)         => Context.stripFile(root, platform.operativeSystem()) + s
+      case RelativeToIncludedFile(s) => Context.stripFile(current, platform.operativeSystem()) + s
     }))
+  }
 
   private def applyMapping(path: String): String =
     mappings.find(m => path.startsWith(m._1)).fold(path)(m => path.replace(m._1, m._2))
@@ -42,8 +43,13 @@ object Context {
   def apply(platform: Platform, mapping: Map[String, String]): Context =
     new Context(platform, Nil, mapping)
 
-  private def stripFile(url: String): String =
-    if (url.contains('/')) url.substring(0, url.lastIndexOf('/') + 1) else ""
+  private def stripFile(url: String, so: String): String = {
+    if (url.contains('\\') && so == "win") {
+      url.substring(0, url.lastIndexOf('\\') + 1)
+    } else if (url.contains('/')) {
+      url.substring(0, url.lastIndexOf('/') + 1)
+    } else ""
+  }
 }
 
 private object Absolute {

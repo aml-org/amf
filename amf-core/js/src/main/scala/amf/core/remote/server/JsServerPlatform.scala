@@ -33,10 +33,13 @@ class JsServerPlatform extends JsPlatform {
   override def resolvePath(uri: String): String = {
     uri match {
       case File(path) =>
-        if (path.startsWith("/")) {
-          FILE_PROTOCOL + normalizeURL(path)
-        } else {
-          FILE_PROTOCOL + normalizeURL(withTrailingSlash(path)).substring(1)
+        operativeSystem() match {
+          case "win" =>
+            if (path.startsWith("/")) FILE_PROTOCOL + normalizeURL(path).substring(1)
+            else FILE_PROTOCOL + normalizeURL(withTrailingSlash(path)).substring(1)
+          case _ =>
+            if (path.startsWith("/")) FILE_PROTOCOL + normalizeURL(path)
+            else FILE_PROTOCOL + normalizeURL(withTrailingSlash(path)).substring(1)
         }
 
       case HttpParts(protocol, host, path) => protocol + host + normalizePath(withTrailingSlash(path))
@@ -46,6 +49,14 @@ class JsServerPlatform extends JsPlatform {
 
   private def withTrailingSlash(path: String) = (if (!path.startsWith("/")) "/" else "") + path
 
+  /** Return the OS (win, mac, nux). */
+  override def operativeSystem(): String = {
+    OS.platform() match {
+      case so if so.contains("win")    => "win"
+      case so if so.contains("darwin") => "mac"
+      case _                           => "nux"
+    }
+  }
 }
 
 @JSExportAll
@@ -66,5 +77,8 @@ object JsServerPlatform {
 
     /** Returns the operating system's default directory for temporary files. */
     def tmpdir(): String = js.native
+
+    /** Returns the operating system. */
+    def platform(): String = js.native
   }
 }
