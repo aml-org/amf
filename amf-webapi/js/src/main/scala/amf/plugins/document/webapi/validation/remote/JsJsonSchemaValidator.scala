@@ -60,7 +60,7 @@ object JsJsonSchemaValidator extends PlatformJsonSchemaValidator {
               if (!correct) {
                 validator.errors.toOption.getOrElse(js.Array[ValidationResult]()).map { result =>
                   AMFValidationResult(
-                    message = js.JSON.stringify(result),
+                    message = js.Dynamic.global.JSON.stringify(result).asInstanceOf[String],
                     level = SeverityLevels.VIOLATION,
                     targetNode = payload.encodes.id,
                     targetProperty = None,
@@ -102,7 +102,7 @@ object JsJsonSchemaValidator extends PlatformJsonSchemaValidator {
   }
 
   protected def loadJson(str: String): js.Dynamic = {
-    js.JSON.parse(str)
+    js.Dynamic.global.JSON.parse(str)
   }
 
 }

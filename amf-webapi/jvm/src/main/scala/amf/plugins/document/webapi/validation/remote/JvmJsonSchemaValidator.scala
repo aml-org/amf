@@ -72,8 +72,6 @@ object PartialTimeFormatValidator extends FormatValidator {
 
 object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
 
-  val AML_JSON_SCHEMA = "http://a.aml/amfschema#" // identifier of our custom schema
-
   def validate(validationCandidates: Seq[ValidationCandidate],
                profile: ValidationProfile): Future[AMFValidationReport] = {
 

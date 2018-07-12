@@ -103,7 +103,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     validatePlatform("/production/type_problems1.raml", golden = Some("type_problems1.report"))
   }
 
-  test("Test valid api with type problems 2") {
+  ignore("Test valid api with type problems 2") {
     validatePlatform("/production/type_problems2/api.raml", golden = Some("type_problems2.report"))
   }
 

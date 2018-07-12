@@ -1,0 +1,28 @@
+#%RAML 1.0 Library
+
+types:
+
+  A:
+    type: object
+    properties:
+      a: integer
+
+  B:
+    type: file
+
+  C:
+    type: object
+    properties:
+      a: integer
+      kind: string
+    discriminator: kind
+
+  D:
+    type: C
+    properties:
+      d: string
+
+  E:
+    type: C
+    properties:
+      e: integer

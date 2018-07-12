@@ -16,6 +16,13 @@ import scala.concurrent.Future
 
 class ExampleUnknownException(e: Throwable) extends RuntimeException(e)
 class UnknownDiscriminator() extends RuntimeException
+class UnsupportedMediaType(msg: String) extends Exception(msg)
+
+abstract class PlatformPayloadValidator(shape: AnyShape) {
+
+  def validate(mediaType: String, payload: String): Boolean
+
+}
 
 trait PlatformJsonSchemaValidator {
 

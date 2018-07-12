@@ -8,9 +8,11 @@ import amf.core.utils.Strings
 import amf.core.validation.{AMFValidationReport, SeverityLevels}
 import amf.plugins.document.webapi.annotations.{DeclaredElement, InlineDefinition}
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaSerializer
+import amf.plugins.document.webapi.validation.remote.{PlatformJsonSchemaValidator, PlatformPayloadValidator}
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel._
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
+import amf.plugins.domain.webapi.unsafe.JsonSchemaSecrets
 import org.yaml.model.YPart
 
 import scala.collection.mutable
@@ -79,6 +81,7 @@ trait InheritanceChain { this: AnyShape =>
 
 class AnyShape(val fields: Fields, val annotations: Annotations)
     extends Shape
+    with JsonSchemaSecrets
     with ShapeHelpers
     with JsonSchemaSerializer
     with ExternalSourceElement
@@ -113,6 +116,8 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
 
   def validate(fragment: PayloadFragment): Future[AMFValidationReport] =
     PayloadValidator.validate(this, fragment, SeverityLevels.VIOLATION)
+
+  def payloadValidator(): PlatformPayloadValidator = payloadValidator(this)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/any/" + name.option().getOrElse("default-any").urlComponentEncoded

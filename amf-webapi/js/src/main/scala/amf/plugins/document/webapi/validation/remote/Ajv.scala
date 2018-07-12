@@ -29,9 +29,18 @@ class Ajv(options: js.Object) extends js.Object {
 
 object AjvValidator {
   private lazy val options = js.JSON.parse("{\"schemaId\":\"id\", \"unknownFormats\": [\"int32\", \"int64\", \"int16\", \"float\", \"double\", \"byte\", \"binary\"], \"allErrors\": true, \"validateSchema\": false}").asInstanceOf[js.Object]
+  private lazy val fastOptions = js.JSON.parse("{\"schemaId\":\"id\", \"unknownFormats\": [\"int32\", \"int64\", \"int16\", \"float\", \"double\", \"byte\", \"binary\"], \"allErrors\": false, \"validateSchema\": false}").asInstanceOf[js.Object]
 
   def apply(): Ajv = {
     js.Dynamic.newInstance(nativeAjv)(options).asInstanceOf[Ajv]
+      .addMetaSchema(Draft4MetaSchema.instance)
+      .addFormat("RFC2616", "^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), (0[1-9]|[12][0-9]|3[01]) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) ([0-9]{4}) ([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60) (GMT)$")
+      .addFormat("rfc2616", "^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), (0[1-9]|[12][0-9]|3[01]) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) ([0-9]{4}) ([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60) (GMT)$")
+      .addFormat("date-time-only", "^([0-9]+)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\\.[0-9]+)?$")
+  }
+
+  def fast(): Ajv = {
+    js.Dynamic.newInstance(nativeAjv)(fastOptions).asInstanceOf[Ajv]
       .addMetaSchema(Draft4MetaSchema.instance)
       .addFormat("RFC2616", "^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), (0[1-9]|[12][0-9]|3[01]) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) ([0-9]{4}) ([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60) (GMT)$")
       .addFormat("rfc2616", "^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), (0[1-9]|[12][0-9]|3[01]) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) ([0-9]{4}) ([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60) (GMT)$")
