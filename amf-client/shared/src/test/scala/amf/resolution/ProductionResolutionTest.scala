@@ -1,10 +1,14 @@
 package amf.resolution
 
 import amf.core.emitter.RenderOptions
+import amf.core.metamodel.document.DocumentModel
 import amf.core.model.document.BaseUnit
+import amf.core.parser.ErrorHandler
 import amf.core.remote._
+import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.facades.{AMFCompiler, AMFRenderer, Validation}
 import amf.plugins.document.webapi.{OAS20Plugin, OAS30Plugin, RAML08Plugin, RAML10Plugin}
+import org.scalatest.Assertion
 
 import scala.concurrent.Future
 
@@ -203,4 +207,120 @@ class Raml08ResolutionTest extends RamlResolutionTest {
   test("Test empty trait in operations") {
     cycle("empty-is-operation-endpoint.raml", "empty-is-operation-endpoint.raml.raml", RamlYamlHint, Raml08)
   }
+}
+
+/**
+  * This unit tests run as one, we need several steps to check that the dumped json ld, after resolve types, it's correct.
+  * That means, that not only the graph can be parsed, but also it's similar to the resolved model dumped as raml.
+  * In order to check that, first dump a raml to jsonld to clean the annotations. Then, we parse that jsonld, resolve the model and dump it to raml.
+  * We do that, to get a raml api generated from a resolved model without annotations
+  * After check that, we parse the resolved jsonld model, and generates the raml, to check that the final raml it's equivalent to the raml resolved and dumped.
+  * */
+class ProductionServiceTest extends RamlResolutionTest {
+
+  override def build(config: CycleConfig, given: Option[Validation]): Future[BaseUnit] = {
+    val validation: Future[Validation] = given match {
+      case Some(validation: Validation) => Future { validation }
+      case None                         => Validation(platform)
+    }
+    validation.flatMap { v =>
+      AMFCompiler(s"file://${config.sourcePath}", platform, config.hint, v).build()
+    }
+  }
+  private def dummyFunc: (BaseUnit, CycleConfig) => BaseUnit = (u: BaseUnit, _: CycleConfig) => u
+
+  override val basePath = "amf-client/shared/src/test/resources/production/resolution-dumpjsonld/"
+
+  /* Generate the jsonld from a resolved raml */
+  test("Test step1: resolve and emit jsonld") {
+    run("api.raml", "api.resolved.raml.jsonld", RamlYamlHint, Amf, transform)
+  }
+
+  /* Generate the api resolved directly, without serialize the jsonld */
+  test("Test step2: resolve and emit raml") {
+    run("api.raml", "api.resolved.raml", RamlYamlHint, Raml, transform)
+  }
+
+  /* Generate the jsonld without resolve (to clean the annotations) */
+  test("Test step3: emit jsonld without resolve") {
+    run("api.raml", "api.raml.jsonld", RamlYamlHint, Amf, dummyFunc)
+  }
+
+  /* Generate the resolved raml after read the jsonld(without annotations) */
+  test("Test step4: emit jsonld with resolve") {
+    run("api.raml.jsonld", "api.raml.jsonld.resolved.raml", AmfJsonHint, Raml, transform)
+  }
+
+  /* Now we really test the case, parse the json ld and compare to a similar jsonld (this should have the declarations) */
+  test("Test step5: parse resolved api and dump raml") {
+    run("api.resolved.raml.jsonld", "api.resolved.jsonld.raml", AmfJsonHint, Raml, dummyFunc)
+  }
+
+  /* Generate the raml from a json ld without resolve */
+  test("Test step6: parse resolved api and dump raml") {
+    run("api.raml.jsonld", "api.jsonld.raml", AmfJsonHint, Raml, dummyFunc)
+  }
+
+  /* Generate the raml from a jsonld resolved raml */
+  test("Test step7: emit resolved jsonld and check against normal raml") {
+    run("api.resolved.raml.jsonld", "api.jsonld.raml", AmfJsonHint, Raml, dummyFunc)
+  }
+
+  /* Generate the raml api from a resolved raml to jsonld cleaning the declarations and refs stage */
+  test("Test step8: emit resolved jsonld and check against normal raml") {
+    run(
+      "api.resolved.raml.jsonld",
+      "api.raml.jsonld.resolved.raml",
+      AmfJsonHint,
+      Raml,
+      (u: BaseUnit, _: CycleConfig) => {
+        val resolved = new ReferenceResolutionStage(false)(new ErrorHandler {
+          override val parserCount: Int    = u.parserRun.get
+          override val currentFile: String = u.location().get
+        }).resolve(u)
+        resolved.fields.removeField(DocumentModel.Declares)
+        resolved
+      }
+    )
+  }
+
+  def run(source: String,
+          golden: String,
+          hint: Hint,
+          target: Vendor,
+          tFn: (BaseUnit, CycleConfig) => BaseUnit): Future[Assertion] = {
+
+    val config = CycleConfig(source, golden, hint, target, basePath)
+
+    build(config, None)
+      .map(tFn(_, config))
+      .flatMap(render(_, config))
+      .flatMap(writeTemporaryFile(golden))
+      .flatMap(assertDifferences(_, config.goldenPath))
+  }
+
+//  private def cycle(source: String, directory: String): Future[Assertion] = {
+//
+//    val config = CycleConfig(source, source+".jsonld", RamlYamlHint, Amf, directory)
+//
+//    for{
+//      v <- Validation(platform).map(_.withEnabledValidation(true))
+//      model <- build(config, Some(v))
+//      tr <- Future.successful(transform(model,config))
+//      jsonLd <- AMFRenderer(tr,Amf,Json,RenderOptions()).renderToString
+//      resolvedRaml <- AMFRenderer(tr,Raml,Yaml,RenderOptions()).renderToString
+//      parsedRaml <- AMFCompiler("", TrunkPlatform(jsonLd),AmfJsonHint,v).build()
+//      resolvedParsedRaml <- Future.successful({
+//        val unit = new ValidationResolutionPipeline(RAMLProfile, parsedRaml).resolve()
+//        unit.fields.removeField(DocumentModel.Declares)
+//        unit
+//      })
+//      renderedRaml <-  AMFRenderer(resolvedParsedRaml,Raml,Yaml,RenderOptions()).renderToString
+//      resolvedFile <- writeTemporaryFile("resolved.raml")(resolvedRaml)
+//      renderedFile <- writeTemporaryFile("rendered.raml")(renderedRaml)
+//      r <- Tests.checkDiff(resolvedFile,renderedFile)
+//    } yield {
+//      r
+//    }
+//  }
 }

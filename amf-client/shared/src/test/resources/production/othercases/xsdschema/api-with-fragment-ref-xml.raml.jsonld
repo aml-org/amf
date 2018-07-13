@@ -70,6 +70,30 @@
         ]
       }
     ],
+    "http://a.ml/vocabularies/document#references": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/production/othercases/xsdschema/schema-lib.xsd",
+        "@type": [
+          "http://a.ml/vocabularies/document#ExternalFragment",
+          "http://a.ml/vocabularies/document#Fragment",
+          "http://a.ml/vocabularies/document#Unit"
+        ],
+        "http://a.ml/vocabularies/document#encodes": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/othercases/xsdschema/schema-lib.xsd#/external",
+            "@type": [
+              "http://a.ml/vocabularies/document#ExternalDomainElement",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/document#raw": [
+              {
+                "@value": "<xs:schema attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">\n    <xs:element name=\"office\" type=\"officeType\" />\n    <xs:complexType name=\"officeType\">\n        <xs:sequence>\n            <xs:element name=\"address\">\n                <xs:complexType>\n                    <xs:simpleContent>\n                        <xs:extension base=\"xs:string\">\n                            <xs:attribute type=\"xs:string\" name=\"street\" use=\"required\"/>\n                            <xs:attribute type=\"xs:string\" name=\"number\" use=\"required\"/>\n                            <xs:attribute type=\"xs:string\" name=\"other\"/>\n                            <xs:attribute type=\"xs:string\" name=\"city\" use=\"required\"/>\n                            <xs:attribute type=\"xs:string\" name=\"zipCode\" use=\"required\"/>\n                        </xs:extension>\n                    </xs:simpleContent>\n                </xs:complexType>\n            </xs:element>\n            <xs:element name=\"phoneNumbers\">\n                <xs:complexType>\n                    <xs:sequence>\n                        <xs:element name=\"phoneNumber\">\n                            <xs:complexType>\n                                <xs:simpleContent>\n                                    <xs:extension base=\"xs:string\">\n                                        <xs:attribute type=\"xs:string\" name=\"areaCode\" use=\"required\"/>\n                                        <xs:attribute type=\"xs:string\" name=\"number\" use=\"required\"/>\n                                    </xs:extension>\n                                </xs:simpleContent>\n                            </xs:complexType>\n                        </xs:element>\n                    </xs:sequence>\n                </xs:complexType>\n            </xs:element>\n        </xs:sequence>\n        <xs:attribute type=\"xs:string\" name=\"name\" use=\"required\"/>\n        <xs:attribute type=\"xs:short\" name=\"capacity\"/>\n    </xs:complexType>\n</xs:schema>"
+              }
+            ]
+          }
+        ]
+      }
+    ],
     "http://a.ml/vocabularies/document#declares": [
       {
         "@id": "file://amf-client/shared/src/test/resources/production/othercases/xsdschema/api-with-fragment-ref-xml.raml#/declarations/types/schema/xmlSchema",
@@ -140,30 +164,6 @@
                     "@value": ""
                   }
                 ]
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "http://a.ml/vocabularies/document#references": [
-      {
-        "@id": "file://amf-client/shared/src/test/resources/production/othercases/xsdschema/schema-lib.xsd",
-        "@type": [
-          "http://a.ml/vocabularies/document#ExternalFragment",
-          "http://a.ml/vocabularies/document#Fragment",
-          "http://a.ml/vocabularies/document#Unit"
-        ],
-        "http://a.ml/vocabularies/document#encodes": [
-          {
-            "@id": "file://amf-client/shared/src/test/resources/production/othercases/xsdschema/schema-lib.xsd#/external",
-            "@type": [
-              "http://a.ml/vocabularies/document#ExternalDomainElement",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://a.ml/vocabularies/document#raw": [
-              {
-                "@value": "<xs:schema attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">\n    <xs:element name=\"office\" type=\"officeType\" />\n    <xs:complexType name=\"officeType\">\n        <xs:sequence>\n            <xs:element name=\"address\">\n                <xs:complexType>\n                    <xs:simpleContent>\n                        <xs:extension base=\"xs:string\">\n                            <xs:attribute type=\"xs:string\" name=\"street\" use=\"required\"/>\n                            <xs:attribute type=\"xs:string\" name=\"number\" use=\"required\"/>\n                            <xs:attribute type=\"xs:string\" name=\"other\"/>\n                            <xs:attribute type=\"xs:string\" name=\"city\" use=\"required\"/>\n                            <xs:attribute type=\"xs:string\" name=\"zipCode\" use=\"required\"/>\n                        </xs:extension>\n                    </xs:simpleContent>\n                </xs:complexType>\n            </xs:element>\n            <xs:element name=\"phoneNumbers\">\n                <xs:complexType>\n                    <xs:sequence>\n                        <xs:element name=\"phoneNumber\">\n                            <xs:complexType>\n                                <xs:simpleContent>\n                                    <xs:extension base=\"xs:string\">\n                                        <xs:attribute type=\"xs:string\" name=\"areaCode\" use=\"required\"/>\n                                        <xs:attribute type=\"xs:string\" name=\"number\" use=\"required\"/>\n                                    </xs:extension>\n                                </xs:simpleContent>\n                            </xs:complexType>\n                        </xs:element>\n                    </xs:sequence>\n                </xs:complexType>\n            </xs:element>\n        </xs:sequence>\n        <xs:attribute type=\"xs:string\" name=\"name\" use=\"required\"/>\n        <xs:attribute type=\"xs:short\" name=\"capacity\"/>\n    </xs:complexType>\n</xs:schema>"
               }
             ]
           }

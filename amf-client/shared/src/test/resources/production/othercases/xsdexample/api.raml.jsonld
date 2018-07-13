@@ -70,6 +70,30 @@
         ]
       }
     ],
+    "http://a.ml/vocabularies/document#references": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/production/othercases/xsdexample/example.xsd",
+        "@type": [
+          "http://a.ml/vocabularies/document#ExternalFragment",
+          "http://a.ml/vocabularies/document#Fragment",
+          "http://a.ml/vocabularies/document#Unit"
+        ],
+        "http://a.ml/vocabularies/document#encodes": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/othercases/xsdexample/example.xsd#/external",
+            "@type": [
+              "http://a.ml/vocabularies/document#ExternalDomainElement",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/document#raw": [
+              {
+                "@value": "<Customer>\n    <name>Bart</name>\n    <lastName>Simpson</lastName>\n    <address>\n        <street>evergreen</street>\n        <number>123</number>\n    </address>\n</Customer>"
+              }
+            ]
+          }
+        ]
+      }
+    ],
     "http://a.ml/vocabularies/document#declares": [
       {
         "@id": "file://amf-client/shared/src/test/resources/production/othercases/xsdexample/api.raml#/declarations/types/Customer",
@@ -656,30 +680,6 @@
                     "@value": "[(6,4)-(13,0)]"
                   }
                 ]
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "http://a.ml/vocabularies/document#references": [
-      {
-        "@id": "file://amf-client/shared/src/test/resources/production/othercases/xsdexample/example.xsd",
-        "@type": [
-          "http://a.ml/vocabularies/document#ExternalFragment",
-          "http://a.ml/vocabularies/document#Fragment",
-          "http://a.ml/vocabularies/document#Unit"
-        ],
-        "http://a.ml/vocabularies/document#encodes": [
-          {
-            "@id": "file://amf-client/shared/src/test/resources/production/othercases/xsdexample/example.xsd#/external",
-            "@type": [
-              "http://a.ml/vocabularies/document#ExternalDomainElement",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://a.ml/vocabularies/document#raw": [
-              {
-                "@value": "<Customer>\n    <name>Bart</name>\n    <lastName>Simpson</lastName>\n    <address>\n        <street>evergreen</street>\n        <number>123</number>\n    </address>\n</Customer>"
               }
             ]
           }

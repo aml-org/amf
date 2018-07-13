@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: a
+types:
+  A:
+    items:
+      type: string
+/endpoint:
+  get:
+    body:
+      application/json: A
+  post:
+    body:
+      application/json: A

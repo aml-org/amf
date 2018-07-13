@@ -70,6 +70,35 @@
         ]
       }
     ],
+    "http://a.ml/vocabularies/document#references": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/production/othercases/jsonschema/schema.json",
+        "@type": [
+          "http://a.ml/vocabularies/document#ExternalFragment",
+          "http://a.ml/vocabularies/document#Fragment",
+          "http://a.ml/vocabularies/document#Unit"
+        ],
+        "http://a.ml/vocabularies/document#encodes": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/othercases/jsonschema/schema.json#/external",
+            "@type": [
+              "http://a.ml/vocabularies/document#ExternalDomainElement",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/document#raw": [
+              {
+                "@value": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"$ref\": \"#/definitions/root\",\n  \"definitions\": {\n    \"root\": {\n      \"type\": \"object\",\n      \"additionalProperties\": true,\n      \"required\": [\n        \"age\"\n      ],\n      \"properties\": {\n        \"age\": {\n          \"type\": \"number\"\n        }\n      }\n    }\n  }\n}\n"
+              }
+            ],
+            "http://a.ml/vocabularies/http#mediaType": [
+              {
+                "@value": "application/json"
+              }
+            ]
+          }
+        ]
+      }
+    ],
     "http://a.ml/vocabularies/document#declares": [
       {
         "@id": "file://amf-client/shared/src/test/resources/production/othercases/jsonschema/api.raml#/declarations/types/jsonSchema",
@@ -304,35 +333,6 @@
                     "@value": "[(6,6)-(6,12)]"
                   }
                 ]
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "http://a.ml/vocabularies/document#references": [
-      {
-        "@id": "file://amf-client/shared/src/test/resources/production/othercases/jsonschema/schema.json",
-        "@type": [
-          "http://a.ml/vocabularies/document#ExternalFragment",
-          "http://a.ml/vocabularies/document#Fragment",
-          "http://a.ml/vocabularies/document#Unit"
-        ],
-        "http://a.ml/vocabularies/document#encodes": [
-          {
-            "@id": "file://amf-client/shared/src/test/resources/production/othercases/jsonschema/schema.json#/external",
-            "@type": [
-              "http://a.ml/vocabularies/document#ExternalDomainElement",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://a.ml/vocabularies/document#raw": [
-              {
-                "@value": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"$ref\": \"#/definitions/root\",\n  \"definitions\": {\n    \"root\": {\n      \"type\": \"object\",\n      \"additionalProperties\": true,\n      \"required\": [\n        \"age\"\n      ],\n      \"properties\": {\n        \"age\": {\n          \"type\": \"number\"\n        }\n      }\n    }\n  }\n}\n"
-              }
-            ],
-            "http://a.ml/vocabularies/http#mediaType": [
-              {
-                "@value": "application/json"
               }
             ]
           }

@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
-import amf.core.annotations.ExplicitField
+import amf.core.annotations.{ExplicitField, ResolvedInheritance}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
@@ -116,6 +116,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
     if (endpointSimpleInheritance(shape)) {
       val referencedShape = shape.inherits.head
       aggregateExamples(shape, referencedShape)
+      if (!referencedShape.isInstanceOf[RecursiveShape]) referencedShape.annotations += ResolvedInheritance()
       normalize(referencedShape)
     } else {
       val superTypes = shape.inherits

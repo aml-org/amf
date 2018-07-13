@@ -37,92 +37,6 @@
         }
       }
     ],
-    "doc:declares": [
-      {
-        "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type",
-        "@type": [
-          "shacl:NodeShape",
-          "shacl:Shape",
-          "raml-shapes:Shape",
-          "doc:DomainElement"
-        ],
-        "shacl:closed": [
-          {
-            "@value": false
-          }
-        ],
-        "shacl:property": [
-          {
-            "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name",
-            "@type": [
-              "shacl:PropertyShape",
-              "shacl:Shape",
-              "raml-shapes:Shape"
-            ],
-            "shacl:path": [
-              {
-                "@id": "http://a.ml/vocabularies/data#name"
-              }
-            ],
-            "raml-shapes:range": [
-              {
-                "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name/scalar/name",
-                "@type": [
-                  "raml-shapes:ScalarShape",
-                  "shacl:Shape",
-                  "raml-shapes:Shape",
-                  "doc:DomainElement"
-                ],
-                "shacl:datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "shacl:name": [
-                  {
-                    "@value": "name"
-                  }
-                ],
-                "smaps": {
-                  "type-property-lexical-info": {
-                    "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name/scalar/name": "[(4,4)-(4,8)]"
-                  },
-                  "lexical": {
-                    "shacl:datatype": "[(4,4)-(5,0)]",
-                    "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name/scalar/name": "[(3,2)-(5,0)]"
-                  }
-                }
-              }
-            ],
-            "shacl:minCount": [
-              {
-                "@value": 1
-              }
-            ],
-            "shacl:name": [
-              {
-                "@value": "name"
-              }
-            ],
-            "smaps": {
-              "lexical": {
-                "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name": "[(3,2)-(5,0)]"
-              }
-            }
-          }
-        ],
-        "shacl:name": [
-          {
-            "@value": "person"
-          }
-        ],
-        "smaps": {
-          "lexical": {
-            "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type": "[(2,0)-(5,0)]"
-          }
-        }
-      }
-    ],
     "doc:references": [
       {
         "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.raml",
@@ -211,6 +125,9 @@
               }
             ],
             "smaps": {
+              "resolved-link": {
+                "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type": "file://amf-client/shared/src/test/resources/references/data-type-fragment.reference.raml#/declarations/types/person"
+              },
               "lexical": {
                 "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type": "[(2,0)-(5,0)]"
               }
@@ -220,6 +137,95 @@
         "smaps": {
           "lexical": {
             "file://amf-client/shared/src/test/resources/references/fragments/person.raml": "[(2,0)-(5,0)]"
+          }
+        }
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type",
+        "@type": [
+          "shacl:NodeShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:closed": [
+          {
+            "@value": false
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#name"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name/scalar/name",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "name"
+                  }
+                ],
+                "smaps": {
+                  "type-property-lexical-info": {
+                    "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name/scalar/name": "[(4,4)-(4,8)]"
+                  },
+                  "lexical": {
+                    "shacl:datatype": "[(4,4)-(5,0)]",
+                    "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name/scalar/name": "[(3,2)-(5,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "name"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name": "[(3,2)-(5,0)]"
+              }
+            }
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "person"
+          }
+        ],
+        "smaps": {
+          "resolved-link": {
+            "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type": "file://amf-client/shared/src/test/resources/references/data-type-fragment.reference.raml#/declarations/types/person"
+          },
+          "lexical": {
+            "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type": "[(2,0)-(5,0)]"
           }
         }
       }

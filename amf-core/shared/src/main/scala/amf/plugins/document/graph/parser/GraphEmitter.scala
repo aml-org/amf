@@ -1,9 +1,9 @@
 package amf.plugins.document.graph.parser
 
-import amf.core.annotations.{DomainExtensionAnnotation, ScalarType}
+import amf.core.annotations.{DomainExtensionAnnotation, ResolvedInheritance, ScalarType}
 import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Type.{Any, Array, Bool, EncodedIri, Iri, SortedArray, Str}
-import amf.core.metamodel.document.SourceMapModel
+import amf.core.metamodel.document.{ModuleModel, SourceMapModel}
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ShapeModel}
 import amf.core.metamodel.{Field, MetaModelTypeMapping, Obj, Type}
@@ -12,8 +12,8 @@ import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.{Annotations, FieldEntry, Value}
-import amf.core.vocabulary.{Namespace, ValueType}
 import amf.core.utils._
+import amf.core.vocabulary.{Namespace, ValueType}
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model._
@@ -74,6 +74,24 @@ object DefaultScalarEmitter extends ScalarEmitter
 class EmissionContext(val prefixes: mutable.Map[String, String], var base: String, val options: RenderOptions) {
   var counter: Int = 1
 
+  private val declarations: mutable.LinkedHashSet[AmfElement] = mutable.LinkedHashSet.empty
+
+  private val typeCount: IdCounter = new IdCounter()
+
+  def nextTypeName: String = typeCount.genId("type")
+
+  def +(element: AmfElement): this.type = {
+    declarations += element
+    this
+  }
+
+  def ++(elements: Iterable[AmfElement]): this.type = {
+    declarations ++= elements
+    this
+  }
+
+  def declared: Seq[AmfElement] = declarations.toSeq
+
   def shouldCompact: Boolean                           = options.isCompactUris
   protected def compactAndCollect(uri: String): String = Namespace.compactAndCollect(uri, prefixes)
   def emitIri(uri: String): String                     = if (shouldCompact) compactAndCollect(uri) else uri
@@ -119,12 +137,18 @@ object GraphEmitter extends MetaModelTypeMapping {
   case class Emitter(options: RenderOptions) {
 
     def root(unit: BaseUnit): YDocument = {
-      val ctx = EmissionContext(unit, options)
+      val ctx                            = EmissionContext(unit, options)
+      val maybeEntry: Option[FieldEntry] = unit.fields.entry(ModuleModel.Declares)
+      val elements: Iterable[AmfElement] = maybeEntry.map(_.value.value.asInstanceOf[AmfArray].values).getOrElse(Nil)
+      ctx ++ elements
+      unit.fields.removeField(ModuleModel.Declares)
+
       if (ctx.shouldCompact) {
         YDocument {
           _.list { l =>
             l.obj { o =>
               traverse(unit, o, ctx)
+              emitDeclarations(unit.id, SourceMap(unit.id, unit), o, ctx)
               ctx.emitContext(o)
             }
           }
@@ -132,11 +156,24 @@ object GraphEmitter extends MetaModelTypeMapping {
       } else {
         YDocument {
           _.list {
-            _.obj {
-              traverse(unit, _, ctx)
+            _.obj { o =>
+              traverse(unit, o, ctx)
+              emitDeclarations(unit.id, SourceMap(unit.id, unit), o, ctx)
             }
           }
         }
+      }
+    }
+
+    def emitDeclarations(id: String, sources: SourceMap, b: EntryBuilder, ctx: EmissionContext): Unit = {
+      if (ctx.declared.nonEmpty) {
+        val v   = Value(AmfArray(ctx.declared), Annotations())
+        val f   = ModuleModel.Declares
+        val url = ctx.emitIri(f.value.iri())
+        b.entry(
+          url,
+          value(f.`type`, v, id, sources.property(url), _, ctx)
+        )
       }
     }
 
@@ -367,6 +404,8 @@ object GraphEmitter extends MetaModelTypeMapping {
                       ctx: EmissionContext): Unit = {
       val scalarEmitter = options.getCustomEmitter.getOrElse(DefaultScalarEmitter)
       t match {
+        case _: ShapeModel if Seq(classOf[ResolvedInheritance]).exists(v.value.annotations.contains(_)) =>
+          extractToLink(v.value.asInstanceOf[Shape], b, ctx)
         case t: DomainElement with Linkable if t.isLink =>
           link(b, t, inArray = false, ctx)
           sources(v)
@@ -506,6 +545,12 @@ object GraphEmitter extends MetaModelTypeMapping {
       def emit(b: PartBuilder): Unit = b.obj(traverse(element, _, ctx))
 
       if (inArray) emit(b) else b.list(emit)
+    }
+
+    private def extractToLink(shape: Shape, b: PartBuilder, ctx: EmissionContext): Unit = {
+      ctx + shape
+      val linked = shape.link[Shape](shape.name.option().getOrElse(ctx.nextTypeName))
+      link(b, linked, inArray = false, ctx)
     }
 
     private def link(b: PartBuilder,

@@ -53,32 +53,6 @@
         ]
       }
     ],
-    "http://a.ml/vocabularies/document#declares": [
-      {
-        "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.raml#/declarations/person",
-        "@type": [
-          "http://www.w3.org/ns/shacl#NodeShape",
-          "http://www.w3.org/ns/shacl#Shape",
-          "http://a.ml/vocabularies/shapes#Shape",
-          "http://a.ml/vocabularies/document#DomainElement"
-        ],
-        "http://a.ml/vocabularies/document#link-target": [
-          {
-            "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type"
-          }
-        ],
-        "http://a.ml/vocabularies/document#link-label": [
-          {
-            "@value": "fragments/person.raml"
-          }
-        ],
-        "http://www.w3.org/ns/shacl#name": [
-          {
-            "@value": "person"
-          }
-        ]
-      }
-    ],
     "http://a.ml/vocabularies/document#references": [
       {
         "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.raml",
@@ -259,6 +233,32 @@
                 ]
               }
             ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#declares": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.raml#/declarations/person",
+        "@type": [
+          "http://www.w3.org/ns/shacl#NodeShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/document#link-target": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type"
+          }
+        ],
+        "http://a.ml/vocabularies/document#link-label": [
+          {
+            "@value": "fragments/person.raml"
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
+          {
+            "@value": "person"
           }
         ]
       }

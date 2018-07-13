@@ -1,6 +1,6 @@
 package amf.core.resolution.stages
 
-import amf.core.annotations.ResolvedLinkAnnotation
+import amf.core.annotations.{ResolvedInheritance, ResolvedLinkAnnotation}
 import amf.core.metamodel.document.DocumentModel
 import amf.core.metamodel.domain.ExternalSourceElementModel
 import amf.core.model.document.{BaseUnit, Document, EncodesModel}
@@ -122,10 +122,12 @@ class ReferenceResolutionStage(
           case Some(elem) =>
             val resolved = new ResolvedLinkNode(l, elem).withId(l.id)
             if (keepEditingInfo) resolved.annotations += ResolvedLinkAnnotation(l.id)
+            resolved.annotations += ResolvedInheritance()
             Some(resolved)
           case None if l.linkedDomainElement.isDefined =>
             val resolved = new ResolvedLinkNode(l, l.linkedDomainElement.get).withId(l.id)
             if (keepEditingInfo) resolved.annotations += ResolvedLinkAnnotation(l.id)
+            resolved.annotations += ResolvedInheritance()
             Some(resolved)
           case _ =>
             Some(l)
@@ -148,6 +150,7 @@ class ReferenceResolutionStage(
         if (resolved.isInstanceOf[Linkable] && l.supportsRecursion.option().getOrElse(false))
           resolved.asInstanceOf[Linkable].withSupportsRecursion(true)
         if (keepEditingInfo) resolved.annotations += ResolvedLinkAnnotation(l.id)
+        resolved.annotations += ResolvedInheritance()
         Some(customDomainElementTransformation(withName(resolved, l), l))
 
       case l: Linkable if l.linkTarget.isDefined && isCycle =>
