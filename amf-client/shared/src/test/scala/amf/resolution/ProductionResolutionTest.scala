@@ -67,6 +67,13 @@ class ProductionResolutionTest extends RamlResolutionTest {
           Raml)
   }
 
+  test("Resolves googleapis.compredictionv1.2swagger.raml to jsonld") {
+    cycle("googleapis.compredictionv1.2swagger.raml",
+          "googleapis.compredictionv1.2swagger.raml.resolved.jsonld",
+          RamlYamlHint,
+          Amf)
+  }
+
   test("test definition_loops input") {
     cycle("crossfiles2.raml", "crossfiles2.resolved.raml", RamlYamlHint, Raml, basePath + "definitions-loops/")
   }
