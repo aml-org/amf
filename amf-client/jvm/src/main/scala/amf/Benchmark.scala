@@ -1,9 +1,9 @@
-package amf.facades
+package amf
 
-import amf.RAMLProfile
 import amf.core.benchmark.ExecutionLog
 import amf.core.remote.RamlYamlHint
 import amf.core.unsafe.PlatformSecrets
+import amf.facades.{AMFCompiler, Validation}
 
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
