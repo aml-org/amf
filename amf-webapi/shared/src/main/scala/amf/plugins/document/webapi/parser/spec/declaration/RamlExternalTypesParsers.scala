@@ -5,15 +5,7 @@ import amf.core.annotations.LexicalInformation
 import amf.core.annotations.ExternalFragmentRef
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.{AmfScalar, Shape}
-import amf.core.parser.{
-  Annotations,
-  InferredLinkReference,
-  ParsedDocument,
-  ParsedReference,
-  Reference,
-  ReferenceFragmentPartition,
-  _
-}
+import amf.core.parser.{Annotations, InferredLinkReference, ParsedDocument, ParsedReference, Reference, ReferenceFragmentPartition, _}
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.core.utils.Strings
 import amf.plugins.document.webapi.annotations.{JSONSchemaId, ParsedJSONSchema}
@@ -22,7 +14,7 @@ import amf.plugins.document.webapi.parser.spec.domain.NodeDataNodeParser
 import amf.plugins.document.webapi.parser.spec.oas.Oas2DocumentParser
 import amf.plugins.document.webapi.parser.spec.raml.RamlSpecParser
 import amf.plugins.document.webapi.parser.spec.toOas
-import amf.plugins.domain.shapes.metamodel.SchemaShapeModel
+import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, SchemaShapeModel}
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape, UnresolvedShape}
 import org.mulesoft.lexer.CharSequenceLexerInput
 import org.yaml.lexer.YamlLexer
@@ -51,6 +43,12 @@ case class RamlJsonSchemaExpression(name: String,
             ctx.declarations.fragments
               .get(path)
               .foreach(e => shape.withReference(e.encoded.id + extFrament.getOrElse("")))
+            if (shape.examples.nonEmpty) { // top level inlined shape, we don't want to reuse the ID, this must be an included JSON schema => EDGE CASE!
+              shape.id = null
+              adopt(shape)
+              // We remove the examples declared in the previous endpoint for this inlined shape , see previous comment about the edge case
+              shape.fields.remove(AnyShapeModel.Examples.value.iri())
+            }
             shape
           case _ if fragment.isDefined => // oas lib
             RamlExternalOasLibParser(ctx, origin.text, origin.valueAST, path).parse()

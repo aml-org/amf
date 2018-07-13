@@ -111,5 +111,9 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     validatePlatform("/production/type_problems3.raml", golden = Some("type_problems3.report"))
   }
 
+  test("HERE_HERE Test api with duplciated null keys") {
+    validatePlatform("/production/null-keys/api.raml", golden = Some("null-keys.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

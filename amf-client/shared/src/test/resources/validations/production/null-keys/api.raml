@@ -1,0 +1,24 @@
+#%RAML 1.0
+baseUri: http://test.com
+version: v2
+title: test
+
+
+/Usuario:
+  post:
+    body:
+      application/json:
+        schema: !include include.schema
+        example: |
+          {
+            "b": 1
+          }
+
+  delete:
+    body:
+      application/json:
+        schema: !include include.schema
+        example: |
+          {
+            "b": "3"
+          }
