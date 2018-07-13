@@ -2,7 +2,7 @@ package amf.validation
 
 import amf.core.remote.{Hint, RamlYamlHint}
 
-class RamlModelValidationReportTest extends ValidationReportGenTest {
+class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   override val basePath    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath = "amf-client/shared/src/test/resources/validations/reports/model/"
@@ -105,6 +105,14 @@ class RamlModelValidationReportTest extends ValidationReportGenTest {
 
   test("Test extension without extends") {
     validate("/extends/Overlay-Extension/extension.raml", Some("extension-without-extends.report"))
+  }
+
+  test("Test maxProperties and minProperties constraint between facets") {
+    validate("/facets/min-max-properties-between.raml", Some("min-max-properties-between.report"))
+  }
+
+  test("Test variable not implemented in resource type use") {
+    validate("/resource_types/variable-not-implemented-resourcetype.raml",Some("variable-not-implemented-resourcetype.report"))
   }
 
   override val hint: Hint = RamlYamlHint

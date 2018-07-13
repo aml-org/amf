@@ -320,6 +320,10 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
+  test("Test invalid map in resource type use") {
+    validate("/valid/invalid-map-resource-type.raml")
+  }
+
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/raml/"
 
   override protected def build(validation: Validation, file: String): Future[BaseUnit] =

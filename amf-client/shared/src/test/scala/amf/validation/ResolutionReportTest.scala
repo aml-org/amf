@@ -1,7 +1,7 @@
 package amf.validation
 import amf.core.remote.{Hint, RamlYamlHint}
 
-class ResolutionReportTest extends ResolutionForValidationReportTest {
+class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
 
   override val basePath = "file://amf-client/shared/src/test/resources/validations"
 

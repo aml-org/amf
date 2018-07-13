@@ -1,0 +1,35 @@
+#%RAML 0.8
+title: SAP Customer API
+
+
+/customer/{custname}:
+  post:
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "Name" : "Airlight",
+                "SAP#" : "00093401"
+              }
+            schema: |
+              {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "id": "http://jsonschema.net",
+                "type": "object",
+                "properties": {
+                "Name": {
+                  "id": "http://jsonschema.net/Name",
+                  "type": "string"
+                },
+                "SAP#": {
+                  "id": "http://jsonschema.net/SAP#",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "Name",
+                "SAP#"
+              ]
+              }

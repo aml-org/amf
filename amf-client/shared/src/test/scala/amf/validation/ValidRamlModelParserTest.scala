@@ -86,5 +86,13 @@ class ValidRamlModelParserTest extends ValidModelTest {
   test("Test optional node in resource type without var") {
     checkValid("/resource_types/optional-node.raml")
   }
+
+  test("Test array without item type validation") {
+    checkValid("/types/arrays/array-without-items.raml")
+  }
+
+  test("Test media type with + char in resource type") {
+    checkValid("/resource_types/media-type-resource-type.raml")
+  }
   override val hint: Hint = RamlYamlHint
 }

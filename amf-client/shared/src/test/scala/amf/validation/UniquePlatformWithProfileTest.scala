@@ -5,7 +5,7 @@ import amf.core.remote.{Hint, RamlYamlHint}
 import amf.core.validation.AMFValidationReport
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 
-class ValidationWithProfileTest extends ValidationReportGenTest {
+class UniquePlatformWithProfileTest extends UniquePlatformReportGenTest {
 
   override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/with-profiles/"

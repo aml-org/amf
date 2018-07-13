@@ -10,7 +10,7 @@ import _root_.org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.Future
 
-trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTest {
+sealed trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTest {
 
   val basePath: String
   val reportsPath: String
@@ -49,29 +49,24 @@ trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTest {
       _          <- if (profileFile.isDefined) validation.loadValidationProfile(basePath + profileFile.get) else Future.unit
       model      <- AMFCompiler(basePath + api, platform, RamlYamlHint, validation).build()
       report     <- validation.validate(model, profile)
-      r          <- handleReport(report, golden)
+      r          <- handleReport(report, golden.map(processGolden))
     } yield {
       r
     }
   }
 
-  protected def validatePlatform(api: String,
-                                 golden: Option[String] = None,
-                                 profile: ProfileName = defaultProfile,
-                                 profileFile: Option[String] = None): Future[Assertion] = {
-    for {
-      validation <- Validation(platform)
-      _          <- if (profileFile.isDefined) validation.loadValidationProfile(basePath + profileFile.get) else Future.unit
-      model      <- AMFCompiler(basePath + api, platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, profile)
-      r          <- handleReport(report, golden.map { g => g + s".${platform.name}"})
-    } yield {
-      r
-    }
-  }
+  protected def processGolden(g:String): String
 }
 
-trait ResolutionForValidationReportTest extends ValidationReportGenTest {
+trait UniquePlatformReportGenTest extends ValidationReportGenTest{
+  override protected def processGolden(g:String): String = g
+}
+
+trait MultiPlatformReportGenTest extends ValidationReportGenTest{
+  override protected def processGolden(g:String): String = g + s".${platform.name}"
+}
+
+trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   protected def checkReport(api: String,
                             golden: Option[String] = None,
@@ -93,14 +88,11 @@ trait ResolutionForValidationReportTest extends ValidationReportGenTest {
   }
 }
 
-trait ValidModelTest extends ValidationReportGenTest {
+trait ValidModelTest extends MultiPlatformReportGenTest {
   override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath: String = ""
 
   protected def checkValid(api: String, profile: ProfileName = RAMLProfile): Future[Assertion] =
     super.validate(api, None, profile, None)
-
-  protected def checkValidPlatform(api: String, profile: ProfileName = RAMLProfile): Future[Assertion] =
-    super.validatePlatform(api, None, profile, None)
 
 }

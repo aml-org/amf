@@ -2,7 +2,7 @@ package amf.validation
 
 import amf.core.remote.{Hint, OasJsonHint}
 
-class OasModelValidationReportTest extends ValidationReportGenTest {
+class OasModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   override val basePath    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath = "amf-client/shared/src/test/resources/validations/reports/model/"

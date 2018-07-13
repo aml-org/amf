@@ -1,7 +1,7 @@
 package amf.validation
 
-import amf.RAML08Profile
 import amf.core.remote.{Hint, RamlYamlHint}
+import amf.{AMFProfile, RAML08Profile}
 
 class ValidApiExamplesValidationTest extends ValidModelTest {
 
@@ -84,36 +84,55 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Test declared type with two uses adding example") {
-    validatePlatform("/examples/declared-type-ref-add-example.raml", golden = Some("declared-type-ref-add-example.report"))
+    validate("/examples/declared-type-ref-add-example.raml", golden = Some("declared-type-ref-add-example.report"))
   }
 
   test("Test validate declared type with two uses") {
-    validatePlatform("/examples/declared-type-ref.raml", golden = Some("declared-type-ref.report"))
+    validate("/examples/declared-type-ref.raml", golden = Some("declared-type-ref.report"))
   }
 
   test("Test valid string hierarchy examples") {
-    validatePlatform("/examples/string-hierarchy.raml", golden = Some("string-hierarchy.report"))
+    validate("/examples/string-hierarchy.raml", golden = Some("string-hierarchy.report"))
   }
 
   test("Test valid api with pattern properties") {
-    validatePlatform("/production/pattern_properties.raml", golden = Some("production_pattern_properties.report"))
+    validate("/production/pattern_properties.raml", golden = Some("production_pattern_properties.report"))
   }
 
   test("Test valid api with type problems 1") {
-    validatePlatform("/production/type_problems1.raml", golden = Some("type_problems1.report"))
+    validate("/production/type_problems1.raml", golden = Some("type_problems1.report"))
   }
 
   ignore("Test valid api with type problems 2") {
-    validatePlatform("/production/type_problems2/api.raml", golden = Some("type_problems2.report"))
+    validate("/production/type_problems2/api.raml", golden = Some("type_problems2.report"))
   }
 
   test("Test valid api with type problems 3") {
-    validatePlatform("/production/type_problems3.raml", golden = Some("type_problems3.report"))
+    validate("/production/type_problems3.raml", golden = Some("type_problems3.report"))
   }
 
   test("HERE_HERE Test api with duplciated null keys") {
-    validatePlatform("/production/null-keys/api.raml", golden = Some("null-keys.report"))
+    validate("/production/null-keys/api.raml", golden = Some("null-keys.report"))
   }
 
+  test("Valid type example 1 test") {
+    validate("/examples/validex1.raml", profile = AMFProfile)
+  }
+
+  test("Valid type example 2 test") {
+    validate("/examples/validex2.raml", profile = AMFProfile)
+  }
+
+  test("Test validate trait with quoted string example variable") {
+    validate("/traits/trait-string-quoted-node.raml", profile = AMFProfile)
+  }
+
+  test("Test properties with special names") {
+    validate("/property-names.raml", profile = AMFProfile)
+  }
+
+  test("Test enum number in string format validation") {
+    checkValid("/examples/enum-number-string/api.raml")
+  }
   override val hint: Hint = RamlYamlHint
 }
