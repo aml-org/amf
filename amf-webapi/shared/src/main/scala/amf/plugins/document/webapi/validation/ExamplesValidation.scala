@@ -65,6 +65,7 @@ class ExamplesValidationCollector(model: BaseUnit) {
       else
         PayloadFragment(ScalarNode(example.raw.value(), None, example.annotations), mediaType) // todo: review with antonio
 
+    fragment.withRaw(example.raw.value())
     fragment.encodes.withId(example.id)
     fragment
   }

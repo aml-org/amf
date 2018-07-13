@@ -3,6 +3,7 @@ package amf.client.model.domain
 import amf.client.convert.WebApiClientConverters._
 import amf.client.model.document.PayloadFragment
 import amf.client.validate.ValidationReport
+import amf.client.validation.PayloadValidator
 import amf.plugins.domain.shapes.models.{AnyShape => InternalAnyShape}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -44,6 +45,8 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
 
   def validate(fragment: PayloadFragment): ClientFuture[ValidationReport] =
     _internal.validate(fragment._internal).asClient
+
+  def payloadValidator(): PayloadValidator = new PayloadValidator(_internal.payloadValidator())
 
   /** Aux method to know when the shape is instance only of any shape
     * and it's because was parsed from

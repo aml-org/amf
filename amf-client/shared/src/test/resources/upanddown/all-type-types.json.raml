@@ -10,7 +10,8 @@ types:
   DateTimeOnlyType:
     type: datetime-only
   TimeOnlyType:
-    type: time-only
+    type: string
+    (amf-format): time
   UnionType:
     anyOf:
       -
@@ -30,7 +31,8 @@ types:
   DateTimeType:
     type: datetime
   DateOnlyType:
-    type: date-only
+    type: string
+    (amf-format): date
   BooleanType:
     type: boolean
   ObjectType:

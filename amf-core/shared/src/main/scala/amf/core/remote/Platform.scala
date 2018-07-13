@@ -5,8 +5,7 @@ import amf.client.remote.Content
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfObject, DomainElement}
-import amf.core.rdf.{RdfFramework, RdfModel}
-import amf.core.validation.core.SHACLValidator
+import amf.core.rdf.RdfFramework
 import amf.core.vocabulary.Namespace
 import amf.internal.environment.Environment
 import amf.internal.resource.ResourceLoader
@@ -40,6 +39,8 @@ object FileMediaType extends FileMediaType
   *
   */
 trait Platform extends FileMediaType {
+
+  def name: String = "gen"
 
   def findCharInCharSequence(s: CharSequence)(p: Char => Boolean): Option[Char]
 

@@ -13,6 +13,7 @@ import amf.plugins.document.webapi.{OAS20Plugin, OAS30Plugin, RAML08Plugin, RAML
 import amf.resolution.ResolutionTest
 import _root_.org.mulesoft.common.io.{Fs, SyncFile}
 import _root_.org.scalatest.compatible.Assertion
+import amf.core.vocabulary.Namespace
 
 import scala.concurrent.Future
 
@@ -20,14 +21,17 @@ trait ModelValidationTest extends DirectoryTest {
 
   override def ignorableExtention: String = ".ignore"
 
-  override def runDirectory(d: String): Future[String] = {
+  override def runDirectory(d: String): Future[(String, Boolean)] = {
     for {
       validation <- Validation(platform)
       model      <- AMFCompiler(s"file://${d + inputFileName}", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, profileFromModel(model))
-      output     <- renderOutput(d, model, report)
+      report     <- { validation.validate(model, profileFromModel(model)) }
+      output     <- { renderOutput(d, model, report) }
     } yield {
-      output
+      // we only need to use the platform if there are errors in examples, this is what causes differences due to
+      // the different JSON-Schema libraries used in JS and the JVM
+      val usePlatform = !report.conforms && report.results.exists(_.validationId == (Namespace.AmfParser + "exampleError").iri())
+      (output, usePlatform)
     }
   }
 
@@ -127,20 +131,21 @@ trait DirectoryTest extends ResolutionTest {
     result
   }
 
-  def runDirectory(d: String): Future[String]
+  def runDirectory(d: String): Future[(String, Boolean)]
 
   case class directoryResult(outputFile: String, goldenFile: String)
 
   private def validDir(files: List[SyncFile]): Boolean = {
     val fileNames = files.map(_.name)
     files.nonEmpty && fileNames.contains(inputFileName) && (fileNames.contains(outputFileName) || fileNames.contains(
-      outputFileName concat ignorableExtention))
+      outputFileName concat ignorableExtention) || fileNames.contains(outputFileName + s".${platform.name}"))
   }
 
   private def testFunction(d: String): Future[Assertion] = {
-    runDirectory(d).flatMap { t =>
-      writeTemporaryFile(outputFileName)(t)
-        .flatMap(assertDifferences(_, s"${d + outputFileName}"))
+    runDirectory(d).flatMap { case (t, usePlatform) =>
+      val finalOutputFileName = if (usePlatform) outputFileName + s".${platform.name}" else outputFileName
+      writeTemporaryFile(finalOutputFileName)(t)
+        .flatMap(assertDifferences(_, s"${d + finalOutputFileName}"))
     }
   }
   directories.foreach(d => {

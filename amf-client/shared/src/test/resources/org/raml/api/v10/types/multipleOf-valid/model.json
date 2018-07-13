@@ -1,30 +1,27 @@
-Model: file://amf-client/shared/src/test/resources/org/raml/api/v10/types/multipleOf-valid/input.raml
-Profile: RAML
-Conforms? false
-Number of results: 3
-
-Level: Violation
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/types/multipleOf-valid/input.raml#/declarations/types/Foo/property/amount/scalar/amount_validation_validation_multipleOf/prop
-  Message: Data at is not a multipleOf '0.01'
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/types/multipleOf-valid/input.raml#/declarations/types/Foo/property/amount/scalar/amount/example/valid1
-  Property: http://a.ml/vocabularies/data#value
-  Position: Some(LexicalInformation([(12,18)-(12,24)]))
-  Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/types/multipleOf-valid/input.raml
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/types/multipleOf-valid/input.raml#/declarations/types/Foo/property/amount/scalar/amount_validation_validation_multipleOf/prop
-  Message: Data at is not a multipleOf '0.01'
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/types/multipleOf-valid/input.raml#/declarations/types/Foo/property/amount/scalar/amount/example/valid2
-  Property: http://a.ml/vocabularies/data#value
-  Position: Some(LexicalInformation([(13,18)-(13,23)]))
-  Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/types/multipleOf-valid/input.raml
-
-- Source: file://amf-client/shared/src/test/resources/org/raml/api/v10/types/multipleOf-valid/input.raml#/declarations/types/Foo/property/amount/scalar/amount_validation_validation_multipleOf/prop
-  Message: Data at is not a multipleOf '0.01'
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/types/multipleOf-valid/input.raml#/declarations/types/Foo/property/amount/scalar/amount/example/valid3
-  Property: http://a.ml/vocabularies/data#value
-  Position: Some(LexicalInformation([(14,18)-(14,21)]))
-  Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/types/multipleOf-valid/input.raml
+#%RAML 1.0
+title: Test
+types:
+  Foo:
+    additionalProperties: true
+    properties:
+      amount:
+        type: number
+        multipleOf: 0.01
+        examples:
+          valid1: 100.22
+          valid2: 100.0
+          valid3: 100
+        required: true
+  Fee:
+    additionalProperties: true
+    properties:
+      amount:
+        type: number
+        multipleOf: 2
+        examples:
+          valid1: 100
+          valid2: 100.0
+          valid3: 100.00
+          valid4: 2
+          valid5: 4
+        required: true

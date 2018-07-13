@@ -1,0 +1,32 @@
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/multiple-inheritance-validation/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance type (string) does not match any allowed primitive type (allowed: ["integer"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/properties/age"}
+    instance: {"pointer":"/age"}
+    domain: "validation"
+    keyword: "type"
+    found: "string"
+    expected: ["integer"]
+
+error: instance type (integer) does not match any allowed primitive type (allowed: ["string"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/properties/id"}
+    instance: {"pointer":"/id"}
+    domain: "validation"
+    keyword: "type"
+    found: "integer"
+    expected: ["string"]
+
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/multiple-inheritance-validation/input.raml#/web-api/end-points/%2Fresource/get/200/application%2Fjson/schema/example/default-example
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/multiple-inheritance-validation/input.raml#/web-api/end-points/%2Fresource/get/200/application%2Fjson/schema/example/default-example
+  Position: Some(LexicalInformation([(27,0)-(29,25)]))
+  Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/multiple-inheritance-validation/input.raml

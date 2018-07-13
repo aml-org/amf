@@ -323,6 +323,7 @@ abstract class OasSpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) ext
     factory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel.option(), Nil)
 
   val factory: OasSpecEmitterFactory
+  val jsonPointersMap: mutable.Map[String,String] = mutable.Map() // id -> pointer
 }
 
 class Oas3SpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) extends OasSpecEmitterContext(refEmitter) {

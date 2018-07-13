@@ -23,9 +23,11 @@ class ShapeNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean
     extends ResolutionStage()
     with MetaModelTypeMapping {
 
+  protected var m: Option[BaseUnit] = None
   protected val context = new NormalizationContext(errorHandler, keepEditingInfo, profile)
 
   override def resolve[T <: BaseUnit](model: T): T = {
+    m = Some(model)
     model.transform(findShapesPredicate, transform).asInstanceOf[T]
   }
 

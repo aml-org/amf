@@ -4,6 +4,7 @@ import amf.core.annotations.{LexicalInformation, SynthesizedField}
 import amf.core.metamodel.domain.ExternalSourceElementModel
 import amf.core.model.domain.{AmfScalar, DataNode}
 import amf.core.parser.{Annotations, ScalarNode, _}
+import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
@@ -211,6 +212,11 @@ case class RamlExampleValueAsString(node: YNode, example: Example, options: Exam
     val result = NodeDataNodeParser(targetNode, example.id, options.quiet, mutTarget).parse()
 
     result.dataNode.foreach { dataNode =>
+      // If this example comes from a 08 param with type string, we force this to be a string
+      if (options.paramString && dataNode.isInstanceOf[amf.core.model.domain.ScalarNode]) {
+        val scalar = dataNode.asInstanceOf[amf.core.model.domain.ScalarNode]
+        scalar.dataType = Some((Namespace.Xsd + "string").iri())
+      }
       example.set(ExampleModel.StructuredValue, dataNode, Annotations(node))
     }
 
@@ -256,6 +262,6 @@ case class NodeDataNodeParser(node: YNode, parentId: String, quiet: Boolean, fro
 
 case class DataNodeParserResult(exampleNode: Option[YNode], dataNode: Option[DataNode]) {}
 
-case class ExampleOptions(strictDefault: Boolean, quiet: Boolean)
+case class ExampleOptions(strictDefault: Boolean, quiet: Boolean, paramString: Boolean = false)
 
 object DefaultExampleOptions extends ExampleOptions(true, false)

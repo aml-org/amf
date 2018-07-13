@@ -1,0 +1,26 @@
+Model: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml
+Profile: RAML
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: {"schemaLocation":"#/properties/foo/anyOf/0","pointerToViolation":"#/foo","causingExceptions":[],"keyword":"additionalProperties","message":"extraneous key [bar] is not permitted"}
+{"schemaLocation":"#/properties/foo/anyOf/1","pointerToViolation":"#/foo","causingExceptions":[],"keyword":"type","message":"expected type: Boolean, found: JSONObject"}
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/schema/example/default-example
+  Property: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/schema/example/default-example
+  Position: Some(LexicalInformation([(48,0)-(51,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: {"schemaLocation":"#/properties/foo/anyOf/0/properties/foo","pointerToViolation":"#/foo/foo","causingExceptions":[{"schemaLocation":"#","pointerToViolation":"#/foo/foo","causingExceptions":[],"keyword":"type","message":"expected type: JSONObject, found: String"},{"schemaLocation":"#/properties/foo/anyOf/0/properties/foo/anyOf/1","pointerToViolation":"#/foo/foo","causingExceptions":[],"keyword":"type","message":"expected type: Boolean, found: String"}],"keyword":"anyOf","message":"#: no subschema matched out of the total 2 subschemas"}
+{"schemaLocation":"#/properties/foo/anyOf/1","pointerToViolation":"#/foo","causingExceptions":[],"keyword":"type","message":"expected type: Boolean, found: JSONObject"}
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/schema/example/default-example
+  Property: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/schema/example/default-example
+  Position: Some(LexicalInformation([(59,0)-(60,27)]))
+  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml

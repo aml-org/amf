@@ -30,34 +30,38 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
     ("payloads.raml", "B", "b_valid.yaml")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
     ("payloads.raml", "B", "b_invalid.yaml")               -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
     ("payloads.raml", "C", "c_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
-    ("payloads.raml", "C", "c_invalid.json")               -> ExpectedReport(conforms = false, 8, PAYLOADProfile),
+    ("payloads.raml", "C", "c_invalid.json")               -> ExpectedReport(conforms = false, 4, PAYLOADProfile),
     ("payloads.raml", "D", "d_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
-    ("payloads.raml", "D", "d_invalid.json")               -> ExpectedReport(conforms = false, 5, PAYLOADProfile),
+    // jvm reports the failures in the inner node and the failed value for the property connecting the inner node,
+    // js only reports the failed properties in the inner node
+    ("payloads.raml", "D", "d_invalid.json")               -> ExpectedReport(conforms = false, 2, PAYLOADProfile, jsNumErrors = Some(2)),
     ("payloads.raml", "E", "e_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
     ("payloads.raml", "E", "e_invalid.json")               -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
     ("payloads.raml", "F", "f_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
     ("payloads.raml", "F", "f_invalid.json")               -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
     ("payloads.raml", "G", "g1_valid.json")                -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
     ("payloads.raml", "G", "g2_valid.json")                -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
-    ("payloads.raml", "G", "g_invalid.json")               -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
+    // jvm reports two nested error for the anyOf
+    // js reports an error for each failed shape and one more for the fialed anyOf
+    ("payloads.raml", "G", "g_invalid.json")               ->  ExpectedReport(conforms = false, 2, PAYLOADProfile, jsNumErrors = Some(3)),
     ("payloads.raml", "H", "h_invalid.json")               -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
     ("payloads.raml", "PersonData", "person_valid.yaml")   -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
-    ("payloads.raml", "PersonData", "person_invalid.yaml") -> ExpectedReport(conforms = false, 2, PAYLOADProfile),
+    ("payloads.raml", "PersonData", "person_invalid.yaml") -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
     ("payloads.raml", "CustomerData", "customer_data_valid.yaml") -> ExpectedReport(conforms = true,
                                                                                     0,
                                                                                     PAYLOADProfile),
     ("payloads.raml", "CustomerData", "person_valid.yaml")   -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
-    ("payloads.raml", "CustomerData", "person_invalid.yaml") -> ExpectedReport(conforms = false, 2, PAYLOADProfile),
+    ("payloads.raml", "CustomerData", "person_invalid.yaml") -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
     ("test_cases.raml", "A", "test_case_a_valid.json")       -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
-    ("test_cases.raml", "A", "test_case_a_invalid.json")     -> ExpectedReport(conforms = false, 2, PAYLOADProfile),
+    ("test_cases.raml", "A", "test_case_a_invalid.json")     -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
     ("test_cases.raml", "A", "test_case_a2_valid.json")      -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
-    ("test_cases.raml", "A", "test_case_a2_invalid.json")    -> ExpectedReport(conforms = false, 2, PAYLOADProfile)
+    ("test_cases.raml", "A", "test_case_a2_invalid.json")    -> ExpectedReport(conforms = false, 1, PAYLOADProfile)
   )
 
   for {
     ((libraryFile, shapeName, payloadFile), expectedReport) <- payloadValidations
   } yield {
-    test(s"SHACL Payload Validator $shapeName -> $payloadFile") {
+    test(s"Payload Validator $shapeName -> $payloadFile") {
       val hint = payloadFile.split("\\.").last match {
         case "json" => PayloadJsonHint
         case "yaml" => PayloadYamlHint
@@ -89,7 +93,11 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
           assert(result.position.isDefined)
         }
         assert(report.conforms == expectedReport.conforms)
-        assert(report.results.length == expectedReport.numErrors)
+        if (expectedReport.jsNumErrors.isDefined && platform.name == "js") {
+          assert(report.results.length == expectedReport.jsNumErrors.get)
+        } else {
+          assert(report.results.length == expectedReport.numErrors)
+        }
       }
     }
   }

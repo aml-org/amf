@@ -22,7 +22,7 @@ case class PayloadFragment(fields: Fields = Fields(), annotations: Annotations =
 object PayloadFragment {
   private def apply(payload: DataNode): PayloadFragment = apply().withEncodes(payload)
 
-  def apply(): PayloadFragment =
+  private def apply(): PayloadFragment =
     PayloadFragment(Fields(), Annotations())
       .withId("http://test.com/payload")
       .withLocation("http://test.com/payload")

@@ -1,0 +1,21 @@
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/examples/additional-properties/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: object instance has properties which are not allowed by the schema: ["segundoNombre"]
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "additionalProperties"
+    unwanted: ["segundoNombre"]
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/additional-properties/input.raml#/declarations/types/Animal/example/default-example
+  Property: 
+  Position: Some(LexicalInformation([(18,0)-(20,0)]))
+  Location: 

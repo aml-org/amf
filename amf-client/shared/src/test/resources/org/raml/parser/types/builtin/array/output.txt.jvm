@@ -1,0 +1,86 @@
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 5
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: numeric instance is lower than the required minimum (minimum: 0, found: -1)
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/properties/employees/items/properties/age"}
+    instance: {"pointer":"/employees/0/age"}
+    domain: "validation"
+    keyword: "minimum"
+    minimum: 0
+    found: -1
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/Office/example/default-example
+  Property: 
+  Position: Some(LexicalInformation([(18,13)-(43,0)]))
+  Location: 
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: array is too short: must have at least 2 elements but instance has 1 elements
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "minItems"
+    minItems: 2
+    found: 1
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/array/Colors/example/bad-min
+  Property: 
+  Position: Some(LexicalInformation([(49,15)-(49,21)]))
+  Location: 
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: array is too long: must have at most 3 elements but instance has 4 elements
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "maxItems"
+    maxItems: 3
+    found: 4
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/array/Colors/example/bad-max
+  Property: 
+  Position: Some(LexicalInformation([(50,15)-(50,39)]))
+  Location: 
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance type (string) does not match any allowed primitive type (allowed: ["array"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "type"
+    found: "string"
+    expected: ["array"]
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/array/Colors/example/bad-type
+  Property: 
+  Position: Some(LexicalInformation([(51,16)-(51,20)]))
+  Location: 
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance type (object) does not match any allowed primitive type (allowed: ["array"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "type"
+    found: "object"
+    expected: ["array"]
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/array/Colors/example/bad-type2
+  Property: 
+  Position: Some(LexicalInformation([(53,0)-(54,19)]))
+  Location: 

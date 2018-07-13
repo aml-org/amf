@@ -15,6 +15,7 @@ jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
 val settings = Common.settings ++ Common.publish ++ Seq(
   organization := "com.github.amlorg",
   resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal, ivyLocal),
+  resolvers += "jitpack" at "https://jitpack.io",
   credentials ++= Common.credentials(),
   aggregate in assembly := false,
   libraryDependencies ++= Seq(
@@ -66,6 +67,7 @@ lazy val webapi = crossProject
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
     libraryDependencies += "org.json4s"             %% "json4s-native"         % "3.5.4",
+    libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.9.1",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-webapi-javadoc.jar"
   )
   .jsSettings(
@@ -159,9 +161,11 @@ lazy val client = crossProject
   )
   .jsSettings(
     jsDependencies += ProvidedJS / "shacl.js",
+    jsDependencies += ProvidedJS / "ajv.min.js",
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
+    scalaJSUseMainModuleInitializer := true,
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-client-module.js"
   )
 

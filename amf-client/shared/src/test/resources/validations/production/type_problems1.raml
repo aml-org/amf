@@ -1,0 +1,13 @@
+#%RAML 0.8
+title: test
+version: v1
+mediaType: application/json
+baseUri: http://test.com
+/mojligaNamnansokningar:
+  /{problem}:
+    description: random description
+    uriParameters:
+      identitetsbeteckning:
+        description: random descriptiopn
+        type: string
+        example: 121212121212

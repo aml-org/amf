@@ -18,7 +18,7 @@ import _root_.org.scalatest.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}
 
-case class ExpectedReport(conforms: Boolean, numErrors: Integer, profile: ProfileName)
+case class ExpectedReport(conforms: Boolean, numErrors: Integer, profile: ProfileName, jsNumErrors: Option[Integer] = None)
 
 class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
@@ -115,7 +115,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  // tck examples?! for definition this name its wrong. What it's testing? the name makes refference to an external fragment exception, but the golden its a normal and small api.
+  // tck examples?! for definition this name its wrong. What it's testing? the name makes reference to an external fragment exception, but the golden its a normal and small api.
   test("Test validate external fragment cast exception") {
     for {
       validation <- Validation(platform)
@@ -292,8 +292,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       assert(!report.conforms)
       assert(report.results.length == 2)
-      assert(report.results.exists(_.message.contains("Expected max properties")))
-      assert(report.results.exists(_.message.contains("Expected min properties")))
     }
   }
 
@@ -561,7 +559,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
-      assert(report.results.exists(_.message.equals("Data at / must be smaller than to 180")))
     }
   }
 
@@ -595,7 +592,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         .build()
       report <- validation.validate(model, RAMLProfile)
     } yield {
-      assert(report.results.nonEmpty)
+      assert(!report.conforms)
+      assert(report.results.length == 2)
     }
   }
 

@@ -127,14 +127,21 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       shape.fields.removeField(ShapeModel.Inherits) // i need to remove the resolved type without inhertis, because later it will be added to cache once it will be fully resolved
       var accShape: Shape                             = normalizeWithoutCaching(shape)
       var superShapeswithDiscriminator: Seq[AnyShape] = Nil
+      var inheritedIds: Seq[String] = Nil
+
       superTypes.foreach { superNode =>
         val canonicalSuperNode = normalizeAction(superNode)
+
 
         // we save this information to connect the references once we have computed the minShape
         if (hasDiscriminator(canonicalSuperNode))
           superShapeswithDiscriminator = superShapeswithDiscriminator ++ Seq(
             canonicalSuperNode.asInstanceOf[NodeShape])
 
+        canonicalSuperNode match {
+          case chain: InheritanceChain => inheritedIds ++= (Seq(canonicalSuperNode.id) ++ chain.inheritedIds)
+          case _                       => inheritedIds :+= canonicalSuperNode.id
+        }
         val newMinShape = context.minShape(accShape, canonicalSuperNode)
         accShape = actionWithoutCaching(newMinShape)
       }
@@ -148,6 +155,12 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       accShape match {
         case any: AnyShape => superShapeswithDiscriminator.foreach(_.linkSubType(any))
         case _             => // ignore
+      }
+
+      // we set the full set of inherited IDs
+      accShape match {
+        case chain: InheritanceChain => chain.inheritedIds ++= inheritedIds
+        case _                       => // ignore
       }
 
       accShape

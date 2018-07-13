@@ -1,0 +1,34 @@
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: string "Marley" is too long (length: 6, maximum allowed: 5)
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/properties/lastname"}
+    instance: {"pointer":"/lastname"}
+    domain: "validation"
+    keyword: "maxLength"
+    value: "Marley"
+    found: 6
+    maxLength: 5
+
+error: string "Bob" is too short (length: 3, required minimum: 5)
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/properties/name"}
+    instance: {"pointer":"/name"}
+    domain: "validation"
+    keyword: "minLength"
+    value: "Bob"
+    found: 3
+    minLength: 5
+
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple/input.raml#/declarations/types/User/example/default-example
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple/input.raml#/declarations/types/User/example/default-example
+  Position: Some(LexicalInformation([(15,0)-(16,26)]))
+  Location: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple/input.raml

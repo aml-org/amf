@@ -1,0 +1,38 @@
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/object/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: object has missing required properties (["alive"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "required"
+    required: ["alive","name"]
+    missing: ["alive"]
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/object/input.raml#/web-api/end-points/%2Fbad0/user/object_1
+  Property: 
+  Position: Some(LexicalInformation([(22,0)-(23,0)]))
+  Location: 
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance type (integer) does not match any allowed primitive type (allowed: ["boolean"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/properties/alive"}
+    instance: {"pointer":"/alive"}
+    domain: "validation"
+    keyword: "type"
+    found: "integer"
+    expected: ["boolean"]
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/object/input.raml#/web-api/end-points/%2Fbad1/user/object_1
+  Property: 
+  Position: Some(LexicalInformation([(25,0)-(26,15)]))
+  Location: 

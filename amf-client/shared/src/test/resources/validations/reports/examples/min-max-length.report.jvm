@@ -1,0 +1,16 @@
+Model: file://amf-client/shared/src/test/resources/validations/types/lengths.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: {"schemaLocation":"#/properties/name","pointerToViolation":"#/name","causingExceptions":[],"keyword":"minLength","message":"expected minLength: 5, actual: 3"}
+{"schemaLocation":"#/properties/lastname","pointerToViolation":"#/lastname","causingExceptions":[],"keyword":"maxLength","message":"expected maxLength: 5, actual: 6"}
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/types/lengths.raml#/declarations/types/User/example/default-example
+  Property: file://amf-client/shared/src/test/resources/validations/types/lengths.raml#/declarations/types/User/example/default-example
+  Position: Some(LexicalInformation([(15,0)-(16,26)]))
+  Location: file://amf-client/shared/src/test/resources/validations/types/lengths.raml

@@ -44,40 +44,19 @@ class ParamPayloadValidationTest extends FileAssertionTest with Matchers {
     }
   }
 
-  sealed case class Fixture(name: String, payload: String, result: Option[AMFValidationResult])
+  sealed case class Fixture(name: String, payload: String, conforms: Boolean)
 
   val fixtureList: Seq[Fixture] = Seq(
-    Fixture("param validation", "2015-07-20T21:00:00", None),
-    Fixture("param validation number in string", "\"2\"", None),
-    Fixture("param validation boolean in string", "\"true\"", None),
-    Fixture("param validation number error", "2", None)
+    Fixture("param validation", "2015-07-20T21:00:00", conforms = true),
+    Fixture("param validation number in string", "\"2\"", conforms = true),
+    Fixture("param validation boolean in string", "\"true\"", conforms = true),
+    Fixture("param validation number error", "2", conforms = false)
   )
 
   fixtureList.foreach { f =>
     test(f.name) {
       validate(f.payload).map { report =>
-        f.result match {
-          case None if !report.conforms =>
-            fail("report not conforms")
-          case None if report.results.nonEmpty => fail("report has results (probably warnings because conforms)")
-          case None                            => succeed
-          case Some(expected) if report.results.isEmpty =>
-            fail(s"report it's empty while should be ${expected.toString}")
-          case Some(expected) if report.results.size > 1 =>
-            fail(s"report has more than one results while should be ${expected.toString}")
-          case Some(expected) =>
-            val actual = report.results.head
-            expected.message should be(actual.message)
-            expected.targetNode should be(actual.targetNode)
-            expected.level should be(actual.level)
-            expected.position match {
-              case Some(p) if actual.position.isDefined => p.toString should be(actual.position.get.toString)
-              case Some(p)                              => fail("Actual position $p while no expected position its defined")
-              case None if actual.position.isDefined =>
-                fail(s"Actual position is not defined while no expected position its ${actual.position.get.toString}")
-              case _ => succeed
-            }
-        }
+        assert(report.conforms == f.conforms)
       }
     }
   }

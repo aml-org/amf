@@ -1,0 +1,22 @@
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/examples/builtin/number/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance type (number) does not match any allowed primitive type (allowed: ["integer"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/properties/age"}
+    instance: {"pointer":"/age"}
+    domain: "validation"
+    keyword: "type"
+    found: "number"
+    expected: ["integer"]
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/builtin/number/input.raml#/declarations/types/User/example/bad-int
+  Property: 
+  Position: Some(LexicalInformation([(20,0)-(22,21)]))
+  Location: 

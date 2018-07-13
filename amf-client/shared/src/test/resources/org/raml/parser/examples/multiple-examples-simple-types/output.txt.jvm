@@ -1,0 +1,22 @@
+Model: file://amf-client/shared/src/test/resources/org/raml/parser/examples/multiple-examples-simple-types/input.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#exampleError
+  Message: error: instance type (integer) does not match any allowed primitive type (allowed: ["string"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":""}
+    instance: {"pointer":""}
+    domain: "validation"
+    keyword: "type"
+    found: "integer"
+    expected: ["string"]
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/multiple-examples-simple-types/input.raml#/declarations/types/scalar/tigerName/example/new
+  Property: 
+  Position: Some(LexicalInformation([(14,10)-(14,11)]))
+  Location: 

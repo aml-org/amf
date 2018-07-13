@@ -5,6 +5,8 @@ import amf.core.remote.{Hint, RamlYamlHint}
 
 class ValidApiExamplesValidationTest extends ValidModelTest {
 
+  override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/examples/"
+
   test("Example of object validations test") {
     checkValid("examples/object-name-example.raml")
   }
@@ -82,15 +84,35 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Test declared type with two uses adding example") {
-    validate("/examples/declared-type-ref-add-example.raml")
+    validatePlatform("/examples/declared-type-ref-add-example.raml", golden = Some("declared-type-ref-add-example.report"))
   }
 
   test("Test validate declared type with two uses") {
-    validate("/examples/declared-type-ref.raml")
+    validatePlatform("/examples/declared-type-ref.raml", golden = Some("declared-type-ref.report"))
   }
 
   test("Test valid string hierarchy examples") {
-    validate("/examples/string-hierarchy.raml")
+    validatePlatform("/examples/string-hierarchy.raml", golden = Some("string-hierarchy.report"))
+  }
+
+  test("Test valid api with pattern properties") {
+    validatePlatform("/production/pattern_properties.raml", golden = Some("production_pattern_properties.report"))
+  }
+
+  test("Test valid api with type problems 1") {
+    validatePlatform("/production/type_problems1.raml", golden = Some("type_problems1.report"))
+  }
+
+  ignore("Test valid api with type problems 2") {
+    validatePlatform("/production/type_problems2/api.raml", golden = Some("type_problems2.report"))
+  }
+
+  test("Test valid api with type problems 3") {
+    validatePlatform("/production/type_problems3.raml", golden = Some("type_problems3.report"))
+  }
+
+  test("HERE_HERE Test api with duplciated null keys") {
+    validatePlatform("/production/null-keys/api.raml", golden = Some("null-keys.report"))
   }
 
   override val hint: Hint = RamlYamlHint
