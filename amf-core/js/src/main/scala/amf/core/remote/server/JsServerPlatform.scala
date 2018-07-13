@@ -52,8 +52,8 @@ class JsServerPlatform extends JsPlatform {
   /** Return the OS (win, mac, nux). */
   override def operativeSystem(): String = {
     OS.platform() match {
-      case so if so.contains("win")    => "win"
       case so if so.contains("darwin") => "mac"
+      case so if so.contains("win")    => "win"
       case _                           => "nux"
     }
   }
