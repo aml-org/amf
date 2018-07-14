@@ -25,10 +25,11 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, platform: Platform) {
   }
 
   private def groupResults(report: AMFValidationReport): Seq[AMFValidationResult] = {
-    val indexedResults: Map[String, Seq[AMFValidationResult]] = report.results.groupBy { r =>
+    // we can order here or order in each json schema validator pair when ask for the exception causes
+
+    val indexedResults: Map[String, Seq[AMFValidationResult]] = report.results.sorted.groupBy { r =>
       r.targetNode
     }
-
     index.aggregate(indexedResults)
   }
 

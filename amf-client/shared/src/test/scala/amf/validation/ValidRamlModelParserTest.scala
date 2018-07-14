@@ -94,5 +94,26 @@ class ValidRamlModelParserTest extends ValidModelTest {
   test("Test media type with + char in resource type") {
     checkValid("/resource_types/media-type-resource-type.raml")
   }
+
+  test("Empty responses") {
+    checkValid("/operation/empty-responses.raml")
+  }
+
+  test("Test recursive optional shape") {
+    checkValid("/types/recursive-optional-property.raml")
+  }
+
+  test("Test valid recursive union recursive") {
+    checkValid("/shapes/union-recursive.raml") // shapes and types? we should have only one folder
+  }
+
+  test("Test different declarations with same name") {
+    checkValid("/declarations/api.raml", profile = RAML08Profile)
+  }
+
+  test("Test empty usage/uses entries") {
+    checkValid("/empty-usage-uses.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

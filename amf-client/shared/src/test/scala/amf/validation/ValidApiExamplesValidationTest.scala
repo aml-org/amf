@@ -134,5 +134,25 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   test("Test enum number in string format validation") {
     checkValid("/examples/enum-number-string/api.raml")
   }
+
+  test("Include twice same json schema and add example in raml 08") {
+    checkValid("/examples/reuse-json-schema/api.raml", profile = RAML08Profile)
+  }
+
+  test("Date format not SYaml timestamp") {
+    validate("/types/mhra-e-payment-v1.raml")
+  }
+
+  test("Test more than one variable with link node in trait") {
+    validate("/traits/two-included-examples.raml")
+  }
+
+  test("Spec usage examples example validation") {
+    validate("/examples/spec_examples_example.raml")
+  }
+
+  test("Test for different examples") {
+    validate("/examples/examples.raml")
+  }
   override val hint: Hint = RamlYamlHint
 }

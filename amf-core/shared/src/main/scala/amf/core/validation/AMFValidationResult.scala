@@ -42,7 +42,11 @@ case class AMFValidationResult(message: String,
               case 0 =>
                 Option(this.targetNode).getOrElse("") compareTo Option(that.targetNode).getOrElse("") match {
                   case 0 =>
-                    Option(this.validationId).getOrElse("") compareTo Option(that.validationId).getOrElse("")
+                    Option(this.validationId).getOrElse("") compareTo Option(that.validationId).getOrElse("") match {
+                      case 0 =>
+                        Option(this.message).getOrElse("") compareTo Option(that.message).getOrElse("")
+                      case x => x
+                    }
                   case x => x
                 }
               case x => x

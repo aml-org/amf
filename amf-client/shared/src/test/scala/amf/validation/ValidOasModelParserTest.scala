@@ -17,5 +17,9 @@ class ValidOasModelParserTest extends ValidModelTest {
     checkValid("/multiple-tags.json", profile = OASProfile)
   }
 
+  test("Test multiple formData parameters") {
+    checkValid("/parameters/multiple-formdata.yaml", profile = OASProfile)
+  }
+
   override val hint: Hint = OasJsonHint
 }

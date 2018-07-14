@@ -27,7 +27,7 @@ object PayloadValidator {
       .sequence(value)
       .map(s => {
         val seq = s.flatMap { report =>
-          report.results.sortWith({ case (l, r) => l.validationId.compareTo(r.validationId) > 0 })
+          report.results.sorted
         }.toSeq
         AMFValidationReport(!seq.exists(_.level == SeverityLevels.VIOLATION), "", ProfileName(""), seq)
       })
@@ -39,7 +39,7 @@ object PayloadValidator {
   def validate(shape: Shape, payload: String, severity: String): Future[AMFValidationReport] = {
 
     val mediaType = payload.guessMediaType(isScalar = false)
-    val p = plugin(mediaType, shape)
+    val p         = plugin(mediaType, shape)
     p.validatePayload(shape, payload, mediaType)
   }
 

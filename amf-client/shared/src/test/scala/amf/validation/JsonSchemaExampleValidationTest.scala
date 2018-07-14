@@ -1,5 +1,6 @@
 package amf.validation
 
+import amf.RAML08Profile
 import amf.core.remote.{Hint, RamlYamlHint}
 
 class JsonSchemaExampleValidationTest extends MultiPlatformReportGenTest {
@@ -85,6 +86,26 @@ class JsonSchemaExampleValidationTest extends MultiPlatformReportGenTest {
 
   test("Test validation with # in property shape name") {
     validate("/invalid-char-property-name.raml", None)
+  }
+
+  test("Exclusive Maximum Schema") {
+    validate("/max-exclusive-schema.raml", Some("max-exclusive-schema.report"), profile = RAML08Profile)
+  }
+
+  test("Validate json schema with non url id.") {
+    validate("/id-without-url/currencyapi.raml", None)
+  }
+
+  test("JSON Schema pattern properties") {
+    validate("/jsonSchemaProperties.raml", Some("jsonSchemaProperties.report"))
+  }
+
+  test("JSON Schema Draft-3 required property support") {
+    validate("/misc_shapes.raml", Some("misc_shapes.report"))
+  }
+
+  test("Examples JSON-Schema") {
+    validate("/examples-json-schema.raml", None, profile = RAML08Profile)
   }
   override val hint: Hint = RamlYamlHint
 }

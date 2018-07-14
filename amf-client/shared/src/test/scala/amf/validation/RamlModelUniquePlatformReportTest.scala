@@ -1,5 +1,6 @@
 package amf.validation
 
+import amf.RAML08Profile
 import amf.core.remote.{Hint, RamlYamlHint}
 
 class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
@@ -112,7 +113,23 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Test variable not implemented in resource type use") {
-    validate("/resource_types/variable-not-implemented-resourcetype.raml",Some("variable-not-implemented-resourcetype.report"))
+    validate("/resource_types/variable-not-implemented-resourcetype.raml",
+             Some("variable-not-implemented-resourcetype.report"))
+  }
+
+  test("Invalid security scheme") {
+    validate("invalid-security.raml", Some("invalid-security.report"), profile = RAML08Profile)
+  }
+
+  test("security scheme authorizationGrant RAML 1.0") {
+    validate("/securitySchemes/raml10AuthorizationGrant.raml", Some("invalid-auth-grant-10.report"))
+  }
+
+  test("security scheme authorizationGrant RAML 0.8") {
+    validate("/securitySchemes/raml08AuthorizationGrant.raml",
+             Some("invalid-auth-grant-08.report"),
+             profile = RAML08Profile)
+
   }
 
   override val hint: Hint = RamlYamlHint

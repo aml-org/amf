@@ -391,8 +391,15 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
       shape.set(ScalarShapeModel.Maximum, value.text(), Annotations(entry))
     })
 
-    val isParamString = shape.isInstanceOf[ScalarShape] && shape.asInstanceOf[ScalarShape].dataType.option().getOrElse("") == (Namespace.Xsd + "string").iri()
-    RamlSingleExampleParser("example", map, shape.withExample, ExampleOptions(strictDefault = true, quiet = true, paramString = isParamString))
+    val isParamString = shape.isInstanceOf[ScalarShape] && shape
+      .asInstanceOf[ScalarShape]
+      .dataType
+      .option()
+      .getOrElse("") == (Namespace.Xsd + "string").iri()
+    RamlSingleExampleParser("example",
+                            map,
+                            shape.withExample,
+                            ExampleOptions(strictDefault = true, quiet = true, paramString = isParamString))
       .parse()
       .foreach(e => shape.setArray(ScalarShapeModel.Examples, Seq(e)))
 
@@ -435,15 +442,14 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   def parse(): Option[Shape] = {
     val info: Option[TypeDef] =
-      RamlTypeDetection(
-        node,
-        "",
-        node
-          .toOption[YMap]
-          .flatMap { m =>
-            m.key("format").orElse(m.key("format".asRamlAnnotation)).map(_.value.toString())
-          },
-        defaultType)
+      RamlTypeDetection(node,
+                        "",
+                        node
+                          .toOption[YMap]
+                          .flatMap { m =>
+                            m.key("format").orElse(m.key("format".asRamlAnnotation)).map(_.value.toString())
+                          },
+                        defaultType)
     val result = info.map {
       case XMLSchemaType                         => RamlXmlSchemaExpression(name, node, adopt, parseExample = true).parse()
       case JSONSchemaType                        => RamlJsonSchemaExpression(name, node, adopt, parseExample = true).parse()
@@ -1218,8 +1224,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         if (map.key("discriminator").isDefined) {
           ctx.violation(
             ParserSideValidations.DiscriminatorOnExtendedUnionSpecification.id,
-            "Property discriminator forbidden in a node extending a unionShape",
             shape.id,
+            "Property discriminator forbidden in a node extending a unionShape",
             map.key("discriminator").get
           )
         }
@@ -1227,8 +1233,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         if (map.key("discriminatorValue").isDefined) {
           ctx.violation(
             ParserSideValidations.DiscriminatorOnExtendedUnionSpecification.id,
-            "Property discriminatorValue forbidden in a node extending a unionShape",
             shape.id,
+            "Property discriminatorValue forbidden in a node extending a unionShape",
             map.key("discriminatorValue").get
           )
         }
@@ -1292,7 +1298,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               property.set(
                 PropertyShapeModel.Name,
                 if (required) prop else prop.stripSuffix("?").stripPrefix("/").stripSuffix("/")) // TODO property id is using a name that is not final.
-              property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text.stripSuffix("?")).iri())
+              property.set(PropertyShapeModel.Path,
+                           (Namespace.Data + entry.key.as[YScalar].text.stripSuffix("?")).iri())
             }
           }
 

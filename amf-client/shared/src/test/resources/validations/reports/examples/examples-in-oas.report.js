@@ -17,8 +17,8 @@ Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
   Message: {"keyword":"format","dataPath":".application.user.dateOfBirth","schemaPath":"#/properties/application/properties/user/properties/dateOfBirth/format","params":{"format":"date-time"},"message":"should match format \"date-time\""}
-{"keyword":"type","dataPath":".application.user.monthsAtCurrAdd","schemaPath":"#/properties/application/properties/user/properties/monthsAtCurrAdd/type","params":{"type":"integer"},"message":"should be integer"}
 {"keyword":"format","dataPath":".user.dateOfBirth","schemaPath":"#/properties/user/properties/dateOfBirth/format","params":{"format":"date-time"},"message":"should match format \"date-time\""}
+{"keyword":"type","dataPath":".application.user.monthsAtCurrAdd","schemaPath":"#/properties/application/properties/user/properties/monthsAtCurrAdd/type","params":{"type":"integer"},"message":"should be integer"}
 {"keyword":"type","dataPath":".user.monthsAtCurrAdd","schemaPath":"#/properties/user/properties/monthsAtCurrAdd/type","params":{"type":"integer"},"message":"should be integer"}
 
   Level: Violation

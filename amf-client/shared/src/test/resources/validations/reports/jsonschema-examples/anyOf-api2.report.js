@@ -14,9 +14,9 @@ Level: Violation
   Location: 
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"keyword":"maxLength","dataPath":"","schemaPath":"#/anyOf/0/maxLength","params":{"limit":2},"message":"should NOT be longer than 2 characters"}
+  Message: {"keyword":"anyOf","dataPath":"","schemaPath":"#/anyOf","params":{},"message":"should match some schema in anyOf"}
+{"keyword":"maxLength","dataPath":"","schemaPath":"#/anyOf/0/maxLength","params":{"limit":2},"message":"should NOT be longer than 2 characters"}
 {"keyword":"minLength","dataPath":"","schemaPath":"#/anyOf/1/minLength","params":{"limit":4},"message":"should NOT be shorter than 4 characters"}
-{"keyword":"anyOf","dataPath":"","schemaPath":"#/anyOf","params":{},"message":"should match some schema in anyOf"}
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/anyOf/api2.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/scalar/schema/example/default-example

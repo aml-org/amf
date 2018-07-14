@@ -324,6 +324,102 @@ class RamlParserErrorTest extends ParserErrorTest {
     validate("/valid/invalid-map-resource-type.raml")
   }
 
+  test("baseUriParameters without baseUri") {
+    validate(
+      "/error/no-base-uri.raml",
+      violation => {
+        violation.level should be("Violation")
+        violation.message should be("'baseUri' not defined and 'baseUriParameters' defined.")
+        violation.position.map(_.range) should be(Some(Range((4, 0), (6, 17))))
+      }
+    )
+  }
+
+  test("Invalid type def with json schemas includes") {
+    validate(
+      "/error/invalid-jsonschema-includes/cloudhub-api.raml",
+      violation => {
+        violation.level should be("Violation")
+        violation.message should be("Cannot parse JSON Schema expression out of a non string value")
+        violation.position.map(_.range) should be(Some(Range((7, 23), (10, 62))))
+      }
+    )
+  }
+
+  test("Numeric key in external fragment root entry") {
+    validate("/valid/numeric-key-in-external-fragment/api.raml")
+  }
+
+  test("Invalid library and type def in 08") {
+    validate(
+      "/error/invalid-lib-and-type-08/api.raml",
+      first => {
+        first.level should be("Violation")
+        first.message should be("Property uses not supported in a raml 0.8 webApi node")
+        first.position.map(_.range) should be(Some(Range((4, 0), (8, 0))))
+      },
+      second => {
+        second.level should be("Violation")
+        second.message should be("Invalid type def duTypes.storyCollection for raml 08")
+        second.position.map(_.range) should be(Some(Range((14, 18), (14, 41))))
+      }
+    )
+  }
+
+  test("Invalid library tag type def") {
+    validate(
+      "/error/invalid-lib-tagtype/api.raml",
+      first => {
+        first.level should be("Violation")
+        first.message should be("Missing library location")
+        first.position.map(_.range) should be(Some(Range((5, 2), (14, 12))))
+      }
+    )
+  }
+
+  // Strange problem where hashcode for YMap entries had to be recalculated inside syaml.
+  // Just check it doesn't throw NPE :)
+  test("Null in type name") {
+    validate(
+      "/error/null-name.raml",
+      first => {
+        first.level should be("Violation")
+        first.message should be("Expecting !!str and !!null provided")
+        first.position.map(_.range) should be(Some(Range((13, 6), (13, 10))))
+      }
+    )
+  }
+
+  test("Invalid map key") {
+    validate(
+      "/error/map-key.raml",
+      first => {
+        first.level should be("Violation")
+        first.message should be("Property {alpha2code: } not supported in a raml 1.0 webApi node")
+        first.position.map(_.range) should be(Some(Range((7, 0), (9, 14))))
+      }
+    )
+  }
+
+  test("Json example external that starts with space") {
+    validate("/valid/json-example-space-start/api.raml")
+  }
+
+  test("Discriminator in union definition") {
+    validate(
+      "/error/discriminator_union.raml",
+      error => {
+        error.level should be("Violation")
+        error.message should be("Property discriminator forbidden in a node extending a unionShape")
+        error.position.map(_.range) should be(Some(Range((20, 3), (20, 25))))
+      }
+    )
+  }
+
+  test("Connect and trace methods") {
+    validate("/valid/connect-trace.raml")
+  }
+
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/raml/"
 
   override protected def build(validation: Validation, file: String): Future[BaseUnit] =

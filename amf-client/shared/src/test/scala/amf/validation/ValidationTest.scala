@@ -1,5 +1,6 @@
 package amf.validation
 
+import _root_.org.scalatest.AsyncFunSuite
 import amf._
 import amf.core.AMFSerializer
 import amf.core.emitter.RenderOptions
@@ -9,12 +10,11 @@ import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.SeverityLevels
 import amf.facades.{AMFCompiler, Validation}
+import amf.plugins.document.webapi.RAML10Plugin
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 import amf.plugins.document.webapi.validation.AMFShapeValidations
-import amf.plugins.document.webapi.{RAML08Plugin, RAML10Plugin}
 import amf.plugins.domain.shapes.models.ArrayShape
 import amf.plugins.features.validation.ParserSideValidations
-import _root_.org.scalatest.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -39,19 +39,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   // todo serialize json of validation report?
   // Example validations test and Example model validation test were the same, because the resolution runs always for validation
 
-  // generic examples test? Extracted from spec? is not testing a particular cases, but testing different examples. This should be an unit test?
-  test("Spec usage examples example validation") {
-    for {
-      validation <- Validation(platform)
-      library    <- AMFCompiler(productionPath + "spec_examples_example.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(library, RAMLProfile)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  //what is speciy testing?? should be partitioned in a some new of tests?
-  test("Trailing spaces validation") {
+  //what is speciy testing?? should be partitioned in a some new of tests? extract to tckUtor?
+  ignore("Trailing spaces validation") {
     for {
       validation <- Validation(platform)
       library    <- AMFCompiler(productionPath + "americanflightapi.raml", platform, RamlYamlHint, validation).build()
@@ -62,7 +51,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   // this is not a validation test
-  test("Can parse a recursive API") {
+  ignore("Can parse a recursive API") {
     for {
       validation <- Validation(platform)
       doc        <- AMFCompiler(productionPath + "recursive.raml", platform, RamlYamlHint, validation).build()
@@ -150,20 +139,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  // this test should be refactored into 3 different examples test
-  test("Test for different examples") {
-
-    val validation = Validation(platform)
-    for {
-      validation <- Validation(platform)
-      library <- AMFCompiler(validationsPath + "/tck-examples/examples.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(library, RAMLProfile)
-    } yield {
-      assert(report.results.isEmpty)
-    }
-  }
-
   // this is a real case, recursion in json schema??
   test("Test stackoverflow case from Platform") {
     for {
@@ -209,356 +184,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   //test("Test resource type non string scalar parameter example") { its already tested in java parser tests
 
-  test("baseUriParameters without baseUri") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "/no-base-uri.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(doc, RAMLProfile, RAMLStyle)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.size == 1)
-      assert(report.results.head.message.startsWith("'baseUri' not defined and 'baseUriParameters' defined."))
-    }
-  }
-
-  test("Test multiple formData parameters") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "parameters/multiple-formdata.yaml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(doc, OASProfile, OASStyle)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("Invalid security scheme") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "invalid-security.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(doc, RAML08Profile)
-    } yield {
-      assert(report.results.length == 1)
-    }
-  }
-
-  test("Invalid type def with json schemas includes") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "production/invalid-jsonschema-includes/cloudhub-api.raml",
-                         platform,
-                         RamlYamlHint,
-                         validation)
-        .build()
-      report <- validation.validate(doc, RAMLProfile)
-    } yield {
-      assert(report.results.length == 1)
-      assert(report.results.head.message.equals("Cannot parse JSON Schema expression out of a non string value"))
-    }
-  }
-
-  test("Numeric key in external fragment root entry") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "production/numeric-key-in-external-fragment/api.raml",
-                         platform,
-                         RamlYamlHint,
-                         validation)
-        .build()
-      report <- validation.validate(doc, RAMLProfile)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("Invalid library and type def in 08") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "production/invalid-lib-and-type-08/api.raml",
-                         platform,
-                         RamlYamlHint,
-                         validation)
-        .build()
-      report <- validation.validate(doc, RAMLProfile)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.size == 2)
-      assert(report.results.exists(_.message.equals("Property uses not supported in a raml 0.8 webApi node")))
-      assert(report.results.exists(_.message.equals("Invalid type def duTypes.storyCollection for raml 08")))
-    }
-  }
-
-  test("Invalid library tag type def") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "production/invalid-lib-tagtype/api.raml",
-                         platform,
-                         RamlYamlHint,
-                         validation)
-        .build()
-      report <- validation.validate(doc, RAMLProfile)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.exists(_.message.equals("Missing library location")))
-    }
-  }
-
-  // Strange problem where hashcode for YMap entries had to be recalculated inside syaml.
-  // Just check it doesn't throw NPE :)
-  test("Null in type name") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "null-name.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(doc, RAMLProfile)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.size == 1)
-      assert(report.results.head.message.equals("Expecting !!str and !!null provided"))
-    }
-  }
-
-  test("Exclusive Maximum Schema") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "08/max-exclusive-schema.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(doc, RAML08Profile)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.size == 1)
-    }
-  }
-
-  test("Validate json schema with non url id.") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(productionPath + "card-data/currencyapi.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(doc, RAMLProfile)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("pattern raml example test") {
-    for {
-      validation <- Validation(platform)
-      _          <- validation.loadValidationDialect()
-      model      <- AMFCompiler(validationsPath + "08/ramlpattern.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, RAMLProfile)
-    } yield {
-      assert(report.results.nonEmpty)
-    }
-  }
-
-  test("lock-unlock example test") {
-    for {
-      validation <- Validation(platform)
-      _          <- validation.loadValidationDialect()
-      model <- AMFCompiler(productionPath + "lock-unlock/lockUnlockStats.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(model, RAMLProfile)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.length == 2)
-    }
-  }
-
-  test("security scheme authorizationGrant RAML 1.0") {
-    for {
-      validation <- Validation(platform)
-      _          <- validation.loadValidationDialect()
-      model <- AMFCompiler(validationsPath + "securitySchemes/raml10AuthorizationGrant.raml",
-                           platform,
-                           RamlYamlHint,
-                           validation).build()
-      report <- validation.validate(model, RAMLProfile)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.size == 1)
-      assert(report.results.exists(_.message.contains("Invalid authorization grant")))
-    }
-  }
-
-  test("security scheme authorizationGrant RAML 0.8") {
-    for {
-      validation <- Validation(platform)
-      _          <- validation.loadValidationDialect()
-      model <- AMFCompiler(validationsPath + "securitySchemes/raml08AuthorizationGrant.raml",
-                           platform,
-                           RamlYamlHint,
-                           validation).build()
-      report <- validation.validate(model, RAML08Profile)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.size == 1)
-      assert(report.results.exists(_.message.contains("Invalid authorization grant")))
-    }
-  }
-
-  test("Invalid map key") {
-    for {
-      validation <- Validation(platform)
-      model      <- AMFCompiler(validationsPath + "map-key.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, RAMLProfile)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.size == 1)
-      assert(
-        report.results.exists(_.message.equals("Property {alpha2code: } not supported in a raml 1.0 webApi node")))
-    }
-  }
-
-  test("Pattern properties key") {
-    for {
-      validation <- Validation(platform)
-      model <- AMFCompiler(validationsPath + "data/pattern_properties.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(model, RAMLProfile)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.size == 1)
-    }
-  }
-
-  test("Pattern properties key 2 (all additional properties)") {
-    for {
-      validation <- Validation(platform)
-      model <- AMFCompiler(validationsPath + "data/pattern_properties2.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(model, RAMLProfile)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.size == 1)
-    }
-  }
-
-  test("Pattern properties key 3 (precedence)") {
-    for {
-      validation <- Validation(platform)
-      model <- AMFCompiler(validationsPath + "data/pattern_properties3.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(model, RAMLProfile)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.size == 1)
-    }
-  }
-
-  ignore("Pattern properties key 4 (additionalProperties: false clash)") {
-    for {
-      validation <- Validation(platform)
-      model <- AMFCompiler(validationsPath + "data/pattern_properties4.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(model, RAMLProfile)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.size == 1)
-    }
-  }
-  test("Include twice same json schema and add example in raml 08") {
-
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "production/reuse-json-schema/api.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(doc, RAML08Profile)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("JSON Schema pattern properties") {
-    for {
-      validation <- Validation(platform)
-      model      <- AMFCompiler(validationsPath + "jsonSchemaProperties.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, RAMLProfile)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.size == 1)
-    }
-  }
-
-  test("Json example external that starts with space") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "production/json-example-space-start/api.raml",
-                         platform,
-                         RamlYamlHint,
-                         validation)
-        .build()
-      report <- validation.validate(doc, RAML08Profile)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("Discriminator in union definition") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "discriminator_union.raml", platform, RamlYamlHint, validation)
-        .build()
-      report   <- validation.validate(doc, RAML08Profile)
-      resolved <- Future { RAML08Plugin.resolve(doc) }
-    } yield {
-      assert(!report.conforms)
-    }
-  }
-
-  test("Date format not SYaml timestamp") {
-    for {
-      validation <- Validation(platform)
-      model <- AMFCompiler(validationsPath + "types/mhra-e-payment-v1.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(model, RAMLProfile)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("JSON Schema Draft-3 required property support") {
-    for {
-      validation <- Validation(platform)
-      model      <- AMFCompiler(validationsPath + "jsonschema/misc_shapes.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, RAMLProfile)
-    } yield {
-      assert(!report.conforms)
-    }
-  }
-
-  test("Connect and trace methods") {
-    for {
-      validation <- Validation(platform)
-      model      <- AMFCompiler(validationsPath + "connect-trace.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, RAML08Profile)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("Empty responses") {
-    for {
-      validation <- Validation(platform)
-      model      <- AMFCompiler(validationsPath + "empty-responses.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, RAMLProfile)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("Test recursive optional shape") {
-    for {
-      validation <- Validation(platform)
-      model <- AMFCompiler(validationsPath + "recursive-optional-property.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(model, RAMLProfile)
-    } yield {
-      assert(report.conforms)
-    }
-  }
+  //test("pattern raml example test") { was duplicated by   test("Param in raml 0.8 api") {
 
   ignore("emilio performance") {
     for {
@@ -575,59 +201,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.isEmpty)
     }
     //assert(true)
-  }
-
-  test("Examples JSON-Schema") {
-    for {
-      validation <- Validation(platform)
-      model <- AMFCompiler(validationsPath + "08/examples-json-schema.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(model, RAML08Profile)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("Test valid recursive union recursive") {
-    for {
-      validation <- Validation(platform)
-      model <- AMFCompiler(validationsPath + "shapes/union-recursive.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(model, RAMLProfile)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("Test more than one variable with link node in trait") {
-    for {
-      validation <- Validation(platform)
-      model <- AMFCompiler(validationsPath + "traits/two-included-examples.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(model, RAMLProfile)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("Test different declarations with same name") {
-    for {
-      validation <- Validation(platform)
-      model      <- AMFCompiler(validationsPath + "declarations/api.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, RAML08Profile)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
-  test("Test empty usage/uses entries") {
-    for {
-      validation <- Validation(platform)
-      model      <- AMFCompiler(validationsPath + "empty-usage-uses.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(model, RAMLProfile)
-    } yield {
-      assert(report.conforms)
-    }
   }
 
   /*

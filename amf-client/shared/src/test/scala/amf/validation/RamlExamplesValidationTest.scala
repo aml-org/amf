@@ -69,7 +69,6 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate("examples/invalid-property-in-array-items.raml", Some("invalid-property-in-array-items.report"))
   }
 
-// pass to another suit raml 08 cases? profile implemented as overrided var in class?
   test("Param in raml 0.8 api") {
     validate("08/pattern.raml", Some("pattern-08.report"), profile = RAML08Profile)
   }
@@ -144,6 +143,30 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
 
   test("Test maxProperties and minProperties constraints example") {
     validate("/examples/min-max-properties-example.raml", Some("min-max-properties-example.report"))
+  }
+
+  test("lock-unlock example test (raml dates)") {
+    validate("/examples/raml-dates/lockUnlockStats.raml", Some("raml-dates-lockunlock.report"))
+  }
+
+  test("Pattern properties key") {
+    validate("/examples/pattern-properties/pattern_properties.raml",
+             Some("pattern-properties/pattern_properties.report"))
+  }
+
+  test("Pattern properties key 2 (all additional properties)") {
+    validate("/examples/pattern-properties/pattern_properties2.raml",
+             Some("pattern-properties/pattern_properties2.report"))
+  }
+
+  test("Pattern properties key 3 (precedence)") {
+    validate("/examples/pattern-properties/pattern_properties3.raml",
+             Some("pattern-properties/pattern_properties3.report"))
+  }
+
+  test("Pattern properties key 4 (additionalProperties: false clash)") {
+    validate("/examples/pattern-properties/pattern_properties4.raml",
+             Some("pattern-properties/pattern_properties4.report"))
   }
 
   override val hint: Hint = RamlYamlHint
