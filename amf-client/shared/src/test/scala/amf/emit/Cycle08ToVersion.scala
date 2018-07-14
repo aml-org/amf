@@ -50,7 +50,8 @@ class Cycle08ToVersion extends BuildCycleTests {
     FixtureData("empty media type", "empty-media-type.raml", "empty-media-type-08.raml"),
     FixtureData("empty params", "empty-params.raml", "empty-params-08.raml"),
     FixtureData("nullpointer", "default-type-payloads.raml", "default-type-payloads-08.raml"),
-    FixtureData("parameter with file type", "file-type.raml", "file-type-08.raml")
+    FixtureData("parameter with file type", "file-type.raml", "file-type-08.raml"),
+    FixtureData("json schema array", "jsonschema-array.raml", "jsonschema-array-08.raml")
   )
 
   cycles08.foreach(f => {

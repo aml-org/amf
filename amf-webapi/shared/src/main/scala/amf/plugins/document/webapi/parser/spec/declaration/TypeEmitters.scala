@@ -47,20 +47,14 @@ trait EnumEmitterHelper {
   def enumTagType(shape: Shape) = shape match {
     case scalarShape: ScalarShape =>
       val dataType = scalarShape.dataType.option().getOrElse((Namespace.Xsd + "string").iri())
-      if (
-        dataType == (Namespace.Xsd + "integer").iri() ||
-          dataType == (Namespace.Xsd + "long").iri()
-      ) {
+      if (dataType == (Namespace.Xsd + "integer").iri() ||
+          dataType == (Namespace.Xsd + "long").iri()) {
         YType.Int
-      } else if (
-        dataType == (Namespace.Xsd + "float").iri() ||
-          dataType == (Namespace.Xsd + "double").iri() ||
-          dataType == (Namespace.Shapes + "number").iri()
-      ) {
+      } else if (dataType == (Namespace.Xsd + "float").iri() ||
+                 dataType == (Namespace.Xsd + "double").iri() ||
+                 dataType == (Namespace.Shapes + "number").iri()) {
         YType.Float
-      } else if (
-        dataType == (Namespace.Xsd + "boolean").iri()
-      ) {
+      } else if (dataType == (Namespace.Xsd + "boolean").iri()) {
         YType.Bool
       } else {
         YType.Str
@@ -68,6 +62,7 @@ trait EnumEmitterHelper {
     case _ => YType.Str
   }
 }
+
 /**
   *
   */
@@ -1181,7 +1176,7 @@ case class OasTypePartEmitter(shape: Shape,
                               ignored: Seq[Field] = Nil,
                               references: Seq[BaseUnit],
                               pointer: Seq[String] = Nil,
-                              schemaPath: Seq[(String,String)] = Nil)(implicit spec: OasSpecEmitterContext)
+                              schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
     extends OasTypePartCollector(shape, ordering, ignored, references)
     with PartEmitter {
 
@@ -1199,23 +1194,25 @@ abstract class OasTypePartCollector(shape: Shape,
                                     ordering: SpecOrdering,
                                     ignored: Seq[Field],
                                     references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext) {
-  private var _emitters: Option[Seq[Emitter]] = None
+  private var _emitters: Option[Seq[Emitter]]                          = None
   private var _emitter: Option[Either[PartEmitter, Seq[EntryEmitter]]] = None
 
   protected def emitters: Seq[Emitter] = emitters(Nil, Nil)
-  
+
   protected def emitters(pointer: Seq[String], schemaPath: Seq[(String, String)]): Seq[Emitter] = {
     _emitters match {
       case Some(ems) => ems
       case _ =>
-        _emitters = Some(ordering.sorted(OasTypeEmitter(shape, ordering, ignored, references, pointer, schemaPath).emitters()))
+        _emitters = Some(
+          ordering.sorted(OasTypeEmitter(shape, ordering, ignored, references, pointer, schemaPath).emitters()))
         _emitters.get
     }
   }
 
   protected def emitter: Either[PartEmitter, Seq[EntryEmitter]] = emitter(Nil, Nil)
 
-  protected def emitter(pointer: Seq[String], schemaPath: Seq[(String, String)]): Either[PartEmitter, Seq[EntryEmitter]] = _emitter match {
+  protected def emitter(pointer: Seq[String],
+                        schemaPath: Seq[(String, String)]): Either[PartEmitter, Seq[EntryEmitter]] = _emitter match {
     case Some(em) => em
     case _ =>
       _emitter = Some(
@@ -1229,26 +1226,27 @@ abstract class OasTypePartCollector(shape: Shape,
   }
 }
 
-class SimpleOasTypePartCollector(shape: Shape,
-                                 ordering: SpecOrdering,
-                                 ignored: Seq[Field],
-                                 references: Seq[BaseUnit])(
-  implicit spec: OasSpecEmitterContext)
-  extends OasTypePartCollector(shape, ordering, ignored, references) {
+class SimpleOasTypePartCollector(shape: Shape, ordering: SpecOrdering, ignored: Seq[Field], references: Seq[BaseUnit])(
+    implicit spec: OasSpecEmitterContext)
+    extends OasTypePartCollector(shape, ordering, ignored, references) {
 
   def computeEmitters(pointer: Seq[String], schemaPath: Seq[(String, String)]) = emitters(pointer, schemaPath)
 }
 
-case class OasTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Field] = Nil, references: Seq[BaseUnit], pointer: Seq[String] = Nil, schemaPath: Seq[(String, String)] = Nil)(
-    implicit spec: OasSpecEmitterContext) {
+case class OasTypeEmitter(shape: Shape,
+                          ordering: SpecOrdering,
+                          ignored: Seq[Field] = Nil,
+                          references: Seq[BaseUnit],
+                          pointer: Seq[String] = Nil,
+                          schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext) {
   def emitters(): Seq[Emitter] = {
 
     // Adjusting JSON Schema  pointer
-    val nextPointerStr = s"#${pointer.map(p => s"/$p").mkString}"
+    val nextPointerStr                           = s"#${pointer.map(p => s"/$p").mkString}"
     var updatedSchemaPath: Seq[(String, String)] = schemaPath :+ (shape.id, nextPointerStr)
     shape match {
       case chain: InheritanceChain => updatedSchemaPath ++= chain.inheritedIds.map((_, nextPointerStr))
-      case                       _ => // ignore
+      case _                       => // ignore
     }
 
     shape match {
@@ -1295,8 +1293,12 @@ case class OasTypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Fie
 
 }
 
-abstract class OasShapeEmitter(shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit], pointer: Seq[String] = Nil, schemaPath: Seq[(String,String)] = Nil)(
-    implicit spec: OasSpecEmitterContext) extends EnumEmitterHelper {
+abstract class OasShapeEmitter(shape: Shape,
+                               ordering: SpecOrdering,
+                               references: Seq[BaseUnit],
+                               pointer: Seq[String] = Nil,
+                               schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
+    extends EnumEmitterHelper {
   def emitters(): Seq[EntryEmitter] = {
 
     val result = ListBuffer[EntryEmitter]()
@@ -1312,7 +1314,6 @@ abstract class OasShapeEmitter(shape: Shape, ordering: SpecOrdering, references:
                                    position = pos(f.value.annotations))
       case None => fs.entry(ShapeModel.DefaultValueString).map(dv => result += ValueEmitter("default", dv))
     }
-
 
     fs.entry(ShapeModel.Values).map(f => result += ArrayEmitter("enum", f, ordering, valuesTag = enumTagType(shape)))
 
@@ -1335,10 +1336,12 @@ abstract class OasShapeEmitter(shape: Shape, ordering: SpecOrdering, references:
 
     if (Option(shape.and).isDefined && shape.and.nonEmpty)
       result += OasAndConstraintEmitter(shape, ordering, references, pointer, schemaPath)
-    if (Option(shape.or).isDefined && shape.or.nonEmpty) result += OasOrConstraintEmitter(shape, ordering, references, pointer, schemaPath)
+    if (Option(shape.or).isDefined && shape.or.nonEmpty)
+      result += OasOrConstraintEmitter(shape, ordering, references, pointer, schemaPath)
     if (Option(shape.xone).isDefined && shape.xone.nonEmpty)
       result += OasXoneConstraintEmitter(shape, ordering, references, pointer, schemaPath)
-    if (Option(shape.not).isDefined) result += OasNotConstraintEmitter(shape, ordering, references, pointer, schemaPath)
+    if (Option(shape.not).isDefined)
+      result += OasNotConstraintEmitter(shape, ordering, references, pointer, schemaPath)
 
     result
   }
@@ -1371,16 +1374,18 @@ case class OasUnionShapeEmitter(shape: UnionShape, ordering: SpecOrdering, refer
   override def position(): Position = pos(shape.annotations)
 }
 
-case class OasRecursiveShapeEmitter(recursive: RecursiveShape, ordering: SpecOrdering, schemaPath: Seq[(String, String)])(
-  implicit spec: OasSpecEmitterContext)
-  extends EntryEmitter {
+case class OasRecursiveShapeEmitter(recursive: RecursiveShape,
+                                    ordering: SpecOrdering,
+                                    schemaPath: Seq[(String, String)])(implicit spec: OasSpecEmitterContext)
+    extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
     val pointer = recursive.fixpoint.option() match {
-      case Some(id) => schemaPath.reverse.find(_._1 == id) match {
-        case Some((_, pointer)) => Some(pointer)
-        case _                  => None
-      }
+      case Some(id) =>
+        schemaPath.reverse.find(_._1 == id) match {
+          case Some((_, pointer)) => Some(pointer)
+          case _                  => None
+        }
       case _ => None
     }
 
@@ -1397,12 +1402,16 @@ case class OasRecursiveShapeEmitter(recursive: RecursiveShape, ordering: SpecOrd
   override def position(): Position = ZERO
 }
 
-case class OasOrConstraintEmitter(shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit], pointer: Seq[String] = Nil, schemaPath: Seq[(String,String)] = Nil)(
-    implicit spec: OasSpecEmitterContext)
+case class OasOrConstraintEmitter(shape: Shape,
+                                  ordering: SpecOrdering,
+                                  references: Seq[BaseUnit],
+                                  pointer: Seq[String] = Nil,
+                                  schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
 
-  val emitters: Seq[OasTypePartEmitter] = shape.or.zipWithIndex map { case (s: Shape, i: Int) =>
-    OasTypePartEmitter(s, ordering, ignored = Nil,references, pointer = pointer ++ Seq("allOf", s"$i"), schemaPath)
+  val emitters: Seq[OasTypePartEmitter] = shape.or.zipWithIndex map {
+    case (s: Shape, i: Int) =>
+      OasTypePartEmitter(s, ordering, ignored = Nil, references, pointer = pointer ++ Seq("allOf", s"$i"), schemaPath)
   }
 
   override def emit(b: EntryBuilder): Unit = {
@@ -1417,12 +1426,16 @@ case class OasOrConstraintEmitter(shape: Shape, ordering: SpecOrdering, referenc
   override def position(): Position = emitters.map(_.position()).sortBy(_.line).headOption.getOrElse(ZERO)
 }
 
-case class OasAndConstraintEmitter(shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit], pointer: Seq[String] = Nil, schemaPath: Seq[(String,String)] = Nil)(
-    implicit spec: OasSpecEmitterContext)
+case class OasAndConstraintEmitter(shape: Shape,
+                                   ordering: SpecOrdering,
+                                   references: Seq[BaseUnit],
+                                   pointer: Seq[String] = Nil,
+                                   schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
 
-  val emitters: Seq[OasTypePartEmitter] = shape.and.zipWithIndex map { case (s: Shape, i: Int) =>
-    OasTypePartEmitter(s, ordering, ignored = Nil,references, pointer = pointer ++ Seq("allOf", s"$i"), schemaPath)
+  val emitters: Seq[OasTypePartEmitter] = shape.and.zipWithIndex map {
+    case (s: Shape, i: Int) =>
+      OasTypePartEmitter(s, ordering, ignored = Nil, references, pointer = pointer ++ Seq("allOf", s"$i"), schemaPath)
   }
 
   override def emit(b: EntryBuilder): Unit = {
@@ -1437,12 +1450,16 @@ case class OasAndConstraintEmitter(shape: Shape, ordering: SpecOrdering, referen
   override def position(): Position = emitters.map(_.position()).sortBy(_.line).headOption.getOrElse(ZERO)
 }
 
-case class OasXoneConstraintEmitter(shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit], pointer: Seq[String] = Nil, schemaPath: Seq[(String,String)] = Nil)(
-    implicit spec: OasSpecEmitterContext)
+case class OasXoneConstraintEmitter(shape: Shape,
+                                    ordering: SpecOrdering,
+                                    references: Seq[BaseUnit],
+                                    pointer: Seq[String] = Nil,
+                                    schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
 
-  val emitters: Seq[OasTypePartEmitter] = shape.xone.zipWithIndex map { case (s: Shape, i: Int) =>
-    OasTypePartEmitter(s, ordering, ignored = Nil,references, pointer = pointer ++ Seq("oneOf", s"$i"), schemaPath)
+  val emitters: Seq[OasTypePartEmitter] = shape.xone.zipWithIndex map {
+    case (s: Shape, i: Int) =>
+      OasTypePartEmitter(s, ordering, ignored = Nil, references, pointer = pointer ++ Seq("oneOf", s"$i"), schemaPath)
   }
 
   override def emit(b: EntryBuilder): Unit = {
@@ -1457,11 +1474,15 @@ case class OasXoneConstraintEmitter(shape: Shape, ordering: SpecOrdering, refere
   override def position(): Position = emitters.map(_.position()).sortBy(_.line).headOption.getOrElse(ZERO)
 }
 
-case class OasNotConstraintEmitter(shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit], pointer: Seq[String] = Nil, schemaPath: Seq[(String,String)] = Nil)(
-    implicit spec: OasSpecEmitterContext)
+case class OasNotConstraintEmitter(shape: Shape,
+                                   ordering: SpecOrdering,
+                                   references: Seq[BaseUnit],
+                                   pointer: Seq[String] = Nil,
+                                   schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
 
-  val emitter = OasTypePartEmitter(shape.not, ordering, ignored = Nil, references = references, pointer :+ "not", schemaPath)
+  val emitter =
+    OasTypePartEmitter(shape.not, ordering, ignored = Nil, references = references, pointer :+ "not", schemaPath)
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
@@ -1474,13 +1495,19 @@ case class OasNotConstraintEmitter(shape: Shape, ordering: SpecOrdering, referen
 }
 
 object OasAnyShapeEmitter {
-  def apply(shape: AnyShape, ordering: SpecOrdering, references: Seq[BaseUnit], pointer: Seq[String] = Nil, schemaPath: Seq[(String,String)] = Nil)(
-      implicit spec: OasSpecEmitterContext): OasAnyShapeEmitter =
+  def apply(shape: AnyShape,
+            ordering: SpecOrdering,
+            references: Seq[BaseUnit],
+            pointer: Seq[String] = Nil,
+            schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext): OasAnyShapeEmitter =
     new OasAnyShapeEmitter(shape, ordering, references, pointer, schemaPath)(spec)
 }
 
-class OasAnyShapeEmitter(shape: AnyShape, ordering: SpecOrdering, references: Seq[BaseUnit], pointer: Seq[String] = Nil, schemaPath: Seq[(String,String)] = Nil)(
-    implicit spec: OasSpecEmitterContext)
+class OasAnyShapeEmitter(shape: AnyShape,
+                         ordering: SpecOrdering,
+                         references: Seq[BaseUnit],
+                         pointer: Seq[String] = Nil,
+                         schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
     extends OasShapeEmitter(shape, ordering, references, pointer, schemaPath) {
   override def emitters(): Seq[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter]()
@@ -1511,8 +1538,11 @@ class OasAnyShapeEmitter(shape: AnyShape, ordering: SpecOrdering, references: Se
   }
 }
 
-case class OasArrayShapeEmitter(shape: ArrayShape, ordering: SpecOrdering, references: Seq[BaseUnit], pointer: Seq[String] = Nil, schemaPath: Seq[(String,String)] = Nil)(
-    implicit spec: OasSpecEmitterContext)
+case class OasArrayShapeEmitter(shape: ArrayShape,
+                                ordering: SpecOrdering,
+                                references: Seq[BaseUnit],
+                                pointer: Seq[String] = Nil,
+                                schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
     extends OasAnyShapeEmitter(shape, ordering, references) {
   override def emitters(): Seq[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter](super.emitters(): _*)
@@ -1528,9 +1558,16 @@ case class OasArrayShapeEmitter(shape: ArrayShape, ordering: SpecOrdering, refer
 
     fs.entry(ArrayShapeModel.CollectionFormat) match { // What happens if there is an array of an array with collectionFormat?
       case Some(f) if f.value.annotations.contains(classOf[CollectionFormatFromItems]) =>
-        result += OasItemsShapeEmitter(shape, ordering, references, Some(ValueEmitter("collectionFormat", f)), pointer, schemaPath)
+        result += OasItemsShapeEmitter(shape,
+                                       ordering,
+                                       references,
+                                       Some(ValueEmitter("collectionFormat", f)),
+                                       pointer,
+                                       schemaPath)
       case Some(f) =>
-        result += OasItemsShapeEmitter(shape, ordering, references, None, pointer, schemaPath) += ValueEmitter("collectionFormat", f)
+        result += OasItemsShapeEmitter(shape, ordering, references, None, pointer, schemaPath) += ValueEmitter(
+          "collectionFormat",
+          f)
       case None =>
         result += OasItemsShapeEmitter(shape, ordering, references, None, pointer, schemaPath)
     }
@@ -1543,9 +1580,12 @@ case class OasArrayShapeEmitter(shape: ArrayShape, ordering: SpecOrdering, refer
   }
 }
 
-case class OasTupleShapeEmitter(shape: TupleShape, ordering: SpecOrdering, references: Seq[BaseUnit], pointer: Seq[String] = Nil, schemaPath: Seq[(String,String)] = Nil)(
-  implicit spec: OasSpecEmitterContext)
-  extends OasAnyShapeEmitter(shape, ordering, references) {
+case class OasTupleShapeEmitter(shape: TupleShape,
+                                ordering: SpecOrdering,
+                                references: Seq[BaseUnit],
+                                pointer: Seq[String] = Nil,
+                                schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
+    extends OasAnyShapeEmitter(shape, ordering, references) {
   override def emitters(): Seq[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter](super.emitters(): _*)
     val fs     = shape.fields
@@ -1560,9 +1600,16 @@ case class OasTupleShapeEmitter(shape: TupleShape, ordering: SpecOrdering, refer
 
     fs.entry(ArrayShapeModel.CollectionFormat) match { // What happens if there is an array of an array with collectionFormat?
       case Some(f) if f.value.annotations.contains(classOf[CollectionFormatFromItems]) =>
-        result += OasTupleItemsShapeEmitter(shape, ordering, references, Some(ValueEmitter("collectionFormat", f)), pointer, schemaPath)
+        result += OasTupleItemsShapeEmitter(shape,
+                                            ordering,
+                                            references,
+                                            Some(ValueEmitter("collectionFormat", f)),
+                                            pointer,
+                                            schemaPath)
       case Some(f) =>
-        result += OasTupleItemsShapeEmitter(shape, ordering, references, None, pointer, schemaPath) += ValueEmitter("collectionFormat", f)
+        result += OasTupleItemsShapeEmitter(shape, ordering, references, None, pointer, schemaPath) += ValueEmitter(
+          "collectionFormat",
+          f)
       case None =>
         result += OasTupleItemsShapeEmitter(shape, ordering, references, None, pointer, schemaPath)
     }
@@ -1599,7 +1646,7 @@ case class OasItemsShapeEmitter(array: ArrayShape,
                                 references: Seq[BaseUnit],
                                 additionalEntry: Option[ValueEmitter],
                                 pointer: Seq[String] = Nil,
-                                schemaPath: Seq[(String,String)] = Nil)(implicit spec: OasSpecEmitterContext)
+                                schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
     extends OasTypePartCollector(array.items, ordering, Nil, references)
     with EntryEmitter {
 
@@ -1629,29 +1676,33 @@ case class OasTupleItemsShapeEmitter(array: TupleShape,
                                      references: Seq[BaseUnit],
                                      additionalEntry: Option[ValueEmitter],
                                      pointer: Seq[String] = Nil,
-                                     schemaPath: Seq[(String,String)] = Nil)(implicit spec: OasSpecEmitterContext)
+                                     schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
 
   val itemEmitters = {
-    array.items.zipWithIndex.map { case (shape, i) =>
-      /*
+    array.items.zipWithIndex.map {
+      case (shape, i) =>
+        /*
       val collector = new SimpleOasTypePartCollector(shape, ordering, Nil, references)
       collector.computeEmitters(pointer ++ Seq("items", s"$i"), schemaPath)
-      */
-      OasTypeEmitter(shape, ordering, Nil, references, pointer ++ Seq("items", s"$i"), schemaPath)
+         */
+        OasTypeEmitter(shape, ordering, Nil, references, pointer ++ Seq("items", s"$i"), schemaPath)
     }
   }
 
   def emit(b: EntryBuilder): Unit = {
     if (Option(array.fields.getValue(TupleShapeModel.TupleItems)).isDefined) {
-      b.entry("items", _.list { le =>
-        itemEmitters.foreach { emitter =>
-          val allEmitters = emitter.emitters().collect{ case e: EntryEmitter => e }
-          le.obj { o =>
-            allEmitters.foreach(_.emit(o))
+      b.entry(
+        "items",
+        _.list { le =>
+          itemEmitters.foreach { emitter =>
+            val allEmitters = emitter.emitters().collect { case e: EntryEmitter => e }
+            le.obj { o =>
+              allEmitters.foreach(_.emit(o))
+            }
           }
         }
-      })
+      )
     }
   }
   override def position(): Position = {
@@ -1662,8 +1713,11 @@ case class OasTupleItemsShapeEmitter(array: TupleShape,
   }
 }
 
-case class OasNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, references: Seq[BaseUnit], pointer: Seq[String] = Nil, schemaPath: Seq[(String, String)] = Nil)(
-    implicit spec: OasSpecEmitterContext)
+case class OasNodeShapeEmitter(node: NodeShape,
+                               ordering: SpecOrdering,
+                               references: Seq[BaseUnit],
+                               pointer: Seq[String] = Nil,
+                               schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
     extends OasAnyShapeEmitter(node, ordering, references) {
   override def emitters(): Seq[EntryEmitter] = {
     val result: ListBuffer[EntryEmitter] = ListBuffer(super.emitters(): _*)
@@ -1692,9 +1746,23 @@ case class OasNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referenc
     fs.entry(NodeShapeModel.Properties).map(f => result += OasRequiredPropertiesShapeEmitter(f, references))
 
     fs.entry(NodeShapeModel.Properties)
-      .map(f => result += OasPropertiesShapeEmitter(f, ordering, references, patterned = false, pointer = pointer, schemaPath = schemaPath))
+      .map(
+        f =>
+          result += OasPropertiesShapeEmitter(f,
+                                              ordering,
+                                              references,
+                                              patterned = false,
+                                              pointer = pointer,
+                                              schemaPath = schemaPath))
     fs.entry(NodeShapeModel.Properties)
-      .map(f => result += OasPropertiesShapeEmitter(f, ordering, references, patterned = true, pointer = pointer, schemaPath = schemaPath))
+      .map(
+        f =>
+          result += OasPropertiesShapeEmitter(f,
+                                              ordering,
+                                              references,
+                                              patterned = true,
+                                              pointer = pointer,
+                                              schemaPath = schemaPath))
 
     val properties = ListMap(node.properties.map(p => p.id -> p): _*)
 
@@ -1837,7 +1905,10 @@ trait OasCommonOASFieldsEmitter extends RamlFormatTranslator {
       .map(f => result += ValueEmitter("multipleOf", f, Some(NumberTypeToYTypeConverter.convert(typeDef))))
 
     fs.entry(ScalarShapeModel.Format).map { f =>
-      result += RawValueEmitter("format", ScalarShapeModel.Format, checkRamlFormats(f.scalar.toString), f.value.annotations)
+      result += RawValueEmitter("format",
+                                ScalarShapeModel.Format,
+                                checkRamlFormats(f.scalar.toString),
+                                f.value.annotations)
     }
   }
 }
@@ -1874,7 +1945,7 @@ case class OasScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, re
           case Some(format) => {
             result += RawValueEmitter("format", ScalarShapeModel.Format, checkRamlFormats(format))
           }
-          case None         => // ignore
+          case None => // ignore
         }
     }
     emitCommonFields(fs, result)
@@ -1948,7 +2019,8 @@ case class OasPropertiesShapeEmitter(f: FieldEntry,
         propertiesKey,
         _.obj { b =>
           val result =
-            properties.map(v => OasPropertyShapeEmitter(v.asInstanceOf[PropertyShape], ordering, references, pointer, schemaPath))
+            properties.map(v =>
+              OasPropertyShapeEmitter(v.asInstanceOf[PropertyShape], ordering, references, pointer, schemaPath))
           traverse(ordering.sorted(result), b)
         }
       )
@@ -1958,15 +2030,18 @@ case class OasPropertiesShapeEmitter(f: FieldEntry,
   override def position(): Position = pos(f.value.annotations)
 }
 
-case class OasPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrdering, references: Seq[BaseUnit], pointer: Seq[String] = Nil, schemaPath: Seq[(String,String)] = Nil)(
-    implicit spec: OasSpecEmitterContext)
+case class OasPropertyShapeEmitter(property: PropertyShape,
+                                   ordering: SpecOrdering,
+                                   references: Seq[BaseUnit],
+                                   pointer: Seq[String] = Nil,
+                                   schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
     extends OasTypePartCollector(property.range, ordering, Nil, references)
     with EntryEmitter {
 
   val readOnlyEmitter: Option[ValueEmitter] =
     property.fields.entry(PropertyShapeModel.ReadOnly).map(fe => ValueEmitter("readOnly", fe))
 
-  val propertyName: String  = property.patternName.option().getOrElse(property.name.value())
+  val propertyName: String = property.patternName.option().getOrElse(property.name.value())
 
   val computedEmitters = emitter(pointer ++ Seq("properties", propertyName), schemaPath)
 
@@ -1990,10 +2065,37 @@ case class OasPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrderi
   override def position(): Position = pos(property.annotations) // TODO check this
 }
 
-case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext) {
+case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
+    extends ExamplesEmitter {
+
+  def inheritsEmitters(): Seq[Emitter] = {
+    val father =
+      shape.inherits.collectFirst({ case s: Shape if s.annotations.contains(classOf[ParsedJSONSchema]) => s }).get
+    val emitter = new EntryEmitter {
+      override def emit(b: EntryBuilder): Unit = {
+        val emit: PartBuilder => Unit = Raml08TypePartEmitter(father, ordering, Nil).emit _
+        b.entry("schema", emit)
+      }
+
+      override def position(): Position = pos(father.annotations)
+    }
+
+    val results = mutable.ListBuffer[EntryEmitter]()
+    results += emitter
+    shape match {
+      case any: AnyShape if any.examples.nonEmpty => emitExamples(any, results, ordering, Nil)
+      case _                                      => //ignore
+    }
+
+    results
+  }
+
   def emitters(): Seq[Emitter] = {
     shape match {
-      case shape: Shape if shape.isLink => Seq(spec.localReference(shape))
+      case shape: Shape if shape.isLink                                                     => Seq(spec.localReference(shape))
+      case s: Shape if s.inherits.exists(_.annotations.contains(classOf[ParsedJSONSchema])) => inheritsEmitters()
+      case shape: AnyShape if shape.annotations.find(classOf[ParsedJSONSchema]).isDefined =>
+        Seq(RamlJsonShapeEmitter(shape, ordering, Nil, typeKey = "schema"))
       case scalar: ScalarShape =>
         SimpleTypeEmitter(scalar, ordering).emitters()
       case array: ArrayShape =>
@@ -2018,8 +2120,6 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
           override def position(): Position = pos(union.annotations)
         })
       case schema: SchemaShape => Seq(RamlSchemaShapeEmitter(schema, ordering, Nil))
-      case shape: AnyShape if shape.annotations.find(classOf[ParsedJSONSchema]).isDefined =>
-        Seq(RamlJsonShapeEmitter(shape, ordering, Nil, typeKey = "schema"))
       case nil: NilShape =>
         RamlNilShapeEmitter(nil, ordering, Seq()).emitters()
       case fileShape: FileShape =>
@@ -2037,7 +2137,8 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
 }
 
 case class SimpleTypeEmitter(shape: ScalarShape, ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
-    extends RamlCommonOASFieldsEmitter with EnumEmitterHelper {
+    extends RamlCommonOASFieldsEmitter
+    with EnumEmitterHelper {
 
   def emitters(): Seq[EntryEmitter] = {
     val fs = shape.fields
@@ -2060,7 +2161,8 @@ case class SimpleTypeEmitter(shape: ScalarShape, ordering: SpecOrdering)(implici
 
     fs.entry(ScalarShapeModel.Description).map(f => result += ValueEmitter("description", f))
 
-    fs.entry(ScalarShapeModel.Values).map(f => result += ArrayEmitter("enum", f, ordering, valuesTag = enumTagType(shape)))
+    fs.entry(ScalarShapeModel.Values)
+      .map(f => result += ArrayEmitter("enum", f, ordering, valuesTag = enumTagType(shape)))
 
     fs.entry(ScalarShapeModel.Pattern).map { f =>
       result += RamlScalarEmitter("pattern", processRamlPattern(f))
