@@ -5,6 +5,7 @@ import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.Shape
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, ValidationCandidate}
+import amf.internal.environment.Environment
 import amf.plugins.document.webapi.OAS20Plugin
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
 import amf.plugins.document.webapi.model.DataTypeFragment
@@ -21,14 +22,16 @@ import scala.concurrent.Future
 
 class JvmPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shape) with PlatformJsonSchemaValidator {
 
-  val isFileShape: Boolean = shape.isInstanceOf[FileShape]
-  val polymorphic: Boolean = shape.supportsInheritance
+  val isFileShape: Boolean                = shape.isInstanceOf[FileShape]
+  val polymorphic: Boolean                = shape.supportsInheritance
   var jsonSchemasMap: Map[String, Schema] = Map()
-  val validator = Validator.builder().failEarly().build()
+  val validator: Validator                = Validator.builder().failEarly().build()
+  private val env                         = Environment()
 
   override def validate(mediaType: String, payload: String): Boolean = {
     if (mediaType != "application/json" && mediaType != "application/yaml") {
-      throw new UnsupportedMediaType(s"Unsupported payload media type '$mediaType', only application/json and application/yaml supported")
+      throw new UnsupportedMediaType(
+        s"Unsupported payload media type '$mediaType', only application/json and application/yaml supported")
     }
     if (isFileShape) {
       true
@@ -42,7 +45,7 @@ class JvmPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shap
   protected def shapeJsonSchema(effectiveShape: Shape): Option[Schema] = {
     jsonSchemasMap.get(effectiveShape.id) match {
       case Some(schema) => Some(schema)
-      case None         =>
+      case None =>
         parseShape(effectiveShape) map { parsedShape =>
           jsonSchemasMap += (effectiveShape.id -> parsedShape)
           parsedShape
@@ -52,10 +55,10 @@ class JvmPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shap
   }
 
   protected def validatePolymorphic(mediaType: String, payload: String): Boolean = {
-    val payloadFragment = PayloadValidatorPlugin.parsePayload(payload, mediaType)
-    val effectiveShape = findPolymorphicShape(shape, payloadFragment.encodes)
+    val payloadFragment = PayloadValidatorPlugin.parsePayload(payload, mediaType, env)
+    val effectiveShape  = findPolymorphicShape(shape, payloadFragment.encodes)
     shapeJsonSchema(effectiveShape) match {
-      case None             => throw new Exception(s"Cannot parse shape '${effectiveShape.id}' to execute validation")
+      case None => throw new Exception(s"Cannot parse shape '${effectiveShape.id}' to execute validation")
       case Some(jsonSchema) =>
         val dataNode = if (mediaType == "application/json") {
           loadJson(payload)
@@ -73,12 +76,12 @@ class JvmPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shap
 
   protected def validateNotPolymorphic(mediaType: String, payload: String): Boolean = {
     shapeJsonSchema(shape) match {
-      case None             => throw new Exception(s"Cannot parse shape '${shape.id}' to execute validation")
+      case None => throw new Exception(s"Cannot parse shape '${shape.id}' to execute validation")
       case Some(jsonSchema) =>
         val dataNode = if (mediaType == "application/json") {
           loadJson(payload)
         } else {
-          val payloadFragment = PayloadValidatorPlugin.parsePayload(payload, mediaType)
+          val payloadFragment = PayloadValidatorPlugin.parsePayload(payload, mediaType, env)
           loadDataNodeString(payloadFragment)
         }
         try {
@@ -92,7 +95,8 @@ class JvmPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shap
 
   protected def parseShape(fragmentShape: Shape): Option[Schema] = {
     val dataType = DataTypeFragment()
-    dataType.fields.setWithoutId(DataTypeFragmentModel.Encodes, fragmentShape) // careful, we don't want to modify the ID
+    dataType.fields
+      .setWithoutId(DataTypeFragmentModel.Encodes, fragmentShape) // careful, we don't want to modify the ID
 
     OAS20Plugin.unparse(dataType, RenderOptions()) match {
       case Some(doc) =>
@@ -104,7 +108,8 @@ class JvmPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shap
                 schemaNode.remove("example")
                 schemaNode.remove("examples")
 
-                val schemaBuilder = SchemaLoader.builder()
+                val schemaBuilder = SchemaLoader
+                  .builder()
                   .schemaJson(schemaNode)
                   .addFormatValidator(DateTimeOnlyFormatValidator)
                   .addFormatValidator(Rfc2616Attribute)
@@ -118,9 +123,9 @@ class JvmPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shap
                 Some(schemaLoader.load().build())
               case _ => None
             }
-          case _                => None
+          case _ => None
         }
-      case _         =>
+      case _ =>
         None
     }
   }
@@ -136,6 +141,7 @@ class JvmPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shap
 
   protected def loadJson(text: String): Object = new JSONTokener(text).nextValue()
 
-  override def validate(validationCandidates: Seq[ValidationCandidate], profile: ValidationProfile): Future[AMFValidationReport] =
+  override def validate(validationCandidates: Seq[ValidationCandidate],
+                        profile: ValidationProfile): Future[AMFValidationReport] =
     throw new Exception("Validate not supported in payload validator")
 }

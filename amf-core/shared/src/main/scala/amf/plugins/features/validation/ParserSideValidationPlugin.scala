@@ -8,6 +8,7 @@ import amf.core.rdf.RdfModel
 import amf.core.services.{IgnoreValidationsMerger, RuntimeValidator, ValidationOptions, ValidationsMerger}
 import amf.core.validation._
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationResult, ValidationSpecification}
+import amf.internal.environment.Environment
 
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -130,7 +131,8 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
     */
   override def validate(model: BaseUnit,
                         profileName: ProfileName,
-                        messageStyle: MessageStyle): Future[AMFValidationReport] =
+                        messageStyle: MessageStyle,
+                        env: Environment): Future[AMFValidationReport] =
     aggregateReport(model, profileName, messageStyle)
 
   final def aggregateReport(model: BaseUnit,

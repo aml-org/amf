@@ -11,6 +11,7 @@ import amf.core.services.{RuntimeCompiler, RuntimeValidator, ValidationOptions}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationSpecification}
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations}
+import amf.internal.environment.Environment
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.graph.parser.ScalarEmitter
 import amf.plugins.document.vocabularies.AMLPlugin
@@ -179,23 +180,25 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
 
   override def validate(model: BaseUnit,
                         profileName: ProfileName,
-                        messageStyle: MessageStyle): Future[AMFValidationReport] = {
+                        messageStyle: MessageStyle,
+                        env: Environment): Future[AMFValidationReport] = {
 
-    super.validate(model, profileName, messageStyle) flatMap {
+    super.validate(model, profileName, messageStyle, env) flatMap {
       case parseSideValidation if !parseSideValidation.conforms => Future.successful(parseSideValidation)
-      case _                                                    => modelValidation(model, profileName, messageStyle)
+      case _                                                    => modelValidation(model, profileName, messageStyle, env)
     }
 
   }
 
   private def modelValidation(model: BaseUnit,
                               profileName: ProfileName,
-                              messageStyle: MessageStyle): Future[AMFValidationReport] = {
+                              messageStyle: MessageStyle,
+                              env: Environment): Future[AMFValidationReport] = {
     profilesPlugins.get(profileName.profile) match {
       case Some(domainPlugin: AMFValidationPlugin) =>
         val validations = computeValidations(profileName)
         domainPlugin
-          .validationRequest(model, profileName, validations, platform)
+          .validationRequest(model, profileName, validations, platform, env)
       case _ =>
         Future {
           profileNotFoundWarningReport(model, profileName)

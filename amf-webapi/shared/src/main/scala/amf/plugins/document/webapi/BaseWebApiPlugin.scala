@@ -8,6 +8,7 @@ import amf.core.remote.Platform
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
+import amf.internal.environment.Environment
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
@@ -67,8 +68,9 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
   def validationRequest(baseUnit: BaseUnit,
                         profile: ProfileName,
                         validations: EffectiveValidations,
-                        platform: Platform): Future[AMFValidationReport] = {
-    validationRequestsForBaseUnit(baseUnit, profile, validations, validationProfile.messageStyle, platform)
+                        platform: Platform,
+                        env: Environment): Future[AMFValidationReport] = {
+    validationRequestsForBaseUnit(baseUnit, profile, validations, validationProfile.messageStyle, platform, env)
   }
 
   override def init(): Future[AMFPlugin] = Future.successful(this)

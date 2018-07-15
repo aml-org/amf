@@ -6,9 +6,10 @@ import amf.core.parser.{Annotations, Fields}
 import amf.core.services.PayloadValidator
 import amf.core.utils.Strings
 import amf.core.validation.{AMFValidationReport, SeverityLevels}
+import amf.internal.environment.Environment
 import amf.plugins.document.webapi.annotations.{DeclaredElement, InlineDefinition}
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaSerializer
-import amf.plugins.document.webapi.validation.remote.{PlatformJsonSchemaValidator, PlatformPayloadValidator}
+import amf.plugins.document.webapi.validation.remote.PlatformPayloadValidator
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel._
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
@@ -42,7 +43,7 @@ trait InheritanceChain { this: AnyShape =>
     }
   }
 
-    def linkSubType(shape: AnyShape) = {
+  def linkSubType(shape: AnyShape): Unit = {
     addSubType(shape)
     shape.addSuperType(this)
   }
@@ -111,11 +112,15 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
   def copyAnyShape(fields: Fields = fields, annotations: Annotations = annotations): AnyShape =
     AnyShape(fields, annotations).withId(id)
 
-  def validate(payload: String): Future[AMFValidationReport] =
-    PayloadValidator.validate(this, payload, SeverityLevels.VIOLATION)
+  def validate(payload: String, env: Environment): Future[AMFValidationReport] =
+    PayloadValidator.validate(this, payload, SeverityLevels.VIOLATION, env)
 
-  def validate(fragment: PayloadFragment): Future[AMFValidationReport] =
-    PayloadValidator.validate(this, fragment, SeverityLevels.VIOLATION)
+  def validate(payload: String): Future[AMFValidationReport] = validate(payload, Environment())
+
+  def validate(fragment: PayloadFragment, env: Environment): Future[AMFValidationReport] =
+    PayloadValidator.validate(this, fragment, SeverityLevels.VIOLATION, env)
+
+  def validate(fragment: PayloadFragment): Future[AMFValidationReport] = validate(fragment, Environment())
 
   def payloadValidator(): PlatformPayloadValidator = payloadValidator(this)
 

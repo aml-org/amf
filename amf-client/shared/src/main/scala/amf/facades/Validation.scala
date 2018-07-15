@@ -6,6 +6,7 @@ import amf.core.remote.Platform
 import amf.core.services.RuntimeValidator
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations}
+import amf.internal.environment.Environment
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.Dialect
@@ -101,9 +102,10 @@ class Validation(platform: Platform) {
 
   def validate(model: BaseUnit,
                profileName: ProfileName,
-               messageStyle: MessageStyle = RAMLStyle): Future[AMFValidationReport] = {
+               messageStyle: MessageStyle = RAMLStyle,
+               env: Environment = Environment()): Future[AMFValidationReport] = {
 
-    validator.validate(model, profileName, messageStyle)
+    validator.validate(model, profileName, messageStyle, env)
   }
 
   def computeValidations(profileName: ProfileName): EffectiveValidations = validator.computeValidations(profileName)

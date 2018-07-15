@@ -72,7 +72,7 @@ class Parser(vendor: String, mediaType: String, private val env: Option[Environm
     RuntimeValidator.reset()
 
     val environment = {
-      val e = env.getOrElse(DefaultEnvironment())._internal
+      val e = internalEnv()
       loader.map(e.add).getOrElse(e)
     }
 
@@ -82,8 +82,11 @@ class Parser(vendor: String, mediaType: String, private val env: Option[Environm
     }
   }
 
+  private def internalEnv() = env.getOrElse(DefaultEnvironment())._internal
+
   /**
     * Generates the validation report for the last parsed model.
+    *
     * @param profileName the profile to be parsed
     * @param messageStyle if a RAML/OAS profile, this can be set to the preferred error reporting style
     * @return the AMF validation report
@@ -91,7 +94,7 @@ class Parser(vendor: String, mediaType: String, private val env: Option[Environm
   private def report(profileName: ProfileName,
                      messageStyle: MessageStyle = RAMLStyle): ClientFuture[ValidationReport] = {
 
-    val result = parsedModel.map(RuntimeValidator(_, profileName, messageStyle)) match {
+    val result = parsedModel.map(RuntimeValidator(_, profileName, messageStyle, internalEnv())) match {
       case Some(validation) => validation
       case None             => Future.failed(new Exception("No parsed model or current validation found, cannot validate"))
     }
@@ -111,7 +114,7 @@ class Parser(vendor: String, mediaType: String, private val env: Option[Environm
       case Some(model) =>
         for {
           _      <- RuntimeValidator.loadValidationProfile(customProfilePath)
-          report <- RuntimeValidator(model, profileName)
+          report <- RuntimeValidator(model, profileName, env = internalEnv())
         } yield {
           report
         }

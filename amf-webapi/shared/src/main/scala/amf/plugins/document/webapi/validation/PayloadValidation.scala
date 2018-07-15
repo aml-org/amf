@@ -10,6 +10,7 @@ import amf.core.services.{DefaultValidationOptions, RuntimeValidator}
 import amf.core.validation._
 import amf.core.validation.core.{PropertyConstraint, ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.Namespace
+import amf.internal.environment.Environment
 import amf.plugins.document.webapi.contexts.PayloadContext
 import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
@@ -22,21 +23,21 @@ import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-
 case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
                              validations: EffectiveValidations = EffectiveValidations())
-    extends WebApiValidations with JsonSchemaSecrets {
+    extends WebApiValidations
+    with JsonSchemaSecrets {
 
   val profiles: ListBuffer[ValidationProfile]                  = ListBuffer[ValidationProfile]()
   val validationsCache: mutable.Map[String, ValidationProfile] = mutable.Map()
 
-
   def validate(): Future[AMFValidationReport] = {
     // return validateWithShacl()
-    jsonSchemaValidator.validate(validationCandidates, profiles.headOption.getOrElse(ValidationProfile(ProfileNames.AMF, None)))
+    jsonSchemaValidator.validate(validationCandidates,
+                                 profiles.headOption.getOrElse(ValidationProfile(ProfileNames.AMF, None)))
   }
 
-  def validateWithShacl() = {
+  def validateWithShacl(): Future[AMFValidationReport] = {
     validationCandidates.foreach { vc =>
       val dataNode = vc.payload.encodes
       addProfileTargets(dataNode, vc.shape)
@@ -64,7 +65,6 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
     }
   }
 
-
   protected def addProfileTargets(dataNode: DataNode, shape: Shape): Unit = {
     val localProfile              = profileForShape(shape, dataNode)
     val entryValidation           = localProfile.validations.head
@@ -88,11 +88,10 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
     } else {
       validationsCache.get(shape.id) match {
         case Some(profile) => profile
-        case None => {
+        case None =>
           val profile = new AMFShapeValidations(shape).profile(dataNode)
           validationsCache.put(shape.id, profile)
           profile
-        }
       }
     }
   }
@@ -170,7 +169,7 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
 
 object PayloadValidatorPlugin extends AMFPayloadValidationPlugin {
 
-  override def canValidate(shape: Shape): Boolean = {
+  override def canValidate(shape: Shape, env: Environment): Boolean = {
     shape match {
       case _: SchemaShape => false
       case _: AnyShape    => true
@@ -188,7 +187,7 @@ object PayloadValidatorPlugin extends AMFPayloadValidationPlugin {
 
   val defaultCtx = new PayloadContext("", Nil, ParserContext())
 
-  override def parsePayload(payload: String, mediaType: String): PayloadFragment = {
+  override def parsePayload(payload: String, mediaType: String, env: Environment): PayloadFragment = {
     val fragment = PayloadFragment(payload, mediaType)
 
     YamlParser(payload).parse(keepTokens = true).collectFirst({ case doc: YDocument => doc.node }) match {
@@ -199,6 +198,6 @@ object PayloadValidatorPlugin extends AMFPayloadValidationPlugin {
     fragment
   }
 
-  override def validateSet(set: ValidationShapeSet): Future[AMFValidationReport] =
+  override def validateSet(set: ValidationShapeSet, env: Environment): Future[AMFValidationReport] =
     PayloadValidation(set.candidates).validate()
 }

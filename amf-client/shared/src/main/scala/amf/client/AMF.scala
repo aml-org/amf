@@ -2,13 +2,13 @@ package amf.client
 
 import amf.client.convert.ClientPayloadPluginConverter
 import amf.client.convert.CoreClientConverters._
+import amf.client.environment.Environment
 import amf.client.model.document.{BaseUnit, Dialect}
 import amf.client.parse._
 import amf.client.plugins.{AMFPlugin, ClientAMFPayloadValidationPlugin}
 import amf.client.render._
 import amf.client.resolve._
 import amf.client.validate.ValidationReport
-import amf.core.validation.{ValidationShapeSet => InternalValidationShapeSet}
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.document.{Vocabularies, WebApi}
 import amf.plugins.features.AMFValidation
@@ -50,6 +50,12 @@ object AMF {
   def validate(model: BaseUnit, profileName: ProfileName, messageStyle: MessageStyle): ClientFuture[ValidationReport] =
     Core.validate(model, profileName, messageStyle)
 
+  def validate(model: BaseUnit,
+               profileName: ProfileName,
+               messageStyle: MessageStyle,
+               env: Environment): ClientFuture[ValidationReport] =
+    Core.validate(model, profileName, messageStyle, env)
+
   @deprecated
   def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): ClientFuture[ValidationReport] =
     Core.validate(model, profileName, messageStyle)
@@ -88,6 +94,12 @@ object CoreWrapper {
                profileName: ProfileName,
                messageStyle: MessageStyle = AMFStyle): ClientFuture[ValidationReport] =
     Core.validate(model, profileName, messageStyle)
+
+  def validate(model: BaseUnit,
+               profileName: ProfileName,
+               messageStyle: MessageStyle,
+               env: Environment): ClientFuture[ValidationReport] =
+    Core.validate(model, profileName, messageStyle, env)
 
   def loadValidationProfile(url: String): ClientFuture[ProfileName] = Core.loadValidationProfile(url)
 

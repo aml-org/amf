@@ -5,6 +5,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
+import amf.internal.environment.Environment
 
 import scala.concurrent.Future
 
@@ -21,5 +22,6 @@ trait AMFValidationPlugin extends AMFPlugin {
   def validationRequest(baseUnit: BaseUnit,
                         profile: ProfileName,
                         validations: EffectiveValidations,
-                        platform: Platform): Future[AMFValidationReport]
+                        platform: Platform,
+                        env: Environment): Future[AMFValidationReport]
 }

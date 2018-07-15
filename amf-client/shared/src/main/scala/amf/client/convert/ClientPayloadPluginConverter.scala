@@ -5,6 +5,8 @@ import amf.client.plugins.{AMFPayloadValidationPlugin, AMFPlugin, ClientAMFPaylo
 import amf.core.model.document.{PayloadFragment => InternalPayloadFragment}
 import amf.core.model.domain.Shape
 import amf.core.validation.{AMFValidationReport, ValidationShapeSet => InternalValidationShapeSet}
+import amf.internal.environment.Environment
+import amf.client.environment.{Environment => ClientEnvironment}
 
 import scala.concurrent.Future
 object ClientPayloadPluginConverter {
@@ -23,15 +25,18 @@ object ClientPayloadPluginConverter {
 
   def convert(clientPlugin: ClientAMFPayloadValidationPlugin): AMFPayloadValidationPlugin =
     new AMFPayloadValidationPlugin {
-      override protected def parsePayload(payload: String, mediaType: String): InternalPayloadFragment =
-        clientPlugin.parsePayload(payload, mediaType)._internal
+      override protected def parsePayload(payload: String,
+                                          mediaType: String,
+                                          env: Environment): InternalPayloadFragment =
+        clientPlugin.parsePayload(payload, mediaType, ClientEnvironment(env))._internal
 
-      override def validateSet(set: InternalValidationShapeSet): Future[AMFValidationReport] =
-        clientPlugin.validateSet(set).asInternal
+      override def validateSet(set: InternalValidationShapeSet, env: Environment): Future[AMFValidationReport] =
+        clientPlugin.validateSet(set, ClientEnvironment(env)).asInternal
 
       override val payloadMediaType: Seq[String] = clientPlugin.payloadMediaType.asInternal
 
-      override def canValidate(shape: Shape): Boolean = clientPlugin.canValidate(ShapeMatcher.asClient(shape))
+      override def canValidate(shape: Shape, env: Environment): Boolean =
+        clientPlugin.canValidate(ShapeMatcher.asClient(shape), ClientEnvironment(env))
 
       override val ID: String = clientPlugin.ID
 

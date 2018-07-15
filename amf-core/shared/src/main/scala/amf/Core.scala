@@ -2,6 +2,7 @@ package amf
 
 import amf.client.convert.CoreClientConverters._
 import amf.client.convert.CoreRegister
+import amf.client.environment.{DefaultEnvironment, Environment}
 import amf.client.model.document._
 import amf.client.parse.Parser
 import amf.client.plugins.AMFPlugin
@@ -30,8 +31,14 @@ object Core extends PlatformSecrets {
 
   def resolver(vendor: String): Resolver = new Resolver(vendor)
 
+  def validate(model: BaseUnit,
+               profileName: ProfileName,
+               messageStyle: MessageStyle,
+               env: Environment): ClientFuture[ValidationReport] =
+    Validator.validate(model, profileName, messageStyle, env)
+
   def validate(model: BaseUnit, profileName: ProfileName, messageStyle: MessageStyle): ClientFuture[ValidationReport] =
-    Validator.validate(model, profileName, messageStyle)
+    validate(model, profileName, messageStyle, DefaultEnvironment())
 
   @deprecated
   def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): ClientFuture[ValidationReport] =

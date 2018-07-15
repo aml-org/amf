@@ -8,6 +8,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.rdf.RdfModel
 import amf.core.validation.core.{ValidationReport, ValidationSpecification}
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations}
+import amf.internal.environment.Environment
 
 import scala.concurrent.Future
 
@@ -49,7 +50,10 @@ trait RuntimeValidator {
     * Main validation function returning an AMF validation report linking validation errors
     * for validations in the profile to domain elements in the model
     */
-  def validate(model: BaseUnit, profileName: ProfileName, messageStyle: MessageStyle): Future[AMFValidationReport]
+  def validate(model: BaseUnit,
+               profileName: ProfileName,
+               messageStyle: MessageStyle,
+               env: Environment): Future[AMFValidationReport]
 
   def reset()
 
@@ -109,8 +113,9 @@ object RuntimeValidator {
 
   def apply(model: BaseUnit,
             profileName: ProfileName,
-            messageStyle: MessageStyle = AMFStyle): Future[AMFValidationReport] =
-    validator.validate(model, profileName, messageStyle)
+            messageStyle: MessageStyle = AMFStyle,
+            env: Environment = Environment()): Future[AMFValidationReport] =
+    validator.validate(model, profileName, messageStyle, env)
 
   def aggregateReport(model: BaseUnit,
                       profileName: ProfileName,

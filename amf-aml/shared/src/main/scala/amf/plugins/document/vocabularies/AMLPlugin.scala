@@ -16,6 +16,7 @@ import amf.core.services.{RuntimeValidator, ValidationOptions}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels, ValidationResultProcessor}
+import amf.internal.environment.Environment
 import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, JsonPointerRef, RefInclude}
 import amf.plugins.document.vocabularies.emitters.dialects.{DialectEmitter, RamlDialectLibraryEmitter}
 import amf.plugins.document.vocabularies.emitters.instances.DialectInstancesEmitter
@@ -287,7 +288,8 @@ object AMLPlugin
   override def validationRequest(baseUnit: BaseUnit,
                                  profile: ProfileName,
                                  validations: EffectiveValidations,
-                                 platform: Platform): Future[AMFValidationReport] = {
+                                 platform: Platform,
+                                 env: Environment): Future[AMFValidationReport] = {
     baseUnit match {
       case dialectInstance: DialectInstance =>
         val resolvedModel = new DialectInstanceResolutionPipeline(dialectInstance).resolve()

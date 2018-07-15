@@ -9,6 +9,7 @@ import amf.core.remote.Platform
 import amf.core.services.{RuntimeValidator, ValidationOptions}
 import amf.core.validation._
 import amf.core.validation.core.ValidationResult
+import amf.internal.environment.Environment
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -56,7 +57,7 @@ trait ValidationStep extends ValidationResultProcessor {
 }
 
 case class FilterDataNodeOptions() extends ValidationOptions {
-  override val filterFields: (Field) => Boolean = (f: Field) => f.`type` == DataNodeModel
+  override val filterFields: Field => Boolean = (f: Field) => f.`type` == DataNodeModel
 }
 
 case class ModelValidationStep(override val validationContext: ValidationContext) extends ValidationStep {
@@ -82,7 +83,7 @@ case class ExamplesValidationStep(override val validationContext: ValidationCont
 
   override protected def validate(): Future[Seq[AMFValidationResult]] = {
     UnitPayloadsValidation(validationContext.baseUnit, validationContext.platform)
-      .validate()
+      .validate(validationContext.env)
       .map { results =>
         results.flatMap { buildValidationWithCustomLevelForProfile }
       }
@@ -108,4 +109,5 @@ case class ValidationContext(baseUnit: BaseUnit,
                              profile: ProfileName,
                              platform: Platform,
                              messageStyle: MessageStyle,
-                             validations: EffectiveValidations)
+                             validations: EffectiveValidations,
+                             env: Environment)

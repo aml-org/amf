@@ -6,6 +6,7 @@ import amf.core.remote.Platform
 import amf.core.validation._
 import amf.core.validation.core.{ValidationProfile, ValidationResult, ValidationSpecification}
 import amf.core.vocabulary.Namespace
+import amf.internal.environment.Environment
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 
 import scala.concurrent.Future
@@ -25,11 +26,12 @@ trait WebApiValidations extends ValidationResultProcessor {
                                               profile: ProfileName,
                                               validations: EffectiveValidations,
                                               messageStyle: MessageStyle,
-                                              platform: Platform): Future[AMFValidationReport] = {
+                                              platform: Platform,
+                                              env: Environment): Future[AMFValidationReport] = {
 
     // Before validating we need to resolve to get all the model information
     val baseUnit = new ValidationResolutionPipeline(profile, unresolvedUnit).resolve()
-    WebApiValidationsRunner(ValidationContext(baseUnit, profile, platform, messageStyle, validations)).runSteps
+    WebApiValidationsRunner(ValidationContext(baseUnit, profile, platform, messageStyle, validations, env)).runSteps
   }
 
   protected def buildPayloadValidationResult(model: BaseUnit,

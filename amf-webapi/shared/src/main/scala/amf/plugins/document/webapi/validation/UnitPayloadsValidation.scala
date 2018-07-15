@@ -6,6 +6,7 @@ import amf.core.model.domain.{ArrayNode, DataNode, ObjectNode}
 import amf.core.remote.Platform
 import amf.core.services.PayloadValidator
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels, ValidationCandidate}
+import amf.internal.environment.Environment
 
 import scala.concurrent.Future
 
@@ -19,9 +20,9 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, platform: Platform) {
 
   val index = DataNodeIndex(candidates.map(_.payload.encodes))
 
-  def validate(): Future[Seq[AMFValidationResult]] = {
+  def validate(env: Environment): Future[Seq[AMFValidationResult]] = {
     ExecutionLog.log(s"UnitPayloadsValidation#validate: Validating all candidates ${candidates.size}")
-    PayloadValidator.validateAll(candidates, SeverityLevels.WARNING).map(groupResults)
+    PayloadValidator.validateAll(candidates, SeverityLevels.WARNING, env).map(groupResults)
   }
 
   private def groupResults(report: AMFValidationReport): Seq[AMFValidationResult] = {

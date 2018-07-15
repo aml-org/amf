@@ -1,6 +1,7 @@
 package amf.client.model.domain
 
 import amf.client.convert.WebApiClientConverters._
+import amf.client.environment.Environment
 import amf.client.model.document.PayloadFragment
 import amf.client.validate.ValidationReport
 import amf.client.validation.PayloadValidator
@@ -40,8 +41,13 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
 
   def toJsonSchema: String = _internal.toJsonSchema
 
-  def validate(payload: String): ClientFuture[ValidationReport] =
-    _internal.validate(payload).asClient
+  def validate(payload: String, env: Environment): ClientFuture[ValidationReport] =
+    _internal.validate(payload, env._internal).asClient
+
+  def validate(payload: String): ClientFuture[ValidationReport] = _internal.validate(payload).asClient
+
+  def validate(fragment: PayloadFragment, env: Environment): ClientFuture[ValidationReport] =
+    _internal.validate(fragment._internal, env._internal).asClient
 
   def validate(fragment: PayloadFragment): ClientFuture[ValidationReport] =
     _internal.validate(fragment._internal).asClient
