@@ -11,4 +11,4 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/number-prop-bool-example.raml#/web-api/end-points/%2Fteams/get/request/application%2Fxml/schema/example/default-example
   Property: 
   Position: Some(LexicalInformation([(16,0)-(20,0)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/examples/number-prop-bool-example.raml

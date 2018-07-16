@@ -11,4 +11,4 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/types/big_nums.raml#/declarations/types/scalar/LongNumber/example/three
   Property: 
   Position: Some(LexicalInformation([(11,13)-(11,26)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/types/big_nums.raml

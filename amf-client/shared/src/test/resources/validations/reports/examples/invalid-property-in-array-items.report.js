@@ -11,4 +11,4 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/invalid-property-in-array-items.raml#/web-api/end-points/%2Forders/get/200/application%2Fjson/schema/example/single-order
   Property: 
   Position: Some(LexicalInformation([(16,0)-(27,0)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/examples/invalid-property-in-array-items.raml

@@ -11,4 +11,4 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/08/validation_error1.raml#/web-api/end-points/%2Freservations%2F%7Bpnrcreationdate%7D/get/200/application%2Fjson/any/application%2Fjson/example/default-example
   Property: 
   Position: Some(LexicalInformation([(26,27)-(29,0)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/08/validation_error1.raml

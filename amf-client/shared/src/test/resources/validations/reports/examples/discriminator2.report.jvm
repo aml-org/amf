@@ -11,4 +11,4 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/discriminator2.raml#/web-api/end-points/%2Forgs%2F%7BorgId%7D/get/200/application%2Fjson/schema/example/default-example
   Property: 
   Position: Some(LexicalInformation([(44,0)-(52,29)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/examples/discriminator2.raml

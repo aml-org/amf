@@ -11,7 +11,7 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/A/example/default-example
   Property: 
   Position: Some(LexicalInformation([(13,0)-(16,0)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
   Message: {"schemaLocation":"#","pointerToViolation":"#","causingExceptions":[],"keyword":"type","message":"expected type: Number, found: String"}
@@ -19,7 +19,7 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/scalar/D/example/default-example
   Property: 
   Position: Some(LexicalInformation([(33,13)-(33,17)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
   Message: {"schemaLocation":"#","pointerToViolation":"#","causingExceptions":[],"keyword":"required","message":"required key [g] not found"}
@@ -27,7 +27,7 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/H/example/default-example
   Property: 
   Position: Some(LexicalInformation([(51,13)-(56,0)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml
 
 Level: Warning
 

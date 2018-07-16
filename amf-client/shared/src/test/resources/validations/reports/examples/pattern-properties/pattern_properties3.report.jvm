@@ -11,4 +11,4 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/pattern-properties/pattern_properties3.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema/example/default-example
   Property: 
   Position: Some(LexicalInformation([(18,0)-(20,65)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/examples/pattern-properties/pattern_properties3.raml

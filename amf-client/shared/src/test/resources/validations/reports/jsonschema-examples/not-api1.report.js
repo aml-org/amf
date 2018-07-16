@@ -11,4 +11,4 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/not/api1.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/any/schema/example/default-example
   Property: 
   Position: Some(LexicalInformation([(26,21)-(26,22)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/not/api1.raml

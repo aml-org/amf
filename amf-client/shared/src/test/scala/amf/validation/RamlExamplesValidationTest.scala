@@ -111,10 +111,6 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate("/examples/min-max-items.raml", Some("min-max-items.report"))
   }
 
-  test("Test unsupported example with raml08 profile") {
-    validate("/examples/unsupported-examples-08.raml", Some("unsupported-examples-08.report"), profile = RAML08Profile)
-  }
-
   test("Date times invalid examples test") {
     validate("/examples/date_time_validations2.raml", Some("date-time-validation.report"))
   }
@@ -167,6 +163,10 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   test("Pattern properties key 4 (additionalProperties: false clash)") {
     validate("/examples/pattern-properties/pattern_properties4.raml",
              Some("pattern-properties/pattern_properties4.report"))
+  }
+
+  test("Check binary file included for string shape example") {
+    validate("/examples/image-file-example/in-stringshape.raml", Some("image-file-example/in-stringshape.report"))
   }
 
   override val hint: Hint = RamlYamlHint

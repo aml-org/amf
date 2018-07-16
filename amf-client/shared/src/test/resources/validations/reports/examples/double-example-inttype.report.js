@@ -11,4 +11,4 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/double-example-inttype.raml#/declarations/types/orders/property/Priority/scalar/Priority/example/default-example
   Property: 
   Position: Some(LexicalInformation([(9,17)-(9,20)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/examples/double-example-inttype.raml

@@ -11,4 +11,4 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/max-exclusive-schema.raml#/declarations/schemas/invalidExample/property/prop1/scalar/prop1/example/default-example
   Property: 
   Position: Some(LexicalInformation([(20,36)-(20,39)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/max-exclusive-schema.raml

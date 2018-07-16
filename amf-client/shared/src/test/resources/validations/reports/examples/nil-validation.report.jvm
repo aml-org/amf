@@ -11,4 +11,4 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/nil_validation.raml#/declarations/types/User/example/wrong-type
   Property: 
   Position: Some(LexicalInformation([(15,0)-(17,31)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/examples/nil_validation.raml

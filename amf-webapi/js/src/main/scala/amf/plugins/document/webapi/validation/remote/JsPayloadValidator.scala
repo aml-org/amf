@@ -16,7 +16,7 @@ import amf.plugins.syntax.SYamlSyntaxPlugin
 import scala.concurrent.Future
 import scala.scalajs.js
 
-class JsPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shape) with PlatformJsonSchemaValidator {
+class JsPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shape) with PlatformSchemaValidator {
 
   val validator: Ajv                         = AjvValidator.fast()
   val isFileShape: Boolean                   = shape.isInstanceOf[FileShape]

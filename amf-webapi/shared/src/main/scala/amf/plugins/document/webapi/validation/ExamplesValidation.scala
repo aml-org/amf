@@ -5,7 +5,7 @@ import amf.core.model.domain.{ScalarNode, Shape}
 import amf.core.utils._
 import amf.core.validation.ValidationCandidate
 import amf.core.vocabulary.Namespace
-import amf.plugins.domain.shapes.metamodel.ExampleModel
+import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, ExampleModel}
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ScalarShape}
 
 import scala.collection.mutable
@@ -19,10 +19,19 @@ class ExamplesValidationCollector(model: BaseUnit) {
     findCandidates()
   }
 
+  private def anyShapeRestrictions =
+    Seq(AnyShapeModel.Values,
+        AnyShapeModel.Inherits,
+        AnyShapeModel.Or,
+        AnyShapeModel.And,
+        AnyShapeModel.Xone,
+        AnyShapeModel.Not)
+
   protected def findCandidates(): Seq[ValidationCandidate] = {
     val results = mutable.Map[String, Seq[Example]]()
     val shapes  = mutable.Map[String, Shape]()
     model.findByType((Namespace.Shapes + "Shape").iri()) foreach {
+      case shape: AnyShape if shape.meta == AnyShapeModel && !anyShapeRestrictions.exists(shape.fields.exists) => // ignore any shape without logical restriccions, any payload it's valid
       case shape: AnyShape if results.keys.exists(_.equals(shape.id)) =>
         val currentExamples: Seq[Example] = results(shape.id)
         shape.examples.foreach({

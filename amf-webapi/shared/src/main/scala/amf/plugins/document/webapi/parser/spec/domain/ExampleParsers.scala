@@ -11,8 +11,6 @@ import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNod
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.features.validation.ParserSideValidations
-import org.mulesoft.lexer.CharSequenceLexerInput
-import org.yaml.lexer.YamlLexer
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.YamlParser
@@ -237,7 +235,7 @@ case class NodeDataNodeParser(node: YNode, parentId: String, quiet: Boolean, fro
             val parser =
               if (!fromExternal)
                 YamlParser(scalar.text, scalar.sourceName, (node.range.lineFrom, node.range.columnFrom))(errorHandler)
-              else YamlParser(scalar.text, scalar.text)
+              else YamlParser(scalar.text, scalar.sourceName)
             parser
               .parse(true)
               .collectFirst({ case doc: YDocument => doc.node })

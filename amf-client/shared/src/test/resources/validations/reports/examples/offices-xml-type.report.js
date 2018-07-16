@@ -1,7 +1,7 @@
 Model: file://amf-client/shared/src/test/resources/validations/xmlexample/offices_xml_type.raml
 Profile: RAML
 Conforms? true
-Number of results: 3
+Number of results: 2
 
 Level: Warning
 
@@ -19,12 +19,4 @@ Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/xmlexample/offices_xml_type.raml#/declarations/types/schema/Office/example/default-example
   Property: http://a.ml/vocabularies/document#value
   Position: Some(LexicalInformation([(9,17)-(9,46)]))
-  Location: file://amf-client/shared/src/test/resources/validations/xmlexample/offices_xml_type.raml
-
-- Source: http://a.ml/vocabularies/amf/parser#unsupported-example-media-type-warning
-  Message: Unsupported validation for mediatype: application/xml and shape file://amf-client/shared/src/test/resources/validations/xmlexample/offices_xml_type.raml#/web-api/end-points/%2Flocation/post/200/application%2Fxml/any/schema
-  Level: Warning
-  Target: file://amf-client/shared/src/test/resources/validations/xmlexample/offices_xml_type.raml#/web-api/end-points/%2Flocation/post/200/application%2Fxml/any/schema/example/default-example
-  Property: http://a.ml/vocabularies/document#value
-  Position: Some(LexicalInformation([(20,32)-(22,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/xmlexample/offices_xml_type.raml

@@ -1,0 +1,10 @@
+#%RAML 1.0
+
+title: test
+/file-content:
+    get:
+      responses:
+        200:
+          body:
+            application/octet-stream:
+              example: !include logo.png

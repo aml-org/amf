@@ -11,4 +11,4 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/annotations/annotations.raml#/web-api/b/scalar_1
   Property: 
   Position: Some(LexicalInformation([(10,5)-(10,7)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/annotations/annotations.raml

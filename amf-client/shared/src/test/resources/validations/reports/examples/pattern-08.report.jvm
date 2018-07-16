@@ -11,4 +11,4 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/08/pattern.raml#/web-api/end-points/%2Fresources/get/request/parameter/param/scalar/param/example/default-example
   Property: 
   Position: Some(LexicalInformation([(11,21)-(11,24)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/08/pattern.raml

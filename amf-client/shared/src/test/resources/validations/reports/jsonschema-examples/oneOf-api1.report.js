@@ -11,7 +11,7 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/oneOf/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/any/schema/example/default-example
   Property: 
   Position: Some(LexicalInformation([(42,21)-(42,22)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/oneOf/api1.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
   Message: {"keyword":"minimum","dataPath":"","schemaPath":"#/oneOf/1/minimum","params":{"comparison":">=","limit":2,"exclusive":false},"message":"should be >= 2"}

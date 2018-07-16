@@ -154,5 +154,14 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   test("Test for different examples") {
     validate("/examples/examples.raml")
   }
+
+  test("Check binary file included for any shape(ignore validation)") {
+    validate("/examples/image-file-example/in-anyshape.raml")
+  }
+
+  // xml example in any shape types are no more candidates, so there is no warning
+  test("Test unsupported example with raml08 profile") {
+    validate("/examples/unsupported-examples-08.raml", profile = RAML08Profile)
+  }
   override val hint: Hint = RamlYamlHint
 }

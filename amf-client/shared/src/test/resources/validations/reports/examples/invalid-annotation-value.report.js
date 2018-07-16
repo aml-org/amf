@@ -11,4 +11,4 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/invalid-annotation-value.raml#/web-api/end-points/%2Fusers/intAnnotation/scalar_1
   Property: 
   Position: Some(LexicalInformation([(26,19)-(26,20)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/examples/invalid-annotation-value.raml

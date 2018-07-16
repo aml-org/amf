@@ -20,7 +20,7 @@ import org.json.{JSONObject, JSONTokener}
 
 import scala.concurrent.Future
 
-class JvmPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shape) with PlatformJsonSchemaValidator {
+class JvmPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shape) with PlatformSchemaValidator {
 
   val isFileShape: Boolean                = shape.isInstanceOf[FileShape]
   val polymorphic: Boolean                = shape.supportsInheritance

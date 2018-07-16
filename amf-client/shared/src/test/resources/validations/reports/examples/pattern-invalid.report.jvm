@@ -11,4 +11,4 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/pattern-invalid.raml#/web-api/end-points/%2Fusers/clearanceLevel/object_1
   Property: 
   Position: Some(LexicalInformation([(15,0)-(16,23)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/examples/pattern-invalid.raml

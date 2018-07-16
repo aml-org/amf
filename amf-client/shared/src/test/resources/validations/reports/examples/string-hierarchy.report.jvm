@@ -11,7 +11,7 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/example/validInt1
   Property: 
   Position: Some(LexicalInformation([(11,17)-(11,18)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
   Message: {"schemaLocation":"#","pointerToViolation":"#","causingExceptions":[],"keyword":"type","message":"expected type: String, found: Long"}
@@ -19,7 +19,7 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/example/validInt2
   Property: 
   Position: Some(LexicalInformation([(12,17)-(12,29)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
   Message: {"schemaLocation":"#","pointerToViolation":"#","causingExceptions":[],"keyword":"type","message":"expected type: String, found: Boolean"}
@@ -27,7 +27,7 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/example/validBoolean
   Property: 
   Position: Some(LexicalInformation([(13,20)-(13,24)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
   Message: {"schemaLocation":"#","pointerToViolation":"#","causingExceptions":[],"keyword":"type","message":"expected type: String, found: Double"}
@@ -35,4 +35,4 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/example/validNumber
   Property: 
   Position: Some(LexicalInformation([(14,19)-(14,22)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml

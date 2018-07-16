@@ -11,7 +11,7 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/production/null-keys/api.raml#/web-api/end-points/%2FUsuario/delete/request/application%2Fjson/schema/example/default-example
   Property: 
   Position: Some(LexicalInformation([(21,17)-(24,11)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/production/null-keys/api.raml
 
 Level: Warning
 
