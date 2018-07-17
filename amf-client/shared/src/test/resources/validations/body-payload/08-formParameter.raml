@@ -1,0 +1,9 @@
+#%RAML 0.8
+title: Body Test
+/get_with_body:
+  get:
+    body:
+      application/x-www-form-urlencoded:
+        formParameters:
+          element:
+            type: integer

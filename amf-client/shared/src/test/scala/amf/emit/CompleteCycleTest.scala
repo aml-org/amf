@@ -1273,4 +1273,8 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Test description property in example body") {
     cycle("example-key-map-without-value.raml", RamlYamlHint)
   }
+
+  test("Test more than one base uri param") {
+    cycle("base-uri-params-implicit.raml", "base-uri-params-implicit.raml.jsonld", RamlYamlHint, Amf)
+  }
 }

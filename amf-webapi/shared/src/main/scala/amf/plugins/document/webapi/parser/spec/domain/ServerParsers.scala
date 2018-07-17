@@ -4,6 +4,7 @@ import amf.core.annotations.{BasePathLexicalInformation, HostLexicalInformation,
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{Strings, TemplateUri}
+import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, RamlScalarNode, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.{toOas, toRaml}
@@ -54,22 +55,44 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
     }
   }
 
-  private def parseBaseUriParameters(server: Server, orderedVariables: Seq[String]): Unit =
-    map.key("baseUriParameters").foreach { entry =>
-      entry.value.tagType match {
-        case YType.Map =>
-          val parameters =
-            RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(server.id))
-              .parse()
-              .map(_.withBinding("path"))
+  private def parseBaseUriParameters(server: Server, orderedVariables: Seq[String]): Unit = {
+    val maybeEntry = map.key("baseUriParameters")
+    maybeEntry match {
+      case Some(entry) =>
+        entry.value.tagType match {
+          case YType.Map =>
+            val parameters =
+              RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(server.id))
+                .parse()
+                .map(_.withBinding("path"))
 
-          val flatten: Seq[Parameter] = orderedVariables.flatMap(v => parameters.find(_.name.value().equals(v)))
-          val finalParams             = flatten ++ parameters.filter(!flatten.contains(_))
-          server.set(ServerModel.Variables, AmfArray(finalParams, Annotations(entry.value)), Annotations(entry))
-        case YType.Null =>
-        case _          => ctx.violation("Invalid node for baseUriParameters", entry.value)
-      }
+            val flatten: Seq[Parameter] = orderedVariables.map(v =>
+              parameters.find(_.name.value().equals(v)) match {
+                case Some(p) => p
+                case _       => buildParamFromVar(v, server.id)
+
+            })
+            val finalParams = flatten ++ parameters.filter(!flatten.contains(_))
+            server.set(ServerModel.Variables, AmfArray(finalParams, Annotations(entry.value)), Annotations(entry))
+          case YType.Null =>
+          case _          => ctx.violation("Invalid node for baseUriParameters", entry.value)
+        }
+      case None =>
+        if (orderedVariables.nonEmpty)
+          server.set(ServerModel.Variables,
+                     AmfArray(orderedVariables.map(buildParamFromVar(_, server.id)), Annotations()),
+                     Annotations())
     }
+
+  }
+
+  private def buildParamFromVar(v: String, serverId: String) = {
+    val param = Parameter().withName(v).withBinding("path").withRequired(true)
+    param.adopted(serverId)
+    param.withScalarSchema(v).withDataType((Namespace.Xsd + "string").iri())
+    param.annotations += SynthesizedField()
+    param
+  }
 }
 
 abstract class OasServersParser(map: YMap, api: WebApi)(implicit val ctx: OasWebApiContext) extends SpecParserOps {
