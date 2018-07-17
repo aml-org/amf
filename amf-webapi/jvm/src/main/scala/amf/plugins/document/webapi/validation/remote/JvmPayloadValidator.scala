@@ -55,7 +55,7 @@ class JvmPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shap
   }
 
   protected def validatePolymorphic(mediaType: String, payload: String): Boolean = {
-    val payloadFragment = PayloadValidatorPlugin.parsePayload(payload, mediaType, env)
+    val payloadFragment = PayloadValidatorPlugin.parsePayload(payload, mediaType, env, shape)
     val effectiveShape  = findPolymorphicShape(shape, payloadFragment.encodes)
     shapeJsonSchema(effectiveShape) match {
       case None => throw new Exception(s"Cannot parse shape '${effectiveShape.id}' to execute validation")
@@ -81,7 +81,7 @@ class JvmPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shap
         val dataNode = if (mediaType == "application/json") {
           loadJson(payload)
         } else {
-          val payloadFragment = PayloadValidatorPlugin.parsePayload(payload, mediaType, env)
+          val payloadFragment = PayloadValidatorPlugin.parsePayload(payload, mediaType, env, shape)
           loadDataNodeString(payloadFragment)
         }
         try {

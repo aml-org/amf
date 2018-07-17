@@ -98,7 +98,10 @@ object PayloadValidator {
                           results)
     }
 
-    override protected def parsePayload(payload: String, mediaType: String, env: Environment): PayloadFragment =
+    override protected def parsePayload(payload: String,
+                                        mediaType: String,
+                                        env: Environment,
+                                        shape: Shape): PayloadFragment =
       PayloadFragment(payload, mediaType)
   }
 }

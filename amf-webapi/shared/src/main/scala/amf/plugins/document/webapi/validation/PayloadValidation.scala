@@ -13,9 +13,10 @@ import amf.core.vocabulary.Namespace
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.contexts.PayloadContext
 import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
-import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
+import amf.plugins.domain.shapes.models.{AnyShape, ScalarShape, SchemaShape}
 import amf.plugins.domain.webapi.unsafe.JsonSchemaSecrets
-import org.yaml.model.{YDocument, YNode}
+import org.yaml.model.{YDocument, YNode, YScalar}
+import amf.core.parser.YNodeLikeOps
 import org.yaml.parser.YamlParser
 
 import scala.collection.mutable
@@ -187,15 +188,22 @@ object PayloadValidatorPlugin extends AMFPayloadValidationPlugin {
 
   val defaultCtx = new PayloadContext("", Nil, ParserContext())
 
-  override def parsePayload(payload: String, mediaType: String, env: Environment): PayloadFragment = {
+  override def parsePayload(payload: String, mediaType: String, env: Environment, shape: Shape): PayloadFragment = {
     val fragment = PayloadFragment(payload, mediaType)
 
     YamlParser(payload).parse(keepTokens = true).collectFirst({ case doc: YDocument => doc.node }) match {
+      case Some(node: YNode) if node.toOption[YScalar].isDefined && isString(shape) =>
+        fragment.withEncodes(ScalarNode(payload, None))
       case Some(node: YNode) =>
         fragment.withEncodes(DataNodeParser(node, parent = Option(fragment.id))(defaultCtx).parse())
       case None => fragment.withEncodes(ScalarNode(payload, None))
     }
     fragment
+  }
+
+  private def isString(shape: Shape): Boolean = shape match {
+    case s: ScalarShape => s.dataType.option().getOrElse("").equals((Namespace.Xsd + "string").iri())
+    case _              => false
   }
 
   override def validateSet(set: ValidationShapeSet, env: Environment): Future[AMFValidationReport] =

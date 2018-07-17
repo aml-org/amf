@@ -2,12 +2,10 @@ package amf.validation
 
 import amf.common.Diff
 import amf.common.Diff.makeString
-import amf.core.annotations.LexicalInformation
 import amf.core.model.document.Document
-import amf.core.parser
 import amf.core.remote.OasJsonHint
 import amf.core.services.PayloadValidator
-import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels}
+import amf.core.validation.{AMFValidationReport, SeverityLevels}
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
 import amf.plugins.domain.webapi.models.WebApi
@@ -48,9 +46,10 @@ class ParamPayloadValidationTest extends FileAssertionTest with Matchers {
 
   val fixtureList: Seq[Fixture] = Seq(
     Fixture("param validation", "2015-07-20T21:00:00", conforms = true),
-    Fixture("param validation number in string", "\"2\"", conforms = true),
-    Fixture("param validation boolean in string", "\"true\"", conforms = true),
-    Fixture("param validation number error", "2", conforms = false)
+    Fixture("param validation quoted number in string", "\"2\"", conforms = true),
+    Fixture("param validation quoted boolean in string", "\"true\"", conforms = true),
+    Fixture("param validation boolean in string", "true", conforms = true),
+    Fixture("param validation number against string", "2", conforms = true)
   )
 
   fixtureList.foreach { f =>

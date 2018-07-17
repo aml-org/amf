@@ -11,7 +11,7 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 trait ClientAMFPayloadValidationPlugin extends ClientAMFPlugin {
 
-  def parsePayload(payload: String, mediaType: String, env: Environment): PayloadFragment
+  def parsePayload(payload: String, mediaType: String, env: Environment, shape: Shape): PayloadFragment
 
   def validateSet(set: ValidationShapeSet, env: Environment): ClientFuture[ValidationReport]
 

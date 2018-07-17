@@ -11,7 +11,7 @@ import scala.scalajs.js
 @js.native
 trait ClientAMFPayloadValidationPlugin extends ClientAMFPlugin {
 
-  def parsePayload(payload: String, mediaType: String, env: Environment): PayloadFragment = js.native
+  def parsePayload(payload: String, mediaType: String, env: Environment, shape: Shape): PayloadFragment = js.native
 
   def validateSet(set: ValidationShapeSet, env: Environment): ClientFuture[ValidationReport] = js.native
 

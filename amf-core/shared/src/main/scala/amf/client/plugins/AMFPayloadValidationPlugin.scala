@@ -9,13 +9,13 @@ import scala.concurrent.Future
 
 trait AMFPayloadValidationPlugin extends AMFPlugin {
 
-  protected def parsePayload(payload: String, mediaType: String, env: Environment): PayloadFragment
+  protected def parsePayload(payload: String, mediaType: String, env: Environment, shape: Shape): PayloadFragment
 
   final def validatePayload(shape: Shape,
                             payload: String,
                             mediaType: String,
                             env: Environment): Future[AMFValidationReport] =
-    validateSet(ValidationShapeSet(shape, parsePayload(payload, mediaType, env)), env)
+    validateSet(ValidationShapeSet(shape, parsePayload(payload, mediaType, env, shape)), env)
 
   def validateSet(set: ValidationShapeSet, env: Environment): Future[AMFValidationReport]
 

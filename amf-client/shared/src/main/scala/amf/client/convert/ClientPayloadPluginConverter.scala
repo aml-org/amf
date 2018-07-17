@@ -27,8 +27,9 @@ object ClientPayloadPluginConverter {
     new AMFPayloadValidationPlugin {
       override protected def parsePayload(payload: String,
                                           mediaType: String,
-                                          env: Environment): InternalPayloadFragment =
-        clientPlugin.parsePayload(payload, mediaType, ClientEnvironment(env))._internal
+                                          env: Environment,
+                                          shape: Shape): InternalPayloadFragment =
+        clientPlugin.parsePayload(payload, mediaType, ClientEnvironment(env), ShapeMatcher.asClient(shape))._internal
 
       override def validateSet(set: InternalValidationShapeSet, env: Environment): Future[AMFValidationReport] =
         clientPlugin.validateSet(set, ClientEnvironment(env)).asInternal
