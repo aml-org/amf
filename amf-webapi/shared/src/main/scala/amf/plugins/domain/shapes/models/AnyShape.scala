@@ -109,6 +109,8 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
 
   def toJsonSchema: String = toJsonSchema(this)
 
+  def buildJsonSchema(): String = generateJsonSchema(this)
+
   def copyAnyShape(fields: Fields = fields, annotations: Annotations = annotations): AnyShape =
     AnyShape(fields, annotations).withId(id)
 

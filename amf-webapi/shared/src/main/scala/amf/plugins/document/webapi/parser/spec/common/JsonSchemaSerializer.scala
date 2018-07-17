@@ -6,6 +6,7 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.Document
 import amf.core.parser.Position
 import amf.core.services.RuntimeSerializer
+import amf.plugins.document.webapi.annotations.{GeneratedJSONSchema, ParsedJSONSchema}
 import amf.plugins.document.webapi.contexts.Oas3SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.oas.OasDeclarationsEmitter
@@ -18,10 +19,25 @@ trait JsonSchemaSerializer {
   // todo lexical ordering?
 
   protected def toJsonSchema(element: AnyShape): String = {
+    element.annotations.find(classOf[ParsedJSONSchema]) match {
+      case Some(a) => a.rawText
+      case _ =>
+        element.annotations.find(classOf[GeneratedJSONSchema]) match {
+          case Some(g) => g.rawText
+          case _       => generateJsonSchema(element)
+        }
+    }
+  }
+
+  protected def generateJsonSchema(element: AnyShape): String = {
     AMFSerializer.init()
-    RuntimeSerializer(Document().withDeclaredElement(fixNameIfNeeded(element)),
-                      "application/schema+json",
-                      "JSON Schema")
+    val jsonSchema = RuntimeSerializer(Document().withDeclaredElement(fixNameIfNeeded(element)),
+                                       "application/schema+json",
+                                       "JSON Schema")
+    element.annotations.reject(_.isInstanceOf[ParsedJSONSchema])
+    element.annotations.reject(_.isInstanceOf[GeneratedJSONSchema])
+    element.annotations += GeneratedJSONSchema(jsonSchema)
+    jsonSchema
   }
 
   private def fixNameIfNeeded(element: AnyShape): AnyShape = {

@@ -3,10 +3,9 @@ package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 import amf.core.annotations.{ExplicitField, ResolvedInheritance}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain._
+import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.Annotations
-import amf.plugins.document.webapi.annotations.ParsedJSONSchema
 import amf.plugins.domain.shapes.annotations.InheritedShapes
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
@@ -21,8 +20,7 @@ private[stages] object ShapeCanonizer {
 sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) extends ShapeNormalizer {
 
   protected def cleanUnnecessarySyntax(shape: Shape): Shape = {
-    shape.annotations.reject(a =>
-      !a.isInstanceOf[PerpetualAnnotation] || (!context.isRaml08 && a.isInstanceOf[ParsedJSONSchema]))
+    shape.annotations.reject(a => !a.isInstanceOf[PerpetualAnnotation])
     shape
   }
 
@@ -127,11 +125,10 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       shape.fields.removeField(ShapeModel.Inherits) // i need to remove the resolved type without inhertis, because later it will be added to cache once it will be fully resolved
       var accShape: Shape                             = normalizeWithoutCaching(shape)
       var superShapeswithDiscriminator: Seq[AnyShape] = Nil
-      var inheritedIds: Seq[String] = Nil
+      var inheritedIds: Seq[String]                   = Nil
 
       superTypes.foreach { superNode =>
         val canonicalSuperNode = normalizeAction(superNode)
-
 
         // we save this information to connect the references once we have computed the minShape
         if (hasDiscriminator(canonicalSuperNode))

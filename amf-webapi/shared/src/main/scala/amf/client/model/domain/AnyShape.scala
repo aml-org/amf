@@ -39,7 +39,14 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
   override def linkCopy(): AnyShape = _internal.linkCopy()
 //  def build(shape: InternalAnyShape): Shape = platform.wrap[Shape](shape) ???
 
+  /** if the shape was parsed of a json schema, or has been previously generated a new json schema, returns thar value,
+    otherwise generate a new json schema and store the value for futures invocations */
   def toJsonSchema: String = _internal.toJsonSchema
+
+  /** Force a new json schema generation, no matter if the shape was parsed from that kind of expression or if was previously generated.
+    * Stores the result for futures toJsonSchema invocations.
+    * Should use this method when you have mutated this instance */
+  def buildJsonSchema(): String = _internal.buildJsonSchema()
 
   def validate(payload: String, env: Environment): ClientFuture[ValidationReport] =
     _internal.validate(payload, env._internal).asClient
