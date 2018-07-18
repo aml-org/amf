@@ -30,7 +30,7 @@ object AMFRawValidations {
     "		AMF	Domain	raml-doc:DomainElement	schema-org:name	PropertyShape	sh:path	sh:maxCount	1	Titles and names must be single values	Names and titles must be single values	Violation",
     "		AMF	Domain	raml-doc:DomainElement	schema-org:description	PropertyShape	sh:path	sh:datatype	xsd:string	Descriptions must be strings	Description must be strings	Violation",
     "		AMF	Domain	raml-doc:DomainElement	schema-org:description	PropertyShape	sh:path	sh:maxCount	1	Descriptions must be single values	Descriptions must be single values	Violation",
-    "		AMF	Domain	schema-org:WebAPI	schema-org:name	PropertyShape	sh:path	sh:minCount	1	API name must be a single value	Info object 'title' must be a single value	Violation",
+    "		AMF	Domain	schema-org:WebAPI	schema-org:name	PropertyShape	sh:path	sh:minCount	1	API title is mandatory	Info object 'title' must be a single value	Violation",
     "		RAML	Domain	schema-org:WebAPI	schema-org:name	PropertyShape	sh:path	sh:minLength	1	Info object 'title' must not be empty	API name must not be an empty string	Violation",
     "		AMF	Domain	schema-org:WebAPI	raml-http:scheme	PropertyShape	sh:path	sh:datatype	xsd:string	API BaseUri scheme information must be a string	Swagger object 'schemes' must be a string	Violation",
     "		AMF	Domain	schema-org:WebAPI	raml-http:scheme	PropertyShape	sh:path	sh:datatype	xsd:string	API BaseUri scheme information must be a string	Swagger object 'schemes' must be a string	Violation",
