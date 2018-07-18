@@ -18,6 +18,9 @@ case class ValidationShapeSet(private[amf] val _internal: InternalValidationShap
   def this(candidates: ClientList[ValidationCandidate], defaultSeverity: String) =
     this(InternalValidationShapeSet(candidates.asInternal, defaultSeverity))
 
+  def candidates: ClientList[ValidationCandidate] = _internal.candidates.asClient
+
+  def defaultSeverity: String = _internal.defaultSeverity
 }
 
 @JSExportAll
