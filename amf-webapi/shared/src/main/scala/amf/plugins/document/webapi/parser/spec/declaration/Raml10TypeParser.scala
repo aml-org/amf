@@ -747,7 +747,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
           ctx.violation(
             ParserSideValidations.ParsingErrorSpecification.id,
             shape.id,
-            "Wrong precision for integer numeric facet value",
+            "Invalid decimal point for an integer: " + value,
             ast
           )
         }

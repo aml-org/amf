@@ -281,7 +281,7 @@ class RamlParserErrorTest extends ParserErrorTest {
       "/error/invalid-facet-format.raml",
       violation => {
         violation.level should be("Violation")
-        violation.message should be("Default type name cannot be used to name a custom type")
+        violation.message should be("'datetime' cannot be used to name a custom type")
         violation.position.map(_.range) should be(Some(Range((4, 2), (4, 10))))
       }
     )

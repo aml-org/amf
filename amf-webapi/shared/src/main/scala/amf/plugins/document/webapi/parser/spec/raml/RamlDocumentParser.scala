@@ -301,7 +301,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
               ctx.violation(
                 ParserSideValidations.ParsingErrorSpecification.id,
                 parent,
-                "Default type name cannot be used to name a custom type",
+                s"'${entry.key.as[String]}' cannot be used to name a custom type",
                 entry.key
               )
             }
