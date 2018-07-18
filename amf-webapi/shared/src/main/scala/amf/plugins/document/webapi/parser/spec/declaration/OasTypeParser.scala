@@ -701,33 +701,39 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         }
         .getOrElse(Map[String, YNode]())
 
-      map.key(
-        "properties",
-        entry => {
-          entry.value.toOption[YMap] match {
-            case Some(m) =>
-              val properties: Seq[PropertyShape] =
-                PropertiesParser(m, shape.withProperty, requiredFields).parse()
-              shape.set(NodeShapeModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
-            case _ => // Empty properties node.
-          }
+      val properties  = mutable.LinkedHashMap[String, PropertyShape]()
+      val properEntry = map.key("properties")
+      properEntry.foreach(entry => {
+        entry.value.toOption[YMap] match {
+          case Some(m) =>
+            val props = PropertiesParser(m, shape.withProperty, requiredFields).parse()
+            properties ++= props.map(p => p.name.value() -> p)
+          case _ => // Empty properties node.
         }
-      )
+      })
 
-      map.key(
-        "patternProperties",
-        entry => {
-          entry.value.toOption[YMap] match {
-            case Some(m) =>
-              val properties: Seq[PropertyShape] =
-                PropertiesParser(m, shape.withProperty, requiredFields, patterned = true).parse()
-              shape.set(NodeShapeModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
-            case _ => // Empty properties node.
-          }
+      val patternPropEntry = map.key("patternProperties")
+
+      patternPropEntry.foreach(entry => {
+        entry.value.toOption[YMap] match {
+          case Some(m) =>
+            properties ++=
+              PropertiesParser(m, shape.withProperty, requiredFields, patterned = true)
+                .parse()
+                .map(p => p.name.value() -> p)
+          case _ => // Empty properties node.
         }
-      )
+      })
+      val (entryAnnotations, valueAnnotations) = properEntry.map { pe =>
+        Annotations(pe.value) -> Annotations(pe)
+      } orElse {
+        patternPropEntry.map { pp =>
+          Annotations(pp.value) -> Annotations(pp)
+        }
+      } getOrElse { Annotations() -> Annotations() }
 
-      val properties = mutable.ListMap[String, PropertyShape]()
+      if (properties.nonEmpty)
+        shape.set(NodeShapeModel.Properties, AmfArray(properties.values.toSeq, entryAnnotations), valueAnnotations)
       shape.properties.foreach(p => properties += (p.name.value() -> p))
 
       map.key(

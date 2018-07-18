@@ -1207,7 +1207,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         }
       )
 
-      val properties = mutable.ListMap[String, PropertyShape]()
+      val properties = mutable.LinkedHashMap[String, PropertyShape]()
       shape.properties.foreach(p => properties += (p.name.value() -> p))
 
       map.key(

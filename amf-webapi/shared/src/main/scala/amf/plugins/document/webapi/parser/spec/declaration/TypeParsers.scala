@@ -15,14 +15,14 @@ import scala.collection.mutable
 /**
   *
   */
-case class ShapeDependenciesParser(map: YMap, properties: mutable.ListMap[String, PropertyShape])(
+case class ShapeDependenciesParser(map: YMap, properties: mutable.LinkedHashMap[String, PropertyShape])(
     implicit ctx: WebApiContext) {
   def parse(): Seq[PropertyDependencies] = {
     map.entries.flatMap(entry => NodeDependencyParser(entry, properties).parse())
   }
 }
 
-case class NodeDependencyParser(entry: YMapEntry, properties: mutable.ListMap[String, PropertyShape])(
+case class NodeDependencyParser(entry: YMapEntry, properties: mutable.LinkedHashMap[String, PropertyShape])(
     implicit ctx: WebApiContext) {
   def parse(): Option[PropertyDependencies] = {
 
