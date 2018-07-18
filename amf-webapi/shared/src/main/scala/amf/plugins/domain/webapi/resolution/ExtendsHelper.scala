@@ -64,7 +64,7 @@ object ExtendsHelper {
           (ctxForTrait.declarations.resourceTypes ++ ctxForTrait.declarations.traits).foreach { e =>
             ctx.declarations += e._2
           }
-          ctx.factory.operationParser(entry, _ => Operation(), true).parse()
+          ctxForTrait.factory.operationParser(entry, _ => Operation(), true).parse()
         }
       }
     checkNoNestedEndpoints(entry, ctx, node, extensionId, "trait")

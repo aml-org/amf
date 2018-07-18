@@ -110,6 +110,10 @@ class ProductionResolutionTest extends RamlResolutionTest {
     cycle("e-bo.raml", "e-bo.resolved.raml", RamlYamlHint, Raml, basePath + "reference-api/")
   }
 
+  test("Test lib trait resolution with type defined in lib") {
+    cycle("api.raml", "api.resolved.raml", RamlYamlHint, Raml, basePath + "lib-trait-type-resolution/")
+  }
+
   test("test resource type") {
     cycle("input.raml",
           "input.resolved.raml",
