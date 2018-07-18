@@ -11,7 +11,7 @@ import amf.plugins.document.webapi.{RAML08Plugin, RAML10Plugin}
 import amf.plugins.domain.webapi.models.WebApi
 import org.scalatest.{AsyncFunSuite, Matchers}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
 
@@ -56,6 +56,8 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
 }
 
 trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with PlatformSecrets {
+
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   protected val basePath: String
 
