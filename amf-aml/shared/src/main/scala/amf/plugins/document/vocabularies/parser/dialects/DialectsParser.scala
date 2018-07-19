@@ -63,16 +63,6 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMapping] = Map(),
       case _                      => resolveExternal(key).map(DatatypePropertyTerm().withId(_))
     }
 
-  def resolveExternal(key: String): Option[String] = {
-    if (key.contains(".")) {
-      val prefix = key.split("\\.").head
-      val value  = key.split("\\.").last
-      externals.get(prefix).map(external => s"${external.base.value()}$value")
-    } else {
-      None
-    }
-  }
-
   override def declarables(): Seq[DomainElement] = nodeMappings.values.toSeq
 
 }

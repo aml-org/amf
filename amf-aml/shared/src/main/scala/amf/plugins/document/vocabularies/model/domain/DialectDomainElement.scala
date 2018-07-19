@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.model.domain
 
-import amf.core.metamodel.domain.LinkableElementModel
+import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel}
 import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, Fields, Value}
@@ -69,7 +69,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
 
     (literalProperties.keys ++ objectProperties.keys ++ objectCollectionProperties.keys).map { propertyId =>
       instanceDefinedBy.get.propertiesMapping().find(_.id == propertyId).get.toField
-    }.toList ++ mapKeyFields ++ fields.fields().filter(_.field != LinkableElementModel.Target).map(_.field)
+    }.toList ++ mapKeyFields ++ fields.fields().filter(f => f.field != LinkableElementModel.Target && f.field != DomainElementModel.CustomDomainProperties).map(_.field)
   }
 
   def findPropertyByTermPropertyId(termPropertyId: String): String =

@@ -28,6 +28,13 @@ case class DomainExtension(fields: Fields, annotations: Annotations) extends Dom
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/extension"
+
+  /** Call after object has been adopted by specified parent. */
+  override def adopted(parent: String): this.type = {
+    if (Option(id) == None || id.startsWith("null/")) simpleAdoption(parent)
+    this
+  }
+
 }
 
 object DomainExtension {

@@ -41,12 +41,14 @@ object AnnotationParser {
 private case class ExtensionParser(annotation: String, parent: String, entry: YMapEntry)(
     implicit val ctx: WebApiContext) {
   def parse(): DomainExtension = {
-    val domainExtension = DomainExtension()
-    val dataNode        = DataNodeParser(entry.value, parent = Some(s"$parent/$annotation")).parse()
+    val id = s"$parent/extension/$annotation"
+    val propertyId = s"$parent/$annotation"
+    val domainExtension = DomainExtension().withId(id)
+    val dataNode        = DataNodeParser(entry.value, parent = Some(propertyId)).parse()
     // TODO
     // throw a parser-side warning validation error if no annotation can be found
     val customDomainProperty = ctx.declarations.annotations
-      .getOrElse(annotation, CustomDomainProperty(Annotations(entry)).withName(annotation))
+      .getOrElse(annotation, CustomDomainProperty(Annotations(entry)).withId(propertyId).withName(annotation))
     domainExtension.adopted(parent)
     domainExtension
       .withExtension(dataNode)

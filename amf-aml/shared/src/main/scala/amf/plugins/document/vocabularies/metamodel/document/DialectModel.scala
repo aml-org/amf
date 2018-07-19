@@ -8,11 +8,10 @@ import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.metamodel.domain.{DocumentsModelModel, ExternalModel}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary}
 
-object DialectModel extends DocumentModel {
+object DialectModel extends DocumentModel with ExternalContextModel {
 
   val Name = Field(Str, Namespace.Schema + "name")
   val Version = Field(Str, Namespace.Schema + "version")
-  val Externals = Field(Array(ExternalModel), Namespace.Meta + "externals")
   val Documents = Field(DocumentsModelModel, Namespace.Meta + "documents")
 
   override def modelInstance: AmfObject = Dialect()
@@ -24,9 +23,7 @@ object DialectModel extends DocumentModel {
 }
 
 
-object DialectLibraryModel extends ModuleModel {
-  val Externals = Field(Array(ExternalModel), Namespace.Meta + "externals")
-
+object DialectLibraryModel extends ModuleModel with ExternalContextModel {
   override def modelInstance: AmfObject = DialectLibrary()
 
   override val `type`: List[ValueType] =
@@ -35,9 +32,7 @@ object DialectLibraryModel extends ModuleModel {
   override def fields: List[Field] = Externals :: Location :: ModuleModel.fields
 }
 
-object DialectFragmentModel extends FragmentModel {
-  val Externals = Field(Array(ExternalModel), Namespace.Meta + "externals")
-
+object DialectFragmentModel extends FragmentModel with ExternalContextModel {
   override def modelInstance: AmfObject = DialectFragment()
 
   override val `type`: List[ValueType] =

@@ -1,8 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.Root
-import amf.core.annotations.LexicalInformation
-import amf.core.annotations.ExternalFragmentRef
+import amf.core.annotations.{ExternalFragmentRef, LexicalInformation}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{Annotations, InferredLinkReference, ParsedDocument, ParsedReference, Reference, ReferenceFragmentPartition, _}
@@ -16,8 +15,6 @@ import amf.plugins.document.webapi.parser.spec.raml.RamlSpecParser
 import amf.plugins.document.webapi.parser.spec.toOas
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, SchemaShapeModel}
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape, UnresolvedShape}
-import org.mulesoft.lexer.CharSequenceLexerInput
-import org.yaml.lexer.YamlLexer
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.YamlParser
