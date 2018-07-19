@@ -12,5 +12,4 @@ trait RdfFramework {
     new RdfModelEmitter(model).emit(unit, options)
     model
   }
-
 }

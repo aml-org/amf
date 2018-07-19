@@ -102,7 +102,7 @@
                 "@value": "Documentation content"
               }
             ],
-            "null/extension#AnnotationInDocumentationRoot": {
+            "null/AnnotationInDocumentationRoot": {
               "http://a.ml/vocabularies/document#name": [
                 {
                   "@value": "AnnotationInDocumentationRoot"
@@ -231,7 +231,7 @@
             },
             "http://a.ml/vocabularies/document#customDomainProperties": [
               {
-                "@id": "null/extension#AnnotationInDocumentationRoot"
+                "@id": "null/AnnotationInDocumentationRoot"
               },
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/creative-work/Documentation%20title/scalar-valued/1/AnnotationInDocumentationTitle"
@@ -310,7 +310,7 @@
                 "@value": "EndPoint description"
               }
             ],
-            "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/extension/AnnotationInEndPointAlpha": {
+            "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/AnnotationInEndPointAlpha": {
               "http://a.ml/vocabularies/document#name": [
                 {
                   "@value": "AnnotationInEndPointAlpha"
@@ -349,7 +349,7 @@
                 }
               ]
             },
-            "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/extension/AnnotationInEndPointBeta": {
+            "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/AnnotationInEndPointBeta": {
               "http://a.ml/vocabularies/document#name": [
                 {
                   "@value": "AnnotationInEndPointBeta"
@@ -478,10 +478,10 @@
             },
             "http://a.ml/vocabularies/document#customDomainProperties": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/extension/AnnotationInEndPointAlpha"
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/AnnotationInEndPointAlpha"
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/extension/AnnotationInEndPointBeta"
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/AnnotationInEndPointBeta"
               },
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers/scalar-valued/1/AnnotationInEndPointDisplayName"
@@ -771,7 +771,7 @@
                     ]
                   }
                 ],
-                "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/extension/AnnotationInOperation": {
+                "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/AnnotationInOperation": {
                   "http://a.ml/vocabularies/document#name": [
                     {
                       "@value": "AnnotationInOperation"
@@ -856,7 +856,7 @@
                 },
                 "http://a.ml/vocabularies/document#customDomainProperties": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/extension/AnnotationInOperation"
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/AnnotationInOperation"
                   },
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/scalar-valued/1/AnnotationInOperationDescription"
@@ -956,7 +956,7 @@
                         "@value": "schema"
                       }
                     ],
-                    "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/scalar/schema/extension/AnnotationInParameter": {
+                    "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/scalar/schema/AnnotationInParameter": {
                       "http://a.ml/vocabularies/document#name": [
                         {
                           "@value": "AnnotationInParameter"
@@ -997,7 +997,7 @@
                     },
                     "http://a.ml/vocabularies/document#customDomainProperties": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/scalar/schema/extension/AnnotationInParameter"
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/scalar/schema/AnnotationInParameter"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1050,7 +1050,7 @@
                     ]
                   }
                 ],
-                "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/extension/AnnotationInParameter": {
+                "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/AnnotationInParameter": {
                   "http://a.ml/vocabularies/document#name": [
                     {
                       "@value": "AnnotationInParameter"
@@ -1091,7 +1091,7 @@
                 },
                 "http://a.ml/vocabularies/document#customDomainProperties": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/extension/AnnotationInParameter"
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/parameter/customer_id/AnnotationInParameter"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1180,7 +1180,7 @@
             ]
           }
         ],
-        "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/extension/AnnotationInRoot": {
+        "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/AnnotationInRoot": {
           "http://a.ml/vocabularies/document#name": [
             {
               "@value": "AnnotationInRoot"
@@ -1309,7 +1309,7 @@
         },
         "http://a.ml/vocabularies/document#customDomainProperties": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/extension/AnnotationInRoot"
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/AnnotationInRoot"
           },
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations-scalars.raml#/web-api/scalar-valued/1/AnnotationInTitle"

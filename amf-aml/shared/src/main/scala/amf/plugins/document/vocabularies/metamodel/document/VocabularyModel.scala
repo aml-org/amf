@@ -8,12 +8,11 @@ import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.metamodel.domain.{ExternalModel, VocabularyReferenceModel}
 import amf.plugins.document.vocabularies.model.document.Vocabulary
 
-object VocabularyModel extends ModuleModel {
+object VocabularyModel extends ModuleModel with ExternalContextModel {
 
   val Name = Field(Str, Namespace.Schema + "name")
   val Base = Field(Str, Namespace.Meta + "base")
   val Imports = Field(Array(VocabularyReferenceModel), Namespace.Owl + "imports")
-  val Externals = Field(Array(ExternalModel), Namespace.Meta + "externals")
 
   override def modelInstance: AmfObject = Vocabulary()
 

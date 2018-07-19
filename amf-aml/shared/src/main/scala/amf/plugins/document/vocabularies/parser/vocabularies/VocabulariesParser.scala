@@ -14,6 +14,7 @@ import amf.plugins.document.vocabularies.parser.common.SyntaxErrorReporter
 import org.yaml.model._
 
 import scala.collection.mutable
+import scala.util.{Failure, Success, Try}
 
 class VocabularyDeclarations(var externals: Map[String, External] = Map(),
                              var classTerms: Map[String, ClassTerm] = Map(),
@@ -63,6 +64,26 @@ class VocabularyDeclarations(var externals: Map[String, External] = Map(),
     }
   }
 
+  def resolveExternal(key: String): Option[String] = {
+    if (key.contains(".")) {
+      val prefix = key.split("\\.").head
+      val value  = key.split("\\.").last
+      externals.get(prefix).map(external => s"${external.base.value()}$value")
+    } else {
+      None
+    }
+  }
+
+  def resolveExternalNamespace(prefix: Option[String], suffix: String): Try[String] = {
+    prefix match {
+      case Some(prefixString) =>
+        resolveExternal(s"$prefixString.$suffix") match {
+          case Some(resolvedPrefix) => Success(resolvedPrefix)
+          case _                    => Failure(new Exception(s"Cannot resolve external prefix $prefixString"))
+        }
+      case _                  => Success((Namespace.Data + suffix).iri())
+    }
+  }
 }
 
 

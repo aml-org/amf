@@ -14369,201 +14369,82 @@
             ]
           }
         ],
-        "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/annotations/oas-tags-definition": {
+        "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/annotations/oas-externalDocs": {
           "http://a.ml/vocabularies/document#name": [
             {
-              "@value": "oas-tags-definition"
+              "@value": "oas-externalDocs"
             }
           ],
-          "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1",
+          "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-externalDocs/object_1",
           "@type": [
-            "http://a.ml/vocabularies/data#Array",
-            "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"
+            "http://a.ml/vocabularies/data#Object"
           ],
-          "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
+          "http://a.ml/vocabularies/data#url": [
             {
-              "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_2",
+              "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-externalDocs/object_1/scalar_2",
               "@type": [
-                "http://a.ml/vocabularies/data#Object"
+                "http://a.ml/vocabularies/data#Scalar"
               ],
-              "http://a.ml/vocabularies/data#name": [
+              "http://a.ml/vocabularies/data#value": [
                 {
-                  "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_2/scalar_3",
-                  "@type": [
-                    "http://a.ml/vocabularies/data#Scalar"
-                  ],
-                  "http://a.ml/vocabularies/data#value": [
-                    {
-                      "@value": "hostedmodels",
-                      "@type": "http://www.w3.org/2001/XMLSchema#string"
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#sources": [
-                    {
-                      "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_2/scalar_3/source-map",
-                      "@type": [
-                        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#lexical": [
-                        {
-                          "http://a.ml/vocabularies/document-source-maps#element": [
-                            {
-                              "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_2/scalar_3"
-                            }
-                          ],
-                          "http://a.ml/vocabularies/document-source-maps#value": [
-                            {
-                              "@value": "[(9,10)-(9,22)]"
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
+                  "@value": "https://developers.google.com/prediction/docs/developer-guide",
+                  "@type": "http://www.w3.org/2001/XMLSchema#string"
                 }
               ],
               "http://a.ml/vocabularies/document-source-maps#sources": [
                 {
-                  "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_2/source-map",
+                  "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-externalDocs/object_1/scalar_2/source-map",
                   "@type": [
                     "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
-                    {
-                      "http://a.ml/vocabularies/document-source-maps#element": [
-                        {
-                          "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_2"
-                        }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#value": [
-                        {
-                          "@value": "name->[(9,4)-(10,0)]"
-                        }
-                      ]
-                    }
                   ],
                   "http://a.ml/vocabularies/document-source-maps#lexical": [
                     {
                       "http://a.ml/vocabularies/document-source-maps#element": [
                         {
-                          "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_2"
+                          "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-externalDocs/object_1/scalar_2"
                         }
                       ],
                       "http://a.ml/vocabularies/document-source-maps#value": [
                         {
-                          "@value": "[(9,4)-(10,0)]"
+                          "@value": "[(72,7)-(72,70)]"
                         }
                       ]
                     }
                   ]
                 }
               ]
-            },
-            {
-              "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_4",
-              "@type": [
-                "http://a.ml/vocabularies/data#Object"
-              ],
-              "http://a.ml/vocabularies/data#name": [
-                {
-                  "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_4/scalar_5",
-                  "@type": [
-                    "http://a.ml/vocabularies/data#Scalar"
-                  ],
-                  "http://a.ml/vocabularies/data#value": [
-                    {
-                      "@value": "training",
-                      "@type": "http://www.w3.org/2001/XMLSchema#string"
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#sources": [
-                    {
-                      "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_4/scalar_5/source-map",
-                      "@type": [
-                        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#lexical": [
-                        {
-                          "http://a.ml/vocabularies/document-source-maps#element": [
-                            {
-                              "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_4/scalar_5"
-                            }
-                          ],
-                          "http://a.ml/vocabularies/document-source-maps#value": [
-                            {
-                              "@value": "[(10,10)-(10,18)]"
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ],
-              "http://a.ml/vocabularies/document-source-maps#sources": [
-                {
-                  "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_4/source-map",
-                  "@type": [
-                    "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
-                    {
-                      "http://a.ml/vocabularies/document-source-maps#element": [
-                        {
-                          "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_4"
-                        }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#value": [
-                        {
-                          "@value": "name->[(10,4)-(11,0)]"
-                        }
-                      ]
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#lexical": [
-                    {
-                      "http://a.ml/vocabularies/document-source-maps#element": [
-                        {
-                          "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_4"
-                        }
-                      ],
-                      "http://a.ml/vocabularies/document-source-maps#value": [
-                        {
-                          "@value": "[(10,4)-(11,0)]"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "http://a.ml/vocabularies/data#pos0": [
-            {
-              "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_2"
-            }
-          ],
-          "http://a.ml/vocabularies/data#pos1": [
-            {
-              "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_4"
             }
           ],
           "http://a.ml/vocabularies/document-source-maps#sources": [
             {
-              "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/source-map",
+              "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-externalDocs/object_1/source-map",
               "@type": [
                 "http://a.ml/vocabularies/document-source-maps#SourceMap"
+              ],
+              "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
+                {
+                  "http://a.ml/vocabularies/document-source-maps#element": [
+                    {
+                      "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-externalDocs/object_1"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#value": [
+                    {
+                      "@value": "url->[(72,2)-(73,0)]"
+                    }
+                  ]
+                }
               ],
               "http://a.ml/vocabularies/document-source-maps#lexical": [
                 {
                   "http://a.ml/vocabularies/document-source-maps#element": [
                     {
-                      "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1"
+                      "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-externalDocs/object_1"
                     }
                   ],
                   "http://a.ml/vocabularies/document-source-maps#value": [
                     {
-                      "@value": "[(8,22)-(11,0)]"
+                      "@value": "[(72,0)-(73,0)]"
                     }
                   ]
                 }
@@ -15154,44 +15035,167 @@
             }
           ]
         },
-        "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/annotations/oas-externalDocs": {
+        "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/annotations/oas-tags-definition": {
           "http://a.ml/vocabularies/document#name": [
             {
-              "@value": "oas-externalDocs"
+              "@value": "oas-tags-definition"
             }
           ],
-          "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-externalDocs/object_1",
+          "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1",
           "@type": [
-            "http://a.ml/vocabularies/data#Object"
+            "http://a.ml/vocabularies/data#Array",
+            "http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"
           ],
-          "http://a.ml/vocabularies/data#url": [
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
             {
-              "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-externalDocs/object_1/scalar_2",
+              "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_2",
               "@type": [
-                "http://a.ml/vocabularies/data#Scalar"
+                "http://a.ml/vocabularies/data#Object"
               ],
-              "http://a.ml/vocabularies/data#value": [
+              "http://a.ml/vocabularies/data#name": [
                 {
-                  "@value": "https://developers.google.com/prediction/docs/developer-guide",
-                  "@type": "http://www.w3.org/2001/XMLSchema#string"
+                  "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_2/scalar_3",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "hostedmodels",
+                      "@type": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#sources": [
+                    {
+                      "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_2/scalar_3/source-map",
+                      "@type": [
+                        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#lexical": [
+                        {
+                          "http://a.ml/vocabularies/document-source-maps#element": [
+                            {
+                              "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_2/scalar_3"
+                            }
+                          ],
+                          "http://a.ml/vocabularies/document-source-maps#value": [
+                            {
+                              "@value": "[(9,10)-(9,22)]"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
                 }
               ],
               "http://a.ml/vocabularies/document-source-maps#sources": [
                 {
-                  "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-externalDocs/object_1/scalar_2/source-map",
+                  "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_2/source-map",
                   "@type": [
                     "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
+                    {
+                      "http://a.ml/vocabularies/document-source-maps#element": [
+                        {
+                          "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_2"
+                        }
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#value": [
+                        {
+                          "@value": "name->[(9,4)-(10,0)]"
+                        }
+                      ]
+                    }
                   ],
                   "http://a.ml/vocabularies/document-source-maps#lexical": [
                     {
                       "http://a.ml/vocabularies/document-source-maps#element": [
                         {
-                          "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-externalDocs/object_1/scalar_2"
+                          "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_2"
                         }
                       ],
                       "http://a.ml/vocabularies/document-source-maps#value": [
                         {
-                          "@value": "[(72,7)-(72,70)]"
+                          "@value": "[(9,4)-(10,0)]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_4",
+              "@type": [
+                "http://a.ml/vocabularies/data#Object"
+              ],
+              "http://a.ml/vocabularies/data#name": [
+                {
+                  "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_4/scalar_5",
+                  "@type": [
+                    "http://a.ml/vocabularies/data#Scalar"
+                  ],
+                  "http://a.ml/vocabularies/data#value": [
+                    {
+                      "@value": "training",
+                      "@type": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#sources": [
+                    {
+                      "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_4/scalar_5/source-map",
+                      "@type": [
+                        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#lexical": [
+                        {
+                          "http://a.ml/vocabularies/document-source-maps#element": [
+                            {
+                              "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_4/scalar_5"
+                            }
+                          ],
+                          "http://a.ml/vocabularies/document-source-maps#value": [
+                            {
+                              "@value": "[(10,10)-(10,18)]"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "http://a.ml/vocabularies/document-source-maps#sources": [
+                {
+                  "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_4/source-map",
+                  "@type": [
+                    "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
+                    {
+                      "http://a.ml/vocabularies/document-source-maps#element": [
+                        {
+                          "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_4"
+                        }
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#value": [
+                        {
+                          "@value": "name->[(10,4)-(11,0)]"
+                        }
+                      ]
+                    }
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#lexical": [
+                    {
+                      "http://a.ml/vocabularies/document-source-maps#element": [
+                        {
+                          "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_4"
+                        }
+                      ],
+                      "http://a.ml/vocabularies/document-source-maps#value": [
+                        {
+                          "@value": "[(10,4)-(11,0)]"
                         }
                       ]
                     }
@@ -15200,36 +15204,32 @@
               ]
             }
           ],
+          "http://a.ml/vocabularies/data#pos0": [
+            {
+              "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_2"
+            }
+          ],
+          "http://a.ml/vocabularies/data#pos1": [
+            {
+              "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/object_4"
+            }
+          ],
           "http://a.ml/vocabularies/document-source-maps#sources": [
             {
-              "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-externalDocs/object_1/source-map",
+              "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1/source-map",
               "@type": [
                 "http://a.ml/vocabularies/document-source-maps#SourceMap"
-              ],
-              "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
-                {
-                  "http://a.ml/vocabularies/document-source-maps#element": [
-                    {
-                      "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-externalDocs/object_1"
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#value": [
-                    {
-                      "@value": "url->[(72,2)-(73,0)]"
-                    }
-                  ]
-                }
               ],
               "http://a.ml/vocabularies/document-source-maps#lexical": [
                 {
                   "http://a.ml/vocabularies/document-source-maps#element": [
                     {
-                      "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-externalDocs/object_1"
+                      "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/oas-tags-definition/array_1"
                     }
                   ],
                   "http://a.ml/vocabularies/document-source-maps#value": [
                     {
-                      "@value": "[(72,0)-(73,0)]"
+                      "@value": "[(8,22)-(11,0)]"
                     }
                   ]
                 }
@@ -15239,13 +15239,13 @@
         },
         "http://a.ml/vocabularies/document#customDomainProperties": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/annotations/oas-tags-definition"
+            "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/annotations/oas-externalDocs"
           },
           {
             "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/annotations/oas-info"
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/annotations/oas-externalDocs"
+            "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/annotations/oas-tags-definition"
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [

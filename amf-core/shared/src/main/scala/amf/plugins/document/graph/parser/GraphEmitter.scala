@@ -287,11 +287,13 @@ object GraphEmitter extends MetaModelTypeMapping {
         case FieldEntry(_, v) =>
           v.value match {
             case AmfArray(values, _) =>
-              values.foreach {
-                case extension: DomainExtension =>
-                  val uri = extension.definedBy.id
-                  customProperties += uri
-                  createCustomExtension(b, uri, extension, None, ctx)
+              values
+                .sortBy(_.asInstanceOf[DomainExtension].id)
+                .foreach {
+                  case extension: DomainExtension =>
+                    val uri = extension.definedBy.id
+                    customProperties += uri
+                    createCustomExtension(b, uri, extension, None, ctx)
               }
             case _ => // ignore
           }
@@ -303,6 +305,7 @@ object GraphEmitter extends MetaModelTypeMapping {
         case (f, v) =>
           v.value.annotations
             .collect({ case e: DomainExtensionAnnotation => e })
+            .sortBy(_.extension.id)
             .foreach(e => {
               val extension = e.extension
               val uri       = s"${element.id}/scalar-valued/$count/${extension.name.value()}"

@@ -32,6 +32,7 @@ trait MappingDeclarer { this: BaseUnit with DeclaresModel =>
 
 case class Dialect(fields: Fields, annotations: Annotations)
     extends BaseUnit
+    with ExternalContext[Dialect]
     with DeclaresModel
     with EncodesModel
     with MappingDeclarer {
@@ -41,7 +42,6 @@ case class Dialect(fields: Fields, annotations: Annotations)
   def declares: Seq[DomainElement] = fields.field(Declares)
   def name(): StrField             = fields.field(Name)
   def version(): StrField          = fields.field(Version)
-  def externals: Seq[External]     = fields.field(Externals)
   def documents(): DocumentsModel  = fields.field(Documents)
 
   def nameAndVersion(): String = s"${name().value()} ${version().value()}"
@@ -51,7 +51,6 @@ case class Dialect(fields: Fields, annotations: Annotations)
 
   def withName(name: String): Dialect                          = set(Name, name)
   def withVersion(version: String): Dialect                    = set(Version, version)
-  def withExternals(externals: Seq[External]): Dialect         = setArray(Externals, externals)
   def withDocuments(documentsMapping: DocumentsModel): Dialect = set(Documents, documentsMapping)
 
   def libraryHeaders: Seq[String] = Option(documents().library()) match {
@@ -80,16 +79,14 @@ object Dialect {
 
 case class DialectLibrary(fields: Fields, annotations: Annotations)
     extends BaseUnit
+    with ExternalContext[DialectLibrary]
     with DeclaresModel
     with MappingDeclarer {
 
   def references: Seq[BaseUnit]    = fields.field(References)
   def declares: Seq[DomainElement] = fields.field(Declares)
-  def externals: Seq[External]     = fields.field(Externals)
 
   override def componentId: String = ""
-
-  def withExternals(externals: Seq[External]): DialectLibrary = setArray(Externals, externals)
 
   def meta: Obj = DialectLibraryModel
 }
@@ -100,15 +97,13 @@ object DialectLibrary {
   def apply(annotations: Annotations): DialectLibrary = DialectLibrary(Fields(), annotations)
 }
 
-case class DialectFragment(fields: Fields, annotations: Annotations) extends BaseUnit with EncodesModel {
+case class DialectFragment(fields: Fields, annotations: Annotations) extends BaseUnit with EncodesModel with ExternalContext[DialectFragment] {
 
   def references: Seq[BaseUnit]     = fields.field(References)
-  def externals: Seq[External]      = fields.field(Externals)
   override def encodes: NodeMapping = fields.field(Encodes)
 
   override def componentId: String = ""
 
-  def withExternals(externals: Seq[External]): DialectFragment = setArray(Externals, externals)
   def withEncodes(nodeMapping: NodeMapping): DialectFragment   = set(Encodes, nodeMapping)
 
   def meta: Obj = DialectFragmentModel

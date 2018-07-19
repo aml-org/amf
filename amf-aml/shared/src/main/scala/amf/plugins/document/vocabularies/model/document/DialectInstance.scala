@@ -6,12 +6,8 @@ import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.{AmfObject, DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel._
-import amf.plugins.document.vocabularies.metamodel.document.{
-  DialectInstanceFragmentModel,
-  DialectInstanceLibraryModel,
-  DialectInstanceModel
-}
-import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
+import amf.plugins.document.vocabularies.metamodel.document.{DialectInstanceFragmentModel, DialectInstanceLibraryModel, DialectInstanceModel}
+import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, External}
 
 trait ComposedInstancesSupport {
   var composedDialects: Map[String, Dialect] = Map()
@@ -21,6 +17,7 @@ trait ComposedInstancesSupport {
 
 case class DialectInstance(fields: Fields, annotations: Annotations)
     extends BaseUnit
+    with ExternalContext[DialectInstance]
     with DeclaresModel
     with EncodesModel
     with ComposedInstancesSupport {
@@ -127,6 +124,7 @@ object DialectInstance {
 
 case class DialectInstanceFragment(fields: Fields, annotations: Annotations)
     extends BaseUnit
+    with ExternalContext[DialectInstanceFragment]
     with EncodesModel
     with ComposedInstancesSupport {
   override def meta: Obj = DialectInstanceFragmentModel
@@ -138,8 +136,8 @@ case class DialectInstanceFragment(fields: Fields, annotations: Annotations)
 
   override def componentId: String = ""
 
-  def withDefinedBy(dialectId: String): DialectInstanceFragment     = set(DefinedBy, dialectId)
-  def withGraphDepencies(ids: Seq[String]): DialectInstanceFragment = set(GraphDependencies, ids)
+  def withDefinedBy(dialectId: String): DialectInstanceFragment        = set(DefinedBy, dialectId)
+  def withGraphDepencies(ids: Seq[String]): DialectInstanceFragment    = set(GraphDependencies, ids)
 }
 
 object DialectInstanceFragment {
@@ -149,6 +147,7 @@ object DialectInstanceFragment {
 
 case class DialectInstanceLibrary(fields: Fields, annotations: Annotations)
     extends BaseUnit
+    with ExternalContext[DialectInstanceLibrary]
     with DeclaresModel
     with ComposedInstancesSupport {
   override def meta: Obj = DialectInstanceLibraryModel

@@ -12,7 +12,7 @@ import amf.core.parser.{FieldEntry, Position, Value}
 import amf.core.utils._
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, JsonPointerRef, RefInclude}
-import amf.plugins.document.vocabularies.emitters.common.IdCounter
+import amf.plugins.document.vocabularies.emitters.common.{ExternalEmitter, IdCounter}
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
 import org.mulesoft.common.time.SimpleDateTime
@@ -21,6 +21,30 @@ import org.yaml.model.{YDocument, YNode}
 
 trait DialectEmitterHelper {
   val dialect: Dialect
+
+  def externalEmitters[T <: amf.core.model.domain.AmfObject](model: ExternalContext[T], ordering: SpecOrdering): Seq[EntryEmitter] = {
+    if (model.externals.nonEmpty) {
+      Seq(new EntryEmitter {
+        override def emit(b: EntryBuilder): Unit = {
+          b.entry("$external", _.obj({ b =>
+            traverse(ordering.sorted(model.externals.map(external => ExternalEmitter(external, ordering))), b)
+          }))
+        }
+
+        override def position(): Position = {
+          model.externals
+            .map(e => e.annotations.find(classOf[LexicalInformation]).map(_.range.start))
+            .filter(_.nonEmpty)
+            .map(_.get)
+            .sortBy(_.line)
+            .headOption
+            .getOrElse(ZERO)
+        }
+      })
+    } else {
+      Nil
+    }
+  }
 
   def findNodeMappingById(nodeMappingId: String): (Dialect, NodeMapping) = {
     maybeFindNodeMappingById(nodeMappingId).getOrElse {
@@ -126,6 +150,7 @@ case class DialectInstancesEmitter(instance: DialectInstance, dialect: Dialect) 
   }
 
   def emitInstance(): YDocument = {
+
     YDocument(b => {
       b.comment(s"%${dialect.name().value()} ${dialect.version().value()}")
       val (_, rootNodeMapping) = findNodeMappingById(dialect.documents().root().encoded().value())
@@ -136,7 +161,8 @@ case class DialectInstancesEmitter(instance: DialectInstance, dialect: Dialect) 
                          ordering,
                          aliases,
                          None,
-                         rootNode = true).emit(b)
+                         rootNode = true,
+                         topLevelEmitters = externalEmitters(instance, ordering)) .emit(b)
     })
   }
 }
@@ -196,7 +222,8 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                               keyPropertyId: Option[String] = None,
                               rootNode: Boolean = false,
                               discriminator: Option[(String, String)] = None,
-                              emitDialect: Boolean = false)
+                              emitDialect: Boolean = false,
+                              topLevelEmitters: Seq[EntryEmitter] = Nil)
     extends PartEmitter
     with DialectEmitterHelper {
 
@@ -209,10 +236,11 @@ case class DialectNodeEmitter(node: DialectDomainElement,
         emitRef(node, b)
       }
     } else {
-      var emitters: Seq[EntryEmitter] = Nil
+      var emitters: Seq[EntryEmitter] = topLevelEmitters
       if (emitDialect) {
         emitters ++= Seq(MapEntryEmitter("$dialect", nodeMapping.id))
       }
+
       if (discriminator.isDefined) {
         val (discriminatorName, discriminatorValue) = discriminator.get
         emitters ++= Seq(MapEntryEmitter(discriminatorName, discriminatorValue))

@@ -4,42 +4,29 @@ import amf.core.Root
 import amf.core.annotations.{Aliases, LexicalInformation}
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.Annotation
-import amf.core.parser.{
-  Annotations,
-  BaseSpecParser,
-  Declarations,
-  EmptyFutureDeclarations,
-  ErrorHandler,
-  FutureDeclarations,
-  ParsedReference,
-  ParserContext,
-  Reference,
-  SearchScope,
-  _
-}
+import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension}
+import amf.core.parser.{Annotations, BaseSpecParser, EmptyFutureDeclarations, ErrorHandler, FutureDeclarations, ParsedReference, ParserContext, Reference, SearchScope, _}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, JsonPointerRef, RefInclude}
-import amf.plugins.document.vocabularies.model.document.{
-  Dialect,
-  DialectInstance,
-  DialectInstanceFragment,
-  DialectInstanceLibrary
-}
+import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectInstanceFragment, DialectInstanceLibrary}
 import amf.plugins.document.vocabularies.model.domain._
+import amf.plugins.document.vocabularies.parser.DynamicExtensionParser
 import amf.plugins.document.vocabularies.parser.common.SyntaxErrorReporter
+import amf.plugins.document.vocabularies.parser.vocabularies.VocabularyDeclarations
 import amf.plugins.features.validation.ParserSideValidations
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model._
 
 import scala.collection.mutable
+import scala.util.{Failure, Success}
 
 class DialectInstanceDeclarations(var dialectDomainElements: Map[String, DialectDomainElement] = Map(),
                                   errorHandler: Option[ErrorHandler],
                                   futureDeclarations: FutureDeclarations)
-    extends Declarations(Map(), Map(), Map(), errorHandler, futureDeclarations) {
+    extends VocabularyDeclarations(Map(), Map(), Map(), Map(), errorHandler, futureDeclarations) {
 
   /** Get or create specified library. */
   override def getOrCreateLibrary(alias: String): DialectInstanceDeclarations = {
@@ -175,6 +162,11 @@ case class ReferenceDeclarations(references: mutable.Map[String, Any] = mutable.
     }
   }
 
+  def +=(external: External): Unit = {
+    references += (external.alias.value()                 -> external)
+    ctx.declarations.externals += (external.alias.value() -> external)
+  }
+
   def baseUnitReferences(): Seq[BaseUnit] =
     references.values.toSet.filter(_.isInstanceOf[BaseUnit]).toSeq.asInstanceOf[Seq[BaseUnit]]
 }
@@ -185,6 +177,8 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
   def parse(location: String): ReferenceDeclarations = {
     val result = ReferenceDeclarations()
     parseLibraries(dialectInstance, result, location)
+    parseExternals(result, location)
+
     references.foreach {
       case ParsedReference(f: DialectInstanceFragment, origin: Reference, None) => result += (origin.url, f)
       case _                                                                    =>
@@ -237,6 +231,29 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
     case _ => e.value
   }
 
+  private def parseExternalEntry(result: ReferenceDeclarations, entry: YMapEntry) = {
+    entry.value
+      .as[YMap]
+      .entries
+      .foreach(e => {
+        val alias: String = e.key.as[YScalar].text
+        val base: String  = e.value
+        val external      = External()
+        result += external.withAlias(alias).withBase(base)
+      })
+  }
+  private def parseExternals(result: ReferenceDeclarations, id: String): Unit = {
+    map.key(
+      "external",
+      entry => parseExternalEntry(result, entry)
+    )
+
+    map.key(
+      "$external",
+      entry => parseExternalEntry(result, entry)
+    )
+  }
+
   private def collectAlias(aliasCollectorUnit: BaseUnit,
                            alias: (Aliases.Alias, (Aliases.FullUrl, Aliases.RelativeUrl))): BaseUnit = {
     aliasCollectorUnit.annotations.find(classOf[Aliases]) match {
@@ -259,9 +276,13 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
       .withId(root.location)
       .withDefinedBy(ctx.dialect.id)
     parseDeclarations("root")
+
     val references =
       DialectInstanceReferencesParser(dialectInstance, map, root.references)
         .parse(dialectInstance.location().getOrElse(dialectInstance.id))
+
+    if (ctx.declarations.externals.nonEmpty)
+      dialectInstance.withExternals(ctx.declarations.externals.values.toSeq)
 
     val document = parseEncoded(dialectInstance) match {
 
@@ -293,6 +314,12 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
       .withLocation(root.location)
       .withId(root.location)
       .withDefinedBy(ctx.dialect.id)
+
+    DialectInstanceReferencesParser(dialectInstanceFragment, map, root.references).parse(root.location)
+
+    if (ctx.declarations.externals.nonEmpty)
+      dialectInstanceFragment.withExternals(ctx.declarations.externals.values.toSeq)
+
     parseEncodedFragment(dialectInstanceFragment) match {
       case Some(dialectDomainElement) =>
         // registering JSON pointer
@@ -314,6 +341,9 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
     val references =
       DialectInstanceReferencesParser(dialectInstance, map, root.references)
         .parse(dialectInstance.location().getOrElse(dialectInstance.id))
+
+    if (ctx.declarations.externals.nonEmpty)
+      dialectInstance.withExternals(ctx.declarations.externals.values.toSeq)
 
     if (ctx.declarations.declarables.nonEmpty)
       dialectInstance.withDeclares(ctx.declarations.declarables)
@@ -382,6 +412,49 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
     }
   }
 
+  def parseAnnotations(ast: YMap, node: DialectDomainElement) = {
+    val parsedAnnotationProperties: Iterable[((Option[String], String), String, YNode)] = ast.map.map { case (k, v) =>
+      val key = k.as[String]
+      if (key.startsWith("(") && key.endsWith(")")) {
+        val base = key.replace("(","").replace(")", "")
+        base.split("\\.") match {
+          case Array(prefix, suffix) => Some(((Some(prefix), suffix), key, v))
+          case Array(suffix)         => Some(((None, suffix), key, v))
+          case _                     => None
+        }
+      } else if (key.startsWith("x-")) {
+        val base = key.replace("x-", "")
+        base.split("-") match {
+          case Array(prefix, suffix) => Some(((Some(prefix), suffix), key, v))
+          case Array(suffix)         => Some(((None, suffix), key, v))
+          case _                     => None
+        }
+      } else {
+        None
+      }
+    } collect { case Some(parsed) =>
+      parsed
+    }
+
+    val parsedExtensions = parsedAnnotationProperties map { case ((prefix, suffix), k, v) =>
+        ctx.declarations.resolveExternalNamespace(prefix, suffix) match {
+          case Success(propertyId) =>
+            val id = node.id + s"/${prefix.getOrElse("")}$suffix"
+            val parsedAnnotation = DynamicExtensionParser(v, Some(id)).parse()
+            val property = CustomDomainProperty(Annotations(v)).withId(propertyId).withName(k)
+            val extension = DomainExtension().withId(id).withExtension(parsedAnnotation).withDefinedBy(property).withName(k).add(Annotations(v))
+            Some(extension)
+          case Failure(ex)       =>
+            ctx.violation(ex.getMessage, v)
+            None
+        }
+    } collect { case Some(parsed) => parsed }
+
+    if (parsedExtensions.nonEmpty) {
+      node.withCustomDomainProperties(parsedExtensions.toSeq)
+    }
+  }
+
   protected def parseNode(id: String, ast: YNode, mapping: NodeMapping): Option[DialectDomainElement] = {
     ast.tagType match {
       case YType.Map =>
@@ -402,6 +475,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
             val finalId                    = generateNodeId(node, nodeMap, id, mapping)
             node.withId(finalId)
             node.withInstanceTypes(Seq(mapping.nodetypeMapping.value(), mapping.id))
+            parseAnnotations(nodeMap, node)
             mapping.propertiesMapping().foreach { propertyMapping =>
               val propertyName = propertyMapping.name().value()
               nodeMap.entries.find(_.key.as[YScalar].text == propertyName) match {
