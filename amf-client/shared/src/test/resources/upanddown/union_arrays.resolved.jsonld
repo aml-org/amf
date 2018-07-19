@@ -232,20 +232,65 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#/declarations/types/PropertyNoArray/property/complex/union/default-union/union/default-union/linked_1",
+                "@id": "#/declarations/types/PropertyNoArray/property/complex/union/default-union/union/default-union",
                 "@type": [
                   "raml-shapes:UnionShape",
                   "shacl:Shape",
                   "raml-shapes:Shape"
                 ],
-                "doc:link-target": [
+                "raml-shapes:anyOf": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/union_arrays.raml#/declarations/types/PropertyNoArray/property/complex/union/default-union/union/default-union"
-                  }
-                ],
-                "doc:link-label": [
+                    "@id": "#/declarations/types/PropertyNoArray/property/complex/union/default-union/scalar/scalar-expression-0",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ]
+                  },
                   {
-                    "@value": "type_1"
+                    "@id": "#/declarations/types/PropertyNoArray/property/complex/union/default-union/scalar/scalar-expression-2",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://a.ml/vocabularies/shapes#number"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/types/any/Product",
+                    "@type": [
+                      "raml-shapes:AnyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape"
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "Product"
+                      }
+                    ],
+                    "smaps": {
+                      "resolved-link": {
+                        "#/declarations/types/any/Product": "file://amf-client/shared/src/test/resources/upanddown/union_arrays.raml#/declarations/types/any/Product/linked_5"
+                      },
+                      "lexical": {
+                        "shacl:name": "[(4,2)-(4,9)]",
+                        "#/declarations/types/any/Product": "[(4,2)-(5,0)]"
+                      },
+                      "declared-element": {
+                        "#/declarations/types/any/Product": ""
+                      }
+                    }
                   }
                 ]
               }

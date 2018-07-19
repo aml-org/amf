@@ -71,7 +71,10 @@ trait ScalarEmitter {
 
 object DefaultScalarEmitter extends ScalarEmitter
 
-class EmissionContext(val prefixes: mutable.Map[String, String], var base: String, val options: RenderOptions) {
+class EmissionContext(val prefixes: mutable.Map[String, String],
+                      var base: String,
+                      val options: RenderOptions,
+                      var declares: Boolean = false) {
   var counter: Int = 1
 
   private val declarations: mutable.LinkedHashSet[AmfElement] = mutable.LinkedHashSet.empty
@@ -79,6 +82,11 @@ class EmissionContext(val prefixes: mutable.Map[String, String], var base: Strin
   private val typeCount: IdCounter = new IdCounter()
 
   def nextTypeName: String = typeCount.genId("type")
+
+  def declares(d: Boolean): this.type = {
+    declares = d
+    this
+  }
 
   def +(element: AmfElement): this.type = {
     declarations += element
@@ -172,9 +180,10 @@ object GraphEmitter extends MetaModelTypeMapping {
         val url = ctx.emitIri(f.value.iri())
         b.entry(
           url,
-          value(f.`type`, v, id, sources.property(url), _, ctx)
+          value(f.`type`, v, id, sources.property(url), _, ctx.declares(true))
         )
       }
+      ctx.declares(false)
     }
 
     def traverse(element: AmfObject, b: EntryBuilder, ctx: EmissionContext): Unit = {
@@ -399,12 +408,13 @@ object GraphEmitter extends MetaModelTypeMapping {
     private def value(t: Type,
                       v: Value,
                       parent: String,
-                      sources: (Value) => Unit,
+                      sources: Value => Unit,
                       b: PartBuilder,
                       ctx: EmissionContext): Unit = {
       val scalarEmitter = options.getCustomEmitter.getOrElse(DefaultScalarEmitter)
       t match {
-        case _: ShapeModel if Seq(classOf[ResolvedInheritance]).exists(v.value.annotations.contains(_)) =>
+        case _: ShapeModel
+            if Seq(classOf[ResolvedInheritance]).exists(v.value.annotations.contains(_)) && !ctx.declares =>
           extractToLink(v.value.asInstanceOf[Shape], b, ctx)
         case t: DomainElement with Linkable if t.isLink =>
           link(b, t, inArray = false, ctx)

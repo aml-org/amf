@@ -1882,23 +1882,520 @@
         ],
         "raml-shapes:items": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/linked_3",
+            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type",
             "@type": [
               "shacl:NodeShape",
               "shacl:Shape",
               "raml-shapes:Shape",
               "doc:DomainElement"
             ],
-            "doc:link-target": [
+            "shacl:closed": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type"
+                "@value": false
               }
             ],
-            "doc:link-label": [
+            "shacl:property": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/alternate_id",
+                "@type": [
+                  "shacl:PropertyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape"
+                ],
+                "shacl:path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#alternate_id"
+                  }
+                ],
+                "raml-shapes:range": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/alternate_id/union/default-union",
+                    "@type": [
+                      "raml-shapes:UnionShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape"
+                    ],
+                    "raml-shapes:anyOf": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/default-union/scalar/scalar-expression-0",
+                        "@type": [
+                          "raml-shapes:ScalarShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://a.ml/vocabularies/shapes#number"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/default-union/nil/scalar-expression-2",
+                        "@type": [
+                          "raml-shapes:NilShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape"
+                        ]
+                      }
+                    ],
+                    "schema-org:description": [
+                      {
+                        "@value": "The alternate ID of the organization"
+                      }
+                    ],
+                    "smaps": {
+                      "inherited-shapes": {
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/alternate_id/union/default-union": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/default-union/union/default-union/linked_1"
+                      },
+                      "lexical": {
+                        "schema-org:description": "[(6,4)-(7,0)]",
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/alternate_id/union/default-union": "[(5,0)-(7,0)]"
+                      },
+                      "type-property-lexical-info": {
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/alternate_id/union/default-union": "[(5,4)-(5,8)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:minCount": [
+                  {
+                    "@value": 0
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "alternate_id"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/alternate_id": "[(4,2)-(7,0)]"
+                  }
+                }
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category",
+                "@type": [
+                  "shacl:PropertyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape"
+                ],
+                "shacl:path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#category"
+                  }
+                ],
+                "raml-shapes:range": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category",
+                    "@type": [
+                      "shacl:NodeShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:closed": [
+                      {
+                        "@value": false
+                      }
+                    ],
+                    "shacl:property": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category/property/id",
+                        "@type": [
+                          "shacl:PropertyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape"
+                        ],
+                        "shacl:path": [
+                          {
+                            "@id": "http://a.ml/vocabularies/data#id"
+                          }
+                        ],
+                        "raml-shapes:range": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category/property/id/scalar/id",
+                            "@type": [
+                              "raml-shapes:ScalarShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:datatype": [
+                              {
+                                "@id": "http://a.ml/vocabularies/shapes#number"
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "id"
+                              }
+                            ],
+                            "schema-org:description": [
+                              {
+                                "@value": "ID of the category"
+                              }
+                            ],
+                            "smaps": {
+                              "type-property-lexical-info": {
+                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category/property/id/scalar/id": "[(12,8)-(12,12)]"
+                              },
+                              "lexical": {
+                                "schema-org:description": "[(13,8)-(14,0)]",
+                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category/property/id/scalar/id": "[(11,6)-(14,0)]",
+                                "shacl:datatype": "[(12,8)-(13,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "shacl:minCount": [
+                          {
+                            "@value": 1
+                          }
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "id"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category/property/id": "[(11,6)-(14,0)]"
+                          }
+                        }
+                      },
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category/property/name",
+                        "@type": [
+                          "shacl:PropertyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape"
+                        ],
+                        "shacl:path": [
+                          {
+                            "@id": "http://a.ml/vocabularies/data#name"
+                          }
+                        ],
+                        "raml-shapes:range": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category/property/name/scalar/name",
+                            "@type": [
+                              "raml-shapes:ScalarShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "name"
+                              }
+                            ],
+                            "schema-org:description": [
+                              {
+                                "@value": "The name of the category"
+                              }
+                            ],
+                            "smaps": {
+                              "type-property-lexical-info": {
+                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category/property/name/scalar/name": "[(15,8)-(15,12)]"
+                              },
+                              "lexical": {
+                                "schema-org:description": "[(16,8)-(17,0)]",
+                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category/property/name/scalar/name": "[(14,6)-(17,0)]",
+                                "shacl:datatype": "[(15,8)-(16,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "shacl:minCount": [
+                          {
+                            "@value": 1
+                          }
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "name"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category/property/name": "[(14,6)-(17,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "category"
+                      }
+                    ],
+                    "schema-org:description": [
+                      {
+                        "@value": "Contains the ID and name of the category the organization is in"
+                      }
+                    ],
+                    "smaps": {
+                      "type-property-lexical-info": {
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category": "[(9,4)-(9,8)]"
+                      },
+                      "lexical": {
+                        "schema-org:description": "[(8,4)-(9,0)]",
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category": "[(7,2)-(17,0)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:minCount": [
+                  {
+                    "@value": 1
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "category"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category": "[(7,2)-(17,0)]"
+                  }
+                }
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/created_at",
+                "@type": [
+                  "shacl:PropertyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape"
+                ],
+                "shacl:path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#created_at"
+                  }
+                ],
+                "raml-shapes:range": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/created_at/scalar/created_at",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#dateTime"
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "created_at"
+                      }
+                    ],
+                    "schema-org:description": [
+                      {
+                        "@value": "The date of creation of the organization"
+                      }
+                    ],
+                    "smaps": {
+                      "type-property-lexical-info": {
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/created_at/scalar/created_at": "[(18,4)-(18,8)]"
+                      },
+                      "lexical": {
+                        "schema-org:description": "[(19,4)-(20,0)]",
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/created_at/scalar/created_at": "[(17,2)-(20,0)]",
+                        "shacl:datatype": "[(18,4)-(19,0)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:minCount": [
+                  {
+                    "@value": 1
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "created_at"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/created_at": "[(17,2)-(20,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:name": [
               {
                 "@value": "Organization"
               }
-            ]
+            ],
+            "doc:examples": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value",
+                "@type": [
+                  "doc:Example",
+                  "doc:DomainElement"
+                ],
+                "schema-org:name": [
+                  {
+                    "@value": "value"
+                  }
+                ],
+                "doc:strict": [
+                  {
+                    "@value": true
+                  }
+                ],
+                "doc:structuredValue": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1",
+                    "@type": [
+                      "data:Object"
+                    ],
+                    "data:alternate_id": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2",
+                        "@type": [
+                          "data:Scalar"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "1",
+                            "@type": "xsd:integer"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2": "[(3,18)-(3,19)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:category": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3",
+                        "@type": [
+                          "data:Object"
+                        ],
+                        "data:id": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4",
+                            "@type": [
+                              "data:Scalar"
+                            ],
+                            "data:value": [
+                              {
+                                "@value": "39691",
+                                "@type": "xsd:integer"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4": "[(5,10)-(5,15)]"
+                              }
+                            }
+                          }
+                        ],
+                        "data:name": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5",
+                            "@type": [
+                              "data:Scalar"
+                            ],
+                            "data:value": [
+                              {
+                                "@value": "Religious and Spiritual",
+                                "@type": "xsd:string"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5": "[(6,12)-(6,35)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "data-node-properties": {
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
+                          },
+                          "lexical": {
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3": "[(5,0)-(7,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:created_at": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6",
+                        "@type": [
+                          "data:Scalar"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "2013-01-02T22:21:34Z",
+                            "@type": "xsd:dateTime"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6": "[(7,16)-(7,36)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1": "[(3,0)-(9,0)]"
+                      },
+                      "data-node-properties": {
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1": "created_at->[(7,4)-(9,0)]#alternate_id->[(3,4)-(4,0)]#category->[(4,4)-(7,0)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:raw": [
+                  {
+                    "@value": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
+                  }
+                ],
+                "smaps": {
+                  "synthesized-field": {
+                    "doc:strict": "true"
+                  },
+                  "source-vendor": {
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value": "raml 1.0"
+                  },
+                  "lexical": {
+                    "shacl:raw": "[(3,0)-(9,0)]",
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value": "[(2,6)-(9,0)]",
+                    "schema-org:name": "[(2,0)-(9,0)]"
+                  },
+                  "resolved-link": {
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/example/default-example"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "resolved-link": {
+                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml#/declarations/types/Organization/linked_7"
+              },
+              "lexical": {
+                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type": "[(2,0)-(20,0)]"
+              },
+              "type-property-lexical-info": {
+                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type": "[(2,0)-(2,4)]"
+              }
+            }
           }
         ],
         "doc:examples": [
@@ -2152,23 +2649,520 @@
         ],
         "raml-shapes:items": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/linked_4",
+            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type",
             "@type": [
               "shacl:NodeShape",
               "shacl:Shape",
               "raml-shapes:Shape",
               "doc:DomainElement"
             ],
-            "doc:link-target": [
+            "shacl:closed": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type"
+                "@value": false
               }
             ],
-            "doc:link-label": [
+            "shacl:property": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/alternate_id",
+                "@type": [
+                  "shacl:PropertyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape"
+                ],
+                "shacl:path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#alternate_id"
+                  }
+                ],
+                "raml-shapes:range": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/alternate_id/union/default-union",
+                    "@type": [
+                      "raml-shapes:UnionShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape"
+                    ],
+                    "raml-shapes:anyOf": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/default-union/scalar/scalar-expression-0",
+                        "@type": [
+                          "raml-shapes:ScalarShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://a.ml/vocabularies/shapes#number"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/default-union/nil/scalar-expression-2",
+                        "@type": [
+                          "raml-shapes:NilShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape"
+                        ]
+                      }
+                    ],
+                    "schema-org:description": [
+                      {
+                        "@value": "The alternate ID of the organization"
+                      }
+                    ],
+                    "smaps": {
+                      "inherited-shapes": {
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/alternate_id/union/default-union": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/default-union/union/default-union/linked_1"
+                      },
+                      "lexical": {
+                        "schema-org:description": "[(6,4)-(7,0)]",
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/alternate_id/union/default-union": "[(5,0)-(7,0)]"
+                      },
+                      "type-property-lexical-info": {
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/alternate_id/union/default-union": "[(5,4)-(5,8)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:minCount": [
+                  {
+                    "@value": 0
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "alternate_id"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/alternate_id": "[(4,2)-(7,0)]"
+                  }
+                }
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category",
+                "@type": [
+                  "shacl:PropertyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape"
+                ],
+                "shacl:path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#category"
+                  }
+                ],
+                "raml-shapes:range": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category",
+                    "@type": [
+                      "shacl:NodeShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:closed": [
+                      {
+                        "@value": false
+                      }
+                    ],
+                    "shacl:property": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category/property/id",
+                        "@type": [
+                          "shacl:PropertyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape"
+                        ],
+                        "shacl:path": [
+                          {
+                            "@id": "http://a.ml/vocabularies/data#id"
+                          }
+                        ],
+                        "raml-shapes:range": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category/property/id/scalar/id",
+                            "@type": [
+                              "raml-shapes:ScalarShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:datatype": [
+                              {
+                                "@id": "http://a.ml/vocabularies/shapes#number"
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "id"
+                              }
+                            ],
+                            "schema-org:description": [
+                              {
+                                "@value": "ID of the category"
+                              }
+                            ],
+                            "smaps": {
+                              "type-property-lexical-info": {
+                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category/property/id/scalar/id": "[(12,8)-(12,12)]"
+                              },
+                              "lexical": {
+                                "schema-org:description": "[(13,8)-(14,0)]",
+                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category/property/id/scalar/id": "[(11,6)-(14,0)]",
+                                "shacl:datatype": "[(12,8)-(13,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "shacl:minCount": [
+                          {
+                            "@value": 1
+                          }
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "id"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category/property/id": "[(11,6)-(14,0)]"
+                          }
+                        }
+                      },
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category/property/name",
+                        "@type": [
+                          "shacl:PropertyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape"
+                        ],
+                        "shacl:path": [
+                          {
+                            "@id": "http://a.ml/vocabularies/data#name"
+                          }
+                        ],
+                        "raml-shapes:range": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category/property/name/scalar/name",
+                            "@type": [
+                              "raml-shapes:ScalarShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "name"
+                              }
+                            ],
+                            "schema-org:description": [
+                              {
+                                "@value": "The name of the category"
+                              }
+                            ],
+                            "smaps": {
+                              "type-property-lexical-info": {
+                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category/property/name/scalar/name": "[(15,8)-(15,12)]"
+                              },
+                              "lexical": {
+                                "schema-org:description": "[(16,8)-(17,0)]",
+                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category/property/name/scalar/name": "[(14,6)-(17,0)]",
+                                "shacl:datatype": "[(15,8)-(16,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "shacl:minCount": [
+                          {
+                            "@value": 1
+                          }
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "name"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category/property/name": "[(14,6)-(17,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "category"
+                      }
+                    ],
+                    "schema-org:description": [
+                      {
+                        "@value": "Contains the ID and name of the category the organization is in"
+                      }
+                    ],
+                    "smaps": {
+                      "type-property-lexical-info": {
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category": "[(9,4)-(9,8)]"
+                      },
+                      "lexical": {
+                        "schema-org:description": "[(8,4)-(9,0)]",
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category/category": "[(7,2)-(17,0)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:minCount": [
+                  {
+                    "@value": 1
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "category"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/category": "[(7,2)-(17,0)]"
+                  }
+                }
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/created_at",
+                "@type": [
+                  "shacl:PropertyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape"
+                ],
+                "shacl:path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#created_at"
+                  }
+                ],
+                "raml-shapes:range": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/created_at/scalar/created_at",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#dateTime"
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "created_at"
+                      }
+                    ],
+                    "schema-org:description": [
+                      {
+                        "@value": "The date of creation of the organization"
+                      }
+                    ],
+                    "smaps": {
+                      "type-property-lexical-info": {
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/created_at/scalar/created_at": "[(18,4)-(18,8)]"
+                      },
+                      "lexical": {
+                        "schema-org:description": "[(19,4)-(20,0)]",
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/created_at/scalar/created_at": "[(17,2)-(20,0)]",
+                        "shacl:datatype": "[(18,4)-(19,0)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:minCount": [
+                  {
+                    "@value": 1
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "created_at"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type/property/created_at": "[(17,2)-(20,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:name": [
               {
                 "@value": "Organization"
               }
-            ]
+            ],
+            "doc:examples": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value",
+                "@type": [
+                  "doc:Example",
+                  "doc:DomainElement"
+                ],
+                "schema-org:name": [
+                  {
+                    "@value": "value"
+                  }
+                ],
+                "doc:strict": [
+                  {
+                    "@value": true
+                  }
+                ],
+                "doc:structuredValue": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1",
+                    "@type": [
+                      "data:Object"
+                    ],
+                    "data:alternate_id": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2",
+                        "@type": [
+                          "data:Scalar"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "1",
+                            "@type": "xsd:integer"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2": "[(3,18)-(3,19)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:category": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3",
+                        "@type": [
+                          "data:Object"
+                        ],
+                        "data:id": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4",
+                            "@type": [
+                              "data:Scalar"
+                            ],
+                            "data:value": [
+                              {
+                                "@value": "39691",
+                                "@type": "xsd:integer"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4": "[(5,10)-(5,15)]"
+                              }
+                            }
+                          }
+                        ],
+                        "data:name": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5",
+                            "@type": [
+                              "data:Scalar"
+                            ],
+                            "data:value": [
+                              {
+                                "@value": "Religious and Spiritual",
+                                "@type": "xsd:string"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5": "[(6,12)-(6,35)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "data-node-properties": {
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
+                          },
+                          "lexical": {
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3": "[(5,0)-(7,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:created_at": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6",
+                        "@type": [
+                          "data:Scalar"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "2013-01-02T22:21:34Z",
+                            "@type": "xsd:dateTime"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6": "[(7,16)-(7,36)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1": "[(3,0)-(9,0)]"
+                      },
+                      "data-node-properties": {
+                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1": "created_at->[(7,4)-(9,0)]#alternate_id->[(3,4)-(4,0)]#category->[(4,4)-(7,0)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:raw": [
+                  {
+                    "@value": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
+                  }
+                ],
+                "smaps": {
+                  "synthesized-field": {
+                    "doc:strict": "true"
+                  },
+                  "source-vendor": {
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value": "raml 1.0"
+                  },
+                  "lexical": {
+                    "shacl:raw": "[(3,0)-(9,0)]",
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value": "[(2,6)-(9,0)]",
+                    "schema-org:name": "[(2,0)-(9,0)]"
+                  },
+                  "resolved-link": {
+                    "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema/example/default-example"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "resolved-link": {
+                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml#/declarations/types/Organization/linked_7"
+              },
+              "lexical": {
+                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type": "[(2,0)-(20,0)]"
+              },
+              "type-property-lexical-info": {
+                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type": "[(2,0)-(2,4)]"
+              }
+            }
           }
         ],
         "doc:examples": [
