@@ -2101,7 +2101,7 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
       case array: ArrayShape =>
         array.items match {
           case sc: ScalarShape =>
-            SimpleTypeEmitter(sc, ordering).emitters()
+            SimpleTypeEmitter(sc, ordering).emitters() :+ MapEntryEmitter("repeat", "true", YType.Bool)
           case other =>
             Seq(CommentEmitter(other, s"Cannot emit array shape with items ${other.getClass.toString} in raml 08"))
         }
