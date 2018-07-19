@@ -1,9 +1,10 @@
 package amf.error
 
-import amf.core.model.document.BaseUnit
+import amf.core.model.document.{BaseUnit, Document}
 import amf.core.parser.Range
 import amf.core.remote.RamlYamlHint
 import amf.facades.{AMFCompiler, Validation}
+import amf.plugins.domain.shapes.models.{ScalarShape, UnresolvedShape}
 import amf.plugins.features.validation.ParserSideValidations
 
 import scala.concurrent.Future
@@ -418,6 +419,33 @@ class RamlParserErrorTest extends ParserErrorTest {
 
   test("Connect and trace methods") {
     validate("/valid/connect-trace.raml")
+  }
+
+  test("Cycle in references handled exception") {
+    validateWithUnit(
+      "/error/cycle-references/api.raml",
+      (u: BaseUnit) => {
+        val shape = u.asInstanceOf[Document].declares.head.asInstanceOf[ScalarShape]
+        shape.linkTarget.get.isInstanceOf[UnresolvedShape] should be(false)
+      },
+      Seq(
+        error => {
+          error.level should be("Violation")
+          error.message should startWith(
+            "Cyclic found following references file://amf-client/shared/src/test/resources/parser-results/raml/error/cycle-references/api.raml ->")
+          error.message should endWith(
+            "-> file://amf-client/shared/src/test/resources/parser-results/raml/error/cycle-references/yaKassa.raml")
+        },
+        unresolve1 => {
+          unresolve1.level should be("Violation")
+          unresolve1.message should startWith("Unresolved reference 'lib.InvoiceId' from root context")
+        },
+        unresolve2 => {
+          unresolve2.level should be("Violation")
+          unresolve2.message should startWith("Unresolved reference 'typeFragment.raml' from root context")
+        }
+      )
+    )
   }
 
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/raml/"

@@ -15,6 +15,7 @@ import amf.core.remote._
 import amf.core.services.RuntimeCompiler
 import amf.core.utils.Strings
 import amf.internal.environment.Environment
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YNode
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -225,6 +226,9 @@ class AMFCompiler(val rawUrl: String,
                   ctx.violation(link.url, e.getMessage, ref)
                 }
               }
+              None
+            case e: CyclicReferenceException if !domainPlugin.allowRecursiveReferences =>
+              ctx.violation(ParserSideValidations.CycleReferenceError.id, link.url, e.getMessage, link.refs.head.node)
               None
           }
       })

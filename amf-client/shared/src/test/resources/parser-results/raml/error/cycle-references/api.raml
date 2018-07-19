@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: test cycle
+uses:
+  YaKassa: yaKassa.raml
+
+types:
+  localInvoice: YaKassa.InvoiceId
+/api:
+  post:
+    body:
+      application/json: localInvoice

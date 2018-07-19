@@ -156,6 +156,14 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
+  val CycleReferenceError = ValidationSpecification(
+    (Namespace.AmfParser + "cycle-reference").iri(),
+    "Cycle in references",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val InvalidTypeInheritanceErrorSpecification = ValidationSpecification(
     (Namespace.AmfParser + "invalid-type-inheritance").iri(),
     "Invalid inheritance relationship",
@@ -365,6 +373,13 @@ object ParserSideValidations {
       OAS3Profile   -> SeverityLevels.VIOLATION,
       AMFProfile    -> SeverityLevels.VIOLATION
     ),
+    CycleReferenceError.id -> Map(
+      RAMLProfile   -> SeverityLevels.VIOLATION,
+      RAML08Profile -> SeverityLevels.VIOLATION,
+      OASProfile    -> SeverityLevels.VIOLATION,
+      OAS3Profile   -> SeverityLevels.VIOLATION,
+      AMFProfile    -> SeverityLevels.VIOLATION
+    ),
     ExampleValidationErrorSpecification.id -> Map(
       RAMLProfile   -> SeverityLevels.VIOLATION,
       RAML08Profile -> SeverityLevels.VIOLATION,
@@ -466,6 +481,7 @@ object ParserSideValidations {
     DuplicatedPropertySpecification,
     DialectAmbiguousRangeSpecification,
     ParsingErrorSpecification,
+    CycleReferenceError,
     ParsingWarningSpecification,
     ExampleValidationErrorSpecification,
     UnsupportedExampleMediaTypeErrorSpecification,

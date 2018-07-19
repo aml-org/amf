@@ -1,16 +1,15 @@
 package amf.compiler
 
-import amf.{RAMLProfile, RAMLStyle}
+import amf.client.plugins.{AMFFeaturePlugin, AMFPlugin}
 import amf.client.remote.Content
-import amf.core.exception.CyclicReferenceException
 import amf.core.model.document.{BaseUnit, Document, ExternalFragment}
 import amf.core.parser.{UnspecifiedReference, _}
-import amf.client.plugins.{AMFFeaturePlugin, AMFPlugin}
 import amf.core.remote.Syntax.{Json, Syntax, Yaml}
 import amf.core.remote._
 import amf.core.services.RuntimeCompiler
 import amf.facades.{Root, Validation}
 import amf.plugins.domain.webapi.models.WebApi
+import amf.{RAMLProfile, RAMLStyle}
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.model.{YMap, YMapEntry}
@@ -58,11 +57,17 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("Simple cicle (yaml)") {
-    recoverToExceptionIf[CyclicReferenceException] {
-      build(s"file://amf-client/shared/src/test/resources/reference-itself.raml", RamlYamlHint)
+    recoverToExceptionIf[Exception] {
+      Validation(platform)
+        .map(_.withEnabledValidation(false))
+        .flatMap(
+          v =>
+            build(s"file://amf-client/shared/src/test/resources/reference-itself.raml",
+                  RamlYamlHint,
+                  validation = Some(v)))
     } map { ex =>
-      assert(ex.getMessage ==
-        s"Cyclic found following references file://amf-client/shared/src/test/resources/reference-itself.raml -> file://amf-client/shared/src/test/resources/reference-itself.raml")
+      assert(ex.getMessage.contains(
+        s"Cyclic found following references file://amf-client/shared/src/test/resources/reference-itself.raml -> file://amf-client/shared/src/test/resources/reference-itself.raml"))
     }
   }
 
@@ -203,11 +208,17 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   private def assertCycles(syntax: Syntax, hint: Hint) = {
-    recoverToExceptionIf[CyclicReferenceException] {
-      build(s"file://amf-client/shared/src/test/resources/input-cycle.${syntax.extension}", hint)
+    recoverToExceptionIf[Exception] {
+      Validation(platform)
+        .map(_.withEnabledValidation(false))
+        .flatMap(v => {
+          build(s"file://amf-client/shared/src/test/resources/input-cycle.${syntax.extension}",
+                hint,
+                validation = Some(v))
+        })
     } map { ex =>
-      assert(ex.getMessage ==
-        s"Cyclic found following references file://amf-client/shared/src/test/resources/input-cycle.${syntax.extension} -> file://amf-client/shared/src/test/resources/includes/include-cycle.${syntax.extension} -> file://amf-client/shared/src/test/resources/input-cycle.${syntax.extension}")
+      assert(ex.getMessage.contains(
+        s"Cyclic found following references file://amf-client/shared/src/test/resources/input-cycle.${syntax.extension} -> file://amf-client/shared/src/test/resources/includes/include-cycle.${syntax.extension} -> file://amf-client/shared/src/test/resources/input-cycle.${syntax.extension}"))
     }
   }
 

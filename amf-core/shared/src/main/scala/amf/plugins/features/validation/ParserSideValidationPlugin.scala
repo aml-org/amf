@@ -1,14 +1,14 @@
 package amf.plugins.features.validation
 
-import amf.{MessageStyle, ProfileName, ProfileNames}
+import amf.client.plugins.{AMFFeaturePlugin, AMFPlugin}
 import amf.core.annotations.LexicalInformation
 import amf.core.model.document.BaseUnit
-import amf.client.plugins.{AMFFeaturePlugin, AMFPlugin}
 import amf.core.rdf.RdfModel
 import amf.core.services.{IgnoreValidationsMerger, RuntimeValidator, ValidationOptions, ValidationsMerger}
 import amf.core.validation._
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationResult, ValidationSpecification}
 import amf.internal.environment.Environment
+import amf.{MessageStyle, ProfileName, ProfileNames}
 
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global

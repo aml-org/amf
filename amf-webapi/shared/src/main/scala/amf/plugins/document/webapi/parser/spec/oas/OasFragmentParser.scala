@@ -4,7 +4,8 @@ import amf.core.Root
 import amf.core.model.document._
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{ExternalDomainElement, Shape}
-import amf.core.parser.Annotations
+import amf.core.parser.{Annotations, ScalarNode}
+import amf.core.utils.Strings
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
@@ -13,8 +14,7 @@ import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, RamlNamedExampleParser}
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import org.yaml.model.{YMap, YScalar}
-import amf.core.utils.Strings
+import org.yaml.model.{YMap, YMapEntry, YScalar}
 
 /**
   *
@@ -40,7 +40,10 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       case Oas20SecurityScheme            => SecuritySchemeFragmentParser(map).parse()
       case Oas20NamedExample              => NamedExampleFragmentParser(map).parse()
     }).getOrElse {
-      val fragment = ExternalFragment().withLocation(root.location).withId(root.location).withEncodes(ExternalDomainElement().withRaw(root.raw))
+      val fragment = ExternalFragment()
+        .withLocation(root.location)
+        .withId(root.location)
+        .withEncodes(ExternalDomainElement().withRaw(root.raw))
       ctx.violation(fragment.id, "Unsupported oas type", map)
       fragment
     }
@@ -73,9 +76,18 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
   case class DataTypeFragmentParser(map: YMap) {
     def parse(): DataTypeFragment = {
       val dataType = DataTypeFragment().adopted(root.location)
+      val filterMap = YMap(
+        map.entries.filter({
+          case c: YMapEntry =>
+            val key = ScalarNode(c.key).text().toString
+            !key.equals(Oas20DataType.key) && !key.equals(OasHeader.swagger)
+          case _ => true
+        }),
+        map.sourceName
+      )
 
       val shapeOption =
-        OasTypeParser(map,
+        OasTypeParser(filterMap,
                       "type",
                       (shape: Shape) => shape.withId(root.location + "#/shape"),
                       OAS20SchemaVersion(position = "schema"))

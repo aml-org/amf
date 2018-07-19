@@ -17,9 +17,16 @@ trait ParserErrorTest extends AsyncFunSuite with PlatformSecrets with Matchers {
   protected def build(validation: Validation, file: String): Future[BaseUnit]
 
   protected def validate(file: String, fixture: (AMFValidationResult => Unit)*): Future[Assertion] = {
+    validateWithUnit(file, (_: BaseUnit) => Unit, fixture)
+  }
+
+  protected def validateWithUnit(file: String,
+                                 unitAssertion: (BaseUnit) => Unit,
+                                 fixture: Seq[AMFValidationResult => Unit]): Future[Assertion] = {
     Validation(platform).flatMap { validation =>
       build(validation, basePath + file)
-        .map { _ =>
+        .map { u =>
+          unitAssertion(u)
           val report = validation.aggregatedReport
           if (report.size != fixture.size) {
             report.foreach(println)

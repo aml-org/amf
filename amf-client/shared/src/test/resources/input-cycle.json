@@ -1,13 +1,17 @@
 {
   "swagger": "2.0",
-  "a": 1,
-  "b": {
-    "$ref": "includes/include-cycle.json"
+  "info": {
+    "title": "title"
   },
-  "c": [
-    2
-  ],
-  "d": {
-    "$ref": "includes/include1.json"
+  "definitions": {
+    "b": {
+      "$ref": "includes/include-cycle.json"
+    },
+    "c": {
+      "type": "string"
+    },
+    "d": {
+      "$ref": "includes/include1.json"
+    }
   }
 }

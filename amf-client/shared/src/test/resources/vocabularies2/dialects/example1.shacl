@@ -16,6 +16,9 @@
 <http://a.ml/vocabularies/amf/parser#closed-shape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#closed-shape> <http://www.w3.org/ns/shacl#message> "Invalid property for node" .
 <http://a.ml/vocabularies/amf/parser#closed-shape> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#cycle-reference> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#cycle-reference> <http://www.w3.org/ns/shacl#message> "Cycle in references" .
+<http://a.ml/vocabularies/amf/parser#cycle-reference> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#dialect-ambiguous-range> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#dialect-ambiguous-range> <http://www.w3.org/ns/shacl#message> "Ambiguous entity range" .
 <http://a.ml/vocabularies/amf/parser#dialect-ambiguous-range> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
