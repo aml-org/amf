@@ -1174,9 +1174,14 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       map.key("minProperties", (NodeShapeModel.MinProperties in shape).allowingAnnotations)
       map.key("maxProperties", (NodeShapeModel.MaxProperties in shape).allowingAnnotations)
 
-      shape.set(NodeShapeModel.Closed, value = false)
+      // we set-up default values for closed
+      if (shape.inherits.isEmpty)
+        shape.set(NodeShapeModel.Closed, value = false)
+      else if (map.key("additionalProperties").isEmpty) {
+        val closedInInhertiance = shape.effectiveInherits.exists(s => s.isInstanceOf[NodeShape] && s.asInstanceOf[NodeShape].closed.option().isDefined && s.asInstanceOf[NodeShape].closed.value())
+        shape.set(NodeShapeModel.Closed, value = closedInInhertiance)
+      }
       map.key("additionalProperties", (NodeShapeModel.Closed in shape).negated.explicit)
-
       map.key("additionalProperties".asRamlAnnotation).foreach { entry =>
         OasTypeParser(entry, s => s.adopted(shape.id)).parse().foreach { s =>
           shape.set(NodeShapeModel.AdditionalPropertiesSchema, s, Annotations(entry))
