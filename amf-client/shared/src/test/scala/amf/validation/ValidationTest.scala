@@ -182,6 +182,24 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("File Shapes always validate correctly") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "/securitySchemes/security1.raml", platform, RamlYamlHint, validation)
+        .build()
+      resolved <- Future {
+        RAML10Plugin.resolve(doc)
+      }
+      generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
+      report    <- validation.validate(doc, RAMLProfile)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 2)
+      assert(report.results.exists(_.message.contains("Security scheme 'undefined' not found in declarations.")))
+
+    }
+  }
+
   //test("Test resource type non string scalar parameter example") { its already tested in java parser tests
 
   //test("pattern raml example test") { was duplicated by   test("Param in raml 0.8 api") {

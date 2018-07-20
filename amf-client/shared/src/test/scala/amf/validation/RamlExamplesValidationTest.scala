@@ -169,5 +169,9 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate("/examples/image-file-example/in-stringshape.raml", Some("image-file-example/in-stringshape.report"))
   }
 
+  test("File examples always validate unless encoding problems are found") {
+    validate("/examples/image-file-example/in-fileshape.raml", Some("image-file-example/in-fileshape.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }
