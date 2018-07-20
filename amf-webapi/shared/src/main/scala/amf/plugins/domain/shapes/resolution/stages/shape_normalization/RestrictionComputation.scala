@@ -111,11 +111,11 @@ private[shape_normalization] trait RestrictionComputation {
 
   protected def restrictShape(restriction: Shape, shape: Shape): Shape = {
     restriction.fields.foreach {
-      case (field, baseValue) =>
+      case (field, derivedValue) =>
         if (field != NodeShapeModel.Inherits) {
           Option(shape.fields.getValue(field)) match {
-            case Some(superValue) => shape.set(field, computeNarrow(field, baseValue.value, superValue.value))
-            case None             => shape.fields.setWithoutId(field, baseValue.value, baseValue.annotations)
+            case Some(superValue) => shape.set(field, computeNarrow(field, derivedValue.value, superValue.value))
+            case None             => shape.fields.setWithoutId(field, derivedValue.value, derivedValue.annotations)
           }
         }
     }
@@ -209,169 +209,169 @@ private[shape_normalization] trait RestrictionComputation {
     }
   }
 
-  protected def computeNarrow(field: Field, baseValue: AmfElement, superValue: AmfElement): AmfElement = {
+  protected def computeNarrow(field: Field, derivedValue: AmfElement, superValue: AmfElement): AmfElement = {
     field match {
 
       case ShapeModel.Name => {
-        val baseStrValue  = stringValue(baseValue)
+        val derivedStrValue  = stringValue(derivedValue)
         val superStrValue = stringValue(superValue)
-        if (superStrValue.isDefined && (baseStrValue.isEmpty || baseStrValue.get == "schema")) {
+        if (superStrValue.isDefined && (derivedStrValue.isEmpty || derivedStrValue.get == "schema")) {
           superValue
         } else {
-          baseValue
+          derivedValue
         }
       }
 
       case NodeShapeModel.MinProperties =>
-        if (computeNumericComparison("<=", superValue, baseValue)) {
-          computeNumericRestriction("max", superValue, baseValue)
+        if (computeNumericComparison("<=", superValue, derivedValue)) {
+          computeNumericRestriction("max", superValue, derivedValue)
         } else {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for min-properties than base type for minProperties")
         }
 
       case NodeShapeModel.MaxProperties =>
-        if (computeNumericComparison(">=", superValue, baseValue)) {
-          computeNumericRestriction("min", superValue, baseValue)
+        if (computeNumericComparison(">=", superValue, derivedValue)) {
+          computeNumericRestriction("min", superValue, derivedValue)
         } else {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for max-properties than base type for maxProperties")
         }
 
       case ScalarShapeModel.MinLength =>
-        if (computeNumericComparison("<=", superValue, baseValue)) {
-          computeNumericRestriction("max", superValue, baseValue)
+        if (computeNumericComparison("<=", superValue, derivedValue)) {
+          computeNumericRestriction("max", superValue, derivedValue)
         } else {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for min-length than base type for maxProperties")
         }
 
       case ScalarShapeModel.MaxLength =>
-        if (computeNumericComparison(">=", superValue, baseValue)) {
-          computeNumericRestriction("min", superValue, baseValue)
+        if (computeNumericComparison(">=", superValue, derivedValue)) {
+          computeNumericRestriction("min", superValue, derivedValue)
         } else {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for max-length than base type for maxProperties")
         }
 
       case ScalarShapeModel.Minimum =>
-        if (computeNumericComparison("<=", superValue, baseValue)) {
-          computeNumericRestriction("max", superValue, baseValue)
+        if (computeNumericComparison("<=", superValue, derivedValue)) {
+          computeNumericRestriction("max", superValue, derivedValue)
         } else {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for min-minimum than base type for minimum")
         }
 
       case ScalarShapeModel.Maximum =>
-        if (computeNumericComparison(">=", superValue, baseValue)) {
-          computeNumericRestriction("min", superValue, baseValue)
+        if (computeNumericComparison(">=", superValue, derivedValue)) {
+          computeNumericRestriction("min", superValue, derivedValue)
         } else {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for maximum than base type for maximum")
         }
 
       case ArrayShapeModel.MinItems =>
-        if (computeNumericComparison("<=", superValue, baseValue)) {
-          computeNumericRestriction("max", superValue, baseValue)
+        if (computeNumericComparison("<=", superValue, derivedValue)) {
+          computeNumericRestriction("max", superValue, derivedValue)
         } else {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for minItems than base type for minItems")
         }
 
       case ArrayShapeModel.MaxItems =>
-        if (computeNumericComparison(">=", superValue, baseValue)) {
-          computeNumericRestriction("min", superValue, baseValue)
+        if (computeNumericComparison(">=", superValue, derivedValue)) {
+          computeNumericRestriction("min", superValue, derivedValue)
         } else {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for maxItems than base type for maxItems")
         }
 
       case ScalarShapeModel.Format =>
-        if (computeStringEquality(superValue, baseValue)) {
-          baseValue
+        if (computeStringEquality(superValue, derivedValue)) {
+          derivedValue
         } else {
           throw new InheritanceIncompatibleShapeError("different values for format constraint")
         }
 
       case ScalarShapeModel.Pattern =>
-        if (computeStringEquality(superValue, baseValue)) {
-          baseValue
+        if (computeStringEquality(superValue, derivedValue)) {
+          derivedValue
         } else {
           throw new InheritanceIncompatibleShapeError("different values for pattern constraint")
         }
 
       case NodeShapeModel.Discriminator =>
-        if (computeStringEquality(superValue, baseValue)) {
-          baseValue
+        if (computeStringEquality(superValue, derivedValue)) {
+          derivedValue
         } else {
           throw new InheritanceIncompatibleShapeError("different values for discriminator constraint")
         }
 
       case NodeShapeModel.DiscriminatorValue =>
-        if (computeStringEquality(superValue, baseValue)) {
-          baseValue
+        if (computeStringEquality(superValue, derivedValue)) {
+          derivedValue
         } else {
           throw new InheritanceIncompatibleShapeError("different values for discriminator value constraint")
         }
 
       case ShapeModel.Values =>
-        val baseEnumeration  = baseValue.asInstanceOf[AmfArray].values.map(_.toString)
-        val superEnumeration = superValue.asInstanceOf[AmfArray].values.map(_.toString)
-        if (superEnumeration.forall(e => baseEnumeration.contains(e))) {
-          baseValue
+        val derivedEnumeration  = derivedValue.asInstanceOf[AmfArray].values.map(_.toString)
+        val superEnumeration    = superValue.asInstanceOf[AmfArray].values.map(_.toString)
+        if (derivedEnumeration.forall(e => superEnumeration.contains(e))) {
+          derivedValue
         } else {
-          throw new InheritanceIncompatibleShapeError("Values in super type not found in the subtype enumeration")
+          throw new InheritanceIncompatibleShapeError(s"Values in subtype enumeration (${derivedEnumeration.mkString(",")}) not found in the supertype enumeration (${superEnumeration.mkString(",")})")
         }
 
       case ArrayShapeModel.UniqueItems =>
-        if (computeBooleanComparison(lcomparison = true, rcomparison = true, superValue, baseValue) ||
-            computeBooleanComparison(lcomparison = false, rcomparison = false, superValue, baseValue) ||
-            computeBooleanComparison(lcomparison = false, rcomparison = true, superValue, baseValue)) {
-          baseValue
+        if (computeBooleanComparison(lcomparison = true, rcomparison = true, superValue, derivedValue) ||
+            computeBooleanComparison(lcomparison = false, rcomparison = false, superValue, derivedValue) ||
+            computeBooleanComparison(lcomparison = false, rcomparison = true, superValue, derivedValue)) {
+          derivedValue
         } else {
           throw new InheritanceIncompatibleShapeError("different values for unique items constraint")
         }
 
       case PropertyShapeModel.MinCount =>
-        if (computeNumericComparison("<=", superValue, baseValue)) {
-          computeNumericRestriction("max", superValue, baseValue)
+        if (computeNumericComparison("<=", superValue, derivedValue)) {
+          computeNumericRestriction("max", superValue, derivedValue)
         } else {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for minCount than base type for minCount")
         }
 
       case PropertyShapeModel.MaxCount =>
-        if (computeNumericComparison(">=", superValue, baseValue)) {
-          computeNumericRestriction("min", superValue, baseValue)
+        if (computeNumericComparison(">=", superValue, derivedValue)) {
+          computeNumericRestriction("min", superValue, derivedValue)
         } else {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for maxCount than base type for maxCount")
         }
 
       case PropertyShapeModel.Path =>
-        if (computeStringEquality(superValue, baseValue)) {
-          baseValue
+        if (computeStringEquality(superValue, derivedValue)) {
+          derivedValue
         } else {
           throw new InheritanceIncompatibleShapeError("different values for discriminator value path")
         }
 
       case PropertyShapeModel.Range =>
-        if (computeStringEquality(superValue, baseValue)) {
-          baseValue
+        if (computeStringEquality(superValue, derivedValue)) {
+          derivedValue
         } else {
           throw new InheritanceIncompatibleShapeError("different values for discriminator value range")
         }
 
       case NodeShapeModel.Closed =>
-        if (computeBooleanComparison(lcomparison = true, rcomparison = true, superValue, baseValue) ||
-            computeBooleanComparison(lcomparison = false, rcomparison = false, superValue, baseValue) ||
-            computeBooleanComparison(lcomparison = true, rcomparison = false, superValue, baseValue)) {
-          baseValue
+        if (computeBooleanComparison(lcomparison = true, rcomparison = true, superValue, derivedValue) ||
+            computeBooleanComparison(lcomparison = false, rcomparison = false, superValue, derivedValue) ||
+            computeBooleanComparison(lcomparison = true, rcomparison = false, superValue, derivedValue)) {
+          derivedValue
         } else {
           throw new InheritanceIncompatibleShapeError("closed shapes cannot inherit from open shapes")
         }
 
-      case _ => baseValue
+      case _ => derivedValue
     }
   }
 }

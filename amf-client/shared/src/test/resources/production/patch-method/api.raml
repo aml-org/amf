@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: test
+version: 1.0
+baseUri: http://test.com/
+
+types:
+
+  BaseOperation:
+    properties:
+      op:
+        enum: [ test, remove, add, replace, move, copy ]
+      path: string
+
+  AddOperation:
+    type: BaseOperation
+    properties:
+      op:
+        enum: [ add ]
+      value: any
+
+/todos:
+  get:
+    responses:
+      200:
+        body:
+          application/json: AddOperation
+
+
