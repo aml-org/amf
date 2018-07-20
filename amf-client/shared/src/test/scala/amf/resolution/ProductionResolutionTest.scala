@@ -53,6 +53,10 @@ class ProductionValidationTest extends RamlResolutionTest {
     cycle("recursive-union.raml", "recursive-union.raml.raml", RamlYamlHint, Raml)
   }
 
+  test("Patch method raml to raml") {
+    cycle("api.raml", "api.raml.raml", RamlYamlHint, Raml, directory = basePath + "patch-method/")
+  }
+
 }
 
 class ProductionResolutionTest extends RamlResolutionTest {

@@ -1,0 +1,23 @@
+#%RAML 1.0
+title: test
+version: "1.0"
+baseUri: http://test.com/
+/todos:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: object
+            additionalProperties: true
+            properties:
+              path:
+                type: string
+                required: true
+              op:
+                enum:
+                  - add
+                required: true
+              value:
+                type: any
+                required: true
