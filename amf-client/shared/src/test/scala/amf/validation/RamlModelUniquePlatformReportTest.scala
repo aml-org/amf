@@ -132,5 +132,9 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   }
 
+  test("File type minLength/maxLength validation") {
+    validate("/shapes/file-min-max-length.raml", Some("file-min-max-length.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }
