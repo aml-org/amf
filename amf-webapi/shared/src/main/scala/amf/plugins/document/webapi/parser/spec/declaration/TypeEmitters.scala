@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.{ExplicitField, LexicalInformation, SynthesizedField}
+import amf.core.annotations.{DeclaredElement, ExplicitField, LexicalInformation, SynthesizedField}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
 import amf.core.metamodel.Field

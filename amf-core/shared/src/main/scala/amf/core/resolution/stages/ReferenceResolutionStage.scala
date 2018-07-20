@@ -1,6 +1,6 @@
 package amf.core.resolution.stages
 
-import amf.core.annotations.{ResolvedInheritance, ResolvedLinkAnnotation}
+import amf.core.annotations.{DeclaredElement, ResolvedInheritance, ResolvedLinkAnnotation}
 import amf.core.metamodel.document.DocumentModel
 import amf.core.metamodel.domain.ExternalSourceElementModel
 import amf.core.model.document.{BaseUnit, Document, EncodesModel}
@@ -80,14 +80,14 @@ class ReferenceResolutionStage(
     } else {
       doc.withEncodes(element)
     }
-    resolve(doc).asInstanceOf[Document].encodes.asInstanceOf[T]
+    resolve(doc).encodes.asInstanceOf[T]
   }
 
   def resolveDomainElementSet[T <: DomainElement](elements: Seq[T]): Seq[DomainElement] = {
     val doc = Document().withId("http://resolutionstage.com/test#")
 
     doc.withDeclares(elements)
-    resolve(doc).asInstanceOf[Document].declares
+    resolve(doc).declares
   }
 
   // Internal request that checks for mutually recursive types
@@ -123,10 +123,12 @@ class ReferenceResolutionStage(
             val resolved = new ResolvedLinkNode(l, elem).withId(l.id)
             if (keepEditingInfo) resolved.annotations += ResolvedLinkAnnotation(l.id)
             resolved.annotations += ResolvedInheritance()
+            if (elem.annotations.contains(classOf[DeclaredElement])) resolved.annotations += DeclaredElement()
             Some(resolved)
           case None if l.linkedDomainElement.isDefined =>
             val resolved = new ResolvedLinkNode(l, l.linkedDomainElement.get).withId(l.id)
             if (keepEditingInfo) resolved.annotations += ResolvedLinkAnnotation(l.id)
+            if (l.annotations.contains(classOf[DeclaredElement])) resolved.annotations += DeclaredElement()
             resolved.annotations += ResolvedInheritance()
             Some(resolved)
           case _ =>
@@ -147,10 +149,14 @@ class ReferenceResolutionStage(
       // link not traversed, cache it and traverse it
       case l: Linkable if l.linkTarget.isDefined && !isCycle =>
         val resolved = resolveReferenced(l.linkTarget.get)
-        if (resolved.isInstanceOf[Linkable] && l.supportsRecursion.option().getOrElse(false))
-          resolved.asInstanceOf[Linkable].withSupportsRecursion(true)
+        resolved match {
+          case linkable: Linkable if l.supportsRecursion.option().getOrElse(false) =>
+            linkable.withSupportsRecursion(true)
+          case _ => // ignore
+        }
         if (keepEditingInfo) resolved.annotations += ResolvedLinkAnnotation(l.id)
         resolved.annotations += ResolvedInheritance()
+        if (element.annotations.contains(classOf[DeclaredElement])) resolved.annotations += DeclaredElement()
         Some(customDomainElementTransformation(withName(resolved, l), l))
 
       case l: Linkable if l.linkTarget.isDefined && isCycle =>

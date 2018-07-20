@@ -64,6 +64,18 @@ class ProductionResolutionTest extends RamlResolutionTest {
   val completeCyclePath = "amf-client/shared/src/test/resources/upanddown/"
   val validationPath    = "amf-client/shared/src/test/resources/validations/"
 
+  test("Test declared type with facet added") {
+    cycle("add-facet.raml", "add-facet.raml.jsonld", RamlYamlHint, Amf, basePath + "inherits-resolution-declares/")
+  }
+
+  test("Test inline type from includes") {
+    cycle("test-ramlfragment.raml",
+          "test-ramlfragment.raml.jsonld",
+          RamlYamlHint,
+          Amf,
+          basePath + "inherits-resolution-declares/")
+  }
+
   test("Resolves googleapis.compredictionv1.2swagger.raml") {
     cycle("googleapis.compredictionv1.2swagger.raml",
           "googleapis.compredictionv1.2swagger.raml.resolved.raml",

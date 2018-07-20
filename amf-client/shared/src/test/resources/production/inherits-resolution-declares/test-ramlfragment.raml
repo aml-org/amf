@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: exchange-xapi
+version: v1
+mediaType: application/json
+baseUri: https://anypoint.mulesoft.com/exchange/api/v1
+
+/a:
+  get:
+    body:
+      application/json: !include type.raml
+/b:
+  get:
+      body:
+        application/json: !include type.raml

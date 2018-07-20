@@ -1,10 +1,10 @@
 package amf.plugins.document.webapi.parser.spec.raml
 
 import amf.core.Root
+import amf.core.annotations.DeclaredElement
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.YMapOps
 import amf.core.utils._
-import amf.plugins.document.webapi.annotations.DeclaredElement
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.{
   AbstractDeclarationParser,

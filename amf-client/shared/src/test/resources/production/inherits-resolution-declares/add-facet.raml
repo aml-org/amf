@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: exchange-xapi
+version: v1
+types:
+  A:
+    properties:
+      c: string
+/b:
+  get:
+      body:
+        application/json:
+          type: A
+          maxProperties: 5

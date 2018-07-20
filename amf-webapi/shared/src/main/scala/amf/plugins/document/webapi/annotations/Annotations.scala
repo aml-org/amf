@@ -43,18 +43,6 @@ object FormBodyParameter extends AnnotationGraphLoader {
   }
 }
 
-case class DeclaredElement() extends SerializableAnnotation with PerpetualAnnotation {
-  override val name: String = "declared-element"
-
-  override val value: String = ""
-}
-
-object DeclaredElement extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    DeclaredElement()
-  }
-}
-
 case class LocalLinkPath(rawPath: String) extends SerializableAnnotation {
   override val name: String  = "local-link-path"
   override val value: String = rawPath

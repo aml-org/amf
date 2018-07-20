@@ -1,6 +1,6 @@
 package amf.plugins.document.graph.parser
 
-import amf.core.annotations.{DomainExtensionAnnotation, ResolvedInheritance, ScalarType}
+import amf.core.annotations._
 import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Type.{Any, Array, Bool, EncodedIri, Iri, SortedArray, Str}
 import amf.core.metamodel.document.{ModuleModel, SourceMapModel}
@@ -81,7 +81,7 @@ class EmissionContext(val prefixes: mutable.Map[String, String],
 
   private val typeCount: IdCounter = new IdCounter()
 
-  def nextTypeName: String = typeCount.genId("type")
+  def nextTypeName: String = typeCount.genId("amf_inline_type")
 
   def declares(d: Boolean): this.type = {
     declares = d
@@ -294,7 +294,7 @@ object GraphEmitter extends MetaModelTypeMapping {
                     val uri = extension.definedBy.id
                     customProperties += uri
                     createCustomExtension(b, uri, extension, None, ctx)
-              }
+                }
             case _ => // ignore
           }
       }
@@ -416,8 +416,7 @@ object GraphEmitter extends MetaModelTypeMapping {
                       ctx: EmissionContext): Unit = {
       val scalarEmitter = options.getCustomEmitter.getOrElse(DefaultScalarEmitter)
       t match {
-        case _: ShapeModel
-            if Seq(classOf[ResolvedInheritance]).exists(v.value.annotations.contains(_)) && !ctx.declares =>
+        case _: ShapeModel if v.value.annotations.contains(classOf[ResolvedInheritance]) && !ctx.declares =>
           extractToLink(v.value.asInstanceOf[Shape], b, ctx)
         case t: DomainElement with Linkable if t.isLink =>
           link(b, t, inArray = false, ctx)
@@ -562,7 +561,13 @@ object GraphEmitter extends MetaModelTypeMapping {
 
     private def extractToLink(shape: Shape, b: PartBuilder, ctx: EmissionContext): Unit = {
       ctx + shape
-      val linked = shape.link[Shape](shape.name.option().getOrElse(ctx.nextTypeName))
+      shape.name.option() match {
+        case Some("schema") | Some("type") | None => shape.withName(ctx.nextTypeName).annotations += InlineElement()
+        case _ if !shape.annotations.contains(classOf[DeclaredElement]) =>
+          shape.withName(ctx.nextTypeName).annotations += InlineElement() // to catch media type named cases.
+        case _ => // ignore
+      }
+      val linked = shape.link[Shape](shape.name.value())
       link(b, linked, inArray = false, ctx)
     }
 

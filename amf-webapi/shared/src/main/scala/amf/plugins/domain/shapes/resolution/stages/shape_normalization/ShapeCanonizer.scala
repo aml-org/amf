@@ -114,7 +114,9 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
     if (endpointSimpleInheritance(shape)) {
       val referencedShape = shape.inherits.head
       aggregateExamples(shape, referencedShape)
-      if (!referencedShape.isInstanceOf[RecursiveShape]) referencedShape.annotations += ResolvedInheritance()
+      if (!referencedShape
+            .isInstanceOf[RecursiveShape]) // i need to mark the reference shape as resolved to extract to declaration in graph emitter if is a declared element
+        referencedShape.annotations += ResolvedInheritance()
       normalize(referencedShape)
     } else {
       val superTypes = shape.inherits

@@ -79,7 +79,7 @@
                             ],
                             "doc:link-label": [
                               {
-                                "@value": "type_1"
+                                "@value": "amf_inline_type_1"
                               }
                             ]
                           }
@@ -165,7 +165,7 @@
                             ],
                             "doc:link-label": [
                               {
-                                "@value": "type_2"
+                                "@value": "amf_inline_type_2"
                               }
                             ]
                           }
@@ -1091,6 +1091,9 @@
               },
               "type-property-lexical-info": {
                 "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type": "[(2,0)-(2,4)]"
+              },
+              "declared-element": {
+                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type": ""
               }
             }
           }
@@ -1869,6 +1872,9 @@
           },
           "type-property-lexical-info": {
             "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type": "[(2,0)-(2,4)]"
+          },
+          "declared-element": {
+            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type": ""
           }
         }
       },
@@ -2394,8 +2400,16 @@
               },
               "type-property-lexical-info": {
                 "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type": "[(2,0)-(2,4)]"
+              },
+              "declared-element": {
+                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type": ""
               }
             }
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "amf_inline_type_1"
           }
         ],
         "doc:examples": [
@@ -2637,7 +2651,12 @@
               }
             }
           }
-        ]
+        ],
+        "smaps": {
+          "inline-element": {
+            "#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema/array/default-array": ""
+          }
+        }
       },
       {
         "@id": "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/array/default-array",
@@ -3161,8 +3180,16 @@
               },
               "type-property-lexical-info": {
                 "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type": "[(2,0)-(2,4)]"
+              },
+              "declared-element": {
+                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml#/type": ""
               }
             }
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "amf_inline_type_2"
           }
         ],
         "doc:examples": [
@@ -3404,7 +3431,12 @@
               }
             }
           }
-        ]
+        ],
+        "smaps": {
+          "inline-element": {
+            "#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema/array/default-array": ""
+          }
+        }
       }
     ],
     "@context": {

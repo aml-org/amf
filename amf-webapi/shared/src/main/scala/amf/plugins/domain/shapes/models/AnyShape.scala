@@ -1,5 +1,6 @@
 package amf.plugins.domain.shapes.models
 
+import amf.core.annotations.DeclaredElement
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{ExternalSourceElement, Shape}
 import amf.core.parser.{Annotations, Fields}
@@ -7,7 +8,7 @@ import amf.core.services.PayloadValidator
 import amf.core.utils.Strings
 import amf.core.validation.{AMFValidationReport, SeverityLevels}
 import amf.internal.environment.Environment
-import amf.plugins.document.webapi.annotations.{DeclaredElement, InlineDefinition}
+import amf.plugins.document.webapi.annotations.InlineDefinition
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaSerializer
 import amf.plugins.document.webapi.validation.remote.PlatformPayloadValidator
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel

@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.Root
-import amf.core.annotations.{ExplicitField, SingleValueArray, SourceVendor}
+import amf.core.annotations.{DeclaredElement, ExplicitField, SingleValueArray, SourceVendor}
 import amf.core.metamodel.Field
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
@@ -28,6 +28,7 @@ import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import org.yaml.model.{YNode, _}
 import amf.core.utils.Strings
 import amf.plugins.document.webapi.parser.spec._
+
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 

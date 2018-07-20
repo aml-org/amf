@@ -1,11 +1,11 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
+import amf.core.annotations.DeclaredElement
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.PartEmitter
 import amf.core.model.document.{BaseUnit, Fragment, Module}
 import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.parser.Position
-import amf.plugins.document.webapi.annotations.DeclaredElement
 import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmitterContext, TagToReferenceEmitter}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecEmitter

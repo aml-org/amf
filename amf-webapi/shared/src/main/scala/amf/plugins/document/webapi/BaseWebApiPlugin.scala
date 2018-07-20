@@ -3,7 +3,7 @@ package amf.plugins.document.webapi
 import amf.ProfileName
 import amf.core.model.document.BaseUnit
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
-import amf.core.annotations.ExternalFragmentRef
+import amf.core.annotations.{DeclaredElement, ExternalFragmentRef, InlineElement}
 import amf.core.remote.Platform
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
@@ -52,6 +52,7 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
     "external-fragment-ref" -> ExternalFragmentRef,
     "json-schema-id"        -> JSONSchemaId,
     "declared-element"      -> DeclaredElement,
+    "inline-element"        -> InlineElement,
     "local-link-path"       -> LocalLinkPath,
     "extension-provenance"  -> ExtensionProvenance,
     "form-body-parameter"   -> FormBodyParameter
