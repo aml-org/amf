@@ -1,9 +1,13 @@
 package amf.error
 
+import amf.RAMLProfile
+import amf.core.AMFSerializer
+import amf.core.emitter.RenderOptions
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.parser.Range
 import amf.core.remote.RamlYamlHint
 import amf.facades.{AMFCompiler, Validation}
+import amf.plugins.document.webapi.RAML10Plugin
 import amf.plugins.domain.shapes.models.{ScalarShape, UnresolvedShape}
 import amf.plugins.features.validation.ParserSideValidations
 

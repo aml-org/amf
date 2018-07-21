@@ -182,40 +182,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("File Shapes always validate correctly") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "/securitySchemes/security1.raml", platform, RamlYamlHint, validation)
-        .build()
-      resolved <- Future {
-        RAML10Plugin.resolve(doc)
-      }
-      generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
-      report    <- validation.validate(doc, RAMLProfile)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.size == 2)
-      assert(report.results.exists(_.message.contains("Security scheme 'undefined' not found in declarations.")))
-
-    }
-  }
-
-  test("Inheritance facets validations become warnings") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "/inheritance.raml", platform, RamlYamlHint, validation)
-        .build()
-      _ <- Future {
-        RAML10Plugin.resolve(doc)
-      }
-      report    <- validation.validate(doc, RAMLProfile)
-    } yield {
-      assert(!report.conforms)
-      assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 2)
-      assert(report.results.size == 11)
-    }
-  }
-
   //test("Test resource type non string scalar parameter example") { its already tested in java parser tests
 
   //test("pattern raml example test") { was duplicated by   test("Param in raml 0.8 api") {
