@@ -252,19 +252,27 @@ class Value(var value: AmfElement, val annotations: Annotations) {
             linkable.annotations,
             linkable,
             linkable.supportsRecursion.option().getOrElse(false)) // mutation of the field value
-          linkable.afterResolve() // triggers the after resolve logic
+          val syntax = value match {
+            case s: Shape => Some(s.ramlSyntaxKey)
+            case _        => None
+          }
+          linkable.afterResolve(syntax) // triggers the after resolve logic
         })
 
       case array: AmfArray => // Same for arrays, but iterating through elements and looking for unresolved
         array.values.foreach {
           case linkable: Linkable if linkable.isUnresolved =>
             linkable.toFutureRef((resolved) => {
-              val unresolved = ListBuffer[Linkable]()
+              val unresolved = ListBuffer[(Linkable, Option[String])]()
               value.asInstanceOf[AmfArray].values = value.asInstanceOf[AmfArray].values map {
                 element =>
                   if (element == linkable) {
-                    unresolved += element
-                      .asInstanceOf[Linkable] // we need to collect the linkables unresolved instances,torun the after resolve trigger. This will end the father parser logic when its necessary
+                    val syntax = resolved match {
+                      case s: Shape => Some(s.ramlSyntaxKey)
+                      case _        => None
+                    }
+                    unresolved += (element
+                      .asInstanceOf[Linkable] -> syntax) // we need to collect the linkables unresolved instances,torun the after resolve trigger. This will end the father parser logic when its necessary
                     resolved.resolveUnreferencedLink(linkable.refName,
                                                      linkable.annotations,
                                                      element,
@@ -274,9 +282,8 @@ class Value(var value: AmfElement, val annotations: Annotations) {
                   }
               }
               // we need to wait until the field inherits of father is mutated, so we can triggers the after resolve parsing with the instance totally parser.If we trigger in the resolve unreferenced link, the value of the father field it would not have changed yet.
-              unresolved.foreach { ur =>
-                ur.afterResolve()
-              } //triggers the after resolved logic in all unresolve collected linkables instances.
+              unresolved
+                .foreach { case (ur, key) => ur.afterResolve(key) } //triggers the after resolved logic in all unresolve collected linkables instances.
             })
 
           case _ => // ignore

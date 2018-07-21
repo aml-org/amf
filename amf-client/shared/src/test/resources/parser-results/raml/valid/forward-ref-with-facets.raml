@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: AC-EIP-PSS.raml
+
+types:
+  StateProvCodeType:
+    description: The standard code or abbreviation for the state, province, or region.
+    type: StringLength1to8
+    required: true
+    minLength: 2
+  StringLength1to8:
+    description: Used for Character Strings, length 1 to 8.
+    type: string
+    required: true
+    minLength: 1
+    maxLength: 8

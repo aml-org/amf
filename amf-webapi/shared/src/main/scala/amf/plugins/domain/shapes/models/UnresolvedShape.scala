@@ -12,7 +12,7 @@ import org.yaml.model.{YNode, YPart}
 case class UnresolvedShape(override val fields: Fields,
                            override val annotations: Annotations,
                            override val reference: String,
-                           fatherExtensionParser: Option[ShapeExtensionParser] = None)
+                           fatherExtensionParser: Option[Option[String] => ShapeExtensionParser] = None)
     extends AnyShape(fields, annotations)
     with UnresolvedReference {
 
@@ -33,12 +33,12 @@ case class UnresolvedShape(override val fields: Fields,
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/unresolved"
 
-  override def afterResolve(): Unit = fatherExtensionParser.foreach { parser =>
-    parser.parse()
+  override def afterResolve(fatherSyntaxKey: Option[String]): Unit = fatherExtensionParser.foreach { parser =>
+    parser(fatherSyntaxKey).parse()
   }
 
   // if is unresolved the effective target its himselft, because any real type has been found.
-  override def effectiveLinkTarget = this
+  override def effectiveLinkTarget: UnresolvedShape = this
 
   override def copyShape(): UnresolvedShape =
     UnresolvedShape(fields.copy(), annotations.copy(), reference, fatherExtensionParser).withId(id)
@@ -48,7 +48,9 @@ case class UnresolvedShape(override val fields: Fields,
 object UnresolvedShape {
   def apply(reference: String): UnresolvedShape = apply(reference, Annotations(), None)
 
-  def apply(reference: String, ast: YPart, extensionParser: Option[ShapeExtensionParser]): UnresolvedShape =
+  def apply(reference: String,
+            ast: YPart,
+            extensionParser: Option[Option[String] => ShapeExtensionParser]): UnresolvedShape =
     apply(reference, Annotations(ast), extensionParser)
 
   def apply(reference: String, ast: YPart): UnresolvedShape = apply(reference, Annotations(ast), None)
@@ -58,6 +60,6 @@ object UnresolvedShape {
 
   def apply(reference: String,
             annotations: Annotations,
-            extensionParser: Option[ShapeExtensionParser]): UnresolvedShape =
+            extensionParser: Option[Option[String] => ShapeExtensionParser]): UnresolvedShape =
     UnresolvedShape(Fields(), annotations, reference, extensionParser)
 }

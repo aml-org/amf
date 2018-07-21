@@ -1149,7 +1149,11 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
     private def unresolved(node: YNode): UnresolvedShape = {
       val reference = node.as[YScalar].text
       // we need to pass the extension parser to the unresolved, in order to not only have the father at the moment of resolve the future ref in Value, also we need the parser itself, for modular dependency (We cannot create an instance of this parser in core)
-      val unresolvedShape = UnresolvedShape(reference, node, fatherMap.map(ShapeExtensionParser(shape, _, ctx)))
+      val unresolvedShape = UnresolvedShape(
+        reference,
+        node,
+        fatherMap.map(m =>
+          (resolvedKey: Option[String]) => ShapeExtensionParser(shape, m, ctx, overrideSyntax = resolvedKey)))
       unresolvedShape.withContext(ctx)
       if (!reference.validReferencePath) {
         ctx.violation(

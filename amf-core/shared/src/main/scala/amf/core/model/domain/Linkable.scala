@@ -56,7 +56,7 @@ trait Linkable extends AmfObject { this: DomainElement with Linkable =>
     linked
   }
 
-  def afterResolve(): Unit = Unit
+  def afterResolve(fatherSyntaxKey: Option[String]): Unit = Unit
 
   // Unresolved references to things that can be linked
   // TODO: another trait?

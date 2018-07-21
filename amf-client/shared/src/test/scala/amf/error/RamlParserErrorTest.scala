@@ -448,6 +448,10 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
+  test("Forward reference with facets in base") {
+    validate("/valid/forward-ref-with-facets.raml")
+  }
+
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/raml/"
 
   override protected def build(validation: Validation, file: String): Future[BaseUnit] =
