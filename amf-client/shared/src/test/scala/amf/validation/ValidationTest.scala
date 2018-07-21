@@ -200,6 +200,22 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Inheritance facets validations become warnings") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "/inheritance.raml", platform, RamlYamlHint, validation)
+        .build()
+      _ <- Future {
+        RAML10Plugin.resolve(doc)
+      }
+      report    <- validation.validate(doc, RAMLProfile)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 1)
+      assert(report.results.size == 10)
+    }
+  }
+
   //test("Test resource type non string scalar parameter example") { its already tested in java parser tests
 
   //test("pattern raml example test") { was duplicated by   test("Param in raml 0.8 api") {

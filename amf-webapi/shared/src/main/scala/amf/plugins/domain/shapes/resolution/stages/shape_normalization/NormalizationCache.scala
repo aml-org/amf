@@ -1,6 +1,8 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
+import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.core.parser.ErrorHandler
+import amf.plugins.features.validation.ParserSideValidations
 import amf.{ProfileName, RAML08Profile}
 
 import scala.collection.mutable
@@ -13,7 +15,23 @@ private[plugins] class NormalizationContext(final val errorHandler: ErrorHandler
   val isRaml08: Boolean                        = profile.equals(RAML08Profile)
   private val minShapeClass: MinShapeAlgorithm = new MinShapeAlgorithm()(this)
 
-  def minShape(base: Shape, superShape: Shape): Shape = minShapeClass.computeMinShape(base, superShape)
+  def minShape(derivedShape: Shape, superShape: Shape): Shape = try {
+    minShapeClass.computeMinShape(derivedShape, superShape)
+  } catch {
+    case e: InheritanceIncompatibleShapeError =>
+      errorHandler.violation(
+        ParserSideValidations.InvalidTypeInheritanceWarningSpecification.id,
+        derivedShape.id,
+        e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
+        e.getMessage,
+        e.lexicalInfo,
+        None
+      )
+      derivedShape
+    case other: Exception => throw other
+  }
+
+
 }
 
 private[shape_normalization] case class NormalizationCache() {

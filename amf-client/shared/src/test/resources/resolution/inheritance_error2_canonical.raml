@@ -1,0 +1,24 @@
+#%RAML 1.0 Library
+types:
+  A:
+    anyOf:
+      -
+        type: string
+      -
+        type: string
+  B:
+    anyOf:
+      -
+        type: object
+        additionalProperties: true
+        properties:
+          b:
+            type: string
+            required: true
+      -
+        type: object
+        additionalProperties: true
+        properties:
+          b:
+            type: string
+            required: true

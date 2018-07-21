@@ -374,7 +374,8 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
         var regex = entry.value.as[String]
         if (!regex.startsWith("^")) regex = "^" + regex
         if (!regex.endsWith("$")) regex = regex + "$"
-        shape.set(ScalarShapeModel.Pattern, ScalarNode(regex).text(), Annotations(entry))
+        val pattern = ScalarNode(regex).text().copy(annotations = Annotations(entry))
+        shape.set(ScalarShapeModel.Pattern, pattern, Annotations(entry))
       }
     )
 
@@ -658,7 +659,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
           var regex = entry.value.as[String]
           if (!regex.startsWith("^")) regex = "^" + regex
           if (!regex.endsWith("$")) regex = regex + "$"
-          shape.set(ScalarShapeModel.Pattern, ScalarNode(regex).text(), Annotations(entry))
+          val pattern = ScalarNode(regex).text().copy(annotations = Annotations(entry))
+          shape.set(ScalarShapeModel.Pattern, pattern, Annotations(entry))
         }
       )
       map.key("minLength", (ScalarShapeModel.MinLength in shape).allowingAnnotations)

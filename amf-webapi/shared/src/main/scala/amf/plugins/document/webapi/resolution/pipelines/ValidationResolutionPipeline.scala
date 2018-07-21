@@ -15,39 +15,13 @@ import amf.plugins.domain.shapes.resolution.stages.shape_normalization.{
 }
 import amf.plugins.features.validation.ParserSideValidations
 
-class ValidationShapeNormalisationStage(profile: ProfileName, override val keepEditingInfo: Boolean)(
-    override implicit val errorHandler: ErrorHandler)
-    extends ShapeNormalizationStage(profile, keepEditingInfo) {
-
-  override protected val context: NormalizationContext = HandledNormalizationContext()
-
-  case class HandledNormalizationContext() extends NormalizationContext(errorHandler, keepEditingInfo, profile) {
-
-    override def minShape(base: Shape, superShape: Shape): Shape = {
-      try {
-        super.minShape(base, superShape)
-      } catch {
-        case e: InheritanceIncompatibleShapeError =>
-          errorHandler.violation(
-            ParserSideValidations.InvalidTypeInheritanceErrorSpecification.id,
-            base,
-            Some(ShapeModel.Inherits.value.iri()),
-            e.getMessage
-          )
-          base
-        case other: Exception => throw other
-      }
-    }
-  }
-}
-
 class ValidationResolutionPipeline(profile: ProfileName, override val model: BaseUnit)
     extends ResolutionPipeline[BaseUnit] {
 
   override protected val steps: Seq[ResolutionStage] = Seq(
     new ReferenceResolutionStage(keepEditingInfo = false),
     new ExtensionsResolutionStage(profile, keepEditingInfo = false),
-    new ValidationShapeNormalisationStage(profile, keepEditingInfo = false)
+    new ShapeNormalizationStage(profile, keepEditingInfo = false)
   )
 
   override def profileName: ProfileName = profile
