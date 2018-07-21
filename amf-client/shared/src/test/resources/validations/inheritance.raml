@@ -111,6 +111,17 @@ types:
     properties:
       a: integer
 
+  BaseType1:
+    type: object
+    properties:
+      a:
+        type: string
+  DerivedType1:
+    type: BaseType1
+    properties:
+      a:
+        type: object
+
 /todos:
   get:
     responses:
