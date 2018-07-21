@@ -215,8 +215,9 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
     }
   }
 
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
+  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
     RAML10Plugin.resolve(unit)
+  }
 
   val errorExamples = Seq(
     "inheritance_error1",
@@ -226,15 +227,13 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
 
   errorExamples.foreach { example =>
     test(s"Fails on erroneous data types: $example") {
-      build(s"file://$basePath$example.raml", RamlYamlHint)
-        .map(u => RAML10Plugin.resolve(u))
-        .transformWith {
-          case Success(_) =>
-            fail("Expected resolution error")
-            succeed
-          case Failure(exception) =>
-            exception.getMessage should startWith("Resolution error:")
-            succeed
+      Validation(platform)
+        .flatMap(v => {
+          v.withEnabledValidation(true)
+          v.loadValidationDialect().map(_ => v)
+        })
+        .flatMap { validation =>
+          cycle(s"$example.raml", s"${example}_canonical.raml", RamlYamlHint, Raml, basePath, Some(validation))
         }
     }
   }

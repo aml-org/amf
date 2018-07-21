@@ -1,0 +1,120 @@
+#%RAML 1.0
+title: test
+version: 1.0
+baseUri: http://test.com/
+
+types:
+
+  BaseAdditionalProperties:
+    additionalProperties: false
+    type: object
+  DerivedAdditionalProperties:
+    additionalProperties: true
+    type: BaseAdditionalProperties
+
+  BaseMaxProperties:
+    maxProperties: 4
+    type: object
+  DerivedMaxProperties:
+    maxProperties: 5
+    type: BaseMaxProperties
+
+  BaseMinProperties:
+    minProperties: 3
+    type: object
+  DerivedMinProperties:
+    minProperties: 2
+    type: BaseMinProperties
+
+  BaseDiscriminator:
+    type: object
+    discriminator: hey
+    properties:
+      hey: string
+  DerivedDiscriminator:
+    type: BaseDiscriminator
+    discriminator: ho
+    properties:
+      ho: string
+
+  BaseMaxLength:
+    type: object
+    properties:
+      a:
+        type: string
+        maxLength: 200
+  DerivedMaxLength:
+    type: BaseMaxLength
+    properties:
+      a:
+        type: string
+        maxLength: 400
+
+  BasePattern:
+    type: object
+    properties:
+      a:
+        type: string
+        pattern: /a/
+  DerivedPattern:
+    type: BasePattern
+    properties:
+      a:
+        type: string
+        pattern: /b/
+
+  BaseMaximum:
+    type: object
+    properties:
+      a:
+        type: integer
+        maximum: 200
+  DerivedMaximum:
+    type: BaseMaximum
+    properties:
+      a:
+        type: integer
+        maximum: 600
+
+  BaseMinimum:
+    type: object
+    properties:
+      a:
+        type: integer
+        minimum: 200
+  DerivedMinimum:
+    type: BaseMinimum
+    properties:
+      a:
+        type: integer
+        minimum: 100
+
+  BaseEnum:
+    type: object
+    properties:
+      a:
+        type: string
+        enum: ["a","b"]
+  DerivedEnum:
+    type: BaseEnum
+    properties:
+      a:
+        type: string
+        enum: ["f"]
+
+  BaseType:
+    type: object
+    properties:
+      a: string
+  DerivedType:
+    type: BaseType
+    properties:
+      a: integer
+
+/todos:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: object

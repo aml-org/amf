@@ -93,6 +93,11 @@ trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
     reportConstraint(id, node, property, message, lexical, WARNING, location)
   }
 
+  /** Report constraint failure of severity violation for the given amf object. */
+  def warning(id: String, element: AmfObject, target: Option[String], message: String): Unit = {
+    reportConstraint(id, element.id, target, message, element.position(), WARNING, element.location())
+  }
+
   /** Report constraint failure of severity warning. WITHOUT NODE ID. */
   def warning(message: String, ast: YPart): Unit = {
     warning(ParsingWarningSpecification.id, "", None, message, lexical(ast), ast.sourceName.option)

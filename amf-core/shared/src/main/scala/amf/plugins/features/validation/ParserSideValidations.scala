@@ -172,6 +172,14 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
+  val InvalidTypeInheritanceWarningSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "invalid-type-inheritance-warning").iri(),
+    "Invalid inheritance relationship",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val MissingExtensionInReferences = ValidationSpecification(
     (Namespace.AmfParser + "missing-extension").iri(),
     "Missing extension in reference",
@@ -316,6 +324,13 @@ object ParserSideValidations {
       OASProfile    -> SeverityLevels.VIOLATION,
       OAS3Profile   -> SeverityLevels.VIOLATION,
       AMFProfile    -> SeverityLevels.VIOLATION
+    ),
+    InvalidTypeInheritanceWarningSpecification.id -> Map(
+      RAMLProfile   -> SeverityLevels.WARNING,
+      RAML08Profile -> SeverityLevels.WARNING,
+      OASProfile    -> SeverityLevels.WARNING,
+      OAS3Profile   -> SeverityLevels.WARNING,
+      AMFProfile    -> SeverityLevels.WARNING
     ),
     JsonSchemaInheratinaceWarningSpecification.id -> Map(
       RAMLProfile   -> SeverityLevels.WARNING,
@@ -476,6 +491,7 @@ object ParserSideValidations {
     UnknownScopeErrorSpecification,
     JsonSchemaInheratinaceWarningSpecification,
     InvalidTypeInheritanceErrorSpecification,
+    InvalidTypeInheritanceWarningSpecification,
     MissingExtensionInReferences,
     ClosedShapeSpecification,
     DuplicatedPropertySpecification,

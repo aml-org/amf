@@ -1,6 +1,8 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
+import amf.core.annotations.LexicalInformation
 import amf.core.metamodel.Field
+import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, RecursiveShape, Shape}
@@ -10,10 +12,11 @@ import amf.plugins.document.webapi.annotations.ParsedJSONSchema
 import amf.plugins.domain.shapes.annotations.InheritanceProvenance
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
+import amf.plugins.features.validation.ParserSideValidations
 
 import scala.collection.mutable
 
-class InheritanceIncompatibleShapeError(message: String) extends Exception(message)
+class InheritanceIncompatibleShapeError(val message: String, val property: Option[String] = None, val lexicalInfo: Option[LexicalInformation] = None) extends Exception(message)
 
 private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationContext) extends RestrictionComputation {
 
@@ -29,95 +32,118 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     }
   }
 
-  def computeMinShape(baseShapeOrig: Shape, superShapeOri: Shape): Shape = {
+  def computeMinShape(derivedShapeOrig: Shape, superShapeOri: Shape): Shape = {
     val superShape = copy(superShapeOri)
-    val baseShape  = baseShapeOrig.cloneShape(Some(context.errorHandler)) // this is destructive, we need to clone
-    baseShape match {
+    val derivedShape  = derivedShapeOrig.cloneShape(Some(context.errorHandler)) // this is destructive, we need to clone
+    try {
+      derivedShape match {
 
-      // Scalars
-      case baseScalar: ScalarShape if superShape.isInstanceOf[ScalarShape] =>
-        val superScalar = superShape.asInstanceOf[ScalarShape]
+        // Scalars
+        case baseScalar: ScalarShape if superShape.isInstanceOf[ScalarShape] =>
+          val superScalar = superShape.asInstanceOf[ScalarShape]
 
-        val b = baseScalar.dataType.value()
-        val s = superScalar.dataType.value()
-        if (b == s) {
-          computeMinScalar(baseScalar, superScalar)
-        } else if (b == (Namespace.Xsd + "integer").iri() &&
-                   (s == (Namespace.Xsd + "float").iri() ||
-                   s == (Namespace.Xsd + "double").iri() ||
-                   s == (Namespace.Shapes + "number").iri())) {
-          computeMinScalar(baseScalar, superScalar.withDataType((Namespace.Xsd + "integer").iri()))
-        } else {
-          throw new InheritanceIncompatibleShapeError(
-            s"Resolution error: Invalid scalar inheritance base type $b < $s ")
-        }
+          val b = baseScalar.dataType.value()
+          val s = superScalar.dataType.value()
+          if (b == s) {
+            computeMinScalar(baseScalar, superScalar)
+          } else if (b == (Namespace.Xsd + "integer").iri() &&
+            (s == (Namespace.Xsd + "float").iri() ||
+              s == (Namespace.Xsd + "double").iri() ||
+              s == (Namespace.Shapes + "number").iri())) {
+            computeMinScalar(baseScalar, superScalar.withDataType((Namespace.Xsd + "integer").iri()))
+          } else {
+            context.errorHandler.violation(
+              ParserSideValidations.InvalidTypeInheritanceErrorSpecification.id,
+              derivedShape,
+              Some(ShapeModel.Inherits.value.iri()),
+              s"Resolution error: Invalid scalar inheritance base type $b < $s "
+            )
+            baseScalar
+          }
 
-      // Arrays
-      case baseArray: ArrayShape if superShape.isInstanceOf[ArrayShape] =>
-        val superArray = superShape.asInstanceOf[ArrayShape]
-        computeMinArray(baseArray, superArray)
-      case baseArray: MatrixShape if superShape.isInstanceOf[MatrixShape] =>
-        val superArray = superShape.asInstanceOf[MatrixShape]
-        computeMinMatrix(baseArray, superArray)
-      case baseArray: TupleShape if superShape.isInstanceOf[TupleShape] =>
-        val superArray = superShape.asInstanceOf[TupleShape]
-        computeMinTuple(baseArray, superArray)
+        // Arrays
+        case baseArray: ArrayShape if superShape.isInstanceOf[ArrayShape] =>
+          val superArray = superShape.asInstanceOf[ArrayShape]
+          computeMinArray(baseArray, superArray)
+        case baseArray: MatrixShape if superShape.isInstanceOf[MatrixShape] =>
+          val superArray = superShape.asInstanceOf[MatrixShape]
+          computeMinMatrix(baseArray, superArray)
+        case baseArray: TupleShape if superShape.isInstanceOf[TupleShape] =>
+          val superArray = superShape.asInstanceOf[TupleShape]
+          computeMinTuple(baseArray, superArray)
 
-      // Nodes
-      case baseNode: NodeShape if superShape.isInstanceOf[NodeShape] =>
-        val superNode = superShape.asInstanceOf[NodeShape]
-        computeMinNode(baseNode, superNode)
+        // Nodes
+        case baseNode: NodeShape if superShape.isInstanceOf[NodeShape] =>
+          val superNode = superShape.asInstanceOf[NodeShape]
+          computeMinNode(baseNode, superNode)
 
-      // Unions
-      case baseUnion: UnionShape if superShape.isInstanceOf[UnionShape] =>
-        val superUnion = superShape.asInstanceOf[UnionShape]
-        computeMinUnion(baseUnion, superUnion)
+        // Unions
+        case baseUnion: UnionShape if superShape.isInstanceOf[UnionShape] =>
+          val superUnion = superShape.asInstanceOf[UnionShape]
+          computeMinUnion(baseUnion, superUnion)
 
-      case baseUnion: UnionShape if superShape.isInstanceOf[NodeShape] =>
-        val superNode = superShape.asInstanceOf[NodeShape]
-        computeMinUnionNode(baseUnion, superNode)
+        case baseUnion: UnionShape if superShape.isInstanceOf[NodeShape] =>
+          val superNode = superShape.asInstanceOf[NodeShape]
+          computeMinUnionNode(baseUnion, superNode)
 
-      // super Unions
-      case base: Shape if superShape.isInstanceOf[UnionShape] =>
-        val superUnion = superShape.asInstanceOf[UnionShape]
-        computeMinSuperUnion(base, superUnion)
+        // super Unions
+        case base: Shape if superShape.isInstanceOf[UnionShape] =>
+          val superUnion = superShape.asInstanceOf[UnionShape]
+          computeMinSuperUnion(base, superUnion)
 
-      case baseProperty: PropertyShape if superShape.isInstanceOf[PropertyShape] =>
-        val superProperty = superShape.asInstanceOf[PropertyShape]
-        computeMinProperty(baseProperty, superProperty)
+        case baseProperty: PropertyShape if superShape.isInstanceOf[PropertyShape] =>
+          val superProperty = superShape.asInstanceOf[PropertyShape]
+          computeMinProperty(baseProperty, superProperty)
 
-      // Files
-      case baseFile: FileShape if superShape.isInstanceOf[FileShape] =>
-        val superFile = superShape.asInstanceOf[FileShape]
-        computeMinFile(baseFile, superFile)
+        // Files
+        case baseFile: FileShape if superShape.isInstanceOf[FileShape] =>
+          val superFile = superShape.asInstanceOf[FileShape]
+          computeMinFile(baseFile, superFile)
 
-      // Nil
-      case baseNil: NilShape if superShape.isInstanceOf[NilShape] => baseNil
+        // Nil
+        case baseNil: NilShape if superShape.isInstanceOf[NilShape] => baseNil
 
-      // Generic inheritance
-      case _ if superShape.isInstanceOf[RecursiveShape] =>
-        computeMinRecursive(baseShape, superShape.asInstanceOf[RecursiveShape])
+        // Generic inheritance
+        case _ if superShape.isInstanceOf[RecursiveShape] =>
+          computeMinRecursive(derivedShape, superShape.asInstanceOf[RecursiveShape])
 
-      // Any => is explicitly Any, we are comparing the meta-model because now
-      //      all shapes inherit from Any, cannot check with instanceOf
-      case _ if baseShape.meta == AnyShapeModel || superShape.meta == AnyShapeModel =>
-        baseShape match {
-          case shape: AnyShape =>
-            restrictShape(shape, superShape)
-          case _ =>
-            computeMinAny(baseShape, superShape.asInstanceOf[AnyShape])
-        }
+        // Any => is explicitly Any, we are comparing the meta-model because now
+        //      all shapes inherit from Any, cannot check with instanceOf
+        case _ if derivedShape.meta == AnyShapeModel || superShape.meta == AnyShapeModel =>
+          derivedShape match {
+            case shape: AnyShape =>
+              restrictShape(shape, superShape)
+            case _ =>
+              computeMinAny(derivedShape, superShape.asInstanceOf[AnyShape])
+          }
 
-      // Generic inheritance
-      case baseGeneric: NodeShape if isGenericNodeShape(baseGeneric) =>
-        computeMinGeneric(baseGeneric, superShape)
+        // Generic inheritance
+        case baseGeneric: NodeShape if isGenericNodeShape(baseGeneric) =>
+          computeMinGeneric(baseGeneric, superShape)
 
-      case schema: SchemaShape if superShape.meta == SchemaShapeModel =>
-        computeMinSchema(superShape, schema)
-      // fallback error
-      case _ =>
-        throw new InheritanceIncompatibleShapeError(
-          s"Resolution error: Incompatible types [${baseShape.getClass}, ${superShape.getClass}]")
+        case schema: SchemaShape if superShape.meta == SchemaShapeModel =>
+          computeMinSchema(superShape, schema)
+        // fallback error
+        case _ =>
+          context.errorHandler.violation(
+            ParserSideValidations.InvalidTypeInheritanceErrorSpecification.id,
+            derivedShape,
+            Some(ShapeModel.Inherits.value.iri()),
+            s"Resolution error: Incompatible types [${derivedShape.getClass}, ${superShape.getClass}]"
+          )
+          derivedShape
+      }
+    } catch {
+      case e: InheritanceIncompatibleShapeError =>
+        context.errorHandler.warning(
+          ParserSideValidations.InvalidTypeInheritanceWarningSpecification.id,
+          derivedShape.id,
+          e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
+          e.getMessage,
+          e.lexicalInfo,
+          None
+        )
+        derivedShape
     }
   }
 

@@ -374,7 +374,8 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
         var regex = entry.value.as[String]
         if (!regex.startsWith("^")) regex = "^" + regex
         if (!regex.endsWith("$")) regex = regex + "$"
-        shape.set(ScalarShapeModel.Pattern, ScalarNode(regex).text(), Annotations(entry))
+        val pattern = ScalarNode(regex).text().copy(annotations = Annotations(entry))
+        shape.set(ScalarShapeModel.Pattern, pattern, Annotations(entry))
       }
     )
 
@@ -658,7 +659,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
           var regex = entry.value.as[String]
           if (!regex.startsWith("^")) regex = "^" + regex
           if (!regex.endsWith("$")) regex = regex + "$"
-          shape.set(ScalarShapeModel.Pattern, ScalarNode(regex).text(), Annotations(entry))
+          val pattern = ScalarNode(regex).text().copy(annotations = Annotations(entry))
+          shape.set(ScalarShapeModel.Pattern, pattern, Annotations(entry))
         }
       )
       map.key("minLength", (ScalarShapeModel.MinLength in shape).allowingAnnotations)
@@ -1174,9 +1176,14 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       map.key("minProperties", (NodeShapeModel.MinProperties in shape).allowingAnnotations)
       map.key("maxProperties", (NodeShapeModel.MaxProperties in shape).allowingAnnotations)
 
-      shape.set(NodeShapeModel.Closed, value = false)
+      // we set-up default values for closed
+      if (shape.inherits.isEmpty)
+        shape.set(NodeShapeModel.Closed, value = false)
+      else if (map.key("additionalProperties").isEmpty) {
+        val closedInInhertiance = shape.effectiveInherits.exists(s => s.isInstanceOf[NodeShape] && s.asInstanceOf[NodeShape].closed.option().isDefined && s.asInstanceOf[NodeShape].closed.value())
+        shape.set(NodeShapeModel.Closed, value = closedInInhertiance)
+      }
       map.key("additionalProperties", (NodeShapeModel.Closed in shape).negated.explicit)
-
       map.key("additionalProperties".asRamlAnnotation).foreach { entry =>
         OasTypeParser(entry, s => s.adopted(shape.id)).parse().foreach { s =>
           shape.set(NodeShapeModel.AdditionalPropertiesSchema, s, Annotations(entry))

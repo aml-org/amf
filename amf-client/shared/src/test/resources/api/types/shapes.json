@@ -57,6 +57,7 @@
     },
     "NewCustomerData": {
       "type": "object",
+      "additionalProperties": false,
       "required": [
         "lei",
         "tax_id",
@@ -153,6 +154,7 @@
     },
     "NewOrganizationData": {
       "type": "object",
+      "additionalProperties": false,
       "required": [
         "name",
         "vat_id"
@@ -445,6 +447,7 @@
     },
     "NewPersonData": {
       "type": "object",
+      "additionalProperties": false,
       "required": [
         "given_name",
         "family_name",
