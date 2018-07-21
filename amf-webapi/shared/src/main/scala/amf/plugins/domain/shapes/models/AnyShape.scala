@@ -60,7 +60,7 @@ trait InheritanceChain { this: AnyShape =>
       } else {
         superTypes.find(_.isInstanceOf[AnyShape]) match { // which one if multiple inheritance?
           case Some(superType: AnyShape) => superType.effectiveStructuralShapes
-          case None                      => Nil
+          case _                         => Nil
         }
       }
     (Seq(this) ++ acc).distinct

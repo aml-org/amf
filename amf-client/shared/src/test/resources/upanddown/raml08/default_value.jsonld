@@ -244,6 +244,18 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
+                                    "@value": "http://www.w3.org/ns/hydra/core#required"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(12,12)-(13,0)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
                                     "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/default_value.raml#/web-api/end-points/%2Fpet/get/request/parameter/stock"
                                   }
                                 ],

@@ -177,13 +177,7 @@ case class Raml08ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
 
     entry.value.toOption[YMap] match {
       case Some(map) =>
-        map.key(
-          "required",
-          entry => {
-            val required = ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
-            parameter.set(ParameterModel.Required, value = required)
-          }
-        )
+        map.key("required", (ParameterModel.Required in parameter).explicit)
       case _ =>
     }
 

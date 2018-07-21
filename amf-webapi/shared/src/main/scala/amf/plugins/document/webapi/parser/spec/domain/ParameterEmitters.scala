@@ -9,26 +9,26 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{FieldEntry, Fields, Position, Value}
+import amf.core.utils.Strings
+import amf.plugins.document.webapi.annotations.FormBodyParameter
 import amf.plugins.document.webapi.contexts.{
   OasSpecEmitterContext,
   RamlScalarEmitter,
   RamlSpecEmitterContext,
-  SpecEmitterContext
+  SpecEmitterContext,
+  _
 }
-import amf.plugins.document.webapi.contexts._
-import amf.plugins.document.webapi.parser.spec.{OasDefinitions, toRaml}
+import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, FileShapeModel}
 import amf.plugins.domain.shapes.models._
+import amf.plugins.domain.webapi.annotations.{InvalidBinding, ParameterBindingInBodyLexicalInfo}
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.YType
-import amf.core.utils.Strings
-import amf.plugins.document.webapi.annotations.FormBodyParameter
-import amf.plugins.domain.webapi.annotations.{InvalidBinding, ParameterBindingInBodyLexicalInfo}
 import org.yaml.model.YType.Bool
+import org.yaml.model.{YNode, YType}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -144,7 +144,24 @@ case class Raml08ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
       emitParameterKey(parameter.fields, _),
       parameter.schema match {
         case anyShape: AnyShape =>
-          Raml08TypePartEmitter(anyShape, ordering, references).emit
+          _.obj(eb => {
+            val result = ListBuffer[EntryEmitter]()
+            Raml08TypePartEmitter(anyShape, ordering, references).emitter match {
+              case Left(p: PartEmitter) =>
+                result += new EntryEmitter {
+                  override def emit(b: EntryBuilder): Unit =
+                    b.entry(YNode("schema"), (b) => p.emit(b))
+
+                  override def position(): Position = p.position()
+                }
+              case Right(e: Seq[EntryEmitter]) => result ++= e
+            }
+            parameter.fields
+              .entry(ParameterModel.Required)
+              .filter(_.value.annotations.contains(classOf[ExplicitField]))
+              .map(f => result += RamlScalarEmitter("required", f))
+            traverse(ordering.sorted(result), eb)
+          })
         case other => CommentEmitter(other, s"Cannot emit ${other.getClass.toString} type of shape in raml 08").emit
       }
     )
