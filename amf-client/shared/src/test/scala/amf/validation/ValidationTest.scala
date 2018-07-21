@@ -211,8 +211,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report    <- validation.validate(doc, RAMLProfile)
     } yield {
       assert(!report.conforms)
-      assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 1)
-      assert(report.results.size == 10)
+      assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 2)
+      assert(report.results.size == 11)
     }
   }
 

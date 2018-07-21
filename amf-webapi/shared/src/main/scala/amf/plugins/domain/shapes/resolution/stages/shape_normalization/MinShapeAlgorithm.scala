@@ -118,7 +118,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
           }
 
         // Generic inheritance
-        case baseGeneric: NodeShape if isGenericNodeShape(baseGeneric) =>
+        case baseGeneric: NodeShape if isGenericNodeShape(baseGeneric) && superShape.isInstanceOf[NodeShape] =>
           computeMinGeneric(baseGeneric, superShape)
 
         case schema: SchemaShape if superShape.meta == SchemaShapeModel =>
