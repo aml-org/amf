@@ -18,9 +18,15 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
 
   test("Inheritance facets validations become warnings") {
     checkReport("/types/inheritance-facets.raml", Some("inheritance-facets-warnings.report"))
-//      assert(!report.conforms)
-//      assert(report.results.count(_.level == SeverityLevels.VIOLATION) == 2)
-//      assert(report.results.size == 11)
   }
+
+  test("Unresolve inheritance from same class") {
+    checkReport("/types/unresolve-inherits-sameclass.raml", None)
+  }
+
+  test("Unresolve inheritance from different clases") {
+    checkReport("/types/unresolve-inherits-differentclass.raml", Some("unresolve-inherits-differentclass.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

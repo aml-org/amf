@@ -150,26 +150,34 @@ case class RamlTypeDetector(parent: String,
     `type`.orElse(schema)
   }
 
-  private def collectTypeDefs(sequence: Seq[YNode]): Seq[TypeDef] =
+  private def collectTypeDefs(sequence: Seq[YNode]): List[TypeDef] =
     sequence
-      .map(node => RamlTypeDetector(parent, recursive = true).detect(node))
-      .collect({ case Some(typeDef) => typeDef })
+      .flatMap(node => RamlTypeDetector(parent, recursive = true).detect(node))
+      .toList
 
   object InheritsTypeDetecter {
-    def apply(inheritsTypes: Seq[TypeDef], ast: YPart): Option[TypeDef] = {
-      val head = inheritsTypes.headOption
-      if (inheritsTypes.count(_.equals(head.get)) != inheritsTypes.size) {
-        ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
-                      parent,
-                      "Can't inherit from more than one class type",
-                      ast)
-        Some(UndefinedType)
-      } else
-        head
+    def apply(inheritsTypes: List[TypeDef], ast: YPart): Option[TypeDef] = {
+      inheritsTypes match {
+        case Nil         => None
+        case head :: Nil => Some(head)
+        case _ =>
+          val definedTypes = inheritsTypes.filter(_ != UndefinedType)
+          if (definedTypes.isEmpty) Some(UndefinedType)
+          else {
+            val head = definedTypes.headOption
+            if (definedTypes.count(_.equals(head.get)) != definedTypes.size) {
+              ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
+                            parent,
+                            "Can't inherit from more than one class type",
+                            ast)
+              Some(UndefinedType)
+            } else head
+          }
+      }
     }
 
     def shapeToType(inherits: Seq[Shape], part: YNode)(implicit ctx: ParserContext): Option[TypeDef] =
-      apply(inherits.flatMap(s => ShapeClassTypeDefMatcher(s, part, plainUnion = true)), part)
+      apply(inherits.flatMap(s => ShapeClassTypeDefMatcher(s, part, plainUnion = true)).toList, part)
   }
 
   object ShapeClassTypeDefMatcher {

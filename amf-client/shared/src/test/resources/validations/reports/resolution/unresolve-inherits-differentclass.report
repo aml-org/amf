@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/validations/types/unresolve-inherits-differentclass.raml
+Profile: RAML
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#invalid-type-inheritance
+  Message: Resolution error: Incompatible types [class amf.plugins.domain.shapes.models.ScalarShape, class amf.plugins.domain.shapes.models.NodeShape]
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/types/unresolve-inherits-differentclass.raml#/declarations/types/scalar/TYPE2
+  Property: http://a.ml/vocabularies/shapes#inherits
+  Position: Some(LexicalInformation([(7,2)-(9,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/types/unresolve-inherits-differentclass.raml
