@@ -14,7 +14,7 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, platform: Platform) {
 
   import scala.concurrent.ExecutionContext.Implicits.global
 
-  val candidates: Seq[ValidationCandidate] = ExamplesCandidatesCollector(baseUnit) ++
+  val candidates: Seq[ValidationCandidate] = PayloadsInApiCollector(baseUnit) ++
     ShapeFacetsCandidatesCollector(baseUnit, platform) ++
     AnnotationsCandidatesCollector(baseUnit, platform)
 
