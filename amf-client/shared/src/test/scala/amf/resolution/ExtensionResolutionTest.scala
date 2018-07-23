@@ -36,7 +36,6 @@ class ExtensionResolutionTest extends ResolutionTest {
   test("Extension with example to Raml") {
     cycle("input.raml", "output.raml", RamlYamlHint, Raml, basePath + "example/")
   }
-
   override def render(unit: BaseUnit, config: CycleConfig): Future[String] = {
     val target = config.target
     new AMFRenderer(unit, target, target.defaultSyntax, RenderOptions().withSourceMaps).renderToString

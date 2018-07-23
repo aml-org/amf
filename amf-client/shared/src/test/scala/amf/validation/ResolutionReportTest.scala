@@ -28,5 +28,21 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
     checkReport("/types/unresolve-inherits-differentclass.raml", Some("unresolve-inherits-differentclass.report"))
   }
 
+  test("Invalid fields in overlay and master") {
+    checkReport("/overlays/invalid-override/overlay.raml", Some("overlays-report.report"))
+  }
+
+  test("Invalid fields without override in overlay") {
+    checkReport("/overlays/restricted-notoverride/overlay.raml", None)
+  }
+
+  test("Invalid type overrided") {
+    checkReport("/overlays/valid-declaration/overlay.raml", None)
+  }
+
+  test("Invalid not existing node in master") {
+    checkReport("/overlays/not-existing-node/overlay.raml", Some("not-existing-node.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

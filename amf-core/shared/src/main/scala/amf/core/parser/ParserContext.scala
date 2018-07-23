@@ -1,7 +1,7 @@
 package amf.core.parser
 
 import amf.core.{AMFCompilerRunCount, annotations}
-import amf.core.annotations.LexicalInformation
+import amf.core.annotations.{LexicalInformation, SourceLocation}
 import amf.core.model.domain.AmfObject
 import amf.core.services.RuntimeValidator
 import amf.core.validation.SeverityLevels.{VIOLATION, WARNING}
@@ -116,6 +116,17 @@ trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
   /** Report constraint failure of severity warning. */
   def warning(node: String, message: String, ast: YPart): Unit = {
     warning(ParsingWarningSpecification.id, node, message, ast)
+  }
+
+  /** Report constraint failure of severity warning. */
+  def warning(id: String, node: String, message: String, annotations: Annotations): Unit = {
+    reportConstraint(id,
+                     node,
+                     None,
+                     message,
+                     annotations.find(classOf[LexicalInformation]),
+                     WARNING,
+                     annotations.find(classOf[SourceLocation]).map(_.location))
   }
 
   protected def part(error: YError): YPart = {

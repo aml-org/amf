@@ -1,25 +1,28 @@
 package amf.plugins.document.webapi.resolution.stages
 
 import amf.core.annotations.{Aliases, SynthesizedField}
+import amf.core.metamodel.Type.{ArrayLike, Scalar}
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.DomainElementModel._
-import amf.core.metamodel.domain.extensions.DomainExtensionModel
+import amf.core.metamodel.domain.extensions.{CustomDomainPropertyModel, DomainExtensionModel}
 import amf.core.metamodel.domain.templates.KeyField
 import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, ShapeModel}
-import amf.core.metamodel.{Field, Type}
+import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.model.document._
 import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, EmptyFutureDeclarations, ErrorHandler, FieldEntry, ParserContext, Value}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 import amf.core.unsafe.PlatformSecrets
+import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.ExtensionProvenance
 import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
-import amf.plugins.domain.shapes.metamodel.ExampleModel
+import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, CreativeWorkModel, ExampleModel}
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.templates.ParametrizedTraitModel
+import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models.WebApi
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DataNodeMerging
@@ -49,9 +52,17 @@ class ExtensionsResolutionStage(val profile: ProfileName, val keepEditingInfo: B
   }
 }
 
+abstract class MerginRestrictions() {
+  def allowsOverride(field: Field): Boolean
+
+  def allowsNodeInsertionIn(field: Field): Boolean
+}
+
 abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElement]](
     val profile: ProfileName,
     val keepEditingInfo: Boolean)(implicit val errorHandler: ErrorHandler) {
+
+  val merginRestrictions: MerginRestrictions
 
   /** Default to raml10 context. */
   implicit val ctx: RamlWebApiContext = profile match {
@@ -86,7 +97,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
     document.withReferences(refs)
   }
 
-  def mergeAliases(document: Document, extension: ExtensionLike[_ <: DomainElement]) = {
+  def mergeAliases(document: Document, extension: ExtensionLike[_ <: DomainElement]): Unit = {
     val extensionsAliases = extension.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases
     val documentAliases   = document.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases
 
@@ -172,11 +183,24 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
     overlay.fields.fields().filter(ignored).foreach {
       case entry @ FieldEntry(field, value) =>
         master.fields.entry(field) match {
-          case None =>
+          case None if merginRestrictions allowsNodeInsertionIn field =>
             val newValue = adoptInner(master.id, value.value)
             if (keepEditingInfo) newValue.annotations += ExtensionProvenance(extensionId, extensionLocation)
             master.set(field, newValue) // Set field if it doesn't exist.
-          case Some(existing) =>
+          case None => // not allowed insert a new obj node. Not exists node in master.
+            val node = value.value match {
+              case amfObject: AmfObject => amfObject.id
+              case _                    => field.value.toString
+            }
+
+            errorHandler.warning(
+              ParserSideValidations.ResolutionErrorSpecification.id,
+              node,
+              s"Property '$node' of type '${value.value.getClass.getSimpleName}' is not allowed to be overriden or added in overlays",
+              value.annotations
+            )
+
+          case Some(existing) if merginRestrictions allowsOverride field =>
             field.`type` match {
               case _: Type.Scalar =>
                 if (keepEditingInfo) value.value.annotations += ExtensionProvenance(extensionId, extensionLocation)
@@ -196,6 +220,13 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
                 merge(existing.domainElement, entry.domainElement, extensionId, extensionLocation)
               case _ => throw new Exception(s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)")
             }
+          case Some(existing) => // cannot be override
+            errorHandler.warning(
+              ParserSideValidations.ResolutionErrorSpecification.id,
+              existing.field.toString,
+              s"Property '${existing.field.toString}' in '${master.getClass.getSimpleName}' is not allowed to be overriden or added in overlays",
+              existing.value.annotations
+            )
         }
     }
     master
@@ -332,10 +363,12 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
                                                      existing.get(keyValue),
                                                      obj,
                                                      extensionId,
-                                                     extensionLocation)
+                                                     extensionLocation,
+                                                     field)
 
           case _ => // If key is null and nullKey exists, merge if it is not a simpleProperty. Else just override.
-            nullKey = Some(mergeByKeyResult(target, asSimpleProperty, nullKey, obj, extensionId, extensionLocation))
+            nullKey =
+              Some(mergeByKeyResult(target, asSimpleProperty, nullKey, obj, extensionId, extensionLocation, field))
         }
     }
 
@@ -347,10 +380,20 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
                                existing: Option[DomainElement],
                                obj: DomainElement,
                                extensionId: String,
-                               extensionLocation: Option[String]) = {
+                               extensionLocation: Option[String],
+                               field: Field) = {
     existing match {
       case Some(e) if !asSimpleProperty => merge(e, obj.adopted(target.id), extensionId, extensionLocation)
-      case _                            => adoptInner(target.id, obj).asInstanceOf[DomainElement]
+      case None if !(merginRestrictions allowsNodeInsertionIn field) =>
+        errorHandler.warning(
+          ParserSideValidations.ResolutionErrorSpecification.id,
+          obj.id,
+          s"Property of key '${obj.id}' of class '${obj.getClass.getSimpleName}' is not allowed to be overriden or added in overlays",
+          obj.annotations
+        )
+        obj
+      case _ =>
+        adoptInner(target.id, obj).asInstanceOf[DomainElement]
     }
   }
 
@@ -432,6 +475,8 @@ class ExtensionResolutionStage(override val profile: ProfileName, override val k
       target.add(field, value)
     }
   }
+
+  override val merginRestrictions: MerginRestrictions = MerginRestrictions.unrestricted
 }
 
 class OverlayResolutionStage(override val profile: ProfileName, override val keepEditingInfo: Boolean)(
@@ -449,5 +494,51 @@ class OverlayResolutionStage(override val profile: ProfileName, override val kee
       value
     }
     target.setArray(field, seq)
+  }
+
+  override val merginRestrictions: MerginRestrictions = MerginRestrictions.onlyFunctionalField
+}
+
+object MerginRestrictions {
+
+  val unrestricted: MerginRestrictions = new MerginRestrictions {
+    override def allowsOverride(field: Field): Boolean = true
+
+    override def allowsNodeInsertionIn(field: Field): Boolean = true
+  }
+
+  val onlyFunctionalField: MerginRestrictions = new MerginRestrictions {
+    override def allowsOverride(field: Field): Boolean = {
+      val forgivenScalar = (field.`type`.isInstanceOf[Scalar] && !(Seq(
+        WebApiModel.Name.value.iri(),
+        WebApiModel.Description.value.iri(),
+        WebApiModel.Documentations.value.iri(),
+        TagModel.Documentation.value.iri(),
+        BaseUnitModel.Usage.value.iri(),
+        EndPointModel.Path.value.iri(),
+        OperationModel.Method.value.iri(),
+        AnyShapeModel.Examples.value.iri()
+      ) contains field.value.iri())) || field.value
+        .iri()
+        .equals(WebApiModel.Servers.toString) // exception array field, because servers its not a field key element, so we cannot merge.
+
+      !forgivenScalar || field.value.ns == Namespace.Shacl
+    }
+
+    override def allowsNodeInsertionIn(field: Field): Boolean = {
+      field.`type` match {
+        case o: Obj            => checkObjAllow(o)
+        case ArrayLike(o: Obj) => checkObjAllow(o)
+        case _                 => true
+      }
+    }
+    private def checkObjAllow(o: Obj) = {
+      val allowedObjs =
+        Seq(ShapeModel, CustomDomainPropertyModel, DomainExtensionModel, ExampleModel, CreativeWorkModel)
+      o match {
+        case k: KeyField => allowedObjs.contains(o)
+        case _           => true
+      }
+    }
   }
 }

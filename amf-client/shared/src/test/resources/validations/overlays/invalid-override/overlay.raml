@@ -1,0 +1,12 @@
+#%RAML 1.0 Overlay
+extends: master.raml
+title: Biblioteca de libros API
+baseUri: http://cuspide.com.ar
+documentation:
+  - title: Introducción
+    content: El acceso automatizado a los libros
+  - title: Licencias
+    content: Por favor respeta los derechos de autor de los libros
+/books:
+  description: La colección de libros de la biblioteca
+  get:
