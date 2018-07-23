@@ -24,7 +24,7 @@ class ShapeNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean
     with MetaModelTypeMapping {
 
   protected var m: Option[BaseUnit] = None
-  protected val context = new NormalizationContext(errorHandler, keepEditingInfo, profile)
+  protected val context             = new NormalizationContext(errorHandler, keepEditingInfo, profile)
 
   override def resolve[T <: BaseUnit](model: T): T = {
     m = Some(model)
@@ -61,15 +61,15 @@ private[stages] case class RecursionErrorRegister() {
 
   def recursionAndError(root: Shape, base: Option[String], s: Shape, traversed: IdsTraversionCheck)(
       implicit context: NormalizationContext): RecursiveShape =
-    recursionError(root, buildRecursion(base, s), traversed: IdsTraversionCheck)
+    recursionError(root, buildRecursion(base, s), root.id, traversed: IdsTraversionCheck)
 
-  def recursionError(original: Shape, r: RecursiveShape, traversed: IdsTraversionCheck)(
+  def recursionError(original: Shape, r: RecursiveShape, checkId: String, traversed: IdsTraversionCheck)(
       implicit context: NormalizationContext): RecursiveShape = {
 
     val canRegister = !avoidRegister.contains(r.id)
     if (!r.supportsRecursion
           .option()
-          .getOrElse(false) && !traversed.avoidError(original.id) && canRegister) {
+          .getOrElse(false) && !traversed.avoidError(checkId) && canRegister) {
       context.errorHandler.violation(
         ParserSideValidations.RecursiveShapeSpecification.id,
         original.id,
