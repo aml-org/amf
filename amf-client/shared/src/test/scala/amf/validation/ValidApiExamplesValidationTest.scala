@@ -167,5 +167,9 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   test("Test unsupported example with raml08 profile") {
     validate("/examples/unsupported-examples-08.raml", profile = RAML08Profile)
   }
+
+  test("Test json quoted string example") {
+    validate("/examples/json-quoted-example.raml")
+  }
   override val hint: Hint = RamlYamlHint
 }

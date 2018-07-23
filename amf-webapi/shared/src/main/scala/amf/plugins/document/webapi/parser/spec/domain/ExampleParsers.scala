@@ -228,6 +228,7 @@ case class NodeDataNodeParser(node: YNode, parentId: String, quiet: Boolean, fro
     val errorHandler = if (quiet) WarningOnlyHandler(ctx.rootContextDocument) else ctx
 
     val exampleNode: Option[YNode] = node.toOption[YScalar] match {
+      case Some(scalar) if scalar.mark.isInstanceOf[QuotedMark] => Some(node)
       case Some(scalar) if JSONSchema.unapply(scalar.text).isDefined =>
         node
           .toOption[YScalar]
