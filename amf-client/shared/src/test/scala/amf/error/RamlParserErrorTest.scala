@@ -1,13 +1,9 @@
 package amf.error
 
-import amf.RAMLProfile
-import amf.core.AMFSerializer
-import amf.core.emitter.RenderOptions
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.parser.Range
 import amf.core.remote.RamlYamlHint
 import amf.facades.{AMFCompiler, Validation}
-import amf.plugins.document.webapi.RAML10Plugin
 import amf.plugins.domain.shapes.models.{ScalarShape, UnresolvedShape}
 import amf.plugins.features.validation.ParserSideValidations
 
@@ -456,6 +452,9 @@ class RamlParserErrorTest extends ParserErrorTest {
     validate("/valid/forward-ref-with-facets.raml")
   }
 
+  test("Forward reference with type son") {
+    validate("/valid/future-ref-withType.raml")
+  }
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/raml/"
 
   override protected def build(validation: Validation, file: String): Future[BaseUnit] =

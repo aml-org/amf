@@ -38,10 +38,17 @@ case class ShapeExtensionParser(shape: Shape,
       )
     }
     if (!shape.inherits.exists(s => s.isUnresolved)) { // only validate shapes when the father its resolved, to avoid close shape over custom annotations
+      val syntax = overrideSyntax match {
+        case Some("anyShape") | Some("shape") => shape.ramlSyntaxKey
+        case Some(other)                      => other
+        case None                             => shape.ramlSyntaxKey
+      }
+
       val extensionsNames = properties.flatMap(_.name.option())
       val m               = YMap(map.entries.filter(e => !extensionsNames.contains(e.key.value.toString)), "")
-      ctx.closedRamlTypeShape(shape, m, overrideSyntax.getOrElse(shape.ramlSyntaxKey), isAnnotation)
+      ctx.closedRamlTypeShape(shape, m, syntax, isAnnotation)
     }
+
     // todo: filter map.entries by extension key and call close shape by instance of for the rest?
   }
 }

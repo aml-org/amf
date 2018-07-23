@@ -1,0 +1,32 @@
+#%RAML 1.0 Library
+types:
+  objects:
+    type: objects_post
+    properties:
+      id:
+        required: true
+  objects_post:
+    type: objects_patch
+  objects_patch:
+    type: resource_post
+    description: an objectstore entry
+    additionalProperties: true
+    example:
+        type: objects
+        id: "14"
+        attributes:
+          warehouse: NYC
+          aisle: "3"
+          shelf: "4"
+          bin: "22"
+
+  resource_post:
+    properties:
+      attributes:
+        properties:
+          warehouse:
+            type: string
+            enum: [ NYC]
+          aisle: string
+          shelf: string
+          bin: string
