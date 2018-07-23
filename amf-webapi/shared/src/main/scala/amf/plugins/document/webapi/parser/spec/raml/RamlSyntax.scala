@@ -52,6 +52,16 @@ object Raml10Syntax extends RamlSyntax {
       "example",
       "examples"
     ),
+    "schemaShape" -> Set(
+      "type",
+      "default",
+      "schema",
+      "example",
+      "examples",
+      "displayName",
+      "description",
+      "required",
+    ),
     "unionShape" -> Set(
       "type",
       "default",

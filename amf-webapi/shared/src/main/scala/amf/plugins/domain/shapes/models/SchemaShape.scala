@@ -24,7 +24,7 @@ case class SchemaShape(override val fields: Fields, override val annotations: An
 
   override def copyShape(): SchemaShape = SchemaShape(fields.copy(), annotations.copy()).withId(id)
 
-  override def ramlSyntaxKey: String = "anyShape"
+  override def ramlSyntaxKey: String = "schemaShape" // same that any shape
 }
 
 object SchemaShape {

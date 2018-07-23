@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
+import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.Shape
 import amf.core.parser._
 import amf.core.unsafe.PlatformSecrets
@@ -37,14 +38,28 @@ case class RamlTypeDetector(parent: String,
         .orElse(Some(ObjectType)) // type expression type?
 
     case YType.Map =>
-      val map       = node.as[YMap]
-      val entries   = map.entries.filter(e => !e.key.as[YScalar].text.matches(".*/.*"))
-      val filterMap = YMap(entries, entries.headOption.map(_.sourceName).getOrElse(""))
-      detectItems(filterMap)
+      val map          = node.as[YMap]
+      val entries      = map.entries.filter(e => !e.key.as[YScalar].text.matches(".*/.*"))
+      val filterMap    = YMap(entries, entries.headOption.map(_.sourceName).getOrElse(""))
+      val typeExplicit = detectTypeOrSchema(filterMap)
+      val infer = detectItems(filterMap)
         .orElse(detectFileTypes(filterMap))
         .orElse(detectProperties(filterMap))
         .orElse(detectAnyOf(filterMap))
-        .orElse(detectTypeOrSchema(filterMap))
+      typeExplicit match {
+        case Some(JSONSchemaType) if infer.isDefined =>
+          ctx.warning(
+            ParserSideValidations.JsonSchemaInheratinaceWarningSpecification.id,
+            parent,
+            Some(ShapeModel.Inherits.value.iri()),
+            "Inheritance from JSON Schema",
+            node.value
+          )
+          typeExplicit
+        case Some(_)                 => typeExplicit
+        case None if infer.isDefined => infer
+        case _                       => inferType(map)
+      }
 
     // Default type as received from the parsing process
     case YType.Null => Some(defaultType.typeDef)
@@ -107,7 +122,7 @@ case class RamlTypeDetector(parent: String,
   private def detectTypeOrSchema(map: YMap): Option[TypeDef] = {
     if (map.entries.nonEmpty) {
       // let's try to detect based on the explicit value of 'type'
-      val fromExplicitType = typeOrSchema(map).flatMap(
+      typeOrSchema(map).flatMap(
         e => {
           // let's call ourselves recursively with the value of type
           val result =
@@ -115,22 +130,17 @@ case class RamlTypeDetector(parent: String,
                              map.key("format").orElse(map.key("format".asRamlAnnotation)).map(_.value.toString()),
                              recursive = true).detect(e.value)
           result match {
-            case Some(t) if t == UndefinedType => None
-            case Some(other)                   => Some(other)
-            case None                          => result
+            case Some(t) if t == UndefinedType || (t == AnyType && e.value.toString() != "any") => None
+            case Some(other)                                                                    => Some(other)
+            case None                                                                           => result
           }
         }
       )
 
-      fromExplicitType match {
-        case None =>
-          // implicit detection here
-          ShapeClassTypeDefMatcher.fetchByRamlSyntax(map)
-        case explicitType =>
-          explicitType // we were able to find a shape looking into the 'type' property
-      }
-    } else Some(defaultType.typeDef)
+    } else None
   }
+
+  private def inferType(map: YMap) = ShapeClassTypeDefMatcher.fetchByRamlSyntax(map).orElse(Some(defaultType.typeDef))
 
   /** Get type or schema facet. If both are available, default to type facet and throw a validation error. */
   def typeOrSchema(map: YMap): Option[YMapEntry] = {

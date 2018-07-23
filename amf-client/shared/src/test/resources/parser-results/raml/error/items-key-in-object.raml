@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: Serialization API
+
+types:
+  Email:
+    type: object
+    properties:
+      name:
+        type: string
+      id:
+        type: number
+  Emails:
+    type: object
+    items: Email

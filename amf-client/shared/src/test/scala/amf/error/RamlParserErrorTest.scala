@@ -455,6 +455,17 @@ class RamlParserErrorTest extends ParserErrorTest {
   test("Forward reference with type son") {
     validate("/valid/future-ref-withType.raml")
   }
+
+  test("Items keyword at node shape") {
+    validate(
+      "/error/items-key-in-object.raml",
+      error => {
+        error.level should be("Violation")
+        error.message should be("Properties items not supported in a raml 1.0 nodeShape node")
+        error.position.map(_.range) should be(Some(Range((14, 4), (14, 16))))
+      }
+    )
+  }
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/raml/"
 
   override protected def build(validation: Validation, file: String): Future[BaseUnit] =

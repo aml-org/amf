@@ -5,10 +5,10 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-type-inheritance
-  Message: Resolution error: Incompatible types [class amf.plugins.domain.shapes.models.NodeShape, class amf.plugins.domain.shapes.models.SchemaShape]
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Properties properties not supported in a raml 1.0 schemaShape node
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/types/schema_inheritance2.raml#/declarations/types/Person
-  Property: http://a.ml/vocabularies/shapes#inherits
-  Position: Some(LexicalInformation([(5,2)-(24,21)]))
+  Target: file://amf-client/shared/src/test/resources/validations/types/schema_inheritance2.raml#/declarations/types/schema/Person
+  Property: 
+  Position: Some(LexicalInformation([(23,4)-(24,21)]))
   Location: file://amf-client/shared/src/test/resources/validations/types/schema_inheritance2.raml
