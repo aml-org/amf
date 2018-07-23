@@ -51,6 +51,10 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     checkValid("/examples/empty-example.raml")
   }
 
+  test("Ignore empty default") {
+    checkValid("/examples/empty-default.raml")
+  }
+
   test("Empty payload with example validation") {
     checkValid("/08/empty-payload-with-example.raml", RAML08Profile)
   }

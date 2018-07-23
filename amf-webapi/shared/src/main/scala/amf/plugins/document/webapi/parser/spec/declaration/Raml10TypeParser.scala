@@ -407,11 +407,15 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
     map.key(
       "default",
       entry => {
-        NodeDataNodeParser(entry.value, shape.id, quiet = false).parse().dataNode.foreach { dn =>
-          shape.set(ShapeModel.Default, dn, Annotations(entry))
+        entry.value.tagType match {
+          case YType.Null =>
+          case _ =>
+            NodeDataNodeParser(entry.value, shape.id, quiet = false).parse().dataNode.foreach { dn =>
+              shape.set(ShapeModel.Default, dn, Annotations(entry))
+            }
+            val str = YamlRender.render(entry.value)
+            shape.set(ShapeModel.DefaultValueString, AmfScalar(str), Annotations(entry))
         }
-        val str = YamlRender.render(entry.value)
-        shape.set(ShapeModel.DefaultValueString, AmfScalar(str), Annotations(entry))
       }
     )
   }
@@ -1184,7 +1188,12 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       if (shape.inherits.isEmpty)
         shape.set(NodeShapeModel.Closed, value = false)
       else if (map.key("additionalProperties").isEmpty) {
-        val closedInInhertiance = shape.effectiveInherits.exists(s => s.isInstanceOf[NodeShape] && s.asInstanceOf[NodeShape].closed.option().isDefined && s.asInstanceOf[NodeShape].closed.value())
+        val closedInInhertiance = shape.effectiveInherits.exists(
+          s =>
+            s.isInstanceOf[NodeShape] && s.asInstanceOf[NodeShape].closed.option().isDefined && s
+              .asInstanceOf[NodeShape]
+              .closed
+              .value())
         shape.set(NodeShapeModel.Closed, value = closedInInhertiance)
       }
       map.key("additionalProperties", (NodeShapeModel.Closed in shape).negated.explicit)
@@ -1352,11 +1361,15 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       map.key(
         "default",
         entry => {
-          val dataNodeResult = NodeDataNodeParser(entry.value, shape.id, quiet = false).parse()
-          val str            = YamlRender.render(entry.value)
-          shape.set(ShapeModel.DefaultValueString, AmfScalar(str), Annotations(entry))
-          dataNodeResult.dataNode.foreach { dataNode =>
-            shape.set(ShapeModel.Default, dataNode, Annotations(entry))
+          entry.value.tagType match {
+            case YType.Null =>
+            case _ =>
+              val dataNodeResult = NodeDataNodeParser(entry.value, shape.id, quiet = false).parse()
+              val str            = YamlRender.render(entry.value)
+              shape.set(ShapeModel.DefaultValueString, AmfScalar(str), Annotations(entry))
+              dataNodeResult.dataNode.foreach { dataNode =>
+                shape.set(ShapeModel.Default, dataNode, Annotations(entry))
+              }
           }
         }
       )
