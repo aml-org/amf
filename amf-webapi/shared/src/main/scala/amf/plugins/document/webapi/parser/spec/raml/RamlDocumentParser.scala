@@ -219,8 +219,8 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
 
   protected def parseDeclarations(root: Root, map: YMap): Unit = {
     val parent = root.location + "#/declarations"
-    parseTypeDeclarations(map, parent + "/types")
     parseAnnotationTypeDeclarations(map, parent + "/annotations")
+    parseTypeDeclarations(map, parent + "/types")
     AbstractDeclarationsParser(
       "traits",
       entry =>

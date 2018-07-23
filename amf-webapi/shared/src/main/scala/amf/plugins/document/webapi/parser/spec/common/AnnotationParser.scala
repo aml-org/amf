@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.common
 
+import amf.core.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.model.domain.DomainElement
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.parser.{Annotations, _}
@@ -41,8 +42,8 @@ object AnnotationParser {
 private case class ExtensionParser(annotation: String, parent: String, entry: YMapEntry)(
     implicit val ctx: WebApiContext) {
   def parse(): DomainExtension = {
-    val id = s"$parent/extension/$annotation"
-    val propertyId = s"$parent/$annotation"
+    val id              = s"$parent/extension/$annotation"
+    val propertyId      = s"$parent/$annotation"
     val domainExtension = DomainExtension().withId(id)
     val dataNode        = DataNodeParser(entry.value, parent = Some(propertyId)).parse()
     // TODO
@@ -52,7 +53,8 @@ private case class ExtensionParser(annotation: String, parent: String, entry: YM
     domainExtension.adopted(parent)
     domainExtension
       .withExtension(dataNode)
-      .withDefinedBy(customDomainProperty)
       .withName(annotation)
+    domainExtension.fields.setWithoutId(DomainExtensionModel.DefinedBy, customDomainProperty)
+    domainExtension
   }
 }

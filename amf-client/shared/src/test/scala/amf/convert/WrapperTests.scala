@@ -4,7 +4,7 @@ import _root_.org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 import amf._
 import amf.client.AMF
 import amf.client.convert.NativeOps
-import amf.client.convert.WebApiClientConverters._
+import amf.client.convert.CoreClientConverters._
 import amf.client.environment.{DefaultEnvironment, Environment}
 import amf.client.model.document._
 import amf.client.model.domain._
@@ -1247,6 +1247,49 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       seq(2).name.value() should be("color")
       seq(3).name.value() should be("description")
 
+    }
+  }
+
+  // extract to some kind of client tests in another proyect?
+  test("Test custom domain property id after parse") {
+
+    for {
+      _ <- AMF.init().asFuture
+      doc <- Future {
+        val ns            = (Namespace.Xsd + "string").iri()
+        val doc: Document = new Document()
+        doc._internal.withId("http://location.com/myfile")
+        val shape = new ScalarShape().withName("scalarDeclared").withDataType(ns)
+        doc.withDeclaredElement(shape)
+        val wa = new WebApi().withName("test")
+        doc.withEncodes(wa)
+        val annotationType =
+          new CustomDomainProperty()
+            .withName("forDescribedBy")
+            .withId("http://location.com/myfile#/declarations/annotations/forDescribedBy")
+            .withSchema(new ScalarShape().withName("scalarName").withDataType(ns))
+        doc.withDeclaredElement(annotationType)
+        val annotation = amf.core.model.domain.extensions
+          .DomainExtension()
+          .withExtension(new ScalarNode("extension", ns)._internal)
+          .withDefinedBy(annotationType._internal)
+          .withName(annotationType.name.value())
+        shape.withCustomDomainProperties(Seq(annotation).asClient)
+        doc
+      }
+      s      <- new Raml10Renderer().generateString(doc).asFuture
+      parsed <- new Raml10Parser().parseStringAsync("http://location.com/myfile", s).asFuture
+    } yield {
+      val buildedProp: CustomDomainProperty =
+        doc.declares.asSeq.collectFirst({ case s: Shape => s.customDomainProperties.asSeq.head.definedBy }).get
+
+      val parsedProp: CustomDomainProperty = parsed
+        .asInstanceOf[Document]
+        .declares
+        .asSeq
+        .collectFirst({ case s: Shape => s.customDomainProperties.asSeq.head.definedBy })
+        .get
+      parsedProp.id should be(buildedProp.id)
     }
   }
 }
