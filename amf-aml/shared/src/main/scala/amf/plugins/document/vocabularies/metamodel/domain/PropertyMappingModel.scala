@@ -25,10 +25,11 @@ object PropertyMappingModel extends DomainElementModel {
   val Enum                  = Field(SortedArray(Any), Namespace.Shacl + "in")
   val TypeDiscriminator     = Field(Str, Namespace.Meta + "typeDiscriminatorMap")
   val TypeDiscriminatorName = Field(Str, Namespace.Meta + "typeDiscriminatorName")
+  val Unique                = Field(Bool, Namespace.Meta + "unique")
 
   override def fields: List[Field] = NodePropertyMapping :: Name :: LiteralRange :: ObjectRange :: MapKeyProperty ::
     MapValueProperty :: MinCount :: Pattern :: Minimum :: Maximum :: AllowMultiple :: Sorted :: Enum :: TypeDiscriminator ::
-    TypeDiscriminatorName :: DomainElementModel.fields
+    Unique :: TypeDiscriminatorName :: DomainElementModel.fields
 
   override def modelInstance: AmfObject = PropertyMapping()
 

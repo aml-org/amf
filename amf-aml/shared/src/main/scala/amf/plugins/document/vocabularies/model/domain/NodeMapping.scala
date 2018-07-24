@@ -23,6 +23,15 @@ case class NodeMapping(fields: Fields, annotations: Annotations) extends DomainE
   def withPropertiesMapping(props: Seq[PropertyMapping]): NodeMapping = setArrayWithoutId(PropertiesMapping, props)
   def withIdTemplate(idTemplate: String): NodeMapping                 = set(IdTemplate, idTemplate)
 
+  /**
+    * Returns the properties forming the primary key for this node.
+    * Properties are already sorted.
+    */
+  def primaryKey(): Seq[PropertyMapping] =
+    propertiesMapping()
+      .filter(_.unique().option().getOrElse(false))
+      .sortBy(_.nodePropertyMapping().value())
+
   override def linkCopy(): Linkable = NodeMapping().withId(id)
 
   override def resolveUnreferencedLink[T](label: String, annotations: Annotations, unresolved: T, supportsRecursion: Boolean): T = {
