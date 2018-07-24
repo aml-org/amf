@@ -311,7 +311,8 @@ annotationTypes:
         displayName: The Second
     displayName: uno
     body: {}
-    securedBy: []
+    securedBy:
+      - oauth_2_0
   post:
     description: post something
     queryString:
@@ -443,7 +444,10 @@ annotationTypes:
             <xsd:element name="first" type="xsd:string" />
             <xsd:element name="second" type="xsd:string" />
           </xsd:schema>
-    securedBy: []
+    securedBy:
+      - oauth_2_0
+      - oauth_1_0
+      - null
   /child/{childId}:
     description: child description
     uriParameters:
@@ -464,4 +468,7 @@ annotationTypes:
            },
            "required": [ "firstname", "lastname" ]
           }
-      securedBy: []
+      securedBy:
+        - oauth_2_0
+        - oauth_1_0
+        - null

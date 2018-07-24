@@ -115,7 +115,11 @@ description: Lets you access a cloud hosted machine learning service that makes 
           userIp:
             description: IP address of the site where the request originates. Use this if you want to enforce per-user limits.
             type: string
-        securedBy: []
+        securedBy:
+          -
+            Oauth2:
+              scopes:
+                - https://www.googleapis.com/auth/prediction
     uriParameters:
       data:
         description: mybucket/mydata resource in Google Storage
@@ -203,7 +207,11 @@ description: Lets you access a cloud hosted machine learning service that makes 
         userIp:
           description: IP address of the site where the request originates. Use this if you want to enforce per-user limits.
           type: string
-      securedBy: []
+      securedBy:
+        -
+          Oauth2:
+            scopes:
+              - https://www.googleapis.com/auth/prediction
     get:
       queryParameters:
         alt:
@@ -271,7 +279,11 @@ description: Lets you access a cloud hosted machine learning service that makes 
           description: Successful response
       (oas-tags):
         - training
-      securedBy: []
+      securedBy:
+        -
+          Oauth2:
+            scopes:
+              - https://www.googleapis.com/auth/prediction
     delete:
       queryParameters:
         alt:
@@ -306,7 +318,11 @@ description: Lets you access a cloud hosted machine learning service that makes 
           description: Successful response
       (oas-tags):
         - training
-      securedBy: []
+      securedBy:
+        -
+          Oauth2:
+            scopes:
+              - https://www.googleapis.com/auth/prediction
   post:
     displayName: prediction.training.insert
     description: Begin training your model
@@ -412,7 +428,11 @@ description: Lets you access a cloud hosted machine learning service that makes 
         type: string
     (oas-tags):
       - training
-    securedBy: []
+    securedBy:
+      -
+        Oauth2:
+          scopes:
+            - https://www.googleapis.com/auth/prediction
 /hostedmodels:
   displayName: hostedmodels
   /{hostedModelName}:
@@ -503,4 +523,8 @@ description: Lets you access a cloud hosted machine learning service that makes 
           userIp:
             description: IP address of the site where the request originates. Use this if you want to enforce per-user limits.
             type: string
-        securedBy: []
+        securedBy:
+          -
+            Oauth2:
+              scopes:
+                - https://www.googleapis.com/auth/prediction

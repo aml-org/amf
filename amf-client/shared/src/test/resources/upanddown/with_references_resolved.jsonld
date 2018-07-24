@@ -319,7 +319,7 @@
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20",
                     "@type": [
-                      "http://a.ml/vocabularies/security#SecurityScheme",
+                      "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/security#name": [
@@ -327,60 +327,38 @@
                         "@value": "oauth20"
                       }
                     ],
-                    "http://a.ml/vocabularies/security#type": [
+                    "http://a.ml/vocabularies/security#scheme": [
                       {
-                        "@value": "OAuth 2.0"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/http#header": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20/parameter/Authorization",
+                        "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#fragment",
                         "@type": [
-                          "http://a.ml/vocabularies/http#Parameter",
+                          "http://a.ml/vocabularies/security#SecurityScheme",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://schema.org/name": [
+                        "http://a.ml/vocabularies/security#name": [
                           {
-                            "@value": "Authorization"
+                            "@value": "oauth20"
                           }
                         ],
-                        "http://a.ml/vocabularies/http#paramName": [
+                        "http://a.ml/vocabularies/security#type": [
                           {
-                            "@value": "Authorization"
+                            "@value": "OAuth 2.0"
                           }
                         ],
-                        "http://schema.org/description": [
+                        "http://a.ml/vocabularies/http#header": [
                           {
-                            "@value": "Used to send a valid OAuth 2 access token."
-                          }
-                        ],
-                        "http://www.w3.org/ns/hydra/core#required": [
-                          {
-                            "@value": true
-                          }
-                        ],
-                        "http://a.ml/vocabularies/http#binding": [
-                          {
-                            "@value": "header"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/http#schema": [
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20/parameter/Authorization/scalar/schema",
+                            "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization",
                             "@type": [
-                              "http://a.ml/vocabularies/shapes#ScalarShape",
-                              "http://www.w3.org/ns/shacl#Shape",
-                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/http#Parameter",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://www.w3.org/ns/shacl#datatype": [
+                            "http://schema.org/name": [
                               {
-                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                "@value": "Authorization"
                               }
                             ],
-                            "http://www.w3.org/ns/shacl#name": [
+                            "http://a.ml/vocabularies/http#paramName": [
                               {
-                                "@value": "schema"
+                                "@value": "Authorization"
                               }
                             ],
                             "http://schema.org/description": [
@@ -388,25 +366,107 @@
                                 "@value": "Used to send a valid OAuth 2 access token."
                               }
                             ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
+                            "http://www.w3.org/ns/hydra/core#required": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20/parameter/Authorization/scalar/schema/source-map",
+                                "@value": true
+                              }
+                            ],
+                            "http://a.ml/vocabularies/http#binding": [
+                              {
+                                "@value": "header"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/http#schema": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization/scalar/schema",
                                 "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                                "http://www.w3.org/ns/shacl#datatype": [
                                   {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "schema"
+                                  }
+                                ],
+                                "http://schema.org/description": [
+                                  {
+                                    "@value": "Used to send a valid OAuth 2 access token."
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization/scalar/schema/source-map",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20/parameter/Authorization/scalar/schema"
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization/scalar/schema"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(16,6)-(16,10)]"
+                                          }
+                                        ]
                                       }
                                     ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
-                                        "@value": "[(16,6)-(16,10)]"
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://schema.org/description"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(15,6)-(16,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization/scalar/schema"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(14,4)-(17,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://www.w3.org/ns/shacl#datatype"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(16,6)-(17,0)]"
+                                          }
+                                        ]
                                       }
                                     ]
                                   }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#sources": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization/source-map",
+                                "@type": [
+                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
@@ -424,7 +484,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20/parameter/Authorization/scalar/schema"
+                                        "@value": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -432,109 +492,27 @@
                                         "@value": "[(14,4)-(17,0)]"
                                       }
                                     ]
-                                  },
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://www.w3.org/ns/shacl#datatype"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(16,6)-(17,0)]"
-                                      }
-                                    ]
                                   }
                                 ]
                               }
                             ]
                           }
                         ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                        "http://a.ml/vocabularies/http#parameter": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20/parameter/Authorization/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/access_token",
                             "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://schema.org/description"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(15,6)-(16,0)]"
-                                  }
-                                ]
-                              },
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20/parameter/Authorization"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(14,4)-(17,0)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ],
-                    "http://a.ml/vocabularies/http#parameter": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20/parameter/access_token",
-                        "@type": [
-                          "http://a.ml/vocabularies/http#Parameter",
-                          "http://a.ml/vocabularies/document#DomainElement"
-                        ],
-                        "http://schema.org/name": [
-                          {
-                            "@value": "access_token"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/http#paramName": [
-                          {
-                            "@value": "access_token"
-                          }
-                        ],
-                        "http://schema.org/description": [
-                          {
-                            "@value": "Used to send a valid OAuth 2 access token."
-                          }
-                        ],
-                        "http://www.w3.org/ns/hydra/core#required": [
-                          {
-                            "@value": true
-                          }
-                        ],
-                        "http://a.ml/vocabularies/http#binding": [
-                          {
-                            "@value": "query"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/http#schema": [
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20/parameter/access_token/scalar/schema",
-                            "@type": [
-                              "http://a.ml/vocabularies/shapes#ScalarShape",
-                              "http://www.w3.org/ns/shacl#Shape",
-                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/http#Parameter",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://www.w3.org/ns/shacl#datatype": [
+                            "http://schema.org/name": [
                               {
-                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                "@value": "access_token"
                               }
                             ],
-                            "http://www.w3.org/ns/shacl#name": [
+                            "http://a.ml/vocabularies/http#paramName": [
                               {
-                                "@value": "schema"
+                                "@value": "access_token"
                               }
                             ],
                             "http://schema.org/description": [
@@ -542,9 +520,79 @@
                                 "@value": "Used to send a valid OAuth 2 access token."
                               }
                             ],
+                            "http://www.w3.org/ns/hydra/core#required": [
+                              {
+                                "@value": true
+                              }
+                            ],
+                            "http://a.ml/vocabularies/http#binding": [
+                              {
+                                "@value": "query"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/http#schema": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/access_token/scalar/schema",
+                                "@type": [
+                                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://www.w3.org/ns/shacl#datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "schema"
+                                  }
+                                ],
+                                "http://schema.org/description": [
+                                  {
+                                    "@value": "Used to send a valid OAuth 2 access token."
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/access_token/scalar/schema/source-map",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://schema.org/description"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(19,6)-(20,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/access_token/scalar/schema"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(18,4)-(20,0)]"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20/parameter/access_token/scalar/schema/source-map",
+                                "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/access_token/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -564,7 +612,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20/parameter/access_token/scalar/schema"
+                                        "@value": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/access_token"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -578,216 +626,280 @@
                             ]
                           }
                         ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                        "http://www.w3.org/ns/hydra/core#response": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20/parameter/access_token/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/401",
                             "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://schema.org/description"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(19,6)-(20,0)]"
-                                  }
-                                ]
-                              },
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20/parameter/access_token"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(18,4)-(20,0)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ],
-                    "http://www.w3.org/ns/hydra/core#response": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20/401",
-                        "@type": [
-                          "http://a.ml/vocabularies/http#Response",
-                          "http://a.ml/vocabularies/document#DomainElement"
-                        ],
-                        "http://schema.org/name": [
-                          {
-                            "@value": "401"
-                          }
-                        ],
-                        "http://schema.org/description": [
-                          {
-                            "@value": "Authorization error."
-                          }
-                        ],
-                        "http://www.w3.org/ns/hydra/core#statusCode": [
-                          {
-                            "@value": "401"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20/401/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://schema.org/description"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(22,6)-(22,39)]"
-                                  }
-                                ]
-                              },
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20/401"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(21,4)-(22,39)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ],
-                    "http://a.ml/vocabularies/security#settings": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20/settings/oauth2",
-                        "@type": [
-                          "http://a.ml/vocabularies/security#OAuth2Settings",
-                          "http://a.ml/vocabularies/security#Settings",
-                          "http://a.ml/vocabularies/document#DomainElement"
-                        ],
-                        "http://a.ml/vocabularies/security#authorizationUri": [
-                          {
-                            "@value": "https://example.com/oauth/authorize"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/security#accessTokenUri": [
-                          {
-                            "@value": "https://example.com/oauth/token"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/security#authorizationGrant": [
-                          {
-                            "@value": "authorization_code"
-                          },
-                          {
-                            "@value": "implicit"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/security#scope": [
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20/settings/oauth2/profile",
-                            "@type": [
-                              "http://a.ml/vocabularies/security#Scope",
+                              "http://a.ml/vocabularies/http#Response",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://a.ml/vocabularies/security#name": [
+                            "http://schema.org/name": [
                               {
-                                "@value": "profile"
+                                "@value": "401"
+                              }
+                            ],
+                            "http://schema.org/description": [
+                              {
+                                "@value": "Authorization error."
+                              }
+                            ],
+                            "http://www.w3.org/ns/hydra/core#statusCode": [
+                              {
+                                "@value": "401"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#sources": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/401/source-map",
+                                "@type": [
+                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://schema.org/description"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(22,6)-(22,39)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/401"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(21,4)-(22,39)]"
+                                      }
+                                    ]
+                                  }
+                                ]
                               }
                             ]
-                          },
+                          }
+                        ],
+                        "http://a.ml/vocabularies/security#settings": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20/settings/oauth2/history",
+                            "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/settings/oauth2",
                             "@type": [
-                              "http://a.ml/vocabularies/security#Scope",
+                              "http://a.ml/vocabularies/security#OAuth2Settings",
+                              "http://a.ml/vocabularies/security#Settings",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://a.ml/vocabularies/security#name": [
+                            "http://a.ml/vocabularies/security#authorizationUri": [
                               {
-                                "@value": "history"
+                                "@value": "https://example.com/oauth/authorize"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/security#accessTokenUri": [
+                              {
+                                "@value": "https://example.com/oauth/token"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/security#authorizationGrant": [
+                              {
+                                "@value": "authorization_code"
+                              },
+                              {
+                                "@value": "implicit"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/security#scope": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/settings/oauth2/profile",
+                                "@type": [
+                                  "http://a.ml/vocabularies/security#Scope",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/security#name": [
+                                  {
+                                    "@value": "profile"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/settings/oauth2/history",
+                                "@type": [
+                                  "http://a.ml/vocabularies/security#Scope",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/security#name": [
+                                  {
+                                    "@value": "history"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#sources": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/settings/oauth2/source-map",
+                                "@type": [
+                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://a.ml/vocabularies/security#scope"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(9,2)-(12,0)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://a.ml/vocabularies/security#accessTokenUri"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(5,2)-(6,0)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/settings/oauth2"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(4,0)-(12,0)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://a.ml/vocabularies/security#authorizationUri"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(4,2)-(5,0)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://a.ml/vocabularies/security#authorizationGrant"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(6,2)-(9,0)]"
+                                      }
+                                    ]
+                                  }
+                                ]
                               }
                             ]
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20/settings/oauth2/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#fragment/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+                              {
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#fragment"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": ""
+                                  }
+                                ]
+                              }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://a.ml/vocabularies/security#scope"
+                                    "@value": "http://www.w3.org/ns/hydra/core#response"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(9,2)-(12,0)]"
+                                    "@value": "[(20,2)-(22,39)]"
                                   }
                                 ]
                               },
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://a.ml/vocabularies/security#accessTokenUri"
+                                    "@value": "http://a.ml/vocabularies/http#header"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(5,2)-(6,0)]"
+                                    "@value": "[(13,2)-(17,0)]"
                                   }
                                 ]
                               },
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20/settings/oauth2"
+                                    "@value": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#fragment"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(4,0)-(12,0)]"
+                                    "@value": "[(2,0)-(22,39)]"
                                   }
                                 ]
                               },
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://a.ml/vocabularies/security#authorizationUri"
+                                    "@value": "http://a.ml/vocabularies/security#type"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(4,2)-(5,0)]"
+                                    "@value": "[(2,0)-(3,0)]"
                                   }
                                 ]
                               },
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://a.ml/vocabularies/security#authorizationGrant"
+                                    "@value": "http://a.ml/vocabularies/http#parameter"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(6,2)-(9,0)]"
+                                    "@value": "[(17,2)-(20,0)]"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+                              {
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#fragment"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "raml 1.0"
                                   }
                                 ]
                               }
@@ -802,92 +914,16 @@
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
-                        "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": ""
-                              }
-                            ]
-                          }
-                        ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://www.w3.org/ns/hydra/core#response"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(20,2)-(22,39)]"
-                              }
-                            ]
-                          },
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "http://a.ml/vocabularies/http#header"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(13,2)-(17,0)]"
-                              }
-                            ]
-                          },
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
                                 "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(2,0)-(22,39)]"
-                              }
-                            ]
-                          },
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "http://a.ml/vocabularies/security#type"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(2,0)-(3,0)]"
-                              }
-                            ]
-                          },
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "http://a.ml/vocabularies/http#parameter"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(17,2)-(20,0)]"
-                              }
-                            ]
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/with_references.raml#/web-api/end-points/%2Ftest/get/oauth20"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "raml 1.0"
+                                "@value": "[(27,8)-(27,15)]"
                               }
                             ]
                           }

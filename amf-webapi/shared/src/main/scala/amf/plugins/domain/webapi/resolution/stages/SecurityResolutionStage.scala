@@ -5,41 +5,37 @@ import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.DomainElement
 import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.domain.webapi.metamodel.security.{ParametrizedSecuritySchemeModel, SecuritySchemeModel}
+import amf.plugins.domain.webapi.metamodel.security.OAuth2SettingsModel
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel, WebApiModel}
 import amf.plugins.domain.webapi.models.WebApi
-import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityScheme, Settings}
+import amf.plugins.domain.webapi.models.security.{OAuth2Settings, ParametrizedSecurityScheme, Settings}
+import amf.plugins.features.validation.ParserSideValidations
 
 class SecurityResolutionStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
 
-  private def asSecurityScheme(finder: String => Option[DomainElement],
-                               scheme: ParametrizedSecurityScheme,
-                               parent: String): SecurityScheme = {
-    scheme.fields
-      .entry(ParametrizedSecuritySchemeModel.Scheme)
-      .fold(SecurityScheme(scheme.annotations).withName(scheme.name.value())) { f =>
-        f.value.value match {
-          case s: SecurityScheme =>
-            val cloned = s.cloneScheme(parent)
-
-            if (Option(s.settings).isEmpty) Option(scheme.settings).foreach {
-              cloned.set(SecuritySchemeModel.Settings, _)
-            }
-
-            // keep root definition  for now. If has scopes defined override only scopes??
-//            validateSettings(s.settings, scheme.settings).foreach(cloned.set(SecuritySchemeModel.Settings, _))
-
-            cloned
-          case _ => throw new Exception(s"Security scheme not found for parameterized security scheme ${scheme.id}.")
-        }
-      }
-  }
-
   // TODO validate given settings against root defined settings? Step over? Override only the explicit ones?
-  private def validateSettings(root: Settings, settings: Settings): Option[Settings] =
-    Option(settings).orElse(Option(root))
+  private def validateSettings(root: Settings, settings: Settings): Unit =
+    root match {
+      case rootAuth2: OAuth2Settings if settings.isInstanceOf[OAuth2Settings] =>
+        val auth2Settings   = settings.asInstanceOf[OAuth2Settings]
+        val rootAuth2Scopes = rootAuth2.scopes.flatMap(_.name.option())
+        val scopes = auth2Settings.scopes.flatMap(_.name.option()).filter { s =>
+          !rootAuth2Scopes.contains(s)
+        }
+        if (scopes.nonEmpty)
+          errorHandler.violation(
+            ParserSideValidations.ResolutionErrorSpecification.id,
+            settings.id,
+            Some(OAuth2SettingsModel.Scopes.value.toString),
+            "Follow scopes are not defined in root: " + scopes.toString(),
+            settings.position(),
+            settings.location()
+          )
+      // Should I validate that settings are from same class?
+      case _ => // ignore
+    }
 
-  private def resolveSecurity(finder: String => Option[DomainElement], api: WebApi): Unit = {
+  private def resolveSecurity(api: WebApi): Unit = {
     val rootSecurity = field(api, WebApiModel.Security)
 
     api.endPoints.foreach { endPoint =>
@@ -49,12 +45,15 @@ class SecurityResolutionStage()(override implicit val errorHandler: ErrorHandler
         // I need to know if this is an empty array or if it's not defined.
         val opSecurity = field(operation, OperationModel.Security)
 
-        val security = merge(endPointSecurity, opSecurity)
+        merge(endPointSecurity, opSecurity).foreach { schemes =>
+          schemes.foreach {
+            case s: ParametrizedSecurityScheme
+                if Option(s.settings).isDefined && Option(s.scheme).map(_.settings).isDefined =>
+              validateSettings(s.scheme.settings, s.settings)
+            case _ => // ignore
+          }
+          if (schemes.nonEmpty) operation.setArray(OperationModel.Security, schemes)
 
-        security.foreach { schemes =>
-          val resolved = schemes.map(asSecurityScheme(finder, _, operation.id))
-
-          if (resolved.nonEmpty) operation.setArray(OperationModel.Security, resolved)
         }
       }
     }
@@ -74,7 +73,7 @@ class SecurityResolutionStage()(override implicit val errorHandler: ErrorHandler
   override def resolve[T <: BaseUnit](model: T): T = {
     model match {
       case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
-        resolveSecurity(model.findById, doc.encodes.asInstanceOf[WebApi])
+        resolveSecurity(doc.encodes.asInstanceOf[WebApi])
       case _ =>
     }
     model.asInstanceOf[T]
