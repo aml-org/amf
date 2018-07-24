@@ -14,6 +14,7 @@ import amf.plugins.domain.webapi.metamodel.EndPointModel._
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
 import org.yaml.model._
 import amf.core.utils.Strings
+import amf.plugins.features.validation.ParserSideValidations
 
 import scala.collection.mutable
 
@@ -182,8 +183,8 @@ abstract class RamlEndpointParser(entry: YMapEntry,
       )
       .getOrElse(Map())
 
-    val params: Seq[Parameter] = TemplateUri
-      .variables(parsePath())
+    val pathParams: Seq[String] = TemplateUri.variables(parsePath())
+    val params: Seq[Parameter] = pathParams
       .filter(filter)
       .map { variable =>
         val implicitParam: Parameter = parentParams.get(variable) match {
@@ -203,10 +204,33 @@ abstract class RamlEndpointParser(entry: YMapEntry,
         }
         implicitParam
       }
+    checkParamsUsage(endpoint, pathParams, explicitParams)
     params ++ explicitParams.filter(!params.contains(_))
 
   }
 
+  private def checkParamsUsage(endpoint: EndPoint, pathParams: Seq[String], endpointParams: Seq[Parameter]): Unit = {
+    endpointParams.foreach { p =>
+      if (!p.name.option().exists(n => pathParams.contains(n)))
+        ctx.warning(ParserSideValidations.ParsingWarningSpecification.id,
+                    p.id,
+                    None,
+                    s"Unused uri parameter ${p.name.value()}",
+                    p.position(),
+                    p.location())
+    }
+
+    endpoint.operations.flatMap(o => Option(o.request)).flatMap(_.uriParameters).foreach { p =>
+      if (!p.name.option().exists(n => pathParams.contains(n))) {
+        ctx.warning(ParserSideValidations.ParsingWarningSpecification.id,
+                    p.id,
+                    None,
+                    s"Unused operation uri parameter ${p.name.value()}",
+                    p.position(),
+                    p.location())
+      }
+    }
+  }
   protected def parsePath(): String = parent.map(_.path.value()).getOrElse("") + entry.key.as[YScalar].text
 
   protected def uriParametersKey: String

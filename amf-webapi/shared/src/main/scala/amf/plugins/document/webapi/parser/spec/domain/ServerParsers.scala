@@ -10,6 +10,7 @@ import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, RamlSca
 import amf.plugins.document.webapi.parser.spec.{toOas, toRaml}
 import amf.plugins.domain.webapi.metamodel.{ServerModel, WebApiModel}
 import amf.plugins.domain.webapi.models.{Parameter, Server, WebApi}
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.{YMap, YType}
 
 case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebApiContext) extends SpecParserOps {
@@ -72,8 +73,17 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
                 case _       => buildParamFromVar(v, server.id)
 
             })
-            val finalParams = flatten ++ parameters.filter(!flatten.contains(_))
+            val (used, unused) = parameters.partition(flatten.contains(_))
+            val finalParams    = flatten ++ unused
             server.set(ServerModel.Variables, AmfArray(finalParams, Annotations(entry.value)), Annotations(entry))
+            unused.foreach { p =>
+              ctx.warning(ParserSideValidations.ParsingWarningSpecification.id,
+                          p.id,
+                          None,
+                          s"Unused base uri parameter ${p.name.value()}",
+                          p.position(),
+                          p.location())
+            }
           case YType.Null =>
           case _          => ctx.violation("Invalid node for baseUriParameters", entry.value)
         }

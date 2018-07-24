@@ -331,7 +331,12 @@ class RamlParserErrorTest extends ParserErrorTest {
       violation => {
         violation.level should be("Violation")
         violation.message should be("'baseUri' not defined and 'baseUriParameters' defined.")
-        violation.position.map(_.range) should be(Some(Range((4, 0), (6, 17))))
+        violation.position.map(_.range) should be(Some(Range((4, 0), (5, 14))))
+      },
+      warning => {
+        warning.level should be("Warning")
+        warning.message should be("Unused base uri parameter some")
+        warning.position.map(_.range) should be(Some(Range((5, 2), (5, 14))))
       }
     )
   }
@@ -463,6 +468,33 @@ class RamlParserErrorTest extends ParserErrorTest {
         error.level should be("Violation")
         error.message should be("Properties items not supported in a raml 1.0 nodeShape node")
         error.position.map(_.range) should be(Some(Range((14, 4), (14, 16))))
+      }
+    )
+  }
+
+  test("test non used base uri and uri params") {
+    validate(
+      "/warning/unused-uri-params.raml",
+      endPoint => {
+        endPoint.level should be("Warning")
+        endPoint.message should be("Unused uri parameter unusedUriParam")
+        endPoint.position.map(_.range) should be(Some(Range((18, 4), (19, 18))))
+      },
+      baseUri => {
+        baseUri.level should be("Warning")
+        baseUri.message should be("Unused base uri parameter unusedParam")
+        baseUri.position.map(_.range) should be(Some(Range((9, 2), (11, 0))))
+      }
+    )
+  }
+
+  test("test non used operation uri param 08") {
+    validate(
+      "/warning/unused-uri-params-operation08.raml",
+      operation => {
+        operation.level should be("Warning")
+        operation.message should be("Unused operation uri parameter unusedUriParam")
+        operation.position.map(_.range) should be(Some(Range((9, 6), (10, 20))))
       }
     )
   }

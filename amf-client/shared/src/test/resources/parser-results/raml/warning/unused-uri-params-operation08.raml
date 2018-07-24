@@ -1,0 +1,10 @@
+#%RAML 0.8
+title: test
+
+/endpoint/{uriParam1}/{nonExistsUri}:
+  get:
+    baseUriParameters:
+      uriParam1:
+        type: string
+      unusedUriParam:
+        type: string

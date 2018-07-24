@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: test
+
+baseUri: http://param.raml/a/{baseUriParam1}/{nonExists}/{baseUriParam2}
+
+baseUriParameters:
+  baseUriParam1:
+    type: string
+  unusedParam:
+    type: string
+  baseUriParam2:
+      type: string
+
+/endpoint/{uriParam1}/{nonExistsUri}:
+  uriParameters:
+    uriParam1:
+      type: string
+    unusedUriParam:
+      type: string
