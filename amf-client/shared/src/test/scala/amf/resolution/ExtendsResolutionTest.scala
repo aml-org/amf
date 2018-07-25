@@ -96,6 +96,22 @@ class ExtendsResolutionTest extends ResolutionTest {
     cycle("usage.raml", "usage.raml.raml", RamlYamlHint, Raml08, basePath + "08/")
   }
 
+  test("Trait application with quoted value") {
+    cycle("trait-with-quoted-value.raml",
+          "trait-with-quoted-value.resolved.raml",
+          RamlYamlHint,
+          Raml08,
+          basePath + "08/")
+  }
+
+  test("Trait application with quoted value to jsonld") {
+    cycle("trait-with-quoted-value.raml",
+          "trait-with-quoted-value.resolved.jsonld",
+          RamlYamlHint,
+          Amf,
+          basePath + "08/")
+  }
+
   override def render(unit: BaseUnit, config: CycleConfig): Future[String] = {
     val target = config.target
     new AMFRenderer(unit, target, target.defaultSyntax, RenderOptions().withSourceMaps).renderToString

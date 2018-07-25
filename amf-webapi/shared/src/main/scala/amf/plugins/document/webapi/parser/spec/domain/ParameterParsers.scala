@@ -152,7 +152,7 @@ case class Raml08ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
     extends RamlParameterParser(entry, adopted) {
   def parse(): Parameter = {
 
-    var name      = ScalarNode(entry.key)
+    val name      = ScalarNode(entry.key)
     val parameter = Parameter(entry).set(ParameterModel.Name, name.text()).withParameterName(name.text().toString)
     adopted(parameter)
 

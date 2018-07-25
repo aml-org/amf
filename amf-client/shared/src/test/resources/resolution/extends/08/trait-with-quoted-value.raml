@@ -1,0 +1,15 @@
+#%RAML 0.8
+title: Traits test
+
+traits:
+  - withParam:
+      queryParameters:
+        <<paramName>>:
+          description: <<descr>>
+          type: integer
+        another:
+          description: this has <<descr>>, right?
+
+/param:
+  is: [ withParam: { paramName: "element", descr: "some description" } ]
+  get:
