@@ -14,13 +14,16 @@ class Context protected (val platform: Platform,
 
   def update(url: String): Context = Context(platform, history, resolve(url), mappings)
 
-  def resolve(url: String): String = {
-    applyMapping(platform.resolvePath(url match {
-      case Absolute(s)               => s
-      case RelativeToRoot(s)         => Context.stripFile(root, platform.operativeSystem()) + s
-      case RelativeToIncludedFile(s) => Context.stripFile(current, platform.operativeSystem()) + s
-    }))
-  }
+  def resolve(url: String): String =
+    try {
+      applyMapping(platform.resolvePath(url match {
+        case Absolute(s)               => s
+        case RelativeToRoot(s)         => Context.stripFile(root, platform.operativeSystem()) + s
+        case RelativeToIncludedFile(s) => Context.stripFile(current, platform.operativeSystem()) + s
+      }))
+    } catch {
+      case e: Exception => throw new PathResolutionError(s"url: $url - ${e.getMessage}")
+    }
 
   private def applyMapping(path: String): String =
     mappings.find(m => path.startsWith(m._1)).fold(path)(m => path.replace(m._1, m._2))

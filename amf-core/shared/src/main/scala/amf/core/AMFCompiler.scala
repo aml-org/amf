@@ -47,6 +47,7 @@ class AMFCompiler(val rawUrl: String,
       case e: URISyntaxException =>
         baseContext.getOrElse(ParserContext(rawUrl)).violation(path, e.getMessage, YNode(path))
         rawUrl
+      case e: Exception => throw new PathResolutionError(e.getMessage)
     }
   }
 
@@ -220,10 +221,10 @@ class AMFCompiler(val rawUrl: String,
           })
           .recover {
             case e @ (_: FileNotFound | _: URISyntaxException | _: SocketTimeout | _: UnsupportedUrlScheme |
-                _: NetworkError) =>
+                _: NetworkError | _: PathResolutionError) =>
               if (!link.isInferred()) {
                 link.refs.map(_.node).foreach { ref =>
-                  ctx.violation(link.url, e.getMessage, ref)
+                  ctx.violation(link.url, s"Error Loading File: ${e.getMessage}", ref)
                 }
               }
               None
@@ -235,7 +236,14 @@ class AMFCompiler(val rawUrl: String,
     Future.sequence(units).map(rs => root.copy(references = rs.flatten, vendor = domainPlugin.ID))
   }
 
-  private def resolve(): Future[Content] = remote.resolve(location, env)
+  private def resolve(): Future[Content] =
+    try {
+      remote.resolve(location, env)
+    } catch {
+      case e @ (_: FileNotFound | _: URISyntaxException | _: SocketTimeout | _: UnsupportedUrlScheme |
+          _: NetworkError | _: PathResolutionError) =>
+        throw new FileReadingError(s"Error Loading File: ${e.getMessage}")
+    }
 
   def root(): Future[Root] = resolve().map(parseSyntax).flatMap {
     case Right(document: Root) =>

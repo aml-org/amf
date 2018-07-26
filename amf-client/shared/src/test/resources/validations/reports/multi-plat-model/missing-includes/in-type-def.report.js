@@ -6,7 +6,7 @@ Number of results: 6
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#parsing-error
-  Message: java.io.IOException: ENOENT: no such file or directory, open 'amf-client/shared/src/test/resources/validations/missing-includes/conterparty.raml'
+  Message: Error Loading File: java.io.IOException: ENOENT: no such file or directory, open 'amf-client/shared/src/test/resources/validations/missing-includes/conterparty.raml'
   Level: Violation
   Target: conterparty.raml
   Property: 

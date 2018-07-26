@@ -15,7 +15,9 @@ import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class UnsupportedUrlScheme(url: String) extends Exception
+class UnsupportedUrlScheme(url: String)    extends Exception
+class PathResolutionError(message: String) extends Exception
+class FileReadingError(message: String)    extends Exception
 
 trait FileMediaType {
   def mimeFromExtension(extension: String): Option[String] =
@@ -99,7 +101,7 @@ trait Platform extends FileMediaType {
   }
 
   private def loaderConcat(url: String, loaders: Seq[ResourceLoader]): Future[Content] = loaders.toList match {
-    case Nil         => Future.failed(new UnsupportedUrlScheme(url))
+    case Nil         => throw new UnsupportedUrlScheme(url)
     case head :: Nil => head.fetch(url)
     case head :: tail =>
       head.fetch(url).recoverWith {
