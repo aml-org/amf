@@ -59,8 +59,8 @@ sealed trait RAMLPlugin extends BaseWebApiPlugin {
 
       case Raml08          => Some(Raml08DocumentParser(root)(updated).parseDocument())
       case Raml10          => Some(Raml10DocumentParser(root)(updated).parseDocument())
-      case Raml10Overlay   => Some(Raml10DocumentParser(root)(updated).parseOverlay())
-      case Raml10Extension => Some(Raml10DocumentParser(root)(updated).parseExtension())
+      case Raml10Overlay   => Some(ExtensionLikeParser.apply(root, updated).parseOverlay())
+      case Raml10Extension => Some(ExtensionLikeParser.apply(root, updated).parseExtension())
       case Raml10Library   => Some(RamlModuleParser(root)(clean).parseModule())
       case f: RamlFragment => RamlFragmentParser(root, f)(updated).parseFragment()
       case _               => None

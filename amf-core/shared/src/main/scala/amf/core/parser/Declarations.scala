@@ -67,9 +67,9 @@ class Declarations(var libraries: Map[String, Declarations] = Map(),
       case a: CustomDomainProperty => a
     }
 
-  protected def findForType(key: String,
-                            map: Declarations => Map[String, DomainElement],
-                            scope: SearchScope.Scope): Option[DomainElement] = {
+  def findForType(key: String,
+                  map: Declarations => Map[String, DomainElement],
+                  scope: SearchScope.Scope): Option[DomainElement] = {
     def inRef(): Option[DomainElement] = {
       val fqn = QName(key)
 

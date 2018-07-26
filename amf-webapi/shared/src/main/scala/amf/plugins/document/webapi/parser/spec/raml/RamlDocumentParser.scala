@@ -6,12 +6,12 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
-import amf.core.model.document.{BaseUnit, Document}
+import amf.core.model.document._
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils._
-import amf.plugins.document.webapi.contexts.RamlWebApiContext
+import amf.plugins.document.webapi.contexts.{ExtensionLikeWebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common._
@@ -30,17 +30,66 @@ import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 /**
-  * Raml 1.0 spec parser
+  * Extension and Overlay parser
   */
-case class Raml10DocumentParser(root: Root)(implicit override val ctx: RamlWebApiContext)
+case class ExtensionLikeParser(root: Root)(implicit override val ctx: ExtensionLikeWebApiContext)
     extends RamlDocumentParser(root)
     with Raml10BaseSpecParser {
+
   def parseExtension(): Extension = {
+
+    getParent match {
+      case Some(parent) => collectAncestorsDeclarationsAndReferences(parent, ctx.parentDeclarations)
+      case _            => // nothing to do
+    }
+
     val extension = parseDocument(Extension())
 
     parseExtension(extension, ExtensionLikeModel.Extends)
 
     extension
+  }
+
+  def parseOverlay(): Overlay = {
+
+    getParent match {
+      case Some(parent) => collectAncestorsDeclarationsAndReferences(parent, ctx.parentDeclarations)
+      case _            => // nothing to do
+    }
+
+    val overlay = parseDocument(Overlay())
+
+    parseExtension(overlay, ExtensionLikeModel.Extends)
+
+    overlay
+  }
+
+  private def getParent: Option[BaseUnit] = {
+    root.references.map(_.unit).collectFirst { case u @ (_: ExtensionLike[_] | _: Document) => u }
+  }
+
+  private def collectAncestorsDeclarationsAndReferences(reference: BaseUnit, collector: RamlWebApiDeclarations): Unit = {
+
+    reference.asInstanceOf[Document].declares.foreach(collector += _)
+
+    val (exLikeOrDocument, otherReferences) = reference.references.partition({
+      case _: ExtensionLike[_] | _: Document => true
+      case _                                 => false
+    })
+
+    reference.annotations
+      .find(classOf[Aliases])
+      .foreach(_.aliases.foreach { alias =>
+        val fullUrl = alias._2._1
+        otherReferences.find(_.location().exists(_.equals(fullUrl))) match {
+          case Some(library: Module) =>
+            val libraryDeclarations = collector.getOrCreateLibrary(alias._1)
+            library.declares.foreach(libraryDeclarations += _)
+          case _ => // nothing to do
+        }
+      })
+
+    exLikeOrDocument.foreach(collectAncestorsDeclarationsAndReferences(_, collector))
   }
 
   private def parseExtension(document: Document, field: Field): Unit = {
@@ -59,14 +108,28 @@ case class Raml10DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
       })
   }
 
-  def parseOverlay(): Overlay = {
-    val overlay = parseDocument(Overlay())
+}
 
-    parseExtension(overlay, ExtensionLikeModel.Extends)
-
-    overlay
+object ExtensionLikeParser {
+  def apply(root: Root, baseCtx: RamlWebApiContext): ExtensionLikeParser = {
+    val parentDeclarations = new RamlWebApiDeclarations(alias = None,
+                                                        errorHandler = Some(baseCtx),
+                                                        futureDeclarations = baseCtx.futureDeclarations)
+    val exLikeCtx: ExtensionLikeWebApiContext = new ExtensionLikeWebApiContext(baseCtx.rootContextDocument,
+                                                                               baseCtx.refs,
+                                                                               baseCtx,
+                                                                               Some(baseCtx.declarations),
+                                                                               parentDeclarations)
+    new ExtensionLikeParser(root)(exLikeCtx)
   }
 }
+
+/**
+  * Raml 1.0 spec parser
+  */
+case class Raml10DocumentParser(root: Root)(implicit override val ctx: RamlWebApiContext)
+    extends RamlDocumentParser(root)
+    with Raml10BaseSpecParser {}
 
 abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContext) extends RamlBaseDocumentParser {
 

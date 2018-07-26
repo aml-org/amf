@@ -112,6 +112,14 @@ class ExtendsResolutionTest extends ResolutionTest {
           basePath + "08/")
   }
 
+  test("Extension with library usage") {
+    cycle("extension-library/api.raml", "extension-library/api.raml.raml", RamlYamlHint, Raml)
+  }
+
+  test("Extension with library multilevel usage") {
+    cycle("extension-library-multilevel/api.raml", "extension-library-multilevel/api.raml.raml", RamlYamlHint, Raml)
+  }
+
   override def render(unit: BaseUnit, config: CycleConfig): Future[String] = {
     val target = config.target
     new AMFRenderer(unit, target, target.defaultSyntax, RenderOptions().withSourceMaps).renderToString

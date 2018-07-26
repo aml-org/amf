@@ -8,7 +8,12 @@ import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.JsonSchemaPlugin
 import amf.plugins.document.webapi.parser.spec.oas.{Oas2Syntax, Oas3Syntax}
 import amf.plugins.document.webapi.parser.spec.raml.{Raml08Syntax, Raml10Syntax}
-import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, SpecSyntax, WebApiDeclarations}
+import amf.plugins.document.webapi.parser.spec.{
+  ExtensionWebApiDeclarations,
+  RamlWebApiDeclarations,
+  SpecSyntax,
+  WebApiDeclarations
+}
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.features.validation.ParserSideValidations.{
   ClosedShapeSpecification,
@@ -153,6 +158,33 @@ abstract class RamlWebApiContext(override val loc: String,
       case None => throw new Exception(s"Cannot validate unknown node type $shapeType for $vendor")
     }
   }
+}
+
+class ExtensionLikeWebApiContext(loc: String,
+                                 refs: Seq[ParsedReference],
+                                 private val wrapped: ParserContext,
+                                 private val ds: Option[RamlWebApiDeclarations] = None,
+                                 val parentDeclarations: RamlWebApiDeclarations)
+    extends Raml10WebApiContext(loc, refs, wrapped, ds) {
+
+  override val declarations: ExtensionWebApiDeclarations =
+    ds match {
+      case Some(dec) =>
+        new ExtensionWebApiDeclarations(dec.externalShapes,
+                                        dec.externalLibs,
+                                        parentDeclarations,
+                                        dec.alias,
+                                        dec.errorHandler,
+                                        dec.futureDeclarations)
+      case None =>
+        new ExtensionWebApiDeclarations(parentDeclarations = parentDeclarations,
+                                        alias = None,
+                                        errorHandler = Some(this),
+                                        futureDeclarations = futureDeclarations)
+    }
+
+  override protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext =
+    new ExtensionLikeWebApiContext(loc, refs, wrapped, Some(declarations), parentDeclarations)
 }
 
 abstract class OasWebApiContext(loc: String,

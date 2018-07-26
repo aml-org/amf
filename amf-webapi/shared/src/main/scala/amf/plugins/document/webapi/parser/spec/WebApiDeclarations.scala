@@ -222,6 +222,11 @@ class WebApiDeclarations(val alias: Option[String],
   def findNamedExample(key: String): Option[Example] = fragments.get(key).map(_.encoded) collect {
     case e: Example => e
   }
+
+  def nonEmpty: Boolean = {
+    libs.nonEmpty || frags.nonEmpty || shapes.nonEmpty || anns.nonEmpty || resourceTypes.nonEmpty ||
+    parameters.nonEmpty || payloads.nonEmpty || traits.nonEmpty || securitySchemes.nonEmpty || responses.nonEmpty
+  }
 }
 
 object WebApiDeclarations {
@@ -323,6 +328,28 @@ class RamlWebApiDeclarations(var externalShapes: Map[String, AnyShape] = Map(),
     externalShapes.foreach { case (k, s)       => merged.externalShapes += (k -> s) }
     other.externalShapes.foreach { case (k, s) => merged.externalShapes += (k -> s) }
     merged
+  }
+
+//  def addDeclarationsAndReferencesRecursively(dec: ): Unit = {
+//
+//  }
+}
+
+class ExtensionWebApiDeclarations(externalShapes: Map[String, AnyShape] = Map(),
+                                  externalLibs: Map[String, Map[String, AnyShape]] = Map(),
+                                  parentDeclarations: RamlWebApiDeclarations,
+                                  override val alias: Option[String],
+                                  override val errorHandler: Option[ErrorHandler],
+                                  override val futureDeclarations: FutureDeclarations)
+    extends RamlWebApiDeclarations(externalShapes, externalLibs, alias, errorHandler, futureDeclarations) {
+
+  override def findForType(key: String,
+                           map: Declarations => Map[String, DomainElement],
+                           scope: SearchScope.Scope): Option[DomainElement] = {
+    super.findForType(key, map, scope) match {
+      case Some(x) => Some(x)
+      case None    => parentDeclarations.findForType(key, map, scope)
+    }
   }
 }
 
