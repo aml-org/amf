@@ -1,0 +1,24 @@
+#%RAML 1.0
+title: Token API
+version: v1
+
+resourceTypes:
+  OperationCreate:
+    post:
+      responses:
+        201:
+          body:
+            application/json:
+              type: <<postResponseType>>
+              example: <<postResponseExample>>
+
+  
+/tokens:
+  type:
+    OperationCreate:
+      postResponseType : 
+        description: This is structure of the Create Token Response JSON
+        properties:
+          tokenId:
+            type: string
+      postResponseExample : !include create-token-response-success.json

@@ -1,10 +1,10 @@
 package amf.core.resolution
 
-import amf.core.annotations.ErrorRegistered
+import amf.core.annotations.{ErrorRegistered, SourceAST}
 import amf.core.model.domain.templates.Variable
 import amf.core.model.domain.{DataNode, ScalarNode}
 import amf.core.utils.InflectorBase.Inflector
-import org.yaml.model.YScalar
+import org.yaml.model.{QuotedMark, YScalar}
 import org.yaml.render.YamlRender
 
 import scala.util.matching.Regex
@@ -53,7 +53,15 @@ object VariableReplacer {
       .get(name)
       .map {
         case v: ScalarNode =>
-          val text = YamlRender.render(YScalar(v.value))
+          val text: String = v.annotations
+            .find(classOf[SourceAST])
+            .map(_.ast)
+            .collectFirst({
+              case s: YScalar if s.mark.isInstanceOf[QuotedMark] => YamlRender.render(YScalar(s.text))
+              /* this calls quotedmark.marktext*/
+            })
+            .getOrElse(v.value)
+
           Option(m.group(2))
             .map { transformations =>
               TransformationsRegex.findAllIn(transformations).foldLeft(text)(variableTransformation)
