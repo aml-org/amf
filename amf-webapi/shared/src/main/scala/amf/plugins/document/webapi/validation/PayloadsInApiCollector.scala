@@ -6,7 +6,7 @@ import amf.core.parser.Annotations
 import amf.core.utils._
 import amf.core.validation.ValidationCandidate
 import amf.core.vocabulary.Namespace
-import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, ExampleModel}
+import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, ExampleModel, ScalarShapeModel}
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ScalarShape}
 
 import scala.collection.mutable
@@ -116,7 +116,17 @@ class PayloadsInApiCollector(model: BaseUnit) {
     val fragment = colectedElement match {
       case dn: DataNodeCollectedElement => // the example has been parsed, so i can use native validation like json or any default
 
-        PayloadFragment(dn.dataNode, "text/vnd.yaml")
+        val newNode: DataNode = dn.dataNode match {
+          case scalar: ScalarNode
+              if shape.fields
+                .entry(ScalarShapeModel.DataType)
+                .exists(e => e.value.value.toString.equals((Namespace.Xsd + "string").iri())) =>
+            val node = scalar.cloneNode()
+            node.withId(scalar.id).dataType = Some((Namespace.Xsd + "string").iri())
+            node
+          case other => other
+        }
+        PayloadFragment(newNode, "text/vnd.yaml")
       case s: StringCollectedElement =>
         PayloadFragment(ScalarNode(s.raw, None, s.a), s.raw.guessMediaType(shape.isInstanceOf[ScalarShape])) // todo: review with antonio
     }

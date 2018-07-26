@@ -1,17 +1,9 @@
 Model: file://amf-client/shared/src/test/resources/validations/jsonschema/anyOf/api2.raml
 Profile: RAML
 Conforms? false
-Number of results: 2
+Number of results: 1
 
 Level: Violation
-
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"keyword":"type","dataPath":"","schemaPath":"#/type","params":{"type":"string"},"message":"should be string"}
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/jsonschema/anyOf/api2.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/scalar/schema/example/default-example
-  Property: 
-  Position: Some(LexicalInformation([(25,21)-(25,22)]))
-  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/anyOf/api2.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
   Message: {"keyword":"anyOf","dataPath":"","schemaPath":"#/anyOf","params":{},"message":"should match some schema in anyOf"}

@@ -87,16 +87,16 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     checkValid("examples/date_time_validations.raml")
   }
 
+  test("Test valid string hierarchy examples") {
+    checkValid("/examples/string-hierarchy.raml")
+  }
+
   test("Test declared type with two uses adding example") {
     validate("/examples/declared-type-ref-add-example.raml", golden = Some("declared-type-ref-add-example.report"))
   }
 
   test("Test validate declared type with two uses") {
     validate("/examples/declared-type-ref.raml", golden = Some("declared-type-ref.report"))
-  }
-
-  test("Test valid string hierarchy examples") {
-    validate("/examples/string-hierarchy.raml", golden = Some("string-hierarchy.report"))
   }
 
   test("Test valid api with pattern properties") {

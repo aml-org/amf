@@ -397,10 +397,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
       .dataType
       .option()
       .getOrElse("") == (Namespace.Xsd + "string").iri()
-    RamlSingleExampleParser("example",
-                            map,
-                            shape.withExample,
-                            ExampleOptions(strictDefault = true, quiet = true, paramString = isParamString))
+    RamlSingleExampleParser("example", map, shape.withExample, ExampleOptions(strictDefault = true, quiet = true))
       .parse()
       .foreach(e => shape.setArray(ScalarShapeModel.Examples, Seq(e)))
 
