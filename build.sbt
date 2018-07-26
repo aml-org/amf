@@ -152,8 +152,15 @@ lazy val client = crossProject
     mainClass in assembly := Some("amf.Main"),
     assemblyOutputPath in assembly := file(s"./amf-${version.value}.jar"),
     assemblyMergeStrategy in assembly := {
-      case x if x.toString.endsWith("JS_DEPENDENCIES")             => MergeStrategy.discard
-      case PathList(ps @ _*) if ps.last endsWith "JS_DEPENDENCIES" => MergeStrategy.discard
+      case x if x.toString.contains("commons/logging")             => {
+        MergeStrategy.discard
+      }
+      case x if x.toString.endsWith("JS_DEPENDENCIES")             => {
+        MergeStrategy.discard
+      }
+      case PathList(ps @ _*) if ps.last endsWith "JS_DEPENDENCIES" => {
+        MergeStrategy.discard
+      }
       case x =>
         val oldStrategy = (assemblyMergeStrategy in assembly).value
         oldStrategy(x)
