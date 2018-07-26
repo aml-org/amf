@@ -6,9 +6,9 @@ Number of results: 1
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"keyword":"anyOf","dataPath":"","schemaPath":"#/anyOf","params":{},"message":"should match some schema in anyOf"}
-{"keyword":"type","dataPath":"","schemaPath":"#/anyOf/0/type","params":{"type":"string"},"message":"should be string"}
-{"keyword":"type","dataPath":"","schemaPath":"#/anyOf/1/type","params":{"type":"integer"},"message":"should be integer"}
+  Message:  should be integer
+ should be string
+ should match some schema in anyOf
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/shapes/invalid-example-in-unions.raml#/shape/example/ex3

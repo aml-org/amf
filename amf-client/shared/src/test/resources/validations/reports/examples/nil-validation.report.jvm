@@ -6,7 +6,7 @@ Number of results: 1
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"schemaLocation":"#/properties/middlename","pointerToViolation":"#/middlename","causingExceptions":[],"keyword":"type","message":"expected: null, found: String"}
+  Message: /middlename expected: null, found: String
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/nil_validation.raml#/declarations/types/User/example/wrong-type
   Property: 

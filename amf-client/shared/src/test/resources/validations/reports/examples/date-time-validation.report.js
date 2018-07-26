@@ -6,7 +6,7 @@ Number of results: 6
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"keyword":"format","dataPath":"","schemaPath":"#/format","params":{"format":"date-time-only"},"message":"should match format \"date-time-only\""}
+  Message:  should match format "date-time-only"
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/fireworks/example/bad
   Property: 
@@ -14,7 +14,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"keyword":"format","dataPath":"","schemaPath":"#/format","params":{"format":"date"},"message":"should match format \"date\""}
+  Message:  should match format "date"
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/birthday/example/default-example
   Property: 
@@ -22,7 +22,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"keyword":"format","dataPath":"","schemaPath":"#/format","params":{"format":"time"},"message":"should match format \"time\""}
+  Message:  should match format "time"
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/lunchtime/example/default-example
   Property: 
@@ -30,7 +30,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"keyword":"format","dataPath":"","schemaPath":"#/format","params":{"format":"date-time"},"message":"should match format \"date-time\""}
+  Message:  should match format "date-time"
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/created/example/default-example
   Property: 
@@ -38,7 +38,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"keyword":"format","dataPath":"","schemaPath":"#/format","params":{"format":"rfc2616"},"message":"should match format \"rfc2616\""}
+  Message:  should match format "rfc2616"
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/If-Modified-Since/example/default-example
   Property: 
@@ -46,7 +46,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"keyword":"format","dataPath":"","schemaPath":"#/format","params":{"format":"date-time"},"message":"should match format \"date-time\""}
+  Message:  should match format "date-time"
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/date_time_validations2.raml#/declarations/types/scalar/If-Modified-Since2/example/default-example
   Property: 

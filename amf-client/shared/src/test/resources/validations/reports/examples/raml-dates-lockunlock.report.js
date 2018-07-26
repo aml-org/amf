@@ -6,7 +6,7 @@ Number of results: 4
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"keyword":"format","dataPath":"","schemaPath":"#/format","params":{"format":"RFC2616"},"message":"should match format \"RFC2616\""}
+  Message:  should match format "RFC2616"
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/raml-dates/lockUnlockStats.raml#/web-api/end-points/%2Fstores%2Fcount/get/request/parameter/from/scalar/from/example/default-example
   Property: 
@@ -14,7 +14,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/examples/raml-dates/lockUnlockStats.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"keyword":"format","dataPath":"","schemaPath":"#/format","params":{"format":"RFC2616"},"message":"should match format \"RFC2616\""}
+  Message:  should match format "RFC2616"
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/raml-dates/lockUnlockStats.raml#/web-api/end-points/%2Fstores%2Fcount/get/request/parameter/from/scalar/from/scalar_1
   Property: 
@@ -22,7 +22,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/examples/raml-dates/lockUnlockStats.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"keyword":"format","dataPath":"","schemaPath":"#/format","params":{"format":"RFC2616"},"message":"should match format \"RFC2616\""}
+  Message:  should match format "RFC2616"
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/raml-dates/lockUnlockStats.raml#/web-api/end-points/%2Fstores%2Fcount/get/request/parameter/to/scalar/to/example/default-example
   Property: 
@@ -30,7 +30,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/examples/raml-dates/lockUnlockStats.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"keyword":"format","dataPath":"","schemaPath":"#/format","params":{"format":"RFC2616"},"message":"should match format \"RFC2616\""}
+  Message:  should match format "RFC2616"
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/raml-dates/lockUnlockStats.raml#/web-api/end-points/%2Fstores%2Fcount/get/request/parameter/to/scalar/to/scalar_1
   Property: 

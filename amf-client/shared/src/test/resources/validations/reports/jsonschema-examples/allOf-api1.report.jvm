@@ -6,7 +6,7 @@ Number of results: 3
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"schemaLocation":"#/allOf/0","pointerToViolation":"#","causingExceptions":[],"keyword":"required","message":"required key [bar] not found"}
+  Message:  required key [bar] not found
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api1.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/any/schema/example/default-example
   Property: 
@@ -14,7 +14,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api1.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"schemaLocation":"#/allOf/1","pointerToViolation":"#","causingExceptions":[],"keyword":"required","message":"required key [foo] not found"}
+  Message:  required key [foo] not found
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/any/schema/example/default-example
   Property: 
@@ -22,7 +22,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api1.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"schemaLocation":"#/allOf/0/properties/bar","pointerToViolation":"#/bar","causingExceptions":[],"keyword":"type","message":"expected type: Number, found: String"}
+  Message: /bar expected type: Number, found: String
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/any/schema/example/default-example
   Property: 

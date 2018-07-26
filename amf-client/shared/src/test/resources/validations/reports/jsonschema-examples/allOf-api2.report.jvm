@@ -6,7 +6,7 @@ Number of results: 4
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"pointerToViolation":"#","causingExceptions":[],"keyword":"required","message":"required key [bar] not found"}
+  Message:  required key [bar] not found
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/schema/example/default-example
   Property: 
@@ -14,7 +14,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"pointerToViolation":"#","causingExceptions":[{"schemaLocation":"#/allOf/0","pointerToViolation":"#","causingExceptions":[],"keyword":"required","message":"required key [foo] not found"}],"keyword":"allOf","message":"#: only 1 subschema matches out of 2"}
+  Message:  required key [foo] not found
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/schema/example/default-example
   Property: 
@@ -22,7 +22,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"pointerToViolation":"#","causingExceptions":[{"schemaLocation":"#/allOf/1","pointerToViolation":"#","causingExceptions":[],"keyword":"required","message":"required key [baz] not found"}],"keyword":"allOf","message":"#: only 1 subschema matches out of 2"}
+  Message:  required key [baz] not found
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/schema/example/default-example
   Property: 
@@ -30,9 +30,11 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"pointerToViolation":"#","causingExceptions":[{"schemaLocation":"#/allOf/0","pointerToViolation":"#","causingExceptions":[],"keyword":"required","message":"required key [foo] not found"},{"schemaLocation":"#/allOf/1","pointerToViolation":"#","causingExceptions":[],"keyword":"required","message":"required key [baz] not found"}],"keyword":"allOf","message":"#: only 0 subschema matches out of 2"}
+  Message:  required key [baz] not found
+ required key [foo] not found
+
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml#/web-api/end-points/%2Fep5/get/200/application%2Fjson/schema/example/default-example
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml#/web-api/end-points/%2Fep5/get/200/application%2Fjson/schema/example/default-example
   Position: Some(LexicalInformation([(80,0)-(80,20)]))
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml

@@ -6,7 +6,7 @@ Number of results: 1
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"keyword":"type","dataPath":"","schemaPath":"#/type","params":{"type":"integer"},"message":"should be integer"}
+  Message:  should be integer
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/double-example-inttype.raml#/declarations/types/orders/property/Priority/scalar/Priority/example/default-example
   Property: 

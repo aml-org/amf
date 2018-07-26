@@ -6,7 +6,7 @@ Number of results: 2
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"keyword":"minProperties","dataPath":"","schemaPath":"#/minProperties","params":{"limit":2},"message":"should NOT have less than 2 properties"}
+  Message:  should NOT have less than 2 properties
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/min-max-properties-example.raml#/declarations/types/InvalidMax/example/badMin
   Property: 
@@ -14,7 +14,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/examples/min-max-properties-example.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"keyword":"maxProperties","dataPath":"","schemaPath":"#/maxProperties","params":{"limit":2},"message":"should NOT have more than 2 properties"}
+  Message:  should NOT have more than 2 properties
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/min-max-properties-example.raml#/declarations/types/InvalidMax/example/badMax
   Property: 

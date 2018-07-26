@@ -40,7 +40,7 @@ object JsJsonSchemaValidator extends PlatformJsonSchemaValidator {
     if (!correct) {
       validator.errors.toOption.getOrElse(js.Array[ValidationResult]()).map { result =>
         AMFValidationResult(
-          message = js.Dynamic.global.JSON.stringify(result).asInstanceOf[String],
+          message = makeValidationMessage(result),
           level = SeverityLevels.VIOLATION,
           targetNode = payload.encodes.id,
           targetProperty = None,
@@ -53,6 +53,12 @@ object JsJsonSchemaValidator extends PlatformJsonSchemaValidator {
     } else {
       Nil
     }
+  }
+
+  private def makeValidationMessage(validationResult: ValidationResult): String ={
+    var pointer = validationResult.dataPath
+    if (pointer.startsWith(".")) pointer = pointer.replaceFirst("\\.", "")
+    (pointer + " " + validationResult.message).trim
   }
 
   override protected def loadDataNodeString(payload: PayloadFragment): Option[js.Dynamic] = {

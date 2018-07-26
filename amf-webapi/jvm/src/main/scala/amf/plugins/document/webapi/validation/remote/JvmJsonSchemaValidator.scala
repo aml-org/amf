@@ -120,38 +120,40 @@ object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
                 println("-----------------------\n\n")
              */
 
-            var resultsAcc = Seq[AMFValidationResult]()
-            val results    = validationException.getCausingExceptions.iterator()
-            while (results.hasNext) {
-              val result = results.next()
-              resultsAcc = resultsAcc :+ AMFValidationResult(
-                message = result.toJSON.toString(),
-                level = SeverityLevels.VIOLATION,
-                targetNode = payload.encodes.id,
-                targetProperty = None,
-                validationId = (Namespace.AmfParser + "exampleError").iri(),
-                position = payload.encodes.position(),
-                location = payload.encodes.location(),
-                source = validationException
-              )
-            }
-            if (resultsAcc.isEmpty) {
-              resultsAcc = resultsAcc :+ AMFValidationResult(
-                message = validationException.toJSON.toString(),
-                level = SeverityLevels.VIOLATION,
-                targetNode = payload.encodes.id,
-                targetProperty = None,
-                validationId = (Namespace.AmfParser + "exampleError").iri(),
-                position = payload.encodes.position(),
-                location = payload.encodes.location(),
-                source = validationException
-              )
-            }
-            resultsAcc
+            iterateValidations(validationException, payload)
         }
 
       case _ => Nil // schema is not a JSON object
     }
+
+  def iterateValidations(validationException: ValidationException, payload: PayloadFragment): Seq[AMFValidationResult] = {
+    var resultsAcc = Seq[AMFValidationResult]()
+    val results    = validationException.getCausingExceptions.iterator()
+    while (results.hasNext) {
+      val result = results.next()
+      resultsAcc = resultsAcc ++ iterateValidations(result, payload)
+    }
+    if (resultsAcc.isEmpty) {
+      resultsAcc = resultsAcc :+ AMFValidationResult(
+        message = makeValidationMessage(validationException),
+        level = SeverityLevels.VIOLATION,
+        targetNode = payload.encodes.id,
+        targetProperty = None,
+        validationId = (Namespace.AmfParser + "exampleError").iri(),
+        position = payload.encodes.position(),
+        location = payload.encodes.location(),
+        source = validationException
+      )
+    }
+    resultsAcc
+  }
+
+  private def makeValidationMessage(validationException: ValidationException): String ={
+    val json = validationException.toJSON
+    var pointer = json.getString("pointerToViolation")
+    if (pointer.startsWith("#")) pointer = pointer.replaceFirst("#", "")
+    (pointer + " " + json.getString("message")).trim
+  }
 
   protected def loadDataNodeString(payload: PayloadFragment): Option[LoadedObj] = {
     try {

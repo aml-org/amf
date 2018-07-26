@@ -34,7 +34,7 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
     ("payloads.raml", "D", "d_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
     // jvm reports the failures in the inner node and the failed value for the property connecting the inner node,
     // js only reports the failed properties in the inner node
-    ("payloads.raml", "D", "d_invalid.json")               -> ExpectedReport(conforms = false, 2, PAYLOADProfile, jsNumErrors = Some(2)),
+    ("payloads.raml", "D", "d_invalid.json")               -> ExpectedReport(conforms = false, 3, PAYLOADProfile, jsNumErrors = Some(2)),
     ("payloads.raml", "E", "e_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),
     ("payloads.raml", "E", "e_invalid.json")               -> ExpectedReport(conforms = false, 1, PAYLOADProfile),
     ("payloads.raml", "F", "f_valid.json")                 -> ExpectedReport(conforms = true, 0, PAYLOADProfile),

@@ -6,7 +6,7 @@ Number of results: 2
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"keyword":"oneOf","dataPath":"","schemaPath":"#/oneOf","params":{"passingSchemas":[0,1]},"message":"should match exactly one schema in oneOf"}
+  Message: should match exactly one schema in oneOf
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/oneOf/api3.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/any/schema/example/default-example
   Property: 
@@ -14,9 +14,9 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/oneOf/api3.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"keyword":"oneOf","dataPath":"","schemaPath":"#/oneOf","params":{"passingSchemas":null},"message":"should match exactly one schema in oneOf"}
-{"keyword":"type","dataPath":".bar","schemaPath":"#/oneOf/0/properties/bar/type","params":{"type":"integer"},"message":"should be integer"}
-{"keyword":"type","dataPath":".foo","schemaPath":"#/oneOf/1/properties/foo/type","params":{"type":"string"},"message":"should be string"}
+  Message: bar should be integer
+foo should be string
+should match exactly one schema in oneOf
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/oneOf/api3.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/any/schema/example/default-example

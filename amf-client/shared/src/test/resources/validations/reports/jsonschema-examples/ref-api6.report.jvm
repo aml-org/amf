@@ -6,8 +6,14 @@ Number of results: 2
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"schemaLocation":"#/properties/nodes/items/properties/subtree/properties/nodes","pointerToViolation":"#/nodes/0/subtree/nodes","causingExceptions":[{"schemaLocation":"#","pointerToViolation":"#/nodes/0/subtree/nodes/0","causingExceptions":[{"schemaLocation":"#","pointerToViolation":"#/nodes/0/subtree/nodes/0","causingExceptions":[],"keyword":"required","message":"required key [meta] not found"},{"schemaLocation":"#","pointerToViolation":"#/nodes/0/subtree/nodes/0","causingExceptions":[],"keyword":"required","message":"required key [nodes] not found"}],"message":"2 schema violations found"},{"schemaLocation":"#","pointerToViolation":"#/nodes/0/subtree/nodes/1","causingExceptions":[{"schemaLocation":"#","pointerToViolation":"#/nodes/0/subtree/nodes/1","causingExceptions":[],"keyword":"required","message":"required key [meta] not found"},{"schemaLocation":"#","pointerToViolation":"#/nodes/0/subtree/nodes/1","causingExceptions":[],"keyword":"required","message":"required key [nodes] not found"}],"message":"2 schema violations found"}],"message":"4 schema violations found"}
-{"schemaLocation":"#/properties/nodes/items/properties/subtree/properties/nodes","pointerToViolation":"#/nodes/1/subtree/nodes","causingExceptions":[{"schemaLocation":"#","pointerToViolation":"#/nodes/1/subtree/nodes/0","causingExceptions":[{"schemaLocation":"#","pointerToViolation":"#/nodes/1/subtree/nodes/0","causingExceptions":[],"keyword":"required","message":"required key [meta] not found"},{"schemaLocation":"#","pointerToViolation":"#/nodes/1/subtree/nodes/0","causingExceptions":[],"keyword":"required","message":"required key [nodes] not found"}],"message":"2 schema violations found"},{"schemaLocation":"#","pointerToViolation":"#/nodes/1/subtree/nodes/1","causingExceptions":[{"schemaLocation":"#","pointerToViolation":"#/nodes/1/subtree/nodes/1","causingExceptions":[],"keyword":"required","message":"required key [meta] not found"},{"schemaLocation":"#","pointerToViolation":"#/nodes/1/subtree/nodes/1","causingExceptions":[],"keyword":"required","message":"required key [nodes] not found"}],"message":"2 schema violations found"}],"message":"4 schema violations found"}
+  Message: /nodes/0/subtree/nodes/0 required key [meta] not found
+/nodes/0/subtree/nodes/0 required key [nodes] not found
+/nodes/0/subtree/nodes/1 required key [meta] not found
+/nodes/0/subtree/nodes/1 required key [nodes] not found
+/nodes/1/subtree/nodes/0 required key [meta] not found
+/nodes/1/subtree/nodes/0 required key [nodes] not found
+/nodes/1/subtree/nodes/1 required key [meta] not found
+/nodes/1/subtree/nodes/1 required key [nodes] not found
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api6.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/schema/example/default-example
@@ -16,8 +22,14 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api6.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"schemaLocation":"#/properties/nodes/items/properties/subtree/properties/nodes","pointerToViolation":"#/nodes/0/subtree/nodes","causingExceptions":[{"schemaLocation":"#","pointerToViolation":"#/nodes/0/subtree/nodes/0","causingExceptions":[{"schemaLocation":"#","pointerToViolation":"#/nodes/0/subtree/nodes/0","causingExceptions":[],"keyword":"required","message":"required key [meta] not found"},{"schemaLocation":"#","pointerToViolation":"#/nodes/0/subtree/nodes/0","causingExceptions":[],"keyword":"required","message":"required key [nodes] not found"}],"message":"2 schema violations found"},{"schemaLocation":"#","pointerToViolation":"#/nodes/0/subtree/nodes/1","causingExceptions":[{"schemaLocation":"#","pointerToViolation":"#/nodes/0/subtree/nodes/1","causingExceptions":[],"keyword":"required","message":"required key [meta] not found"},{"schemaLocation":"#","pointerToViolation":"#/nodes/0/subtree/nodes/1","causingExceptions":[],"keyword":"required","message":"required key [nodes] not found"}],"message":"2 schema violations found"}],"message":"4 schema violations found"}
-{"schemaLocation":"#/properties/nodes/items/properties/subtree/properties/nodes","pointerToViolation":"#/nodes/1/subtree/nodes","causingExceptions":[{"schemaLocation":"#","pointerToViolation":"#/nodes/1/subtree/nodes/0","causingExceptions":[{"schemaLocation":"#","pointerToViolation":"#/nodes/1/subtree/nodes/0","causingExceptions":[],"keyword":"required","message":"required key [meta] not found"},{"schemaLocation":"#","pointerToViolation":"#/nodes/1/subtree/nodes/0","causingExceptions":[],"keyword":"required","message":"required key [nodes] not found"}],"message":"2 schema violations found"},{"schemaLocation":"#","pointerToViolation":"#/nodes/1/subtree/nodes/1","causingExceptions":[{"schemaLocation":"#","pointerToViolation":"#/nodes/1/subtree/nodes/1","causingExceptions":[],"keyword":"required","message":"required key [meta] not found"},{"schemaLocation":"#","pointerToViolation":"#/nodes/1/subtree/nodes/1","causingExceptions":[],"keyword":"required","message":"required key [nodes] not found"}],"message":"2 schema violations found"}],"message":"4 schema violations found"}
+  Message: /nodes/0/subtree/nodes/0 required key [meta] not found
+/nodes/0/subtree/nodes/0 required key [nodes] not found
+/nodes/0/subtree/nodes/1 required key [meta] not found
+/nodes/0/subtree/nodes/1 required key [nodes] not found
+/nodes/1/subtree/nodes/0 required key [meta] not found
+/nodes/1/subtree/nodes/0 required key [nodes] not found
+/nodes/1/subtree/nodes/1 required key [meta] not found
+/nodes/1/subtree/nodes/1 required key [nodes] not found
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api6.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/schema/example/default-example

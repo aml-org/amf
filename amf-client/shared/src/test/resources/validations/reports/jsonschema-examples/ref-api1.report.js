@@ -6,9 +6,9 @@ Number of results: 2
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"keyword":"additionalProperties","dataPath":".foo","schemaPath":"#/properties/foo/anyOf/0/additionalProperties","params":{"additionalProperty":"bar"},"message":"should NOT have additional properties"}
-{"keyword":"anyOf","dataPath":".foo","schemaPath":"#/properties/foo/anyOf","params":{},"message":"should match some schema in anyOf"}
-{"keyword":"type","dataPath":".foo","schemaPath":"#/properties/foo/anyOf/1/type","params":{"type":"boolean"},"message":"should be boolean"}
+  Message: foo should NOT have additional properties
+foo should be boolean
+foo should match some schema in anyOf
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/schema/example/default-example
@@ -17,11 +17,11 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"keyword":"anyOf","dataPath":".foo","schemaPath":"#/properties/foo/anyOf","params":{},"message":"should match some schema in anyOf"}
-{"keyword":"anyOf","dataPath":".foo.foo","schemaPath":"#/properties/foo/anyOf/0/properties/foo/anyOf","params":{},"message":"should match some schema in anyOf"}
-{"keyword":"type","dataPath":".foo","schemaPath":"#/properties/foo/anyOf/1/type","params":{"type":"boolean"},"message":"should be boolean"}
-{"keyword":"type","dataPath":".foo.foo","schemaPath":"#/properties/foo/anyOf/0/properties/foo/anyOf/1/type","params":{"type":"boolean"},"message":"should be boolean"}
-{"keyword":"type","dataPath":".foo.foo","schemaPath":"#/type","params":{"type":"object"},"message":"should be object"}
+  Message: foo should be boolean
+foo should match some schema in anyOf
+foo.foo should be boolean
+foo.foo should be object
+foo.foo should match some schema in anyOf
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/schema/example/default-example

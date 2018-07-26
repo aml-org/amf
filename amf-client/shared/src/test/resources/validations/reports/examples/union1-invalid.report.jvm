@@ -6,8 +6,8 @@ Number of results: 1
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"schemaLocation":"#/anyOf/0","pointerToViolation":"#","causingExceptions":[],"keyword":"type","message":"expected: null, found: Boolean"}
-{"schemaLocation":"#/anyOf/1","pointerToViolation":"#","causingExceptions":[],"keyword":"type","message":"expected type: Number, found: Boolean"}
+  Message:  expected type: Number, found: Boolean
+ expected: null, found: Boolean
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/union1-invalid.raml#/web-api/end-points/%2Ftest/get/request/parameter/date/union/schema/example/default-example

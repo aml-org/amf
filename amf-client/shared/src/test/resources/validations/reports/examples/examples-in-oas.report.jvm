@@ -6,8 +6,8 @@ Number of results: 2
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"schemaLocation":"#/properties/dateOfBirth","pointerToViolation":"#/dateOfBirth","causingExceptions":[],"keyword":"format","message":"[bla bla] is not a valid date-time. Expected [yyyy-MM-dd'T'HH:mm:ssZ, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}Z, yyyy-MM-dd'T'HH:mm:ss[+-]HH:mm, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}[+-]HH:mm]"}
-{"schemaLocation":"#/properties/phoneNo","pointerToViolation":"#/phoneNo","causingExceptions":[{"pointerToViolation":"#/phoneNo","causingExceptions":[],"keyword":"type","message":"expected type: Number, found: String"}],"keyword":"allOf","message":"#: only 1 subschema matches out of 2"}
+  Message: /dateOfBirth [bla bla] is not a valid date-time. Expected [yyyy-MM-dd'T'HH:mm:ssZ, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}Z, yyyy-MM-dd'T'HH:mm:ss[+-]HH:mm, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}[+-]HH:mm]
+/phoneNo expected type: Number, found: String
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/User/example/default-example
@@ -16,8 +16,10 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"schemaLocation":"#/properties/application/properties/user","pointerToViolation":"#/application/user","causingExceptions":[{"schemaLocation":"#/properties/application/properties/user/properties/dateOfBirth","pointerToViolation":"#/application/user/dateOfBirth","causingExceptions":[],"keyword":"format","message":"[bla bla] is not a valid date-time. Expected [yyyy-MM-dd'T'HH:mm:ssZ, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}Z, yyyy-MM-dd'T'HH:mm:ss[+-]HH:mm, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}[+-]HH:mm]"},{"schemaLocation":"#/properties/application/properties/user/properties/monthsAtCurrAdd","pointerToViolation":"#/application/user/monthsAtCurrAdd","causingExceptions":[{"pointerToViolation":"#/application/user/monthsAtCurrAdd","causingExceptions":[],"keyword":"type","message":"expected type: Number, found: String"}],"keyword":"allOf","message":"#: only 1 subschema matches out of 2"}],"message":"2 schema violations found"}
-{"schemaLocation":"#/properties/user","pointerToViolation":"#/user","causingExceptions":[{"schemaLocation":"#/properties/user/properties/dateOfBirth","pointerToViolation":"#/user/dateOfBirth","causingExceptions":[],"keyword":"format","message":"[bla bla bla] is not a valid date-time. Expected [yyyy-MM-dd'T'HH:mm:ssZ, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}Z, yyyy-MM-dd'T'HH:mm:ss[+-]HH:mm, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}[+-]HH:mm]"},{"schemaLocation":"#/properties/user/properties/monthsAtCurrAdd","pointerToViolation":"#/user/monthsAtCurrAdd","causingExceptions":[{"pointerToViolation":"#/user/monthsAtCurrAdd","causingExceptions":[],"keyword":"type","message":"expected type: Number, found: String"}],"keyword":"allOf","message":"#: only 1 subschema matches out of 2"}],"message":"2 schema violations found"}
+  Message: /application/user/dateOfBirth [bla bla] is not a valid date-time. Expected [yyyy-MM-dd'T'HH:mm:ssZ, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}Z, yyyy-MM-dd'T'HH:mm:ss[+-]HH:mm, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}[+-]HH:mm]
+/application/user/monthsAtCurrAdd expected type: Number, found: String
+/user/dateOfBirth [bla bla bla] is not a valid date-time. Expected [yyyy-MM-dd'T'HH:mm:ssZ, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}Z, yyyy-MM-dd'T'HH:mm:ss[+-]HH:mm, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}[+-]HH:mm]
+/user/monthsAtCurrAdd expected type: Number, found: String
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/LoanApplication/example/default-example

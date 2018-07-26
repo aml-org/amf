@@ -6,9 +6,9 @@ Number of results: 1
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: {"keyword":"anyOf","dataPath":"","schemaPath":"#/anyOf","params":{},"message":"should match some schema in anyOf"}
-{"keyword":"type","dataPath":".bar","schemaPath":"#/anyOf/0/properties/bar/type","params":{"type":"integer"},"message":"should be integer"}
-{"keyword":"type","dataPath":".foo","schemaPath":"#/anyOf/1/properties/foo/type","params":{"type":"string"},"message":"should be string"}
+  Message: bar should be integer
+foo should be string
+should match some schema in anyOf
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/anyOf/api3.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/any/schema/example/default-example
