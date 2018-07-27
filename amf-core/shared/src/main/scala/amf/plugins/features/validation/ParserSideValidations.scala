@@ -31,6 +31,14 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
+  val ExamplesMustBeAMap = ValidationSpecification(
+    (Namespace.AmfParser + "examples-must-be-map").iri(),
+    "Examples value should be a map",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val PathTemplateUnbalancedParameters = ValidationSpecification(
     (Namespace.AmfParser + "path-template-unbalanced-parameters").iri(),
     "Nested parameters are not allowed in path templates",

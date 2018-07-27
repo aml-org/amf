@@ -173,6 +173,10 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate("/examples/image-file-example/in-fileshape.raml", Some("image-file-example/in-fileshape.report"))
   }
 
+  test("Examples facet with an array instead a map") {
+    validate("/examples/examples-array-not-map.raml", Some("examples-array-not-map.report"))
+  }
+
   // is here this test ok? or i should move to another new test suit
   test("Test validate default value") {
     validate("/examples/invalid-default.raml", Some("invalid-default.report"))

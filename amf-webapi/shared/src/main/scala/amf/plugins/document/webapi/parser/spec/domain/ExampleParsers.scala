@@ -81,9 +81,12 @@ case class RamlMultipleExampleParser(key: String,
           node.tagType match {
             case YType.Map =>
               examples ++= node.as[YMap].entries.map(RamlNamedExampleParser(_, producer, options).parse())
-            case YType.Seq => // example sequence must have a name ??
-              RamlExampleValueAsString(node, Example(node), options).populate()
-            case _ => RamlExampleValueAsString(node, Example(node.as[YScalar]), options).populate()
+            case _ =>
+              ctx.violation(
+                ParserSideValidations.ExamplesMustBeAMap.id,
+                s"Property '$key' should be a map",
+                entry
+              )
           }
       }
     }
