@@ -1,14 +1,16 @@
 package amf.plugins.syntax
 
+import java.io.Writer
+
+import amf.client.plugins.{AMFPlugin, AMFSyntaxPlugin}
 import amf.core.benchmark.ExecutionLog
 import amf.core.parser.{ParsedDocument, ParserContext}
-import amf.client.plugins.{AMFPlugin, AMFSyntaxPlugin}
 import org.yaml.model.{YComment, YDocument, YMap, YNode}
 import org.yaml.parser.YamlParser
 import org.yaml.render.{JsonRender, YamlRender}
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
 
@@ -16,7 +18,7 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
 
   override def init(): Future[AMFPlugin] = Future { this }
 
-  override def dependencies() = Nil
+  override def dependencies(): Seq[AMFPlugin] = Nil
 
   override def supportedMediaTypes() = Seq(
     "application/yaml",
@@ -29,7 +31,7 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
     "text/vnd.yaml"
   )
 
-  override def parse(mediaType: String, text: CharSequence, ctx: ParserContext) = {
+  override def parse(mediaType: String, text: CharSequence, ctx: ParserContext): Option[ParsedDocument] = {
     val parser = YamlParser.apply(text, ctx.currentFile)(ctx).withIncludeTag("!include")
     val parts  = parser.parse(true)
 
@@ -45,30 +47,26 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
     }
   }
 
-  override def unparse(mediaType: String, ast: YDocument) = {
-    val format = mediaType match {
-      case "application/yaml"   => "yaml"
-      case "application/x-yaml" => "yaml"
-      case "text/yaml"          => "yaml"
-      case "text/x-yaml"        => "yaml"
-      case "application/json"   => "json"
-      case "text/json"          => "json"
-      case _ =>
-        if (mediaType.indexOf("json") > -1) {
-          "json"
-        } else {
-          "yaml"
-        }
-    }
-
-    ExecutionLog.log(s"Serialising to format $format")
-    val res = if (format == "yaml") {
-      Some(YamlRender.render(ast))
-    } else {
-      Some(JsonRender.render(ast))
-    }
-    ExecutionLog.log(s"Got the serialisation $format")
-    res
+  override def unparse(mediaType: String, ast: YDocument): Some[String] = unparseMe(mediaType, ast) { (format, ast) =>
+    Some(if (format == "yaml") YamlRender.render(ast) else JsonRender.render(ast))
   }
 
+  override def unparse(mediaType: String, ast: YDocument, writer: Writer): Option[Writer] = unparseMe(mediaType, ast) {
+    (format, ast) =>
+      if (format == "yaml") None else Some(JsonRender.render(ast, writer))
+  }
+
+  private def unparseMe[T](mediaType: String, ast: YDocument)(render: (String, YDocument) => T): T = {
+    val format = getFormat(mediaType)
+
+    ExecutionLog.log(s"Serialising to format $format with writer")
+
+    val result: T = render(format, ast)
+
+    ExecutionLog.log(s"Got the serialisation $format with writer")
+
+    result
+  }
+
+  private def getFormat(mediaType: String) = if (mediaType.contains("json")) "json" else "yaml"
 }

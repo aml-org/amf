@@ -1,5 +1,7 @@
 package amf.core
 
+import java.io.Writer
+
 import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{BaseUnit, ExternalFragment}
@@ -27,19 +29,32 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
     }
   }
 
+  /** Print ast to writer. */
+  def renderToWriter(writer: Writer): Future[Writer] = Future { render(writer) }
+
   /** Print ast to string. */
   def renderToString: Future[String] = Future { render() }
 
   /** Print ast to file. */
   def renderToFile(remote: Platform, path: String): Future[Unit] = remote.write(path, render())
 
-  protected def render(): String = {
+  private def render(writer: Writer): Writer =
+    parsed { (syntaxPlugin, mediaType, ast) =>
+      syntaxPlugin.unparse(mediaType, ast, writer)
+    } match {
+      case Some(w) => w
+      case None if unit.isInstanceOf[ExternalFragment] =>
+        writer.append(unit.asInstanceOf[ExternalFragment].encodes.raw.value())
+      case _ => throw new Exception(s"Unsupported media type $mediaType and vendor $vendor")
+    }
+
+  private def parsed[T](unparse: (AMFSyntaxPlugin, String, YDocument) => Option[T]): Option[T] = {
     ExecutionLog.log(s"AMFSerializer#render: Rendering to $mediaType ($vendor file) ${unit.location()}")
     val ast = make()
 
     // Let's try to find a syntax plugin for the media type and vendor
-    val parsed: Option[CharSequence] = AMFPluginsRegistry.syntaxPluginForMediaType(mediaType) match {
-      case Some(syntaxPlugin) => syntaxPlugin.unparse(mediaType, ast)
+    AMFPluginsRegistry.syntaxPluginForMediaType(mediaType) match {
+      case Some(syntaxPlugin) => unparse(syntaxPlugin, mediaType, ast)
       case None               =>
         // media type not directly supported, maybe it is supported by the media types of the accepted domain plugin
         findDomainPlugin() match {
@@ -48,19 +63,23 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
               case mediaType: String =>
                 (mediaType, AMFPluginsRegistry.syntaxPluginForMediaType(mediaType))
             } flatMap {
-              case (effectiveMediaType, Some(syntaxPlugin)) => syntaxPlugin.unparse(effectiveMediaType, ast)
+              case (effectiveMediaType, Some(syntaxPlugin)) => unparse(syntaxPlugin, effectiveMediaType, ast)
               case _                                        => None
             }
           case None => None
         }
       case _ => None
     }
-    parsed match {
+  }
+
+  private def render(): String =
+    parsed { (syntaxPlugin, mediaType, ast) =>
+      syntaxPlugin.unparse(mediaType, ast)
+    } match {
       case Some(doc)                                   => doc.toString
       case None if unit.isInstanceOf[ExternalFragment] => unit.asInstanceOf[ExternalFragment].encodes.raw.value()
       case _                                           => throw new Exception(s"Unsupported media type $mediaType and vendor $vendor")
     }
-  }
 
   protected def findDomainPlugin(): Option[AMFDocumentPlugin] = {
     AMFPluginsRegistry.documentPluginForVendor(vendor).find { plugin =>
