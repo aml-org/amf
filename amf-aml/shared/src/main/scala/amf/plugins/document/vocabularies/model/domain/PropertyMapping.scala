@@ -35,6 +35,7 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
   def sorted(): BoolField               = fields.field(Sorted)
   def enum(): Seq[AnyField]             = fields.field(PropertyMappingModel.Enum)
   def typeDiscriminatorName(): StrField = fields.field(TypeDiscriminatorName)
+  def unique(): BoolField               = fields.field(Unique)
 
   def typeDiscriminator(): Map[String, String] =
     Option(fields(TypeDiscriminator)).map { disambiguator: String =>
@@ -61,6 +62,7 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
   def withTypeDiscriminatorName(name: String): PropertyMapping     = set(TypeDiscriminatorName, name)
   def withTypeDiscriminator(typesMapping: Map[String, String]): PropertyMapping =
     set(TypeDiscriminator, typesMapping.map { case (a, b) => s"$a->$b" }.mkString(","))
+  def withUnique(unique: Boolean): PropertyMapping                 = set(Unique, unique)
 
   def classification(): PropertyClassification = {
     val isAnyNode = objectRange().exists { obj =>

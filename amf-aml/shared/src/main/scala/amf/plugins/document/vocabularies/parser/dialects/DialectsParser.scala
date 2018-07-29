@@ -112,7 +112,8 @@ trait DialectSyntax { this: DialectContext =>
     "allowMultiple"         -> false,
     "enum"                  -> false,
     "typeDiscriminatorName" -> false,
-    "typeDiscriminator"     -> false
+    "typeDiscriminator"     -> false,
+    "unique"                -> false
   )
 
   val documentsMapping: Map[String, Boolean] = Map(
@@ -279,7 +280,6 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
   val dialect: Dialect = Dialect(Annotations(map)).withLocation(root.location).withId(root.location)
 
   def parseDocument(): BaseUnit = {
-
     map.key("dialect", entry => {
       val value = ValueNode(entry.value)
       dialect.set(DialectModel.Name, value.string(), Annotations(entry))
@@ -628,6 +628,17 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
         }
       }
     )
+
+    map.key("unique",
+      entry => {
+        entry.value.tagType match {
+          case YType.Bool =>
+            val booleanValue = ValueNode(entry.value).boolean().toBool
+            propertyMapping.withUnique(booleanValue)
+          case _ =>
+            ctx.violation("Unique property in a property mapping must be a boolean value", entry.value)
+        }
+      })
 
     map.key(
       "maximum",

@@ -342,6 +342,11 @@ case class PropertyMappingEmitter(dialect: Dialect,
           }
         }
 
+        propertyMapping.unique().option().foreach { value =>
+          val pos = fieldPos(propertyMapping, PropertyMappingModel.Unique)
+          emitters ++= Seq(MapEntryEmitter("unique", value.toString, YType.Bool, pos))
+        }
+
         propertyMapping.fields.entry(PropertyMappingModel.MinCount) foreach { entry =>
           val value = entry.value.value.asInstanceOf[AmfScalar].value
           val pos   = fieldPos(propertyMapping, entry.field)
