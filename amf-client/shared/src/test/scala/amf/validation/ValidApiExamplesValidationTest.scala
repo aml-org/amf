@@ -173,7 +173,11 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Test external include json example in trait var") {
-    validate("/examples/json-frag-trait/api.raml")
+    checkValid("/examples/json-frag-trait/api.raml")
+  }
+
+  test("Test empty examples entry value") {
+    checkValid("/examples/empty-examples/api.raml")
   }
   override val hint: Hint = RamlYamlHint
 }

@@ -81,6 +81,7 @@ case class RamlMultipleExampleParser(key: String,
           node.tagType match {
             case YType.Map =>
               examples ++= node.as[YMap].entries.map(RamlNamedExampleParser(_, producer, options).parse())
+            case YType.Null => // ignore
             case _ =>
               ctx.violation(
                 ParserSideValidations.ExamplesMustBeAMap.id,
