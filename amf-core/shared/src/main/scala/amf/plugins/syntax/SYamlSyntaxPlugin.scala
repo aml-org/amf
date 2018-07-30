@@ -47,23 +47,23 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
     }
   }
 
-  override def unparse(mediaType: String, ast: YDocument): Some[String] = unparseMe(mediaType, ast) { (format, ast) =>
+  override def unparse(mediaType: String, ast: YDocument): Some[String] = render(mediaType, ast) { (format, ast) =>
     Some(if (format == "yaml") YamlRender.render(ast) else JsonRender.render(ast))
   }
 
-  override def unparse(mediaType: String, ast: YDocument, writer: Writer): Option[Writer] = unparseMe(mediaType, ast) {
+  override def unparse(mediaType: String, ast: YDocument, writer: Writer): Option[Writer] = render(mediaType, ast) {
     (format, ast) =>
-      if (format == "yaml") None else Some(JsonRender.render(ast, writer))
+      Some(if (format == "yaml") writer.append(YamlRender.render(ast)) else JsonRender.render(ast, writer))
   }
 
-  private def unparseMe[T](mediaType: String, ast: YDocument)(render: (String, YDocument) => T): T = {
+  private def render[T](mediaType: String, ast: YDocument)(render: (String, YDocument) => T): T = {
     val format = getFormat(mediaType)
 
-    ExecutionLog.log(s"Serialising to format $format with writer")
+    ExecutionLog.log(s"Serialising to format $format")
 
     val result: T = render(format, ast)
 
-    ExecutionLog.log(s"Got the serialisation $format with writer")
+    ExecutionLog.log(s"Got the serialisation $format")
 
     result
   }
