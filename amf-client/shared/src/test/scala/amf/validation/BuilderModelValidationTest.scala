@@ -1,9 +1,12 @@
 package amf.validation
 
+import amf.common.Diff
+import amf.common.Diff.makeString
 import amf.core.AMFSerializer
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{Document, Module, PayloadFragment}
 import amf.core.model.domain.ScalarNode
+import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.facades.Validation
 import amf.io.FileAssertionTest
@@ -48,6 +51,27 @@ class BuilderModelValidationTest extends FileAssertionTest with Matchers {
       s <- new AMFSerializer(fragment, "application/amf+yaml", "YAML Payload", RenderOptions()).renderToString
     } yield {
       s should be("1\n") // without cuotes
+    }
+  }
+
+  test("Build number type with format") {
+    val scalar = ScalarShape().withName("myType").withDataType((Namespace.Shapes + "number").iri()).withFormat("int")
+    val m      = Module().withDeclaredElement(scalar)
+
+    val e =
+      """
+        |#%RAML 1.0 Library
+        |types:
+        | myType:
+        |   type: number
+        |   format: int""".stripMargin
+    for {
+      _ <- Validation(platform) // in order to initialize
+      s <- new AMFSerializer(m, "application/raml+yaml", "RAML", RenderOptions()).renderToString
+    } yield {
+      val diffs = Diff.ignoreAllSpace.diff(s, e)
+      if (diffs.nonEmpty) fail(s"\ndiff: \n\n${makeString(diffs)}")
+      succeed
     }
   }
 }
