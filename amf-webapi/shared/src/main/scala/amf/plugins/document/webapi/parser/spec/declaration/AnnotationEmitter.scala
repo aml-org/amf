@@ -112,6 +112,7 @@ case class DataNodeEmitter(dataNode: DataNode,
   private val xsdString: String  = (Namespace.Xsd + "string").iri()
   private val xsdInteger: String = (Namespace.Xsd + "integer").iri()
   private val xsdFloat: String   = (Namespace.Xsd + "float").iri()
+  private val amlNumber: String  = (Namespace.Shapes + "number").iri()
   private val xsdDouble: String  = (Namespace.Xsd + "double").iri()
   private val xsdBoolean: String = (Namespace.Xsd + "boolean").iri()
   private val xsdNil: String     = (Namespace.Xsd + "nil").iri()
@@ -186,7 +187,8 @@ case class DataNodeEmitter(dataNode: DataNode,
     scalar.dataType match {
       case Some(t) if t == xsdString  => TextScalarEmitter(scalar.value, scalar.annotations, YType.Str)
       case Some(t) if t == xsdInteger => TextScalarEmitter(scalar.value, scalar.annotations, YType.Int)
-      case Some(t) if t == xsdDouble  => TextScalarEmitter(scalar.value, scalar.annotations, YType.Float)
+      case Some(t) if t == xsdDouble | t == amlNumber =>
+        TextScalarEmitter(scalar.value, scalar.annotations, YType.Float)
       case Some(t) if t == xsdBoolean => TextScalarEmitter(scalar.value, scalar.annotations, YType.Bool)
       case Some(t) if t == xsdNil     => NullEmitter(scalar.annotations)
       case _                          => TextScalarEmitter(scalar.value, Annotations(), YType.Str)
