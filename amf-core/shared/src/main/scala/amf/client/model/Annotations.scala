@@ -2,7 +2,7 @@ package amf.client.model
 
 import amf.client.convert.CoreClientConverters._
 import amf.client.model.domain.DomainExtension
-import amf.core.annotations.{DomainExtensionAnnotation, ExternalFragmentRef, LexicalInformation}
+import amf.core.annotations.{DomainExtensionAnnotation, ExternalFragmentRef, LexicalInformation, SourceLocation}
 import amf.core.parser.{Range, Annotations => InternalAnnotations}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -19,4 +19,6 @@ case class Annotations(_internal: InternalAnnotations) {
     _internal.collect({ case d: DomainExtensionAnnotation => d }).map(_.extension).asClient
 
   def fragmentName(): ClientOption[String] = _internal.find(classOf[ExternalFragmentRef]).map(_.fragment).asClient
+
+  def position(): ClientOption[String] = _internal.find(classOf[SourceLocation]).map(_.location).asClient
 }

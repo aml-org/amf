@@ -1,6 +1,5 @@
 package amf.client.validate
 
-import amf.client.convert.CoreClientConverters
 import amf.client.convert.CoreClientConverters._
 import amf.client.model.document.PayloadFragment
 import amf.client.model.domain.Shape
@@ -32,6 +31,5 @@ case class ValidationCandidate(private[amf] val _internal: InternalValidationCan
 
   def shape: Shape = _internal.shape
 
-  def payload: PayloadFragment =
-    CoreClientConverters.BaseUnitMatcher.asClient(_internal.payload).asInstanceOf[PayloadFragment]
+  def payload: PayloadFragment = _internal.payload
 }

@@ -1,7 +1,7 @@
 package amf.client.convert
 
 import amf.ProfileName
-import amf.client.model.document.{BaseUnit => ClientBaseUnit}
+import amf.client.model.document.{BaseUnit => ClientBaseUnit, PayloadFragment => ClientPayloadFragment}
 import amf.client.model.domain.{
   AbstractDeclaration => ClientAbstractDeclaration,
   ArrayNode => ClientArrayNode,
@@ -30,7 +30,7 @@ import amf.client.remote.Content
 import amf.client.resource.{ResourceLoader => ClientResourceLoader}
 import amf.client.validate.{ValidationReport => ClientValidatorReport, ValidationResult => ClientValidationResult}
 import amf.core.model._
-import amf.core.model.document.BaseUnit
+import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
 import amf.core.model.domain.templates.{AbstractDeclaration, ParametrizedDeclaration, VariableValue}
@@ -65,7 +65,8 @@ trait CoreBaseConverter
     with ResourceLoaderConverter
     with GraphDomainConverter
     with ValidationCandidateConverter
-    with ValidationShapeSetConverter {
+    with ValidationShapeSetConverter
+    with PayloadFragmentConverter {
 
   implicit def asClient[Internal, Client](from: Internal)(
       implicit m: InternalClientMatcher[Internal, Client]): Client = m.asClient(from)
@@ -339,6 +340,16 @@ trait BaseUnitConverter extends PlatformSecrets {
     override def asInternal(from: ClientBaseUnit): BaseUnit = from._internal
 
     override def asClient(from: BaseUnit): ClientBaseUnit = platform.wrap[ClientBaseUnit](from)
+  }
+
+}
+
+trait PayloadFragmentConverter extends PlatformSecrets {
+
+  implicit object PayloadFragmentMatcher extends BidirectionalMatcher[PayloadFragment, ClientPayloadFragment] {
+    override def asInternal(from: ClientPayloadFragment): PayloadFragment = from._internal
+
+    override def asClient(from: PayloadFragment): ClientPayloadFragment = platform.wrap[ClientPayloadFragment](from)
   }
 
 }
