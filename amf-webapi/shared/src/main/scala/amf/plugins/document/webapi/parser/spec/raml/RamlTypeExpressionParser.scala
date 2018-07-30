@@ -2,21 +2,26 @@ package amf.plugins.document.webapi.parser.spec.raml
 
 import amf.core.annotations.LexicalInformation
 import amf.core.model.domain.{AmfArray, Shape}
-import amf.core.parser.{Range, SearchScope}
+import amf.core.parser.{Annotations, Range, SearchScope}
+import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.metamodel.UnionShapeModel
 import amf.plugins.domain.shapes.models._
-import org.yaml.model.{YNode, YPart}
-import amf.core.utils.Strings
+import org.yaml.model.{YMapEntry, YNode, YPart, YScalar}
 protected case class ParsingResult(result: Option[Shape], remaining: Seq[Char])
 
-class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Option[YPart] = None, checking: Boolean)(
+class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Option[YPart] = None, checking: Boolean)(
     implicit ctx: WebApiContext) {
   var parsedShape: Option[Shape] = None
   var acc: String                = ""
   var parsingArray               = false
+  val part: Option[YPart] = ast.map {
+    case e: YMapEntry => e.value.value
+    case n: YNode     => n.value
+    case s: YScalar   => s
+  }
 
   def parse(expression: String): Option[Shape] = {
     val input: Seq[Char] = expression.replaceAll("\\s*", "").toCharArray.toSeq
@@ -24,6 +29,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Opti
       case Some(t) =>
         ensureNotEmptyArray(t)
         t.annotations += ParsedFromTypeExpression(expression)
+        ast.foreach(p => t.annotations ++= Annotations(p))
         Some(t)
       case None => None
     }
@@ -40,7 +46,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Opti
           ParsingResult(parsedShape, input.tail)
         case '(' =>
           processChars()
-          val result = new RamlTypeExpressionParser(adopt, i + 1, part, checking).parseInput(input.tail)
+          val result = new RamlTypeExpressionParser(adopt, i + 1, ast, checking).parseInput(input.tail)
           acceptShape(result.result)
           parseInput(result.remaining)
         case '|' =>
@@ -49,7 +55,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, part: Opti
           }
           processChars()
           parsedShape = Some(toUnion)
-          val result = new RamlTypeExpressionParser(adopt, i + 1, part, checking).parseInput(input.tail)
+          val result = new RamlTypeExpressionParser(adopt, i + 1, ast, checking).parseInput(input.tail)
           acceptShape(result.result)
           parseInput(result.remaining)
         case '[' =>

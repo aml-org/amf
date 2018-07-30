@@ -528,7 +528,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
   private def parseTypeExpression(): Shape = {
     node.value match {
       case expression: YScalar =>
-        RamlTypeExpressionParser(adopt, Some(node.value)).parse(expression.text).get
+        RamlTypeExpressionParser(adopt, Some(ast)).parse(expression.text).get
 
       case _: YMap => parseObjectType()
     }
