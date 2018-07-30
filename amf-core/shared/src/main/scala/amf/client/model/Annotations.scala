@@ -20,5 +20,5 @@ case class Annotations(_internal: InternalAnnotations) {
 
   def fragmentName(): ClientOption[String] = _internal.find(classOf[ExternalFragmentRef]).map(_.fragment).asClient
 
-  def position(): ClientOption[String] = _internal.find(classOf[SourceLocation]).map(_.location).asClient
+  def location(): ClientOption[String] = _internal.find(classOf[SourceLocation]).map(_.location).asClient
 }
