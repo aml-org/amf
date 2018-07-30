@@ -6,7 +6,7 @@ import amf.client.plugins.{AMFPlugin, AMFSyntaxPlugin}
 import amf.core.benchmark.ExecutionLog
 import amf.core.parser.{ParsedDocument, ParserContext}
 import org.yaml.model.{YComment, YDocument, YMap, YNode}
-import org.yaml.parser.YamlParser
+import org.yaml.parser.{JsonParser, YamlParser}
 import org.yaml.render.{JsonRender, YamlRender}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -32,8 +32,12 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
   )
 
   override def parse(mediaType: String, text: CharSequence, ctx: ParserContext): Option[ParsedDocument] = {
-    val parser = YamlParser.apply(text, ctx.currentFile)(ctx).withIncludeTag("!include")
-    val parts  = parser.parse(true)
+
+    val parser = getFormat(mediaType) match {
+      case "json" => JsonParser.withSource(text, ctx.currentFile)(ctx).withIncludeTag("!include")
+      case _      => YamlParser(text, ctx.currentFile)(ctx).withIncludeTag("!include")
+    }
+    val parts = parser.parse(true)
 
     if (parts.exists(v => v.isInstanceOf[YDocument])) {
       parts collectFirst { case d: YDocument => d } map { document =>

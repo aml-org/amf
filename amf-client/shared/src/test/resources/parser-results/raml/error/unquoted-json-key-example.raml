@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: hello
+
+/hello:
+  get:
+  post:
+    responses:
+      202:
+        body:
+          application/json:
+            type:
+              properties:
+                x: string
+            example: |
+              {
+              x: "lala"
+              }

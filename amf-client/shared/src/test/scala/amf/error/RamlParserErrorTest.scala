@@ -225,7 +225,7 @@ class RamlParserErrorTest extends ParserErrorTest {
       "/warning/any-shape-invalid-example.raml",
       warning => {
         warning.level should be("Warning")
-        warning.message should startWith("Error node '{")
+        warning.message should startWith("Error node ',")
       }
     )
   }
@@ -498,6 +498,18 @@ class RamlParserErrorTest extends ParserErrorTest {
       }
     )
   }
+
+  test("Invalid json example - unquoted key") {
+    validate(
+      "/error/unquoted-json-key-example.raml",
+      error => {
+        error.level should be("Violation")
+        error.message should be("Error node 'x'")
+        error.position.map(_.range) should be(Some(Range((16, 20), (16, 21))))
+      }
+    )
+  }
+
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/raml/"
 
   override protected def build(validation: Validation, file: String): Future[BaseUnit] =

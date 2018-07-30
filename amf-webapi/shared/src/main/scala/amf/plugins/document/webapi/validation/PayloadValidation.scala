@@ -17,7 +17,7 @@ import amf.plugins.domain.shapes.models.{AnyShape, ScalarShape, SchemaShape}
 import amf.plugins.domain.webapi.unsafe.JsonSchemaSecrets
 import org.yaml.model.{YDocument, YNode, YScalar}
 import amf.core.parser.YNodeLikeOps
-import org.yaml.parser.YamlParser
+import org.yaml.parser.{JsonParser, YamlParser}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -191,7 +191,11 @@ object PayloadValidatorPlugin extends AMFPayloadValidationPlugin {
   override def parsePayload(payload: String, mediaType: String, env: Environment, shape: Shape): PayloadFragment = {
     val fragment = PayloadFragment(payload, mediaType)
 
-    YamlParser(payload).parse(keepTokens = true).collectFirst({ case doc: YDocument => doc.node }) match {
+    val parser = mediaType match {
+      case "application/json" => JsonParser(payload)
+      case _                  => YamlParser(payload)
+    }
+    parser.parse(keepTokens = true).collectFirst({ case doc: YDocument => doc.node }) match {
       case Some(node: YNode) if node.toOption[YScalar].isDefined && isString(shape) =>
         fragment.withEncodes(ScalarNode(payload, None))
       case Some(node: YNode) =>

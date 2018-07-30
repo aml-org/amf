@@ -29,7 +29,7 @@ import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model._
-import org.yaml.parser.YamlParser
+import org.yaml.parser.JsonParser
 
 import scala.concurrent.Future
 
@@ -67,8 +67,9 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     val encoded: YNode = inputFragment match {
       case fragment: ExternalFragment =>
         fragment.encodes.parsed.getOrElse {
-          YamlParser(fragment.encodes.raw.value(), fragment.location().getOrElse(""))(ctx)
-            .withIncludeTag("!include")
+          JsonParser
+            .withSource(fragment.encodes.raw.value(), fragment.location().getOrElse(""))(ctx)
+            .withIncludeTag("!include") // with include tag? in this json plugin?
             .parse(keepTokens = true)
             .head match {
             case doc: YDocument => doc.node
@@ -81,7 +82,8 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
           }
         }
       case fragment: RecursiveUnit if fragment.raw.isDefined =>
-        YamlParser(fragment.raw.get, fragment.location().getOrElse(""))(ctx)
+        JsonParser
+          .withSource(fragment.raw.get, fragment.location().getOrElse(""))(ctx)
           .withIncludeTag("!include")
           .parse(keepTokens = true)
           .head

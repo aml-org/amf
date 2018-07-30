@@ -12,7 +12,7 @@ import amf.plugins.domain.shapes.models.Example
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
-import org.yaml.parser.YamlParser
+import org.yaml.parser.JsonParser
 import org.yaml.render.YamlRender
 
 import scala.collection.mutable.ListBuffer
@@ -224,17 +224,20 @@ case class NodeDataNodeParser(node: YNode, parentId: String, quiet: Boolean, fro
     implicit ctx: WebApiContext) {
   def parse(): DataNodeParserResult = {
     val errorHandler = if (quiet) WarningOnlyHandler(ctx.rootContextDocument) else ctx
-
+    var isJson       = false
     val exampleNode: Option[YNode] = node.toOption[YScalar] match {
       case Some(scalar) if scalar.mark.isInstanceOf[QuotedMark] => Some(node)
       case Some(scalar) if JSONSchema.unapply(scalar.text).isDefined =>
+        isJson = true
         node
           .toOption[YScalar]
           .flatMap { scalar =>
             val parser =
               if (!fromExternal)
-                YamlParser(scalar.text, scalar.sourceName, (node.range.lineFrom, node.range.columnFrom))(errorHandler)
-              else YamlParser(scalar.text, scalar.sourceName)
+                JsonParser.withSourceOffset(scalar.text,
+                                            scalar.sourceName,
+                                            (node.range.lineFrom, node.range.columnFrom))(errorHandler)
+              else JsonParser.withSource(scalar.text, scalar.sourceName)
             parser
               .parse(true)
               .collectFirst({ case doc: YDocument => doc.node })
@@ -244,16 +247,21 @@ case class NodeDataNodeParser(node: YNode, parentId: String, quiet: Boolean, fro
     }
 
     errorHandler match {
-      case wh: WarningOnlyHandler if wh.hasRegister => DataNodeParserResult(exampleNode, None)
-      case _ =>
-        val dataNode = exampleNode.map { ex =>
-          val dataNode = DataNodeParser(ex, parent = Some(parentId)).parse()
-          dataNode.annotations.reject(_.isInstanceOf[LexicalInformation])
-          dataNode.annotations += LexicalInformation(Range(node.value.range))
-          dataNode
-        }
-        DataNodeParserResult(exampleNode, dataNode)
+      case wh: WarningOnlyHandler if wh.hasRegister && isJson => parseDataNode(exampleNode)
+      case wh: WarningOnlyHandler if wh.hasRegister           => DataNodeParserResult(exampleNode, None)
+      case _                                                  => parseDataNode(exampleNode)
+
     }
+  }
+
+  private def parseDataNode(exampleNode: Option[YNode]) = {
+    val dataNode = exampleNode.map { ex =>
+      val dataNode = DataNodeParser(ex, parent = Some(parentId)).parse()
+      dataNode.annotations.reject(_.isInstanceOf[LexicalInformation])
+      dataNode.annotations += LexicalInformation(Range(node.value.range))
+      dataNode
+    }
+    DataNodeParserResult(exampleNode, dataNode)
   }
 }
 
