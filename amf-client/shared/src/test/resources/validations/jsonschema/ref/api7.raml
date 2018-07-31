@@ -1,0 +1,45 @@
+#%RAML 1.0
+title: test
+
+types:
+  test1:
+    type: object
+    additionalProperties: false
+    properties:
+      wadus: string
+      left?: test1
+      right?: test1
+
+/ep1:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              value1: test
+
+/ep2:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              wadus: test
+              left:
+                value1: test
+
+/ep3:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              wadus: test
+              right:
+                wadus: test
