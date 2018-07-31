@@ -1215,6 +1215,7 @@ abstract class OasTypePartCollector(shape: Shape,
                         schemaPath: Seq[(String, String)]): Either[PartEmitter, Seq[EntryEmitter]] = _emitter match {
     case Some(em) => em
     case _ =>
+      val res = emitters(pointer, schemaPath)
       _emitter = Some(
         emitters(pointer, schemaPath) match {
           case Seq(p: PartEmitter)                           => Left(p)
@@ -2047,7 +2048,7 @@ case class OasPropertyShapeEmitter(property: PropertyShape,
 
   override def emit(b: EntryBuilder): Unit = {
     property.range match {
-      case range: AnyShape =>
+      case _: AnyShape | _: RecursiveShape =>
         b.entry(
           propertyName,
           pb => {
