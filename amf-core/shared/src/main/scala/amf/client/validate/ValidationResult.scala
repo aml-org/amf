@@ -5,6 +5,7 @@ import amf.core.parser.Range
 import amf.core.validation.{AMFValidationResult => InternalValidationResult}
 import amf.core.utils.Strings
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
+import amf.client.convert.CoreClientConverters._
 
 @JSExportAll
 class ValidationResult(private[amf] val _internal: InternalValidationResult) {
@@ -38,4 +39,6 @@ class ValidationResult(private[amf] val _internal: InternalValidationResult) {
     case Some(lexical) => lexical.range
     case _             => Range.NONE
   }
+
+  val location: ClientOption[String] = _internal.location.asClient
 }
