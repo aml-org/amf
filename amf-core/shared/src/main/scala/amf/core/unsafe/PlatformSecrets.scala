@@ -61,7 +61,10 @@ class TrunkValidator extends SHACLValidator {
     throw new Exception("Error, validation is not supported")
 }
 
-case class TrunkPlatform(content: String, wrappedPlatform: Option[Platform] = None) extends Platform {
+case class TrunkPlatform(content: String,
+                         wrappedPlatform: Option[Platform] = None,
+                         forcedMediaType: Option[String] = None)
+    extends Platform {
 
   /** Underlying file system for platform. */
   override val fs: FileSystem = UnsupportedFileSystem
@@ -72,7 +75,7 @@ case class TrunkPlatform(content: String, wrappedPlatform: Option[Platform] = No
   override def tmpdir(): String = throw new Exception("Unsupported tmpdir operation")
 
   override def resolve(url: String, env: Environment = Environment()): Future[Content] =
-    Future.successful(new Content(content, url))
+    Future.successful(new Content(content, url, forcedMediaType))
 
   /** Platform out of the box [ResourceLoader]s */
   override def loaders(): Seq[ResourceLoader] = wrappedPlatform.map(_.loaders()).getOrElse(Seq())
