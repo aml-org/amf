@@ -1,0 +1,65 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "name",
+    "version": "1.0"
+  },
+  "paths": {},
+  "definitions": {
+    "scalarString": {
+      "enum": [
+        "a",
+        "b"
+      ],
+      "type": "string"
+    },
+    "scalarNumber": {
+      "enum": [
+        1,
+        2
+      ],
+      "type": "integer"
+    },
+    "objectType": {
+      "enum": [
+        {
+          "value1": "a",
+          "value2": "b"
+        },
+        {
+          "value1": "c",
+          "value2": "d"
+        }
+      ],
+      "type": "object",
+      "required": [
+        "value1",
+        "value2"
+      ],
+      "properties": {
+        "value1": {
+          "type": "string"
+        },
+        "value2": {
+          "type": "string"
+        }
+      }
+    },
+    "arrayType": {
+      "enum": [
+        [
+          "a",
+          "b"
+        ],
+        [
+          "c",
+          "d"
+        ]
+      ],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

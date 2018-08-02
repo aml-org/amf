@@ -22,7 +22,7 @@ import amf.plugins.document.webapi.contexts.{
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema, matchType}
 import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, ShapeExtensionParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.oas.Oas2DocumentParser
 import amf.plugins.document.webapi.parser.spec.raml.{RamlSpecParser, RamlTypeExpressionParser}
@@ -367,7 +367,8 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
 
     map.key("displayName", ShapeModel.DisplayName in shape)
     map.key("description", ShapeModel.Description in shape)
-    map.key("enum", ShapeModel.Values in shape)
+    map.key("enum", (ShapeModel.Values in shape using DataNodeParser.parse(Some(shape.id))).allowingSingleValue)
+
     map.key(
       "pattern",
       entry => {
@@ -697,6 +698,10 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
   case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap)
       extends AnyShapeParser
       with CommonScalarParsingLogic {
+
+    override lazy val dataNodeParser: YNode => DataNode = ScalarNodeParser(
+      forcedType = if (typeDef == TypeDef.StrType) Some(typeDef) else None,
+      parent = Some(shape.id)).parse
 
     override def parse(): ScalarShape = {
       super.parse()
@@ -1347,6 +1352,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
     val shape: Shape
     val map: YMap
+    lazy val dataNodeParser: YNode => DataNode = DataNodeParser.parse(Some(shape.id))
 
     def parse(): Shape = {
 
@@ -1371,7 +1377,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         }
       )
 
-      map.key("enum", ShapeModel.Values in shape)
+      map.key("enum", (ShapeModel.Values in shape using dataNodeParser).allowingSingleValue)
+
       map.key("minItems", (ArrayShapeModel.MinItems in shape).allowingAnnotations)
       map.key("maxItems", (ArrayShapeModel.MaxItems in shape).allowingAnnotations)
       map.key("externalDocs".asRamlAnnotation, AnyShapeModel.Documentation in shape using OasCreativeWorkParser.parse)

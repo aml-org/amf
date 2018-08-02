@@ -13,7 +13,7 @@ import amf.plugins.document.webapi.contexts.{
   RamlSpecEmitterContext,
   SpecEmitterContext
 }
-import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, DataNodeEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, DataNodeEmitter, EnumValuesEmitter}
 import amf.plugins.document.webapi.parser.spec.{BaseUriSplitter, toRaml}
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.ScalarShape
@@ -199,7 +199,7 @@ private case class OasServerVariableEmitter(variable: Parameter, ordering: SpecO
 
     fs.entry(ShapeModel.Description).map(f => result += ValueEmitter("description", f))
 
-    fs.entry(ShapeModel.Values).map(f => result += ArrayEmitter("enum", f, ordering))
+    fs.entry(ShapeModel.Values).map(f => result += EnumValuesEmitter("enum", f.value, ordering))
 
     fs.entry(ShapeModel.Default) match {
       case Some(f) =>

@@ -6,6 +6,8 @@ import amf.core.parser.{Annotations, _}
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.domain.shapes.models.TypeDef
+import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.features.validation.ParserSideValidations
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model._
@@ -21,35 +23,70 @@ case class DataNodeParser(node: YNode,
                           parent: Option[String] = None,
                           idCounter: IdCounter = new IdCounter)(implicit ctx: WebApiContext) {
 
-  def parseTimestamp(node: YNode): (Seq[String], Seq[String]) = {
-    val text = node.as[YScalar].text.toLowerCase()
-    val date = text.split("t").headOption.getOrElse("")
-    val rest = text.split("t").last
-    val time = if (rest.contains("+")) {
-      rest.split("\\+").head
-    } else if (rest.contains("-")) {
-      rest.split("-").head
-    } else if (rest.contains("z")) {
-      rest.split("z").head
-    } else if (rest.contains(".")) {
-      rest.split(".").head
-    } else {
-      rest
+  def parse(): DataNode = {
+    node.tag.tagType match {
+      case YType.Seq => parseArray(node.as[Seq[YNode]], node)
+      case YType.Map => parseObject(node.as[YMap])
+      case _         => ScalarNodeParser(parameters, parent, idCounter).parse(node)
     }
-    val dateParts = date.split("-")
-    val timeParts = time.split(":")
-    (dateParts, timeParts)
   }
 
-  def parse(): DataNode = {
+  protected def parseArray(seq: Seq[YNode], ast: YPart): DataNode = {
+    val node = DataArrayNode(Annotations(ast)).withName(idCounter.genId("array"))
+    parent.foreach(node.adopted)
+    seq.foreach { v =>
+      val element = DataNodeParser(v, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
+      node.addMember(element)
+    }
+    node
+  }
+
+  protected def parseObject(value: YMap): DataNode = {
+    val node = DataObjectNode(Annotations(value)).withName(idCounter.genId("object"))
+    parent.foreach(node.adopted)
+    value.entries.map { ast =>
+      val key = ast.key.as[YScalar].text
+      parameters.parseVariables(key)
+      val value               = ast.value
+      val propertyAnnotations = Annotations(ast)
+
+      val propertyNode = DataNodeParser(value, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
+      node.addProperty(key.urlComponentEncoded, propertyNode, propertyAnnotations)
+      node.lexicalPropertiesAnnotation.map(a => node.annotations += a)
+    }
+    node
+  }
+}
+
+case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
+                            parent: Option[String] = None,
+                            idCounter: IdCounter = new IdCounter,
+                            forcedType: Option[TypeDef] = None)(implicit ctx: WebApiContext) {
+
+  protected def parseScalar(ast: YScalar, dataType: String): DataNode = {
+    val finalDataType = forcedType
+      .map(XsdTypeDefMapping.xsd)
+      .orElse({
+        if (dataType == "dateTimeOnly") {
+          Some((Namespace.Shapes + "dateTimeOnly").iri())
+        } else {
+          Some((Namespace.Xsd + dataType).iri())
+        }
+      })
+    val node = ScalarNode(ast.text, finalDataType, Annotations(ast))
+      .withName(idCounter.genId("scalar"))
+    parent.foreach(node.adopted)
+    parameters.parseVariables(ast)
+    node
+  }
+
+  def parse(node: YNode): DataNode = {
     node.tag.tagType match {
       case YType.Str       => parseScalar(node.as[YScalar], "string") // Date/time types are evaluated with patterns
       case YType.Int       => parseScalar(node.as[YScalar], "integer")
       case YType.Float     => parseScalar(node.as[YScalar], "double")
       case YType.Bool      => parseScalar(node.as[YScalar], "boolean")
       case YType.Null      => parseScalar(node.as[YScalar], "nil")
-      case YType.Seq       => parseArray(node.as[Seq[YNode]], node)
-      case YType.Map       => parseObject(node.as[YMap])
       case YType.Timestamp =>
         // TODO add time-only type in syaml and amf
         SimpleDateTime.parse(node.toString()) match {
@@ -76,7 +113,7 @@ case class DataNodeParser(node: YNode,
         ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
                       parsed.id,
                       None,
-                      s"Cannot parse data node from AST structure '$other'",
+                      s"Cannot parse scalar node from AST structure '$other'",
                       node)
         parsed
     }
@@ -88,7 +125,7 @@ case class DataNodeParser(node: YNode,
         ctx.refs.find(ref => ref.origin.url == reference.text) match {
           case Some(ref) if ref.unit.isInstanceOf[ExternalFragment] =>
             val includedText = ref.unit.asInstanceOf[ExternalFragment].encodes.raw.value()
-            parseIncludedAST(includedText)
+            parseIncludedAST(includedText, node)
           case Some(ref) if ref.unit.isInstanceOf[EncodesModel] =>
             parseLink(reference.text).withLinkedDomainElement(ref.unit.asInstanceOf[EncodesModel].encodes)
           case _ =>
@@ -104,7 +141,7 @@ case class DataNodeParser(node: YNode,
     }
   }
 
-  def parseIncludedAST(raw: String): DataNode = {
+  def parseIncludedAST(raw: String, node: YNode): DataNode = {
     YamlParser(raw, node.sourceName).withIncludeTag("!include").parse().find(_.isInstanceOf[YNode]) match {
       case Some(node: YNode) => DataNodeParser(node, parameters, parent, idCounter).parse()
       case _                 => ScalarNode(raw, Some((Namespace.Xsd + "string").iri())).withId(parent.getOrElse("") + "/included")
@@ -156,42 +193,9 @@ case class DataNodeParser(node: YNode,
     }
   }
 
-  protected def parseScalar(ast: YScalar, dataType: String): DataNode = {
-    val finalDataType = if (dataType == "dateTimeOnly") {
-      Some((Namespace.Shapes + "dateTimeOnly").iri())
-    } else {
-      Some((Namespace.Xsd + dataType).iri())
-    }
-    val node = ScalarNode(ast.text, finalDataType, Annotations(ast))
-      .withName(idCounter.genId("scalar"))
-    parent.foreach(node.adopted)
-    parameters.parseVariables(ast)
-    node
-  }
+}
 
-  protected def parseArray(seq: Seq[YNode], ast: YPart): DataNode = {
-    val node = DataArrayNode(Annotations(ast)).withName(idCounter.genId("array"))
-    parent.foreach(node.adopted)
-    seq.foreach { v =>
-      val element = DataNodeParser(v, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
-      node.addMember(element)
-    }
-    node
-  }
-
-  protected def parseObject(value: YMap): DataNode = {
-    val node = DataObjectNode(Annotations(value)).withName(idCounter.genId("object"))
-    parent.foreach(node.adopted)
-    value.entries.map { ast =>
-      val key = ast.key.as[YScalar].text
-      parameters.parseVariables(key)
-      val value               = ast.value
-      val propertyAnnotations = Annotations(ast)
-
-      val propertyNode = DataNodeParser(value, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
-      node.addProperty(key.urlComponentEncoded, propertyNode, propertyAnnotations)
-      node.lexicalPropertiesAnnotation.map(a => node.annotations += a)
-    }
-    node
-  }
+object DataNodeParser {
+  def parse(parent: Option[String])(node: YNode)(implicit ctx: WebApiContext): DataNode =
+    DataNodeParser(node, parent = parent).parse()
 }

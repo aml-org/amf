@@ -1,7 +1,7 @@
 package amf.core.metamodel.domain
 
 import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Array, Bool, SortedArray, Str}
+import amf.core.metamodel.Type.{Array, SortedArray, Str}
 import amf.core.metamodel.domain.extensions.{PropertyShapeModel, ShapeExtensionModel}
 import amf.core.metamodel.domain.templates.KeyField
 import amf.core.vocabulary.Namespace.{Schema, Shacl, Shapes}
@@ -24,7 +24,7 @@ trait ShapeModel extends DomainElementModel with LinkableElementModel with KeyFi
 
   val DefaultValueString = Field(Str, Shacl + "defaultValueStr")
 
-  val Values = Field(SortedArray(Str), Shacl + "in")
+  val Values = Field(SortedArray(DataNodeModel), Shacl + "in")
 
   /**
     * Inheritance relationship between shapes. Introduces the idea that the constraints defined by this shape are a specialization of the constraints of the base shapes.

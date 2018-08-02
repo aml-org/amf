@@ -1,0 +1,23 @@
+#%RAML 1.0
+title: name
+types:
+  scalarString:
+    type: string
+    enum: ["a", "b"]
+  scalarNumber:
+    type: integer
+    enum: [ 1,2 ]
+  objectType:
+    properties:
+      value1: string
+      value2: string
+    enum:
+      - value1: "a"
+        value2: "b"
+      - value1: "c"
+        value2: "d"
+  arrayType:
+    items: string
+    enum:
+      - ["a","b"]
+      - ["c","d"]

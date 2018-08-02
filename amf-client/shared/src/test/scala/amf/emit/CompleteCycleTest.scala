@@ -1269,4 +1269,28 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Test more than one base uri param") {
     cycle("base-uri-params-implicit.raml", "base-uri-params-implicit.raml.jsonld", RamlYamlHint, Amf)
   }
+
+  test("Test enums raml to raml") {
+    cycle("enums.raml", "enums.raml.raml", RamlYamlHint, Raml, basePath + "enums/")
+  }
+
+  test("Test enums raml to oas") {
+    cycle("enums.raml", "enums.json", RamlYamlHint, Oas, basePath + "enums/")
+  }
+
+  test("Test enums oas to oas") {
+    cycle("enums.json", "enums.json.json", OasJsonHint, Oas, basePath + "enums/")
+  }
+
+  test("Test enums oas to raml") {
+    cycle("enums.json", "enums.json.raml", OasJsonHint, Raml, basePath + "enums/")
+  }
+
+  test("Test enums raml to amf") {
+    cycle("enums.json", "enums.raml.jsonld", RamlYamlHint, Amf, basePath + "enums/")
+  }
+
+  test("Test enums raml-amf to raml") {
+    cycle("enums.raml.jsonld", "enums.jsonld.raml", AmfJsonHint, Raml, basePath + "enums/")
+  }
 }

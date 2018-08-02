@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: test
+types:
+  A:
+    items: string
+    enum:
+      - [aa,bb]
+      - [nn,mmm]
+    examples:
+      invalid1: [dd,bb]
+      invalid2: [aa]

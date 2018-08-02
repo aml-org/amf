@@ -1,0 +1,24 @@
+#%RAML 1.0
+title: test
+types:
+  A:
+    items:
+      properties:
+        a: string
+        b: string
+    enum:
+      -
+        - a: aa
+          b: bb
+        - a: ee
+          b: tt
+      -
+        - a: qq
+          b: pp
+        - a: ii
+          b: ..
+    example:
+      - a: aa
+        b: bb
+      - a: ee
+        b: tt

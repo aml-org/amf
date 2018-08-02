@@ -9,7 +9,7 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain.{AmfScalar, Linkable, RecursiveShape, Shape}
+import amf.core.model.domain._
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, FieldEntry, Fields, Position, Value}
 import amf.core.utils.Strings
@@ -42,26 +42,6 @@ import org.yaml.model.{YNode, YType}
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
-
-trait EnumEmitterHelper {
-  def enumTagType(shape: Shape) = shape match {
-    case scalarShape: ScalarShape =>
-      val dataType = scalarShape.dataType.option().getOrElse((Namespace.Xsd + "string").iri())
-      if (dataType == (Namespace.Xsd + "integer").iri() ||
-          dataType == (Namespace.Xsd + "long").iri()) {
-        YType.Int
-      } else if (dataType == (Namespace.Xsd + "float").iri() ||
-                 dataType == (Namespace.Xsd + "double").iri() ||
-                 dataType == (Namespace.Shapes + "number").iri()) {
-        YType.Float
-      } else if (dataType == (Namespace.Xsd + "boolean").iri()) {
-        YType.Bool
-      } else {
-        YType.Str
-      }
-    case _ => YType.Str
-  }
-}
 
 /**
   *
@@ -276,7 +256,7 @@ abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references
       case None => fs.entry(ShapeModel.DefaultValueString).map(dv => result += ValueEmitter("default", dv))
     }
 
-    fs.entry(ShapeModel.Values).map(f => result += ArrayEmitter("enum", f, ordering, valuesTag = valuesTag))
+    fs.entry(ShapeModel.Values).map(f => result += EnumValuesEmitter("enum", f.value, ordering))
 
     fs.entry(AnyShapeModel.Documentation)
       .map(
@@ -1300,8 +1280,7 @@ abstract class OasShapeEmitter(shape: Shape,
                                ordering: SpecOrdering,
                                references: Seq[BaseUnit],
                                pointer: Seq[String] = Nil,
-                               schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
-    extends EnumEmitterHelper {
+                               schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext) {
   def emitters(): Seq[EntryEmitter] = {
 
     val result = ListBuffer[EntryEmitter]()
@@ -1318,7 +1297,7 @@ abstract class OasShapeEmitter(shape: Shape,
       case None => fs.entry(ShapeModel.DefaultValueString).map(dv => result += ValueEmitter("default", dv))
     }
 
-    fs.entry(ShapeModel.Values).map(f => result += ArrayEmitter("enum", f, ordering, valuesTag = enumTagType(shape)))
+    fs.entry(ShapeModel.Values).map(f => result += EnumValuesEmitter("enum", f.value, ordering))
 
     fs.entry(AnyShapeModel.Documentation)
       .map(f =>
@@ -2140,8 +2119,7 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
 }
 
 case class SimpleTypeEmitter(shape: ScalarShape, ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
-    extends RamlCommonOASFieldsEmitter
-    with EnumEmitterHelper {
+    extends RamlCommonOASFieldsEmitter {
 
   def emitters(): Seq[EntryEmitter] = {
     val fs = shape.fields
@@ -2165,7 +2143,7 @@ case class SimpleTypeEmitter(shape: ScalarShape, ordering: SpecOrdering)(implici
     fs.entry(ScalarShapeModel.Description).map(f => result += ValueEmitter("description", f))
 
     fs.entry(ScalarShapeModel.Values)
-      .map(f => result += ArrayEmitter("enum", f, ordering, valuesTag = enumTagType(shape)))
+      .map(f => result += EnumValuesEmitter("enum", f.value, ordering))
 
     fs.entry(ScalarShapeModel.Pattern).map { f =>
       result += RamlScalarEmitter("pattern", processRamlPattern(f))
@@ -2207,4 +2185,16 @@ object NumberTypeToYTypeConverter {
   def convert(datatype: Option[TypeDef]): YType = {
     this.convert(datatype.getOrElse(TypeDef.UndefinedType))
   }
+}
+
+case class EnumValuesEmitter(key: String, value: Value, ordering: SpecOrdering) extends EntryEmitter {
+  override def emit(b: EntryBuilder): Unit = {
+    val nodes = value.value.asInstanceOf[AmfArray].values.asInstanceOf[Seq[DataNode]]
+    val emitters = nodes.map { d =>
+      DataNodeEmitter(d, ordering)
+    }
+    b.entry(key, _.list(traverse(ordering.sorted(emitters), _)))
+  }
+
+  override def position(): Position = pos(value.annotations)
 }

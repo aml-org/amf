@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi.resolution.stages
 
 import amf.core.annotations.DefaultNode
-import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel}
+import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableElementModel}
 import amf.core.metamodel.domain.DomainElementModel._
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.metamodel.{Field, Type}
@@ -27,10 +27,10 @@ object DomainElementMerging {
           case None => // Case (2)
             field.`type` match {
               case t: OptionalField if isOptional(t, value.value.asInstanceOf[DomainElement]) => // Do nothing (2)
-              case Type.ArrayLike(element)                                                    => {
+              case Type.ArrayLike(element) => {
                 setNonOptional(main, field, element, value)
               }
-              case _                                                                          => {
+              case _ => {
                 main.set(field, adoptInner(main.id, value.value))
               }
             }
@@ -110,9 +110,23 @@ object DomainElementMerging {
     element match {
       case _: Type.Scalar => mergeByValue(target, field, m, o)
       case key: KeyField  => mergeByKeyValue(target, field, element, key, m, o)
-      case _              => {
+      case DataNodeModel  => mergeDataNodes(target, field, m, o)
+      case _ =>
         throw new Exception(s"Cannot merge '$element': not a KeyField nor a Scalar")
-      }
+
+    }
+  }
+
+  private def mergeDataNodes(target: DomainElement, field: Field, main: AmfArray, other: AmfArray): Unit = {
+
+    val mainNodes  = main.values.asInstanceOf[Seq[DataNode]]
+    val otherNodes = other.values.asInstanceOf[Seq[DataNode]]
+
+    otherNodes.foreach {
+      case oScalar: ScalarNode =>
+        if (mainNodes.collectFirst({ case ms: ScalarNode if ms.value.equals(oScalar.value) => ms }).isEmpty)
+          target.add(field, oScalar)
+      case other: DataNode => target.add(field, other)
     }
   }
 
@@ -158,8 +172,8 @@ object DomainElementMerging {
       .exists(_.scalar.toBool)
 
   private def ignored(entry: FieldEntry) = entry.field match {
-    case Extends | Sources | LinkableElementModel.Target  => false
-    case _                                                => true
+    case Extends | Sources | LinkableElementModel.Target => false
+    case _                                               => true
   }
 }
 

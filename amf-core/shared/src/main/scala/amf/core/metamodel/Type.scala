@@ -9,7 +9,7 @@ import amf.core.vocabulary.ValueType
 trait Type {
   val `type`: List[ValueType]
 
-  val dynamicType: Boolean = false
+  val dynamic: Boolean = false
 }
 
 trait Obj extends Type {
@@ -17,7 +17,7 @@ trait Obj extends Type {
   // This can be override by dynamic element models to provide
   // the information about fields at parsing time
 
-  val dynamic: Boolean = false
+  override val dynamic: Boolean = false
 
   def fields: List[Field]
 }

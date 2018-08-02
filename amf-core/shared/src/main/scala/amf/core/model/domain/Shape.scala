@@ -19,7 +19,7 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
   def description: StrField                              = fields.field(Description)
   def default: DataNode                                  = fields.field(Default)
   def defaultString: StrField                            = fields.field(DefaultValueString)
-  def values: Seq[StrField]                              = fields.field(Values)
+  def values: Seq[DataNode]                              = fields.field(Values)
   def inherits: Seq[Shape]                               = fields.field(Inherits)
   def or: Seq[Shape]                                     = fields.field(Or)
   def and: Seq[Shape]                                    = fields.field(And)

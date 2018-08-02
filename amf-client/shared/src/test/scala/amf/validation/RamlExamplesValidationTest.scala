@@ -181,5 +181,22 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   test("Test validate default value") {
     validate("/examples/invalid-default.raml", Some("invalid-default.report"))
   }
+
+  test("Test invalid example in object against enum") {
+    validate("/enums/invalid-obj-example-enum.raml", Some("invalid-obj-example-enum.report"))
+  }
+
+  test("Test invalid example in array against enum") {
+    validate("/enums/invalid-array-enums.raml", Some("invalid-array-enums.report"))
+  }
+
+  test("Test invalid example in obj array against enum") {
+    validate("/enums/invalid-obj-array-enums.raml", Some("invalid-obj-array-enums.report"))
+  }
+
+  test("Test invalid obj enum value") {
+    validate("/enums/invalid-obj-enum.raml", Some("invalid-obj-enum.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

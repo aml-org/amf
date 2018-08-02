@@ -4,8 +4,8 @@ import amf.core.annotations.DomainExtensionAnnotation
 import amf.core.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.core.metamodel.document.BaseUnitModel.Location
 import amf.core.metamodel.document._
-import amf.core.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.metamodel.domain._
+import amf.core.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.metamodel.{Field, ModelDefaultBuilder, Obj, Type}
 import amf.core.model.document._
 import amf.core.model.domain._
@@ -72,8 +72,9 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
       }
       buffer.flatMap({ (n) =>
         listElement match {
-          case _: Obj => parse(n.as[YMap])
-          case _      => try { Some(str(value(listElement, n))) } catch { case e: Exception => None }
+          case _ if listElement.dynamic => dynamicGraphParser.parseDynamicType(n.as[YMap])
+          case _: Obj                   => parse(n.as[YMap])
+          case _                        => try { Some(str(value(listElement, n))) } catch { case e: Exception => None }
         }
       })
     }

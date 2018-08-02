@@ -1,12 +1,10 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
-import java.util.regex.Pattern
-
 import amf.core.annotations.LexicalInformation
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, Shape}
+import amf.core.model.domain._
 import amf.core.parser.Annotations
 import amf.plugins.domain.shapes.annotations.InheritanceProvenance
 import amf.plugins.domain.shapes.metamodel._
@@ -126,7 +124,11 @@ private[shape_normalization] trait RestrictionComputation {
     shape
   }
 
-  protected def computeNumericRestriction(comparison: String, lvalue: AmfElement, rvalue: AmfElement, property: Option[String] = None, lexicalInfo: Option[LexicalInformation] = None): AmfElement = {
+  protected def computeNumericRestriction(comparison: String,
+                                          lvalue: AmfElement,
+                                          rvalue: AmfElement,
+                                          property: Option[String] = None,
+                                          lexicalInfo: Option[LexicalInformation] = None): AmfElement = {
     lvalue match {
       case scalar: AmfScalar
           if Option(scalar.value).isDefined && rvalue.isInstanceOf[AmfScalar] && Option(
@@ -154,7 +156,40 @@ private[shape_normalization] trait RestrictionComputation {
     }
   }
 
-  protected def computeStringEquality(lvalue: AmfElement, rvalue: AmfElement, property: Option[String] = None, lexicalInfo: Option[LexicalInformation] = None): Boolean = {
+  protected def computeEnum(derivedEnumeration: Seq[AmfElement],
+                            superEnumeration: Seq[AmfElement],
+                            annotations: Annotations): Unit = {
+    if (derivedEnumeration.nonEmpty && superEnumeration.nonEmpty) {
+      if (derivedEnumeration.headOption.exists(h => superEnumeration.headOption.exists(_.getClass != h.getClass)))
+        throw new InheritanceIncompatibleShapeError(
+          s"Values in subtype enumeration are from different class '${derivedEnumeration.head.getClass}' of the super type enumeration '${superEnumeration.head.getClass}'",
+          Some(ShapeModel.Values.value.iri()),
+          annotations.find(classOf[LexicalInformation])
+        )
+
+      derivedEnumeration match {
+        case Seq(_: ScalarNode) =>
+          val superScalars = superEnumeration.collect({ case s: ScalarNode => s.value })
+          val ds           = derivedEnumeration.asInstanceOf[Seq[ScalarNode]]
+          ds.foreach { e =>
+            if (!superScalars.contains(e.value)) {
+              throw new InheritanceIncompatibleShapeError(
+                s"Values in subtype enumeration (${ds.map(_.value).mkString(",")}) not found in the supertype enumeration (${superScalars
+                  .mkString(",")})",
+                Some(ShapeModel.Values.value.iri()),
+                e.annotations.find(classOf[LexicalInformation])
+              )
+            }
+          }
+        case _ => // ignore
+      }
+    }
+  }
+
+  protected def computeStringEquality(lvalue: AmfElement,
+                                      rvalue: AmfElement,
+                                      property: Option[String] = None,
+                                      lexicalInfo: Option[LexicalInformation] = None): Boolean = {
     lvalue match {
       case scalar: AmfScalar
           if Option(scalar.value).isDefined && rvalue.isInstanceOf[AmfScalar] && Option(
@@ -163,7 +198,9 @@ private[shape_normalization] trait RestrictionComputation {
         val rstr = rvalue.asInstanceOf[AmfScalar].toString
         lstr == rstr
       case _ =>
-        throw new InheritanceIncompatibleShapeError("Cannot compare non numeric or missing values", property, lexicalInfo)
+        throw new InheritanceIncompatibleShapeError("Cannot compare non numeric or missing values",
+                                                    property,
+                                                    lexicalInfo)
     }
   }
 
@@ -177,7 +214,11 @@ private[shape_normalization] trait RestrictionComputation {
     }
   }
 
-  protected def computeNumericComparison(comparison: String, lvalue: AmfElement, rvalue: AmfElement, property: Option[String] = None, lexicalInformation: Option[LexicalInformation] = None): Boolean = {
+  protected def computeNumericComparison(comparison: String,
+                                         lvalue: AmfElement,
+                                         rvalue: AmfElement,
+                                         property: Option[String] = None,
+                                         lexicalInformation: Option[LexicalInformation] = None): Boolean = {
     lvalue match {
       case scalar: AmfScalar
           if Option(scalar.value).isDefined && rvalue.isInstanceOf[AmfScalar] && Option(
@@ -190,10 +231,15 @@ private[shape_normalization] trait RestrictionComputation {
             lnum.intValue() <= rnum.intValue()
           case ">=" =>
             lnum.intValue() >= rnum.intValue()
-          case _ => throw new InheritanceIncompatibleShapeError(s"Unknown numeric comparison $comparison", property, lexicalInformation)
+          case _ =>
+            throw new InheritanceIncompatibleShapeError(s"Unknown numeric comparison $comparison",
+                                                        property,
+                                                        lexicalInformation)
         }
       case _ =>
-        throw new InheritanceIncompatibleShapeError("Cannot compare non numeric or missing values", property, lexicalInformation)
+        throw new InheritanceIncompatibleShapeError("Cannot compare non numeric or missing values",
+                                                    property,
+                                                    lexicalInformation)
     }
   }
 
@@ -219,8 +265,8 @@ private[shape_normalization] trait RestrictionComputation {
     field match {
 
       case ShapeModel.Name => {
-        val derivedStrValue  = stringValue(derivedValue)
-        val superStrValue = stringValue(superValue)
+        val derivedStrValue = stringValue(derivedValue)
+        val superStrValue   = stringValue(superValue)
         if (superStrValue.isDefined && (derivedStrValue.isEmpty || derivedStrValue.get == "schema")) {
           superValue
         } else {
@@ -229,63 +275,130 @@ private[shape_normalization] trait RestrictionComputation {
       }
 
       case NodeShapeModel.MinProperties =>
-        if (computeNumericComparison("<=", superValue, derivedValue, Some(NodeShapeModel.MinProperties.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))) {
-          computeNumericRestriction("max", superValue, derivedValue, Some(NodeShapeModel.MinProperties.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+        if (computeNumericComparison("<=",
+                                     superValue,
+                                     derivedValue,
+                                     Some(NodeShapeModel.MinProperties.value.iri()),
+                                     derivedValue.annotations.find(classOf[LexicalInformation]))) {
+          computeNumericRestriction("max",
+                                    superValue,
+                                    derivedValue,
+                                    Some(NodeShapeModel.MinProperties.value.iri()),
+                                    derivedValue.annotations.find(classOf[LexicalInformation]))
         } else {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for min-properties than base type for minProperties",
-            Some(NodeShapeModel.MinProperties.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+            Some(NodeShapeModel.MinProperties.value.iri()),
+            derivedValue.annotations.find(classOf[LexicalInformation])
+          )
         }
 
       case NodeShapeModel.MaxProperties =>
-        if (computeNumericComparison(">=", superValue, derivedValue, Some(NodeShapeModel.MaxProperties.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))) {
-          computeNumericRestriction("min", superValue, derivedValue, Some(NodeShapeModel.MaxProperties.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+        if (computeNumericComparison(">=",
+                                     superValue,
+                                     derivedValue,
+                                     Some(NodeShapeModel.MaxProperties.value.iri()),
+                                     derivedValue.annotations.find(classOf[LexicalInformation]))) {
+          computeNumericRestriction("min",
+                                    superValue,
+                                    derivedValue,
+                                    Some(NodeShapeModel.MaxProperties.value.iri()),
+                                    derivedValue.annotations.find(classOf[LexicalInformation]))
         } else {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for max-properties than base type for maxProperties",
-            Some(NodeShapeModel.MaxProperties.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation])
+            Some(NodeShapeModel.MaxProperties.value.iri()),
+            derivedValue.annotations.find(classOf[LexicalInformation])
           )
         }
 
       case ScalarShapeModel.MinLength =>
-        if (computeNumericComparison("<=", superValue, derivedValue, Some(ScalarShapeModel.MinLength.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))) {
-          computeNumericRestriction("max", superValue, derivedValue, Some(ScalarShapeModel.MinLength.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+        if (computeNumericComparison("<=",
+                                     superValue,
+                                     derivedValue,
+                                     Some(ScalarShapeModel.MinLength.value.iri()),
+                                     derivedValue.annotations.find(classOf[LexicalInformation]))) {
+          computeNumericRestriction("max",
+                                    superValue,
+                                    derivedValue,
+                                    Some(ScalarShapeModel.MinLength.value.iri()),
+                                    derivedValue.annotations.find(classOf[LexicalInformation]))
         } else {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for min-length than base type for maxProperties",
-            Some(ScalarShapeModel.MinLength.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+            Some(ScalarShapeModel.MinLength.value.iri()),
+            derivedValue.annotations.find(classOf[LexicalInformation])
+          )
         }
 
       case ScalarShapeModel.MaxLength =>
-        if (computeNumericComparison(">=", superValue, derivedValue, Some(ScalarShapeModel.MaxLength.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))) {
-          computeNumericRestriction("min", superValue, derivedValue, Some(ScalarShapeModel.MaxLength.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+        if (computeNumericComparison(">=",
+                                     superValue,
+                                     derivedValue,
+                                     Some(ScalarShapeModel.MaxLength.value.iri()),
+                                     derivedValue.annotations.find(classOf[LexicalInformation]))) {
+          computeNumericRestriction("min",
+                                    superValue,
+                                    derivedValue,
+                                    Some(ScalarShapeModel.MaxLength.value.iri()),
+                                    derivedValue.annotations.find(classOf[LexicalInformation]))
         } else {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for max-length than base type for maxProperties",
-            Some(ScalarShapeModel.MaxLength.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+            Some(ScalarShapeModel.MaxLength.value.iri()),
+            derivedValue.annotations.find(classOf[LexicalInformation])
+          )
         }
 
       case ScalarShapeModel.Minimum =>
-        if (computeNumericComparison("<=", superValue, derivedValue, Some(ScalarShapeModel.Minimum.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))) {
-          computeNumericRestriction("max", superValue, derivedValue, Some(ScalarShapeModel.Minimum.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+        if (computeNumericComparison("<=",
+                                     superValue,
+                                     derivedValue,
+                                     Some(ScalarShapeModel.Minimum.value.iri()),
+                                     derivedValue.annotations.find(classOf[LexicalInformation]))) {
+          computeNumericRestriction("max",
+                                    superValue,
+                                    derivedValue,
+                                    Some(ScalarShapeModel.Minimum.value.iri()),
+                                    derivedValue.annotations.find(classOf[LexicalInformation]))
         } else {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for min-minimum than base type for minimum",
-            Some(ScalarShapeModel.Minimum.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+            Some(ScalarShapeModel.Minimum.value.iri()),
+            derivedValue.annotations.find(classOf[LexicalInformation])
+          )
         }
 
       case ScalarShapeModel.Maximum =>
-        if (computeNumericComparison(">=", superValue, derivedValue, Some(ScalarShapeModel.Maximum.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))) {
-          computeNumericRestriction("min", superValue, derivedValue, Some(ScalarShapeModel.Maximum.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+        if (computeNumericComparison(">=",
+                                     superValue,
+                                     derivedValue,
+                                     Some(ScalarShapeModel.Maximum.value.iri()),
+                                     derivedValue.annotations.find(classOf[LexicalInformation]))) {
+          computeNumericRestriction("min",
+                                    superValue,
+                                    derivedValue,
+                                    Some(ScalarShapeModel.Maximum.value.iri()),
+                                    derivedValue.annotations.find(classOf[LexicalInformation]))
         } else {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for maximum than base type for maximum",
-            Some(ScalarShapeModel.Maximum.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+            Some(ScalarShapeModel.Maximum.value.iri()),
+            derivedValue.annotations.find(classOf[LexicalInformation])
+          )
         }
 
       case ArrayShapeModel.MinItems =>
-        if (computeNumericComparison("<=", superValue, derivedValue, Some(ArrayShapeModel.MinItems.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))) {
-          computeNumericRestriction("max", superValue, derivedValue, Some(ArrayShapeModel.MinItems.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+        if (computeNumericComparison("<=",
+                                     superValue,
+                                     derivedValue,
+                                     Some(ArrayShapeModel.MinItems.value.iri()),
+                                     derivedValue.annotations.find(classOf[LexicalInformation]))) {
+          computeNumericRestriction("max",
+                                    superValue,
+                                    derivedValue,
+                                    Some(ArrayShapeModel.MinItems.value.iri()),
+                                    derivedValue.annotations.find(classOf[LexicalInformation]))
         } else {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for minItems than base type for minItems",
@@ -295,8 +408,16 @@ private[shape_normalization] trait RestrictionComputation {
         }
 
       case ArrayShapeModel.MaxItems =>
-        if (computeNumericComparison(">=", superValue, derivedValue, Some(ArrayShapeModel.MaxItems.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))) {
-          computeNumericRestriction("min", superValue, derivedValue, Some(ArrayShapeModel.MaxItems.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+        if (computeNumericComparison(">=",
+                                     superValue,
+                                     derivedValue,
+                                     Some(ArrayShapeModel.MaxItems.value.iri()),
+                                     derivedValue.annotations.find(classOf[LexicalInformation]))) {
+          computeNumericRestriction("min",
+                                    superValue,
+                                    derivedValue,
+                                    Some(ArrayShapeModel.MaxItems.value.iri()),
+                                    derivedValue.annotations.find(classOf[LexicalInformation]))
         } else {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for maxItems than base type for maxItems",
@@ -306,90 +427,191 @@ private[shape_normalization] trait RestrictionComputation {
         }
 
       case ScalarShapeModel.Format =>
-        if (computeStringEquality(superValue, derivedValue, Some(ScalarShapeModel.Format.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))) {
+        if (computeStringEquality(superValue,
+                                  derivedValue,
+                                  Some(ScalarShapeModel.Format.value.iri()),
+                                  derivedValue.annotations.find(classOf[LexicalInformation]))) {
           derivedValue
         } else {
-          throw new InheritanceIncompatibleShapeError("different values for format constraint", Some(ScalarShapeModel.Format.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+          throw new InheritanceIncompatibleShapeError("different values for format constraint",
+                                                      Some(ScalarShapeModel.Format.value.iri()),
+                                                      derivedValue.annotations.find(classOf[LexicalInformation]))
         }
 
       case ScalarShapeModel.Pattern =>
-        if (computeStringEquality(superValue, derivedValue, Some(ScalarShapeModel.Pattern.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))) {
+        if (computeStringEquality(superValue,
+                                  derivedValue,
+                                  Some(ScalarShapeModel.Pattern.value.iri()),
+                                  derivedValue.annotations.find(classOf[LexicalInformation]))) {
           derivedValue
         } else {
-          throw new InheritanceIncompatibleShapeError("different values for pattern constraint", Some(ScalarShapeModel.Pattern.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+          throw new InheritanceIncompatibleShapeError("different values for pattern constraint",
+                                                      Some(ScalarShapeModel.Pattern.value.iri()),
+                                                      derivedValue.annotations.find(classOf[LexicalInformation]))
         }
 
       case NodeShapeModel.Discriminator =>
-        if (computeStringEquality(superValue, derivedValue, Some(NodeShapeModel.Discriminator.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))) {
+        if (computeStringEquality(superValue,
+                                  derivedValue,
+                                  Some(NodeShapeModel.Discriminator.value.iri()),
+                                  derivedValue.annotations.find(classOf[LexicalInformation]))) {
           derivedValue
         } else {
-          throw new InheritanceIncompatibleShapeError("different values for discriminator constraint",Some(NodeShapeModel.Discriminator.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+          throw new InheritanceIncompatibleShapeError(
+            "different values for discriminator constraint",
+            Some(NodeShapeModel.Discriminator.value.iri()),
+            derivedValue.annotations.find(classOf[LexicalInformation])
+          )
         }
 
       case NodeShapeModel.DiscriminatorValue =>
-        if (computeStringEquality(superValue, derivedValue, Some(NodeShapeModel.DiscriminatorValue.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))) {
+        if (computeStringEquality(superValue,
+                                  derivedValue,
+                                  Some(NodeShapeModel.DiscriminatorValue.value.iri()),
+                                  derivedValue.annotations.find(classOf[LexicalInformation]))) {
           derivedValue
         } else {
-          throw new InheritanceIncompatibleShapeError("different values for discriminator value constraint", Some(NodeShapeModel.DiscriminatorValue.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+          throw new InheritanceIncompatibleShapeError(
+            "different values for discriminator value constraint",
+            Some(NodeShapeModel.DiscriminatorValue.value.iri()),
+            derivedValue.annotations.find(classOf[LexicalInformation])
+          )
         }
 
       case ShapeModel.Values =>
-        val derivedEnumeration  = derivedValue.asInstanceOf[AmfArray].values
-        val superEnumeration    = superValue.asInstanceOf[AmfArray].values.map(_.toString)
-        derivedEnumeration.foreach { e =>
-          if (!superEnumeration.contains(e.toString)) {
-            throw new InheritanceIncompatibleShapeError(s"Values in subtype enumeration (${derivedEnumeration.mkString(",")}) not found in the supertype enumeration (${superEnumeration.mkString(",")})", Some(ShapeModel.Values.value.iri()), e.annotations.find(classOf[LexicalInformation]))
-          }
-        }
+        computeEnum(derivedValue.asInstanceOf[AmfArray].values,
+                    superValue.asInstanceOf[AmfArray].values,
+                    derivedValue.annotations)
         derivedValue
 
       case ArrayShapeModel.UniqueItems =>
-        if (computeBooleanComparison(lcomparison = true, rcomparison = true, superValue, derivedValue, Some(ArrayShapeModel.UniqueItems.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation])) ||
-            computeBooleanComparison(lcomparison = false, rcomparison = false, superValue, derivedValue, Some(ArrayShapeModel.UniqueItems.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation])) ||
-            computeBooleanComparison(lcomparison = false, rcomparison = true, superValue, derivedValue, Some(ArrayShapeModel.UniqueItems.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))) {
+        if (computeBooleanComparison(
+              lcomparison = true,
+              rcomparison = true,
+              superValue,
+              derivedValue,
+              Some(ArrayShapeModel.UniqueItems.value.iri()),
+              derivedValue.annotations.find(classOf[LexicalInformation])
+            ) ||
+            computeBooleanComparison(
+              lcomparison = false,
+              rcomparison = false,
+              superValue,
+              derivedValue,
+              Some(ArrayShapeModel.UniqueItems.value.iri()),
+              derivedValue.annotations.find(classOf[LexicalInformation])
+            ) ||
+            computeBooleanComparison(
+              lcomparison = false,
+              rcomparison = true,
+              superValue,
+              derivedValue,
+              Some(ArrayShapeModel.UniqueItems.value.iri()),
+              derivedValue.annotations.find(classOf[LexicalInformation])
+            )) {
           derivedValue
         } else {
-          throw new InheritanceIncompatibleShapeError("different values for unique items constraint",
-            Some(ArrayShapeModel.UniqueItems.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+          throw new InheritanceIncompatibleShapeError(
+            "different values for unique items constraint",
+            Some(ArrayShapeModel.UniqueItems.value.iri()),
+            derivedValue.annotations.find(classOf[LexicalInformation])
+          )
         }
 
       case PropertyShapeModel.MinCount =>
-        if (computeNumericComparison("<=", superValue, derivedValue, Some(PropertyShapeModel.MinCount.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))) {
-          computeNumericRestriction("max", superValue, derivedValue, Some(PropertyShapeModel.MinCount.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+        if (computeNumericComparison("<=",
+                                     superValue,
+                                     derivedValue,
+                                     Some(PropertyShapeModel.MinCount.value.iri()),
+                                     derivedValue.annotations.find(classOf[LexicalInformation]))) {
+          computeNumericRestriction("max",
+                                    superValue,
+                                    derivedValue,
+                                    Some(PropertyShapeModel.MinCount.value.iri()),
+                                    derivedValue.annotations.find(classOf[LexicalInformation]))
         } else {
           throw new InheritanceIncompatibleShapeError(
-            "Resolution error: sub type has a weaker constraint for minCount than base type for minCount", Some(PropertyShapeModel.MinCount.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+            "Resolution error: sub type has a weaker constraint for minCount than base type for minCount",
+            Some(PropertyShapeModel.MinCount.value.iri()),
+            derivedValue.annotations.find(classOf[LexicalInformation])
+          )
         }
 
       case PropertyShapeModel.MaxCount =>
-        if (computeNumericComparison(">=", superValue, derivedValue, Some(PropertyShapeModel.MaxCount.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))) {
-          computeNumericRestriction("min", superValue, derivedValue, Some(PropertyShapeModel.MaxCount.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+        if (computeNumericComparison(">=",
+                                     superValue,
+                                     derivedValue,
+                                     Some(PropertyShapeModel.MaxCount.value.iri()),
+                                     derivedValue.annotations.find(classOf[LexicalInformation]))) {
+          computeNumericRestriction("min",
+                                    superValue,
+                                    derivedValue,
+                                    Some(PropertyShapeModel.MaxCount.value.iri()),
+                                    derivedValue.annotations.find(classOf[LexicalInformation]))
         } else {
           throw new InheritanceIncompatibleShapeError(
-            "Resolution error: sub type has a weaker constraint for maxCount than base type for maxCount", Some(PropertyShapeModel.MaxCount.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+            "Resolution error: sub type has a weaker constraint for maxCount than base type for maxCount",
+            Some(PropertyShapeModel.MaxCount.value.iri()),
+            derivedValue.annotations.find(classOf[LexicalInformation])
+          )
         }
 
       case PropertyShapeModel.Path =>
-        if (computeStringEquality(superValue, derivedValue, Some(PropertyShapeModel.Path.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))) {
+        if (computeStringEquality(superValue,
+                                  derivedValue,
+                                  Some(PropertyShapeModel.Path.value.iri()),
+                                  derivedValue.annotations.find(classOf[LexicalInformation]))) {
           derivedValue
         } else {
-          throw new InheritanceIncompatibleShapeError("different values for discriminator value path", Some(PropertyShapeModel.Path.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+          throw new InheritanceIncompatibleShapeError("different values for discriminator value path",
+                                                      Some(PropertyShapeModel.Path.value.iri()),
+                                                      derivedValue.annotations.find(classOf[LexicalInformation]))
         }
 
       case PropertyShapeModel.Range =>
-        if (computeStringEquality(superValue, derivedValue, Some(PropertyShapeModel.Range.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))) {
+        if (computeStringEquality(superValue,
+                                  derivedValue,
+                                  Some(PropertyShapeModel.Range.value.iri()),
+                                  derivedValue.annotations.find(classOf[LexicalInformation]))) {
           derivedValue
         } else {
-          throw new InheritanceIncompatibleShapeError("different values for discriminator value range", Some(PropertyShapeModel.Range.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+          throw new InheritanceIncompatibleShapeError(
+            "different values for discriminator value range",
+            Some(PropertyShapeModel.Range.value.iri()),
+            derivedValue.annotations.find(classOf[LexicalInformation])
+          )
         }
 
       case NodeShapeModel.Closed =>
-        if (computeBooleanComparison(lcomparison = true, rcomparison = true, superValue, derivedValue, Some(NodeShapeModel.Closed.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation])) ||
-            computeBooleanComparison(lcomparison = false, rcomparison = false, superValue, derivedValue, Some(NodeShapeModel.Closed.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation])) ||
-            computeBooleanComparison(lcomparison = false, rcomparison = true, superValue, derivedValue, Some(NodeShapeModel.Closed.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))) {
+        if (computeBooleanComparison(
+              lcomparison = true,
+              rcomparison = true,
+              superValue,
+              derivedValue,
+              Some(NodeShapeModel.Closed.value.iri()),
+              derivedValue.annotations.find(classOf[LexicalInformation])
+            ) ||
+            computeBooleanComparison(
+              lcomparison = false,
+              rcomparison = false,
+              superValue,
+              derivedValue,
+              Some(NodeShapeModel.Closed.value.iri()),
+              derivedValue.annotations.find(classOf[LexicalInformation])
+            ) ||
+            computeBooleanComparison(
+              lcomparison = false,
+              rcomparison = true,
+              superValue,
+              derivedValue,
+              Some(NodeShapeModel.Closed.value.iri()),
+              derivedValue.annotations.find(classOf[LexicalInformation])
+            )) {
           derivedValue
         } else {
-          throw new InheritanceIncompatibleShapeError("closed shapes cannot inherit from open shapes", Some(NodeShapeModel.Closed.value.iri()), derivedValue.annotations.find(classOf[LexicalInformation]))
+          throw new InheritanceIncompatibleShapeError("closed shapes cannot inherit from open shapes",
+                                                      Some(NodeShapeModel.Closed.value.iri()),
+                                                      derivedValue.annotations.find(classOf[LexicalInformation]))
         }
 
       case _ => derivedValue

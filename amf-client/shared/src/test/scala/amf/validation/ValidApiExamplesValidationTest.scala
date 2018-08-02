@@ -23,7 +23,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     checkValid("examples/force-enum-string.raml")
   }
 
-  test("Minimun and maximun over float format") {
+  test("Minimum and maximum over float format") {
     checkValid("examples/min-max-float-format.raml")
   }
 
@@ -178,6 +178,18 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
 
   test("Test empty examples entry value") {
     checkValid("/examples/empty-examples/api.raml")
+  }
+
+  test("Test valid object against enum") {
+    checkValid("/enums/valid-objects-enums.raml")
+  }
+
+  test("Test valid array against enum") {
+    checkValid("/enums/valid-array-enums.raml")
+  }
+
+  test("Test valid array of object against enum") {
+    checkValid("/enums/valid-obj-array-enums.raml")
   }
   override val hint: Hint = RamlYamlHint
 }
