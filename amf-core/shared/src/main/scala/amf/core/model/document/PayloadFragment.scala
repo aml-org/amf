@@ -1,6 +1,6 @@
 package amf.core.model.document
 
-import amf.core.metamodel.document.{FragmentModel, PayloadFragmentModel}
+import amf.core.metamodel.document.PayloadFragmentModel
 import amf.core.model.StrField
 import amf.core.model.domain.{DataNode, ScalarNode}
 import amf.core.parser.{Annotations, Fields}
@@ -9,7 +9,7 @@ case class PayloadFragment(fields: Fields = Fields(), annotations: Annotations =
   override def encodes: DataNode = fields(PayloadFragmentModel.Encodes)
 
   /** Meta data for the document */
-  override def meta = FragmentModel
+  override def meta = PayloadFragmentModel
 
   def withMediaType(mediaType: String): this.type = {
     set(PayloadFragmentModel.MediaType, mediaType)

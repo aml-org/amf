@@ -39,5 +39,5 @@ object PayloadFragmentModel extends FragmentModel {
 
   override def fields: List[Field] = Encodes :: MediaType :: BaseUnitModel.fields
 
-  override val `type`: List[ValueType] = List(Document + "Fragment") ++ BaseUnitModel.`type`
+  override val `type`: List[ValueType] = List(Document + "PayloadFragment") ++ FragmentModel.`type`
 }
