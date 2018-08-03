@@ -212,7 +212,7 @@ object ExtendsHelper {
         nestedDeclarations(ctx, f)
       case m: DeclaresModel =>
         model.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases.foreach {
-          case (alias, (fullUrl, relativeUrl)) =>
+          case (alias, (fullUrl, _)) =>
             if (m.id == fullUrl) {
               val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext())
               m.declares.foreach { declaration =>
@@ -244,6 +244,7 @@ object ExtendsHelper {
                   .asInstanceOf[DomainElement]
                   .id
                   .contains(model.location().getOrElse("")))
+            nestedCtx.declarations += declaration
             declaration match {
               // we recover the local alias we removed when resolving
               case element: NamedDomainElement if inContext.isDefined =>
@@ -253,7 +254,6 @@ object ExtendsHelper {
                 nestedCtx.declarations += declaration
                 element.withName(realName)
               case _ =>
-                nestedCtx.declarations += declaration
             }
         }
       case _ => nestedCtx.declarations += declaration
