@@ -1984,8 +1984,8 @@ case class OasRequiredPropertiesShapeEmitter(f: FieldEntry, references: Seq[Base
 
   override def emit(b: EntryBuilder): Unit = {
     val requiredProperties = f.array.values.filter {
-      case property: PropertyShape => property.minCount.value() > 0
-      case _                       => false
+      case property: PropertyShape if property.patternName.isNullOrEmpty => property.minCount.value() > 0
+      case _                                                             => false
     }
     if (requiredProperties.nonEmpty) {
       b.entry(

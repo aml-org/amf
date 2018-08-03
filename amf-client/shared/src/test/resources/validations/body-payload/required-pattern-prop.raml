@@ -1,0 +1,12 @@
+#%RAML 1.0
+---
+title: Body Test
+/wildcards:
+ post:
+  body:
+   application/x-www-form-urlencoded:
+    properties:
+     /^element-\d+$/:
+      type: integer
+      required: true
+    additionalProperties: false

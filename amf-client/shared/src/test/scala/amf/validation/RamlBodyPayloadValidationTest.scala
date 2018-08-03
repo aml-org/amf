@@ -31,7 +31,13 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
                                     |  }
                                     |}""".stripMargin,
         conforms = true
-      ))
+      ),
+      Fixture("Required pattern property", "required-pattern-prop.raml", "element-2: 2", conforms = true),
+      Fixture("Invalid required pattern property",
+              "required-pattern-prop.raml",
+              "invalid-element-2: 2",
+              conforms = false)
+    )
 
   override protected def findShape(d: Document): Shape =
     d.encodes
