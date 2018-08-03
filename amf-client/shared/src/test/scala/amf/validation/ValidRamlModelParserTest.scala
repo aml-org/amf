@@ -115,5 +115,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("/empty-usage-uses.raml")
   }
 
+  test("Object array") {
+    checkValid("/types/object-array.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

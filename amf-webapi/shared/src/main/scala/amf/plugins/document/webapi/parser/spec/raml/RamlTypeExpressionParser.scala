@@ -81,6 +81,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
         case "nil"           => NilShape()
         case "any"           => AnyShape()
         case "file"          => FileShape()
+        case "object"        => NodeShape()
         case "string"        => ScalarShape().withDataType((Namespace.Xsd + "string").iri())
         case "integer"       => ScalarShape().withDataType((Namespace.Xsd + "integer").iri())
         case "number"        => ScalarShape().withDataType((Namespace.Shapes + "number").iri())
