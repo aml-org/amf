@@ -1,16 +1,16 @@
 package amf.plugins.features.validation
 
 import amf._
+import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.BaseUnit
-import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Context
 import amf.core.services.{RuntimeCompiler, RuntimeValidator, ValidationOptions}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationSpecification}
-import amf.core.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations}
+import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.internal.environment.Environment
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.graph.parser.ScalarEmitter
@@ -147,7 +147,19 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
 
   override def shaclValidation(model: BaseUnit,
                                validations: EffectiveValidations,
-                               options: ValidationOptions): Future[ValidationReport] = {
+                               options: ValidationOptions): Future[ValidationReport] =
+    if (options.isPartialValidation()) partialShaclValidation(model, validations, options)
+    else fullShaclValidation(model, validations, options)
+
+
+  def partialShaclValidation(model: BaseUnit,
+                            validations: EffectiveValidations,
+                            options: ValidationOptions): Future[ValidationReport] =
+    new CustomShaclValidator(model, validations, options).run
+
+  def fullShaclValidation(model: BaseUnit,
+                          validations: EffectiveValidations,
+                          options: ValidationOptions): Future[ValidationReport] = {
     ExecutionLog.log(
       s"AMFValidatorPlugin#shaclValidation: shacl validation for ${validations.effective.values.size} validations")
     // println(s"VALIDATIONS: ${validations.effective.values.size} / ${validations.all.values.size} => $profileName")

@@ -1230,7 +1230,6 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
       case YType.Float     => true
       case YType.Str       => true
       case YType.Int       => true
-      case YType.Float     => true
       case YType.Timestamp => true
       case _               => false
     }

@@ -1,0 +1,20 @@
+#%RAML 1.0
+version: v1
+title: QR Payment
+
+types:
+  test:
+    type: object
+    properties:
+      a:
+        type: string
+        maxLength: 20
+        required: false
+        enum: []
+
+/test:
+  get:
+    responses:
+      200:
+        body:
+          application/json: test

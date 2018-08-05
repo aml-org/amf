@@ -154,12 +154,26 @@ object RuntimeValidator {
 class ValidationOptions() {
   val filterFields: (Field) => Boolean = (_: Field) => false
   var messageStyle: MessageStyle       = AMFStyle
+  var level: String                    = "partial" // partial | full
+
   def toRenderOptions: RenderOptions   = RenderOptions().withValidation.withFilterFieldsFunc(filterFields)
 
   def withMessageStyle(style: MessageStyle): ValidationOptions = {
     var messageStyle = style
     this
   }
+
+  def withFullValidation(): ValidationOptions = {
+    level = "full"
+    this
+  }
+
+  def withPartialValidation(): ValidationOptions = {
+    level = "partial"
+    this
+  }
+
+  def isPartialValidation(): Boolean = level == "partial"
 }
 
 object DefaultValidationOptions extends ValidationOptions {}

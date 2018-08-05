@@ -29,7 +29,7 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
     }
 
   /**
-    * Version of the validate function that retuern a JS promise instead of a Scala future
+    * Version of the validate function that return a JS promise instead of a Scala future
     * @param data string representation of the data graph
     * @param dataMediaType media type for the data graph
     * @param shapes string representation of the shapes graph

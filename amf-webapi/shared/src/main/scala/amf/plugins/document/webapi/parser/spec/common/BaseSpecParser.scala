@@ -17,7 +17,7 @@ trait WebApiBaseSpecParser extends BaseSpecParser with SpecParserOps
 
 trait SpecParserOps {
 
-  protected def checkBalancedParams(path: String, value: YNode, node: String, property: String, ctx: WebApiContext) = {
+  protected def checkBalancedParams(path: String, value: YNode, node: String, property: String, ctx: WebApiContext): Unit = {
     val pattern1 = "\\{[^\\}]*\\{".r
     val pattern2 = "\\}[^\\{]*\\}".r
     if (pattern1.findFirstMatchIn(path).nonEmpty || pattern2.findFirstMatchIn(path).nonEmpty) {
@@ -41,10 +41,10 @@ trait SpecParserOps {
     private var mapped: Option[YNode => AmfElement]    = None
     private var typed: Option[TypedNode => AmfElement] = None
 
-    private var single    = false
-    private var entries   = false
-    private var annotated = false
-    private var opt       = false
+    private var single      = false
+    private var entries     = false
+    private var annotated   = false
+    private var opt         = false
 
     /** Allow scalar-valued annotations. */
     def allowingAnnotations: ObjectField = {
@@ -80,7 +80,7 @@ trait SpecParserOps {
       this
     }
 
-    def using(fn: (YNode) => AmfElement): ObjectField = {
+    def using(fn: YNode => AmfElement): ObjectField = {
       mapped = Some(fn)
       this
     }

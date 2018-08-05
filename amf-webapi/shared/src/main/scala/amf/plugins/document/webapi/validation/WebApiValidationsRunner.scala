@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.validation
 
-import amf.{MessageStyle, ProfileName}
+import amf._
 import amf.core.benchmark.ExecutionLog
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.DataNodeModel
@@ -63,11 +63,18 @@ case class FilterDataNodeOptions() extends ValidationOptions {
 case class ModelValidationStep(override val validationContext: ValidationContext) extends ValidationStep {
 
   override protected def validate(): Future[Seq[AMFValidationResult]] = {
+    val baseOptions = FilterDataNodeOptions().withMessageStyle(validationContext.messageStyle)
+    val options = validationContext.profile match {
+      case RAMLProfile | RAML08Profile | OASProfile | OAS3Profile =>
+        baseOptions.withPartialValidation()
+      case _ =>
+        baseOptions.withFullValidation()
+    }
     ExecutionLog.log("WebApiValidations#validationRequestsForBaseUnit: validating now WebAPI")
     RuntimeValidator
       .shaclValidation(validationContext.baseUnit,
                        validationContext.validations,
-                       FilterDataNodeOptions().withMessageStyle(validationContext.messageStyle))
+        options)
       .map { report =>
         report.results.flatMap { buildValidationResult }
       }
