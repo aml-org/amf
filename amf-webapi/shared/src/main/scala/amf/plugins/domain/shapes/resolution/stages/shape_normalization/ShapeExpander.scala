@@ -63,7 +63,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     if (Option(oldInherits).isDefined) {
       // in this case i use the father shape id and position, because the inheritance could be a recursive shape already
       val newInherits = shape.inherits.map {
-        case r: RecursiveShape => recursionRegister.recursionError(shape, r, r.id, traversed)
+        case r: RecursiveShape => recursionRegister.recursionError(shape, r, r.fixpoint.value(), traversed)
         case other             => recursiveNormalization(other)
       }
       shape.setArrayWithoutId(ShapeModel.Inherits, newInherits, oldInherits.annotations)
@@ -178,7 +178,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
       case Some(t) => traversed.runWithIgnoredIds(() => normalize(range), Set(root.id, t.id))
       case None if range.inherits.nonEmpty =>
         traversed.runWithIgnoredIds(() => normalize(range), range.inherits.map(_.id).toSet + root.id)
-      case _ => traversed.runWithIgnoredIds(() => normalize(range), Set(range.id, range.id))
+      case _ => traversed.runWithIgnoredIds(() => normalize(range), Set(root.id, range.id))
     }
   }
 

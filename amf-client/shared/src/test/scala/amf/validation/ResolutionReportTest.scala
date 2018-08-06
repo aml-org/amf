@@ -13,7 +13,6 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
 
   test("Invalid recursive shape") {
     checkReport("/types/recursive-shape.raml", Some("recursive-shape.report"))
-
   }
 
   test("Inheritance facets validations become warnings") {
@@ -42,6 +41,10 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
 
   test("Invalid not existing node in master") {
     checkReport("/overlays/not-existing-node/overlay.raml", Some("not-existing-node.report"))
+  }
+
+  test("Valid recursive optional property with items recursive") {
+    checkReport("/types/optional-prop-item-recursive.raml", None)
   }
 
   override val hint: Hint = RamlYamlHint
