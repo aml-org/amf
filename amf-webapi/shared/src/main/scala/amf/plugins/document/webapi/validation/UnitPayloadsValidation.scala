@@ -1,10 +1,11 @@
 package amf.plugins.document.webapi.validation
 
 import amf.core.benchmark.ExecutionLog
+import amf.core.metamodel.document.PayloadFragmentModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{ArrayNode, DataNode, ObjectNode}
 import amf.core.remote.Platform
-import amf.core.services.PayloadValidator
+import amf.core.services.ShapesNodesValidator
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels, ValidationCandidate}
 import amf.internal.environment.Environment
 
@@ -18,11 +19,16 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, platform: Platform) {
     ShapeFacetsCandidatesCollector(baseUnit, platform) ++
     AnnotationsCandidatesCollector(baseUnit, platform)
 
-  val index = DataNodeIndex(candidates.map(_.payload.encodes))
+  val index: DataNodeIndex = {
+    val nodes = candidates
+      .filter(_.payload.fields.exists(PayloadFragmentModel.Encodes))
+      .map(_.payload.encodes) ++ candidates.flatMap(c => c.shape.values)
+    DataNodeIndex(nodes)
+  }
 
   def validate(env: Environment): Future[Seq[AMFValidationResult]] = {
     ExecutionLog.log(s"UnitPayloadsValidation#validate: Validating all candidates ${candidates.size}")
-    PayloadValidator.validateAll(candidates, SeverityLevels.WARNING, env).map(groupResults)
+    ShapesNodesValidator.validateAll(candidates, SeverityLevels.WARNING, env).map(groupResults)
   }
 
   private def groupResults(report: AMFValidationReport): Seq[AMFValidationResult] = {

@@ -1,7 +1,6 @@
 package amf.client.model.domain
 
 import amf.client.convert.CoreClientConverters._
-import amf.client.convert.InternalClientMatcher
 import amf.client.model.StrField
 import amf.core.model.domain.{Shape => InternalShape}
 
@@ -18,7 +17,7 @@ trait Shape extends DomainElement with Linkable with NamedDomainElement {
   def defaultValue: DataNode    = _internal.default
   def defaultValueStr: StrField = _internal.defaultString
 
-  def values: ClientList[StrField] = _internal.values.asClient
+  def values: ClientList[DataNode] = _internal.values.asClient
   def inherits: ClientList[Shape]  = _internal.inherits.asClient
   def or: ClientList[Shape]        = _internal.or.asClient
   def and: ClientList[Shape]       = _internal.and.asClient

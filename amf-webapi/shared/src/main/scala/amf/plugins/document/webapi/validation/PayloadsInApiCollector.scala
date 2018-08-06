@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.validation
 import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.model.domain.{DataNode, ScalarNode, Shape}
 import amf.core.parser.Annotations
+import amf.core.services.ShapesNodesValidator
 import amf.core.utils._
 import amf.core.validation.ValidationCandidate
 import amf.core.vocabulary.Namespace
@@ -74,16 +75,30 @@ class PayloadsInApiCollector(model: BaseUnit) {
             case Some(ei) =>
               results.put(shape.id, Seq(ei))
               shapes.put(shape.id, shape)
+            // first time i check the shape, i should collect it if has values
+            case None if shape.values.nonEmpty =>
+              shapes.put(shape.id, shape)
+              results.put(shape.id, Nil)
             case _ => // ignore
+
           }
         }
+
       case _ =>
     }
     val seq = results
       .flatMap({
         case (id, e) =>
           val shape = shapes(id)
-          e.map(e => ValidationCandidate(shape, buildFragment(shape, e)))
+          if (e.isEmpty) // only shapes with enums
+            Seq(
+              ValidationCandidate(
+                shape,
+                PayloadFragment().withMediaType(ShapesNodesValidator.defaultMediaTypeFor(shape.values.head))))
+          else
+            e.map { encodes =>
+              ValidationCandidate(shape, buildFragment(shape, encodes))
+            }
       })
       .toSeq
     seq

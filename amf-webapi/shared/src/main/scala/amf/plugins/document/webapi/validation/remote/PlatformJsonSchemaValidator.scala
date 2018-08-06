@@ -12,6 +12,7 @@ import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin}
 import amf.plugins.domain.shapes.models.{AnyShape, FileShape, NodeShape}
 import amf.plugins.syntax.SYamlSyntaxPlugin
 
+import scala.collection.mutable
 import scala.concurrent.Future
 
 class ExampleUnknownException(e: Throwable) extends RuntimeException(e)
@@ -147,34 +148,31 @@ trait PlatformJsonSchemaValidator extends PlatformSchemaValidator {
     )
   }
 
-  def computeJsonSchemaCandidates(validationCandidates: Seq[ValidationCandidate]): Seq[JsonSchemaCandidate] =
+  def computeJsonSchemaCandidates(validationCandidates: Seq[ValidationCandidate]): Seq[JsonSchemaCandidate] = {
+    val cache = mutable.Map[Shape, String]()
     validationCandidates.map { vc =>
       try {
         if (vc.shape.isInstanceOf[FileShape]) {
           None
         } else {
-          val fragmentShape = vc.shape match {
+          val schemaShape: Option[String] = vc.shape match {
             case anyShape: AnyShape if anyShape.supportsInheritance =>
-              findPolymorphicShape(anyShape, vc.payload.encodes)
-            case _ => vc.shape
-          }
-          val dataType = DataTypeFragment()
-          dataType.fields
-            .setWithoutId(DataTypeFragmentModel.Encodes, fragmentShape) // careful, we don't want to modify the ID
-
-          OAS20Plugin.unparse(dataType, RenderOptions()) match {
-            case Some(doc) =>
-              SYamlSyntaxPlugin.unparse("application/json", doc) match {
-                case Some(jsonSchema) =>
-                  Some(
-                    JsonSchemaCandidate(vc,
-                                        jsonSchema.replace("x-amf-union", "anyOf"),
-                                        loadDataNodeString(vc.payload),
-                                        None))
+              generateShape(findPolymorphicShape(anyShape, vc.payload.encodes))
+            case _ =>
+              cache.get(vc.shape) match {
+                case Some(json) => Some(json)
                 case _ =>
-                  None
+                  generateShape(vc.shape) match {
+                    case Some(generated) =>
+                      cache.put(vc.shape, generated)
+                      Some(generated)
+                    case _ => None
+                  }
               }
-            case _ => None
+          }
+
+          schemaShape.map { s =>
+            JsonSchemaCandidate(vc, s, loadDataNodeString(vc.payload), None)
           }
         }
       } catch {
@@ -182,5 +180,22 @@ trait PlatformJsonSchemaValidator extends PlatformSchemaValidator {
         case e: InvalidJsonObject    => Some(JsonSchemaCandidate(vc, "", None, Some(e)))
       }
     } collect { case Some(s) => s }
+  }
+
+  private def generateShape(fragmentShape: Shape): Option[String] = {
+    val dataType = DataTypeFragment()
+    dataType.fields
+      .setWithoutId(DataTypeFragmentModel.Encodes, fragmentShape) // careful, we don't want to modify the ID
+
+    OAS20Plugin.unparse(dataType, RenderOptions()) match {
+      case Some(doc) =>
+        SYamlSyntaxPlugin.unparse("application/json", doc) match {
+          case Some(jsonSchema) => Some(jsonSchema.replace("x-amf-union", "anyOf"))
+          case _                => None
+        }
+      case _ => None
+    }
+
+  }
 
 }

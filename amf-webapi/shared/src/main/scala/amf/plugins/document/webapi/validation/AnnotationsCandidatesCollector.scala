@@ -4,12 +4,7 @@ import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.remote.Platform
 import amf.core.validation.ValidationCandidate
-import amf.core.services.PayloadValidator
-import amf.core.validation.{AMFValidationResult, SeverityLevels}
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.resolveAnnotation
-
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
 
 class AnnotationsCandidatesCollector(model: BaseUnit, platform: Platform) {
 
