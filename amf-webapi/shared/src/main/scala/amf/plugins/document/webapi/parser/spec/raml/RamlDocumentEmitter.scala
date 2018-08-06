@@ -11,18 +11,18 @@ import amf.core.parser.Position.ZERO
 import amf.core.parser.{EmptyFutureDeclarations, FieldEntry, Position}
 import amf.core.remote._
 import amf.core.utils.TSort.tsort
+import amf.core.utils.{IdCounter, Strings}
 import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.oas.{OasDeclaredResponsesEmitter, TagsEmitter}
-import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork}
+import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode}
 import org.yaml.render.YamlRender
-import amf.core.utils.{IdCounter, Strings}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -40,7 +40,7 @@ case class Raml08RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
     val result = ListBuffer[EntryEmitter]()
 
     if (declarations.shapes.nonEmpty)
-      result += DeclaredTypesEmitters(declarations.shapes.values.toSeq, document.references, ordering)
+      result += spec.factory.declaredTypesEmitter(declarations.shapes.values.toSeq, document.references, ordering)
 
 //    if (declarations.annotations.nonEmpty)
 //      result += AnnotationsTypesEmitter(declarations.annotations.values.toSeq, document.references, ordering)
@@ -139,7 +139,7 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
     val result = ListBuffer[EntryEmitter]()
 
     if (declarations.shapes.nonEmpty)
-      result += DeclaredTypesEmitters(declarations.shapes.values.toSeq, document.references, ordering)
+      result += spec.factory.declaredTypesEmitter(declarations.shapes.values.toSeq, document.references, ordering)
 
     if (declarations.annotations.nonEmpty)
       result += AnnotationsTypesEmitter(declarations.annotations.values.toSeq, document.references, ordering)
@@ -199,27 +199,6 @@ abstract class RamlRootLevelEmitters(doc: BaseUnit with DeclaresModel, ordering:
   def emitters: Seq[EntryEmitter]
 
   def declarationsEmitter(): Seq[EntryEmitter]
-
-  case class DeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)
-      extends EntryEmitter {
-    override def emit(b: EntryBuilder): Unit = {
-      b.entry(
-        spec.factory.typesKey,
-        _.obj { b =>
-          traverse(
-            ordering.sorted(types.map {
-              case s: AnyShape       => RamlNamedTypeEmitter(s, ordering, references, spec.factory.typesEmitter)
-              case r: RecursiveShape => RamlRecursiveShapeTypeEmitter(r, ordering, references)
-              case _                 => throw new Exception("Cannot emit non WebApi shape")
-            }),
-            b
-          )
-        }
-      )
-    }
-
-    override def position(): Position = types.headOption.map(a => pos(a.annotations)).getOrElse(ZERO)
-  }
 }
 
 case class ReferenceEmitter(reference: BaseUnit,

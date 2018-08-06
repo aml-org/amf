@@ -58,6 +58,10 @@ class EditingResolutionTest extends BuildCycleTests {
     cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, productionPath + "lib-trait-location/")
   }
 
+  test("Test merge examples in local against declared type") {
+    cycle("merge-examples.raml", "merge-examples.resolved.raml", RamlYamlHint, Raml, resolutionPath + "examples/")
+  }
+
   /*
   test("Exchange experience API resolution to Amf") {
     cycle("api.v1.raml", "api.v1.resolved.jsonld", RamlYamlHint, Amf, productionPath + "exchange-experience-api-1.0.1-raml/")

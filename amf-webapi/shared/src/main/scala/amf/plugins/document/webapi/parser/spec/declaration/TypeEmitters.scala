@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.{DeclaredElement, ExplicitField, LexicalInformation, SynthesizedField}
+import amf.core.annotations._
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
 import amf.core.metamodel.Field
@@ -640,8 +640,10 @@ trait ExamplesEmitter {
       .entry(AnyShapeModel.Examples)
       .map(f => {
         val (anonymous, named) =
-          shape.examples.partition(e => !e.fields.fieldsMeta().contains(ExampleModel.Name) && !e.isLink)
-        val examples = f.array.values.collect({ case e: Example => e })
+          spec
+            .filterLocal(shape.examples)
+            .partition(e => !e.fields.fieldsMeta().contains(ExampleModel.Name) && !e.isLink)
+        val examples = spec.filterLocal(f.array.values.collect({ case e: Example => e }))
         anonymous.headOption.foreach { a =>
           results += SingleExampleEmitter("example", a, ordering)
         }
@@ -1516,7 +1518,7 @@ class OasAnyShapeEmitter(shape: AnyShape,
     shape.fields
       .entry(AnyShapeModel.Examples)
       .map(f => {
-        val examples = f.array.values.collect({ case e: Example => e })
+        val examples = spec.filterLocal(f.array.values.collect({ case e: Example => e }))
         val tuple    = examples.partition(e => !e.fields.fieldsMeta().contains(ExampleModel.Name) && !e.isLink)
 
         result ++= (tuple match {

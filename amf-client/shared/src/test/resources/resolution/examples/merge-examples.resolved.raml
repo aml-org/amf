@@ -1,0 +1,38 @@
+#%RAML 1.0
+title: test
+types:
+  A:
+    examples:
+      exampleDeclared:
+        value:
+          value1: aa
+          value2: 10
+    additionalProperties: true
+    properties:
+      value1:
+        type: string
+        required: true
+      value2:
+        type: integer
+        required: true
+/endpoint:
+  get:
+    body:
+      application/json:
+        examples:
+          exampleDeclared:
+            value:
+              value1: aa
+              value2: 10
+          exampleLocal:
+            value:
+              value1: bb
+              value2: 10
+        additionalProperties: true
+        properties:
+          value1:
+            type: string
+            required: true
+          value2:
+            type: integer
+            required: true

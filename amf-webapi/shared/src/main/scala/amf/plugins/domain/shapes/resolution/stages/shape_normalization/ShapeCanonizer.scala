@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
-import amf.core.annotations.{ExplicitField, ResolvedInheritance}
+import amf.core.annotations.{ExplicitField, LocalElement, ResolvedInheritance}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain._
@@ -181,9 +181,9 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
               .getOrElse("")
               .trim == example.raw.option().getOrElse("").trim) match {
           case Some(_) => // duplicated
-          case None => {
+          case None =>
+            example.annotations += LocalElement()
             refShape.setArrayWithoutId(AnyShapeModel.Examples, oldExamples ++ Seq(example))
-          }
         }
       }
       // we give proper names if there are more than one example, so it cannot be null

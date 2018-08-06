@@ -3,11 +3,12 @@ package amf.plugins.document.webapi.parser.spec.oas
 import amf.core.emitter.BaseEmitters.{pos, traverse}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
+import amf.core.model.domain.DomainElement
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{EmptyFutureDeclarations, FieldEntry, Position}
 import amf.core.unsafe.PlatformSecrets
+import amf.core.utils.Strings
 import amf.plugins.document.webapi.contexts.OasSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.declaration._
@@ -15,7 +16,6 @@ import amf.plugins.document.webapi.parser.spec.domain.{OasResponseEmitter, Param
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.models.{Parameter, Response}
 import org.yaml.model.YDocument.EntryBuilder
-import amf.core.utils.Strings
 
 import scala.collection.mutable.ListBuffer
 
@@ -29,7 +29,7 @@ case class OasDeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOr
     val result = ListBuffer[EntryEmitter]()
 
     if (declarations.shapes.nonEmpty)
-      result += OasDeclaredTypesEmitters(declarations.shapes.values.toSeq, ordering, references)
+      result += spec.factory.declaredTypesEmitter(declarations.shapes.values.toSeq, references, ordering)
 
     if (declarations.annotations.nonEmpty)
       result += OasAnnotationsTypesEmitter(declarations.annotations.values.toSeq, ordering)
@@ -53,17 +53,6 @@ case class OasDeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOr
       result += OasDeclaredResponsesEmitter("responses", declarations.responses.values.toSeq, ordering, references)
     result
   }
-}
-
-case class OasDeclaredTypesEmitters(types: Seq[Shape], ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasSpecEmitterContext)
-    extends EntryEmitter {
-  override def emit(b: EntryBuilder): Unit = {
-    b.entry("definitions",
-            _.obj(traverse(ordering.sorted(types.map(OasNamedTypeEmitter(_, ordering, references))), _)))
-  }
-
-  override def position(): Position = types.headOption.map(a => pos(a.annotations)).getOrElse(ZERO)
 }
 
 case class OasDeclaredParametersEmitter(parameters: Seq[Parameter], ordering: SpecOrdering, references: Seq[BaseUnit])(
