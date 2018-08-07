@@ -89,20 +89,20 @@ class AMFCompiler(val rawUrl: String,
 
     val parsed = content.mime
       .orElse(mediaType)
-      .flatMap(mime => AMFPluginsRegistry.syntaxPluginForMediaType(mime).flatMap(_.parse(mime, content.stream, ctx)))
+      .flatMap(mime => AMFPluginsRegistry.syntaxPluginForMediaType(mime).flatMap(_.parse(mime, vendor, content.stream, ctx)))
       // if we cannot find a plugin with the resolved media type, we try parsing from file extension
       .orElse {
         FileMediaType
           .extension(content.url)
           .flatMap(FileMediaType.mimeFromExtension)
           .flatMap(mime =>
-            AMFPluginsRegistry.syntaxPluginForMediaType(mime).flatMap(_.parse(mime, content.stream, ctx)))
+            AMFPluginsRegistry.syntaxPluginForMediaType(mime).flatMap(_.parse(mime, vendor, content.stream, ctx)))
       }
       .orElse {
         autodetectSyntax(content.stream).flatMap(mime =>
           try {
             mediaType = Some(mime)
-            AMFPluginsRegistry.syntaxPluginForMediaType(mime).flatMap(_.parse(mime, content.stream, ctx))
+            AMFPluginsRegistry.syntaxPluginForMediaType(mime).flatMap(_.parse(mime, vendor, content.stream, ctx))
           } catch {
             case _: Exception => None // This is just a parsing attempt, it can go wrong
         })

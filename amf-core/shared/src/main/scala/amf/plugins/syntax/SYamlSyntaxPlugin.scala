@@ -31,7 +31,7 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
     "text/vnd.yaml"
   )
 
-  override def parse(mediaType: String, text: CharSequence, ctx: ParserContext): Option[ParsedDocument] = {
+  override def parse(mediaType: String, vendor: String, text: CharSequence, ctx: ParserContext): Option[ParsedDocument] = {
 
     val parser = getFormat(mediaType) match {
       case "json" => JsonParser.withSource(text, ctx.currentFile)(ctx).withIncludeTag("!include")
