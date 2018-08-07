@@ -5,6 +5,7 @@ import java.io.{FileWriter, PrintWriter}
 import amf.core.rdf._
 import amf.core.vocabulary.Namespace
 import org.apache.jena.rdf.model.Model
+import org.apache.jena.riot.{RDFLanguages, RDFParser}
 import org.topbraid.jenax.util.JenaUtil
 
 class JenaRdfModel(val model: Model = JenaUtil.createMemoryModel()) extends RdfModel {
@@ -104,5 +105,24 @@ class JenaRdfModel(val model: Model = JenaUtil.createMemoryModel()) extends RdfM
           None
         }
     }
+  }
+  override def load(text: String, mediaType: String): Unit = {
+    val parser = RDFParser.create().source(text)
+    mediaType match {
+      case "application/ld+json"     =>
+        parser.lang(RDFLanguages.JSONLD)
+      case "text/n3" | "text/rdf+n3" =>
+        parser.lang(RDFLanguages.N3)
+      case "application/x-turtle" | "text/turtle" =>
+        parser.lang(RDFLanguages.TURTLE)
+      case "text/plain"              =>
+        parser.lang(RDFLanguages.NTRIPLES)
+      case "application/rdf+xml"     =>
+        parser.lang(RDFLanguages.RDFXML)
+      case _                         =>
+        throw new Exception(s"Unsupported RDF media type $mediaType")
+
+    }
+    parser.parse(model)
   }
 }

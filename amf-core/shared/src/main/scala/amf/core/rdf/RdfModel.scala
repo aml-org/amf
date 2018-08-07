@@ -20,6 +20,8 @@ abstract class RdfModel {
     s"http://amf.org/anon/$anonCounter"
   }
 
+  def load(text: String, mediaType: String)
+
   def toN3(): String
 
   // returns the native representation of the model

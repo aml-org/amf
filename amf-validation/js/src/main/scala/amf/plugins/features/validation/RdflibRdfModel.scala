@@ -15,7 +15,7 @@ object RDF {
 
 class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfModel {
 
-  val rdf: js.Dynamic = RDF.instance
+  lazy val rdf: js.Dynamic = RDF.instance
 
   override def addTriple(subject: String, predicate: String, objResource: String): RdfModel = {
     nodesCache = nodesCache - subject
@@ -103,5 +103,8 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
         }
     }
 
+  }
+  override def load(text: String, mediaType: String): Unit = {
+    rdf.parse(text, model, "", mediaType)
   }
 }

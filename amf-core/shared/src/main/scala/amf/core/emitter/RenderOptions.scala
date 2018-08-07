@@ -15,6 +15,7 @@ class RenderOptions {
   private var rawSourceMaps: Boolean               = false
   private var validating: Boolean                  = false
   private var filterFields: (Field) => Boolean     = (_: Field) => false
+  private var amfJsonLdSerialization               = true
 
   /** Include source maps when rendering to graph. */
   def withSourceMaps: RenderOptions = {
@@ -68,10 +69,21 @@ class RenderOptions {
     this
   }
 
+  def withoutAmfJsonLdSerialization: RenderOptions = {
+    amfJsonLdSerialization = false
+    this
+  }
+
+  def withAmfJsonLdSerialization: RenderOptions = {
+    amfJsonLdSerialization = true
+    this
+  }
+
   def isCompactUris: Boolean                  = compactUris
   def isWithSourceMaps: Boolean               = sources
   def isWithRawSoureMaps: Boolean             = rawSourceMaps
   def getCustomEmitter: Option[ScalarEmitter] = customEmitter
+  def isAmfJsonLdSerilization: Boolean        = amfJsonLdSerialization
   def isValidation: Boolean =
     customEmitter.isDefined || validating // I consider that if CustomEmitter is defined, is a validation
   def renderField(field: Field): Boolean = !filterFields(field)

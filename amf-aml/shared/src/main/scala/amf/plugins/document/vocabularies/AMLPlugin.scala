@@ -212,7 +212,8 @@ object AMLPlugin
     * to decide which one will parse the document base on information from
     * the document structure
     */
-  override def canParse(document: Root): Boolean = DialectHeader(document)
+  override def canParse(document: Root): Boolean =
+    document.parsed.isInstanceOf[SyamlParsedDocument] && DialectHeader(document)
 
   /**
     * Decides if this plugin can unparse the provided model document instance.

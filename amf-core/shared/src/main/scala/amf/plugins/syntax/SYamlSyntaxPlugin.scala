@@ -5,6 +5,7 @@ import java.io.Writer
 import amf.client.plugins.{AMFPlugin, AMFSyntaxPlugin}
 import amf.core.benchmark.ExecutionLog
 import amf.core.parser.{ParsedDocument, ParserContext, SyamlParsedDocument}
+import amf.core.unsafe.PlatformSecrets
 import org.yaml.model.{YComment, YDocument, YMap, YNode}
 import org.yaml.parser.{JsonParser, YamlParser}
 import org.yaml.render.{JsonRender, YamlRender}
@@ -12,7 +13,7 @@ import org.yaml.render.{JsonRender, YamlRender}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
+object SYamlSyntaxPlugin extends AMFSyntaxPlugin with PlatformSecrets {
 
   override val ID = "SYaml"
 
@@ -33,20 +34,24 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
 
   override def parse(mediaType: String, vendor: String, text: CharSequence, ctx: ParserContext): Option[ParsedDocument] = {
 
-    val parser = getFormat(mediaType) match {
-      case "json" => JsonParser.withSource(text, ctx.currentFile)(ctx).withIncludeTag("!include")
-      case _      => YamlParser(text, ctx.currentFile)(ctx).withIncludeTag("!include")
-    }
-    val parts = parser.parse(true)
-
-    if (parts.exists(v => v.isInstanceOf[YDocument])) {
-      parts collectFirst { case d: YDocument => d } map { document =>
-        val comment = parts collectFirst { case c: YComment => c }
-        SyamlParsedDocument(comment, document)
-      }
+    if (mediaType == "application/ld+json" && vendor == "AML 1.0" && platform.rdfFramework.isDefined) { // TODO: remove the hard-coded AML 1.0 somehow!
+      platform.rdfFramework.get.syntaxToRdfModel(mediaType, text)
     } else {
-      parts collectFirst { case d: YComment => d } map { comment =>
-        SyamlParsedDocument(Some(comment), YDocument(IndexedSeq(YNode(YMap.empty)), ctx.currentFile))
+      val parser = getFormat(mediaType) match {
+        case "json" => JsonParser.withSource(text, ctx.currentFile)(ctx).withIncludeTag("!include")
+        case _      => YamlParser(text, ctx.currentFile)(ctx).withIncludeTag("!include")
+      }
+      val parts = parser.parse(true)
+
+      if (parts.exists(v => v.isInstanceOf[YDocument])) {
+        parts collectFirst { case d: YDocument => d } map { document =>
+          val comment = parts collectFirst { case c: YComment => c }
+          SyamlParsedDocument(comment, document)
+        }
+      } else {
+        parts collectFirst { case d: YComment => d } map { comment =>
+          SyamlParsedDocument(Some(comment), YDocument(IndexedSeq(YNode(YMap.empty)), ctx.currentFile))
+        }
       }
     }
   }
