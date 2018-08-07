@@ -14,14 +14,14 @@ import org.yaml.model._
 case class RamlModuleParser(root: Root)(implicit override val ctx: RamlWebApiContext) extends Raml10BaseSpecParser {
 
   def parseModule(): Module = {
-    val module = Module(Annotations(root.parsed.document))
+    val module = Module(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
       .withLocation(root.location)
       .adopted(root.location)
       .add(SourceVendor(root.vendor))
 
     module.withLocation(root.location)
 
-    root.parsed.document.toOption[YMap].foreach { rootMap =>
+    root.parsed.asInstanceOf[SyamlParsedDocument].document.toOption[YMap].foreach { rootMap =>
       val references = ReferencesParser(module, "uses", rootMap, root.references).parse(root.location)
 
       parseDeclarations(root, rootMap)

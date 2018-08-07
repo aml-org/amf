@@ -3,7 +3,7 @@ package amf.plugins.document.webapi
 import amf.AMFProfile
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.model.document.{BaseUnit, PayloadFragment}
-import amf.core.parser.{ParserContext, SimpleReferenceHandler}
+import amf.core.parser.{ParserContext, SimpleReferenceHandler, SyamlParsedDocument}
 import amf.core.remote.Platform
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.{Root, emitter}
@@ -43,22 +43,33 @@ object PayloadPlugin extends AMFDocumentPlugin {
   )
 
   override def parse(root: Root, parentContext: ParserContext, platform: Platform) = {
-    implicit val ctx = new PayloadContext(root.location, parentContext.refs, parentContext)
-    Some(PayloadParser(root.parsed.document, root.location, root.mediatype).parseUnit())
+    root.parsed match {
+      case parsed: SyamlParsedDocument =>
+        implicit val ctx = new PayloadContext(root.location, parentContext.refs, parentContext)
+        Some(PayloadParser(parsed.document, root.location, root.mediatype).parseUnit())
+      case _                           =>
+        None
+    }
   }
 
   override def canParse(root: Root) = notRAML(root) && notOAS(root) // any document can be parsed as a Payload
   override def referenceHandler()   = SimpleReferenceHandler
 
-  private def notRAML(root: Root) = root.parsed.comment.isEmpty || !root.parsed.comment.get.metaText.startsWith("%")
+  private def notRAML(root: Root) = root.parsed match {
+    case parsed: SyamlParsedDocument => parsed.comment.isEmpty || !parsed.comment.get.metaText.startsWith("%")
+    case _                           => false
+  }
 
-  private def notOAS(root: Root) = {
-    root.parsed.document.node.value match {
-      case map: YMap => {
-        !map.entries.exists(_.key.value.asInstanceOf[YScalar].text.startsWith("swagger"))
+  private def notOAS(root: Root) = root.parsed match {
+    case parsed: SyamlParsedDocument =>
+      parsed.document.node.value match {
+        case map: YMap => {
+          !map.entries.exists(_.key.value.asInstanceOf[YScalar].text.startsWith("swagger"))
+        }
+        case _ => true
       }
-      case _ => true
-    }
+    case _                           =>
+      false
   }
 
   // Unparsing payloads not supported

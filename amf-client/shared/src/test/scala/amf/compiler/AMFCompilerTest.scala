@@ -91,7 +91,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
     compiler("file://amf-client/shared/src/test/resources/modules.raml", RamlYamlHint)
       .flatMap(_.root()) map {
       case Root(root, _, references, UnspecifiedReference, _, _) =>
-        val body = root.document.as[YMap]
+        val body = root.asInstanceOf[SyamlParsedDocument].document.as[YMap]
         body.entries.size should be(2)
         assertUses(body.key("uses").get, references.map(_.unit))
       case Root(root, _, _, refKind, _, _) => throw new Exception(s"Unespected type of referenceKind parsed $refKind")
@@ -102,7 +102,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
     compiler("file://amf-client/shared/src/test/resources/modules.json", OasJsonHint)
       .flatMap(_.root()) map {
       case Root(root, _, references, UnspecifiedReference, _, _) =>
-        val body = root.document.as[YMap]
+        val body = root.asInstanceOf[SyamlParsedDocument].document.as[YMap]
         body.entries.size should be(3)
         assertUses(body.key("x-amf-uses").get, references.map(_.unit))
       case Root(root, _, _, refKind, _, _) => throw new Exception(s"Unespected type of referenceKind parsed $refKind")

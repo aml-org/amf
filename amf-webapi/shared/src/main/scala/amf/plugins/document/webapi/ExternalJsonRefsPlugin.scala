@@ -4,14 +4,7 @@ import amf.core.Root
 import amf.core.metamodel.Obj
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.{AnnotationGraphLoader, ExternalDomainElement}
-import amf.core.parser.{
-  InferredLinkReference,
-  LinkReference,
-  ParsedDocument,
-  ParserContext,
-  ReferenceCollector,
-  ReferenceHandler
-}
+import amf.core.parser.{InferredLinkReference, LinkReference, ParsedDocument, ParserContext, ReferenceCollector, ReferenceHandler, SyamlParsedDocument}
 import amf.client.plugins.{AMFDocumentPluginSettings, AMFPlugin}
 import amf.core.remote.Platform
 import amf.core.utils._
@@ -24,14 +17,19 @@ class JsonRefsReferenceHandler extends ReferenceHandler {
   private val references           = ReferenceCollector()
   private var refUrls: Set[String] = Set()
 
-  override def collect(parsed: ParsedDocument, ctx: ParserContext): ReferenceCollector = {
-    links(parsed.document, ctx)
-    refUrls.foreach { ref =>
-      if (ref.startsWith("http:") || ref.startsWith("https:"))
-        references += (ref, LinkReference, ref) // this is not for all scalars, link must be a string
-      else
-        references += (ref, InferredLinkReference, ref) // Is inferred because we don't know how to dereference by default
+  override def collect(inputParsed: ParsedDocument, ctx: ParserContext): ReferenceCollector = {
+    inputParsed match {
+      case parsed: SyamlParsedDocument =>
+        links(parsed.document, ctx)
+        refUrls.foreach { ref =>
+          if (ref.startsWith("http:") || ref.startsWith("https:"))
+            references += (ref, LinkReference, ref) // this is not for all scalars, link must be a string
+          else
+            references += (ref, InferredLinkReference, ref) // Is inferred because we don't know how to dereference by default
+        }
+      case _ => // ignore
     }
+
     references
   }
 
@@ -79,18 +77,23 @@ class ExternalJsonRefsPlugin extends JsonSchemaPlugin {
   /**
     * Parses an accepted document returning an optional BaseUnit
     */
-  override def parse(document: Root, ctx: ParserContext, platform: Platform): Option[BaseUnit] = {
-    val result =
-      ExternalDomainElement().withId(document.location + "#/").withRaw(document.raw).withMediaType("application/json")
-    result.parsed = Some(document.parsed.document.node)
-    val references = document.references.map(_.unit)
-    val fragment = ExternalFragment()
-      .withLocation(document.location)
-      .withId(document.location)
-      .withEncodes(result)
-      .withLocation(document.location)
-    if (references.nonEmpty) fragment.withReferences(references)
-    Some(fragment)
+  override def parse(document: Root, ctx: ParserContext, platform: Platform): Option[BaseUnit] = document.parsed match {
+
+    case parsed: SyamlParsedDocument =>
+      val result =
+        ExternalDomainElement().withId(document.location + "#/").withRaw(document.raw).withMediaType("application/json")
+      result.parsed = Some(parsed.document.node)
+      val references = document.references.map(_.unit)
+      val fragment = ExternalFragment()
+        .withLocation(document.location)
+        .withId(document.location)
+        .withEncodes(result)
+        .withLocation(document.location)
+      if (references.nonEmpty) fragment.withReferences(references)
+      Some(fragment)
+
+    case _                           =>
+      None
   }
 
   override def canParse(document: Root): Boolean = document.raw.isJson

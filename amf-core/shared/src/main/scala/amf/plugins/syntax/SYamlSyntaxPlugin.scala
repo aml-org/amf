@@ -4,8 +4,8 @@ import java.io.Writer
 
 import amf.client.plugins.{AMFPlugin, AMFSyntaxPlugin}
 import amf.core.benchmark.ExecutionLog
-import amf.core.parser.{ParsedDocument, ParserContext}
-import org.yaml.model._
+import amf.core.parser.{ParsedDocument, ParserContext, SyamlParsedDocument}
+import org.yaml.model.{YComment, YDocument, YMap, YNode}
 import org.yaml.parser.{JsonParser, YamlParser}
 import org.yaml.render.{JsonRender, YamlRender}
 
@@ -42,11 +42,11 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin {
     if (parts.exists(v => v.isInstanceOf[YDocument])) {
       parts collectFirst { case d: YDocument => d } map { document =>
         val comment = parts collectFirst { case c: YComment => c }
-        ParsedDocument(comment, document)
+        SyamlParsedDocument(comment, document)
       }
     } else {
       parts collectFirst { case d: YComment => d } map { comment =>
-        ParsedDocument(Some(comment), YDocument(IndexedSeq(YNode(YMap.empty)), ctx.currentFile))
+        SyamlParsedDocument(Some(comment), YDocument(IndexedSeq(YNode(YMap.empty)), ctx.currentFile))
       }
     }
   }

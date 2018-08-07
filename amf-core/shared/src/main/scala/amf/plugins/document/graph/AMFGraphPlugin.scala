@@ -36,19 +36,28 @@ object AMFGraphPlugin extends AMFDocumentPlugin {
   )
 
   override def canParse(root: Root): Boolean = {
-    val maybeMaps = root.parsed.document.node.toOption[Seq[YMap]]
-    val maybeMap  = maybeMaps.flatMap(s => s.headOption)
-    maybeMap match {
-      case Some(m: YMap) =>
-        m.key("@id").isDefined || m.key("@type").isDefined || m
-          .key((Namespace.Document + "encodes").iri())
-          .isDefined || m.key((Namespace.Document + "declares").iri()).isDefined
+    root.parsed match {
+      case parsed: SyamlParsedDocument =>
+        val maybeMaps = parsed.document.node.toOption[Seq[YMap]]
+        val maybeMap  = maybeMaps.flatMap(s => s.headOption)
+        maybeMap match {
+          case Some(m: YMap) =>
+            m.key("@id").isDefined || m.key("@type").isDefined || m
+              .key((Namespace.Document + "encodes").iri())
+              .isDefined || m.key((Namespace.Document + "declares").iri()).isDefined
+          case _ => false
+        }
       case _ => false
     }
-
   }
+
   override def parse(root: Root, ctx: ParserContext, platform: Platform) =
-    Some(GraphParser(platform).parse(root.parsed.document, root.location))
+    root.parsed match {
+      case parsed: SyamlParsedDocument =>
+        Some(GraphParser(platform).parse(parsed.document, root.location))
+      case _                           =>
+        None
+    }
 
   override def canUnparse(unit: BaseUnit) = true
 

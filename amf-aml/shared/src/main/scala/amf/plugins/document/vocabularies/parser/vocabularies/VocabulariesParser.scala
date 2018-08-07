@@ -284,7 +284,7 @@ case class VocabulariesReferencesParser(map: YMap, references: Seq[ParsedReferen
 
 class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContext) extends BaseSpecParser {
 
-  val map: YMap = root.parsed.document.as[YMap]
+  val map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
   val vocabulary: Vocabulary = Vocabulary(Annotations(map)).withLocation(root.location).withId(root.location)
 
   def parseDocument(): BaseUnit = {

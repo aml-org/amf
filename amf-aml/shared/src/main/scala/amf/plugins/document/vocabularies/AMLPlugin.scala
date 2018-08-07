@@ -6,7 +6,7 @@ import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
-import amf.core.parser.{ParserContext, ReferenceHandler}
+import amf.core.parser.{ParserContext, ReferenceHandler, SyamlParsedDocument}
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFDomainEntityResolver
@@ -29,10 +29,7 @@ import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReference
 import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, DialectsParser}
 import amf.plugins.document.vocabularies.parser.instances.{DialectInstanceContext, DialectInstanceParser}
 import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
-import amf.plugins.document.vocabularies.resolution.pipelines.{
-  DialectInstanceResolutionPipeline,
-  DialectResolutionPipeline
-}
+import amf.plugins.document.vocabularies.resolution.pipelines.{DialectInstanceResolutionPipeline, DialectResolutionPipeline}
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import org.yaml.model._
 
@@ -40,7 +37,13 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 trait RamlHeaderExtractor {
-  def comment(root: Root): Option[YComment] = root.parsed.comment
+  def comment(root: Root): Option[YComment] = {
+    root.parsed match {
+      case parsed: SyamlParsedDocument => parsed.comment
+      case _                           => None
+    }
+
+  }
 
   def comment(document: YDocument): Option[YComment] =
     document.children.find(v => v.isInstanceOf[YComment]).asInstanceOf[Option[YComment]]
@@ -48,22 +51,27 @@ trait RamlHeaderExtractor {
 
 trait JsonHeaderExtractor {
   def dialect(root: Root): Option[String] = {
-    val parsed: Seq[Option[String]] = root.parsed.document.children.collect {
-      case n: YNode =>
-        n.asOption[YMap] match {
-          case Some(m) =>
-            try {
-              m.entries.find(_.key.as[YScalar].text == "$dialect") map { entry =>
-                entry.value.as[String]
-              }
-            } catch {
-              case _: YException => None
+    root.parsed match {
+      case parsedInput: SyamlParsedDocument =>
+        val parsed: Seq[Option[String]] = parsedInput.document.children.collect {
+          case n: YNode =>
+            n.asOption[YMap] match {
+              case Some(m) =>
+                try {
+                  m.entries.find(_.key.as[YScalar].text == "$dialect") map { entry =>
+                    entry.value.as[String]
+                  }
+                } catch {
+                  case _: YException => None
+                }
+              case None => None
             }
-          case None => None
-        }
 
+        }
+        parsed.collectFirst { case Some(metaText) => metaText }
+      case _                           => None
     }
-    parsed.collectFirst { case Some(metaText) => metaText }
+
   }
 
 }

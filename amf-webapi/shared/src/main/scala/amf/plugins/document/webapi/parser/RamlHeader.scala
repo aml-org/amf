@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.parser
 
 import amf.core.Root
+import amf.core.parser.SyamlParsedDocument
 import amf.plugins.document.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
 
 import scala.util.matching.Regex
@@ -23,9 +24,13 @@ object RamlHeader {
   object Raml10Extension extends RamlHeader("%RAML 1.0 Extension")
 
   def apply(root: Root): Option[RamlHeader] = {
-    root.parsed.comment.flatMap(c => fromText(c.metaText)) match {
-      case Some(header) => Option(header)
-      case _            => RamlFragmentHeader(root)
+    root.parsed match {
+      case parsed: SyamlParsedDocument =>
+        parsed.comment.flatMap(c => fromText(c.metaText)) match {
+          case Some(header) => Option(header)
+          case _            => RamlFragmentHeader(root)
+        }
+      case _                           => None
     }
   }
 
@@ -50,9 +55,13 @@ object RamlFragmentHeader {
   object Raml10AnnotationTypeDeclaration extends RamlHeader("%RAML 1.0 AnnotationTypeDeclaration") with RamlFragment
   object Raml10SecurityScheme            extends RamlHeader("%RAML 1.0 SecurityScheme") with RamlFragment
 
-  def fromRoot(root: Root): Option[RamlHeader] = root.parsed.comment.flatMap(c => fromText(c.metaText)) match {
-    case Some(header) => Option(header)
-    case _            => None
+  def fromRoot(root: Root): Option[RamlHeader] = root.parsed match {
+    case parsed: SyamlParsedDocument =>
+      parsed.comment.flatMap(c => fromText(c.metaText)) match {
+        case Some(header) => Option(header)
+        case _            => None
+      }
+    case _                           => None
   }
 
   def unapply(root: Root): Option[RamlHeader] = fromRoot(root)

@@ -2,7 +2,7 @@ package amf.facades
 
 import amf.core
 import amf.core.model.document.BaseUnit
-import amf.core.parser.{ParsedDocument, ParsedReference, ParserContext, ReferenceKind}
+import amf.core.parser.{ParsedDocument, ParsedReference, ParserContext, ReferenceKind, SyamlParsedDocument}
 import amf.core.remote.Syntax.{Json, Yaml}
 import amf.core.remote._
 import amf.core.{AMFCompiler => ModularCompiler}
@@ -154,7 +154,7 @@ case class Root(parsed: ParsedDocument,
                 referenceKind: ReferenceKind,
                 vendor: Vendor,
                 raw: String) {
-  val document: YDocument = parsed.document
+  val document: YDocument = parsed.asInstanceOf[SyamlParsedDocument].document
 
   // TODO: remove me, only for compatibility while refactoring
   def newFormat(): amf.core.Root = {

@@ -8,16 +8,21 @@ object GraphDependenciesReferenceHandler extends ReferenceHandler {
 
   val graphDependenciesPredicate: String = (Namespace.Document + "graphDependencies").iri()
 
-  override def collect(parsed: ParsedDocument, ctx: ParserContext): ReferenceCollector = {
-    val document  = parsed.document
-    val maybeMaps = document.node.toOption[Seq[YMap]]
-    maybeMaps.flatMap(s => s.headOption) match {
-      case Some(map: YMap) =>
-        map.entries.find(_.key.as[String] == graphDependenciesPredicate) match {
-          case Some(entry) => processDependencyEntry(entry)
-          case None        => EmptyReferenceCollector
+  override def collect(inputParsed: ParsedDocument, ctx: ParserContext): ReferenceCollector = {
+    inputParsed match {
+      case parsed: SyamlParsedDocument =>
+        val document  = parsed.document
+        val maybeMaps = document.node.toOption[Seq[YMap]]
+        maybeMaps.flatMap(s => s.headOption) match {
+          case Some(map: YMap) =>
+            map.entries.find(_.key.as[String] == graphDependenciesPredicate) match {
+              case Some(entry) => processDependencyEntry(entry)
+              case None        => EmptyReferenceCollector
+            }
+          case None => EmptyReferenceCollector
         }
-      case None => EmptyReferenceCollector
+      case _                           =>
+        EmptyReferenceCollector
     }
   }
 
