@@ -220,7 +220,7 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
-  test("Invalid example in any shape") {
+  ignore("Invalid example in any shape") {
     validate(
       "/warning/any-shape-invalid-example.raml",
       warning => {
@@ -499,7 +499,7 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
-  test("Invalid json example - unquoted key") {
+  ignore("Invalid json example - unquoted key") {
     validate(
       "/error/unquoted-json-key-example.raml",
       error => {

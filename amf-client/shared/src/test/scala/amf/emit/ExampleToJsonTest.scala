@@ -39,7 +39,7 @@ class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
     cycle("json-object.raml", "json-object-raw.json")
   }
 
-  test("Json object example without raw") {
+  ignore("Json object example without raw") {
     cycle("json-object.raml", "json-object.json", removeRaw = true)
   }
 
@@ -47,7 +47,7 @@ class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
     cycle("json-array.raml", "json-array-raw.json")
   }
 
-  test("Json array example without raw") {
+  ignore("Json array example without raw") {
     cycle("json-array.raml", "json-array.json", removeRaw = true)
   }
 
