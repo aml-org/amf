@@ -3,7 +3,7 @@ package amf.plugins.document.webapi
 import amf.AMFProfile
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.model.document.{BaseUnit, PayloadFragment}
-import amf.core.parser.{ParserContext, SimpleReferenceHandler, SyamlParsedDocument}
+import amf.core.parser.{ParsedDocument, ParserContext, SimpleReferenceHandler, SyamlParsedDocument}
 import amf.core.remote.Platform
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.{Root, emitter}
@@ -73,8 +73,8 @@ object PayloadPlugin extends AMFDocumentPlugin {
   }
 
   // Unparsing payloads not supported
-  override def unparse(unit: BaseUnit, options: emitter.RenderOptions): Option[YDocument] = unit match {
-    case p: PayloadFragment => Some(PayloadEmitter(p.encodes).emitDocument())
+  override def unparse(unit: BaseUnit, options: emitter.RenderOptions): Option[ParsedDocument] = unit match {
+    case p: PayloadFragment => Some(SyamlParsedDocument(document = PayloadEmitter(p.encodes).emitDocument()))
     case _                  => None
   }
 

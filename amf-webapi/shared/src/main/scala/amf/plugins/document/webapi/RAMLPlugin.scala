@@ -5,7 +5,7 @@ import amf.core.emitter.RenderOptions
 import amf.core.Root
 import amf.core.model.document._
 import amf.core.model.domain.{DomainElement, ExternalDomainElement}
-import amf.core.parser.{EmptyFutureDeclarations, LinkReference, ParserContext, RefContainer}
+import amf.core.parser.{EmptyFutureDeclarations, LinkReference, ParsedDocument, ParserContext, RefContainer, SyamlParsedDocument}
 import amf.core.remote.Platform
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.plugins.document.webapi.contexts._
@@ -15,12 +15,7 @@ import amf.plugins.document.webapi.parser.RamlHeader.{Raml10, Raml10Extension, R
 import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, WebApiDeclarations}
 import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
-import amf.plugins.document.webapi.resolution.pipelines.{
-  Raml08EditingPipeline,
-  Raml08ResolutionPipeline,
-  Raml10EditingPipeline,
-  Raml10ResolutionPipeline
-}
+import amf.plugins.document.webapi.resolution.pipelines.{Raml08EditingPipeline, Raml08ResolutionPipeline, Raml10EditingPipeline, Raml10ResolutionPipeline}
 import amf.plugins.domain.webapi.models.WebApi
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YDocument, YNode}
@@ -138,10 +133,13 @@ object RAML08Plugin extends RAMLPlugin {
   }
 
   // fix for 08?
-  override def unparse(unit: BaseUnit, options: RenderOptions): Option[YDocument] = unit match {
-    case document: Document => Some(RamlDocumentEmitter(document)(specContext).emitDocument())
-    case fragment: Fragment => Some(new RamlFragmentEmitter(fragment)(specContext).emitFragment())
-    case _                  => None
+  override def unparse(unit: BaseUnit, options: RenderOptions): Option[ParsedDocument] = {
+    val unparsed = unit match {
+      case document: Document => Some(RamlDocumentEmitter(document)(specContext).emitDocument())
+      case fragment: Fragment => Some(new RamlFragmentEmitter(fragment)(specContext).emitFragment())
+      case _                  => None
+    }
+    unparsed map { doc => SyamlParsedDocument(document = doc) }
   }
 
   override def context(wrapped: ParserContext, root: Root, ds: Option[WebApiDeclarations] = None): RamlWebApiContext =
@@ -195,12 +193,15 @@ object RAML10Plugin extends RAMLPlugin {
   }
 
   // fix for 08?
-  override def unparse(unit: BaseUnit, options: RenderOptions): Option[YDocument] = unit match {
-    case module: Module             => Some(RamlModuleEmitter(module)(specContext).emitModule())
-    case document: Document         => Some(RamlDocumentEmitter(document)(specContext).emitDocument())
-    case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
-    case fragment: Fragment         => Some(new RamlFragmentEmitter(fragment)(specContext).emitFragment())
-    case _                          => None
+  override def unparse(unit: BaseUnit, options: RenderOptions): Option[ParsedDocument] = {
+    val unparsed = unit match {
+      case module: Module             => Some(RamlModuleEmitter(module)(specContext).emitModule())
+      case document: Document         => Some(RamlDocumentEmitter(document)(specContext).emitDocument())
+      case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
+      case fragment: Fragment         => Some(new RamlFragmentEmitter(fragment)(specContext).emitFragment())
+      case _                          => None
+    }
+    unparsed map { doc => SyamlParsedDocument(document = doc) }
   }
 
   override def context(wrapped: ParserContext, root: Root, ds: Option[WebApiDeclarations] = None): RamlWebApiContext =

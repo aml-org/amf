@@ -173,8 +173,8 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
   /**
     * Unparses a model base unit and return a document AST
     */
-  override def unparse(unit: BaseUnit, options: RenderOptions): Option[YDocument] =
-    firstAnyShape(unit).map(as => JsonSchemaEmitter(as).emitDocument())
+  override def unparse(unit: BaseUnit, options: RenderOptions): Option[ParsedDocument] =
+    firstAnyShape(unit).map(as => JsonSchemaEmitter(as).emitDocument()).map { doc => SyamlParsedDocument(document =  doc) }
 
   /**
     * Decides if this plugin can parse the provided document instance.

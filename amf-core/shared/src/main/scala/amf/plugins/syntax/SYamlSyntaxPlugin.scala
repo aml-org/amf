@@ -56,13 +56,29 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin with PlatformSecrets {
     }
   }
 
-  override def unparse(mediaType: String, ast: YDocument): Some[String] = render(mediaType, ast) { (format, ast) =>
-    Some(if (format == "yaml") YamlRender.render(ast) else JsonRender.render(ast))
+  override def unparse(mediaType: String, doc: ParsedDocument): Option[String] = {
+    doc match {
+      case input: SyamlParsedDocument =>
+        val ast = input.document
+        render(mediaType, ast) {
+          (format, ast) => {
+            Some(if (format == "yaml") YamlRender.render(ast) else JsonRender.render(ast))
+          }
+        }
+      case _                          => None
+    }
   }
 
-  override def unparse(mediaType: String, ast: YDocument, writer: Writer): Option[Writer] = render(mediaType, ast) {
-    (format, ast) =>
-      Some(if (format == "yaml") writer.append(YamlRender.render(ast)) else JsonRender.render(ast, writer))
+  override def unparse(mediaType: String, doc: ParsedDocument, writer: Writer): Option[Writer] = {
+    doc match {
+      case input: SyamlParsedDocument =>
+        val ast = input.document
+        render(mediaType, ast) {
+          (format, ast) =>
+            Some(if (format == "yaml") writer.append(YamlRender.render(ast)) else JsonRender.render(ast, writer))
+        }
+      case _                          => None
+    }
   }
 
   private def render[T](mediaType: String, ast: YDocument)(render: (String, YDocument) => T): T = {

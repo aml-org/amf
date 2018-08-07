@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.validation.remote
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.Shape
+import amf.core.parser.SyamlParsedDocument
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, ValidationCandidate}
 import amf.internal.environment.Environment

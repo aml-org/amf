@@ -69,7 +69,7 @@ object AMFGraphPlugin extends AMFDocumentPlugin with PlatformSecrets {
 
   override def unparse(unit: BaseUnit, options: RenderOptions) =
     // if (options.isAmfJsonLdSerilization || platform.rdfFramework.isEmpty) {
-      Some(GraphEmitter.emit(unit, options))
+      Some(SyamlParsedDocument(comment = None, document = GraphEmitter.emit(unit, options)))
   /*
     } else {
       val rdfModel = platform.rdfFramework.get.unitToRdfModel(unit , options)

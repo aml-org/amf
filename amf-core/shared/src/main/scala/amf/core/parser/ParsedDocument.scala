@@ -4,4 +4,4 @@ import org.yaml.model.{YComment, YDocument}
 
 abstract class ParsedDocument
 
-case class SyamlParsedDocument(comment: Option[YComment], document: YDocument) extends ParsedDocument
+case class SyamlParsedDocument(comment: Option[YComment] = None, document: YDocument) extends ParsedDocument

@@ -4,6 +4,7 @@ import amf.Core
 import amf.core.emitter.RenderOptions
 import amf.core.AMFSerializer
 import amf.core.model.document.BaseUnit
+import amf.core.parser.SyamlParsedDocument
 import amf.core.remote._
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.AMLPlugin
@@ -57,7 +58,7 @@ class AMFUnitMaker {
       case _         => ""
     }
 
-    new AMFSerializer(unit, mediaType, vendorString, options).make()
+    new AMFSerializer(unit, mediaType, vendorString, options).make().asInstanceOf[SyamlParsedDocument].document
   }
 }
 

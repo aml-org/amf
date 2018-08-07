@@ -5,7 +5,7 @@ import amf.core.emitter.RenderOptions
 import amf.core.Root
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
-import amf.core.parser.{LibraryReference, LinkReference, ParsedReference, ParserContext}
+import amf.core.parser.{LibraryReference, LinkReference, ParsedDocument, ParsedReference, ParserContext, SyamlParsedDocument}
 import amf.core.remote.Platform
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.plugins.document.webapi.contexts._
@@ -98,12 +98,15 @@ object OAS20Plugin extends OASPlugin {
     case _           => false
   }
 
-  override def unparse(unit: BaseUnit, options: RenderOptions): Option[YDocument] = unit match {
-    case module: Module             => Some(OasModuleEmitter(module)(specContext).emitModule())
-    case document: Document         => Some(Oas2DocumentEmitter(document)(specContext).emitDocument())
-    case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
-    case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext).emitFragment())
-    case _                          => None
+  override def unparse(unit: BaseUnit, options: RenderOptions): Option[ParsedDocument] = {
+    val unparsed = unit match {
+      case module: Module             => Some(OasModuleEmitter(module)(specContext).emitModule())
+      case document: Document         => Some(Oas2DocumentEmitter(document)(specContext).emitDocument())
+      case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
+      case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext).emitFragment())
+      case _                          => None
+    }
+    unparsed map { doc => SyamlParsedDocument(document = doc) }
   }
 
   /**
@@ -152,12 +155,15 @@ object OAS30Plugin extends OASPlugin {
     case _           => false
   }
 
-  override def unparse(unit: BaseUnit, options: RenderOptions): Option[YDocument] = unit match {
-    case module: Module             => Some(OasModuleEmitter(module)(specContext).emitModule())
-    case document: Document         => Some(Oas3DocumentEmitter(document)(specContext).emitDocument())
-    case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
-    case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext).emitFragment())
-    case _                          => None
+  override def unparse(unit: BaseUnit, options: RenderOptions): Option[ParsedDocument] = {
+    val unparsed = unit match {
+      case module: Module             => Some(OasModuleEmitter(module)(specContext).emitModule())
+      case document: Document         => Some(Oas3DocumentEmitter(document)(specContext).emitDocument())
+      case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
+      case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext).emitFragment())
+      case _                          => None
+    }
+    unparsed map { doc => SyamlParsedDocument(document = doc) }
   }
 
   /**
