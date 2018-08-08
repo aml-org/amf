@@ -9,8 +9,9 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportTopLevel("render.RenderOptions")
 class RenderOptions {
 
-  private var sources: Boolean = false
-  private var compactUris: Boolean = false
+  private var sources: Boolean       = false
+  private var compactUris: Boolean   = false
+  private var amfJsonLdSerialization = true
 
   /** Include source maps when rendering to graph. */
   def withSourceMaps: RenderOptions = {
@@ -34,8 +35,27 @@ class RenderOptions {
     this
   }
 
+  /**
+    * Emit specific AMF JSON-LD serialization
+    * @return
+    */
+  def withoutAmfJsonLdSerialization: RenderOptions = {
+    amfJsonLdSerialization = false
+    this
+  }
+
+  /**
+    * Emit regular JSON-LD serialization
+    * @return
+    */
+  def withAmfJsonLdSerialization: RenderOptions = {
+    amfJsonLdSerialization = true
+    this
+  }
+
   def isWithCompactUris: Boolean = compactUris
   def isWithSourceMaps: Boolean = sources
+  def isAmfJsonLdSerilization: Boolean = amfJsonLdSerialization
 }
 
 object RenderOptions {

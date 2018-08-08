@@ -4,7 +4,9 @@ import java.io.Writer
 
 import amf.client.plugins.{AMFPlugin, AMFSyntaxPlugin}
 import amf.core.benchmark.ExecutionLog
+import amf.core.client.ParsingOptions
 import amf.core.parser.{ParsedDocument, ParserContext, SyamlParsedDocument}
+import amf.core.rdf.RdfModelDocument
 import amf.core.unsafe.PlatformSecrets
 import org.yaml.model.{YComment, YDocument, YMap, YNode}
 import org.yaml.parser.{JsonParser, YamlParser}
@@ -32,9 +34,9 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin with PlatformSecrets {
     "text/vnd.yaml"
   )
 
-  override def parse(mediaType: String, vendor: String, text: CharSequence, ctx: ParserContext): Option[ParsedDocument] = {
+  override def parse(mediaType: String, vendor: String, text: CharSequence, ctx: ParserContext, options: ParsingOptions): Option[ParsedDocument] = {
 
-    if (mediaType == "application/ld+json" && vendor == "AML 1.0" && platform.rdfFramework.isDefined) { // TODO: remove the hard-coded AML 1.0 somehow!
+    if ((mediaType == "application/ld+json" || mediaType == "application/json") && !options.isAmfJsonLdSerilization && platform.rdfFramework.isDefined) {
       platform.rdfFramework.get.syntaxToRdfModel(mediaType, text)
     } else {
       val parser = getFormat(mediaType) match {
@@ -65,6 +67,8 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin with PlatformSecrets {
             Some(if (format == "yaml") YamlRender.render(ast) else JsonRender.render(ast))
           }
         }
+      case input: RdfModelDocument if platform.rdfFramework.isDefined   =>
+        platform.rdfFramework.get.rdfModelToSyntax(mediaType, input)
       case _                          => None
     }
   }
@@ -77,6 +81,8 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin with PlatformSecrets {
           (format, ast) =>
             Some(if (format == "yaml") writer.append(YamlRender.render(ast)) else JsonRender.render(ast, writer))
         }
+      case input: RdfModelDocument if platform.rdfFramework.isDefined   =>
+        platform.rdfFramework.get.rdfModelToSyntaxWriter(mediaType, input, writer)
       case _                          => None
     }
   }

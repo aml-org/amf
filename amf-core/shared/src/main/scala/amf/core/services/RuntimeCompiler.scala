@@ -1,5 +1,6 @@
 package amf.core.services
 
+import amf.core.client.ParsingOptions
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{ParserContext, ReferenceKind, UnspecifiedReference}
 import amf.core.registries.AMFPluginsRegistry
@@ -17,7 +18,8 @@ trait RuntimeCompiler {
             referenceKind: ReferenceKind,
             cache: Cache,
             ctx: Option[ParserContext],
-            env: Environment = Environment()): Future[BaseUnit]
+            env: Environment = Environment(),
+            parsingOptions: ParsingOptions = ParsingOptions()): Future[BaseUnit]
 }
 
 object RuntimeCompiler {
@@ -33,11 +35,12 @@ object RuntimeCompiler {
             referenceKind: ReferenceKind = UnspecifiedReference,
             cache: Cache = Cache(),
             ctx: Option[ParserContext] = None,
-            env: Environment = Environment()): Future[BaseUnit] = {
+            env: Environment = Environment(),
+            parsingOptions: ParsingOptions = ParsingOptions()): Future[BaseUnit] = {
     compiler match {
       case Some(runtimeCompiler) =>
         AMFPluginsRegistry.featurePlugins().foreach(_.onBeginParsingInvocation(url, mediaType, vendor))
-        runtimeCompiler.build(url, base, mediaType, vendor, referenceKind, cache, ctx, env) map { parsedUnit =>
+        runtimeCompiler.build(url, base, mediaType, vendor, referenceKind, cache, ctx, env, parsingOptions) map { parsedUnit =>
           AMFPluginsRegistry.featurePlugins().foldLeft(parsedUnit) {
             case (parsed, plugin) =>
               plugin.onFinishedParsingInvocation(url, parsed)

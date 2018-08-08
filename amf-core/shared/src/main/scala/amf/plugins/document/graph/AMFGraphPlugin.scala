@@ -7,6 +7,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
 import amf.core.parser._
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
+import amf.core.client.ParsingOptions
 import amf.core.rdf.{RdfModelDocument, RdfModelEmitter, RdfModelParser}
 import amf.core.remote.Platform
 import amf.core.resolution.pipelines.{BasicResolutionPipeline, ResolutionPipeline}
@@ -55,26 +56,25 @@ object AMFGraphPlugin extends AMFDocumentPlugin with PlatformSecrets {
     }
   }
 
-  override def parse(root: Root, ctx: ParserContext, platform: Platform) =
+  override def parse(root: Root, ctx: ParserContext, platform: Platform, options: ParsingOptions): Option[BaseUnit] =
     root.parsed match {
       case parsed: SyamlParsedDocument =>
-        Some(GraphParser(platform).parse(parsed.document, root.location))
+        Some(GraphParser(platform).parse(parsed.document, effectiveUnitUrl(root.location, options)))
       case parsed: RdfModelDocument    =>
-        Some(new RdfModelParser(platform)(ctx).parse(parsed.model, root.location))
+        Some(new RdfModelParser(platform)(ctx).parse(parsed.model, effectiveUnitUrl(root.location, options)))
       case _                           =>
         None
     }
 
   override def canUnparse(unit: BaseUnit) = true
 
-  override def unparse(unit: BaseUnit, options: RenderOptions) =
-    // if (options.isAmfJsonLdSerilization || platform.rdfFramework.isEmpty) {
-      Some(SyamlParsedDocument(comment = None, document = GraphEmitter.emit(unit, options)))
-  /*
-    } else {
-      val rdfModel = platform.rdfFramework.get.unitToRdfModel(unit , options)
-    }
-    */
+  override def unparse(unit: BaseUnit, options: RenderOptions): Some[ParsedDocument] =
+     if (options.isAmfJsonLdSerilization || platform.rdfFramework.isEmpty) {
+       Some(SyamlParsedDocument(comment = None, document = GraphEmitter.emit(unit, options)))
+     } else {
+       val rdfModel = platform.rdfFramework.get.unitToRdfModel(unit , options)
+       Some(RdfModelDocument(model = rdfModel))
+     }
 
 
   override def referenceHandler(): ReferenceHandler = GraphDependenciesReferenceHandler
@@ -89,4 +89,12 @@ object AMFGraphPlugin extends AMFDocumentPlugin with PlatformSecrets {
     * Does references in this type of documents be recursive?
     */
   override val allowRecursiveReferences: Boolean = true
+
+  protected def effectiveUnitUrl(location: String, options: ParsingOptions): String = {
+    options.definedBaseUrl match {
+      case Some(url) => url
+      case None      => location
+    }
+  }
+
 }

@@ -6,6 +6,7 @@ import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.{AnnotationGraphLoader, ExternalDomainElement}
 import amf.core.parser.{InferredLinkReference, LinkReference, ParsedDocument, ParserContext, ReferenceCollector, ReferenceHandler, SyamlParsedDocument}
 import amf.client.plugins.{AMFDocumentPluginSettings, AMFPlugin}
+import amf.core.client.ParsingOptions
 import amf.core.remote.Platform
 import amf.core.utils._
 import org.yaml.model._
@@ -77,7 +78,7 @@ class ExternalJsonRefsPlugin extends JsonSchemaPlugin {
   /**
     * Parses an accepted document returning an optional BaseUnit
     */
-  override def parse(document: Root, ctx: ParserContext, platform: Platform): Option[BaseUnit] = document.parsed match {
+  override def parse(document: Root, ctx: ParserContext, platform: Platform, options: ParsingOptions): Option[BaseUnit] = document.parsed match {
 
     case parsed: SyamlParsedDocument =>
       val result =

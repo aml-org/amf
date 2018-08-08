@@ -2,6 +2,7 @@ package amf.plugins.document.webapi
 
 import amf.AMFProfile
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
+import amf.core.client.ParsingOptions
 import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.parser.{ParsedDocument, ParserContext, SimpleReferenceHandler, SyamlParsedDocument}
 import amf.core.remote.Platform
@@ -42,7 +43,7 @@ object PayloadPlugin extends AMFDocumentPlugin {
     "application/yaml"*/
   )
 
-  override def parse(root: Root, parentContext: ParserContext, platform: Platform) = {
+  override def parse(root: Root, parentContext: ParserContext, platform: Platform, options: ParsingOptions) = {
     root.parsed match {
       case parsed: SyamlParsedDocument =>
         implicit val ctx = new PayloadContext(root.location, parentContext.refs, parentContext)

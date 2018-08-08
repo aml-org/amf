@@ -13,7 +13,7 @@ import org.scalatest.Assertion
 import scala.concurrent.Future
 
 abstract class RamlResolutionTest extends ResolutionTest {
-  override def render(unit: BaseUnit, config: CycleConfig): Future[String] = {
+  override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
     new AMFRenderer(unit, config.target, Raml.defaultSyntax, RenderOptions().withSourceMaps).renderToString
   }
 }
@@ -35,7 +35,7 @@ abstract class OasResolutionTest extends ResolutionTest {
 
 class ProductionValidationTest extends RamlResolutionTest {
   override val basePath = "amf-client/shared/src/test/resources/production/"
-  override def build(config: CycleConfig, given: Option[Validation]): Future[BaseUnit] = {
+  override def build(config: CycleConfig, given: Option[Validation], useAmfJsonldSerialization: Boolean): Future[BaseUnit] = {
     val validation: Future[Validation] = given match {
       case Some(validation: Validation) => Future { validation }
       case None                         => Validation(platform).map(_.withEnabledValidation(true))
@@ -245,7 +245,7 @@ class Raml08ResolutionTest extends RamlResolutionTest {
   * */
 class ProductionServiceTest extends RamlResolutionTest {
 
-  override def build(config: CycleConfig, given: Option[Validation]): Future[BaseUnit] = {
+  override def build(config: CycleConfig, given: Option[Validation], useAmfJsonldSerialization: Boolean): Future[BaseUnit] = {
     val validation: Future[Validation] = given match {
       case Some(validation: Validation) => Future { validation }
       case None                         => Validation(platform)
@@ -319,9 +319,9 @@ class ProductionServiceTest extends RamlResolutionTest {
 
     val config = CycleConfig(source, golden, hint, target, basePath)
 
-    build(config, None)
+    build(config, None, useAmfJsonldSerialization = true)
       .map(tFn(_, config))
-      .flatMap(render(_, config))
+      .flatMap(render(_, config, useAmfJsonldSerialization = true))
       .flatMap(writeTemporaryFile(golden))
       .flatMap(assertDifferences(_, config.goldenPath))
   }

@@ -366,6 +366,7 @@ SHACLValidator.prototype.registerJSCode = function(url, jsCode){
 
 // Expose the RDF interface
 SHACLValidator.$rdf = $rdf;
+SHACLValidator.jsonld = jsonld;
 
 module.exports = SHACLValidator;
 
@@ -8938,7 +8939,7 @@ Processor.prototype.fromRDF = function(dataset, options, callback) {
       }
       var node = nodeMap[s];
 
-      var objectIsId = (o.type === 'IRI' || o.type === 'blank node');
+      var objectIsId = (o.termType === 'NamedNode' || o.termType === "BlankNode" || o.type === 'IRI' || o.type === 'blank node');
       if(objectIsId && !(o.value in nodeMap)) {
         nodeMap[o.value] = {'@id': o.value};
       }

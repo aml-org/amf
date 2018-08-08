@@ -70,7 +70,7 @@ class OverlayResolutionTest extends ResolutionTest {
     }
   }
 
-  override def render(unit: BaseUnit, config: CycleConfig): Future[String] = {
+  override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
     val target = config.target
     new AMFRenderer(unit, target, target.defaultSyntax, RenderOptions().withSourceMaps).renderToString
   }

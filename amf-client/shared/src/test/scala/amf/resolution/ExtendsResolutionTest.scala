@@ -120,7 +120,7 @@ class ExtendsResolutionTest extends ResolutionTest {
     cycle("extension-library-multilevel/api.raml", "extension-library-multilevel/api.raml.raml", RamlYamlHint, Raml)
   }
 
-  override def render(unit: BaseUnit, config: CycleConfig): Future[String] = {
+  override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
     val target = config.target
     new AMFRenderer(unit, target, target.defaultSyntax, RenderOptions().withSourceMaps).renderToString
   }

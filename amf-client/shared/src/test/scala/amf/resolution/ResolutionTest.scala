@@ -25,6 +25,6 @@ abstract class ResolutionTest extends BuildCycleTests {
     res
   }
 
-  override def render(unit: BaseUnit, config: CycleConfig): Future[String] =
+  override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] =
     new AMFRenderer(unit, Amf, Amf.defaultSyntax, RenderOptions().withSourceMaps).renderToString
 }

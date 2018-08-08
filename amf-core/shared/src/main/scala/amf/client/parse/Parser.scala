@@ -31,6 +31,15 @@ class Parser(vendor: String, mediaType: String, private val env: Option[Environm
   def parseFileAsync(url: String): ClientFuture[BaseUnit] = parseAsync(url).asClient
 
   /**
+    * Asynchronously generate a BaseUnit from the unit located in the given url.
+    * @param url : Location of the api.
+    * @param options: Parsing options
+    * @return A future that will have a BaseUnit or an error to handle the result of such invocation.
+    */
+  @JSExport
+  def parseFileAsync(url: String, options: ParsingOptions): ClientFuture[BaseUnit] = parseAsync(url, parsingOptions = options).asClient
+
+  /**
     * Asynchronously generate a BaseUnit from a given string.
     * @param stream: The unit as a string
     * @return A future that will have a BaseUnit or an error to handle the result of such invocation.
@@ -39,9 +48,23 @@ class Parser(vendor: String, mediaType: String, private val env: Option[Environm
   def parseStringAsync(stream: String): ClientFuture[BaseUnit] =
     parseAsync(DEFAULT_DOCUMENT_URL, Some(fromStream(stream))).asClient
 
+  /**
+    * Asynchronously generate a BaseUnit from a given string.
+    * @param stream: The unit as a string
+    * @param options: Parsing options
+    * @return A future that will have a BaseUnit or an error to handle the result of such invocation.
+    */
+  @JSExport
+  def parseStringAsync(stream: String, options: ParsingOptions): ClientFuture[BaseUnit] =
+    parseAsync(DEFAULT_DOCUMENT_URL, Some(fromStream(stream)), parsingOptions = options).asClient
+
   @JSExport
   def parseStringAsync(url: String, stream: String): ClientFuture[BaseUnit] =
     parseAsync(url, Some(fromStream(url, stream))).asClient
+
+  @JSExport
+  def parseStringAsync(url: String, stream: String, options: ParsingOptions): ClientFuture[BaseUnit] =
+    parseAsync(url, Some(fromStream(url, stream)), parsingOptions = options).asClient
 
   /**
     * Generates the validation report for the last parsed model.
@@ -76,7 +99,7 @@ class Parser(vendor: String, mediaType: String, private val env: Option[Environm
       loader.map(e.add).getOrElse(e)
     }
 
-    RuntimeCompiler(url, Option(mediaType), vendor, Context(platform), env = environment) map { model =>
+    RuntimeCompiler(url, Option(mediaType), vendor, Context(platform), env = environment, parsingOptions = parsingOptions) map { model =>
       parsedModel = Some(model)
       model
     }

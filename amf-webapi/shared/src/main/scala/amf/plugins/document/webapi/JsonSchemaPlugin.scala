@@ -2,6 +2,7 @@ package amf.plugins.document.webapi
 
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.Root
+import amf.core.client.ParsingOptions
 import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document._
@@ -100,7 +101,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
       ExternalJsonRefsPlugin.ID,
       inputFragment.raw.getOrElse("")
     )
-    parse(doc, ctx, platform).flatMap { parsed =>
+    parse(doc, ctx, platform, new ParsingOptions()).flatMap { parsed =>
       parsed match {
         case encoded: EncodesModel if encoded.encodes.isInstanceOf[AnyShape] =>
           Some(encoded.encodes.asInstanceOf[AnyShape])
@@ -112,7 +113,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
   /**
     * Parses an accepted document returning an optional BaseUnit
     */
-  override def parse(document: Root, parentContext: ParserContext, platform: Platform): Option[BaseUnit] = {
+  override def parse(document: Root, parentContext: ParserContext, platform: Platform, options: ParsingOptions): Option[BaseUnit] = {
     document.parsed match {
       case parsedDoc: SyamlParsedDocument =>
         val parts        = document.location.split("#")

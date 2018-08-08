@@ -93,14 +93,23 @@ object RenderOptions {
   def apply(): RenderOptions = new RenderOptions()
 
   def apply(client: ClientRenderOptions): RenderOptions = {
-    val opts =
-      if (client.isWithSourceMaps)
-        new RenderOptions().withSourceMaps
-      else
-        new RenderOptions().withoutSourceMaps
+    val opts = new RenderOptions()
+
+    if (client.isWithSourceMaps)
+      opts.withSourceMaps
+    else
+      opts.withoutSourceMaps
+
     if (client.isWithCompactUris)
       opts.withCompactUris
     else
       opts.withoutCompactUris
+
+    if (client.isAmfJsonLdSerilization)
+      opts.withAmfJsonLdSerialization
+    else
+      opts.withoutAmfJsonLdSerialization
+
+    opts
   }
 }

@@ -3,6 +3,7 @@ package amf.plugins.document.webapi
 import amf.{OAS3Profile, OASProfile, ProfileName}
 import amf.core.emitter.RenderOptions
 import amf.core.Root
+import amf.core.client.ParsingOptions
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{LibraryReference, LinkReference, ParsedDocument, ParsedReference, ParserContext, SyamlParsedDocument}
@@ -30,7 +31,7 @@ sealed trait OASPlugin extends BaseWebApiPlugin {
               wrapped: ParserContext,
               ds: Option[WebApiDeclarations] = None): OasWebApiContext
 
-  override def parse(document: Root, parentContext: ParserContext, platform: Platform): Option[BaseUnit] = {
+  override def parse(document: Root, parentContext: ParserContext, platform: Platform, options: ParsingOptions): Option[BaseUnit] = {
     implicit val ctx: OasWebApiContext = context(document.location, document.references, parentContext)
     document.referenceKind match {
       case LibraryReference => Some(OasModuleParser(document).parseModule())

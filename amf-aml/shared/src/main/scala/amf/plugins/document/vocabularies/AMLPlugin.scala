@@ -8,6 +8,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
 import amf.core.parser.{ParsedDocument, ParserContext, ReferenceHandler, SyamlParsedDocument}
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
+import amf.core.client.ParsingOptions
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.Platform
@@ -169,7 +170,7 @@ object AMLPlugin
   /**
     * Parses an accepted document returning an optional BaseUnit
     */
-  override def parse(document: Root, parentContext: ParserContext, platform: Platform): Option[BaseUnit] = {
+  override def parse(document: Root, parentContext: ParserContext, platform: Platform, options: ParsingOptions): Option[BaseUnit] = {
     val maybeMetaText = comment(document) match {
       case Some(comment) => Some(comment.metaText)
       case _ =>

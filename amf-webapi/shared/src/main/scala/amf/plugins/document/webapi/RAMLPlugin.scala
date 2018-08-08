@@ -3,6 +3,7 @@ package amf.plugins.document.webapi
 import amf.{ProfileName, RAML08Profile, RAMLProfile}
 import amf.core.emitter.RenderOptions
 import amf.core.Root
+import amf.core.client.ParsingOptions
 import amf.core.model.document._
 import amf.core.model.domain.{DomainElement, ExternalDomainElement}
 import amf.core.parser.{EmptyFutureDeclarations, LinkReference, ParsedDocument, ParserContext, RefContainer, SyamlParsedDocument}
@@ -39,7 +40,7 @@ sealed trait RAMLPlugin extends BaseWebApiPlugin {
 
   override def specContext: RamlSpecEmitterContext
 
-  override def parse(root: Root, parentContext: ParserContext, platform: Platform): Option[BaseUnit] = {
+  override def parse(root: Root, parentContext: ParserContext, platform: Platform, options: ParsingOptions): Option[BaseUnit] = {
 
     inlineExternalReferences(root)
 

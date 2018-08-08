@@ -90,7 +90,7 @@ class EditingResolutionTest extends BuildCycleTests {
       case target                => throw new Exception(s"Cannot resolve $target")
     }
 
-  override def render(unit: BaseUnit, config: CycleConfig): Future[String] = {
+  override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
     new AMFRenderer(unit,
                     config.target,
                     config.target.defaultSyntax,
