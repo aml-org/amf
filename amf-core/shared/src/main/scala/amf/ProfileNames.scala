@@ -7,17 +7,19 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 @JSExportTopLevel("ProfileNames")
 object ProfileNames {
-  val AMF    = AMFProfile
-  val OAS    = OASProfile
-  val OAS3   = OAS3Profile
-  val RAML   = RAMLProfile
-  val RAML08 = RAML08Profile
+  val AMF: ProfileName    = AMFProfile
+  val OAS: ProfileName    = OASProfile
+  val OAS3: ProfileName   = OAS3Profile
+  val RAML: ProfileName   = RAMLProfile
+  val RAML08: ProfileName = RAML08Profile
 }
 
-case class ProfileName(profile: String, messageStyle: MessageStyle = AMFStyle) {
+case class ProfileName(private[amf] val p: String, private val m: MessageStyle = AMFStyle) {
   @JSExportTopLevel("ProfileName")
   def this(profile: String) = this(profile, AMFStyle)
-  override def toString: String = profile
+  def profile: String            = p
+  def messageStyle: MessageStyle = m
+  override def toString: String  = p
 }
 
 object AMFProfile     extends ProfileName("AMF")
@@ -30,12 +32,12 @@ object PAYLOADProfile extends ProfileName("Payload")
 object ProfileName {
   def unapply(name: String): Option[ProfileName] =
     name match {
-      case AMFProfile.profile    => Some(AMFProfile)
-      case OASProfile.profile    => Some(OASProfile)
-      case OAS3Profile.profile   => Some(OAS3Profile)
-      case RAMLProfile.profile   => Some(RAMLProfile)
-      case RAML08Profile.profile => Some(RAML08Profile)
-      case _                     => None
+      case AMFProfile.p    => Some(AMFProfile)
+      case OASProfile.p    => Some(OASProfile)
+      case OAS3Profile.p   => Some(OAS3Profile)
+      case RAMLProfile.p   => Some(RAMLProfile)
+      case RAML08Profile.p => Some(RAML08Profile)
+      case _               => None
     }
 
   def apply(profile: String): ProfileName = profile match {

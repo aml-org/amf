@@ -28,17 +28,17 @@ class ValidationResult(private[amf] val _internal: InternalValidationResult) {
                                location.option,
                                null))
 
-  val message: String        = _internal.message
-  val level: String          = _internal.level
-  val targetNode: String     = _internal.targetNode
-  val targetProperty: String = _internal.targetProperty.orNull
-  val validationId: String   = _internal.validationId
-  val source: Any            = _internal.source
+  def message: String        = _internal.message
+  def level: String          = _internal.level
+  def targetNode: String     = _internal.targetNode
+  def targetProperty: String = _internal.targetProperty.orNull
+  def validationId: String   = _internal.validationId
+  def source: Any            = _internal.source
 
-  val position: Range = _internal.position match {
+  def position: Range = _internal.position match {
     case Some(lexical) => lexical.range
     case _             => Range.NONE
   }
 
-  val location: ClientOption[String] = _internal.location.asClient
+  def location: ClientOption[String] = _internal.location.asClient
 }
