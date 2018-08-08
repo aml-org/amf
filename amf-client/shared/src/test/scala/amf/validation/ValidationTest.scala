@@ -178,7 +178,53 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(!report.conforms)
       assert(report.results.size == 2)
       assert(report.results.exists(_.message.contains("Security scheme 'undefined' not found in declarations.")))
+    }
+  }
 
+  test("Custom validaton problems 1") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "/missing-annotation-types/api.raml", platform, RamlYamlHint, validation)
+        .build()
+      resolved <- Future {
+        RAML10Plugin.resolve(doc)
+      }
+      generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
+      report    <- validation.validate(doc, RAMLProfile)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 1)
+    }
+  }
+
+  test("Custom validation problems 2 (RAML)") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "/enumeration-arrays/api.raml", platform, RamlYamlHint, validation)
+        .build()
+      resolved <- Future {
+        RAML10Plugin.resolve(doc)
+      }
+      generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
+      report    <- validation.validate(doc, RAMLProfile)
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
+  test("Custom validation problems 2 (OAS)") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "/enumeration-arrays/api.raml", platform, RamlYamlHint, validation)
+        .build()
+      resolved <- Future {
+        RAML10Plugin.resolve(doc)
+      }
+      generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
+      report    <- validation.validate(doc, OASProfile)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 1)
     }
   }
 

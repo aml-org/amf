@@ -23,7 +23,7 @@ class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets
     "parameters/amf_properties.jsonld"        -> ExpectedReport(conforms = false, 3, AMFProfile),
     "parameters/amf_empty.jsonld"             -> ExpectedReport(conforms = false, 3, AMFProfile),
     "parameters/amf_valid.jsonld"             -> ExpectedReport(conforms = true, 0, AMFProfile),
-    "shapes/enum_amf.jsonld"                  -> ExpectedReport(conforms = false, 2, OASProfile),
+    "shapes/enum_amf.jsonld"                  -> ExpectedReport(conforms = false, 1, OASProfile),
     "shapes/enum_valid.jsonld"                -> ExpectedReport(conforms = true, 0, OASProfile),
     "webapi/amf.jsonld"                       -> ExpectedReport(conforms = false, 1, OASProfile),
     "webapi/valid.jsonld"                     -> ExpectedReport(conforms = false, 1, OASProfile),

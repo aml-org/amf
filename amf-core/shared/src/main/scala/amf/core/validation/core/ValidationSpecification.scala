@@ -11,24 +11,24 @@ case class FunctionConstraint(message: Option[String],
                               code: Option[String] = None,
                               libraries: Seq[String] = Seq(),
                               functionName: Option[String] = None,
-                              parameters: Seq[FunctionConstraintParameter] = Seq()) {
+                              parameters: Seq[FunctionConstraintParameter] = Seq(),
+                              internalFunction: Option[String] = None) {
 
   def constraintId(validationId: String)  = s"${validationId}Constraint"
   def validatorId(validationId: String)   = s"${validationId}Validator"
   def validatorPath(validationId: String) = s"${validationId}Path"
-  def validatorArgument(validationId: String) = {
+  def validatorArgument(validationId: String): String = {
     "$" + validatorPath(validationId)
       .split("#")
       .last
       .replace("-", "_")
       .replace(".", "_")
   }
-  def computeFunctionName(validationId: String) = functionName match {
+  def computeFunctionName(validationId: String): String = functionName match {
     case Some(fnName) => fnName
-    case _ => {
+    case _ =>
       val localName = validationId.split("/").last.split("#").last
       s"${localName.replace("-", "_").replace(".", "_")}FnName"
-    }
   }
 }
 
@@ -120,7 +120,7 @@ case class ValidationSpecification(name: String,
     }
   }
 
-  def isParserSide() = targetInstance.nonEmpty && targetInstance.head == ValidationSpecification.PARSER_SIDE_VALIDATION
+  def isParserSide(): Boolean = targetInstance.nonEmpty && targetInstance.head == ValidationSpecification.PARSER_SIDE_VALIDATION
 
   def withTargets(other: ValidationSpecification): ValidationSpecification =
     copy(

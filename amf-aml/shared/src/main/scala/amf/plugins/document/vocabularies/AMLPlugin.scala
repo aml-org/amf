@@ -305,7 +305,7 @@ object AMLPlugin
           validationsFromDeps <- dependenciesValidations
           shaclReport <- RuntimeValidator.shaclValidation(resolvedModel,
                                                           aggregateValidations(validations, validationsFromDeps),
-                                                          options = new ValidationOptions())
+                                                          options = new ValidationOptions().withFullValidation())
         } yield {
 
           // adding model-side validations
