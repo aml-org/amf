@@ -5,7 +5,7 @@ import java.io.Writer
 import amf.client.plugins.{AMFPlugin, AMFSyntaxPlugin}
 import amf.core.benchmark.ExecutionLog
 import amf.core.parser.{ParsedDocument, ParserContext}
-import org.yaml.model.{YComment, YDocument, YMap, YNode}
+import org.yaml.model._
 import org.yaml.parser.{JsonParser, YamlParser}
 import org.yaml.render.{JsonRender, YamlRender}
 

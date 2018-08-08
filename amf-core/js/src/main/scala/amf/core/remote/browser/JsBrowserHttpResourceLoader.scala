@@ -2,7 +2,7 @@ package amf.core.remote.browser
 
 import amf.client.remote.Content
 import amf.client.resource.BaseHttpResourceLoader
-import amf.core.remote.{FileNotFound, NetworkError}
+import amf.core.remote.{NetworkError, UnexpectedStatusCode}
 import org.scalajs.dom.ext.Ajax
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -21,10 +21,11 @@ case class JsBrowserHttpResourceLoader() extends BaseHttpResourceLoader {
       .flatMap(xhr =>
         xhr.status match {
           case 200 => Future.successful(new Content(xhr.responseText, resource))
-          case s   => Future.failed(FileNotFound(new Exception(s"Unhandled status code $s with ${xhr.statusText}")))
+          case s   => Future.failed(UnexpectedStatusCode(resource, s))
       })
       .recover {
         case e: Throwable => throw NetworkError(e)
-      }.toJSPromise
+      }
+      .toJSPromise
   }
 }

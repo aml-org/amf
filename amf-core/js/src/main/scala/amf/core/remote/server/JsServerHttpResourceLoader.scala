@@ -2,11 +2,12 @@ package amf.core.remote.server
 
 import amf.client.remote.Content
 import amf.client.resource.BaseHttpResourceLoader
-import amf.core.remote.NetworkError
+import amf.core.remote.{NetworkError, UnexpectedStatusCode}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Promise
 import scala.scalajs.js
+import scala.scalajs.js.Dictionary
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -21,32 +22,9 @@ case class JsServerHttpResourceLoader() extends BaseHttpResourceLoader {
       try {
         val req = Https.get(
           resource,
-          (response: js.Dynamic) => {
-            var str = ""
-
-            // CAREFUL!
-            // this is required to avoid undefined behaviours
-            val dataCb: js.Function1[Any, Any] = { (res: Any) =>
-              str += res.toString
-            }
-            // Another chunk of data has been received, append it to `str`
-            response.on("data", dataCb)
-
-            val completedCb: js.Function = () => {
-              val mediaType = try {
-                Some(response.headers.asInstanceOf[js.Dictionary[String]]("content-type"))
-              } catch {
-                case e: Throwable => None
-              }
-              promise.success(new Content(str, resource, mediaType))
-            }
-            response.on("end", completedCb)
-          }
+          handleResponse(resource, promise)
         )
-        val errorCb: js.Function = (e: Any) => {
-          promise.failure(NetworkError(new Exception(e.toString)))
-        }
-        req.on("error", errorCb)
+        req.on("error", handleError(promise))
       } catch {
         case e: Throwable =>
           promise.failure(NetworkError(e))
@@ -56,30 +34,9 @@ case class JsServerHttpResourceLoader() extends BaseHttpResourceLoader {
       try {
         val req = Http.get(
           resource,
-          (response: js.Dynamic) => {
-            var str = ""
-
-            val dataCb: js.Function1[Any, Any] = { (res: Any) =>
-              str += res.toString
-            }
-            // Another chunk of data has been received, append it to `str`
-            response.on("data", dataCb)
-
-            val completedCb: js.Function = () => {
-              val mediaType = try {
-                Some(response.headers.asInstanceOf[js.Dictionary[String]]("content-type"))
-              } catch {
-                case e: Throwable => None
-              }
-              promise.success(new Content(str, resource, mediaType))
-            }
-            response.on("end", completedCb)
-          }
+          handleResponse(resource, promise)
         )
-        val errorCb: js.Function = (e: Any) => {
-          promise.failure(NetworkError(new Exception(e.toString)))
-        }
-        req.on("error", errorCb)
+        req.on("error", handleError(promise))
       } catch {
         case e: Throwable =>
           promise.failure(NetworkError(e))
@@ -91,4 +48,38 @@ case class JsServerHttpResourceLoader() extends BaseHttpResourceLoader {
         throw NetworkError(e)
     }.toJSPromise
   }
+
+  private def handleError(promise: Promise[Content]): js.Function =
+    (e: Any) => promise.failure(NetworkError(new Exception(e.toString)))
+
+  private def handleResponse(resource: String, promise: Promise[Content]): js.Function1[js.Dynamic, Any] = {
+    (response: js.Dynamic) =>
+      {
+        var str  = ""
+        val code = response.statusCode.asInstanceOf[Int]
+
+        if (code >= 300) promise.failure(UnexpectedStatusCode(resource, code))
+        else {
+          // CAREFUL!
+          // this is required to avoid undefined behaviours
+          val dataCb: js.Function1[Any, Any] = { (res: Any) =>
+            str += res.toString
+          }
+          // Another chunk of data has been received, append it to `str`
+          response.on("data", dataCb)
+
+          val completedCb: js.Function = () => {
+            val mediaType = try {
+              Some(response.headers.asInstanceOf[Dictionary[String]]("content-type"))
+            } catch {
+              case e: Throwable => None
+            }
+            promise.success(new Content(str, resource, mediaType))
+          }
+          response.on("end", completedCb)
+        }
+      }
+
+  }
+
 }

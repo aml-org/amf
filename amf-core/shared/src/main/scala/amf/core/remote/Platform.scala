@@ -221,3 +221,6 @@ case class FileNotFound(cause: Exception) extends Exception(cause)
 case class SocketTimeout(cause: Exception) extends Exception(cause)
 
 case class NetworkError(cause: Throwable) extends Exception(cause)
+
+case class UnexpectedStatusCode(resource: String, code: Int)
+    extends Exception(s"Unexpected status code '$code' for resource '$resource'")
