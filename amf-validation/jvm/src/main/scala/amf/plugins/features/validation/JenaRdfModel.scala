@@ -1,10 +1,13 @@
 package amf.plugins.features.validation
 
-import java.io.{FileWriter, PrintWriter}
+import java.io.{FileWriter, PrintWriter, StringWriter, Writer}
 
 import amf.core.rdf._
 import amf.core.vocabulary.Namespace
 import org.apache.jena.rdf.model.Model
+import org.apache.jena.riot._
+import org.apache.jena.riot.system.RiotLib
+import org.apache.jena.sparql.util.Context
 import org.topbraid.jenax.util.JenaUtil
 
 class JenaRdfModel(val model: Model = JenaUtil.createMemoryModel()) extends RdfModel {
@@ -103,6 +106,64 @@ class JenaRdfModel(val model: Model = JenaUtil.createMemoryModel()) extends RdfM
         } else {
           None
         }
+    }
+  }
+  override def load(mediaType: String, text: String): Unit = {
+    val parser = RDFParser.create().fromString(text)
+    mediaType match {
+      case "application/ld+json" | "application/json" =>
+        parser.lang(RDFLanguages.JSONLD)
+      case "text/n3" | "text/rdf+n3"                  =>
+        parser.lang(RDFLanguages.N3)
+      case "application/x-turtle" | "text/turtle"     =>
+        parser.lang(RDFLanguages.TURTLE)
+      case "text/plain"              =>
+        parser.lang(RDFLanguages.NTRIPLES)
+      case "application/rdf+xml"     =>
+        parser.lang(RDFLanguages.RDFXML)
+      case _                         =>
+        throw new Exception(s"Unsupported RDF media type $mediaType")
+    }
+    parser.parse(model)
+  }
+
+  /**
+    * Write model as a String representation
+ *
+    * @param mediaType
+    * @return
+    */
+  override def serializeString(mediaType: String): Option[String] = {
+    val writer = new StringWriter()
+    val format = formatForMediaType(mediaType)
+    RDFDataMgr.write(writer, model, format)
+    Some(writer.toString)
+  }
+
+  override def serializeWriter(mediaType: String,
+                               writer: Writer): Option[Writer] = {
+
+    val format = formatForMediaType(mediaType)
+    val graphWriter = RDFWriterRegistry.getWriterGraphFactory(format).create(format)
+    val modelGraph = model.getGraph
+    graphWriter.write(writer, modelGraph, RiotLib.prefixMap(modelGraph), "", new Context())
+    Some(writer)
+  }
+
+  protected def formatForMediaType(mediaType: String) = {
+    mediaType match {
+      case "application/ld+json"     =>
+        RDFFormat.JSONLD_EXPAND_FLAT // flatten and without context
+      case "text/n3" | "text/rdf+n3" =>
+        RDFFormat.NT
+      case "application/x-turtle" | "text/turtle" =>
+        RDFFormat.TURTLE
+      case "text/plain"              =>
+        RDFFormat.NTRIPLES
+      case "application/rdf+xml"     =>
+        RDFFormat.RDFXML
+      case _                         =>
+        throw new Exception(s"Unsupported RDF media type $mediaType")
     }
   }
 }

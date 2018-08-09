@@ -46,7 +46,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
   }
 
   private def parseExtension(document: Document, field: Field): Unit = {
-    val map = root.parsed.document.as[YMap]
+    val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
     UsageParser(map, document).parse()
 
     map
@@ -77,7 +77,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
   private def parseDocument[T <: Document](document: T): T = {
     document.adopted(root.location).withLocation(root.location)
 
-    val map = root.parsed.document.as[YMap]
+    val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
     val references = ReferencesParser(document, "uses".asOasExtension, map, root.references).parse(root.location)
     parseDeclarations(root: Root, map)
@@ -96,7 +96,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
   def parseWebApi(map: YMap): WebApi = {
 
-    val api = WebApi(root.parsed.document.node).adopted(root.location)
+    val api = WebApi(root.parsed.asInstanceOf[SyamlParsedDocument].document.node).adopted(root.location)
 
     map.key(
       "info",

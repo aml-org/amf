@@ -2,10 +2,11 @@ package amf.client.plugins
 
 import amf.core.emitter.RenderOptions
 import amf.core.Root
+import amf.core.client.ParsingOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
-import amf.core.parser.{ParserContext, ReferenceHandler}
+import amf.core.parser.{ParsedDocument, ParserContext, ReferenceHandler}
 import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.Platform
 import amf.core.resolution.pipelines.ResolutionPipeline
@@ -51,12 +52,12 @@ abstract class AMFDocumentPlugin extends AMFPlugin {
   /**
     * Parses an accepted document returning an optional BaseUnit
     */
-  def parse(document: Root, ctx: ParserContext, platform: Platform): Option[BaseUnit]
+  def parse(document: Root, ctx: ParserContext, platform: Platform, options: ParsingOptions): Option[BaseUnit]
 
   /**
     * Unparses a model base unit and return a document AST
     */
-  def unparse(unit: BaseUnit, options: RenderOptions): Option[YDocument]
+  def unparse(unit: BaseUnit, options: RenderOptions): Option[ParsedDocument]
 
   /**
     * Decides if this plugin can parse the provided document instance.

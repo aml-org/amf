@@ -6,17 +6,17 @@ import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.client.plugins.{AMFDocumentPlugin, AMFSyntaxPlugin}
+import amf.core.parser.ParsedDocument
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Platform
 import amf.core.services.RuntimeSerializer
-import org.yaml.model.YDocument
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: RenderOptions) {
 
-  def make(): YDocument = {
+  def make(): ParsedDocument = {
     findDomainPlugin() match {
       case Some(domainPlugin) =>
         domainPlugin.unparse(unit, options) match {
@@ -48,7 +48,7 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
       case _ => throw new Exception(s"Unsupported media type $mediaType and vendor $vendor")
     }
 
-  private def parsed[T](unparse: (AMFSyntaxPlugin, String, YDocument) => Option[T]): Option[T] = {
+  private def parsed[T](unparse: (AMFSyntaxPlugin, String, ParsedDocument) => Option[T]): Option[T] = {
     ExecutionLog.log(s"AMFSerializer#render: Rendering to $mediaType ($vendor file) ${unit.location()}")
     val ast = make()
 

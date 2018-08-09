@@ -25,9 +25,10 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
   private val references = ReferenceCollector()
 
   override def collect(parsed: ParsedDocument, ctx: ParserContext): ReferenceCollector = {
-    libraries(parsed.document, ctx)
-    links(parsed.document, ctx)
-    if (isRamlOverlayOrExtension(vendor, parsed)) overlaysAndExtensions(parsed.document, ctx)
+    val doc = parsed.asInstanceOf[SyamlParsedDocument].document
+    libraries(doc, ctx)
+    links(doc, ctx)
+    if (isRamlOverlayOrExtension(vendor, parsed)) overlaysAndExtensions(doc, ctx)
     references
   }
 
@@ -44,7 +45,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
 
   // TODO take this away when dialects don't use 'extends' keyword.
   def isRamlOverlayOrExtension(vendor: String, parsed: ParsedDocument): Boolean = {
-    parsed.comment match {
+    parsed.asInstanceOf[SyamlParsedDocument].comment match {
       case Some(c) =>
         RamlHeader.fromText(c.metaText) match {
           case Some(Raml10Overlay | Raml10Extension) if vendor == "RAML 1.0" => true
@@ -181,7 +182,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
                                          environment: Environment): Future[ParsedReference] = {
     resolveUnitDocument(reference, ctx) match {
       case Right(document) =>
-        val parsed = ParsedDocument(None, document)
+        val parsed = SyamlParsedDocument(None, document)
 
         val refs    = new WebApiReferenceHandler(vendor, plugin).collect(parsed, ctx)
         val updated = context.update(reference.unit.id) // ??

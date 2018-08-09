@@ -7,14 +7,20 @@ import org.yaml.model._
 class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry) extends ReferenceHandler {
   private val collector = ReferenceCollector()
 
-  override def collect(parsed: ParsedDocument, ctx: ParserContext): ReferenceCollector = {
-    if (parsed.comment.isDefined) {
-      if (referencesDialect(parsed.comment.get.metaText)) {
-        collector += (dialectDefinitionUrl(parsed.comment.get.metaText), SchemaReference, parsed.document.node)
-      }
+  override def collect(parsedDoc: ParsedDocument, ctx: ParserContext): ReferenceCollector = {
+    parsedDoc match {
+      case parsed: SyamlParsedDocument =>
+        if (parsed.comment.isDefined) {
+          if (referencesDialect(parsed.comment.get.metaText)) {
+            collector += (dialectDefinitionUrl(parsed.comment.get.metaText), SchemaReference, parsed.document.node)
+          }
+        }
+        libraries(parsed.document, ctx)
+        links(parsed.document)
+
+      case _ => // ignore
     }
-    libraries(parsed.document, ctx)
-    links(parsed.document)
+
     collector
   }
 

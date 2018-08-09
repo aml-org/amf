@@ -27,12 +27,12 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
   def parseFragment(): Option[Fragment] = {
     // first i must identify the type of fragment
 
-    val rootMap: YMap = root.parsed.document.to[YMap] match {
+    val rootMap: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.to[YMap] match {
       case Right(map) => map
       case _          =>
         // we need to check if named example fragment in order to support invalid structures as external fragment
         if (fragmentType != Raml10NamedExample)
-          ctx.violation(root.location, "Cannot parse empty map", root.parsed.document)
+          ctx.violation(root.location, "Cannot parse empty map", root.parsed.asInstanceOf[SyamlParsedDocument].document)
         YMap.empty
     }
 
@@ -63,7 +63,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
         })
         fragment.withLocation(root.location)
         UsageParser(rootMap, fragment).parse()
-        fragment.add(Annotations(root.parsed.document))
+        fragment.add(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
         if (aliases.isDefined) fragment.annotations += aliases.get
         fragment.encodes.add(SourceVendor(Raml10))
         if (references.references.nonEmpty) fragment.withReferences(references.solvedReferences())
@@ -76,7 +76,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
   private def buildExternalFragment() = {
     ctx.warning(root.location,
                 s"Invalid fragment body in ${root.location} , external fragment will be created",
-                root.parsed.document)
+                root.parsed.asInstanceOf[SyamlParsedDocument].document)
     ExternalFragment()
       .withLocation(root.location)
       .withId(root.location)

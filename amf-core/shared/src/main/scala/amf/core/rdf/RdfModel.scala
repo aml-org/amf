@@ -1,4 +1,5 @@
 package amf.core.rdf
+import java.io.Writer
 
 class PropertyObject(val value: String)
 case class Literal(override val value: String, literalType: Option[String]) extends PropertyObject(value)
@@ -19,6 +20,28 @@ abstract class RdfModel {
     anonCounter += 1
     s"http://amf.org/anon/$anonCounter"
   }
+
+  /**
+  * Load RDF string representation in this model
+    * @param text
+    * @param mediaType
+    */
+  def load(mediaType: String, text: String)
+
+  /**
+    * Write model as a String representation
+    * @param mediaType
+    * @return
+    */
+  def serializeString(mediaType: String): Option[String]
+
+  /**
+    * Write model using a writer
+    * @param mediaType
+    * @writer writer where to send the representation
+    * @return
+    */
+  def serializeWriter(mediaType: String, writer: Writer): Option[Writer]
 
   def toN3(): String
 

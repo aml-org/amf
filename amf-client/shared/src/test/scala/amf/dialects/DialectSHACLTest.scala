@@ -44,7 +44,7 @@ class DialectSHACLTest extends AsyncFunSuite with PlatformSecrets with BuildCycl
 
     val config = CycleConfig(source, golden, hint, target, directory)
 
-    build(config, validation)
+    build(config, validation, useAmfJsonldSerialisation = true)
       .map(transformRdf(_, config))
       .flatMap(renderRdf(_, config))
       .flatMap(writeTemporaryFile(golden))

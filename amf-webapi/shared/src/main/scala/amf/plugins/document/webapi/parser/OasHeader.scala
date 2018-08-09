@@ -44,15 +44,20 @@ object OasHeader {
 
   object Oas20Overlay extends OasHeader(extensionType, "2.0 Overlay")
 
-  def apply(root: Root): Option[OasHeader] = root.parsed.document.to[YMap] match {
-    case Right(map) =>
-      map
-        .key(extensionName)
-        .orElse(map.key(extensionType))
-        .orElse(map.key(swagger))
-        .orElse(map.key(openapi))
-        .flatMap(extension => OasHeader(extension.value))
-    case Left(_) => None
+  def apply(root: Root): Option[OasHeader] =
+    root.parsed match {
+      case parsed: SyamlParsedDocument =>
+        parsed.document.to[YMap] match {
+          case Right(map) =>
+            map
+              .key(extensionName)
+              .orElse(map.key(extensionType))
+              .orElse(map.key(swagger))
+              .orElse(map.key(openapi))
+              .flatMap(extension => OasHeader(extension.value))
+          case Left(_) => None
+        }
+      case _ => None
   }
 
   def apply(text: String): Option[OasHeader] = text match {

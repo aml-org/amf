@@ -268,7 +268,7 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
 class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstanceContext)
     extends BaseSpecParser
     with PlatformSecrets {
-  val map: YMap = root.parsed.document.as[YMap]
+  val map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
   def parseDocument(): Option[DialectInstance] = {
     val dialectInstance: DialectInstance = DialectInstance(Annotations(map))
@@ -402,7 +402,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
   protected def parseEncodedFragment(dialectInstanceFragment: DialectInstanceFragment): Option[DialectDomainElement] = {
     Option(ctx.dialect.documents()) flatMap { documents: DocumentsModel =>
       documents.fragments().find { documentMapping =>
-        root.parsed.comment.get.metaText.replace(" ", "").contains(documentMapping.documentName().value())
+        root.parsed.asInstanceOf[SyamlParsedDocument].comment.get.metaText.replace(" ", "").contains(documentMapping.documentName().value())
       } match {
         case Some(documentMapping) =>
           ctx.findNodeMapping(documentMapping.encoded().value()) match {

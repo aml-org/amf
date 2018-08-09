@@ -1,5 +1,7 @@
 package amf.plugins.features.validation
 
+import java.io.Writer
+
 import amf.core.rdf._
 import amf.core.vocabulary.Namespace
 
@@ -13,9 +15,18 @@ object RDF {
   }
 }
 
+object JSONLD {
+  lazy val instance: js.Dynamic = if (js.isUndefined(js.Dynamic.global.SHACLValidator)) {
+    throw new Exception("Cannot find global SHACLValidator object")
+  }  else {
+    js.Dynamic.global.SHACLValidator.jsonld
+  }
+}
+
 class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfModel {
 
-  val rdf: js.Dynamic = RDF.instance
+  lazy val rdf: js.Dynamic = RDF.instance
+  lazy val jsonld: js.Dynamic = JSONLD.instance
 
   override def addTriple(subject: String, predicate: String, objResource: String): RdfModel = {
     nodesCache = nodesCache - subject
@@ -103,5 +114,32 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
         }
     }
 
+  }
+  override def load(mediaType: String, text: String): Unit = {
+    var effectiveMediaType = if (mediaType == "application/json") "application/ld+json" else mediaType
+    rdf.parse(text, model, "", effectiveMediaType)
+  }
+
+  /**
+    * Write model as a String representation
+ *
+    * @param mediaType
+    * @return
+    */
+  override def serializeString(mediaType: String): Option[String] = {
+    throw new Exception("Sync rdf serialization not supported yet")
+  }
+
+
+  /**
+    * Write model using a writer
+ *
+    * @param mediaType
+    * @writer writer where to send the representation
+    * @return
+    */
+  override def serializeWriter(mediaType: String,
+                               writer: Writer): Option[Writer] = {
+    throw new Exception("Sync rdf serialization to writer not supported yet")
   }
 }

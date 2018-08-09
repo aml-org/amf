@@ -30,9 +30,9 @@ class MutateModelCycleTest extends BuildCycleTests {
                            directory: String = basePath): Future[Assertion] = {
     val config = CycleConfig(source, golden, hint, target, directory)
 
-    build(config, None)
+    build(config, None, useAmfJsonldSerialisation = true)
       .map(transform(_))
-      .flatMap(render(_, config))
+      .flatMap(render(_, config, useAmfJsonldSerialization = true))
       .flatMap(writeTemporaryFile(golden))
       .flatMap(assertDifferences(_, config.goldenPath))
   }

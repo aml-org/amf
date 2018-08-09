@@ -4,7 +4,7 @@ import amf.core.Root
 import amf.core.model.document._
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{ExternalDomainElement, Shape}
-import amf.core.parser.{Annotations, ScalarNode}
+import amf.core.parser.{Annotations, ScalarNode, SyamlParsedDocument}
 import amf.core.utils.Strings
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.model._
@@ -24,10 +24,10 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
 
   def parseFragment(): Fragment = {
     // first i must identify the type of fragment
-    val map: YMap = root.parsed.document.to[YMap] match {
+    val map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.to[YMap] match {
       case Right(m) => m
       case _ =>
-        ctx.violation(root.location, "Cannot parse empty map", root.parsed.document)
+        ctx.violation(root.location, "Cannot parse empty map", root.parsed.asInstanceOf[SyamlParsedDocument].document)
         YMap.empty
     }
 
@@ -52,7 +52,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
 
     fragment
       .withLocation(root.location)
-      .add(Annotations(root.parsed.document))
+      .add(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
 
     UsageParser(map, fragment).parse()
 

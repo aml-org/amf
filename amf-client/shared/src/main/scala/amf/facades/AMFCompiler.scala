@@ -1,8 +1,9 @@
 package amf.facades
 
 import amf.core
+import amf.core.client.ParsingOptions
 import amf.core.model.document.BaseUnit
-import amf.core.parser.{ParsedDocument, ParsedReference, ParserContext, ReferenceKind}
+import amf.core.parser.{ParsedDocument, ParsedReference, ParserContext, ReferenceKind, SyamlParsedDocument}
 import amf.core.remote.Syntax.{Json, Yaml}
 import amf.core.remote._
 import amf.core.{AMFCompiler => ModularCompiler}
@@ -19,7 +20,8 @@ class AMFCompiler private (val url: String,
                            hint: Hint,
                            val currentValidation: Validation,
                            private val cache: Cache,
-                           private val baseContext: Option[ParserContext] = None)
+                           private val baseContext: Option[ParserContext] = None,
+                           private val parsingOptions: ParsingOptions = ParsingOptions())
     extends RamlHeaderExtractor {
 
   implicit val ctx: ParserContext                             = baseContext.getOrElse(ParserContext(url, Seq.empty))
@@ -63,7 +65,8 @@ class AMFCompiler private (val url: String,
       actualVendor,
       hint.kind,
       cache,
-      baseContext
+      baseContext,
+      parsingOptions = parsingOptions
     ).build()
 
     /*
@@ -154,7 +157,7 @@ case class Root(parsed: ParsedDocument,
                 referenceKind: ReferenceKind,
                 vendor: Vendor,
                 raw: String) {
-  val document: YDocument = parsed.document
+  val document: YDocument = parsed.asInstanceOf[SyamlParsedDocument].document
 
   // TODO: remove me, only for compatibility while refactoring
   def newFormat(): amf.core.Root = {
@@ -199,8 +202,9 @@ object AMFCompiler {
             currentValidation: Validation,
             context: Option[Context] = None,
             cache: Option[Cache] = None,
-            ctx: Option[ParserContext] = None) =
-    new AMFCompiler(url, remote, context, hint, currentValidation, cache.getOrElse(Cache()))
+            ctx: Option[ParserContext] = None,
+            parsingOptions: ParsingOptions = ParsingOptions()) =
+    new AMFCompiler(url, remote, context, hint, currentValidation, cache.getOrElse(Cache()), parsingOptions = parsingOptions)
 
   val RAML_10 = "#%RAML 1.0\n"
 }

@@ -12,8 +12,19 @@ class DialectInstancesParsingTest extends BuildCycleTests {
 
   val basePath = "amf-client/shared/src/test/resources/vocabularies2/instances/"
 
-  test("parse 1 test") {
-    withDialect("dialect1.raml", "example1.raml", "example1.json", VocabularyYamlHint, Amf)
+  if (platform.name == "jvm") {
+    test("parse 1 test") {
+      withDialect("dialect1.raml",
+                  "example1.raml",
+                  "example1.json",
+                  VocabularyYamlHint,
+                  Amf,
+                  useAmfJsonldSerialisation = false)
+    }
+  }
+
+  test("parse 1 (AMF) test") {
+    withDialect("dialect1.raml", "example1.raml", "example1.amf.json", VocabularyYamlHint, Amf)
   }
 
   test("parse 1 with annotations test") {
@@ -120,8 +131,19 @@ class DialectInstancesParsingTest extends BuildCycleTests {
     withDialect("dialect19.raml", "example19.raml", "example19.json", VocabularyJsonHint, Amf)
   }
 
-  test("generate 1 test") {
-    withDialect("dialect1.raml", "example1.json", "example1.raml", AmfJsonHint, AmlVocabulary)
+  if (platform.name == "jvm") {
+    test("generate 1 test") {
+      withDialect("dialect1.raml",
+                  "example1.json",
+                  "example1.raml",
+                  AmfJsonHint,
+                  AmlVocabulary,
+                  useAmfJsonldSerialisation = false)
+    }
+  }
+
+  test("generate 1 (AMF) test") {
+    withDialect("dialect1.raml", "example1.amf.json","example1.raml", AmfJsonHint, AmlVocabulary)
   }
 
   test("generate 2 test") {
@@ -221,11 +243,12 @@ class DialectInstancesParsingTest extends BuildCycleTests {
                             golden: String,
                             hint: Hint,
                             target: Vendor,
-                            directory: String = basePath) = {
+                            directory: String = basePath,
+                            useAmfJsonldSerialisation: Boolean = true) = {
     for {
       v         <- Validation(platform).map(_.withEnabledValidation(false))
       _         <- AMFCompiler(s"file://$directory/$dialect", platform, VocabularyYamlHint, v).build()
-      res       <- cycle(source, golden, hint, target)
+      res       <- cycle(source, golden, hint, target, basePath, None, useAmfJsonldSerialisation)
     } yield {
       res
     }

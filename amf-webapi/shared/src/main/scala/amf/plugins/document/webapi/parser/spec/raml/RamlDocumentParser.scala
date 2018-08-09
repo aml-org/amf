@@ -93,7 +93,7 @@ case class ExtensionLikeParser(root: Root)(implicit override val ctx: ExtensionL
   }
 
   private def parseExtension(document: Document, field: Field): Unit = {
-    val map = root.parsed.document.as[YMap]
+    val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
     UsageParser(map, document).parse()
 
@@ -136,7 +136,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
   def parseDocument[T <: Document](document: T): T = {
     document.adopted(root.location).withLocation(root.location)
 
-    val map = root.parsed.document.as[YMap]
+    val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
     val references = ReferencesParser(document, "uses", map, root.references).parse(root.location)
     parseDeclarations(root, map)
@@ -157,7 +157,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
 
   protected def parseWebApi(map: YMap): WebApi = {
 
-    val api = WebApi(root.parsed.document.node).adopted(root.location)
+    val api = WebApi(root.parsed.asInstanceOf[SyamlParsedDocument].document.node).adopted(root.location)
 
     ctx.closedShape(api.id, map, "webApi")
 
