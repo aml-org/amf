@@ -47,5 +47,9 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
     checkReport("/types/optional-prop-item-recursive.raml", None)
   }
 
+  test("Valid type with array property with items recursive") {
+    checkReport("/types/recursive-optional-array-item-type.raml", None)
+  }
+
   override val hint: Hint = RamlYamlHint
 }

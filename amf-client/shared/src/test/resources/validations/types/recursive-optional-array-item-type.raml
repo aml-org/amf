@@ -1,0 +1,18 @@
+#%RAML 1.0
+title: Test array item recursion
+
+types:
+  TypeA:
+    type: object
+    properties:
+      a:
+        type: array
+        items:
+          type: TypeB
+        required: false
+  TypeB:
+    type: object
+    properties:
+      a:
+        type: TypeB
+        required: false

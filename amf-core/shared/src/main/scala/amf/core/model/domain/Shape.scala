@@ -181,6 +181,9 @@ case class IdsTraversionCheck() {
 
   def avoidError(id: String): Boolean = whiteList.contains(id)
 
+  def avoidError(r: RecursiveShape, checkId: Option[String] = None): Boolean =
+    avoidError(r.id) || avoidError(r.fixpoint.option().getOrElse("")) || (checkId.isDefined && avoidError(checkId.get))
+
   def hasId(id: String): Boolean = ids.contains(id)
 
   def canTravers(id: String): Boolean = !stepOverFieldId(id)

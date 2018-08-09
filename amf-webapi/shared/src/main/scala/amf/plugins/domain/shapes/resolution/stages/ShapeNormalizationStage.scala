@@ -69,7 +69,7 @@ private[stages] case class RecursionErrorRegister() {
     val canRegister = !avoidRegister.contains(r.id)
     if (!r.supportsRecursion
           .option()
-          .getOrElse(false) && !traversed.avoidError(checkId) && canRegister) {
+          .getOrElse(false) && !traversed.avoidError(r, Some(checkId)) && canRegister) {
       context.errorHandler.violation(
         ParserSideValidations.RecursiveShapeSpecification.id,
         original.id,
