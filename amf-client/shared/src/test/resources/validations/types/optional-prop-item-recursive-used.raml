@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: test
+types:
+  other:
+    properties:
+      f: folder
+  folder:
+      type: object
+      properties:
+        folderId:
+          type: string
+        folders?:
+          type: array
+          items:
+            type: folder

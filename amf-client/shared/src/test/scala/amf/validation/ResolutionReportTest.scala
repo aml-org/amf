@@ -47,6 +47,10 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
     checkReport("/types/optional-prop-item-recursive.raml", None)
   }
 
+  test("USed from propr recursive optional property with items recursive") {
+    checkReport("/types/optional-prop-item-recursive-used.raml", None)
+  }
+
   test("Valid type with array property with items recursive") {
     checkReport("/types/recursive-optional-array-item-type.raml", None)
   }
