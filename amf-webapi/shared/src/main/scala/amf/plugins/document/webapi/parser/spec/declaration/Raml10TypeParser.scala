@@ -1215,13 +1215,17 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             case Some(m) =>
               val properties: Seq[PropertyShape] =
                 PropertiesParser(m, shape.withProperty).parse()
-              if (properties.exists(_.patternName.nonEmpty) && shape.closed.option().getOrElse(false)) {
+              val hasPatternProperties = properties.exists(_.patternName.nonEmpty)
+              if (hasPatternProperties && shape.closed.option().getOrElse(false)) {
                 ctx.violation(
                   ParserSideValidations.PatternPropertiesOnClosedNodeSpecification.id,
                   shape.id,
                   s"Node without additional properties support cannot have pattern properties",
                   node
                 )
+              }
+              if (hasPatternProperties) {
+                shape.set(NodeShapeModel.Closed, true) // we close by default, additional properties must match one patter or fail
               }
               shape.set(NodeShapeModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
             case _ => // Empty properties node.

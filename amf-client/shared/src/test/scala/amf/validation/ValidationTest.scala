@@ -241,6 +241,19 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("HERE_HERE Patterned properties tests") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "/types/patterned_properties.raml", platform, RamlYamlHint, validation)
+        .build()
+      report    <- validation.validate(doc, RAMLProfile)
+    } yield {
+      println(report)
+      assert(!report.conforms)
+      assert(report.results.length == 2)
+    }
+  }
+
 
   //test("Test resource type non string scalar parameter example") { its already tested in java parser tests
 
