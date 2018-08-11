@@ -1248,6 +1248,9 @@ case class OasTypeEmitter(shape: Shape,
       case array: ArrayShape =>
         val copiedArray = array.copy(fields = array.fields.filter(f => !ignored.contains(f._1)))
         OasArrayShapeEmitter(copiedArray, ordering, references, pointer, updatedSchemaPath).emitters()
+      case matrix: MatrixShape =>
+        val copiedMatrix = matrix.copy(fields = matrix.fields.filter(f => !ignored.contains(f._1)))
+        OasArrayShapeEmitter(copiedMatrix.toArrayShape, ordering, references, pointer, updatedSchemaPath).emitters()
       case array: TupleShape =>
         val copiedArray = array.copy(fields = array.fields.filter(f => !ignored.contains(f._1)))
         OasTupleShapeEmitter(copiedArray, ordering, references, pointer, updatedSchemaPath).emitters()

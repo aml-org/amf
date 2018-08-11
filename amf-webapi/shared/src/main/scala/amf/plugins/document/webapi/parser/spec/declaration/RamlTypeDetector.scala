@@ -14,6 +14,7 @@ import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model._
 import amf.core.utils.Strings
+import javafx.scene.transform.MatrixType
 
 /**
   *
@@ -212,6 +213,7 @@ case class RamlTypeDetector(parent: String,
         case union: UnionShape => if (plainUnion) InheritsUnionMatcher(union, part) else Some(UnionType)
         case _: NodeShape      => Some(ObjectType)
         case _: ArrayShape     => Some(ArrayType)
+        case _: MatrixShape    => Some(ArrayType)
         case _: AnyShape       => Some(AnyType)
         case _                 => None
       }
