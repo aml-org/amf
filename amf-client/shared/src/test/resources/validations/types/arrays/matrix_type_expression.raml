@@ -1,0 +1,25 @@
+#%RAML 1.0
+title: Test API
+types:
+  Matrix:
+    type: number[][]
+    example: [[1,invalid], [3,invalid]]
+  Correct:
+    type: number[][]
+    example: [[1,2],[3,4]]
+
+/test:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            Matrix
+
+/test2:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            Correct
