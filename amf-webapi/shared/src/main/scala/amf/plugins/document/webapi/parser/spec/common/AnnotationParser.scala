@@ -48,8 +48,8 @@ private case class ExtensionParser(annotation: String, parent: String, entry: YM
     val dataNode        = DataNodeParser(entry.value, parent = Some(propertyId)).parse()
     // TODO
     // throw a parser-side warning validation error if no annotation can be found
-    val customDomainProperty = ctx.declarations.annotations
-      .getOrElse(annotation, CustomDomainProperty(Annotations(entry)).withId(propertyId).withName(annotation))
+    val customDomainProperty = ctx.declarations.findAnnotation(annotation, SearchScope.All)
+      .getOrElse(CustomDomainProperty(Annotations(entry)).withId(propertyId).withName(annotation))
     domainExtension.adopted(parent)
     domainExtension
       .withExtension(dataNode)
