@@ -51,7 +51,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
             case fileShape: FileShape      => expandAny(fileShape)
             case nil: NilShape             => nil
             case node: NodeShape           => expandNode(node)
-            case recursive: RecursiveShape => recursive
+            case recursive: RecursiveShape => recursionRegister.recursionError(recursive, recursive, recursive.id, traversed)
             case any: AnyShape             => expandAny(any)
           }
         })

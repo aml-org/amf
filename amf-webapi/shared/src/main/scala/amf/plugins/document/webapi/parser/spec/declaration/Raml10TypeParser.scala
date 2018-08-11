@@ -196,7 +196,9 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
   case class Raml08ReferenceParser(text: String, node: YNode, name: String)(implicit ctx: RamlWebApiContext) {
     def parse(): Some[AnyShape] = {
       val shape: AnyShape = ctx.declarations.findType(text, SearchScope.All) match {
-        case Some(s: AnyShape) => s.link(text, Annotations(node.value)).asInstanceOf[AnyShape].withName(name)
+        case Some(s: AnyShape) => {
+          s.link(text, Annotations(node.value)).asInstanceOf[AnyShape].withName(name)
+        }
         case None =>
           val shape = UnresolvedShape(text, node).withName(text)
           shape.withContext(ctx)

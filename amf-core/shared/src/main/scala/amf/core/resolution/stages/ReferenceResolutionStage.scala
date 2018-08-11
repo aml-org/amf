@@ -141,9 +141,9 @@ class ReferenceResolutionStage(
   protected def customDomainElementTransformation(d: DomainElement, source: Linkable): DomainElement = d
 
   def transform(element: DomainElement, isCycle: Boolean): Option[DomainElement] =
-    cache.get(element.id).orElse(resolveAndCach(element, isCycle))
+    cache.get(element.id).orElse(resolveAndCache(element, isCycle))
 
-  private def resolveAndCach(element: DomainElement, isCycle: Boolean): Option[DomainElement] = {
+  private def resolveAndCache(element: DomainElement, isCycle: Boolean): Option[DomainElement] = {
 
     val resolved = element match {
       // link not traversed, cache it and traverse it
