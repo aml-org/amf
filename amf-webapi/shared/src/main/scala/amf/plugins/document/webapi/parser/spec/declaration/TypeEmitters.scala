@@ -514,10 +514,11 @@ case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referen
     fs.entry(NodeShapeModel.MinProperties).map(f => result += RamlScalarEmitter("minProperties", f))
     fs.entry(NodeShapeModel.MaxProperties).map(f => result += RamlScalarEmitter("maxProperties", f))
 
+    val hasPatternProperties = node.properties.exists(_.patternName.nonEmpty)
     fs.entry(NodeShapeModel.Closed)
       .foreach { f =>
         val closed = node.closed.value()
-        if (closed || f.value.annotations.contains(classOf[ExplicitField])) {
+        if (!hasPatternProperties && (closed || f.value.annotations.contains(classOf[ExplicitField]))) {
           result += MapEntryEmitter("additionalProperties",
                                     (!closed).toString,
                                     YType.Bool,

@@ -1,0 +1,33 @@
+#%RAML 1.0
+title: cpl-test
+version: 1.0
+
+/wildcards:
+  post:
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          /^element-\d+$/:
+            type: integer
+        example:
+          element-2: 34
+
+/wildcards2:
+  post:
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          /^element-\d+$/:
+            type: integer
+        example:
+          element-fail: 25
+
+/wildcards3:
+  post:
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          /^element-\d+$/:
+            type: integer
+        example:
+          element-3: "test"
