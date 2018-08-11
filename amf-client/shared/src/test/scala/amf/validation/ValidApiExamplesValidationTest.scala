@@ -119,6 +119,10 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     validate("/production/null-keys/api.raml", golden = Some("null-keys.report"))
   }
 
+  test("Test rest connect example") {
+    validate("/production/rest_connect/api.raml", golden = Some("rest_connect.report"))
+  }
+
   test("Valid type example 1 test") {
     validate("/examples/validex1.raml", profile = AMFProfile)
   }
