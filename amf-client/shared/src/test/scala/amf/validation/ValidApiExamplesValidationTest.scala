@@ -127,6 +127,10 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     validate("/production/rest_connect/apibad.raml", golden = Some("rest_connect_bad.report"))
   }
 
+  test("Test inheritance example") {
+    validate("/production/inheritance.raml", golden = Some("inheritance.report"))
+  }
+
   test("Valid type example 1 test") {
     validate("/examples/validex1.raml", profile = AMFProfile)
   }

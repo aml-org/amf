@@ -1,0 +1,48 @@
+#%RAML 1.0
+title: valid property type inheritance
+
+types:
+
+  A4:
+    properties:
+      zz:
+        properties:
+          a: string
+  B4:
+    type: A4
+    properties:
+      zz:
+        properties:
+          b: integer
+    example:
+      zz:
+        a: hey
+        b: 12
+
+  Anything:
+    properties:
+      name:
+        type: any
+  StringOrNumber:
+    type: Anything
+    properties:
+      name:
+        type: string|number
+  NumberOrNil:
+    properties:
+      name:
+        type: number|nil
+  Integer:
+    type: NumberOrNil
+    properties:
+      name:
+        type: integer
+  StringOrNumberOrBoolean:
+    properties:
+      name:
+        type: string|number|boolean
+  NumberOrString:
+    type: StringOrNumberOrBoolean
+    properties:
+      name:
+        type: number|string

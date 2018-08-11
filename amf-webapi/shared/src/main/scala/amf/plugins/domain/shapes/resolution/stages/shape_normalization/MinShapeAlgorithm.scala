@@ -6,13 +6,14 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, RecursiveShape, Shape}
-import amf.core.parser.{Annotations, Value}
+import amf.core.parser.{Annotations, ErrorHandler, Value}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
 import amf.plugins.domain.shapes.annotations.InheritanceProvenance
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.features.validation.ParserSideValidations
+import org.yaml.model.YError
 
 import scala.collection.mutable
 
@@ -141,7 +142,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
           e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
           e.getMessage,
           e.lexicalInfo,
-          None
+          derivedShape.position().map(_.value)
         )
         derivedShape
     }
@@ -211,7 +212,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
         baseTuple
       } else {
         throw new InheritanceIncompatibleShapeError(
-          "Cannot inherit from a tuple shape with different number of elements")
+          "Cannot inherit from a tuple shape with different number of elements", None, baseTuple.position())
       }
     } else {
       val newItems = for {
@@ -313,18 +314,56 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     clonedProp
   }
 
+  val unionErrorHandler = new ErrorHandler {
+    override  val parserCount: Int = 0
+    override  val currentFile: String = ""
+
+    override def handle[T](error: YError, defaultValue: T): T = {
+      throw new Exception("raising exceptions in union processing")
+    }
+
+    override protected def reportConstraint(id: String,
+                                   node: String,
+                                   property: Option[String],
+                                   message: String,
+                                   lexical: Option[LexicalInformation],
+                                   level: String,
+                                   location: Option[String]): Unit = {
+      throw new Exception("raising exceptions in union processing")
+    }
+
+    def wrapContext(ctx: NormalizationContext) = {
+      new NormalizationContext(
+        this,
+        ctx.keepEditingInfo,
+        ctx.profile,
+        ctx.cache
+      )
+    }
+  }
   protected def computeMinUnion(baseUnion: UnionShape, superUnion: UnionShape): Shape = {
+
+    val unionContext: NormalizationContext = unionErrorHandler.wrapContext(context)
     val newUnionItems =
       if (baseUnion.anyOf.isEmpty || superUnion.anyOf.isEmpty) {
         baseUnion.anyOf ++ superUnion.anyOf
       } else {
-        for {
+        val minShapes = for {
           baseUnionElement  <- baseUnion.anyOf
           superUnionElement <- superUnion.anyOf
         } yield {
-          context.minShape(baseUnionElement, superUnionElement)
+          try {
+            Some(unionContext.minShape(baseUnionElement, superUnionElement))
+          } catch {
+            case _: Exception => None
+          }
         }
+        val finalMinShapes = minShapes.collect { case Some(s) => s }
+        if (finalMinShapes.isEmpty)
+          throw new InheritanceIncompatibleShapeError("Cannot compute inheritance for union", None, baseUnion.position())
+        finalMinShapes
       }
+
 
     baseUnion.fields.setWithoutId(UnionShapeModel.AnyOf,
                                   AmfArray(newUnionItems),
@@ -339,10 +378,11 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
   }
 
   protected def computeMinUnionNode(baseUnion: UnionShape, superNode: NodeShape): Shape = {
+    val unionContext: NormalizationContext = unionErrorHandler.wrapContext(context)
     val newUnionItems = for {
       baseUnionElement <- baseUnion.anyOf
     } yield {
-      context.minShape(baseUnionElement, superNode)
+      unionContext.minShape(baseUnionElement, superNode)
     }
 
     baseUnion.fields.setWithoutId(UnionShapeModel.AnyOf,
@@ -358,10 +398,19 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
   }
 
   protected def computeMinSuperUnion(baseShape: Shape, superUnion: UnionShape): Shape = {
-    val newUnionItems = for {
+    val unionContext: NormalizationContext = unionErrorHandler.wrapContext(context)
+    val minItems = for {
       superUnionElement <- superUnion.anyOf
     } yield {
-      context.minShape(baseShape, superUnionElement)
+      try {
+        Some(unionContext.minShape(baseShape, superUnionElement))
+      } catch {
+        case _: Exception => None
+      }
+    }
+    val newUnionItems = minItems collect { case Some(s) => s}
+    if (newUnionItems.isEmpty) {
+      throw new InheritanceIncompatibleShapeError("Cannot compute inheritance from union", None, baseShape.position())
     }
 
     var accExamples = List[Example]()
