@@ -1,0 +1,22 @@
+#%RAML 1.0
+baseUri: http:/test.com/
+version: 1.0
+title: title
+description: description
+
+uses:
+    rest-connect: rest-connect.raml
+
+securitySchemes:
+    basic:
+        type: Basic Authentication
+    passthrough:
+      description: |
+        This API supports Pass Through Authentication.
+      type: Pass Through
+      describedBy:
+        headers:
+          api_key:
+            type: string
+
+securedBy: [basic, passthrough]

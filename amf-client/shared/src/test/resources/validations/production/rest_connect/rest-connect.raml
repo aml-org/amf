@@ -1,0 +1,31 @@
+#%RAML 1.0 Library
+---
+usage: |
+    This library defines annotation types to provide connectivity using the REST Connect.
+
+annotationTypes:
+    ignored:
+        type: string?
+        description: |
+            This annotation allows to specify a method which will not be transformed into an operation.
+            Optionally, a reason can be defined.
+        allowedTargets: [ Method ]
+
+    operationName:
+        type: string
+        description: This annotation allows to specify a custom operation name.
+        allowedTargets: [ Method ]
+
+    parameterName:
+        type: string
+        description: This annotation allows to specify a custom parameter name.
+        allowedTargets: [ TypeDeclaration ]
+
+    userSelectedSecuritySchemes:
+        type: string?
+        description: |
+            When using this annotation Rest Connect will let the user select which security scheme to use in the operations.
+            It can be set globally at the root of the spec or on a method by method basis.
+            This annotation only affects mule 4 connectors as mule 3 ones have native support for this.
+            Optionally, a reason can be defined.
+        allowedTargets: [ API, Method ]
