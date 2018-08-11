@@ -37,13 +37,13 @@ object RecursiveShape {
     RecursiveShape(Fields(), annotations)
 
   def apply(l: Linkable): RecursiveShape =
-    apply(Fields(), Annotations())
+    apply(Fields(), l.annotations)
       .adopted(l.id)
       .withSupportsRecursion(l.supportsRecursion.value())
       .withFixPoint(l.id)
 
   def apply(shape: Shape): RecursiveShape =
-    apply(Fields(), Annotations())
+    apply(Fields(), shape.annotations)
       .withName(shape.name.option().getOrElse("default-recursion"))
       .adopted(shape.id)
       .withSupportsRecursion(shape.supportsRecursion.value())

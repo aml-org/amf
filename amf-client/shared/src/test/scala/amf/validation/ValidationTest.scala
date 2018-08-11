@@ -241,16 +241,27 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("HERE_HERE Patterned properties tests") {
+  test("Patterned properties tests") {
     for {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/types/patterned_properties.raml", platform, RamlYamlHint, validation)
         .build()
       report    <- validation.validate(doc, RAMLProfile)
     } yield {
-      println(report)
       assert(!report.conforms)
       assert(report.results.length == 2)
+    }
+  }
+
+  test("Recursive array test") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "/types/recursive_array.raml", platform, RamlYamlHint, validation)
+        .build()
+      report    <- validation.validate(doc, RAMLProfile)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.length == 1)
     }
   }
 
