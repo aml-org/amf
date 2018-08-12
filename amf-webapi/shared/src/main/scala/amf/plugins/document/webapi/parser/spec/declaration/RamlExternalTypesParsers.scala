@@ -7,7 +7,7 @@ import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{Annotations, InferredLinkReference, ParsedDocument, ParsedReference, Reference, ReferenceFragmentPartition, _}
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.core.utils.Strings
-import amf.plugins.document.webapi.annotations.{JSONSchemaId, ParsedJSONSchema}
+import amf.plugins.document.webapi.annotations.{JSONSchemaId, ParsedJSONSchema, SchemaIsJsonSchema}
 import amf.plugins.document.webapi.contexts.{Oas2WebApiContext, OasWebApiContext, RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.spec.domain.NodeDataNodeParser
 import amf.plugins.document.webapi.parser.spec.oas.Oas2DocumentParser
@@ -95,6 +95,8 @@ case class RamlJsonSchemaExpression(name: String,
       )
       parseExamples(parsed, value.as[YMap])
     }
+
+    parsed.annotations += SchemaIsJsonSchema()
     parsed
   }
 
@@ -202,7 +204,7 @@ case class RamlXmlSchemaExpression(name: String,
                                    override val adopt: Shape => Shape,
                                    parseExample: Boolean = false)(override implicit val ctx: RamlWebApiContext)
     extends RamlExternalTypesParser {
-  override def parseValue(origin: ValueAndOrigin): AnyShape = {
+  override def parseValue(origin: ValueAndOrigin): SchemaShape = {
     val (maybeReferenceId, maybeLocation, maybeFragmentLabel): (Option[String], Option[String], Option[String]) =
       origin.oriUrl
         .map(ReferenceFragmentPartition.apply) match {

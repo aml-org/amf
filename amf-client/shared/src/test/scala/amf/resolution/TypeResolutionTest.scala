@@ -203,7 +203,7 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
     test(s"Resolve data types: $example") {
       Validation(platform)
         .flatMap(v => {
-          v.withEnabledValidation(false)
+          v.withEnabledValidation(true)
           v.loadValidationDialect().map(_ => v)
         })
         .flatMap { validation =>

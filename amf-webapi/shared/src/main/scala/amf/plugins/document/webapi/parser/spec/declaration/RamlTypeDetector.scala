@@ -91,13 +91,14 @@ case class RamlTypeDetector(parent: String,
         case t: String if matchType(t, default = UndefinedType) == UndefinedType =>
           // it might be a named type
           // its for identify the type, so i can search in all the scope, no need to difference between named ref and includes.
+
           ctx.declarations
             .findType(scalar.text, SearchScope.All) match {
             case Some(ancestor) if recursive => ShapeClassTypeDefMatcher(ancestor, node, recursive)
             case Some(_) if !recursive       => Some(ObjectType)
             case None                        => Some(UndefinedType)
           }
-        case _ => // todo add if wellknowtype?
+        case _ => // todo add if well known type?
           val t = scalar.text
           //      val f = map.key("format".asRamlAnnotation).map(_.value.value.toScalar.text).getOrElse("")
           if (format.isDefined) format.map(f => matchType(t, f))

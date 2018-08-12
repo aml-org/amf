@@ -131,6 +131,10 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     validate("/production/inheritance.raml", golden = Some("inheritance.report"))
   }
 
+  test("Test json schema inheritance") {
+    validate("/production/json_schema_inheritance/api.raml", golden = Some("json_schema_inheritance.report"))
+  }
+
   test("Valid type example 1 test") {
     validate("/examples/validex1.raml", profile = AMFProfile)
   }
