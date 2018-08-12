@@ -204,6 +204,14 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
+  val XmlSchemaInheratinaceWarningSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "xml-schema-inheritance").iri(),
+    "Inheriting from XML Schema",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val ParsingWarningSpecification = ValidationSpecification(
     (Namespace.AmfParser + "parsing-warning").iri(),
     "Parsing warning",
@@ -346,6 +354,13 @@ object ParserSideValidations {
       OASProfile    -> SeverityLevels.WARNING,
       OAS3Profile   -> SeverityLevels.WARNING,
       AMFProfile    -> SeverityLevels.WARNING
+    ),
+    XmlSchemaInheratinaceWarningSpecification.id -> Map(
+      RAMLProfile   -> SeverityLevels.VIOLATION,
+      RAML08Profile -> SeverityLevels.VIOLATION,
+      OASProfile    -> SeverityLevels.VIOLATION,
+      OAS3Profile   -> SeverityLevels.VIOLATION,
+      AMFProfile    -> SeverityLevels.VIOLATION
     ),
     UnknownSecuritySchemeErrorSpecification.id -> Map(
       RAMLProfile   -> SeverityLevels.VIOLATION,
@@ -498,6 +513,7 @@ object ParserSideValidations {
     UnknownSecuritySchemeErrorSpecification,
     UnknownScopeErrorSpecification,
     JsonSchemaInheratinaceWarningSpecification,
+    XmlSchemaInheratinaceWarningSpecification,
     InvalidTypeInheritanceErrorSpecification,
     InvalidTypeInheritanceWarningSpecification,
     MissingExtensionInReferences,

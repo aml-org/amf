@@ -19,6 +19,8 @@ object ParsedJSONSchema extends AnnotationGraphLoader {
   }
 }
 
+case class SchemaIsJsonSchema() extends Annotation
+
 case class GeneratedJSONSchema(rawText: String) extends Annotation
 
 case class JSONSchemaId(id: String) extends SerializableAnnotation with PerpetualAnnotation {
