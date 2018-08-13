@@ -14,7 +14,6 @@ import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model._
 import amf.core.utils.Strings
-import javafx.scene.transform.MatrixType
 
 /**
   *
