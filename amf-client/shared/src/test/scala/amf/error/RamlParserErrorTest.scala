@@ -472,6 +472,12 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
+  test("Uses keyword at node shape fragment") {
+    validate(
+      "/error/uses-in-object.raml"
+    )
+  }
+
   test("test non used base uri and uri params") {
     validate(
       "/warning/unused-uri-params.raml",
