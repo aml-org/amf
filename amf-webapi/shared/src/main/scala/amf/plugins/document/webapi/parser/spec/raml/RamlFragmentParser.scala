@@ -39,7 +39,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
     val (references, aliases) = ReferencesParserAnnotations("uses", rootMap, root)
 
     // usage is valid for a fragment, not for the encoded domain element
-    val encodedMap = YMap(rootMap.entries.filter(_.key.as[YScalar].text != "usage"), root.location)
+    val encodedMap = YMap(rootMap.entries.filter(e => e.key.as[YScalar].text != "usage" && e.key.as[YScalar].text != "uses"), root.location)
 
     val optionFragment = fragmentType match {
       case Raml10DocumentationItem         => Some(DocumentationItemFragmentParser(encodedMap).parse())
