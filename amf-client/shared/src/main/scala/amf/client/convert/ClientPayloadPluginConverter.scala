@@ -1,8 +1,9 @@
 package amf.client.convert
 
 import amf.client.convert.WebApiClientConverters._
-import amf.client.plugins.{AMFPayloadValidationPlugin, AMFPlugin, ClientAMFPayloadValidationPlugin, ClientAMFPlugin}
+import amf.client.plugins._
 import amf.core.model.document.{PayloadFragment => InternalPayloadFragment}
+import amf.client.plugins.{PayloadParsingResult => InternalPayloadParsingResult}
 import amf.core.model.domain.Shape
 import amf.core.validation.{AMFValidationReport, ValidationShapeSet => InternalValidationShapeSet}
 import amf.internal.environment.Environment
@@ -30,6 +31,14 @@ object ClientPayloadPluginConverter {
                                           env: Environment,
                                           shape: Shape): InternalPayloadFragment =
         clientPlugin.parsePayload(payload, mediaType, ClientEnvironment(env), ShapeMatcher.asClient(shape))._internal
+
+      override protected def parsePayloadWithErrorHandler(payload: String,
+                                                          mediaType: String,
+                                                          env: Environment,
+                                                          shape: Shape): InternalPayloadParsingResult =
+        clientPlugin
+          .parsePayloadWithErrorHandler(payload, mediaType, ClientEnvironment(env), ShapeMatcher.asClient(shape))
+          ._internal
 
       override def validateSet(set: InternalValidationShapeSet, env: Environment): Future[AMFValidationReport] =
         clientPlugin.validateSet(set, ClientEnvironment(env)).asInternal

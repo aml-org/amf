@@ -51,18 +51,21 @@ class JsPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shape
   }
 
   protected def validatePolymorphic(mediaType: String, payload: String): Boolean = {
-    val payloadFragment = PayloadValidatorPlugin.parsePayload(payload, mediaType, env, shape)
-    val effectiveShape  = findPolymorphicShape(shape, payloadFragment.encodes)
-    shapeJsonSchema(effectiveShape) match {
-      case None => throw new Exception(s"Cannot parse shape '${effectiveShape.id}' to execute validation")
-      case Some(jsonSchema) =>
-        val dataNode = if (mediaType == "application/json") {
-          js.Dynamic.global.JSON.parse(payload)
-        } else {
-          loadDataNodeString(payloadFragment)
-        }
-        validator.validate(jsonSchema, dataNode)
-    }
+    val payloadParsingResult = PayloadValidatorPlugin.parsePayloadWithErrorHandler(payload, mediaType, env, shape)
+    if (!payloadParsingResult.hasError) {
+      val payloadFragment = payloadParsingResult.fragment
+      val effectiveShape  = findPolymorphicShape(shape, payloadFragment.encodes)
+      shapeJsonSchema(effectiveShape) match {
+        case None => throw new Exception(s"Cannot parse shape '${effectiveShape.id}' to execute validation")
+        case Some(jsonSchema) =>
+          val dataNode = if (mediaType == "application/json") {
+            js.Dynamic.global.JSON.parse(payload)
+          } else {
+            loadDataNodeString(payloadFragment)
+          }
+          validator.validate(jsonSchema, dataNode)
+      }
+    } else false
   }
 
   protected def validateNotPolymorphic(mediaType: String, payload: String): Boolean = {
@@ -72,8 +75,10 @@ class JsPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shape
         val dataNode = if (mediaType == "application/json") {
           js.Dynamic.global.JSON.parse(payload)
         } else {
-          val payloadFragment = PayloadValidatorPlugin.parsePayload(payload, mediaType, env, shape)
-          loadDataNodeString(payloadFragment)
+          val payloadParsingResult =
+            PayloadValidatorPlugin.parsePayloadWithErrorHandler(payload, mediaType, env, shape)
+          if (!payloadParsingResult.hasError) loadDataNodeString(payloadParsingResult.fragment)
+          else return false
         }
         validator.validate(jsonSchema, dataNode)
     }

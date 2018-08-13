@@ -3,7 +3,7 @@ package amf.core.services
 import amf.ProfileName
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.Shape
-import amf.client.plugins.{AMFPayloadValidationPlugin, AMFPlugin}
+import amf.client.plugins.{AMFPayloadValidationPlugin, AMFPlugin, PayloadErrorHandler, PayloadParsingResult}
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.utils._
 import amf.core.validation._
@@ -103,5 +103,11 @@ object PayloadValidator {
                                         env: Environment,
                                         shape: Shape): PayloadFragment =
       PayloadFragment(payload, mediaType)
+
+    override protected def parsePayloadWithErrorHandler(payload: String,
+                                                        mediaType: String,
+                                                        env: Environment,
+                                                        shape: Shape): PayloadParsingResult =
+      PayloadParsingResult(PayloadFragment(payload, mediaType), Nil)
   }
 }

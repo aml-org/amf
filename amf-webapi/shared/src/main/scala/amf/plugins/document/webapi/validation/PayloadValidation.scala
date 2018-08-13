@@ -1,12 +1,13 @@
 package amf.plugins.document.webapi.validation
 
 import amf.ProfileNames
-import amf.client.plugins.{AMFPayloadValidationPlugin, AMFPlugin}
+import amf.client.plugins.{AMFPayloadValidationPlugin, AMFPlugin, PayloadErrorHandler, PayloadParsingResult}
 import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.{Module, PayloadFragment}
 import amf.core.model.domain._
-import amf.core.parser.ParserContext
+import amf.core.parser.{ParserContext, YNodeLikeOps}
 import amf.core.services.{DefaultValidationOptions, RuntimeValidator}
+import amf.core.validation.SeverityLevels._
 import amf.core.validation._
 import amf.core.validation.core.{PropertyConstraint, ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.Namespace
@@ -15,8 +16,7 @@ import amf.plugins.document.webapi.contexts.PayloadContext
 import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
 import amf.plugins.domain.shapes.models.{AnyShape, ScalarShape, SchemaShape}
 import amf.plugins.domain.webapi.unsafe.JsonSchemaSecrets
-import org.yaml.model.{YDocument, YNode, YScalar}
-import amf.core.parser.YNodeLikeOps
+import org.yaml.model._
 import org.yaml.parser.{JsonParser, YamlParser}
 
 import scala.collection.mutable
@@ -58,7 +58,7 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
         .filter(_.isDefined)
         .map(_.get)
       AMFValidationReport(
-        conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
+        conforms = !results.exists(_.level == VIOLATION),
         model = bu.id,
         profile = profiles.head.name,
         results = results
@@ -187,6 +187,27 @@ object PayloadValidatorPlugin extends AMFPayloadValidationPlugin {
   override val payloadMediaType: Seq[String] = Seq("application/json", "application/yaml", "text/vnd.yaml")
 
   val defaultCtx = new PayloadContext("", Nil, ParserContext())
+
+  override def parsePayloadWithErrorHandler(payload: String,
+                                            mediaType: String,
+                                            env: Environment,
+                                            shape: Shape): PayloadParsingResult = {
+    val fragment     = PayloadFragment(payload, mediaType)
+    val errorHandler = new PayloadErrorHandler
+
+    val parser = mediaType match {
+      case "application/json" => JsonParser(payload)(errorHandler)
+      case _                  => YamlParser(payload)(errorHandler)
+    }
+    parser.parse(keepTokens = true).collectFirst({ case doc: YDocument => doc.node }) match {
+      case Some(node: YNode) if node.toOption[YScalar].isDefined && isString(shape) =>
+        fragment.withEncodes(ScalarNode(payload, None))
+      case Some(node: YNode) =>
+        fragment.withEncodes(DataNodeParser(node, parent = Option(fragment.id))(defaultCtx).parse())
+      case None => fragment.withEncodes(ScalarNode(payload, None))
+    }
+    PayloadParsingResult(fragment, errorHandler.getErrors)
+  }
 
   override def parsePayload(payload: String, mediaType: String, env: Environment, shape: Shape): PayloadFragment = {
     val fragment = PayloadFragment(payload, mediaType)

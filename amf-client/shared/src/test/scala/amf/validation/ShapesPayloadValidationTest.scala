@@ -41,7 +41,8 @@ class SchemaPayloadValidationTest extends AsyncFunSuite with ShapesFixture {
         ExampleInfo("XmlSimpleIntExample", Fixture.XmlSimpleIntExample, valid = false),
         ExampleInfo("UserYamlExample", Fixture.UserYamlExample, valid = false),
         ExampleInfo("UserJsonExample", Fixture.UserJsonExample, valid = false),
-        ExampleInfo("UserXmlExample", Fixture.UserXmlExample, valid = false)
+        ExampleInfo("UserXmlExample", Fixture.UserXmlExample, valid = false),
+        ExampleInfo("YamlInvalidStrExample", Fixture.YamlInvalidStrExample, valid = false)
       )
     ),
     ShapeInfo(
@@ -231,6 +232,8 @@ trait ShapesFixture {
          |  number: falsa""".stripMargin
 
     val YamlSimpleStrExample = "simple"
+
+    val YamlInvalidStrExample = "%7Bversion%7D"
 
     val JsonSimpleStrExample: String = "\"simple\""
 

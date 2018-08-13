@@ -3,7 +3,6 @@ package amf.plugins.document.webapi.validation.remote
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.Shape
-import amf.core.parser.SyamlParsedDocument
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, ValidationCandidate}
 import amf.internal.environment.Environment
@@ -56,35 +55,39 @@ class JvmPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shap
   }
 
   protected def validatePolymorphic(mediaType: String, payload: String): Boolean = {
-    val payloadFragment = PayloadValidatorPlugin.parsePayload(payload, mediaType, env, shape)
-    val effectiveShape  = findPolymorphicShape(shape, payloadFragment.encodes)
-    shapeJsonSchema(effectiveShape) match {
-      case None => throw new Exception(s"Cannot parse shape '${effectiveShape.id}' to execute validation")
-      case Some(jsonSchema) =>
-        val dataNode = if (mediaType == "application/json") {
-          loadJson(payload)
-        } else {
-          loadDataNodeString(payloadFragment)
-        }
-        try {
-          validator.performValidation(jsonSchema, dataNode)
-          true
-        } catch {
-          case _: ValidationException => false
-        }
-    }
+    val payloadResult = PayloadValidatorPlugin.parsePayloadWithErrorHandler(payload, mediaType, env, shape)
+    if (!payloadResult.hasError) {
+      val payloadFragment = payloadResult.fragment
+      val effectiveShape  = findPolymorphicShape(shape, payloadFragment.encodes)
+      shapeJsonSchema(effectiveShape) match {
+        case None => throw new Exception(s"Cannot parse shape '${effectiveShape.id}' to execute validation")
+        case Some(jsonSchema) =>
+          val dataNode = if (mediaType == "application/json") {
+            loadJson(payload)
+          } else {
+            loadDataNodeString(payloadFragment)
+          }
+          try {
+            validator.performValidation(jsonSchema, dataNode)
+            true
+          } catch {
+            case _: ValidationException => false
+          }
+      }
+    } else false
   }
 
   protected def validateNotPolymorphic(mediaType: String, payload: String): Boolean = {
     shapeJsonSchema(shape) match {
       case None => throw new Exception(s"Cannot parse shape '${shape.id}' to execute validation")
       case Some(jsonSchema) =>
-        val dataNode = if (mediaType == "application/json") {
-          loadJson(payload)
-        } else {
-          val payloadFragment = PayloadValidatorPlugin.parsePayload(payload, mediaType, env, shape)
-          loadDataNodeString(payloadFragment)
-        }
+        val dataNode =
+          if (mediaType == "application/json") loadJson(payload)
+          else {
+            val payloadResult = PayloadValidatorPlugin.parsePayloadWithErrorHandler(payload, mediaType, env, shape)
+            if (!payloadResult.hasError) loadDataNodeString(payloadResult.fragment)
+            else return false
+          }
         try {
           validator.performValidation(jsonSchema, dataNode)
           true

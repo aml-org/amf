@@ -4,7 +4,7 @@ import amf.client.convert.CoreClientConverters._
 import amf.client.environment.Environment
 import amf.client.model.document.PayloadFragment
 import amf.client.model.domain.Shape
-import amf.client.validate.{ValidationReport, ValidationShapeSet}
+import amf.client.validate.{PayloadParsingResult => ExternalPayloadParsingResult, ValidationReport, ValidationShapeSet}
 
 import scala.scalajs.js
 
@@ -12,6 +12,11 @@ import scala.scalajs.js
 trait ClientAMFPayloadValidationPlugin extends ClientAMFPlugin {
 
   def parsePayload(payload: String, mediaType: String, env: Environment, shape: Shape): PayloadFragment = js.native
+
+  def parsePayloadWithErrorHandler(payload: String,
+                                   mediaType: String,
+                                   env: Environment,
+                                   shape: Shape): ExternalPayloadParsingResult = js.native
 
   def validateSet(set: ValidationShapeSet, env: Environment): ClientFuture[ValidationReport] = js.native
 

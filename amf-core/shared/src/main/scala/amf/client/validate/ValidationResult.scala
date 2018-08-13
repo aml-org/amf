@@ -3,9 +3,12 @@ package amf.client.validate
 import amf.core.annotations.LexicalInformation
 import amf.core.parser.Range
 import amf.core.validation.{AMFValidationResult => InternalValidationResult}
+import amf.client.plugins.{PayloadParsingResult => InternalPayloadParsingResult}
 import amf.core.utils.Strings
+
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.client.convert.CoreClientConverters._
+import amf.client.model.document.PayloadFragment
 
 @JSExportAll
 class ValidationResult(private[amf] val _internal: InternalValidationResult) {
@@ -41,4 +44,16 @@ class ValidationResult(private[amf] val _internal: InternalValidationResult) {
   }
 
   def location: ClientOption[String] = _internal.location.asClient
+}
+
+@JSExportAll
+class PayloadParsingResult(private[amf] val _internal: InternalPayloadParsingResult) {
+
+  @JSExportTopLevel("client.validate.PayloadParsingResult")
+  def this(fragment: PayloadFragment, results: ClientList[ValidationResult]) =
+    this(InternalPayloadParsingResult(fragment._internal, results.asInternal.toList))
+
+  def fragment: PayloadFragment             = _internal.fragment
+  def results: ClientList[ValidationResult] = _internal.results.asClient
+
 }
