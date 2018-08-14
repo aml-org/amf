@@ -1,0 +1,369 @@
+[
+  {
+    "@id": "amf://1",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "amf://9",
+        "@type": [
+          "schema-org:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "schema-org:name": [
+          {
+            "@value": "overlay"
+          }
+        ],
+        "schema-org:description": [
+          {
+            "@value": "some overlaid description"
+          }
+        ],
+        "raml-http:endpoint": [
+          {
+            "@id": "amf://10",
+            "@type": [
+              "raml-http:EndPoint",
+              "doc:DomainElement"
+            ],
+            "raml-http:path": [
+              {
+                "@value": "/master"
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@id": "amf://15",
+                "@type": [
+                  "hydra:Operation",
+                  "doc:DomainElement"
+                ],
+                "hydra:method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "schema-org:description": [
+                  {
+                    "@value": "Master description"
+                  }
+                ],
+                "doc:extends": [
+                  {
+                    "@id": "amf://16",
+                    "@type": [
+                      "doc:ParametrizedTrait",
+                      "doc:ParametrizedDeclaration",
+                      "doc:DomainElement"
+                    ],
+                    "schema-org:name": [
+                      {
+                        "@value": "slave"
+                      }
+                    ],
+                    "doc:target": [
+                      {
+                        "@id": "amf://17",
+                        "@type": [
+                          "doc:Trait",
+                          "doc:AbstractDeclaration",
+                          "doc:DomainElement"
+                        ],
+                        "schema-org:name": [
+                          {
+                            "@value": "slave"
+                          }
+                        ],
+                        "doc:dataNode": [
+                          {
+                            "@id": "amf://18",
+                            "@type": [
+                              "data:Object"
+                            ],
+                            "data:description": [
+                              {
+                                "@id": "#/web-api/end-points/%2Fmaster/get/slave/slave/object_1/scalar_2",
+                                "@type": [
+                                  "data:Scalar"
+                                ],
+                                "data:value": [
+                                  {
+                                    "@value": "Slave description",
+                                    "@type": "xsd:string"
+                                  }
+                                ],
+                                "smaps": {
+                                  "lexical": {
+                                    "#/web-api/end-points/%2Fmaster/get/slave/slave/object_1/scalar_2": "[(8,17)-(8,34)]"
+                                  }
+                                }
+                              }
+                            ],
+                            "smaps": {
+                              "data-node-properties": {
+                                "amf://18": "description->[(8,4)-(10,0)]"
+                              },
+                              "lexical": {
+                                "amf://18": "[(8,4)-(10,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "extension-provenance": {
+                            "amf://17": "id->amf://20"
+                          },
+                          "lexical": {
+                            "amf://17": "[(7,2)-(10,0)]"
+                          },
+                          "resolved-link": {
+                            "amf://17": "amf://19"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "amf://16": "[(12,9)-(12,14)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "amf://15": "[(10,2)-(10,6)]"
+                  }
+                }
+              }
+            ],
+            "doc:extends": [
+              {
+                "@id": "amf://11",
+                "@type": [
+                  "doc:ParametrizedTrait",
+                  "doc:ParametrizedDeclaration",
+                  "doc:DomainElement"
+                ],
+                "schema-org:name": [
+                  {
+                    "@value": "master"
+                  }
+                ],
+                "doc:target": [
+                  {
+                    "@id": "amf://12",
+                    "@type": [
+                      "doc:Trait",
+                      "doc:AbstractDeclaration",
+                      "doc:DomainElement"
+                    ],
+                    "schema-org:name": [
+                      {
+                        "@value": "master"
+                      }
+                    ],
+                    "doc:dataNode": [
+                      {
+                        "@id": "amf://13",
+                        "@type": [
+                          "data:Object"
+                        ],
+                        "data:description": [
+                          {
+                            "@id": "#/declarations/traits/master/object_1/scalar_2",
+                            "@type": [
+                              "data:Scalar"
+                            ],
+                            "data:value": [
+                              {
+                                "@value": "Master description",
+                                "@type": "xsd:string"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "#/declarations/traits/master/object_1/scalar_2": "[(6,17)-(6,35)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "data-node-properties": {
+                            "amf://13": "description->[(6,4)-(8,0)]"
+                          },
+                          "lexical": {
+                            "amf://13": "[(6,4)-(8,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "resolved-link": {
+                        "amf://12": "amf://14"
+                      },
+                      "lexical": {
+                        "amf://12": "[(5,2)-(8,0)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "amf://11": "[(9,7)-(9,13)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "doc:extends": "[(9,2)-(10,0)]",
+                "amf://10": "[(8,0)-(10,6)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "amf://9": "raml 1.0"
+          },
+          "lexical": {
+            "amf://9": "[(2,0)-(10,6)]"
+          }
+        }
+      }
+    ],
+    "doc:references": [],
+    "doc:declares": [
+      {
+        "@id": "amf://12",
+        "@type": [
+          "doc:Trait",
+          "doc:AbstractDeclaration",
+          "doc:DomainElement"
+        ],
+        "schema-org:name": [
+          {
+            "@value": "master"
+          }
+        ],
+        "doc:dataNode": [
+          {
+            "@id": "amf://13",
+            "@type": [
+              "data:Object"
+            ],
+            "data:description": [
+              {
+                "@id": "#/declarations/traits/master/object_1/scalar_2",
+                "@type": [
+                  "data:Scalar"
+                ],
+                "data:value": [
+                  {
+                    "@value": "Master description",
+                    "@type": "xsd:string"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#/declarations/traits/master/object_1/scalar_2": "[(6,17)-(6,35)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "data-node-properties": {
+                "amf://13": "description->[(6,4)-(8,0)]"
+              },
+              "lexical": {
+                "amf://13": "[(6,4)-(8,0)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "resolved-link": {
+            "amf://12": "amf://14"
+          },
+          "lexical": {
+            "amf://12": "[(5,2)-(8,0)]"
+          }
+        }
+      },
+      {
+        "@id": "amf://17",
+        "@type": [
+          "doc:Trait",
+          "doc:AbstractDeclaration",
+          "doc:DomainElement"
+        ],
+        "schema-org:name": [
+          {
+            "@value": "slave"
+          }
+        ],
+        "doc:dataNode": [
+          {
+            "@id": "amf://18",
+            "@type": [
+              "data:Object"
+            ],
+            "data:description": [
+              {
+                "@id": "#/web-api/end-points/%2Fmaster/get/slave/slave/object_1/scalar_2",
+                "@type": [
+                  "data:Scalar"
+                ],
+                "data:value": [
+                  {
+                    "@value": "Slave description",
+                    "@type": "xsd:string"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#/web-api/end-points/%2Fmaster/get/slave/slave/object_1/scalar_2": "[(8,17)-(8,34)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "data-node-properties": {
+                "amf://18": "description->[(8,4)-(10,0)]"
+              },
+              "lexical": {
+                "amf://18": "[(8,4)-(10,0)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "extension-provenance": {
+            "amf://17": "id->amf://20"
+          },
+          "lexical": {
+            "amf://17": "[(7,2)-(10,0)]"
+          },
+          "resolved-link": {
+            "amf://17": "amf://19"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "file://amf-client/shared/src/test/resources/resolution/extension/traits/master.raml",
+      "raml-http": "http://a.ml/vocabularies/http#",
+      "data": "http://a.ml/vocabularies/data#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "schema-org": "http://schema.org/",
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "hydra": "http://www.w3.org/ns/hydra/core#"
+    }
+  }
+]

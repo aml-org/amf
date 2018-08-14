@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.resolution.pipelines
 
 import amf.core.model.document.BaseUnit
 import amf.core.resolution.pipelines.ResolutionPipeline
-import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
+import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage, UrlShortenerStage}
 import amf.plugins.document.webapi.resolution.stages.ExtensionsResolutionStage
 import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
 import amf.plugins.domain.webapi.resolution.stages.{
@@ -27,7 +27,8 @@ class AmfEditingPipeline(override val model: BaseUnit) extends ResolutionPipelin
     new SecurityResolutionStage(),
     new ParametersNormalizationStage(profileName),
     new MediaTypeResolutionStage(profileName),
-    new ExamplesResolutionStage()
+    new ExamplesResolutionStage(),
+    new UrlShortenerStage()
   )
 
   val ID: String = "editing"

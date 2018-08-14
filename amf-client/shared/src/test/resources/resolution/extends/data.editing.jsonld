@@ -1,6 +1,6 @@
 [
   {
-    "@id": "",
+    "@id": "amf://1",
     "@type": [
       "doc:Document",
       "doc:Fragment",
@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#/web-api",
+        "@id": "amf://23",
         "@type": [
           "schema-org:WebAPI",
           "doc:RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "raml-http:server": [
           {
-            "@id": "#/web-api/aa-bbb.com%2Fapis",
+            "@id": "amf://43",
             "@type": [
               "raml-http:Server",
               "doc:DomainElement"
@@ -37,7 +37,7 @@
                 "raml-http:url": "[(4,0)-(6,0)]"
               },
               "synthesized-field": {
-                "#/web-api/aa-bbb.com%2Fapis": "true"
+                "amf://43": "true"
               }
             }
           }
@@ -49,7 +49,7 @@
         ],
         "raml-http:endpoint": [
           {
-            "@id": "#/web-api/end-points/%2Fcustomers",
+            "@id": "amf://24",
             "@type": [
               "raml-http:EndPoint",
               "doc:DomainElement"
@@ -67,12 +67,12 @@
             "smaps": {
               "lexical": {
                 "schema-org:name": "[(19,2)-(20,0)]",
-                "#/web-api/end-points/%2Fcustomers": "[(18,0)-(27,21)]"
+                "amf://24": "[(18,0)-(27,21)]"
               }
             }
           },
           {
-            "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate",
+            "@id": "amf://25",
             "@type": [
               "raml-http:EndPoint",
               "doc:DomainElement"
@@ -84,7 +84,7 @@
             ],
             "hydra:supportedOperation": [
               {
-                "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post",
+                "@id": "amf://26",
                 "@type": [
                   "hydra:Operation",
                   "doc:DomainElement"
@@ -101,14 +101,14 @@
                 ],
                 "hydra:expects": [
                   {
-                    "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request",
+                    "@id": "amf://27",
                     "@type": [
                       "raml-http:Request",
                       "doc:DomainElement"
                     ],
                     "raml-http:payload": [
                       {
-                        "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson",
+                        "@id": "amf://28",
                         "@type": [
                           "raml-http:Payload",
                           "doc:DomainElement"
@@ -120,7 +120,7 @@
                         ],
                         "raml-http:schema": [
                           {
-                            "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema",
+                            "@id": "amf://29",
                             "@type": [
                               "shacl:NodeShape",
                               "shacl:Shape",
@@ -134,7 +134,7 @@
                             ],
                             "shacl:property": [
                               {
-                                "@id": "#/declarations/types/FinancialInstitution/property/d",
+                                "@id": "amf://31",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -147,7 +147,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#/declarations/types/FinancialInstitution/property/d/scalar/d",
+                                    "@id": "amf://32",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -166,7 +166,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#/declarations/types/FinancialInstitution/property/d/scalar/d": "[(11,6)-(12,0)]"
+                                        "amf://32": "[(11,6)-(12,0)]"
                                       }
                                     }
                                   }
@@ -183,12 +183,12 @@
                                 ],
                                 "smaps": {
                                   "lexical": {
-                                    "#/declarations/types/FinancialInstitution/property/d": "[(11,6)-(12,0)]"
+                                    "amf://31": "[(11,6)-(12,0)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "#/declarations/types/Bank/property/a",
+                                "@id": "amf://33",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -201,7 +201,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#/declarations/types/Bank/property/a/scalar/a",
+                                    "@id": "amf://34",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -220,7 +220,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#/declarations/types/Bank/property/a/scalar/a": "[(16,6)-(17,0)]"
+                                        "amf://34": "[(16,6)-(17,0)]"
                                       }
                                     }
                                   }
@@ -237,12 +237,12 @@
                                 ],
                                 "smaps": {
                                   "lexical": {
-                                    "#/declarations/types/Bank/property/a": "[(16,6)-(17,0)]"
+                                    "amf://33": "[(16,6)-(17,0)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/l",
+                                "@id": "amf://35",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -255,7 +255,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/l/scalar/l",
+                                    "@id": "amf://36",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -274,7 +274,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/l/scalar/l": "[(27,12)-(27,21)]"
+                                        "amf://36": "[(27,12)-(27,21)]"
                                       }
                                     }
                                   }
@@ -291,12 +291,12 @@
                                 ],
                                 "smaps": {
                                   "lexical": {
-                                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema/property/l": "[(27,12)-(27,21)]"
+                                    "amf://35": "[(27,12)-(27,21)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "#/declarations/types/FinancialInstitution/property/c",
+                                "@id": "amf://37",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -309,7 +309,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#/declarations/types/FinancialInstitution/property/c/scalar/c",
+                                    "@id": "amf://38",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -328,7 +328,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#/declarations/types/FinancialInstitution/property/c/scalar/c": "[(10,6)-(11,0)]"
+                                        "amf://38": "[(10,6)-(11,0)]"
                                       }
                                     }
                                   }
@@ -345,12 +345,12 @@
                                 ],
                                 "smaps": {
                                   "lexical": {
-                                    "#/declarations/types/FinancialInstitution/property/c": "[(10,6)-(11,0)]"
+                                    "amf://37": "[(10,6)-(11,0)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "#/declarations/types/FinancialInstitution/property/e",
+                                "@id": "amf://39",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -363,7 +363,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#/declarations/types/FinancialInstitution/property/e/scalar/e",
+                                    "@id": "amf://40",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -382,7 +382,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#/declarations/types/FinancialInstitution/property/e/scalar/e": "[(12,6)-(13,0)]"
+                                        "amf://40": "[(12,6)-(13,0)]"
                                       }
                                     }
                                   }
@@ -399,12 +399,12 @@
                                 ],
                                 "smaps": {
                                   "lexical": {
-                                    "#/declarations/types/FinancialInstitution/property/e": "[(12,6)-(13,0)]"
+                                    "amf://39": "[(12,6)-(13,0)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "#/declarations/types/Bank/property/b",
+                                "@id": "amf://41",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -417,7 +417,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#/declarations/types/Bank/property/b/scalar/b",
+                                    "@id": "amf://42",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -436,7 +436,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#/declarations/types/Bank/property/b/scalar/b": "[(17,6)-(18,0)]"
+                                        "amf://42": "[(17,6)-(18,0)]"
                                       }
                                     }
                                   }
@@ -453,7 +453,7 @@
                                 ],
                                 "smaps": {
                                   "lexical": {
-                                    "#/declarations/types/Bank/property/b": "[(17,6)-(18,0)]"
+                                    "amf://41": "[(17,6)-(18,0)]"
                                   }
                                 }
                               }
@@ -465,23 +465,23 @@
                             ],
                             "smaps": {
                               "inheritance-provenance": {
-                                "shacl:name": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/types/Bank"
+                                "shacl:name": "amf://10"
                               },
                               "type-property-lexical-info": {
-                                "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema": "[(25,10)-(25,14)]"
+                                "amf://29": "[(25,10)-(25,14)]"
                               },
                               "lexical": {
-                                "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema": "[(24,8)-(27,21)]"
+                                "amf://29": "[(24,8)-(27,21)]"
                               },
                               "inherited-shapes": {
-                                "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson/schema": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/types/Bank/linked_1"
+                                "amf://29": "amf://21"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "lexical": {
-                            "#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request/application%2Fjson": "[(24,8)-(27,21)]"
+                            "amf://28": "[(24,8)-(27,21)]"
                           }
                         }
                       }
@@ -496,29 +496,29 @@
                 "smaps": {
                   "lexical": {
                     "schema-org:description": "[(22,6)-(23,0)]",
-                    "#/web-api/end-points/%2Fcustomers%2Fcorporate/post": "[(21,4)-(27,21)]"
+                    "amf://26": "[(21,4)-(27,21)]"
                   }
                 }
               }
             ],
             "smaps": {
               "parent-end-point": {
-                "#/web-api/end-points/%2Fcustomers%2Fcorporate": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/web-api/end-points/%2Fcustomers"
+                "amf://25": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/web-api/end-points/%2Fcustomers"
               },
               "lexical": {
-                "#/web-api/end-points/%2Fcustomers%2Fcorporate": "[(20,2)-(27,21)]"
+                "amf://25": "[(20,2)-(27,21)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#/web-api": "raml 1.0"
+            "amf://23": "raml 1.0"
           },
           "lexical": {
             "schema-org:version": "[(3,0)-(4,0)]",
             "schema-org:name": "[(2,0)-(3,0)]",
-            "#/web-api": "[(2,0)-(27,21)]",
+            "amf://23": "[(2,0)-(27,21)]",
             "raml-http:server": "[(4,0)-(6,0)]"
           }
         }
@@ -526,7 +526,7 @@
     ],
     "doc:declares": [
       {
-        "@id": "#/declarations/types/FinancialInstitution",
+        "@id": "amf://2",
         "@type": [
           "shacl:NodeShape",
           "shacl:Shape",
@@ -540,7 +540,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#/declarations/types/FinancialInstitution/property/c",
+            "@id": "amf://37",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -553,7 +553,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#/declarations/types/FinancialInstitution/property/c/scalar/c",
+                "@id": "amf://38",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "shacl:Shape",
@@ -572,7 +572,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#/declarations/types/FinancialInstitution/property/c/scalar/c": "[(10,6)-(11,0)]"
+                    "amf://38": "[(10,6)-(11,0)]"
                   }
                 }
               }
@@ -589,12 +589,12 @@
             ],
             "smaps": {
               "lexical": {
-                "#/declarations/types/FinancialInstitution/property/c": "[(10,6)-(11,0)]"
+                "amf://37": "[(10,6)-(11,0)]"
               }
             }
           },
           {
-            "@id": "#/declarations/types/FinancialInstitution/property/d",
+            "@id": "amf://31",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -607,7 +607,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#/declarations/types/FinancialInstitution/property/d/scalar/d",
+                "@id": "amf://32",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "shacl:Shape",
@@ -626,7 +626,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#/declarations/types/FinancialInstitution/property/d/scalar/d": "[(11,6)-(12,0)]"
+                    "amf://32": "[(11,6)-(12,0)]"
                   }
                 }
               }
@@ -643,12 +643,12 @@
             ],
             "smaps": {
               "lexical": {
-                "#/declarations/types/FinancialInstitution/property/d": "[(11,6)-(12,0)]"
+                "amf://31": "[(11,6)-(12,0)]"
               }
             }
           },
           {
-            "@id": "#/declarations/types/FinancialInstitution/property/e",
+            "@id": "amf://39",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -661,7 +661,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#/declarations/types/FinancialInstitution/property/e/scalar/e",
+                "@id": "amf://40",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "shacl:Shape",
@@ -680,7 +680,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#/declarations/types/FinancialInstitution/property/e/scalar/e": "[(12,6)-(13,0)]"
+                    "amf://40": "[(12,6)-(13,0)]"
                   }
                 }
               }
@@ -697,7 +697,7 @@
             ],
             "smaps": {
               "lexical": {
-                "#/declarations/types/FinancialInstitution/property/e": "[(12,6)-(13,0)]"
+                "amf://39": "[(12,6)-(13,0)]"
               }
             }
           }
@@ -709,22 +709,22 @@
         ],
         "smaps": {
           "resolved-link": {
-            "#/declarations/types/FinancialInstitution": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/types/FinancialInstitution/linked_1"
+            "amf://2": "amf://9"
           },
           "type-property-lexical-info": {
-            "#/declarations/types/FinancialInstitution": "[(8,4)-(8,8)]"
+            "amf://2": "[(8,4)-(8,8)]"
           },
           "lexical": {
             "shacl:name": "[(7,2)-(7,22)]",
-            "#/declarations/types/FinancialInstitution": "[(7,2)-(13,0)]"
+            "amf://2": "[(7,2)-(13,0)]"
           },
           "declared-element": {
-            "#/declarations/types/FinancialInstitution": ""
+            "amf://2": ""
           }
         }
       },
       {
-        "@id": "#/declarations/types/Bank",
+        "@id": "amf://10",
         "@type": [
           "shacl:NodeShape",
           "shacl:Shape",
@@ -738,7 +738,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#/declarations/types/FinancialInstitution/property/d",
+            "@id": "amf://31",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -751,7 +751,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#/declarations/types/FinancialInstitution/property/d/scalar/d",
+                "@id": "amf://32",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "shacl:Shape",
@@ -770,7 +770,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#/declarations/types/FinancialInstitution/property/d/scalar/d": "[(11,6)-(12,0)]"
+                    "amf://32": "[(11,6)-(12,0)]"
                   }
                 }
               }
@@ -787,12 +787,12 @@
             ],
             "smaps": {
               "lexical": {
-                "#/declarations/types/FinancialInstitution/property/d": "[(11,6)-(12,0)]"
+                "amf://31": "[(11,6)-(12,0)]"
               }
             }
           },
           {
-            "@id": "#/declarations/types/Bank/property/a",
+            "@id": "amf://33",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -805,7 +805,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#/declarations/types/Bank/property/a/scalar/a",
+                "@id": "amf://34",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "shacl:Shape",
@@ -824,7 +824,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#/declarations/types/Bank/property/a/scalar/a": "[(16,6)-(17,0)]"
+                    "amf://34": "[(16,6)-(17,0)]"
                   }
                 }
               }
@@ -841,12 +841,12 @@
             ],
             "smaps": {
               "lexical": {
-                "#/declarations/types/Bank/property/a": "[(16,6)-(17,0)]"
+                "amf://33": "[(16,6)-(17,0)]"
               }
             }
           },
           {
-            "@id": "#/declarations/types/FinancialInstitution/property/c",
+            "@id": "amf://37",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -859,7 +859,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#/declarations/types/FinancialInstitution/property/c/scalar/c",
+                "@id": "amf://38",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "shacl:Shape",
@@ -878,7 +878,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#/declarations/types/FinancialInstitution/property/c/scalar/c": "[(10,6)-(11,0)]"
+                    "amf://38": "[(10,6)-(11,0)]"
                   }
                 }
               }
@@ -895,12 +895,12 @@
             ],
             "smaps": {
               "lexical": {
-                "#/declarations/types/FinancialInstitution/property/c": "[(10,6)-(11,0)]"
+                "amf://37": "[(10,6)-(11,0)]"
               }
             }
           },
           {
-            "@id": "#/declarations/types/FinancialInstitution/property/e",
+            "@id": "amf://39",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -913,7 +913,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#/declarations/types/FinancialInstitution/property/e/scalar/e",
+                "@id": "amf://40",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "shacl:Shape",
@@ -932,7 +932,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#/declarations/types/FinancialInstitution/property/e/scalar/e": "[(12,6)-(13,0)]"
+                    "amf://40": "[(12,6)-(13,0)]"
                   }
                 }
               }
@@ -949,12 +949,12 @@
             ],
             "smaps": {
               "lexical": {
-                "#/declarations/types/FinancialInstitution/property/e": "[(12,6)-(13,0)]"
+                "amf://39": "[(12,6)-(13,0)]"
               }
             }
           },
           {
-            "@id": "#/declarations/types/Bank/property/b",
+            "@id": "amf://41",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -967,7 +967,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#/declarations/types/Bank/property/b/scalar/b",
+                "@id": "amf://42",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "shacl:Shape",
@@ -986,7 +986,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#/declarations/types/Bank/property/b/scalar/b": "[(17,6)-(18,0)]"
+                    "amf://42": "[(17,6)-(18,0)]"
                   }
                 }
               }
@@ -1003,7 +1003,7 @@
             ],
             "smaps": {
               "lexical": {
-                "#/declarations/types/Bank/property/b": "[(17,6)-(18,0)]"
+                "amf://41": "[(17,6)-(18,0)]"
               }
             }
           }
@@ -1014,18 +1014,21 @@
           }
         ],
         "smaps": {
-          "resolved-link": {
-            "#/declarations/types/Bank": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/declarations/types/Bank/linked_1"
+          "inherited-shapes": {
+            "amf://10": "amf://22"
           },
-          "type-property-lexical-info": {
-            "#/declarations/types/Bank": "[(14,4)-(14,8)]"
+          "declared-element": {
+            "amf://10": ""
           },
           "lexical": {
             "shacl:name": "[(13,2)-(13,6)]",
-            "#/declarations/types/Bank": "[(13,2)-(18,0)]"
+            "amf://10": "[(13,2)-(18,0)]"
           },
-          "declared-element": {
-            "#/declarations/types/Bank": ""
+          "type-property-lexical-info": {
+            "amf://10": "[(14,4)-(14,8)]"
+          },
+          "resolved-link": {
+            "amf://10": "amf://21"
           }
         }
       }

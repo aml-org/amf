@@ -2,7 +2,7 @@ package amf.core.annotations
 
 import amf.core.model.domain.SerializableAnnotation
 
-case class ExtendsDialectNode(val extendedNode: String) extends SerializableAnnotation {
+case class ExtendsDialectNode(extendedNode: String) extends SerializableAnnotation {
 
   /** Extension name. */
   override val name: String = "extendsNode"
@@ -11,4 +11,3 @@ case class ExtendsDialectNode(val extendedNode: String) extends SerializableAnno
   override val value: String = extendedNode
 
 }
-

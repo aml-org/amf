@@ -1,6 +1,6 @@
 [
   {
-    "@id": "",
+    "@id": "amf://1",
     "@type": [
       "doc:Document",
       "doc:Fragment",
@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#/web-api",
+        "@id": "amf://22",
         "@type": [
           "schema-org:WebAPI",
           "doc:RootDomainElement",
@@ -22,18 +22,18 @@
         ],
         "smaps": {
           "source-vendor": {
-            "#/web-api": "raml 1.0"
+            "amf://22": "raml 1.0"
           },
           "lexical": {
             "schema-org:name": "[(2,0)-(3,0)]",
-            "#/web-api": "[(2,0)-(13,39)]"
+            "amf://22": "[(2,0)-(13,39)]"
           }
         }
       }
     ],
     "doc:declares": [
       {
-        "@id": "#/declarations/types/any/Product",
+        "@id": "amf://19",
         "@type": [
           "raml-shapes:AnyShape",
           "shacl:Shape",
@@ -46,19 +46,19 @@
         ],
         "smaps": {
           "resolved-link": {
-            "#/declarations/types/any/Product": "file://amf-client/shared/src/test/resources/upanddown/union_arrays.raml#/declarations/types/any/Product/linked_5"
+            "amf://19": "amf://21"
           },
           "lexical": {
             "shacl:name": "[(4,2)-(4,9)]",
-            "#/declarations/types/any/Product": "[(4,2)-(5,0)]"
+            "amf://19": "[(4,2)-(5,0)]"
           },
           "declared-element": {
-            "#/declarations/types/any/Product": ""
+            "amf://19": ""
           }
         }
       },
       {
-        "@id": "#/declarations/types/PropertyArray",
+        "@id": "amf://5",
         "@type": [
           "shacl:NodeShape",
           "shacl:Shape",
@@ -72,7 +72,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#/declarations/types/PropertyArray/property/complex",
+            "@id": "amf://6",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -85,7 +85,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#/declarations/types/PropertyArray/property/complex/array/complex",
+                "@id": "amf://7",
                 "@type": [
                   "raml-shapes:ArrayShape",
                   "shacl:Shape",
@@ -94,7 +94,7 @@
                 ],
                 "raml-shapes:items": [
                   {
-                    "@id": "#/declarations/types/PropertyArray/property/complex/array/complex/items/union/default-union",
+                    "@id": "amf://8",
                     "@type": [
                       "raml-shapes:UnionShape",
                       "shacl:Shape",
@@ -102,7 +102,7 @@
                     ],
                     "raml-shapes:anyOf": [
                       {
-                        "@id": "#/declarations/types/PropertyArray/property/complex/array/complex/scalar/scalar-expression-0",
+                        "@id": "amf://9",
                         "@type": [
                           "raml-shapes:ScalarShape",
                           "shacl:Shape",
@@ -116,7 +116,7 @@
                         ]
                       },
                       {
-                        "@id": "#/declarations/types/PropertyArray/property/complex/array/complex/scalar/scalar-expression-2",
+                        "@id": "amf://10",
                         "@type": [
                           "raml-shapes:ScalarShape",
                           "shacl:Shape",
@@ -130,7 +130,7 @@
                         ]
                       },
                       {
-                        "@id": "#/declarations/types/any/Product",
+                        "@id": "amf://19",
                         "@type": [
                           "raml-shapes:AnyShape",
                           "shacl:Shape",
@@ -143,21 +143,21 @@
                         ],
                         "smaps": {
                           "resolved-link": {
-                            "#/declarations/types/any/Product": "file://amf-client/shared/src/test/resources/upanddown/union_arrays.raml#/declarations/types/any/Product/linked_5"
+                            "amf://19": "amf://21"
                           },
                           "lexical": {
                             "shacl:name": "[(4,2)-(4,9)]",
-                            "#/declarations/types/any/Product": "[(4,2)-(5,0)]"
+                            "amf://19": "[(4,2)-(5,0)]"
                           },
                           "declared-element": {
-                            "#/declarations/types/any/Product": ""
+                            "amf://19": ""
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "lexical": {
-                        "#/declarations/types/PropertyArray/property/complex/array/complex/items/union/default-union": "[(9,8)-(10,0)]"
+                        "amf://8": "[(9,8)-(10,0)]"
                       }
                     }
                   }
@@ -169,10 +169,10 @@
                 ],
                 "smaps": {
                   "type-property-lexical-info": {
-                    "#/declarations/types/PropertyArray/property/complex/array/complex": "[(8,8)-(8,12)]"
+                    "amf://7": "[(8,8)-(8,12)]"
                   },
                   "lexical": {
-                    "#/declarations/types/PropertyArray/property/complex/array/complex": "[(7,6)-(10,0)]"
+                    "amf://7": "[(7,6)-(10,0)]"
                   }
                 }
               }
@@ -189,7 +189,7 @@
             ],
             "smaps": {
               "lexical": {
-                "#/declarations/types/PropertyArray/property/complex": "[(7,6)-(10,0)]"
+                "amf://6": "[(7,6)-(10,0)]"
               }
             }
           }
@@ -201,16 +201,16 @@
         ],
         "smaps": {
           "declared-element": {
-            "#/declarations/types/PropertyArray": ""
+            "amf://5": ""
           },
           "lexical": {
             "shacl:name": "[(5,2)-(5,15)]",
-            "#/declarations/types/PropertyArray": "[(5,2)-(10,0)]"
+            "amf://5": "[(5,2)-(10,0)]"
           }
         }
       },
       {
-        "@id": "#/declarations/types/PropertyNoArray",
+        "@id": "amf://14",
         "@type": [
           "shacl:NodeShape",
           "shacl:Shape",
@@ -224,7 +224,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#/declarations/types/PropertyNoArray/property/complex",
+            "@id": "amf://15",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -237,7 +237,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#/declarations/types/PropertyNoArray/property/complex/union/default-union/union/default-union",
+                "@id": "amf://16",
                 "@type": [
                   "raml-shapes:UnionShape",
                   "shacl:Shape",
@@ -245,7 +245,7 @@
                 ],
                 "raml-shapes:anyOf": [
                   {
-                    "@id": "#/declarations/types/PropertyNoArray/property/complex/union/default-union/scalar/scalar-expression-0",
+                    "@id": "amf://17",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "shacl:Shape",
@@ -259,7 +259,7 @@
                     ]
                   },
                   {
-                    "@id": "#/declarations/types/PropertyNoArray/property/complex/union/default-union/scalar/scalar-expression-2",
+                    "@id": "amf://18",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "shacl:Shape",
@@ -273,7 +273,7 @@
                     ]
                   },
                   {
-                    "@id": "#/declarations/types/any/Product",
+                    "@id": "amf://19",
                     "@type": [
                       "raml-shapes:AnyShape",
                       "shacl:Shape",
@@ -286,21 +286,21 @@
                     ],
                     "smaps": {
                       "resolved-link": {
-                        "#/declarations/types/any/Product": "file://amf-client/shared/src/test/resources/upanddown/union_arrays.raml#/declarations/types/any/Product/linked_5"
+                        "amf://19": "amf://21"
                       },
                       "lexical": {
                         "shacl:name": "[(4,2)-(4,9)]",
-                        "#/declarations/types/any/Product": "[(4,2)-(5,0)]"
+                        "amf://19": "[(4,2)-(5,0)]"
                       },
                       "declared-element": {
-                        "#/declarations/types/any/Product": ""
+                        "amf://19": ""
                       }
                     }
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "#/declarations/types/PropertyNoArray/property/complex/union/default-union/union/default-union": "[(13,8)-(13,39)]"
+                    "amf://16": "[(13,8)-(13,39)]"
                   }
                 }
               }
@@ -317,7 +317,7 @@
             ],
             "smaps": {
               "lexical": {
-                "#/declarations/types/PropertyNoArray/property/complex": "[(12,6)-(13,39)]"
+                "amf://15": "[(12,6)-(13,39)]"
               }
             }
           }
@@ -329,11 +329,11 @@
         ],
         "smaps": {
           "declared-element": {
-            "#/declarations/types/PropertyNoArray": ""
+            "amf://14": ""
           },
           "lexical": {
             "shacl:name": "[(10,2)-(10,17)]",
-            "#/declarations/types/PropertyNoArray": "[(10,2)-(13,39)]"
+            "amf://14": "[(10,2)-(13,39)]"
           }
         }
       }

@@ -123,13 +123,14 @@ class EmissionContext(val prefixes: mutable.Map[String, String],
   }
 
   def emitContext(b: EntryBuilder): Unit = {
-    b.entry("@context", _.obj { b =>
-      b.entry("@base", base)
-      prefixes.foreach {
-        case (p, v) =>
-          b.entry(p, v)
-      }
-    })
+    if (shouldCompact)
+      b.entry("@context", _.obj { b =>
+        b.entry("@base", base)
+        prefixes.foreach {
+          case (p, v) =>
+            b.entry(p, v)
+        }
+      })
   }
 }
 
@@ -150,24 +151,12 @@ object GraphEmitter extends MetaModelTypeMapping {
       val elements: Iterable[AmfElement] = maybeEntry.map(_.value.value.asInstanceOf[AmfArray].values).getOrElse(Nil)
       ctx ++ elements
       unit.fields.removeField(ModuleModel.Declares)
-
-      if (ctx.shouldCompact) {
-        YDocument {
-          _.list { l =>
-            l.obj { o =>
-              traverse(unit, o, ctx)
-              emitDeclarations(unit.id, SourceMap(unit.id, unit), o, ctx)
-              ctx.emitContext(o)
-            }
-          }
-        }
-      } else {
-        YDocument {
-          _.list {
-            _.obj { o =>
-              traverse(unit, o, ctx)
-              emitDeclarations(unit.id, SourceMap(unit.id, unit), o, ctx)
-            }
+      YDocument {
+        _.list { l =>
+          l.obj { o =>
+            traverse(unit, o, ctx)
+            emitDeclarations(unit.id, SourceMap(unit.id, unit), o, ctx)
+            ctx.emitContext(o)
           }
         }
       }

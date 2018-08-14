@@ -19,6 +19,11 @@ trait AnnotationGraphLoader {
   def unparse(annotatedValue: String, objects: Map[String, AmfElement]): Annotation
 }
 
+trait UriAnnotation {
+  val uris: Seq[String]
+  def shorten(fn: String => String): Annotation
+}
+
 object Annotation {
   def unapply(annotation: String): Option[(String, Map[String, AmfElement]) => Annotation] =
     AMFDomainRegistry.annotationsRegistry.get(annotation) match {

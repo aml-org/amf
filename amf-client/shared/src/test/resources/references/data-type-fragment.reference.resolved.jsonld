@@ -1,6 +1,6 @@
 [
   {
-    "@id": "",
+    "@id": "amf://1",
     "@type": [
       "doc:Document",
       "doc:Fragment",
@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#/web-api",
+        "@id": "amf://11",
         "@type": [
           "schema-org:WebAPI",
           "doc:RootDomainElement",
@@ -27,11 +27,11 @@
         ],
         "smaps": {
           "source-vendor": {
-            "#/web-api": "raml 1.0"
+            "amf://11": "raml 1.0"
           },
           "lexical": {
             "schema-org:version": "[(3,0)-(4,0)]",
-            "#/web-api": "[(2,0)-(6,0)]",
+            "amf://11": "[(2,0)-(6,0)]",
             "schema-org:name": "[(2,0)-(3,0)]"
           }
         }
@@ -39,7 +39,7 @@
     ],
     "doc:references": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.raml",
+        "@id": "amf://6",
         "@type": [
           "doc:DataType",
           "doc:Fragment",
@@ -47,7 +47,7 @@
         ],
         "doc:encodes": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type",
+            "@id": "amf://7",
             "@type": [
               "shacl:NodeShape",
               "shacl:Shape",
@@ -61,7 +61,7 @@
             ],
             "shacl:property": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name",
+                "@id": "amf://8",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -74,7 +74,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name/scalar/name",
+                    "@id": "amf://9",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "shacl:Shape",
@@ -93,11 +93,11 @@
                     ],
                     "smaps": {
                       "type-property-lexical-info": {
-                        "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name/scalar/name": "[(4,4)-(4,8)]"
+                        "amf://9": "[(4,4)-(4,8)]"
                       },
                       "lexical": {
                         "shacl:datatype": "[(4,4)-(5,0)]",
-                        "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name/scalar/name": "[(3,2)-(5,0)]"
+                        "amf://9": "[(3,2)-(5,0)]"
                       }
                     }
                   }
@@ -114,7 +114,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name": "[(3,2)-(5,0)]"
+                    "amf://8": "[(3,2)-(5,0)]"
                   }
                 }
               }
@@ -125,28 +125,28 @@
               }
             ],
             "smaps": {
-              "declared-element": {
-                "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type": ""
+              "resolved-link": {
+                "amf://7": "amf://10"
               },
               "lexical": {
-                "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type": "[(2,0)-(5,0)]"
+                "amf://7": "[(2,0)-(5,0)]"
               },
-              "resolved-link": {
-                "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type": "file://amf-client/shared/src/test/resources/references/data-type-fragment.reference.raml#/declarations/types/person"
+              "declared-element": {
+                "amf://7": ""
               }
             }
           }
         ],
         "smaps": {
           "lexical": {
-            "file://amf-client/shared/src/test/resources/references/fragments/person.raml": "[(2,0)-(5,0)]"
+            "amf://6": "[(2,0)-(5,0)]"
           }
         }
       }
     ],
     "doc:declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type",
+        "@id": "amf://7",
         "@type": [
           "shacl:NodeShape",
           "shacl:Shape",
@@ -160,7 +160,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name",
+            "@id": "amf://8",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -173,7 +173,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name/scalar/name",
+                "@id": "amf://9",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "shacl:Shape",
@@ -192,11 +192,11 @@
                 ],
                 "smaps": {
                   "type-property-lexical-info": {
-                    "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name/scalar/name": "[(4,4)-(4,8)]"
+                    "amf://9": "[(4,4)-(4,8)]"
                   },
                   "lexical": {
                     "shacl:datatype": "[(4,4)-(5,0)]",
-                    "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name/scalar/name": "[(3,2)-(5,0)]"
+                    "amf://9": "[(3,2)-(5,0)]"
                   }
                 }
               }
@@ -213,7 +213,7 @@
             ],
             "smaps": {
               "lexical": {
-                "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type/property/name": "[(3,2)-(5,0)]"
+                "amf://8": "[(3,2)-(5,0)]"
               }
             }
           }
@@ -224,14 +224,14 @@
           }
         ],
         "smaps": {
-          "declared-element": {
-            "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type": ""
+          "resolved-link": {
+            "amf://7": "amf://10"
           },
           "lexical": {
-            "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type": "[(2,0)-(5,0)]"
+            "amf://7": "[(2,0)-(5,0)]"
           },
-          "resolved-link": {
-            "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type": "file://amf-client/shared/src/test/resources/references/data-type-fragment.reference.raml#/declarations/types/person"
+          "declared-element": {
+            "amf://7": ""
           }
         }
       }

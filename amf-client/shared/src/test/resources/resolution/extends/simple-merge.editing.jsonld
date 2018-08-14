@@ -1,6 +1,6 @@
 [
   {
-    "@id": "",
+    "@id": "amf://1",
     "@type": [
       "doc:Document",
       "doc:Fragment",
@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#/web-api",
+        "@id": "amf://5",
         "@type": [
           "schema-org:WebAPI",
           "doc:RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "raml-http:endpoint": [
           {
-            "@id": "#/web-api/end-points/%2Fproducts",
+            "@id": "amf://6",
             "@type": [
               "raml-http:EndPoint",
               "doc:DomainElement"
@@ -34,7 +34,7 @@
             ],
             "hydra:supportedOperation": [
               {
-                "@id": "#/web-api/end-points/%2Fproducts/get",
+                "@id": "amf://11",
                 "@type": [
                   "hydra:Operation",
                   "doc:DomainElement"
@@ -51,14 +51,14 @@
                 ],
                 "hydra:expects": [
                   {
-                    "@id": "#/web-api/end-points/%2Fproducts/get/request",
+                    "@id": "amf://15",
                     "@type": [
                       "raml-http:Request",
                       "doc:DomainElement"
                     ],
                     "raml-http:header": [
                       {
-                        "@id": "#/web-api/end-points/%2Fproducts/get/request/parameter/APIKey",
+                        "@id": "amf://16",
                         "@type": [
                           "raml-http:Parameter",
                           "doc:DomainElement"
@@ -85,7 +85,7 @@
                         ],
                         "raml-http:schema": [
                           {
-                            "@id": "#/web-api/end-points/%2Fproducts/get/request/parameter/APIKey/scalar/schema",
+                            "@id": "amf://17",
                             "@type": [
                               "raml-shapes:ScalarShape",
                               "shacl:Shape",
@@ -104,32 +104,32 @@
                             ],
                             "smaps": {
                               "extension-provenance": {
-                                "shacl:name": "id->file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection",
-                                "shacl:datatype": "id->file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection"
+                                "shacl:name": "id->amf://7",
+                                "shacl:datatype": "id->amf://7"
                               },
                               "lexical": {
-                                "#/web-api/end-points/%2Fproducts/get/request/parameter/APIKey/scalar/schema": "[(1,0)-(1,0)]"
+                                "amf://17": "[(1,0)-(1,0)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "extension-provenance": {
-                            "raml-http:binding": "id->file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection",
-                            "raml-http:paramName": "id->file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection",
-                            "#/web-api/end-points/%2Fproducts/get/request/parameter/APIKey": "id->file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection",
-                            "schema-org:name": "id->file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection",
-                            "hydra:required": "id->file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection"
+                            "raml-http:binding": "id->amf://7",
+                            "raml-http:paramName": "id->amf://7",
+                            "amf://16": "id->amf://7",
+                            "schema-org:name": "id->amf://7",
+                            "hydra:required": "id->amf://7"
                           },
                           "lexical": {
-                            "#/web-api/end-points/%2Fproducts/get/request/parameter/APIKey": "[(1,0)-(1,0)]"
+                            "amf://16": "[(1,0)-(1,0)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "extension-provenance": {
-                        "raml-http:header": "id->file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection"
+                        "raml-http:header": "id->amf://7"
                       },
                       "lexical": {
                         "raml-http:header": "[(1,0)-(1,0)]"
@@ -139,7 +139,7 @@
                 ],
                 "hydra:returns": [
                   {
-                    "@id": "#/web-api/end-points/%2Fproducts/get/200",
+                    "@id": "amf://12",
                     "@type": [
                       "raml-http:Response",
                       "doc:DomainElement"
@@ -156,7 +156,7 @@
                     ],
                     "raml-http:payload": [
                       {
-                        "@id": "#/web-api/end-points/%2Fproducts/get/200/application%2Fjson",
+                        "@id": "amf://13",
                         "@type": [
                           "raml-http:Payload",
                           "doc:DomainElement"
@@ -168,7 +168,7 @@
                         ],
                         "raml-http:schema": [
                           {
-                            "@id": "#/web-api/end-points/%2Fproducts/get/200/application%2Fjson/any/schema",
+                            "@id": "amf://14",
                             "@type": [
                               "raml-shapes:AnyShape",
                               "shacl:Shape",
@@ -181,14 +181,14 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "#/web-api/end-points/%2Fproducts/get/200/application%2Fjson/any/schema": "[(16,10)-(16,27)]"
+                                "amf://14": "[(16,10)-(16,27)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "lexical": {
-                            "#/web-api/end-points/%2Fproducts/get/200/application%2Fjson": "[(16,10)-(16,27)]"
+                            "amf://13": "[(16,10)-(16,27)]"
                           }
                         }
                       }
@@ -196,7 +196,7 @@
                     "smaps": {
                       "lexical": {
                         "raml-http:payload": "[(15,8)-(16,27)]",
-                        "#/web-api/end-points/%2Fproducts/get/200": "[(14,6)-(16,27)]"
+                        "amf://12": "[(14,6)-(16,27)]"
                       }
                     }
                   }
@@ -204,7 +204,7 @@
                 "smaps": {
                   "lexical": {
                     "hydra:returns": "[(13,4)-(16,27)]",
-                    "#/web-api/end-points/%2Fproducts/get": "[(11,2)-(16,27)]",
+                    "amf://11": "[(11,2)-(16,27)]",
                     "schema-org:description": "[(12,4)-(13,0)]"
                   }
                 }
@@ -212,7 +212,7 @@
             ],
             "doc:extends": [
               {
-                "@id": "#/web-api/end-points/%2Fproducts/collection",
+                "@id": "amf://7",
                 "@type": [
                   "doc:ParametrizedResourceType",
                   "doc:ParametrizedDeclaration",
@@ -225,7 +225,7 @@
                 ],
                 "doc:target": [
                   {
-                    "@id": "#/declarations/resourceTypes/collection",
+                    "@id": "amf://8",
                     "@type": [
                       "doc:ResourceType",
                       "doc:AbstractDeclaration",
@@ -238,7 +238,7 @@
                     ],
                     "doc:dataNode": [
                       {
-                        "@id": "#/declarations/resourceTypes/collection/object_1",
+                        "@id": "amf://9",
                         "@type": [
                           "data:Object"
                         ],
@@ -314,52 +314,52 @@
                         ],
                         "smaps": {
                           "data-node-properties": {
-                            "#/declarations/resourceTypes/collection/object_1": "get->[(5,4)-(9,0)]"
+                            "amf://9": "get->[(5,4)-(9,0)]"
                           },
                           "lexical": {
-                            "#/declarations/resourceTypes/collection/object_1": "[(5,4)-(9,0)]"
+                            "amf://9": "[(5,4)-(9,0)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "resolved-link": {
-                        "#/declarations/resourceTypes/collection": "file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection/default-abstract"
+                        "amf://8": "amf://10"
                       },
                       "lexical": {
-                        "#/declarations/resourceTypes/collection": "[(4,2)-(9,0)]"
+                        "amf://8": "[(4,2)-(9,0)]"
                       }
                     }
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "#/web-api/end-points/%2Fproducts/collection": "[(10,8)-(10,18)]"
+                    "amf://7": "[(10,8)-(10,18)]"
                   }
                 }
               }
             ],
             "smaps": {
               "lexical": {
-                "#/web-api/end-points/%2Fproducts": "[(9,0)-(16,27)]"
+                "amf://6": "[(9,0)-(16,27)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#/web-api": "raml 1.0"
+            "amf://5": "raml 1.0"
           },
           "lexical": {
             "schema-org:name": "[(2,0)-(3,0)]",
-            "#/web-api": "[(2,0)-(16,27)]"
+            "amf://5": "[(2,0)-(16,27)]"
           }
         }
       }
     ],
     "doc:declares": [
       {
-        "@id": "#/declarations/resourceTypes/collection",
+        "@id": "amf://8",
         "@type": [
           "doc:ResourceType",
           "doc:AbstractDeclaration",
@@ -372,7 +372,7 @@
         ],
         "doc:dataNode": [
           {
-            "@id": "#/declarations/resourceTypes/collection/object_1",
+            "@id": "amf://9",
             "@type": [
               "data:Object"
             ],
@@ -448,20 +448,20 @@
             ],
             "smaps": {
               "data-node-properties": {
-                "#/declarations/resourceTypes/collection/object_1": "get->[(5,4)-(9,0)]"
+                "amf://9": "get->[(5,4)-(9,0)]"
               },
               "lexical": {
-                "#/declarations/resourceTypes/collection/object_1": "[(5,4)-(9,0)]"
+                "amf://9": "[(5,4)-(9,0)]"
               }
             }
           }
         ],
         "smaps": {
           "resolved-link": {
-            "#/declarations/resourceTypes/collection": "file://amf-client/shared/src/test/resources/resolution/extends/simple-merge.raml#/web-api/end-points/%2Fproducts/collection/default-abstract"
+            "amf://8": "amf://10"
           },
           "lexical": {
-            "#/declarations/resourceTypes/collection": "[(4,2)-(9,0)]"
+            "amf://8": "[(4,2)-(9,0)]"
           }
         }
       }

@@ -62,6 +62,14 @@ class EditingResolutionTest extends BuildCycleTests {
     cycle("merge-examples.raml", "merge-examples.resolved.raml", RamlYamlHint, Raml, resolutionPath + "examples/")
   }
 
+  test("Test extension merging") {
+    cycle("input.raml",
+          "input.resolved.jsonld",
+          RamlYamlHint,
+          Amf,
+          "amf-client/shared/src/test/resources/resolution/extension/traits/")
+  }
+
   /*
   test("Exchange experience API resolution to Amf") {
     cycle("api.v1.raml", "api.v1.resolved.jsonld", RamlYamlHint, Amf, productionPath + "exchange-experience-api-1.0.1-raml/")

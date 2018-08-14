@@ -1,6 +1,6 @@
 [
   {
-    "@id": "",
+    "@id": "amf://1",
     "@type": [
       "doc:Document",
       "doc:Fragment",
@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#/web-api",
+        "@id": "amf://6",
         "@type": [
           "schema-org:WebAPI",
           "doc:RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "raml-http:endpoint": [
           {
-            "@id": "#/web-api/end-points/%2Fresource",
+            "@id": "amf://7",
             "@type": [
               "raml-http:EndPoint",
               "doc:DomainElement"
@@ -34,7 +34,7 @@
             ],
             "hydra:supportedOperation": [
               {
-                "@id": "#/web-api/end-points/%2Fresource/post",
+                "@id": "amf://12",
                 "@type": [
                   "hydra:Operation",
                   "doc:DomainElement"
@@ -46,14 +46,14 @@
                 ],
                 "hydra:expects": [
                   {
-                    "@id": "#/web-api/end-points/%2Fresource/post/request",
+                    "@id": "amf://13",
                     "@type": [
                       "raml-http:Request",
                       "doc:DomainElement"
                     ],
                     "raml-http:parameter": [
                       {
-                        "@id": "#/web-api/end-points/%2Fresource/post/request/parameter/qp1",
+                        "@id": "amf://14",
                         "@type": [
                           "raml-http:Parameter",
                           "doc:DomainElement"
@@ -80,7 +80,7 @@
                         ],
                         "raml-http:schema": [
                           {
-                            "@id": "#/web-api/end-points/%2Fresource/post/request/parameter/qp1/scalar/schema",
+                            "@id": "amf://15",
                             "@type": [
                               "raml-shapes:ScalarShape",
                               "shacl:Shape",
@@ -99,32 +99,32 @@
                             ],
                             "smaps": {
                               "extension-provenance": {
-                                "shacl:name": "id->file://amf-client/shared/src/test/resources/production/lib-trait-location/api.raml#/web-api/end-points/%2Fresource/lib.rt,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
-                                "shacl:datatype": "id->file://amf-client/shared/src/test/resources/production/lib-trait-location/api.raml#/web-api/end-points/%2Fresource/lib.rt,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
+                                "shacl:name": "id->amf://8,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+                                "shacl:datatype": "id->amf://8,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
                               },
                               "lexical": {
-                                "#/web-api/end-points/%2Fresource/post/request/parameter/qp1/scalar/schema": "[(1,0)-(1,0)]"
+                                "amf://15": "[(1,0)-(1,0)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "extension-provenance": {
-                            "raml-http:binding": "id->file://amf-client/shared/src/test/resources/production/lib-trait-location/api.raml#/web-api/end-points/%2Fresource/lib.rt,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
-                            "raml-http:paramName": "id->file://amf-client/shared/src/test/resources/production/lib-trait-location/api.raml#/web-api/end-points/%2Fresource/lib.rt,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
-                            "#/web-api/end-points/%2Fresource/post/request/parameter/qp1": "id->file://amf-client/shared/src/test/resources/production/lib-trait-location/api.raml#/web-api/end-points/%2Fresource/lib.rt,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
-                            "schema-org:name": "id->file://amf-client/shared/src/test/resources/production/lib-trait-location/api.raml#/web-api/end-points/%2Fresource/lib.rt,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
-                            "hydra:required": "id->file://amf-client/shared/src/test/resources/production/lib-trait-location/api.raml#/web-api/end-points/%2Fresource/lib.rt,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
+                            "raml-http:binding": "id->amf://8,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+                            "raml-http:paramName": "id->amf://8,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+                            "amf://14": "id->amf://8,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+                            "schema-org:name": "id->amf://8,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+                            "hydra:required": "id->amf://8,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
                           },
                           "lexical": {
-                            "#/web-api/end-points/%2Fresource/post/request/parameter/qp1": "[(1,0)-(1,0)]"
+                            "amf://14": "[(1,0)-(1,0)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "extension-provenance": {
-                        "raml-http:parameter": "id->file://amf-client/shared/src/test/resources/production/lib-trait-location/api.raml#/web-api/end-points/%2Fresource/lib.rt,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
+                        "raml-http:parameter": "id->amf://8,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
                       },
                       "lexical": {
                         "raml-http:parameter": "[(1,0)-(1,0)]"
@@ -134,18 +134,18 @@
                 ],
                 "smaps": {
                   "extension-provenance": {
-                    "hydra:method": "id->file://amf-client/shared/src/test/resources/production/lib-trait-location/api.raml#/web-api/end-points/%2Fresource/lib.rt,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
-                    "#/web-api/end-points/%2Fresource/post": "id->file://amf-client/shared/src/test/resources/production/lib-trait-location/api.raml#/web-api/end-points/%2Fresource/lib.rt,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
+                    "hydra:method": "id->amf://8,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+                    "amf://12": "id->amf://8,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
                   },
                   "lexical": {
-                    "#/web-api/end-points/%2Fresource/post": "[(1,0)-(1,0)]"
+                    "amf://12": "[(1,0)-(1,0)]"
                   }
                 }
               }
             ],
             "doc:extends": [
               {
-                "@id": "#/web-api/end-points/%2Fresource/lib.rt",
+                "@id": "amf://8",
                 "@type": [
                   "doc:ParametrizedResourceType",
                   "doc:ParametrizedDeclaration",
@@ -158,7 +158,7 @@
                 ],
                 "doc:target": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml#/declarations/resourceTypes/rt",
+                    "@id": "amf://9",
                     "@type": [
                       "doc:ResourceType",
                       "doc:AbstractDeclaration",
@@ -171,7 +171,7 @@
                     ],
                     "doc:dataNode": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml#/declarations/resourceTypes/rt/object_1",
+                        "@id": "amf://10",
                         "@type": [
                           "data:Object"
                         ],
@@ -228,59 +228,59 @@
                         ],
                         "smaps": {
                           "data-node-properties": {
-                            "file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml#/declarations/resourceTypes/rt/object_1": "post->[(4,4)-(6,12)]"
+                            "amf://10": "post->[(4,4)-(6,12)]"
                           },
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml#/declarations/resourceTypes/rt/object_1": "[(4,4)-(6,12)]"
+                            "amf://10": "[(4,4)-(6,12)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "resolved-link": {
-                        "file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml#/declarations/resourceTypes/rt": "file://amf-client/shared/src/test/resources/production/lib-trait-location/api.raml#/web-api/end-points/%2Fresource/lib.rt/default-abstract"
+                        "amf://9": "amf://11"
                       },
                       "lexical": {
-                        "file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml#/declarations/resourceTypes/rt": "[(3,2)-(6,12)]"
+                        "amf://9": "[(3,2)-(6,12)]"
                       }
                     }
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "#/web-api/end-points/%2Fresource/lib.rt": "[(8,8)-(8,14)]"
+                    "amf://8": "[(8,8)-(8,14)]"
                   }
                 }
               }
             ],
             "smaps": {
               "lexical": {
-                "#/web-api/end-points/%2Fresource": "[(7,0)-(8,14)]"
+                "amf://7": "[(7,0)-(8,14)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#/web-api": "raml 1.0"
+            "amf://6": "raml 1.0"
           },
           "lexical": {
             "schema-org:name": "[(2,0)-(4,0)]",
-            "#/web-api": "[(2,0)-(8,14)]"
+            "amf://6": "[(2,0)-(8,14)]"
           }
         }
       }
     ],
     "doc:references": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+        "@id": "amf://2",
         "@type": [
           "doc:Module",
           "doc:Unit"
         ],
         "doc:declares": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml#/declarations/resourceTypes/rt",
+            "@id": "amf://9",
             "@type": [
               "doc:ResourceType",
               "doc:AbstractDeclaration",
@@ -293,7 +293,7 @@
             ],
             "doc:dataNode": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml#/declarations/resourceTypes/rt/object_1",
+                "@id": "amf://10",
                 "@type": [
                   "data:Object"
                 ],
@@ -350,37 +350,37 @@
                 ],
                 "smaps": {
                   "data-node-properties": {
-                    "file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml#/declarations/resourceTypes/rt/object_1": "post->[(4,4)-(6,12)]"
+                    "amf://10": "post->[(4,4)-(6,12)]"
                   },
                   "lexical": {
-                    "file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml#/declarations/resourceTypes/rt/object_1": "[(4,4)-(6,12)]"
+                    "amf://10": "[(4,4)-(6,12)]"
                   }
                 }
               }
             ],
             "smaps": {
               "resolved-link": {
-                "file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml#/declarations/resourceTypes/rt": "file://amf-client/shared/src/test/resources/production/lib-trait-location/api.raml#/web-api/end-points/%2Fresource/lib.rt/default-abstract"
+                "amf://9": "amf://11"
               },
               "lexical": {
-                "file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml#/declarations/resourceTypes/rt": "[(3,2)-(6,12)]"
+                "amf://9": "[(3,2)-(6,12)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml": "raml 1.0"
+            "amf://2": "raml 1.0"
           },
           "lexical": {
-            "file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml": "[(2,0)-(6,12)]"
+            "amf://2": "[(2,0)-(6,12)]"
           }
         }
       }
     ],
     "smaps": {
       "aliases-array": {
-        "": "lib->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml::lib.raml"
+        "amf://1": "lib->amf://2::lib.raml"
       }
     },
     "@context": {
