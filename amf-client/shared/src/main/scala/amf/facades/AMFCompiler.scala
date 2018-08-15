@@ -3,15 +3,12 @@ package amf.facades
 import amf.core
 import amf.core.client.ParsingOptions
 import amf.core.model.document.BaseUnit
-import amf.core.parser.{ParsedDocument, ParsedReference, ParserContext, ReferenceKind, SyamlParsedDocument}
-import amf.core.remote.Syntax.{Json, Yaml}
+import amf.core.parser.{ParsedReference, ParserContext}
 import amf.core.remote._
-import amf.core.{AMFCompiler => ModularCompiler}
+import amf.core.{Root, AMFCompiler => ModularCompiler}
 import amf.plugins.document.vocabularies.RamlHeaderExtractor
-import org.yaml.model.YDocument
 
 import scala.collection.mutable.ListBuffer
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class AMFCompiler private (val url: String,
@@ -31,19 +28,6 @@ class AMFCompiler private (val url: String,
 
   def build(): Future[BaseUnit] = {
 
-    val actualVendor = hint.vendor match {
-      case AmlVocabulary => "RAML Vocabularies"
-      case Raml10         => "RAML 1.0"
-      case Raml08         => "RAML 0.8"
-      case Raml           => "RAML"
-      case Oas3           => "OAS 3.0.0"
-      case Oas            => "OAS 2.0"
-      case Payload        => "AMF Payload"
-      case Amf            => "AMF Graph"
-      case Extension      => "RAML Extension"
-      case _              => "Unknown Vendor"
-    }
-
     val mediaType = hint match {
       case VocabularyYamlHint => "application/yaml"
       case RamlYamlHint       => "application/yaml"
@@ -53,7 +37,6 @@ class AMFCompiler private (val url: String,
       case AmfJsonHint        => "application/ld+json"
       case PayloadJsonHint    => "application/amf+json"
       case PayloadYamlHint    => "application/amf+yaml"
-      case ExtensionYamlHint  => "application/yaml"
       case _                  => "text/plain"
     }
 
@@ -62,38 +45,16 @@ class AMFCompiler private (val url: String,
       remote,
       base,
       Option(mediaType),
-      actualVendor,
+      Some(hint.vendor.name),
       hint.kind,
       cache,
       baseContext,
       parsingOptions = parsingOptions
     ).build()
 
-    /*
-    // Reset the data node counter
-    idCounter.reset()
-
-    if (context.hasCycles) failed(new CyclicReferenceException(context.history))
-    else
-      cache.getOrUpdate(location) { () =>
-        compile()
-      }
-   */
   }
 
   def root(): Future[Root] = {
-    val actualVendor = hint.vendor match {
-      case AmlVocabulary => "RAML Vocabularies"
-      case Raml10         => "RAML 1.0"
-      case Raml08         => "RAML 0.8"
-      case Raml           => "RAML"
-      case Oas3           => "OAS 3.0.0"
-      case Oas            => "OAS 2.0"
-      case Payload        => "AMF Payload"
-      case Amf            => "AMF Graph"
-      case Extension      => "RAML Vocabularies"
-      case _              => "Unknown Vendor"
-    }
 
     val mediaType = hint match {
       case VocabularyYamlHint => "application/yaml"
@@ -102,7 +63,6 @@ class AMFCompiler private (val url: String,
       case OasJsonHint        => "application/json"
       case OasYamlHint        => "application/yaml"
       case AmfJsonHint        => "application/ld+json"
-      case ExtensionYamlHint  => "application/raml"
       case _                  => "text/plain"
     }
 
@@ -111,88 +71,13 @@ class AMFCompiler private (val url: String,
       remote,
       base,
       Option(mediaType),
-      actualVendor,
+      Some(hint.vendor.name),
       hint.kind,
       cache,
       Some(ctx)
-    ).root() map (root => oldFormat(root))
+    ).root()
   }
 
-  def oldFormat(root: amf.core.Root): Root = {
-
-    val mediaType = if (root.mediatype.indexOf("yaml") > -1) {
-      Yaml
-    } else if (root.mediatype.indexOf("json") > -1) {
-      Json
-    } else {
-      Unknown
-    }
-
-    val hint = root.vendor match {
-      case "RAML Vocabularies" if mediaType == Yaml              => VocabularyYamlHint
-      case "RAML" | "RAML 1.0" | "RAML 0.8" if mediaType == Yaml => RamlYamlHint
-      case "RAML" | "RAML 1.0" | "RAML 0.8" if mediaType == Json => RamlJsonHint
-      case "OAS 2.0" | "OAS 3.0.0" if mediaType == Json          => OasJsonHint
-      case "OAS 2.0" | "OAS 3.0.0" if mediaType == Yaml          => OasYamlHint
-      case "AMF Payload" if mediaType == Yaml                    => PayloadYamlHint
-      case "AMF Payload" if mediaType == Json                    => PayloadJsonHint
-      case "AMF Extension"                                       => ExtensionYamlHint
-      case _                                                     => AmfJsonHint
-    }
-
-    Root(
-      root.parsed,
-      location,
-      root.references,
-      root.referenceKind,
-      hint.vendor,
-      root.raw
-    )
-  }
-}
-
-case class Root(parsed: ParsedDocument,
-                location: String,
-                references: Seq[ParsedReference],
-                referenceKind: ReferenceKind,
-                vendor: Vendor,
-                raw: String) {
-  val document: YDocument = parsed.asInstanceOf[SyamlParsedDocument].document
-
-  // TODO: remove me, only for compatibility while refactoring
-  def newFormat(): amf.core.Root = {
-    val actualVendor = vendor match {
-      case AmlVocabulary  => "AML 1.0"
-      case Raml10         => "RAML 1.0"
-      case Raml08         => "RAML 0.8"
-      case Raml           => "RAML"
-      case Oas3           => "OAS 3.0.0"
-      case Oas            => "OAS 2.0"
-      case Payload        => "AMF Payload"
-      case Amf            => "AMF Graph"
-      case Extension      => "RAML Vocabularies"
-      case _              => "Unknown Vendor"
-    }
-    val mediaType = vendor match {
-      case AmlVocabulary => "application/yaml"
-      case Extension      => "application/yaml"
-      case Raml           => "application/yaml"
-      case Oas            => "application/json"
-      case Payload        => "application/amf+json"
-      case Amf            => "application/ld+json"
-      case Unknown        => "text/plain"
-    }
-
-    amf.core.Root(
-      parsed,
-      location,
-      mediaType,
-      references,
-      referenceKind,
-      actualVendor,
-      raw
-    )
-  }
 }
 
 object AMFCompiler {
@@ -204,7 +89,13 @@ object AMFCompiler {
             cache: Option[Cache] = None,
             ctx: Option[ParserContext] = None,
             parsingOptions: ParsingOptions = ParsingOptions()) =
-    new AMFCompiler(url, remote, context, hint, currentValidation, cache.getOrElse(Cache()), parsingOptions = parsingOptions)
+    new AMFCompiler(url,
+                    remote,
+                    context,
+                    hint,
+                    currentValidation,
+                    cache.getOrElse(Cache()),
+                    parsingOptions = parsingOptions)
 
   val RAML_10 = "#%RAML 1.0\n"
 }

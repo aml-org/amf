@@ -1,6 +1,7 @@
 package amf.client.commands
 
 import amf.core.client.{ParserConfig, Proc, ProcWriter}
+import amf.core.remote.{Oas20, Raml, Raml10}
 import amf.core.unsafe.PlatformSecrets
 import org.scalatest.AsyncFunSuite
 
@@ -31,7 +32,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
   test("Parse command") {
     val args = Array("parse",
                      "-in",
-                     "RAML 1.0",
+                     Raml10.name,
                      "-mime-in",
                      "application/yaml",
                      "file://amf-client/shared/src/test/resources/upanddown/complete-with-operations.raml")
@@ -57,11 +58,11 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val args = Array(
       "translate",
       "-in",
-      "RAML 1.0",
+      Raml10.name,
       "-mime-in",
       "application/yaml",
       "-out",
-      "OAS 2.0",
+      Oas20.name,
       "-mime-out",
       "application/json",
       "file://amf-client/shared/src/test/resources/upanddown/complete-with-operations.raml"
@@ -87,11 +88,11 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
   test("Validation command") {
     val args = Array("validate",
                      "-in",
-                     "RAML 1.0",
+                     Raml10.name,
                      "-mime-in",
                      "application/yaml",
                      "-p",
-                     "RAML",
+                     Raml.name,
                      "file://amf-client/shared/src/test/resources/validations/data/error1.raml")
     val cfg = CmdLineParser.parse(args)
     assert(cfg.isDefined)
@@ -116,7 +117,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val args = Array(
       "validate",
       "-in",
-      "RAML 1.0",
+      Raml10.name,
       "-mime-in",
       "application/yaml",
       "-cp",

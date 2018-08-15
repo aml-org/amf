@@ -1,5 +1,5 @@
 Model: file://amf-client/shared/src/test/resources/validations/jsonschema/max-exclusive-schema.raml
-Profile: RAML08
+Profile: RAML 1.008
 Conforms? false
 Number of results: 1
 

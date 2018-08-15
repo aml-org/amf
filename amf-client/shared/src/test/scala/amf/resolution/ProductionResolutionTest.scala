@@ -6,26 +6,27 @@ import amf.core.model.document.BaseUnit
 import amf.core.parser.ErrorHandler
 import amf.core.remote._
 import amf.core.resolution.stages.ReferenceResolutionStage
-import amf.facades.{AMFCompiler, AMFRenderer, Validation}
-import amf.plugins.document.webapi.{OAS20Plugin, OAS30Plugin, RAML08Plugin, RAML10Plugin}
+import amf.emit.AMFRenderer
+import amf.facades.{AMFCompiler, Validation}
+import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
 import org.scalatest.Assertion
 
 import scala.concurrent.Future
 
 abstract class RamlResolutionTest extends ResolutionTest {
   override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
-    new AMFRenderer(unit, config.target, Raml.defaultSyntax, RenderOptions().withSourceMaps).renderToString
+    new AMFRenderer(unit, config.target, RenderOptions().withSourceMaps, config.syntax).renderToString
   }
 }
 
 abstract class OasResolutionTest extends ResolutionTest {
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
     val res = config.target match {
-      case Raml08        => RAML08Plugin.resolve(unit)
-      case Raml | Raml10 => RAML10Plugin.resolve(unit)
-      case Oas3          => OAS30Plugin.resolve(unit)
-      case Oas | Oas2    => OAS20Plugin.resolve(unit)
-      case Amf           => OAS20Plugin.resolve(unit)
+      case Raml08        => Raml08Plugin.resolve(unit)
+      case Raml | Raml10 => Raml10Plugin.resolve(unit)
+      case Oas30         => Oas30Plugin.resolve(unit)
+      case Oas | Oas20   => Oas20Plugin.resolve(unit)
+      case Amf           => Oas20Plugin.resolve(unit)
       case target        => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit
     }
@@ -35,7 +36,9 @@ abstract class OasResolutionTest extends ResolutionTest {
 
 class ProductionValidationTest extends RamlResolutionTest {
   override val basePath = "amf-client/shared/src/test/resources/production/"
-  override def build(config: CycleConfig, given: Option[Validation], useAmfJsonldSerialization: Boolean): Future[BaseUnit] = {
+  override def build(config: CycleConfig,
+                     given: Option[Validation],
+                     useAmfJsonldSerialization: Boolean): Future[BaseUnit] = {
     val validation: Future[Validation] = given match {
       case Some(validation: Validation) => Future { validation }
       case None                         => Validation(platform).map(_.withEnabledValidation(true))
@@ -245,7 +248,9 @@ class Raml08ResolutionTest extends RamlResolutionTest {
   * */
 class ProductionServiceTest extends RamlResolutionTest {
 
-  override def build(config: CycleConfig, given: Option[Validation], useAmfJsonldSerialization: Boolean): Future[BaseUnit] = {
+  override def build(config: CycleConfig,
+                     given: Option[Validation],
+                     useAmfJsonldSerialization: Boolean): Future[BaseUnit] = {
     val validation: Future[Validation] = given match {
       case Some(validation: Validation) => Future { validation }
       case None                         => Validation(platform)
@@ -317,7 +322,7 @@ class ProductionServiceTest extends RamlResolutionTest {
           target: Vendor,
           tFn: (BaseUnit, CycleConfig) => BaseUnit): Future[Assertion] = {
 
-    val config = CycleConfig(source, golden, hint, target, basePath)
+    val config = CycleConfig(source, golden, hint, target, basePath, None)
 
     build(config, None, useAmfJsonldSerialization = true)
       .map(tFn(_, config))

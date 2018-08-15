@@ -8,16 +8,11 @@ import scopt.OptionParser
 object CmdLineParser {
 
   def knownSpec(f: String): Boolean = {
-    RAMLProfile.profile == f ||
-    RAML08Profile.profile == f ||
-    OAS3Profile.profile == f ||
-    OASProfile.profile == f ||
-    AMFProfile.profile == f ||
-    "RAML 1.0" == f ||
-    "RAML 0.8" == f ||
-    "OAS 3.0.0" == f ||
-    "OAS 2.0" == f ||
-    "AML 1.0" == f
+    RamlProfile.profile == f ||
+    Raml08Profile.profile == f ||
+    Oas30Profile.profile == f ||
+    OasProfile.profile == f ||
+    AmfProfile.profile == f
 
   }
 

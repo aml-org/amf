@@ -3,7 +3,7 @@ package amf.emit
 import amf.core.remote._
 import amf.io.BuildCycleTests
 
-class Oas3CycleTest extends BuildCycleTests {
+class Oas30CycleTest extends BuildCycleTests {
   override val basePath: String = "amf-client/shared/src/test/resources/upanddown/oas3/"
 
   case class FixtureData(name: String, apiFrom: String, apiTo: String)
@@ -25,7 +25,7 @@ class Oas3CycleTest extends BuildCycleTests {
 
   cycleOas2ToOas3.foreach { f =>
     test(s"${f.name} - oas2 to oas3") {
-      cycle(f.apiFrom, f.apiTo, OasJsonHint, Oas3)
+      cycle(f.apiFrom, f.apiTo, OasJsonHint, Oas30)
     }
   }
 
@@ -36,7 +36,7 @@ class Oas3CycleTest extends BuildCycleTests {
 
   cyclesOas3.foreach { f =>
     test(s"${f.name} - oas3 to oas3") {
-      cycle(f.apiFrom, f.apiTo, OasJsonHint, Oas3)
+      cycle(f.apiFrom, f.apiTo, OasJsonHint, Oas30)
     }
   }
 
@@ -47,7 +47,7 @@ class Oas3CycleTest extends BuildCycleTests {
 
   cyclesRamlOas3.foreach { f =>
     test(s"${f.name} - raml to oas3") {
-      cycle(f.apiFrom, f.apiTo, RamlYamlHint, Oas3)
+      cycle(f.apiFrom, f.apiTo, RamlYamlHint, Oas30)
     }
   }
 

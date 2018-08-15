@@ -21,7 +21,7 @@ import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging._
-import amf.{ProfileName, RAML08Profile}
+import amf.{ProfileName, Raml08Profile}
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -41,7 +41,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
 
   /** Default to raml10 context. */
   def ctx(parserRun: Int): RamlWebApiContext = profile match {
-    case RAML08Profile => new Raml08WebApiContext("", Nil, ParserContext(parserCount = parserRun))
+    case Raml08Profile => new Raml08WebApiContext("", Nil, ParserContext(parserCount = parserRun))
     case _             => new Raml10WebApiContext("", Nil, ParserContext(parserCount = parserRun))
   }
 

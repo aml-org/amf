@@ -2,7 +2,8 @@ package amf.client.parse
 
 import amf.client.environment.Environment
 import amf.core.registries.AMFPluginsRegistry
-import amf.plugins.document.webapi.OAS20Plugin
+import amf.core.remote.Oas20
+import amf.plugins.document.webapi.Oas20Plugin
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -11,7 +12,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   */
 @JSExportAll
 class Oas20Parser private (private val env: Option[Environment] = None)
-    extends Parser("OAS 2.0", "application/json", env) {
+    extends Parser(Oas20.name, "application/json", env) {
 
   @JSExportTopLevel("Oas20Parser")
   def this() = this(None)
@@ -19,5 +20,5 @@ class Oas20Parser private (private val env: Option[Environment] = None)
   @JSExportTopLevel("Oas20Parser")
   def this(env: Environment) = this(Some(env))
 
-  AMFPluginsRegistry.registerDocumentPlugin(OAS20Plugin)
+  AMFPluginsRegistry.registerDocumentPlugin(Oas20Plugin)
 }

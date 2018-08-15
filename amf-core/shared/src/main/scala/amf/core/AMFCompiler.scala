@@ -5,7 +5,7 @@ import java.net.URISyntaxException
 import amf.client.remote.Content
 import amf.core
 import amf.core.benchmark.ExecutionLog
-import amf.core.exception.CyclicReferenceException
+import amf.core.exception.{CyclicReferenceException, UnsupportedVendorException}
 import amf.core.model.document.{BaseUnit, ExternalFragment, RecursiveUnit}
 import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser.{ParsedDocument, ParsedReference, ParserContext, ReferenceKind, UnspecifiedReference}
@@ -35,7 +35,7 @@ class AMFCompiler(val rawUrl: String,
                   val remote: Platform,
                   val base: Option[Context],
                   var mediaType: Option[String],
-                  val vendor: String,
+                  val vendor: Option[String],
                   val referenceKind: ReferenceKind = UnspecifiedReference,
                   private val cache: Cache = Cache(),
                   private val baseContext: Option[ParserContext] = None,
@@ -86,16 +86,13 @@ class AMFCompiler(val rawUrl: String,
     ExecutionLog.log(s"AMFCompiler#parseSyntax: parsing syntax $rawUrl")
     val content = AMFPluginsRegistry.featurePlugins().foldLeft(inputContent) {
       case (input, plugin) =>
-        plugin.onBeginDocumentParsing(path, input, referenceKind, vendor)
+        plugin.onBeginDocumentParsing(path, input, referenceKind)
     }
 
     val parsed = content.mime
       .orElse(mediaType)
-      .flatMap(
-        mime =>
-          AMFPluginsRegistry
-            .syntaxPluginForMediaType(mime)
-            .flatMap(_.parse(mime, vendor, content.stream, ctx, parsingOptions)))
+      .flatMap(mime =>
+        AMFPluginsRegistry.syntaxPluginForMediaType(mime).flatMap(_.parse(mime, content.stream, ctx, parsingOptions)))
       // if we cannot find a plugin with the resolved media type, we try parsing from file extension
       .orElse {
         FileMediaType
@@ -105,7 +102,7 @@ class AMFCompiler(val rawUrl: String,
             mime =>
               AMFPluginsRegistry
                 .syntaxPluginForMediaType(mime)
-                .flatMap(_.parse(mime, vendor, content.stream, ctx, parsingOptions)))
+                .flatMap(_.parse(mime, content.stream, ctx, parsingOptions)))
       }
       .orElse {
         autodetectSyntax(content.stream).flatMap(mime =>
@@ -113,7 +110,7 @@ class AMFCompiler(val rawUrl: String,
             mediaType = Some(mime)
             AMFPluginsRegistry
               .syntaxPluginForMediaType(mime)
-              .flatMap(_.parse(mime, vendor, content.stream, ctx, parsingOptions))
+              .flatMap(_.parse(mime, content.stream, ctx, parsingOptions))
           } catch {
             case _: Exception => None // This is just a parsing attempt, it can go wrong
         })
@@ -131,7 +128,6 @@ class AMFCompiler(val rawUrl: String,
                content.mime.getOrElse(mediaType.getOrElse("")),
                Seq(),
                referenceKind,
-               vendor,
                content.stream.toString))
       case None =>
         Left(content)
@@ -155,10 +151,10 @@ class AMFCompiler(val rawUrl: String,
   private def parseDomain(document: Root): Future[BaseUnit] = {
     ExecutionLog.log(s"AMFCompiler#parseDomain: parsing domain $rawUrl")
     val currentRun = ctx.parserCount
-    val domainPluginOption = AMFPluginsRegistry.documentPluginForVendor(vendor).find(_.canParse(document)) match {
-      case Some(domainPlugin) => Some(domainPlugin)
-      case None               => AMFPluginsRegistry.documentPluginForMediaType(document.mediatype).find(_.canParse(document))
-    }
+    val domainPluginOption =
+      vendor.fold(AMFPluginsRegistry.documentPluginForMediaType(document.mediatype).find(_.canParse(document)))({
+        AMFPluginsRegistry.documentPluginForVendor(_).find(_.canParse(document))
+      })
 
     val futureDocument = domainPluginOption match {
       case Some(domainPlugin) =>
@@ -177,6 +173,7 @@ class AMFCompiler(val rawUrl: String,
                     .withMediaType(document.mediatype))
           }
         }
+      case None if vendor.isDefined => throw new UnsupportedVendorException(vendor.get)
       case None =>
         ExecutionLog.log(s"AMFCompiler#parseSyntax: parsing domain $rawUrl NO PLUGIN")
         val fragment = ExternalFragment()
@@ -244,7 +241,7 @@ class AMFCompiler(val rawUrl: String,
               None
           }
       })
-    Future.sequence(units).map(rs => root.copy(references = rs.flatten, vendor = domainPlugin.ID))
+    Future.sequence(units).map(rs => root.copy(references = rs.flatten))
   }
 
   private def resolve(): Future[Content] =
@@ -280,7 +277,7 @@ object AMFCompiler {
         (url: String,
          base: Context,
          mediaType: Option[String],
-         vendor: String,
+         vendor: Option[String],
          referenceKind: ReferenceKind,
          cache: Cache,
          ctx: Option[ParserContext],
@@ -306,7 +303,6 @@ case class Root(parsed: ParsedDocument,
                 mediatype: String,
                 references: Seq[ParsedReference],
                 referenceKind: ReferenceKind,
-                vendor: String,
                 raw: String) {}
 object Root {
   def apply(parsed: ParsedDocument,
@@ -314,7 +310,6 @@ object Root {
             mediatype: String,
             references: Seq[ParsedReference],
             referenceKind: ReferenceKind,
-            vendor: String,
             raw: String): Root =
-    new Root(parsed, location.normalizeUrl, mediatype, references, referenceKind, vendor, raw)
+    new Root(parsed, location.normalizeUrl, mediatype, references, referenceKind, raw)
 }

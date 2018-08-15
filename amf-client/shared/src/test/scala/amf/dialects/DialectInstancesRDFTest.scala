@@ -20,30 +20,30 @@ class DialectInstancesRDFTest extends AsyncFunSuite with PlatformSecrets with Bu
   }
 
   test("RDF 2 full test") {
-    withDialectFull("dialect2.raml", "example2.raml", "example2.raml", VocabularyYamlHint, AmlVocabulary)
+    withDialectFull("dialect2.raml", "example2.raml", "example2.raml", VocabularyYamlHint, Aml)
   }
 
   ignore("RDF 3 full test") {
-    withDialectFull("dialect3.raml", "example3.raml", "example3.raml", VocabularyYamlHint, AmlVocabulary)
+    withDialectFull("dialect3.raml", "example3.raml", "example3.raml", VocabularyYamlHint, Aml)
   }
 
   test("RDF 4 full test") {
-    withDialectFull("dialect4.raml", "example4.raml", "example4.raml", VocabularyYamlHint, AmlVocabulary)
+    withDialectFull("dialect4.raml", "example4.raml", "example4.raml", VocabularyYamlHint, Aml)
   }
 
   test("RDF 5 full test") {
-    withDialectFull("dialect5.raml", "example5.raml", "example5.raml", VocabularyYamlHint, AmlVocabulary)
+    withDialectFull("dialect5.raml", "example5.raml", "example5.raml", VocabularyYamlHint, Aml)
   }
 
   test("RDF 6 full test") {
-    withDialectFull("dialect6.raml", "example6.raml", "example6.raml", VocabularyYamlHint, AmlVocabulary)
+    withDialectFull("dialect6.raml", "example6.raml", "example6.raml", VocabularyYamlHint, Aml)
   }
 
   test("RDF 1 Vocabulary full test") {
     cycleFullRdf("example1.raml",
                  "example1.raml",
                  VocabularyYamlHint,
-                 AmlVocabulary,
+                 Aml,
                  "amf-client/shared/src/test/resources/vocabularies2/vocabularies/")
   }
 
@@ -51,7 +51,7 @@ class DialectInstancesRDFTest extends AsyncFunSuite with PlatformSecrets with Bu
     cycleFullRdf("example1.raml",
                  "example1.raml",
                  VocabularyYamlHint,
-                 AmlVocabulary,
+                 Aml,
                  "amf-client/shared/src/test/resources/vocabularies2/dialects/")
   }
 
@@ -59,7 +59,7 @@ class DialectInstancesRDFTest extends AsyncFunSuite with PlatformSecrets with Bu
     cycleFullRdf("eng_demos.yaml",
                  "eng_demos.yaml",
                  VocabularyYamlHint,
-                 AmlVocabulary,
+                 Aml,
                  "amf-client/shared/src/test/resources/vocabularies2/production/")
   }
 

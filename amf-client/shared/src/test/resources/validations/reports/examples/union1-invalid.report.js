@@ -1,5 +1,5 @@
 Model: file://amf-client/shared/src/test/resources/validations/examples/union1-invalid.raml
-Profile: RAML
+Profile: RAML 1.0
 Conforms? false
 Number of results: 1
 

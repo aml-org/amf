@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.validation
 
-import amf.{AMFProfile, ProfileName}
+import amf.core.remote.{Oas, Raml}
+import amf._
 import amf.core.validation.SeverityLevels
 import amf.core.validation.core._
 import amf.core.vocabulary.{Namespace, ValueType}
@@ -113,42 +114,49 @@ object DefaultAMFValidations extends ImportUtils {
       .filter(_.isDefined)
       .map(_.get)
 
+  private def specificsProfile(p: String): Seq[ProfileName] = p match {
+    case Oas.name  => Seq(Oas20Profile, Oas30Profile)
+    case Raml.name => Seq(Raml10Profile, Raml08Profile)
+    case _         => Seq(ProfileName(p))
+  }
+
   def profiles(): List[ValidationProfile] = {
     val groups = validations().groupBy(_.spec)
-    groups.map {
+    groups.flatMap {
       case (p, validationsInGroup) =>
-        val profile              = ProfileName(p)
-        val violationValidations = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.VIOLATION))
-        val infoValidations      = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.INFO))
-        val warningValidations   = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.WARNING))
+        specificsProfile(p).map { profile =>
+          val violationValidations = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.VIOLATION))
+          val infoValidations      = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.INFO))
+          val warningValidations   = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.WARNING))
 
-        // sorting parser side validation for this profile
-        val violationParserSideValidations = ParserSideValidations.validations
-          .filter { v =>
-            ParserSideValidations
-              .levels(v.id)
-              .getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.VIOLATION
-          }
-          .map(_.name)
-        val infoParserSideValidations = ParserSideValidations.validations
-          .filter { v =>
-            ParserSideValidations.levels(v.id).getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.INFO
-          }
-          .map(_.name)
-        val warningParserSideValidations = ParserSideValidations.validations
-          .filter { v =>
-            ParserSideValidations.levels(v.id).getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.WARNING
-          }
-          .map(_.name)
+          // sorting parser side validation for this profile
+          val violationParserSideValidations = ParserSideValidations.validations
+            .filter { v =>
+              ParserSideValidations
+                .levels(v.id)
+                .getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.VIOLATION
+            }
+            .map(_.name)
+          val infoParserSideValidations = ParserSideValidations.validations
+            .filter { v =>
+              ParserSideValidations.levels(v.id).getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.INFO
+            }
+            .map(_.name)
+          val warningParserSideValidations = ParserSideValidations.validations
+            .filter { v =>
+              ParserSideValidations.levels(v.id).getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.WARNING
+            }
+            .map(_.name)
 
-        ValidationProfile(
-          name = profile,
-          baseProfile = if (profile == AMFProfile) None else Some(AMFProfile),
-          infoLevel = infoParserSideValidations ++ infoValidations.map(_.name),
-          warningLevel = warningParserSideValidations ++ warningValidations.map(_.name),
-          violationLevel = violationParserSideValidations ++ violationValidations.map(_.name),
-          validations = infoValidations ++ warningValidations ++ violationValidations ++ ParserSideValidations.validations
-        )
+          ValidationProfile(
+            name = profile,
+            baseProfile = if (profile == AmfProfile) None else Some(AmfProfile),
+            infoLevel = infoParserSideValidations ++ infoValidations.map(_.name),
+            warningLevel = warningParserSideValidations ++ warningValidations.map(_.name),
+            violationLevel = violationParserSideValidations ++ violationValidations.map(_.name),
+            validations = infoValidations ++ warningValidations ++ violationValidations ++ ParserSideValidations.validations
+          )
+        }
 
     }.toList
   }

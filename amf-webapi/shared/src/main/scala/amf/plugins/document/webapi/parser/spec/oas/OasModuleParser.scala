@@ -5,10 +5,10 @@ import amf.core.annotations.SourceVendor
 import amf.core.metamodel.document.BaseUnitModel
 import amf.core.model.document.Module
 import amf.core.parser.{Annotations, _}
+import amf.core.utils.Strings
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.ReferencesParser
 import org.yaml.model._
-import amf.core.utils.Strings
 
 /**
   *
@@ -16,7 +16,7 @@ import amf.core.utils.Strings
 case class OasModuleParser(root: Root)(implicit val ctx: OasWebApiContext) extends OasSpecParser {
 
   def parseModule(): Module = {
-    val sourceVendor = SourceVendor(root.vendor)
+    val sourceVendor = SourceVendor(ctx.vendor)
     val module = Module(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
       .withLocation(root.location)
       .adopted(root.location)

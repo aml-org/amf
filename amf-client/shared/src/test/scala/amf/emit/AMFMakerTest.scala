@@ -1,14 +1,21 @@
 package amf.emit
 
+import amf.Core
 import amf.core.emitter.RenderOptions
 import amf.common.ListAssertions
-import amf.core.model.document.Document
+import amf.core.AMFSerializer
+import amf.core.model.document.{BaseUnit, Document}
 import amf.core.parser._
-import amf.core.remote.{Oas, Raml, Vendor}
-import amf.facades.AMFUnitMaker
+import amf.core.remote._
+import amf.plugins.document.graph.AMFGraphPlugin
+import amf.plugins.document.vocabularies.AMLPlugin
+import amf.plugins.document.webapi._
+import amf.plugins.domain.shapes.DataShapesDomainPlugin
+import amf.plugins.domain.webapi.WebAPIDomainPlugin
+import amf.plugins.syntax.SYamlSyntaxPlugin
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, FunSuite}
-import org.yaml.model.YMap
+import org.yaml.model.{YDocument, YMap}
 
 class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions {
 
@@ -120,6 +127,34 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
   }
 
   private def ast(document: Document, vendor: Vendor): YMap = {
-    AMFUnitMaker(document, vendor, RenderOptions()).node.as[YMap]
+
+    Core.init()
+    amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
+    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Raml10Plugin)
+    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Raml08Plugin)
+    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas20Plugin)
+    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas30Plugin)
+    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
+    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
+    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMLPlugin)
+    amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(WebAPIDomainPlugin)
+    amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
+    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(JsonSchemaPlugin)
+
+    val mediaType = vendor match {
+      case Aml     => "application/yaml"
+      case Amf     => "application/ld+json"
+      case Payload => "application/amf+json"
+      case r: Raml => "application/yaml"
+      case Oas     => "application/json"
+      case _       => ""
+    }
+
+    new AMFSerializer(document, mediaType, vendor.name, RenderOptions())
+      .make()
+      .asInstanceOf[SyamlParsedDocument]
+      .document
+      .node
+      .as[YMap]
   }
 }

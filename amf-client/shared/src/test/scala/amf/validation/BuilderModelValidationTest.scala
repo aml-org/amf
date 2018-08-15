@@ -6,12 +6,13 @@ import amf.core.AMFSerializer
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{Document, Module, PayloadFragment}
 import amf.core.model.domain.ScalarNode
+import amf.core.remote.Raml
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.facades.Validation
 import amf.io.FileAssertionTest
 import amf.plugins.domain.shapes.models.{NodeShape, ScalarShape}
-import amf.{RAMLProfile, RAMLStyle}
+import amf.{RAMLStyle, RamlProfile}
 import org.scalatest.Matchers
 
 import scala.concurrent.ExecutionContext
@@ -36,7 +37,7 @@ class BuilderModelValidationTest extends FileAssertionTest with Matchers {
 
     for {
       validation <- Validation(platform)
-      report     <- validation.validate(module, RAMLProfile, RAMLStyle)
+      report     <- validation.validate(module, RamlProfile, RAMLStyle)
     } yield {
       report.conforms should be(true)
     }
@@ -67,7 +68,7 @@ class BuilderModelValidationTest extends FileAssertionTest with Matchers {
         |   format: int""".stripMargin
     for {
       _ <- Validation(platform) // in order to initialize
-      s <- new AMFSerializer(m, "application/raml+yaml", "RAML", RenderOptions()).renderToString
+      s <- new AMFSerializer(m, "application/raml+yaml", Raml.name, RenderOptions()).renderToString
     } yield {
       val diffs = Diff.ignoreAllSpace.diff(s, e)
       if (diffs.nonEmpty) fail(s"\ndiff: \n\n${makeString(diffs)}")

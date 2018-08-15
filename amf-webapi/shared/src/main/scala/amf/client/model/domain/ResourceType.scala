@@ -3,7 +3,7 @@ package amf.client.model.domain
 import amf.client.convert.WebApiClientConverters._
 import amf.client.model.document.BaseUnit
 import amf.plugins.domain.webapi.models.templates.{ResourceType => InternalResourceType}
-import amf.{ProfileName, RAMLProfile}
+import amf.{ProfileName, RamlProfile}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -21,6 +21,6 @@ case class ResourceType(override private[amf] val _internal: InternalResourceTyp
   @deprecated
   def asEndpoint[T <: BaseUnit](unit: T, profile: String): EndPoint = asEndpoint(unit, ProfileName(profile))
 
-  def asEndpoint[T <: BaseUnit](unit: T, profile: ProfileName = RAMLProfile): EndPoint =
+  def asEndpoint[T <: BaseUnit](unit: T, profile: ProfileName = RamlProfile): EndPoint =
     _internal.asEndpoint(unit._internal, profile)
 }

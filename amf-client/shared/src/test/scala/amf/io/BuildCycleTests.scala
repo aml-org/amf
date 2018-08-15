@@ -5,8 +5,10 @@ import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.parser.ParserContext
 import amf.core.rdf.{RdfModel, RdfModelParser}
+import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{Amf, Hint, Vendor}
-import amf.facades.{AMFCompiler, AMFRenderer, Validation}
+import amf.emit.AMFRenderer
+import amf.facades.{AMFCompiler, Validation}
 import org.scalatest.Assertion
 
 import scala.concurrent.Future
@@ -32,9 +34,10 @@ trait BuildCycleTests extends FileAssertionTest {
                   target: Vendor,
                   directory: String = basePath,
                   validation: Option[Validation] = None,
-                  useAmfJsonldSerialization: Boolean = true): Future[Assertion] = {
+                  useAmfJsonldSerialization: Boolean = true,
+                  syntax: Option[Syntax] = None): Future[Assertion] = {
 
-    val config = CycleConfig(source, golden, hint, target, directory)
+    val config = CycleConfig(source, golden, hint, target, directory, syntax)
 
     build(config, validation, useAmfJsonldSerialization)
       .map(transform(_, config))
@@ -50,7 +53,9 @@ trait BuildCycleTests extends FileAssertionTest {
       case None                         => Validation(platform).map(_.withEnabledValidation(false))
     }
     validation.flatMap { v =>
-      var options = if (!useAmfJsonldSerialisation) { ParsingOptions().withoutAmfJsonLdSerialization } else { ParsingOptions().withAmfJsonLdSerialization }
+      var options = if (!useAmfJsonldSerialisation) { ParsingOptions().withoutAmfJsonLdSerialization } else {
+        ParsingOptions().withAmfJsonLdSerialization
+      }
       options = options.withBaseUnitUrl("file://" + config.goldenPath)
       AMFCompiler(s"file://${config.sourcePath}", platform, config.hint, v, parsingOptions = options).build()
     }
@@ -61,10 +66,11 @@ trait BuildCycleTests extends FileAssertionTest {
 
   /** Method to render parsed unit. Override if necessary. */
   def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
-    val target = config.target
+    val target  = config.target
     var options = RenderOptions().withSourceMaps
-    options = if (!useAmfJsonldSerialization) options.withoutAmfJsonLdSerialization else options.withAmfJsonLdSerialization
-    new AMFRenderer(unit, target, target.defaultSyntax, options).renderToString
+    options =
+      if (!useAmfJsonldSerialization) options.withoutAmfJsonLdSerialization else options.withAmfJsonLdSerialization
+    new AMFRenderer(unit, target, options, config.syntax).renderToString
   }
 
   /** Method for transforming parsed unit. Override if necessary. */
@@ -91,9 +97,10 @@ trait BuildCycleTests extends FileAssertionTest {
                hint: Hint,
                target: Vendor = Amf,
                directory: String = basePath,
-               validation: Option[Validation] = None): Future[Assertion] = {
+               validation: Option[Validation] = None,
+               syntax: Option[Syntax] = None): Future[Assertion] = {
 
-    val config = CycleConfig(source, golden, hint, target, directory)
+    val config = CycleConfig(source, golden, hint, target, directory, syntax)
 
     build(config, validation, useAmfJsonldSerialisation = true)
       .map(transformRdf(_, config))
@@ -102,7 +109,12 @@ trait BuildCycleTests extends FileAssertionTest {
       .flatMap(assertDifferences(_, config.goldenPath))
   }
 
-  case class CycleConfig(source: String, golden: String, hint: Hint, target: Vendor, directory: String) {
+  case class CycleConfig(source: String,
+                         golden: String,
+                         hint: Hint,
+                         target: Vendor,
+                         directory: String,
+                         syntax: Option[Syntax]) {
     val sourcePath: String = directory + source
     val goldenPath: String = directory + golden
   }
@@ -112,9 +124,10 @@ trait BuildCycleTests extends FileAssertionTest {
                    hint: Hint,
                    target: Vendor = Amf,
                    directory: String = basePath,
-                   validation: Option[Validation] = None): Future[Assertion] = {
+                   validation: Option[Validation] = None,
+                   syntax: Option[Syntax] = None): Future[Assertion] = {
 
-    val config = CycleConfig(source, golden, hint, target, directory)
+    val config = CycleConfig(source, golden, hint, target, directory, syntax)
 
     build(config, validation, useAmfJsonldSerialisation = true)
       .map(transformThroughRdf(_, config))

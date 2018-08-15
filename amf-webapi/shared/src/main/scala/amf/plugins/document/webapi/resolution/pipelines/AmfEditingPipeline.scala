@@ -11,11 +11,11 @@ import amf.plugins.domain.webapi.resolution.stages.{
   ParametersNormalizationStage,
   SecurityResolutionStage
 }
-import amf.{AMFProfile, ProfileName}
+import amf.{AmfProfile, ProfileName}
 
 class AmfEditingPipeline(override val model: BaseUnit) extends ResolutionPipeline[BaseUnit] {
 
-  override def profileName: ProfileName = AMFProfile
+  override def profileName: ProfileName = AmfProfile
 
   val references = new ReferenceResolutionStage(keepEditingInfo = true)
 

@@ -108,7 +108,6 @@ case class ExtensionLikeParser(root: Root)(implicit override val ctx: ExtensionL
               .set(field, AmfScalar(extend.unit.id, Annotations(e.value)), Annotations(e)))
       })
   }
-
 }
 
 object ExtensionLikeParser {
@@ -142,7 +141,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
     val references = ReferencesParser(document, "uses", map, root.references).parse(root.location)
     parseDeclarations(root, map)
 
-    val api = parseWebApi(map).add(SourceVendor(root.vendor))
+    val api = parseWebApi(map).add(SourceVendor(ctx.vendor))
     document.withEncodes(api)
 
     val declarables = ctx.declarations.declarables()

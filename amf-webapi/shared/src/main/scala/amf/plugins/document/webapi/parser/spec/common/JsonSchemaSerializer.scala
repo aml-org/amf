@@ -5,6 +5,7 @@ import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.Document
 import amf.core.parser.Position
+import amf.core.remote.JsonSchema
 import amf.core.services.RuntimeSerializer
 import amf.plugins.document.webapi.annotations.{GeneratedJSONSchema, ParsedJSONSchema}
 import amf.plugins.document.webapi.contexts.JsonSchemaEmitterContext
@@ -33,7 +34,7 @@ trait JsonSchemaSerializer {
     AMFSerializer.init()
     val jsonSchema = RuntimeSerializer(Document().withDeclaredElement(fixNameIfNeeded(element)),
                                        "application/schema+json",
-                                       "JSON Schema")
+                                       JsonSchema.name)
     element.annotations.reject(_.isInstanceOf[ParsedJSONSchema])
     element.annotations.reject(_.isInstanceOf[GeneratedJSONSchema])
     element.annotations += GeneratedJSONSchema(jsonSchema)

@@ -28,7 +28,7 @@ class MutateModelCycleTest extends BuildCycleTests {
                            target: Vendor,
                            transform: BaseUnit => BaseUnit,
                            directory: String = basePath): Future[Assertion] = {
-    val config = CycleConfig(source, golden, hint, target, directory)
+    val config = CycleConfig(source, golden, hint, target, directory, None)
 
     build(config, None, useAmfJsonldSerialisation = true)
       .map(transform(_))

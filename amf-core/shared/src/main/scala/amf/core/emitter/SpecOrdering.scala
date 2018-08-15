@@ -2,7 +2,7 @@ package amf.core.emitter
 
 import amf.core.annotations.SourceVendor
 import amf.core.parser.Annotations
-import amf.core.remote.{Amf, Vendor}
+import amf.core.remote.{Amf, Oas, Raml, Vendor}
 
 /**
   * Created by pedro.colunga on 8/22/17.
@@ -25,8 +25,16 @@ object SpecOrdering {
 
   def ordering(target: Vendor, annotations: Annotations): SpecOrdering = {
     annotations.find(classOf[SourceVendor]) match {
-      case Some(SourceVendor(source)) if source == Amf || source.isSameWithoutVersion(target) => Lexical
-      case _                                                                                  => Default
+      case Some(SourceVendor(source)) if source == Amf || equivalent(source, target) => Lexical
+      case _                                                                         => Default
+    }
+  }
+
+  private def equivalent(left: Vendor, right: Vendor) = {
+    left match {
+      case _: Oas  => right.isInstanceOf[Oas]
+      case _: Raml => right.isInstanceOf[Raml]
+      case _       => false
     }
   }
 }

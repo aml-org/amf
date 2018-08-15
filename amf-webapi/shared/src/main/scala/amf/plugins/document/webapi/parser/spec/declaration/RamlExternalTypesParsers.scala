@@ -4,6 +4,7 @@ import amf.core.Root
 import amf.core.annotations.{ExternalFragmentRef, LexicalInformation}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.{AmfScalar, Shape}
+import amf.core.parser.{Annotations, InferredLinkReference, ParsedReference, Reference, ReferenceFragmentPartition, _}
 import amf.core.parser.{
   Annotations,
   InferredLinkReference,
@@ -129,7 +130,6 @@ case class RamlJsonSchemaExpression(key: YNode,
              "application/json",
              Nil,
              InferredLinkReference,
-             "OAS",
              text))(context)
         .parseTypeDeclarations(schemaEntry.node.as[YMap], url + "#/definitions/")
       val libraryShapes = context.declarations.shapes

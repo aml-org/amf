@@ -1,5 +1,5 @@
 Model: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json
-Profile: OpenAPI
+Profile: OAS 2.0
 Conforms? false
 Number of results: 2
 

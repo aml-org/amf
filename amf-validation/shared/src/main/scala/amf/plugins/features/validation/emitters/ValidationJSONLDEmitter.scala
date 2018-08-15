@@ -47,8 +47,8 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
       p.entry("@type", (Namespace.Shacl + "NodeShape").iri())
 
       val message = targetProfile match {
-        case RAMLProfile | RAML08Profile => validation.ramlMessage.getOrElse(validation.message)
-        case OASProfile                  => validation.oasMessage.getOrElse(validation.message)
+        case RamlProfile | Raml08Profile => validation.ramlMessage.getOrElse(validation.message)
+        case OasProfile                  => validation.oasMessage.getOrElse(validation.message)
         case _                           => validation.message
       }
       if (message != "") {

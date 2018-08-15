@@ -1,12 +1,10 @@
 package amf.dumper
 
-import amf.core.emitter.RenderOptions
 import amf.common.Tests
-import amf.core.remote.Syntax.{Json, Yaml}
+import amf.core.emitter.RenderOptions
 import amf.core.remote.{Amf, Oas, Raml}
 import amf.core.unsafe.PlatformSecrets
-import amf.emit.AMFUnitFixtureTest
-import amf.facades.AMFRenderer
+import amf.emit.{AMFRenderer, AMFUnitFixtureTest}
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.ExecutionContext
@@ -43,7 +41,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |  "paths": {}
         |}""".stripMargin
 
-    new AMFRenderer(`document/api/bare`, Oas, Json, RenderOptions()).renderToString.map(assert(_, expected))
+    new AMFRenderer(`document/api/bare`, Oas, RenderOptions(), None).renderToString.map(assert(_, expected))
   }
 
   test("Test simple raml/yaml") {
@@ -60,7 +58,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |  - http
         |  - https""".stripMargin
 
-    new AMFRenderer(`document/api/bare`, Raml, Yaml, RenderOptions()).renderToString.map(assert(_, expected))
+    new AMFRenderer(`document/api/bare`, Raml, RenderOptions(), None).renderToString.map(assert(_, expected))
   }
 
   test("Test simple amf/jsonld") {
@@ -139,7 +137,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |  }
         |]""".stripMargin
 
-    new AMFRenderer(`document/api/bare`, Amf, Json, RenderOptions()).renderToString.map(assert(_, expected))
+    new AMFRenderer(`document/api/bare`, Amf, RenderOptions(), None).renderToString.map(assert(_, expected))
   }
 
   test("Test full amf/jsonld") {
@@ -413,7 +411,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |  }
         |]""".stripMargin
 
-    new AMFRenderer(`document/api/full`, Amf, Json, RenderOptions()).renderToString.map(assert(_, expected))
+    new AMFRenderer(`document/api/full`, Amf, RenderOptions(), None).renderToString.map(assert(_, expected))
   }
 
   test("Test string examples raml/yaml") {
@@ -439,7 +437,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |           name: Cristian
         |           lastName: Pavon""".stripMargin
 
-    new AMFRenderer(`document/api/stringExamples`, Raml, Yaml, RenderOptions()).renderToString.map(assert(_, expected))
+    new AMFRenderer(`document/api/stringExamples`, Raml, RenderOptions(), None).renderToString.map(assert(_, expected))
   }
 
   test("Test string examples oas/json") {
@@ -489,7 +487,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |  }
         |}""".stripMargin
 
-    new AMFRenderer(`document/api/stringExamples`, Oas, Json, RenderOptions()).renderToString.map(assert(_, expected))
+    new AMFRenderer(`document/api/stringExamples`, Oas, RenderOptions(), None).renderToString.map(assert(_, expected))
   }
 
   private def assert(actual: String, expected: String): Assertion = {

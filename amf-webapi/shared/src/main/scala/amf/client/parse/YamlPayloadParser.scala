@@ -2,6 +2,7 @@ package amf.client.parse
 
 import amf.client.environment.Environment
 import amf.core.registries.AMFPluginsRegistry
+import amf.core.remote.Payload
 import amf.plugins.document.webapi.PayloadPlugin
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -11,7 +12,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   */
 @JSExportAll
 class YamlPayloadParser private (private val env: Option[Environment] = None)
-    extends Parser("AMF Payload", "application/amf+yaml", env) {
+    extends Parser(Payload.name, "application/amf+yaml", env) {
 
   @JSExportTopLevel("YamlPayloadParser")
   def this() = this(None)

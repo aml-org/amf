@@ -1,13 +1,12 @@
 package amf.plugins.document.webapi
 
-import amf.{OAS3Profile, OASProfile, ProfileName}
-import amf.core.emitter.RenderOptions
 import amf.core.Root
 import amf.core.client.ParsingOptions
+import amf.core.emitter.RenderOptions
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{LibraryReference, LinkReference, ParsedDocument, ParsedReference, ParserContext, SyamlParsedDocument}
-import amf.core.remote.Platform
+import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model.{Extension, Overlay}
@@ -17,12 +16,12 @@ import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.oas._
 import amf.plugins.document.webapi.resolution.pipelines.{OasEditingPipeline, OasResolutionPipeline}
 import amf.plugins.domain.webapi.models.WebApi
+import amf.{Oas20Profile, Oas30Profile, ProfileName}
 import org.yaml.model.{YDocument, YNode}
 
-sealed trait OASPlugin extends BaseWebApiPlugin {
-  override val ID: String = ("OAS " + version).trim
+sealed trait OasPlugin extends BaseWebApiPlugin {
 
-  override val vendors = Seq(ID, "OAS")
+  override val vendors = Seq(vendor.name, Oas.name)
 
   override def specContext: OasSpecEmitterContext
 
@@ -91,13 +90,13 @@ sealed trait OASPlugin extends BaseWebApiPlugin {
   )
 }
 
-object OAS20Plugin extends OASPlugin {
+object Oas20Plugin extends OasPlugin {
 
   override def specContext: OasSpecEmitterContext = new Oas2SpecEmitterContext()
 
-  override def version: String = "2.0"
+  override protected def vendor: Vendor = Oas20
 
-  override val validationProfile: ProfileName = OASProfile
+  override val validationProfile: ProfileName = Oas20Profile
 
   /**
     * Decides if this plugin can parse the provided document instance.
@@ -128,7 +127,9 @@ object OAS20Plugin extends OASPlugin {
       case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext).emitFragment())
       case _                          => None
     }
-    unparsed map { doc => SyamlParsedDocument(document = doc) }
+    unparsed map { doc =>
+      SyamlParsedDocument(document = doc)
+    }
   }
 
   /**
@@ -148,13 +149,13 @@ object OAS20Plugin extends OASPlugin {
                        ds: Option[WebApiDeclarations]) = new Oas2WebApiContext(loc, refs, wrapped, ds)
 }
 
-object OAS30Plugin extends OASPlugin {
+object Oas30Plugin extends OasPlugin {
 
   override def specContext: Oas3SpecEmitterContext = new Oas3SpecEmitterContext()
 
-  override def version: String = "3.0.0"
+  override protected def vendor: Vendor = Oas30
 
-  override val validationProfile: ProfileName = OAS3Profile
+  override val validationProfile: ProfileName = Oas30Profile
 
   /**
     * Decides if this plugin can parse the provided document instance.
@@ -185,7 +186,9 @@ object OAS30Plugin extends OASPlugin {
       case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext).emitFragment())
       case _                          => None
     }
-    unparsed map { doc => SyamlParsedDocument(document = doc) }
+    unparsed map { doc =>
+      SyamlParsedDocument(document = doc)
+    }
   }
 
   /**

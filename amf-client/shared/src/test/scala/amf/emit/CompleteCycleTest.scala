@@ -675,7 +675,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Closed node for 0.8 web form test") {
-    cycle("closed_web_form.raml", "closed_web_form.json", RamlYamlHint, Oas2, base08Path)
+    cycle("closed_web_form.raml", "closed_web_form.json", RamlYamlHint, Oas20, base08Path)
   }
 
   test("Closed node for 0.8 empty payload schema test") {

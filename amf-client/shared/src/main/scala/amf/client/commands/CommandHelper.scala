@@ -9,7 +9,7 @@ import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.{RuntimeCompiler, RuntimeResolver, RuntimeSerializer}
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
-import amf.plugins.document.webapi.{OAS20Plugin, OAS30Plugin, RAML08Plugin, RAML10Plugin}
+import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
 import amf.plugins.features.validation.AMFValidatorPlugin
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -20,10 +20,10 @@ trait CommandHelper {
 
   def AMFInit(): Future[Unit] = {
     amf.core.AMF.registerPlugin(AMLPlugin)
-    amf.core.AMF.registerPlugin(RAML10Plugin)
-    amf.core.AMF.registerPlugin(RAML08Plugin)
-    amf.core.AMF.registerPlugin(OAS20Plugin)
-    amf.core.AMF.registerPlugin(OAS30Plugin)
+    amf.core.AMF.registerPlugin(Raml10Plugin)
+    amf.core.AMF.registerPlugin(Raml08Plugin)
+    amf.core.AMF.registerPlugin(Oas20Plugin)
+    amf.core.AMF.registerPlugin(Oas30Plugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     amf.core.AMF.registerPlugin(PayloadValidatorPlugin)
     amf.core.AMF.init()
@@ -50,14 +50,13 @@ trait CommandHelper {
 
   protected def parseInput(config: ParserConfig): Future[BaseUnit] = {
     var inputFile = ensureUrl(config.input.get)
-    val vendor    = effectiveVendor(config.inputMediaType, config.inputFormat)
     val parsed = RuntimeCompiler(
       inputFile,
       Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
-      vendor,
+      config.inputFormat,
       Context(platform)
     )
-
+    val vendor = effectiveVendor(config.inputFormat)
     if (config.resolve) {
       parsed map { unit =>
         RuntimeResolver.resolve(vendor, unit, ResolutionPipeline.DEFAULT_PIPELINE)
@@ -68,13 +67,13 @@ trait CommandHelper {
   }
 
   protected def resolve(config: ParserConfig, unit: BaseUnit): Future[BaseUnit] = {
-    val vendor = effectiveVendor(config.inputMediaType, config.inputFormat)
+    val vendor = effectiveVendor(config.inputFormat)
     if (config.resolve && config.validate) {
       var inputFile = ensureUrl(config.input.get)
       val parsed = RuntimeCompiler(
         inputFile,
         Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
-        vendor,
+        config.inputFormat,
         Context(platform)
       )
       parsed map { parsed =>
@@ -96,7 +95,7 @@ trait CommandHelper {
       generateOptions.withCompactUris
     }
     val mediaType = effectiveMediaType(config.outputMediaType, config.outputFormat)
-    val vendor    = effectiveVendor(config.outputMediaType, config.outputFormat)
+    val vendor    = effectiveVendor(config.outputFormat)
     config.output match {
       case Some(f) =>
         RuntimeSerializer.dumpToFile(
@@ -133,7 +132,7 @@ trait CommandHelper {
     }
   }
 
-  def effectiveVendor(mediaType: Option[String], vendor: Option[String]): String = {
+  def effectiveVendor(vendor: Option[String]): String = {
     vendor match {
       case Some(effectiveVendor) => effectiveVendor
       case None                  => "Unknown"

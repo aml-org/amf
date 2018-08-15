@@ -2,11 +2,12 @@ package amf.plugins.features.validation
 
 import amf._
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
+import amf.core.annotations.SourceVendor
 import amf.core.benchmark.ExecutionLog
-import amf.core.model.document.BaseUnit
+import amf.core.model.document.{BaseUnit, Document, Fragment, Module}
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFPluginsRegistry
-import amf.core.remote.Context
+import amf.core.remote.{Context, Oas30, Raml08, Vendor}
 import amf.core.services.{RuntimeCompiler, RuntimeValidator, ValidationOptions}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationSpecification}
@@ -70,7 +71,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     RuntimeCompiler(
       validationProfilePath,
       Some("application/yaml"),
-      AMLPlugin.ID,
+      Some(AMLPlugin.ID),
       Context(platform)
     ).map {
         case parsed: DialectInstance if parsed.definedBy().is(url) =>
@@ -85,7 +86,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
           val domainPlugin = profilesPlugins.get(profile.name.profile) match {
             case Some(plugin) => plugin
             case None =>
-              profilesPlugins.get(profile.baseProfile.getOrElse(AMFProfile).profile) match {
+              profilesPlugins.get(profile.baseProfile.getOrElse(AmfProfile).profile) match {
                 case Some(plugin) =>
                   plugin
                 case None => AMLPlugin
@@ -151,10 +152,9 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     if (options.isPartialValidation()) partialShaclValidation(model, validations, options)
     else fullShaclValidation(model, validations, options)
 
-
   def partialShaclValidation(model: BaseUnit,
-                            validations: EffectiveValidations,
-                            options: ValidationOptions): Future[ValidationReport] =
+                             validations: EffectiveValidations,
+                             options: ValidationOptions): Future[ValidationReport] =
     new CustomShaclValidator(model, validations, options).run
 
   def fullShaclValidation(model: BaseUnit,
@@ -202,10 +202,36 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
 
   }
 
+  private def profileForUnit(unit: BaseUnit, given: ProfileName): ProfileName = {
+    given match {
+      case OasProfile =>
+        getSource(unit) match {
+          case Some(Oas30) => Oas30Profile
+          case _           => Oas20Profile
+        }
+      case RamlProfile =>
+        getSource(unit) match {
+          case Some(Raml08) => Raml08Profile
+          case _            => Raml10Profile
+        }
+      case _ => given
+    }
+
+  }
+
+  private def getSource(unit: BaseUnit): Option[Vendor] = unit match {
+    case d: Document => d.encodes.annotations.find(classOf[SourceVendor]).map(_.vendor)
+    case m: Module   => m.annotations.find(classOf[SourceVendor]).map(_.vendor)
+    case f: Fragment => f.encodes.annotations.find(classOf[SourceVendor]).map(_.vendor)
+    case _           => None
+  }
+
   private def modelValidation(model: BaseUnit,
-                              profileName: ProfileName,
+                              given: ProfileName,
                               messageStyle: MessageStyle,
                               env: Environment): Future[AMFValidationReport] = {
+    val profileName = profileForUnit(model, given)
+
     profilesPlugins.get(profileName.profile) match {
       case Some(domainPlugin: AMFValidationPlugin) =>
         val validations = computeValidations(profileName)

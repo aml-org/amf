@@ -137,105 +137,105 @@ class DialectInstancesParsingTest extends BuildCycleTests {
                   "example1.json",
                   "example1.raml",
                   AmfJsonHint,
-                  AmlVocabulary,
+                  Aml,
                   useAmfJsonldSerialisation = false)
     }
   }
 
   test("generate 1 (AMF) test") {
-    withDialect("dialect1.raml", "example1.amf.json","example1.raml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect1.raml", "example1.amf.json", "example1.raml", AmfJsonHint, Aml)
   }
 
   test("generate 2 test") {
-    withDialect("dialect2.raml", "example2.json", "example2.raml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect2.raml", "example2.json", "example2.raml", AmfJsonHint, Aml)
   }
 
   test("generate 3 test") {
-    withDialect("dialect3.raml", "example3.json", "example3.raml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect3.raml", "example3.json", "example3.raml", AmfJsonHint, Aml)
   }
 
   test("generate 4 test") {
-    withDialect("dialect4.raml", "example4.json", "example4.raml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect4.raml", "example4.json", "example4.raml", AmfJsonHint, Aml)
   }
 
   test("generate 5 test") {
-    withDialect("dialect5.raml", "example5.json", "example5.raml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect5.raml", "example5.json", "example5.raml", AmfJsonHint, Aml)
   }
 
   test("generate 6 test") {
-    withDialect("dialect6.raml", "example6.json", "example6.raml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect6.raml", "example6.json", "example6.raml", AmfJsonHint, Aml)
   }
 
   test("generate 6b $ref test") {
-    withDialect("dialect6.raml", "example6b.json", "example6b.raml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect6.raml", "example6b.json", "example6b.raml", AmfJsonHint, Aml)
   }
 
   test("generate 7 test") {
-    withDialect("dialect7.raml", "example7.json", "example7.raml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect7.raml", "example7.json", "example7.raml", AmfJsonHint, Aml)
   }
 
   test("generate 8 test") {
-    withDialect("dialect8.raml", "example8.json", "example8.raml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect8.raml", "example8.json", "example8.raml", AmfJsonHint, Aml)
   }
 
   test("generate 8b $include test") {
-    withDialect("dialect8.raml", "example8b.json", "example8b.yaml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect8.raml", "example8b.json", "example8b.yaml", AmfJsonHint, Aml)
   }
 
   test("generate 8c $ref test") {
-    withDialect("dialect8.raml", "example8c.json", "example8c.yaml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect8.raml", "example8c.json", "example8c.yaml", AmfJsonHint, Aml)
   }
 
   test("generate 9 test") {
-    withDialect("dialect9.raml", "example9.json", "example9.raml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect9.raml", "example9.json", "example9.raml", AmfJsonHint, Aml)
   }
 
   test("generate 9b $ref test") {
-    withDialect("dialect9.raml", "example9b.json", "example9b.json.raml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect9.raml", "example9b.json", "example9b.json.raml", AmfJsonHint, Aml)
   }
 
   test("generate 10a test") {
-    withDialect("dialect10.raml", "example10a.json", "example10a.raml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect10.raml", "example10a.json", "example10a.raml", AmfJsonHint, Aml)
   }
 
   test("generate 10b test") {
-    withDialect("dialect10.raml", "example10b.json", "example10b.raml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect10.raml", "example10b.json", "example10b.raml", AmfJsonHint, Aml)
   }
 
   test("generate 10c test") {
-    withDialect("dialect10.raml", "example10c.json", "example10c.raml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect10.raml", "example10c.json", "example10c.raml", AmfJsonHint, Aml)
   }
 
   test("generate 11 test") {
-    withDialect("dialect11.raml", "example11.json", "example11.raml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect11.raml", "example11.json", "example11.raml", AmfJsonHint, Aml)
   }
 
   test("generate 13 test") {
-    withDialect("dialect13.raml", "example13.json", "example13.raml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect13.raml", "example13.json", "example13.raml", AmfJsonHint, Aml)
   }
 
   test("generate 14 test") {
-    withDialect("dialect14.raml", "example14.json", "example14.raml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect14.raml", "example14.json", "example14.raml", AmfJsonHint, Aml)
   }
 
   test("generate 15 test") {
-    withDialect("dialect15a.raml", "example15.json", "example15.raml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect15a.raml", "example15.json", "example15.raml", AmfJsonHint, Aml)
   }
 
   test("generate 16 test") {
-    withDialect("dialect16a.raml", "example16a.json", "example16a.raml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect16a.raml", "example16a.json", "example16a.raml", AmfJsonHint, Aml)
   }
 
   test("generate 16c test") {
-    withDialect("dialect16a.raml", "example16c.json", "example16c.yaml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect16a.raml", "example16c.json", "example16c.yaml", AmfJsonHint, Aml)
   }
 
   test("generate 18 test") {
-    withDialect("dialect18.raml", "example18.json", "example18.raml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect18.raml", "example18.json", "example18.raml", AmfJsonHint, Aml)
   }
 
   test("generate 19 test") {
-    withDialect("dialect19.raml", "example19.json", "example19.raml", AmfJsonHint, AmlVocabulary)
+    withDialect("dialect19.raml", "example19.json", "example19.raml", AmfJsonHint, Aml)
   }
 
   protected def withDialect(dialect: String,
@@ -246,9 +246,9 @@ class DialectInstancesParsingTest extends BuildCycleTests {
                             directory: String = basePath,
                             useAmfJsonldSerialisation: Boolean = true) = {
     for {
-      v         <- Validation(platform).map(_.withEnabledValidation(false))
-      _         <- AMFCompiler(s"file://$directory/$dialect", platform, VocabularyYamlHint, v).build()
-      res       <- cycle(source, golden, hint, target, basePath, None, useAmfJsonldSerialisation)
+      v   <- Validation(platform).map(_.withEnabledValidation(false))
+      _   <- AMFCompiler(s"file://$directory/$dialect", platform, VocabularyYamlHint, v).build()
+      res <- cycle(source, golden, hint, target, basePath, None, useAmfJsonldSerialisation)
     } yield {
       res
     }

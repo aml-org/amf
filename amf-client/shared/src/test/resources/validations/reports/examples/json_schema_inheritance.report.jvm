@@ -1,5 +1,5 @@
 Model: file://amf-client/shared/src/test/resources/validations/production/json_schema_inheritance/api.raml
-Profile: RAML
+Profile: RAML 1.0
 Conforms? true
 Number of results: 3
 

@@ -155,7 +155,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
           platform,
           None,
           Some("application/yaml"),
-          AMLPlugin.ID
+          Some(AMLPlugin.ID)
         ).build()
       }
       instance <- {
@@ -165,7 +165,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
           platform,
           None,
           Some("application/yaml"),
-          AMLPlugin.ID
+          Some(AMLPlugin.ID)
         ).build()
       }
       report <- {
@@ -199,7 +199,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
           platform,
           None,
           Some("application/yaml"),
-          AMLPlugin.ID
+          Some(AMLPlugin.ID)
         ).build()
       }
       profile <- {
@@ -213,7 +213,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
           platform,
           None,
           Some("application/yaml"),
-          AMLPlugin.ID
+          Some(AMLPlugin.ID)
         ).build()
       }
       report <- {

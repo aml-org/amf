@@ -2,14 +2,15 @@ package amf.compiler
 
 import amf.client.plugins.{AMFFeaturePlugin, AMFPlugin}
 import amf.client.remote.Content
+import amf.core.Root
 import amf.core.model.document.{BaseUnit, Document, ExternalFragment}
 import amf.core.parser.{UnspecifiedReference, _}
 import amf.core.remote.Syntax.{Json, Syntax, Yaml}
 import amf.core.remote._
 import amf.core.services.RuntimeCompiler
-import amf.facades.{Root, Validation}
+import amf.facades.Validation
 import amf.plugins.domain.webapi.models.WebApi
-import amf.{RAMLProfile, RAMLStyle}
+import amf.{RAMLStyle, RamlProfile}
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.model.{YMap, YMapEntry}
@@ -29,7 +30,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("Vocabulary") {
-    build("file://amf-client/shared/src/test/resources/vocabularies2/production/raml_doc.raml", ExtensionYamlHint) map {
+    build("file://amf-client/shared/src/test/resources/vocabularies2/production/raml_doc.raml", VocabularyYamlHint) map {
       _ should not be null
     }
   }
@@ -90,7 +91,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   test("Libraries (raml)") {
     compiler("file://amf-client/shared/src/test/resources/modules.raml", RamlYamlHint)
       .flatMap(_.root()) map {
-      case Root(root, _, references, UnspecifiedReference, _, _) =>
+      case Root(root, _, _, references, UnspecifiedReference, _) =>
         val body = root.asInstanceOf[SyamlParsedDocument].document.as[YMap]
         body.entries.size should be(2)
         assertUses(body.key("uses").get, references.map(_.unit))
@@ -101,7 +102,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   test("Libraries (oas)") {
     compiler("file://amf-client/shared/src/test/resources/modules.json", OasJsonHint)
       .flatMap(_.root()) map {
-      case Root(root, _, references, UnspecifiedReference, _, _) =>
+      case Root(root, _, _, references, UnspecifiedReference, _) =>
         val body = root.asInstanceOf[SyamlParsedDocument].document.as[YMap]
         body.entries.size should be(3)
         assertUses(body.key("x-amf-uses").get, references.map(_.unit))
@@ -117,7 +118,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
               RamlYamlHint,
               validation = Some(v))
           .flatMap(bu => {
-            v.validate(bu, RAMLProfile, RAMLStyle)
+            v.validate(bu, RamlProfile, RAMLStyle)
           })
       })
       .map(r => {
@@ -145,14 +146,11 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
 
       override val ID: String = "Test Feature Plugin"
 
-      override def onBeginParsingInvocation(url: String, mediaType: Option[String], vendor: String): Unit = {
+      override def onBeginParsingInvocation(url: String, mediaType: Option[String]): Unit = {
         invocations += "begin_parsing_invocation"
       }
 
-      override def onBeginDocumentParsing(url: String,
-                                          content: Content,
-                                          referenceKind: ReferenceKind,
-                                          vendor: String): Content = {
+      override def onBeginDocumentParsing(url: String, content: Content, referenceKind: ReferenceKind): Content = {
         invocations += "begin_document_parsing"
         content
       }
@@ -174,7 +172,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
     }
     amf.core.AMF.registerPlugin(featurePlugin)
     featurePlugin.init() flatMap { _ =>
-      RuntimeCompiler(url, Some("application/yaml"), "RAML 1.0", Context(platform)) map { _ =>
+      RuntimeCompiler(url, Some("application/yaml"), Some(Raml10.name), Context(platform)) map { _ =>
         val allPhases = Seq("begin_parsing_invocation",
                             "begin_document_parsing",
                             "syntax_parsed",

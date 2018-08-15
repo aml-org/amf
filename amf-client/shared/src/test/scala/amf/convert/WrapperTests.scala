@@ -15,6 +15,7 @@ import amf.client.resolve.{Raml08Resolver, Raml10Resolver}
 import amf.client.resource.ResourceLoader
 import amf.common.Diff
 import amf.core.parser.Range
+import amf.core.remote.{Oas20, Raml, Raml10}
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.plugins.document.Vocabularies
@@ -143,7 +144,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     for {
       _           <- AMF.init().asFuture
       unit        <- new RamlParser().parseFileAsync(zencoder).asFuture
-      report      <- AMF.validate(unit, RAMLProfile, AMFStyle).asFuture
+      report      <- AMF.validate(unit, RamlProfile, AMFStyle).asFuture
       profileName <- AMF.loadValidationProfile(profile).asFuture
       custom      <- AMF.validate(unit, profileName, AMFStyle).asFuture
     } yield {
@@ -157,7 +158,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       _        <- AMF.init().asFuture
       unit     <- new RamlParser().parseFileAsync(zencoder).asFuture
       resolved <- Future.successful(AMF.resolveRaml10(unit))
-      report   <- AMF.validate(resolved, RAMLProfile, AMFStyle).asFuture
+      report   <- AMF.validate(resolved, RamlProfile, AMFStyle).asFuture
     } yield {
       assert(report.conforms)
     }
@@ -311,8 +312,8 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   test("world-music-test") {
     for {
       _      <- AMF.init().asFuture
-      unit   <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(music).asFuture
-      report <- AMF.validate(unit, RAMLProfile, RAMLStyle).asFuture
+      unit   <- amf.Core.parser(Raml10.name, "application/yaml").parseFileAsync(music).asFuture
+      report <- AMF.validate(unit, RamlProfile, RAMLStyle).asFuture
     } yield {
       assert(!unit.references().asSeq.map(_.location).contains(null))
       assert(report.conforms)
@@ -322,7 +323,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   test("Scalar Annotations") {
     for {
       _    <- AMF.init().asFuture
-      unit <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(scalarAnnotations).asFuture
+      unit <- amf.Core.parser(Raml10.name, "application/yaml").parseFileAsync(scalarAnnotations).asFuture
     } yield {
       val api         = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
       val annotations = api.name.annotations().custom().asSeq
@@ -587,7 +588,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
 
     for {
       _        <- AMF.init().asFuture
-      unit     <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(amflight).asFuture
+      unit     <- amf.Core.parser(Raml10.name, "application/yaml").parseFileAsync(amflight).asFuture
       resolved <- Future.successful(AMF.resolveRaml10(unit))
     } yield {
       val webapi = resolved.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
@@ -662,7 +663,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     for {
       _         <- AMF.init().asFuture
       doc       <- Future { buildBasicApi() }
-      generated <- new Renderer("OAS 2.0", "application/yaml").generateString(doc).asFuture
+      generated <- new Renderer(Oas20.name, "application/yaml").generateString(doc).asFuture
     } yield {
       val deltas = Diff.ignoreAllSpace.diff(expected, generated)
       if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
@@ -697,7 +698,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     for {
       _         <- AMF.init().asFuture
       doc       <- Future { buildApiWithTypeTarget() }
-      generated <- new Renderer("OAS 2.0", "application/yaml").generateString(doc).asFuture
+      generated <- new Renderer(Oas20.name, "application/yaml").generateString(doc).asFuture
     } yield {
       val deltas = Diff.ignoreAllSpace.diff(expected, generated)
       if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
@@ -1016,7 +1017,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
 
     for {
       _    <- AMF.init().asFuture
-      unit <- amf.Core.parser("RAML 1.0", "application/yaml").parseStringAsync(baseUrl, spec).asFuture
+      unit <- amf.Core.parser(Raml10.name, "application/yaml").parseStringAsync(baseUrl, spec).asFuture
     } yield {
       assert(unit.location.startsWith(baseUrl))
       val encodes = unit.asInstanceOf[Document].encodes
@@ -1087,7 +1088,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
 
     for {
       _      <- AMF.init().asFuture
-      unit   <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(banking).asFuture
+      unit   <- amf.Core.parser(Raml10.name, "application/yaml").parseFileAsync(banking).asFuture
       jsonld <- amf.Core.generator("AMF Graph", "application/ld+json").generateString(unit, options).asFuture
     } yield {
       jsonld should include("[(3,0)-(252,0)]")
@@ -1099,7 +1100,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
 
     for {
       _      <- AMF.init().asFuture
-      unit   <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(banking).asFuture
+      unit   <- amf.Core.parser(Raml10.name, "application/yaml").parseFileAsync(banking).asFuture
       jsonld <- amf.Core.generator("AMF Graph", "application/ld+json").generateString(unit, options).asFuture
     } yield {
       jsonld should not include "[(3,0)-(252,0)]"
@@ -1109,7 +1110,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   test("banking-api-test") {
     for {
       _    <- AMF.init().asFuture
-      unit <- amf.Core.parser("RAML 1.0", "application/yaml").parseFileAsync(banking).asFuture
+      unit <- amf.Core.parser(Raml10.name, "application/yaml").parseFileAsync(banking).asFuture
     } yield {
       val references = unit.references().asSeq
       assert(!references.map(_.location).contains(null))
@@ -1203,7 +1204,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       unit <- new Raml10Parser()
         .parseFileAsync(scalarAnnotations)
         .asFuture
-      v <- AMF.validate(unit, "RAML", "RAML").asFuture
+      v <- AMF.validate(unit, Raml.name, Raml.name).asFuture
     } yield {
       assert(v.conforms)
     }
@@ -1215,7 +1216,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       unit <- new Raml10Parser()
         .parseFileAsync(scalarAnnotations)
         .asFuture
-      v <- AMF.validate(unit, RAMLProfile, RAMLProfile.messageStyle).asFuture
+      v <- AMF.validate(unit, RamlProfile, RamlProfile.messageStyle).asFuture
     } yield {
       assert(v.conforms)
     }
@@ -1302,7 +1303,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
         .parseFileAsync(
           "file://amf-client/shared/src/test/resources/parser-results/raml/error/not-existing-http-include.raml")
         .asFuture
-      r <- AMF.validate(a, RAML08Profile, RAMLStyle).asFuture
+      r <- AMF.validate(a, Raml08Profile, RAMLStyle).asFuture
     } yield {
       r.conforms should be(false)
       val seq = r.results.asSeq

@@ -37,7 +37,8 @@ class Parser(vendor: String, mediaType: String, private val env: Option[Environm
     * @return A future that will have a BaseUnit or an error to handle the result of such invocation.
     */
   @JSExport
-  def parseFileAsync(url: String, options: ParsingOptions): ClientFuture[BaseUnit] = parseAsync(url, parsingOptions = options).asClient
+  def parseFileAsync(url: String, options: ParsingOptions): ClientFuture[BaseUnit] =
+    parseAsync(url, parsingOptions = options).asClient
 
   /**
     * Asynchronously generate a BaseUnit from a given string.
@@ -99,7 +100,12 @@ class Parser(vendor: String, mediaType: String, private val env: Option[Environm
       loader.map(e.add).getOrElse(e)
     }
 
-    RuntimeCompiler(url, Option(mediaType), vendor, Context(platform), env = environment, parsingOptions = parsingOptions) map { model =>
+    RuntimeCompiler(url,
+                    Option(mediaType),
+                    Some(vendor),
+                    Context(platform),
+                    env = environment,
+                    parsingOptions = parsingOptions) map { model =>
       parsedModel = Some(model)
       model
     }

@@ -1,5 +1,5 @@
 Model: file://amf-client/shared/src/test/resources/validations/examples/declared-type-ref-add-example.raml
-Profile: RAML
+Profile: RAML 1.0
 Conforms? false
 Number of results: 2
 

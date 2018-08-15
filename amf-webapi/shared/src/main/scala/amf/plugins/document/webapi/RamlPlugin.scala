@@ -1,13 +1,13 @@
 package amf.plugins.document.webapi
 
-import amf.{ProfileName, RAML08Profile, RAMLProfile}
+import amf.{ProfileName, Raml08Profile, RamlProfile}
 import amf.core.emitter.RenderOptions
 import amf.core.Root
 import amf.core.client.ParsingOptions
 import amf.core.model.document._
 import amf.core.model.domain.{DomainElement, ExternalDomainElement}
 import amf.core.parser.{EmptyFutureDeclarations, LinkReference, ParsedDocument, ParserContext, RefContainer, SyamlParsedDocument}
-import amf.core.remote.Platform
+import amf.core.remote.{Platform, Raml, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model._
@@ -21,11 +21,9 @@ import amf.plugins.domain.webapi.models.WebApi
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YDocument, YNode}
 
-sealed trait RAMLPlugin extends BaseWebApiPlugin {
+sealed trait RamlPlugin extends BaseWebApiPlugin {
 
-  override val ID: String = "RAML " + version
-
-  override val vendors = Seq(ID, "RAML")
+  override val vendors = Seq(vendor.name, Raml.name)
 
   def context(wrapped: ParserContext, root: Root, ds: Option[WebApiDeclarations] = None): RamlWebApiContext
 
@@ -40,7 +38,10 @@ sealed trait RAMLPlugin extends BaseWebApiPlugin {
 
   override def specContext: RamlSpecEmitterContext
 
-  override def parse(root: Root, parentContext: ParserContext, platform: Platform, options: ParsingOptions): Option[BaseUnit] = {
+  override def parse(root: Root,
+                     parentContext: ParserContext,
+                     platform: Platform,
+                     options: ParsingOptions): Option[BaseUnit] = {
 
     inlineExternalReferences(root)
 
@@ -103,10 +104,11 @@ sealed trait RAMLPlugin extends BaseWebApiPlugin {
   )
 }
 
-object RAML08Plugin extends RAMLPlugin {
-  override def version: String = "0.8"
+object Raml08Plugin extends RamlPlugin {
 
-  override val validationProfile: ProfileName = RAML08Profile
+  override protected def vendor: Vendor = amf.core.remote.Raml08
+
+  override val validationProfile: ProfileName = Raml08Profile
 
   def canParse(root: Root): Boolean = {
     RamlHeader(root) exists {
@@ -140,7 +142,9 @@ object RAML08Plugin extends RAMLPlugin {
       case fragment: Fragment => Some(new RamlFragmentEmitter(fragment)(specContext).emitFragment())
       case _                  => None
     }
-    unparsed map { doc => SyamlParsedDocument(document = doc) }
+    unparsed map { doc =>
+      SyamlParsedDocument(document = doc)
+    }
   }
 
   override def context(wrapped: ParserContext, root: Root, ds: Option[WebApiDeclarations] = None): RamlWebApiContext =
@@ -159,11 +163,12 @@ object RAML08Plugin extends RAMLPlugin {
   }
 }
 
-object RAML10Plugin extends RAMLPlugin {
+object Raml10Plugin extends RamlPlugin {
 
-  override def version: String = "1.0"
 
-  override val validationProfile: ProfileName = RAMLProfile
+  override protected def vendor: Vendor = amf.core.remote.Raml10
+
+  override val validationProfile: ProfileName = RamlProfile
 
   def canParse(root: Root): Boolean = RamlHeader(root) exists {
     case Raml10 | Raml10Overlay | Raml10Extension | Raml10Library => true
@@ -202,7 +207,9 @@ object RAML10Plugin extends RAMLPlugin {
       case fragment: Fragment         => Some(new RamlFragmentEmitter(fragment)(specContext).emitFragment())
       case _                          => None
     }
-    unparsed map { doc => SyamlParsedDocument(document = doc) }
+    unparsed map { doc =>
+      SyamlParsedDocument(document = doc)
+    }
   }
 
   override def context(wrapped: ParserContext, root: Root, ds: Option[WebApiDeclarations] = None): RamlWebApiContext =

@@ -210,7 +210,7 @@ class Oas2WebApiContext(loc: String,
                         private val ds: Option[WebApiDeclarations] = None)
     extends OasWebApiContext(loc, refs, wrapped, ds) {
   override val factory: Oas2VersionFactory = Oas2VersionFactory()(this)
-  override val vendor: Vendor              = Oas2
+  override val vendor: Vendor              = Oas20
   override val syntax: SpecSyntax          = Oas2Syntax
 }
 
@@ -220,7 +220,7 @@ class Oas3WebApiContext(loc: String,
                         private val ds: Option[WebApiDeclarations] = None)
     extends OasWebApiContext(loc, refs, wrapped, ds) {
   override val factory: Oas3VersionFactory = Oas3VersionFactory()(this)
-  override val vendor: Vendor              = Oas3
+  override val vendor: Vendor              = Oas30
   override val syntax: SpecSyntax          = Oas3Syntax
 }
 

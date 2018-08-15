@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.RAML08Profile
+import amf.Raml08Profile
 import amf.core.remote.{Hint, RamlYamlHint}
 
 class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
@@ -74,11 +74,11 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("Param in raml 0.8 api") {
-    validate("08/pattern.raml", Some("pattern-08.report"), profile = RAML08Profile)
+    validate("08/pattern.raml", Some("pattern-08.report"), profile = Raml08Profile)
   }
 
   test("Validation error raml 0.8 example 1") {
-    validate("08/validation_error1.raml", Some("validation_error1.report"), profile = RAML08Profile)
+    validate("08/validation_error1.raml", Some("validation_error1.report"), profile = Raml08Profile)
   }
 
   test("Test validate pattern with invalid example") {
@@ -91,7 +91,7 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
 
   // this is not in ParaPayloadValidation test because we need to check the validation against a raml 08 parsed and resolved model (with that profile).
   test("Raml 0.8 Query Parameter Negative test case") {
-    validate("/08/date-query-parameter.raml", Some("date-query-parameter.report"), profile = RAML08Profile)
+    validate("/08/date-query-parameter.raml", Some("date-query-parameter.report"), profile = Raml08Profile)
   }
 
   test("Invalid example validation over union shapes") {
@@ -146,7 +146,7 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("lock-unlock example test (raml dates)") {
-    validate("/examples/raml-dates/lockUnlockStats.raml", Some("raml-dates-lockunlock.report"))
+    validate("/examples/raml-dates/lockUnlockStats.raml", Some("raml-dates-lockunlock.report"), Raml08Profile)
   }
 
   test("Pattern properties key") {

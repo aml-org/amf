@@ -4,7 +4,7 @@ import amf.client.convert.CoreRegister
 import amf.core.AMFSerializer
 import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
-import amf.core.remote.{Amf, Context, RamlYamlHint}
+import amf.core.remote.{Amf, Context, Raml08, RamlYamlHint}
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.Validation
@@ -38,10 +38,10 @@ object IntellijTest extends PlatformSecrets with App {
         validation.init().map(_ => validation)
         RuntimeValidator.reset()
         println("** parsing")
-        RuntimeCompiler(file, Option("application/yaml"), "RAML 0.8", Context(platform))
+        RuntimeCompiler(file, Option("application/yaml"), Some(Raml08.name), Context(platform))
       } flatMap { model =>
         println("** validating")
-        validation.validate(model, RAML08Profile) map { report =>
+        validation.validate(model, Raml08Profile) map { report =>
           println("** validation report")
           println(report)
           model

@@ -1,7 +1,7 @@
 package amf.validation
 
 import amf.core.remote.{Hint, RamlYamlHint}
-import amf.{AMFProfile, RAML08Profile}
+import amf.{AmfProfile, Raml08Profile}
 
 class ValidApiExamplesValidationTest extends ValidModelTest {
 
@@ -56,7 +56,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Empty payload with example validation") {
-    checkValid("/08/empty-payload-with-example.raml", RAML08Profile)
+    checkValid("/08/empty-payload-with-example.raml", Raml08Profile)
   }
 
   test("Invalid yaml with scalar an map as value") {
@@ -148,19 +148,19 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Valid type example 1 test") {
-    validate("/examples/validex1.raml", profile = AMFProfile)
+    validate("/examples/validex1.raml", profile = AmfProfile)
   }
 
   test("Valid type example 2 test") {
-    validate("/examples/validex2.raml", profile = AMFProfile)
+    validate("/examples/validex2.raml", profile = AmfProfile)
   }
 
   test("Test validate trait with quoted string example variable") {
-    validate("/traits/trait-string-quoted-node.raml", profile = AMFProfile)
+    validate("/traits/trait-string-quoted-node.raml", profile = AmfProfile)
   }
 
   test("Test properties with special names") {
-    validate("/property-names.raml", profile = AMFProfile)
+    validate("/property-names.raml", profile = AmfProfile)
   }
 
   test("Test enum number in string format validation") {
@@ -168,7 +168,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Include twice same json schema and add example in raml 08") {
-    checkValid("/examples/reuse-json-schema/api.raml", profile = RAML08Profile)
+    checkValid("/examples/reuse-json-schema/api.raml", profile = Raml08Profile)
   }
 
   test("Date format not SYaml timestamp") {
@@ -193,7 +193,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
 
   // xml example in any shape types are no more candidates, so there is no warning
   test("Test unsupported example with raml08 profile") {
-    validate("/examples/unsupported-examples-08.raml", profile = RAML08Profile)
+    validate("/examples/unsupported-examples-08.raml", profile = Raml08Profile)
   }
 
   test("Test json quoted string example") {

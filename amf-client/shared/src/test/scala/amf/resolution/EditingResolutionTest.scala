@@ -2,12 +2,14 @@ package amf.resolution
 
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
+import amf.core.remote.Syntax.Yaml
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.emit.AMFRenderer
 import amf.facades.{AMFRenderer, Validation}
 import amf.io.BuildCycleTests
 import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
-import amf.plugins.document.webapi.{OAS20Plugin, OAS30Plugin, RAML08Plugin, RAML10Plugin}
+import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -31,7 +33,7 @@ class EditingResolutionTest extends BuildCycleTests {
   }
 
   test("Example1 resolution to Raml") {
-    cycle("example1.yaml", "example1.resolved.yaml", OasYamlHint, Oas2Yaml, resolutionPath)
+    cycle("example1.yaml", "example1.resolved.yaml", OasYamlHint, Oas20, resolutionPath, syntax = Some(Yaml))
   }
 
   test("Include type resolution to Raml") {
@@ -118,19 +120,19 @@ class EditingResolutionTest extends BuildCycleTests {
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
     config.target match {
-      case Raml08                => RAML08Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
-      case Raml | Raml10         => RAML10Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
-      case Oas3                  => OAS30Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
-      case Oas | Oas2 | Oas2Yaml => OAS20Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
-      case Amf                   => new AmfEditingPipeline(unit).resolve()
-      case target                => throw new Exception(s"Cannot resolve $target")
+      case Raml08        => Raml08Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
+      case Raml | Raml10 => Raml10Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
+      case Oas30         => Oas30Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
+      case Oas | Oas20   => Oas20Plugin.resolve(unit, ResolutionPipeline.EDITING_PIPELINE)
+      case Amf           => new AmfEditingPipeline(unit).resolve()
+      case target        => throw new Exception(s"Cannot resolve $target")
     }
 
   override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
     new AMFRenderer(unit,
                     config.target,
-                    config.target.defaultSyntax,
-                    RenderOptions().withSourceMaps.withRawSourceMaps.withCompactUris).renderToString
+                    RenderOptions().withSourceMaps.withRawSourceMaps.withCompactUris,
+                    config.syntax).renderToString
   }
 
   override val basePath: String = ""

@@ -7,13 +7,14 @@ import amf.core.model.document.{BaseUnit, Document, EncodesModel, Module}
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline.EDITING_PIPELINE
 import amf.core.validation.AMFValidationReport
-import amf.facades.{AMFCompiler, AMFRenderer, Validation}
+import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
-import amf.plugins.document.webapi.{OAS20Plugin, OAS30Plugin, RAML08Plugin, RAML10Plugin}
+import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
 import amf.resolution.ResolutionTest
 import _root_.org.mulesoft.common.io.{Fs, SyncFile}
 import _root_.org.scalatest.compatible.Assertion
 import amf.core.vocabulary.Namespace
+import amf.emit.AMFRenderer
 
 import scala.concurrent.Future
 
@@ -30,7 +31,8 @@ trait ModelValidationTest extends DirectoryTest {
     } yield {
       // we only need to use the platform if there are errors in examples, this is what causes differences due to
       // the different JSON-Schema libraries used in JS and the JVM
-      val usePlatform = !report.conforms && report.results.exists(_.validationId == (Namespace.AmfParser + "exampleError").iri())
+      val usePlatform = !report.conforms && report.results.exists(
+        _.validationId == (Namespace.AmfParser + "exampleError").iri())
       (output, usePlatform)
     }
   }
@@ -46,7 +48,7 @@ trait ModelValidationTest extends DirectoryTest {
   }
 
   def render(model: BaseUnit, d: String, vendor: Vendor): Future[String] =
-    AMFRenderer(transform(model, d, vendor), vendor, vendor.defaultSyntax, RenderOptions()).renderToString
+    AMFRenderer(transform(model, d, vendor), vendor, RenderOptions()).renderToString
 
   def transform(unit: BaseUnit, d: String, vendor: Vendor): BaseUnit =
     unit
@@ -56,8 +58,8 @@ trait ModelValidationTest extends DirectoryTest {
       .collect({ case d: Document => d })
       .flatMap(_.encodes.annotations.find(classOf[SourceVendor]).map(_.vendor))
     maybeVendor match {
-      case Some(Raml08) => RAML08Profile
-      case _            => RAMLProfile
+      case Some(Raml08) => Raml08Profile
+      case _            => RamlProfile
     }
   }
 
@@ -81,24 +83,24 @@ trait ModelValidationTest extends DirectoryTest {
 trait ModelResolutionTest extends ModelValidationTest {
 
   override def transform(unit: BaseUnit, d: String, vendor: Vendor): BaseUnit =
-    transform(unit, CycleConfig("", "", hintFromTarget(vendor), vendor, d))
+    transform(unit, CycleConfig("", "", hintFromTarget(vendor), vendor, d, None))
 
   private def profileFromVendor(vendor: Vendor): ProfileName = {
     vendor match {
-      case Raml08        => RAML08Profile
-      case Raml | Raml10 => RAMLProfile
-      case Oas | Oas2    => OASProfile
-      case Oas3          => OAS3Profile
-      case _             => AMFProfile
+      case Raml08        => Raml08Profile
+      case Raml | Raml10 => RamlProfile
+      case Oas | Oas20   => OasProfile
+      case Oas30         => Oas30Profile
+      case _             => AmfProfile
     }
   }
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
     val res = config.target match {
-      case Raml08        => RAML08Plugin.resolve(unit, EDITING_PIPELINE) // use edition pipeline to avoid remove declarations
-      case Raml | Raml10 => RAML10Plugin.resolve(unit, EDITING_PIPELINE)
-      case Oas3          => OAS30Plugin.resolve(unit, EDITING_PIPELINE)
-      case Oas | Oas2    => OAS20Plugin.resolve(unit, EDITING_PIPELINE)
+      case Raml08        => Raml08Plugin.resolve(unit, EDITING_PIPELINE) // use edition pipeline to avoid remove declarations
+      case Raml | Raml10 => Raml10Plugin.resolve(unit, EDITING_PIPELINE)
+      case Oas30         => Oas30Plugin.resolve(unit, EDITING_PIPELINE)
+      case Oas | Oas20   => Oas20Plugin.resolve(unit, EDITING_PIPELINE)
       case Amf           => new AmfEditingPipeline(unit).resolve()
       case target        => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit
@@ -142,10 +144,11 @@ trait DirectoryTest extends ResolutionTest {
   }
 
   private def testFunction(d: String): Future[Assertion] = {
-    runDirectory(d).flatMap { case (t, usePlatform) =>
-      val finalOutputFileName = if (usePlatform) outputFileName + s".${platform.name}" else outputFileName
-      writeTemporaryFile(finalOutputFileName)(t)
-        .flatMap(assertDifferences(_, s"${d + finalOutputFileName}"))
+    runDirectory(d).flatMap {
+      case (t, usePlatform) =>
+        val finalOutputFileName = if (usePlatform) outputFileName + s".${platform.name}" else outputFileName
+        writeTemporaryFile(finalOutputFileName)(t)
+          .flatMap(assertDifferences(_, s"${d + finalOutputFileName}"))
     }
   }
   directories.foreach(d => {

@@ -1,15 +1,15 @@
 package amf.plugins.document.graph
 
-import amf.core.emitter.RenderOptions
+import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.Root
+import amf.core.client.ParsingOptions
+import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
 import amf.core.parser._
-import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
-import amf.core.client.ParsingOptions
-import amf.core.rdf.{RdfModelDocument, RdfModelEmitter, RdfModelParser}
-import amf.core.remote.Platform
+import amf.core.rdf.{RdfModelDocument, RdfModelParser}
+import amf.core.remote.{Amf, Platform}
 import amf.core.resolution.pipelines.{BasicResolutionPipeline, ResolutionPipeline}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.vocabulary.Namespace
@@ -23,10 +23,10 @@ object AMFGraphPlugin extends AMFDocumentPlugin with PlatformSecrets {
 
   override def init(): Future[AMFPlugin] = Future { this }
 
-  override val ID             = "AMF Graph"
+  override val ID: String     = Amf.name
   override def dependencies() = Seq()
 
-  val vendors = Seq("AMF JSON-LD", "AMF Graph")
+  val vendors = Seq(Amf.name)
 
   override def modelEntities: Seq[Obj] = Nil
 
@@ -50,9 +50,9 @@ object AMFGraphPlugin extends AMFDocumentPlugin with PlatformSecrets {
               .isDefined || m.key((Namespace.Document + "declares").iri()).isDefined
           case _ => false
         }
-      case _: RdfModelDocument         => true
+      case _: RdfModelDocument => true
 
-      case _                           => false
+      case _ => false
     }
   }
 
@@ -60,22 +60,21 @@ object AMFGraphPlugin extends AMFDocumentPlugin with PlatformSecrets {
     root.parsed match {
       case parsed: SyamlParsedDocument =>
         Some(GraphParser(platform).parse(parsed.document, effectiveUnitUrl(root.location, options)))
-      case parsed: RdfModelDocument    =>
+      case parsed: RdfModelDocument =>
         Some(new RdfModelParser(platform)(ctx).parse(parsed.model, effectiveUnitUrl(root.location, options)))
-      case _                           =>
+      case _ =>
         None
     }
 
   override def canUnparse(unit: BaseUnit) = true
 
   override def unparse(unit: BaseUnit, options: RenderOptions): Some[ParsedDocument] =
-     if (options.isAmfJsonLdSerilization || platform.rdfFramework.isEmpty) {
-       Some(SyamlParsedDocument(comment = None, document = GraphEmitter.emit(unit, options)))
-     } else {
-       val rdfModel = platform.rdfFramework.get.unitToRdfModel(unit , options)
-       Some(RdfModelDocument(model = rdfModel))
-     }
-
+    if (options.isAmfJsonLdSerilization || platform.rdfFramework.isEmpty) {
+      Some(SyamlParsedDocument(comment = None, document = GraphEmitter.emit(unit, options)))
+    } else {
+      val rdfModel = platform.rdfFramework.get.unitToRdfModel(unit, options)
+      Some(RdfModelDocument(model = rdfModel))
+    }
 
   override def referenceHandler(): ReferenceHandler = GraphDependenciesReferenceHandler
 

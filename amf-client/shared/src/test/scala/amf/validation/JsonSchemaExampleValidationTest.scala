@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.RAML08Profile
+import amf.Raml08Profile
 import amf.core.remote.{Hint, RamlYamlHint}
 
 class JsonSchemaExampleValidationTest extends MultiPlatformReportGenTest {
@@ -93,7 +93,7 @@ class JsonSchemaExampleValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("Exclusive Maximum Schema") {
-    validate("/max-exclusive-schema.raml", Some("max-exclusive-schema.report"), profile = RAML08Profile)
+    validate("/max-exclusive-schema.raml", Some("max-exclusive-schema.report"), profile = Raml08Profile)
   }
 
   test("Validate json schema with non url id.") {
@@ -109,7 +109,7 @@ class JsonSchemaExampleValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("Examples JSON-Schema") {
-    validate("/examples-json-schema.raml", None, profile = RAML08Profile)
+    validate("/examples-json-schema.raml", None, profile = Raml08Profile)
   }
 
   test("JSON Schema enum not array") {

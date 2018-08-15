@@ -11,7 +11,7 @@ import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
-import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin, RAML08Plugin, RAML10Plugin, _}
+import amf.plugins.document.webapi.{Oas20Plugin, PayloadPlugin, Raml08Plugin, Raml10Plugin, _}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.features.validation.AMFValidatorPlugin
@@ -28,10 +28,10 @@ class Validation(platform: Platform) {
     amf.core.AMF.registerPlugin(PayloadValidatorPlugin)
     amf.core.AMF.init().map { _ =>
       amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
-      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAML10Plugin)
-      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(RAML08Plugin)
-      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(OAS20Plugin)
-      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(OAS30Plugin)
+      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Raml10Plugin)
+      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Raml08Plugin)
+      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas20Plugin)
+      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas30Plugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMLPlugin)

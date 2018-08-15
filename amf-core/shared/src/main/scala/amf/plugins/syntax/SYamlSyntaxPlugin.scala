@@ -34,7 +34,10 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin with PlatformSecrets {
     "text/vnd.yaml"
   )
 
-  override def parse(mediaType: String, vendor: String, text: CharSequence, ctx: ParserContext, options: ParsingOptions): Option[ParsedDocument] = {
+  override def parse(mediaType: String,
+                     text: CharSequence,
+                     ctx: ParserContext,
+                     options: ParsingOptions): Option[ParsedDocument] = {
 
     if ((mediaType == "application/ld+json" || mediaType == "application/json") && !options.isAmfJsonLdSerilization && platform.rdfFramework.isDefined) {
       platform.rdfFramework.get.syntaxToRdfModel(mediaType, text)
@@ -62,14 +65,14 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin with PlatformSecrets {
     doc match {
       case input: SyamlParsedDocument =>
         val ast = input.document
-        render(mediaType, ast) {
-          (format, ast) => {
+        render(mediaType, ast) { (format, ast) =>
+          {
             Some(if (format == "yaml") YamlRender.render(ast) else JsonRender.render(ast))
           }
         }
-      case input: RdfModelDocument if platform.rdfFramework.isDefined   =>
+      case input: RdfModelDocument if platform.rdfFramework.isDefined =>
         platform.rdfFramework.get.rdfModelToSyntax(mediaType, input)
-      case _                          => None
+      case _ => None
     }
   }
 
@@ -77,13 +80,12 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin with PlatformSecrets {
     doc match {
       case input: SyamlParsedDocument =>
         val ast = input.document
-        render(mediaType, ast) {
-          (format, ast) =>
-            Some(if (format == "yaml") writer.append(YamlRender.render(ast)) else JsonRender.render(ast, writer))
+        render(mediaType, ast) { (format, ast) =>
+          Some(if (format == "yaml") writer.append(YamlRender.render(ast)) else JsonRender.render(ast, writer))
         }
-      case input: RdfModelDocument if platform.rdfFramework.isDefined   =>
+      case input: RdfModelDocument if platform.rdfFramework.isDefined =>
         platform.rdfFramework.get.rdfModelToSyntaxWriter(mediaType, input, writer)
-      case _                          => None
+      case _ => None
     }
   }
 

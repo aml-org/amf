@@ -1,5 +1,5 @@
 Model: file://amf-client/shared/src/test/resources/validations/08/validation_error1.raml
-Profile: RAML08
+Profile: RAML 1.008
 Conforms? false
 Number of results: 1
 

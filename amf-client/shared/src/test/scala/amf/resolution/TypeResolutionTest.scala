@@ -9,7 +9,7 @@ import amf.core.services.RuntimeValidator
 import amf.core.vocabulary.Namespace
 import amf.facades.Validation
 import amf.io.BuildCycleTests
-import amf.plugins.document.webapi.RAML10Plugin
+import amf.plugins.document.webapi.Raml10Plugin
 import amf.plugins.document.webapi.contexts.Raml10WebApiContext
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
 import amf.plugins.domain.shapes.models._
@@ -213,7 +213,7 @@ class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
   }
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
-    RAML10Plugin.resolve(unit)
+    Raml10Plugin.resolve(unit)
   }
 
   val errorExamples = Seq(

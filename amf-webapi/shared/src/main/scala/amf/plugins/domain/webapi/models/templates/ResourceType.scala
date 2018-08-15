@@ -7,7 +7,7 @@ import amf.core.parser.{Annotations, DefaultUnhandledError, ErrorHandler, Fields
 import amf.plugins.domain.webapi.metamodel.templates.ResourceTypeModel
 import amf.plugins.domain.webapi.models.EndPoint
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
-import amf.{ProfileName, RAMLProfile}
+import amf.{ProfileName, RamlProfile}
 import org.yaml.model.YPart
 
 class ResourceType(override val fields: Fields, override val annotations: Annotations)
@@ -18,7 +18,7 @@ class ResourceType(override val fields: Fields, override val annotations: Annota
   override def meta: AbstractDeclarationModel = ResourceTypeModel
 
   def asEndpoint[T <: BaseUnit](unit: T,
-                                profile: ProfileName = RAMLProfile,
+                                profile: ProfileName = RamlProfile,
                                 errorHandler: ErrorHandler = DefaultUnhandledError): EndPoint = {
     linkTarget match {
       case Some(_) =>

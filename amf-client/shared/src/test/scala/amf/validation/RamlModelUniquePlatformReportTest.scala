@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.RAML08Profile
+import amf.Raml08Profile
 import amf.core.remote.{Hint, RamlYamlHint}
 
 class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
@@ -122,7 +122,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Invalid security scheme") {
-    validate("invalid-security.raml", Some("invalid-security.report"), profile = RAML08Profile)
+    validate("invalid-security.raml", Some("invalid-security.report"), profile = Raml08Profile)
   }
 
   test("security scheme authorizationGrant RAML 1.0") {
@@ -132,7 +132,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("security scheme authorizationGrant RAML 0.8") {
     validate("/securitySchemes/raml08AuthorizationGrant.raml",
              Some("invalid-auth-grant-08.report"),
-             profile = RAML08Profile)
+             profile = Raml08Profile)
 
   }
 

@@ -32,14 +32,18 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
       case _          =>
         // we need to check if named example fragment in order to support invalid structures as external fragment
         if (fragmentType != Raml10NamedExample)
-          ctx.violation(root.location, "Cannot parse empty map", root.parsed.asInstanceOf[SyamlParsedDocument].document)
+          ctx.violation(root.location,
+                        "Cannot parse empty map",
+                        root.parsed.asInstanceOf[SyamlParsedDocument].document)
         YMap.empty
     }
 
     val (references, aliases) = ReferencesParserAnnotations("uses", rootMap, root)
 
     // usage is valid for a fragment, not for the encoded domain element
-    val encodedMap = YMap(rootMap.entries.filter(e => e.key.as[YScalar].text != "usage" && e.key.as[YScalar].text != "uses"), root.location)
+    val encodedMap = YMap(
+      rootMap.entries.filter(e => e.key.as[YScalar].text != "usage" && e.key.as[YScalar].text != "uses"),
+      root.location)
 
     val optionFragment = fragmentType match {
       case Raml10DocumentationItem         => Some(DocumentationItemFragmentParser(encodedMap).parse())
@@ -193,5 +197,4 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
         RamlNamedExampleParser(entry, producer, ExampleOptions(strictDefault = true, quiet = true)).parse())
     }
   }
-
 }

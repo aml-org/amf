@@ -2,6 +2,7 @@ package amf.dialects
 
 import amf.core.model.document.BaseUnit
 import amf.core.rdf.RdfModel
+import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{Amf, Hint, Vendor, VocabularyYamlHint}
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.Validation
@@ -40,9 +41,10 @@ class DialectSHACLTest extends AsyncFunSuite with PlatformSecrets with BuildCycl
                         hint: Hint = VocabularyYamlHint,
                         target: Vendor = Amf,
                         directory: String = basePath,
-                        validation: Option[Validation] = None): Future[Assertion] = {
+                        validation: Option[Validation] = None,
+                        syntax: Option[Syntax] = None): Future[Assertion] = {
 
-    val config = CycleConfig(source, golden, hint, target, directory)
+    val config = CycleConfig(source, golden, hint, target, directory, None)
 
     build(config, validation, useAmfJsonldSerialisation = true)
       .map(transformRdf(_, config))

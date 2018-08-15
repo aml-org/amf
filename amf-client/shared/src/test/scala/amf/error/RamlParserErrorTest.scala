@@ -305,7 +305,7 @@ class RamlParserErrorTest extends ParserErrorTest {
       "/error/invalid-mediatype.raml",
       violation => {
         violation.level should be("Violation")
-        violation.message should be("Property applicationjson not supported in a raml 0.8 shape node")
+        violation.message should be("Property applicationjson not supported in a RAML 0.8 shape node")
         violation.position.map(_.range) should be(Some(Range((8, 10), (8, 26))))
       }
     )
@@ -316,7 +316,7 @@ class RamlParserErrorTest extends ParserErrorTest {
       "/error/invalid-payload-facet.raml",
       violation => {
         violation.level should be("Violation")
-        violation.message should be("Properties typically not supported in a raml 1.0 anyShape node")
+        violation.message should be("Properties typically not supported in a RAML 1.0 anyShape node")
         violation.position.map(_.range) should be(Some(Range((10, 12), (15, 30))))
       }
     )
@@ -373,12 +373,12 @@ class RamlParserErrorTest extends ParserErrorTest {
       "/error/invalid-lib-and-type-08/api.raml",
       first => {
         first.level should be("Violation")
-        first.message should be("Property uses not supported in a raml 0.8 webApi node")
+        first.message should be("Property uses not supported in a RAML 0.8 webApi node")
         first.position.map(_.range) should be(Some(Range((4, 0), (8, 0))))
       },
       second => {
         second.level should be("Violation")
-        second.message should be("Invalid type def duTypes.storyCollection for raml 08")
+        second.message should be("Invalid type def duTypes.storyCollection for RAML 0.8")
         second.position.map(_.range) should be(Some(Range((14, 18), (14, 41))))
       }
     )
@@ -413,7 +413,7 @@ class RamlParserErrorTest extends ParserErrorTest {
       "/error/map-key.raml",
       first => {
         first.level should be("Violation")
-        first.message should be("Property {alpha2code: } not supported in a raml 1.0 webApi node")
+        first.message should be("Property {alpha2code: } not supported in a RAML 1.0 webApi node")
         first.position.map(_.range) should be(Some(Range((7, 0), (9, 14))))
       }
     )
@@ -482,7 +482,7 @@ class RamlParserErrorTest extends ParserErrorTest {
       "/error/items-key-in-object.raml",
       error => {
         error.level should be("Violation")
-        error.message should be("Properties items not supported in a raml 1.0 nodeShape node")
+        error.message should be("Properties items not supported in a RAML 1.0 nodeShape node")
         error.position.map(_.range) should be(Some(Range((14, 4), (14, 16))))
       }
     )

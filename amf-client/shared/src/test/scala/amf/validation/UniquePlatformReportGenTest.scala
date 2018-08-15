@@ -17,9 +17,9 @@ sealed trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTes
   val hint: Hint
 
   protected lazy val defaultProfile: ProfileName = hint.vendor match {
-    case Raml => RAMLProfile
-    case Oas  => OASProfile
-    case _    => AMFProfile
+    case Raml => RamlProfile
+    case Oas  => OasProfile
+    case _    => AmfProfile
   }
 
   protected def generate(report: AMFValidationReport): String = {
@@ -47,7 +47,7 @@ sealed trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTes
     for {
       validation <- Validation(platform)
       _          <- if (profileFile.isDefined) validation.loadValidationProfile(basePath + profileFile.get) else Future.unit
-      model      <- AMFCompiler(basePath + api, platform, RamlYamlHint, validation).build()
+      model      <- AMFCompiler(basePath + api, platform, hint, validation).build()
       report     <- validation.validate(model, profile)
       r          <- handleReport(report, golden.map(processGolden))
     } yield {
@@ -55,15 +55,15 @@ sealed trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTes
     }
   }
 
-  protected def processGolden(g:String): String
+  protected def processGolden(g: String): String
 }
 
-trait UniquePlatformReportGenTest extends ValidationReportGenTest{
-  override protected def processGolden(g:String): String = g
+trait UniquePlatformReportGenTest extends ValidationReportGenTest {
+  override protected def processGolden(g: String): String = g
 }
 
-trait MultiPlatformReportGenTest extends ValidationReportGenTest{
-  override protected def processGolden(g:String): String = g + s".${platform.name}"
+trait MultiPlatformReportGenTest extends ValidationReportGenTest {
+  override protected def processGolden(g: String): String = g + s".${platform.name}"
 }
 
 trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest {
@@ -92,7 +92,7 @@ trait ValidModelTest extends MultiPlatformReportGenTest {
   override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath: String = ""
 
-  protected def checkValid(api: String, profile: ProfileName = RAMLProfile): Future[Assertion] =
+  protected def checkValid(api: String, profile: ProfileName = RamlProfile): Future[Assertion] =
     super.validate(api, None, profile, None)
 
 }

@@ -7,7 +7,7 @@ import amf.core.annotations.SourceAST
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser._
-import amf.core.remote.{Cache, Context, FileNotFound}
+import amf.core.remote._
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.BaseWebApiPlugin
 import amf.plugins.document.webapi.parser.RamlHeader
@@ -38,7 +38,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
                       context: Context,
                       environment: Environment): Future[ParsedReference] =
     vendor match {
-      case "RAML 1.0" | "RAML 0.8" if reference.isExternalFragment =>
+      case Raml10.name | Raml08.name | Raml.name if reference.isExternalFragment =>
         handleRamlExternalFragment(reference, ctx, context, environment)
       case _ => Future.successful(reference)
     }
@@ -48,8 +48,8 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     parsed.asInstanceOf[SyamlParsedDocument].comment match {
       case Some(c) =>
         RamlHeader.fromText(c.metaText) match {
-          case Some(Raml10Overlay | Raml10Extension) if vendor == "RAML 1.0" => true
-          case _                                                             => false
+          case Some(Raml10Overlay | Raml10Extension) if vendor == Raml10.name => true
+          case _                                                              => false
         }
       case None => false
     }
@@ -59,8 +59,8 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     document.node.to[YMap] match {
       case Right(map) =>
         val ext = vendor match {
-          case "RAML 1.0"              => Some("extends")
-          case "OAS 2.0" | "OAS 3.0.0" => Some("x-extends")
+          case Raml10.name             => Some("extends")
+          case Oas20.name | Oas30.name => Some("x-extends")
           case _                       => None
         }
 
@@ -85,9 +85,9 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
   // todo: we should use vendor.name in every place instead of match handwrited strings
   private def links(part: YPart, ctx: ParserContext): Unit = {
     vendor match {
-      case "RAML 1.0" | "RAML 0.8" | "RAML" => ramlLinks(part)
-      case "OAS 2.0" | "OAS 3.0.0"          => oasLinks(part, ctx)
-      case _                                => // Ignore
+      case Raml10.name | Raml08.name | Raml.name => ramlLinks(part)
+      case Oas20.name | Oas30.name               => oasLinks(part, ctx)
+      case _                                     => // Ignore
     }
   }
 
@@ -95,8 +95,8 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     document.to[YMap] match {
       case Right(map) =>
         val uses = vendor match {
-          case "RAML 1.0"              => Some("uses")
-          case "OAS 2.0" | "OAS 3.0.0" => Some("x-amf-uses")
+          case Raml10.name             => Some("uses")
+          case Oas20.name | Oas30.name => Some("x-amf-uses")
           case _                       => None
         }
         uses.foreach(u => {
@@ -188,7 +188,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
         val updated = context.update(reference.unit.id) // ??
 
         val externals = refs.toReferences.map((r: Reference) => {
-          r.resolve(updated, None, vendor, Cache(), ctx, environment, r.refs.map(_.node))
+          r.resolve(updated, None, Cache(), ctx, environment, r.refs.map(_.node))
             .flatMap(u => {
               val resolved = handleRamlExternalFragment(ParsedReference(u, r), ctx, updated, environment)
 

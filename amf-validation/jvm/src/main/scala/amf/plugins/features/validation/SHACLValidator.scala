@@ -3,7 +3,7 @@ package amf.plugins.features.validation
 import java.io.{InputStreamReader, Reader, StringReader}
 import java.nio.charset.Charset
 
-import amf.AMFProfile
+import amf.AmfProfile
 import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.BaseUnit
 import amf.core.rdf.{RdfModel, RdfModelEmitter}
@@ -149,7 +149,7 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
 
   override def shapes(shapes: Seq[ValidationSpecification], functionsUrl: String): RdfModel = {
     val shapesModel = new JenaRdfModel()
-    new ValidationRdfModelEmitter(AMFProfile, shapesModel).emit(shapes)
+    new ValidationRdfModelEmitter(AmfProfile, shapesModel).emit(shapes)
     shapesModel
   }
 

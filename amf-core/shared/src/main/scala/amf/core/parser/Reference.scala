@@ -21,7 +21,6 @@ case class Reference(url: String, refs: Seq[RefContainer]) {
   }
   def resolve(base: Context,
               mediaType: Option[String],
-              vendor: String,
               cache: Cache,
               ctx: ParserContext,
               env: Environment,

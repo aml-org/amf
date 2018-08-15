@@ -20,9 +20,9 @@ class ParametersNormalizationStage(profile: ProfileName)(override implicit val e
 
   override def resolve[T <: BaseUnit](model: T): T = {
     profile match {
-      case RAMLProfile                => parametersRaml10(model).asInstanceOf[T]
-      case OASProfile | RAML08Profile => parametersOpenApi(model).asInstanceOf[T]
-      case AMFProfile                 => parametersAmf(model).asInstanceOf[T]
+      case RamlProfile                => parametersRaml10(model).asInstanceOf[T]
+      case OasProfile | Raml08Profile => parametersOpenApi(model).asInstanceOf[T]
+      case AmfProfile                 => parametersAmf(model).asInstanceOf[T]
       case _                          => throw new Exception(s"Unknown profile ${profile.profile}")
     }
   }

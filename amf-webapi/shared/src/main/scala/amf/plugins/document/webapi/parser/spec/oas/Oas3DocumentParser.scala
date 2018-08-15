@@ -2,11 +2,11 @@ package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.Root
 import amf.core.parser._
+import amf.core.utils.Strings
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models.WebApi
 import org.yaml.model._
-import amf.core.utils.Strings
 
 case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiContext)
     extends OasDocumentParser(root) {

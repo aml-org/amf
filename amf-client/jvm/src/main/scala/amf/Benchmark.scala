@@ -32,7 +32,7 @@ object Benchmark extends PlatformSecrets {
       val current = for {
         validation <- Validation(platform)
         model      <- AMFCompiler(file, platform, RamlYamlHint, validation).build()
-        report     <- validation.validate(model, RAMLProfile)
+        report     <- validation.validate(model, RamlProfile)
       } yield {
         ExecutionLog.finish()
       }

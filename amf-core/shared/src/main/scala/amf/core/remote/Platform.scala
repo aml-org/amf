@@ -15,10 +15,6 @@ import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class UnsupportedUrlScheme(url: String)    extends Exception
-class PathResolutionError(message: String) extends Exception
-class FileReadingError(message: String)    extends Exception
-
 trait FileMediaType {
   def mimeFromExtension(extension: String): Option[String] =
     extension match {
@@ -224,3 +220,7 @@ case class NetworkError(cause: Throwable) extends Exception(cause)
 
 case class UnexpectedStatusCode(resource: String, code: Int)
     extends Exception(s"Unexpected status code '$code' for resource '$resource'")
+
+class UnsupportedUrlScheme(url: String)    extends Exception
+class PathResolutionError(message: String) extends Exception
+class FileReadingError(message: String)    extends Exception

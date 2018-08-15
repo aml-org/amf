@@ -7,7 +7,7 @@ import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models.{Payload, WebApi}
-import amf.{OASProfile, ProfileName}
+import amf.{OasProfile, ProfileName}
 
 /** Apply root and operation mime types to payloads.
   *
@@ -60,7 +60,7 @@ class MediaTypeResolutionStage(profile: ProfileName)(override implicit val error
         Option(operation.request).foreach { request =>
           // Use accepts field.
           accepts.foreach { a =>
-            if (profile == OASProfile) operation.set(OperationModel.Accepts, a)
+            if (profile == OasProfile) operation.set(OperationModel.Accepts, a)
             request.setArray(RequestModel.Payloads, payloads(request.payloads, a, request.id))
           }
         }
@@ -68,7 +68,7 @@ class MediaTypeResolutionStage(profile: ProfileName)(override implicit val error
         operation.responses.foreach { response =>
           // Use contentType field.
           contentType.foreach { ct =>
-            if (profile == OASProfile) operation.set(OperationModel.ContentType, ct)
+            if (profile == OasProfile) operation.set(OperationModel.ContentType, ct)
             response.setArray(RequestModel.Payloads, payloads(response.payloads, ct, response.id))
           }
         }

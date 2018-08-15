@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.validation
 
 import java.net.URISyntaxException
 
-import amf.PAYLOADProfile
+import amf.PayloadProfile
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain._
@@ -29,8 +29,8 @@ class AMFShapeValidations(root: Shape) {
     currentDataNode = Some(dataNode)
     val parsedValidations = validations() ++ customFunctionValidations()
     ValidationProfile(
-      name = PAYLOADProfile,
-      baseProfile = Some(PAYLOADProfile),
+      name = PayloadProfile,
+      baseProfile = Some(PayloadProfile),
       violationLevel = parsedValidations.map(_.name),
       validations = parsedValidations ++ ParserSideValidations.validations
     )

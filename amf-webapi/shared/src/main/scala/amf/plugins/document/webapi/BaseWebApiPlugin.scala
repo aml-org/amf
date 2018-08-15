@@ -4,7 +4,7 @@ import amf.ProfileName
 import amf.core.model.document.BaseUnit
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.annotations.{DeclaredElement, ExternalFragmentRef, InlineElement}
-import amf.core.remote.Platform
+import amf.core.remote.{Platform, Vendor}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
@@ -22,7 +22,9 @@ import scala.concurrent.Future
 
 trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with WebApiValidations with PlatformSecrets {
 
-  def version: String
+  protected def vendor: Vendor
+
+  override val ID: String = vendor.name
 
   override def referenceHandler() = new WebApiReferenceHandler(ID, this)
 

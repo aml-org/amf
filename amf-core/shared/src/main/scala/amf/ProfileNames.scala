@@ -1,17 +1,19 @@
 package amf
 
-import amf.core.vocabulary.Namespace
+import amf.core.remote._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
 @JSExportTopLevel("ProfileNames")
 object ProfileNames {
-  val AMF: ProfileName    = AMFProfile
-  val OAS: ProfileName    = OASProfile
-  val OAS3: ProfileName   = OAS3Profile
-  val RAML: ProfileName   = RAMLProfile
-  val RAML08: ProfileName = RAML08Profile
+  val AMF: ProfileName    = AmfProfile
+  val OAS: ProfileName    = OasProfile
+  val OAS20: ProfileName  = Oas20Profile
+  val OAS30: ProfileName  = Oas30Profile
+  val RAML: ProfileName   = RamlProfile
+  val RAML10: ProfileName = Raml10Profile
+  val RAML08: ProfileName = Raml08Profile
 }
 
 case class ProfileName(private[amf] val p: String, private val m: MessageStyle = AMFStyle) {
@@ -22,39 +24,43 @@ case class ProfileName(private[amf] val p: String, private val m: MessageStyle =
   override def toString: String  = p
 }
 
-object AMFProfile     extends ProfileName("AMF")
-object OASProfile     extends ProfileName("OpenAPI", OASStyle)
-object OAS3Profile    extends ProfileName("OpenAPI3", OASStyle)
-object RAMLProfile    extends ProfileName("RAML", RAMLStyle)
-object RAML08Profile  extends ProfileName("RAML08", RAMLStyle)
-object PAYLOADProfile extends ProfileName("Payload")
+object AmfProfile     extends ProfileName(Amf.name)
+object OasProfile     extends ProfileName(Oas.name, OASStyle)
+object Oas20Profile   extends ProfileName(Oas20.name, OASStyle)
+object Oas30Profile   extends ProfileName(Oas30.name, OASStyle)
+object RamlProfile    extends ProfileName(Raml10.name, RAMLStyle)
+object Raml08Profile  extends ProfileName(Raml08.name, RAMLStyle)
+object Raml10Profile  extends ProfileName(Raml10.name, RAMLStyle)
+object PayloadProfile extends ProfileName(Payload.name)
 
 object ProfileName {
   def unapply(name: String): Option[ProfileName] =
     name match {
-      case AMFProfile.p    => Some(AMFProfile)
-      case OASProfile.p    => Some(OASProfile)
-      case OAS3Profile.p   => Some(OAS3Profile)
-      case RAMLProfile.p   => Some(RAMLProfile)
-      case RAML08Profile.p => Some(RAML08Profile)
+      case AmfProfile.p    => Some(AmfProfile)
+      case OasProfile.p    => Some(OasProfile)
+      case Oas30Profile.p  => Some(Oas30Profile)
+      case RamlProfile.p   => Some(RamlProfile)
+      case Raml08Profile.p => Some(Raml08Profile)
       case _               => None
     }
 
   def apply(profile: String): ProfileName = profile match {
-    case "AMF"    => AMFProfile
-    case "OAS"    => OASProfile
-    case "OAS3"   => OAS3Profile
-    case "RAML"   => RAMLProfile
-    case "RAML08" => RAML08Profile
-    case other    => new ProfileName(other)
+    case Amf.name    => AmfProfile
+    case Oas.name    => OasProfile
+    case Oas20.name  => Oas20Profile
+    case Oas30.name  => Oas30Profile
+    case Raml.name   => RamlProfile
+    case Raml08.name => Raml08Profile
+    case Raml10.name => Raml10Profile
+    case custom      => new ProfileName(custom)
   }
 }
 
 object MessageStyle {
   def apply(name: String): MessageStyle = name match {
-    case "RAML" | "RAML08" => RAMLStyle
-    case "OAS" | "OAS3"    => OASStyle
-    case _                 => AMFStyle
+    case Raml.name | Raml10.name | Raml08.name => RAMLStyle
+    case Oas.name | Oas20.name | Oas30.name    => OASStyle
+    case _                                     => AMFStyle
   }
 }
 
@@ -71,34 +77,11 @@ object MessageStyles {
 }
 
 object RAMLStyle extends MessageStyle {
-  override def profileName: ProfileName = RAMLProfile
+  override def profileName: ProfileName = RamlProfile
 }
 object OASStyle extends MessageStyle {
-  override def profileName: ProfileName = OASProfile
+  override def profileName: ProfileName = OasProfile
 }
 object AMFStyle extends MessageStyle {
-  override def profileName: ProfileName = AMFProfile
-}
-
-@JSExportAll
-@JSExportTopLevel("DataTypes")
-object DataTypes {
-  val String: String       = (Namespace.Xsd + "string").iri()
-  val Integer: String      = (Namespace.Xsd + "integer").iri()
-  val Number: String       = (Namespace.Shapes + "number").iri()
-  val Long: String         = (Namespace.Xsd + "long").iri()
-  val Double: String       = (Namespace.Xsd + "double").iri()
-  val Float: String        = (Namespace.Xsd + "float").iri()
-  val Decimal: String      = (Namespace.Xsd + "decimal").iri()
-  val Boolean: String      = (Namespace.Xsd + "boolean").iri()
-  val Date: String         = (Namespace.Xsd + "date").iri()
-  val Time: String         = (Namespace.Xsd + "time").iri()
-  val DateTime: String     = (Namespace.Xsd + "dateTime").iri()
-  val DateTimeOnly: String = (Namespace.Shapes + "dateTimeOnly").iri()
-  val File: String         = (Namespace.Shapes + "file").iri()
-  val Byte: String         = (Namespace.Xsd + "byte").iri()
-  val Binary: String       = (Namespace.Xsd + "base64Binary").iri()
-  val Password: String     = (Namespace.Shapes + "password").iri()
-  val Any: String          = (Namespace.Xsd + "anyType").iri()
-  val Nil: String          = (Namespace.Xsd + "nil").iri()
+  override def profileName: ProfileName = AmfProfile
 }

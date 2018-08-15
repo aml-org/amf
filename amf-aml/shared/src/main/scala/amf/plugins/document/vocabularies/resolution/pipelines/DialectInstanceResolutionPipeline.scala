@@ -4,7 +4,7 @@ import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.stages.{CleanReferencesStage, DeclarationsRemovalStage, ResolutionStage}
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 import amf.plugins.document.vocabularies.resolution.stages.DialectInstanceReferencesResolutionStage
-import amf.{AMFProfile, ProfileName}
+import amf.{AmfProfile, ProfileName}
 
 class DialectInstanceResolutionPipeline(override val model: DialectInstance)
     extends ResolutionPipeline[DialectInstance] {
@@ -14,5 +14,5 @@ class DialectInstanceResolutionPipeline(override val model: DialectInstance)
     new CleanReferencesStage(),
     new DeclarationsRemovalStage()
   )
-  override def profileName: ProfileName = AMFProfile
+  override def profileName: ProfileName = AmfProfile
 }

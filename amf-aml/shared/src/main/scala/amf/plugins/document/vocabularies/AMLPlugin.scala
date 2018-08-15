@@ -1,17 +1,16 @@
 package amf.plugins.document.vocabularies
 
-import amf.{ProfileName, ProfileNames, RAMLProfile}
+import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.Root
+import amf.core.client.ParsingOptions
 import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
 import amf.core.parser.{ParsedDocument, ParserContext, ReferenceHandler, SyamlParsedDocument}
-import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
-import amf.core.client.ParsingOptions
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFDomainEntityResolver
-import amf.core.remote.Platform
+import amf.core.remote.{Aml, Platform}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.{RuntimeValidator, ValidationOptions}
 import amf.core.unsafe.PlatformSecrets
@@ -30,8 +29,12 @@ import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReference
 import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, DialectsParser}
 import amf.plugins.document.vocabularies.parser.instances.{DialectInstanceContext, DialectInstanceParser}
 import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
-import amf.plugins.document.vocabularies.resolution.pipelines.{DialectInstanceResolutionPipeline, DialectResolutionPipeline}
+import amf.plugins.document.vocabularies.resolution.pipelines.{
+  DialectInstanceResolutionPipeline,
+  DialectResolutionPipeline
+}
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
+import amf.{ProfileName, RamlProfile}
 import org.yaml.model._
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -70,7 +73,7 @@ trait JsonHeaderExtractor {
 
         }
         parsed.collectFirst { case Some(metaText) => metaText }
-      case _                           => None
+      case _ => None
     }
 
   }
@@ -106,9 +109,9 @@ object AMLPlugin
 
   val registry = new DialectsRegistry
 
-  override val ID: String = "AML 1.0"
+  override val ID: String = Aml.name
 
-  override val vendors: Seq[String] = Seq("AML 1.0")
+  override val vendors: Seq[String] = Seq(Aml.name)
 
   override def init(): Future[AMFPlugin] = Future { this }
 
@@ -170,7 +173,10 @@ object AMLPlugin
   /**
     * Parses an accepted document returning an optional BaseUnit
     */
-  override def parse(document: Root, parentContext: ParserContext, platform: Platform, options: ParsingOptions): Option[BaseUnit] = {
+  override def parse(document: Root,
+                     parentContext: ParserContext,
+                     platform: Platform,
+                     options: ParsingOptions): Option[BaseUnit] = {
     val maybeMetaText = comment(document) match {
       case Some(comment) => Some(comment.metaText)
       case _ =>
@@ -199,7 +205,7 @@ object AMLPlugin
     * Unparses a model base unit and return a document AST
     */
   override def unparse(unit: BaseUnit, options: RenderOptions): Option[ParsedDocument] = {
-    val unparsed =unit match {
+    val unparsed = unit match {
       case vocabulary: Vocabulary  => Some(VocabularyEmitter(vocabulary).emitVocabulary())
       case dialect: Dialect        => Some(DialectEmitter(dialect).emitDialect())
       case library: DialectLibrary => Some(RamlDialectLibraryEmitter(library).emitDialectLibrary())
@@ -207,7 +213,9 @@ object AMLPlugin
         Some(DialectInstancesEmitter(instance, registry.dialectFor(instance).get).emitInstance())
       case _ => None
     }
-    unparsed map { doc => SyamlParsedDocument(document = doc) }
+    unparsed map { doc =>
+      SyamlParsedDocument(document = doc)
+    }
   }
 
   /**
@@ -323,7 +331,7 @@ object AMLPlugin
 
           // adding model-side validations
           val results = shaclReport.results.flatMap { r =>
-            buildValidationResult(baseUnit, r, RAMLProfile.messageStyle, validations)
+            buildValidationResult(baseUnit, r, RamlProfile.messageStyle, validations)
           }
 
           AMFValidationReport(

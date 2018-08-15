@@ -1,6 +1,5 @@
 package amf.plugins.document.webapi.validation
 
-import amf.{MessageStyle, ProfileName}
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
 import amf.core.validation._
@@ -8,6 +7,7 @@ import amf.core.validation.core.{ValidationProfile, ValidationResult, Validation
 import amf.core.vocabulary.Namespace
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
+import amf._
 
 import scala.concurrent.Future
 
@@ -15,12 +15,13 @@ trait WebApiValidations extends ValidationResultProcessor {
 
   var aggregatedReport: List[AMFValidationResult] = List()
 
-  val defaultValidationProfiles = DefaultAMFValidations.profiles().foldLeft(Map[String, () => ValidationProfile]()) {
-    case (acc, profile) =>
-      acc.updated(profile.name.profile, { () =>
-        profile
-      })
-  }
+  val defaultValidationProfiles: Map[String, () => ValidationProfile] =
+    DefaultAMFValidations.profiles().foldLeft(Map[String, () => ValidationProfile]()) {
+      case (acc, profile) =>
+        acc.updated(profile.name.profile, { () =>
+          profile
+        })
+    }
 
   protected def validationRequestsForBaseUnit(unresolvedUnit: BaseUnit,
                                               profile: ProfileName,
@@ -52,11 +53,11 @@ trait WebApiValidations extends ValidationResultProcessor {
           case (v, validation) =>
             // processing property shapes Id computed as constraintID + "/prop"
             validation.propertyConstraints.find(p => p.name == validationSpecToLook) match {
-              case Some(p) => true
+              case Some(_) => true
               case None    => validationSpecToLook.startsWith(v)
             }
         } match {
-          case Some((v, spec)) =>
+          case Some((_, spec)) =>
             Some(spec)
           case None =>
             if (validationSpecToLook.startsWith("_:")) {

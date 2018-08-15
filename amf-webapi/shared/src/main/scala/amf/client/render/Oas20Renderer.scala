@@ -1,7 +1,8 @@
 package amf.client.render
 
 import amf.core.registries.AMFPluginsRegistry
-import amf.plugins.document.webapi.OAS20Plugin
+import amf.core.remote.Oas20
+import amf.plugins.document.webapi.Oas20Plugin
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -10,6 +11,6 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   */
 @JSExportAll
 @JSExportTopLevel("Oas20Renderer")
-class Oas20Renderer extends Renderer("OAS 2.0", "application/json") {
-  AMFPluginsRegistry.registerDocumentPlugin(OAS20Plugin)
+class Oas20Renderer extends Renderer(Oas20.name, "application/json") {
+  AMFPluginsRegistry.registerDocumentPlugin(Oas20Plugin)
 }

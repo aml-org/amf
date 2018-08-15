@@ -5,7 +5,8 @@ import amf.core.emitter.RenderOptions
 import amf.core.remote.Syntax.{Json, Syntax, Yaml}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
-import amf.facades.{AMFCompiler, AMFRenderer, Validation}
+import amf.emit.AMFRenderer
+import amf.facades.{AMFCompiler, Validation}
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -22,7 +23,7 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
     }) flatMap { v =>
       AMFCompiler(basePath + exampleFile, platform, hint, v, None, None).build()
     } flatMap {
-      AMFRenderer(_, target, syntax, RenderOptions()).renderToString
+      AMFRenderer(_, target, RenderOptions(), Some(syntax)).renderToString
     }
   }
 
@@ -30,7 +31,7 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
     val expectedFile             = "validation_profile_example_gold.raml"
     val exampleFile              = "validation_profile_example.raml"
     val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
-    cycle(exampleFile, RamlYamlHint, Yaml, Raml).zip(expected).map(checkDiff)
+    cycle(exampleFile, VocabularyYamlHint, Yaml, Raml).zip(expected).map(checkDiff)
   }
 
   test("prefixes can be loaded") {
@@ -38,7 +39,7 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
     val exampleFile              = "validation_profile_prefixes.raml"
     val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
     val validation               = Validation(platform)
-    cycle(exampleFile, RamlYamlHint, Json, Amf).zip(expected).map(checkDiff)
+    cycle(exampleFile, VocabularyYamlHint, Json, Amf).zip(expected).map(checkDiff)
   }
 
   test("Prefixes can be parsed") {
@@ -54,7 +55,7 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
     val exampleFile              = "validation_profile_example.raml"
     val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
     val validation               = Validation(platform)
-    cycle(exampleFile, RamlYamlHint, Yaml, Raml).zip(expected).map(checkDiff)
+    cycle(exampleFile, VocabularyYamlHint, Yaml, Raml).zip(expected).map(checkDiff)
   }
 
   test("Loading and serializing validations with inplace definition of range") {
@@ -62,7 +63,7 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
     val exampleFile              = "validation_profile_example.raml"
     val validation               = Validation(platform)
     val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
-    cycle(exampleFile, RamlYamlHint, Yaml, Raml).zip(expected).map(checkDiff)
+    cycle(exampleFile, VocabularyYamlHint, Yaml, Raml).zip(expected).map(checkDiff)
   }
 
   test("Loading and serializing validations with union type") {
@@ -70,7 +71,7 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
     val exampleFile              = "validation_profile_example.raml"
     val validation               = Validation(platform)
     val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
-    cycle(exampleFile, RamlYamlHint, Yaml, Raml).zip(expected).map(checkDiff)
+    cycle(exampleFile, VocabularyYamlHint, Yaml, Raml).zip(expected).map(checkDiff)
   }
 
 }

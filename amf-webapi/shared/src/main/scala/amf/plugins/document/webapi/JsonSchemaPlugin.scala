@@ -7,8 +7,18 @@ import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document._
 import amf.core.model.domain.AnnotationGraphLoader
-import amf.core.parser.{EmptyFutureDeclarations, ParsedDocument, ParsedReference, ParserContext, Reference, ReferenceHandler, SchemaReference, SimpleReferenceHandler, SyamlParsedDocument}
-import amf.core.remote.{Oas3, Platform, Vendor}
+import amf.core.parser.{
+  EmptyFutureDeclarations,
+  ParsedDocument,
+  ParsedReference,
+  ParserContext,
+  Reference,
+  ReferenceHandler,
+  SchemaReference,
+  SimpleReferenceHandler,
+  SyamlParsedDocument
+}
+import amf.core.remote.{JsonSchema, Oas30, Platform, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.contexts._
@@ -32,11 +42,11 @@ class JsonSchemaWebApiContext(loc: String,
     extends OasWebApiContext(loc, refs, wrapped, ds) {
   override val factory: OasSpecVersionFactory = Oas3VersionFactory()(this)
   override val syntax: SpecSyntax             = Oas3Syntax
-  override val vendor: Vendor                 = Oas3
+  override val vendor: Vendor                 = Oas30
 }
 
 class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
-  override val vendors: Seq[String] = Seq("JSON Schema", "JSON Payload")
+  override val vendors: Seq[String] = Seq(JsonSchema.name)
 
   override def modelEntities: Seq[Obj] = Nil
 
@@ -98,7 +108,6 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
       "application/json",
       inputFragment.references.map(ref => ParsedReference(ref, Reference(ref.location().getOrElse(""), Nil), None)),
       SchemaReference,
-      ExternalJsonRefsPlugin.ID,
       inputFragment.raw.getOrElse("")
     )
     parse(doc, ctx, platform, new ParsingOptions()).flatMap { parsed =>
@@ -115,7 +124,10 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
   /**
     * Parses an accepted document returning an optional BaseUnit
     */
-  override def parse(document: Root, parentContext: ParserContext, platform: Platform, options: ParsingOptions): Option[BaseUnit] = {
+  override def parse(document: Root,
+                     parentContext: ParserContext,
+                     platform: Platform,
+                     options: ParsingOptions): Option[BaseUnit] = {
     document.parsed match {
       case parsedDoc: SyamlParsedDocument =>
         val parts        = document.location.split("#")
@@ -129,15 +141,17 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
 
         // Apparently, in a RAML 0.8 API spec the JSON Schema has a closure over the schemas declared in the spec...
         val inheritedDeclarations =
-          if (parentContext.isInstanceOf[Raml08WebApiContext]) Some(parentContext.asInstanceOf[WebApiContext].declarations)
+          if (parentContext.isInstanceOf[Raml08WebApiContext])
+            Some(parentContext.asInstanceOf[WebApiContext].declarations)
           else None
-        val jsonSchemaContext = new JsonSchemaWebApiContext(url, document.references, cleanNested, inheritedDeclarations)
+        val jsonSchemaContext =
+          new JsonSchemaWebApiContext(url, document.references, cleanNested, inheritedDeclarations)
 
         val documentRoot = parsedDoc.document.node
         val rootAst = findRootNode(documentRoot, jsonSchemaContext, hashFragment).getOrElse {
           jsonSchemaContext.violation(shapeId,
-            s"Cannot find fragment $url in JSON schema ${document.location}",
-            documentRoot)
+                                      s"Cannot find fragment $url in JSON schema ${document.location}",
+                                      documentRoot)
           documentRoot
         }
 
@@ -177,7 +191,9 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     * Unparses a model base unit and return a document AST
     */
   override def unparse(unit: BaseUnit, options: RenderOptions): Option[ParsedDocument] =
-    firstAnyShape(unit).map(as => JsonSchemaEmitter(as).emitDocument()).map { doc => SyamlParsedDocument(document =  doc) }
+    firstAnyShape(unit).map(as => JsonSchemaEmitter(as).emitDocument()).map { doc =>
+      SyamlParsedDocument(document = doc)
+    }
 
   /**
     * Decides if this plugin can parse the provided document instance.

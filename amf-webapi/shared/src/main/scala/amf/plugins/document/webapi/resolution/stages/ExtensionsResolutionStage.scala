@@ -27,7 +27,7 @@ import amf.plugins.domain.webapi.models.WebApi
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DataNodeMerging
 import amf.plugins.features.validation.ParserSideValidations
-import amf.{ProfileName, RAML08Profile}
+import amf.{ProfileName, Raml08Profile}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -66,7 +66,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
 
   /** Default to raml10 context. */
   implicit val ctx: RamlWebApiContext = profile match {
-    case RAML08Profile => new Raml08WebApiContext("", Nil, ParserContext())
+    case Raml08Profile => new Raml08WebApiContext("", Nil, ParserContext())
     case _             => new Raml10WebApiContext("", Nil, ParserContext())
   }
 

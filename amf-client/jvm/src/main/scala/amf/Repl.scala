@@ -29,10 +29,10 @@ class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
 
   private def generate(unit: BaseUnit, syntax: String): Unit = {
     val generator: Option[Renderer] = syntax match {
-      case "raml"   => Some(new Raml10Renderer)
-      case "raml08" => Some(new Raml08Renderer)
-      case "oas"    => Some(new Oas20Renderer)
-      case "amf"    => Some(new AmfGraphRenderer)
+      case Raml10.name | Raml.name => Some(new Raml10Renderer)
+      case Raml08.name             => Some(new Raml08Renderer)
+      case Oas20.name              => Some(new Oas20Renderer)
+      case Amf.name                => Some(new AmfGraphRenderer)
       case _ =>
         out.println(s"Unsupported generation for: $syntax")
         None

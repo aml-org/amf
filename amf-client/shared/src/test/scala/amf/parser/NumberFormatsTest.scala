@@ -1,13 +1,13 @@
 package amf.parser
 
-import amf.core.emitter.RenderOptions
 import amf.common.Diff
 import amf.common.Diff.makeString
+import amf.core.emitter.RenderOptions
 import amf.core.model.document.Fragment
-import amf.core.remote.Syntax.Yaml
 import amf.core.remote.{Raml10, RamlYamlHint}
 import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
-import amf.facades.{AMFCompiler, AMFRenderer, Validation}
+import amf.emit.AMFRenderer
+import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models.{ScalarShape, TypeDef}
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
@@ -37,7 +37,7 @@ class NumberFormatsTest extends AsyncFunSuite with PlatformSecrets {
       for {
         validation <- Validation(platform).map(_.withEnabledValidation(false))
         unit       <- AMFCompiler("", TrunkPlatform(ex.api), RamlYamlHint, validation).build()
-        dumped     <- AMFRenderer(unit, Raml10, Yaml, RenderOptions()).renderToString
+        dumped     <- AMFRenderer(unit, Raml10, RenderOptions()).renderToString
       } yield {
         unit match {
           case f: Fragment =>

@@ -1,5 +1,5 @@
 Model: file://amf-client/shared/src/test/resources/validations/xmlexample/offices_xml_type.raml
-Profile: RAML
+Profile: RAML 1.0
 Conforms? true
 Number of results: 2
 

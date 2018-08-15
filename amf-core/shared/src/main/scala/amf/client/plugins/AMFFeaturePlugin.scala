@@ -11,18 +11,16 @@ trait AMFFeaturePlugin extends AMFPlugin {
     *
     * @param url URL of the top level document being parsed
     * @param mediaType optional media type passed in the invocation
-    * @param vendor type of vendor selected through the user interface
     */
-  def onBeginParsingInvocation(url: String, mediaType: Option[String], vendor: String): Unit = ()
+  def onBeginParsingInvocation(url: String, mediaType: Option[String]): Unit = ()
 
   /**
     * Callback invoked for every linked document being parsed as result of the client invocation of the parser
     * @param url URL of the documen being parsed
     * @param content Raw content being parsed after fetching it fromt the remote location
     * @param referenceKind Type of reference for the content
-    * @param vendor Vendor being parsed
     */
-  def onBeginDocumentParsing(url: String, content: Content, referenceKind: ReferenceKind, vendor: String): Content =
+  def onBeginDocumentParsing(url: String, content: Content, referenceKind: ReferenceKind): Content =
     content
 
   /**

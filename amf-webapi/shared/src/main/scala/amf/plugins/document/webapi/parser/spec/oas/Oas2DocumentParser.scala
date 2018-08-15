@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.Root
 import amf.core.parser._
+import amf.core.remote.{Oas20, Vendor}
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.domain.webapi.metamodel.WebApiModel
 import amf.plugins.domain.webapi.models.WebApi

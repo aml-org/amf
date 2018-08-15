@@ -385,12 +385,12 @@ final case class JsonSchemaEmitterContext() extends Oas2SpecEmitterContext {
 
 class Oas3SpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) extends OasSpecEmitterContext(refEmitter) {
   override val factory: OasSpecEmitterFactory = Oas3SpecEmitterFactory()(this)
-  override val vendor: Vendor                 = Oas3
+  override val vendor: Vendor                 = Oas30
 }
 
 class Oas2SpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) extends OasSpecEmitterContext(refEmitter) {
   override val factory: OasSpecEmitterFactory = Oas2SpecEmitterFactory()(this)
-  override val vendor: Vendor                 = Oas2
+  override val vendor: Vendor                 = Oas20
 }
 
 trait RefEmitter {

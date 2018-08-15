@@ -65,16 +65,14 @@ case class ModelValidationStep(override val validationContext: ValidationContext
   override protected def validate(): Future[Seq[AMFValidationResult]] = {
     val baseOptions = FilterDataNodeOptions().withMessageStyle(validationContext.messageStyle)
     val options = validationContext.profile match {
-      case RAMLProfile | RAML08Profile | OASProfile | OAS3Profile =>
+      case RamlProfile | Raml08Profile | OasProfile | Oas30Profile =>
         baseOptions.withPartialValidation()
       case _ =>
         baseOptions.withFullValidation()
     }
     ExecutionLog.log("WebApiValidations#validationRequestsForBaseUnit: validating now WebAPI")
     RuntimeValidator
-      .shaclValidation(validationContext.baseUnit,
-                       validationContext.validations,
-        options)
+      .shaclValidation(validationContext.baseUnit, validationContext.validations, options)
       .map { report =>
         report.results.flatMap { buildValidationResult }
       }

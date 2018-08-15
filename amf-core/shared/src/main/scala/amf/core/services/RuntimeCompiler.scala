@@ -14,7 +14,7 @@ trait RuntimeCompiler {
   def build(url: String,
             base: Context,
             mediaType: Option[String],
-            vendor: String,
+            vendor: Option[String],
             referenceKind: ReferenceKind,
             cache: Cache,
             ctx: Option[ParserContext],
@@ -30,7 +30,7 @@ object RuntimeCompiler {
 
   def apply(url: String,
             mediaType: Option[String],
-            vendor: String,
+            vendor: Option[String],
             base: Context,
             referenceKind: ReferenceKind = UnspecifiedReference,
             cache: Cache = Cache(),
@@ -39,12 +39,13 @@ object RuntimeCompiler {
             parsingOptions: ParsingOptions = ParsingOptions()): Future[BaseUnit] = {
     compiler match {
       case Some(runtimeCompiler) =>
-        AMFPluginsRegistry.featurePlugins().foreach(_.onBeginParsingInvocation(url, mediaType, vendor))
-        runtimeCompiler.build(url, base, mediaType, vendor, referenceKind, cache, ctx, env, parsingOptions) map { parsedUnit =>
-          AMFPluginsRegistry.featurePlugins().foldLeft(parsedUnit) {
-            case (parsed, plugin) =>
-              plugin.onFinishedParsingInvocation(url, parsed)
-          }
+        AMFPluginsRegistry.featurePlugins().foreach(_.onBeginParsingInvocation(url, mediaType))
+        runtimeCompiler.build(url, base, mediaType, vendor, referenceKind, cache, ctx, env, parsingOptions) map {
+          parsedUnit =>
+            AMFPluginsRegistry.featurePlugins().foldLeft(parsedUnit) {
+              case (parsed, plugin) =>
+                plugin.onFinishedParsingInvocation(url, parsed)
+            }
         }
       case _ => throw new Exception("No registered runtime compiler")
     }

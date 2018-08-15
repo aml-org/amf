@@ -7,7 +7,7 @@ import amf.core.services.PayloadValidator
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.{AMFValidationReport, SeverityLevels}
 import amf.facades.{AMFCompiler, Validation}
-import amf.plugins.document.webapi.{RAML08Plugin, RAML10Plugin}
+import amf.plugins.document.webapi.{Raml08Plugin, Raml10Plugin}
 import amf.plugins.domain.webapi.models.WebApi
 import org.scalatest.{AsyncFunSuite, Matchers}
 
@@ -56,8 +56,8 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
 
   override def transform(unit: BaseUnit): BaseUnit =
     unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].sourceVendor match {
-      case Some(Raml08) => RAML08Plugin.resolve(unit)
-      case _            => RAML10Plugin.resolve(unit)
+      case Some(Raml08) => Raml08Plugin.resolve(unit)
+      case _            => Raml10Plugin.resolve(unit)
     }
 }
 

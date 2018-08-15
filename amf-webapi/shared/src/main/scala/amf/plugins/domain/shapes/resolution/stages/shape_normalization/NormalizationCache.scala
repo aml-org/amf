@@ -3,7 +3,7 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.core.parser.ErrorHandler
 import amf.plugins.features.validation.ParserSideValidations
-import amf.{ProfileName, RAML08Profile}
+import amf.{ProfileName, Raml08Profile}
 
 import scala.collection.mutable
 
@@ -12,25 +12,25 @@ private[plugins] class NormalizationContext(final val errorHandler: ErrorHandler
                                             final val profile: ProfileName,
                                             val cache: NormalizationCache = NormalizationCache()) {
 
-  val isRaml08: Boolean                        = profile.equals(RAML08Profile)
+  val isRaml08: Boolean                        = profile.equals(Raml08Profile)
   private val minShapeClass: MinShapeAlgorithm = new MinShapeAlgorithm()(this)
 
-  def minShape(derivedShape: Shape, superShape: Shape): Shape = try {
-    minShapeClass.computeMinShape(derivedShape, superShape)
-  } catch {
-    case e: InheritanceIncompatibleShapeError =>
-      errorHandler.violation(
-        ParserSideValidations.InvalidTypeInheritanceWarningSpecification.id,
-        derivedShape.id,
-        e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
-        e.getMessage,
-        e.lexicalInfo,
-        None
-      )
-      derivedShape
-    case other: Exception => throw other
-  }
-
+  def minShape(derivedShape: Shape, superShape: Shape): Shape =
+    try {
+      minShapeClass.computeMinShape(derivedShape, superShape)
+    } catch {
+      case e: InheritanceIncompatibleShapeError =>
+        errorHandler.violation(
+          ParserSideValidations.InvalidTypeInheritanceWarningSpecification.id,
+          derivedShape.id,
+          e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
+          e.getMessage,
+          e.lexicalInfo,
+          None
+        )
+        derivedShape
+      case other: Exception => throw other
+    }
 
 }
 

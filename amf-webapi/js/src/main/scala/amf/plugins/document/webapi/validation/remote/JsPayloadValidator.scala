@@ -6,7 +6,7 @@ import amf.core.model.domain.Shape
 import amf.core.validation.{AMFValidationReport, ValidationCandidate}
 import amf.core.validation.core.ValidationProfile
 import amf.internal.environment.Environment
-import amf.plugins.document.webapi.OAS20Plugin
+import amf.plugins.document.webapi.Oas20Plugin
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
@@ -89,7 +89,7 @@ class JsPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shape
     dataType.fields
       .setWithoutId(DataTypeFragmentModel.Encodes, fragmentShape) // careful, we don't want to modify the ID
 
-    OAS20Plugin.unparse(dataType, RenderOptions()) match {
+    Oas20Plugin.unparse(dataType, RenderOptions()) match {
       case Some(doc) =>
         SYamlSyntaxPlugin.unparse("application/json", doc) match {
           case Some(jsonSchema) =>

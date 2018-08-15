@@ -4,7 +4,7 @@ import amf.compiler.CompilerTestBuilder
 import amf.core.remote.RamlYamlHint
 import amf.core.validation.SeverityLevels
 import amf.facades.Validation
-import amf.{ProfileName, RAML08Profile, RAMLProfile}
+import amf.{ProfileName, Raml08Profile, RamlProfile}
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
@@ -21,7 +21,7 @@ class DeprecatedKeysTest extends AsyncFunSuite with CompilerTestBuilder {
     Fixture(
       "deprecated schemas 10 warning",
       "schemas.raml",
-      RAMLProfile,
+      RamlProfile,
       Seq(
         FixtureResult(SeverityLevels.WARNING,
                       "'schemas' keyword it's deprecated for 1.0 version, should use 'types' instead"))
@@ -29,13 +29,13 @@ class DeprecatedKeysTest extends AsyncFunSuite with CompilerTestBuilder {
     Fixture(
       "deprecated schema 10 warning",
       "schema.raml",
-      RAMLProfile,
+      RamlProfile,
       Seq(
         FixtureResult(SeverityLevels.WARNING,
                       "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead"))
     ),
-    Fixture("schemas in 08 non warning", "schemas08.raml", RAML08Profile, Nil),
-    Fixture("schema in 08 non warning", "schema08.raml", RAML08Profile, Nil)
+    Fixture("schemas in 08 non warning", "schemas08.raml", Raml08Profile, Nil),
+    Fixture("schema in 08 non warning", "schema08.raml", Raml08Profile, Nil)
   )
 
   fixture.foreach { f =>

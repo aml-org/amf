@@ -956,5 +956,4 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       shape
     }
   }
-
 }

@@ -6,7 +6,7 @@ import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{ScalarNode => DynamicDataNode, _}
 import amf.core.parser.{Annotations, Value, _}
-import amf.core.remote.Oas
+import amf.core.remote.{Oas, Raml08}
 import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Shapes
@@ -350,7 +350,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
               }
               Some(shape.withName(name))
             case _ =>
-              ctx.violation(s"Invalid type def ${value.text} for raml 08", value)
+              ctx.violation(s"Invalid type def ${value.text} for ${Raml08.name}", value)
               None
           }
         })

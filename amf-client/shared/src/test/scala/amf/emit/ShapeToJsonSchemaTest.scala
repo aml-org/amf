@@ -4,7 +4,7 @@ import amf.core.model.document.{BaseUnit, Document}
 import amf.core.remote.RamlYamlHint
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
-import amf.plugins.document.webapi.OAS20Plugin
+import amf.plugins.document.webapi.Oas20Plugin
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.models.WebApi
 import org.scalatest.{Assertion, AsyncFunSuite}
@@ -75,7 +75,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
       v    <- Validation(platform)
       unit <- AMFCompiler(basePath + file, platform, RamlYamlHint, v).build()
     } yield {
-      findShapeFunc(OAS20Plugin.resolve(unit)).map(_.toJsonSchema).getOrElse("")
+      findShapeFunc(Oas20Plugin.resolve(unit)).map(_.toJsonSchema).getOrElse("")
     }
 
     jsonSchema.flatMap { writeTemporaryFile(golden) }.flatMap(assertDifferences(_, goldenPath + golden))

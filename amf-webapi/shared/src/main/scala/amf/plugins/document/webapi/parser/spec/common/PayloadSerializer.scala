@@ -4,6 +4,7 @@ import amf.core.AMFSerializer
 import amf.core.emitter.SpecOrdering
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.DataNode
+import amf.core.remote.Payload
 import amf.core.services.RuntimeSerializer
 import amf.core.utils._
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
@@ -38,7 +39,7 @@ trait PayloadSerializer {
 
   private def dump(dataNode: DataNode): String = {
     AMFSerializer.init()
-    RuntimeSerializer(PayloadFragment(dataNode, "application/json"), "application/payload+json", "RAML")
+    RuntimeSerializer(PayloadFragment(dataNode, "application/json"), "application/payload+json", Payload.name)
   }
 }
 
