@@ -25,5 +25,6 @@ trait FileAssertionTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   /** Return random temporary file name for testing. */
-  def tmp(name: String = ""): String = platform.tmpdir() + System.nanoTime() + "-" + name
+  def tmp(name: String = ""): String = (platform.tmpdir() + platform.fs.separatorChar + System.nanoTime() + "-" + name)
+    .replaceAll(s"${platform.fs.separatorChar}${platform.fs.separatorChar}", s"${platform.fs.separatorChar}")
 }
