@@ -52,7 +52,7 @@ class ExtensionsResolutionStage(val profile: ProfileName, val keepEditingInfo: B
   }
 }
 
-abstract class MerginRestrictions() {
+abstract class MergingRestrictions() {
   def allowsOverride(field: Field): Boolean
 
   def allowsNodeInsertionIn(field: Field): Boolean
@@ -62,7 +62,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
     val profile: ProfileName,
     val keepEditingInfo: Boolean)(implicit val errorHandler: ErrorHandler) {
 
-  val merginRestrictions: MerginRestrictions
+  val restrictions: MergingRestrictions
 
   /** Default to raml10 context. */
   implicit val ctx: RamlWebApiContext = profile match {
@@ -183,7 +183,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
     overlay.fields.fields().filter(ignored).foreach {
       case entry @ FieldEntry(field, value) =>
         master.fields.entry(field) match {
-          case None if merginRestrictions allowsNodeInsertionIn field =>
+          case None if restrictions allowsNodeInsertionIn field =>
             val newValue = adoptInner(master.id, value.value)
             if (keepEditingInfo) newValue.annotations += ExtensionProvenance(extensionId, extensionLocation)
             master.set(field, newValue) // Set field if it doesn't exist.
@@ -200,7 +200,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
               value.annotations
             )
 
-          case Some(existing) if merginRestrictions allowsOverride field =>
+          case Some(existing) if restrictions allowsOverride field =>
             field.`type` match {
               case _: Type.Scalar =>
                 if (keepEditingInfo) value.value.annotations += ExtensionProvenance(extensionId, extensionLocation)
@@ -384,7 +384,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
                                field: Field) = {
     existing match {
       case Some(e) if !asSimpleProperty => merge(e, obj.adopted(target.id), extensionId, extensionLocation)
-      case None if !(merginRestrictions allowsNodeInsertionIn field) =>
+      case None if !(restrictions allowsNodeInsertionIn field) =>
         errorHandler.warning(
           ParserSideValidations.ResolutionErrorSpecification.id,
           obj.id,
@@ -476,7 +476,7 @@ class ExtensionResolutionStage(override val profile: ProfileName, override val k
     }
   }
 
-  override val merginRestrictions: MerginRestrictions = MerginRestrictions.unrestricted
+  override val restrictions: MergingRestrictions = MergingRestrictions.unrestricted
 }
 
 class OverlayResolutionStage(override val profile: ProfileName, override val keepEditingInfo: Boolean)(
@@ -496,18 +496,18 @@ class OverlayResolutionStage(override val profile: ProfileName, override val kee
     target.setArray(field, seq)
   }
 
-  override val merginRestrictions: MerginRestrictions = MerginRestrictions.onlyFunctionalField
+  override val restrictions: MergingRestrictions = MergingRestrictions.onlyFunctionalField
 }
 
-object MerginRestrictions {
+object MergingRestrictions {
 
-  val unrestricted: MerginRestrictions = new MerginRestrictions {
+  val unrestricted: MergingRestrictions = new MergingRestrictions {
     override def allowsOverride(field: Field): Boolean = true
 
     override def allowsNodeInsertionIn(field: Field): Boolean = true
   }
 
-  val onlyFunctionalField: MerginRestrictions = new MerginRestrictions {
+  val onlyFunctionalField: MergingRestrictions = new MergingRestrictions {
     override def allowsOverride(field: Field): Boolean = {
       val forgivenScalar = (field.`type`.isInstanceOf[Scalar] && !(Seq(
         WebApiModel.Name.value.iri(),
