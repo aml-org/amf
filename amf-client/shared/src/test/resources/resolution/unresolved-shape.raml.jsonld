@@ -1,0 +1,125 @@
+[
+  {
+    "@id": "amf://1",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "amf://6",
+        "@type": [
+          "schema-org:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "smaps": {
+          "source-vendor": {
+            "amf://6": "raml 1.0"
+          },
+          "lexical": {
+            "amf://6": "[(2,0)-(6,18)]"
+          }
+        }
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "amf://2",
+        "@type": [
+          "shacl:NodeShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:closed": [
+          {
+            "@value": false
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "amf://3",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#ok"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "amf://4",
+                "@type": [
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape"
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "booolean"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "amf://4": "[(6,10)-(6,18)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "ok"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "amf://3": "[(6,6)-(6,18)]"
+              }
+            }
+          }
+        ],
+        "doc:link-target": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/resolution/unresolved-shape.raml#/declarations/types/A/unresolved/linked_1"
+          }
+        ],
+        "doc:link-label": [
+          {
+            "@value": "A"
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "A"
+          }
+        ],
+        "smaps": {
+          "inherited-shapes": {
+            "amf://2": "amf://5"
+          },
+          "lexical": {
+            "amf://2": "[(4,10)-(4,13)]"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "file://amf-client/shared/src/test/resources/resolution/unresolved-shape.raml",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "schema-org": "http://schema.org/"
+    }
+  }
+]

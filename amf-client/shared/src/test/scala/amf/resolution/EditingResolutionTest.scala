@@ -4,7 +4,7 @@ import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
-import amf.facades.AMFRenderer
+import amf.facades.{AMFRenderer, Validation}
 import amf.io.BuildCycleTests
 import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
 import amf.plugins.document.webapi.{OAS20Plugin, OAS30Plugin, RAML08Plugin, RAML10Plugin}
@@ -68,6 +68,19 @@ class EditingResolutionTest extends BuildCycleTests {
           RamlYamlHint,
           Amf,
           "amf-client/shared/src/test/resources/resolution/extension/traits/")
+  }
+
+  test("Unresolved shape") {
+    Validation(platform)
+      .map(_.withEnabledValidation(true))
+      .flatMap(
+        v =>
+          cycle("unresolved-shape.raml",
+                "unresolved-shape.raml.jsonld",
+                RamlYamlHint,
+                Amf,
+                resolutionPath,
+                validation = Some(v)))
   }
 
   /*

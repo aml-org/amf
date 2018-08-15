@@ -1,4 +1,5 @@
 package amf.core.resolution.stages
+import amf.core.metamodel.domain.LinkableElementModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfArray, AmfElement, AmfObject, UriAnnotation}
 import amf.core.parser.{Annotations, ErrorHandler, Value}
@@ -16,7 +17,7 @@ class UrlShortenerStage()(override implicit val errorHandler: ErrorHandler) exte
     element match {
       case o: AmfObject =>
         o.withId(shortener.shorten(o.id))
-        o.fields.foreach {
+        o.fields.filter({ case (f, v) => f != LinkableElementModel.Target }).foreach {
           case (_, value: Value) =>
             shorten(value.value)
             shorten(value.annotations)
