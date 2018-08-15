@@ -1,5 +1,7 @@
 package amf.plugins.domain.shapes.models
 
+import java.util.Optional
+
 import amf.core.model.domain.Shape
 import amf.core.model.{BoolField, IntField}
 import amf.core.parser.{Annotations, Fields}
@@ -96,7 +98,16 @@ case class MatrixShape(override val fields: Fields, override val annotations: An
   def items: Shape                       = fields.field(Items)
   def withItems(items: Shape): this.type = set(Items, items)
 
-  def toArrayShape               = ArrayShape(fields, annotations)
+  def toArrayShape               = {
+    val array = ArrayShape(fields, annotations)
+    Option(id) match {
+      case Some(effectiveId: String) =>
+        val res= array.withId(effectiveId)
+        res
+      case None              =>
+        array
+    }
+  }
   def toMatrixShape: MatrixShape = this
 
   override def linkCopy() = MatrixShape().withId(id)
