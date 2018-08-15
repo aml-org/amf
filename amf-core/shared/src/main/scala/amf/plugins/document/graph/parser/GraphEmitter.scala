@@ -136,7 +136,7 @@ class EmissionContext(val prefixes: mutable.Map[String, String],
 
 object EmissionContext {
   def apply(unit: BaseUnit, options: RenderOptions) =
-    new EmissionContext(mutable.Map(), unit.location().getOrElse(unit.id), options)
+    new EmissionContext(mutable.Map(), unit.id, options)
 }
 
 object GraphEmitter extends MetaModelTypeMapping {

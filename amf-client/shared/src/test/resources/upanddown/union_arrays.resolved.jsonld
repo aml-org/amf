@@ -1,6 +1,6 @@
 [
   {
-    "@id": "amf://1",
+    "@id": "",
     "@type": [
       "doc:Document",
       "doc:Fragment",
@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "amf://22",
+        "@id": "#21",
         "@type": [
           "schema-org:WebAPI",
           "doc:RootDomainElement",
@@ -22,18 +22,18 @@
         ],
         "smaps": {
           "source-vendor": {
-            "amf://22": "raml 1.0"
+            "#21": "raml 1.0"
           },
           "lexical": {
             "schema-org:name": "[(2,0)-(3,0)]",
-            "amf://22": "[(2,0)-(13,39)]"
+            "#21": "[(2,0)-(13,39)]"
           }
         }
       }
     ],
     "doc:declares": [
       {
-        "@id": "amf://19",
+        "@id": "#18",
         "@type": [
           "raml-shapes:AnyShape",
           "shacl:Shape",
@@ -46,19 +46,19 @@
         ],
         "smaps": {
           "resolved-link": {
-            "amf://19": "amf://21"
+            "#18": "amf://id#20"
           },
           "lexical": {
             "shacl:name": "[(4,2)-(4,9)]",
-            "amf://19": "[(4,2)-(5,0)]"
+            "#18": "[(4,2)-(5,0)]"
           },
           "declared-element": {
-            "amf://19": ""
+            "#18": ""
           }
         }
       },
       {
-        "@id": "amf://5",
+        "@id": "#4",
         "@type": [
           "shacl:NodeShape",
           "shacl:Shape",
@@ -72,7 +72,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "amf://6",
+            "@id": "#5",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -85,7 +85,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "amf://7",
+                "@id": "#6",
                 "@type": [
                   "raml-shapes:ArrayShape",
                   "shacl:Shape",
@@ -94,7 +94,7 @@
                 ],
                 "raml-shapes:items": [
                   {
-                    "@id": "amf://8",
+                    "@id": "#7",
                     "@type": [
                       "raml-shapes:UnionShape",
                       "shacl:Shape",
@@ -102,7 +102,7 @@
                     ],
                     "raml-shapes:anyOf": [
                       {
-                        "@id": "amf://9",
+                        "@id": "#8",
                         "@type": [
                           "raml-shapes:ScalarShape",
                           "shacl:Shape",
@@ -116,7 +116,7 @@
                         ]
                       },
                       {
-                        "@id": "amf://10",
+                        "@id": "#9",
                         "@type": [
                           "raml-shapes:ScalarShape",
                           "shacl:Shape",
@@ -130,7 +130,7 @@
                         ]
                       },
                       {
-                        "@id": "amf://19",
+                        "@id": "#18",
                         "@type": [
                           "raml-shapes:AnyShape",
                           "shacl:Shape",
@@ -143,21 +143,21 @@
                         ],
                         "smaps": {
                           "resolved-link": {
-                            "amf://19": "amf://21"
+                            "#18": "amf://id#20"
                           },
                           "lexical": {
                             "shacl:name": "[(4,2)-(4,9)]",
-                            "amf://19": "[(4,2)-(5,0)]"
+                            "#18": "[(4,2)-(5,0)]"
                           },
                           "declared-element": {
-                            "amf://19": ""
+                            "#18": ""
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "lexical": {
-                        "amf://8": "[(9,8)-(10,0)]"
+                        "#7": "[(9,8)-(10,0)]"
                       }
                     }
                   }
@@ -169,10 +169,10 @@
                 ],
                 "smaps": {
                   "type-property-lexical-info": {
-                    "amf://7": "[(8,8)-(8,12)]"
+                    "#6": "[(8,8)-(8,12)]"
                   },
                   "lexical": {
-                    "amf://7": "[(7,6)-(10,0)]"
+                    "#6": "[(7,6)-(10,0)]"
                   }
                 }
               }
@@ -189,7 +189,7 @@
             ],
             "smaps": {
               "lexical": {
-                "amf://6": "[(7,6)-(10,0)]"
+                "#5": "[(7,6)-(10,0)]"
               }
             }
           }
@@ -201,16 +201,16 @@
         ],
         "smaps": {
           "declared-element": {
-            "amf://5": ""
+            "#4": ""
           },
           "lexical": {
             "shacl:name": "[(5,2)-(5,15)]",
-            "amf://5": "[(5,2)-(10,0)]"
+            "#4": "[(5,2)-(10,0)]"
           }
         }
       },
       {
-        "@id": "amf://14",
+        "@id": "#13",
         "@type": [
           "shacl:NodeShape",
           "shacl:Shape",
@@ -224,7 +224,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "amf://15",
+            "@id": "#14",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -237,7 +237,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "amf://16",
+                "@id": "#15",
                 "@type": [
                   "raml-shapes:UnionShape",
                   "shacl:Shape",
@@ -245,7 +245,7 @@
                 ],
                 "raml-shapes:anyOf": [
                   {
-                    "@id": "amf://17",
+                    "@id": "#16",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "shacl:Shape",
@@ -259,7 +259,7 @@
                     ]
                   },
                   {
-                    "@id": "amf://18",
+                    "@id": "#17",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "shacl:Shape",
@@ -273,7 +273,7 @@
                     ]
                   },
                   {
-                    "@id": "amf://19",
+                    "@id": "#18",
                     "@type": [
                       "raml-shapes:AnyShape",
                       "shacl:Shape",
@@ -286,21 +286,21 @@
                     ],
                     "smaps": {
                       "resolved-link": {
-                        "amf://19": "amf://21"
+                        "#18": "amf://id#20"
                       },
                       "lexical": {
                         "shacl:name": "[(4,2)-(4,9)]",
-                        "amf://19": "[(4,2)-(5,0)]"
+                        "#18": "[(4,2)-(5,0)]"
                       },
                       "declared-element": {
-                        "amf://19": ""
+                        "#18": ""
                       }
                     }
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "amf://16": "[(13,8)-(13,39)]"
+                    "#15": "[(13,8)-(13,39)]"
                   }
                 }
               }
@@ -317,7 +317,7 @@
             ],
             "smaps": {
               "lexical": {
-                "amf://15": "[(12,6)-(13,39)]"
+                "#14": "[(12,6)-(13,39)]"
               }
             }
           }
@@ -329,17 +329,17 @@
         ],
         "smaps": {
           "declared-element": {
-            "amf://14": ""
+            "#13": ""
           },
           "lexical": {
             "shacl:name": "[(10,2)-(10,17)]",
-            "amf://14": "[(10,2)-(13,39)]"
+            "#13": "[(10,2)-(13,39)]"
           }
         }
       }
     ],
     "@context": {
-      "@base": "file://amf-client/shared/src/test/resources/upanddown/union_arrays.raml",
+      "@base": "amf://id",
       "shacl": "http://www.w3.org/ns/shacl#",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "doc": "http://a.ml/vocabularies/document#",

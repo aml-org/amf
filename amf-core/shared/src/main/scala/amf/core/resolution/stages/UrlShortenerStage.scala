@@ -10,7 +10,7 @@ class UrlShortenerStage()(override implicit val errorHandler: ErrorHandler) exte
 
   override def resolve[T <: BaseUnit](model: T): T = {
     shorten(model)
-    model
+    model.withId(base)
   }
 
   def shorten(element: AmfElement): Unit = {
@@ -40,17 +40,19 @@ class UrlShortenerStage()(override implicit val errorHandler: ErrorHandler) exte
   private val shortener = Shortener()
 
   private case class Shortener(dictionary: mutable.Map[String, String] = mutable.Map()) {
-    private var c: Int = 0
+    private var c: Int = -1
 
     def shorten(uri: String): String =
       if (uri.nonEmpty) {
         dictionary.getOrElseUpdate(uri, {
           c = c + 1
-          val result = "amf://" + c
+          val result = s"$base#" + c
           dictionary.put(uri, result)
           result
         })
       } else uri
   }
+
+  private val base = "amf://id"
 
 }

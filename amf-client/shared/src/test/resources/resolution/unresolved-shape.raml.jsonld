@@ -1,6 +1,6 @@
 [
   {
-    "@id": "amf://1",
+    "@id": "",
     "@type": [
       "doc:Document",
       "doc:Fragment",
@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "amf://6",
+        "@id": "#5",
         "@type": [
           "schema-org:WebAPI",
           "doc:RootDomainElement",
@@ -17,17 +17,17 @@
         ],
         "smaps": {
           "source-vendor": {
-            "amf://6": "raml 1.0"
+            "#5": "raml 1.0"
           },
           "lexical": {
-            "amf://6": "[(2,0)-(6,18)]"
+            "#5": "[(2,0)-(6,18)]"
           }
         }
       }
     ],
     "doc:declares": [
       {
-        "@id": "amf://2",
+        "@id": "#1",
         "@type": [
           "shacl:NodeShape",
           "shacl:Shape",
@@ -41,7 +41,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "amf://3",
+            "@id": "#2",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -54,7 +54,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "amf://4",
+                "@id": "#3",
                 "@type": [
                   "raml-shapes:AnyShape",
                   "shacl:Shape",
@@ -67,7 +67,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "amf://4": "[(6,10)-(6,18)]"
+                    "#3": "[(6,10)-(6,18)]"
                   }
                 }
               }
@@ -84,7 +84,7 @@
             ],
             "smaps": {
               "lexical": {
-                "amf://3": "[(6,6)-(6,18)]"
+                "#2": "[(6,6)-(6,18)]"
               }
             }
           }
@@ -106,16 +106,16 @@
         ],
         "smaps": {
           "inherited-shapes": {
-            "amf://2": "amf://5"
+            "#1": "amf://id#4"
           },
           "lexical": {
-            "amf://2": "[(4,10)-(4,13)]"
+            "#1": "[(4,10)-(4,13)]"
           }
         }
       }
     ],
     "@context": {
-      "@base": "file://amf-client/shared/src/test/resources/resolution/unresolved-shape.raml",
+      "@base": "amf://id",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "shacl": "http://www.w3.org/ns/shacl#",
       "doc": "http://a.ml/vocabularies/document#",
