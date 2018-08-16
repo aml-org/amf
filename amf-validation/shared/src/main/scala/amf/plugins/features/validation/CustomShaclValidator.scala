@@ -175,13 +175,9 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
         case Some(f) =>
           Option(element.fields.getValue(f)) match {
             case Some(value) if value.value.isInstanceOf[AmfScalar] =>
-              if (fromMinLenght) {
-
+              if (fromMinLenght)
                 println(
                   "scalar value found amf scalar to scala: " + amfScalarToScala(value.value.asInstanceOf[AmfScalar]))
-                println("value: " + value)
-                println("value value: " + value.value)
-              }
               Some((value.annotations, value.value, Some(amfScalarToScala(value.value.asInstanceOf[AmfScalar]))))
             case Some(value) =>
               if (fromMinLenght) println("NOn scalar value found, ")
@@ -449,13 +445,7 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
                        propertyConstraint: PropertyConstraint,
                        parentElement: DomainElement) = {
     println("Validation min count")
-    val extracted = extractPropertyValue(propertyConstraint, parentElement, true)
-    if (extracted.isDefined) {
-      println("Amf element: " + extracted.get._2)
-      println("Is instance of amfscalar: " + extracted.get._2.isInstanceOf[AmfScalar])
-    }
-
-    extracted match {
+    extractPropertyValue(propertyConstraint, parentElement, true) match {
       case Some((_, arr: AmfArray, _)) =>
         println("Some array found ")
         if (!(arr.values.length >= propertyConstraint.minCount.get.toInt)) {
