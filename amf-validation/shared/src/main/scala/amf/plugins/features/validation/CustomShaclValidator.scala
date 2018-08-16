@@ -453,6 +453,7 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
     if (extracted.isDefined) {
       println("Amf element: " + extracted.get._2)
       println("Is instance of amfscalar: " + extracted.get._2.isInstanceOf[AmfScalar])
+      println("Is instance of amfelement: " + extracted.get._2.isInstanceOf[AmfElement])
     }
 
     extracted match {
@@ -462,8 +463,15 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
           reportFailure(validationSpecification, propertyConstraint, parentElement.id, arr.annotations)
         }
 
-      case Some((_, x: AmfElement, _)) =>
-        println(s"Some amf element found")
+      case Some((_, x: AmfScalar, _)) => // todo AmfObject?
+        println(s"Some amf scalar found")
+        if (!(1 >= propertyConstraint.minCount.get.toInt)) {
+          println(s"Prop constriant minCount minor to 1 ${propertyConstraint.minCount}")
+          reportFailure(validationSpecification, propertyConstraint, parentElement.id, x.annotations)
+        }
+
+      case Some((_, x: AmfObject, _)) => // todo AmfObject?
+        println(s"Some amf object found")
         if (!(1 >= propertyConstraint.minCount.get.toInt)) {
           println(s"Prop constriant minCount minor to 1 ${propertyConstraint.minCount}")
           reportFailure(validationSpecification, propertyConstraint, parentElement.id, x.annotations)
