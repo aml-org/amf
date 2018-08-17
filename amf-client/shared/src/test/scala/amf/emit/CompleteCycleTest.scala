@@ -1293,4 +1293,9 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Test enums raml-amf to raml") {
     cycle("enums.raml.jsonld", "enums.jsonld.raml", AmfJsonHint, Raml, basePath + "enums/")
   }
+
+  test("Test schema lexical information position") {
+    cycle("schema-position.raml", "schema-position.jsonld", RamlYamlHint, Amf, base08Path)
+  }
+
 }

@@ -1,4 +1,5 @@
 #%RAML 0.8
+title: api title
 schemas:
   UserJson: |
     {
@@ -23,7 +24,6 @@ schemas:
         </xs:complexType>
       </xs:element>
     </xs:schema>
-title: api title
 traits:
   one:
     description: method description from trait one

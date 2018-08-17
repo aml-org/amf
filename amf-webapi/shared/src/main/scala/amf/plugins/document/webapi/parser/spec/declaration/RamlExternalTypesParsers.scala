@@ -4,7 +4,15 @@ import amf.core.Root
 import amf.core.annotations.{ExternalFragmentRef, LexicalInformation}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.{AmfScalar, Shape}
-import amf.core.parser.{Annotations, InferredLinkReference, ParsedDocument, ParsedReference, Reference, ReferenceFragmentPartition, _}
+import amf.core.parser.{
+  Annotations,
+  InferredLinkReference,
+  ParsedDocument,
+  ParsedReference,
+  Reference,
+  ReferenceFragmentPartition,
+  _
+}
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.core.utils.Strings
 import amf.plugins.document.webapi.annotations.{JSONSchemaId, ParsedJSONSchema, SchemaIsJsonSchema}
@@ -21,7 +29,7 @@ import org.yaml.parser.YamlParser
 import org.yaml.render.YamlRender
 
 import scala.collection.mutable
-case class RamlJsonSchemaExpression(name: String,
+case class RamlJsonSchemaExpression(key: YNode,
                                     override val value: YNode,
                                     override val adopt: Shape => Shape,
                                     parseExample: Boolean = false)(override implicit val ctx: RamlWebApiContext)
@@ -36,7 +44,7 @@ case class RamlJsonSchemaExpression(name: String,
           .flatMap(ctx.declarations.findInExternalsLibs(path, _))
           .orElse(ctx.declarations.findInExternals(path)) match {
           case Some(s) =>
-            val shape = s.copyShape().withName(name)
+            val shape = s.copyShape().withName(key.as[String])
             ctx.declarations.fragments
               .get(path)
               .foreach(e => shape.withReference(e.encoded.id + extFrament.getOrElse("")))
@@ -51,7 +59,7 @@ case class RamlJsonSchemaExpression(name: String,
             RamlExternalOasLibParser(ctx, origin.text, origin.valueAST, path).parse()
             val shape = ctx.declarations.findInExternalsLibs(path, fragment.get) match {
               case Some(s) =>
-                s.copyShape().withName(name)
+                s.copyShape().withName(key.as[String])
               case _ =>
                 ctx.violation(s"could not find json schema fragment ${extFrament.get} in file $path", origin.valueAST)
                 UnresolvedShape(url)
@@ -63,7 +71,7 @@ case class RamlJsonSchemaExpression(name: String,
             shape.annotations += ExternalFragmentRef(extFrament.get)
             shape
           case _ =>
-            val shape = parseJsonShape(origin.text, name, origin.valueAST, adopt, value, origin.oriUrl)
+            val shape = parseJsonShape(origin.text, key, origin.valueAST, adopt, value, origin.oriUrl)
             ctx.declarations.fragments
               .get(path)
               .foreach(e => shape.withReference(e.encoded.id))
@@ -71,7 +79,7 @@ case class RamlJsonSchemaExpression(name: String,
             shape
         }
       case None =>
-        val shape = parseJsonShape(origin.text, name, origin.valueAST, adopt, value, None)
+        val shape = parseJsonShape(origin.text, key, origin.valueAST, adopt, value, None)
         shape.annotations += ParsedJSONSchema(origin.text)
         shape
     }
@@ -116,8 +124,13 @@ case class RamlJsonSchemaExpression(name: String,
       context.localJSONSchemaContext = Some(schemaEntry.node)
 
       Oas2DocumentParser(
-        Root(SyamlParsedDocument(None, schemaEntry), url, "application/json", Nil, InferredLinkReference, "OAS", text))(
-        context)
+        Root(SyamlParsedDocument(None, schemaEntry),
+             url,
+             "application/json",
+             Nil,
+             InferredLinkReference,
+             "OAS",
+             text))(context)
         .parseTypeDeclarations(schemaEntry.node.as[YMap], url + "#/definitions/")
       val libraryShapes = context.declarations.shapes
       val resolvedShapes = new ReferenceResolutionStage(false)(ctx)
@@ -138,7 +151,7 @@ case class RamlJsonSchemaExpression(name: String,
   }
 
   private def parseJsonShape(text: String,
-                             name: String,
+                             key: YNode,
                              valueAST: YNode,
                              adopt: Shape => Shape,
                              value: YNode,
@@ -150,11 +163,11 @@ case class RamlJsonSchemaExpression(name: String,
       else YamlParser(text, url.getOrElse(valueAST.sourceName))(ctx)
     val schemaAst = parser.withIncludeTag("!include").parse(keepTokens = true)
     val schemaEntry = schemaAst.head match {
-      case d: YDocument => YMapEntry(name, d.node)
+      case d: YDocument => YMapEntry(key, d.node)
       case _            =>
         // TODO get parent id
         ctx.violation("invalid json schema expression", valueAST)
-        YMapEntry(name, YNode.Null)
+        YMapEntry(key, YNode.Null)
     }
 
     // we set the local schema entry to be able to resolve local $refs
@@ -199,7 +212,7 @@ case class RamlJsonSchemaExpression(name: String,
   override val externalType: String = "JSON"
 }
 
-case class RamlXmlSchemaExpression(name: String,
+case class RamlXmlSchemaExpression(key: YNode,
                                    override val value: YNode,
                                    override val adopt: Shape => Shape,
                                    parseExample: Boolean = false)(override implicit val ctx: RamlWebApiContext)
@@ -225,7 +238,7 @@ case class RamlXmlSchemaExpression(name: String,
           case Some(typeEntry: YMapEntry) if typeEntry.value.toOption[YScalar].isDefined =>
             val shape =
               SchemaShape().withRaw(typeEntry.value.as[YScalar].text).withMediaType("application/xml")
-            shape.withName(name)
+            shape.withName(key.as[String])
             adopt(shape)
             shape
           case _ =>
@@ -258,7 +271,7 @@ case class RamlXmlSchemaExpression(name: String,
       case _ =>
         val raw   = value.as[YScalar].text
         val shape = SchemaShape().withRaw(raw).withMediaType("application/xml")
-        shape.withName(name)
+        shape.withName(key.as[String])
         adopt(shape)
         shape
     }

@@ -1,4 +1,26 @@
 #%RAML 0.8
+title: api title
+version: v1
+baseUri: http://base.uri/{version}/{param1}
+protocols:
+  - HTTP
+  - HTTPS
+baseUriParameters:
+  param1:
+    displayName: Param 1
+    description: some description
+    type: string
+    maxLength: 10
+    example: one
+documentation:
+  -
+    title: doc title 1
+    content: single line
+  -
+    title: doc title 2
+    content: |
+      multi
+      line
 schemas:
   UserJson:
     schema: |
@@ -24,28 +46,6 @@ schemas:
         </xs:complexType>
       </xs:element>
     </xs:schema>
-title: api title
-version: v1
-baseUri: http://base.uri/{version}/{param1}
-protocols:
-  - HTTP
-  - HTTPS
-baseUriParameters:
-  param1:
-    displayName: Param 1
-    description: some description
-    type: string
-    maxLength: 10
-    example: one
-documentation:
-  -
-    title: doc title 1
-    content: single line
-  -
-    title: doc title 2
-    content: |
-      multi
-      line
 traits:
   one:
     description: method description from trait one
