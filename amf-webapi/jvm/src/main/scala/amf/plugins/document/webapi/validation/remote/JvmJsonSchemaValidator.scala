@@ -77,7 +77,6 @@ object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
     // hack! TODO: clean json object properly
     loadJson(jsonSchema.replace("\"type\": \"file\"", "\"type\": \"string\"")) match {
       case schemaNode: JSONObject =>
-        schemaNode.remove("x-amf-fragmentType")
         schemaNode.remove("example")
         schemaNode.remove("examples")
 
@@ -126,7 +125,8 @@ object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
       case _ => Nil // schema is not a JSON object
     }
 
-  def iterateValidations(validationException: ValidationException, payload: PayloadFragment): Seq[AMFValidationResult] = {
+  def iterateValidations(validationException: ValidationException,
+                         payload: PayloadFragment): Seq[AMFValidationResult] = {
     var resultsAcc = Seq[AMFValidationResult]()
     val results    = validationException.getCausingExceptions.iterator()
     while (results.hasNext) {
@@ -148,8 +148,8 @@ object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
     resultsAcc
   }
 
-  private def makeValidationMessage(validationException: ValidationException): String ={
-    val json = validationException.toJSON
+  private def makeValidationMessage(validationException: ValidationException): String = {
+    val json    = validationException.toJSON
     var pointer = json.getString("pointerToViolation")
     if (pointer.startsWith("#")) pointer = pointer.replaceFirst("#", "")
     (pointer + " " + json.getString("message")).trim

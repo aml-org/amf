@@ -3,12 +3,15 @@ package amf.plugins.document.webapi.validation.remote
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DataNode, ObjectNode, ScalarNode, Shape}
+import amf.core.parser.SyamlParsedDocument
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels, ValidationCandidate}
 import amf.core.vocabulary.Namespace
+import amf.plugins.document.webapi.PayloadPlugin
+import amf.plugins.document.webapi.contexts.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
 import amf.plugins.document.webapi.model.DataTypeFragment
-import amf.plugins.document.webapi.{OAS20Plugin, PayloadPlugin}
+import amf.plugins.document.webapi.parser.spec.oas.OasFragmentEmitter
 import amf.plugins.domain.shapes.models.{AnyShape, FileShape, NodeShape}
 import amf.plugins.syntax.SYamlSyntaxPlugin
 
@@ -30,7 +33,7 @@ abstract class PlatformPayloadValidator(shape: AnyShape) {
 trait PlatformSchemaValidator {
   def validate(validationCandidates: Seq[ValidationCandidate], profile: ValidationProfile): Future[AMFValidationReport]
 
-  def findPolymorphicShape(anyShape: AnyShape, payload: DataNode): Shape = {
+  def findPolymorphicShape(anyShape: AnyShape, payload: DataNode): AnyShape = {
     val closure: Seq[Shape] = anyShape.effectiveStructuralShapes
     findPolymorphicEffectiveShape(closure, payload) match {
       case Some(shape: NodeShape) => shape
@@ -149,6 +152,7 @@ trait PlatformJsonSchemaValidator extends PlatformSchemaValidator {
   }
 
   def computeJsonSchemaCandidates(validationCandidates: Seq[ValidationCandidate]): Seq[JsonSchemaCandidate] = {
+    // already caching in generated json schema annotation? how to ignore the parsed json schema annotation?
     val cache = mutable.Map[Shape, String]()
     validationCandidates.map { vc =>
       try {
@@ -158,17 +162,17 @@ trait PlatformJsonSchemaValidator extends PlatformSchemaValidator {
           val schemaShape: Option[String] = vc.shape match {
             case anyShape: AnyShape if anyShape.supportsInheritance =>
               generateShape(findPolymorphicShape(anyShape, vc.payload.encodes))
-            case _ =>
+            case anyShape: AnyShape =>
               cache.get(vc.shape) match {
                 case Some(json) => Some(json)
                 case _ =>
-                  generateShape(vc.shape) match {
-                    case Some(generated) =>
-                      cache.put(vc.shape, generated)
-                      Some(generated)
-                    case _ => None
-                  }
+                  val generated = generateShape(anyShape).getOrElse("")
+                  cache.put(vc.shape, generated)
+                  Some(generated)
               }
+            case _ =>
+              throw new InvalidJsonObject(
+                new Exception(s"Invalid shape for json schema: ${vc.shape.getClass.getSimpleName}"))
           }
 
           schemaShape.map { s =>
@@ -182,19 +186,16 @@ trait PlatformJsonSchemaValidator extends PlatformSchemaValidator {
     } collect { case Some(s) => s }
   }
 
+  // todo: move to json schema serializer? remove header and examples using comparator by json schema context
   private def generateShape(fragmentShape: Shape): Option[String] = {
     val dataType = DataTypeFragment()
     dataType.fields
       .setWithoutId(DataTypeFragmentModel.Encodes, fragmentShape) // careful, we don't want to modify the ID
 
-    OAS20Plugin.unparse(dataType, RenderOptions()) match {
-      case Some(doc) =>
-        SYamlSyntaxPlugin.unparse("application/json", doc) match {
-          case Some(jsonSchema) => Some(jsonSchema.replace("x-amf-union", "anyOf"))
-          case _                => None
-        }
-      case _ => None
-    }
+    SYamlSyntaxPlugin.unparse("application/json",
+                              SyamlParsedDocument(document =
+                                new OasFragmentEmitter(dataType)(JsonSchemaEmitterContext())
+                                  .emitFragment())) // todo for logic in serializer. Hoy to handle the root?
 
   }
 

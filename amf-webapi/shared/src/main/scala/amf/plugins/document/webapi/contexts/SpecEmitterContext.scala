@@ -11,7 +11,6 @@ import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.parser.FieldEntry
 import amf.core.remote._
 import amf.plugins.document.webapi.model.{Extension, Overlay}
-import amf.plugins.document.webapi.parser.RamlHeader
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.raml.{
@@ -19,16 +18,23 @@ import amf.plugins.document.webapi.parser.spec.raml.{
   Raml10RootLevelEmitters,
   RamlRootLevelEmitters
 }
+import amf.plugins.document.webapi.parser.{
+  CommonOasTypeDefMatcher,
+  JsonSchemaTypeDefMatcher,
+  OasTypeDefStringValueMatcher,
+  RamlHeader
+}
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
-import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityScheme}
 import amf.plugins.domain.webapi.models._
+import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityScheme}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YNode, YScalar, YType}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
+import amf.core.utils.Strings
 
 /**
   *
@@ -349,6 +355,16 @@ abstract class OasSpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) ext
 
   val factory: OasSpecEmitterFactory
   val jsonPointersMap: mutable.Map[String, String] = mutable.Map() // id -> pointer
+
+  val typeDefMatcher: OasTypeDefStringValueMatcher = CommonOasTypeDefMatcher
+
+  val anyOfKey: String = "union".asOasExtension
+}
+
+final case class JsonSchemaEmitterContext() extends Oas2SpecEmitterContext {
+  override val typeDefMatcher: OasTypeDefStringValueMatcher = JsonSchemaTypeDefMatcher
+
+  override val anyOfKey: String = "anyOf"
 }
 
 class Oas3SpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) extends OasSpecEmitterContext(refEmitter) {

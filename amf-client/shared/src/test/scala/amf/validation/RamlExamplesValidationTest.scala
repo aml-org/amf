@@ -198,5 +198,9 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate("/enums/invalid-obj-enum.raml", Some("invalid-obj-enum.report"))
   }
 
+  test("Test ints formats validations") {
+    validate("/types/int-formats.raml", Some("int-formats.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

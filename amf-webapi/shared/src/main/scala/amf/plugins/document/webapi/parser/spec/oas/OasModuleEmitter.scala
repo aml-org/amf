@@ -86,7 +86,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
   case class DataTypeFragmentEmitter(dataType: DataTypeFragment, ordering: SpecOrdering)
       extends OasFragmentTypeEmitter {
 
-    override val header = OasHeaderEmitter(OasHeader.Oas20DataType)
+    override val header: OasHeaderEmitter = OasHeaderEmitter(OasHeader.Oas20DataType)
 
     val emitters: Seq[EntryEmitter] =
       OasTypeEmitter(dataType.encodes, ordering, references = dataType.references).entries()

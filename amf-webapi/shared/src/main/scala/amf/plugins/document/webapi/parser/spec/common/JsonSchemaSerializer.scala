@@ -7,7 +7,7 @@ import amf.core.model.document.Document
 import amf.core.parser.Position
 import amf.core.services.RuntimeSerializer
 import amf.plugins.document.webapi.annotations.{GeneratedJSONSchema, ParsedJSONSchema}
-import amf.plugins.document.webapi.contexts.Oas3SpecEmitterContext
+import amf.plugins.document.webapi.contexts.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.oas.OasDeclarationsEmitter
 import amf.plugins.domain.shapes.models.AnyShape
@@ -43,7 +43,10 @@ trait JsonSchemaSerializer {
   private def fixNameIfNeeded(element: AnyShape): AnyShape = {
     if (element.name.option().isEmpty)
       element.copyShape().withName("root")
-    else element
+    else {
+      if (element.name.value().matches(".*/.*")) element.copyShape().withName("root")
+      else element
+    }
   }
 }
 
@@ -71,7 +74,7 @@ case class JsonSchemaEmitter(shape: AnyShape, ordering: SpecOrdering = SpecOrder
 
   private def sortedTypeEntries =
     ordering.sorted(
-      OasDeclarationsEmitter(Seq(shape), SpecOrdering.Lexical, Seq())(new Oas3SpecEmitterContext()).emitters) // spec 3 context? or 2? set from outside, from vendor?? support two versions of jsonSchema??
+      OasDeclarationsEmitter(Seq(shape), SpecOrdering.Lexical, Seq())(JsonSchemaEmitterContext()).emitters) // spec 3 context? or 2? set from outside, from vendor?? support two versions of jsonSchema??
 
   private val emitters = Seq(JsonSchemaEntry, jsonSchemaRefEntry) ++ sortedTypeEntries
 }

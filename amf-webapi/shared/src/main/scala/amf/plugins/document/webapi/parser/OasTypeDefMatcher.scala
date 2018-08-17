@@ -52,7 +52,7 @@ object OasTypeDefMatcher {
   }
 }
 
-object OasTypeDefStringValueMatcher {
+trait OasTypeDefStringValueMatcher {
 
   def matchType(typeDef: TypeDef): String = typeDef match {
     case ByteType         => "string"
@@ -87,5 +87,15 @@ object OasTypeDefStringValueMatcher {
     case LongType         => Some("int64")
     case DoubleType       => Some("double")
     case _                => None
+  }
+}
+
+object CommonOasTypeDefMatcher extends OasTypeDefStringValueMatcher
+
+object JsonSchemaTypeDefMatcher extends OasTypeDefStringValueMatcher {
+
+  override def matchType(typeDef: TypeDef): String = {
+    if (typeDef == LongType) "number"
+    else super.matchType(typeDef)
   }
 }

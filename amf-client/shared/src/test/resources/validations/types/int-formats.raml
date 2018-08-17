@@ -1,0 +1,35 @@
+#%RAML 1.0
+title: test
+
+types:
+  int:
+    type: number
+    format: int
+    examples:
+      valid: 522316465
+      invalid: 10.2
+  int8:
+    type: number
+    format: int8
+    examples:
+      valid: 125
+      invalid: 130
+  int16:
+    type: number
+    format: int16
+    examples:
+      valid: 32760
+      invalid: 32800
+  int32:
+    type: number
+    format: int32
+    examples:
+      valid: 2147483640
+      invalid: 2147483800
+  int64:
+    type: number
+    format: int64
+    examples:
+      valid: 9223372036854775807
+#      invalid: !!float 9223372036854775809
+
