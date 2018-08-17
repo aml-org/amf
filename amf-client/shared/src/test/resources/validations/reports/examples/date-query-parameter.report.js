@@ -1,12 +1,12 @@
 Model: file://amf-client/shared/src/test/resources/validations/08/date-query-parameter.raml
-Profile: RAML 1.008
+Profile: RAML 0.8
 Conforms? false
 Number of results: 1
 
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message:  should match format "RFC2616"
+  Message: should match format "RFC2616"
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/08/date-query-parameter.raml#/web-api/end-points/%2Ftickets/get/request/parameter/createdAfter/scalar/createdAfter/example/default-example
   Property: 

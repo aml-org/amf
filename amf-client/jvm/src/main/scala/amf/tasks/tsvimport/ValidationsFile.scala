@@ -2,8 +2,7 @@ package amf.tasks.tsvimport
 
 import java.io.{BufferedReader, File, FileReader}
 
-import amf.core.vocabulary.Namespace
-import amf.plugins.document.webapi.validation.AMFValidation
+import amf.plugins.document.webapi.validation.AMFRawValidations.AMFValidation
 
 import scala.collection.JavaConverters._
 
@@ -33,16 +32,16 @@ class ValidationsFile(validationsFile: File) {
                  openAPIErrorMessage) =>
         Some(
           AMFValidation(
-            nonNullString(Namespace.uri(uri.trim).iri()),
+            nonNullString(uri.trim),
             nonNullString(message.trim),
             spec.trim,
             level.trim,
-            nonNullString(Namespace.uri(owlClass.trim).iri()),
-            nonNullString(Namespace.uri(owlProperty.trim).iri()),
+            nonNullString(owlClass.trim),
+            nonNullString(owlProperty.trim),
             shape.trim,
-            Namespace.uri(target.trim).iri(),
-            Namespace.uri(constraint.trim).iri(),
-            Namespace.uri(value.trim).iri(), // this might not be a URI, but trying to expand it is still safe
+            target.trim,
+            constraint.trim,
+            value.trim, // this might not be a URI, but trying to expand it is still safe
             ramlErrorMessage.trim,
             openAPIErrorMessage.trim,
             "Violation"

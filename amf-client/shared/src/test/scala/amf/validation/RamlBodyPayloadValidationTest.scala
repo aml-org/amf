@@ -51,7 +51,7 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
       .head
       .schema
 
-  override protected val hint: Hint       = OasJsonHint
+  override protected val hint: Hint       = RamlYamlHint
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/validations/body-payload/"
 
   override def transform(unit: BaseUnit): BaseUnit =

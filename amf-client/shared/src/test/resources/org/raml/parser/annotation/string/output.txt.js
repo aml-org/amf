@@ -1,12 +1,12 @@
 Model: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/string/input.raml
-Profile: RAML
+Profile: RAML 1.0
 Conforms? false
 Number of results: 3
 
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message:  should be string
+  Message: should be string
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/string/input.raml#/web-api/end-points/%2Ftext/image/scalar_1
   Property: 
@@ -14,7 +14,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/string/input.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message:  should NOT be longer than 2 characters
+  Message: should NOT be longer than 2 characters
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/string/input.raml#/web-api/end-points/%2Ftext/foo/scalar_1
   Property: 
@@ -22,7 +22,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/string/input.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message:  should NOT be shorter than 10 characters
+  Message: should NOT be shorter than 10 characters
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/string/input.raml#/web-api/end-points/%2Ftext/tato/scalar_1
   Property: 

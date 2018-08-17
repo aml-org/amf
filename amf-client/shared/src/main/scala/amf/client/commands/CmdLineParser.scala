@@ -1,18 +1,21 @@
 package amf.client.commands
 
 import amf._
-
 import amf.core.client.ParserConfig
+import amf.core.remote._
 import scopt.OptionParser
 
 object CmdLineParser {
 
   def knownSpec(f: String): Boolean = {
     RamlProfile.profile == f ||
+    Raml10Profile.profile == f ||
     Raml08Profile.profile == f ||
     Oas30Profile.profile == f ||
+    Oas20Profile.profile == f ||
     OasProfile.profile == f ||
-    AmfProfile.profile == f
+    AmfProfile.profile == f ||
+    Aml.name == f
 
   }
 
@@ -40,7 +43,8 @@ object CmdLineParser {
         if (knownSpec(f)) {
           success
         } else {
-          failure("Invalid value, values supported: 'RAML 1.0', 'RAML 0.8', 'OpenAPI 2.0', 'AML 1.0', 'AMF'")
+          failure(
+            s"Invalid value $f, values supported: '${Raml10.name}', '${Raml08.name}', '${Oas20.name}', '${Aml.name}', '${Amf.name}'")
         }
       })
       .action((f, c) => c.copy(inputFormat = Some(f)))
@@ -57,7 +61,8 @@ object CmdLineParser {
         if (knownSpec(f)) {
           success
         } else {
-          failure("Invalid value, values supported: 'RAML 1.0', 'RAML 0.8', 'OpenAPI 2.0', 'AML 1.0', 'AMF'")
+          failure(
+            s"Invalid value $f, values supported: '${Raml10.name}', '${Raml08.name}', '${Oas20.name}', '${Aml.name}', '${Amf.name}'")
         }
       })
       .action((f, c) => c.copy(validationProfile = f))
@@ -109,7 +114,8 @@ object CmdLineParser {
             if (knownSpec(f)) {
               success
             } else {
-              failure("Invalid value, values supported: 'RAML 1.0', 'RAML 0.8', 'OpenAPI 2.0', 'AML 1.0', 'AMF'")
+              failure(
+                s"Invalid value $f, values supported: '${Raml10.name}', '${Raml08.name}', '${Oas20.name}', '${Aml.name}', '${Amf.name}'")
             }
           })
           .action((f, c) => c.copy(outputFormat = Some(f)))

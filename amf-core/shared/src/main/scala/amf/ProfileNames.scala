@@ -14,6 +14,7 @@ object ProfileNames {
   val RAML: ProfileName   = RamlProfile
   val RAML10: ProfileName = Raml10Profile
   val RAML08: ProfileName = Raml08Profile
+  val AML: ProfileName    = RamlProfile
 }
 
 case class ProfileName(private[amf] val p: String, private val m: MessageStyle = AMFStyle) {
@@ -25,10 +26,11 @@ case class ProfileName(private[amf] val p: String, private val m: MessageStyle =
 }
 
 object AmfProfile     extends ProfileName(Amf.name)
+object AmlProfile     extends ProfileName(Aml.name)
 object OasProfile     extends ProfileName(Oas.name, OASStyle)
 object Oas20Profile   extends ProfileName(Oas20.name, OASStyle)
 object Oas30Profile   extends ProfileName(Oas30.name, OASStyle)
-object RamlProfile    extends ProfileName(Raml10.name, RAMLStyle)
+object RamlProfile    extends ProfileName(Raml.name, RAMLStyle)
 object Raml08Profile  extends ProfileName(Raml08.name, RAMLStyle)
 object Raml10Profile  extends ProfileName(Raml10.name, RAMLStyle)
 object PayloadProfile extends ProfileName(Payload.name)

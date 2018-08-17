@@ -312,226 +312,288 @@ object ParserSideValidations {
 
     RecursiveShapeSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.WARNING,
+      Oas20Profile  -> SeverityLevels.WARNING,
       Oas30Profile  -> SeverityLevels.WARNING,
       AmfProfile    -> SeverityLevels.INFO
     ),
     ChainedReferenceSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     ExclusivePropertiesSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     PathTemplateUnbalancedParameters.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     OasBodyAndFormDataParameterSpecification.id -> Map(
-      OasProfile -> SeverityLevels.VIOLATION,
-      OasProfile -> SeverityLevels.VIOLATION
+      OasProfile   -> SeverityLevels.VIOLATION,
+      Oas20Profile -> SeverityLevels.VIOLATION
     ),
     OasInvalidBodyParameter.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     OasInvalidParameterBinding.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     OasFormDataNotFileSpecification.id -> Map(
-      OasProfile -> SeverityLevels.VIOLATION,
-      OasProfile -> SeverityLevels.VIOLATION
+      OasProfile   -> SeverityLevels.VIOLATION,
+      Oas20Profile -> SeverityLevels.VIOLATION
     ),
     MissingExtensionInReferences.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     InvalidTypeInheritanceErrorSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     InvalidTypeInheritanceWarningSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.WARNING,
+      Raml10Profile -> SeverityLevels.WARNING,
       Raml08Profile -> SeverityLevels.WARNING,
       OasProfile    -> SeverityLevels.WARNING,
+      Oas20Profile  -> SeverityLevels.WARNING,
       Oas30Profile  -> SeverityLevels.WARNING,
       AmfProfile    -> SeverityLevels.WARNING
     ),
     JsonSchemaInheratinaceWarningSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.WARNING,
+      Raml10Profile -> SeverityLevels.WARNING,
       Raml08Profile -> SeverityLevels.WARNING,
       OasProfile    -> SeverityLevels.WARNING,
+      Oas20Profile  -> SeverityLevels.WARNING,
       Oas30Profile  -> SeverityLevels.WARNING,
       AmfProfile    -> SeverityLevels.WARNING
     ),
     XmlSchemaInheratinaceWarningSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     UnknownSecuritySchemeErrorSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     UnknownScopeErrorSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     ClosedShapeSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     DuplicatedPropertySpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     NamedExampleUsedInExample.id -> Map(
       RamlProfile   -> SeverityLevels.WARNING,
+      Raml10Profile -> SeverityLevels.WARNING,
       Raml08Profile -> SeverityLevels.WARNING,
       OasProfile    -> SeverityLevels.INFO,
+      Oas20Profile  -> SeverityLevels.INFO,
       Oas30Profile  -> SeverityLevels.INFO,
       AmfProfile    -> SeverityLevels.INFO
     ),
     DialectAmbiguousRangeSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     ParsingErrorSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     CycleReferenceError.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     ExampleValidationErrorSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.WARNING,
+      Oas20Profile  -> SeverityLevels.WARNING,
       Oas30Profile  -> SeverityLevels.WARNING,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     ParsingWarningSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.WARNING,
+      Raml10Profile -> SeverityLevels.WARNING,
       Raml08Profile -> SeverityLevels.WARNING,
       OasProfile    -> SeverityLevels.WARNING,
+      Oas20Profile  -> SeverityLevels.WARNING,
       Oas30Profile  -> SeverityLevels.WARNING,
       AmfProfile    -> SeverityLevels.WARNING
     ),
     UnsupportedExampleMediaTypeErrorSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     UnsupportedExampleMediaTypeWarningSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.WARNING,
+      Raml10Profile -> SeverityLevels.WARNING,
       Raml08Profile -> SeverityLevels.WARNING,
       OasProfile    -> SeverityLevels.WARNING,
+      Oas20Profile  -> SeverityLevels.WARNING,
       Oas30Profile  -> SeverityLevels.WARNING,
       AmfProfile    -> SeverityLevels.WARNING
     ),
     InconsistentPropertyRangeValueSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     MissingPropertyRangeSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     MissingTermSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     MissingFragmentSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     MissingPropertySpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     ResolutionErrorSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
     PatternPropertiesOnClosedNodeSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.WARNING,
+      Oas20Profile  -> SeverityLevels.WARNING,
       Oas30Profile  -> SeverityLevels.WARNING,
       AmfProfile    -> SeverityLevels.WARNING
     ),
     DiscriminatorOnExtendedUnionSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
       Raml08Profile -> SeverityLevels.VIOLATION,
       OasProfile    -> SeverityLevels.WARNING,
+      Oas20Profile  -> SeverityLevels.WARNING,
       Oas30Profile  -> SeverityLevels.WARNING,
       AmfProfile    -> SeverityLevels.WARNING
     )

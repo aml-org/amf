@@ -1,9 +1,9 @@
 package amf.plugins.document.webapi
 
 import amf.ProfileName
-import amf.core.model.document.BaseUnit
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.annotations.{DeclaredElement, ExternalFragmentRef, InlineElement}
+import amf.core.model.document.BaseUnit
 import amf.core.remote.{Platform, Vendor}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
@@ -65,6 +65,7 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
   /**
     * Validation profiles supported by this plugin by default
     */
+  // todo: compute again each map for each web api vendor plug in (ej raml 10 oas 20 etc). Filter each one by vendor? compute only one time the map? the problme its how to add custom validations.
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
     defaultValidationProfiles
 

@@ -6,7 +6,7 @@ import amf.core.remote.Syntax.Yaml
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.emit.AMFRenderer
-import amf.facades.{AMFRenderer, Validation}
+import amf.facades.Validation
 import amf.io.BuildCycleTests
 import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
 import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}

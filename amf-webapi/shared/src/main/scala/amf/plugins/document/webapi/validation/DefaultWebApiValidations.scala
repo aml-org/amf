@@ -1,82 +1,73 @@
 package amf.plugins.document.webapi.validation
 
-import amf.core.remote.{Oas, Raml}
 import amf._
+import amf.core.remote.{Oas, Raml}
 import amf.core.validation.SeverityLevels
 import amf.core.validation.core._
 import amf.core.vocabulary.{Namespace, ValueType}
+import amf.plugins.document.webapi.validation.AMFRawValidations.AMFValidation
 import amf.plugins.features.validation.ParserSideValidations
 
 /**
   * Created by antoniogarrote on 17/07/2017.
   */
-/**
-  * Validation defined in a TSV file with AMF validations
-  * @param uri URI of the validation, null to auto-generate
-  * @param message Optional message for the validation
-  * @param level Level: AMF, OpenAPI or RAML
-  * @param owlClass Optional OWL class target of the validation
-  * @param owlProperty Optional OWL property target of the validation
-  * @param shape Type of SHACL shape for the validation
-  * @param constraint URI of the constraint component
-  * @param value Value for the contraint component
-  */
-case class AMFValidation(uri: Option[String],
-                         message: Option[String],
-                         spec: String,
-                         level: String,
-                         owlClass: Option[String],
-                         owlProperty: Option[String],
-                         shape: String,
-                         target: String,
-                         constraint: String,
-                         value: String,
-                         ramlErrorMessage: String,
-                         openApiErrorMessage: String,
-                         severity: String)
-
-object AMFValidation {
-
-  def fromLine(line: String): Option[AMFValidation] =
-    line.split("\t") match {
-      case Array(uri,
-                 message,
-                 spec: String,
-                 level,
-                 owlClass,
-                 owlProperty,
-                 shape,
-                 target,
-                 constraint,
-                 value,
-                 ramlError,
-                 openApiError,
-                 severity) =>
-        val parsedValue =
-          if (constraint.endsWith("pattern")) value
-          else Namespace.uri(value).iri() // this might not be a URI, but trying to expand it is still safe
-        Some(
-          AMFValidation(
-            nonNullString(Namespace.uri(uri).iri()),
-            nonNullString(message),
-            spec,
-            level,
-            nonNullString(Namespace.uri(owlClass).iri()),
-            nonNullString(Namespace.uri(owlProperty).iri()),
-            shape,
-            Namespace.uri(target).iri(),
-            Namespace.uri(constraint).iri(),
-            parsedValue,
-            ramlError,
-            openApiError,
-            severity
-          ))
-      case _ => None
-    }
-
-  protected def nonNullString(s: String): Option[String] = if (s == "") { None } else { Some(s) }
-
-}
+//case class AMFValidation(uri: Option[String],
+//                         message: Option[String],
+//                         spec: String,
+//                         level: String,
+//                         owlClass: Option[String],
+//                         owlProperty: Option[String],
+//                         shape: String,
+//                         target: String,
+//                         constraint: String,
+//                         value: String,
+//                         ramlErrorMessage: String,
+//                         openApiErrorMessage: String,
+//                         severity: String)
+//
+//object AMFValidation {
+//
+//  def fromLine(line: String): Option[AMFValidation] =
+//    line.split("\t") match {
+//      case Array(uri,
+//                 message,
+//                 spec: String,
+//                 level,
+//                 owlClass,
+//                 owlProperty,
+//                 shape,
+//                 target,
+//                 constraint,
+//                 value,
+//                 ramlError,
+//                 openApiError,
+//                 severity) =>
+//        val parsedValue =
+//          if (constraint.endsWith("pattern")) value
+//          else Namespace.uri(value).iri() // this might not be a URI, but trying to expand it is still safe
+//        Some(
+//          AMFValidation(
+//            nonNullString(Namespace.uri(uri).iri()),
+//            nonNullString(message),
+//            spec,
+//            level,
+//            nonNullString(Namespace.uri(owlClass).iri()),
+//            nonNullString(Namespace.uri(owlProperty).iri()),
+//            shape,
+//            Namespace.uri(target).iri(),
+//            Namespace.uri(constraint).iri(),
+//            parsedValue,
+//            ramlError,
+//            openApiError,
+//            severity
+//          ))
+//      case _ =>
+//        None
+//    }
+//
+//  protected def nonNullString(s: String): Option[String] = if (s == "") { None } else { Some(s) }
+//
+//}
 
 trait ImportUtils {
 
@@ -108,11 +99,7 @@ trait ImportUtils {
 
 object DefaultAMFValidations extends ImportUtils {
 
-  private def validations(): List[AMFValidation] =
-    AMFRawValidations.raw
-      .map(AMFValidation.fromLine)
-      .filter(_.isDefined)
-      .map(_.get)
+  private def validations(): Map[ProfileName, Seq[AMFValidation]] = AMFRawValidations.map
 
   private def specificsProfile(p: String): Seq[ProfileName] = p match {
     case Oas.name  => Seq(Oas20Profile, Oas30Profile)
@@ -121,47 +108,44 @@ object DefaultAMFValidations extends ImportUtils {
   }
 
   def profiles(): List[ValidationProfile] = {
-    val groups = validations().groupBy(_.spec)
-    groups.flatMap {
-      case (p, validationsInGroup) =>
-        specificsProfile(p).map { profile =>
-          val violationValidations = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.VIOLATION))
-          val infoValidations      = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.INFO))
-          val warningValidations   = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.WARNING))
+    val list = validations().map {
+      case (profile, validationsInGroup) =>
+        val violationValidations = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.VIOLATION))
+        val infoValidations      = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.INFO))
+        val warningValidations   = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.WARNING))
 
-          // sorting parser side validation for this profile
-          val violationParserSideValidations = ParserSideValidations.validations
-            .filter { v =>
-              ParserSideValidations
-                .levels(v.id)
-                .getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.VIOLATION
-            }
-            .map(_.name)
-          val infoParserSideValidations = ParserSideValidations.validations
-            .filter { v =>
-              ParserSideValidations.levels(v.id).getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.INFO
-            }
-            .map(_.name)
-          val warningParserSideValidations = ParserSideValidations.validations
-            .filter { v =>
-              ParserSideValidations.levels(v.id).getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.WARNING
-            }
-            .map(_.name)
+        // sorting parser side validation for this profile
+        val violationParserSideValidations = ParserSideValidations.validations
+          .filter { v =>
+            ParserSideValidations
+              .levels(v.id)
+              .getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.VIOLATION
+          }
+          .map(_.name)
+        val infoParserSideValidations = ParserSideValidations.validations
+          .filter { v =>
+            ParserSideValidations.levels(v.id).getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.INFO
+          }
+          .map(_.name)
+        val warningParserSideValidations = ParserSideValidations.validations
+          .filter { v =>
+            ParserSideValidations.levels(v.id).getOrElse(profile, SeverityLevels.VIOLATION) == SeverityLevels.WARNING
+          }
+          .map(_.name)
 
-          ValidationProfile(
-            name = profile,
-            baseProfile = if (profile == AmfProfile) None else Some(AmfProfile),
-            infoLevel = infoParserSideValidations ++ infoValidations.map(_.name),
-            warningLevel = warningParserSideValidations ++ warningValidations.map(_.name),
-            violationLevel = violationParserSideValidations ++ violationValidations.map(_.name),
-            validations = infoValidations ++ warningValidations ++ violationValidations ++ ParserSideValidations.validations
-          )
-        }
-
+        ValidationProfile(
+          name = profile,
+          baseProfile = if (profile == AmfProfile) None else Some(AmfProfile),
+          infoLevel = infoParserSideValidations ++ infoValidations.map(_.name),
+          warningLevel = warningParserSideValidations ++ warningValidations.map(_.name),
+          violationLevel = violationParserSideValidations ++ violationValidations.map(_.name),
+          validations = infoValidations ++ warningValidations ++ violationValidations ++ ParserSideValidations.validations
+        )
     }.toList
+    list
   }
 
-  private def parseValidation(validations: List[AMFValidation]): List[ValidationSpecification] = {
+  private def parseValidation(validations: Seq[AMFValidation]): Seq[ValidationSpecification] = {
     validations.map { validation =>
       val uri = validation.uri match {
         case Some(s) => s.trim

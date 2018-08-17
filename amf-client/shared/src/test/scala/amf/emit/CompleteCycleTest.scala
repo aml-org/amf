@@ -1299,7 +1299,7 @@ class CompleteCycleTest extends BuildCycleTests {
   }
 
   test("Test enums raml to amf") {
-    cycle("enums.json", "enums.raml.jsonld", RamlYamlHint, Amf, basePath + "enums/")
+    cycle("enums.json", "enums.raml.jsonld", OasJsonHint, Amf, basePath + "enums/")
   }
 
   test("Test enums raml-amf to raml") {

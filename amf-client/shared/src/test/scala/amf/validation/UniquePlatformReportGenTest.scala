@@ -17,8 +17,8 @@ sealed trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTes
   val hint: Hint
 
   protected lazy val defaultProfile: ProfileName = hint.vendor match {
-    case Raml => RamlProfile
-    case Oas  => OasProfile
+    case Raml => Raml10Profile
+    case Oas  => Oas20Profile
     case _    => AmfProfile
   }
 

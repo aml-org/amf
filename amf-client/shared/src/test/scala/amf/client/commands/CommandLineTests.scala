@@ -1,7 +1,7 @@
 package amf.client.commands
 
 import amf.core.client.{ParserConfig, Proc, ProcWriter}
-import amf.core.remote.{Oas20, Raml, Raml10}
+import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import org.scalatest.AsyncFunSuite
 
@@ -147,7 +147,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val args = Array(
       "parse",
       "-in",
-      "AML 1.0",
+      Aml.name,
       "-mime-in",
       "application/yaml",
       "-ds",

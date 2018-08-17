@@ -65,7 +65,7 @@ case class ModelValidationStep(override val validationContext: ValidationContext
   override protected def validate(): Future[Seq[AMFValidationResult]] = {
     val baseOptions = FilterDataNodeOptions().withMessageStyle(validationContext.messageStyle)
     val options = validationContext.profile match {
-      case RamlProfile | Raml08Profile | OasProfile | Oas30Profile =>
+      case RamlProfile | Raml10Profile | Raml08Profile | OasProfile | Oas20Profile | Oas30Profile | AmfProfile =>
         baseOptions.withPartialValidation()
       case _ =>
         baseOptions.withFullValidation()

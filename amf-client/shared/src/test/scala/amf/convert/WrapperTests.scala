@@ -15,7 +15,7 @@ import amf.client.resolve.{Raml08Resolver, Raml10Resolver}
 import amf.client.resource.ResourceLoader
 import amf.common.Diff
 import amf.core.parser.Range
-import amf.core.remote.{Oas20, Raml, Raml10}
+import amf.core.remote.{Aml, Oas20, Raml, Raml10}
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.plugins.document.Vocabularies
@@ -168,7 +168,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     for {
       _           <- AMF.init().asFuture
       dialectName <- AMF.registerDialect(demosDialect).asFuture
-      unit        <- new RamlParser().parseFileAsync(demosInstance).asFuture
+      unit        <- new Aml10Parser().parseFileAsync(demosInstance).asFuture
       report      <- AMF.validate(unit, ProfileName("Eng Demos 0.1"), AMFStyle).asFuture
     } yield {
       AMF.registerNamespace("eng-demos", "http://mulesoft.com/vocabularies/eng-demos#")
@@ -287,7 +287,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     for {
       _           <- AMF.init().asFuture
       dialectName <- Vocabularies.registerDialect(demos2Dialect, env).asFuture
-      unit        <- new RamlParser().parseFileAsync(demosInstance).asFuture
+      unit        <- new Aml10Parser().parseFileAsync(demosInstance).asFuture
       report      <- AMF.validate(unit, ProfileName("Eng Demos 0.1"), AMFStyle).asFuture
     } yield {
       AMF.registerNamespace("eng-demos", "http://mulesoft.com/vocabularies/eng-demos#")
@@ -442,7 +442,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   test("Vocabularies parsing aml_doc") {
     for {
       _    <- AMF.init().asFuture
-      unit <- amf.Core.parser("AMF Vocabularies", "application/yaml").parseFileAsync(aml_doc).asFuture
+      unit <- amf.Core.parser(Aml.name, "application/yaml").parseFileAsync(aml_doc).asFuture
     } yield {
       val declarations = unit.asInstanceOf[Vocabulary].declares.asSeq
 

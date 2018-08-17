@@ -220,7 +220,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       resolved <- Future {
         Raml10Plugin.resolve(doc)
       }
-      generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
+      generated <- new AMFSerializer(resolved, "application/ld+json", Amf.name, RenderOptions().withoutSourceMaps).renderToString
       report    <- validation.validate(doc, OasProfile)
     } yield {
       assert(!report.conforms)

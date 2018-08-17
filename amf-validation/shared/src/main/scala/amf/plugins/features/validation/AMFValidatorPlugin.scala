@@ -58,9 +58,11 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
   def profilesPlugins: Map[String, AMFDocumentPlugin] =
     AMFPluginsRegistry.documentPlugins.foldLeft(Map[String, AMFDocumentPlugin]()) {
       case (acc, domainPlugin: AMFValidationPlugin) =>
-        acc ++ domainPlugin.domainValidationProfiles(platform).keys.foldLeft(Map[String, AMFDocumentPlugin]()) {
-          case (accProfiles, profileName) => accProfiles.updated(profileName, domainPlugin)
+        val toPut = domainPlugin.domainValidationProfiles(platform).keys.foldLeft(Map[String, AMFDocumentPlugin]()) {
+          case (accProfiles, profileName) =>
+            accProfiles.updated(profileName, domainPlugin)
         }
+        acc ++ toPut
       case (acc, _) => acc
     } ++ customValidationProfilesPlugins
 
@@ -190,18 +192,6 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
 //    }
   }
 
-  override def validate(model: BaseUnit,
-                        profileName: ProfileName,
-                        messageStyle: MessageStyle,
-                        env: Environment): Future[AMFValidationReport] = {
-
-    super.validate(model, profileName, messageStyle, env) flatMap {
-      case parseSideValidation if !parseSideValidation.conforms => Future.successful(parseSideValidation)
-      case _                                                    => modelValidation(model, profileName, messageStyle, env)
-    }
-
-  }
-
   private def profileForUnit(unit: BaseUnit, given: ProfileName): ProfileName = {
     given match {
       case OasProfile =>
@@ -226,11 +216,23 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     case _           => None
   }
 
+  override def validate(model: BaseUnit,
+                        given: ProfileName,
+                        messageStyle: MessageStyle,
+                        env: Environment): Future[AMFValidationReport] = {
+
+    val profileName = profileForUnit(model, given)
+    super.validate(model, profileName, messageStyle, env) flatMap {
+      case parseSideValidation if !parseSideValidation.conforms => Future.successful(parseSideValidation)
+      case _                                                    => modelValidation(model, profileName, messageStyle, env)
+    }
+
+  }
+
   private def modelValidation(model: BaseUnit,
-                              given: ProfileName,
+                              profileName: ProfileName,
                               messageStyle: MessageStyle,
                               env: Environment): Future[AMFValidationReport] = {
-    val profileName = profileForUnit(model, given)
 
     profilesPlugins.get(profileName.profile) match {
       case Some(domainPlugin: AMFValidationPlugin) =>

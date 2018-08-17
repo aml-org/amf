@@ -325,8 +325,13 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
     private def endpoints(f: FieldEntry, ordering: SpecOrdering, vendor: Option[Vendor]): Seq[EntryEmitter] = {
 
       def defaultOrder(emitters: Seq[RamlEndPointEmitter]): Seq[RamlEndPointEmitter] = {
-        emitters.sorted((x: RamlEndPointEmitter, y: RamlEndPointEmitter) =>
-          x.endpoint.path.value().count(_ == '/') compareTo y.endpoint.path.value().count(_ == '/'))
+        emitters.sorted((x: RamlEndPointEmitter, y: RamlEndPointEmitter) => {
+          x.endpoint.path.value().count(_ == '/') compareTo y.endpoint.path.value().count(_ == '/') match {
+            case 0 =>
+              x.endpoint.path.value() compareTo y.endpoint.path.value()
+            case n => n
+          }
+        })
       }
 
       val endpoints = f.array.values
