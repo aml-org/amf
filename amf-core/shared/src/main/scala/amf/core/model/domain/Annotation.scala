@@ -31,3 +31,5 @@ object Annotation {
       case _                      => None
     }
 }
+
+trait EternalSerializedAnnotation extends PerpetualAnnotation with SerializableAnnotation

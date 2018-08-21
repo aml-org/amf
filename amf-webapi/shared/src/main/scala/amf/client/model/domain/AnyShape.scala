@@ -65,4 +65,11 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
     * and it's because was parsed from
     * an empty (or only with example) payload, an not an explicit type def */
   def isDefaultEmpty: Boolean = _internal.isDefaultEmpty
+
+  /**
+    * @param trackId parent id of the original payload type with simpleinheritance and the searched example.
+    * @return A ClientOption of the original inlined example, or empty if there is not any example with
+    *         that track information annotated.
+    */
+  def trackedExample(trackId: String): ClientOption[Example] = _internal.trackedExample(trackId).asClient
 }

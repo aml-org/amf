@@ -654,7 +654,8 @@ object GraphEmitter extends MetaModelTypeMapping {
           b.entry(
             "smaps",
             _.obj { b =>
-              createAnnotationNodes(b, sources, ctx)
+              createAnnotationNodes(b, sources.annotations, ctx)
+              createAnnotationNodes(b, sources.eternals, ctx)
             }
           )
         } else {
@@ -664,16 +665,48 @@ object GraphEmitter extends MetaModelTypeMapping {
               _.obj { b =>
                 createIdNode(b, id, ctx)
                 createTypeNode(b, SourceMapModel, None, ctx)
-                createAnnotationNodes(b, sources, ctx)
+                createAnnotationNodes(b, sources.annotations, ctx)
+                createAnnotationNodes(b, sources.eternals, ctx)
               }
             }
           )
         }
+      } else {
+        createEternalsAnnotationsNodes(id, options, b, sources, ctx)
       }
     }
 
-    private def createAnnotationNodes(b: EntryBuilder, sources: SourceMap, ctx: EmissionContext): Unit = {
-      sources.annotations.foreach({
+    private def createEternalsAnnotationsNodes(id: String,
+                                               options: RenderOptions,
+                                               b: EntryBuilder,
+                                               sources: SourceMap,
+                                               ctx: EmissionContext): Unit = {
+      if (sources.eternals.nonEmpty)
+        if (options.isWithRawSoureMaps) {
+          b.entry(
+            "smaps",
+            _.obj { b =>
+              createAnnotationNodes(b, sources.eternals, ctx)
+            }
+          )
+        } else {
+          b.entry(
+            ctx.emitIri(DomainElementModel.Sources.value.iri()),
+            _.list {
+              _.obj { b =>
+                createIdNode(b, id, ctx)
+                createTypeNode(b, SourceMapModel, None, ctx)
+                createAnnotationNodes(b, sources.eternals, ctx)
+              }
+            }
+          )
+        }
+    }
+
+    private def createAnnotationNodes(b: EntryBuilder,
+                                      annotations: mutable.ListMap[String, mutable.ListMap[String, String]],
+                                      ctx: EmissionContext): Unit = {
+      annotations.foreach({
         case (a, values) =>
           if (ctx.options.isWithRawSoureMaps) {
             b.entry(

@@ -10,15 +10,16 @@ import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{Lazy, TemplateUri}
-import amf.plugins.document.webapi.annotations._
+import amf.core.utils.{Lazy, Strings, TemplateUri}
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec
+import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, WebApiBaseSpecParser}
 import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationsParser, SecuritySchemeParser, _}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
+import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{CreativeWork, NodeShape}
 import amf.plugins.domain.webapi.metamodel.security.{OAuth2SettingsModel, ParametrizedSecuritySchemeModel, ScopeModel}
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, _}
@@ -26,8 +27,6 @@ import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import org.yaml.model.{YNode, _}
-import amf.core.utils.Strings
-import amf.plugins.document.webapi.parser.spec._
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -421,7 +420,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         queryEntry => {
           Raml10TypeParser(queryEntry, shape => shape.adopted(request.getOrCreate.id))(toRaml(ctx))
             .parse()
-            .map(request.getOrCreate.withQueryString(_))
+            .map(s => request.getOrCreate.withQueryString(tracking(s, request.getOrCreate.id)))
         }
       )
 
@@ -762,6 +761,7 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
           OasTypeParser(entry, shape => shape.adopted(custom.id))
             .parse()
             .foreach({ shape =>
+              tracking(shape, custom.id)
               custom.set(CustomDomainPropertyModel.Schema, shape, Annotations(entry))
             })
         }

@@ -8,6 +8,7 @@ import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
+import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload
@@ -41,7 +42,7 @@ case class Raml10PayloadParser(entry: YMapEntry, producer: Option[String] => Pay
           .parse()
           .foreach { schema =>
             schema.annotations += SynthesizedField()
-            payload.withSchema(schema)
+            payload.withSchema(tracking(schema, payload.id))
           }
       case _ =>
         Raml10TypeParser(entry,
@@ -49,7 +50,7 @@ case class Raml10PayloadParser(entry: YMapEntry, producer: Option[String] => Pay
                          isAnnotation = false,
                          AnyDefaultType)
           .parse()
-          .foreach(payload.withSchema)
+          .foreach(s => payload.withSchema(tracking(s, payload.id)))
 
     }
 
@@ -83,7 +84,7 @@ case class Raml08PayloadParser(entry: YMapEntry, producer: Option[String] => Pay
         } else {
           Raml08TypeParser(entry, (shape: Shape) => shape.adopted(payload.id), isAnnotation = false, AnyDefaultType)
             .parse()
-            .foreach(payload.withSchema)
+            .foreach(s => payload.withSchema(tracking(s, payload.id)))
         }
     }
 
@@ -103,7 +104,10 @@ case class Raml08WebFormParser(map: YMap, parentId: String)(implicit ctx: RamlWe
             val webFormShape = NodeShape(entry.value).withName("schema").adopted(parentId)
             entries.foreach(e => {
 
-              Raml08TypeParser(e, (shape: Shape) => shape.adopted(webFormShape.id), isAnnotation = false, StringDefaultType)
+              Raml08TypeParser(e,
+                               (shape: Shape) => shape.adopted(webFormShape.id),
+                               isAnnotation = false,
+                               StringDefaultType)
                 .parse()
                 .foreach(s => {
                   val property = webFormShape.withProperty(e.key.toString())
@@ -117,8 +121,8 @@ case class Raml08WebFormParser(map: YMap, parentId: String)(implicit ctx: RamlWe
                         entry => {
                           val required = ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
                           property.set(PropertyShapeModel.MinCount,
-                            AmfScalar(if (required) 1 else 0),
-                            Annotations(entry) += ExplicitField())
+                                       AmfScalar(if (required) 1 else 0),
+                                       Annotations(entry) += ExplicitField())
                         }
                       )
                     case _ =>

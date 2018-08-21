@@ -1,6 +1,6 @@
 package amf.core.model.domain
 
-import amf.core.annotations.{LexicalInformation, LocalElement, SourceLocation}
+import amf.core.annotations.{LexicalInformation, LocalElement, SourceLocation, TrackedElement}
 import amf.core.parser.Annotations
 
 /**
@@ -31,4 +31,7 @@ trait AmfElement {
 
   /** true if the element have the local annotation, that means that has been aggregated in resolution. e.g: local examples to declared type */
   def fromLocal(): Boolean = annotations.find(classOf[LocalElement]).isDefined
+
+  def isTrackedBy(trackId: String): Boolean =
+    annotations.collect({ case t: TrackedElement if t.parent.equals(trackId) => t }).nonEmpty
 }

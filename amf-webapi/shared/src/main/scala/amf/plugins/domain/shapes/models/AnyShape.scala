@@ -143,6 +143,8 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
   protected def inlined: Boolean = annotations.find(classOf[InlineDefinition]).isDefined
 
   override def ramlSyntaxKey: String = "anyShape"
+
+  def trackedExample(trackId: String): Option[Example] = examples.find(_.isTrackedBy(trackId))
 }
 
 object AnyShape {

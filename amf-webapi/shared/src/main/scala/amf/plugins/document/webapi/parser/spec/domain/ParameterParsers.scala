@@ -18,6 +18,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   _
 }
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
+import amf.plugins.domain.shapes.models.ExampleTracking._
 import amf.plugins.domain.shapes.models.{FileShape, NodeShape}
 import amf.plugins.domain.webapi.annotations.{InvalidBinding, ParameterBindingInBodyLexicalInfo}
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
@@ -75,7 +76,7 @@ case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
 
         Raml10TypeParser(entry, shape => shape.withName("schema").adopted(parameter.id))
           .parse()
-          .foreach(parameter.set(ParameterModel.Schema, _, Annotations(entry)))
+          .foreach(s => parameter.set(ParameterModel.Schema, tracking(s, parameter.id), Annotations(entry)))
 
         AnnotationParser(parameter, map).parse()
 
@@ -91,7 +92,7 @@ case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
               entry,
               shape => shape.withName("schema").adopted(parameter.id)
             ).parse().foreach { schema =>
-              schema.annotations += SynthesizedField()
+              tracking(schema, parameter.id).annotations += SynthesizedField()
               parameter.set(ParameterModel.Schema, schema, Annotations(entry))
             }
             parameter
@@ -162,7 +163,7 @@ case class Raml08ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
           entry,
           shape => shape.withName("schema").adopted(parameter.id)
         ).parse().foreach { schema =>
-          schema.annotations += SynthesizedField()
+          tracking(schema, parameter.id).annotations += SynthesizedField()
           parameter.set(ParameterModel.Schema, schema, Annotations(entry))
         }
       case _ =>
@@ -172,7 +173,7 @@ case class Raml08ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
                          isAnnotation = false,
                          StringDefaultType)
           .parse()
-          .foreach(parameter.withSchema)
+          .foreach(s => parameter.withSchema(tracking(s, parameter.id)))
     }
 
     entry.value.toOption[YMap] match {
@@ -251,7 +252,7 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
                 .map { schema =>
                   shapeFromOasParameter(parameter, schema)
                   checkNotFileInBody(schema)
-                  p.payload.set(PayloadModel.Schema, schema, Annotations(entry))
+                  p.payload.set(PayloadModel.Schema, tracking(schema, parameter.id), Annotations(entry))
                 }
             }
           )
@@ -273,7 +274,7 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
             .map { schema =>
               if (p.isFormData) {
                 shapeFromOasParameter(parameter, schema)
-                p.payload.set(PayloadModel.Schema, schema, Annotations(map))
+                p.payload.set(PayloadModel.Schema, tracking(schema, p.payload.id), Annotations(map))
                 p.payload.set(PayloadModel.Name, AmfScalar(parameter.name.value()), Annotations())
               } else parameter.set(ParameterModel.Schema, schema, Annotations(map))
             }

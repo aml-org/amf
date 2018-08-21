@@ -3,17 +3,18 @@ package amf.plugins.document.webapi.parser.spec.declaration
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.remote.{Oas, Raml}
+import amf.core.utils.Strings
 import amf.plugins.document.webapi.contexts.{RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.domain._
+import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security.{Scope, SecurityScheme, Settings}
 import amf.plugins.domain.webapi.models.{Parameter, Response}
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model._
-import amf.core.utils.Strings
 
 import scala.collection.mutable
 
@@ -119,7 +120,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
               queryEntry => {
                 Raml10TypeParser(queryEntry, shape => shape.adopted(scheme.id))
                   .parse()
-                  .map(scheme.withQueryString)
+                  .foreach(s => scheme.withQueryString(tracking(s, scheme.id)))
               }
             )
 

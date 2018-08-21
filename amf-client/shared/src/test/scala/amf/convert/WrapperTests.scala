@@ -1326,4 +1326,41 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       unresolvedRef.position should be(Range((6, 10), (6, 41)))
     }
   }
+
+  test("Test search tracked example") {
+    for {
+      _ <- AMF.init().asFuture
+      a <- AMF
+        .raml10Parser()
+        .parseFileAsync("file://amf-client/shared/src/test/resources/resolution/payloads-examples-resolution.raml")
+        .asFuture
+    } yield {
+      val r          = new Raml10Resolver().resolve(a)
+      val operations = r.asInstanceOf[Document].encodes.asInstanceOf[WebApi].endPoints.asSeq.head.operations.asSeq
+      val getOp      = operations.find(_.method.value().equals("get")).get
+      val option = getOp.request.payloads.asSeq.head.schema
+        .asInstanceOf[AnyShape]
+        .trackedExample(
+          "file://amf-client/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/web-api/end-points/%2Fendpoint1/get/request/application%2Fjson")
+        .asOption
+      option.isDefined should be(true)
+      option.get.annotations().isTracked should be(true)
+
+      val getPost = operations.find(_.method.value().equals("post")).get
+      val shape   = getPost.request.payloads.asSeq.head.schema.asInstanceOf[AnyShape]
+      val option2 = shape
+        .trackedExample(
+          "file://amf-client/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/web-api/end-points/%2Fendpoint1/get/request/application%2Fjson")
+        .asOption
+      option2.isDefined should be(true)
+      option2.get.annotations().isTracked should be(true)
+
+      shape.examples.asSeq
+        .find(_.id.equals(
+          "file://amf-client/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/declarations/types/A/example/declared"))
+        .head
+        .annotations()
+        .isTracked should be(false)
+    }
+  }
 }

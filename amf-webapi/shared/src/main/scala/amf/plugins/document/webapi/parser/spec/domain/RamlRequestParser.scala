@@ -6,6 +6,7 @@ import amf.core.utils.{Lazy, Strings}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.SpecParserOps
 import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, DefaultType, Raml10TypeParser}
+import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.RequestModel
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Request}
 import amf.plugins.features.validation.ParserSideValidations
@@ -36,7 +37,7 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
                 map
               )
             }
-            finalRequest.withQueryString(q)
+            finalRequest.withQueryString(tracking(q, finalRequest.id))
           })
       }
     )

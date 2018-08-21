@@ -1,7 +1,7 @@
 package amf.core.parser
 
 import amf.core.annotations.{LexicalInformation, SourceAST, SourceLocation, SourceNode}
-import amf.core.model.domain.{Annotation, SerializableAnnotation}
+import amf.core.model.domain.{Annotation, EternalSerializedAnnotation, SerializableAnnotation}
 import org.yaml.model.{YMapEntry, YNode, YPart}
 
 import scala.collection.mutable.ArrayBuffer
@@ -43,7 +43,12 @@ class Annotations(hintSize: Int = 4) {
   }
 
   /** Return [[SerializableAnnotation]]s only. */
-  def serializables(): Seq[SerializableAnnotation] = collect { case s: SerializableAnnotation => s }
+  def serializables(): Seq[SerializableAnnotation] = collect {
+    case s: SerializableAnnotation if !s.isInstanceOf[EternalSerializedAnnotation] => s
+  }
+
+  /** Return [[EternalSerializedAnnotation]]s only. */
+  def eternals(): Seq[EternalSerializedAnnotation] = collect { case e: EternalSerializedAnnotation => e }
 
   def unapply[T <: Annotation](clazz: Class[T]): Option[T] = find(clazz)
 

@@ -532,7 +532,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
     result
   }
 
-  def parseCustomProperties(node: Node, instance: DomainElement) = {
+  def parseCustomProperties(node: Node, instance: DomainElement): Unit = {
     val properties: Seq[String] = node.properties
       .getOrElse(DomainElementModel.CustomDomainProperties.value.iri(), Nil)
       .filter(_.isInstanceOf[Uri])

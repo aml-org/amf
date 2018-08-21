@@ -1,13 +1,13 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.parser.{Annotations, ScalarNode}
+import amf.core.parser.{Annotations, ScalarNode, _}
+import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
+import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.ParameterModel
 import amf.plugins.domain.webapi.models.Parameter
 import org.yaml.model.{YMap, YMapEntry, YScalar}
-import amf.core.parser._
-import amf.plugins.document.webapi.contexts.OasWebApiContext
 
 case class OasHeaderParametersParser(map: YMap, producer: String => Parameter)(implicit ctx: OasWebApiContext) {
   def parse(): Seq[Parameter] = {
@@ -37,7 +37,7 @@ case class OasHeaderParameterParser(entry: YMapEntry, producer: String => Parame
       _ => {
         OasTypeParser(entry, (shape) => shape.withName("schema").adopted(parameter.id))
           .parse()
-          .map(parameter.set(ParameterModel.Schema, _, Annotations(entry)))
+          .map(s => parameter.set(ParameterModel.Schema, tracking(s, parameter.id), Annotations(entry)))
       }
     )
 

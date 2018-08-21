@@ -19,6 +19,7 @@ import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.CreativeWork
+import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.WebApiModel
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.models._
@@ -479,7 +480,9 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
               copied
             case _ =>
               Raml10TypeParser(ast, (shape) => shape.adopted(domainProp.id), isAnnotation = true).parse() match {
-                case Some(schema) => domainProp.withSchema(schema)
+                case Some(schema) =>
+                  tracking(schema, domainProp.id)
+                  domainProp.withSchema(schema)
                 case _ =>
                   ctx.violation(domainProp.id, "Could not find declared annotation link in references", scalar)
                   domainProp
@@ -511,6 +514,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
           Raml10TypeParser(annotationType, shape => shape.withName("schema").adopted(custom.id), isAnnotation = true)
             .parse()
             .foreach({ shape =>
+              tracking(shape, custom.id)
               custom.set(CustomDomainPropertyModel.Schema, shape, Annotations(ast))
             })
 

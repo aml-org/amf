@@ -23,4 +23,9 @@ case class Annotations(_internal: InternalAnnotations) {
   def location(): ClientOption[String] = _internal.find(classOf[SourceLocation]).map(_.location).asClient
 
   def isLocal: Boolean = _internal.find(classOf[LocalElement]).isDefined
+
+  def isTrackedBy(trackId: String): Boolean =
+    _internal.collect({ case t: TrackedElement if t.parent.equals(trackId) => t }).nonEmpty
+
+  def isTracked: Boolean = _internal.collect({ case t: TrackedElement => t }).nonEmpty
 }

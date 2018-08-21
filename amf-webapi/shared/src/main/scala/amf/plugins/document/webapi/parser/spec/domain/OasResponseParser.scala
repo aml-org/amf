@@ -9,6 +9,7 @@ import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
+import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.{PayloadModel, RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
 import org.yaml.model.{YMap, YMapEntry}
@@ -96,7 +97,7 @@ case class OasResponseParser(entry: YMapEntry, adopted: Response => Unit)(implic
         OasTypeParser(entry, (shape) => shape.withName("default").adopted(payload.id))
           .parse()
           .map { s =>
-            payload.set(PayloadModel.Schema, s, Annotations(entry))
+            payload.set(PayloadModel.Schema, tracking(s, payload.id), Annotations(entry))
         }
     )
 

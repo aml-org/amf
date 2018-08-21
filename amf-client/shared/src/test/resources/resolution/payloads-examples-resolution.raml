@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: test
+types:
+  A:
+    properties:
+      a: string
+      b: string
+    examples:
+      declared:
+        a: cristian
+        b: pavon
+/endpoint1:
+  get:
+    body:
+      application/json:
+        type: A
+        examples:
+          endpoint1:
+            a: roman
+            b: riquelme
+  post:
+    body:
+      application/json:
+        type: A
+        examples:
+          endpointP:
+            a: leonardo
+            b: jara
