@@ -69,6 +69,10 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate("examples/invalid-property-in-array-items.raml", Some("invalid-property-in-array-items.report"))
   }
 
+  test("Can validate correctly incorrect json schema properties for a certain json schema version") {
+    validate("examples/invalid-json-schema-version-properties.raml", Some("invalid-json-schema-version-properties.report"))
+  }
+
   test("Param in raml 0.8 api") {
     validate("08/pattern.raml", Some("pattern-08.report"), profile = RAML08Profile)
   }

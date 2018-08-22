@@ -26,7 +26,7 @@ import org.yaml.render.YamlRender
 
 import scala.collection.mutable
 
-class JSONSchemaVersion(val name: String)
+abstract class JSONSchemaVersion(val name: String)
 class OASSchemaVersion(override val name: String, val position: String) extends JSONSchemaVersion(name) {
   if (position != "schema" && position != "parameter")
     throw new Exception(s"Invalid schema position '$position', only 'schema' and 'parameter' are valid")
@@ -35,7 +35,9 @@ class OAS20SchemaVersion(override val position: String) extends OASSchemaVersion
 object OAS20SchemaVersion { def apply(position: String) = new OAS20SchemaVersion(position) }
 class OAS30SchemaVersion(override val position: String) extends OASSchemaVersion("oas3.0.0", position)
 object OAS30SchemaVersion { def apply(position: String) = new OAS20SchemaVersion(position) }
-object JSONSchemaVersion extends JSONSchemaVersion("json-schema")
+object JSONSchemaDraft3SchemaVersion extends JSONSchemaVersion("draft-3")
+object JSONSchemaDraft4SchemaVersion extends JSONSchemaVersion("draft-4")
+object JSONSchemaUnspecifiedVersion extends JSONSchemaVersion("")
 
 /**
   * OpenAPI Type Parser.
@@ -661,7 +663,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     }
   }
 
-  case class NodeShapeParser(shape: NodeShape, map: YMap) extends AnyShapeParser() {
+  case class NodeShapeParser(shape: NodeShape, map: YMap)(implicit val ctx: OasWebApiContext) extends AnyShapeParser() {
     override def parse(): NodeShape = {
 
       super.parse()
@@ -691,7 +693,10 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         .key("required")
         .map { field =>
           field.value.tagType match {
-            case YType.Seq =>
+            case YType.Seq if version == JSONSchemaDraft3SchemaVersion =>
+              ctx.violation(shape.id, "Required arrays of properties not supported in JSON Schema below version draft-4", field.value)
+              Map[String,YNode]()
+            case YType.Seq  =>
               field.value.as[YSequence].nodes.foldLeft(Map[String, YNode]()) {
                 case (acc, node) =>
                   acc.updated(node.as[String], node)
@@ -820,6 +825,9 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
             "required",
             entry => {
               if (entry.value.tagType == YType.Bool) {
+                if (version == JSONSchemaDraft4SchemaVersion) {
+                  ctx.violation(property.id,  "Required property boolean value is only supported in JSON Schema draft-3", entry)
+                }
                 val required = ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
                 property.set(PropertyShapeModel.MinCount,
                              AmfScalar(if (required) 1 else 0),

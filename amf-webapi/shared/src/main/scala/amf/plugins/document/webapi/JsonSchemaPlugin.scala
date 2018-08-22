@@ -14,7 +14,7 @@ import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaVersion, OasTypeParser}
+import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft3SchemaVersion, JSONSchemaDraft4SchemaVersion, JSONSchemaVersion, OasTypeParser}
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
 import amf.plugins.document.webapi.parser.spec.{SpecSyntax, WebApiDeclarations}
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
@@ -110,6 +110,8 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     }
   }
 
+
+
   /**
     * Parses an accepted document returning an optional BaseUnit
     */
@@ -141,7 +143,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
 
         jsonSchemaContext.localJSONSchemaContext = Some(documentRoot)
         val parsed =
-          OasTypeParser(YMapEntry("schema", rootAst), (shape) => shape.withId(shapeId), version = JSONSchemaVersion)(
+          OasTypeParser(YMapEntry("schema", rootAst), (shape) => shape.withId(shapeId), version = jsonSchemaContext.computeJsonSchemaVersion(rootAst))(
             jsonSchemaContext).parse() match {
             case Some(shape) =>
               shape

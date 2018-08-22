@@ -1,0 +1,27 @@
+#%RAML 0.8
+title: invalid-json-schema-version-properties.raml
+version: V1.0.0
+baseUri: http://test.com/
+
+schemas:
+
+  - Request: |
+      {
+        "$schema": "http://json-schema.org/draft-03/schema",
+        "properties": {
+           "a": {
+            "type": "string"
+           }
+        },
+        "required": ["a"]
+      }
+
+
+/test:
+  displayName: test
+  description: test
+        
+  post:
+    body: 
+     application/json:
+       schema: Request
