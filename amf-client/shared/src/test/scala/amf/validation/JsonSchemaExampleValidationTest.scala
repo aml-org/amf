@@ -111,5 +111,10 @@ class JsonSchemaExampleValidationTest extends MultiPlatformReportGenTest {
   test("Examples JSON-Schema") {
     validate("/examples-json-schema.raml", None, profile = RAML08Profile)
   }
+
+  test("JSON Schema enum not array") {
+    validate("/enum-not-seq.raml", Some("enum-not-seq.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

@@ -865,7 +865,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         }
       )
 
-      map.key("enum", ShapeModel.Values in shape using DataNodeParser.parse(Some(shape.id)) allowingSingleValue)
+      map.key("enum", ShapeModel.Values in shape using DataNodeParser.parse(Some(shape.id)))
       map.key("externalDocs", AnyShapeModel.Documentation in shape using OasCreativeWorkParser.parse)
       map.key("xml", AnyShapeModel.XMLSerialization in shape using XMLSerializerParser.parse(shape.name.value()))
 

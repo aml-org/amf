@@ -1,0 +1,23 @@
+#%RAML 0.8
+title: Backline System API
+version: 1.0
+
+/system/token:
+  post:
+    body:
+      application/json:
+        schema: |
+          {
+            "type": "object",
+            "$schema": "http://json-schema.org/draft-03/schema",
+            "id": "http://jsonschema.net",
+            "required": true,
+            "properties": {
+              "device_type": {
+                "type": "string",
+                "description": "'phone','tablet', 'pc', 'bot'",
+                "required": false,
+                "enum": "[ phone, tablet, pc, bot ]"
+              }
+            }
+          }
