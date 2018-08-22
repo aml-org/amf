@@ -7,6 +7,14 @@ import amf.core.vocabulary.Namespace
 
 object ParserSideValidations {
 
+  val DuplicatedOperationStatusCodeSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "duplicated-operation-status-code").iri(),
+    "Status code for the  provided operation response must not be duplicated",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val MissingOperationStatusCodeSpecification = ValidationSpecification(
     (Namespace.AmfParser + "missing-operation-status-code").iri(),
     "Status code must be provided for an operation response",
@@ -286,6 +294,14 @@ object ParserSideValidations {
 
   val levels: Map[String, Map[ProfileName, String]] = Map(
 
+    DuplicatedOperationStatusCodeSpecification.id -> Map(
+      RAMLProfile   -> SeverityLevels.VIOLATION,
+      RAML08Profile -> SeverityLevels.VIOLATION,
+      OASProfile    -> SeverityLevels.VIOLATION,
+      OAS3Profile   -> SeverityLevels.VIOLATION,
+      AMFProfile    -> SeverityLevels.VIOLATION
+    ),
+
     MissingOperationStatusCodeSpecification.id -> Map(
       RAMLProfile   -> SeverityLevels.VIOLATION,
       RAML08Profile -> SeverityLevels.VIOLATION,
@@ -522,6 +538,7 @@ object ParserSideValidations {
   )
 
   def validations: List[ValidationSpecification] = List(
+    DuplicatedOperationStatusCodeSpecification,
     MissingOperationStatusCodeSpecification,
     RecursiveShapeSpecification,
     NamedExampleUsedInExample,

@@ -79,6 +79,12 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
               .regex(
                 s"(\\d{3})$optionalMethod"
               )
+            val keys = entries.map(_.key.as[YScalar].text)
+            val keySet = keys.toSet
+            if (keys.size > keySet.size) {
+              ctx.violation(DuplicatedOperationStatusCodeSpecification.id, operation.id, None,"RAML Responses must not have duplicated status codes", entry.value)
+            }
+
             if (entries.nonEmpty) {
               val responses = mutable.ListBuffer[Response]()
               entries.foreach(entry => {
