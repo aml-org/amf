@@ -202,5 +202,9 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate("/types/int-formats.raml", Some("int-formats.report"))
   }
 
+  test("Test invalid int64 format with int example") {
+    validate("/examples/invalid-format-example.raml", Some("invalid-format-example.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

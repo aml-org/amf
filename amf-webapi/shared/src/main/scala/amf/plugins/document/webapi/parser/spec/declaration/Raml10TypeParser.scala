@@ -748,7 +748,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         }
       )
 
-      map.key("format", (ScalarShapeModel.Format in shape).allowingAnnotations)
+      ScalarFormatParser(shape, typeDef).parse(map)
       // We don't need to parse (format) extension because in oas must not be emitted, and in raml will be emitted.
 
       map.key(
@@ -777,6 +777,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         }
       }
     }
+
   }
 
   case class UnionShapeParser(override val map: YMap, adopt: Shape => Shape) extends AnyShapeParser {

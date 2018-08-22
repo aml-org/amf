@@ -11,8 +11,7 @@ import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, Inferred, JSONSchemaId}
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
-import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.OasDefinitions
+import amf.plugins.document.webapi.parser.spec.{OasDefinitions, _}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser}
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, NodeDataNodeParser, RamlExamplesParser}
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
@@ -368,7 +367,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
   }
 
   trait CommonScalarParsingLogic {
-    def parseScalar(map: YMap, shape: Shape): Unit = {
+    def parseScalar(map: YMap, shape: Shape, typeDef: TypeDef): Unit = {
       map.key("pattern", ScalarShapeModel.Pattern in shape)
       map.key("minLength", ScalarShapeModel.MinLength in shape)
       map.key("maxLength", ScalarShapeModel.MaxLength in shape)
@@ -386,6 +385,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       map.key("exclusiveMinimum", ScalarShapeModel.ExclusiveMinimum in shape)
       map.key("exclusiveMaximum", ScalarShapeModel.ExclusiveMaximum in shape)
       map.key("format", ScalarShapeModel.Format in shape)
+      ScalarFormatParser(shape, typeDef).parse(map)
       map.key("multipleOf", ScalarShapeModel.MultipleOf in shape)
 
 //      shape.set(ScalarShapeModel.Repeat, value = false)
@@ -404,7 +404,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
           .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations() += Inferred()))(
           entry => shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations(entry)))
 
-      parseScalar(map, shape)
+      parseScalar(map, shape, typeDef)
 
       shape
     }
@@ -900,7 +900,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     override def parse(): FileShape = {
       super.parse()
 
-      parseScalar(map, shape)
+      parseScalar(map, shape, typeDef)
 
       map.key("fileTypes".asOasExtension, FileShapeModel.FileTypes in shape)
 
