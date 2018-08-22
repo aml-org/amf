@@ -174,7 +174,7 @@ case class RamlJsonSchemaExpression(key: YNode,
     ctx.localJSONSchemaContext = Some(schemaEntry.value)
 
     val s =
-      OasTypeParser(schemaEntry, shape => adopt(shape), JSONSchemaVersion)(toSchemaContext(ctx, valueAST))
+      OasTypeParser(schemaEntry, shape => adopt(shape), ctx.computeJsonSchemaVersion(schemaEntry.value))(toSchemaContext(ctx, valueAST))
         .parse() match {
         case Some(sh) => sh
         case None =>
