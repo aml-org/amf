@@ -13,45 +13,46 @@ external:
   hydra: "http://www.w3.org/ns/hydra/core#"
   shacl: "http://www.w3.org/ns/shacl#"
   security: "http://a.ml/vocabularies/security#"
+  doc-ext: "http://a.ml/vocabularies/document#"
 
 classTerms:
 
-  doc.DocumentationItemFragment:
+  doc-ext.DocumentationItemFragment:
     displayName: Documentation Item Fragment
     description: Fragment encoding documentation about a Web API
     extends: doc.Fragment
 
-  doc.DataTypeFragment:
+  doc-ext.DataTypeFragment:
     displayName: Data Type Fragment
     description: Fragment encoding information about a payload data shape
     extends: doc.Fragment
 
-  doc.NamedExampleFragment:
+  doc-ext.NamedExampleFragment:
     displayName:  Named Example Fragment
     description: Fragment encoding information about a named example for an API endpoint
     extends: doc.Fragment
 
-  doc.ResourceTypeFragment:
+  doc-ext.ResourceTypeFragment:
     displayName: Resource Type Fragment
     description: Fragment encoding information about an EndPoint graph template
     extends: doc.Fragment
 
-  doc.TraitFragment:
+  doc-ext.TraitFragment:
     displayName: Trait Fragment
     description: Fragment encoding information about an operation graph template
     extends: doc.Fragment
 
-  doc.AnnotationTypeDeclarationFragment:
+  doc-ext.AnnotationTypeDeclarationFragment:
     displayName: Annotation Type Declaration Fragment
     description: Fragment encoding information about an API spec extension
     extends: doc.Fragment
 
-  doc.SecuritySchemeFragment:
+  doc-ext.SecuritySchemeFragment:
     displayName: Security Scheme Fragment
     description: Fragment encoding information about a Security Scheme
     extends: doc.Fragment
 
-  doc.Extension:
+  doc-ext.Extension:
     displayName: API Spec Extension
     description: |
       An extension broadens a RAML API definition by adding to, or modifying aspects of its behavior and other functionality.
@@ -59,7 +60,7 @@ classTerms:
       more restricted audiences, for creating variants of an API for somewhat different purposes, or for specifying instance-specific nodes of an API, such as its service endpoint (URL) without altering its pure interface definition document.
     extends: doc.DocumentExtension
 
-  doc.Overlay:
+  doc-ext.Overlay:
     displayName: API Spec Overlay
     description: |
       An overlay adds or overrides nodes of a RAML API definition while preserving its behavioral, functional aspects.
@@ -387,4 +388,9 @@ propertyTerms:
   security.in:
     displayName: API key token binding
     description: binding of the security token in an API key security scheme
+    range: string
+
+  binding:
+    displayName: binding
+    description: Binding of a parameter
     range: string
