@@ -2,8 +2,6 @@
 
 base: "http://a.ml/vocabularies/shapes#"
 
-version: "1.0"
-
 usage: Vocabulary defining data shapes, used as an extension to SHACL
 
 uses:
@@ -125,6 +123,16 @@ classTerms:
       - propertySource
       - propertyTarget
 
+  XMLSerializer:
+    displayName: XML Serializer
+    description: informtion to encode any shape as a XML schema
+    properties:
+      - xmlAttribute
+      - xmlWrapped
+      - xmlName
+      - xmlNamespace
+      - xmlPrefix
+
 propertyTerms:
 
   inherits:
@@ -201,4 +209,44 @@ propertyTerms:
   raw:
     description: raw value of the external data schema
     extends: doc.raw
+    range: string
+
+  xmlSerialization:
+    displayName: xml serialization
+    description: XML serialization information for a shape
+    range: XMLSerializer
+
+
+  xmlAttribute:
+    displayName: xml attribute
+    description: XML attribute encoding information
+    range: boolean
+
+  xmlWrapped:
+    displayName: xml wrapped
+    description: XML wrapping attribute
+    range: boolean
+
+
+  xmlName:
+    displayName: xml name
+    description: XML name for the attribute
+    range: string
+
+
+  xmlNamespace:
+    displayName: xml namespace
+    description: Namespace for the XML mapping of a shape
+    range: string
+
+  xmlPrefix:
+    displayName: xml prefix
+    description: Prefix for the XML mapping of a shape
+
+  propertySource:
+    displayName: property source
+    range: string
+
+  propertyTarget:
+    displayName: property target
     range: string
