@@ -1,0 +1,10 @@
+#%RAML 1.0
+title: My API With Types
+
+types:
+  Person:
+    type: object
+    properties:
+      reports:
+        items: Person
+        minItems: 1

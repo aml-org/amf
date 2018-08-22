@@ -32,7 +32,9 @@ types:
     type: core.MasterEntity
     properties:
       description: string
-      sectors: Sector[]
+      sectors:
+        items: Sector
+        minItems: 1
   Language:
     type: core.Entity
     properties:

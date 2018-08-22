@@ -1,7 +1,9 @@
 #%RAML 1.0
 title: Types
 types:
-    Mariano: Mariano[]
+    Mariano:
+      items: Mariano
+      minItems: 1
 
 /test:
   get:

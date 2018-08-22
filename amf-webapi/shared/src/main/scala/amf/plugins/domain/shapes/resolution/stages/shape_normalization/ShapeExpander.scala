@@ -42,17 +42,18 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
         traversed + shape.id
         traversed.runPushed(_ => {
           shape match {
-            case union: UnionShape         => expandUnion(union)
-            case scalar: ScalarShape       => expandAny(scalar)
-            case array: ArrayShape         => expandArray(array)
-            case matrix: MatrixShape       => expandMatrix(matrix)
-            case tuple: TupleShape         => expandTuple(tuple)
-            case property: PropertyShape   => expandProperty(property)
-            case fileShape: FileShape      => expandAny(fileShape)
-            case nil: NilShape             => nil
-            case node: NodeShape           => expandNode(node)
-            case recursive: RecursiveShape => recursionRegister.recursionError(recursive, recursive, recursive.id, traversed)
-            case any: AnyShape             => expandAny(any)
+            case union: UnionShape       => expandUnion(union)
+            case scalar: ScalarShape     => expandAny(scalar)
+            case array: ArrayShape       => expandArray(array)
+            case matrix: MatrixShape     => expandMatrix(matrix)
+            case tuple: TupleShape       => expandTuple(tuple)
+            case property: PropertyShape => expandProperty(property)
+            case fileShape: FileShape    => expandAny(fileShape)
+            case nil: NilShape           => nil
+            case node: NodeShape         => expandNode(node)
+            case recursive: RecursiveShape =>
+              recursionRegister.recursionError(recursive, recursive, recursive.id, traversed)
+            case any: AnyShape => expandAny(any)
           }
         })
     }
@@ -108,8 +109,13 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     expandInherits(array)
     expandLogicalConstraints(array)
     val oldItems = array.fields.getValue(ArrayShapeModel.Items)
-    if (Option(oldItems).isDefined)
-      array.fields.setWithoutId(ArrayShapeModel.Items, recursiveNormalization(array.items), oldItems.annotations)
+    if (Option(oldItems).isDefined) {
+      if (array.minItems.option().exists(_ > 0)) {
+        array.fields.setWithoutId(ArrayShapeModel.Items, recursiveNormalization(array.items), oldItems.annotations)
+      } else { // min items not present, could be an empty array, so not need to report recursive violation
+        array.fields.setWithoutId(ArrayShapeModel.Items, traverseOptionalShapeFacet(array.items), oldItems.annotations)
+      }
+    }
     array
   }
 
@@ -166,7 +172,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     val oldRange = property.fields.getValue(PropertyShapeModel.Range)
     if (Option(oldRange).isDefined) {
       val expandedRange =
-        if (!required) traverseOptionalPropertyRange(property.range) else recursiveNormalization(property.range)
+        if (!required) traverseOptionalShapeFacet(property.range) else recursiveNormalization(property.range)
 
       property.fields.setWithoutId(PropertyShapeModel.Range, expandedRange, oldRange.annotations)
     } else {
@@ -175,12 +181,12 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     property
   }
 
-  private def traverseOptionalPropertyRange(range: Shape) = {
-    range.linkTarget match {
-      case Some(t) => traversed.runWithIgnoredIds(() => normalize(range), Set(root.id, t.id))
-      case None if range.inherits.nonEmpty =>
-        traversed.runWithIgnoredIds(() => normalize(range), range.inherits.map(_.id).toSet + root.id)
-      case _ => traversed.runWithIgnoredIds(() => normalize(range), Set(root.id, range.id))
+  private def traverseOptionalShapeFacet(shape: Shape) = {
+    shape.linkTarget match {
+      case Some(t) => traversed.runWithIgnoredIds(() => normalize(shape), Set(root.id, t.id))
+      case None if shape.inherits.nonEmpty =>
+        traversed.runWithIgnoredIds(() => normalize(shape), shape.inherits.map(_.id).toSet + root.id)
+      case _ => traversed.runWithIgnoredIds(() => normalize(shape), Set(root.id, shape.id))
     }
   }
 

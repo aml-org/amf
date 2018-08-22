@@ -55,5 +55,13 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
     checkReport("/types/recursive-optional-array-item-type.raml", None)
   }
 
+  test("Items recursive without min items") {
+    checkReport("/types/arrays/items-recursive-allowed.raml", None)
+  }
+
+  test("Items recursive with min items") {
+    checkReport("/types/arrays/recursive-items.raml", Some("recursive-items.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }
