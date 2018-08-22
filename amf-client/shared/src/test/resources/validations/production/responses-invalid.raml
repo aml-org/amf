@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: test
+
+/test:
+  /{id}:
+    displayName: test
+    patch:
+      body:
+        application/json:
+          type: string
+      responses:
+          body:
+            application/json:
+              type: string

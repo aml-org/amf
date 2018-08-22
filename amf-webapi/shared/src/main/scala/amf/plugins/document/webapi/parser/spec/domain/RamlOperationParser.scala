@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, _}
+import amf.plugins.features.validation.ParserSideValidations._
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.OasCreativeWorkParser
@@ -73,22 +74,24 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
         entry.value.tagType match {
           case YType.Null => // ignore
           case _ =>
-            entry.value
+            val entries = entry.value
               .as[YMap]
               .regex(
-                s"(\\d{3})$optionalMethod",
-                entries => {
-                  val responses = mutable.ListBuffer[Response]()
-                  entries.foreach(entry => {
-                    responses += ctx.factory
-                      .responseParser(entry, (r: Response) => r.adopted(operation.id), parseOptional)
-                      .parse()
-                  })
-                  operation.set(OperationModel.Responses,
-                                AmfArray(responses, Annotations(entry.value)),
-                                Annotations(entry))
-                }
+                s"(\\d{3})$optionalMethod"
               )
+            if (entries.nonEmpty) {
+              val responses = mutable.ListBuffer[Response]()
+              entries.foreach(entry => {
+                responses += ctx.factory
+                  .responseParser(entry, (r: Response) => r.adopted(operation.id), parseOptional)
+                  .parse()
+              })
+              operation.set(OperationModel.Responses,
+                AmfArray(responses, Annotations(entry.value)),
+                Annotations(entry))
+            } else {
+              ctx.violation(MissingOperationStatusCodeSpecification.id, operation.id, None,"RAML Responses must have a valid status code", entry.value)
+            }
         }
       }
     )

@@ -99,6 +99,14 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     validate("/examples/declared-type-ref.raml", golden = Some("declared-type-ref.report"))
   }
 
+  test("Test invalid responses api") {
+    validate("/production/responses-invalid.raml", golden = Some("production_responses_invalid.report"))
+  }
+
+  test("HERE_HERE Test invalid responses api (2)") {
+    validate("/production/responses-invalid-2.raml", golden = Some("production_responses_invalid_2.report"))
+  }
+
   test("Test valid api with pattern properties") {
     validate("/production/pattern_properties.raml", golden = Some("production_pattern_properties.report"))
   }

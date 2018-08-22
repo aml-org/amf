@@ -7,6 +7,14 @@ import amf.core.vocabulary.Namespace
 
 object ParserSideValidations {
 
+  val MissingOperationStatusCodeSpecification = ValidationSpecification(
+    (Namespace.AmfParser + "missing-operation-status-code").iri(),
+    "Status code must be provided for an operation response",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val ChainedReferenceSpecification = ValidationSpecification(
     (Namespace.AmfParser + "chained-reference-error").iri(),
     "References cannot be chained",
@@ -277,6 +285,15 @@ object ParserSideValidations {
   )
 
   val levels: Map[String, Map[ProfileName, String]] = Map(
+
+    MissingOperationStatusCodeSpecification.id -> Map(
+      RAMLProfile   -> SeverityLevels.VIOLATION,
+      RAML08Profile -> SeverityLevels.VIOLATION,
+      OASProfile    -> SeverityLevels.WARNING,
+      OAS3Profile   -> SeverityLevels.WARNING,
+      AMFProfile    -> SeverityLevels.INFO
+    ),
+
     RecursiveShapeSpecification.id -> Map(
       RAMLProfile   -> SeverityLevels.VIOLATION,
       RAML08Profile -> SeverityLevels.VIOLATION,
@@ -505,6 +522,7 @@ object ParserSideValidations {
   )
 
   def validations: List[ValidationSpecification] = List(
+    MissingOperationStatusCodeSpecification,
     RecursiveShapeSpecification,
     NamedExampleUsedInExample,
     ChainedReferenceSpecification,
