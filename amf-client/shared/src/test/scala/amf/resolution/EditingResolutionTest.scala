@@ -90,6 +90,14 @@ class EditingResolutionTest extends BuildCycleTests {
           Amf,
           resolutionPath + "externalfragment/test-links-with-references/")
   }
+
+  test("Test tracked examples annotations parent shortened") {
+    cycle("payloads-examples-resolution.raml",
+          "payloads-examples-resolution.resolved.jsonld",
+          RamlYamlHint,
+          Amf,
+          resolutionPath)
+  }
   /*
   test("Exchange experience API resolution to Amf") {
     cycle("api.v1.raml", "api.v1.resolved.jsonld", RamlYamlHint, Amf, productionPath + "exchange-experience-api-1.0.1-raml/")
