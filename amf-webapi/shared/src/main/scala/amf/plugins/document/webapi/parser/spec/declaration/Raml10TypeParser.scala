@@ -1177,7 +1177,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
           val inherits: Seq[AmfElement] = entry.value.as[Seq[YNode]].map { node =>
             node.as[String] match {
               case RamlTypeDefMatcher.TypeExpression(s) =>
-                RamlTypeExpressionParser(adopt, Some(node)).parse(s).get
+                RamlTypeExpressionParser(adopt, Some(node)).parse(s).get.adopted(shape.id)
               case s if wellKnownType(s) =>
                 parseWellKnownTypeRef(s).withName(s).adopted(shape.id)
               case s =>
