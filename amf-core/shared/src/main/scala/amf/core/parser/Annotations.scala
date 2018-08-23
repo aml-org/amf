@@ -15,6 +15,8 @@ class Annotations(hintSize: Int = 4) {
 
   def foreach(fn: Annotation => Unit): Unit = annotations.foreach(fn)
 
+  def map(fn: Annotation => Annotation): Unit = annotations = annotations.map(fn)
+
   def find[T <: Annotation](fn: Annotation => Boolean): Option[T] = annotations.find(fn).map(_.asInstanceOf[T])
 
   def find[T <: Annotation](clazz: Class[T]): Option[T] = find(clazz.isInstance(_))
