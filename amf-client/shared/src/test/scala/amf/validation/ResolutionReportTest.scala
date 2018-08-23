@@ -5,7 +5,12 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
 
   override val basePath = "file://amf-client/shared/src/test/resources/validations"
 
+
   override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/resolution/"
+
+  test("Complex union resolution") {
+    checkReport( "/../resolution/empty_union/api.raml", Some("empty_union.report"))
+  }
 
   test("Invalid property overriding") {
     checkReport("/types/invalid-property-overriding.raml", Some("invalid-property-overriding.report"))

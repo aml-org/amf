@@ -646,6 +646,10 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("forward-inherits-reference.raml", "forward-inherits-reference.raml", RamlYamlHint, Raml)
   }
 
+  test("Empty union fixed problem raml to jsonld test") {
+    cycle("empty_union.raml", "empty_union.jsonld", RamlYamlHint, Amf)
+  }
+
   test("Schema types raml to amf test") {
     cycle("externals.raml", "externals.raml.jsonld", RamlYamlHint, Amf)
   }
