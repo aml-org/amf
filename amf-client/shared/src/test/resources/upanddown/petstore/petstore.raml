@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: Swagger Petstore
+baseUri: petstore.swagger.wordnik.com/api
+version: 1.0.0
+/pets:
+  get:
+    displayName: findPets
+    responses:
+      200:
+        description: pet response
+        body:
+          type: array
+          items: !include Pet.json

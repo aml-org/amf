@@ -1,0 +1,27 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Petstore"
+  },
+  "host": "petstore.swagger.wordnik.com",
+  "basePath": "/api",
+  "paths": {
+    "/pets": {
+      "get": {
+        "operationId": "findPets",
+        "responses": {
+          "200": {
+            "description": "pet response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "Pet.json"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -31,12 +31,33 @@ sealed trait OASPlugin extends BaseWebApiPlugin {
               wrapped: ParserContext,
               ds: Option[WebApiDeclarations] = None): OasWebApiContext
 
+  // We might find $refs in the document pointing to actual shapes in external files in the
+  // right positions of the AST.
+  // We will try to promote these external fragments to data type fragments instead of just inlining them.
+  def promoteFragments(unit: BaseUnit, ctx: OasWebApiContext): BaseUnit = {
+    var oldReferences = unit.references.foldLeft(Map[String, BaseUnit]()) { case (acc: Map[String, BaseUnit], e: BaseUnit ) =>
+      acc + (e.location().getOrElse(e.id) -> e)
+    }
+    ctx.declarations.promotedFragments.foreach { promoted =>
+      val key = promoted.location().getOrElse(promoted.id)
+      oldReferences = oldReferences + (key -> promoted)
+    }
+
+    if (oldReferences.values.nonEmpty)
+      unit.withReferences(oldReferences.values.toSeq)
+    else
+      unit
+  }
+
   override def parse(document: Root, parentContext: ParserContext, platform: Platform, options: ParsingOptions): Option[BaseUnit] = {
     implicit val ctx: OasWebApiContext = context(document.location, document.references, parentContext)
-    document.referenceKind match {
+    val parsed = document.referenceKind match {
       case LibraryReference => Some(OasModuleParser(document).parseModule())
       case LinkReference    => Some(OasFragmentParser(document).parseFragment())
       case _                => detectOasUnit(document)
+    }
+    parsed map { unit =>
+      promoteFragments(unit, ctx)
     }
   }
 
