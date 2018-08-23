@@ -140,9 +140,5 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("/shapes/file-min-max-length.raml", Some("file-min-max-length.report"))
   }
 
-  test("Invalid include library") {
-    validate("/invalid-library-include/api.raml", Some("invalid-library-include.report"))
-  }
-
   override val hint: Hint = RamlYamlHint
 }

@@ -1,16 +1,13 @@
 package amf.core.parser
 
-import amf.core.model.document._
+import amf.core.model.document.BaseUnit
 import amf.core.remote.{Cache, Context}
 import amf.core.services.RuntimeCompiler
 import amf.internal.environment.Environment
 import org.yaml.model.YNode
 import amf.core.utils.Strings
-import amf.core.vocabulary.Namespace
-
 import scala.collection.mutable
 import scala.concurrent.Future
-import scala.concurrent.ExecutionContext.Implicits.global
 
 case class Reference(url: String, refs: Seq[RefContainer]) {
 
@@ -24,35 +21,13 @@ case class Reference(url: String, refs: Seq[RefContainer]) {
               vendor: String,
               cache: Cache,
               ctx: ParserContext,
-              env: Environment,
-              nodes: Seq[YNode]): Future[BaseUnit] = {
-    val kinds        = refs.map(_.linkType)
-    val kind         = if (kinds.distinct.size > 1) UnspecifiedReference else kinds.distinct.head
-    val eventualUnit = RuntimeCompiler(url, mediaType, vendor, base, kind, cache, Some(ctx), env)
-    verifyMatchingKind(eventualUnit, kind, nodes, ctx)
+              env: Environment): Future[BaseUnit] = {
+    val kinds = refs.map(_.linkType)
+    val kind  = if (kinds.distinct.size > 1) UnspecifiedReference else kinds.distinct.head
+    RuntimeCompiler(url, mediaType, vendor, base, kind, cache, Some(ctx), env)
   }
 
-  def isInferred: Boolean = refs.exists(_.linkType == InferredLinkReference)
-
-  private def verifyMatchingKind(eventualUnit: Future[BaseUnit],
-                                 kind: ReferenceKind,
-                                 nodes: Seq[YNode],
-                                 ctx: ParserContext): Future[BaseUnit] = {
-    eventualUnit.map(unit => {
-      unit match {
-        case _: Module => // if is a library, kind should be LibraryReference
-          if (!LibraryReference.eq(kind))
-            nodes.foreach(ctx.violation("Libraries must be applied by using 'uses'", _))
-        // ToDo find a better way to skip vocabulary/dialect elements of this validation
-        case _ if !unit.meta.`type`.exists(_.iri().contains(Namespace.Meta.base)) =>
-          // if is not a library, and is not a vocabulary, kind should not be LibraryReference
-          if (LibraryReference.eq(kind))
-            nodes.foreach(ctx.violation("Fragments must be imported by using '!include'", _))
-        case _ => // nothing to do
-      }
-      unit
-    })
-  }
+  def isInferred(): Boolean = refs.exists(_.linkType == InferredLinkReference)
 }
 
 object Reference {
