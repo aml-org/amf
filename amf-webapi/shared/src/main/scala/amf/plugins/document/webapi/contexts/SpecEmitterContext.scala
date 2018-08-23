@@ -5,25 +5,17 @@ import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.SpecOrdering.Default
 import amf.core.emitter._
 import amf.core.metamodel.Field
-import amf.core.model.document.{BaseUnit, DeclaresModel, Document}
+import amf.core.model.document.{BaseUnit, DeclaresModel, Document, EncodesModel}
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}
 import amf.core.model.domain.{DomainElement, Linkable, Shape}
-import amf.core.parser.FieldEntry
+import amf.core.parser.{FieldEntry, Position}
 import amf.core.remote._
+import amf.core.emitter._
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.raml.{
-  Raml08RootLevelEmitters,
-  Raml10RootLevelEmitters,
-  RamlRootLevelEmitters
-}
-import amf.plugins.document.webapi.parser.{
-  CommonOasTypeDefMatcher,
-  JsonSchemaTypeDefMatcher,
-  OasTypeDefStringValueMatcher,
-  RamlHeader
-}
+import amf.plugins.document.webapi.parser.spec.raml.{Raml08RootLevelEmitters, Raml10RootLevelEmitters, RamlRootLevelEmitters}
+import amf.plugins.document.webapi.parser.{CommonOasTypeDefMatcher, JsonSchemaTypeDefMatcher, OasTypeDefStringValueMatcher, RamlHeader}
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
@@ -83,6 +75,22 @@ abstract class SpecEmitterContext(refEmitter: RefEmitter) {
   def filterLocal[T <: DomainElement](elements: Seq[T]): Seq[T] = {
     if (!emittingDeclarations) elements
     else elements.filter(!_.fromLocal())
+  }
+
+  def externalLink(link: Linkable, refs: Seq[BaseUnit]): Option[BaseUnit] = {
+    link.linkTarget match {
+      case Some(element) =>
+        val linkTarget = element.id
+        refs.find {
+          case fragment: EncodesModel =>
+            fragment.encodes.id == linkTarget
+          case library: DeclaresModel =>
+            library.declares.exists(_.id == linkTarget)
+          case _ => false
+        }
+
+      case _ => None
+    }
   }
 }
 
@@ -343,7 +351,15 @@ class Raml08SpecEmitterContext extends RamlSpecEmitterContext(RamlRefEmitter) {
 
 abstract class RamlSpecEmitterContext(refEmitter: RefEmitter) extends SpecEmitterContext(refEmitter) {
 
+  import BaseEmitters._
+
   override def localReference(reference: Linkable): PartEmitter = RamlLocalReferenceEmitter(reference)
+
+  def externalReference(location: String, reference: Linkable): PartEmitter =
+    new PartEmitter {
+      override def emit(b: PartBuilder): Unit = b += YNode.include(reference.linkLabel.option().getOrElse(reference.location().get))
+      override def position(): Position           = pos(reference.annotations)
+    }
 
   val factory: RamlEmitterVersionFactory
 

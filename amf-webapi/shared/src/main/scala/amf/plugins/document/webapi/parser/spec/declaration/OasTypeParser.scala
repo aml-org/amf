@@ -10,6 +10,7 @@ import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, Inferred, JSONSchemaId}
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, WebApiContext}
+import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
 import amf.plugins.document.webapi.parser.spec.{OasDefinitions, _}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser}
@@ -281,7 +282,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 adopt(copied)
                 Some(copied)
               case None
-                  if !isOas => // Only enabled for JSON Schema, not OAS. In OAS local references can only point to the #/definitions (#/components in OAS 3) node
+                  if !isOas || ctx.declarations.fragments.contains(text) => // Only enabled for JSON Schema, not OAS. In OAS local references can only point to the #/definitions (#/components in OAS 3) node
                 // now we work with canonical JSON schema pointers, not local refs
                 val fullRef = ctx.resolvedPath(ctx.rootContextDocument, ref)
                 ctx.findJsonSchema(fullRef) match {
@@ -329,7 +330,16 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                           // it might still be resolvable at the RAML (not JSON Schema) level
                           tmpShape.unresolved(text, map, "warning").withSupportsRecursion(true)
                           Some(tmpShape)
-                        case someShape => someShape
+                        case Some(jsonSchemaShape) =>
+                          if (ctx.declarations.fragments.contains(text)) {
+                            // case when in an OAS spec we point with a regular $ref to something that is external
+                            // and holds a JSON schema
+                            // we need to promote an external fragment to data type fragment
+                            val promotedShape = ctx.declarations.promoteExternaltoDataTypeFragment(text, fullRef, jsonSchemaShape)
+                            Some(promotedShape.link(text, Annotations(ast)).asInstanceOf[AnyShape].withName(name).withSupportsRecursion(true))
+                          } else {
+                            Some(jsonSchemaShape)
+                          }
                       }
                     }
                 }

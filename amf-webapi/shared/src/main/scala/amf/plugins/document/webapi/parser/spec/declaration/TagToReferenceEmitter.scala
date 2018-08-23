@@ -11,6 +11,7 @@ import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecEmitter
 import amf.plugins.domain.webapi.models.{Parameter, Response}
 import org.yaml.model.YDocument.PartBuilder
+import org.yaml.model.{YTag, YType}
 
 /**
   *
@@ -68,6 +69,15 @@ case class RamlLocalReferenceEmitter(reference: Linkable) extends PartEmitter {
     case Some(label) => raw(b, label)
     case None        => throw new Exception("Missing link label")
   }
+
+  override def position(): Position = pos(reference.annotations)
+}
+
+
+case class RamlIncludeReferenceEmitter(reference: Linkable, location: String) extends PartEmitter {
+
+  override def emit(b: PartBuilder): Unit =
+    raw(b, s"!include ${location}", YType.Include)
 
   override def position(): Position = pos(reference.annotations)
 }

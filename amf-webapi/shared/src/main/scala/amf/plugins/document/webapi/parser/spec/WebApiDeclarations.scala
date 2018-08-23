@@ -2,16 +2,8 @@ package amf.plugins.document.webapi.parser.spec
 
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{DataNode, DomainElement, ObjectNode, Shape}
-import amf.core.parser.{
-  Annotations,
-  Declarations,
-  EmptyFutureDeclarations,
-  ErrorHandler,
-  Fields,
-  FragmentRef,
-  FutureDeclarations,
-  SearchScope
-}
+import amf.core.parser.{Annotations, Declarations, EmptyFutureDeclarations, ErrorHandler, Fields, FragmentRef, FutureDeclarations, SearchScope}
+import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations._
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
@@ -36,6 +28,19 @@ class WebApiDeclarations(val alias: Option[String],
                          val errorHandler: Option[ErrorHandler],
                          val futureDeclarations: FutureDeclarations)
     extends Declarations(libs, frags, anns, errorHandler, futureDeclarations = futureDeclarations) {
+
+  def promoteExternaltoDataTypeFragment(text: String, fullRef: String, shape: Shape): Shape = {
+    fragments.get(text) match {
+      case Some(fragmentRef) =>
+        promotedFragments :+= DataTypeFragment().withId(fragmentRef.location.getOrElse(fullRef)).withLocation(fragmentRef.location.getOrElse(fullRef)).withEncodes(shape)
+        fragments +=  (text -> FragmentRef(shape, fragmentRef.location))
+      case _                 =>
+        promotedFragments :+= DataTypeFragment().withId(fullRef).withLocation(fullRef).withEncodes(shape)
+        fragments +=  (text -> FragmentRef(shape, None))
+    }
+    shape
+  }
+
 
   protected def mergeParts(other: WebApiDeclarations, merged: WebApiDeclarations): Unit = {
     libs.foreach { case (k, s)                  => merged.libs += (k            -> s) }

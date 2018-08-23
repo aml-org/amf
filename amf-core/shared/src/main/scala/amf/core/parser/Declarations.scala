@@ -13,6 +13,8 @@ class Declarations(var libraries: Map[String, Declarations] = Map(),
                    errorHandler: Option[ErrorHandler],
                    futureDeclarations: FutureDeclarations) {
 
+  var promotedFragments = Seq[Fragment]()
+
   def +=(fragment: (String, Fragment)): Declarations = {
     fragment match {
       case (url, f) => fragments = fragments + (url -> FragmentRef(f.encodes, f.location()))

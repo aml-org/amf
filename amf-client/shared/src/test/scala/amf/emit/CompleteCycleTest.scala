@@ -437,6 +437,14 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("annotations-scalars.raml", "annotations-scalars.json", RamlYamlHint, Oas)
   }
 
+  test("Petstore oas to raml") {
+    cycle("petstore/petstore.json", "petstore/petstore.raml", OasJsonHint, Raml10)
+  }
+
+  test("Petstore oas to jsonld") {
+    cycle("petstore/petstore.json", "petstore/petstore.jsonld", OasJsonHint, Amf)
+  }
+
   test("Annotations in Scalars jsonld to raml test") {
     cycle("annotations-scalars.raml.jsonld", "annotations-scalars.jsonld.raml", AmfJsonHint, Raml)
   }

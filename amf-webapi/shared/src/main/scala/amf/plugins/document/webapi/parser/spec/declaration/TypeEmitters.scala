@@ -7,7 +7,7 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Bool
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.model.document.{BaseUnit, ExternalFragment}
+import amf.core.model.document.{BaseUnit, EncodesModel, ExternalFragment}
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain._
 import amf.core.parser.Position.ZERO
@@ -19,12 +19,7 @@ import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
-import amf.plugins.document.webapi.parser.{
-  OasTypeDefMatcher,
-  OasTypeDefStringValueMatcher,
-  RamlTypeDefMatcher,
-  RamlTypeDefStringValueMatcher
-}
+import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, OasTypeDefStringValueMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
 import amf.plugins.domain.shapes.annotations.{NilUnion, ParsedFromTypeExpression}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
@@ -179,7 +174,13 @@ case class Raml10TypeEmitter(shape: Shape,
           if Option(shape).isDefined && shape
             .isInstanceOf[AnyShape] && shape.asInstanceOf[AnyShape].fromTypeExpression =>
         Seq(RamlTypeExpressionEmitter(shape.asInstanceOf[AnyShape]))
-      case l: Linkable if l.isLink => Seq(spec.localReference(shape))
+      case l: Linkable if l.isLink =>
+        spec.externalLink(shape, references) match {
+          case Some(fragment: EncodesModel) =>
+            Seq(spec.externalReference(shape.linkLabel.option().getOrElse(fragment.location().get), shape))
+          case _  =>
+            Seq(spec.localReference(shape))
+        }
       case schema: SchemaShape     => Seq(RamlSchemaShapeEmitter(schema, ordering, references))
       case node: NodeShape if node.annotations.find(classOf[ParsedJSONSchema]).isDefined =>
         Seq(RamlJsonShapeEmitter(node, ordering, references))
