@@ -309,7 +309,7 @@ object GraphEmitter extends MetaModelTypeMapping {
         b.entry(
           ctx.emitIri(DomainElementModel.CustomDomainProperties.value.iri()),
           _.list { b =>
-            customProperties.foreach(iri(b, _, inArray = true))
+            customProperties.foreach(iri(b, _, ctx, inArray = true))
           }
         )
     }
@@ -367,10 +367,10 @@ object GraphEmitter extends MetaModelTypeMapping {
                           DefaultScalarEmitter.scalar(b, e.asInstanceOf[AmfScalar].value.toString, inArray = true)
 
                         case EncodedIri =>
-                          safeIri(b, e.asInstanceOf[AmfScalar].toString, inArray = true)
+                          safeIri(b, e.asInstanceOf[AmfScalar].toString, ctx, inArray = true)
 
                         case Iri =>
-                          iri(b, e.asInstanceOf[AmfScalar].toString, inArray = true)
+                          iri(b, e.asInstanceOf[AmfScalar].toString, ctx, inArray = true)
 
                         case Any =>
                           val scalarElement = e.asInstanceOf[AmfScalar]
@@ -414,10 +414,10 @@ object GraphEmitter extends MetaModelTypeMapping {
           obj(b, v.value.asInstanceOf[AmfObject], inArray = false, ctx)
           sources(v)
         case Iri =>
-          iri(b, v.value.asInstanceOf[AmfScalar].toString)
+          iri(b, v.value.asInstanceOf[AmfScalar].toString, ctx)
           sources(v)
         case EncodedIri =>
-          safeIri(b, v.value.asInstanceOf[AmfScalar].toString)
+          safeIri(b, v.value.asInstanceOf[AmfScalar].toString, ctx)
           sources(v)
         case Str =>
           v.annotations.find(classOf[ScalarType]) match {
@@ -483,8 +483,8 @@ object GraphEmitter extends MetaModelTypeMapping {
                   }
                 }
               case EncodedIri =>
-                seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => safeIri(b, e.toString, inArray = true))
-              case Iri => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(b, e.toString, inArray = true))
+                seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => safeIri(b, e.toString, ctx, inArray = true))
+              case Iri => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(b, e.toString, ctx, inArray = true))
               case Type.Int =>
                 seq.values
                   .asInstanceOf[Seq[AmfScalar]]
@@ -536,7 +536,7 @@ object GraphEmitter extends MetaModelTypeMapping {
                     case other     => scalarEmitter.scalar(b, other.toString, inArray = true)
                   }
                 }
-              case _ => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(b, e.toString, inArray = true))
+              case _ => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(b, e.toString, ctx, inArray = true))
             }
           }
       }
@@ -584,19 +584,19 @@ object GraphEmitter extends MetaModelTypeMapping {
       if (inArray) emit(b) else b.list(emit)
     }
 
-    private def iri(b: PartBuilder, content: String, inArray: Boolean = false): Unit = {
+    private def iri(b: PartBuilder, content: String, ctx: EmissionContext, inArray: Boolean = false): Unit = {
       // Last update, we assume that the iris are valid and han been encoded. Other option could be use the previous custom lcoal object URLEncoder but not search for %.
       // That can be a problem, because some chars could not being encoded
       def emit(b: PartBuilder): Unit = {
-        b.obj(_.entry("@id", raw(_, content)))
+        b.obj(_.entry("@id", raw(_, ctx.emitId(content))))
       }
 
       if (inArray) emit(b) else b.list(emit)
     }
 
-    private def safeIri(b: PartBuilder, content: String, inArray: Boolean = false): Unit = {
+    private def safeIri(b: PartBuilder, content: String, ctx: EmissionContext, inArray: Boolean = false): Unit = {
       def emit(b: PartBuilder): Unit = {
-        b.obj(_.entry("@id", raw(_, content)))
+        b.obj(_.entry("@id", raw(_, ctx.emitId(content))))
       }
 
       if (inArray) emit(b) else b.list(emit)

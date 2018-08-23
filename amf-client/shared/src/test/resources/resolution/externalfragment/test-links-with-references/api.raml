@@ -1,0 +1,18 @@
+#%RAML 1.0
+title: test
+types:
+  error: !include errorResponse-schema.json
+
+/articles:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: error
+  post:
+    responses:
+      200:
+        body:
+          application/json:
+            type: error

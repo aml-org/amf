@@ -83,6 +83,13 @@ class EditingResolutionTest extends BuildCycleTests {
                 validation = Some(v)))
   }
 
+  test("Test url shortener with external references") {
+    cycle("api.raml",
+          "api.resolved.jsonld",
+          RamlYamlHint,
+          Amf,
+          resolutionPath + "externalfragment/test-links-with-references/")
+  }
   /*
   test("Exchange experience API resolution to Amf") {
     cycle("api.v1.raml", "api.v1.resolved.jsonld", RamlYamlHint, Amf, productionPath + "exchange-experience-api-1.0.1-raml/")

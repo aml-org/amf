@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#22",
+        "@id": "#16",
         "@type": [
           "schema-org:WebAPI",
           "doc:RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "raml-http:server": [
           {
-            "@id": "#42",
+            "@id": "#25",
             "@type": [
               "raml-http:Server",
               "doc:DomainElement"
@@ -37,7 +37,7 @@
                 "raml-http:url": "[(4,0)-(6,0)]"
               },
               "synthesized-field": {
-                "#42": "true"
+                "#25": "true"
               }
             }
           }
@@ -49,7 +49,7 @@
         ],
         "raml-http:endpoint": [
           {
-            "@id": "#23",
+            "@id": "#17",
             "@type": [
               "raml-http:EndPoint",
               "doc:DomainElement"
@@ -67,12 +67,12 @@
             "smaps": {
               "lexical": {
                 "schema-org:name": "[(19,2)-(20,0)]",
-                "#23": "[(18,0)-(27,21)]"
+                "#17": "[(18,0)-(27,21)]"
               }
             }
           },
           {
-            "@id": "#24",
+            "@id": "#18",
             "@type": [
               "raml-http:EndPoint",
               "doc:DomainElement"
@@ -84,7 +84,7 @@
             ],
             "hydra:supportedOperation": [
               {
-                "@id": "#25",
+                "@id": "#19",
                 "@type": [
                   "hydra:Operation",
                   "doc:DomainElement"
@@ -101,14 +101,14 @@
                 ],
                 "hydra:expects": [
                   {
-                    "@id": "#26",
+                    "@id": "#20",
                     "@type": [
                       "raml-http:Request",
                       "doc:DomainElement"
                     ],
                     "raml-http:payload": [
                       {
-                        "@id": "#27",
+                        "@id": "#21",
                         "@type": [
                           "raml-http:Payload",
                           "doc:DomainElement"
@@ -120,7 +120,7 @@
                         ],
                         "raml-http:schema": [
                           {
-                            "@id": "#28",
+                            "@id": "#22",
                             "@type": [
                               "shacl:NodeShape",
                               "shacl:Shape",
@@ -134,7 +134,7 @@
                             ],
                             "shacl:property": [
                               {
-                                "@id": "#30",
+                                "@id": "#4",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -147,7 +147,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#31",
+                                    "@id": "#5",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -166,7 +166,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#31": "[(11,6)-(12,0)]"
+                                        "#5": "[(11,6)-(12,0)]"
                                       }
                                     }
                                   }
@@ -183,12 +183,12 @@
                                 ],
                                 "smaps": {
                                   "lexical": {
-                                    "#30": "[(11,6)-(12,0)]"
+                                    "#4": "[(11,6)-(12,0)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "#32",
+                                "@id": "#10",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -201,7 +201,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#33",
+                                    "@id": "#11",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -220,7 +220,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#33": "[(16,6)-(17,0)]"
+                                        "#11": "[(16,6)-(17,0)]"
                                       }
                                     }
                                   }
@@ -237,12 +237,12 @@
                                 ],
                                 "smaps": {
                                   "lexical": {
-                                    "#32": "[(16,6)-(17,0)]"
+                                    "#10": "[(16,6)-(17,0)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "#34",
+                                "@id": "#23",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -255,7 +255,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#35",
+                                    "@id": "#24",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -274,7 +274,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#35": "[(27,12)-(27,21)]"
+                                        "#24": "[(27,12)-(27,21)]"
                                       }
                                     }
                                   }
@@ -291,12 +291,12 @@
                                 ],
                                 "smaps": {
                                   "lexical": {
-                                    "#34": "[(27,12)-(27,21)]"
+                                    "#23": "[(27,12)-(27,21)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "#36",
+                                "@id": "#2",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -309,7 +309,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#37",
+                                    "@id": "#3",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -328,7 +328,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#37": "[(10,6)-(11,0)]"
+                                        "#3": "[(10,6)-(11,0)]"
                                       }
                                     }
                                   }
@@ -345,12 +345,12 @@
                                 ],
                                 "smaps": {
                                   "lexical": {
-                                    "#36": "[(10,6)-(11,0)]"
+                                    "#2": "[(10,6)-(11,0)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "#38",
+                                "@id": "#6",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -363,7 +363,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#39",
+                                    "@id": "#7",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -382,7 +382,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#39": "[(12,6)-(13,0)]"
+                                        "#7": "[(12,6)-(13,0)]"
                                       }
                                     }
                                   }
@@ -399,12 +399,12 @@
                                 ],
                                 "smaps": {
                                   "lexical": {
-                                    "#38": "[(12,6)-(13,0)]"
+                                    "#6": "[(12,6)-(13,0)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "#40",
+                                "@id": "#12",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -417,7 +417,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#41",
+                                    "@id": "#13",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -436,7 +436,7 @@
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#41": "[(17,6)-(18,0)]"
+                                        "#13": "[(17,6)-(18,0)]"
                                       }
                                     }
                                   }
@@ -453,7 +453,7 @@
                                 ],
                                 "smaps": {
                                   "lexical": {
-                                    "#40": "[(17,6)-(18,0)]"
+                                    "#12": "[(17,6)-(18,0)]"
                                   }
                                 }
                               }
@@ -468,20 +468,20 @@
                                 "shacl:name": "amf://id#9"
                               },
                               "type-property-lexical-info": {
-                                "#28": "[(25,10)-(25,14)]"
+                                "#22": "[(25,10)-(25,14)]"
                               },
                               "lexical": {
-                                "#28": "[(24,8)-(27,21)]"
+                                "#22": "[(24,8)-(27,21)]"
                               },
                               "inherited-shapes": {
-                                "#28": "amf://id#20"
+                                "#22": "amf://id#14"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "lexical": {
-                            "#27": "[(24,8)-(27,21)]"
+                            "#21": "[(24,8)-(27,21)]"
                           }
                         }
                       }
@@ -496,29 +496,29 @@
                 "smaps": {
                   "lexical": {
                     "schema-org:description": "[(22,6)-(23,0)]",
-                    "#25": "[(21,4)-(27,21)]"
+                    "#19": "[(21,4)-(27,21)]"
                   }
                 }
               }
             ],
             "smaps": {
               "parent-end-point": {
-                "#24": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/web-api/end-points/%2Fcustomers"
+                "#18": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/web-api/end-points/%2Fcustomers"
               },
               "lexical": {
-                "#24": "[(20,2)-(27,21)]"
+                "#18": "[(20,2)-(27,21)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#22": "raml 1.0"
+            "#16": "raml 1.0"
           },
           "lexical": {
             "schema-org:version": "[(3,0)-(4,0)]",
             "schema-org:name": "[(2,0)-(3,0)]",
-            "#22": "[(2,0)-(27,21)]",
+            "#16": "[(2,0)-(27,21)]",
             "raml-http:server": "[(4,0)-(6,0)]"
           }
         }
@@ -540,7 +540,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#36",
+            "@id": "#2",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -553,7 +553,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#37",
+                "@id": "#3",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "shacl:Shape",
@@ -572,7 +572,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#37": "[(10,6)-(11,0)]"
+                    "#3": "[(10,6)-(11,0)]"
                   }
                 }
               }
@@ -589,12 +589,12 @@
             ],
             "smaps": {
               "lexical": {
-                "#36": "[(10,6)-(11,0)]"
+                "#2": "[(10,6)-(11,0)]"
               }
             }
           },
           {
-            "@id": "#30",
+            "@id": "#4",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -607,7 +607,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#31",
+                "@id": "#5",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "shacl:Shape",
@@ -626,7 +626,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#31": "[(11,6)-(12,0)]"
+                    "#5": "[(11,6)-(12,0)]"
                   }
                 }
               }
@@ -643,12 +643,12 @@
             ],
             "smaps": {
               "lexical": {
-                "#30": "[(11,6)-(12,0)]"
+                "#4": "[(11,6)-(12,0)]"
               }
             }
           },
           {
-            "@id": "#38",
+            "@id": "#6",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -661,7 +661,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#39",
+                "@id": "#7",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "shacl:Shape",
@@ -680,7 +680,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#39": "[(12,6)-(13,0)]"
+                    "#7": "[(12,6)-(13,0)]"
                   }
                 }
               }
@@ -697,7 +697,7 @@
             ],
             "smaps": {
               "lexical": {
-                "#38": "[(12,6)-(13,0)]"
+                "#6": "[(12,6)-(13,0)]"
               }
             }
           }
@@ -738,7 +738,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#30",
+            "@id": "#4",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -751,7 +751,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#31",
+                "@id": "#5",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "shacl:Shape",
@@ -770,7 +770,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#31": "[(11,6)-(12,0)]"
+                    "#5": "[(11,6)-(12,0)]"
                   }
                 }
               }
@@ -787,12 +787,12 @@
             ],
             "smaps": {
               "lexical": {
-                "#30": "[(11,6)-(12,0)]"
+                "#4": "[(11,6)-(12,0)]"
               }
             }
           },
           {
-            "@id": "#32",
+            "@id": "#10",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -805,7 +805,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#33",
+                "@id": "#11",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "shacl:Shape",
@@ -824,7 +824,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#33": "[(16,6)-(17,0)]"
+                    "#11": "[(16,6)-(17,0)]"
                   }
                 }
               }
@@ -841,12 +841,12 @@
             ],
             "smaps": {
               "lexical": {
-                "#32": "[(16,6)-(17,0)]"
+                "#10": "[(16,6)-(17,0)]"
               }
             }
           },
           {
-            "@id": "#36",
+            "@id": "#2",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -859,7 +859,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#37",
+                "@id": "#3",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "shacl:Shape",
@@ -878,7 +878,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#37": "[(10,6)-(11,0)]"
+                    "#3": "[(10,6)-(11,0)]"
                   }
                 }
               }
@@ -895,12 +895,12 @@
             ],
             "smaps": {
               "lexical": {
-                "#36": "[(10,6)-(11,0)]"
+                "#2": "[(10,6)-(11,0)]"
               }
             }
           },
           {
-            "@id": "#38",
+            "@id": "#6",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -913,7 +913,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#39",
+                "@id": "#7",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "shacl:Shape",
@@ -932,7 +932,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#39": "[(12,6)-(13,0)]"
+                    "#7": "[(12,6)-(13,0)]"
                   }
                 }
               }
@@ -949,12 +949,12 @@
             ],
             "smaps": {
               "lexical": {
-                "#38": "[(12,6)-(13,0)]"
+                "#6": "[(12,6)-(13,0)]"
               }
             }
           },
           {
-            "@id": "#40",
+            "@id": "#12",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -967,7 +967,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#41",
+                "@id": "#13",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "shacl:Shape",
@@ -986,7 +986,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#41": "[(17,6)-(18,0)]"
+                    "#13": "[(17,6)-(18,0)]"
                   }
                 }
               }
@@ -1003,7 +1003,7 @@
             ],
             "smaps": {
               "lexical": {
-                "#40": "[(17,6)-(18,0)]"
+                "#12": "[(17,6)-(18,0)]"
               }
             }
           }
@@ -1015,7 +1015,7 @@
         ],
         "smaps": {
           "inherited-shapes": {
-            "#9": "amf://id#21"
+            "#9": "amf://id#15"
           },
           "declared-element": {
             "#9": ""
@@ -1028,7 +1028,7 @@
             "#9": "[(14,4)-(14,8)]"
           },
           "resolved-link": {
-            "#9": "amf://id#20"
+            "#9": "amf://id#14"
           }
         }
       }

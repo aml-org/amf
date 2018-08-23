@@ -34,7 +34,7 @@
             ],
             "hydra:supportedOperation": [
               {
-                "@id": "#11",
+                "@id": "#8",
                 "@type": [
                   "hydra:Operation",
                   "doc:DomainElement"
@@ -46,14 +46,14 @@
                 ],
                 "hydra:expects": [
                   {
-                    "@id": "#12",
+                    "@id": "#9",
                     "@type": [
                       "raml-http:Request",
                       "doc:DomainElement"
                     ],
                     "raml-http:parameter": [
                       {
-                        "@id": "#13",
+                        "@id": "#10",
                         "@type": [
                           "raml-http:Parameter",
                           "doc:DomainElement"
@@ -80,7 +80,7 @@
                         ],
                         "raml-http:schema": [
                           {
-                            "@id": "#14",
+                            "@id": "#11",
                             "@type": [
                               "raml-shapes:ScalarShape",
                               "shacl:Shape",
@@ -103,7 +103,7 @@
                                 "shacl:datatype": "id->amf://id#7,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
                               },
                               "lexical": {
-                                "#14": "[(1,0)-(1,0)]"
+                                "#11": "[(1,0)-(1,0)]"
                               }
                             }
                           }
@@ -112,12 +112,12 @@
                           "extension-provenance": {
                             "raml-http:binding": "id->amf://id#7,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
                             "raml-http:paramName": "id->amf://id#7,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
-                            "#13": "id->amf://id#7,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+                            "#10": "id->amf://id#7,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
                             "schema-org:name": "id->amf://id#7,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
                             "hydra:required": "id->amf://id#7,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
                           },
                           "lexical": {
-                            "#13": "[(1,0)-(1,0)]"
+                            "#10": "[(1,0)-(1,0)]"
                           }
                         }
                       }
@@ -135,10 +135,10 @@
                 "smaps": {
                   "extension-provenance": {
                     "hydra:method": "id->amf://id#7,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
-                    "#11": "id->amf://id#7,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
+                    "#8": "id->amf://id#7,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
                   },
                   "lexical": {
-                    "#11": "[(1,0)-(1,0)]"
+                    "#8": "[(1,0)-(1,0)]"
                   }
                 }
               }
@@ -158,7 +158,7 @@
                 ],
                 "doc:target": [
                   {
-                    "@id": "#8",
+                    "@id": "#2",
                     "@type": [
                       "doc:ResourceType",
                       "doc:AbstractDeclaration",
@@ -171,7 +171,7 @@
                     ],
                     "doc:dataNode": [
                       {
-                        "@id": "#9",
+                        "@id": "#3",
                         "@type": [
                           "data:Object"
                         ],
@@ -228,20 +228,20 @@
                         ],
                         "smaps": {
                           "data-node-properties": {
-                            "#9": "post->[(4,4)-(6,12)]"
+                            "#3": "post->[(4,4)-(6,12)]"
                           },
                           "lexical": {
-                            "#9": "[(4,4)-(6,12)]"
+                            "#3": "[(4,4)-(6,12)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "resolved-link": {
-                        "#8": "amf://id#10"
+                        "#2": "amf://id#4"
                       },
                       "lexical": {
-                        "#8": "[(3,2)-(6,12)]"
+                        "#2": "[(3,2)-(6,12)]"
                       }
                     }
                   }
@@ -280,7 +280,7 @@
         ],
         "doc:declares": [
           {
-            "@id": "#8",
+            "@id": "#2",
             "@type": [
               "doc:ResourceType",
               "doc:AbstractDeclaration",
@@ -293,7 +293,7 @@
             ],
             "doc:dataNode": [
               {
-                "@id": "#9",
+                "@id": "#3",
                 "@type": [
                   "data:Object"
                 ],
@@ -350,20 +350,20 @@
                 ],
                 "smaps": {
                   "data-node-properties": {
-                    "#9": "post->[(4,4)-(6,12)]"
+                    "#3": "post->[(4,4)-(6,12)]"
                   },
                   "lexical": {
-                    "#9": "[(4,4)-(6,12)]"
+                    "#3": "[(4,4)-(6,12)]"
                   }
                 }
               }
             ],
             "smaps": {
               "resolved-link": {
-                "#8": "amf://id#10"
+                "#2": "amf://id#4"
               },
               "lexical": {
-                "#8": "[(3,2)-(6,12)]"
+                "#2": "[(3,2)-(6,12)]"
               }
             }
           }

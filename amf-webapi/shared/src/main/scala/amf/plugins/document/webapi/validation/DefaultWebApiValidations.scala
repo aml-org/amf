@@ -172,7 +172,7 @@ object DefaultAMFValidations extends ImportUtils {
         case "http://www.w3.org/ns/shacl#path" =>
           val valueType = if (validation.constraint.trim.contains("#")) {
             val strings = validation.constraint.trim.split("#")
-            ValueType(Namespace.find(strings.head), strings.last)
+            ValueType(Namespace.find(strings.head).get, strings.last)
           } else Namespace.expand(validation.constraint)
           valueType match {
             case sh @ ValueType(Namespace.Shacl, _) =>
@@ -225,7 +225,7 @@ object DefaultAMFValidations extends ImportUtils {
       message = validation.message,
       functionName = None, // i have to ignore the function name so it will be taken from the generated js library
       code = JsCustomValidations(sh.name),
-      internalFunction =  Some(sh.name)
+      internalFunction = Some(sh.name)
     )
   }
 }

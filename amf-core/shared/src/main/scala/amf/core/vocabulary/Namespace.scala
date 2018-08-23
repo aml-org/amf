@@ -121,41 +121,43 @@ object Namespace {
     }
   }
 
-  def find(uri: String): Namespace = uri match {
-    case "http://a.ml/vocabularies/document" => Document
+  def find(uri: String): Option[Namespace] = uri match {
+    case "http://a.ml/vocabularies/document" => Some(Document)
 
-    case "http://a.ml/vocabularies/http" => Http
+    case "http://a.ml/vocabularies/http" => Some(Http)
 
-    case "http://a.ml/vocabularies/security" => Security
+    case "http://a.ml/vocabularies/security" => Some(Security)
 
-    case "http://a.ml/vocabularies/shapes" => Shapes
+    case "http://a.ml/vocabularies/shapes" => Some(Shapes)
 
-    case "http://a.ml/vocabularies/data" => Data
+    case "http://a.ml/vocabularies/data" => Some(Data)
 
-    case "http://a.ml/vocabularies/document-source-maps" => SourceMaps
+    case "http://a.ml/vocabularies/document-source-maps" => Some(SourceMaps)
 
-    case "http://www.w3.org/ns/shacl" => Shacl
+    case "http://www.w3.org/ns/shacl" => Some(Shacl)
 
-    case "http://schema.org/" => Schema
+    case "http://schema.org/" => Some(Schema)
 
-    case "http://www.w3.org/ns/hydra/core" => Hydra
+    case "http://www.w3.org/ns/hydra/core" => Some(Hydra)
 
-    case "http://www.w3.org/2001/XMLSchema" => Xsd
+    case "http://www.w3.org/2001/XMLSchema" => Some(Xsd)
 
-    case "http://a.ml/vocabularies/shapes/anon" => AnonShapes
+    case "http://a.ml/vocabularies/shapes/anon" => Some(AnonShapes)
 
-    case "http://www.w3.org/1999/02/22-rdf-syntax-ns" => Rdf
+    case "http://www.w3.org/1999/02/22-rdf-syntax-ns" => Some(Rdf)
 
     // To build full URIs without namespace
-    case "" => WihtoutNamespace
+    case "" => Some(WihtoutNamespace)
 
-    case "http://a.ml/vocabularies/meta" => Meta
+    case "http://a.ml/vocabularies/meta" => Some(Meta)
 
-    case "http://www.w3.org/2002/07/owl" => Owl
+    case "http://www.w3.org/2002/07/owl" => Some(Owl)
 
-    case "http://www.w3.org/2000/01/rdf-schema" => Rdfs
+    case "http://www.w3.org/2000/01/rdf-schema" => Some(Rdfs)
 
-    case "http://a.ml/vocabularies/amf/parser" => AmfParser
+    case "http://a.ml/vocabularies/amf/parser" => Some(AmfParser)
+
+    case _ => None
   }
 
   private def resolve(prefix: String): Option[Namespace] = ns.get(prefix)
