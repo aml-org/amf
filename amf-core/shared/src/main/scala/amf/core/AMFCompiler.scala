@@ -91,20 +91,29 @@ class AMFCompiler(val rawUrl: String,
 
     val parsed = content.mime
       .orElse(mediaType)
-      .flatMap(mime => AMFPluginsRegistry.syntaxPluginForMediaType(mime).flatMap(_.parse(mime, vendor, content.stream, ctx, parsingOptions)))
+      .flatMap(
+        mime =>
+          AMFPluginsRegistry
+            .syntaxPluginForMediaType(mime)
+            .flatMap(_.parse(mime, vendor, content.stream, ctx, parsingOptions)))
       // if we cannot find a plugin with the resolved media type, we try parsing from file extension
       .orElse {
         FileMediaType
           .extension(content.url)
           .flatMap(FileMediaType.mimeFromExtension)
-          .flatMap(mime =>
-            AMFPluginsRegistry.syntaxPluginForMediaType(mime).flatMap(_.parse(mime, vendor, content.stream, ctx, parsingOptions)))
+          .flatMap(
+            mime =>
+              AMFPluginsRegistry
+                .syntaxPluginForMediaType(mime)
+                .flatMap(_.parse(mime, vendor, content.stream, ctx, parsingOptions)))
       }
       .orElse {
         autodetectSyntax(content.stream).flatMap(mime =>
           try {
             mediaType = Some(mime)
-            AMFPluginsRegistry.syntaxPluginForMediaType(mime).flatMap(_.parse(mime, vendor, content.stream, ctx, parsingOptions))
+            AMFPluginsRegistry
+              .syntaxPluginForMediaType(mime)
+              .flatMap(_.parse(mime, vendor, content.stream, ctx, parsingOptions))
           } catch {
             case _: Exception => None // This is just a parsing attempt, it can go wrong
         })
@@ -205,7 +214,7 @@ class AMFCompiler(val rawUrl: String,
       .filter(_.isRemote)
       .map(link => {
         link
-          .resolve(context, None, domainPlugin.ID, cache, ctx, env)
+          .resolve(context, None, domainPlugin.ID, cache, ctx, env, link.refs.map(_.node))
           .recover {
             case e: CyclicReferenceException if domainPlugin.allowRecursiveReferences =>
               val fulllUrl = e.history.last
@@ -224,7 +233,7 @@ class AMFCompiler(val rawUrl: String,
           .recover {
             case e @ (_: FileNotFound | _: URISyntaxException | _: SocketTimeout | _: UnsupportedUrlScheme |
                 _: NetworkError | _: PathResolutionError) =>
-              if (!link.isInferred()) {
+              if (!link.isInferred) {
                 link.refs.map(_.node).foreach { ref =>
                   ctx.violation(link.url, s"Error Loading File: ${e.getMessage}", ref)
                 }
@@ -277,7 +286,16 @@ object AMFCompiler {
          ctx: Option[ParserContext],
          env: Environment,
          parsingOptions: ParsingOptions) => {
-          new AMFCompiler(url, base.platform, Some(base), mediaType, vendor, referenceKind, cache, ctx, env, parsingOptions).build()
+          new AMFCompiler(url,
+                          base.platform,
+                          Some(base),
+                          mediaType,
+                          vendor,
+                          referenceKind,
+                          cache,
+                          ctx,
+                          env,
+                          parsingOptions).build()
         })
     }
   }

@@ -188,7 +188,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
         val updated = context.update(reference.unit.id) // ??
 
         val externals = refs.toReferences.map((r: Reference) => {
-          r.resolve(updated, None, vendor, Cache(), ctx, environment)
+          r.resolve(updated, None, vendor, Cache(), ctx, environment, r.refs.map(_.node))
             .flatMap(u => {
               val resolved = handleRamlExternalFragment(ParsedReference(u, r), ctx, updated, environment)
 
@@ -204,8 +204,8 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
               })
             })
             .recover {
-              case e: URISyntaxException             => None
-              case e: FileNotFound if r.isInferred() => None
+              case e: URISyntaxException           => None
+              case e: FileNotFound if r.isInferred => None
             }
         })
 
