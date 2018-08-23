@@ -630,9 +630,9 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               shape.annotations += ExplicitField()
               shape
             case (text: String, _) =>
-              val shape = UnresolvedShape(text, node).withName(text)
-              shape.withContext(ctx)
-              adopt(shape)
+              val unresolve = UnresolvedShape(text, node).withName(text)
+              unresolve.withContext(ctx)
+              adopt(unresolve)
               if (!text.validReferencePath) {
                 ctx.violation(
                   ParserSideValidations.ChainedReferenceSpecification.id,
@@ -641,9 +641,9 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
                   node
                 )
               } else {
-                shape.unresolved(text, node)
+                unresolve.unresolved(text, node)
               }
-              shape
+              shape.withLinkTarget(unresolve).withLinkLabel(text)
           }
       }
     }

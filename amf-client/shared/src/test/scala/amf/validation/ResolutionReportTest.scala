@@ -5,11 +5,10 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
 
   override val basePath = "file://amf-client/shared/src/test/resources/validations"
 
-
   override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/resolution/"
 
   test("Complex union resolution") {
-    checkReport( "/../resolution/empty_union/api.raml", Some("empty_union.report"))
+    checkReport("/../resolution/empty_union/api.raml", Some("empty_union.report"))
   }
 
   test("Invalid property overriding") {
@@ -66,6 +65,10 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
 
   test("Items recursive with min items") {
     checkReport("/types/arrays/recursive-items.raml", Some("recursive-items.report"))
+  }
+
+  test("Test direct link to future reference") {
+    checkReport("/unresolve.raml", None)
   }
 
   override val hint: Hint = RamlYamlHint

@@ -713,7 +713,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
         |/endpoint:
         |   get:
         |     body:
-        |       application/json
+        |       application/json:
         |   post:
         |     body:
         |       application/json:
@@ -855,7 +855,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
-  test("Test order of uri parameter ") {
+  test("Test order of uri parameter") {
     val api =
       """
         |#%RAML 1.0
