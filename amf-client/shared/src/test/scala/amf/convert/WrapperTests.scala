@@ -1363,4 +1363,18 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
         .isTracked should be(false)
     }
   }
+
+  test("Test accessor to double parsed field") {
+    for {
+      _ <- AMF.init().asFuture
+      unit <- new Raml10Parser()
+        .parseFileAsync("file://amf-client/shared/src/test/resources/clients/double-field.raml")
+        .asFuture
+    } yield {
+      val shape = unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[ScalarShape]
+      shape.minimum.value() should be(1.1)
+      succeed
+    }
+  }
+
 }

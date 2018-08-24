@@ -24,11 +24,17 @@ case class AmfScalar(value: Any, annotations: Annotations = new Annotations()) e
   }
 
   def toNumber: Number = {
-    Option(value) match {
-      case Some(v: String) if v.indexOf(".") > -1 => v.toFloat
-      case Some(v: String)                        => v.toInt
-      case Some(v)                                => v.asInstanceOf[Number]
-      case None                                   => throw new Exception("Cannot transform null value into Number")
+    toNumberOption match {
+      case Some(v: Number) => v
+      case None            => throw new Exception("Cannot transform null value into Number")
+    }
+  }
+
+  def toNumberOption: Option[Number] = {
+    Option(value).map {
+      case v: String if v.indexOf(".") > -1 => v.toDouble
+      case v: String                        => v.toInt
+      case v                                => v.asInstanceOf[Number]
     }
   }
 }

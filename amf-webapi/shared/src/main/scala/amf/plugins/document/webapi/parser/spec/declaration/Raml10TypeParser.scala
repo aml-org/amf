@@ -730,12 +730,13 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations() += Inferred()))(
           entry => shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations(entry)))
 
+      // todo: should i parse double type values as value.double()? when emit it the values will appear with .0 (if they where ints)
       map.key(
         "minimum",
         entry => { // todo pope
           val value = ScalarNode(entry.value)
-          ensurePrecision(shape.dataType.option(), entry.value.toString(), entry.value)
-          shape.set(ScalarShapeModel.Minimum, value.text(), Annotations(entry))
+          if (ensurePrecision(shape.dataType.option(), entry.value.toString(), entry.value))
+            shape.set(ScalarShapeModel.Minimum, value.text(), Annotations(entry))
         }
       )
 
@@ -743,8 +744,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         "maximum",
         entry => { // todo pope
           val value = ScalarNode(entry.value)
-          ensurePrecision(shape.dataType.option(), entry.value.toString(), entry.value)
-          shape.set(ScalarShapeModel.Maximum, value.text(), Annotations(entry))
+          if (ensurePrecision(shape.dataType.option(), entry.value.toString(), entry.value))
+            shape.set(ScalarShapeModel.Maximum, value.text(), Annotations(entry))
         }
       )
 
@@ -755,8 +756,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         "multipleOf",
         entry => { // todo pope
           val value = ScalarNode(entry.value)
-          ensurePrecision(shape.dataType.option(), entry.value.toString(), entry.value)
-          shape.set(ScalarShapeModel.MultipleOf, value.text(), Annotations(entry))
+          if (ensurePrecision(shape.dataType.option(), entry.value.toString(), entry.value))
+            shape.set(ScalarShapeModel.MultipleOf, value.text(), Annotations(entry))
         }
       )
 
@@ -765,7 +766,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       shape
     }
 
-    protected def ensurePrecision(dataType: Option[String], value: String, ast: YNode): Unit = {
+    protected def ensurePrecision(dataType: Option[String], value: String, ast: YNode): Boolean = {
       if (dataType.isDefined && dataType.get.endsWith("#integer")) {
         if (value.contains(".")) {
           ctx.violation(
@@ -774,8 +775,11 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             "Invalid decimal point for an integer: " + value,
             ast
           )
+          false
         }
+        true
       }
+      true
     }
 
   }

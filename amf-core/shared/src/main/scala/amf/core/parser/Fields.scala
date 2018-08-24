@@ -213,7 +213,7 @@ class Fields {
   private case class DoubleFieldImpl(option: Option[Double], annotations: Annotations, field: Field)
       extends DoubleField
       with FieldRemover {
-    def this(s: AmfScalar, f: Field) = this(Option(s.value).map(_.asInstanceOf[Double]), s.annotations, f)
+    def this(s: AmfScalar, f: Field) = this(s.toNumberOption.map(_.asInstanceOf[Double]), s.annotations, f)
   }
 
   private case class AnyFieldImpl(option: Option[Any], annotations: Annotations, field: Field)
