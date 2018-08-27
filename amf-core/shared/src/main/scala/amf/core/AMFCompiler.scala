@@ -211,7 +211,7 @@ class AMFCompiler(val rawUrl: String,
       .filter(_.isRemote)
       .map(link => {
         link
-          .resolve(context, None, domainPlugin.ID, cache, ctx, env, link.refs.map(_.node))
+          .resolve(context, None, cache, ctx, env, link.refs.map(_.node))
           .recover {
             case e: CyclicReferenceException if domainPlugin.allowRecursiveReferences =>
               val fulllUrl = e.history.last

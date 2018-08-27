@@ -27,7 +27,7 @@ case class Reference(url: String, refs: Seq[RefContainer]) {
               nodes: Seq[YNode]): Future[BaseUnit] = {
     val kinds        = refs.map(_.linkType)
     val kind         = if (kinds.distinct.size > 1) UnspecifiedReference else kinds.distinct.head
-    val eventualUnit = RuntimeCompiler(url, mediaType, vendor, base, kind, cache, Some(ctx), env)
+    val eventualUnit = RuntimeCompiler(url, mediaType, None, base, kind, cache, Some(ctx), env)
     verifyMatchingKind(eventualUnit, kind, nodes, ctx)
   }
 

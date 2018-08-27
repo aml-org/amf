@@ -293,23 +293,22 @@ object ParserSideValidations {
   )
 
   val levels: Map[String, Map[ProfileName, String]] = Map(
-
     DuplicatedOperationStatusCodeSpecification.id -> Map(
-      RAMLProfile   -> SeverityLevels.VIOLATION,
-      RAML08Profile -> SeverityLevels.VIOLATION,
-      OASProfile    -> SeverityLevels.VIOLATION,
-      OAS3Profile   -> SeverityLevels.VIOLATION,
-      AMFProfile    -> SeverityLevels.VIOLATION
+      RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml08Profile -> SeverityLevels.VIOLATION,
+      OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
+      Oas30Profile  -> SeverityLevels.VIOLATION,
+      AmfProfile    -> SeverityLevels.VIOLATION
     ),
-
     MissingOperationStatusCodeSpecification.id -> Map(
-      RAMLProfile   -> SeverityLevels.VIOLATION,
-      RAML08Profile -> SeverityLevels.VIOLATION,
-      OASProfile    -> SeverityLevels.WARNING,
-      OAS3Profile   -> SeverityLevels.WARNING,
-      AMFProfile    -> SeverityLevels.INFO
+      RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml08Profile -> SeverityLevels.VIOLATION,
+      OasProfile    -> SeverityLevels.WARNING,
+      Oas20Profile  -> SeverityLevels.WARNING,
+      Oas30Profile  -> SeverityLevels.WARNING,
+      AmfProfile    -> SeverityLevels.INFO
     ),
-
     RecursiveShapeSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
       Raml10Profile -> SeverityLevels.VIOLATION,

@@ -1,6 +1,5 @@
 package amf.client.model
 
-import amf.DataTypes
 import amf.client.model.domain.ScalarShape
 import org.scalatest.{FunSuite, Matchers}
 
