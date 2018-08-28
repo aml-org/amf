@@ -1,0 +1,18 @@
+#%RAML 1.0
+title: Microsoft Azure Blob Service
+version: v1
+
+/:
+  get:
+    responses:
+      200:
+        body:
+          application/xml:
+            examples:
+              Get_storage_stats": |
+                <?xml version="1.0" encoding="utf-8"?>
+                <StorageServiceStats>
+                  <GeoReplication>
+                      <Status>live|bootstrap|unavailable</Status>
+                      <LastSyncTime>sync-time|<empty></LastSyncTime>
+                  </GeoReplication>
