@@ -5,7 +5,7 @@ import amf.core.vocabulary.Namespace
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
-@JSExportTopLevel("DataTypes")
+@JSExportTopLevel("client.model.DataTypes")
 object DataTypes {
   val String: String       = (Namespace.Xsd + "string").iri()
   val Integer: String      = (Namespace.Xsd + "integer").iri()

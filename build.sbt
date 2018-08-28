@@ -1,12 +1,11 @@
 import org.scalajs.core.tools.linker.ModuleKind
 import sbt.Keys.{libraryDependencies, resolvers}
+import sbtcrossproject.CrossPlugin.autoImport.crossProject
 val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns)
 
 name := "amf"
 
 version in ThisBuild := "1.9.0-SNAPSHOT"
-
-scalaVersion in ThisBuild := "2.12.2"
 
 publish := {}
 
@@ -31,11 +30,11 @@ lazy val defaultProfilesGenerationTask = TaskKey[Unit](
   "defaultValidationProfilesGeneration",
   "Generates the validation dialect documents for the standard profiles")
 
-lazy val core = crossProject
+lazy val core = crossProject(JSPlatform, JVMPlatform)
   .settings(
     Seq(
       name := "amf-core",
-      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.2.14"
+      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.2.15"
     ))
   .in(file("./amf-core"))
   .settings(settings: _*)
@@ -58,7 +57,7 @@ lazy val coreJS  = core.js.in(file("./amf-core/js"))
 /** **********************************************
   * AMF-WebAPI
   ********************************************** */
-lazy val webapi = crossProject
+lazy val webapi = crossProject(JSPlatform, JVMPlatform)
   .settings(name := "amf-webapi")
   .dependsOn(core)
   .in(file("./amf-webapi"))
@@ -83,7 +82,7 @@ lazy val webapiJS  = webapi.js.in(file("./amf-webapi/js"))
 /** **********************************************
   * AMF-AML
   ********************************************** */
-lazy val vocabularies = crossProject
+lazy val vocabularies = crossProject(JSPlatform, JVMPlatform)
   .settings(name := "amf-aml")
   .dependsOn(core)
   .in(file("./amf-aml"))
@@ -107,7 +106,7 @@ lazy val vocabulariesJS  = vocabularies.js.in(file("./amf-aml/js"))
 /** **********************************************
   * AMF-Validation
   ********************************************** */
-lazy val validation = crossProject
+lazy val validation = crossProject(JSPlatform, JVMPlatform)
   .settings(name := "amf-validation")
   .dependsOn(core, vocabularies)
   .in(file("./amf-validation"))
@@ -133,7 +132,7 @@ lazy val validationJS  = validation.js.in(file("./amf-validation/js"))
 /** **********************************************
   * AMF Client
   ********************************************** */
-lazy val client = crossProject
+lazy val client = crossProject(JSPlatform, JVMPlatform)
   .settings(Seq(
     name := "amf-client",
     fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter")))
