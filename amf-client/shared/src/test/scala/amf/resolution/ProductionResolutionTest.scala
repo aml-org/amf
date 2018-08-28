@@ -2,13 +2,15 @@ package amf.resolution
 
 import amf.core.emitter.RenderOptions
 import amf.core.metamodel.document.DocumentModel
-import amf.core.model.document.BaseUnit
+import amf.core.model.document.{BaseUnit, Document}
 import amf.core.parser.ErrorHandler
 import amf.core.remote._
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.emit.AMFRenderer
 import amf.facades.{AMFCompiler, Validation}
+import amf.plugins.document.webapi.resolution.pipelines.{AmfEditingPipeline, AmfResolutionPipeline}
 import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
+import amf.plugins.domain.webapi.models.WebApi
 import org.scalatest.Assertion
 
 import scala.concurrent.Future
@@ -205,6 +207,36 @@ class ProductionResolutionTest extends RamlResolutionTest {
 
   test("Test type resolution with property override") {
     cycle("property-override.raml", "property-override.resolved.raml", RamlYamlHint, Raml, basePath + "types/")
+  }
+
+  test("Test endpoints are not removed") {
+    val source = "demo-api.raml"
+    val golden = ""
+    val hint = RamlYamlHint
+    val target = Amf
+    val directory = basePath + "demo-api/"
+    val syntax = None
+    val validation = None
+
+    val config = CycleConfig(source, golden, hint, target, directory, syntax)
+    val useAmfJsonldSerialization = true
+
+
+    for {
+      simpleModel <- build(config, validation, useAmfJsonldSerialization).map(new AmfEditingPipeline(_).resolve())
+      a           <- render(simpleModel, config, useAmfJsonldSerialization)
+      doubleModel <- build(config, validation, useAmfJsonldSerialization).map(new AmfEditingPipeline(_).resolve())
+      _           <- render(doubleModel, config, useAmfJsonldSerialization)
+      b           <- render(doubleModel, config, useAmfJsonldSerialization)
+    } yield {
+      val simpleDeclares = simpleModel.asInstanceOf[Document].declares
+      val doubleDeclares = doubleModel.asInstanceOf[Document].declares
+      println(simpleDeclares.length)
+      println(doubleDeclares.length)
+      writeTemporaryFile("demo-api1.jsonld")(a)
+      writeTemporaryFile("demo-api2.jsonld")(b)
+      assert(simpleDeclares.length == doubleDeclares.length)
+    }
   }
 }
 
