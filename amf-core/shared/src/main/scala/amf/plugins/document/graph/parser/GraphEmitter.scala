@@ -156,6 +156,8 @@ object GraphEmitter extends MetaModelTypeMapping {
           l.obj { o =>
             traverse(unit, o, ctx)
             emitDeclarations(unit.id, SourceMap(unit.id, unit), o, ctx)
+            if (maybeEntry.isDefined)
+              unit.fields.setWithoutId(ModuleModel.Declares, maybeEntry.get.array)
             ctx.emitContext(o)
           }
         }
