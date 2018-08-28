@@ -93,6 +93,13 @@ class ProductionResolutionTest extends RamlResolutionTest {
           Amf)
   }
 
+  test("azure_blob_service raml to jsonld") {
+    cycle("microsoft_azure_blob_service.raml",
+      "microsoft_azure_blob_service.raml.resolved.jsonld",
+      RamlYamlHint,
+      Amf)
+  }
+
   test("test definition_loops input") {
     cycle("crossfiles2.raml", "crossfiles2.resolved.raml", RamlYamlHint, Raml, basePath + "definitions-loops/")
   }
