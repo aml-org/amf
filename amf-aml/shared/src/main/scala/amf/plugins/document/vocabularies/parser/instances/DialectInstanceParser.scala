@@ -925,6 +925,8 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
         Some(value.as[YScalar].text)
       case YType.Str if property.literalRange().value() == (Namespace.Xsd + "anyUri").iri() =>
         Some(value.as[YScalar].text)
+      case YType.Str if property.literalRange().value() == (Namespace.Shapes + "link").iri() =>
+        Some(("link", value.as[YScalar].text))
       case YType.Str =>
         ctx.inconsistentPropertyRangeValueViolation(node.id,
                                                     property,
@@ -970,13 +972,14 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
 
   protected def setLiteralValue(value: YNode, property: PropertyMapping, node: DialectDomainElement) = {
     parseLiteralValue(value, property, node) match {
-      case Some(b: Boolean)        => node.setLiteralField(property, b, value)
-      case Some(i: Int)            => node.setLiteralField(property, i, value)
-      case Some(f: Float)          => node.setLiteralField(property, f, value)
-      case Some(d: Double)         => node.setLiteralField(property, d, value)
-      case Some(s: String)         => node.setLiteralField(property, s, value)
-      case Some(d: SimpleDateTime) => node.setLiteralField(property, d, value)
-      case _                       => // ignore
+      case Some(b: Boolean)          => node.setLiteralField(property, b, value)
+      case Some(i: Int)              => node.setLiteralField(property, i, value)
+      case Some(f: Float)            => node.setLiteralField(property, f, value)
+      case Some(d: Double)           => node.setLiteralField(property, d, value)
+      case Some(s: String)           => node.setLiteralField(property, s, value)
+      case Some(("link", l: String)) => node.setLinkField(property, l, value)
+      case Some(d: SimpleDateTime)   => node.setLiteralField(property, d, value)
+      case _                         => // ignore
     }
   }
 
