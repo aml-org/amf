@@ -285,6 +285,10 @@ case class PropertyMappingEmitter(dialect: Dialect,
             val pos = fieldPos(propertyMapping, PropertyMappingModel.LiteralRange)
             emitters ++= Seq(MapEntryEmitter("range", "uri", YType.Str, pos))
 
+          case literal if literal.endsWith("link") =>
+            val pos = fieldPos(propertyMapping, PropertyMappingModel.LiteralRange)
+            emitters ++= Seq(MapEntryEmitter("range", "link", YType.Str, pos))
+
           case literal if literal.endsWith("anyType") =>
             val pos = fieldPos(propertyMapping, PropertyMappingModel.LiteralRange)
             emitters ++= Seq(MapEntryEmitter("range", "any", YType.Str, pos))

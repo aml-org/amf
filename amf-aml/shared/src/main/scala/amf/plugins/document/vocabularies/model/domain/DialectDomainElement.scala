@@ -16,6 +16,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     with Linkable {
 
   val literalProperties: mutable.Map[String, Any]                                = mutable.HashMap()
+  val linkProperties: mutable.Map[String, Any]                                   = mutable.HashMap()
   val mapKeyProperties: mutable.Map[String, Any]                                 = mutable.HashMap()
   val objectProperties: mutable.Map[String, DialectDomainElement]                = mutable.HashMap()
   val objectCollectionProperties: mutable.Map[String, Seq[DialectDomainElement]] = mutable.HashMap()
@@ -67,7 +68,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
       Field(Type.Str, iriToValue(propertyId))
     }
 
-    (literalProperties.keys ++ objectProperties.keys ++ objectCollectionProperties.keys).map { propertyId =>
+    (literalProperties.keys ++ linkProperties.keys ++ objectProperties.keys ++ objectCollectionProperties.keys).map { propertyId =>
       instanceDefinedBy.get.propertiesMapping().find(_.id == propertyId).get.toField
     }.toList ++ mapKeyFields ++ fields.fields().filter(f => f.field != LinkableElementModel.Target && f.field != DomainElementModel.CustomDomainProperties).map(_.field)
   }
@@ -107,6 +108,16 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
         case other =>
           AmfScalar(other, annotations)
       }
+    } orElse {
+      linkProperties.get(propertyId) map {
+        case vs: Seq[_] =>
+          val scalars = vs.map { s =>
+            AmfScalar(s)
+          }
+          AmfArray(scalars, annotations)
+        case other =>
+          AmfScalar(other, annotations)
+      }
     } map { Value(_, Annotations()) } orElse {
       fields.fields().find(_.field == f).map(_.value)
     }
@@ -115,7 +126,8 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   def containsProperty(property: PropertyMapping): Boolean = {
     mapKeyProperties.contains(property.nodePropertyMapping().value()) ||
     objectCollectionProperties.contains(property.id) ||
-    literalProperties.contains(property.id)
+    literalProperties.contains(property.id) ||
+    linkProperties.contains(property.id)
   }
 
   def setObjectField(property: PropertyMapping, value: DialectDomainElement, node: YNode): DialectDomainElement = {
@@ -161,6 +173,12 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
         })
       case _ => // ignore
     }
+    this
+  }
+
+  def setLinkField(property: PropertyMapping, value: String, node: YNode): DialectDomainElement = {
+    linkProperties.put(property.id, value)
+    propertyAnnotations.put(property.id, Annotations(node))
     this
   }
 
