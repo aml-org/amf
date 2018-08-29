@@ -1,0 +1,48 @@
+#%RAML 1.0
+title: recursives
+types:
+  arr:
+    type: array
+    items: arr
+  arrObj:
+      type: array
+      items:
+        properties:
+          arr:
+            type: array
+            items: arrObj
+  arrObjProp:
+    type: array
+    minItems: 1
+    items:
+      properties:
+        a?: arrObjProp
+  arr2:
+    type: arr2[]
+  arr3: arr3[]
+  arr4: arr3[]
+  obj:
+    properties:
+      ob?: obj
+  objComplex:
+      properties:
+        ob?:
+          properties:
+            ob2: objComplex
+
+  objComplexExt:
+        properties:
+          ob?:
+            properties:
+              ob2: obj
+  objArr:
+    properties:
+      arr:
+        type: array
+        items: objArr
+  a: string
+  b: integer
+  uni: (a | uni) []
+  objUnion:
+    properties:
+      a: (uni | objUnion)

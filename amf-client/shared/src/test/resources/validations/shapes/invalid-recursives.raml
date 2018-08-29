@@ -1,0 +1,49 @@
+#%RAML 1.0
+title: recursives
+types:
+  arr:
+    type: array
+    items: arr
+    minItems: 1
+  arrObj:
+      type: array
+      items:
+        properties:
+          arr:
+            type: array
+            items: arrObj
+            minItems: 1
+      minItems: 1
+  arrObjProp:
+      type: array
+      minItems: 1
+      items:
+        properties:
+          a: arrObjProp
+  arr2:
+    type: arr2[]
+    minItems: 1
+  # arr3: arr3[] impossible
+  # arr4: arr3[] impossible
+  obj:
+    properties:
+      ob: obj
+  objComplex:
+      properties:
+        ob:
+          properties:
+            ob2: objComplex
+
+  objComplexExt:
+        properties:
+          ob:
+            properties:
+              ob2: obj #obj its recursive, not objComplex, just for the inherits not will be added an error.
+  objArr:
+    properties:
+      arr:
+        type: array
+        items: objArr
+        minItems: 1
+  #unions can not be recursive invalid.
+

@@ -78,8 +78,8 @@ private[stages] case class RecursionErrorRegister() {
         original.position(),
         original.location()
       )
+      avoidRegister += r.id
     }
-    if (canRegister) avoidRegister += r.id
     r
   }
 }

@@ -71,5 +71,13 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
     checkReport("/unresolve.raml", None)
   }
 
+  test("Test recursives valid") {
+    checkReport("/shapes/valid-recursives.raml", None)
+  }
+
+  test("Test recursives invalid") {
+    checkReport("/shapes/invalid-recursives.raml", Some("invalid-recursives.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

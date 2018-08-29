@@ -108,9 +108,14 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
   protected def expandArray(array: ArrayShape): ArrayShape = {
     expandInherits(array)
     expandLogicalConstraints(array)
-    val oldItems = array.fields.getValue(ArrayShapeModel.Items)
+    val mandatory = array.minItems.option().exists(_ > 0)
+    val oldItems  = array.fields.getValue(ArrayShapeModel.Items)
+    if (mandatory)
+      array.inherits.collect({ case arr: ArrayShape if arr.items.isInstanceOf[RecursiveShape] => arr }).foreach { f =>
+        recursionRegister.recursionError(array, f.items.asInstanceOf[RecursiveShape], array.id, traversed)
+      }
     if (Option(oldItems).isDefined) {
-      if (array.minItems.option().exists(_ > 0)) {
+      if (mandatory) {
         array.fields.setWithoutId(ArrayShapeModel.Items, recursiveNormalization(array.items), oldItems.annotations)
       } else { // min items not present, could be an empty array, so not need to report recursive violation
         array.fields.setWithoutId(ArrayShapeModel.Items, traverseOptionalShapeFacet(array.items), oldItems.annotations)
