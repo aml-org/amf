@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: test
+types:
+
+  Extension:
+    properties:
+      propr: CodeableConcept
+
+  Element:
+    properties:
+      extension?: Extension[]
+
+  CodeableConcept:
+    type: Element
+    properties:
+      text?: string
+
+
+resourceTypes:
+
+  fhirResourceType:
+    post:
+      body:
+        application/json:
+          type: <<resourcePathName>>
+
+/CodeableConcept:
+  type: fhirResourceType

@@ -4,7 +4,7 @@ import amf.{ProfileName, Raml08Profile}
 import amf.core.annotations.{Aliases, LexicalInformation}
 import amf.core.emitter.SpecOrdering
 import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
-import amf.core.model.domain.{AmfArray, DataNode, DomainElement, NamedDomainElement}
+import amf.core.model.domain._
 import amf.core.parser.{ErrorHandler, FragmentRef, ParserContext}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolvedNamedEntity}
 import amf.core.services.{RuntimeValidator, ValidationsMerger}
@@ -176,19 +176,24 @@ object ExtendsHelper {
 
   private def annotateExtensionId(point: DomainElement, extensionId: String, extensionLocation: Option[String]): Unit = {
     val extendedFieldAnnotation = ExtensionProvenance(extensionId, extensionLocation)
-    point.fields.fields().foreach { field =>
-      field.value.annotations += extendedFieldAnnotation
-      field.value.value match {
-        case elem: DomainElement => annotateExtensionId(elem, extensionId, extensionLocation)
-        case arr: AmfArray =>
-          arr.values.foreach {
-            case elem: DomainElement =>
-              elem.annotations += extendedFieldAnnotation
-              annotateExtensionId(elem, extensionId, extensionLocation)
-            case other =>
-              other.annotations += extendedFieldAnnotation
-          }
-        case scalar => scalar.annotations += extendedFieldAnnotation
+    if (!point.fields
+          .fields()
+          .headOption
+          .exists(_.value.annotations.find(classOf[ExtensionProvenance]).exists(_.baseId == extensionId))) {
+      point.fields.fields().foreach { field =>
+        field.value.annotations += extendedFieldAnnotation
+        field.value.value match {
+          case elem: DomainElement => annotateExtensionId(elem, extensionId, extensionLocation)
+          case arr: AmfArray =>
+            arr.values.foreach {
+              case elem: DomainElement =>
+                elem.annotations += extendedFieldAnnotation
+                annotateExtensionId(elem, extensionId, extensionLocation)
+              case other =>
+                other.annotations += extendedFieldAnnotation
+            }
+          case scalar => scalar.annotations += extendedFieldAnnotation
+        }
       }
     }
   }
