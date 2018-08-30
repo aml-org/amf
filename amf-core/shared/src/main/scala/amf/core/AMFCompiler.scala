@@ -106,7 +106,10 @@ class AMFCompiler(val rawUrl: String,
             mime =>
               AMFPluginsRegistry
                 .syntaxPluginForMediaType(mime)
-                .flatMap(_.parse(mime, content.stream, ctx, parsingOptions)))
+                .flatMap { plugin =>
+                  mediaType = Some(mime)
+                  plugin.parse(mime, content.stream, ctx, parsingOptions)
+                })
       }
       .orElse {
         autodetectSyntax(content.stream).flatMap(mime =>
