@@ -3,7 +3,7 @@ import amf.core.metamodel.Type.Iri
 import amf.core.metamodel.domain.LinkableElementModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
-import amf.core.parser.{Annotations, ErrorHandler, Value}
+import amf.core.parser.{Annotations, ErrorHandler, FieldEntry, Value}
 import amf.core.vocabulary.Namespace
 
 import scala.collection.mutable
@@ -20,18 +20,22 @@ class UrlShortenerStage()(override implicit val errorHandler: ErrorHandler) exte
     element match {
       case o: AmfObject =>
         o.withId(shortener.shorten(o.id))
-        o.fields.foreach {
-          case (f, value: Value) if f == LinkableElementModel.Target =>
+        val fieldEntries = o match {
+          case d: DynamicDomainElement => d.dynamicFields.flatMap(f => d.valueForField(f).map(v => FieldEntry(f, v)))
+          case _                       => o.fields.fields()
+        }
+        fieldEntries.foreach {
+          case FieldEntry(f, value: Value) if f == LinkableElementModel.Target =>
             value.value match {
               case o: AmfObject => o.withId(shortener.shorten(o.id))
               case _            => // ignore
             }
-          case (f, value: Value) if f.`type` == Iri =>
+          case FieldEntry(f, value: Value) if f.`type` == Iri =>
             shorten(value.annotations)
             val v = value.value.toString
             if (ids.exists(i => v.startsWith(i)))
               value.value = AmfScalar(shortener.shorten(v), value.value.annotations)
-          case (_, value: Value) =>
+          case FieldEntry(_, value: Value) =>
             shorten(value.value, ids)
             shorten(value.annotations)
         }

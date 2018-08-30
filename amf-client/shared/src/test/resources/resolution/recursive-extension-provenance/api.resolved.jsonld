@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#20",
+        "@id": "#24",
         "@type": [
           "schema-org:WebAPI",
           "doc:RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "raml-http:endpoint": [
           {
-            "@id": "#21",
+            "@id": "#25",
             "@type": [
               "raml-http:EndPoint",
               "doc:DomainElement"
@@ -34,7 +34,7 @@
             ],
             "hydra:supportedOperation": [
               {
-                "@id": "#22",
+                "@id": "#26",
                 "@type": [
                   "hydra:Operation",
                   "doc:DomainElement"
@@ -46,14 +46,14 @@
                 ],
                 "hydra:expects": [
                   {
-                    "@id": "#23",
+                    "@id": "#27",
                     "@type": [
                       "raml-http:Request",
                       "doc:DomainElement"
                     ],
                     "raml-http:payload": [
                       {
-                        "@id": "#24",
+                        "@id": "#28",
                         "@type": [
                           "raml-http:Payload",
                           "doc:DomainElement"
@@ -87,10 +87,10 @@
                         "smaps": {
                           "extension-provenance": {
                             "raml-http:mediaType": "id->amf://id#2",
-                            "#24": "id->amf://id#2"
+                            "#28": "id->amf://id#2"
                           },
                           "lexical": {
-                            "#24": "[(1,0)-(1,0)]"
+                            "#28": "[(1,0)-(1,0)]"
                           }
                         }
                       }
@@ -108,10 +108,10 @@
                 "smaps": {
                   "extension-provenance": {
                     "hydra:method": "id->amf://id#2",
-                    "#22": "id->amf://id#2"
+                    "#26": "id->amf://id#2"
                   },
                   "lexical": {
-                    "#22": "[(1,0)-(1,0)]"
+                    "#26": "[(1,0)-(1,0)]"
                   }
                 }
               }
@@ -150,25 +150,25 @@
                         ],
                         "data:post": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declarations/resourceTypes/fhirResourceType/object_1/object_2",
+                            "@id": "#19",
                             "@type": [
                               "data:Object"
                             ],
                             "data:body": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declarations/resourceTypes/fhirResourceType/object_1/object_2/object_3",
+                                "@id": "#20",
                                 "@type": [
                                   "data:Object"
                                 ],
                                 "data:application%2Fjson": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declarations/resourceTypes/fhirResourceType/object_1/object_2/object_3/object_4",
+                                    "@id": "#21",
                                     "@type": [
                                       "data:Object"
                                     ],
                                     "data:type": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declarations/resourceTypes/fhirResourceType/object_1/object_2/object_3/object_4/scalar_5",
+                                        "@id": "#22",
                                         "@type": [
                                           "data:Scalar"
                                         ],
@@ -180,37 +180,37 @@
                                         ],
                                         "smaps": {
                                           "lexical": {
-                                            "file://amf-client/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declarations/resourceTypes/fhirResourceType/object_1/object_2/object_3/object_4/scalar_5": "[(25,16)-(25,36)]"
+                                            "#22": "[(25,16)-(25,36)]"
                                           }
                                         }
                                       }
                                     ],
                                     "smaps": {
                                       "data-node-properties": {
-                                        "file://amf-client/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declarations/resourceTypes/fhirResourceType/object_1/object_2/object_3/object_4": "type->[(25,10)-(27,0)]"
+                                        "#21": "type->[(25,10)-(27,0)]"
                                       },
                                       "lexical": {
-                                        "file://amf-client/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declarations/resourceTypes/fhirResourceType/object_1/object_2/object_3/object_4": "[(25,0)-(27,0)]"
+                                        "#21": "[(25,0)-(27,0)]"
                                       }
                                     }
                                   }
                                 ],
                                 "smaps": {
                                   "data-node-properties": {
-                                    "file://amf-client/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declarations/resourceTypes/fhirResourceType/object_1/object_2/object_3": "application%2Fjson->[(24,8)-(27,0)]"
+                                    "#20": "application%2Fjson->[(24,8)-(27,0)]"
                                   },
                                   "lexical": {
-                                    "file://amf-client/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declarations/resourceTypes/fhirResourceType/object_1/object_2/object_3": "[(24,0)-(27,0)]"
+                                    "#20": "[(24,0)-(27,0)]"
                                   }
                                 }
                               }
                             ],
                             "smaps": {
                               "data-node-properties": {
-                                "file://amf-client/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declarations/resourceTypes/fhirResourceType/object_1/object_2": "body->[(23,6)-(27,0)]"
+                                "#19": "body->[(23,6)-(27,0)]"
                               },
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declarations/resourceTypes/fhirResourceType/object_1/object_2": "[(23,0)-(27,0)]"
+                                "#19": "[(23,0)-(27,0)]"
                               }
                             }
                           }
@@ -232,7 +232,7 @@
                     ],
                     "smaps": {
                       "resolved-link": {
-                        "#17": "amf://id#19"
+                        "#17": "amf://id#23"
                       },
                       "lexical": {
                         "#17": "[(21,2)-(27,0)]"
@@ -249,18 +249,18 @@
             ],
             "smaps": {
               "lexical": {
-                "#21": "[(27,0)-(28,24)]"
+                "#25": "[(27,0)-(28,24)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#20": "RAML 1.0"
+            "#24": "RAML 1.0"
           },
           "lexical": {
             "schema-org:name": "[(2,0)-(3,0)]",
-            "#20": "[(2,0)-(28,24)]"
+            "#24": "[(2,0)-(28,24)]"
           }
         }
       }
@@ -865,25 +865,25 @@
             ],
             "data:post": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declarations/resourceTypes/fhirResourceType/object_1/object_2",
+                "@id": "#19",
                 "@type": [
                   "data:Object"
                 ],
                 "data:body": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declarations/resourceTypes/fhirResourceType/object_1/object_2/object_3",
+                    "@id": "#20",
                     "@type": [
                       "data:Object"
                     ],
                     "data:application%2Fjson": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declarations/resourceTypes/fhirResourceType/object_1/object_2/object_3/object_4",
+                        "@id": "#21",
                         "@type": [
                           "data:Object"
                         ],
                         "data:type": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declarations/resourceTypes/fhirResourceType/object_1/object_2/object_3/object_4/scalar_5",
+                            "@id": "#22",
                             "@type": [
                               "data:Scalar"
                             ],
@@ -895,37 +895,37 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declarations/resourceTypes/fhirResourceType/object_1/object_2/object_3/object_4/scalar_5": "[(25,16)-(25,36)]"
+                                "#22": "[(25,16)-(25,36)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "data-node-properties": {
-                            "file://amf-client/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declarations/resourceTypes/fhirResourceType/object_1/object_2/object_3/object_4": "type->[(25,10)-(27,0)]"
+                            "#21": "type->[(25,10)-(27,0)]"
                           },
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declarations/resourceTypes/fhirResourceType/object_1/object_2/object_3/object_4": "[(25,0)-(27,0)]"
+                            "#21": "[(25,0)-(27,0)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "data-node-properties": {
-                        "file://amf-client/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declarations/resourceTypes/fhirResourceType/object_1/object_2/object_3": "application%2Fjson->[(24,8)-(27,0)]"
+                        "#20": "application%2Fjson->[(24,8)-(27,0)]"
                       },
                       "lexical": {
-                        "file://amf-client/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declarations/resourceTypes/fhirResourceType/object_1/object_2/object_3": "[(24,0)-(27,0)]"
+                        "#20": "[(24,0)-(27,0)]"
                       }
                     }
                   }
                 ],
                 "smaps": {
                   "data-node-properties": {
-                    "file://amf-client/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declarations/resourceTypes/fhirResourceType/object_1/object_2": "body->[(23,6)-(27,0)]"
+                    "#19": "body->[(23,6)-(27,0)]"
                   },
                   "lexical": {
-                    "file://amf-client/shared/src/test/resources/resolution/recursive-extension-provenance/api.raml#/declarations/resourceTypes/fhirResourceType/object_1/object_2": "[(23,0)-(27,0)]"
+                    "#19": "[(23,0)-(27,0)]"
                   }
                 }
               }
@@ -947,7 +947,7 @@
         ],
         "smaps": {
           "resolved-link": {
-            "#17": "amf://id#19"
+            "#17": "amf://id#23"
           },
           "lexical": {
             "#17": "[(21,2)-(27,0)]"

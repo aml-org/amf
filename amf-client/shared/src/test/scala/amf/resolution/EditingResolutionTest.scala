@@ -104,6 +104,10 @@ class EditingResolutionTest extends BuildCycleTests {
   test("Test recursive annotations of extension provenance") {
     cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, resolutionPath + "recursive-extension-provenance/")
   }
+
+  test("Test url shortener at example (dynamic)") {
+    cycle("examples-shortener.raml", "examples-shortener.resolved.jsonld", RamlYamlHint, Amf, resolutionPath)
+  }
   /*
   test("Exchange experience API resolution to Amf") {
     cycle("api.v1.raml", "api.v1.resolved.jsonld", RamlYamlHint, Amf, productionPath + "exchange-experience-api-1.0.1-raml/")

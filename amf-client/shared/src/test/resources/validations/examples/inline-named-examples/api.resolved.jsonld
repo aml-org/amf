@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#29",
+        "@id": "#44",
         "@type": [
           "schema-org:WebAPI",
           "doc:RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "raml-http:endpoint": [
           {
-            "@id": "#30",
+            "@id": "#45",
             "@type": [
               "raml-http:EndPoint",
               "doc:DomainElement"
@@ -34,7 +34,7 @@
             ],
             "hydra:supportedOperation": [
               {
-                "@id": "#31",
+                "@id": "#46",
                 "@type": [
                   "hydra:Operation",
                   "doc:DomainElement"
@@ -46,14 +46,14 @@
                 ],
                 "hydra:expects": [
                   {
-                    "@id": "#32",
+                    "@id": "#47",
                     "@type": [
                       "raml-http:Request",
                       "doc:DomainElement"
                     ],
                     "raml-http:payload": [
                       {
-                        "@id": "#33",
+                        "@id": "#48",
                         "@type": [
                           "raml-http:Payload",
                           "doc:DomainElement"
@@ -65,7 +65,7 @@
                         ],
                         "raml-http:schema": [
                           {
-                            "@id": "#34/linked_1",
+                            "@id": "#49/linked_1",
                             "@type": [
                               "raml-shapes:ArrayShape",
                               "shacl:Shape",
@@ -74,7 +74,7 @@
                             ],
                             "doc:link-target": [
                               {
-                                "@id": "#34"
+                                "@id": "#49"
                               }
                             ],
                             "doc:link-label": [
@@ -86,7 +86,7 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#33": "[(12,6)-(15,0)]"
+                            "#48": "[(12,6)-(15,0)]"
                           }
                         }
                       }
@@ -100,12 +100,12 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#31": "[(10,2)-(15,0)]"
+                    "#46": "[(10,2)-(15,0)]"
                   }
                 }
               },
               {
-                "@id": "#35",
+                "@id": "#50",
                 "@type": [
                   "hydra:Operation",
                   "doc:DomainElement"
@@ -122,7 +122,7 @@
                 ],
                 "hydra:returns": [
                   {
-                    "@id": "#36",
+                    "@id": "#51",
                     "@type": [
                       "raml-http:Response",
                       "doc:DomainElement"
@@ -139,7 +139,7 @@
                     ],
                     "raml-http:payload": [
                       {
-                        "@id": "#37",
+                        "@id": "#52",
                         "@type": [
                           "raml-http:Payload",
                           "doc:DomainElement"
@@ -151,7 +151,7 @@
                         ],
                         "raml-http:schema": [
                           {
-                            "@id": "#38/linked_1",
+                            "@id": "#53/linked_1",
                             "@type": [
                               "raml-shapes:ArrayShape",
                               "shacl:Shape",
@@ -160,7 +160,7 @@
                             ],
                             "doc:link-target": [
                               {
-                                "@id": "#38"
+                                "@id": "#53"
                               }
                             ],
                             "doc:link-label": [
@@ -172,7 +172,7 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#37": "[(20,10)-(24,0)]"
+                            "#52": "[(20,10)-(24,0)]"
                           }
                         }
                       }
@@ -180,7 +180,7 @@
                     "smaps": {
                       "lexical": {
                         "raml-http:payload": "[(19,8)-(24,0)]",
-                        "#36": "[(18,6)-(24,0)]"
+                        "#51": "[(18,6)-(24,0)]"
                       }
                     }
                   }
@@ -188,7 +188,7 @@
                 "smaps": {
                   "lexical": {
                     "hydra:returns": "[(17,4)-(24,0)]",
-                    "#35": "[(15,2)-(24,0)]",
+                    "#50": "[(15,2)-(24,0)]",
                     "schema-org:name": "[(16,4)-(17,0)]"
                   }
                 }
@@ -196,12 +196,12 @@
             ],
             "smaps": {
               "lexical": {
-                "#30": "[(9,0)-(37,3)]"
+                "#45": "[(9,0)-(37,3)]"
               }
             }
           },
           {
-            "@id": "#39",
+            "@id": "#54",
             "@type": [
               "raml-http:EndPoint",
               "doc:DomainElement"
@@ -213,7 +213,7 @@
             ],
             "hydra:supportedOperation": [
               {
-                "@id": "#40",
+                "@id": "#55",
                 "@type": [
                   "hydra:Operation",
                   "doc:DomainElement"
@@ -230,14 +230,14 @@
                 ],
                 "hydra:expects": [
                   {
-                    "@id": "#43",
+                    "@id": "#58",
                     "@type": [
                       "raml-http:Request",
                       "doc:DomainElement"
                     ],
                     "raml-http:uriParameter": [
                       {
-                        "@id": "#44",
+                        "@id": "#59",
                         "@type": [
                           "raml-http:Parameter",
                           "doc:DomainElement"
@@ -269,7 +269,7 @@
                         ],
                         "raml-http:schema": [
                           {
-                            "@id": "#45",
+                            "@id": "#60",
                             "@type": [
                               "raml-shapes:ScalarShape",
                               "shacl:Shape",
@@ -293,11 +293,11 @@
                             ],
                             "smaps": {
                               "type-property-lexical-info": {
-                                "#45": "[(27,8)-(27,12)]"
+                                "#60": "[(27,8)-(27,12)]"
                               },
                               "lexical": {
                                 "schema-org:description": "[(28,8)-(29,0)]",
-                                "#45": "[(26,6)-(29,0)]",
+                                "#60": "[(26,6)-(29,0)]",
                                 "shacl:datatype": "[(27,8)-(28,0)]"
                               }
                             }
@@ -306,7 +306,7 @@
                         "smaps": {
                           "lexical": {
                             "schema-org:description": "[(28,8)-(29,0)]",
-                            "#44": "[(26,6)-(29,0)]"
+                            "#59": "[(26,6)-(29,0)]"
                           }
                         }
                       }
@@ -315,7 +315,7 @@
                 ],
                 "hydra:returns": [
                   {
-                    "@id": "#41",
+                    "@id": "#56",
                     "@type": [
                       "raml-http:Response",
                       "doc:DomainElement"
@@ -332,7 +332,7 @@
                     ],
                     "raml-http:payload": [
                       {
-                        "@id": "#42",
+                        "@id": "#57",
                         "@type": [
                           "raml-http:Payload",
                           "doc:DomainElement"
@@ -365,7 +365,7 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#42": "[(34,12)-(37,3)]"
+                            "#57": "[(34,12)-(37,3)]"
                           }
                         }
                       }
@@ -373,7 +373,7 @@
                     "smaps": {
                       "lexical": {
                         "raml-http:payload": "[(33,10)-(37,3)]",
-                        "#41": "[(32,8)-(37,3)]"
+                        "#56": "[(32,8)-(37,3)]"
                       }
                     }
                   }
@@ -381,7 +381,7 @@
                 "smaps": {
                   "lexical": {
                     "hydra:returns": "[(31,6)-(37,3)]",
-                    "#40": "[(29,4)-(37,3)]",
+                    "#55": "[(29,4)-(37,3)]",
                     "schema-org:name": "[(30,6)-(31,0)]"
                   }
                 }
@@ -389,28 +389,28 @@
             ],
             "smaps": {
               "parent-end-point": {
-                "#39": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations"
+                "#54": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations"
               },
               "lexical": {
-                "#39": "[(24,2)-(37,3)]"
+                "#54": "[(24,2)-(37,3)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#29": "RAML 1.0"
+            "#44": "RAML 1.0"
           },
           "lexical": {
             "schema-org:name": "[(3,0)-(6,0)]",
-            "#29": "[(3,0)-(37,3)]"
+            "#44": "[(3,0)-(37,3)]"
           }
         }
       }
     ],
     "doc:references": [
       {
-        "@id": "#22",
+        "@id": "#27",
         "@type": [
           "doc:NamedExample",
           "doc:Fragment",
@@ -441,7 +441,7 @@
                 ],
                 "data:alternate_id": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2",
+                    "@id": "#17",
                     "@type": [
                       "data:Scalar"
                     ],
@@ -453,20 +453,20 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2": "[(3,18)-(3,19)]"
+                        "#17": "[(3,18)-(3,19)]"
                       }
                     }
                   }
                 ],
                 "data:category": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3",
+                    "@id": "#18",
                     "@type": [
                       "data:Object"
                     ],
                     "data:id": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4",
+                        "@id": "#19",
                         "@type": [
                           "data:Scalar"
                         ],
@@ -478,14 +478,14 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4": "[(5,10)-(5,15)]"
+                            "#19": "[(5,10)-(5,15)]"
                           }
                         }
                       }
                     ],
                     "data:name": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5",
+                        "@id": "#20",
                         "@type": [
                           "data:Scalar"
                         ],
@@ -497,24 +497,24 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5": "[(6,12)-(6,35)]"
+                            "#20": "[(6,12)-(6,35)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "data-node-properties": {
-                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
+                        "#18": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
                       },
                       "lexical": {
-                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3": "[(5,0)-(7,0)]"
+                        "#18": "[(5,0)-(7,0)]"
                       }
                     }
                   }
                 ],
                 "data:created_at": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6",
+                    "@id": "#21",
                     "@type": [
                       "data:Scalar"
                     ],
@@ -526,7 +526,7 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6": "[(7,16)-(7,36)]"
+                        "#21": "[(7,16)-(7,36)]"
                       }
                     }
                   }
@@ -551,7 +551,7 @@
                 "doc:strict": "true"
               },
               "resolved-link": {
-                "#15": "amf://id#17"
+                "#15": "amf://id#22"
               },
               "lexical": {
                 "shacl:raw": "[(3,0)-(9,0)]",
@@ -569,12 +569,12 @@
         ],
         "smaps": {
           "lexical": {
-            "#22": "[(2,0)-(9,0)]"
+            "#27": "[(2,0)-(9,0)]"
           }
         }
       },
       {
-        "@id": "#23",
+        "@id": "#28",
         "@type": [
           "doc:DataType",
           "doc:Fragment",
@@ -962,7 +962,7 @@
                     ],
                     "data:alternate_id": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2",
+                        "@id": "#17",
                         "@type": [
                           "data:Scalar"
                         ],
@@ -974,20 +974,20 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2": "[(3,18)-(3,19)]"
+                            "#17": "[(3,18)-(3,19)]"
                           }
                         }
                       }
                     ],
                     "data:category": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3",
+                        "@id": "#18",
                         "@type": [
                           "data:Object"
                         ],
                         "data:id": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4",
+                            "@id": "#19",
                             "@type": [
                               "data:Scalar"
                             ],
@@ -999,14 +999,14 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4": "[(5,10)-(5,15)]"
+                                "#19": "[(5,10)-(5,15)]"
                               }
                             }
                           }
                         ],
                         "data:name": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5",
+                            "@id": "#20",
                             "@type": [
                               "data:Scalar"
                             ],
@@ -1018,24 +1018,24 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5": "[(6,12)-(6,35)]"
+                                "#20": "[(6,12)-(6,35)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "data-node-properties": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
+                            "#18": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
                           },
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3": "[(5,0)-(7,0)]"
+                            "#18": "[(5,0)-(7,0)]"
                           }
                         }
                       }
                     ],
                     "data:created_at": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6",
+                        "@id": "#21",
                         "@type": [
                           "data:Scalar"
                         ],
@@ -1047,7 +1047,7 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6": "[(7,16)-(7,36)]"
+                            "#21": "[(7,16)-(7,36)]"
                           }
                         }
                       }
@@ -1072,7 +1072,7 @@
                     "doc:strict": "true"
                   },
                   "resolved-link": {
-                    "#15": "amf://id#17"
+                    "#15": "amf://id#22"
                   },
                   "lexical": {
                     "shacl:raw": "[(3,0)-(9,0)]",
@@ -1090,7 +1090,7 @@
             ],
             "smaps": {
               "resolved-link": {
-                "#1": "amf://id#21"
+                "#1": "amf://id#26"
               },
               "type-property-lexical-info": {
                 "#1": "[(2,0)-(2,4)]"
@@ -1109,12 +1109,12 @@
         ],
         "smaps": {
           "lexical": {
-            "#23": "[(2,0)-(20,0)]"
+            "#28": "[(2,0)-(20,0)]"
           }
         }
       },
       {
-        "@id": "#24",
+        "@id": "#29",
         "@type": [
           "doc:NamedExample",
           "doc:Fragment",
@@ -1122,7 +1122,7 @@
         ],
         "doc:encodes": [
           {
-            "@id": "#25",
+            "@id": "#30",
             "@type": [
               "doc:Example",
               "doc:DomainElement"
@@ -1139,26 +1139,26 @@
             ],
             "doc:structuredValue": [
               {
-                "@id": "#26",
+                "@id": "#31",
                 "@type": [
                   "data:Array",
                   "rdf:Seq"
                 ],
                 "rdf:member": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2",
+                    "@id": "#32",
                     "@type": [
                       "data:Object"
                     ],
                     "data:category": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3",
+                        "@id": "#33",
                         "@type": [
                           "data:Object"
                         ],
                         "data:id": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_4",
+                            "@id": "#34",
                             "@type": [
                               "data:Scalar"
                             ],
@@ -1170,14 +1170,14 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_4": "[(6,10)-(6,15)]"
+                                "#34": "[(6,10)-(6,15)]"
                               }
                             }
                           }
                         ],
                         "data:name": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_5",
+                            "@id": "#35",
                             "@type": [
                               "data:Scalar"
                             ],
@@ -1189,24 +1189,24 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_5": "[(7,12)-(7,35)]"
+                                "#35": "[(7,12)-(7,35)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "data-node-properties": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3": "name->[(7,6)-(8,0)]#id->[(6,6)-(7,0)]"
+                            "#33": "name->[(7,6)-(8,0)]#id->[(6,6)-(7,0)]"
                           },
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3": "[(6,0)-(8,0)]"
+                            "#33": "[(6,0)-(8,0)]"
                           }
                         }
                       }
                     ],
                     "data:created_at": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/scalar_6",
+                        "@id": "#36",
                         "@type": [
                           "data:Scalar"
                         ],
@@ -1218,34 +1218,34 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/scalar_6": "[(8,16)-(8,36)]"
+                            "#36": "[(8,16)-(8,36)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "data-node-properties": {
-                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2": "created_at->[(8,4)-(10,0)]#category->[(5,4)-(8,0)]"
+                        "#32": "created_at->[(8,4)-(10,0)]#category->[(5,4)-(8,0)]"
                       },
                       "lexical": {
-                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2": "[(5,0)-(10,0)]"
+                        "#32": "[(5,0)-(10,0)]"
                       }
                     }
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7",
+                    "@id": "#37",
                     "@type": [
                       "data:Object"
                     ],
                     "data:category": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8",
+                        "@id": "#38",
                         "@type": [
                           "data:Object"
                         ],
                         "data:id": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_9",
+                            "@id": "#39",
                             "@type": [
                               "data:Scalar"
                             ],
@@ -1257,14 +1257,14 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_9": "[(12,10)-(12,15)]"
+                                "#39": "[(12,10)-(12,15)]"
                               }
                             }
                           }
                         ],
                         "data:name": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_10",
+                            "@id": "#40",
                             "@type": [
                               "data:Scalar"
                             ],
@@ -1276,24 +1276,24 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_10": "[(13,12)-(13,19)]"
+                                "#40": "[(13,12)-(13,19)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "data-node-properties": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8": "name->[(13,6)-(14,0)]#id->[(12,6)-(13,0)]"
+                            "#38": "name->[(13,6)-(14,0)]#id->[(12,6)-(13,0)]"
                           },
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8": "[(12,0)-(14,0)]"
+                            "#38": "[(12,0)-(14,0)]"
                           }
                         }
                       }
                     ],
                     "data:created_at": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/scalar_11",
+                        "@id": "#41",
                         "@type": [
                           "data:Scalar"
                         ],
@@ -1305,34 +1305,34 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/scalar_11": "[(14,16)-(14,36)]"
+                            "#41": "[(14,16)-(14,36)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "data-node-properties": {
-                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7": "created_at->[(14,4)-(15,3)]#category->[(11,4)-(14,0)]"
+                        "#37": "created_at->[(14,4)-(15,3)]#category->[(11,4)-(14,0)]"
                       },
                       "lexical": {
-                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7": "[(11,0)-(15,3)]"
+                        "#37": "[(11,0)-(15,3)]"
                       }
                     }
                   }
                 ],
                 "data:pos0": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2"
+                    "@id": "#32"
                   }
                 ],
                 "data:pos1": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7"
+                    "@id": "#37"
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "#26": "[(3,0)-(15,3)]"
+                    "#31": "[(3,0)-(15,3)]"
                   }
                 }
               }
@@ -1347,25 +1347,25 @@
                 "doc:strict": "true"
               },
               "resolved-link": {
-                "#25": "amf://id#28"
+                "#30": "amf://id#43"
               },
               "lexical": {
                 "shacl:raw": "[(3,0)-(15,3)]",
-                "#25": "[(2,6)-(15,3)]",
+                "#30": "[(2,6)-(15,3)]",
                 "schema-org:name": "[(2,0)-(15,3)]"
               },
               "source-vendor": {
-                "#25": "RAML 1.0"
+                "#30": "RAML 1.0"
               },
               "local-element": {
-                "#25": ""
+                "#30": ""
               }
             }
           }
         ],
         "smaps": {
           "lexical": {
-            "#24": "[(2,0)-(15,3)]"
+            "#29": "[(2,0)-(15,3)]"
           }
         }
       }
@@ -1752,7 +1752,7 @@
                 ],
                 "data:alternate_id": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2",
+                    "@id": "#17",
                     "@type": [
                       "data:Scalar"
                     ],
@@ -1764,20 +1764,20 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2": "[(3,18)-(3,19)]"
+                        "#17": "[(3,18)-(3,19)]"
                       }
                     }
                   }
                 ],
                 "data:category": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3",
+                    "@id": "#18",
                     "@type": [
                       "data:Object"
                     ],
                     "data:id": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4",
+                        "@id": "#19",
                         "@type": [
                           "data:Scalar"
                         ],
@@ -1789,14 +1789,14 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4": "[(5,10)-(5,15)]"
+                            "#19": "[(5,10)-(5,15)]"
                           }
                         }
                       }
                     ],
                     "data:name": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5",
+                        "@id": "#20",
                         "@type": [
                           "data:Scalar"
                         ],
@@ -1808,24 +1808,24 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5": "[(6,12)-(6,35)]"
+                            "#20": "[(6,12)-(6,35)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "data-node-properties": {
-                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
+                        "#18": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
                       },
                       "lexical": {
-                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3": "[(5,0)-(7,0)]"
+                        "#18": "[(5,0)-(7,0)]"
                       }
                     }
                   }
                 ],
                 "data:created_at": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6",
+                    "@id": "#21",
                     "@type": [
                       "data:Scalar"
                     ],
@@ -1837,7 +1837,7 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6": "[(7,16)-(7,36)]"
+                        "#21": "[(7,16)-(7,36)]"
                       }
                     }
                   }
@@ -1862,7 +1862,7 @@
                 "doc:strict": "true"
               },
               "resolved-link": {
-                "#15": "amf://id#17"
+                "#15": "amf://id#22"
               },
               "lexical": {
                 "shacl:raw": "[(3,0)-(9,0)]",
@@ -1880,7 +1880,7 @@
         ],
         "smaps": {
           "resolved-link": {
-            "#1": "amf://id#21"
+            "#1": "amf://id#26"
           },
           "type-property-lexical-info": {
             "#1": "[(2,0)-(2,4)]"
@@ -1897,7 +1897,7 @@
         }
       },
       {
-        "@id": "#34",
+        "@id": "#49",
         "@type": [
           "raml-shapes:ArrayShape",
           "shacl:Shape",
@@ -2286,7 +2286,7 @@
                     ],
                     "data:alternate_id": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2",
+                        "@id": "#17",
                         "@type": [
                           "data:Scalar"
                         ],
@@ -2298,20 +2298,20 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2": "[(3,18)-(3,19)]"
+                            "#17": "[(3,18)-(3,19)]"
                           }
                         }
                       }
                     ],
                     "data:category": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3",
+                        "@id": "#18",
                         "@type": [
                           "data:Object"
                         ],
                         "data:id": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4",
+                            "@id": "#19",
                             "@type": [
                               "data:Scalar"
                             ],
@@ -2323,14 +2323,14 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4": "[(5,10)-(5,15)]"
+                                "#19": "[(5,10)-(5,15)]"
                               }
                             }
                           }
                         ],
                         "data:name": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5",
+                            "@id": "#20",
                             "@type": [
                               "data:Scalar"
                             ],
@@ -2342,24 +2342,24 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5": "[(6,12)-(6,35)]"
+                                "#20": "[(6,12)-(6,35)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "data-node-properties": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
+                            "#18": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
                           },
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3": "[(5,0)-(7,0)]"
+                            "#18": "[(5,0)-(7,0)]"
                           }
                         }
                       }
                     ],
                     "data:created_at": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6",
+                        "@id": "#21",
                         "@type": [
                           "data:Scalar"
                         ],
@@ -2371,7 +2371,7 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6": "[(7,16)-(7,36)]"
+                            "#21": "[(7,16)-(7,36)]"
                           }
                         }
                       }
@@ -2396,7 +2396,7 @@
                     "doc:strict": "true"
                   },
                   "resolved-link": {
-                    "#15": "amf://id#17"
+                    "#15": "amf://id#22"
                   },
                   "lexical": {
                     "shacl:raw": "[(3,0)-(9,0)]",
@@ -2414,7 +2414,7 @@
             ],
             "smaps": {
               "resolved-link": {
-                "#1": "amf://id#21"
+                "#1": "amf://id#26"
               },
               "type-property-lexical-info": {
                 "#1": "[(2,0)-(2,4)]"
@@ -2438,7 +2438,7 @@
         ],
         "doc:examples": [
           {
-            "@id": "#25",
+            "@id": "#30",
             "@type": [
               "doc:Example",
               "doc:DomainElement"
@@ -2455,26 +2455,26 @@
             ],
             "doc:structuredValue": [
               {
-                "@id": "#26",
+                "@id": "#31",
                 "@type": [
                   "data:Array",
                   "rdf:Seq"
                 ],
                 "rdf:member": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2",
+                    "@id": "#32",
                     "@type": [
                       "data:Object"
                     ],
                     "data:category": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3",
+                        "@id": "#33",
                         "@type": [
                           "data:Object"
                         ],
                         "data:id": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_4",
+                            "@id": "#34",
                             "@type": [
                               "data:Scalar"
                             ],
@@ -2486,14 +2486,14 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_4": "[(6,10)-(6,15)]"
+                                "#34": "[(6,10)-(6,15)]"
                               }
                             }
                           }
                         ],
                         "data:name": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_5",
+                            "@id": "#35",
                             "@type": [
                               "data:Scalar"
                             ],
@@ -2505,24 +2505,24 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_5": "[(7,12)-(7,35)]"
+                                "#35": "[(7,12)-(7,35)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "data-node-properties": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3": "name->[(7,6)-(8,0)]#id->[(6,6)-(7,0)]"
+                            "#33": "name->[(7,6)-(8,0)]#id->[(6,6)-(7,0)]"
                           },
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3": "[(6,0)-(8,0)]"
+                            "#33": "[(6,0)-(8,0)]"
                           }
                         }
                       }
                     ],
                     "data:created_at": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/scalar_6",
+                        "@id": "#36",
                         "@type": [
                           "data:Scalar"
                         ],
@@ -2534,34 +2534,34 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/scalar_6": "[(8,16)-(8,36)]"
+                            "#36": "[(8,16)-(8,36)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "data-node-properties": {
-                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2": "created_at->[(8,4)-(10,0)]#category->[(5,4)-(8,0)]"
+                        "#32": "created_at->[(8,4)-(10,0)]#category->[(5,4)-(8,0)]"
                       },
                       "lexical": {
-                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2": "[(5,0)-(10,0)]"
+                        "#32": "[(5,0)-(10,0)]"
                       }
                     }
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7",
+                    "@id": "#37",
                     "@type": [
                       "data:Object"
                     ],
                     "data:category": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8",
+                        "@id": "#38",
                         "@type": [
                           "data:Object"
                         ],
                         "data:id": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_9",
+                            "@id": "#39",
                             "@type": [
                               "data:Scalar"
                             ],
@@ -2573,14 +2573,14 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_9": "[(12,10)-(12,15)]"
+                                "#39": "[(12,10)-(12,15)]"
                               }
                             }
                           }
                         ],
                         "data:name": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_10",
+                            "@id": "#40",
                             "@type": [
                               "data:Scalar"
                             ],
@@ -2592,24 +2592,24 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_10": "[(13,12)-(13,19)]"
+                                "#40": "[(13,12)-(13,19)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "data-node-properties": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8": "name->[(13,6)-(14,0)]#id->[(12,6)-(13,0)]"
+                            "#38": "name->[(13,6)-(14,0)]#id->[(12,6)-(13,0)]"
                           },
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8": "[(12,0)-(14,0)]"
+                            "#38": "[(12,0)-(14,0)]"
                           }
                         }
                       }
                     ],
                     "data:created_at": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/scalar_11",
+                        "@id": "#41",
                         "@type": [
                           "data:Scalar"
                         ],
@@ -2621,34 +2621,34 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/scalar_11": "[(14,16)-(14,36)]"
+                            "#41": "[(14,16)-(14,36)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "data-node-properties": {
-                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7": "created_at->[(14,4)-(15,3)]#category->[(11,4)-(14,0)]"
+                        "#37": "created_at->[(14,4)-(15,3)]#category->[(11,4)-(14,0)]"
                       },
                       "lexical": {
-                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7": "[(11,0)-(15,3)]"
+                        "#37": "[(11,0)-(15,3)]"
                       }
                     }
                   }
                 ],
                 "data:pos0": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2"
+                    "@id": "#32"
                   }
                 ],
                 "data:pos1": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7"
+                    "@id": "#37"
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "#26": "[(3,0)-(15,3)]"
+                    "#31": "[(3,0)-(15,3)]"
                   }
                 }
               }
@@ -2663,33 +2663,33 @@
                 "doc:strict": "true"
               },
               "resolved-link": {
-                "#25": "amf://id#28"
+                "#30": "amf://id#43"
               },
               "lexical": {
                 "shacl:raw": "[(3,0)-(15,3)]",
-                "#25": "[(2,6)-(15,3)]",
+                "#30": "[(2,6)-(15,3)]",
                 "schema-org:name": "[(2,0)-(15,3)]"
               },
               "source-vendor": {
-                "#25": "RAML 1.0"
+                "#30": "RAML 1.0"
               },
               "local-element": {
-                "#25": ""
+                "#30": ""
               }
             }
           }
         ],
         "smaps": {
           "inline-element": {
-            "#34": ""
+            "#49": ""
           },
           "lexical": {
-            "#34": "[(13,8)-(14,0)]"
+            "#49": "[(13,8)-(14,0)]"
           }
         }
       },
       {
-        "@id": "#38",
+        "@id": "#53",
         "@type": [
           "raml-shapes:ArrayShape",
           "shacl:Shape",
@@ -3078,7 +3078,7 @@
                     ],
                     "data:alternate_id": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2",
+                        "@id": "#17",
                         "@type": [
                           "data:Scalar"
                         ],
@@ -3090,20 +3090,20 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_2": "[(3,18)-(3,19)]"
+                            "#17": "[(3,18)-(3,19)]"
                           }
                         }
                       }
                     ],
                     "data:category": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3",
+                        "@id": "#18",
                         "@type": [
                           "data:Object"
                         ],
                         "data:id": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4",
+                            "@id": "#19",
                             "@type": [
                               "data:Scalar"
                             ],
@@ -3115,14 +3115,14 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_4": "[(5,10)-(5,15)]"
+                                "#19": "[(5,10)-(5,15)]"
                               }
                             }
                           }
                         ],
                         "data:name": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5",
+                            "@id": "#20",
                             "@type": [
                               "data:Scalar"
                             ],
@@ -3134,24 +3134,24 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3/scalar_5": "[(6,12)-(6,35)]"
+                                "#20": "[(6,12)-(6,35)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "data-node-properties": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
+                            "#18": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
                           },
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/object_3": "[(5,0)-(7,0)]"
+                            "#18": "[(5,0)-(7,0)]"
                           }
                         }
                       }
                     ],
                     "data:created_at": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6",
+                        "@id": "#21",
                         "@type": [
                           "data:Scalar"
                         ],
@@ -3163,7 +3163,7 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/object_1/scalar_6": "[(7,16)-(7,36)]"
+                            "#21": "[(7,16)-(7,36)]"
                           }
                         }
                       }
@@ -3188,7 +3188,7 @@
                     "doc:strict": "true"
                   },
                   "resolved-link": {
-                    "#15": "amf://id#17"
+                    "#15": "amf://id#22"
                   },
                   "lexical": {
                     "shacl:raw": "[(3,0)-(9,0)]",
@@ -3206,7 +3206,7 @@
             ],
             "smaps": {
               "resolved-link": {
-                "#1": "amf://id#21"
+                "#1": "amf://id#26"
               },
               "type-property-lexical-info": {
                 "#1": "[(2,0)-(2,4)]"
@@ -3230,7 +3230,7 @@
         ],
         "doc:examples": [
           {
-            "@id": "#25",
+            "@id": "#30",
             "@type": [
               "doc:Example",
               "doc:DomainElement"
@@ -3247,26 +3247,26 @@
             ],
             "doc:structuredValue": [
               {
-                "@id": "#26",
+                "@id": "#31",
                 "@type": [
                   "data:Array",
                   "rdf:Seq"
                 ],
                 "rdf:member": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2",
+                    "@id": "#32",
                     "@type": [
                       "data:Object"
                     ],
                     "data:category": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3",
+                        "@id": "#33",
                         "@type": [
                           "data:Object"
                         ],
                         "data:id": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_4",
+                            "@id": "#34",
                             "@type": [
                               "data:Scalar"
                             ],
@@ -3278,14 +3278,14 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_4": "[(6,10)-(6,15)]"
+                                "#34": "[(6,10)-(6,15)]"
                               }
                             }
                           }
                         ],
                         "data:name": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_5",
+                            "@id": "#35",
                             "@type": [
                               "data:Scalar"
                             ],
@@ -3297,24 +3297,24 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3/scalar_5": "[(7,12)-(7,35)]"
+                                "#35": "[(7,12)-(7,35)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "data-node-properties": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3": "name->[(7,6)-(8,0)]#id->[(6,6)-(7,0)]"
+                            "#33": "name->[(7,6)-(8,0)]#id->[(6,6)-(7,0)]"
                           },
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/object_3": "[(6,0)-(8,0)]"
+                            "#33": "[(6,0)-(8,0)]"
                           }
                         }
                       }
                     ],
                     "data:created_at": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/scalar_6",
+                        "@id": "#36",
                         "@type": [
                           "data:Scalar"
                         ],
@@ -3326,34 +3326,34 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2/scalar_6": "[(8,16)-(8,36)]"
+                            "#36": "[(8,16)-(8,36)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "data-node-properties": {
-                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2": "created_at->[(8,4)-(10,0)]#category->[(5,4)-(8,0)]"
+                        "#32": "created_at->[(8,4)-(10,0)]#category->[(5,4)-(8,0)]"
                       },
                       "lexical": {
-                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2": "[(5,0)-(10,0)]"
+                        "#32": "[(5,0)-(10,0)]"
                       }
                     }
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7",
+                    "@id": "#37",
                     "@type": [
                       "data:Object"
                     ],
                     "data:category": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8",
+                        "@id": "#38",
                         "@type": [
                           "data:Object"
                         ],
                         "data:id": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_9",
+                            "@id": "#39",
                             "@type": [
                               "data:Scalar"
                             ],
@@ -3365,14 +3365,14 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_9": "[(12,10)-(12,15)]"
+                                "#39": "[(12,10)-(12,15)]"
                               }
                             }
                           }
                         ],
                         "data:name": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_10",
+                            "@id": "#40",
                             "@type": [
                               "data:Scalar"
                             ],
@@ -3384,24 +3384,24 @@
                             ],
                             "smaps": {
                               "lexical": {
-                                "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8/scalar_10": "[(13,12)-(13,19)]"
+                                "#40": "[(13,12)-(13,19)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "data-node-properties": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8": "name->[(13,6)-(14,0)]#id->[(12,6)-(13,0)]"
+                            "#38": "name->[(13,6)-(14,0)]#id->[(12,6)-(13,0)]"
                           },
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/object_8": "[(12,0)-(14,0)]"
+                            "#38": "[(12,0)-(14,0)]"
                           }
                         }
                       }
                     ],
                     "data:created_at": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/scalar_11",
+                        "@id": "#41",
                         "@type": [
                           "data:Scalar"
                         ],
@@ -3413,34 +3413,34 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7/scalar_11": "[(14,16)-(14,36)]"
+                            "#41": "[(14,16)-(14,36)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "data-node-properties": {
-                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7": "created_at->[(14,4)-(15,3)]#category->[(11,4)-(14,0)]"
+                        "#37": "created_at->[(14,4)-(15,3)]#category->[(11,4)-(14,0)]"
                       },
                       "lexical": {
-                        "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7": "[(11,0)-(15,3)]"
+                        "#37": "[(11,0)-(15,3)]"
                       }
                     }
                   }
                 ],
                 "data:pos0": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_2"
+                    "@id": "#32"
                   }
                 ],
                 "data:pos1": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/array_1/object_7"
+                    "@id": "#37"
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "#26": "[(3,0)-(15,3)]"
+                    "#31": "[(3,0)-(15,3)]"
                   }
                 }
               }
@@ -3455,28 +3455,28 @@
                 "doc:strict": "true"
               },
               "resolved-link": {
-                "#25": "amf://id#28"
+                "#30": "amf://id#43"
               },
               "lexical": {
                 "shacl:raw": "[(3,0)-(15,3)]",
-                "#25": "[(2,6)-(15,3)]",
+                "#30": "[(2,6)-(15,3)]",
                 "schema-org:name": "[(2,0)-(15,3)]"
               },
               "source-vendor": {
-                "#25": "RAML 1.0"
+                "#30": "RAML 1.0"
               },
               "local-element": {
-                "#25": ""
+                "#30": ""
               }
             }
           }
         ],
         "smaps": {
           "inline-element": {
-            "#38": ""
+            "#53": ""
           },
           "lexical": {
-            "#38": "[(21,12)-(22,0)]"
+            "#53": "[(21,12)-(22,0)]"
           }
         }
       }
