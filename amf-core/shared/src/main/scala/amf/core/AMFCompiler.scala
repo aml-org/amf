@@ -70,12 +70,13 @@ class AMFCompiler(val rawUrl: String,
   private def compile() = resolve().map(parseSyntax).flatMap(parseDomain)
 
   def autodetectSyntax(stream: CharSequence): Option[String] = {
-    if (stream.charAt(0) == '#' && stream.charAt(1) == '%') {
+    if (stream.length() > 2 && stream.charAt(0) == '#' && stream.charAt(1) == '%') {
       ExecutionLog.log(s"AMFCompiler#autodetectSyntax: auto detected application/yaml media type")
       Some("application/yaml")
     } else {
       base.flatMap { b =>
-        b.platform.findCharInCharSequence(stream) { c => c != '\n' && c != '\t' && c != '\r' && c != ' '
+        b.platform.findCharInCharSequence(stream) { c =>
+          c != '\n' && c != '\t' && c != '\r' && c != ' '
         } match {
           case Some(c) if c == '{' || c == '[' =>
             ExecutionLog.log(s"AMFCompiler#autodetectSyntax: auto detected application/json media type")
@@ -109,7 +110,7 @@ class AMFCompiler(val rawUrl: String,
                 .flatMap { plugin =>
                   mediaType = Some(mime)
                   plugin.parse(mime, content.stream, ctx, parsingOptions)
-                })
+              })
       }
       .orElse {
         autodetectSyntax(content.stream).flatMap(mime =>

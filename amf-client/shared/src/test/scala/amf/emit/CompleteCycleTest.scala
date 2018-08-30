@@ -1310,4 +1310,7 @@ class CompleteCycleTest extends BuildCycleTests {
     cycle("schema-position.raml", "schema-position.jsonld", RamlYamlHint, Amf, base08Path)
   }
 
+  test("Test parse empty included external fragment") {
+    cycle("api.raml", "api.raml.raml", RamlYamlHint, Raml, basePath + "empty-external-fragment/")
+  }
 }
