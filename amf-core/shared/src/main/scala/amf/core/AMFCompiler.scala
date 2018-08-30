@@ -70,14 +70,18 @@ class AMFCompiler(val rawUrl: String,
   private def compile() = resolve().map(parseSyntax).flatMap(parseDomain)
 
   def autodetectSyntax(stream: CharSequence): Option[String] = {
-    base.flatMap { b =>
-      b.platform.findCharInCharSequence(stream) { c =>
-        c != '\n' && c != '\t' && c != '\r' && c != ' '
-      } match {
-        case Some(c) if c == '{' || c == '[' =>
-          ExecutionLog.log(s"AMFCompiler#autodetectSyntax: auto detected application/json media type")
-          Some("application/json")
-        case _ => None
+    if (stream.charAt(0) == '#' && stream.charAt(1) == '%') {
+      ExecutionLog.log(s"AMFCompiler#autodetectSyntax: auto detected application/yaml media type")
+      Some("application/yaml")
+    } else {
+      base.flatMap { b =>
+        b.platform.findCharInCharSequence(stream) { c => c != '\n' && c != '\t' && c != '\r' && c != ' '
+        } match {
+          case Some(c) if c == '{' || c == '[' =>
+            ExecutionLog.log(s"AMFCompiler#autodetectSyntax: auto detected application/json media type")
+            Some("application/json")
+          case _ => None
+        }
       }
     }
   }
