@@ -3,7 +3,7 @@ package amf.validation
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.Shape
 import amf.core.remote._
-import amf.core.services.PayloadValidator
+import amf.core.services.{PayloadValidator, StrictValidationMode, ValidationMode}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.{AMFValidationReport, SeverityLevels}
 import amf.facades.{AMFCompiler, Validation}
@@ -86,7 +86,7 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
         .map(transform)
       result <- {
         val shape = findShape(model.asInstanceOf[Document])
-        PayloadValidator.validate(shape, payload, SeverityLevels.VIOLATION)
+        PayloadValidator.validate(shape, payload, SeverityLevels.VIOLATION, validationMode = validationMode)
       }
     } yield {
       result
@@ -97,4 +97,6 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
       validate(basePath + f.api, f.payload).map(_.conforms should be(f.conforms))
     }
   }
+
+  protected def validationMode: ValidationMode = StrictValidationMode
 }

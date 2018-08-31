@@ -70,7 +70,8 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("Can validate correctly incorrect json schema properties for a certain json schema version") {
-    validate("examples/invalid-json-schema-version-properties.raml", Some("invalid-json-schema-version-properties.report"))
+    validate("examples/invalid-json-schema-version-properties.raml",
+             Some("invalid-json-schema-version-properties.report"))
   }
 
   test("Param in raml 0.8 api") {
@@ -210,5 +211,8 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate("/examples/invalid-format-example.raml", Some("invalid-format-example.report"))
   }
 
+  test("Test invalid string hierarchy examples") {
+    validate("/examples/string-hierarchy.raml", Some("scalars-numbers-string.report"))
+  }
   override val hint: Hint = RamlYamlHint
 }

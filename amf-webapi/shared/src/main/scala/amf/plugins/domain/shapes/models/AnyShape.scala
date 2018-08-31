@@ -4,7 +4,7 @@ import amf.core.annotations.DeclaredElement
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{ExternalSourceElement, Shape}
 import amf.core.parser.{Annotations, Fields}
-import amf.core.services.PayloadValidator
+import amf.core.services.{PayloadValidator, ScalarRelaxedValidationMode}
 import amf.core.utils.Strings
 import amf.core.validation.{AMFValidationReport, SeverityLevels}
 import amf.internal.environment.Environment
@@ -114,6 +114,11 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
 
   def copyAnyShape(fields: Fields = fields, annotations: Annotations = annotations): AnyShape =
     AnyShape(fields, annotations).withId(id)
+
+  def validateParameter(payload: String, env: Environment): Future[AMFValidationReport] =
+    PayloadValidator.validate(this, payload, SeverityLevels.VIOLATION, env, ScalarRelaxedValidationMode)
+
+  def validateParameter(payload: String): Future[AMFValidationReport] = validateParameter(payload, Environment())
 
   def validate(payload: String, env: Environment): Future[AMFValidationReport] =
     PayloadValidator.validate(this, payload, SeverityLevels.VIOLATION, env)

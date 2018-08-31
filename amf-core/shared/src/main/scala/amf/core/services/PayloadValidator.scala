@@ -1,9 +1,9 @@
 package amf.core.services
 
-import amf.ProfileName
+import amf.{ProfileName, ProfileNames}
+import amf.client.plugins._
 import amf.core.model.document.PayloadFragment
-import amf.core.model.domain.Shape
-import amf.client.plugins.{AMFPayloadValidationPlugin, AMFPlugin, PayloadErrorHandler, PayloadParsingResult}
+import amf.core.model.domain.{ScalarNode, Shape}
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.utils._
 import amf.core.validation._
@@ -48,12 +48,30 @@ object PayloadValidator {
   def validate(shape: Shape,
                payload: String,
                severity: String,
-               env: Environment = Environment()): Future[AMFValidationReport] = {
+               env: Environment = Environment(),
+               validationMode: ValidationMode = StrictValidationMode): Future[AMFValidationReport] = {
 
-    val mediaType = payload.guessMediaType(isScalar = false)
-    val p         = plugin(mediaType, shape, env)
-    p.validatePayload(shape, payload, mediaType, env)
+    val mediaType                    = payload.guessMediaType(isScalar = false)
+    val p                            = plugin(mediaType, shape, env)
+    val result: PayloadParsingResult = p.parsePayloadWithErrorHandler(payload, mediaType, env, shape)
+    if (result.hasError)
+      Future.successful(AMFValidationReport(conforms = false, payload, ProfileNames.AMF, result.results))
+    else {
+      val f = if (isString(shape) && validationMode == ScalarRelaxedValidationMode) {
+        result.fragment.encodes match {
+          case s: ScalarNode if !s.dataType.getOrElse("").equals((Namespace.Xsd + "string").iri()) =>
+            PayloadFragment(ScalarNode(s.value, Some((Namespace.Xsd + "string").iri()), s.annotations),
+                            result.fragment.mediaType.value())
+          case other => result.fragment
+        }
+      } else
+        result.fragment
+      p.validateSet(ValidationShapeSet(Seq(ValidationCandidate(shape, f))), env)
+    }
   }
+
+  private def isString(shape: Shape): Boolean =
+    shape.ramlSyntaxKey.equals("stringScalarShape") // todo: temp solution to know if a string scalar. We need to do something with the modules. I need to see any shape hierarchy from validation.
 
   def plugin(mediaType: String, shape: Shape, env: Environment): AMFPayloadValidationPlugin =
     AMFPluginsRegistry
@@ -104,10 +122,16 @@ object PayloadValidator {
                                         shape: Shape): PayloadFragment =
       PayloadFragment(payload, mediaType)
 
-    override protected def parsePayloadWithErrorHandler(payload: String,
-                                                        mediaType: String,
-                                                        env: Environment,
-                                                        shape: Shape): PayloadParsingResult =
+    override def parsePayloadWithErrorHandler(payload: String,
+                                              mediaType: String,
+                                              env: Environment,
+                                              shape: Shape): PayloadParsingResult =
       PayloadParsingResult(PayloadFragment(payload, mediaType), Nil)
   }
 }
+
+trait ValidationMode
+
+object StrictValidationMode extends ValidationMode
+
+object ScalarRelaxedValidationMode extends ValidationMode

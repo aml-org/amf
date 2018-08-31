@@ -3,6 +3,7 @@ package amf.validation
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.Shape
 import amf.core.remote.{Hint, OasJsonHint}
+import amf.core.services.{ScalarRelaxedValidationMode, ValidationMode}
 import amf.plugins.domain.webapi.models.WebApi
 
 class RamlParamPayloadValidationTest extends ApiShapePayloadValidationTest {
@@ -31,4 +32,6 @@ class RamlParamPayloadValidationTest extends ApiShapePayloadValidationTest {
   override protected val hint: Hint = OasJsonHint
 
   override def transform(unit: BaseUnit): BaseUnit = unit
+
+  override protected def validationMode: ValidationMode = ScalarRelaxedValidationMode
 }

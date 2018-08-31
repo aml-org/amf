@@ -32,10 +32,10 @@ object ClientPayloadPluginConverter {
                                           shape: Shape): InternalPayloadFragment =
         clientPlugin.parsePayload(payload, mediaType, ClientEnvironment(env), ShapeMatcher.asClient(shape))._internal
 
-      override protected def parsePayloadWithErrorHandler(payload: String,
-                                                          mediaType: String,
-                                                          env: Environment,
-                                                          shape: Shape): InternalPayloadParsingResult =
+      override def parsePayloadWithErrorHandler(payload: String,
+                                                mediaType: String,
+                                                env: Environment,
+                                                shape: Shape): InternalPayloadParsingResult =
         clientPlugin
           .parsePayloadWithErrorHandler(payload, mediaType, ClientEnvironment(env), ShapeMatcher.asClient(shape))
           ._internal
